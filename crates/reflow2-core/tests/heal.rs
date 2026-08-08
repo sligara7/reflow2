@@ -31,7 +31,7 @@ fn dup_graph() -> DesignGraph {
         "cap:a",
         node::CAPABILITY,
         "cap:b",
-        Props::new(),
+        Props::new().set("basis", "asserted"),
     )
     .unwrap();
     g
@@ -123,7 +123,7 @@ fn merge_carries_a_unique_edge_onto_the_survivor() {
         "cap:a",
         node::CAPABILITY,
         "cap:b",
-        Props::new(),
+        Props::new().set("basis", "asserted"),
     )
     .unwrap();
 
@@ -231,7 +231,7 @@ fn max_operations_cap_surfaces_overflow_never_drops_it() {
         "cap:a",
         node::CAPABILITY,
         "cap:b",
-        Props::new(),
+        Props::new().set("basis", "asserted"),
     )
     .unwrap();
     g.create_edge(
@@ -240,7 +240,7 @@ fn max_operations_cap_surfaces_overflow_never_drops_it() {
         "cap:c",
         node::CAPABILITY,
         "cap:d",
-        Props::new(),
+        Props::new().set("basis", "asserted"),
     )
     .unwrap();
 
@@ -487,7 +487,7 @@ fn a_cross_type_merge_is_refused_rather_than_half_applied() {
         "req:a",
         node::CAPABILITY,
         "cap:a",
-        Props::new(),
+        Props::new().set("basis", "asserted"),
     )
     .unwrap();
 
@@ -528,7 +528,7 @@ fn chained_graph() -> DesignGraph {
             x,
             node::CAPABILITY,
             y,
-            Props::new(),
+            Props::new().set("basis", "asserted"),
         )
         .unwrap();
     }
@@ -742,7 +742,7 @@ fn an_authored_node_survives_a_merge_with_an_inferred_one_regardless_of_id() {
         "cap:a",
         node::CAPABILITY,
         "cap:z",
-        Props::new(),
+        Props::new().set("basis", "asserted"),
     )
     .unwrap();
 
@@ -807,7 +807,7 @@ fn a_planned_stub_never_outlives_the_authored_twin_on_the_alphabet() {
         "cap:a-stub",
         node::CAPABILITY,
         "cap:kit",
-        Props::new(),
+        Props::new().set("basis", "asserted"),
     )
     .unwrap();
 
@@ -843,7 +843,7 @@ fn the_provenance_order_is_graded_not_binary() {
         "cap:a",
         node::CAPABILITY,
         "cap:z",
-        Props::new(),
+        Props::new().set("basis", "asserted"),
     )
     .unwrap();
 
@@ -873,7 +873,11 @@ fn a_self_loop_duplicates_edge_never_becomes_a_merge() {
         "cap:a",
         node::CAPABILITY,
         "cap:a",
-        Props::new(),
+        // `asserted` on purpose: BL-53's guard lives in the merge DERIVATION,
+        // so the self-loop has to reach it to be refused there. A `suspected`
+        // self-loop never gets that far, which would make this test pass for
+        // the wrong reason and leave the real guard uncovered.
+        Props::new().set("basis", "asserted"),
     )
     .unwrap();
 

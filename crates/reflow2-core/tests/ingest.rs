@@ -4,6 +4,7 @@
 //! scriptable mock returns per-pass canned JSON by matching that marker.
 
 use reflow2_core::detect::GapSource;
+use reflow2_core::heal::HealOptions;
 use reflow2_core::nodes::{edge, node};
 use reflow2_core::propagate::PropagateOptions;
 use reflow2_core::{
@@ -509,11 +510,27 @@ fn the_more_specific_name_survives_a_merge_whichever_way_round() {
 /// hundred separate asks to an agent that has forgotten the last one.
 ///
 /// Persisting the suspicion as a `DUPLICATES` edge hands it to machinery that
-/// already exists: HEAL's `duplicate` detector collects them across the whole
-/// run, in any order, however long the run takes. **This test is the proof that
-/// the handoff actually happens** — the edge alone would only be a claim.
+/// already exists: `detect_gaps` collects them across the whole run, in any
+/// order, however long the run takes. **This test is the proof that the handoff
+/// actually happens** — the edge alone would only be a claim.
+///
+/// # It goes to DETECT, and it must NOT go to HEAL (2026-08-08)
+///
+/// This test used to assert the opposite of its second half: that the persisted
+/// suspicion reached HEAL's `duplicate` detector. It did, and that was the bug.
+/// HEAL maps `duplicate` to an applicable `Merge`, so a name-similarity score
+/// of 84 became an offer to DELETE one of the two nodes — the exact thing
+/// `dec:ask-not-repair` says must never be driven by a heuristic, defeated by
+/// the mechanism built to honour it.
+///
+/// Measured in dev_storyflow 2026-08-07: `propose_heal` offered ten node
+/// deletions built from scores of 81-85 on semantically unrelated nodes, and
+/// the check-health skill classed them as the safe mechanical half. So the
+/// assertion is now inverted, and BOTH halves are checked — the suspicion
+/// reaches the user as an answerable question, and reaches the merge path not
+/// at all.
 #[test]
-fn a_near_match_becomes_a_standing_question_heal_can_collect() {
+fn a_near_match_becomes_a_standing_question_detect_can_collect() {
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.ingest(
         BRIEF,
@@ -551,18 +568,45 @@ fn a_near_match_becomes_a_standing_question_heal_can_collect() {
     assert_eq!(dups.len(), 1);
     assert_eq!(dups[0].to_id, "cap:auth");
     assert_eq!(dups[0].properties["confidence"].as_f64(), Some(0.84));
+    assert_eq!(
+        dups[0].properties["basis"].as_str(),
+        Some("suspected"),
+        "a machine proposed this pair, and the edge must say so"
+    );
 
-    // THE POINT: HEAL now carries the question, without ingest telling it to.
-    let issue = g
-        .detect_defects()
+    // THE POINT: DETECT carries the question, without ingest telling it to.
+    let gap = g
+        .detect_gaps()
         .unwrap()
         .into_iter()
-        .find(|i| i.category.as_str() == "duplicate")
+        .find(|gp| gp.gap_source == GapSource::PossibleDuplicate)
         .expect("a persisted suspicion must reach the batched ask");
     assert!(
-        issue.affected_ids.contains(&"cap:auth".to_string())
-            && issue.affected_ids.contains(&"cap:auth-2".to_string()),
-        "{issue:?}"
+        gap.affected_ids.contains(&"cap:auth".to_string())
+            && gap.affected_ids.contains(&"cap:auth-2".to_string()),
+        "{gap:?}"
+    );
+    assert!(
+        gap.evidence.contains("suspected"),
+        "the gap must say a heuristic proposed it, not a person: {}",
+        gap.evidence
+    );
+
+    // THE OTHER HALF, and the one that was a live data-loss path: the same
+    // suspicion must NOT reach HEAL, because HEAL's only fix for a duplicate is
+    // an irreversible merge.
+    assert!(
+        g.detect_defects()
+            .unwrap()
+            .iter()
+            .all(|i| i.category.as_str() != "duplicate"),
+        "a heuristic's suspicion must never be offered as a mergeable defect"
+    );
+    let proposal = g.propose_heal(HealOptions::default()).unwrap();
+    assert!(
+        proposal.operations.is_empty(),
+        "no merge may be proposed from a name-similarity score: {:?}",
+        proposal.operations
     );
 }
 

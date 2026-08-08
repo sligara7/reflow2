@@ -39,7 +39,7 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
-use dynograph_core::DynoError;
+use dynograph_core::{DynoError, Value};
 
 use crate::dimensions::DriftDirection;
 use crate::graph::DesignGraph;
@@ -957,6 +957,7 @@ impl DesignGraph {
         self.detect_unsatisfied_requirements(&pop, &mut gaps)?;
         self.detect_unmotivated_capabilities(&pop, &mut gaps)?;
         self.detect_possible_duplicates(&pop, &mut gaps)?;
+        self.detect_suspected_duplicate_edges(&mut gaps)?;
         self.detect_unallocated_capabilities(&pop, &mut gaps)?;
         self.detect_unrealized_capabilities(&pop, &mut gaps)?;
         self.detect_unverified_capabilities(&pop, &mut gaps)?;
@@ -1288,6 +1289,93 @@ impl DesignGraph {
     /// [gap-surfacing.md]: https://github.com/sligara7/reflow2/blob/main/docs/gap-surfacing.md
     /// [heal-process.md]: https://github.com/sligara7/reflow2/blob/main/docs/heal-process.md
     /// [`HealOp::Merge`]: crate::heal::HealOp::Merge
+    /// A `DUPLICATES` edge a MACHINE proposed — asked as a question, because
+    /// nobody has confirmed it.
+    ///
+    /// # Why this exists, and what it is the other half of
+    ///
+    /// `dec:ask-not-repair` splits suspicion from repair: *"possible_duplicate
+    /// is a DETECT gap; HEAL merges only on a human-drawn DUPLICATES edge."*
+    /// [`Self::detect_possible_duplicates`] above implements that for pairs
+    /// reflow2 computes ITSELF from capability overlap. This implements it for
+    /// pairs an EXTRACTION PASS proposed — corpus ingest's fuzzy name match —
+    /// which land in the graph as a real edge carrying `basis: suspected`.
+    ///
+    /// Until 2026-08-08 those edges were bare, so HEAL could not tell them from
+    /// a human's assertion and offered them as merges: measured in
+    /// dev_storyflow, ten proposed node deletions from name-similarity scores of
+    /// 81-85 on unrelated nodes. HEAL now skips anything not explicitly
+    /// `asserted`. **This function is why that is a re-routing rather than a
+    /// silent drop** — the suspicion still reaches the user, on the DETECT side
+    /// where it can be answered or acknowledged, which is what the decision
+    /// asked for in the first place. A defect cannot be dismissed; a gap can,
+    /// and a heuristic with false positives needs the dismissible one.
+    ///
+    /// It also keeps the property corpus ingest wanted when it started
+    /// persisting these: the ask is BATCHED. Four hundred documents raise four
+    /// hundred suspicions collected into one `detect_gaps` answer, rather than
+    /// one transient report per file addressed to an agent that has already
+    /// forgotten the last one.
+    ///
+    /// The score is carried in `evidence` rather than left implicit, so a reader
+    /// can dismiss a bad pair without fetching both nodes.
+    fn detect_suspected_duplicate_edges(
+        &self,
+        gaps: &mut Vec<GapCandidate>,
+    ) -> Result<(), DynoError> {
+        let index = self.node_type_index()?;
+        // Resolve an id to its display name through the same index, so a gap
+        // reads in the user's vocabulary rather than in ids.
+        let name_of = |id: &str| -> String {
+            index
+                .get(id)
+                .and_then(|t| self.get_node(t, id).ok().flatten())
+                .map_or_else(|| id.to_string(), |n| node_name(&n))
+        };
+        for e in self.all_edges_of_type(edge::DUPLICATES, &index)? {
+            // Absent reads as suspected, exactly as HEAL reads it: the two must
+            // agree or a pair could fall between them and be reported nowhere.
+            if matches!(
+                e.properties.get("basis").and_then(Value::as_str),
+                Some("asserted")
+            ) {
+                continue;
+            }
+            let (a, b) = ordered_pair(&e.from_id, &e.to_id);
+            let a_name = name_of(&a);
+            let b_name = name_of(&b);
+            let score = e.properties.get("confidence").and_then(Value::as_f64);
+            let how = match score {
+                Some(c) => format!("their names are {:.0}% alike", c * 100.0),
+                // Omitted for a structural token-subset match, where writing 0.0
+                // would read as "certainly unrelated" — the opposite of what a
+                // subset relation means.
+                None => "one name's words are a subset of the other's".to_string(),
+            };
+            let affected = vec![a.clone(), b.clone()];
+            gaps.push(GapCandidate {
+                id: gap_id(GapSource::PossibleDuplicate, &affected),
+                gap_source: GapSource::PossibleDuplicate,
+                scope: GapScope::Project,
+                // Deliberately below the computed-overlap rule above. That one
+                // reasons about how nodes are WIRED; this one about how they are
+                // SPELLED, and a name match is the weaker signal — which is the
+                // whole lesson of the 81-85 scores on unrelated nodes.
+                severity: 0.45,
+                title: format!("Are “{a_name}” and “{b_name}” the same thing?"),
+                description: format!(
+                    "An extraction pass noticed that “{a_name}” and “{b_name}” look alike ({how}) and recorded the suspicion, but nobody has confirmed it. Are these two names for one thing, or two genuinely different things that happen to read similarly?"
+                ),
+                affected_ids: affected,
+                suggested_depth: 2,
+                evidence: format!(
+                    "'{a}' DUPLICATES '{b}' with basis=suspected — proposed by a name-similarity heuristic, not asserted by anyone. Confirm it by re-drawing the edge with basis=asserted, which is what lets HEAL merge them; acknowledge the gap to record that they are distinct."
+                ),
+            });
+        }
+        Ok(())
+    }
+
     fn detect_possible_duplicates(
         &self,
         pop: &Population,

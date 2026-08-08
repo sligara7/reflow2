@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:4be03fd109a91de0f64878465c0edd4a434bfec5a5b9a09432a88cb21c01d2d5",
+  "content_hash": "sha256:acb87bd743525a4dff470c4a1993ea080a3ae924956e4fc98bf5411443cbbec1",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -393,9 +393,63 @@
     },
     {
       "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-a-deferred-tool-reads-as-a-nonexistent-one",
+      "properties": {},
+      "to_id": "cap:degraded-surface"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-a-running-server-cannot-say-it-is-stale",
+      "properties": {},
+      "to_id": "cap:shared-sessions"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-add-verification-cannot-set-kind-or-last-run-at",
+      "properties": {},
+      "to_id": "cap:reconcile-verified"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-an-aggregate-gap-hides-partial-progress",
+      "properties": {},
+      "to_id": "cap:loop-status"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-change-event-has-no-type-for-a-field-reported-defect",
+      "properties": {},
+      "to_id": "cap:loop-status"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-claim-liveness-is-the-servers-pid-not-the-sessions",
+      "properties": {},
+      "to_id": "cap:claim-liveness"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-claim-region-describes-an-architecture-it-is-not-running",
+      "properties": {},
+      "to_id": "cap:cluster-claims"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
       "from_id": "fact:defect-content-store-invents-its-directory",
       "properties": {},
       "to_id": "cap:content-store"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-ingest-corpus-answers-are-keyed-on-the-document-text",
+      "properties": {},
+      "to_id": "cap:corpus-ingest"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-ingest-writes-duplicates-that-heal-then-merges",
+      "properties": {},
+      "to_id": "dec:ask-not-repair"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -405,9 +459,51 @@
     },
     {
       "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-loop-status-next-routes-to-the-destructive-skill",
+      "properties": {},
+      "to_id": "cap:loop-status"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
       "from_id": "fact:defect-main-rs-realizes-the-wrong-capability",
       "properties": {},
       "to_id": "art:main"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-open-questions-zero-reads-as-an-all-clear",
+      "properties": {},
+      "to_id": "cap:loop-status"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-rollups-became-fleet-numbers-without-saying-so",
+      "properties": {},
+      "to_id": "cap:loop-status"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-small-surface-frictions-contributor-field-and-stale-echo",
+      "properties": {},
+      "to_id": "cap:shared-sessions"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-verification-evidence-is-prose-so-passing-can-contradict-itself",
+      "properties": {},
+      "to_id": "cap:reconcile-verified"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-write-response-describes-the-write-not-the-state",
+      "properties": {},
+      "to_id": "cap:shared-sessions"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:shared-graph-field-report-what-held",
+      "properties": {},
+      "to_id": "cap:shared-sessions"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -10299,6 +10395,69 @@
         "action": "modified"
       },
       "to_id": "req:drift-rolls-up-to-a-score"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:duplicate-merge-needs-a-human-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:duplicate-merge-needs-a-human-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:duplicate-merge-needs-a-human-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:duplicate-merge-needs-a-human-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-inference"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:duplicate-merge-needs-a-human-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:corpus-ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:duplicate-merge-needs-a-human-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:duplicate-merge-needs-a-human-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:ask-not-repair"
     },
     {
       "edge_type": "CHANGED",
@@ -20357,6 +20516,14 @@
       "from_id": "req:adopt-says-how-much-it-got",
       "properties": {},
       "to_id": "decision:ack:3a667fe34b66bffd"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:an-irreversible-operation-is-concurrency-aware",
+      "properties": {
+        "note": "This requirement is the second guard for a decision that is already accepted and currently defeated in the build -- not new intent. Whether it should exist as a separate requirement at all, or be folded into enforcing dec:ask-not-repair, is Anthony's call."
+      },
+      "to_id": "dec:ask-not-repair"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -40674,6 +40841,15 @@
     {
       "edge_type": "SATISFIES",
       "from_id": "cap:heal",
+      "properties": {
+        "coverage": "partial",
+        "evidence": "COVERED as of 2026-08-08 (chg:duplicate-merge-needs-a-human-20260808): HEAL proposes a merge only for a DUPLICATES edge explicitly carrying basis=asserted, so a heuristic can no longer drive an irreversible deletion, and the check-health skill no longer describes node deletion as the safe mechanical half to apply unread. NOT COVERED, and deliberately not claimed: the requirement's second clause -- that on a shared graph the acting seat must acknowledge other sessions are attached -- is unbuilt, because nothing in any payload yet reports concurrency at all. That is req:a-session-can-tell-it-is-not-alone, which this clause is blocked on; building the acknowledgement first would mean asking a seat to confirm a fact reflow2 cannot currently tell it."
+      },
+      "to_id": "req:an-irreversible-operation-is-concurrency-aware"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:heal",
       "properties": {},
       "to_id": "req:coherence"
     },
@@ -40889,6 +41065,15 @@
       "from_id": "cap:owed-to-a-contributor",
       "properties": {},
       "to_id": "req:no-idea-goes-quiet"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:owed-to-a-contributor",
+      "properties": {
+        "coverage": "partial",
+        "evidence": "cap:owed-to-a-contributor is in_progress and holds the same thesis, but its chosen first cut answers 'what has a named person been asked to settle' (proposed Decisions with an approver edge), not 'which gaps are in the part of the system I own'. The fleet's ask is the second one, so this covers the requirement only in part."
+      },
+      "to_id": "req:ownership-is-an-edge-so-debt-has-an-addressee"
     },
     {
       "edge_type": "SATISFIES",
@@ -42577,6 +42762,15 @@
       "to_id": "cap:vocabulary"
     },
     {
+      "edge_type": "VIOLATES",
+      "from_id": "cap:corpus-ingest",
+      "properties": {
+        "confidence": 1.0,
+        "evidence": "ingest.rs:1517 suspect_duplicate persists a DUPLICATES edge for any name match in the 70-89 token_sort_ratio ASK band; heal.rs:798 fires `duplicate` on any DUPLICATES edge regardless of who drew it, so the decision's premise -- that merge is safe only because a human asserted the endpoints -- is false in the shipped build. Field-observed 2026-08-07 in dev_storyflow: 10 proposed node deletions from 81-85 scores on unrelated nodes."
+      },
+      "to_id": "dec:ask-not-repair"
+    },
+    {
       "edge_type": "YIELDED",
       "from_id": "frag:art-alternatives",
       "properties": {
@@ -44135,10 +44329,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6d274cf0f687fd7b3031761e30c174abfd473599c0fd64299fdb88cb71517c0f",
+        "checksum": "sha256:f238a133af03041c96e7ba81f74232a1f6215033e8d3fcafb8db284950269007",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -44369,10 +44565,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d3c6e9fe1cac1177",
+        "checksum": "sha256:59f01a1c703a87a634fb0ec46bc69c830783401474c3f48a29e552983e87914b",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -44428,7 +44626,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7bda3eb9321b2786a0fe67839a5c420f90c89fe0d57c256776c41191f532753c",
+        "checksum": "sha256:e36d3b386dcad3b33c12ed42a28685b2bcd3a9c8a2ccdd7d2704c230739407c0",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/ingest.rs",
         "name": "ingest.rs",
@@ -44883,11 +45081,13 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:52a5e92ffed17c501f9d849dcadbb5f4614d35b79c731a90860d4e7d7056b02d",
+        "checksum": "sha256:917dcbb355fa177e7e2e03212bba59dcf5bf489cbe08b01e963489e7a39a8c7e",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/inference.yaml",
         "name": "inference.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -49029,6 +49229,14 @@
       }
     },
     {
+      "node_id": "chg:duplicate-merge-needs-a-human-20260808",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "A DUPLICATES edge now says who drew it, and HEAL merges only what a human asserted (field-reported defect from dev_storyflow, 2026-08-07; no failing test existed — see note on change_type)"
+      }
+    },
+    {
       "node_id": "chg:edges-need-both-ends-audited",
       "node_type": "ChangeEvent",
       "properties": {
@@ -51161,6 +51369,16 @@
       }
     },
     {
+      "node_id": "dec:export-serialisation-belongs-to-the-gate",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Implement req:the-export-is-serialised-rather-than-socially-enforced in reflow2_check.py (the CI gate), which already reads the committed export, rather than by adding serialisation or refusal to the MCP server.",
+        "name": "A second exporting commit is caught by the CI gate, not by the server",
+        "rationale": "Anthony's word, 2026-08-08, when accepting the requirement; the fleet's own framing ('the tool could refuse or serialise') deliberately left the location open. THE GATE IS WHERE THE EVIDENCE ALREADY IS: the lineage chain lives in the committed export document and its prev_content_hash, which is a property of the COMMIT HISTORY rather than of any live server session — so the server would have to be told about git to enforce it, while the gate already reads exactly the artifact in question. IT ALSO MATCHES WHERE THE FAILURE HAPPENS: two exporting commits break the chain at merge time, not at write time, and both projects that hit this hit it in a pull request. A server-side lock would additionally have to survive the case reflow2's own release procedure records, where a fold rewrites history after the exports were made — which no live serialisation can see. NOTE THE HONEST LIMIT: the gate catches it at CI rather than preventing it at authoring time, so a session still learns about the collision late. That is accepted as the cost of putting the check where the data is.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:external-blob-store-pressure",
       "node_type": "Decision",
       "properties": {
@@ -51789,6 +52007,16 @@
         "name": "What ATTACHES an Artifact is defined by excluding bookkeeping, not by listing the edges that count",
         "rationale": "Recorded because the choice is invisible in the diff — both forms produce the same result on every case anyone has reported, and they differ only in how they FAIL as the vocabulary grows. A future maintainer reading `ARTIFACT_BOOKKEEPING` should find the reason it is an exclusion list rather than rediscovering the argument, and Anthony should get to overrule it while it is still cheap.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:ownership-reads-claims-before-adding-an-edge",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Build the first cut of req:ownership-is-an-edge-so-debt-has-an-addressee by making the loop's reporting consume the CLAIMS edges claim_region already writes, rather than by introducing a new OWNED_BY edge type. Decide on OWNED_BY only after that is built and shown to be insufficient.",
+        "name": "Seat-scoped debt is built from the CLAIMS the graph already carries; OWNED_BY is added only if claims prove insufficient",
+        "rationale": "Anthony's word, 2026-08-08, when accepting the requirement. THE INPUT IS ALREADY IN THE GRAPH AND NOTHING READS IT: claim_region records a seat's region as a seed plus a depth, computed the same way detect_gaps computes a scope — so 'the part I hold' already means one thing everywhere, and the fleet's own #5 ask observes that 'nothing else consumes it'. A seat-scoped loop_status is therefore reachable with no new vocabulary. WHY THIS ORDER RATHER THAN THE EDGE FIRST: adding a node/edge type is the most expensive and least reversible kind of change to this schema, and the UAF audit already found 30 of 60 edge types never used once — so an unused OWNED_BY would not be a novel failure here, it would be the common one. If claims turn out to model the wrong thing (they are transient work-in-hand, while ownership is durable and survives the session), that is a real distinction and the edge becomes justified on evidence rather than on anticipation. WHAT THIS DOES NOT DECIDE: whether ownership and claim are ultimately the same concept. It only fixes the build order.",
+        "status": "accepted"
       }
     },
     {
@@ -57066,6 +57294,22 @@
       }
     },
     {
+      "node_id": "req:a-node-carries-a-revision",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A write can tell it lost a race",
+        "priority": "medium",
+        "provenance": "authored",
+        "rationale": "MEASURED, NOT SUPPOSED (fact:defect-write-response-describes-the-write-not-the-state): a deliberate experiment on the live 7-seat graph established that same-property concurrent writes are SILENT LAST-WRITER-WINS — no error, no warning, no version conflict, no indication a value was replaced — and, more sharply, that THE WRITE RESPONSE DESCRIBES THE WRITE RATHER THAN THE STATE: a racer received a success payload reading `statement: RACER_ONE, priority: high` when both fields were already false in the store. There is no version, rev, etag or updated_at anywhere in the payload, so a client cannot detect that it lost and has no primitive to compare-and-swap with. WHY THIS IS SHARPER THAN IT LOOKS: on a solo graph response == state, so trusting your own write-response is free, and every habit formed under the old stdio transport does exactly that. A session that writes a value and later reasons from its own return value is reasoning from something that was never durable — and nothing tells it. THE REPORTER EXPLICITLY DID NOT ASK FOR ENFORCEMENT: even an unenforced rev, merely RETURNED, lets a caller notice it was superseded, and that is most of the value. WHAT THIS MUST NOT COST, from the same experiment: per-property merge held under concurrency (a partial write EDITS and does not reset omitted fields) and concurrent writes serialize cleanly with both racers' distinct properties surviving. The reporter calls per-property merge the single most important safety property for a shared graph and lists it under what-not-to-change.",
+        "statement": "A node SHALL carry a monotonic revision returned on read and on write, and writes SHOULD accept an optional if_rev precondition — so a client can detect that its value was superseded. At minimum, a write response SHALL say when the node was also written by another seat since the caller's read. Requested as the #4 fleet ask by dev_storyflow's api-boss 5d608b85, 2026-08-07.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:a-project-records-how-it-ships",
       "node_type": "Requirement",
       "properties": {
@@ -57092,6 +57336,22 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "When reflow2 puts a gap to the user, the agent's READING of it travels with the question: what it would do and why, and what would change that answer. The user still decides; the agent stops pretending it has no view.\n\nTHE READING HAS A SHAPE, AND THE SHAPE IS PART OF THE REQUIREMENT — added 2026-07-31 on Anthony's word after the pattern was used on him for the five standing gaps: \"I really like when I say something like 'go through the decisions I need to make... put them in plain and simple english and offer a recommendation' and then you give me the options to select with your recommended choice on top. I believe there is already a proposed idea... but I really like this process (I think other users will really like this process also), so I'd either like to update the proposed req or cap or backlog item to CEMENT THIS BEHAVIOR.\"\n\nThree obligations, and they are separable:\n\n(1) THE OPTIONS ARE SELECTABLE, not buried in prose. The user picks rather than composing a reply. Prose that describes three courses of action still leaves them to name one; a list they can choose from does not.\n\n(2) THE RECOMMENDATION COMES FIRST and is marked as such. Position carries meaning: an unordered menu makes the user infer which the agent favours, which is the analysis req:no-se-knowledge exists to spare them. Marking it also makes an overrule VISIBLE — the user knows they are departing from the agent's view, which is the precondition for the finding below.\n\n(3) EVERY OPTION STILL CARRIES ITS CONSEQUENCE, including the ones not recommended. A list of bare labels is worse than prose, because it looks complete while withholding what each choice costs. The counterweight rule below is not relaxed by the format; it is what makes the format honest.\n\nAND THE LANGUAGE IS THE USER'S, NOT ENGLISH — Anthony, same exchange: \"with agents able to understand multiple languages, the 'simple english' should be 'simple whatever_language_user_is_writing_in'.\" The plainness obligation is about REGISTER, not about English: no jargon, no ids, short sentences, in whatever language the user is writing in. cap:surface already says \"in the user's WORDS\", and this makes the wider reading explicit so nobody implements it as an English-only rule. Every English-language phrasing in these design notes is an example of the register, never a specification of the language.\n\nWHAT IS MISSING TODAY, and it is an omission rather than a prohibition. `detect-and-ask` is explicit that the agent must \"never invent an answer on their behalf\", which is right and must not be weakened. But the skill says nothing about offering a reading, so the default behaviour is a bare question — `gap_to_prompt` returns \"is it covered, deferred, or dropped?\" and the agent relays it. `cap:surface` (\"turn a gap into a question in the user's words\", `verified`) delivers the translation and nothing more.\n\nWHY THAT IS A DEFECT AND NOT NEUTRALITY. `req:no-se-knowledge` says the user never needs systems engineering. A bare gap question hands them back the analysis the agent has already done and asks them to redo it in their own head — which is precisely the SE work that requirement exists to spare them. The agent has read the graph, seen the precedents, and formed a view; withholding it is not impartiality, it is making the user pay for the agent's caution.\n\nIT IS ALSO WHAT `dec:three-party-checks` ALREADY DESCRIBES: \"The LLM speaks, the graph remembers and counts, the human decides.\" Offering a reading IS the LLM speaking. The decision stays with the human, untouched — and `dec:certainty-derived` still governs the write, because a recommendation changes no status until the user answers.\n\nTHE LINE THAT MUST NOT BE CROSSED, stated so this cannot be read as licence. Recommending is not deciding: no requirement moves off `proposed`, no decision reaches `accepted`, no gap is acknowledged on a reading the user has not confirmed. And a recommendation must carry WHAT WOULD CHANGE IT — the condition under which the other option wins — or it is steering rather than advising. An option presented without its counterweight is a decision taken quietly.\n\nTHE PART WORTH RECORDING, and the reason this is design rather than style: WHEN THE USER OVERRULES A RECOMMENDATION, THAT IS INFORMATION. A design where the agent advised one way and the human chose another has learned something neither party knew alone, and today it is invisible because the recommendation was never on the record. Whether the recommendation itself should be stored beside the question is left open here rather than assumed. NOTE that obligation (2) sharpens this: marking the recommendation is what makes an overrule an identifiable EVENT rather than an unremarkable choice among equals.\n\nMEASURED, not theorised: every gap put to Anthony on 2026-07-31 needed the recommendation added by hand, and he asked for it explicitly TWICE that day — \"provide your recommendation\", \"present them in simple english and your recommendations for how to proceed\" — and a THIRD time in the same session, at which point he asked for the behaviour to be cemented rather than repeated. A shape a user has to request each time is a default in the wrong place. This requirement's own evidence therefore accumulated by the exact mechanism it describes.\n\nSCOPE, stated because the third request widened it: this began as a rule about GAPS, and Anthony's framing — \"the decisions I need to make\" — is broader. The obligation is read as covering any point where the agent puts a CHOICE to the user, not only where detect_gaps produced it. Whether that widening needs its own capability rather than riding this one is left open rather than assumed.\n\nTENSION NAMED SO IT IS NOT CONFLATED: `dec:report-dont-judge` says the confirmation ledger reports claim history and never judges a claim. That governs what a COMPUTATION may assert about evidence. It does not govern whether an agent may advise a human who asked — different actor, different act. Conflating the two would silence exactly the party `dec:three-party-checks` puts there to speak.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:a-session-can-tell-it-is-not-alone",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A payload says whether the session reading it is alone on the graph",
+        "priority": "high",
+        "provenance": "authored",
+        "rationale": "THE ROOT CAUSE BEHIND EVERY SHARED-GRAPH FAILURE THEY REPORTED, in their words: A SESSION CANNOT TELL THAT IT IS NOT ALONE. Nothing in any payload reports concurrency, so every seat reasons as if solo and the output actively encourages it. MEASURED CONSEQUENCE (fact:defect-rollups-became-fleet-numbers-without-saying-so): defects 42->6->5->12 and gaps 48->55->69 on one graph in one day by non-coordinating sessions, including a 5->12 jump delivered to a session that had done nothing; TWO BOSSES, one of them the reporter, attributed a global movement to their own change — in the flattering direction, which is the one nobody catches unaided. The reporter told the user '42 -> 6' twice as their own result. It was not. Their argument for this specific field: a seat seeing `attached: 7` CANNOT HONESTLY CLAIM A ROLLUP AS ITS OWN, so one number prevents the whole class. The alternative in force today is a hand-maintained fleet convention requiring every citation to be labelled FLEET or SCOPED — a discipline layered on a tool that could just say it, and by their own standard a defect routed around rather than fixed. NOTE THE MIGRATION HAZARD THIS ALSO NAMES: loop_status and graph_report read IDENTICALLY before and after `--shared`; only the MEANING changed, so every citation of those counts written before the migration is now subtly wrong and nothing says so.",
+        "statement": "Tool responses that report graph-wide state SHALL make concurrency visible — at minimum the number of currently-attached sessions, and ideally last_write_at and last_write_by — and rollups SHALL label themselves as graph-wide rather than leaving scope to the reader. Requested as the #2 fleet ask and as the single 'if only one thing changes' item by dev_storyflow's api-boss 5d608b85, 2026-08-07.",
         "status": "accepted"
       }
     },
@@ -57137,6 +57397,22 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Which design a session writes to must be a STATED CHOICE, and the information needed to make that choice must be available BEFORE anything is created. Two halves: (1) an agent must be able to discover what designs exist in and around a working tree and what each one holds — label, size, when it was minted — without opening a session against each; (2) a session must be able to be pointed at a chosen design explicitly.\n\nANTHONY, 2026-08-05, after the hxm_program field report: \"can we just pass the location of the reflow2 graph via a prompt or skill; it can default to whichever folder path that the session is opened in, but maybe we could just say 'use reflow2 graph as /path/to/reflow2/graph/to/use/for/this/session'.\" And on the mechanism, once told a skill could not do it alone: \"I like this approach of just pointing .mcp.json at the graph_id... an agent within a session can usually change files. can a reflow2 tool be to simply return all graph_ids to the agent and the agent then can choose whichever graph_id the user specifies to use for the project?\"\n\nWHY IT IS A REQUIREMENT AND NOT A CONVENIENCE. Today the answer is implicit: the launch config passes a RELATIVE `--graph-path`, so the design a session edits is decided by where the shell was opened, with no ancestor walk and no report of what else exists. Measured consequence, on Anthony's own repo the same day: a session at the root was told \"this directory has no design yet\" and minted a THIRD graph while two populated ones sat one and two directories down (`dec:no-design-here-never-looked`). An implicit answer to \"which design am I editing\" is not a smaller version of an explicit one — it is the mechanism by which a design gets created in the wrong place and nobody is told.\n\nTHE DIVISION OF LABOUR THIS INHERITS, and it shapes the answer rather than limiting it: reflow2 performs NO FILE IO (`dec:agent-navigates-content`), so WALKING THE TREE TO FIND `.reflow2` DIRECTORIES IS THE AGENT'S JOB — Anthony's own observation that \"an agent within a session can usually change files\" is the same point from the other side. What only reflow2 can answer is what a store at a given path actually HOLDS. So the requirement is met by a pair, not by one tool.\n\n⚠️ MEASURED, AND IT CORRECTS THE OBVIOUS READING OF THE ASK: \"return all graph_ids\" would return ONE per store today. Storage keys are `{graph_id}\\x00{type}\\x00{id}` and `dynograph_storage::keys::graph_prefix` exists, so many graphs per store is supported by the FOUNDATION — but reflow2 opens one graph per store by convention (`DEFAULT_GRAPH_ID`, one `.reflow2` directory per project), and the three graphs in this field report are three separate STORES. Enumerating within a store is therefore true and not useful yet; describing a store found on disk is what the case actually needs.\n\nHOW EACH HALF STANDS, 2026-08-05. HALF (1) — DISCOVERY — has an accepted shape and a planned capability: `dec:describe-a-design-without-binding-to-it` and `cap:describe-design-at-path`. HALF (2) — BEING POINTED — has a WORKING ANSWER IN THE FIELD but not a settled one: `dec:pointing-a-session-is-project-scope-only` (accepted, executed and verified on hxm_program) says a project-scoped config override does it TODAY, with the hard rule that an absolute path must never enter a global config. Whether that remains the answer, or a graph reference carried per call replaces it, is still open at `dec:how-a-session-is-pointed-at-a-design`.\n\n⚠️ AND THE REASON THIS REQUIREMENT IS NOT ALREADY MET BY THE FIELD FIX: PROJECT SCOPE KEYS ON THE DIRECTORY THE SESSION WAS OPENED IN. An override on a project root does nothing for a session opened in a subdirectory — which is precisely the case that produced the extra graph. So the config override satisfies this requirement for sessions started at the root and NOT OTHERWISE, and the discovery half stays necessary rather than being made redundant by it.\n\nACCEPTED 2026-08-05 on Anthony's explicit word (\"Let's take req:a-session-chooses-its-design from proposed to accepted\"), given after both halves and the surviving limitation above were read back to him.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:a-surface-states-its-own-scope",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "An output says which question it answered, and what it could not see",
+        "priority": "medium",
+        "provenance": "authored",
+        "rationale": "THE REPORTER OFFERED THIS AS THE ACTIONABLE GENERALISATION over three separate incidents in one day, each a REAL, CORRECT number that answered a different question than the reader's: (1) merge scores presented as a detection report while silently feeding an irreversible deletion — two competent sessions each held half of it and neither could see the whole, because the similarity surface and the delete-proposing surface NEITHER NAMES THE OTHER; (2) open_questions returning count: 0 while the loop owed 69 gaps, 26 defects and 40 unproven/unexamined claims — both numbers correct, neither saying so; (3) per-session rollups that silently became fleet-wide under --shared. In all three the fix is the same shape: LET THE OUTPUT STATE ITS OWN SCOPE. THE STRONGEST SINGLE INSTANCE, because six independent sessions reported it without consolidating (fact:defect-scoped-detectors-do-not-flag-a-degenerate-region): a scoped detector returning in_scope: 0 over region_size: 1 reads as a pass and is the opposite — an island, where the detector had one node to look at. One reporter caught it only by running a control on a sibling node to prove the measurement could return more at all. Notably, region_size being IN the payload is what three of them credited as working; the defect is purely that the interpretation is left to a reader who, under load, will skip it. THIS IS ALSO ALREADY REFLOW2 DOCTRINE, which is the strongest argument for building it: the served AGENTS.md says in terms that a successful tool response is a claim rather than a result, that '0 gaps' means nothing was detected and never that nothing is wrong, and instructs the agent to ask what a check could not have seen. This requirement is that rule moved from the reader's discipline into the payload — which is exactly the fleet's own repeated lesson that a discipline whose only evidence is that someone runs it disappears the moment they stop.",
+        "statement": "A reflow2 surface that returns a count SHALL state the scope of that count — what question it answered and what it does not cover — rather than leaving a correct number to be read as an answer to a different question. Generalised by dev_storyflow's api-boss 5d608b85 from three same-day cases, 2026-08-07, and independently converged on by six sessions for the degenerate-region case.",
         "status": "accepted"
       }
     },
@@ -57243,6 +57519,22 @@
         "provenance": "authored",
         "statement": "Raised by @ajs from flo2, 2026-08-05, and this is the concrete instance that exposed req:the-loop-says-what-is-owed-to-a-person. A design can hold any number of Decision nodes at proposed — genuinely open choices, one of them blocking another person's work — and NOTHING REPORTS THEM.\n\nMEASURED TWICE, ON TWO DESIGNS, INDEPENDENTLY. (1) On flo2's own design, holding EIGHT proposed decisions: detect_gaps returned 12 gaps, NONE referencing a Decision; loop_status reported unanswered_questions 0, unwritten_answers 0, and has no field that counts an open decision at all. (2) REPRODUCED ON REFLOW2'S OWN DESIGN, 2026-08-05, deliberately as a test rather than by accident: capturing this proposal created dec:one-process-many-stores at status proposed and gave it an AUTHORED_BY edge with role=approver to who:ajs — the exact shape this requirement says should be reported. loop_status then returned clean:false with unsurfaced_gaps 11, unanswered_questions 0, and NO field counting an open decision; detect_gaps returned 11 gaps of which ZERO referenced dec:one-process-many-stores. Every one of the 11 was about the capabilities and requirements captured alongside it. So the loop reported eleven things it was owed and stayed silent about the one item a named person had actually been asked to decide.\n\nThat second measurement matters more than the first: it is on the design of the tool itself, made by the tool's own instrumentation, on a node built specifically to be the positive case. The detector is not failing on an exotic shape — it is silent on the canonical one.\n\nTHE QUIET IS RIGHT; THE LACK OF AN EXIT IS NOT. This is documented and deliberate. The brainstorm skill records a musing as a proposed Decision with its options in prose precisely so the loop stays silent while somebody is still thinking, and detect_gaps fires undecided_decision_point only on a Decision holding two or more REGISTERED ALTERNATIVES — a fork with real design behind each branch. That line is a good one and must survive: a brainstormed Decision with no approver must keep costing nothing, so thinking out loud stays free.\n\nTHE PROBLEM IS THAT THERE IS NO WAY TO CROSS IT. A musing that becomes a live question owned by a named person has no state to move to. register_alternative does not fit: it requires a LOCATION per alternative — where that alternative's design export lives, branch-by-file — and the options here are prose (\"connect the user's own git repo\" against \"provision a hosted sandbox\"), neither of which has a design export. Using it would mean inventing file paths that do not exist in order to make a detector notice something true. And the Question machinery cannot be pointed at a Decision: answer_question refuses unless gap_to_prompt already recorded a question, and gap_to_prompt takes a GapCandidate from detect_gaps, so Questions are GAP-DERIVED ONLY — there is no way to raise a standalone question against a node somebody must decide on. That refusal is correct and well-explained; the limitation is upstream of it.\n\nTHE GRAPH ALREADY KNOWS, which is what makes this cheaper than it looks: AUTHORED_BY with role=approver is already the graph SAYING that a named contributor owes an answer here. The information is present and structured. Nothing computes on it.\n\nTHE DISCRIMINATOR THIS REQUIREMENT ASKS FOR: proposed AND carrying an approver edge means somebody has been asked to decide and the loop should say so. Proposed with no approver means somebody is thinking, and the loop stays silent. The graph already distinguishes these two; the loop does not read the distinction.\n\nWHAT IT COST, which is the shape of what it will cost users: flo2's requirement was that its open decisions surface for the second contributor when he clones. The graph could not satisfy it, so it was met OUTSIDE THE GRAPH — a hand-written list in README.md plus a committed loop-nudge hook. That list is a second copy of something the graph already holds, maintained by hand, with nothing checking the two agree. It will drift the first time a decision is added or settled, and it will drift SILENTLY — the precise failure mode reflow2 exists to prevent. A design brain that holds the open decisions but cannot report them pushes its users into keeping a shadow list.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:an-irreversible-operation-is-concurrency-aware",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Deleting a node is never mechanical, and never quiet on a shared graph",
+        "priority": "critical",
+        "provenance": "authored",
+        "rationale": "THE SAFETY MODEL IS CURRENTLY INVERTED, and it is not a hypothetical: propose_heal offered 10 operations, every one a Merge that DELETES its remove_id, including a load-bearing requirement — while the check-health skill tables `duplicate` as the machine-fixable half and tells the agent in terms that requires_human_review being true 'does not mean you should withhold the mechanical merge'. So THE HALF AN AGENT IS TOLD TO APPLY UNREVIEWED IS THE DESTRUCTIVE ONE, AND THE HALF IT IS TOLD TO ESCALATE MUTATES NOTHING. An agent following the skill exactly deletes ten design nodes; the reporter stopped only because the pairings looked implausible enough to read. Root cause and the full chain are recorded in fact:defect-ingest-writes-duplicates-that-heal-then-merges. THE SHARED-GRAPH MULTIPLIER, which is why this is a separate requirement from fixing the scorer: on a solo graph a bad merge is one person's undo. Here one session's apply hits three bosses and four workers instantly, with no undo and no notification to anyone else. All three bosses stood down on it 3/3 and the whole fleet was barred from check-health. A SECOND INSTANCE OF THE SAME SHAPE, different tool: propose_heal offered generate_bridge on req:stateless_scaling where the user had explicitly ruled that drawing a SATISFIES edge would be a forgery. THE TOOL'S SUGGESTED FIX BEING THE HARM IS NOW TWICE — a bridge adds a wrong edge; this deletes a node. NOTE THE TENSION TO RESOLVE DELIBERATELY: reflow2 already holds dec:ask-not-repair (accepted) saying merge is safe only because the endpoints were asserted by a human. This requirement is arguably not new intent but a second guard for a decision that is already accepted and currently defeated — worth deciding which of those it is before building.",
+        "statement": "An operation that destroys design content SHALL NOT be classified as a mechanical fix an agent may apply without review, and on a shared graph it SHALL require the acting seat to acknowledge that other sessions are attached. Requested as the #6 fleet ask, and as the highest-severity item dev_storyflow has sent this channel (sb-boss ab2291fa, api-boss 5d608b85, 2026-08-07).",
+        "status": "accepted"
       }
     },
     {
@@ -58266,6 +58558,22 @@
       }
     },
     {
+      "node_id": "req:ownership-is-an-edge-so-debt-has-an-addressee",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A gap arrives as YOURS, because the graph can say who owns the thing it is about",
+        "priority": "high",
+        "provenance": "authored",
+        "rationale": "THE EVIDENCE IS A NUMBER THAT NEVER MOVED. The fleet maintains an ownership matrix in markdown — ~25 rows mapping each component/surface/process to the boss who owns it and the bus where changes get flagged. The graph already holds the components; it cannot say who owns one. So detect_gaps BROADCASTS: every one of 7 attached sessions received the same '69 gaps / 26 defects / 20 / 20', almost none of it theirs. FIVE CONSECUTIVE SEATS REPORTED THOSE IDENTICAL NUMBERS AND NOT ONE MOVED — because debt addressed to everyone is addressed to no one. Their framing: with an OWNED_BY edge a gap could arrive as 'yours' rather than 'the graph's', and the rollup could say '12 of 69 are in regions you own'. That single change would convert their biggest standing number from wallpaper into a work queue. COMPOUNDS WITH A SECOND REPORTED DEFECT: fact:defect-an-aggregate-gap-hides-partial-progress — a gap naming 48 capabilities is one item, so a worker who closes it for one capability sees the total stay put. Unaddressed debt that also cannot register progress is doubly inert. WHAT ALREADY EXISTS HERE, and this requirement should be judged against it rather than beside it: cap:owed-to-a-contributor is already `in_progress` and holds exactly this thesis — but its chosen first cut is narrow (loop_status counting proposed Decisions carrying an AUTHORED_BY role=approver edge), which answers 'what has a named person been asked to settle' and NOT 'which of these gaps are in the part of the system I own'. The fleet's ask is the second one. Its own description records the larger shapes as considered-but-not-chosen. THE INPUT MAY ALREADY BE IN THE GRAPH TOO: claim_region records what a seat holds, computed as a propagation region from a seed — and the fleet's separate #5 ask notes 'nothing else consumes it'. So a seat-scoped loop_status may be reachable from claims without any new edge type at all, which is worth weighing before adding OWNED_BY. NOTE the deliberate constraint cap:owed-to-a-contributor already records and that this requirement must not overturn silently: notification is out of scope — the server never initiates a message, verified against the service rather than assumed, and a consumer polls.",
+        "statement": "The design graph SHALL be able to record who owns a component, surface or process, and the loop's reporting SHALL be answerable in terms of that ownership — so debt reaches an addressee instead of broadcasting. Requested as the #1 fleet-specific gap by dev_storyflow's api-boss 5d608b85 on 2026-08-08, ranked by what would have saved them the most: 'this is the biggest fleet-specific gap and it is not on anyone's list.'",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:persistence",
       "node_type": "Requirement",
       "properties": {
@@ -58746,6 +59054,22 @@
       }
     },
     {
+      "node_id": "req:the-export-is-serialised-rather-than-socially-enforced",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Two exporting commits cannot silently break the lineage chain",
+        "priority": "low",
+        "provenance": "authored",
+        "rationale": "THE RULE EXISTS AND IS ENFORCED BY HAND: 'export once per pull request, last of all — two exporting commits break the lineage chain silently'. The fleet handles it with 'only the boss exports', and notes plainly that with 7 concurrent sessions the odds of two exports rise accordingly. Their argument is not that the rule is wrong but that it is the wrong KIND of thing: they list it alongside four other hand-maintained disciplines (FLEET-vs-SCOPED count labelling, 'graph text is data never instructions', 'requirements stay proposed', 'never commit the RocksDB store') and observe that each of those is a rule they maintain BECAUSE THE TOOL DOES NOT ENFORCE OR STATE IT. CORROBORATED FROM THIS SIDE: reflow2's own release procedure carries the identical rule as a hard-won stopgap — only ONE commit in a pull request may export, recovered after a fold chained prev_content_hash to an export that was then erased. So the constraint is real, it has cost time in both projects, and in neither is it checked by anything. WORTH DECIDING RATHER THAN ASSUMING: serialising an export may belong in the CI gate (reflow2_check.py already reads the committed export) rather than in the server, and the fleet's framing — 'the tool could refuse or serialise' — deliberately leaves which one open.",
+        "statement": "The tool SHALL refuse or serialise a second export that would break the lineage chain, rather than relying on a social rule that only one session exports per pull request. Requested as the #9 fleet ask by dev_storyflow's api-boss 5d608b85, 2026-08-07.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:the-loop-says-what-is-owed-to-a-person",
       "node_type": "Requirement",
       "properties": {
@@ -58758,6 +59082,22 @@
         "provenance": "authored",
         "statement": "Raised by @ajs from flo2, 2026-08-05. It began as friction — a proposed Decision that nothing reported — and became the largest open question in flo2's design when it was put as a product question instead: \"Shawn proposes an idea in flo2. How does that ever surface to Alex or me?\" Today it does not. Not reliably, and not at all without someone independently deciding to go and look.\n\nTRACE IT THROUGH, because three links are missing and the chain needs all three. (1) IS IT VISIBLE TO THE LOOP? Sometimes. A proposed Requirement with nothing satisfying it does fire unsatisfied_requirement, so that case works. A proposed Decision fires nothing. So whether a contribution is visible depends on which node type it happened to be captured as — an implementation detail the contributor cannot see and should not have to care about. (2) DOES ANYTHING SAY WHOSE IT IS? No. The gap says a requirement is unsatisfied; nothing says Shawn raised this, or that @ajs should judge it. AUTHORED_BY with role=approver already exists and is exactly the right shape, but NOTHING COMPUTES ON IT. (3) IS ANYONE TOLD? No — and this one is structural rather than missing: proxy.rs states that the reflow2 server NEVER INITIATES A MESSAGE (no notifications, no sampling requests, no progress pushes, \"verified against the service, not assumed\"). Every byte belongs to a request the client started.\n\nTHE MISMATCH UNDERNEATH. reflow2's coherence loop assumes ONE PERSON AT A KEYBOARD, with an agent asking them questions in a conversation. That assumption is sound and it is why the loop works so well in a coding harness. flo2 puts people in different places at different times, so the same loop has to become asynchronous — an inbox rather than a conversation. Nothing about the graph prevents that; the loop simply has no notion of a person to owe something to.\n\nTHE CHEAP PRIMITIVE, and the reason this is a sibling rather than a new idea: loop_status today answers \"what does this design owe?\" and TAKES NO ARGUMENTS AT ALL, while detect_gaps already accepts a scope for \"one part of the design\". A contributor scope on loop_status follows an established pattern. With that, the rest is flo2's own work and is ordinary: poll per user, render the inbox, email when it grows.\n\nNOTIFICATION IS DELIBERATELY OUT OF SCOPE. The server never initiating a message is a property worth keeping, and flo2 can poll. What has to live in reflow2 is the ANSWER to \"what is owed to this person\", because only the graph knows.\n\nTHE REAL DESIGN QUESTION INSIDE THIS, not to be papered over: what \"owed to\" MEANS per item type. A gap on a requirement Shawn raised is arguably owed to whoever must judge it, not to him. That is a genuine question and not a small one.\n\nWHY IT MATTERS HERE AND NOT ONLY TO flo2: this is the axis on which the accepted req:no-idea-goes-quiet currently fails. That requirement promises an idea \"stays connected to whether it was built... the user never has to remember it exists\" — and it holds for one person at one keyboard while failing completely for a contributor who is somewhere else.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:the-server-is-the-authority-on-its-own-currency",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "The running server says whether it is stale, instead of making a human compare two numbers",
+        "priority": "medium",
+        "provenance": "authored",
+        "rationale": "MEASURED AND CHEAP TO FIX (fact:defect-a-running-server-cannot-say-it-is-stale): served_by.reflow2_version reported 0.22.1 while the on-disk binary was 0.24.0, with `--serve-shared` detached on purpose so every restart re-attached to the same stale process and nothing reported a problem. The existing guard failed in the most instructive way possible — it reports a LITERAL that a human must compare against a number the block does not contain, so a stand-down post saying 'demand served_by: 0.22.1' was satisfied four days later by a session that duly reported a PASS on a broken invariant. Four sessions read the same true value on two days and drew OPPOSITE conclusions. THE FIX WAS VERIFIED ON A LIVE SERVER BEFORE BEING PROPOSED: the kernel already marks a replaced binary's /proc/self/exe as '(deleted)', so stale:true is derivable from one syscall with no path re-resolution and no second binary read — and it answers the real question ('has my executable been replaced?') rather than answering it indirectly via a version string that breaks when two builds share a number. REFLOW2 ALREADY KNOWS THIS KERNEL BEHAVIOUR FROM THE OTHER SIDE: fact:defect-rebuild-strands-the-shared-server is the same deleted-inode condition biting spawn_daemon through current_exe(). One signal, two symptoms, and detecting it fixes both. THE SECOND CLAUSE COMES FROM A SEPARATE PATTERN the fleet named: three version-dependent facts landed in copied instruction blocks in ONE DAY with no version stamp and no expiry — the served_by literal, a 'there is no mint_seat tool' correction that was true when measured and rotted when the binary moved, and a claim_region schema note describing the pre-shared-server architecture. Their proposal is that the server state 'as of <version>' beside any tool-existence claim, so a copied doc can be CHECKED rather than trusted. A doc that cannot be distinguished from a stale doc is indistinguishable from a wrong one.",
+        "statement": "The server SHALL report whether the binary it is running has been replaced since it started, as a field rather than as a literal for the reader to compare — and tool-existence and behaviour claims SHOULD be answerable against the running binary rather than trusted from a copied document. Requested by dev_storyflow's w-613d836b and w-6904efa6, 2026-08-07.",
+        "status": "accepted"
       }
     },
     {
@@ -58923,6 +59263,22 @@
         "provenance": "authored",
         "statement": "Anthony, 2026-08-07, from the UAF audit: there is no state machine anywhere in the schema, and a whole UAF model-kind column depends on one.\n\nTHE DISTINCTION THAT MAKES THIS A REAL GAP RATHER THAN A NAMING ONE: reflow2 has plenty of `status` fields — a Requirement is proposed/accepted/deferred/dropped/met, a Capability is planned/realized/verified, a Verification is planned/passing/failing. Every one of those is a LIFECYCLE status: where a design element has got to in its own maturation. None of them is a BEHAVIOURAL state: a mode the designed thing is in while it operates. And no transition is modelled between any of them — the enums are values, not a graph, so even the lifecycles cannot be projected as a state diagram.\n\nWHAT CANNOT BE SAID TODAY: that a detector is in acquiring / idle / faulted; that a vehicle is in launch / cruise / re-entry; that a protocol connection is in handshake / established / draining; which event causes which transition; which states are safe to be interrupted in. A state view is not expressible, and neither is \"what modes must this interface work across\".\n\nWHY IT MATTERS BEYOND reflow2: reflow2 is a request-response tool with no operating modes to speak of, so the absence costs nothing here and everything on anything with modes. Anthony's own current case is one — a beamline instrument has states, and the analysis stack behaves differently in each.\n\nNOT SPECIFIED HERE: whether states attach to Components, Capabilities or both; whether a transition is an edge or a node; and whether lifecycle status should be unified with behavioural state or kept firmly apart. Kept apart is the likelier answer and is still a decision, not an assumption.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:what-changed-since-i-looked-and-by-whom",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A returning session can ask what happened while it was gone",
+        "priority": "medium",
+        "provenance": "authored",
+        "rationale": "SESSIONS TODAY DETECT THAT THE GRAPH MOVED BY RE-RUNNING A ROLLUP AND SEEING A DIFFERENT NUMBER — the reporter calls this the worst possible detector, and the record bears it out: a worker checking in reported gaps 55->69 and defects 12->26 between two check-ins hours apart and, correctly, COULD NAME NO CAUSE. WHY IT IS ACUTE RATHER THAN CONVENIENT, and this is the part that generalises past their fleet: their sessions are EPHEMERAL BY DESIGN — they die on context exhaustion constantly and are replaced by a fresh seat that cold-starts from files. A returning seat's FIRST REAL QUESTION is 'what happened while I was gone', and there is no way to ask it. This sits directly under their stated primary use of reflow2, which is not design capture at all but DURABLE MEMORY ACROSS SESSION DEATH. THE RAW MATERIAL MAY ALREADY BE PRESENT: ChangeEvent exists as a node type and AT_EPOCH/OCCURS_DURING pin events in time; what is missing is the query. Worth checking whether this is a reporting surface over existing data rather than new machinery. RELATED ASKS THAT MAY SHARE A MECHANISM: claim visibility without polling (an overlapping claim never reaches the peer, so claim_report must be polled — the reporter's phrase is 'advisory should still be observable'), and the per-node revision in req:a-node-carries-a-revision. All three are forms of 'tell me what moved'.",
+        "statement": "The graph SHALL answer 'what changed since time T, and by whom' — writes by other seats over an interval — as a query, rather than leaving a session to infer movement by re-running a rollup and noticing a different number. Requested as the #3 fleet ask by dev_storyflow's api-boss 5d608b85, 2026-08-07.",
+        "status": "accepted"
       }
     },
     {
@@ -60540,6 +60896,45 @@
       }
     },
     {
+      "node_id": "fact:defect-a-deferred-tool-reads-as-a-nonexistent-one",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.7,
+        "fact_type": "defect",
+        "statement": "A DEFERRED MCP TOOL CALLED BEFORE ITS SCHEMA IS LOADED FAILS INDISTINGUISHABLY FROM THE TOOL NOT EXISTING — AND THE WRONG CONCLUSION IS DURABLE, BECAUSE IT GETS WRITTEN INTO DOCS AS A CREDITED CORRECTION. Reported by w-613d836b (dev_storyflow, 2026-08-07), WHO STATED THE BOUND UP FRONT: they did NOT reproduce the failure themselves, so the MECHANISM is reported-not-measured and `confidence` here is set below 1 to reflect that. THE MECHANISM AS REPORTED: in some harnesses reflow2's ~114 tools are DEFERRED — listed by name but requiring a schema load before they can be called, and calling one first yields InputValidationError. WHAT IS MEASURED IS THE CONSEQUENCE, and it is well evidenced: `mint_seat` was reported absent from the served surface by one session; that was written into the fleet's worker-onboarding doc as a CREDITED CORRECTION ('There is NO mint_seat tool'); two further sessions and one boss then repeated it. FIVE HOPS, and NOBODY RAN THE TOOL until the fifth person did — at which point it worked on the first call. The `CORRECTED` framing made the claim MORE credible at each hop, not less. A SECOND SESSION INDEPENDENTLY CONFIRMED THE OTHER HALF: w-10f94d47 found the same onboarding block still carrying that correction and verified mint_seat does exist on 0.24.0 — noting the correction was true when measured and rotted when the binary moved. WHY IT BELONGS TO REFLOW2 RATHER THAN ONLY TO THEIR HARNESS: a large deferred surface makes 'this tool does not exist' a cheap and sticky conclusion, and reflow2's surface is large. FIX SHAPES: (1) where the server can see a request for an unknown tool name, respond 'no such tool; did you mean ...' and, where the name IS in the served surface, say so explicitly — the distinction between UNKNOWN and NOT-YET-LOADED is the whole problem; (2) advertise `find_tools`/`list_skills` in the server instructions as the entry point for 'does X exist?', so the question has a cheap authoritative answer that does not require guessing a call signature. NOTE THIS SESSION IS ITSELF EVIDENCE FOR THE PREMISE: every reflow2 tool used to capture this report had to be loaded by name through ToolSearch before it could be called.",
+        "subject_id": "cap:degraded-surface",
+        "valid_from": "2026-08-07",
+        "value": "{\"reported\":\"2026-08-07 dev_storyflow, w-613d836b; corroborated by w-10f94d47\",\"stated_bound\":\"the reporter did NOT reproduce the failure; mechanism is reported-not-measured, hence confidence 0.7\",\"measured_consequence\":\"'There is NO mint_seat tool' propagated five hops as a credited correction; nobody ran it until the fifth person, and it worked first call\",\"aggravator\":\"the CORRECTED framing made the false claim more credible at each hop\",\"fix_shape\":\"distinguish unknown-tool from not-yet-loaded in the error; advertise find_tools/list_skills as the authoritative 'does X exist' route\",\"corroboration_here\":\"this session had to ToolSearch-load every reflow2 tool by name before calling it\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-a-running-server-cannot-say-it-is-stale",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE SERVED-VS-ON-DISK VERSION GAP IS REAL, SILENT, AND THE SERVER CAN DETECT IT ITSELF WITH ONE SYSCALL — `/proc/self/exe` IS ALREADY MARKED `(deleted)`. Two sessions, w-613d836b and w-6904efa6, filed this the same hour on 2026-08-07 from the same incident, and the second carries the cheaper fix. WHAT HAPPENED: `graph_report.served_by.reflow2_version` reported `0.22.1` while `reflow2-mcp --version` on disk reported `0.24.0`. The shared server had been up since before the upgrade and `--serve-shared` is detached on purpose, so every session that restarted RE-ATTACHED TO THE SAME STALE PROCESS and nothing anywhere reported a problem. WHY THE EXISTING GUARD DID NOT WORK: the served_by block exists specifically to catch this, but it reports a LITERAL that a human must compare against a number the block does not contain. The fleet's own stand-down post said 'demand served_by: 0.22.1', so a session matched that literal four days later and reported a PASS — the literal was satisfied and the invariant was broken. Four sessions in that fleet read `0.22.1` out of that block on two different days and drew OPPOSITE conclusions from the same true value, which is the reporter's argument that the comparison should not be left to the reader. Also measured: `binary_mtime_unix` came back `null` in the same block, so the one other advertised freshness signal was unavailable too. THE CHEAP FIX, verified on the live server by w-6904efa6: when a binary is replaced under a running process the kernel marks that process's `/proc/self/exe` as `(deleted)`. They demonstrated it — `readlink /proc/2264267/exe` -> `/home/ajs/.local/bin/reflow2-mcp (deleted)`, `/proc/2264267/exe --version` -> `0.22.1` (still executable, the inode lives on), on-disk -> `0.24.0`. So `stale: true` is derivable from the server's OWN `/proc/self/exe` with no path re-resolution, no second binary read, and no assumption the launch path still exists. It answers the actual question — 'has my executable been replaced since I started?' — directly, whereas a version-string comparison answers it indirectly and breaks entirely if two builds share a version number. REPORTERS' PREFERENCE: report BOTH — the `(deleted)` bit as the reliable trigger, the on-disk version as what a human needs in order to act. NOTE THIS REPO ALREADY KNOWS THE `(deleted)` INODE FAILURE MODE from the other end: fact:defect-rebuild-strands-the-shared-server is the same kernel behaviour biting spawn_daemon via current_exe(). Same signal, two symptoms, and one of them is the fix for the other.",
+        "subject_id": "cap:shared-sessions",
+        "valid_from": "2026-08-07",
+        "value": "{\"reported\":\"2026-08-07 dev_storyflow, w-613d836b (20:17) and w-6904efa6 (20:29), same incident, filed separately\",\"observed\":\"served_by.reflow2_version 0.22.1 vs on-disk 0.24.0; binary_mtime_unix null\",\"why_guard_failed\":\"served_by reports a literal a human must compare against a number not in the block\",\"harm\":\"four sessions read 0.22.1 on two days and drew opposite conclusions; one reported a PASS on a broken invariant\",\"cheap_fix_verified\":\"readlink /proc/<pid>/exe shows '(deleted)' after the binary is replaced; demonstrated live on pid 2264267\",\"fix_shape\":\"derive stale:true from /proc/self/exe; report both the deleted-bit and the on-disk version\",\"related_here\":\"fact:defect-rebuild-strands-the-shared-server - same deleted-inode behaviour, opposite symptom\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-add-verification-cannot-set-kind-or-last-run-at",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "`add_verification` CANNOT SET `kind` OR `last_run_at`, SO RECORDING ONE VALIDATION TAKES FOUR CALLS AND THE NODE IS BORN AS THE VERY THING THE GAP SAID WAS INSUFFICIENT. Two reporters, dev_storyflow 2026-08-07. (1) w-ec25cf2c, answering an `unvalidated_capability` gap for ONE capability, had to run: add_verification -> set_verification_kind(validation) -> verifies(...) -> set_verification_status(passing, last_run_at). `add_verification` accepts `method` and `level` but NOT `kind`, so a node created specifically to satisfy an unvalidated_capability gap is born `kind: verification` — which is exactly what that gap says is already present and not enough. THE DEFAULT IS THE OPPOSITE OF THE INTENT IN THE ONE WORKFLOW THAT MOST OFTEN CREATES THESE. (2) w-fb7d30ab hit the other missing parameter: `add_verification` upserts name/level/method but has no `last_run_at`, so a node UPDATED to describe a NEW run keeps the OLD run's date. They re-ran stack_currency.py on 2026-08-07 and recorded the result into `ver:fleet_stack_currency_gate`; the node's text then described the 08-07 run while `last_run_at` still read `2026-08-03`. The node was internally inconsistent AND THE WRITE REPORTED SUCCESS with nothing saying so. They looked for a route out and could not find one — `reconcile_verification` looked like the intended path but takes real test-run outcomes, which is a different act from 're-ran a measurement script'. FIX SHAPE, from both: accept `kind` on add_verification (and ideally `verifies`, `status`, `last_run_at` too, collapsing four calls to one), or have the gap's own prompt name the exact call sequence; and either accept `last_run_at` or have the upsert WARN when name/description change while last_run_at does not. THE REPORTER'S FRAMING IS THE REUSABLE PART: a date that silently belongs to a previous run is the same failure class as 'a documented constant is not a measurement'.",
+        "subject_id": "cap:reconcile-verified",
+        "valid_from": "2026-08-07",
+        "value": "{\"reported\":\"2026-08-07 dev_storyflow, w-ec25cf2c (kind) and w-fb7d30ab (last_run_at), independently\",\"defect_a\":\"no kind param, so a node answering an unvalidated_capability gap is born kind: verification\",\"defect_b\":\"no last_run_at param, so an updated node keeps the previous run's date and the write still reports success\",\"cost\":\"four calls to record one validation\",\"no_workaround_found\":\"reconcile_verification takes test-run outcomes, a different act from re-running a measurement script\",\"fix_shape\":\"accept kind (and verifies/status/last_run_at) on add_verification; warn when the description moves and last_run_at does not\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-allocation-health-is-green-over-an-empty-structure",
       "node_type": "TemporalFact",
       "properties": {
@@ -60550,6 +60945,71 @@
         "subject_id": "cap:allocate",
         "valid_from": "2026-08-07",
         "value": "{\"found_while\":\"answering Anthony's question about recursive black-box decomposition, 2026-08-07\",\"evaluate_allocation\":{\"modularity\":1.0,\"total_internal\":1,\"total_external\":0,\"unweighted_dependencies\":1,\"components_listed\":44,\"components_with_nonzero_weight\":1,\"depends_on_edges_in_graph\":171},\"hierarchy_issues\":{\"count\":0,\"subsystems\":8,\"components_contained\":42,\"components_outside_any_subsystem\":6,\"component_roots\":14,\"max_depth\":2},\"interfaces\":{\"interface_nodes\":5,\"provides_edges\":5,\"consumes_edges\":5,\"components\":56},\"candid_by_contrast\":\"the trajectory reports seams 0% (0/73) honestly about the same emptiness\",\"requirement_this_hid\":\"req:recursive-black-box-decomposition\",\"analogous_recorded_defect\":\"dec:loop-status-cannot-say-it-never-looked — clean and never-scanned are the same answer\",\"not_asked_for\":\"a change to the modularity formula, or any judgement from granularity_report (dec:report-dont-judge)\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-an-aggregate-gap-hides-partial-progress",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "A GAP NAMING 48 CAPABILITIES IS ONE ITEM, SO CLOSING IT FOR ONE CAPABILITY IS INVISIBLE TO EVERYONE. Reported by w-ec25cf2c (dev_storyflow, 2026-08-07). `gap:0a77650b58242054` read '48 verified capabilities not validated' and listed 48 ids in a single gap. They closed it properly for `cap:counterability_guarantee` with a passing `kind=validation` check, and `unsurfaced_gaps` stayed at 69 — because the gap is still open for the other 47. THAT IS ARITHMETICALLY CORRECT AND OPERATIONALLY USELESS: a worker cannot see their own contribution, and a boss cannot see progress against it. The cost compounds with the ownership problem reported the same day — a standing number that never moves in response to real work is the definition of wallpaper, and five consecutive seats reported the identical rollup with none of them moving it. FIX SHAPE, from the reporter: either emit per-capability items, or report a `remaining`/`closed` count on the aggregate so partial progress is legible.",
+        "subject_id": "cap:detect",
+        "valid_from": "2026-08-07",
+        "value": "{\"reported\":\"2026-08-07 dev_storyflow, w-ec25cf2c\",\"gap\":\"gap:0a77650b58242054 - '48 verified capabilities not validated', 48 ids in one item\",\"observed\":\"closed it correctly for one capability; unsurfaced_gaps stayed at 69\",\"harm\":\"a worker cannot see their own contribution; a boss cannot see progress\",\"fix_shape\":\"per-capability items, or a remaining/closed count on the aggregate\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-append-only-volatility-exempts-a-structural-rewrite",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "`volatility: append_only` IS A PROPERTY OF THE FILE WHILE 'DOES THIS CHANGE CARRY DESIGN MEANING' IS A PROPERTY OF THE EDIT — SO A STRUCTURAL REWRITE INSIDE AN APPEND-ONLY ARTIFACT IS EXEMPTED SILENTLY. Reported by api-boss `5d608b85` (dev_storyflow, 2026-08-08), and the report opens by crediting the Stop hook for catching an omission of theirs. WHAT HAPPENED: they made 5 graph writes (a concurrency probe, created and deleted, net zero) and also edited `P.md`, a REGISTERED Artifact, changing a BINDING worker rule. They ran loop_status and it reported `undispositioned_drift: 0`. That zero means NO DETECTOR HAD LOOKED AT THE CHANGED FILE, not that the file was unchanged. The Stop hook — not loop_status — is what said 'file(s) changed this session with no ChangeEvent recorded'. They state plainly they would otherwise have finished the session believing the loop was clean. THE DESIGN ISSUE UNDERNEATH: `art:fleet_bus_p` carries `volatility: append_only`, which is correct and useful for a bus, where a routine post should not owe a drift disposition forever. But their edit was NOT an append — it was a structural rewrite of binding rules inside the same file. An append-only marker therefore exempts EVERY change to that file, including ones that move the design, and nothing anywhere reports that an exemption was applied. Today an exemption and a genuinely clean file look identical. FIX SHAPE: have append_only suppress drift REPORTING while still letting a caller record a `design_updated` disposition — or better, have the reconcile output say 'N artifacts exempted by volatility', so the exemption is visible rather than silent. WHAT THE LOOP BOUGHT THEM, reported because they expected bookkeeping and got a finding: propagate_change on the recorded event returned 55 impacted nodes and, at distance 3, a RISK CROSSING on `req:fleet_no_idle_worker` — their change inserts a mandatory orientation step between a worker being claimed and starting work, and the graph flagged the tension with the fleet's own never-idle requirement, which they had not considered and no reviewer had raised. They judged the tension acceptable but say they would not have known to make the judgement at all. They also recorded the disposition properly via set_artifact_checksum(design_updated, chg:...) and called the refusal-to-accept-silently good design that should be kept.",
+        "subject_id": "cap:reconcile-artifacts",
+        "valid_from": "2026-08-08",
+        "value": "{\"reported\":\"2026-08-08 dev_storyflow, api-boss 5d608b85\",\"defect\":\"volatility: append_only exempts every edit to the file, including a structural rewrite of binding rules, and the exemption is invisible\",\"loop_status_said\":\"undispositioned_drift: 0 - meaning no detector had looked, not that nothing changed\",\"what_caught_it\":\"the Stop hook, not loop_status\",\"fix_shape\":\"suppress reporting but still allow a design_updated disposition; or report 'N artifacts exempted by volatility'\",\"credit\":\"propagate_change found a risk crossing on req:fleet_no_idle_worker at distance 3 that no reviewer raised; set_artifact_checksum's forced disposition called good design worth keeping\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-change-event-has-no-type-for-a-field-reported-defect",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "`add_change_event`'s `change_type` ENUM HAS NO VALUE FOR A DEFECT FOUND IN THE FIELD, SO RECORDING ONE FORCES A SMALL FICTION. Hit here on 2026-08-08 recording the DUPLICATES/merge fix. The enum is `requirement_creep | new_feature | test_failure_fix | performance_optimization | refactor | scope_change | constraint_change | environment_change | deprecation | resync | baseline_established`. The change being recorded was a defect REPORTED BY A USER of the built system — dev_storyflow's fleet — and diagnosed here. No test had failed; there was no test at all, which was part of the defect. `test_failure_fix` was chosen as the nearest fit and the event NAME says explicitly that no failing test existed, so the ledger is not silently wrong — but the structured field still says something untrue and only the prose corrects it. WHY THIS IS NOT PEDANTRY, and the schema itself makes the argument: `baseline_established` exists precisely because forcing a record-only change through `refactor`/`test_failure_fix` 'writes a fiction into the ledger that exists to prevent fiction' (its own description, BL-157). That reasoning applies unchanged one category along. THE DISTINCTION WORTH KEEPING if a value is added: a defect found by a CHECK and a defect found by a USER are different provenance for the same repair, and reflow2 already cares about that difference everywhere else — `set_provenance` grades authored/inferred/reconciled, and `cap:independent-evidence` refuses to let evidence a value was fitted to count as validating it. FIX SHAPE: add `defect_fix` (or `field_report_fix`); or, smaller, let the event carry a `reported_by`/`found_by` property so the how-it-was-found is structured rather than narrated. NOTE THE MILD IRONY, recorded because it is the same class the fleet reported six times: this is a structured field that answers a slightly different question than the writer's, and the only thing preserving the truth is prose beside it — which is exactly fact:defect-verification-evidence-is-prose-so-passing-can-contradict-itself, one node type over.",
+        "subject_id": "cap:loop-status",
+        "valid_from": "2026-08-08",
+        "value": "{\"observed\":\"2026-08-08, recording chg:duplicate-merge-needs-a-human-20260808\",\"enum\":\"requirement_creep|new_feature|test_failure_fix|performance_optimization|refactor|scope_change|constraint_change|environment_change|deprecation|resync|baseline_established\",\"chosen\":\"test_failure_fix, with the event name stating that no failing test existed\",\"precedent_in_schema\":\"baseline_established was added for exactly this reason (BL-157): forcing a record-only change through a code category writes a fiction into the ledger\",\"fix_shape\":\"add defect_fix/field_report_fix, or a structured reported_by/found_by property\",\"related\":\"fact:defect-verification-evidence-is-prose-so-passing-can-contradict-itself - same shape, different node type\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-claim-liveness-is-the-servers-pid-not-the-sessions",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "A `verified` CAPABILITY WHOSE CENTRAL CLAIM IS FALSE IN THE INSTALLED DEFAULT DEPLOYMENT: SEAT LIVENESS IS THE SHARED SERVER'S PID, SO `gone` IS UNREACHABLE AND EVERY CLAIM OUTLIVES THE SESSION THAT MADE IT. `cap:claim-liveness` is status `verified` and its description states that claim_report 'COMPUTES liveness by asking the operating system whether that process still exists' and that 'a claim whose session exited is reported `gone`'. Measured by w-613d836b in dev_storyflow 2026-08-07: mint_seat returned `ajs77:2304014:4265e97f`; pid 2304014 is the `reflow2-mcp --serve-shared` daemon, while their own session's shell was 2315377 — different processes entirely. CONFIRMED IN THIS REPO: crates/reflow2-core/src/identity.rs:388 mints the seat as `format!(\"{}:{}:{mint}\", machine(), std::process::id())`, and under `--shared` that code runs IN THE DAEMON, so the pid recorded is the server's for every seat it ever mints. The daemon is detached and outlives every client by design. THEREFORE the liveness probe asks whether the server is running — which it is, or nothing could have answered — and the answer is `live` for every claim, forever. IT FAILS IN BOTH DIRECTIONS: (a) a worker that died hours ago still reads as holding its region, so a peer defers to nobody, which is precisely the advisory report starting to lie that the capability's own description says exclusion from overlaps exists to prevent; (b) after a `--stop-shared` bounce the replacement daemon has a new pid, so EVERY seat minted before it is orphaned at once and nothing surfaces that. WHY THE CHECK DID NOT CATCH IT: the property was true under the old one-process-per-session stdio transport, where the serving process WAS the session. `--shared` became the installed default and the world moved; the verification did not, and nothing recomputes a check when the deployment model changes underneath it. This is the same class as the served-version gap the same fleet hit the same day — a literal that stayed satisfied while the invariant it stood for broke. FIX SHAPE, from the reporter and consistent with the design: record the CLIENT's identity — the Contributor handle claim_region is already given — alongside the server pid and compute liveness from that; or at minimum have claim_report mark any seat whose pid differs from the currently-serving pid as `stale: server-restarted` rather than `live`. The `stale` array already exists in the response shape.",
+        "subject_id": "cap:claim-liveness",
+        "valid_from": "2026-08-07",
+        "value": "{\"reported\":\"2026-08-07 dev_storyflow, w-613d836b, by execution\",\"confirmed_here\":\"crates/reflow2-core/src/identity.rs:388 mint_seat uses std::process::id(), which under --shared is the daemon\",\"node_status_at_time_of_report\":\"cap:claim-liveness = verified\",\"evidence\":\"seat ajs77:2304014:4265e97f; 2304014 = reflow2-mcp --serve-shared; reporter session shell = 2315377\",\"gone_state\":\"unreachable for shared-server seats\",\"second_failure\":\"a --stop-shared bounce orphans every prior seat at once, silently\",\"why_missed\":\"true under the old stdio one-process-per-session transport; --shared became the default and the check did not move\",\"fix_shape\":\"compute liveness from the client Contributor handle, or flag seat pid != current serving pid as stale: server-restarted\",\"not_yet_fixed\":\"true\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-claim-region-describes-an-architecture-it-is-not-running",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "`claim_region`'s OWN DESCRIPTION DESCRIBES THE PRE-`--shared` WORLD AS FACT, AND ITS `seat` PARAMETER DOCUMENTS A REFUSAL THAT DOES NOT HAPPEN. Reported three times across two weeks. (1) The description states the claim is 'only as fresh as the last pull, because the design lives as a file in each checkout WITH NO SHARED SERVER (dec:multi-writer-architecture)' — read by api-boss `5d608b85` while running exactly a shared server with 7 attached processes. THIS REPO CONFIRMS THE TEXT IS STILL SHIPPED: the CLAIMS edge hint in the schema reads 'the design lives as a file in each person's checkout with no shared server to hold a lock'. Both architectures are supported; the description asserts one of them as fact, so a session reading it in a `--shared` deployment builds a wrong mental model of what a claim even IS. (2) The `seat` parameter's docs say that on the SESSIONLESS transport a handler is built per request, so omitting `seat` 'is REFUSED rather than answered with a seat that would change on your next call'. w-10f94d47 omitted it. It was NOT refused — the call succeeded and the server returned `seat: \"ajs77:2304014:0e0681c1\"`. Either the behaviour changed or the transport there is not the sessionless one; either way the schema text and the behaviour disagree, and a reader who believes the schema will either mint a seat they did not need or read a success as a bug. They flagged it as not-blocking and reported it anyway because a silent workaround forfeits the fix. (3) w-8da9c31c reported on 2026-08-03 that the description still described the pre-`--shared` world. THE PATTERN THESE SIT IN, named by w-10f94d47: three version-dependent facts landed in copied instruction blocks in ONE DAY with no version stamp and no expiry — the served_by 0.22.1 literal, the mint_seat correction, and this schema note. Their suggestion: have the SERVER be the authority, stating 'as of 0.24.0' next to any tool-existence claim, so a copied doc can be CHECKED against the running binary instead of trusted. A doc that cannot be distinguished from a stale doc is indistinguishable from a wrong one.",
+        "subject_id": "cap:cluster-claims",
+        "valid_from": "2026-08-07",
+        "value": "{\"reported\":\"2026-08-07 dev_storyflow api-boss 5d608b85 and w-10f94d47; earlier 2026-08-03 by w-8da9c31c\",\"defect_a\":\"description asserts the file-per-checkout no-shared-server model as fact while running --shared\",\"still_shipped\":\"confirmed here: the CLAIMS edge schema hint carries the same 'no shared server' wording\",\"defect_b\":\"seat param documents a REFUSAL on omission; omitting it succeeded and auto-assigned ajs77:2304014:0e0681c1\",\"pattern\":\"three version-dependent facts copied into instruction blocks in one day with no version stamp\",\"fix_shape\":\"make the description architecture-neutral or deployment-aware; make the server the authority for tool-existence claims\"}"
       }
     },
     {
@@ -60591,6 +61051,32 @@
       }
     },
     {
+      "node_id": "fact:defect-ingest-corpus-answers-are-keyed-on-the-document-text",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "`ingest_corpus_step` KEYS ITS ANSWERS ON A HASH OF THE DOCUMENT TEXT, AND THE DRIVER IS AN LLM — THE ONE COMPONENT LEAST ABLE TO REPRODUCE PROSE VERBATIM ACROSS TURNS. Measured by api-boss `3fbdc241` (dev_storyflow, 2026-08-07) driving the tool over 8 documents. Round 1 returned 40 prompts. They answered all 40, called again, and got `unused_answers: 40` — EVERY ANSWER DISCARDED — with 36 brand-new prompt ids, an EMPTY known-entities roster, and zero id overlap between rounds. ROOT CAUSE, DIAGNOSED NOT GUESSED: the prompt `id` is a hash over the prompt text, which embeds the DOCUMENT text. Re-sending the same documents is required, and they had re-typed 6 of the 8 more concisely on the second call. They diffed them: 3342->2204, 2930->2134, 2103->2012, 2943->2407, 3533->2575, 3155->2400 chars. THE 2 THEY HAPPENED TO COPY VERBATIM KEPT THEIR IDS AND WORKED. So the mechanism is exactly 'text drifted -> hash changed -> answer orphaned'. WHY IT IS A REPORT RATHER THAN JUST THEIR MISTAKE — and they were explicit that it IS their mistake, and that they are reporting the trap not excusing it: (1) the contract asks for byte-stability from the component worst at providing it, since summarising is an LLM's default behaviour; (2) it fails silently-ish AND expensively — `unused_answers` is present and correct, but it is a LIST OF IDS, and the run still returns `status: needs_llm` with a fresh prompt set that looks like normal progress; they only caught it because the roster came back empty. At 8 docs that cost one wasted round (~100k chars); at the 138-document corpus they were ingesting it would have burned an enormous amount before anyone noticed; (3) it is invisible in the happy path — a driver that pastes verbatim never sees it, one that paraphrases never gets past round 2, and there is nothing in between. FIX SHAPES, in the reporter's own order of preference: (a) echo a per-document `content_hash` in the response and on a later round return `documents_changed: [fragment_id...]` naming the ones whose text moved — cheap, turns a mystifying 'all answers unused' into 'you changed these 6 documents', and the one they would build; (b) key answers on (fragment_id, pass) instead of a hash of the prompt text — arguably wrong for correctness since the answer WAS about different text, but it makes the failure impossible rather than merely visible; (c) let the server hold the documents for a run (run_id returned round 1, documents omitted after) — removes the resend, kills the 3x text cost, makes drift structurally impossible, but trades away the statelessness the design deliberately chose; (d) at minimum one line in the tool description: 'the SAME documents means BYTE-IDENTICAL — a reworded document is a different document and its answers are discarded.' They noted the description says 'SAME documents' twice and they still got it wrong, because 'same' reads as 'the same SET of documents'. CREDIT THE REPORTER GAVE, worth keeping: documents_pending counting down 3->2->done, per-document outcomes with node counts, and `failures: []` being explicitly present made it obvious the run had actually worked — and 'nothing is written until the final round' meant the botched attempt left NO half-design behind, so they could simply restart. They called that exactly the right guarantee and said it saved them.",
+        "subject_id": "cap:corpus-ingest",
+        "valid_from": "2026-08-07",
+        "value": "{\"reported\":\"2026-08-07 dev_storyflow, api-boss 3fbdc241, over 8 documents\",\"symptom\":\"unused_answers: 40 of 40, 36 new prompt ids, empty entity roster, zero id overlap\",\"cause\":\"prompt id is a hash over prompt text which embeds document text; 6 of 8 docs were reworded between rounds\",\"proof\":\"the 2 documents copied verbatim kept their ids and worked; char diffs recorded for the other 6\",\"scale_risk\":\"one wasted round at 8 docs; the same trap at 138 docs before anyone notices\",\"fix_preference\":\"(a) echo per-document content_hash + documents_changed on later rounds\",\"alternatives\":\"(b) key on (fragment_id,pass); (c) server holds documents for a run_id; (d) doc line: SAME means BYTE-IDENTICAL\",\"what_worked\":\"documents_pending countdown, per-document outcomes, explicit failures: [], and nothing written until the final round\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-ingest-writes-duplicates-that-heal-then-merges",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "CORPUS INGEST WRITES THE `DUPLICATES` EDGE THAT `dec:ask-not-repair` PROMISED ONLY A HUMAN WOULD DRAW — SO HEAL PROPOSES IRREVERSIBLE DELETIONS FROM A STRING SCORE, AND THE check-health SKILL CALLS THAT HALF THE SAFE ONE. Reported by dev_storyflow 2026-08-07 as the highest-severity item that channel has sent; ROOT CAUSE DIAGNOSED HERE, and neither reporting session had it. WHAT THEY MEASURED, from opposite ends and without connecting them: (a) api-boss `5d608b85`, during ingest_corpus_step, saw 6 fuzzy merge candidates scoring 81-85 on semantically UNRELATED nodes, and filed it low-priority because the auto-merge threshold of 90 held and nothing merged; (b) hours later sb-boss `ab2291fa` ran propose_heal(balanced) on the same graph and got 10 operations, EVERY ONE a Merge that DELETES its remove_id, including `req:graph_is_the_content_bible`, a load-bearing node. They verified four pairs by READING them: `dec:local_uses_brand_hostnames_not_ports` (local dev selects a brand by /etc/hosts subdomain, not port) paired against `dec:scorecard_is_generated_never_hand_edited` (the benchmark runner generates the scorecard). No shared subject, vocabulary, or edges. Three bosses stood the whole fleet down from running check-health. THE MECHANISM, read out of this repo rather than inferred: crates/reflow2-core/src/ingest.rs:1517 `suspect_duplicate` PERSISTS a near-match as a real `DUPLICATES` edge whenever the score lands in the ASK band — at or above the type's fuzzy_threshold and below auto_merge_threshold, defaults 70 and 90 (identity via resolution_thresholds, ingest.rs:1629). The score is `token_sort_ratio` over NAMES ONLY, case- and order-insensitive, explicitly 'no embeddings' (ingest.rs:1654) — a character-ratio over sorted tokens, which is why two long design-node names sharing ordinary English words reach 81-85 with no shared subject. That edge is then indistinguishable from a human's: heal.rs:798 fires `duplicate` on ANY `DUPLICATES` edge, propose_heal turns it into a Merge, and apply_heal deletes. WHY THIS IS A DESIGN VIOLATION AND NOT A TUNING PROBLEM: `dec:ask-not-repair` is ACCEPTED and reads 'possible_duplicate is a DETECT gap; HEAL merges only on a human-drawn DUPLICATES edge', with the rationale 'apply_heal deletes a node with no undo, so merge is safe only because the endpoints were asserted; a heuristic must not drive it.' Ingest makes that premise false. The irony is documented in the code: ingest.rs:1492 says persisting the edge 'is what makes dec:ask-not-repair affordable at corpus scale', reasoning that the edge turns a transient suspicion into a standing QUESTION detect_defects can batch. The reasoning is sound about batching and wrong about safety — nothing downstream reads the edge as a question, because nothing can tell it from an assertion. THE THIRD LINK, and it is the one that closes the circuit: the served check-health skill tables `duplicate` as 'machine — merged by apply_heal', and step 3 says in terms 'requires_human_review being true does not mean you should withhold the mechanical merge', two paragraphs before conceding 'a merge deletes a node and cannot be undone'. AN AGENT FOLLOWING THE SKILL EXACTLY DELETES TEN DESIGN NODES. sb-boss stopped at step 2 only because the pairings looked implausible enough to read. WORSE ON A SHARED GRAPH: one seat's apply hits every attached session instantly, with no undo and no notification — 7 client processes were attached that day. FIX SHAPE, not yet chosen: the ingest-written edge needs to be distinguishable from a human's (it already carries `confidence`, but that property is OMITTED for a structural token-subset match, so its absence does NOT mean human) — a provenance marker on the edge, with HEAL merging only unmarked ones; and 'delete a node' should not be classed mechanical regardless of source. The scorer is a separate, smaller question: 81-85 on unrelated nodes means token_sort_ratio over names is not measuring duplication of meaning at the band that matters.",
+        "subject_id": "dec:ask-not-repair",
+        "valid_from": "2026-08-07",
+        "value": "{\"severity\":\"highest reported by this channel\",\"reported\":\"2026-08-07 dev_storyflow, sb-boss ab2291fa + api-boss 5d608b85, independently, from opposite ends\",\"root_cause_found\":\"here, 2026-08-07, by reading crates/reflow2-core/src/ingest.rs and heal.rs\",\"chain\":\"ingest.rs:1517 suspect_duplicate writes DUPLICATES in the 70-89 ASK band -> heal.rs:798 fires duplicate on any DUPLICATES edge -> propose_heal builds a Merge -> apply_heal deletes\",\"scorer\":\"token_sort_ratio over node NAMES only, no embeddings (ingest.rs:1654)\",\"thresholds\":\"DEFAULT_FUZZY_THRESHOLD 70 / DEFAULT_AUTO_MERGE_THRESHOLD 90, per-type via schema resolution block\",\"decision_violated\":\"dec:ask-not-repair, accepted 2026-07-19: merge only on a human-drawn edge, a heuristic must not drive it\",\"skill_half\":\"check-health tables duplicate as machine-fixable and tells the agent not to withhold the merge\",\"observed_consequence\":\"10 proposed node deletions, incl. req:graph_is_the_content_bible; 3 bosses stood the fleet down from check-health\",\"blast_on_shared\":\"one apply hits all attached seats, no undo, no notification; 7 attached that day\",\"not_yet_fixed\":\"true\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-kit-manifest-drift-is-invisible-to-ci",
       "node_type": "TemporalFact",
       "properties": {
@@ -60613,6 +61099,32 @@
         "statement": "The export-lineage gate enforces dec:export-once-per-pr correctly but never NAMES it, so whoever trips it re-derives the rule instead of being told it — and its failure message lists two causes that exclude the actual one. Observed 2026-08-06 on PR #87: a second exporting commit on a branch that already had one produced FAIL LINEAGE 'records sha256:8b5471e9 where sha256:486ecbac is expected'. The chain was internally sound (main 85b17257, base 486ecbac, first export 8b5471e9, second 2b536b9a, every prev matching its predecessor), so the agent's first diagnosis was that the GUARD was defective, and a backlog row was filed saying so. The guard was right. dec:export-once-per-pr has been accepted since 2026-08-01 and says exactly: a branch may hold as many commits as it likes, exactly ONE may write docs/design/reflow2.json. THIS IS THE THIRD RECORDED REDISCOVERY of that decision, which dec:idea-backlog-belongs-in-the-graph already characterised as 'accepted, invisible, violated and then re-announced as new'. The message's two stated causes (exported elsewhere and copied in; exported twice since the last commit) both invite 'restore the file and export once', which had already been done and cannot help. The real remedy is fold-to-one-exporting-commit, and the message does not say it.",
         "subject_id": "dec:export-once-per-pr",
         "value": "{\"observed_on\":\"PR #87 feat/updating-doc\",\"gate\":\"tools/reflow2_check.py check_export_lineage\",\"recorded_prev\":\"sha256:8b5471e9\",\"expected_prev\":\"sha256:486ecbac\",\"chain_internally_sound\":true,\"decision_violated\":\"dec:export-once-per-pr\",\"decision_status_at_time\":\"accepted\",\"rediscovery_count\":3,\"message_names_the_decision\":false,\"open_half_already_filed\":\"BL-156 — enforce on the pull_request trigger via git log --name-only origin/main..HEAD, where it is free, instead of after merge on main\",\"agent_first_misdiagnosis\":\"blamed the guard; filed BL-217 asserting a blind spot\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-link-artifact-has-no-type-for-a-test-source",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "`link_artifact`'s `artifact_type` ENUM HAS `test_result` BUT NOTHING FOR THE TEST ITSELF, SO A TEST FILE MUST BE FILED AS GENERIC `code`. Reported by w-deac0a1e (dev_storyflow, 2026-08-07) registering a new vitest contract test. They reached for the obvious value and got: `invalid enum value 'test', expected one of [\"code\",\"config\",\"document\",\"spec\",\"diagram\",\"model\",\"drawing\",\"test_result\",\"binary\",\"data\",\"asset\"]`. The enum carries `test_result` — the OUTPUT of a run — but nothing for the source that produces it. So the one artifact class whose entire purpose is to BE a check cannot be told apart from the implementation it guards, and a query like 'what checks guard this decision?' cannot be answered from artifact_type at all. FIX SHAPE: add `test` (or `test_source`). THE ERROR MESSAGE ITSELF WAS EXPLICITLY PRAISED and should be preserved as the pattern: it printed the full list of valid values, so they fixed it in one retry instead of guessing. The reporter's framing — that is the failure mode done right; the gap is only that the right value does not exist.",
+        "subject_id": "cap:link-artifacts",
+        "valid_from": "2026-08-07",
+        "value": "{\"reported\":\"2026-08-07 dev_storyflow, w-deac0a1e\",\"defect\":\"artifact_type has test_result (the output) but no value for the test source itself\",\"consequence\":\"a test file is filed as generic code; 'what checks guard this decision' is unanswerable from artifact_type\",\"fix_shape\":\"add test or test_source to the enum\",\"praised\":\"the validation error printed every valid value, so it was fixed in one retry - keep this pattern\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-loop-status-next-routes-to-the-destructive-skill",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "`loop_status`'s OWN `next` LIST NAMES THE DESTRUCTIVE SKILL AS THE IMPERATIVE, AND IT IS THE FIELD A FRESH SESSION TRUSTS MOST. Reported by w-abbb53d2 (dev_storyflow, 2026-08-07). loop_status returned, verbatim: `\"26 structural defect(s) outstanding — run check-health (detect_defects)\"`. That line is the tool telling an arriving session what to do next, and it is the single most authoritative-feeling string in the payload for a seat that has just cold-started and is looking for its footing. On that night it named the one skill three bosses had stood the entire fleet down from running — because check-health step 3 applies the 'mechanical' operations without review, which on that graph was 10 irreversible node deletions from duplicate detections scored 81-85 on unrelated nodes (see fact:defect-ingest-writes-duplicates-that-heal-then-merges). The safe half, `detect_defects`, is in the parenthetical — the part most likely to be skimmed. A session that follows `next` literally, which is what `next` is FOR, walks into it. THE REPORTER WAS EXPLICIT THAT THIS IS DISTINCT from the apply_heal reports already filed and asked for it not to be deduped: those are about the skill and the scorer, this is about THE LOOP'S OWN GUIDANCE FIELD POINTING AT THE HAZARD, so the routing survives even for a reader who never opens the skill. THIS REPO CONFIRMS the wording is still shipped: loop_status's `next` on reflow2's own graph today reads `\"1 structural defect(s) outstanding — run check-health (detect_defects)\"`. FIX SHAPE, small and mechanical: have `next` name the NON-MUTATING call as the instruction and the skill as context — `\"run detect_defects (scoped to your area); see check-health for the workflow\"` — rather than the reverse. GENERALISATION THE REPORTER OFFERED: when a skill contains an irreversible step, the loop's own to-do list should not name that skill as the imperative.",
+        "subject_id": "cap:loop-status",
+        "valid_from": "2026-08-07",
+        "value": "{\"reported\":\"2026-08-07 dev_storyflow, w-abbb53d2\",\"verbatim\":\"26 structural defect(s) outstanding - run check-health (detect_defects)\",\"still_shipped\":\"confirmed on reflow2's own graph 2026-08-07: same wording, 1 defect\",\"why_distinct\":\"reporter asked it not be deduped: this is the guidance field, not the skill or the scorer\",\"fix_shape\":\"name the non-mutating call as the imperative, the skill as context\",\"generalisation\":\"a to-do list should not name a skill whose steps include an irreversible one\"}"
       }
     },
     {
@@ -60642,6 +61154,19 @@
       }
     },
     {
+      "node_id": "fact:defect-open-questions-zero-reads-as-an-all-clear",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "`open_questions` RETURNING `count: 0` READS AS AN ALL-CLEAR AND IS NOT ONE — AND THE PROOF IS THAT A DOWNSTREAM DOC HAD TO GROW A HAND-WRITTEN WARNING. Reported by api-boss `5d608b85` (dev_storyflow, 2026-08-07), and previously by api-boss `07426210` on 2026-08-03, so it has now bitten twice. open_questions answers a narrow and correct question: what did we already PUT TO THE USER that is still waiting. In the SAME session that read `count: 0`, loop_status owed 69 gaps never asked, 26 structural defects, 20 capabilities claiming built with no check, and 20 built-but-never-checked. BOTH NUMBERS ARE CORRECT. They are answers to different questions, and nothing in either output says so. EVIDENCE IT IS NOT HYPOTHETICAL: the fleet's own boss cold-start card had to grow the line '⚠ count: 0 is NOT an all-clear' because arriving seats were reading it as one — and the reporter's own framing is the sharp part: a caveat maintained in a downstream document is a defect that was routed around rather than fixed. FIX SHAPE: when count == 0, have open_questions say what it does NOT cover and point at loop_status. One clause in the payload retires the caveat everywhere it was copied to. THE REPORTER GROUPED THIS with two others from the same day as one actionable class — three cases where a reflow2 surface returned a REAL, CORRECT number that answered a different question than the reader's: merge scores that silently feed deletions, open_questions vs the loop's debt, and per-session vs fleet-wide totals. In all three the fix is the same shape: LET THE OUTPUT STATE ITS OWN SCOPE.",
+        "subject_id": "cap:loop-status",
+        "valid_from": "2026-08-07",
+        "value": "{\"reported\":\"2026-08-07 dev_storyflow api-boss 5d608b85; also 2026-08-03 by api-boss 07426210\",\"same_session_contrast\":\"open_questions count 0 while loop_status owed 69 gaps / 26 defects / 20 unproven / 20 unexamined\",\"proof_of_harm\":\"the fleet's boss cold-start card carries a hand-written 'count: 0 is NOT an all-clear' warning\",\"reporter_framing\":\"a caveat maintained in a downstream doc is a defect routed around rather than fixed\",\"fix_shape\":\"on count==0, state what the answer does not cover and point at loop_status\",\"class\":\"one of three same-day cases of a correct number answering a different question than the reader's\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-rebuild-strands-the-shared-server",
       "node_type": "TemporalFact",
       "properties": {
@@ -60652,6 +61177,84 @@
         "subject_id": "cap:shared-sessions",
         "valid_from": "2026-08-07",
         "value": "{\"filed_as\":\"https://github.com/sligara7/reflow2/issues/91 (finding 2 of 3), 2026-08-07, on Anthony's word\",\"observed\":\"2026-08-07, cargo test --workspace with an MCP session attached\",\"error\":\"could not spawn the shared reflow2 server: No such file or directory (os error 2)\",\"cause\":\"std::env::current_exe() in crates/reflow2-mcp/src/shared.rs spawn_daemon resolves a deleted inode after a relink\",\"binary_was_fine\":\"target/debug/reflow2-mcp existed and ran throughout\",\"recovery\":\"full MCP reconnect only\",\"misleading_advice\":\"'Check the server log beside the graph directory' - failure is in the parent, never reaches that log\",\"blast\":\"anyone running the test suite with a session attached\",\"not_the_defect\":\"the 120-minute idle expiry, which shared.rs justifies: the daemon holds the store's exclusive write lock\",\"fix_shape\":\"fall back to the resolved binary path when current_exe() no longer exists, or detect ENOENT on spawn and name the cause\",\"prior_diagnoses\":\"recorded in session handoffs 2026-08-06 as 'worth filing and still unfiled'; this is the first time it is in the graph\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-rollups-became-fleet-numbers-without-saying-so",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "`--shared` TURNED SESSION-LOCAL METRICS INTO SHARED-STATE METRICS WITHOUT CHANGING THEIR INTERFACE, AND TWO BOSSES ATTRIBUTED A FLEET-WIDE MOVEMENT TO THEIR OWN CHANGE — IN THE FLATTERING DIRECTION. loop_status and graph_report read IDENTICALLY before and after the migration; only the MEANING of their numbers changed. A total is now a fleet number moved by every attached boss and worker, wearing the timestamp of whoever asked. MEASURED on one graph in one day by non-coordinating sessions: defects 42 -> 6 -> 5 -> 12 (the 5 -> 12 arriving an hour later to a session that had done nothing at all), and gaps 48 -> 55 -> 69. api-boss `5d608b85` reported '42 -> 6' to the user TWICE as their own result; it was not. A worker checking in reported gaps 55 -> 69 and defects 12 -> 26 between two check-ins hours apart and, correctly, could name no cause. CONSEQUENCE THE REPORTER DREW AND IT IS THE GENERAL ONE: every citation of these counts written before `--shared` is now subtly wrong, and nothing in the output says so. THE ROOT SHAPE, in their words: A SESSION CANNOT TELL THAT IT IS NOT ALONE. Nothing in any payload reports concurrency — no attached-session count, no last-write-by — so every seat reasons as if solo and the output actively encourages it. They fixed it with a fleet convention (state whether a count is FLEET or SCOPED), which is a discipline layered on top of a tool that could just say it; a caveat maintained in a downstream doc is a defect routed around rather than fixed. RELATED AND SEPARATELY REPORTED: there is no 'what changed since I looked, and by whom' query — sessions discover the graph moved by re-running a rollup and noticing a different number, which is the worst possible detector, and for ephemeral seats that die on context exhaustion the first real question on return is exactly 'what happened while I was gone'. ChangeEvent exists as a node type; nothing answers 'writes by other seats since T'. FIX SHAPE: have loop_status/graph_report label their own rollups as graph-wide and report the number of currently-attached sessions; a scoped detect_gaps/detect_defects is already attributable and could say so.",
+        "subject_id": "cap:loop-status",
+        "valid_from": "2026-08-07",
+        "value": "{\"reported\":\"2026-08-07 dev_storyflow, api-boss 5d608b85, plus corroborating worker check-ins\",\"measured\":\"defects 42->6->5->12 and gaps 48->55->69 on one graph in one day, sessions not coordinating\",\"mis_attribution\":\"two bosses claimed a global movement as their own result, in the flattering direction\",\"root\":\"a session cannot tell it is not alone; no concurrency in any payload\",\"workaround_in_use\":\"hand-maintained FLEET-vs-SCOPED convention in fleet docs\",\"fix_shape\":\"label rollups graph-wide; report attached_sessions, last_write_at, last_write_by\",\"related\":\"no 'writes by other seats since T' query; movement is detected by noticing a different number\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-scoped-detectors-do-not-flag-a-degenerate-region",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "A SCOPED DETECTOR RETURNING `in_scope: 0` OVER `region_size: 1` READS AS A PASS AND IS THE OPPOSITE — SIX INDEPENDENT SESSIONS REPORTED IT IN ONE DAY, WHICH IS THE STRONGEST CORROBORATION IN THE FEEDBACK FILE. Reported separately, without consolidation, by w-10f94d47, w-08baa598, w-fb7d30ab, w-ec25cf2c, w-deac0a1e and w-abbb53d2 across dev_storyflow on 2026-08-07. `detect_gaps` and `detect_defects` scoped to a node return `in_scope`, `out_of_scope` and `region_size`, and REPORTING region_size IS THE THING THAT WORKS — three of the six said so explicitly and one wants it kept on the record as a win: it is what let them state honestly that their zero was narrow-but-real rather than empty (region_size 14, 16, 41 in three cases). THE DEFECT IS THAT THE JUDGEMENT IS LEFT TO THE READER. w-deac0a1e scoped to `dec:core_must_not_import_a_lens` and got `in_scope: 0`, which reads green; it was an ISLAND — the node has no edges, so the detector had exactly one node to look at. They only caught it by running a control on a sibling (`dec:lens_isolation` -> region_size 18, 4 gaps) to prove the measurement could return more at all. Two earlier workers had to caveat the same shape in prose as 'the weakest green in the building'. THE GENERAL POINT, and it is why six reports matter more than one: the tool has the number and the human has to supply the interpretation, and under operational load supplying it is exactly what gets skipped. A vacuous green that reads as a pass is the class this fleet keeps paying for. Noted honestly by one reporter: `detect_defects` DOES name the same situation explicitly as `disconnected_community` — it is the gap detector that reads as green. FIX SHAPE, converged on independently by all six: when region_size is 1 (or the region reaches no node of a type the detector can fire on), say so in the payload — e.g. `caveat: \"region is a single isolated node; in_scope: 0 is not evidence of health\"`. One field. The information is already computed.",
+        "subject_id": "cap:detect",
+        "valid_from": "2026-08-07",
+        "value": "{\"reported\":\"2026-08-07 dev_storyflow, six independent sessions: w-10f94d47, w-08baa598, w-fb7d30ab, w-ec25cf2c, w-deac0a1e, w-abbb53d2\",\"filed_separately\":\"per the feedback file's own no-consolidation rule; consolidated here as one defect with six corroborations\",\"what_works\":\"region_size being in the payload at all - explicitly credited by three reporters, keep it\",\"defect\":\"the interpretation of a degenerate region is left to a reader who may not think to caveat it\",\"worst_case_seen\":\"in_scope 0 over region_size 1 on an edgeless node, caught only by running a control on a sibling\",\"fix_shape\":\"a caveat/scope_note field when region_size <= 1 or the region contains nothing the detector can fire on\",\"severity\":\"opportunity, not breakage - nothing failed, the reader carried a rule the output could carry\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-small-surface-frictions-contributor-field-and-stale-echo",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "TWO SMALL, CHEAP SURFACE FRICTIONS REPORTED THE SAME DAY, BOTH MINOR AND BOTH REAL. (1) `add_contributor` TAKES THE HANDLE AS `id` WHILE `claim_region` TAKES THE SAME HANDLE AS `contributor_id`. w-08baa598 passed `contributor_id` to add_contributor first — because that is the field name the very next call in the documented sequence uses — and got `failed to deserialize parameters: unknown field 'contributor_id', expected one of 'id', 'name', 'kind', 'handle', 'description'`. Cost one round trip. THE ERROR MESSAGE IS GOOD and is why this is minor rather than blocking: it named the accepted fields. The two calls are adjacent steps in the fleet's prescribed worker sequence and the asymmetry carries no meaning. FIX SHAPE: accept `contributor_id` as an alias on add_contributor. (2) `set_verification_kind`'s RESPONSE ECHOES THE PRE-UPDATE `status`. w-ec25cf2c got `\"status\":\"planned\"` in the same payload that correctly reported `\"kind\":\"validation\"`, even though they set status immediately after and a get_node confirmed `passing`. Nothing is wrong in the store — the echo simply invites a reader to believe a field was reset. They only knew it was fine because they re-read the node instead of trusting the echo, which their fleet already treats as doctrine. FIX SHAPE: have the echo reflect the post-write node, or omit fields the call did not touch. NOTE THE COMMON THREAD with the far more serious fact:defect-write-response-describes-the-write-not-the-state: in both cases a response describes something other than the current state of the node, and a reader who trusts it is wrong. Here it is cosmetic; there it was silent data loss.",
+        "subject_id": "cap:shared-sessions",
+        "valid_from": "2026-08-07",
+        "value": "{\"reported\":\"2026-08-07 dev_storyflow, w-08baa598 and w-ec25cf2c\",\"friction_a\":\"add_contributor takes id, claim_region takes contributor_id, for the same handle in adjacent steps\",\"friction_a_fix\":\"accept contributor_id as an alias on add_contributor\",\"friction_b\":\"set_verification_kind echoes the pre-update status, inviting a reader to think a field was reset\",\"friction_b_fix\":\"echo the post-write node, or omit untouched fields\",\"both_error_messages\":\"good - named the accepted fields, which is why these are minor\",\"common_thread\":\"a response that describes something other than current state; cosmetic here, silent data loss in the concurrent-write case\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-verification-evidence-is-prose-so-passing-can-contradict-itself",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "A VERIFICATION CAN HOLD A SELF-CONTRADICTORY RESULT AND STAY `passing` FOREVER, BECAUSE THE STATUS IS STRUCTURED AND THE EVIDENCE IS PROSE. Reported by w-613d836b (dev_storyflow, 2026-08-07). `ver:fleet_stack_currency_gate` recorded, in its own name/notes: 'Re-run 2026-08-03: EXIT 0, verdict STALE — 4 of 11'. The reporter re-ran that tool: its true exit is 1, and its source is literally `return 1 if stale else 0` — so `EXIT 0` means 'everything is current', the exact OPPOSITE of the verdict recorded beside it. They diagnosed the origin rather than guessing: the 0 almost certainly came from reading `$?` after a pipe (`... | tail` returns tail's status), and they reproduced both readings side by side to show it. THE REFLOW2-RELEVANT HALF: that contradictory pair sat inside a node the graph reports as `passing`, and NOTHING IN THE LOOP CAN NOTICE, because a Verification's outcome is free text. `status` is structured; the evidence is not. So a wrong number is preserved with exactly the same authority as a right one, and loop_status keeps counting the capability as proven. FIX SHAPE: give Verification optional STRUCTURED result fields — `exit_code`, `command`, `observed`/`expected` — so (a) the graph can flag `status: passing` alongside a non-zero exit_code as incoherent, and (b) a re-run can be compared to the recorded run mechanically instead of by someone re-reading a paragraph. THE REPORTER'S OWN FRAMING, which generalises past this tool: this is the design-layer version of their fleet's rule that a set reduced to a scalar is not a check — right now the EVIDENCE is reduced to a sentence. WORTH WEIGHING AGAINST reflow2's existing position: `reconcile_verification` already exists to feed real run outcomes back in, and `cap:evidence-scope` already structures what a check pinned and swept — so the machinery for 'evidence is structured, not prose' is partly built and this is an argument for extending it to the RESULT.",
+        "subject_id": "cap:reconcile-verified",
+        "valid_from": "2026-08-07",
+        "value": "{\"reported\":\"2026-08-07 dev_storyflow, w-613d836b, by re-running the tool and reading its source\",\"node\":\"ver:fleet_stack_currency_gate recorded 'EXIT 0, verdict STALE - 4 of 11'\",\"truth\":\"true exit is 1; source is `return 1 if stale else 0`; the 0 came from $? after a pipe\",\"defect\":\"status is structured, evidence is free text, so an incoherent pair stays passing and loop_status counts the capability proven\",\"fix_shape\":\"optional structured Verification result fields: exit_code, command, observed/expected; flag passing + nonzero exit as incoherent\",\"existing_adjacent_machinery\":\"reconcile_verification, cap:evidence-scope (pinned/swept)\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-write-response-describes-the-write-not-the-state",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "ON A SHARED GRAPH A WRITE'S OWN RESPONSE REPORTS WHAT WAS SENT, NOT WHAT PERSISTED — SAME-PROPERTY WRITES ARE SILENT LAST-WRITER-WINS AND THERE IS NO VERSION FIELD TO NOTICE IT WITH. Established by a deliberate experiment on the live 7-seat dev_storyflow graph (api-boss `5d608b85`, 2026-08-07, at the user's request), on a throwaway Requirement named to be unmistakable to the other attached sessions, with independent get_node read-backs after every write and the graph restored exactly afterwards (gap_count 69 -> 70 during -> 69 after, get_node -> null). TWO PROPERTIES HELD AND ARE WORTH RECORDING AS WON: per-property merge is real — writer B setting only `statement` left A's `rationale`, `name`, `priority`, `status` all intact, so two sessions editing different aspects of one node do not destroy each other; and concurrent writes SERIALIZE cleanly, with both racers' distinct properties surviving, no interleaving, no torn node, no error. THE DEFECT IS THE THIRD RESULT: when both racers wrote the SAME property, RACER_ONE's value was destroyed with no error, no warning, no version conflict, and no indication a value had been replaced — and RACER_ONE's own success payload read back `statement: RACER_ONE, priority: high` when the persisted state was already `RACER_TWO`/`low`. BOTH FIELDS IN THAT SUCCESS RESPONSE WERE FALSE WHEN IT WAS RETURNED. Why it is sharp rather than academic: on a solo graph response == state, so trusting your own write-response costs nothing and every habit formed under stdio does exactly that. Under `--shared` they diverge silently, and there is no `version`, `rev`, `etag` or `updated_at` anywhere in the payload — so a client cannot detect that it lost and has no primitive to compare-and-swap with. A session that writes a value and later reasons from its own return value is reasoning from something that was never durable. FIX SHAPE, from the reporter: return a monotonic `rev` per node and accept an optional `if_rev` on write; even unenforced, merely RETURNING it lets a caller notice it was superseded. Cheapest version: have the write response say 'this node was also written by another seat since your read.' BOUND THE REPORTER STATED RATHER THAN GLOSSED: the two racing writes were near-simultaneous requests from ONE MCP client process, not two OS-level sessions — the serialization and merge findings are server-side and hold regardless, but two distinct client processes were not proven and they do not claim it.",
+        "subject_id": "cap:shared-sessions",
+        "valid_from": "2026-08-07",
+        "value": "{\"reported\":\"2026-08-07 dev_storyflow, api-boss 5d608b85, deliberate experiment on the live shared graph\",\"held\":\"per-property merge under concurrency; clean serialization; no torn state\",\"defect\":\"same-property write is silent last-writer-wins AND the success payload reports the write, not the state\",\"evidence\":\"RACER_ONE got success for statement=RACER_ONE, priority=high; persisted was RACER_TWO/low\",\"missing_primitive\":\"no version/rev/etag/updated_at anywhere in the payload\",\"fix_shape\":\"monotonic per-node rev returned on write, optional if_rev; minimum: say the node was written by another seat since your read\",\"stated_bound\":\"two racers were one client process, not two OS sessions; server-side findings hold regardless\",\"graph_restored\":\"yes, verified by control\"}"
+      }
+    },
+    {
+      "node_id": "fact:shared-graph-field-report-what-held",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "evidence",
+        "statement": "FIELD EVIDENCE FROM A FULL DAY OF 3 BOSSES + 4 WORKERS ON ONE `--shared` GRAPH: WHAT HELD, RECORDED SO IT IS NOT TRADED AWAY WHILE FIXING WHAT DID NOT. Peak concurrency measured: 7 `--shared` client processes plus 1 `--serve-shared`, across 3 boss seats and 4 worker sessions over ~5 hours (dev_storyflow, 2026-08-07, api-boss `5d608b85`, written from a live shift rather than from docs). The reporter asked for these to be stated BEFORE the complaints. (1) ZERO LOCK CONTENTION, not one instance, all day. This is the headline. Under the old stdio/exclusive-RocksDB behaviour a second session was SILENTLY BLINDED, and their PROTOCOL literally instructed workers NOT to run reflow2. Seven sessions read AND wrote concurrently with nobody blocked, queued or blinded — and the `REFLOW2-HOLD`/`RELEASE` ritual they used to run on the boss channel is simply GONE. A whole coordination protocol deleted, not merely eased. (2) SERVER-SIDE BEHAVIOUR REACHES EVERY ATTACHED SESSION WITH NO RESTART. When the server rolled to 0.24.0 the fixed detectors reached all attached seats MID-SESSION — one seat watched defects 42 -> 6 happen live in its own tool output. Only the TOOL LIST is negotiated at connect, so a session needs restarting ONLY if it needs a genuinely new tool. Measured consequence: they restarted 1 session instead of 6 and five kept their context. The reporter calls this major, non-obvious, and asks that it be kept and documented loudly. (3) `claim_region` BEING ADVISORY RATHER THAN A LOCK IS THE RIGHT CALL and they explicitly defend it: it makes overlap visible without inventing a blocking primitive; nobody deadlocked, nobody waited on a peer, and no claim ever had to be force-released after a session died. A lock would have recreated the exact problem `--shared` just solved. (4) `mint_seat` + `add_contributor` AS SEPARATE CONCEPTS held up once the roles were clear — seat = this session for claim_region, contributor = durable authorship. (5) CONCURRENT READS OF THE SAME NODES WERE COMPLETELY UNEVENTFUL, including reading nodes while workers wrote elsewhere — no staleness, no error, no surprise. (6) WORKERS RUNNING THE DESIGN BRAIN CHANGED THE QUALITY OF THEIR REPORTS: findings came back as graph evidence with node ids the boss could re-resolve, instead of prose that had to be taken on trust. THEIR EXPLICIT 'WHAT NOT TO CHANGE' LIST: advisory-not-lock claims; the refusal to accept an artifact checksum silently (design_holds vs design_updated vs baseline_established called a genuinely good forced question); per-property merge; skills served rather than installed, so they never go stale in a repo; and `--shared` itself.",
+        "subject_id": "cap:shared-sessions",
+        "valid_from": "2026-08-07",
+        "value": "{\"reported\":\"2026-08-07 dev_storyflow, api-boss 5d608b85, from a live 5-hour shift\",\"scale\":\"7 --shared client processes + 1 --serve-shared; 3 bosses + 4 workers; one graph\",\"held_1\":\"zero lock contention all day; the REFLOW2-HOLD/RELEASE ritual is gone entirely\",\"held_2\":\"server-side behaviour reaches attached seats with no restart; only the tool list is negotiated at connect; restarted 1 session instead of 6\",\"held_3\":\"advisory claims defended explicitly: no deadlocks, no waiting, no force-release\",\"held_4\":\"mint_seat vs add_contributor as separate concepts held up\",\"held_5\":\"concurrent reads of the same nodes uneventful\",\"held_6\":\"workers on the design brain returned re-resolvable node ids instead of prose\",\"do_not_change\":\"advisory-not-lock claims; forced checksum disposition; per-property merge; served skills; --shared itself\"}"
       }
     },
     {
@@ -62070,7 +62673,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:3ebe6ac5a730f3a5614ee5426a3acf907a3c4ec3682112354b2b86a748297872",
+  "prev_content_hash": "sha256:4be03fd109a91de0f64878465c0edd4a434bfec5a5b9a09432a88cb21c01d2d5",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

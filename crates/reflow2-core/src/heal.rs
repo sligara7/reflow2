@@ -437,7 +437,12 @@ impl DesignGraph {
     /// Every edge of `edge_type` in the graph, each returned once (from the
     /// out-side). Adjacency stores an edge once per direction, so scanning
     /// outgoing edges across all nodes enumerates each edge exactly once.
-    fn all_edges_of_type(
+    /// `pub(crate)` since 2026-08-08: DETECT needs the same walk to raise
+    /// suspected duplicates as questions, and two implementations of "every
+    /// edge of this type" could disagree about which pairs exist — which for
+    /// this particular edge is the difference between a pair being asked about
+    /// and a pair being reported nowhere at all.
+    pub(crate) fn all_edges_of_type(
         &self,
         edge_type: &str,
         index: &HashMap<String, String>,
@@ -794,15 +799,44 @@ impl DesignGraph {
             });
         }
 
-        // duplicate — a DUPLICATES edge (fixable by merge).
+        // duplicate — a DUPLICATES edge a HUMAN asserted (fixable by merge).
+        //
+        // `basis` is checked here rather than at the merge, because a merge that
+        // is never proposed cannot be applied by mistake. Only an explicit
+        // `asserted` qualifies: absent reads as `suspected`, so an edge that
+        // cannot prove somebody meant it never reaches apply_heal's delete.
+        // That is dec:ask-not-repair's precondition — "merge is safe only
+        // because the endpoints were asserted" — enforced instead of assumed.
+        // Mirrors how CONTRADICTS/alignment=supporting is skipped just above.
+        //
+        // Suspected pairs are NOT dropped: detect_gaps raises each one as a
+        // possible_duplicate the user can answer or acknowledge, which is the
+        // half of dec:ask-not-repair that says a suspicion is a DETECT gap.
         for e in self.all_edges_of_type(edge::DUPLICATES, &index)? {
+            if !matches!(
+                e.properties.get("basis").and_then(Value::as_str),
+                Some("asserted")
+            ) {
+                continue;
+            }
             let (keep, remove) = self.merge_survivor(&index, &e.from_id, &e.to_id)?;
             let affected = vec![keep, remove];
+            // The score, where one was recorded, is printed WITH the verdict.
+            // "cover the same ground" alone is unfalsifiable: dev_storyflow had
+            // to fetch and read four node pairs to dismiss what a number beside
+            // the claim would have dismissed in seconds.
+            let because = match e.properties.get("confidence").and_then(Value::as_f64) {
+                Some(c) => format!(" (asserted; name similarity {:.0}%)", c * 100.0),
+                None => " (asserted)".to_string(),
+            };
             issues.push(HealIssue {
                 id: issue_id(HealCategory::Duplicate, &affected),
                 category: HealCategory::Duplicate,
                 severity: HealSeverity::Warning,
-                message: format!("'{}' and '{}' cover the same ground", e.from_id, e.to_id),
+                message: format!(
+                    "'{}' and '{}' cover the same ground{because}",
+                    e.from_id, e.to_id
+                ),
                 suggested_fix_type: "merge",
                 affected_ids: affected,
             });
