@@ -480,10 +480,7 @@ fn attached_count_answers_only_when_the_process_is_tracking() {
 
     let count = reflow2_core::identity::attached_seat_count()
         .expect("a process that has attached a seat is tracking");
-    assert!(
-        count >= 2,
-        "both our leases must be attached; got {count}"
-    );
+    assert!(count >= 2, "both our leases must be attached; got {count}");
     assert_eq!(
         reflow2_core::identity::seat_liveness(&mine),
         reflow2_core::identity::Liveness::Live,
