@@ -13,6 +13,8 @@ Order:
    (`dec:coord-board-in-graph`, 2026-08-04). Claim what you take with `claim_region`.
    **[COORD.md](COORD.md)** keeps the handles, conventions and conflict doctrine.
 2. **[AGENTS.md](AGENTS.md)** — commands, architecture, invariants.
-3. **[docs/backlog.md](docs/backlog.md)** — what is open and why.
+3. **The design graph itself** — what is open and why: `loop_status` for what the loop owes,
+   `detect_gaps` for the open questions, `search_design` to find a past finding by its words.
+   `docs/backlog.md` was retired 2026-08-07 (`dec:backlog-is-retired`); its open rows are nodes now.
 
 > **reflow2 is installed here.** The design graph is this project's memory — read [REFLOW2.md](REFLOW2.md) and consult it before writing or changing code.

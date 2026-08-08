@@ -128,7 +128,7 @@ reflow2/
                      #   build_design_graph.py (reflow2's own design), validate_schema.py
   docs/              # vision, design, and process specs — START at docs/overview.md
     overview.md · vision.md · three-axes.md · surface-plan.md · partnership.md
-    requirements-coverage.md · backlog.md · impact-propagation.md · heal-process.md · …
+    requirements-coverage.md · impact-propagation.md · heal-process.md · …
   AGENTS.md          # the primary instruction file for working ON reflow2
   SKILLS.md          # which skill (and slash command) to reach for, and when
   CHANGELOG.md · COORD.md
