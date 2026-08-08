@@ -429,11 +429,181 @@ pub enum Liveness {
     Unknown,
 }
 
-/// Ask the operating system whether a seat is still running.
+/// The seats this process is currently serving, when it is serving more than
+/// itself.
 ///
-/// Computed, not remembered — nothing writes "I am alive" anywhere, so nothing
-/// can be stale. Cross-machine is deliberately `Unknown`: a pid means nothing
-/// on a computer that is not the one that minted it.
+/// # Why a registry exists at all, when the whole design says "compute, never remember"
+///
+/// A seat carries a pid, and asking the OS whether that pid is alive is a real
+/// computation that cannot go stale. That was the right and complete answer
+/// under stdio, where one process WAS one session. Under `--shared` it silently
+/// stopped being an answer at all: every seat is minted BY THE DAEMON, so every
+/// seat carries the daemon's pid, and the probe asks "is the server running?" —
+/// to which the answer is always yes, because nothing else could have replied.
+///
+/// Measured in dev_storyflow 2026-08-07 (w-613d836b): `mint_seat` returned a
+/// seat whose pid was the `--serve-shared` process, while their session's own
+/// shell was a different pid entirely. `Gone` had become unreachable, so a
+/// worker that died hours ago still read as holding its region and a peer would
+/// defer to nobody. `cap:claim-liveness` was status `verified` throughout.
+///
+/// So the pid answers a question about the SERVER, and only the server knows
+/// which SESSIONS it is holding. That knowledge cannot be computed from the
+/// graph or from `/proc` — it exists solely in the process, which is why this is
+/// the one thing here that is remembered rather than derived. It is kept honest
+/// three ways: it lives only in the serving process (nothing is persisted, so
+/// nothing survives to go stale), a session's entry is removed when its handler
+/// is dropped, and **a process that never registers keeps the old behaviour
+/// exactly** — `seat_liveness` consults this only when it has been populated, so
+/// stdio is byte-for-byte unchanged.
+/// # Why TWO sets and not one
+///
+/// The obvious shape — one set of currently-attached seats, consulted whenever
+/// the seat's pid is ours — is wrong, and the tests caught it: it makes the
+/// registry authoritative over seats it has never heard of. One `attach()`
+/// anywhere in a process would flip every seat minted WITHOUT a lease from
+/// `Live` to `Gone`, because absent-from-the-set was being read as departed.
+/// That is the half-populated registry this type's own warning predicted, and it
+/// is far too easy to reach: any caller of bare `mint_seat` in a process that
+/// also serves sessions.
+///
+/// So the registry only answers about seats it actually issued. `ever_leased`
+/// records every seat this process has handed out; `attached` records the ones
+/// still held. A seat in the first and not the second is DEFINITELY gone. A seat
+/// in neither is none of the registry's business, and falls through to the pid
+/// probe exactly as before. Absence of evidence stays absence of evidence.
+///
+/// `ever_leased` grows with sessions served rather than with time, and a shared
+/// daemon expires on idle, so it is bounded in practice by one daemon's
+/// lifetime — noted rather than capped, because evicting an entry would
+/// resurrect the very ambiguity the second set exists to remove.
+#[derive(Default)]
+struct SeatRegistry {
+    attached: std::collections::HashSet<String>,
+    ever_leased: std::collections::HashSet<String>,
+}
+
+static ATTACHED_SEATS: std::sync::OnceLock<std::sync::Mutex<SeatRegistry>> =
+    std::sync::OnceLock::new();
+
+fn registry() -> &'static std::sync::Mutex<SeatRegistry> {
+    ATTACHED_SEATS.get_or_init(|| std::sync::Mutex::new(SeatRegistry::default()))
+}
+
+/// Declare that this process is serving `seat`, so liveness can answer about the
+/// SESSION rather than about the server holding it.
+///
+/// Idempotent. Only affects seats registered through here: a seat this process
+/// never issued is left to the pid probe, so registering one session cannot make
+/// another process's — or an unleased — seat read as a ghost.
+pub fn register_seat(seat: &str) {
+    if let Ok(mut reg) = registry().lock() {
+        reg.attached.insert(seat.to_string());
+        reg.ever_leased.insert(seat.to_string());
+    }
+}
+
+/// This session is over: its seat is no longer served, so its claims are ghosts.
+///
+/// Called from the handler's `Drop`, so a client that disconnects, crashes or is
+/// killed releases its seat without having to say anything. Nothing is written
+/// to the graph — the CLAIM stays exactly where it was, and only its liveness
+/// changes, which is the property that makes a ghost claim still readable for
+/// what it says while no longer counting as held.
+pub fn release_seat(seat: &str) {
+    let Some(lock) = ATTACHED_SEATS.get() else {
+        return;
+    };
+    if let Ok(mut reg) = lock.lock() {
+        // Removed from `attached`, KEPT in `ever_leased`: that pair is what
+        // makes the next read say `gone` rather than shrugging.
+        reg.attached.remove(seat);
+    }
+}
+
+/// What the registry knows about `seat`, or `None` if it is not its business.
+///
+/// Split out so the three conditions that must ALL hold before the registry may
+/// override the pid probe — it is our own pid, we are tracking, and we issued
+/// this seat — read as three refusals rather than as nested ifs.
+fn registry_verdict(seat: &str, pid: u32) -> Option<Liveness> {
+    if pid != std::process::id() {
+        return None;
+    }
+    let reg = ATTACHED_SEATS.get()?.lock().ok()?;
+    if !reg.ever_leased.contains(seat) {
+        return None;
+    }
+    Some(if reg.attached.contains(seat) {
+        Liveness::Live
+    } else {
+        Liveness::Gone
+    })
+}
+
+/// How many sessions this process is serving right now, or `None` if it is not
+/// tracking them (a plain stdio process, which is always serving exactly itself).
+///
+/// `req:a-session-can-tell-it-is-not-alone`: a seat that can see `attached: 7`
+/// cannot honestly report a graph-wide rollup as its own result. dev_storyflow
+/// had two bosses attribute a fleet-wide movement to their own change — in the
+/// flattering direction, which is the one nobody catches unaided.
+pub fn attached_seat_count() -> Option<usize> {
+    ATTACHED_SEATS
+        .get()
+        .and_then(|l| l.lock().ok())
+        .map(|reg| reg.attached.len())
+}
+
+/// A seat held for exactly as long as the session holding it.
+///
+/// The registry is only as truthful as its removals, and "remember to release
+/// on every exit path" is the kind of discipline that holds until the day a
+/// client crashes instead of disconnecting. So the release is not a step anybody
+/// has to remember: it is `Drop`. A session that panics, is killed, or simply
+/// loses its socket releases its seat on the way out, because the handler owning
+/// the lease is dropped either way.
+///
+/// Hold it behind an `Arc` and clone THAT within a session — cloning the lease
+/// itself would mint a second identity, and a service is legitimately cloned in
+/// a dozen places inside one session.
+#[derive(Debug)]
+pub struct SeatLease {
+    seat: String,
+}
+
+impl SeatLease {
+    /// Mint a seat and declare this process is serving it.
+    pub fn attach() -> Self {
+        let seat = mint_seat();
+        register_seat(&seat);
+        Self { seat }
+    }
+
+    /// The seat handle, for passing to anything that records who is working.
+    #[must_use]
+    pub fn id(&self) -> &str {
+        &self.seat
+    }
+}
+
+impl Drop for SeatLease {
+    fn drop(&mut self) {
+        release_seat(&self.seat);
+    }
+}
+
+/// Ask whether the session that made a claim is still working.
+///
+/// Computed, not remembered, wherever it can be: a pid probe cannot go stale.
+/// Cross-machine is deliberately `Unknown` — a pid means nothing on a computer
+/// that is not the one that minted it.
+///
+/// **The one case a pid cannot answer** is a seat minted by THIS process while
+/// this process serves many sessions: the pid is trivially alive (it is us), so
+/// it says nothing about the client. There the registry decides, and its absence
+/// from the registry is a real `Gone` rather than a guess — the session was
+/// registered when it attached and removed when it dropped.
 pub fn seat_liveness(seat: &str) -> Liveness {
     let parts: Vec<&str> = seat.split(':').collect();
     let [host, pid, ..] = parts.as_slice() else {
@@ -445,6 +615,18 @@ pub fn seat_liveness(seat: &str) -> Liveness {
     let Ok(pid) = pid.parse::<u32>() else {
         return Liveness::Unknown;
     };
+    // A seat this process minted while serving many: the pid is us, so it proves
+    // nothing about the client. Ask what we are actually holding.
+    //
+    // Note the deliberate asymmetry with the branch below: a seat carrying a
+    // DIFFERENT pid is still answered by the probe, because a seat left behind
+    // by a previous daemon (a `--stop-shared` bounce, a crash) has a pid that
+    // genuinely no longer exists, and `Gone` is the true answer for it.
+    // Only seats this process actually issued. One it never leased is none of
+    // the registry's business and falls through to the probe below.
+    if let Some(verdict) = registry_verdict(seat, pid) {
+        return verdict;
+    }
     if std::path::Path::new(&format!("/proc/{pid}")).exists() {
         return Liveness::Live;
     }

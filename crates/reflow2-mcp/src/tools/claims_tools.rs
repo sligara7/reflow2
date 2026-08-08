@@ -118,14 +118,17 @@ impl ReflowService {
             // value, and an agent that re-mints per call reintroduces the bug.
             "carry_it": "Pass this as `seat` on claim_region for the rest of this session. \
                          Minting a fresh one per call is the failure mode this prevents.",
-            // Liveness reads the host and pid encoded in the seat, and that pid
-            // is the SERVER's — so a seat stays live while the server lives,
-            // whichever transport carried it. Stated so nobody reads
-            // claim_report's `liveness` as a claim about the CLIENT still being
-            // there; it never was, on any transport.
-            "liveness_is_the_server": "claim_report computes liveness from the host and pid in \
-                                       this seat, which are the serving process's. It says the \
-                                       server that minted the seat is alive, not that you are.",
+            // Until 2026-08-08 this field said the opposite, and it was true:
+            // liveness read the pid in the seat, that pid was the SERVER's, and
+            // so every claim stayed live while the server lived. The seat is now
+            // held by a lease that is released when this session's handler
+            // drops, so liveness answers about the session — which is what
+            // everyone reading claim_report already believed it meant.
+            "liveness_is_this_session": "claim_report answers liveness for this seat from the \
+                                         sessions this server is actually holding, not from its \
+                                         own pid. Your claims read `live` while you are attached \
+                                         and `gone` once you are not — including if this session \
+                                         crashes rather than exits cleanly.",
         }))
     }
 

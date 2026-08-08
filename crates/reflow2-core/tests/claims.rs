@@ -380,3 +380,96 @@ fn a_claim_made_before_seats_existed_is_unknown_not_live() {
     );
     assert!(report.stale.is_empty());
 }
+
+// ---- The shared-server case: liveness must be about the SESSION ------------
+//
+// Reported by dev_storyflow 2026-08-07 (w-613d836b) and confirmed here: under
+// `--shared` every seat is minted BY THE DAEMON, so every seat carries the
+// daemon's pid. The old probe asked "is that pid alive?", the answer was always
+// yes because the daemon is what answered, and `Gone` became unreachable. A
+// worker that died hours ago still read as holding its region.
+//
+// These tests pin the registry that fixes it. They run in the CORE test process,
+// which is exactly the shape that made the bug invisible: here the test process
+// IS the "server", so its own pid is trivially alive and only the registry can
+// tell an attached session from a departed one.
+
+#[test]
+fn a_seat_this_process_serves_reads_live_and_stops_when_it_departs() {
+    let seat = reflow2_core::identity::mint_seat();
+
+    // Before anything registers, the pid probe answers — and this pid is us, so
+    // it says live. That is the OLD behaviour, and it is why the bug was silent.
+    assert_eq!(
+        reflow2_core::identity::seat_liveness(&seat),
+        reflow2_core::identity::Liveness::Live,
+    );
+
+    reflow2_core::identity::register_seat(&seat);
+    assert_eq!(
+        reflow2_core::identity::seat_liveness(&seat),
+        reflow2_core::identity::Liveness::Live,
+        "an attached session is live"
+    );
+
+    reflow2_core::identity::release_seat(&seat);
+    assert_eq!(
+        reflow2_core::identity::seat_liveness(&seat),
+        reflow2_core::identity::Liveness::Gone,
+        "THE DEFECT: this read `live` forever, because the pid in the seat is the \
+         serving process's and the serving process is what answers"
+    );
+}
+
+#[test]
+fn a_lease_releases_its_seat_when_the_session_drops() {
+    // The release is Drop rather than a step somebody remembers, so a client
+    // that crashes releases its seat on the way out just like one that exits.
+    let seat = {
+        let lease = reflow2_core::identity::SeatLease::attach();
+        let seat = lease.id().to_string();
+        assert_eq!(
+            reflow2_core::identity::seat_liveness(&seat),
+            reflow2_core::identity::Liveness::Live,
+        );
+        seat
+    };
+    assert_eq!(
+        reflow2_core::identity::seat_liveness(&seat),
+        reflow2_core::identity::Liveness::Gone,
+        "dropping the handler must retire the seat with nothing having to say so"
+    );
+}
+
+#[test]
+fn a_seat_from_a_previous_server_is_gone_not_unknown() {
+    // The `--stop-shared` bounce: the replacement daemon has a new pid, so every
+    // seat minted before it carries a pid that no longer exists. That case is
+    // still answered by the OS probe, deliberately — the registry only takes
+    // over for seats THIS process minted.
+    let dead = dead_seat();
+    assert_eq!(
+        reflow2_core::identity::seat_liveness(&dead),
+        reflow2_core::identity::Liveness::Gone,
+        "a seat from a server that is no longer running is a ghost"
+    );
+}
+
+#[test]
+fn attached_count_answers_only_when_the_process_is_tracking() {
+    // req:a-session-can-tell-it-is-not-alone leans on this: a seat that can see
+    // how many sessions are attached cannot honestly report a graph-wide rollup
+    // as its own result.
+    let lease = reflow2_core::identity::SeatLease::attach();
+    let before = reflow2_core::identity::attached_seat_count()
+        .expect("a process that has attached a seat is tracking");
+    let second = reflow2_core::identity::SeatLease::attach();
+    assert_eq!(
+        reflow2_core::identity::attached_seat_count(),
+        Some(before + 1),
+        "a second session must be visible to the first"
+    );
+    drop(second);
+    assert_eq!(reflow2_core::identity::attached_seat_count(), Some(before));
+    drop(lease);
+}
