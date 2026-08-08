@@ -498,3 +498,43 @@ fn attached_count_answers_only_when_the_process_is_tracking() {
     );
     drop(lease);
 }
+
+// ---- 2026-08-08 · a refusal names its own fix -----------------------------
+
+#[test]
+fn claiming_for_an_unknown_contributor_names_the_call_that_fixes_it() {
+    // dev_storyflow, 2026-08-08: a worker hit this refusal, concluded the tool
+    // was broken, and wrote "there is NO mint_seat tool in the served surface"
+    // into the fleet's worker onboarding file. That false correction travelled
+    // FIVE HOPS and reached a boss offering to amend PROTOCOL on it.
+    //
+    // The refusal was correct and unactionable: "Node not found: Contributor
+    // <handle>". The sibling refusal — a missing seat — has named its own fix
+    // since 2026-07-30 and did not produce that failure.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:x", "X").unwrap();
+    g.add_capability("cap:seed", "Seed", "somewhere to claim", None)
+        .unwrap();
+
+    let err = g
+        .claim_region("who:nobody", "cap:seed", 2, None, None, Some("seat:1"))
+        .expect_err("claiming for a contributor that does not exist must refuse");
+    let msg = format!("{err}");
+
+    assert!(
+        msg.contains("add_contributor"),
+        "the refusal must name the call that fixes it: {msg}"
+    );
+    assert!(
+        msg.contains("who:nobody"),
+        "and the id the caller actually passed, so the fix is copy-pasteable: {msg}"
+    );
+
+    // And it still REFUSES — naming the fix must not become doing it.
+    assert!(
+        g.get_node(node::CONTRIBUTOR, "who:nobody")
+            .unwrap()
+            .is_none(),
+        "reflow2 must not invent the contributor it just asked for"
+    );
+}

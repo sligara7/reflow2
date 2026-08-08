@@ -143,9 +143,30 @@ impl DesignGraph {
         seat: Option<&str>,
     ) -> Result<Claim, DynoError> {
         if self.get_node(node::CONTRIBUTOR, contributor_id)?.is_none() {
-            return Err(DynoError::NodeNotFound {
+            // NAME THE FIX, not just the absence. This used to be a bare
+            // `NodeNotFound`, rendering as "Node not found: Contributor <handle>"
+            // — true, and unactionable to a session that has never met
+            // add_contributor. dev_storyflow, 2026-08-08: a worker hit exactly
+            // this refusal, concluded the tool was broken, and wrote "there is
+            // NO mint_seat tool in the served surface" into the fleet's worker
+            // onboarding file. That false correction TRAVELLED FIVE HOPS and
+            // reached a boss offering to amend PROTOCOL on it, before another
+            // worker disproved it with one command.
+            //
+            // The sibling refusal — a missing `seat` — has named its own fix
+            // since eea5937 (2026-07-30) and did NOT produce that failure,
+            // which is the argument for this shape rather than a general
+            // complaint about refusals.
+            return Err(DynoError::Validation {
                 node_type: node::CONTRIBUTOR.into(),
-                node_id: contributor_id.into(),
+                property: "contributor_id".into(),
+                message: format!(
+                    "no Contributor '{contributor_id}' exists yet, so there is nobody to hold \
+                     this claim. CALL `add_contributor` FIRST with id '{contributor_id}', then \
+                     claim again. (A claim is advisory and names a person; reflow2 will not \
+                     invent one, because a region held by a contributor nobody declared is a \
+                     claim no colleague can ask about.)"
+                ),
             });
         }
         let index = self.node_type_index()?;
