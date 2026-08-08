@@ -101,7 +101,12 @@ const ADVISORY: &str = "Claims are advisory: they never block a write. An overla
                         answered from the sessions it is actually holding, because its own pid is \
                         alive by definition and would otherwise report every client as live \
                         forever. That second case was broken until 2026-08-08 and is the reason \
-                        this sentence is here.";
+                        this sentence is here. THE THIRD CASE IS A SEAT THIS SERVER HANDED OUT \
+                        BUT DOES NOT HOLD — what `mint_seat` returns to a session it cannot \
+                        observe: on a server serving many sessions that reads `unknown`, never \
+                        `live`, because nothing connects the seat to a client and our own pid \
+                        proves only that we answered. A claim carrying one of those does not \
+                        expire on its own; release_claim is what clears it.";
 
 fn int_prop(props: &BTreeMap<String, Value>, key: &str, fallback: usize) -> usize {
     props
