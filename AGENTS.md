@@ -479,7 +479,7 @@ extraction pipeline with the calling agent as the model, so INGEST is finally re
 session rather than only from a test. See the coverage
 matrix for the exact deferral list. Everything else in the loop — the MCP surface, GENESIS,
 INGEST's core, the consumer kit, search, the reconcile family — is built and shipping as of
-v0.24.0.
+v0.25.0.
 
 ---
 
@@ -535,7 +535,7 @@ Three complementary lenses on the graph: **phases** (P0–P5 lifecycle), **three
 
 ## Current state (important)
 
-**Shipping at v0.24.0.** The deterministic core, the agent-native MCP surface, and the consumer
+**Shipping at v0.25.0.** The deterministic core, the agent-native MCP surface, and the consumer
 kit are all built, released as prebuilt binaries, and cold-start-verified. As of v0.12.0 the kit
 is *served* rather than installed: a project holds a pointer file and the MCP config, and both the
 skills and the working instructions come from the binary (`req:thin-install`). The interaction

@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:64c89b3df3f94c8578e690fd2da2c2a62e9e18e13b9467443a15fe7b498dcff8",
+  "content_hash": "sha256:bce3e321268e9cab2107d78c11898271fc1376cf584ab9282a0912560e401e3b",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2591,6 +2591,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-merge-proposal-discloses-what-it-would-destroy",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-refusal-names-its-own-fix-20260808",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-020a057ec12710f0",
       "properties": {},
       "to_id": "epoch:v0230"
@@ -2615,6 +2627,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-1ea01d3ea7e8701a",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-299470f8b4fae678",
       "properties": {},
       "to_id": "epoch:v0210"
@@ -2633,9 +2651,21 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-3e20436d326c84d6",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-3f1cd5f3658574b8",
       "properties": {},
       "to_id": "epoch:v0220"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-3fac4692fb0601d6",
+      "properties": {},
+      "to_id": "epoch:v0250"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2699,6 +2729,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-7a8e70b448098faa",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-7bd49cad8e8337ba",
       "properties": {},
       "to_id": "epoch:v0210"
@@ -2723,6 +2759,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-921b8978971ae293",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-980140987a1dab8d",
       "properties": {},
       "to_id": "epoch:v0210"
@@ -2744,6 +2786,12 @@
       "from_id": "chg:accept-b15edaa1e77d695c",
       "properties": {},
       "to_id": "epoch:v0220"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-b1fafb5f84628d53",
+      "properties": {},
+      "to_id": "epoch:v0250"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2786,6 +2834,12 @@
       "from_id": "chg:accept-eight-requirements",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-f5d009f115db42d1",
+      "properties": {},
+      "to_id": "epoch:v0250"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -2867,6 +2921,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:backlog-question-settled",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:baseline-0da0e8c66a8d93bc",
       "properties": {},
       "to_id": "epoch:v0240"
@@ -2882,6 +2942,18 @@
       "from_id": "chg:baseline-15ac915379dcb2d2",
       "properties": {},
       "to_id": "epoch:v0240"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:baseline-3b39b24ee5303e6c",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:baseline-44ec4db31d00f517",
+      "properties": {},
+      "to_id": "epoch:v0250"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3101,6 +3173,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:central-host-status-corrected",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:certification-requirement-widened",
       "properties": {},
       "to_id": "epoch:requirements-confirmed"
@@ -3119,6 +3197,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:check-reconciles-dependencies",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:checksum-canonical-both-sides",
       "properties": {},
       "to_id": "epoch:v0200"
@@ -3134,6 +3218,12 @@
       "from_id": "chg:claim-liveness",
       "properties": {},
       "to_id": "epoch:v0120"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:classification-and-dependency-are-orthogonal",
+      "properties": {},
+      "to_id": "epoch:v0250"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3161,6 +3251,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:container-packaging",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:content-growth-guard",
       "properties": {},
       "to_id": "epoch:arrival-delta"
@@ -3176,6 +3272,12 @@
       "from_id": "chg:content-manifest-built",
       "properties": {},
       "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:content-path-no-default",
+      "properties": {},
+      "to_id": "epoch:v0250"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3251,6 +3353,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:dependency-names-its-design",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:derived-release-manifest",
       "properties": {},
       "to_id": "epoch:v0220"
@@ -3263,9 +3371,21 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:describe-design-at-path",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:describe-designs-built",
       "properties": {},
       "to_id": "epoch:describe-designs-built"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:describe-designs-built",
+      "properties": {},
+      "to_id": "epoch:v0250"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3299,6 +3419,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:duplicate-merge-needs-a-human-20260808",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:edges-need-both-ends-audited",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:embeddings-question-findings",
       "properties": {},
       "to_id": "epoch:embeddings-question-gets-its-findings"
@@ -3314,6 +3446,12 @@
       "from_id": "chg:federation-decided",
       "properties": {},
       "to_id": "epoch:surface-export"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:flo2-proposal-multi-graph-hosting",
+      "properties": {},
+      "to_id": "epoch:v0250"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3344,6 +3482,12 @@
       "from_id": "chg:hxm-field-report",
       "properties": {},
       "to_id": "epoch:hxm-field-report"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:hxm-field-report",
+      "properties": {},
+      "to_id": "epoch:v0250"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3383,6 +3527,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:intent-crossing-corrected",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:interface-medium-reachable",
       "properties": {},
       "to_id": "epoch:v0200"
@@ -3398,6 +3548,18 @@
       "from_id": "chg:isolation-check-scope-split",
       "properties": {},
       "to_id": "epoch:isolation-check-scope-split"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:isolation-check-scope-split",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:isolation-check-written",
+      "properties": {},
+      "to_id": "epoch:v0250"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3419,6 +3581,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:kit-manifest-check-passes-after-reinstall",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:kit-manifest-check-written",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:kpp-built",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
@@ -3431,9 +3605,33 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:lineage-message-names-its-decision",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:linked-repos-trial-run",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:loop-reports-assigned-decisions",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:machine-state-not-shared",
       "properties": {},
       "to_id": "epoch:v0120"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:manifest-answers-without-a-store",
+      "properties": {},
+      "to_id": "epoch:v0250"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3443,9 +3641,21 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:many-graphs-one-store",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:many-projects-brainstorm",
       "properties": {},
       "to_id": "epoch:many-projects-one-mind-brainstorm"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:many-projects-brainstorm",
+      "properties": {},
+      "to_id": "epoch:v0250"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3482,6 +3692,12 @@
       "from_id": "chg:multi-writer-decided",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:next-names-the-safe-tool-20260808",
+      "properties": {},
+      "to_id": "epoch:v0250"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3527,6 +3743,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:package-vs-collaboration",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:plan-movement-question-answered",
       "properties": {},
       "to_id": "epoch:arrival-delta"
@@ -3542,6 +3764,12 @@
       "from_id": "chg:pointers-follow-the-retired-backlog",
       "properties": {},
       "to_id": "epoch:backlog-retired"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:pointers-follow-the-retired-backlog",
+      "properties": {},
+      "to_id": "epoch:v0250"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3683,7 +3911,25 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:seat-liveness-is-the-session-20260808",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:session-chooses-design-accepted",
+      "properties": {},
+      "to_id": "epoch:hxm-field-report"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:session-chooses-design-accepted",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:session-chooses-its-design",
       "properties": {},
       "to_id": "epoch:hxm-field-report"
     },
@@ -3691,7 +3937,7 @@
       "edge_type": "AT_EPOCH",
       "from_id": "chg:session-chooses-its-design",
       "properties": {},
-      "to_id": "epoch:hxm-field-report"
+      "to_id": "epoch:v0250"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3719,6 +3965,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:sidecar-loss-refused",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:skill-loads-are-counted",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:skills-served",
       "properties": {},
       "to_id": "epoch:surface-export"
@@ -3734,6 +3992,12 @@
       "from_id": "chg:stale-seat",
       "properties": {},
       "to_id": "epoch:surface-export"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:storyflow-second-field-report-20260808",
+      "properties": {},
+      "to_id": "epoch:v0250"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3755,6 +4019,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-installer-says-the-graph-is-tracked-20260808",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:toml-fallback-reader",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:two-answers-2026-07-25",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
@@ -3773,15 +4049,33 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:undefer-skill-adherence-measurement",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:user-is-still-the-reminder",
       "properties": {},
       "to_id": "epoch:skill-use-still-needs-reminding"
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:user-is-still-the-reminder",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:v0210-rescoped",
       "properties": {},
       "to_id": "epoch:v0210"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:v0250-ships-the-heal-fixes-not-the-read-half",
+      "properties": {},
+      "to_id": "epoch:v0250"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -4154,6 +4448,12 @@
       "from_id": "rel:v0240",
       "properties": {},
       "to_id": "epoch:v0240"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "epoch:v0250"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -4706,6 +5006,12 @@
       "from_id": "snap:epoch:v0210:rel:v0210",
       "properties": {},
       "to_id": "epoch:v0210"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:v0250:epoch:v0250-planned",
+      "properties": {},
+      "to_id": "epoch:v0250"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -7045,6 +7351,15 @@
         "action": "modified"
       },
       "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-921b8978971ae293",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dependency-manifest"
     },
     {
       "edge_type": "CHANGED",
@@ -13681,6 +13996,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:v0250-ships-the-heal-fixes-not-the-read-half",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "epoch:v0250-planned"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:v050-as-released",
       "properties": {
         "accepted_baseline": true,
@@ -16551,6 +16875,22 @@
     {
       "edge_type": "DEPLOYED_TO",
       "from_id": "rel:v0240",
+      "properties": {
+        "status": "active"
+      },
+      "to_id": "env:dev"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v0250",
+      "properties": {
+        "status": "active"
+      },
+      "to_id": "env:container"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v0250",
       "properties": {
         "status": "active"
       },
@@ -22147,6 +22487,12 @@
       "from_id": "dep:dynograph-foundation",
       "properties": {},
       "to_id": "snap:epoch:linking-repos:dep:dynograph-foundation"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "epoch:v0250-planned",
+      "properties": {},
+      "to_id": "snap:epoch:v0250:epoch:v0250-planned"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -37354,6 +37700,1638 @@
     },
     {
       "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:8f8a543ba59ec079"
+      },
+      "to_id": "art:acknowledgement-not-structure-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:14b6b93d62aa5ff7"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:c33a33c15e2611b3"
+      },
+      "to_id": "art:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:d282035a162e3e56"
+      },
+      "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:c87a79726aeb111b"
+      },
+      "to_id": "art:alternatives"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:f0b084efabffd96cbbb64ee30fbd89e6d3c241b742b6e4fd031e76ef1b8d7ffa"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:35902cf49663ef135e774805a69f8b2b3fda3673af859d2289c90594ec1ea845"
+      },
+      "to_id": "art:artifact-intent-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:49f1f3095ea2707d"
+      },
+      "to_id": "art:bl124-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:6f101376a547fe6ef1f9a9d7d2d3da29b84505a96b352ed69d19b8514772c0ec"
+      },
+      "to_id": "art:brainstorm-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:6aeb7aaf31ccdd875990bce6735c75eeead49c7371c4bc39064d4e7f478733e8"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:8f5ffbc7c6e84b5e"
+      },
+      "to_id": "art:built-right-review"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:6e8e23fce35b21d6"
+      },
+      "to_id": "art:bulk"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:c2bea913c620128c1e602aed078713c7598f92e7cada4024c67777584b23b8be"
+      },
+      "to_id": "art:changelog-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:a663b78895bd7c095bc88340def62806526b14be46856c5b21cfc5eb0e7f67e2"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:c89109a61fe5a9da6d097dd273a3e1b04b0d698d858b87ae3f25bf2139472ac7"
+      },
+      "to_id": "art:check-health-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:b78fa9e7b867218d12b5f4e478f55228619203e15bebb578d54b0bd00ea0a97d"
+      },
+      "to_id": "art:check-kit-manifest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:a84c2afa299b6793cb78ae9aad6fda8cf659780728e38da0906ffa629dd41919"
+      },
+      "to_id": "art:checksum-dialect-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:5b26eb7f12555e2e6a00ea8b50f3924d56ad6318f0d020384833cd537a8f567a"
+      },
+      "to_id": "art:claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:2575d415a74a3266b208ddf798e5e6516186d6c345324efb6f9b66e46b7367a3"
+      },
+      "to_id": "art:collaborating"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:b73161a0fd04efee"
+      },
+      "to_id": "art:compare"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:b9f6ec2a69d7cfbc6041c2cf7d0bbb5a409a981cd3c44a36672f4b3a375a4558"
+      },
+      "to_id": "art:compose"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:6b58139a0fd5f095c64c4c465f03cfed8200015ef0e7af3a4e7cca064727de39"
+      },
+      "to_id": "art:compose-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:276c4e707db8d55a34f673a533dcaa15629d6bd59be4d3232df21bff1e6ce7c3"
+      },
+      "to_id": "art:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:b4fd5760c54b234a4c8d4031c4dba9610db59dfb10cabc0dfc3907e143442344"
+      },
+      "to_id": "art:confirmation-vocabulary-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:2f61880580a26ac3d957ea9d9eb0702f562a3a6e2644d804738cb97a5c7a744d"
+      },
+      "to_id": "art:content"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:e84a28c58a87148918055465167668cdc668ffaee148ed450e30f9e0bd4896f0"
+      },
+      "to_id": "art:content-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:2459979bcda2901dc08307b0211763a91245cdfd4727c9ab967039b2c154f2ed"
+      },
+      "to_id": "art:contradiction-alignment-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:9f9496cd532968cb39dc7461c83f488e856e97b00a4a438f2f25914ee044760d"
+      },
+      "to_id": "art:corpus"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:657397fc982bc94a7b0624d219503cab8ddf1a325aabf023474db1dfc110881f"
+      },
+      "to_id": "art:coverage"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:c30ee52bd7c3ec95"
+      },
+      "to_id": "art:coverage-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:adfea07b2891743b"
+      },
+      "to_id": "art:cycles-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:eb126729e08e8d8d3ac45acec3a2e291e068dc1e9afed14a8647edf73300bdde"
+      },
+      "to_id": "art:degraded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:c4bb26d2d765f34cf8da774b4605b7431e99c5cfa81d2a4cb9da837cab3437e1"
+      },
+      "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:45cd6ca68f900aa040d2c075a7dc08311afd8acf8e94bd266f101e4fe1ee8ae7"
+      },
+      "to_id": "art:depends"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:f2a9a6d42ce95561436f9ae64e64cef57bd11d90d2c5e6d5bb50825da3d2aee6"
+      },
+      "to_id": "art:depends-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:f238a133af03041c96e7ba81f74232a1f6215033e8d3fcafb8db284950269007"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:59ef210d5f8576a9f07b321dc546b653056ab4ecda17e0ec9269ed87a52c27dc"
+      },
+      "to_id": "art:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:b876b5fc65f8dfe8b3c514d0537a0445dfbb51df24fcf6179e8b30b762988eaf"
+      },
+      "to_id": "art:discover"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:9a774749820828b965aef9eadc6d12d2f07a5e9dc28f05d1ddedc73eb6370a24"
+      },
+      "to_id": "art:discover-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:0d2baac279bc9cdc70b5567031d81347ca6412c994647ec5a4f8b9c81b1505f4"
+      },
+      "to_id": "art:docker-build-script"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:7ba2d1770e2d3752216743b5de56505e2be2419498a3aab9c3cf62607603b422"
+      },
+      "to_id": "art:dockerfile"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:ad766fdd92b8a66a9237c04928ce4c07b4b3e938093c7e7879a9fa0077c7a0ee"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:74c0459e03ad38ce"
+      },
+      "to_id": "art:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:8956d2d0d4f31fe1"
+      },
+      "to_id": "art:evidence-quality-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:0f66b31cfaca4944"
+      },
+      "to_id": "art:evidence-quality-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:58443db75d9199e7addc3f4673d84e1249df60fc563237475636f8e0713f6896"
+      },
+      "to_id": "art:evidence-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:cbba2d0c482d766c6dae2ca016e0b9fd2f760a9987febfa7e9b477a2414df079"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:3dc8f44f7add68ae0f56d7da184e667fd8860ededaa57262e8bd800de87be691"
+      },
+      "to_id": "art:export-via-binary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:cfdf82f1a6497595"
+      },
+      "to_id": "art:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2"
+      },
+      "to_id": "art:fleet-lessons"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:f6abe031170cd8123c44b3f87248b9841f9b31117d78d8325769fea6a34a5d8e"
+      },
+      "to_id": "art:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:8196df94f5775161"
+      },
+      "to_id": "art:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:34701500af93dbcf"
+      },
+      "to_id": "art:github-mcp-study"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:199301145284e0fb30cfec667a6adb26c3af9db724a2f3049474659ee07c7f15"
+      },
+      "to_id": "art:granularity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:15823284a28c35d3e70eee48cfcc6d4d3e05479d36724ec05833d5cb9ab105f5"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:59747ef7945dd315f0ef154b20e5034b3c03506a27394e5ab19425383360758a"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:30fc1a09862792a9"
+      },
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:8170aad432c7374ca4070c9bf5c0e57f55be28ce069c0b44e9ab613b7de8ecc4"
+      },
+      "to_id": "art:identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:889393466bafe709429fc137dd4d2e1a372990c6486d7a85dec07c630a51cbb3"
+      },
+      "to_id": "art:ility"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:752fa1ea328b5bafe200ef45ea7c1e230648bb86f580bd0278886b8cdde5ee3e"
+      },
+      "to_id": "art:increment-plan"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:e36d3b386dcad3b33c12ed42a28685b2bcd3a9c8a2ccdd7d2704c230739407c0"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:ddfa7e13d3b56156a9b463f434cd691718e1af489f27aaba169395c226d14b9a"
+      },
+      "to_id": "art:ingest-handshake-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:34c58f8656dab4e6a1701fa06d3fed85d614afe192086cb172aa702e206dde50"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:07c82cd7671c1241"
+      },
+      "to_id": "art:interface-spec-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:13f19b14c25c9300"
+      },
+      "to_id": "art:kit-instructions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:feebbdb1438ff2c52e51cb0fbb004476378ffa97d3c9aa72890b7aa92f4b81b5"
+      },
+      "to_id": "art:kit-pointer"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:65a01535f32f023e"
+      },
+      "to_id": "art:kpp-proposal-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:4e466f33a0f655d7fadc2ad2e7059b0d1062bbbcab337eda0050334a61e5192f"
+      },
+      "to_id": "art:latent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:6869d93e97fc9393"
+      },
+      "to_id": "art:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:1b610577b6ffc1e8a4a08c8c00352b1a95a7e22a92e78fa56ba6b5206611a8c8"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:b41bc1c569e39c7ab7d8d72d667fe56870b53eb720be82e6e4b6d7b870023c82"
+      },
+      "to_id": "art:machine-install"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:1eee8d1c08bf33ab58c3bbc7c60d658eafc796f631b98db952fb4f5ea9dac53d"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:f743c9902452b2b7b15da4df3d62a92d9dca2bdbbd0efcff7e3625eb9b809e9a"
+      },
+      "to_id": "art:maturity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:075bab31f3c131b6"
+      },
+      "to_id": "art:merge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:cddbea4165e0e3b0"
+      },
+      "to_id": "art:merge-driver-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:4d0783bbb657970305906ae38eb8a51badd40b1229881929e81026149478dd80"
+      },
+      "to_id": "art:migrate-backlog"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:774ad95db84666b3"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856"
+      },
+      "to_id": "art:nudge-detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:e95e6f4c2658ebd1c7afa6e23385256e51272860a0cb56e2046d4c1b581881d0"
+      },
+      "to_id": "art:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:9b388fef123f04c5"
+      },
+      "to_id": "art:orphan-attachment-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:9cbea33b6a561a9e"
+      },
+      "to_id": "art:parallel-work-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:ce7feac76c8da9cd72c6188a2f0035565f37031c2632354820baaf7fc1ffcdcd"
+      },
+      "to_id": "art:plan-increments-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14"
+      },
+      "to_id": "art:planning-at-scale"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:59b6e751c18dfc67d4546b6d6d70e1305b64864d3890d8cf786320687c9b84d4"
+      },
+      "to_id": "art:preserve"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:26dde99a1df42e6f"
+      },
+      "to_id": "art:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:b3cd0321b5dcda802926f3247ab45b6c1bbfc7bbd60ed38d2d95da29a3d6caf0"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:7979028e8c95724dd5696d9b1fee3f307c718b7d9f4e086a968620b602eec420"
+      },
+      "to_id": "art:publishable-promise-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:f01d1b8a9f04a3efd4efe0fa05d12f9d1b330e4c4f16b9f1781ae6e645a38fa5"
+      },
+      "to_id": "art:readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:00ac00342910d276b036ffa093f2ed3ee8a7efb9abe9d3b2a5c21fcfa30939c8"
+      },
+      "to_id": "art:readme"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:e1a55d661c3b9ba857e4eb99d40e6d8b84db5c9e5009e3f3b43721507d2d1fcd"
+      },
+      "to_id": "art:release-workflow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:99fc5da421a04f5e"
+      },
+      "to_id": "art:render-views"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:672d623cd26f73c4f88bb08497c8cdf25a40dfdacb0d4fac1905ec96f7d9dabc"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:dc88dfbc4e1aacbc"
+      },
+      "to_id": "art:sanitize"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:56201fe977dc874f"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:30b38b621f4c98f2487b82076867f0574e96480043a799cadc433797e1774426"
+      },
+      "to_id": "art:schema-build"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:81403d844b84c265da25581c0e3794dbaabae825eebfca0de0917b7f2cfe5322"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:815273502db4fed6800182446fb496a08aace3a9b34757395892e6da37dbcdb9"
+      },
+      "to_id": "art:schema-dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:7201c53b7e2c794b871f3d48b7da761884f5bccd7d9f90b9b7d07210e79053cc"
+      },
+      "to_id": "art:schema-environment"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:831166aee7d4de9bd90e5826d4b6ef474dd8be49f2cc14609f32d12039893222"
+      },
+      "to_id": "art:schema-functional"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:f87ec8468301e8d9887438e149c9d7dcbe1696d2a34438ac32a20afd8ed70846"
+      },
+      "to_id": "art:schema-inference"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:543955d24d224ff0c0aff6f28928fa728248dc7694662b22cab0e8d1f1cc5168"
+      },
+      "to_id": "art:schema-operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:daf8ea6b9399cb16edfd8849adcd1bcd37ac1a7f3ae3acea80ecca8e035fdc9a"
+      },
+      "to_id": "art:schema-readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:8e528069f11575d45725f0fd260a992ba153cfd99de84cfabca797f9b60bccc0"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09"
+      },
+      "to_id": "art:schema-temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:31bc6ca6b00b389dced1dd7ad29164bd2be7b080d6c8a948be99ad57430cf980"
+      },
+      "to_id": "art:schema-verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:47fa2c2aa8b402bb"
+      },
+      "to_id": "art:scope"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:de0871a98e6007aa5ee9e202d5396f014b3799efd72600f2a1a94de6d58ff182"
+      },
+      "to_id": "art:scope-corpus-ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea"
+      },
+      "to_id": "art:scope-read-while-held"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:45aaec579dc701380a04d4f12b59a6b14ba5aeb619e823c021b0b21ed08e5caa"
+      },
+      "to_id": "art:seam"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:efb2faf35ec4cc6ed3df5a61f8fdf2af77aded2a6eb29ddabf2394dfc7ed195d"
+      },
+      "to_id": "art:seam-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:c421c3496192d22d"
+      },
+      "to_id": "art:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:4d824c873120e938"
+      },
+      "to_id": "art:self-host-documents-guard"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:40407c67d5f51959483e88ae3390f796a5a9b5fdd756a2dca76c0283d9751847"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:f6e66fec577e59d755de63c38fc02c7227eb28a64a7e33dc6cd4ab60a2c6b293"
+      },
+      "to_id": "art:setup"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:f8d14a991b90377fab5074ee51dbbcf165d2ab813b1b5e742688b19d534c700b"
+      },
+      "to_id": "art:sibling-merge-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:c221daad4dd73582e3abec93e7d0493e75f71f7809f138c1852271fa63f37ea4"
+      },
+      "to_id": "art:skill-ingest-corpus"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:2a0d95cf199f0a46d893e098279061a1be5959278021113570f759bfabab46f4"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:9352eb7ec610eb6187d482730ea021c18883d4548f4ba2ed3ab3b3fac0451bda"
+      },
+      "to_id": "art:skill-lint-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:ae92f6894ad0c1be076a3243da39ff336e2654554038b512211a654516f41e9b"
+      },
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:beaa4bd48ef2fae4b6cdb0604f5e0ff9ce644d9bb39f1a9c6a7f7f2a630aa797"
+      },
+      "to_id": "art:skills-build"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:c09cc6f310635d1b2fb9a888f38c323fbd2ae2fb9e816586a32f2c00c87a46fb"
+      },
+      "to_id": "art:skills-catalog"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:772b73a05ff491fe6dbca6adeb9697ad84e1ad9592e24b66793aae2716ae0783"
+      },
+      "to_id": "art:stateless-seat-probe"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:ce30365401d775a82585729349538efe1a0fa43625783b2a39a6dc30f7d9ce83"
+      },
+      "to_id": "art:storyflow-resolution-study"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:76f2dec276b09685"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:b3b2bac1387c9c53"
+      },
+      "to_id": "art:surface-usage-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:b1cec4ec107ef2b1"
+      },
+      "to_id": "art:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:e792e6bab2ad48527428df1c015f6ebe20fec9d79da22657f7ed088f8d605c56"
+      },
+      "to_id": "art:sync"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:829e4905cc5f40a8b24e6027b5522780c90e8c133742299549e80880b2f6abef"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:35bd149e47e2a2669241c63df99a4c7b31d1120dd1bb857779376464f39b9bcc"
+      },
+      "to_id": "art:test-check-kit-manifest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:25db9bfb196de65609c48f3aec924f55bdcac7c8492066658f310832b17156ef"
+      },
+      "to_id": "art:test-degraded-server"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:cba77191420374d58d2360da9c1d2a73adcdd1d750d25dafc3991c1a525773af"
+      },
+      "to_id": "art:test-design-identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:adefdf5e47e07f96619a6aa0f32238c8beb42fbd1cc12c067cdcdba7cceb2f05"
+      },
+      "to_id": "art:test-edges-need-both-ends"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:58addb37275ac51b74c0e00183b4a390b0eedd42813e317ce60d7d822824f87c"
+      },
+      "to_id": "art:test-init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:9cd27ccb7bdafea2079d2f691dd664085354c61f96185ff4d6956caba11184c9"
+      },
+      "to_id": "art:test-loop-nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:27f84b4a505d648f2b2b86033ed818a01f6adf50e59ab8a25e76d293daa57162"
+      },
+      "to_id": "art:test-nudge-path"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:b2626bc9b41065d45a47391988fb51f056c5e65c76a2347b2efd47a086547888"
+      },
+      "to_id": "art:test-served-skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:af9a346e7973cb6661f2b3d95cde2e43827667136916833ea3d0ee2402f0cf81"
+      },
+      "to_id": "art:test-sessions-cannot-cross-designs"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:21673699d9d326c9db310fcb24068fa38074634b1949d2708c56f9f77a6c2e5f"
+      },
+      "to_id": "art:test-shared-sessions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:78b994c3da2476c2560bcd53dd776eb2232a1c4856a8427c63e9a08235cc628d"
+      },
+      "to_id": "art:test-stale-seat"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:288dce9896555156f11fda2a204efb826780699e0e9e97d61474911f62d8a639"
+      },
+      "to_id": "art:tools-ask"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:395195e896a9e9d2068f6c0d66e509a66600295237db4f642b7a88ce64bd9373"
+      },
+      "to_id": "art:tools-assure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:1fa0345d69bcb2799d61736814cdc79ebe12120a8967668b451ea8d74db1ab6d"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:e7724d05c7d0e386ebb9a85f531244fae78746c127aee3855d2dcd312563569b"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:268477a9e54b93dde4db095e677c4cf8b8e3bda988fe484de74272d9647f704e"
+      },
+      "to_id": "art:tools-claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:350da82c45348088ed525aea2775d0f6f40019dd4b3b33b4183b4ae0441dd825"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:173cceae74216ee1deb6037dfc94b29d40678922d9d5313b14943b989418dadd"
+      },
+      "to_id": "art:tools-content"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:059eb65c3bb6904b292fef5655a51942079caac0aa0a8c86b0013d4d049cc79f"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:25ab6353c7864b55aa042ac631ecc7ab16daef10aa8024927ecb840158aacbd5"
+      },
+      "to_id": "art:tools-operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:7ed16a594ed4a6c8894c6168f4a345a4f73a4e0ad9cabaa4a7b0d79c84f86174"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:814d67ab62c1014e402611dc1f73028332d2af8ca95a159dbf70022086065b34"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:1dab58f5049860d865ed9351a40393fd093212bb6ae82952e1f136d56cadc21f"
+      },
+      "to_id": "art:unreachable-decision-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:47790db3adb4de239294068eb0bbe1b919a6203bb5385b4f47692b5288c7fa1c"
+      },
+      "to_id": "art:updating-doc"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:ef7dbb708e027df2"
+      },
+      "to_id": "art:upgrade-v0110"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34"
+      },
+      "to_id": "art:upgrading-v0120"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995"
+      },
+      "to_id": "art:upgrading-v0130"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:b1e1cee221b0bc6ed7f9e4411cda9dcd50a2dc2647785e06eaa7b1ce7329da28"
+      },
+      "to_id": "art:upgrading-v0150"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:00eea80c2a79cc4eed4d1db9402a4e90e23231745a8fdd4117f44a9f22f58f24"
+      },
+      "to_id": "art:upgrading-v0160"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:d1c21f5330ad0ea05f4efe46c08a010d5fb22ece05523922bb6324c7ec8a2eda"
+      },
+      "to_id": "art:upgrading-v0180"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:3a36b9b6b248af09"
+      },
+      "to_id": "art:upgrading-v0190"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:d16abc28ea59e3f9"
+      },
+      "to_id": "art:upgrading-v0210"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {
+        "as_checksum": "sha256:0d250aa84d8ebe16"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:alternatives"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:compare"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:degraded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:docs"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:merge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:packaging"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:registry"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:sanitize"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:scope"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:sync"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "cmp:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "sys:agent-surface"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "sys:coherence-loop"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "sys:documentation"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "sys:human-channel"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "sys:intake"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "sys:store"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "sys:time-history"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0250",
+      "properties": {},
+      "to_id": "sys:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
       "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:1c729eee5b67e7dc"
@@ -39503,6 +41481,12 @@
       "from_id": "epoch:v0230",
       "properties": {},
       "to_id": "epoch:v0240-planned"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v0240",
+      "properties": {},
+      "to_id": "epoch:v0250"
     },
     {
       "edge_type": "PRECEDES",
@@ -44742,9 +46726,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:8f8a543ba59ec079",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/acknowledgement_not_structure.rs",
         "name": "acknowledgement_not_structure.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -44753,9 +46739,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:14b6b93d62aa5ff7",
+        "granularity": "atomic",
         "location": "getting-started/skills/adopt/SKILL.md",
         "name": "adopt/SKILL.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -44764,9 +46752,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c33a33c15e2611b3",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/agent.rs",
         "name": "agent.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -44775,9 +46765,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:d282035a162e3e56",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/allocate.rs",
         "name": "allocate.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -44786,9 +46778,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c87a79726aeb111b",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/alternatives.rs",
         "name": "alternatives.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -44823,9 +46817,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:49f1f3095ea2707d",
+        "granularity": "atomic",
         "location": "tools/bl124_instrument.py",
         "name": "bl124_instrument.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -44847,9 +46843,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6aeb7aaf31ccdd875990bce6735c75eeead49c7371c4bc39064d4e7f478733e8",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/budget.rs",
         "name": "budget.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -44858,9 +46856,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:8f5ffbc7c6e84b5e",
+        "granularity": "atomic",
         "location": "docs/built-right-review.md",
         "name": "built-right-review.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -44869,9 +46869,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6e8e23fce35b21d6",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/bulk.rs",
         "name": "bulk.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -44880,9 +46882,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c2bea913c620128c1e602aed078713c7598f92e7cada4024c67777584b23b8be",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/changelog.rs",
         "name": "tests/changelog.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -44930,9 +46934,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:a84c2afa299b6793cb78ae9aad6fda8cf659780728e38da0906ffa629dd41919",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/checksum_dialect.rs",
         "name": "checksum_dialect.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -44954,9 +46960,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:2575d415a74a3266b208ddf798e5e6516186d6c345324efb6f9b66e46b7367a3",
+        "granularity": "atomic",
         "location": "docs/collaborating.md",
         "name": "collaborating.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -44965,9 +46973,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b73161a0fd04efee",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/compare.rs",
         "name": "compare.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -44976,9 +46986,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b9f6ec2a69d7cfbc6041c2cf7d0bbb5a409a981cd3c44a36672f4b3a375a4558",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/compose.rs",
         "name": "compose.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -44987,9 +46999,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6b58139a0fd5f095c64c4c465f03cfed8200015ef0e7af3a4e7cca064727de39",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/compose.rs",
         "name": "tests/compose.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -44998,9 +47012,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:276c4e707db8d55a34f673a533dcaa15629d6bd59be4d3232df21bff1e6ce7c3",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/confirm.rs",
         "name": "confirm.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45009,9 +47025,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b4fd5760c54b234a4c8d4031c4dba9610db59dfb10cabc0dfc3907e143442344",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/confirmation_vocabulary.rs",
         "name": "confirmation_vocabulary.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45046,9 +47064,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:2459979bcda2901dc08307b0211763a91245cdfd4727c9ab967039b2c154f2ed",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/contradiction_alignment.rs",
         "name": "tests/contradiction_alignment.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45083,9 +47103,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c30ee52bd7c3ec95",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/coverage.rs",
         "name": "tests/coverage.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45094,9 +47116,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:adfea07b2891743b",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/cycles.rs",
         "name": "Circular-dependency suite — detection, selectivity, and what the finding says it walked",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45105,9 +47129,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:eb126729e08e8d8d3ac45acec3a2e291e068dc1e9afed14a8647edf73300bdde",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/degraded.rs",
         "name": "degraded.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45115,7 +47141,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "config",
-        "checksum": "sha256:34059cb7abe2cce90cd3a8e28dd893b8235383585e7299e0ca50bbca0a4a0116",
+        "checksum": "sha256:c4bb26d2d765f34cf8da774b4605b7431e99c5cfa81d2a4cb9da837cab3437e1",
         "granularity": "atomic",
         "location": "reflow2.toml",
         "name": "reflow2.toml",
@@ -45168,9 +47194,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:59ef210d5f8576a9f07b321dc546b653056ab4ecda17e0ec9269ed87a52c27dc",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/dimensions.rs",
         "name": "dimensions.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45244,9 +47272,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:74c0459e03ad38ce",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/dto.rs",
         "name": "dto.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45255,9 +47285,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:8956d2d0d4f31fe1",
+        "granularity": "atomic",
         "location": "tools/evidence_quality_instrument.py",
         "name": "Evidence-quality instrument — what the three axes report on a real design",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45266,9 +47298,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:0f66b31cfaca4944",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/evidence_quality.rs",
         "name": "The evidence-quality family suite — all three axes with their counterweights",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45277,9 +47311,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:58443db75d9199e7addc3f4673d84e1249df60fc563237475636f8e0713f6896",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/evidence.rs",
         "name": "tests/evidence.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45288,9 +47324,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:cbba2d0c482d766c6dae2ca016e0b9fd2f760a9987febfa7e9b477a2414df079",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/export.rs",
         "name": "export.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45312,9 +47350,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:cfdf82f1a6497595",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/fielded.rs",
         "name": "fielded.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45323,9 +47363,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2",
+        "granularity": "atomic",
         "location": "docs/fleet-lessons.md",
         "name": "fleet-lessons.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45334,9 +47376,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:f6abe031170cd8123c44b3f87248b9841f9b31117d78d8325769fea6a34a5d8e",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/flow.rs",
         "name": "flow.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45345,9 +47389,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:8196df94f5775161",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/genesis.rs",
         "name": "genesis.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45356,9 +47402,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:34701500af93dbcf",
+        "granularity": "atomic",
         "location": "docs/github-mcp-nuggets.md",
         "name": "github-mcp-nuggets.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45367,9 +47415,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:199301145284e0fb30cfec667a6adb26c3af9db724a2f3049474659ee07c7f15",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/granularity.rs",
         "name": "granularity.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45404,9 +47454,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:30fc1a09862792a9",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/hierarchy.rs",
         "name": "hierarchy.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45428,9 +47480,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:889393466bafe709429fc137dd4d2e1a372990c6486d7a85dec07c630a51cbb3",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/ility.rs",
         "name": "ility.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45465,9 +47519,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:ddfa7e13d3b56156a9b463f434cd691718e1af489f27aaba169395c226d14b9a",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/ingest_handshake.rs",
         "name": "tests/ingest_handshake.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45489,9 +47545,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:07c82cd7671c1241",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/interface_spec.rs",
         "name": "tests/interface_spec.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45500,9 +47558,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:13f19b14c25c9300",
+        "granularity": "atomic",
         "location": "getting-started/AGENTS.md",
         "name": "getting-started/AGENTS.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45511,9 +47571,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:feebbdb1438ff2c52e51cb0fbb004476378ffa97d3c9aa72890b7aa92f4b81b5",
+        "granularity": "atomic",
         "location": "getting-started/POINTER.md",
         "name": "POINTER.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45522,9 +47584,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:65a01535f32f023e",
+        "granularity": "atomic",
         "location": "getting-started/skills/kpp-proposal/SKILL.md",
         "name": "kpp-proposal/SKILL.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45546,9 +47610,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6869d93e97fc9393",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/llm.rs",
         "name": "llm.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45570,9 +47636,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b41bc1c569e39c7ab7d8d72d667fe56870b53eb720be82e6e4b6d7b870023c82",
+        "granularity": "atomic",
         "location": "tools/reflow2_install.py",
         "name": "reflow2_install.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45594,9 +47662,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:f743c9902452b2b7b15da4df3d62a92d9dca2bdbbd0efcff7e3625eb9b809e9a",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/maturity.rs",
         "name": "maturity.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45605,9 +47675,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:075bab31f3c131b6",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/merge.rs",
         "name": "merge.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45616,9 +47688,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:cddbea4165e0e3b0",
+        "granularity": "atomic",
         "location": "tools/test_merge_driver.py",
         "name": "test_merge_driver.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45640,9 +47714,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:774ad95db84666b3",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45651,9 +47727,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/nudge.rs",
         "name": "nudge.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45662,9 +47740,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:e95e6f4c2658ebd1c7afa6e23385256e51272860a0cb56e2046d4c1b581881d0",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/operate.rs",
         "name": "operate.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45673,9 +47753,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:9b388fef123f04c5",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/orphan_attachment.rs",
         "name": "orphan_attachment.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45684,9 +47766,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:9cbea33b6a561a9e",
+        "granularity": "atomic",
         "location": "getting-started/skills/parallel-work/SKILL.md",
         "name": "parallel-work/SKILL.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45708,9 +47792,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14",
+        "granularity": "atomic",
         "location": "docs/planning-at-scale.md",
         "name": "planning-at-scale.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45719,9 +47805,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:59b6e751c18dfc67d4546b6d6d70e1305b64864d3890d8cf786320687c9b84d4",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/preserve.rs",
         "name": "preserve.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45730,9 +47818,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:26dde99a1df42e6f",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/propagate.rs",
         "name": "propagate.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45741,9 +47831,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b3cd0321b5dcda802926f3247ab45b6c1bbfc7bbd60ed38d2d95da29a3d6caf0",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/provenance.rs",
         "name": "provenance.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45752,9 +47844,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:7979028e8c95724dd5696d9b1fee3f307c718b7d9f4e086a968620b602eec420",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/publishable_promise.rs",
         "name": "tests/publishable_promise.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45763,10 +47857,12 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:f01d1b8a9f04a3efd4efe0fa05d12f9d1b330e4c4f16b9f1781ae6e645a38fa5",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "crates/reflow2-core/src/readiness.rs",
         "name": "readiness.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45801,9 +47897,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:99fc5da421a04f5e",
+        "granularity": "atomic",
         "location": "tools/render_views.py",
         "name": "render_views.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45825,9 +47923,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:dc88dfbc4e1aacbc",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/sanitize.rs",
         "name": "sanitize.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45836,9 +47936,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:56201fe977dc874f",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/schema.rs",
         "name": "schema.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45861,10 +47963,12 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:81403d844b84c265da25581c0e3794dbaabae825eebfca0de0917b7f2cfe5322",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/core.yaml",
         "name": "core.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45873,10 +47977,12 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:815273502db4fed6800182446fb496a08aace3a9b34757395892e6da37dbcdb9",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/dimensions.yaml",
         "name": "dimensions.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45885,10 +47991,12 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:7201c53b7e2c794b871f3d48b7da761884f5bccd7d9f90b9b7d07210e79053cc",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/environment.yaml",
         "name": "environment.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45897,10 +48005,12 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:831166aee7d4de9bd90e5826d4b6ef474dd8be49f2cc14609f32d12039893222",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/functional.yaml",
         "name": "functional.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45923,10 +48033,12 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:543955d24d224ff0c0aff6f28928fa728248dc7694662b22cab0e8d1f1cc5168",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/operate.yaml",
         "name": "operate.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45935,10 +48047,12 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:daf8ea6b9399cb16edfd8849adcd1bcd37ac1a7f3ae3acea80ecca8e035fdc9a",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/readiness.yaml",
         "name": "readiness.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45947,10 +48061,12 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:8e528069f11575d45725f0fd260a992ba153cfd99de84cfabca797f9b60bccc0",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/structure.yaml",
         "name": "structure.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45959,10 +48075,12 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/temporal.yaml",
         "name": "temporal.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45971,10 +48089,12 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:31bc6ca6b00b389dced1dd7ad29164bd2be7b080d6c8a948be99ad57430cf980",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/verify.yaml",
         "name": "verify.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -45983,9 +48103,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:47fa2c2aa8b402bb",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/scope.rs",
         "name": "scope.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46007,9 +48129,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea",
+        "granularity": "atomic",
         "location": "docs/scope-read-while-held.md",
         "name": "scope-read-while-held.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46018,9 +48142,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:45aaec579dc701380a04d4f12b59a6b14ba5aeb619e823c021b0b21ed08e5caa",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/seam.rs",
         "name": "seam.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46029,9 +48155,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:efb2faf35ec4cc6ed3df5a61f8fdf2af77aded2a6eb29ddabf2394dfc7ed195d",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/seam.rs",
         "name": "tests/seam.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46040,9 +48168,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c421c3496192d22d",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/search.rs",
         "name": "search.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46051,9 +48181,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:4d824c873120e938",
+        "granularity": "atomic",
         "location": "tools/self_host_uses_documents.py",
         "name": "self_host_uses_documents.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46075,9 +48207,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:f6e66fec577e59d755de63c38fc02c7227eb28a64a7e33dc6cd4ab60a2c6b293",
+        "granularity": "atomic",
         "location": "getting-started/SETUP.md",
         "name": "getting-started/SETUP.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46125,9 +48259,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:9352eb7ec610eb6187d482730ea021c18883d4548f4ba2ed3ab3b3fac0451bda",
+        "granularity": "atomic",
         "location": "tools/test_skill_lint.py",
         "name": "test_skill_lint.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46149,9 +48285,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:beaa4bd48ef2fae4b6cdb0604f5e0ff9ce644d9bb39f1a9c6a7f7f2a630aa797",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/build.rs",
         "name": "build.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46160,9 +48298,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:c09cc6f310635d1b2fb9a888f38c323fbd2ae2fb9e816586a32f2c00c87a46fb",
+        "granularity": "atomic",
         "location": "SKILLS.md",
         "name": "SKILLS.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46171,9 +48311,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:772b73a05ff491fe6dbca6adeb9697ad84e1ad9592e24b66793aae2716ae0783",
+        "granularity": "atomic",
         "location": "tools/stateless_seat_probe.py",
         "name": "stateless_seat_probe.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46182,9 +48324,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:ce30365401d775a82585729349538efe1a0fa43625783b2a39a6dc30f7d9ce83",
+        "granularity": "atomic",
         "location": "docs/storyflow-resolution-nuggets.md",
         "name": "storyflow-resolution-nuggets.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46193,9 +48337,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:76f2dec276b09685",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/structure.rs",
         "name": "structure.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46204,9 +48350,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b3b2bac1387c9c53",
+        "granularity": "atomic",
         "location": "tools/surface_usage.py",
         "name": "Surface-usage instrument — which parts of reflow2 real sessions actually drive",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46215,9 +48363,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b1cec4ec107ef2b1",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/surprises.rs",
         "name": "surprises.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46226,9 +48376,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:e792e6bab2ad48527428df1c015f6ebe20fec9d79da22657f7ed088f8d605c56",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/sync.rs",
         "name": "sync.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46237,9 +48389,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:829e4905cc5f40a8b24e6027b5522780c90e8c133742299549e80880b2f6abef",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "temporal.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46261,9 +48415,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:25db9bfb196de65609c48f3aec924f55bdcac7c8492066658f310832b17156ef",
+        "granularity": "atomic",
         "location": "tools/test_degraded_server.py",
         "name": "test_degraded_server.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46272,9 +48428,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:cba77191420374d58d2360da9c1d2a73adcdd1d750d25dafc3991c1a525773af",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/design_identity.rs",
         "name": "design_identity.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46322,9 +48480,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:27f84b4a505d648f2b2b86033ed818a01f6adf50e59ab8a25e76d293daa57162",
+        "granularity": "atomic",
         "location": "tools/test_nudge_path.py",
         "name": "test_nudge_path.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46333,9 +48493,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b2626bc9b41065d45a47391988fb51f056c5e65c76a2347b2efd47a086547888",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/served_skills.rs",
         "name": "served_skills.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46357,9 +48519,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:21673699d9d326c9db310fcb24068fa38074634b1949d2708c56f9f77a6c2e5f",
+        "granularity": "atomic",
         "location": "tools/test_shared_sessions.py",
         "name": "test_shared_sessions.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46368,9 +48532,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:78b994c3da2476c2560bcd53dd776eb2232a1c4856a8427c63e9a08235cc628d",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/stale_seat.rs",
         "name": "stale_seat.rs + test_stale_seat.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46379,9 +48545,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:288dce9896555156f11fda2a204efb826780699e0e9e97d61474911f62d8a639",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/ask.rs",
         "name": "tools/ask.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46416,9 +48584,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:e7724d05c7d0e386ebb9a85f531244fae78746c127aee3855d2dcd312563569b",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "tools/capture.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46466,9 +48636,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:059eb65c3bb6904b292fef5655a51942079caac0aa0a8c86b0013d4d049cc79f",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46477,9 +48649,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:25ab6353c7864b55aa042ac631ecc7ab16daef10aa8024927ecb840158aacbd5",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/operate_tools.rs",
         "name": "tools/operate_tools.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46488,9 +48662,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:7ed16a594ed4a6c8894c6168f4a345a4f73a4e0ad9cabaa4a7b0d79c84f86174",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46499,9 +48675,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:814d67ab62c1014e402611dc1f73028332d2af8ca95a159dbf70022086065b34",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46510,9 +48688,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:1dab58f5049860d865ed9351a40393fd093212bb6ae82952e1f136d56cadc21f",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/unreachable_decision.rs",
         "name": "unreachable_decision.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46534,9 +48714,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:ef7dbb708e027df2",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.11.0.md",
         "name": "upgrading-to-v0.11.0.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46545,9 +48727,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.12.0.md",
         "name": "upgrading-to-v0.12.0.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46556,9 +48740,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.13.0.md",
         "name": "upgrading-to-v0.13.0.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46567,9 +48753,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:b1e1cee221b0bc6ed7f9e4411cda9dcd50a2dc2647785e06eaa7b1ce7329da28",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.15.0.md",
         "name": "upgrading-to-v0.15.0.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46578,9 +48766,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:00eea80c2a79cc4eed4d1db9402a4e90e23231745a8fdd4117f44a9f22f58f24",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.16.0.md",
         "name": "upgrading-to-v0.16.0.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46589,9 +48779,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:d1c21f5330ad0ea05f4efe46c08a010d5fb22ece05523922bb6324c7ec8a2eda",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.18.0.md",
         "name": "upgrading-to-v0.18.0.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46600,9 +48792,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:3a36b9b6b248af09",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.19.0.md",
         "name": "upgrading-to-v0.19.0.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46611,9 +48805,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:d16abc28ea59e3f9",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.21.0.md",
         "name": "Upgrading to v0.21.0 — the stamp moves, and your evidence can say what it covers",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46622,9 +48818,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/verify.rs",
         "name": "verify.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46633,9 +48831,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:0d250aa84d8ebe16",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/vocabulary.rs",
         "name": "vocabulary.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -48930,6 +51130,15 @@
       }
     },
     {
+      "node_id": "chg:accept-921b8978971ae293",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-08",
+        "name": "reflow2.toml's version string bumped 0.24.0 -> 0.25.0 for the cut. The design meaning of a release lives in the Release node and its epoch, not in a version string, so the design holds. Accepted BEFORE release_includes_all so the manifest freezes the shipped value rather than the pre-bump one — the recorded v0.20.0 trap, avoided rather than repeated."
+      }
+    },
+    {
       "node_id": "chg:accept-975fcb51ce6ec113",
       "node_type": "ChangeEvent",
       "properties": {
@@ -50941,6 +53150,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "v0.21.0 re-scoped: it ships the evidence-quality family and BL-141(a), not the four agent-facing capabilities it was planned for. Those four (cap:gap-carries-a-reading, cap:session-artifacts, cap:skill-triggers, cap:tool-carries-convention) are all `expected` rather than `required`, so nothing blocks the cut under dec:release-trigger — and their SCHEDULED_FOR edges are DELIBERATELY LEFT POINTED AT THIS RELEASE rather than moved. That makes arrival_delta report them as `outstanding`: still pointed at an arrived moment, not delivered, nobody having said whether they slip or drop. Re-pointing them would assert a decision Anthony has not made, and dropping them would assert a withdrawal he has not made — the exact failure the fifth outcome was added to prevent."
+      }
+    },
+    {
+      "node_id": "chg:v0250-ships-the-heal-fixes-not-the-read-half",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "v0.25.0 ships the HEAL disclosure fixes a stood-down fleet is waiting on, NOT the READ half epoch:v0250-planned was scoped for — the planned work is not withdrawn and needs re-pointing, which is Anthony's call"
       }
     },
     {
@@ -55274,6 +57491,16 @@
       }
     },
     {
+      "node_id": "epoch:v0250",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "v0.25.0 cut — a merge proposal says what it would destroy, a finding names its hub, and a refusal names the call that fixes it: the HEAL surface a stood-down fleet reported, made honest",
+        "sequence": 280,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:v0250-planned",
       "node_type": "DesignEpoch",
       "properties": {
@@ -58186,9 +60413,19 @@
       "node_type": "Release",
       "properties": {
         "name": "v0.24.0 — a folder of documents becomes one design, and the first real trial found what green gates could not",
-        "status": "deployed",
+        "status": "retired",
         "unit_type": "binary",
         "version": "0.24.0"
+      }
+    },
+    {
+      "node_id": "rel:v0250",
+      "node_type": "Release",
+      "properties": {
+        "name": "v0.25.0 — HEAL stops certifying a deletion as safe: a proposal says what it would destroy, a finding names its hub, and a refusal names the call that fixes it",
+        "status": "deployed",
+        "unit_type": "binary",
+        "version": "0.25.0"
       }
     },
     {
@@ -61166,6 +63403,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:v0250:epoch:v0250-planned",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[]",
+        "state": "{\"epoch_type\":\"release_cut\",\"name\":\"PLANNED v0.25.0 — \\\"The graph can be READ at the size it has reached.\\\" WIDENED 2026-08-05 on Anthony's word, from \\\"the loop tells the truth about what it is owed\\\" to the whole OUT half (dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one, accepted). THE MEASUREMENT THAT FORCED IT: of 33 collection-returning read tools, THREE let the caller bound the result and only scan_nodes can page; reviewed_gaps returned 130,922 characters and had to be read with jq. Today a document BEATS the graph for making a decision, and that is a fair fight the graph loses — so no capture improvement is worth anything until this lands. Rows already here and still right: BL-194 open_questions all-clear, BL-192 enums name legal values, BL-195 the bridge a ruling forbids, BL-201 wire or retire Requirement.concern, BL-203 an unexercised type is visible. Joining them: generalise scan_nodes' envelope (total/returned/omitted/next_offset/capped_by + payload budget) to the other 30, since it already solved this and was adopted by exactly one tool; and dec:gap-reporting-when-most-intent-is-unbuilt (accepted), because 300 captured ideas produce 300 identical gaps and that is the same defect wearing a detector's clothes. BL-205 is DONE, shipped early in #70 — the plan carried it as open and was stale.\",\"sequence\":250,\"status\":\"planned\"}",
+        "target_id": "epoch:v0250-planned",
+        "target_type": "DesignEpoch"
+      }
+    },
+    {
       "node_id": "snap:epoch:wire-planning-cluster:dec:where-plans-live",
       "node_type": "Snapshot",
       "properties": {
@@ -63947,7 +66194,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:83a172173add1f316a25394bdb60b1b6e5569115c67adec7cb252b4d8868be97",
+  "prev_content_hash": "sha256:64c89b3df3f94c8578e690fd2da2c2a62e9e18e13b9467443a15fe7b498dcff8",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -64044,7 +66291,7 @@
       "Verification"
     ],
     "node_types": 29,
-    "reflow2_version": "0.24.0",
+    "reflow2_version": "0.25.0",
     "schema_version": 1
   }
 }

@@ -31,6 +31,59 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.25.0] — 2026-08-08
+
+### Fixed
+
+- **⭐⭐ A merge proposal now says what it would DESTROY, before anyone can apply it — and a
+  proposal that deletes a node stops reporting itself as needing no review.** `HealProposal` gains
+  `would_destroy`: one entry per merge, naming the doomed node, the properties that die with it,
+  and — when both nodes carry the same provenance — that the survivor was picked by the **alphabet**
+  rather than by anything in the design. `requires_human_review` now also fires on any proposal
+  containing a merge.
+
+  Two defects, and the second read as a feature. `requires_human_review` was
+  `!generated_content.is_empty()`, so a proposal whose *entire content* was irreversible node
+  deletions reported `false` at confidence `0.9` — the machinery behind the served `check-health`
+  skill calling merges the safe mechanical half. And `discarded`, which has always said what a
+  merge let go, lived on the *report*: the receipt of an irreversible act, when the person deciding
+  reads the proposal. `cap:heal` SATISFIES `req:no-silent-fallback` and this failed it.
+
+  Reported by dev_storyflow, whose fleet stood itself down from the entire HEAL surface. Two of
+  this repo's own tests had asserted the defect as intended behaviour — at unit level
+  (*"a structural-only proposal needs no human review"*) and end-to-end (*"the only remaining
+  operation is a content-free merge"*). A merge **is** content-free; it generates nothing. It also
+  deletes a node.
+
+- **⭐ A duplicate finding says when its node is a HUB, so five findings stop reading as five
+  judgements.** `HealIssue` gains `hubs`: for each node also appearing in other findings of the
+  same category, the node and how many. dev_storyflow's scoped `detect_defects` returned
+  `in_scope: 5`, all duplicates — one Decision was in three of the pairs and one Requirement in the
+  other two. **Five findings were two nodes.** Mid-stand-down, the count read as independent
+  corroboration. Scoped per category so a well-connected node does not become a permanent warning.
+
+- **A refusal names the call that fixes it.** `claim_region` on an unknown Contributor was a bare
+  `NodeNotFound` — true and unactionable. A dev_storyflow worker hit it, concluded the tool was
+  broken, and wrote *"there is NO `mint_seat` tool in the served surface"* into fleet onboarding;
+  that false correction travelled **five hops**. It now names `add_contributor` and echoes the id
+  you passed. It still refuses — naming the fix does not become doing it.
+
+- **`add_contributor` accepts `contributor_id`**, the name `claim_region` uses for the same handle
+  one step later. `deny_unknown_fields` is unchanged, so a genuine typo is still refused, and the
+  alias stays out of the advertised schema.
+
+- **The installer says when git is already tracking your graph store.** `.gitignore` never untracks,
+  so a `.reflow2/` committed before the ignore rule stays committed — and the installer's warning
+  for exactly this skipped every entry ending in `/`, which is only ever `.reflow2/`. Both the
+  install path and **`--check`** were silent. The remedy it prints now also runs (`git rm -r
+  --cached` for a directory). Reported by an early adopter whose project was installed at 0.11.0.
+
+- **A schema hint stops offering values its own enum rejects.** `CAUSES.validation_status`
+  described *"(observational / intervention / mechanism / temporal)"* against an enum of
+  `unvalidated / hypothesis / validated / refuted` — no overlap. `describe_schema` serves that prose
+  verbatim to every agent, so it was a wrong instruction at scale.
+
+
 ### Added
 
 - **⭐ `getting-started/UPDATING.md` — how to update reflow2 without losing your design.** Ships in
