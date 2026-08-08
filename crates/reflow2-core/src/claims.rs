@@ -88,14 +88,20 @@ pub struct ClaimReport {
     pub advisory: &'static str,
 }
 
-const ADVISORY: &str = "Claims are advisory: they never block a write, and they are only as fresh \
-                        as the last pull. An overlap means two people may collide — the merge will \
-                        still resolve it correctly if they do. Liveness is COMPUTED from the \
-                        claiming session, not stored: `gone` means that session has exited and the \
-                        claim is a ghost (excluded from overlaps), `unknown` means it was made on \
-                        another machine or before seats were recorded — unknown is never read as \
-                        free, because taking work somebody is actively doing is the expensive \
-                        mistake.";
+const ADVISORY: &str = "Claims are advisory: they never block a write. An overlap means two people \
+                        may collide — the merge will still resolve it correctly if they do. \
+                        Liveness is COMPUTED, never stored: `gone` means that session is no longer \
+                        attached and the claim is a ghost (excluded from overlaps), `unknown` \
+                        means it was made on another machine or before seats were recorded — \
+                        unknown is never read as free, because taking work somebody is actively \
+                        doing is the expensive mistake. HOW IT IS COMPUTED DEPENDS ON WHO IS \
+                        SERVING: a seat minted by another process is answered by asking the OS \
+                        whether that process still exists, so a seat left behind by a previous \
+                        shared server reads `gone` after a restart; a seat this server minted is \
+                        answered from the sessions it is actually holding, because its own pid is \
+                        alive by definition and would otherwise report every client as live \
+                        forever. That second case was broken until 2026-08-08 and is the reason \
+                        this sentence is here.";
 
 fn int_prop(props: &BTreeMap<String, Value>, key: &str, fallback: usize) -> usize {
     props

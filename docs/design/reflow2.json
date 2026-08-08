@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:acb87bd743525a4dff470c4a1993ea080a3ae924956e4fc98bf5411443cbbec1",
+  "content_hash": "sha256:5430b00dcafa89f38dcf34bdacd56c2cfdf400c4b0786f9d439dfb84406b2179",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -393,6 +393,12 @@
     },
     {
       "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:correction-stranded-server-is-recoverable-without-a-reconnect",
+      "properties": {},
+      "to_id": "cap:shared-sessions"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
       "from_id": "fact:defect-a-deferred-tool-reads-as-a-nonexistent-one",
       "properties": {},
       "to_id": "cap:degraded-surface"
@@ -484,6 +490,12 @@
     {
       "edge_type": "ABOUT_ENTITY",
       "from_id": "fact:defect-small-surface-frictions-contributor-field-and-stale-echo",
+      "properties": {},
+      "to_id": "cap:shared-sessions"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-stale-server-reproduced-first-hand-here",
       "properties": {},
       "to_id": "cap:shared-sessions"
     },
@@ -12576,6 +12588,69 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:seat-liveness-is-the-session-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:claims"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seat-liveness-is-the-session-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:identity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seat-liveness-is-the-session-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seat-liveness-is-the-session-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-claims"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seat-liveness-is-the-session-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:claim-liveness"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seat-liveness-is-the-session-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:cluster-claims"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seat-liveness-is-the-session-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:seat-handle"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:session-chooses-design-accepted",
       "properties": {
         "accepted_baseline": false,
@@ -13239,6 +13314,17 @@
         "action": "modified"
       },
       "to_id": "req:version-combination-is-an-object"
+    },
+    {
+      "edge_type": "CLAIMS",
+      "from_id": "who:claude-code",
+      "properties": {
+        "claimed_at": "2026-08-08",
+        "depth": 2,
+        "note": "Fixing the defect where seat liveness is the SERVER's pid, so `gone` is unreachable under --shared and a dead worker's region reads held (fact:defect-claim-liveness-is-the-servers-pid-not-the-sessions). Touching identity.rs (seat_liveness), claims.rs (the advisory text), and the MCP session layer. Claimed LATE and after the writes had already started, which was my error, not the tool's — the board was empty so nothing collided.",
+        "seat": "asligar-bitecool:1540317:7232f67b"
+      },
+      "to_id": "cap:claim-liveness"
     },
     {
       "edge_type": "CONSTRAINS",
@@ -14071,6 +14157,26 @@
         "evidence": "Qualifies rather than overturns: skills stay served because a stale skill is silently wrong; commands are installed because a stale command is still correct, and the one way it could rot (naming a skill that no longer exists) is now a lint failure."
       },
       "to_id": "dec:skills-served"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "fact:correction-stranded-server-is-recoverable-without-a-reconnect",
+      "properties": {
+        "alignment": "opposing",
+        "confidence": 1.0,
+        "evidence": "Corrects one clause only: the stranded session IS recoverable without an MCP reconnect, by starting a replacement daemon by hand from the on-disk path. Proven by execution on 2026-08-08. The rest of that node -- the spawn failure, its cause in current_exe() resolving a deleted inode, and the misleading log advice -- stands unchanged."
+      },
+      "to_id": "fact:defect-rebuild-strands-the-shared-server"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "fact:defect-stale-server-reproduced-first-hand-here",
+      "properties": {
+        "alignment": "supporting",
+        "confidence": 1.0,
+        "evidence": "Independent first-hand reproduction on a second machine and a second project, including the /proc/self/exe '(deleted)' marker being present and correct at the moment it was needed. Raises the proposed fix from plausible to validated."
+      },
+      "to_id": "fact:defect-a-running-server-cannot-say-it-is-stale"
     },
     {
       "edge_type": "CONTRADICTS",
@@ -40577,6 +40683,15 @@
     {
       "edge_type": "SATISFIES",
       "from_id": "cap:claim-liveness",
+      "properties": {
+        "coverage": "partial",
+        "evidence": "The seat registry added on 2026-08-08 makes the count of attached sessions COMPUTABLE in the serving process (identity::attached_seat_count), which is the input this requirement needs. NOT COVERED: nothing yet reports it in a payload -- loop_status and graph_report still do not say how many seats are attached, nor label their rollups as graph-wide, which is what the requirement actually asks for. Recorded as partial so the remaining work stays visible rather than being closed by a capability that merely made it possible."
+      },
+      "to_id": "req:a-session-can-tell-it-is-not-alone"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:claim-liveness",
       "properties": {},
       "to_id": "req:claims-have-owners"
     },
@@ -44117,10 +44232,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5b6cb19cd4efedd8a4940a54412d033f73a904b376953f4f0f58d3ffee989d57",
+        "checksum": "sha256:7550e9e59eb9a31e49637a4612eaf6b2e2198e04cc35482dfa8436c7cbce8b7c",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/claims.rs",
         "name": "claims.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -44589,7 +44706,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:bca3fb382cb6f8bff6c15fcb432077855e56631f192c8bd5ec26620ac78c88b8",
+        "checksum": "sha256:8170aad432c7374ca4070c9bf5c0e57f55be28ce069c0b44e9ab613b7de8ecc4",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/identity.rs",
         "name": "identity.rs",
@@ -45234,7 +45351,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2584bb9e32b2a35d82f96343ca02433e811d1c3768aa811781f4b57322b198f6",
+        "checksum": "sha256:ae2ea2e7fc966561604e7c69bc95cb0c911dbcafb0939d46cd2984312db61a01",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -45597,10 +45714,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:30f35727b9157119714ad5a060cabdef3d87d3a69d88987e8ade91fb6155d623",
+        "checksum": "sha256:268477a9e54b93dde4db095e677c4cf8b8e3bda988fe484de74272d9647f704e",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/claims_tools.rs",
         "name": "tools/claims_tools.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46214,7 +46333,7 @@
       "node_id": "cap:claim-liveness",
       "node_type": "Capability",
       "properties": {
-        "description": "Every claim records a seat — machine:pid:mint, minted once per process with zero coordination — defaulting to the session making it, overridable with a durable handle (a fleet worker name). claim_report then COMPUTES liveness by asking the operating system whether that process still exists: nothing writes \"I am alive\", so nothing can be stale. A claim whose session exited is reported `gone`, listed in `stale` with its note intact, and EXCLUDED from overlaps, because a collision with nobody is not a collision and reporting it as one is how an advisory report starts lying. A claim from another machine, or from before seats were recorded, is `unknown` and still counts as a possible collision — reading it as free would invite somebody to take work that is actively being done.",
+        "description": "Every claim records a seat — machine:pid:mint, minted once per session with zero coordination — defaulting to the session making it, overridable with a durable handle (a fleet worker name). claim_report then COMPUTES liveness rather than storing it: nothing writes 'I am alive', so nothing can be stale. A claim whose session is no longer attached is reported `gone`, listed in `stale` with its note intact, and EXCLUDED from overlaps, because a collision with nobody is not a collision and reporting it as one is how an advisory report starts lying. A claim from another machine, or from before seats were recorded, is `unknown` and still counts as a possible collision — reading it as free would invite somebody to take work that is actively being done.\n\nHOW LIVENESS IS COMPUTED DEPENDS ON WHO MINTED THE SEAT, and this is the part that was wrong until 2026-08-08. A seat carrying ANOTHER process's pid is answered by asking the operating system whether that process still exists — so a seat left behind by a previous shared server correctly reads `gone` after a `--stop-shared` bounce. A seat THIS process minted cannot be answered that way, because under `--shared` every seat is minted by the daemon and the daemon's pid is alive by definition: the probe asked 'is the server running?', to which the answer is always yes, and `gone` was unreachable. Measured in dev_storyflow (w-613d836b, 2026-08-07): a worker that had died hours earlier still read as holding its region, and this capability was status `verified` throughout. Those seats are now answered from the sessions the server is actually holding — a lease registered on attach and released by Drop, so a client that crashes retires its seat exactly like one that exits cleanly. The registry answers only for seats the process itself issued; anything else falls through to the probe, so a bare mint_seat elsewhere in the process cannot make an unrelated seat read as a ghost.\n\nWHY THE ORIGINAL CHECK DID NOT CATCH IT, recorded because the shape recurs: the property was true under the stdio transport, where the serving process WAS the session. `--shared` became the installed default, the world moved, and nothing recomputes a check when the deployment model changes underneath it. The test that covered it still passed, because in a test process the server and the session are the same thing.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "A claim names the session that made it, and a claim nobody is working says so",
@@ -49861,6 +49980,14 @@
       }
     },
     {
+      "node_id": "chg:seat-liveness-is-the-session-20260808",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "Seat liveness stops answering about the server and says so — a claim whose client is gone reads gone, not live"
+      }
+    },
+    {
       "node_id": "chg:session-chooses-design-accepted",
       "node_type": "ChangeEvent",
       "properties": {
@@ -51765,6 +51892,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony, 2026-08-04, in his own words: \"I kind of like this idea of brainstorming ideas for how to solve a problem and laying out trials for how to figure out which is the best approach - maybe this is a future reflow2 skill??\" Raised while brainstorming the corpus-ingest strategies (dec:idea-corpus-ingest-strategies), which is the first concrete case for it.\n\nWHAT ALREADY EXISTS, AND IT IS MORE THAN HALF — the design-space version of this shipped as BL-70 and nothing in this idea should be built without reading it first. `register_alternative` forks a `proposed` Decision into alternatives, each a pointer to that branch's own design export, GOVERNED_BY the Decision and CONTRADICTS its siblings, and it REFUSES unless the Decision is proposed — you fork an open choice, not a settled one. `analyze_alternatives` then compares the branches ON THE SAME MEASURES — design nodes, open gaps, structural defects, allocation modularity, capabilities verified, plus each branch's structural divergence from the baseline — in throwaway graphs, so it never touches the live one. Its own words are \"makes alternatives comparable on measures, not advocacy\", which is this idea's thesis already stated. `collapse_decision` picks the winner, moves the Decision to accepted, and SUPERSEDES the losers with OBSOLETES so the roads not taken stay on the record. `detect_gaps` fires `undecided_decision_point` once a Decision holds two or more registered alternatives, so an open fork nags and a musing does not.\n\nTHE GAP, AND IT IS SPECIFIC — reflow2 can compare DESIGNS; it cannot compare RUNS. Every measure `analyze_alternatives` reports is a property of the resulting graph's shape. None of them is a property of the PROCESS that produced it: what it cost, how long it took, how much of the corpus it covered, how much noise it raised, how many questions a human then had to answer, and whether the result was recognisable to the person who owns the material. The corpus-ingest strategies are indistinguishable on graph shape and completely different on all of those. A trial produces evidence about a PROCESS and there is nowhere in the graph to put it. That is the same hole [BL-187] names from the other side — the corpus records when something was true and nothing computes whether it still is.\n\nTHE SECOND GAP, AND IT IS THE ONE THIS PROJECT KEEPS FINDING — no skill drives the alternatives family end to end. `brainstorm` mentions `register_alternative` in passing, as the line where a musing becomes a fork. Nothing tells anyone to then run `analyze_alternatives` or `collapse_decision`. Same shape as `ingest_step`, which is built, served, verified, and named in no skill at all: a tool nobody is told to call is a tool nobody calls ([BL-154]).\n\nHONEST COUNTER-ARGUMENTS, recorded beside the idea rather than used to kill it. (1) `dec:report-dont-judge` — a trial that picks a winner by number is arithmetic overruling a person, which is the move this project refuses everywhere else; the skill would have to REPORT the measures and leave the collapse to the human, exactly as `collapse_decision` already requires a stated winner and a rationale. (2) The api-boss's objection to PMBOK in `reflow2_feedback.md` applies here too: reflow2 is a design-coherence tool, and importing an experiment harness risks \"a second, competing spine next to the golden thread\". (3) Trials are expensive, and the cheapest honest version of this idea may be a SKILL over the existing tools plus a convention for recording run measures as evidence, rather than any new vocabulary — which is what the last two node-type proposals in this project both collapsed into after measurement (`Attestation` → `TemporalFact`, `Hazard` → `DesignRule`).\n\nNOT PROMOTED, NOT SIZED, AND NOT MINE — recorded so the idea is findable and so the next session does not re-derive BL-70, which is the specific failure this session hit three times.",
         "name": "OPEN — should reflow2 have a skill for \"brainstorm the options, then TRIAL them and let measurement choose\"?",
         "rationale": "Captured under the brainstorm skill because Anthony floated it as a question, not a request. The load-bearing content is the survey of what BL-70 already provides: the idea is substantially built for design alternatives and genuinely missing for process trials, and that distinction is what would make it worth building rather than a second name for something that exists.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-what-governs-this-file",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "PROPOSED IDEA, not a commitment: give the agent a lookup from a FILE (or symbol) to the Decisions, Requirements and Constraints that govern it — \"what does the design already say about the code I am about to change?\" — resolved by traversal rather than by keyword search.",
+        "name": "IDEA — an agent about to edit a file can ask what the design already decided about it, without guessing search terms",
+        "rationale": "RECORDED UNDER ANTHONY'S 2026-08-08 TEST PROTOCOL: run a task as if reflow2 did not exist, then run it leaning on reflow2, compare, and propose what would have helped. His stated aim, quoted so it is not lost: he is NOT trying to change how the agent functions, but to make available skills/tools that make the agent's job easier and better. This idea is scoped to that.\\n\\nTHE EVIDENCE IS TWO FIXES DONE THE SAME DAY, WITH DIFFERENT AMOUNTS OF REFLOW2.\\n\\n(1) THE DUPLICATES/MERGE FIX — reflow2 CHANGED THE OUTCOME, and the whole difference was one call. dev_storyflow reported merge candidates scoring 81-85 on unrelated nodes. Read as a code problem, the obvious fix is 'the scorer is bad, raise the threshold' — a plausible, shippable, WRONG fix. A `search_design` for 'duplicate merge similarity' returned `dec:ask-not-repair` as the top hit, and that decision reframed the entire task: possible_duplicate is a DETECT gap, HEAL merges only on a human-drawn edge, a heuristic must not drive it. The bug was not a bad threshold; it was an ACCEPTED DECISION DEFEATED BY THE BUILD, and the correct fix (mark the edge's basis, re-route suspicions to the gap layer) is not reachable from the code alone. Without reflow2 this session ships a threshold bump and the design stays quietly violated.\\n\\n(2) THE CLAIM-LIVENESS FIX — reflow2 helped at the FRAMING and not at all at the SOLUTION. The graph supplied the finding that mattered (`cap:claim-liveness` was status `verified` while its central claim was false under `--shared`) and `propagate_change` named exactly what to touch, including three Verifications that would be invalidated. But the fix itself — an RAII seat lease, and then a two-set registry after the first design proved unsafe — came entirely from reading code and from a FAILING TEST. No reflow2 detector had anything to say about it. Worth stating plainly rather than overclaiming: the two-set flaw was caught by `cargo test`, not by the design brain.\\n\\nTHE GENERALISATION, and it is the actionable part: REFLOW2'S LEVERAGE IS AT PROBLEM FRAMING AND BLAST RADIUS, NOT AT SOLUTION DESIGN. That is not a weakness — it is where a design brain SHOULD have leverage, and it argues for investing there rather than trying to help write the patch.\\n\\nSO WHAT IS MISSING, CONCRETELY: in case (1) the decision was found because a lucky choice of search words hit it. `search_design` is BM25 over node text, so the agent must already suspect what it is looking for. AN AGENT ABOUT TO EDIT `crates/reflow2-core/src/heal.rs` SHOULD BE ABLE TO ASK WHAT GOVERNS THAT FILE AND BE TOLD `dec:ask-not-repair`, WITHOUT KNOWING THE WORD 'DUPLICATE'. The graph already holds every hop needed: `art:heal` REALIZES `cap:heal`, which is GOVERNED_BY the decisions that constrain it, SATISFIES the requirements behind it, and is VERIFIED by the checks that would break. That is a traversal from a path to its governing intent, and today there is no tool for it — `propagate_change` is the closest but needs a recorded ChangeEvent and answers 'what does this touch', not 'what was already decided here'.\\n\\nWHY THIS FITS THE STATED AIM: it changes nothing about how the agent works. It is a lookup the agent chooses to make at the moment it is already opening a file, and it answers the one question a stateless agent cannot answer for itself and does not know to ask.\\n\\nCANDIDATE SHAPES, none chosen: (a) a `governs` tool taking a path or symbol, returning Decisions/Requirements/Constraints/Verifications reachable from the Artifact at that location, ranked by hop distance; (b) the same as a skill that runs before an edit, the read-side sibling of impact-check; (c) cheapest of all and worth pricing first — have `link_artifact`/`reconcile_artifacts` responses already carry the governing decisions for the artifact named, since the traversal is the same and the agent is already there.\\n\\nOPEN QUESTIONS THIS DOES NOT SETTLE: whether path-level granularity is enough (a 1,700-line file may be governed by decisions relevant to only one of its functions); whether an unregistered file — one with no Artifact — should answer 'nothing governs this' or 'this file is not in the design', which are very different statements and the second is the honest one; and whether ranking by hop distance is meaningful or merely plausible.",
         "status": "proposed"
       }
     },
@@ -60896,6 +61033,19 @@
       }
     },
     {
+      "node_id": "fact:correction-stranded-server-is-recoverable-without-a-reconnect",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "correction",
+        "statement": "CORRECTION TO fact:defect-rebuild-strands-the-shared-server: THE STRANDED SESSION IS RECOVERABLE WITHOUT AN MCP RECONNECT, AND THE WORKAROUND IS ONE COMMAND. That node states the failure is 'unrecoverable for the life of the session — every later respawn resolves the same dead inode, and only a full MCP reconnect clears it.' The first clause is right and the second is WRONG, proven here on 2026-08-08 by hitting the failure and recovering from it mid-session. WHAT HAPPENED: after the shared daemon's binary was replaced by a `cargo test` relink, the daemon exited and the client's auto-respawn failed with 'could not spawn the shared reflow2 server: No such file or directory (os error 2)' — the documented symptom, including the misleading advice to check a server log that cannot contain the cause. THE RECOVERY, verified by execution: start a replacement daemon BY HAND from the on-disk path, `setsid nohup ./target/debug/reflow2-mcp --graph-path ./.reflow2/graph --serve-shared &`, and the next tool call from the SAME session attached to it and worked normally (claim_report returned, then mint_seat, claim_region, open_questions, and a dozen further calls). No reconnect, no session restart, no context lost. WHY THE ORIGINAL CLAIM WAS WRONG: it reasoned that because the CLIENT resolves the binary through `current_exe()` and that inode is dead, every attempt must fail. True — but only of the client's SPAWN path. Attaching is a separate act: the client looks for a published server for that graph, and a server started by any means satisfies it. The dead inode blocks the client from CREATING a daemon; it does not block it from FINDING one. WHY IT MATTERS BEYOND THE WORKAROUND: 'unrecoverable, restart the session' is expensive advice for ephemeral seats that are already dying on context exhaustion, and it was written into the graph as measured fact on reasoning alone. The original node's own evidence field says the diagnosis was 'recorded in session handoffs as worth filing and still unfiled' — so the recoverability clause was inherited, never tested. NOTE THE SHAPE, which is the same one this file keeps producing: a claim that was true about one mechanism (spawn) stated as true about the whole situation (the session), with nothing marking which part had been measured.",
+        "subject_id": "cap:shared-sessions",
+        "valid_from": "2026-08-08",
+        "value": "{\"corrects\":\"fact:defect-rebuild-strands-the-shared-server, the clause 'unrecoverable for the life of the session ... only a full MCP reconnect clears it'\",\"observed\":\"2026-08-08, reflow2's own repo, hit and recovered mid-session\",\"failure\":\"could not spawn the shared reflow2 server: No such file or directory (os error 2)\",\"recovery\":\"setsid nohup ./target/debug/reflow2-mcp --graph-path ./.reflow2/graph --serve-shared & then continue in the same session\",\"proof\":\"claim_report, mint_seat, claim_region, open_questions and further calls all succeeded afterwards with no reconnect\",\"why_the_claim_was_wrong\":\"the dead inode blocks the client's SPAWN path, not its ATTACH path; a daemon started by any means satisfies the lookup\",\"still_true\":\"the spawn failure itself, its unrecoverability by auto-respawn, and the misleading 'check the server log' advice\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-a-deferred-tool-reads-as-a-nonexistent-one",
       "node_type": "TemporalFact",
       "properties": {
@@ -61216,6 +61366,19 @@
         "subject_id": "cap:shared-sessions",
         "valid_from": "2026-08-07",
         "value": "{\"reported\":\"2026-08-07 dev_storyflow, w-08baa598 and w-ec25cf2c\",\"friction_a\":\"add_contributor takes id, claim_region takes contributor_id, for the same handle in adjacent steps\",\"friction_a_fix\":\"accept contributor_id as an alias on add_contributor\",\"friction_b\":\"set_verification_kind echoes the pre-update status, inviting a reader to think a field was reset\",\"friction_b_fix\":\"echo the post-write node, or omit untouched fields\",\"both_error_messages\":\"good - named the accepted fields, which is why these are minor\",\"common_thread\":\"a response that describes something other than current state; cosmetic here, silent data loss in the concurrent-write case\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-stale-server-reproduced-first-hand-here",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE STALE-SERVER DEFECT REPRODUCED FIRST-HAND IN THIS REPO, IN THE SESSION THAT CAPTURED IT — AND THE `/proc/self/exe` SIGNAL dev_storyflow PROPOSED WAS SITTING RIGHT THERE, TRUE, THE WHOLE TIME. Not reported by anyone: observed here on 2026-08-08 while running loop_status after a normal working session. WHAT WAS SEEN: `loop_status` returned a field, `open_defects: 90`, that WAS NOT IN THE RESPONSE AT SESSION START and DOES NOT EXIST ANYWHERE IN THE CHECKED-OUT SOURCE — `grep -rn open_defects crates/` returns nothing on this branch, and the branch that implements it (`feat/loop-reads-defect-facts`) is verified NOT an ancestor of HEAD. THE DIAGNOSIS, run rather than reasoned: `ps` showed the `--serve-shared` daemon started at 05:22 THAT MORNING, mid-session — the previous daemon had hit its idle timeout during the long `cargo test --workspace` runs and a replacement was auto-spawned from `target/debug/reflow2-mcp`, which at that moment still held a build made in an EARLIER session on a DIFFERENT branch. Confirmed by comparing the two binaries directly: `strings /proc/1345843/exe | grep -c open_defects` = 1, while `strings target/debug/reflow2-mcp | grep -c open_defects` = 0. The running server and the source being edited were built from different code, and NOTHING ANYWHERE SAID SO. THE PROPOSED FIX IS VALIDATED, not merely plausible: `readlink /proc/1345843/exe` returned `/home/ajs7/project/reflow2/target/debug/reflow2-mcp (deleted)` — the exact kernel marker w-6904efa6 proposed deriving `stale: true` from, present and correct at the moment it was needed, requiring one syscall and no second source. This is now confirmed on two machines, two projects, two independent incidents. WHAT IT COST HERE, stated rather than glossed: every computed rollup read after 05:22 — gap counts, structural_defects 1 to 3, open_defects itself — came from a build that is not the one being shipped. Graph WRITES were unaffected (the store is the store, and the export and gate were both computed from the working tree by `cargo`/`reflow2_check.py`, plus a clean-checkout CI run), so the deliverable stands; but any number quoted from the server mid-session is of unknown provenance, and a session that had reported one as evidence would have been wrong with no way to notice. THE SHARPEST PART: this happened in the very session that was capturing and fixing a defect of this class, to an agent that had just written the words 'the server can detect its own staleness with one syscall' — and it was still only caught because a field appeared that could not possibly exist. That is the argument for the field rather than the discipline.",
+        "subject_id": "cap:shared-sessions",
+        "valid_from": "2026-08-08",
+        "value": "{\"observed\":\"2026-08-08, reflow2's own repo, during the session capturing dev_storyflow's report\",\"trigger\":\"loop_status returned open_defects: 90, absent at session start and absent from the checked-out source\",\"proof_not_in_source\":\"grep -rn open_defects crates/ = no matches; feat/loop-reads-defect-facts verified NOT an ancestor of HEAD\",\"cause\":\"the --serve-shared daemon hit its idle timeout during long cargo runs and auto-respawned at 05:22 from a target/debug binary built in an earlier session on another branch\",\"binary_comparison\":\"strings /proc/1345843/exe | grep -c open_defects = 1; strings target/debug/reflow2-mcp | grep -c open_defects = 0\",\"deleted_marker\":\"readlink /proc/1345843/exe -> '.../target/debug/reflow2-mcp (deleted)' - the proposed signal, present and correct\",\"validates\":\"fact:defect-a-running-server-cannot-say-it-is-stale and req:the-server-is-the-authority-on-its-own-currency\",\"sibling\":\"fact:defect-rebuild-strands-the-shared-server - same idle-timeout-plus-relink sequence, different symptom\",\"cost\":\"every server-computed rollup read after 05:22 is of unknown provenance; writes, export, gate and CI unaffected\",\"now_confirmed\":\"two machines, two projects, two independent incidents\"}"
       }
     },
     {
@@ -62673,7 +62836,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:4be03fd109a91de0f64878465c0edd4a434bfec5a5b9a09432a88cb21c01d2d5",
+  "prev_content_hash": "sha256:acb87bd743525a4dff470c4a1993ea080a3ae924956e4fc98bf5411443cbbec1",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

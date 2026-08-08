@@ -90,7 +90,11 @@ pub struct ReflowService {
     /// builds a service per session — so a process-wide seat would report every
     /// client as the same owner and make claim_report say six sessions are each
     /// other.
-    pub(crate) seat: String,
+    /// This session's seat, released automatically when the session's last
+    /// handler drops (`SeatLease`). Behind an `Arc` because a service is
+    /// cloned freely WITHIN a session and each clone must be the same seat —
+    /// only `share()` mints a new one, for a genuinely new client.
+    pub(crate) seat: std::sync::Arc<reflow2_core::identity::SeatLease>,
     /// Advanced whenever a mutating handler takes the graph (via `write_lock`).
     /// The coherence loop's owed-set can change only on a write, so this is the
     /// cheap signal that lets an orientation read skip recomputing `loop_status`
@@ -2425,7 +2429,7 @@ impl ReflowService {
     fn wrap_at(graph: DesignGraph, graph_path: Option<String>) -> Self {
         Self {
             graph: Arc::new(RwLock::new(graph)),
-            seat: reflow2_core::identity::mint_seat(),
+            seat: std::sync::Arc::new(reflow2_core::identity::SeatLease::attach()),
             graph_path,
             // Set by the caller after construction (`with_content_path`), so
             // adding a store did not have to change every constructor.
@@ -2514,7 +2518,7 @@ impl ReflowService {
             // Fresh per session: a shared seat would report every client as the
             // same owner, and a shared hint memory would land one session's
             // nudge on whichever session read next.
-            seat: reflow2_core::identity::mint_seat(),
+            seat: std::sync::Arc::new(reflow2_core::identity::SeatLease::attach()),
             read_hint: Arc::new(std::sync::Mutex::new(ReadHintCache::default())),
         }
     }
@@ -2628,7 +2632,7 @@ impl ReflowService {
                 ),
                 None,
             )),
-            None => Ok(self.seat.clone()),
+            None => Ok(self.seat.id().to_string()),
         }
     }
 }
