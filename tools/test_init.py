@@ -663,6 +663,58 @@ class ManifestTest(InstallerTest):
                          ["not", "a", "dict"], "the malformed file is untouched")
         self.assertTrue(any("left alone" in d and ".mcp.json" in d for d in done), done)
 
+    # ---- the graph store is reported when git already tracks it ------------
+    #
+    # Alex, 2026-08-08, on a project installed at 0.11.0: his .gitignore
+    # contained `.reflow2` and git was STILL tracking `.reflow2/graph/LOG` and
+    # `.reflow2/graph/fulltext/*.json`. .gitignore never untracks, so the rule
+    # was inert — and the installer, which has a warning for exactly this, said
+    # nothing, because it skipped every IGNORE_LINES entry ending in `/` and
+    # `.reflow2/` is the only one.
+
+    def tracked_graph_project(self):
+        """A project shaped like Alex's: graph files committed BEFORE the
+        ignore rule existed, which is the ordinary order of events."""
+        p = self.project()
+        run = lambda *a: subprocess.run(a, cwd=p, capture_output=True, check=True)
+        run("git", "init", "-q", ".")
+        (p / ".reflow2" / "graph" / "fulltext").mkdir(parents=True)
+        (p / ".reflow2" / "graph" / "LOG").write_text("rocksdb log\n")
+        (p / ".reflow2" / "graph" / "fulltext" / "meta.json").write_text("{}\n")
+        run("git", "add", "-A")
+        run("git", "-c", "user.email=t@t", "-c", "user.name=t", "commit", "-qm", "before the rule")
+        return p
+
+    def test_a_committed_graph_store_is_reported_not_silently_ignored(self):
+        p = self.tracked_graph_project()
+        notes = init.ensure_gitignore(p)
+
+        hit = [n for n in notes if ".reflow2/" in n and "IS COMMITTED" in n]
+        self.assertTrue(hit, f"the tracked graph store must be reported: {notes}")
+        self.assertIn("git rm -r --cached .reflow2", hit[0],
+                      "and the remedy must be the one that works on a directory")
+
+    def test_check_also_reports_it_because_check_is_what_you_run_first(self):
+        p = self.tracked_graph_project()
+        changes = init.planned_changes(p)
+
+        self.assertTrue(
+            any(".reflow2/" in c and "is committed" in c for c in changes),
+            f"--check is what you run to find out what is wrong: {changes}",
+        )
+
+    def test_an_untracked_graph_store_is_not_reported(self):
+        # The counterweight: the ordinary project must stay quiet, or the
+        # warning becomes noise and stops being read.
+        p = self.project()
+        subprocess.run(["git", "init", "-q", "."], cwd=p, capture_output=True, check=True)
+        (p / ".reflow2" / "graph").mkdir(parents=True)
+        (p / ".reflow2" / "graph" / "LOG").write_text("rocksdb log\n")
+
+        notes = init.ensure_gitignore(p)
+        self.assertFalse([n for n in notes if "IS COMMITTED" in n],
+                         f"nothing is tracked, so nothing should be reported: {notes}")
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

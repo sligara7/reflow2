@@ -634,7 +634,14 @@ def gitignore_block() -> str:
 
 def already_tracked(project: Path, rel: str) -> bool:
     """Is this path committed already? .gitignore does not untrack a tracked
-    file, so saying "ignored" without saying that would be a half-truth."""
+    file, so saying "ignored" without saying that would be a half-truth.
+
+    Works for a DIRECTORY entry (`.reflow2/`) as well as a file: git reports a
+    directory as tracked when anything inside it is. Verified 2026-08-08 in a
+    scratch repo — commit two files under `.reflow2/`, add the ignore rule
+    afterwards, and `git ls-files --error-unmatch '.reflow2/'` exits 0. That
+    matters because the two callers below USED TO SKIP every entry ending in
+    `/`, on the assumption this could not answer for a directory. It can."""
     try:
         return subprocess.run(
             ["git", "ls-files", "--error-unmatch", rel],
@@ -642,6 +649,13 @@ def already_tracked(project: Path, rel: str) -> bool:
         ).returncode == 0
     except (OSError, subprocess.SubprocessError):
         return False
+
+
+def untrack_hint(rel: str) -> str:
+    """The command that actually untracks `rel` — `-r` for a directory, because
+    `git rm --cached .reflow2/` without it fails and an unusable remedy is the
+    same as no remedy."""
+    return f"git rm -r --cached {rel.rstrip('/')}" if rel.endswith("/") else f"git rm --cached {rel}"
 
 
 # The coherence loop's out-of-band trigger, wired to the harness's own events.
@@ -762,13 +776,27 @@ def ensure_gitignore(project: Path) -> list[str]:
         else:
             gi.write_text(gitignore_block())
             notes.append(".gitignore  (created — ignoring the graph and the MCP configs)")
+    # NO `endswith("/")` SKIP. It used to be here, and `.reflow2/` is the only
+    # directory entry in IGNORE_LINES — so the one path most likely to be
+    # already tracked was the one path this warning could never fire for. It is
+    # the most likely because the graph store is created the moment you first
+    # USE reflow2, long before anyone runs the installer that ignores it: a
+    # `git add .` in that window tracks it permanently, and the ignore line
+    # added afterwards does nothing at all.
+    #
+    # Reported 2026-08-08 by Alex, on a project installed at 0.11.0: his
+    # .gitignore contained `.reflow2` and git was still tracking
+    # `.reflow2/graph/LOG` and `.reflow2/graph/fulltext/*.json`. He read his
+    # .gitignore, drew the correct conclusion from it, and the installer stayed
+    # quiet — req:no-silent-fallback, in the first tool a new user meets.
     for _, line in IGNORE_LINES:
-        if line.endswith("/"):
-            continue
         if already_tracked(project, line):
+            what = "carries this machine's absolute paths"
+            if line.endswith("/"):
+                what = "is machine state — a RocksDB store and a search index"
             notes.append(
-                f"{line}  IS COMMITTED and carries this machine's absolute paths — "
-                f"ignoring it changes nothing until you untrack it:  git rm --cached {line}"
+                f"{line}  IS COMMITTED and {what} — "
+                f"ignoring it changes nothing until you untrack it:  {untrack_hint(line)}"
             )
     return notes
 
@@ -857,9 +885,12 @@ def planned_changes(project: Path) -> list[str]:
     if missing:
         verb = "create" if not existing else "append"
         changes.append(f"{verb}  .gitignore  ({', '.join(missing)} — machine state)")
+    # Same missing case as ensure_gitignore, and worse here: `--check` is what
+    # you run to find out what is wrong BEFORE touching anything, so a silent
+    # --check is the one that sends you away reassured.
     for _, line in IGNORE_LINES:
-        if not line.endswith("/") and already_tracked(project, line):
-            changes.append(f"report  {line} is committed — you will need `git rm --cached {line}`")
+        if already_tracked(project, line):
+            changes.append(f"report  {line} is committed — you will need `{untrack_hint(line)}`")
     return changes
 
 

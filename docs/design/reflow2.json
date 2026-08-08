@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:83a172173add1f316a25394bdb60b1b6e5569115c67adec7cb252b4d8868be97",
+  "content_hash": "sha256:64c89b3df3f94c8578e690fd2da2c2a62e9e18e13b9467443a15fe7b498dcff8",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -13561,6 +13561,33 @@
         "action": "modified"
       },
       "to_id": "cap:portability"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-installer-says-the-graph-is-tracked-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-installer-says-the-graph-is-tracked-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-installer-says-the-graph-is-tracked-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:kit"
     },
     {
       "edge_type": "CHANGED",
@@ -42744,6 +42771,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-tracked-graph-store-is-reported",
+      "properties": {},
+      "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:acknowledgement-not-structure",
       "properties": {},
       "to_id": "cap:heal"
@@ -45442,10 +45475,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:49199cc1c858f4cf5b48e370f4b5203bd7989d341951399a28eebde91725c06e",
+        "checksum": "sha256:34c58f8656dab4e6a1701fa06d3fed85d614afe192086cb172aa702e206dde50",
+        "granularity": "atomic",
         "location": "tools/reflow2_init.py",
         "name": "reflow2_init.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -46260,10 +46295,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5d3f5c3b7ee5b14757e11779e086d82853401f3e8ceac245cd1dabc86f25a31a",
+        "checksum": "sha256:58addb37275ac51b74c0e00183b4a390b0eedd42813e317ce60d7d822824f87c",
+        "granularity": "atomic",
         "location": "tools/test_init.py",
         "name": "test_init.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -50840,6 +50877,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Export just the published surface — the one piece of composition that every architecture option needs"
+      }
+    },
+    {
+      "node_id": "chg:the-installer-says-the-graph-is-tracked-20260808",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "The installer stops skipping the one ignore entry most likely to be already tracked, and the remedy it prints works on a directory"
       }
     },
     {
@@ -62486,6 +62531,18 @@
       }
     },
     {
+      "node_id": "ver:a-tracked-graph-store-is-reported",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-08",
+        "level": "integration",
+        "method": "test",
+        "name": "A committed .reflow2/ is reported by both install and --check with a remedy that works on a directory, and an untracked one stays quiet",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:acknowledgement-not-structure",
       "node_type": "Verification",
       "properties": {
@@ -63890,7 +63947,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:6597ec38fa0f2faf40a98633bbf61dce6f912fd947584751cb6da220f7edcd1f",
+  "prev_content_hash": "sha256:83a172173add1f316a25394bdb60b1b6e5569115c67adec7cb252b4d8868be97",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
