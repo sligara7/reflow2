@@ -262,15 +262,29 @@ fn full_coherence_loop() {
     // requirement as an orphan too — a generative stub that gated the whole
     // proposal for review while duplicating what DETECT already asked
     // (asserted above). With the double-count removed, this proposal is
-    // purely mechanical: one merge, nothing to generate, nothing to gate.
+    // purely mechanical: one merge, nothing to generate.
+    //
+    // CHANGED 2026-08-08, and this assertion's own wording was the error:
+    //   assert!(!proposal.requires_human_review,
+    //           "the only remaining operation is a content-free merge");
+    // A merge IS content-free — it generates nothing — and that was taken to
+    // mean consequence-free. It deletes a node with no undo. The same
+    // assumption sat in tests/heal.rs ("a structural-only proposal needs no
+    // human review"), so the belief was pinned at BOTH the unit and the
+    // end-to-end level, which is why nothing caught it until dev_storyflow
+    // lost ten nodes to it on 2026-08-07.
     assert!(
-        !proposal.requires_human_review,
-        "the only remaining operation is a content-free merge"
+        proposal.requires_human_review,
+        "content-free is not consequence-free: this merge deletes cap:fast-dup"
     );
     assert!(
         proposal.generated_content.is_empty(),
         "the unmet need is DETECT's question now, not a HEAL stub"
     );
+    // ...and the review it now demands is answerable, because the proposal
+    // says what dies before anyone can apply it.
+    assert_eq!(proposal.would_destroy.len(), 1);
+    assert_eq!(proposal.would_destroy[0].reference, "cap:fast-dup");
 
     let report = g.apply_heal(&proposal).unwrap();
     assert!(report.applied);

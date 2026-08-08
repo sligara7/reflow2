@@ -54,6 +54,10 @@ fn heal_proposal_round_trips_through_json() {
                 remove_id: "cmp:b".to_string(),
             },
         }],
+        would_destroy: vec![SkippedOperation {
+            reference: "cmp:b".to_string(),
+            reason: "deleting 'cmp:b' keeps only 'cmp:a's properties".to_string(),
+        }],
         generated_content: vec![GeneratedContentStub {
             for_issue: "heal:2".to_string(),
             kind: "Decision".to_string(),
