@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:bce3e321268e9cab2107d78c11898271fc1376cf584ab9282a0912560e401e3b",
+  "content_hash": "sha256:a1664268f405b0e9c05b0c224f942240a93dd6be87f70517e1f164b3eccf8bbc",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3755,6 +3755,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:planned-increments-slip-one-after-v0250",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:planning-axis-intent",
       "properties": {},
       "to_id": "epoch:planning-axis-intent"
@@ -5015,6 +5021,24 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:v0250:epoch:v0260-planned",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:v0250:epoch:v0270-planned",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:v0250:epoch:v0280-planned",
+      "properties": {},
+      "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:wire-planning-cluster:dec:where-plans-live",
       "properties": {},
       "to_id": "epoch:wire-planning-cluster"
@@ -5530,9 +5554,27 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-planned-increment-is-named-by-content-not-by-number",
+      "properties": {
+        "acted_at": "2026-08-08",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-session-holds-several-graphs",
       "properties": {
         "acted_at": "2026-08-06T09:40:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-an-unplanned-cut-takes-an-in-between-number",
+      "properties": {
+        "acted_at": "2026-08-08",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -6716,6 +6758,17 @@
         "validation_status": "validated"
       },
       "to_id": "dec:idea-a-skill-may-assert-the-defaults-it-relies-on"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "dec:an-unplanned-cut-slips-every-later-increment-by-one",
+      "properties": {
+        "basis": "observed",
+        "confidence": 1.0,
+        "evidence": "Making slips routine makes version-numbered epoch ids routinely wrong. Applying the rule once left four ids whose numbers are a version behind their content, and an id cannot be renamed.",
+        "validation_status": "validated"
+      },
+      "to_id": "dec:idea-a-planned-increment-is-named-by-content-not-by-number"
     },
     {
       "edge_type": "CAUSES",
@@ -12466,6 +12519,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:planned-increments-slip-one-after-v0250",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "epoch:v0260-planned"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:planned-increments-slip-one-after-v0250",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "epoch:v0270-planned"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:planned-increments-slip-one-after-v0250",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "epoch:v0280-planned"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:planning-axis-intent",
       "properties": {
         "accepted_baseline": false,
@@ -15032,6 +15112,26 @@
         "evidence": "Qualifies rather than overturns: skills stay served because a stale skill is silently wrong; commands are installed because a stale command is still correct, and the one way it could rot (naming a skill that no longer exists) is now a lint failure."
       },
       "to_id": "dec:skills-served"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-an-unplanned-cut-takes-an-in-between-number",
+      "properties": {
+        "alignment": "opposing",
+        "confidence": 0.8,
+        "evidence": "An alternative answer to the same question, raised as brainstorming minutes after the rule was accepted and in response to the id cost applying it exposed. The accepted rule STANDS and the slip has been applied — this edge marks that a live alternative exists, not that the rule is in doubt."
+      },
+      "to_id": "dec:an-unplanned-cut-slips-every-later-increment-by-one"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-an-unplanned-cut-takes-an-in-between-number",
+      "properties": {
+        "alignment": "supporting",
+        "confidence": 0.9,
+        "evidence": "Both attack the same root: a planned increment holding a number it can lose. Content-naming DISSOLVES the question; in-between numbering ANSWERS it. They compose — content-named plans plus semver-honest numbering at cut time is arguably the same destination from two directions."
+      },
+      "to_id": "dec:idea-a-planned-increment-is-named-by-content-not-by-number"
     },
     {
       "edge_type": "CONTRADICTS",
@@ -21508,6 +21608,62 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "epoch:planned-one-write-surface",
+      "properties": {},
+      "to_id": "dec:idea-a-planned-increment-is-named-by-content-not-by-number"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "epoch:planned-read-half",
+      "properties": {},
+      "to_id": "dec:idea-a-planned-increment-is-named-by-content-not-by-number"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "epoch:planned-seams",
+      "properties": {},
+      "to_id": "dec:idea-a-planned-increment-is-named-by-content-not-by-number"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "epoch:planned-status-accounting",
+      "properties": {},
+      "to_id": "dec:idea-a-planned-increment-is-named-by-content-not-by-number"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "epoch:v0250-planned",
+      "properties": {
+        "note": "Slipped v0.25.0 -> v0.26.0 by this rule when the v0.25.0 number went to unplanned work."
+      },
+      "to_id": "dec:an-unplanned-cut-slips-every-later-increment-by-one"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "epoch:v0260-planned",
+      "properties": {
+        "note": "Slipped v0.26.0 -> v0.27.0 by the cascade."
+      },
+      "to_id": "dec:an-unplanned-cut-slips-every-later-increment-by-one"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "epoch:v0270-planned",
+      "properties": {
+        "note": "Slipped v0.27.0 -> v0.28.0 by the cascade."
+      },
+      "to_id": "dec:an-unplanned-cut-slips-every-later-increment-by-one"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "epoch:v0280-planned",
+      "properties": {
+        "note": "Slipped v0.28.0 -> v0.29.0 by the cascade."
+      },
+      "to_id": "dec:an-unplanned-cut-slips-every-later-increment-by-one"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "fact:correction-stranded-server-is-recoverable-without-a-reconnect",
       "properties": {
         "note": "This correction is the clause that stands, on measured evidence rather than recency."
@@ -21557,6 +21713,14 @@
       "from_id": "rel:v0190",
       "properties": {},
       "to_id": "dec:release-trigger"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "rel:v0250",
+      "properties": {
+        "note": "The cut that triggered the rule: v0.25.0 took a number the plan had assigned elsewhere."
+      },
+      "to_id": "dec:an-unplanned-cut-slips-every-later-increment-by-one"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -22493,6 +22657,24 @@
       "from_id": "epoch:v0250-planned",
       "properties": {},
       "to_id": "snap:epoch:v0250:epoch:v0250-planned"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "epoch:v0260-planned",
+      "properties": {},
+      "to_id": "snap:epoch:v0250:epoch:v0260-planned"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "epoch:v0270-planned",
+      "properties": {},
+      "to_id": "snap:epoch:v0250:epoch:v0270-planned"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "epoch:v0280-planned",
+      "properties": {},
+      "to_id": "snap:epoch:v0250:epoch:v0280-planned"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -41357,6 +41539,46 @@
       "to_id": "dec:idea-backlog-belongs-in-the-graph"
     },
     {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:idea-a-planned-increment-is-named-by-content-not-by-number",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "dec:an-unplanned-cut-slips-every-later-increment-by-one"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "epoch:planned-one-write-surface",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "epoch:v0280-planned"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "epoch:planned-read-half",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "epoch:v0250-planned"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "epoch:planned-seams",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "epoch:v0270-planned"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "epoch:planned-status-accounting",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "epoch:v0260-planned"
+    },
+    {
       "edge_type": "OPERATES_IN",
       "from_id": "proj:reflow2",
       "properties": {},
@@ -41403,6 +41625,24 @@
       "from_id": "epoch:linking-repos",
       "properties": {},
       "to_id": "epoch:v0170"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:planned-read-half",
+      "properties": {},
+      "to_id": "epoch:planned-status-accounting"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:planned-seams",
+      "properties": {},
+      "to_id": "epoch:planned-one-write-surface"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:planned-status-accounting",
+      "properties": {},
+      "to_id": "epoch:planned-seams"
     },
     {
       "edge_type": "PRECEDES",
@@ -41493,6 +41733,12 @@
       "from_id": "epoch:v0240-planned",
       "properties": {},
       "to_id": "epoch:v0250-planned"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v0250",
+      "properties": {},
+      "to_id": "epoch:planned-read-half"
     },
     {
       "edge_type": "PRECEDES",
@@ -52753,6 +52999,14 @@
       }
     },
     {
+      "node_id": "chg:planned-increments-slip-one-after-v0250",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Slip: one honest write surface moves from v0.28.0 to v0.29.0"
+      }
+    },
+    {
       "node_id": "chg:planning-axis-intent",
       "node_type": "ChangeEvent",
       "properties": {
@@ -54076,6 +54330,16 @@
       }
     },
     {
+      "node_id": "dec:an-unplanned-cut-slips-every-later-increment-by-one",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "ACCEPTED on Anthony's word, 2026-08-08: \"when we add in unplanned change to a version, we should just slip the other versions up one to accommodate (what was scheduled for v0.25.0 gets pushed to v0.26.0 and what was scheduled for v0.26.0 gets automatically pushed to v0.27.0 and so on).\" The planned increment is NOT re-scoped to make room, and the unplanned work is NOT held back to protect the number: the number moves and the plan travels with it, intact. APPLIED IMMEDIATELY to the v0.25.0 cut, which shipped the storyflow HEAL disclosure fixes rather than the READ half epoch:v0250-planned was scoped for. WHAT THIS SETTLES that was otherwise decided ad hoc each time: an unplanned cut has three possible responses — rename the planned increment's contents into the new number (which silently redefines what was agreed), drop items to fit (which asserts a withdrawal nobody made), or slip. Slipping is the only one that changes no promise, and it means a plan's CONTENT is stable while its DATE is not — which is what req:plans-move-honestly already says about confidence decaying with horizon. WHAT IT COSTS, and it is worth stating: every slip renames four or more planned epochs, and the version number is currently baked into their IDs (epoch:v0250-planned), which cannot be renamed. So the routine act this decision makes routine is the one the current id scheme handles worst — see dec:idea-a-planned-increment-is-named-by-content-not-by-number.",
+        "name": "When unplanned work takes a version number, every planned increment slips up one rather than being re-scoped or squeezed in",
+        "rationale": "Recorded because it was decided in conversation and would otherwise be re-derived at every cut, which is the failure this project exists to prevent. The immediate trigger: v0.25.0 shipped unplanned work, and I stopped mid-cut rather than assume what should happen to the planned increment — the answer was a policy, not a one-off. Anthony's phrasing makes it automatic (\"and so on\"), so it is a rule a session can apply without asking again.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:anchor-retire-or-implement",
       "node_type": "Decision",
       "properties": {
@@ -54621,6 +54885,16 @@
       }
     },
     {
+      "node_id": "dec:idea-a-planned-increment-is-named-by-content-not-by-number",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "ACCEPTED on Anthony's word, 2026-08-08 — shape (a), and he named why it is the right one: it is the only option where the question STOPS EXISTING rather than being answered. No plan ever holds a number it can lose, so neither slipping nor inserting is a problem. THE RULE: a planned increment's identity names its CONTENT (`epoch:planned-read-half`, `epoch:planned-status-accounting`). The version number is not part of the plan at all. At cut time the number is derived from what actually shipped, by the CHANGELOG's own bucket table — patch for fixes, minor for a change to the shape of the tool surface or the schema. WHAT IT DISSOLVES: (1) The id churn. An id cannot be renamed, so a version-named plan guarantees either a lying id or a node replacement that breaks the snapshot trail `dec:arrival-delta` reads plan movement from. A content-named plan never needs renaming, because content is what the plan IS. (2) The slip-versus-insert question entirely. `dec:an-unplanned-cut-slips-every-later-increment-by-one` (accepted an hour earlier) and `dec:idea-an-unplanned-cut-takes-an-in-between-number` were competing answers to \"what happens to the planned numbers when unplanned work takes one\" — and under this rule there are no planned numbers to disturb. The slip rule is not WRONG; its subject ceases to exist. Recorded with an OBSOLETES edge rather than by un-accepting it, per dec:reopen-supersedes: an accepted Decision is never un-accepted. (3) The pressure to mislabel. With numbering decided at the cut from shipped content, semver stays honest by construction — nobody is tempted to call a shape change a patch to protect a planned number, which is the concrete harm the in-between-number idea carried (the CHANGELOG's own table says patch means the consumer updates blindly). THE OBSERVATION UNDERNEATH, which generalises past versioning: a version number is assigned LAST, at the cut, and a planned increment exists LONG before that. Baking it into the identity records a GUESS as a NAME. That is the same shape as `ver:plan-increments`' finding that a plan's content lived in an epoch's NAME as prose rather than as structure — both are a plan carrying, in its identity or its label, something that belongs elsewhere. COMPOSES WITH THE HYBRID rather than competing: content-named plans plus semver-honest numbering at cut time is the same destination reached from two directions, which is why `dec:idea-an-unplanned-cut-takes-an-in-between-number` stays recorded rather than rejected — its numbering instinct survives, only its premise (that plans own numbers) is gone. NOT CHOSEN: (b) a `version` property on DesignEpoch — smaller, but it leaves the misleading ids in place; (c) redefining the pre-1.0 buckets — cheapest to write, most expensive to be wrong about, since it weakens the one signal consumers act on blindly; (d) keeping version-named ids and reading them as birth numbers — makes every id a small trap for a future reader.",
+        "name": "A planned increment is identified by what it DELIVERS; the version number is assigned at the cut, from what actually shipped",
+        "rationale": "Raised immediately after applying the slip, because the cost was concrete rather than theoretical: four planned epochs needed renaming and none could have its id corrected, so the graph now holds ids whose numbers are one behind their content. Recorded rather than fixed — changing how the plan is ADDRESSED is a bigger act than the slip Anthony asked for, and picking (a) would re-point every future reference.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:idea-a-session-holds-several-graphs",
       "node_type": "Decision",
       "properties": {
@@ -54637,6 +54911,16 @@
         "decision": "UNSETTLED. The instance is fixed; the class is not. Two dev_storyflow seats independently measured that the `brainstorm` skill instructed them to call `set_decision_status(proposed)` because \"add_decision defaults to accepted\" — behaviour that changed on 2026-07-25 and is dated in add_decision's own description — so a conscientious agent made a redundant write on every brainstormed idea. PR #102 corrected the text on 2026-08-08. WHAT REMAINS OPEN IS THE SHAPE OF THE GUARD, and three were offered: (a) let a skill ASSERT the defaults it relies on, so skill_lint fails loudly at the moment the default changes rather than the text aging quietly; (b) GENERATE the sentence from the tool's actual default at build time, so it cannot disagree; (c) forbid a skill from naming a default at all and require it to state the RELATION instead — \"confirm the returned status is `proposed`\" — which stays true across any default change and needs no new machinery. THERE IS AN OBVIOUS HOME: skill_lint.py already enforces that every tool a skill NAMES is served, and is run in CI on every push; asserting a default is the same kind of contract one field deeper.",
         "name": "OPEN — when a served skill's text depends on a served tool's DEFAULT, should that dependency be asserted so the build breaks when the default moves?",
         "rationale": "Worth a decision rather than a fix note because of what the reporters said about it, which generalises past this skill: a served skill and a served tool ship from the SAME BINARY and disagreed about that binary's behaviour — the one place this class of drift should be impossible. And the skill is the half a session reads BEFORE acting, so it is the half that silently teaches the wrong model; here it taught it with emphasis (\"This call is not optional\"), which is exactly the wording that survives a skim. Their formulation is the reusable one: A RULE PINNED TO A BEHAVIOUR MUST NAME HOW TO RE-CHECK IT, NEVER JUST ITS VERDICT. Reported 2026-08-08 by dragon Boss f96eccd3 and api-boss 5d608b85, both by RUNNING it and reading the echo; api-boss stated their own bound honestly, that they did not test whether the redundant call is harmful, only that it is unnecessary.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-an-unplanned-cut-takes-an-in-between-number",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony thinking out loud 2026-08-08, immediately after `dec:an-unplanned-cut-slips-every-later-increment-by-one` was accepted and applied, and in direct response to the id-churn cost that applying it exposed. HIS WORDS: \"if we can't slip a version, just add the in-between version like v0.25.1 for the planned change, then preplanned versions can stay in place (their id stays the same) and we can add unplanned versions as v0.25.1 or v0.26.4 or whatever makes sense - I'm sure this has a drawback also as it probably doesn't fit when you should do a minor bump versus whatever the third decimal place is called.\" (The third decimal is the PATCH number, semver's MAJOR.MINOR.PATCH.) THE IDEA: an unplanned cut is numbered BETWEEN the planned ones rather than consuming one of them, so `epoch:v0260-planned` stays v0.26.0 forever, its id keeps matching its content, and nothing renumbers. WHAT IT SOLVES, and it is the real prize: the id churn is not merely reduced, it is ELIMINATED — no renaming, no risk to the snapshot history `dec:arrival-delta` reads plan movement from, and no ids that lie about their content. It also removes the cascade entirely: today's slip touched four epochs, and a scheme where planned numbers are stable touches none. THE DRAWBACK HE NAMED HIMSELF, AND IT IS REAL AND MEASURABLE ON TODAY'S CUT: patch is not a free slot. This project's CHANGELOG defines its own buckets — patch is \"bug fixes, doc fixes, tests, refactors, perf, and behavior changes that make a silent failure LOUD\", minor is \"a change to the SHAPE of the tool surface (new/changed params, changed result shapes)\". v0.25.0 was MINOR by that table for exactly two reasons: `HealProposal.would_destroy` and `HealIssue.hubs`, both new result fields. Everything else in it was fixes. So v0.25.1 would have been WRONG for what actually shipped — by a hair, and the hair matters. THE HARM IS CONCRETE RATHER THAN PURIST, and the same table states it: patch means the consumer \"updates blindly; skills and calls unchanged\"; minor means they \"may need to notice\". Numbering a shape change as a patch tells Alex he can update without looking when a result shape moved. That is a signal saying SAFE without having checked — the failure family this whole session kept finding. OTHER SHAPES, none chosen: (a) HYBRID — insert as a patch when the unplanned work genuinely IS a patch (the common case), slip only when it is genuinely minor (rarer). Keeps ids stable most of the time and keeps semver honest; costs two rules instead of one and a judgement at each cut, though that judgement is one the CHANGELOG table already forces. (b) DISSOLVE IT — name planned increments by CONTENT and assign the number at cut time from what actually shipped (`dec:idea-a-planned-increment-is-named-by-content-not-by-number`). Then neither slipping nor inserting is a problem, because no plan ever holds a number it can lose. This is the only option where the question stops existing rather than being answered. (c) REDEFINE THE BUCKETS — pre-1.0 semver gives latitude and the project has not made a stability commitment (\"Major 1.0 — Deferred\"), so it could declare that 0.x.y patch admits additive-but-non-breaking changes. Cheapest to write and the most expensive to be wrong about, since it weakens the one signal consumers act on blindly. (d) KEEP THE ACCEPTED RULE and pay the id cost, treating ids as birth numbers rather than delivery numbers. WORTH NOTING: (a) and (b) COMPOSE — content-named plans plus semver-honest numbering at cut time is arguably the same answer reached from two directions.",
+        "name": "OPEN — should unplanned work take an IN-BETWEEN version (v0.25.1) so planned increments never renumber, instead of slipping them all up one?",
+        "rationale": "Recorded as an idea rather than as a change because Anthony was explicitly thinking out loud, offered the counter-argument himself in the same breath, and the accepted rule it revisits was settled minutes earlier. Nothing is superseded: `dec:an-unplanned-cut-slips-every-later-increment-by-one` stands and the slip has been applied. What makes this worth a node rather than a passing remark is that it is a genuine alternative to a rule with a known cost, and the cost is what prompted it — so a later session choosing between them needs both on the record, with the semver objection attached to the idea rather than lost in conversation.",
         "status": "proposed"
       }
     },
@@ -57175,6 +57459,46 @@
       }
     },
     {
+      "node_id": "epoch:planned-one-write-surface",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "PLANNED — one honest write surface. Largest and least urgent; nothing here blocks anyone. BL-202 (L) collapses the two write surfaces the typed constructors created — they reach 44% of declared properties and are the single cause behind BL-129 and BL-183. BL-198 stop serializing defaults, but measure the cost to compare_designs and the merge driver FIRST. BL-197 + BL-204: the words we ship stopped matching the code we ship. NO VERSION NUMBER BY DESIGN (dec:idea-a-planned-increment-is-named-by-content-not-by-number). Supersedes epoch:v0280-planned.",
+        "sequence": 267,
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "epoch:planned-read-half",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "PLANNED — \"The graph can be READ at the size it has reached.\" The OUT half. WIDENED 2026-08-05 on Anthony's word from \"the loop tells the truth about what it is owed\" to the whole out half (dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one, accepted). THE MEASUREMENT THAT FORCED IT: of 33 collection-returning read tools, THREE let the caller bound the result and only scan_nodes can page; reviewed_gaps returned 130,922 characters and had to be read with jq. Today a document BEATS the graph for making a decision, and that is a fair fight the graph loses — so no capture improvement is worth anything until this lands. CONTENTS: BL-194 open_questions all-clear; BL-192 enums name legal values; BL-195 the bridge a ruling forbids; BL-201 wire or retire Requirement.concern; BL-203 an unexercised type is visible; generalise scan_nodes' envelope (total/returned/omitted/next_offset/capped_by + payload budget) to the other 30 tools, since it already solved this and was adopted by exactly one; dec:gap-reporting-when-most-intent-is-unbuilt (accepted), because 300 captured ideas produce 300 identical gaps. JOINED 2026-08-08 from dev_storyflow: scan_nodes has no status filter and get_node returns no edges, which cost a lane its stated bound — and a filtered count MUST name its predicate, or it becomes the fifth number in their four-counts report. BL-205 is DONE (shipped early in #70). NO VERSION NUMBER BY DESIGN (dec:idea-a-planned-increment-is-named-by-content-not-by-number): the number is assigned at the cut from what actually ships. Supersedes epoch:v0250-planned.",
+        "sequence": 250,
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "epoch:planned-seams",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "PLANNED — seams, the frontier the instruments already name. maturity_report puts seams at 0% (0 of 73 couplings declared through a contract) across 23 releases, and Interface has 3 instances with the 5 spec properties set on none. BL-193 a CONSUMED interface with no spec fires no gap; BL-190 the stewardship edge joins it because a new edge type is a schema change and pairing keeps it to one bump. NO VERSION NUMBER BY DESIGN (dec:idea-a-planned-increment-is-named-by-content-not-by-number). Supersedes epoch:v0270-planned.",
+        "sequence": 266,
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "epoch:planned-status-accounting",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "PLANNED — status accounting: WHEN was this true? The biggest conceptual gap either source found, and EIA-649 names it. BL-187 external anchor and BL-185 test-first both add Verification properties (ONE schema touch), BL-189 the retirement half. Evidence: half of one corpus pins to commits no longer ancestors of main; 11 of this project's own verifications sat green on one two-day-old run. NO VERSION NUMBER BY DESIGN (dec:idea-a-planned-increment-is-named-by-content-not-by-number). Supersedes epoch:v0260-planned.",
+        "sequence": 265,
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "epoch:planning-axis-intent",
       "node_type": "DesignEpoch",
       "properties": {
@@ -57505,9 +57829,9 @@
       "node_type": "DesignEpoch",
       "properties": {
         "epoch_type": "release_cut",
-        "name": "PLANNED v0.25.0 — \"The graph can be READ at the size it has reached.\" WIDENED 2026-08-05 on Anthony's word, from \"the loop tells the truth about what it is owed\" to the whole OUT half (dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one, accepted). THE MEASUREMENT THAT FORCED IT: of 33 collection-returning read tools, THREE let the caller bound the result and only scan_nodes can page; reviewed_gaps returned 130,922 characters and had to be read with jq. Today a document BEATS the graph for making a decision, and that is a fair fight the graph loses — so no capture improvement is worth anything until this lands. Rows already here and still right: BL-194 open_questions all-clear, BL-192 enums name legal values, BL-195 the bridge a ruling forbids, BL-201 wire or retire Requirement.concern, BL-203 an unexercised type is visible. Joining them: generalise scan_nodes' envelope (total/returned/omitted/next_offset/capped_by + payload budget) to the other 30, since it already solved this and was adopted by exactly one tool; and dec:gap-reporting-when-most-intent-is-unbuilt (accepted), because 300 captured ideas produce 300 identical gaps and that is the same defect wearing a detector's clothes. BL-205 is DONE, shipped early in #70 — the plan carried it as open and was stale.",
+        "name": "RETIRED 2026-08-08 — superseded by epoch:planned-read-half. This node's id names a version (v0.25.0) it never delivered and then a version (v0.26.0) it also would not have kept. Kept, not deleted, because it holds the plan's snapshot history — dec:arrival-delta reads plan movement from a target's FIRST snapshot, and deleting the node would delete the trail. The content lives on at epoch:planned-read-half under dec:idea-a-planned-increment-is-named-by-content-not-by-number.",
         "sequence": 250,
-        "status": "planned"
+        "status": "arrived"
       }
     },
     {
@@ -57515,9 +57839,9 @@
       "node_type": "DesignEpoch",
       "properties": {
         "epoch_type": "release_cut",
-        "name": "PLANNED v0.26.0 — status accounting: when was this true? The biggest conceptual gap either source found, and EIA-649 names it. BL-187 external anchor and BL-185 test-first both add Verification properties (ONE schema touch), BL-189 the retirement half. Half of one evidence corpus pins to commits no longer ancestors of main; 11 of this project's own verifications sat green on one two-day-old run.",
+        "name": "RETIRED 2026-08-08 — superseded by epoch:planned-status-accounting. Id names a version it never delivered; kept for its snapshot history.",
         "sequence": 265,
-        "status": "planned"
+        "status": "arrived"
       }
     },
     {
@@ -57525,9 +57849,9 @@
       "node_type": "DesignEpoch",
       "properties": {
         "epoch_type": "release_cut",
-        "name": "PLANNED v0.27.0 — seams, the frontier the instruments already name. maturity_report puts seams at 0% (0 of 73 couplings declared through a contract) across 23 releases, and Interface has 3 instances with the 5 spec properties set on none. BL-193 a CONSUMED interface with no spec fires no gap; BL-190 the stewardship edge joins it because a new edge type is a schema change and pairing keeps it to one bump.",
+        "name": "RETIRED 2026-08-08 — superseded by epoch:planned-seams. Id names a version it never delivered; kept for its snapshot history.",
         "sequence": 266,
-        "status": "planned"
+        "status": "arrived"
       }
     },
     {
@@ -57535,9 +57859,9 @@
       "node_type": "DesignEpoch",
       "properties": {
         "epoch_type": "release_cut",
-        "name": "PLANNED v0.28.0 — one honest write surface. Largest and least urgent; nothing here blocks anyone. BL-202 (L) collapses the two write surfaces the typed constructors created — they reach 44% of declared properties and are the single cause behind BL-129 and BL-183. BL-198 stop serializing defaults, but measure the cost to compare_designs and the merge driver FIRST. BL-197 + BL-204: the words we ship stopped matching the code we ship.",
+        "name": "RETIRED 2026-08-08 — superseded by epoch:planned-one-write-surface. Id names a version it never delivered; kept for its snapshot history.",
         "sequence": 267,
-        "status": "planned"
+        "status": "arrived"
       }
     },
     {
@@ -63413,6 +63737,36 @@
       }
     },
     {
+      "node_id": "snap:epoch:v0250:epoch:v0260-planned",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[]",
+        "state": "{\"epoch_type\":\"release_cut\",\"name\":\"PLANNED v0.26.0 — status accounting: when was this true? The biggest conceptual gap either source found, and EIA-649 names it. BL-187 external anchor and BL-185 test-first both add Verification properties (ONE schema touch), BL-189 the retirement half. Half of one evidence corpus pins to commits no longer ancestors of main; 11 of this project's own verifications sat green on one two-day-old run.\",\"sequence\":265,\"status\":\"planned\"}",
+        "target_id": "epoch:v0260-planned",
+        "target_type": "DesignEpoch"
+      }
+    },
+    {
+      "node_id": "snap:epoch:v0250:epoch:v0270-planned",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[]",
+        "state": "{\"epoch_type\":\"release_cut\",\"name\":\"PLANNED v0.27.0 — seams, the frontier the instruments already name. maturity_report puts seams at 0% (0 of 73 couplings declared through a contract) across 23 releases, and Interface has 3 instances with the 5 spec properties set on none. BL-193 a CONSUMED interface with no spec fires no gap; BL-190 the stewardship edge joins it because a new edge type is a schema change and pairing keeps it to one bump.\",\"sequence\":266,\"status\":\"planned\"}",
+        "target_id": "epoch:v0270-planned",
+        "target_type": "DesignEpoch"
+      }
+    },
+    {
+      "node_id": "snap:epoch:v0250:epoch:v0280-planned",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[]",
+        "state": "{\"epoch_type\":\"release_cut\",\"name\":\"PLANNED v0.28.0 — one honest write surface. Largest and least urgent; nothing here blocks anyone. BL-202 (L) collapses the two write surfaces the typed constructors created — they reach 44% of declared properties and are the single cause behind BL-129 and BL-183. BL-198 stop serializing defaults, but measure the cost to compare_designs and the merge driver FIRST. BL-197 + BL-204: the words we ship stopped matching the code we ship.\",\"sequence\":267,\"status\":\"planned\"}",
+        "target_id": "epoch:v0280-planned",
+        "target_type": "DesignEpoch"
+      }
+    },
+    {
       "node_id": "snap:epoch:wire-planning-cluster:dec:where-plans-live",
       "node_type": "Snapshot",
       "properties": {
@@ -66194,7 +66548,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:64c89b3df3f94c8578e690fd2da2c2a62e9e18e13b9467443a15fe7b498dcff8",
+  "prev_content_hash": "sha256:bce3e321268e9cab2107d78c11898271fc1376cf584ab9282a0912560e401e3b",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
