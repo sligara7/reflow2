@@ -641,6 +641,72 @@ fn both_report_surfaces_carry_when_each_check_last_ran() {
     }
 }
 
+/// Omitting `last_run_at` must LEAVE IT ALONE, not erase it.
+///
+/// dev_storyflow filed this 2026-08-08 and re-filed it after retesting on
+/// 0.26.1, both times on a throwaway node created for the purpose. The key was
+/// REMOVED rather than nulled, so a wiped check was byte-identical to one that
+/// had never run — and it fired from the most ordinary act there is, marking a
+/// check `failing` after a regression, erasing the evidence it ever ran and
+/// failing toward `never_run`, the field a later session greps for unproven
+/// work.
+///
+/// Their sharpest argument is the one this test encodes: `set_interface_spec`,
+/// `set_decision_status` and `set_epoch_status` all document the opposite
+/// convention, and this function's own first line said "preserving its other
+/// properties" while null-writing one of them.
+#[test]
+fn setting_a_status_again_does_not_erase_when_the_check_last_ran() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_verification("ver:v", "a check", Some("test"), Some("unit"))
+        .unwrap();
+
+    let ran = g
+        .set_verification_status("ver:v", "passing", Some("2026-08-09T10:00:00Z"))
+        .unwrap();
+    assert_eq!(
+        ran.properties.get("last_run_at").and_then(|v| v.as_str()),
+        Some("2026-08-09T10:00:00Z"),
+        "precondition: the timestamp landed"
+    );
+
+    // THE REPRODUCTION, one variable: same node, omitted parameter.
+    let again = g.set_verification_status("ver:v", "failing", None).unwrap();
+    assert_eq!(
+        again.properties.get("last_run_at").and_then(|v| v.as_str()),
+        Some("2026-08-09T10:00:00Z"),
+        "omitting last_run_at must leave it alone — this is the data-loss bug"
+    );
+    assert_eq!(
+        again.properties.get("status").and_then(|v| v.as_str()),
+        Some("failing"),
+        "and the status the caller DID pass must still be applied"
+    );
+
+    // Supplying one still replaces it — the fix must not make the parameter
+    // inert, which would be the same bug pointing the other way.
+    let moved = g
+        .set_verification_status("ver:v", "passing", Some("2026-08-09T18:00:00Z"))
+        .unwrap();
+    assert_eq!(
+        moved.properties.get("last_run_at").and_then(|v| v.as_str()),
+        Some("2026-08-09T18:00:00Z"),
+        "an explicit timestamp must still overwrite"
+    );
+
+    // And a check that never ran still reports absence rather than a fabricated
+    // time — preserving nothing is not the same as inventing something.
+    g.add_verification("ver:fresh", "never run", Some("test"), Some("unit"))
+        .unwrap();
+    let fresh = g
+        .set_verification_status("ver:fresh", "planned", None)
+        .unwrap();
+    assert!(
+        !fresh.properties.contains_key("last_run_at"),
+        "a check with no run behind it must stay empty"
+    );
+}
+
 /// Visibility, not a new nag. A counter here would make `clean` unreachable on
 /// any design whose last run was yesterday — the permanently-red-check failure
 /// rebuilt inside the tool meant to prevent it.

@@ -78,7 +78,9 @@ impl ReflowService {
 
     #[tool(
         description = "Set a Verification's outcome (planned/passing/failing/skipped/blocked), \
-                       preserving what the check is. A failing check is a live signal: \
+                       preserving what the check is. OMITTING `last_run_at` LEAVES IT ALONE — it \
+                       is not cleared, so marking a check `failing` after a regression keeps the \
+                       evidence that it ever ran. A failing check is a live signal: \
                        `propagate_from` it to see which capability and requirement it affects. \
                        CONVENTION: a check left at `planned` is not confirmation — verified means \
                        a check that PASSES, not one that exists.",

@@ -117,6 +117,34 @@ impl DesignGraph {
     /// Kept separate from creation because the outcome changes far more often
     /// than the check itself, and a re-run should not have to restate what the
     /// check *is*.
+    ///
+    /// **Omitting `last_run_at` LEAVES IT ALONE.** It used to erase it, which is
+    /// the bug dev_storyflow filed on 2026-08-08 and re-filed after retesting on
+    /// 0.26.1 — reproduced on a throwaway node, one variable, the key REMOVED
+    /// rather than nulled, so a wiped check was byte-identical to one that had
+    /// never run.
+    ///
+    /// # Why the direction was the bad one
+    ///
+    /// It fired from the most ordinary act there is — marking a check `failing`
+    /// after a regression — and erased the evidence it had ever run, failing
+    /// toward `never_run`, which is precisely the field a later session greps
+    /// for unproven work. And it was invisible at the call site: the response is
+    /// success-shaped and dominated by a long `name`.
+    ///
+    /// # And it broke a convention this codebase states elsewhere as a principle
+    ///
+    /// `set_interface_spec` promises *"omitting one LEAVES IT ALONE"*,
+    /// `set_decision_status` *"Every other property is preserved"*,
+    /// `set_epoch_status` *"Everything else about the epoch is preserved."*
+    /// This function's own first line has always said *"preserving its other
+    /// properties"* — and then null-wrote one of them. One tool departing from a
+    /// convention the others state is worse than no convention, because a caller
+    /// who has read any sibling reasonably assumes it.
+    ///
+    /// Clearing a run time is therefore not expressible by omission, and should
+    /// not be: erasing evidence is a deliberate act and deserves an explicit
+    /// one.
     pub fn set_verification_status(
         &mut self,
         verification_id: &str,
@@ -133,7 +161,11 @@ impl DesignGraph {
             .set("status", status)
             .set_opt("last_run_at", last_run_at);
         for (k, v) in &existing.properties {
-            if k != "status" && k != "last_run_at" {
+            // `status` is always replaced. `last_run_at` is replaced ONLY when
+            // the caller supplied one — otherwise the stored value is carried
+            // over, which is what "preserving its other properties" means.
+            let replaced = k == "status" || (k == "last_run_at" && last_run_at.is_some());
+            if !replaced {
                 props = props.set(k, v.clone());
             }
         }

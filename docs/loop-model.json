@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:eda0777be14b627e8d2c16e20100f0862150239026238876d471a7c554a5b983",
+  "content_hash": "sha256:ec6569ee711549964f83c9216a9e3ffe8c8e41777cfefa3d48d71118632c44a7",
   "edges": [
     {
       "edge_type": "PART_OF_FLOW",
@@ -228,7 +228,7 @@
       "to_id": "cap:z-change"
     }
   ],
-  "graph_id": "3b2db4fd72fd17da",
+  "graph_id": "fa77678ac7ccbd4e",
   "nodes": [
     {
       "node_id": "cap:p0-intent",
@@ -509,7 +509,7 @@
       "Verification"
     ],
     "node_types": 29,
-    "reflow2_version": "0.23.0",
+    "reflow2_version": "0.26.1",
     "schema_version": 1
   }
 }

@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:9c4f8ec15ef7a4c594f68254c530d5be05b70432ddf06f057fef5ff7a252807d",
+  "content_hash": "sha256:6dd7ff98408bd87b386d29d93ff74f974e3382f90268e577d5e6f26e203c4447",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -633,9 +633,21 @@
     },
     {
       "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-revise-design-skill-contradicted-create-node",
+      "properties": {},
+      "to_id": "cap:skills-served"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
       "from_id": "fact:defect-rollups-became-fleet-numbers-without-saying-so",
       "properties": {},
       "to_id": "cap:loop-status"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-set-verification-status-erased-last-run-at",
+      "properties": {},
+      "to_id": "cmp:verify"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3849,6 +3861,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:omitting-last-run-at-no-longer-erases-it",
+      "properties": {},
+      "to_id": "epoch:the-surface-stops-saying-false-things"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:orphan-decision-degree-zero",
       "properties": {},
       "to_id": "epoch:v0220"
@@ -5226,6 +5244,12 @@
       "from_id": "snap:epoch:surface-export:dec:nested-graphs",
       "properties": {},
       "to_id": "epoch:surface-export"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-surface-stops-saying-false-things:art:verify",
+      "properties": {},
+      "to_id": "epoch:the-surface-stops-saying-false-things"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -13111,6 +13135,42 @@
         "action": "modified"
       },
       "to_id": "dec:where-content-lives"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:omitting-last-run-at-no-longer-erases-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nudge-detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:omitting-last-run-at-no-longer-erases-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-nudge-path"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:omitting-last-run-at-no-longer-erases-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-assure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:omitting-last-run-at-no-longer-erases-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:verify"
     },
     {
       "edge_type": "CHANGED",
@@ -23420,6 +23480,12 @@
       "from_id": "art:upgrading-v0210",
       "properties": {},
       "to_id": "snap:epoch:bl199-reattachment:art:upgrading-v0210"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:verify",
+      "properties": {},
+      "to_id": "snap:epoch:the-surface-stops-saying-false-things:art:verify"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -52539,7 +52605,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ebb93de15ef78e8001fdee164341ce3c113965bfc8f73b2a00737595a841f4ad",
+        "checksum": "sha256:90fdbfdb422ebd8d5fbf64c249ed3e4508538a01cb14090cc234d8ac2439e6b9",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/nudge.rs",
         "name": "nudge.rs",
@@ -53257,10 +53323,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:27f84b4a505d648f2b2b86033ed818a01f6adf50e59ab8a25e76d293daa57162",
+        "checksum": "sha256:39bcf1f944d3ceed42a1c6e10922eb00362b50cf37e8fefbee4a94ec4a35b8c6",
+        "granularity": "atomic",
         "location": "tools/test_nudge_path.py",
         "name": "test_nudge_path.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -53325,7 +53393,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:395195e896a9e9d2068f6c0d66e509a66600295237db4f642b7a88ce64bd9373",
+        "checksum": "sha256:1db5576a75566d013436134d2bd3e4dd0916f78d200c294ddf40011f17215910",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/assure.rs",
         "name": "tools/assure.rs",
@@ -53557,10 +53625,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455",
+        "checksum": "sha256:3532d8866a760bb4b825dd11684e2b73d2c1751f1f9fd994e3a14ab9fb6ae224",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/verify.rs",
         "name": "verify.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -57639,6 +57709,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "object_store researched against dec:where-content-lives — the storage fork mostly dissolves, the sync/async one sharpens"
+      }
+    },
+    {
+      "node_id": "chg:omitting-last-run-at-no-longer-erases-it",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "set_verification_status stops deleting last_run_at when the optional parameter is omitted — the convention three sibling setters already documented"
       }
     },
     {
@@ -62512,6 +62590,16 @@
         "epoch_type": "revision",
         "name": "Published-surface export (2026-07-25, post-v0.11.0)",
         "sequence": 140,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:the-surface-stops-saying-false-things",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "Three consumer-reported defects where a served surface destroyed data or stated something false (2026-08-09)",
+        "sequence": 298,
         "status": "arrived"
       }
     },
@@ -68821,6 +68909,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:the-surface-stops-saying-false-things:art:verify",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0100\",\"properties\":{\"as_checksum\":\"sha256:d667d9a6a64a849e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0101\",\"properties\":{\"as_checksum\":\"sha256:d667d9a6a64a849e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0110\",\"properties\":{\"as_checksum\":\"sha256:d667d9a6a64a849e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0120\",\"properties\":{\"as_checksum\":\"sha256:d667d9a6a64a849e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:d667d9a6a64a849e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:d667d9a6a64a849e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:7c3bcd97918ee929\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:d391003bb5042e18\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:d391003bb5042e18\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:d391003bb5042e18\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:669e73b33ff4cbd1\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:669e73b33ff4cbd1\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:669e73b33ff4cbd1\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v040\",\"properties\":{\"as_checksum\":\"sha256:824287d5a22bd960\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v050\",\"properties\":{\"as_checksum\":\"sha256:824287d5a22bd960\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v060\",\"properties\":{\"as_checksum\":\"sha256:824287d5a22bd960\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v061\",\"properties\":{\"as_checksum\":\"sha256:824287d5a22bd960\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v070\",\"properties\":{\"as_checksum\":\"sha256:824287d5a22bd960\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v080\",\"properties\":{\"as_checksum\":\"sha256:824287d5a22bd960\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v090\",\"properties\":{\"as_checksum\":\"sha256:824287d5a22bd960\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:verify\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455\",\"location\":\"crates/reflow2-core/src/verify.rs\",\"name\":\"verify.rs\",\"status\":\"realized\"}",
+        "target_id": "art:verify",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:v0120:cap:kit",
       "node_type": "Snapshot",
       "properties": {
@@ -70166,6 +70264,20 @@
       }
     },
     {
+      "node_id": "fact:defect-revise-design-skill-contradicted-create-node",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "A SERVED SKILL AND A SERVED TOOL STATED OPPOSITE SEMANTICS FOR THE SAME CALL, AND THE DISAGREEMENT WAS ABOUT WHETHER A WRITE DESTROYS DATA. FIXED 2026-08-09.\n\nThe tool description said create_node MERGES — 'the props you pass overwrite, every stored property you omit survives'. The revise-design skill said 'Do NOT reach for the generic create_node to revise. It is create-or-REPLACE, so passing only the changed field resets every other property to its schema default'.\n\nSETTLED FROM THE SOURCE: the served tool calls upsert_node (crates/reflow2-mcp/src/tools/query.rs), whose own doc reads 'Merge props onto id if it exists... every stored property the caller does not name survives'. THE TOOL WAS RIGHT AND THE SKILL WAS WRONG.\n\nTHE DIRECTION IS WHAT MAKES IT EXPENSIVE: the skill scared agents away from the SAFE call. A dev_storyflow worker filed it after being unable to tell which was true without risking nine accepted requirements, and passed the whole property set to be safe under either reading. A session here did exactly the same thing the same day on a DesignRule, for the same reason. Both paid the cost; neither lost data, which is why it went unnoticed.\n\nAND IT COMPOUNDS WITH A GAP THE SAME WORKER FOUND: the skill prescribes revising via a typed constructor, but there is no typed constructor for a DesignRule at all, and add_requirement accepts only id/name/statement — so a requirement's `source` is unreachable that way. The prescribed safe route did not exist for those fields, and nothing said so. The skill now says both things.\n\nGENERAL SHAPE, and it is the fourth skill-versus-tool drift recorded here: nothing checks a skill's claims about tool BEHAVIOUR. skill_lint verifies that every tool a skill NAMES exists on the served surface — which is why this survived: every name was real, only the semantics were wrong.",
+        "subject_id": "cap:skills-served",
+        "valid_from": "2026-08-09",
+        "valid_to": "2026-08-09",
+        "value": "{\"reported\":\"dev_storyflow w-d890d2b3 2026-08-09 item 1; hit independently in this repo the same day\",\"settled_by\":\"reading crates/reflow2-mcp/src/tools/query.rs — create_node calls upsert_node\",\"verdict\":\"tool description correct, skill wrong\",\"compounding_gap\":\"no typed constructor for DesignRule; add_requirement cannot express source\",\"class\":\"fourth skill-vs-tool drift; skill_lint checks tool NAMES, never tool BEHAVIOUR\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-rollups-became-fleet-numbers-without-saying-so",
       "node_type": "TemporalFact",
       "properties": {
@@ -70189,6 +70301,20 @@
         "subject_id": "cap:detect",
         "valid_from": "2026-08-07",
         "value": "{\"reported\":\"2026-08-07 dev_storyflow, six independent sessions: w-10f94d47, w-08baa598, w-fb7d30ab, w-ec25cf2c, w-deac0a1e, w-abbb53d2\",\"filed_separately\":\"per the feedback file's own no-consolidation rule; consolidated here as one defect with six corroborations\",\"what_works\":\"region_size being in the payload at all - explicitly credited by three reporters, keep it\",\"defect\":\"the interpretation of a degenerate region is left to a reader who may not think to caveat it\",\"worst_case_seen\":\"in_scope 0 over region_size 1 on an edgeless node, caught only by running a control on a sibling\",\"fix_shape\":\"a caveat/scope_note field when region_size <= 1 or the region contains nothing the detector can fire on\",\"severity\":\"opportunity, not breakage - nothing failed, the reader carried a rule the output could carry\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-set-verification-status-erased-last-run-at",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "set_verification_status SILENTLY DELETED `last_run_at` WHEN THE OPTIONAL PARAMETER WAS OMITTED — data loss from the most ordinary act there is. FIXED 2026-08-09.\n\nFiled by dev_storyflow 2026-08-08 and RE-FILED after retesting on 0.26.1, both times on a throwaway node created for the purpose and never on one whose timestamp anyone depended on. One variable: same node, same status, parameter omitted, key GONE. The key was REMOVED rather than set to null, so a wiped check was byte-identical to one that had never run.\n\nCONFIRMED IN THE SOURCE HERE RATHER THAN TAKEN FROM THE REPORT: verify.rs copied every existing property EXCEPT `status` and `last_run_at`, so an omitted `last_run_at` was excluded from the copy and never re-set.\n\nWHY THE DIRECTION WAS THE BAD ONE, and this is their argument, not a restatement: it fires from marking a check `failing` after a regression — which erases the evidence it ever ran — and it fails toward `never_run`, precisely the field a later session greps for unproven work. It was invisible at the call site because the response is success-shaped and dominated by a long `name`.\n\nAND IT BROKE A CONVENTION THIS CODEBASE STATES ELSEWHERE AS A PRINCIPLE, which is the cheapest thing to point at: set_interface_spec promises 'omitting one LEAVES IT ALONE', set_decision_status 'Every other property is preserved', set_epoch_status 'Everything else about the epoch is preserved'. This function's own first line said 'preserving its other properties' and then null-wrote one of them. One tool departing from a convention the others state is worse than no convention, because a caller who has read any sibling reasonably assumes it.\n\nTHE FIX: `last_run_at` is replaced only when the caller supplies one. Clearing a run time is therefore not expressible by omission, and should not be — erasing evidence is a deliberate act and deserves a deliberate call. PROVEN BY NEGATIVE CONTROL: restoring the old one-line condition fails the new test on exactly the data-loss assertion. The test also pins the other direction (an explicit timestamp still overwrites), because a fix that made the parameter inert would be the same bug pointing the other way.\n\n⚠️ WORTH CARRYING TO THE FLEET: they upgraded to 0.26.1 partly on the understanding that filed bugs were fixed, and said so — several were, this one was not, and a reader skimming 'we upgraded, bugs fixed' would reasonably have assumed otherwise. The retest is what caught it.",
+        "subject_id": "cmp:verify",
+        "valid_from": "2026-08-08",
+        "valid_to": "2026-08-09",
+        "value": "{\"reported\":\"dev_storyflow 2026-08-08, re-filed after 0.26.1 retest 2026-08-09\",\"root_cause\":\"verify.rs copied all properties except status and last_run_at, so an omitted last_run_at was dropped\",\"fix\":\"last_run_at replaced only when supplied\",\"negative_control\":\"old condition restored -> new test fails on the data-loss assertion\",\"siblings_documenting_the_opposite\":\"set_interface_spec, set_decision_status, set_epoch_status\"}"
       }
     },
     {
@@ -71830,7 +71956,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:df4d1075858e95c7815cb1c700f8513efa41e70a4fee6b3c9733449cec035c60",
+  "prev_content_hash": "sha256:9c4f8ec15ef7a4c594f68254c530d5be05b70432ddf06f057fef5ff7a252807d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
