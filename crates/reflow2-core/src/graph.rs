@@ -1210,6 +1210,69 @@ impl DesignGraph {
         )
     }
 
+    /// Record that a design node is OWNED by a [`Contributor`](node::CONTRIBUTOR)
+    /// — whose AREA it is, durable and never released.
+    ///
+    /// The third "who" axis, and the one that was missing.
+    /// [`AUTHORED_BY`](edge::AUTHORED_BY) is past tense and never changes;
+    /// [`CLAIMS`](edge::CLAIMS) is who is in it right now and is released at
+    /// checkout; this survives every session.
+    ///
+    /// # Why not a claim, which was the cheap answer
+    ///
+    /// `claim_region` is advisory and session-scoped by its own description, the
+    /// parallel-work skill says release at checkout, and on a shared server a
+    /// claim reads `unknown` rather than `live` and never expires. Standing
+    /// ownership claims would permanently drown that tool's actual job —
+    /// showing who is ACTIVELY in your ground. `dec:ownership-reads-claims-before-adding-an-edge`
+    /// set exactly this condition: decide on an edge once claims are "shown to
+    /// be insufficient", naming *transient work-in-hand versus durable
+    /// ownership* as the disqualifying evidence in advance.
+    ///
+    /// # What it does not do
+    ///
+    /// It is deliberately NOT a traceability edge — absent from
+    /// `structural_rule`, the third of a kind after `AUTHORED_BY` and `CLAIMS` —
+    /// so ownership never propagates a blast radius and a Contributor never
+    /// becomes a hub. Owning something says who answers for it, not that a
+    /// change to it changes them.
+    ///
+    /// And an unowned node is NOT a gap. Most nodes in a mature design have no
+    /// owner, so absence is ordinary; whether unowned ground should be detected
+    /// at all is open in `dec:idea-detect-ownership-orphans` and turns on a
+    /// per-project answer to which types are even ownable.
+    pub fn owned_by(
+        &mut self,
+        from_type: &str,
+        from_id: &str,
+        contributor_id: &str,
+        note: Option<&str>,
+        since: Option<&str>,
+    ) -> Result<StoredEdge, DynoError> {
+        self.create_edge(
+            edge::OWNED_BY,
+            from_type,
+            from_id,
+            node::CONTRIBUTOR,
+            contributor_id,
+            Props::new().set_opt("note", note).set_opt("since", since),
+        )
+    }
+
+    /// Every node this contributor owns, by id.
+    ///
+    /// Computed on demand rather than stored, so it follows the design.
+    pub fn owned_by_contributor(
+        &self,
+        contributor_id: &str,
+    ) -> Result<std::collections::BTreeSet<String>, DynoError> {
+        Ok(self
+            .incoming(contributor_id, Some(edge::OWNED_BY))?
+            .into_iter()
+            .map(|e| e.from_id)
+            .collect())
+    }
+
     /// `Component PROVIDES Interface` — the side of a contract that implements it.
     pub fn provides(
         &mut self,

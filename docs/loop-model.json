@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:47c39bc9fb7d8d5f822f9b07112fc40653fe2267fd4e974cb5981875183c8ca4",
+  "content_hash": "sha256:557278f2f8c72d1f590dc3746cf32e4f61bb3f8e032f424387b7022c6596a5f5",
   "edges": [
     {
       "edge_type": "PART_OF_FLOW",
@@ -228,7 +228,7 @@
       "to_id": "cap:z-change"
     }
   ],
-  "graph_id": "3a3fad5985e3587e",
+  "graph_id": "ce1efbce350f9485",
   "nodes": [
     {
       "node_id": "cap:p0-intent",
@@ -455,6 +455,7 @@
       "OBSOLETES",
       "OCCURS_DURING",
       "OPERATES_IN",
+      "OWNED_BY",
       "PART_OF_FLOW",
       "PERFORMED_IN",
       "PRECEDES",
@@ -476,7 +477,7 @@
       "VIOLATES_RULE",
       "YIELDED"
     ],
-    "edge_types": 60,
+    "edge_types": 61,
     "node_type_names": [
       "Actor",
       "Anchor",

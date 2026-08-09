@@ -1,0 +1,71 @@
+OWNED_BY — whose area this is, durable and never released
+
+Tier 0, on Anthony's word. The THIRD "who" axis, and the one that was missing.
+
+    AUTHORED_BY   who WROTE this          past tense · historical · never changes
+    CLAIMS        who is IN it RIGHT NOW  transient · advisory · released at checkout
+    OWNED_BY      whose AREA this is      durable · standing · never released
+
+⭐ AN ACCEPTED DECISION'S CONDITION, MET AND CLOSED.
+dec:ownership-reads-claims-before-adding-an-edge (accepted 2026-08-08) said
+build from CLAIMS first, and "decide on OWNED_BY only after that is built and
+SHOWN TO BE INSUFFICIENT" — naming the disqualifying evidence in advance:
+"claims are TRANSIENT WORK-IN-HAND while ownership is DURABLE". dev_storyflow
+filed exactly that distinction a day later and Anthony supplied the use case:
+"areas of the design that are his and areas that are mine... durable, survives
+every session, and should never be released."
+
+Claims cannot carry it, operationally rather than theoretically: claim_region's
+own description says advisory and session-scoped, the skill says release at
+checkout, and on a shared server a claim reads `unknown` and never expires.
+Standing ownership claims would drown that tool's actual job.
+
+WHAT SHIPPED
+  · OWNED_BY, `* → Contributor`, with `note` and `since`.
+  · A served `owned_by` tool.
+  · loop_status(contributor_id) reports `gaps_on_owned_ground`, each entry
+    naming WHICH owned nodes the gap stands on; `not_attributable` shrinks by
+    exactly that many. Scoped `clean` now needs BOTH halves empty — a gap on
+    your own ground is owed by you as surely as a decision you were asked to
+    settle. Its served description was rewritten to say so (1495/1500 chars):
+    a tool returning a field its own description never names is the drift class
+    fixed twice already today.
+  · NOT a traceability edge — third of a kind after AUTHORED_BY and CLAIMS.
+    Owning something says who ANSWERS for it, not that changing it changes them.
+    A test asserts a Contributor never appears in a blast radius.
+
+⚠️ DELIBERATELY NOT BUILT: the ownership-orphan detector. An unowned node raises
+NOTHING. Most of a mature design legitimately has no owner, so a naive detector
+fires on the majority and becomes a signal trained to be ignored — while in a
+two-person project the same detector is nearly silent. Which types are OWNABLE
+is a per-project input nobody has supplied; it stays open in
+dec:idea-detect-ownership-orphans.
+
+THE ASYMMETRY IS THE DESIGN: "is this gap on ground you own?" is a FACT the
+graph can answer. "Should this have an owner?" is a JUDGEMENT it cannot.
+
+TESTS carry positive controls throughout: a second contributor who owns nothing
+gets an empty list from the identical call — without which an implementation
+attributing every gap to everybody would pass every other assertion — plus a
+conservation check that scoping never shrinks the design-wide gap count.
+
+⚠️ STAMP MOVED: a 61st edge type, so the next release owes an upgrade note. FOUR
+separate count guards caught it — schema.rs, vocabulary.rs, the MCP tools test
+and smoke_mcp.py — the schema's own tripwire working as intended.
+
+⚠️ AND THE EXPORT NEEDED A REAL SERVER RESTART, which is a new failure mode
+worth recording. `cargo build` replaced the binary the CLIENT process was
+running, so its /proc/self/exe read `(deleted)` and it spawned the server from a
+path ending in that literal marker — every call failed with "No such file or
+directory". `--stop-shared` does NOT fix this: that remedy replaces the DAEMON
+and assumes the client's own binary still exists. A `/mcp` reconnect did not fix
+it either — it reused the same pid. Killing the stale client and reconnecting
+did. Before that, the live server exported a stamp saying 60 edge types with
+OWNED_BY ABSENT; this export says 61 with OWNED_BY present, verified by READING
+the stamp rather than trusting the write.
+
+1062 tests, fmt, clippy (core + mcp), skill_lint, toolsnap, smoke_mcp,
+validate_schema, reflow2_check.
+
+Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_017mwo9Gsx12wT6zvM5LpHD9

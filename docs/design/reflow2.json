@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:cf3b87f997c01e2ea40a22634ac46ed0f3c75a6f005e6a80ad2f1b1d76095a67",
+  "content_hash": "sha256:282610068f8f7032256c2a7a034a5e89636918786c04973ca31dcc386b66449a",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1540,6 +1540,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "sys:coherence-loop"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:ownership-is-durable",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:claims"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -3896,6 +3904,12 @@
       "from_id": "chg:orphan-decision-degree-zero",
       "properties": {},
       "to_id": "epoch:v0220"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:owned-by-the-third-who-axis",
+      "properties": {},
+      "to_id": "epoch:ownership-is-the-third-who-axis"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -6457,6 +6471,15 @@
       "from_id": "dec:orientation-is-computed-not-written",
       "properties": {
         "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:owned-by-is-the-third-who-axis",
+      "properties": {
+        "acted_at": "2026-08-09",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -13437,6 +13460,96 @@
         "action": "modified"
       },
       "to_id": "dec:sanitize-spof-accepted"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:owned-by-the-third-who-axis",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:owned-by-the-third-who-axis",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:owned-by-the-third-who-axis",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:owned-by-the-third-who-axis",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:owned-by-the-third-who-axis",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:owned-by-the-third-who-axis",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:owned-by-the-third-who-axis",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:owned-by-the-third-who-axis",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:owned-by-the-third-who-axis",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:owned-by-the-third-who-axis",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:ownership-is-durable"
     },
     {
       "edge_type": "CHANGED",
@@ -21326,6 +21439,14 @@
       "from_id": "cap:onboarding",
       "properties": {},
       "to_id": "decision:ack:f58dc09a846a8783"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:ownership-is-durable",
+      "properties": {
+        "note": "The decision that built it, and that records what was deliberately NOT built: the ownership-orphan detector."
+      },
+      "to_id": "dec:owned-by-is-the-third-who-axis"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -46551,6 +46672,14 @@
     },
     {
       "edge_type": "OBSOLETES",
+      "from_id": "dec:owned-by-is-the-third-who-axis",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "dec:ownership-reads-claims-before-adding-an-edge"
+    },
+    {
+      "edge_type": "OBSOLETES",
       "from_id": "epoch:planned-one-write-surface",
       "properties": {
         "confidence": 1.0
@@ -49167,6 +49296,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:ownership-is-durable",
+      "properties": {},
+      "to_id": "req:ownership-is-an-edge-so-debt-has-an-addressee"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:parallel-work",
       "properties": {},
       "to_id": "req:concurrent-planning"
@@ -50604,6 +50739,12 @@
       "from_id": "ver:owed-to-a-contributor",
       "properties": {},
       "to_id": "cap:owed-to-a-contributor"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:ownership-attributes-and-does-not-propagate",
+      "properties": {},
+      "to_id": "cap:ownership-is-durable"
     },
     {
       "edge_type": "VERIFIES",
@@ -52807,7 +52948,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:15823284a28c35d3e70eee48cfcc6d4d3e05479d36724ec05833d5cb9ab105f5",
+        "checksum": "sha256:b0aaf8f8a21fc5f7850298110bd13a9b1ae3aeca6d7463b79360371b7f3ce63a",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
@@ -53082,10 +53223,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:774ad95db84666b3",
+        "checksum": "sha256:c3c47b379b7115ea09607d12bca888465018ffb9a3c4f086f25a5a70448ff053",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -53256,7 +53399,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1b138dd1269260236a0b95dcb5948b9d92ce8ff295f5cf9f1167eec1204db09b",
+        "checksum": "sha256:dbe01b770f41a1a88b3a1f89424db5d8e580a7ec70e1ad97010b7e2b43ffe699",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
@@ -53280,10 +53423,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:56201fe977dc874f",
+        "checksum": "sha256:36723891417d2685f602ae0a53211cb164f9bf6926ae7fec4f8a5664e3029412",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/schema.rs",
         "name": "schema.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -53305,7 +53450,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:a8fd5362d207f3ffcdc0a146eea29f3060104109227fd5626b05bfa31984fbca",
+        "checksum": "sha256:d2df8ff9f93352a3a4d1948a62b35890862e2fed2e3aa53d67282637bb139b0a",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/core.yaml",
@@ -53540,7 +53685,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2bdb2e4e30e7a1f6cbc6e3c33e0105e8a38c841fa89ddb969c0e61a01b66eae1",
+        "checksum": "sha256:5c59e50c09a2a8d483e43ed9d8e68dba116249759de14960a8c6b603206897a7",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -53909,10 +54054,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e7724d05c7d0e386ebb9a85f531244fae78746c127aee3855d2dcd312563569b",
+        "checksum": "sha256:4e81fcdb498f093fa95c964482a04079d16a6fbb7638609b560b580ed7b67eb7",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "tools/capture.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -53933,7 +54080,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:31defd5c9145b730aaa69934ffc0f47c66e4b800a032365695cbaf251adb53b4",
+        "checksum": "sha256:fb2b86352447cc177d270d580babb6892ec29f6bff79022f8135037094c82191",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -54132,7 +54279,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:02b4256717ea331fd8e7ef1bc0542410be17814cd3084b961941f1925e8e4763",
+        "checksum": "sha256:9952215fb5bfbffaff8f7af0625b2c56e918dff77e3fc3ea692cf02086b54faa",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/vocabulary.rs",
         "name": "vocabulary.rs",
@@ -55372,6 +55519,19 @@
         "name": "The loop answers what is owed to a named person, computed from edges the graph already carries",
         "provenance": "authored",
         "status": "in_progress",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:ownership-is-durable",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The third \"who\" axis. AUTHORED_BY says who WROTE something (past tense, never changes); CLAIMS says who is IN it right now (transient, released at checkout); OWNED_BY says whose ground it is, and it survives every session.\n\nBUILT: the edge (`* → Contributor`, with `note` and `since`), a served `owned_by` tool, and the read that makes it earn its keep — loop_status(contributor_id) reports `gaps_on_owned_ground`, each entry naming WHICH owned nodes the gap stands on, and `not_attributable` shrinks by exactly that many.\n\nDELIBERATELY NOT A TRACEABILITY EDGE, the third of a kind after AUTHORED_BY and CLAIMS: owning something says who ANSWERS for it, not that a change to it changes them. A Contributor must never appear in a blast radius, and a test asserts it.\n\n⚠️ AND AN UNOWNED NODE RAISES NOTHING. Most of a mature design legitimately has no owner, so absence is ordinary rather than a finding. Whether unowned ground should be detected at all is open in dec:idea-detect-ownership-orphans and turns on a per-project answer to which types are even ownable — a question this capability deliberately does not answer.\n\nTHE ASYMMETRY IS THE DESIGN: \"is this gap on ground you own?\" is a FACT the graph can answer; \"should this have an owner?\" is a JUDGEMENT it cannot.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "Whose AREA a node is, recorded durably and read where debt is reported",
+        "provenance": "authored",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -58251,6 +58411,14 @@
       }
     },
     {
+      "node_id": "chg:owned-by-the-third-who-axis",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "OWNED_BY added — the 61st edge type, plus the owned_by tool and gaps_on_owned_ground on the contributor-scoped loop report"
+      }
+    },
+    {
       "node_id": "chg:package-vs-collaboration",
       "node_type": "ChangeEvent",
       "properties": {
@@ -60972,6 +61140,16 @@
       }
     },
     {
+      "node_id": "dec:owned-by-is-the-third-who-axis",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED AND BUILT 2026-08-09, Anthony's word, closing the condition dec:ownership-reads-claims-before-adding-an-edge set on 2026-08-08.\n\nTHAT DECISION SAID: build the first cut from CLAIMS, and \\\"decide on OWNED_BY only after that is built and SHOWN TO BE INSUFFICIENT\\\". Its rationale named the disqualifying evidence in advance — \\\"if claims turn out to model the wrong thing (they are TRANSIENT WORK-IN-HAND, while ownership is DURABLE and survives the session), that is a real distinction and the edge becomes justified on evidence rather than on anticipation.\\\"\n\nTHE EVIDENCE ARRIVED AS DESCRIBED. dev_storyflow filed the distinction on 2026-08-09 and Anthony supplied the use case: \\\"there are areas of the design that are his and areas that are mine... it is probably durable, survives every session, and should never be released.\\\" Claims cannot carry that, operationally rather than theoretically: claim_region's own description says advisory and session-scoped, the parallel-work skill says release at checkout, and on a shared server a claim reads `unknown` rather than `live` and never expires on its own. Standing ownership claims would permanently drown the tool's actual job — showing who is ACTIVELY in your ground.\n\n⭐ THE FRAMING THAT MADE IT LEGIBLE — reflow2 had two of the three WHO axes:\n  AUTHORED_BY   who WROTE this          past tense · historical · never changes\n  CLAIMS        who is IN it RIGHT NOW  transient · advisory · released at checkout\n  OWNED_BY      whose AREA this is      durable · standing · never released\n\nAND THE REFRAME THAT DECIDED SCOPE: every earlier version of this ask was framed around an agent fleet, which invites \\\"that is exotica\\\". Two people splitting a design is the ORDINARY case of collaborative design work. dev_storyflow retracted the general form of their own counter-argument on exactly this point — their objection (ownership in the graph duplicates their PROTOCOL.md matrix and would rot) \\\"is specific to an organisation that ALREADY writes ownership down. A pair of collaborators has no matrix.\\\"\n\nWHAT WAS BUILT:\n  · OWNED_BY, `* → Contributor`, with `note` (what is actually owned, and any bound on it) and `since`.\n  · DELIBERATELY NOT A TRACEABILITY EDGE — absent from structural_rule, the THIRD of a kind after AUTHORED_BY and CLAIMS. Owning something says who ANSWERS for it, not that a change to it changes them. A test asserts a Contributor never appears in a blast radius.\n  · A served `owned_by` tool.\n  · loop_status(contributor_id) now reports `gaps_on_owned_ground` — open gaps standing on that person's ground, each naming WHICH owned nodes it touches. `not_attributable` shrinks by exactly that many, so the more ownership a design records the less the tool has to say \\\"I cannot tell whose this is\\\". Scoped `clean` now requires BOTH halves empty: a gap on your own ground is owed by you as surely as a decision you were asked to settle.\n\n⚠️ WHAT WAS DELIBERATELY NOT BUILT, and it is the restraint that matters: THE OWNERSHIP-ORPHAN DETECTOR. An unowned node raises NOTHING. dec:idea-detect-ownership-orphans holds that question open because of the fleet's strongest objection — in a 1,127-node graph most nodes legitimately have no owner (\\\"a Constraint about prose rendering is nobody's in the accountability sense\\\"), so a naive detector fires on the majority and becomes a signal trained to be ignored, while in a two-person project the design is mostly partitioned and the same detector is nearly silent. WHICH TYPES ARE OWNABLE looks like a per-project declaration rather than a fixed rule, and that is a design input nobody has supplied.\n\nTHE ASYMMETRY IS THE POINT AND IS WORTH KEEPING: \\\"is this gap on ground you own?\\\" is a FACT the graph can answer. \\\"Should this have an owner?\\\" is a JUDGEMENT it cannot. The first shipped; the second did not.\n\nSTAMP MOVED: a 61st edge type. The next release owes an upgrade note. Four separate count guards caught it — schema.rs, vocabulary.rs, the MCP tools test and smoke_mcp.py — which is the schema's own tripwire working exactly as intended.",
+        "name": "OWNED_BY is built: claims were shown insufficient, and ownership becomes its own edge",
+        "rationale": "Recorded as its own Decision rather than by editing dec:ownership-reads-claims-before-adding-an-edge, because that one is ACCEPTED and dec:reopen-supersedes is explicit that a settled choice is never un-accepted — a new decision supersedes it. This is not a reversal: it is that decision's own condition being met and its own build order being followed to its stated end.\n\nThe restraint half is recorded here rather than only in the capability, because \\\"we built the edge and deliberately did not build the detector\\\" is the kind of thing a later session re-derives as an oversight unless the reasoning is on the record beside the choice.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:ownership-reads-claims-before-adding-an-edge",
       "node_type": "Decision",
       "properties": {
@@ -62991,6 +63169,16 @@
         "epoch_type": "revision",
         "name": "The nudge self-check stops reporting a working hook as broken (2026-08-09)",
         "sequence": 296,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:ownership-is-the-third-who-axis",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "OWNED_BY — whose area this is, durable and never released (2026-08-09)",
+        "sequence": 301,
         "status": "arrived"
       }
     },
@@ -72214,6 +72402,18 @@
       }
     },
     {
+      "node_id": "ver:ownership-attributes-and-does-not-propagate",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-09",
+        "level": "unit",
+        "method": "test",
+        "name": "OWNED_BY attributes gaps to a person and never drags them into a blast radius (crates/reflow2-core/tests/report.rs, 2 tests). CASE 1, gaps_standing_on_ground_you_own_are_attributed_to_you: owning nothing attributes nothing (an unowned design is the ordinary state, not a finding); after taking ownership, the gap on that node appears in gaps_on_owned_ground naming WHICH owned node it stands on and never a node owned by someone else; scoped `clean` goes false, because a gap on your own ground is owed by you as surely as a decision you were asked to settle; and the `next` line says it in words. POSITIVE CONTROL: a second contributor who owns nothing gets an empty list from the identical call — without it, an implementation that attributed every gap to everybody would pass every other assertion. AND A CONSERVATION CHECK: the design-wide gap count is unchanged by scoping, so narrowing never makes the design look smaller. CASE 2, owning_something_does_not_drag_a_person_into_a_blast_radius: propagate_from over an owned node at depth 5 must not reach the Contributor — the exclusion AUTHORED_BY and CLAIMS already carry, asserted rather than assumed for the third of the kind. WHAT IS NOT COVERED, stated rather than left to be found: nothing verifies that ownership is the RIGHT attribution for any given node, because that is a judgement; and no check exists for unowned ground, because none was built.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:plan-increments",
       "node_type": "Verification",
       "properties": {
@@ -72774,7 +72974,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b2de73972e736142e35683fefc49ba2dc9e4b354ea6892d98298c3741525ab7d",
+  "prev_content_hash": "sha256:cf3b87f997c01e2ea40a22634ac46ed0f3c75a6f005e6a80ad2f1b1d76095a67",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -72817,6 +73017,7 @@
       "OBSOLETES",
       "OCCURS_DURING",
       "OPERATES_IN",
+      "OWNED_BY",
       "PART_OF_FLOW",
       "PERFORMED_IN",
       "PRECEDES",
@@ -72838,7 +73039,7 @@
       "VIOLATES_RULE",
       "YIELDED"
     ],
-    "edge_types": 60,
+    "edge_types": 61,
     "node_type_names": [
       "Actor",
       "Anchor",
