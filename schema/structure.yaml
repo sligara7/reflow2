@@ -155,7 +155,21 @@ schema:
     GOVERNED_BY:
       from: "*"
       to: "*"
+      # BOTH ENDS STAY WILDCARD, and the hint is what was wrong.
+      #
+      # Considered for enumeration 2026-08-08 alongside CONSTRAINS and REFUSED
+      # on the consumer argument. This edge carries 829 of the design's links
+      # from ten different source types; narrowing either end would refuse pairs
+      # another project may legitimately use and that this one merely happens
+      # not to. A wildcard that is genuinely open should say so.
+      #
+      # What WAS wrong is the sentence below: it named Decision and DesignRule
+      # while four live edges already pointed at a Requirement. Exactly the
+      # VERIFIES failure — a hint that had stopped describing and started
+      # guessing — and the cheap half of the fix.
       extraction_hint: >
-        Source node is shaped or constrained by a target Decision or DesignRule.
+        Source node is shaped or constrained by a target Decision, DesignRule
+        or Requirement. Anything in the design may be governed, which is why
+        the source stays open.
       properties:
         note: { type: string }

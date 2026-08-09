@@ -487,6 +487,69 @@ mod tests {
         );
     }
 
+    /// Governance's own question, and it had the same shape as BL-50 for
+    /// exactly one release. What binds a DesignRule to a Component?
+    ///
+    /// Until 2026-08-08 the answer was *nothing* — `describe_schema` reported
+    /// zero exact and zero half-exact fits and listed seventeen candidates that
+    /// accepted the pair only through a `*` wildcard, with its own note warning
+    /// that "they will validate, but validating is not the same as meaning what
+    /// you intend". A rule binding a component is the most ordinary thing
+    /// governance does, and the vocabulary could not say so. Found while
+    /// writing the governance-proposal skill, which had to document the hole
+    /// rather than use it.
+    ///
+    /// CONSTRAINS' source list is not a guess: its hint had always asserted
+    /// exactly Constraint and DesignRule, and every such edge in this design
+    /// agrees. The TARGET stays `*` deliberately — narrowing a wildcard is a
+    /// consumer-facing break, and what a rule limits is genuinely open.
+    #[test]
+    fn design_rule_to_component_reports_constrains_as_the_modelled_fit() {
+        let g = graph();
+        let q = g.edge_types_between("DesignRule", "Component").unwrap();
+        assert!(
+            q.half_exact_matches >= 1,
+            "CONSTRAINS names its from-side, so the pair is modelled rather than tolerated"
+        );
+        let first = q.matches.first().unwrap();
+        assert_eq!(
+            first.spec.edge_type, "CONSTRAINS",
+            "the edge designed for this pair must rank above both-sides wildcards"
+        );
+        assert!(
+            q.note.contains("modelled fit"),
+            "the note must stop calling the designed edge a wildcard loophole: {}",
+            q.note
+        );
+    }
+
+    /// The restraint half, pinned so a later tidy-up does not undo it.
+    ///
+    /// GOVERNED_BY was considered for the same treatment and REFUSED: it
+    /// carries 829 of this design's links from ten source types, and narrowing
+    /// either end would refuse pairs another project may legitimately use and
+    /// that this one merely happens not to
+    /// (rule:fixes-are-judged-by-the-third-party — this repo is the test rig,
+    /// not the target). Its HINT was the part that was wrong, and that was
+    /// fixed instead.
+    #[test]
+    fn governed_by_stays_open_at_both_ends() {
+        let g = graph();
+        let spec = g
+            .schema()
+            .edge_types
+            .get("GOVERNED_BY")
+            .expect("GOVERNED_BY");
+        // `Snapshot` is deliberately absurd here — no enumeration anyone wrote
+        // on purpose would list it, so accepting it proves the end is open
+        // rather than merely generous.
+        assert!(
+            spec.from.accepts("Snapshot") && spec.to.accepts("Snapshot"),
+            "GOVERNED_BY must stay wildcard at both ends: anything may be governed, and \
+             narrowing it would refuse pairs another project legitimately uses"
+        );
+    }
+
     /// The self-adopt session's actual question (BL-50): what connects a
     /// ChangeEvent to an Artifact? The answer is CHANGED — its from-side names
     /// ChangeEvent exactly; its to-side is `*` because a change can touch

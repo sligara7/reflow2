@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:d398aab86d8159bcda48a9e346a8d573c34e6a580c570d2d11a67f9950e198cb",
+  "content_hash": "sha256:a3f2e1052740cc3236a87427a8ab8b99b3afe1cb40d5877eab66218db016d736",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3875,6 +3875,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:reflow2-states-its-own-rules-20260808",
+      "properties": {},
+      "to_id": "epoch:reflow2-states-its-own-rules"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:reinjection-trigger-answered",
       "properties": {},
       "to_id": "epoch:reflow-workflow-review"
@@ -4988,6 +4994,24 @@
       "from_id": "snap:epoch:reflow-workflow-review:req:mode-is-chosen-and-changeable",
       "properties": {},
       "to_id": "epoch:reflow-workflow-review"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:reflow2-states-its-own-rules:rule:bl-135",
+      "properties": {},
+      "to_id": "epoch:reflow2-states-its-own-rules"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:reflow2-states-its-own-rules:rule:bl-212",
+      "properties": {},
+      "to_id": "epoch:reflow2-states-its-own-rules"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:reflow2-states-its-own-rules:rule:fixes-are-judged-by-the-third-party",
+      "properties": {},
+      "to_id": "epoch:reflow2-states-its-own-rules"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -6780,6 +6804,33 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "rule:bl-135",
+      "properties": {
+        "acted_at": "2026-08-08",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "rule:bl-212",
+      "properties": {
+        "acted_at": "2026-08-08",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "rule:bl-41",
+      "properties": {
+        "acted_at": "2026-08-08",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "rule:fixes-are-judged-by-the-third-party",
       "properties": {
         "acted_at": "2026-08-06T12:10:00Z",
@@ -7040,6 +7091,42 @@
     {
       "edge_type": "CHANGED",
       "from_id": "chg:a-refusal-names-its-own-fix-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:vocabulary"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-rule-binding-a-component-is-modelled-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-rule-binding-a-component-is-modelled-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-rule-binding-a-component-is-modelled-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-rule-binding-a-component-is-modelled-20260808",
       "properties": {
         "accepted_baseline": false,
         "action": "modified"
@@ -13057,6 +13144,42 @@
         "action": "added"
       },
       "to_id": "who:alex"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:reflow2-states-its-own-rules-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "rule:bl-135"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:reflow2-states-its-own-rules-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "rule:bl-212"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:reflow2-states-its-own-rules-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "rule:bl-41"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:reflow2-states-its-own-rules-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "rule:fixes-are-judged-by-the-third-party"
     },
     {
       "edge_type": "CHANGED",
@@ -23273,6 +23396,24 @@
       "from_id": "req:supporting-is-not-conflict",
       "properties": {},
       "to_id": "snap:epoch:prune-proposed:req:supporting-is-not-conflict"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "rule:bl-135",
+      "properties": {},
+      "to_id": "snap:epoch:reflow2-states-its-own-rules:rule:bl-135"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "rule:bl-212",
+      "properties": {},
+      "to_id": "snap:epoch:reflow2-states-its-own-rules:rule:bl-212"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "rule:fixes-are-judged-by-the-third-party",
+      "properties": {},
+      "to_id": "snap:epoch:reflow2-states-its-own-rules:rule:fixes-are-judged-by-the-third-party"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -48777,7 +48918,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:eff268604fffe9e990ac8198445c9a577e7c444ce2b8067b2c21bb33776e9bb0",
+        "checksum": "sha256:a8fd5362d207f3ffcdc0a146eea29f3060104109227fd5626b05bfa31984fbca",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/core.yaml",
@@ -48875,7 +49016,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:8e528069f11575d45725f0fd260a992ba153cfd99de84cfabca797f9b60bccc0",
+        "checksum": "sha256:9ee06b41897eb4806fd2787a6d8219c545efe028d25adaa268be01fde04e2d3f",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/structure.yaml",
@@ -49658,7 +49799,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0d250aa84d8ebe16",
+        "checksum": "sha256:02b4256717ea331fd8e7ef1bc0542410be17814cd3084b961941f1925e8e4763",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/vocabulary.rs",
         "name": "vocabulary.rs",
@@ -51508,6 +51649,14 @@
       "properties": {
         "change_type": "refactor",
         "name": "A refusal names the call that fixes it, add_contributor forgives the sibling field name, and a schema hint stops offering values its enum rejects"
+      }
+    },
+    {
+      "node_id": "chg:a-rule-binding-a-component-is-modelled-20260808",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "CONSTRAINS enumerates its source so a rule binding a component is modelled rather than tolerated — and GOVERNED_BY deliberately stays open, because narrowing a wildcard breaks consumers"
       }
     },
     {
@@ -53737,6 +53886,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Recovering intent from test evidence captured as an expansion of adopt; Alex recorded as a Contributor"
+      }
+    },
+    {
+      "node_id": "chg:reflow2-states-its-own-rules-20260808",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "constraint_change",
+        "name": "Snapshot of the third-party judgement rule while it still reads enforced: true — a status its own statement contradicts, since it says plainly that nothing verifies it"
       }
     },
     {
@@ -58296,6 +58453,16 @@
       }
     },
     {
+      "node_id": "epoch:reflow2-states-its-own-rules",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "Anthony states which of reflow2's own four rules he actually meant as gate-blocking: BL-41 stays enforced, the other three become advisory (2026-08-08)",
+        "sequence": 291,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:requirements-confirmed",
       "node_type": "DesignEpoch",
       "properties": {
@@ -58708,7 +58875,7 @@
       "node_id": "rule:bl-135",
       "node_type": "DesignRule",
       "properties": {
-        "enforced": true,
+        "enforced": false,
         "name": "[BL-135] State the FAILURE MODE, not the rule — the guardrail principle, evidenced by a blind trial, and written nowhere",
         "statement": "State the FAILURE MODE, not the rule — the guardrail principle, evidenced by a blind trial, and written nowhere\n\n*The strongest general finding from the 2026-07-31 case study, and the only one that is about how this project WRITES rather than what it computes.* An agent designed a whole project through reflow2 without knowing the guardrail docstrings were deliberate behavioural interventions. It read them as ordinary API prose, formed its own view of what they were for, complied, and praised the phrasing in its log without suspecting it was aimed at it — a blind trial, and they worked. It then ranked the eight that changed its behaviour, most effective first: set_artifact_checksum's *\"silent accept does not exist: it is how a design erodes into fiction over N fix cycles while reporting zero gaps\"* (named the single strongest intervention in the surface — it produced a named ChangeEvent for all nine artifact updates that would otherwise have been silent re-registrations); genesis's *\"do not invent a brief on my behalf\"* (held through THREE blank briefs with a detailed solicitation sitting in the directory, preventing the largest failure available — fabricated requirements phrased in the customer's own language, which are unusually hard to spot later); add_constraint's *\"criticality is a claim about consequence, so ask the user first\"*; set_requirement_status's *\"promoting it yourself forges their signature\"*; delete_edge's *\"a link that WAS true and stopped being true is design history, not an error\"*; describe_schema's *\"validating is not the same as meaning what you intended\"*; set_project_mode's *\"the default records that nobody has chosen\"*; and the stop hook's *\"bookkeeping is not the loop\"*. The extractable rule, in its words: it complied more readily where it was told what goes wrong if it did not, because that let it evaluate the reasoning rather than obey it — and agree. *\"Ask the user first\"* alone would have been weaker than the version naming the consequence. Equally informative: the interventions that did NOT need to exist — nothing had to stop it over-modelling or creating Components at genesis, because the skills sequenced the work so those temptations arrived when the right move was already obvious. The work: write the rule where descriptions are written (AGENTS.md), with this ranked evidence, so it is a standard rather than a habit — and consider a skill_lint check that a guardrail sentence names a consequence. The counterexample is already filed: [BL-124] shows a guardrail whose reasoning is the same quality as the rest and whose IMPLEMENTATION contradicts its intent, which the case study called the highest-value fix in its document. Good wording does not survive a mechanism that defeats it. CORROBORATED FROM INSIDE THE OTHER PROJECT, which is the strongest form the evidence could take: that session adopted the same pattern in its own code without being told to, and it caught a real error — a guardrail written two entries earlier asserted that all calibration anchors miss in the same direction, and when the same agent later fitted a coefficient to one anchor, the assertion failed with its own text: *\"anchors now disagree in direction; the models were probably tuned to fit one of them.\"* Written before the mistake, and it named the cause. The principle is not a style preference about API prose; it transfers to any assertion a person will read at the moment they are getting something wrong. Their honest division of labour is worth carrying into the docs alongside it: *reflow2 is where reasoning persists; tests are what stop you being wrong* — which is also the argument for the out-of-scope line on [BL-126]. Size S\n\nMigrated from docs/backlog.md BL-135 on 2026-08-07 (epoch:backlog-retired). Size estimate carried from the row: S."
       }
@@ -58717,7 +58884,7 @@
       "node_id": "rule:bl-212",
       "node_type": "DesignRule",
       "properties": {
-        "enforced": true,
+        "enforced": false,
         "name": "[BL-212] A folder of documents carries no recoverable chronology, so EVOLVES_INTO and SUPERSEDES — both directional — can never b",
         "statement": "A folder of documents carries no recoverable chronology, so EVOLVES_INTO and SUPERSEDES — both directional — can never be drawn from a corpus\n\n*Found 2026-08-04 while capturing [req:accreted-intent-becomes-a-design].* The vocabulary for \"someone changed their mind over years\" is already there and is entirely unused for this: CONTRADICTS carries alignment: opposing\\ | supporting with confidence and evidence, EVOLVES_INTO is literally *\"source is an earlier form that becomes target over time\"*, SUPERSEDES/OBSOLETES retire on the record, and TemporalFact holds a time-bounded assertion with VALID_FROM/VALID_TO. All of it needs to know which document came FIRST, and a folder cannot say. File mtimes lie (checkout, copy, sync all rewrite them), a document corpus may have no git history at all, and the dates inside documents are prose. This is the exact inverse of the bug fixed in this same increment: there, arrival order wrongly decided the canonical NAME and the fix was to stop consulting order; here order genuinely carries meaning and there is no way to learn it. So the honest default is that a corpus ingest draws CONTRADICTS (symmetric, needs no direction) and NEVER EVOLVES_INTO/SUPERSEDES (directional) unless a human or an explicit in-document date supplies the arrow — which makes \"you changed your mind here\" answerable and \"this replaced that\" a question. Candidate signals worth measuring before choosing: an explicit date in frontmatter or filename, git log --follow --diff-filter=A first-commit date where a repo exists, and the corpus's own supersession language (\"replaces\", \"superseded by\"). Do not infer the arrow from mtime. Size S\n\nMigrated from docs/backlog.md BL-212 on 2026-08-07 (epoch:backlog-retired). Size estimate carried from the row: S."
       }
@@ -58735,7 +58902,7 @@
       "node_id": "rule:fixes-are-judged-by-the-third-party",
       "node_type": "DesignRule",
       "properties": {
-        "enforced": true,
+        "enforced": false,
         "name": "Every fix is judged by what it does for somebody else's project — this repo is the test rig, not the target",
         "statement": "Anthony, 2026-08-06: \"most changes we do here are not for the sake of reflow2 itself (though we often apply reflow2 tools/skills on itself). so when we fix something, it must be from the perspective that we are improving reflow2 for anybody that may use it in their project.\"\n\nTHE RULE: when a defect is found while working on reflow2's own design, the fix is judged by what it does for a CONSUMER — a project that installed reflow2 and whose authors will never read this repository. Improving reflow2's own repo state is not the objective; it is the evidence.\n\nDISTINCT FROM THE DOGFOODING RATIONALE, and the two are easy to conflate. req:skill-use-survives-a-long-session records that using the skills on this project is the INSTRUMENT that finds defects. This rule says how to judge the FIX once the instrument has fired. One is about detection, the other about the target. Both are needed, and only holding the first produces a beautifully-instrumented repository that has fixed nothing for anybody.\n\nTHE FAILURE MODE IT FORBIDS, which is subtle because it looks like completion: find a hole, patch it HERE, mark the requirement met, and leave every consumer with the hole. The repo goes green, the design says the need is satisfied, and nothing is true of anyone else's project.\n\nTHE WORKED EXAMPLE THAT PROMPTED IT, same day, and it is the clearest test of the rule available. Asked whether anything runs `reconcile_dependencies`, the first answer was \"reflow2's own CI does not\" — accurate, small, and actionable by adding a step to this repo's workflow. Applying this rule reframed it: `reflow2_check.py` is THE GATE THAT SHIPS TO EVERY CONSUMER IN THE KIT, and it reconciles ARTIFACTS but never DEPENDENCIES. Same underlying fact; the second framing is the one worth acting on, and only the second one fixes anything for anybody. Adding a CI step here would have satisfied the first reading and left req:design-dependencies-declared unenforced in every project that installs reflow2.\n\nHOW TO APPLY IT, concretely: when a finding is written, ask where the fix lands. If it lands in `.github/`, `tools/build_design_graph.py`, or anything else that exists only because reflow2 develops itself, ask what the CONSUMER-facing equivalent is — the served tool surface, a skill, `reflow2_check.py`, the kit, the installer, a tool DESCRIPTION. If there is no consumer-facing equivalent, that absence is usually the real finding.\n\nWHY IT IS A RULE AND NOT A REQUIREMENT: it constrains how every other change is judged rather than describing behaviour anything can satisfy, which is the same shape as rule:no-foreclosure. Nothing verifies it; it is applied by whoever is deciding what to build, and its evidence is the framing of the findings that follow it.\n\nTHE COUNTER-PRESSURE, recorded so the rule is not applied blindly: reflow2 IS a real project with real operational needs, and some work genuinely is for this repo alone — the release procedure, the export discipline, COORD. The rule does not forbid that work. It forbids MISTAKING it for product work, and it forbids closing a consumer-facing requirement with a repo-facing fix."
       }
@@ -64409,6 +64576,36 @@
       }
     },
     {
+      "node_id": "snap:epoch:reflow2-states-its-own-rules:rule:bl-135",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"CONSTRAINS\",\"other_type\":\"Component\",\"other_id\":\"sys:agent-surface\",\"properties\":{\"basis\":\"estimated\",\"note\":\"Migrated from docs/backlog.md BL-135 on 2026-08-07 (epoch:backlog-retired). Size estimate carried from the row: S.\"}}]",
+        "state": "{\"enforced\":true,\"name\":\"[BL-135] State the FAILURE MODE, not the rule — the guardrail principle, evidenced by a blind trial, and written nowhere\",\"statement\":\"State the FAILURE MODE, not the rule — the guardrail principle, evidenced by a blind trial, and written nowhere\\n\\n*The strongest general finding from the 2026-07-31 case study, and the only one that is about how this project WRITES rather than what it computes.* An agent designed a whole project through reflow2 without knowing the guardrail docstrings were deliberate behavioural interventions. It read them as ordinary API prose, formed its own view of what they were for, complied, and praised the phrasing in its log without suspecting it was aimed at it — a blind trial, and they worked. It then ranked the eight that changed its behaviour, most effective first: set_artifact_checksum's *\\\"silent accept does not exist: it is how a design erodes into fiction over N fix cycles while reporting zero gaps\\\"* (named the single strongest intervention in the surface — it produced a named ChangeEvent for all nine artifact updates that would otherwise have been silent re-registrations); genesis's *\\\"do not invent a brief on my behalf\\\"* (held through THREE blank briefs with a detailed solicitation sitting in the directory, preventing the largest failure available — fabricated requirements phrased in the customer's own language, which are unusually hard to spot later); add_constraint's *\\\"criticality is a claim about consequence, so ask the user first\\\"*; set_requirement_status's *\\\"promoting it yourself forges their signature\\\"*; delete_edge's *\\\"a link that WAS true and stopped being true is design history, not an error\\\"*; describe_schema's *\\\"validating is not the same as meaning what you intended\\\"*; set_project_mode's *\\\"the default records that nobody has chosen\\\"*; and the stop hook's *\\\"bookkeeping is not the loop\\\"*. The extractable rule, in its words: it complied more readily where it was told what goes wrong if it did not, because that let it evaluate the reasoning rather than obey it — and agree. *\\\"Ask the user first\\\"* alone would have been weaker than the version naming the consequence. Equally informative: the interventions that did NOT need to exist — nothing had to stop it over-modelling or creating Components at genesis, because the skills sequenced the work so those temptations arrived when the right move was already obvious. The work: write the rule where descriptions are written (AGENTS.md), with this ranked evidence, so it is a standard rather than a habit — and consider a skill_lint check that a guardrail sentence names a consequence. The counterexample is already filed: [BL-124] shows a guardrail whose reasoning is the same quality as the rest and whose IMPLEMENTATION contradicts its intent, which the case study called the highest-value fix in its document. Good wording does not survive a mechanism that defeats it. CORROBORATED FROM INSIDE THE OTHER PROJECT, which is the strongest form the evidence could take: that session adopted the same pattern in its own code without being told to, and it caught a real error — a guardrail written two entries earlier asserted that all calibration anchors miss in the same direction, and when the same agent later fitted a coefficient to one anchor, the assertion failed with its own text: *\\\"anchors now disagree in direction; the models were probably tuned to fit one of them.\\\"* Written before the mistake, and it named the cause. The principle is not a style preference about API prose; it transfers to any assertion a person will read at the moment they are getting something wrong. Their honest division of labour is worth carrying into the docs alongside it: *reflow2 is where reasoning persists; tests are what stop you being wrong* — which is also the argument for the out-of-scope line on [BL-126]. Size S\\n\\nMigrated from docs/backlog.md BL-135 on 2026-08-07 (epoch:backlog-retired). Size estimate carried from the row: S.\"}",
+        "target_id": "rule:bl-135",
+        "target_type": "DesignRule"
+      }
+    },
+    {
+      "node_id": "snap:epoch:reflow2-states-its-own-rules:rule:bl-212",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"CONSTRAINS\",\"other_type\":\"Component\",\"other_id\":\"cmp:ingest\",\"properties\":{\"basis\":\"estimated\",\"note\":\"Migrated from docs/backlog.md BL-212 on 2026-08-07 (epoch:backlog-retired). Size estimate carried from the row: S.\"}}]",
+        "state": "{\"enforced\":true,\"name\":\"[BL-212] A folder of documents carries no recoverable chronology, so EVOLVES_INTO and SUPERSEDES — both directional — can never b\",\"statement\":\"A folder of documents carries no recoverable chronology, so EVOLVES_INTO and SUPERSEDES — both directional — can never be drawn from a corpus\\n\\n*Found 2026-08-04 while capturing [req:accreted-intent-becomes-a-design].* The vocabulary for \\\"someone changed their mind over years\\\" is already there and is entirely unused for this: CONTRADICTS carries alignment: opposing\\\\ | supporting with confidence and evidence, EVOLVES_INTO is literally *\\\"source is an earlier form that becomes target over time\\\"*, SUPERSEDES/OBSOLETES retire on the record, and TemporalFact holds a time-bounded assertion with VALID_FROM/VALID_TO. All of it needs to know which document came FIRST, and a folder cannot say. File mtimes lie (checkout, copy, sync all rewrite them), a document corpus may have no git history at all, and the dates inside documents are prose. This is the exact inverse of the bug fixed in this same increment: there, arrival order wrongly decided the canonical NAME and the fix was to stop consulting order; here order genuinely carries meaning and there is no way to learn it. So the honest default is that a corpus ingest draws CONTRADICTS (symmetric, needs no direction) and NEVER EVOLVES_INTO/SUPERSEDES (directional) unless a human or an explicit in-document date supplies the arrow — which makes \\\"you changed your mind here\\\" answerable and \\\"this replaced that\\\" a question. Candidate signals worth measuring before choosing: an explicit date in frontmatter or filename, git log --follow --diff-filter=A first-commit date where a repo exists, and the corpus's own supersession language (\\\"replaces\\\", \\\"superseded by\\\"). Do not infer the arrow from mtime. Size S\\n\\nMigrated from docs/backlog.md BL-212 on 2026-08-07 (epoch:backlog-retired). Size estimate carried from the row: S.\"}",
+        "target_id": "rule:bl-212",
+        "target_type": "DesignRule"
+      }
+    },
+    {
+      "node_id": "snap:epoch:reflow2-states-its-own-rules:rule:fixes-are-judged-by-the-third-party",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Capability\",\"other_id\":\"cap:plan-increments\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:backup-belongs-to-the-consumer\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Requirement\",\"other_id\":\"req:design-dependencies-declared\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Requirement\",\"other_id\":\"req:skill-use-survives-a-long-session\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Verification\",\"other_id\":\"ver:check-reconciles-dependencies\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Verification\",\"other_id\":\"ver:toml-fallback-reader\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-06T12:10:00Z\",\"role\":\"author\"}}]",
+        "state": "{\"enforced\":true,\"name\":\"Every fix is judged by what it does for somebody else's project — this repo is the test rig, not the target\",\"statement\":\"Anthony, 2026-08-06: \\\"most changes we do here are not for the sake of reflow2 itself (though we often apply reflow2 tools/skills on itself). so when we fix something, it must be from the perspective that we are improving reflow2 for anybody that may use it in their project.\\\"\\n\\nTHE RULE: when a defect is found while working on reflow2's own design, the fix is judged by what it does for a CONSUMER — a project that installed reflow2 and whose authors will never read this repository. Improving reflow2's own repo state is not the objective; it is the evidence.\\n\\nDISTINCT FROM THE DOGFOODING RATIONALE, and the two are easy to conflate. req:skill-use-survives-a-long-session records that using the skills on this project is the INSTRUMENT that finds defects. This rule says how to judge the FIX once the instrument has fired. One is about detection, the other about the target. Both are needed, and only holding the first produces a beautifully-instrumented repository that has fixed nothing for anybody.\\n\\nTHE FAILURE MODE IT FORBIDS, which is subtle because it looks like completion: find a hole, patch it HERE, mark the requirement met, and leave every consumer with the hole. The repo goes green, the design says the need is satisfied, and nothing is true of anyone else's project.\\n\\nTHE WORKED EXAMPLE THAT PROMPTED IT, same day, and it is the clearest test of the rule available. Asked whether anything runs `reconcile_dependencies`, the first answer was \\\"reflow2's own CI does not\\\" — accurate, small, and actionable by adding a step to this repo's workflow. Applying this rule reframed it: `reflow2_check.py` is THE GATE THAT SHIPS TO EVERY CONSUMER IN THE KIT, and it reconciles ARTIFACTS but never DEPENDENCIES. Same underlying fact; the second framing is the one worth acting on, and only the second one fixes anything for anybody. Adding a CI step here would have satisfied the first reading and left req:design-dependencies-declared unenforced in every project that installs reflow2.\\n\\nHOW TO APPLY IT, concretely: when a finding is written, ask where the fix lands. If it lands in `.github/`, `tools/build_design_graph.py`, or anything else that exists only because reflow2 develops itself, ask what the CONSUMER-facing equivalent is — the served tool surface, a skill, `reflow2_check.py`, the kit, the installer, a tool DESCRIPTION. If there is no consumer-facing equivalent, that absence is usually the real finding.\\n\\nWHY IT IS A RULE AND NOT A REQUIREMENT: it constrains how every other change is judged rather than describing behaviour anything can satisfy, which is the same shape as rule:no-foreclosure. Nothing verifies it; it is applied by whoever is deciding what to build, and its evidence is the framing of the findings that follow it.\\n\\nTHE COUNTER-PRESSURE, recorded so the rule is not applied blindly: reflow2 IS a real project with real operational needs, and some work genuinely is for this repo alone — the release procedure, the export discipline, COORD. The rule does not forbid that work. It forbids MISTAKING it for product work, and it forbids closing a consumer-facing requirement with a repo-facing fix.\"}",
+        "target_id": "rule:fixes-are-judged-by-the-third-party",
+        "target_type": "DesignRule"
+      }
+    },
+    {
       "node_id": "snap:epoch:requirements-confirmed:req:restructuring-is-certified",
       "node_type": "Snapshot",
       "properties": {
@@ -67441,7 +67638,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:cb1792abcd84b65fb7de5f66525bb38ddc43cb103a4492b9110d2e47e185a7c9",
+  "prev_content_hash": "sha256:d398aab86d8159bcda48a9e346a8d573c34e6a580c570d2d11a67f9950e198cb",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
