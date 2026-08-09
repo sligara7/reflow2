@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a3f2e1052740cc3236a87427a8ab8b99b3afe1cb40d5877eab66218db016d736",
+  "content_hash": "sha256:08fd173013d09021e670f736477d54df447ee726e35c2b1bd1c07127b120e821",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -672,6 +672,12 @@
       "from_id": "fact:shared-graph-field-report-what-held",
       "properties": {},
       "to_id": "cap:shared-sessions"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:the-stale-server-defect-recurred-to-the-people-who-wrote-it-down",
+      "properties": {},
+      "to_id": "req:the-server-is-the-authority-on-its-own-currency"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1880,6 +1886,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:llm"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-server-knows-its-own-currency",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -14443,6 +14457,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-server-says-when-it-is-stale-20260809",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-server-says-when-it-is-stale-20260809",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-server-says-when-it-is-stale-20260809",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:the-server-knows-its-own-currency"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-server-says-when-it-is-stale-20260809",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:the-server-is-the-authority-on-its-own-currency"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:token-subset-pass",
       "properties": {
         "accepted_baseline": true,
@@ -15701,6 +15751,16 @@
         "alignment": "supporting",
         "confidence": 1.0,
         "evidence": "That fact is the server being unable to answer the staleness question; this is the answer being priced out of reach. req:the-server-is-the-authority-on-its-own-currency subsumes both."
+      },
+      "to_id": "fact:defect-a-running-server-cannot-say-it-is-stale"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "fact:the-stale-server-defect-recurred-to-the-people-who-wrote-it-down",
+      "properties": {
+        "alignment": "supporting",
+        "confidence": 1.0,
+        "evidence": "Third instance of the same defect, and the first to land on the maintainer rather than a reporter. Adds the remedy that fails (--stop-shared, absent from both prior records) and the cost (a full day of undogfooded work); adds nothing to the diagnosis, which was already certain."
       },
       "to_id": "fact:defect-a-running-server-cannot-say-it-is-stale"
     },
@@ -23834,6 +23894,12 @@
       "from_id": "dec:export-once-per-pr",
       "properties": {},
       "to_id": "fact:defect-lineage-message-omits-its-own-decision"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "req:the-server-is-the-authority-on-its-own-currency",
+      "properties": {},
+      "to_id": "fact:the-stale-server-defect-recurred-to-the-people-who-wrote-it-down"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -43549,6 +43615,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:server-currency-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:the-server-says-when-it-is-stale"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:service",
       "properties": {
         "completeness": "complete"
@@ -45049,6 +45123,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:the-server-knows-its-own-currency",
+      "properties": {},
+      "to_id": "req:the-server-is-the-authority-on-its-own-currency"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:tool-carries-convention",
       "properties": {},
       "to_id": "req:conventions-ride-the-tool-not-only-the-skill"
@@ -46387,6 +46467,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-server-says-when-it-is-stale",
+      "properties": {},
+      "to_id": "cap:the-server-knows-its-own-currency"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:toml-fallback-reader",
       "properties": {},
       "to_id": "cap:design-dependencies-declared"
@@ -47238,6 +47324,14 @@
         "action": "created"
       },
       "to_id": "art:self-host-documents-guard"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:server-currency-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:server-currency-test"
     },
     {
       "edge_type": "YIELDED",
@@ -49158,11 +49252,24 @@
       }
     },
     {
+      "node_id": "art:server-currency-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:6ac21cd02a37fc6c6d51bbbc2d1adcac817d0a373e82c33e95ab954344496741",
+        "granularity": "atomic",
+        "location": "crates/reflow2-mcp/tests/the_server_says_when_it_is_stale.rs",
+        "name": "the_server_says_when_it_is_stale.rs",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
       "node_id": "art:service",
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:40407c67d5f51959483e88ae3390f796a5a9b5fdd756a2dca76c0283d9751847",
+        "checksum": "sha256:86386eef65516f34f9018a5c651a6a654e70cdf56cf9a993da07ef60ba361ffa",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -49578,7 +49685,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:350da82c45348088ed525aea2775d0f6f40019dd4b3b33b4183b4ae0441dd825",
+        "checksum": "sha256:89aaf70aca277246eda1df18d33484f84ce1ddcd00bd27253f1d560ee16c02da",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -51559,6 +51666,19 @@
         "name": "Ask the user a plain question",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:the-server-knows-its-own-currency",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`served_by` carries `stale` and `stale_note` alongside the version. THREE-VALUED — true (the binary was replaced under this process), false (still the file it started from), null (the question could not be asked; unknown NEVER reads as current). DERIVED, NOT COMPARED, and that is the whole design: the block used to report a version LITERAL and leave the comparison to the reader, which dev_storyflow measured as four sessions reading `0.22.1` on two days and drawing opposite conclusions from the same true value — one reporting a PASS on a broken invariant. A version string also cannot answer at all when two builds share a version, which is every `cargo build` in a working session. THE MECHANISM IS ONE SYSCALL: when a running binary is replaced the kernel marks that process's `/proc/self/exe` link `(deleted)` while the inode lives on, which is exactly why the process keeps serving and nothing else notices. No second binary read, no path re-resolution, no assumption the launch path still exists. `stale_note` carries the remedy in the payload rather than in a doc, INCLUDING the part that is easy to get wrong: a bare session restart changes nothing because `--shared` re-attaches to the same daemon, and `--stop-shared` alone can fail when the client's own binary was replaced too. DOES NOT CLAIM the graph is current, the checkout matches, or the answer is right — only whether this process's own binary moved under it.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "The server says whether its own executable has been replaced since it started",
+        "provenance": "authored",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -54174,6 +54294,14 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "The installer stops skipping the one ignore entry most likely to be already tracked, and the remedy it prints works on a directory"
+      }
+    },
+    {
+      "node_id": "chg:the-server-says-when-it-is-stale-20260809",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The server stops making a human compare two numbers: served_by derives `stale` from its own /proc/self/exe, and the note carries the remedy that actually works"
       }
     },
     {
@@ -60424,6 +60552,16 @@
       }
     },
     {
+      "node_id": "frag:art:server-currency-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered the_server_says_when_it_is_stale.rs"
+      }
+    },
+    {
       "node_id": "frag:art:service",
       "node_type": "Fragment",
       "properties": {
@@ -66151,6 +66289,18 @@
       }
     },
     {
+      "node_id": "fact:the-stale-server-defect-recurred-to-the-people-who-wrote-it-down",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THIRD INSTANCE, AND THE FIRST ONE WHERE THE PEOPLE LOSING THE CYCLE HAD ALREADY WRITTEN THE DEFECT DOWN. Deliberately NOT a new defect: fact:defect-a-running-server-cannot-say-it-is-stale (2026-08-07) already states this case in almost these words — '--serve-shared is detached on purpose, so every session that restarted RE-ATTACHED TO THE SAME STALE PROCESS and nothing anywhere reported a problem' — and fact:defect-stale-server-reproduced-first-hand-here records the second. This node exists for what those two do NOT say. WHAT HAPPENED, 2026-08-08 late: Anthony went home specifically to restart and pick up the new binary, restarted the session, and the served surface was unchanged. Measured rather than assumed: `describe_schema(from: DesignRule, to: Component)` still answered 'No edge type specifically models DesignRule -> Component' and still showed CONSTRAINS as `from: [\"*\"]`, minutes after that enumeration was built, gated and pushed. `ps` explains it: the `--serve-shared` daemon has held the graph since 10:16 that morning, while the restart spawned a NEW `--shared` CLIENT (23:50) which attached to it. WHAT IS NEW AND WORTH THE NODE: (1) THE DOCUMENTED REMEDY IS THE THING THAT FAILS. Every prior record treats 'restart' as the escape from a stale server. Under `--shared` a session restart does not touch the daemon, so the remedy silently does nothing and the user reasonably believes it worked. The actual remedy is `--stop-shared`, which appears in NEITHER prior fact. (2) IT COST A WHOLE DAY OF DOGFOODING. Five merged PRs — the seat-liveness fix, both governance detectors, the skill, the enforced tri-state — were built, gated and merged without one of them ever running through a live session, because the daemon predated all of it. The handoff note written that evening had to say 'check the version rather than assume', which is the workaround this requirement exists to abolish. (3) IT WAS CAUGHT ONLY BY DELIBERATE CHECKING. The session tested a schema fact it happened to know had changed. Nothing surfaced it, and a session without that specific memory would have proceeded on a stale surface believing it was current — which is exactly how the four sessions in the 2026-08-07 report drew opposite conclusions from the same true value. WHY THIS IS AN ARGUMENT AND NOT A COMPLAINT: `req:the-server-is-the-authority-on-its-own-currency` has NOTHING SATISFYING IT and has sat among the 0.60 unsatisfied-requirement gaps all day. The fix is not research: `/proc/self/exe` is marked `(deleted)` the moment the binary is replaced, w-6904efa6 demonstrated it live on a real pid, and it is one syscall with no second source and no version-string comparison. THREE INSTANCES ACROSS TWO PROJECTS AND TWO MACHINES, and the third landed on the maintainer. THE HONEST CAVEAT, because recurrence is not automatically corroboration: these three share a cause rather than a method — two were found by noticing an impossible value, this one by testing a remembered fact — so they add weight to the COST, not to the diagnosis, which was already certain.",
+        "subject_id": "req:the-server-is-the-authority-on-its-own-currency",
+        "valid_from": "2026-08-08"
+      }
+    },
+    {
       "node_id": "ver:a-finding-names-its-hub",
       "node_type": "Verification",
       "properties": {
@@ -67569,6 +67719,18 @@
       }
     },
     {
+      "node_id": "ver:the-server-says-when-it-is-stale",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-09",
+        "level": "integration",
+        "method": "test",
+        "name": "`served_by` STATES staleness rather than leaving a literal to be compared: the block carries `stale` and `stale_note`; an intact binary reads a definite `false`; `stale` is three-valued and a null SAYS unknown rather than borrowing the wording of a definite answer; the stale note names `--stop-shared`, says why a bare session restart changes nothing (`--shared` re-attaches to the same daemon), and warns that the respawn itself fails when the client's binary was replaced too. Five cases in crates/reflow2-mcp/tests/the_server_says_when_it_is_stale.rs. VERIFIED LIVE ON A RUNNING DAEMON, not only in fixtures, because the `true` branch cannot occur in a test process: a fresh daemon reported `stale: false, binary_mtime_unix: 1786248674`; `cargo build` was then run to relink the binary under it, and the SAME server reported `stale: true, binary_mtime_unix: null` on the next call. That second observation also settled an old puzzle — the `null` mtime dev_storyflow reported as 'best-effort, unavailable' is THIS SAME SIGNAL, since current_exe() returns a path carrying the `(deleted)` marker and metadata() fails on it. The note's wording is asserted against public constants rather than inside `if stale == true`, because a first draft guarded those assertions with that condition and they silently never ran — the vacuous-branch problem this work exists to catch, reproduced in its own test.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:toml-fallback-reader",
       "node_type": "Verification",
       "properties": {
@@ -67638,7 +67800,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:d398aab86d8159bcda48a9e346a8d573c34e6a580c570d2d11a67f9950e198cb",
+  "prev_content_hash": "sha256:a3f2e1052740cc3236a87427a8ab8b99b3afe1cb40d5877eab66218db016d736",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -197,11 +197,16 @@ impl ReflowService {
 
     #[tool(
         description = "The 'what should I look at?' rollup report (SYNTHESIZE). Its `served_by` \
-                       block names the reflow2 actually answering — version and binary build \
-                       time — because an MCP server started before a rebuild keeps serving the \
-                       old surface with nothing to say so (BL-32): the session that finds a \
-                       mismatch between served_by and the repo should be restarted before \
-                       trusting anything else it reads.",
+                       block says whether this server is STILL THE CODE IT WAS STARTED FROM — a \
+                       server that predates a rebuild keeps serving the old surface, and until \
+                       2026-08-09 nothing said so. READ `served_by.stale`: `true` means every \
+                       computed number here came from a binary no longer on disk; `null` means \
+                       the server could not tell (never read it as false). It is DERIVED, not \
+                       compared: a version literal left four sessions drawing opposite \
+                       conclusions from the same true value, and two builds in one working \
+                       session share a version anyway. `stale_note` carries the fix, which is \
+                       `--stop-shared` plus any tool call — NOT a session restart, which \
+                       re-attaches to the same daemon and silently changes nothing.",
         annotations(read_only_hint = true)
     )]
     pub async fn graph_report(&self) -> Result<CallToolResult, McpError> {
