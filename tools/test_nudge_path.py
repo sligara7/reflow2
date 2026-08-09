@@ -260,11 +260,25 @@ class TheServerKnowsWhetherTheNetExists(unittest.TestCase):
 
         instructions = self.handshake_instructions(project)
 
-        self.assertIn("NO SESSION-END NUDGE", instructions, instructions[:400])
+        self.assertIn("REFLOW2 HAS NOT INSTALLED", instructions, instructions[:400])
         self.assertIn(
             "loop_status",
             instructions,
             "and it must say what to do instead of the missing net",
+        )
+        # It reports what reflow2 LOOKED AT, never a claim about the world.
+        # dev_storyflow, 2026-08-09: the old wording said "nothing will remind
+        # you" and a harness-side Stop hook fired at them minutes later — the
+        # field was right and the sentence was not.
+        self.assertIn(
+            "your harness",
+            instructions,
+            "it must allow for a hook reflow2 cannot see",
+        )
+        self.assertNotIn(
+            "so nothing will remind you",
+            instructions,
+            "the overclaim about the world must be gone",
         )
 
     def test_a_project_with_the_hook_is_not_nagged(self):
@@ -295,7 +309,7 @@ class TheServerKnowsWhetherTheNetExists(unittest.TestCase):
         instructions = self.handshake_instructions(project)
 
         self.assertNotIn(
-            "NO SESSION-END NUDGE",
+            "REFLOW2 HAS NOT INSTALLED",
             instructions,
             "a project that HAS the net must not be told it does not",
         )

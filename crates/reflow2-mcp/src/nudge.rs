@@ -52,11 +52,26 @@ impl NudgeStatus {
     pub fn advisory(&self) -> Option<String> {
         match self {
             NudgeStatus::Installed | NudgeStatus::Unknown => None,
+            // Reports what reflow2 LOOKED AT, not a claim about the world.
+            //
+            // This used to read "NO SESSION-END NUDGE IS INSTALLED… so nothing
+            // will remind you". dev_storyflow filed it on 2026-08-09: their
+            // `loop_status` said exactly that, and a Stop hook fired at them
+            // minutes later — the very reminder the sentence said did not
+            // exist. Their hook is harness-side rather than one reflow2
+            // installed, so the FIELD was right and the SENTENCE was not.
+            //
+            // Why the wording matters more than it looks: the advisory exists to
+            // make a session self-police because nothing else will, and **a
+            // session that believes it is unwatched budgets differently from one
+            // that knows a hook will catch it.** Arguing for the first while the
+            // second is true is the wrong error to make.
             NudgeStatus::Absent => Some(
-                "NO SESSION-END NUDGE IS INSTALLED in this project, so nothing will remind you \
-                 when the coherence loop is owed something. Call `loop_status` before you finish \
-                 any session in which you changed the design, and after a batch of captures — it \
-                 is one cheap call that says what is owed."
+                "REFLOW2 HAS NOT INSTALLED A SESSION-END NUDGE in this project — your harness \
+                 may have one of its own, which reflow2 cannot see. If nothing reminds you, \
+                 nothing will say the coherence loop is owed something. Call `loop_status` \
+                 before you finish any session in which you changed the design, and after a \
+                 batch of captures — it is one cheap call that says what is owed."
                     .to_string(),
             ),
             NudgeStatus::Broken { command } => Some(format!(
@@ -253,6 +268,32 @@ mod tests {
         assert_eq!(status, NudgeStatus::Absent);
         let advisory = status.advisory().unwrap();
         assert!(advisory.contains("loop_status"), "{advisory}");
+    }
+
+    /// The advisory reports what reflow2 LOOKED AT, never a claim about the
+    /// world it cannot see.
+    ///
+    /// dev_storyflow, 2026-08-09: `loop_status` told them "nothing will remind
+    /// you" and a Stop hook fired at them minutes later. Their hook was
+    /// harness-side, so reflow2's FIELD was right and its SENTENCE was not — and
+    /// a session that believes it is unwatched budgets differently from one that
+    /// knows a hook will catch it.
+    #[test]
+    fn the_absent_advisory_does_not_claim_nothing_else_will_remind_you() {
+        let p = project_with(r#"{"hooks":{}}"#);
+        let advisory = status(Some(&p.graph())).advisory().unwrap();
+        assert!(
+            advisory.contains("REFLOW2 HAS NOT INSTALLED"),
+            "it must say what reflow2 did, not what the world contains: {advisory}"
+        );
+        assert!(
+            advisory.contains("your harness"),
+            "and must allow for a hook reflow2 cannot see: {advisory}"
+        );
+        assert!(
+            !advisory.contains("so nothing will remind you"),
+            "the overclaim must be gone: {advisory}"
+        );
     }
 
     #[test]
