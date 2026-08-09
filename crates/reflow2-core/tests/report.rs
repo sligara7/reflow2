@@ -212,6 +212,161 @@ fn an_open_decision_is_owed_only_once_somebody_has_been_asked_to_settle_it() {
     );
 }
 
+/// The count was never the hard part — finding out WHICH was.
+///
+/// flo2 filed this (F4): every other debt line names a tool to call next, and
+/// this one left the reader to walk `AUTHORED_BY` edges by hand. Hit
+/// independently in this repo the same day, where identifying two assigned
+/// decisions meant `jq`-ing the committed export.
+#[test]
+fn the_assigned_decisions_are_listed_and_not_merely_counted() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_contributor("who:a", "A", Some("person"), Some("a"), None)
+        .unwrap();
+    g.add_decision("dec:asked", "Which way?", "Two roads.", None)
+        .unwrap();
+    g.authored_by("Decision", "dec:asked", "who:a", Some("approver"), None)
+        .unwrap();
+
+    let s = g.loop_status().unwrap();
+    assert_eq!(s.unsettled_assigned_decisions, s.assigned_decisions.len());
+    let one = &s.assigned_decisions[0];
+    assert_eq!(one.decision_id, "dec:asked");
+    assert_eq!(one.approver_id, "who:a");
+    assert_eq!(
+        one.name, "Which way?",
+        "the reader needs the words, not the id"
+    );
+}
+
+/// "What needs ME" — the asynchronous form of the loop.
+#[test]
+fn the_loop_answers_what_is_owed_to_one_named_person() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    for (id, name) in [("who:a", "A"), ("who:b", "B")] {
+        g.add_contributor(id, name, Some("person"), Some(name), None)
+            .unwrap();
+    }
+    for (dec, who) in [("dec:for-a", "who:a"), ("dec:for-b", "who:b")] {
+        g.add_decision(dec, dec, "In prose.", None).unwrap();
+        g.authored_by("Decision", dec, who, Some("approver"), None)
+            .unwrap();
+    }
+
+    let all = g.loop_status().unwrap();
+    assert_eq!(all.unsettled_assigned_decisions, 2);
+    assert!(all.scope.is_none(), "unscoped carries no scope block");
+
+    let mine = g.loop_status_for(Some("who:a")).unwrap();
+    assert_eq!(mine.unsettled_assigned_decisions, 1);
+    assert_eq!(mine.assigned_decisions[0].decision_id, "dec:for-a");
+    assert_eq!(mine.scope.as_ref().unwrap().contributor_id, "who:a");
+    assert!(
+        mine.next.iter().any(|l| l.contains("who:a")),
+        "the line an agent reads aloud must name the person: {:?}",
+        mine.next
+    );
+}
+
+/// **The honesty test, and the reason this is not a filter.**
+///
+/// A person with nothing assigned must not be told the design is fine. Every
+/// debt class except assignment belongs to the DESIGN, so a scoped answer names
+/// those counts rather than zeroing them — otherwise `clean: true` would be the
+/// tool confidently reporting "nothing is owed to you" when the truth is "I
+/// cannot tell whose this is". That is the defect class this project has now
+/// found four times in other guises: a value that cannot tell a real NONE from
+/// an I-CANNOT-SAY.
+#[test]
+fn a_scoped_answer_never_reads_as_the_design_being_clean() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_contributor("who:idle", "Idle", Some("person"), Some("i"), None)
+        .unwrap();
+    // Real design debt that belongs to nobody in particular. A requirement
+    // needs a capability to exist before `unsatisfied_requirement` can fire —
+    // with none, "nothing satisfies it" is not yet a finding about anything.
+    g.add_requirement("req:orphan", "Orphan", "Something nothing satisfies")
+        .unwrap();
+    g.add_capability(
+        "cap:orphan",
+        "Orphan capability",
+        "Answers no stated need",
+        None,
+    )
+    .unwrap();
+
+    let design_wide = g.loop_status().unwrap();
+    assert!(
+        !design_wide.clean,
+        "precondition: the design must actually owe something"
+    );
+
+    let theirs = g.loop_status_for(Some("who:idle")).unwrap();
+    assert!(
+        theirs.clean,
+        "scoped, clean means nothing is assigned to this person"
+    );
+    let scope = theirs.scope.as_ref().unwrap();
+    assert!(
+        !scope.not_attributable.is_empty(),
+        "the design's own debt must still be reported, not filtered to zero"
+    );
+    assert!(
+        theirs
+            .next
+            .iter()
+            .any(|l| l.contains("no per-person attribution")),
+        "the not-attributable debt must be said in WORDS, not left in a field: {:?}",
+        theirs.next
+    );
+    // And the design-wide counters are untouched by scoping — they are facts
+    // about the design and scoping does not make them smaller.
+    assert_eq!(theirs.unsurfaced_gaps, design_wide.unsurfaced_gaps);
+}
+
+/// A mistyped or renamed id must not answer "nothing is owed to you" — the most
+/// reassuring reply available and the one nobody thinks to question.
+#[test]
+fn an_unknown_contributor_is_refused_rather_than_answered_with_an_empty_list() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_contributor("who:a", "A", Some("person"), Some("a"), None)
+        .unwrap();
+
+    let err = g.loop_status_for(Some("who:typo"));
+    assert!(
+        err.is_err(),
+        "an unknown contributor must be an error, not an empty answer"
+    );
+    // Positive control: the same call with a real id succeeds, so the refusal
+    // above is about the id and not about scoping being broken.
+    assert!(g.loop_status_for(Some("who:a")).is_ok());
+}
+
+/// Scoping must not disturb the deliberate quiet around thinking out loud.
+#[test]
+fn scoping_does_not_make_an_unassigned_decision_somebodys_problem() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_contributor("who:a", "A", Some("person"), Some("a"), None)
+        .unwrap();
+    g.add_decision("dec:musing", "Maybe X?", "Turning it over.", None)
+        .unwrap();
+    // Authored by them, but nobody was ASKED.
+    g.authored_by("Decision", "dec:musing", "who:a", Some("author"), None)
+        .unwrap();
+
+    let mine = g.loop_status_for(Some("who:a")).unwrap();
+    assert_eq!(
+        mine.unsettled_assigned_decisions, 0,
+        "authoring a musing is not being asked to settle it"
+    );
+    assert!(mine.assigned_decisions.is_empty());
+}
+
 #[test]
 fn captured_intent_owes_a_surface_pass_until_the_question_is_asked() {
     use reflow2_core::AskedQuestion;
