@@ -70,6 +70,15 @@ pub mod edge {
     /// Deliberately NOT a traceability edge (absent from `structural_rule`), so
     /// authorship never propagates a blast radius.
     pub const AUTHORED_BY: &str = "AUTHORED_BY";
+    /// `* → Contributor` — whose AREA this is: durable, standing, never
+    /// released. The THIRD "who" axis. `AUTHORED_BY` is past tense and never
+    /// changes; `CLAIMS` is who is in it right now and is released at checkout;
+    /// this survives every session.
+    ///
+    /// Deliberately NOT a traceability edge (absent from `structural_rule`),
+    /// the third of a kind after the two above: owning something says who
+    /// answers for it, not that a change to it changes them.
+    pub const OWNED_BY: &str = "OWNED_BY";
     /// `Constraint/DesignRule → *` — a limit binds a target; for a budget
     /// Constraint the edge carries the target's `contribution` (BL-11).
     pub const CONSTRAINS: &str = "CONSTRAINS";

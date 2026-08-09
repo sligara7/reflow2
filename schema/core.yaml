@@ -243,6 +243,41 @@ schema:
         role: { type: enum, values: [author, reviewer, approver], default: author, indexed: true, description: "How this contributor stood to the node — who wrote it, who reviewed it, whose sign-off it carries." }
         acted_at: { type: string, description: "ISO-8601 timestamp of the authorship act, if recorded." }
 
+    OWNED_BY:
+      from: "*"
+      to: Contributor
+      extraction_hint: >
+        Whose AREA this is — durable, standing, and never released. THE THIRD
+        "WHO" AXIS, and the one that was missing: AUTHORED_BY says who WROTE
+        this (past tense, historical, never changes); CLAIMS says who is IN it
+        RIGHT NOW (transient, advisory, released at checkout); this says whose
+        ground it is, which survives every session. Anthony's case, 2026-08-09:
+        "there are areas of the design that are his and areas that are mine...
+        it is probably durable, survives every session, and should never be
+        released." That is two people splitting a design — the ordinary case of
+        collaborative work, not a multi-agent one.
+
+        WHY IT IS NOT CLAIMS, which was the cheap answer and is wrong on every
+        property: claim_region is advisory and session-scoped by its own
+        description, the parallel-work skill says release at checkout, and on a
+        shared server a claim reads `unknown` rather than `live` and never
+        expires on its own. Standing ownership claims would permanently drown
+        the tool's actual job — showing who is ACTIVELY in your ground.
+
+        Deliberately NOT a traceability edge — absent from structural_rule, the
+        THIRD of a kind after AUTHORED_BY and CLAIMS — so ownership never
+        propagates a blast radius and never makes a Contributor a hub. Owning
+        something says who answers for it, not that a change to it changes them.
+
+        NOT A CLAIM THAT EVERYTHING SHOULD HAVE ONE. Most nodes in a mature
+        design legitimately have no owner, so absence here is ordinary and is
+        deliberately NOT reported as a gap: whether unowned ground should be
+        detected, and which types are even ownable, is open in
+        dec:idea-detect-ownership-orphans and turns on a per-project answer.
+      properties:
+        note: { type: string, description: "What is actually owned, and any bound on it — the sentence a colleague needs when they find your name on something. An owner with no note is still an owner; this is where 'the ingest half, not the export half' goes." }
+        since: { type: string, description: "ISO-8601 date ownership was taken, if recorded. The core takes no clock, so the caller supplies it." }
+
     ASKS_ABOUT:
       from: Question
       to: "*"

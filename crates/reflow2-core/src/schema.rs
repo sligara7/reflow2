@@ -86,7 +86,11 @@ mod tests {
         // can demand TRL 7 of one technology and 4 of another. Moves the stamp:
         // the next release owes an upgrade note.
         assert_eq!(schema.node_types.len(), 29, "expected 29 node types");
-        assert_eq!(schema.edge_types.len(), 60, "expected 60 edge types");
+        // 61 since OWNED_BY (2026-08-09) — the third "who" axis: whose AREA
+        // this is, durable and never released, distinct from AUTHORED_BY
+        // (who wrote it) and CLAIMS (who is in it right now). Moves the
+        // stamp: the next release owes an upgrade note.
+        assert_eq!(schema.edge_types.len(), 61, "expected 61 edge types");
     }
 
     #[test]

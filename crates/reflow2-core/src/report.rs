@@ -416,12 +416,34 @@ pub struct LoopStatus {
     /// Reported by flo2 (F4, 2026-08-09) and hit independently in this repo the
     /// same day, where finding two of them meant `jq`-ing the committed export.
     pub assigned_decisions: Vec<AssignedDecision>,
+    /// Open gaps standing on ground the scoped contributor OWNS.
+    ///
+    /// Empty when unscoped, and empty when the contributor owns nothing — an
+    /// unowned design is the ordinary state and is not a finding. See
+    /// [`GapOnOwnedGround`].
+    pub gaps_on_owned_ground: Vec<GapOnOwnedGround>,
     /// Set when the report was narrowed to one contributor.
     pub scope: Option<LoopScope>,
     /// Every counter zero. **When `scope` is set this means "nothing is
     /// assigned to that person"** — not that the design is clean. `scope`
     /// carries what could not be attributed, and `next` says so in words.
     pub clean: bool,
+}
+
+/// A gap standing on ground a contributor owns.
+///
+/// The second thing that can be honestly attributed to a person, and the reason
+/// `OWNED_BY` was built: before it, a scoped answer could speak only about
+/// decisions somebody had been ASKED to settle. It names WHICH owned nodes the
+/// gap touches, because "a gap in your area" is only actionable if you can see
+/// which part of your area it is standing on.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct GapOnOwnedGround {
+    pub gap_id: String,
+    pub title: String,
+    /// The affected nodes this contributor owns — never the gap's whole
+    /// affected set, which may reach well outside their ground.
+    pub owned_ids: Vec<String>,
 }
 
 /// An open Decision somebody was explicitly asked to settle.
@@ -583,11 +605,46 @@ impl DesignGraph {
         // never asked about. Anchored only — a phase nudge says what comes
         // next, not what is owed (dec:anchored-first), and counting nudges as
         // debt would make `clean` unreachable on a healthy design.
-        let unsurfaced_gaps = self
+        let unsurfaced: Vec<_> = self
             .detect_gaps()?
-            .iter()
+            .into_iter()
             .filter(|g| !g.affected_ids.is_empty() && !surfaced.contains(g.id.as_str()))
-            .count();
+            .collect();
+        let unsurfaced_gaps = unsurfaced.len();
+
+        // Gaps standing on ground this contributor OWNS. This is the second
+        // thing that can honestly be attributed to a person, and the reason
+        // OWNED_BY was built: before it, a scoped answer could speak only about
+        // decisions somebody had been ASKED to settle, and reported every gap
+        // as "I cannot tell whose this is".
+        //
+        // Ownership makes it answerable without guessing — if a gap's affected
+        // set touches a node you own, it is on your ground. That is a fact, not
+        // an inference, which is why this is safe where the reverse question
+        // ("what has NO owner?") is not: dec:idea-detect-ownership-orphans is
+        // open precisely because absence of an owner is ordinary.
+        let owned = match contributor {
+            Some(id) => self.owned_by_contributor(id)?,
+            None => Default::default(),
+        };
+        let gaps_on_owned_ground: Vec<GapOnOwnedGround> = if owned.is_empty() {
+            Vec::new()
+        } else {
+            unsurfaced
+                .iter()
+                .filter(|g| g.affected_ids.iter().any(|id| owned.contains(id)))
+                .map(|g| GapOnOwnedGround {
+                    gap_id: g.id.clone(),
+                    title: g.title.clone(),
+                    owned_ids: g
+                        .affected_ids
+                        .iter()
+                        .filter(|id| owned.contains(*id))
+                        .cloned()
+                        .collect(),
+                })
+                .collect()
+        };
         let unanswered_questions = questions.iter().filter(|q| q.status == "asked").count();
         let unwritten_answers = questions.iter().filter(|q| q.status == "answered").count();
 
@@ -742,14 +799,20 @@ impl DesignGraph {
         }
 
         // Narrowing, and saying what the narrowing left out. Everything above
-        // except `assigned_decisions` is a fact about the DESIGN, not about a
-        // person, so a scoped answer names those counts rather than zeroing
-        // them — the difference between "nothing is owed to you" and "I cannot
-        // tell whose this is", which must never be the same answer.
+        // except `assigned_decisions` and `gaps_on_owned_ground` is a fact about
+        // the DESIGN, not about a person, so a scoped answer names those counts
+        // rather than zeroing them — the difference between "nothing is owed to
+        // you" and "I cannot tell whose this is", which must never be the same
+        // answer.
+        //
+        // The gap line now subtracts what ownership DID attribute, so the
+        // not-attributable count shrinks as a design records more ownership.
+        // That is the whole payoff of OWNED_BY on this surface.
+        let gaps_not_attributable = unsurfaced_gaps.saturating_sub(gaps_on_owned_ground.len());
         let scope = contributor.map(|id| {
             let mut not_attributable = Vec::new();
             for (n, what) in [
-                (unsurfaced_gaps, "open gap(s) never put to anyone"),
+                (gaps_not_attributable, "open gap(s) on ground nobody owns"),
                 (unanswered_questions, "question(s) waiting on the user"),
                 (
                     unwritten_answers,
@@ -792,6 +855,14 @@ impl DesignGraph {
             } else {
                 next.push(format!("Nothing is assigned to {}.", s.contributor_id));
             }
+            if !gaps_on_owned_ground.is_empty() {
+                next.push(format!(
+                    "{} open gap(s) stand on ground {} owns — listed in \
+                     `gaps_on_owned_ground` with the owned nodes each one touches.",
+                    gaps_on_owned_ground.len(),
+                    s.contributor_id
+                ));
+            }
             if !s.not_attributable.is_empty() {
                 // Said in words rather than left to the reader to infer from a
                 // field, because `next` is the line an agent reads aloud.
@@ -805,11 +876,15 @@ impl DesignGraph {
             }
         }
 
-        // Scoped, `clean` means "nothing is assigned to this person" — it is
+        // Scoped, `clean` means "nothing is owed by this person" — it is
         // deliberately NOT `next.is_empty()`, because a scoped answer always
         // carries the not-attributable line and would otherwise never be clean.
+        //
+        // Both attributable kinds count: a gap on your own ground is owed by you
+        // as surely as a decision you were asked to settle, and a `clean: true`
+        // that ignored it would be the same confident lie in a new place.
         let clean = match &scope {
-            Some(_) => unsettled_assigned_decisions == 0,
+            Some(_) => unsettled_assigned_decisions == 0 && gaps_on_owned_ground.is_empty(),
             None => next.is_empty(),
         };
 
@@ -824,6 +899,7 @@ impl DesignGraph {
             unexamined_claims,
             verifications: self.verification_recency()?,
             assigned_decisions,
+            gaps_on_owned_ground,
             scope,
             clean,
             next,

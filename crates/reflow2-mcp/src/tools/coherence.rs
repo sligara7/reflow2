@@ -80,27 +80,27 @@ impl ReflowService {
 
     #[tool(
         description = "The coherence loop's outstanding debt, cheaply: what \
-                       capture→detect→ask→decide steps are owed right now, computed from graph \
-                       state, never from run history. One call returns a short to-do list: \
-                       anchored gaps never put to the user, questions waiting or \
-                       answered-but-unwritten, open decisions a named person was ASKED to settle \
-                       (a `proposed` Decision carrying an AUTHORED_BY `role=approver`; one with \
-                       no approver is somebody thinking out loud and stays deliberately quiet), \
+                       capture→detect→ask→decide steps are owed now, computed from graph state, \
+                       never run history. Anchored gaps never put to the user, questions waiting \
+                       or answered-but-unwritten, open decisions a named person was ASKED to \
+                       settle (a `proposed` Decision carrying an AUTHORED_BY `role=approver`; \
+                       one with no approver is somebody thinking out loud and stays quiet), \
                        structural defects, capabilities claiming realized/verified with no \
-                       passing check, recorded drift awaiting a disposition, and built \
-                       capabilities nobody has checked against reality. `clean: true` means \
-                       nothing is owed. Those decisions are LISTED in `assigned_decisions`, not \
-                       just counted. Pass `contributor_id` to ask WHAT NEEDS THIS PERSON. \
-                       Scoped, only ASSIGNMENT is attributed (the approver edge); every other \
-                       debt class is a fact about the DESIGN and comes back design-wide under \
-                       `scope.not_attributable` rather than filtered to zero, because \"nothing \
-                       is owed to you\" and \"I cannot tell whose this is\" must never be the \
-                       same answer — so scoped, `clean` means nothing is assigned to that \
-                       person, NOT that the design is clean. An unknown contributor_id is \
-                       REFUSED: a typo would otherwise give the most reassuring reply there is. \
-                       `verifications` is a DIGEST, not the roll: counts by status, how many \
-                       never ran, and every check not currently passing. `graph_report` carries \
-                       every check with its last run.",
+                       passing check, drift awaiting a disposition, and built capabilities \
+                       nobody has checked against reality. `clean: true` means nothing is owed, \
+                       and those decisions are LISTED in `assigned_decisions`. Pass \
+                       `contributor_id` to ask WHAT NEEDS THIS PERSON. Scoped, TWO things are \
+                       attributed: decisions they were asked to settle, and open gaps standing \
+                       on ground they OWN (`gaps_on_owned_ground`, each naming which owned nodes \
+                       it touches). Every other debt class is a fact about the DESIGN and comes \
+                       back design-wide under `scope.not_attributable` rather than filtered to \
+                       zero, because \"nothing is owed to you\"and \"I cannot tell whose this \
+                       is\"must never be the same answer — so scoped, `clean` means nothing is \
+                       owed BY THAT PERSON, not that the design is clean. An unknown \
+                       contributor_id is REFUSED: a typo would otherwise give the most \
+                       reassuring reply there is. `verifications` is a DIGEST: counts by status, \
+                       how many never ran, and every check not currently passing. `graph_report` \
+                       carries every check with its last run.",
         annotations(read_only_hint = true)
     )]
     pub async fn loop_status(

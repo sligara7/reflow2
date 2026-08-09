@@ -1654,6 +1654,25 @@ pub struct AuthoredByReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct OwnedByReq {
+    /// Type of the node being owned (e.g. `Component`, `Capability`).
+    pub from_type: String,
+    pub from_id: String,
+    /// The `Contributor` whose area this is.
+    pub contributor_id: String,
+    /// What is actually owned, and any bound on it — the sentence a colleague
+    /// needs when they find your name on something. "The ingest half, not the
+    /// export half" goes here. An owner with no note is still an owner.
+    #[serde(default)]
+    pub note: Option<String>,
+    /// ISO-8601 date ownership was taken, if recorded. The core takes no clock,
+    /// so the caller supplies it.
+    #[serde(default)]
+    pub since: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct AcknowledgeGapReq {
     /// The gap's `id`, exactly as `detect_gaps` reported it.
     pub gap_id: String,

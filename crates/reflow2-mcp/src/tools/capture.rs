@@ -694,6 +694,41 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Record whose AREA a node is (OWNED_BY) — durable, standing, and never \
+                       released. THE THIRD 'WHO' AXIS: `authored_by` says who WROTE it (past \
+                       tense, never changes), `claim_region` says who is IN it RIGHT NOW \
+                       (transient, advisory, released at checkout), and this says whose ground \
+                       it is, which survives every session. Use it for the ordinary case of two \
+                       people splitting a design — these parts are mine, those are yours. DO NOT \
+                       use a claim for this: claims are session-scoped by their own description \
+                       and never expire on a shared server, so standing ones would drown the \
+                       report that shows who is actively working where. Deliberately NOT a \
+                       traceability edge, so ownership never enlarges a blast radius — owning \
+                       something says who ANSWERS for it, not that changing it changes them. \
+                       `note` is what is actually owned and any bound on it. AN UNOWNED NODE IS \
+                       NOT A GAP: most of a mature design legitimately has no owner, so absence \
+                       is never reported. Once recorded, `loop_status` with a `contributor_id` \
+                       lists the open gaps standing on that person's ground.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn owned_by(
+        &self,
+        Parameters(req): Parameters<OwnedByReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        ok_json(EdgeDto::from(
+            g.owned_by(
+                &req.from_type,
+                &req.from_id,
+                &req.contributor_id,
+                req.note.as_deref(),
+                req.since.as_deref(),
+            )
+            .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
         description = "Fill in what a consumer of this contract must AGREE with — the paradigm \
                        (sync/async), the payload format, the field-level schema, the endpoint and \
                        permitted operations, authentication, transport security, and the error \

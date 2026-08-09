@@ -732,3 +732,122 @@ fn surfacing_recency_does_not_make_the_loop_dirty() {
         "…and it must actually be visible"
     );
 }
+
+/// Ownership is the second thing that can honestly be attributed to a person,
+/// and the reason OWNED_BY was built.
+///
+/// Before it, a scoped answer could speak only about decisions somebody had been
+/// ASKED to settle, and reported every gap as "I cannot tell whose this is".
+/// `dec:ownership-reads-claims-before-adding-an-edge` set the condition — decide
+/// on an edge once claims are shown insufficient — and named the disqualifying
+/// evidence in advance: claims are transient work-in-hand, ownership is durable.
+#[test]
+fn gaps_standing_on_ground_you_own_are_attributed_to_you() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    for (id, name) in [("who:mine", "Mine"), ("who:theirs", "Theirs")] {
+        g.add_contributor(id, name, Some("person"), Some(name), None)
+            .unwrap();
+    }
+    // Two capabilities that each raise a gap (nothing asked for them).
+    g.add_requirement("req:r", "R", "so gaps can fire at all")
+        .unwrap();
+    g.add_capability("cap:mine", "Mine", "in my area", None)
+        .unwrap();
+    g.add_capability("cap:theirs", "Theirs", "in their area", None)
+        .unwrap();
+
+    let before = g.loop_status_for(Some("who:mine")).unwrap();
+    assert!(
+        before.gaps_on_owned_ground.is_empty(),
+        "owning nothing must attribute nothing — an unowned design is ordinary"
+    );
+
+    g.owned_by(
+        "Capability",
+        "cap:mine",
+        "who:mine",
+        Some("the ingest half, not the export half"),
+        Some("2026-08-09"),
+    )
+    .unwrap();
+
+    let mine = g.loop_status_for(Some("who:mine")).unwrap();
+    assert!(
+        !mine.gaps_on_owned_ground.is_empty(),
+        "a gap on ground I own must be attributed to me"
+    );
+    assert!(
+        mine.gaps_on_owned_ground
+            .iter()
+            .all(|x| x.owned_ids.contains(&"cap:mine".to_string())),
+        "each attributed gap must name WHICH owned node it stands on: {:?}",
+        mine.gaps_on_owned_ground
+    );
+    assert!(
+        mine.gaps_on_owned_ground
+            .iter()
+            .all(|x| !x.owned_ids.contains(&"cap:theirs".to_string())),
+        "and must never claim ground I do not own"
+    );
+    assert!(
+        !mine.clean,
+        "a gap on your own ground is owed by you, so scoped clean must be false"
+    );
+    assert!(
+        mine.next.iter().any(|l| l.contains("ground who:mine owns")),
+        "the line an agent reads aloud must say it: {:?}",
+        mine.next
+    );
+
+    // POSITIVE CONTROL: the other contributor owns nothing, so the identical
+    // call must attribute nothing. Without this, an implementation that
+    // attributed every gap to everybody would pass every assertion above.
+    let theirs = g.loop_status_for(Some("who:theirs")).unwrap();
+    assert!(
+        theirs.gaps_on_owned_ground.is_empty(),
+        "ownership must be per-person, not global: {:?}",
+        theirs.gaps_on_owned_ground
+    );
+
+    // And the design-wide view is untouched — ownership narrows, never shrinks.
+    assert_eq!(
+        g.loop_status().unwrap().unsurfaced_gaps,
+        mine.unsurfaced_gaps,
+        "scoping must not make the design's own gap count smaller"
+    );
+    assert!(
+        g.loop_status().unwrap().gaps_on_owned_ground.is_empty(),
+        "unscoped, there is no person to attribute to"
+    );
+}
+
+/// Ownership must not propagate. Owning something says who ANSWERS for it, not
+/// that a change to it changes them — the same exclusion `AUTHORED_BY` and
+/// `CLAIMS` already carry, and this is the third of the kind.
+#[test]
+fn owning_something_does_not_drag_a_person_into_a_blast_radius() {
+    use reflow2_core::propagate::PropagateOptions;
+
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_contributor("who:a", "A", Some("person"), Some("a"), None)
+        .unwrap();
+    g.add_capability("cap:a", "A", "does a thing", None)
+        .unwrap();
+    g.owned_by("Capability", "cap:a", "who:a", None, None)
+        .unwrap();
+
+    let blast = g
+        .propagate_from(&["cap:a"], PropagateOptions { max_depth: 5 })
+        .unwrap();
+    assert!(
+        !blast.impacted.iter().any(|i| i.node_id == "who:a"),
+        "a Contributor must never appear in a blast radius: {:?}",
+        blast
+            .impacted
+            .iter()
+            .map(|i| &i.node_id)
+            .collect::<Vec<_>>()
+    );
+}
