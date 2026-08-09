@@ -3058,3 +3058,60 @@ fn add_contributor_accepts_contributor_id_as_an_alias_for_id() {
          not every mistake"
     );
 }
+
+/// A WRONG TYPE NAME and an ABSENT NODE must not answer identically.
+///
+/// dev_storyflow (w-c216679a, 2026-08-09) called `get_node("Epoch", …)` — the
+/// stored type is `DesignEpoch` — got a bare `null`, read it as "it isn't
+/// there", and their brief then told them to mint a second epoch it explicitly
+/// forbids. They caught it only because they distrusted the null.
+///
+/// The type name is checkable against the schema for free, so answering `null`
+/// for it is a fact the server HAS and declines to give.
+#[tokio::test]
+async fn an_unknown_node_type_is_refused_rather_than_answered_null() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    j!(s.add_epoch(Parameters(AddEpochReq {
+        id: "epoch:real".into(),
+        name: "a real epoch".into(),
+        epoch_type: "revision".into(),
+        sequence: 1,
+    })));
+
+    // THE REPRODUCTION: the type name they used.
+    let err = s
+        .get_node(Parameters(TypedIdReq {
+            node_type: "Epoch".into(),
+            id: "epoch:real".into(),
+        }))
+        .await
+        .expect_err("an unknown node type must be refused, not answered null");
+    let msg = format!("{err:?}");
+    assert!(
+        msg.contains("not a node type"),
+        "it must say the TYPE is unknown: {msg}"
+    );
+    assert!(
+        msg.contains("DesignEpoch"),
+        "and point at the one they meant: {msg}"
+    );
+
+    // POSITIVE CONTROL, both directions — the refusal must be about the type
+    // and nothing else.
+    let found = j!(s.get_node(Parameters(TypedIdReq {
+        node_type: "DesignEpoch".into(),
+        id: "epoch:real".into()
+    })));
+    assert_eq!(found["node"]["node_id"], "epoch:real");
+
+    // A REAL type with an absent id still answers null — that is the honest
+    // "no such node", and it must not have been collateral damage.
+    let absent = j!(s.get_node(Parameters(TypedIdReq {
+        node_type: "DesignEpoch".into(),
+        id: "epoch:nope".into()
+    })));
+    assert!(
+        absent["node"].is_null(),
+        "an absent node under a real type is still null: {absent}"
+    );
+}

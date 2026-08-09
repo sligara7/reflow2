@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:6dd7ff98408bd87b386d29d93ff74f974e3382f90268e577d5e6f26e203c4447",
+  "content_hash": "sha256:0702509a41f8058353dcc02866cba93052626ec400519dd0fb81af28c9b593f1",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2685,6 +2685,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-null-and-a-vacuous-zero-now-say-which-they-are",
+      "properties": {},
+      "to_id": "epoch:a-zero-that-is-not-an-absence"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:a-refusal-names-its-own-fix-20260808",
       "properties": {},
       "to_id": "epoch:v0250"
@@ -4713,6 +4719,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:a-zero-that-is-not-an-absence:art:tools-query",
+      "properties": {},
+      "to_id": "epoch:a-zero-that-is-not-an-absence"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:aggregate-gap-ack:art:detect",
       "properties": {},
       "to_id": "epoch:aggregate-gap-ack"
@@ -5955,6 +5967,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-discontinue-the-content-store",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -7294,6 +7315,33 @@
         "action": "modified"
       },
       "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-null-and-a-vacuous-zero-now-say-which-they-are",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:scope"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-null-and-a-vacuous-zero-now-say-which-they-are",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-null-and-a-vacuous-zero-now-say-which-they-are",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
     },
     {
       "edge_type": "CHANGED",
@@ -23462,6 +23510,12 @@
       "from_id": "art:service",
       "properties": {},
       "to_id": "snap:epoch:stateless-seat:art:service"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:tools-query",
+      "properties": {},
+      "to_id": "snap:epoch:a-zero-that-is-not-an-absence:art:tools-query"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -52945,10 +52999,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:47fa2c2aa8b402bb",
+        "checksum": "sha256:7c255df861c27d6db0392f2ca0baf6740c333dcc890e9b13e37624abd8f08512",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/scope.rs",
         "name": "scope.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -53491,10 +53547,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7ed16a594ed4a6c8894c6168f4a345a4f73a4e0ad9cabaa4a7b0d79c84f86174",
+        "checksum": "sha256:4eac13c1f1e3757cf1480f3d86d9c6d05c376011356062c22cd0c03727859570",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -53502,10 +53560,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:814d67ab62c1014e402611dc1f73028332d2af8ca95a159dbf70022086065b34",
+        "checksum": "sha256:f6a56f423d15e9e444f0a49e12879d8df34e1bb800244202ef1507fb109806f0",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -55506,6 +55566,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "A merge proposal says what it would destroy BEFORE the act, and a proposal that deletes nodes stops reporting itself as needing no human review"
+      }
+    },
+    {
+      "node_id": "chg:a-null-and-a-vacuous-zero-now-say-which-they-are",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "get_node refuses an unknown node_type instead of answering null, and a one-node scope says its answer is vacuous"
       }
     },
     {
@@ -59860,6 +59928,16 @@
       }
     },
     {
+      "node_id": "dec:idea-discontinue-the-content-store",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-09, leaning towards discontinuing rather than phasing out: \\\"I don't think anybody is actually fully utilizing it anyways, so not a big deal I think if we just discontinue it now versus phasing it out.\\\"\n\nHIS ARGUMENT, in his words and not improved on: (1) the bytes cannot fully live in a repo because it would become a huge object rapidly; (2) dev_storyflow's 700+ documents have been actively ingested into the graph and \\\"those documents are no longer really needed\\\" — the documents that would have been put in the blob; (3) maybe the better approach is important design artifacts directly in the git repo in something like a design_artifacts folder and forget blob altogether; (4) it is another feature that must be maintained and must grow with the rest of reflow2; (5) in flo2 the blob could end up being terabytes that has to be backed up, secured, and somehow separable per project.\n\n⭐ MEASURED BEFORE ANY OPINION WAS FORMED, and it is the strongest thing in this node. REFLOW2'S OWN DESIGN USES THE CONTENT STORE ZERO TIMES: no `--content-path` is configured in .mcp.json, no `.reflow2/content` directory exists, and 0 of 148 Fragments carry a `content_ref`. This is a 1,867-node graph that has been dogfooded harder than any other. The feature is built, tested (ver:content-surface, 5 cases), documented, and unused by its own author's primary project. That is evidence for his (4) rather than a coincidence.\n\nCORROBORATING, from the consumer side: every dev_storyflow locator complaint filed on 2026-08-09 is about `Artifact.location`, `Fragment.title` and path resolution — a worker even wrote scripts/records/locator_validator.py because \\\"location is the join key between a corpus and the design and nothing validates it.\\\" NOBODY COMPLAINED ABOUT CONTENT HASHES, because nobody is using them. They are joining on PATHS.\n\n⭐ AND AN ARGUMENT NOBODY HAS MADE YET, which strengthens his case: dec:where-content-lives settled on a content-addressed store whose blobs are COMMITTED TO THE REPO. GIT IS ALREADY A CONTENT-ADDRESSED STORE. So the current design is a content-addressed layer inside a content-addressed system — the dedup and the integrity hash are both things git already provides for anything committed. A `design_artifacts/` folder would not be giving up content addressing; it would be using the one underneath.\n\nWHAT THIS WOULD RE-OPEN, stated so nothing is decided by accident: dec:where-content-lives (accepted), dec:what-lives-where (accepted), dec:content-growth-is-bounded-by-what-not-by-size (accepted), dec:content-store-implementation and dec:content-manifest. Per dec:reopen-supersedes a re-opening mints a NEW decision that obsoletes the old one; the accepted ones are never un-accepted.\n\n⚠️ AND IT WOULD ANSWER dec:what-lives-where's OWN FALSIFIABLE TEST — which is the most interesting thing here. That decision wrote its own refutation condition: \\\"IF REFLOW2 WORKS, STORYFLOW WOULD NOT HAVE NEEDED dev_storyflow. One repo, code native, the design in the graph, the sources in the store. If a user still ends up splitting their repo to stay sane, reflow2 has not delivered what this decision claims.\\\" Anthony's observation is a DIFFERENT and sharper result than that test anticipated: it is not that the split was still needed, it is that ONCE THE DOCUMENTS WERE MINED THEIR ROLE WAS SPENT. If what mattered became nodes with Fragments recording provenance, the bytes are archival — and a repo folder (or the existing dev_storyflow repo) already archives them.\n\nTHE OPTIONS, with what is cheap or expensive about each recorded beside rather than argued down:\n\n(A) DISCONTINUE NOW — remove content_put/content_get and the store, keep nothing. Cheapest to maintain, and honest given zero usage here. COUNTER: content_manifest answers a real question (\\\"I was handed this design on its own — what does it point at that I do not have?\\\"), and that question survives the store's removal; it would need re-pointing at repo paths rather than deleting.\n\n(B) DEPRECATE, KEEP THE READS — stop accepting new content, keep content_get/exists/manifest so an existing store still resolves. COUNTER: Anthony's own point is that phasing costs more than discontinuing when the user count is zero; this buys compatibility nobody needs.\n\n(C) KEEP IT, NARROW IT — retain for the one case a repo folder genuinely cannot hold (very large or non-diffable binaries) and say so. COUNTER: that is the status quo with better documentation, and the status quo has zero users; \\\"it might matter later\\\" is what the no-foreclosure rule exists to make a deliberate choice rather than a default.\n\n(D) REPLACE WITH A CONVENTION — a `design_artifacts/` folder plus a Fragment/Artifact `location` pointing into it, no new machinery. Uses git's own content addressing. COUNTER, and it is the real one: `location` is the field dev_storyflow just filed FOUR defects about (unvalidated paths, a literal ellipsis that matched nothing, title-vs-source ambiguity, no way to ask \\\"is this path already in the graph?\\\"). Moving weight onto `location` without fixing it moves weight onto the weakest join in the schema. That is an argument for fixing `location` FIRST, not against (D).\n\nWHAT NOBODY HAS ESTABLISHED, and it should not be guessed: whether any OTHER consumer has a populated store. This project has none; flo2 was checked and has no .mcp.json content path; dev_storyflow was not checked. A discontinue is cheap if the answer is nobody and expensive if it is somebody, and it is one call (content_manifest) per project to find out.\n\nNOTHING HERE IS PROMOTED. Anthony stated a lean, not a decision, and the options above are recorded as considered.",
+        "name": "OPEN — should the content store be discontinued outright, with design artifacts kept as ordinary files in the repo?",
+        "rationale": "Recorded via the brainstorm skill: one Decision per open question, at `proposed`, options in the prose with counters beside them, nothing promoted to intent without Anthony's word. Deliberately NOT recorded as a re-opening of dec:where-content-lives yet — that would assert the choice has been made and would obsolete an accepted decision on a lean rather than a decision. If he settles it, dec:reopen-supersedes says the re-opening mints its own node then.\n\nKept separate from dec:external-blob-store-pressure, which asks whether committed blobs should move to an EXTERNAL store — the opposite direction, and it assumes the store exists. This asks whether it should exist at all, and one node holding both could only ever be half-answered.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-distributional-thresholds",
       "node_type": "Decision",
       "properties": {
@@ -62027,6 +62105,16 @@
         "epoch_type": "revision",
         "name": "Anthony rules on the claimed region: a claim may be defined by a QUERY as well as a seed and depth, and an explicit node list is refused (2026-08-08)",
         "sequence": 288,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:a-zero-that-is-not-an-absence",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "A zero that cannot be told from an absence, in two more places (2026-08-09)",
+        "sequence": 299,
         "status": "arrived"
       }
     },
@@ -68019,6 +68107,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:a-zero-that-is-not-an-absence:art:tools-query",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:7ed16a594ed4a6c8894c6168f4a345a4f73a4e0ad9cabaa4a7b0d79c84f86174\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:7ed16a594ed4a6c8894c6168f4a345a4f73a4e0ad9cabaa4a7b0d79c84f86174\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:7ed16a594ed4a6c8894c6168f4a345a4f73a4e0ad9cabaa4a7b0d79c84f86174\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:7ed16a594ed4a6c8894c6168f4a345a4f73a4e0ad9cabaa4a7b0d79c84f86174\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:7ed16a594ed4a6c8894c6168f4a345a4f73a4e0ad9cabaa4a7b0d79c84f86174\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:bulk-forms\",\"properties\":{\"completeness\":\"partial\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:7ed16a594ed4a6c8894c6168f4a345a4f73a4e0ad9cabaa4a7b0d79c84f86174\",\"location\":\"crates/reflow2-mcp/src/tools/query.rs\",\"name\":\"tools/query.rs\",\"status\":\"realized\"}",
+        "target_id": "art:tools-query",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:aggregate-gap-ack:art:detect",
       "node_type": "Snapshot",
       "properties": {
@@ -71956,7 +72054,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:9c4f8ec15ef7a4c594f68254c530d5be05b70432ddf06f057fef5ff7a252807d",
+  "prev_content_hash": "sha256:6dd7ff98408bd87b386d29d93ff74f974e3382f90268e577d5e6f26e203c4447",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
