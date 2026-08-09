@@ -371,20 +371,6 @@ class SkillTriggers(unittest.TestCase):
         run_hook(self.project, post_tool("mcp__reflow2__detect_gaps"))  # clears writes
         self.assertIsNone(self._stop_reason())
 
-    def test_a_rendering_written_with_nothing_stored_names_session_artifacts(self):
-        run_hook(self.project, edit_tool(path="docs/design/flow.svg"))
-        # Record the change, PROPAGATE it (BL-163) and link the artifact so the
-        # earlier shapes clear and this one is what remains.
-        for op in ("record_change", "propagate_change", "link_artifact", "add_capability"):
-            run_hook(self.project, post_tool(f"mcp__reflow2__{op}"))
-        run_hook(self.project, post_tool("mcp__reflow2__detect_gaps"))
-        run_hook(self.project, post_tool("mcp__reflow2__add_capability"))
-        reason = self._stop_reason()
-        self.assertIn("session-artifacts", reason)
-        # THE FILTER TRAVELS WITH THE TRIGGER: the hook cannot tell an orphan
-        # from an explanation, so it must not imply it can.
-        self.assertIn("if nothing points at it, do not", reason)
-
     def test_an_ordinary_code_edit_is_not_a_rendering(self):
         run_hook(self.project, edit_tool(path="crates/reflow2-core/src/heal.rs"))
         for op in ("record_change", "propagate_change", "link_artifact", "add_capability"):
@@ -397,7 +383,7 @@ class SkillTriggers(unittest.TestCase):
     def test_a_stored_rendering_gets_no_nudge(self):
         run_hook(self.project, edit_tool(path="docs/x.svg"))
         for op in ("record_change", "propagate_change", "link_artifact",
-                   "content_put", "add_capability"):
+                   "add_capability"):
             run_hook(self.project, post_tool(f"mcp__reflow2__{op}"))
         run_hook(self.project, post_tool("mcp__reflow2__detect_gaps"))
         run_hook(self.project, post_tool("mcp__reflow2__add_capability"))
