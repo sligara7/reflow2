@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:eb2df40b1871dc374d6f584c0fb214497c95188a10585bc40504c03b9624909f",
+  "content_hash": "sha256:0702509a41f8058353dcc02866cba93052626ec400519dd0fb81af28c9b593f1",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -609,6 +609,12 @@
     },
     {
       "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-nudge-self-check-called-a-working-hook-broken",
+      "properties": {},
+      "to_id": "cap:nudge-path-proven"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
       "from_id": "fact:defect-open-questions-zero-reads-as-an-all-clear",
       "properties": {},
       "to_id": "cap:loop-status"
@@ -627,9 +633,21 @@
     },
     {
       "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-revise-design-skill-contradicted-create-node",
+      "properties": {},
+      "to_id": "cap:skills-served"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
       "from_id": "fact:defect-rollups-became-fleet-numbers-without-saying-so",
       "properties": {},
       "to_id": "cap:loop-status"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-set-verification-status-erased-last-run-at",
+      "properties": {},
+      "to_id": "cmp:verify"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2667,6 +2685,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-null-and-a-vacuous-zero-now-say-which-they-are",
+      "properties": {},
+      "to_id": "epoch:a-zero-that-is-not-an-absence"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:a-refusal-names-its-own-fix-20260808",
       "properties": {},
       "to_id": "epoch:v0250"
@@ -3723,6 +3747,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:loop-status-takes-a-contributor",
+      "properties": {},
+      "to_id": "epoch:loop-owed-to-a-person"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:machine-state-not-shared",
       "properties": {},
       "to_id": "epoch:v0120"
@@ -3819,6 +3849,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:nudge-resolves-home-relative-hooks",
+      "properties": {},
+      "to_id": "epoch:nudge-expands-tilde"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:nudge-state-integrity",
       "properties": {},
       "to_id": "epoch:v0220"
@@ -3828,6 +3864,12 @@
       "from_id": "chg:object-store-researched",
       "properties": {},
       "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:omitting-last-run-at-no-longer-erases-it",
+      "properties": {},
+      "to_id": "epoch:the-surface-stops-saying-false-things"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -4677,6 +4719,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:a-zero-that-is-not-an-absence:art:tools-query",
+      "properties": {},
+      "to_id": "epoch:a-zero-that-is-not-an-absence"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:aggregate-gap-ack:art:detect",
       "properties": {},
       "to_id": "epoch:aggregate-gap-ack"
@@ -4947,6 +4995,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:loop-owed-to-a-person:cap:owed-to-a-contributor",
+      "properties": {},
+      "to_id": "epoch:loop-owed-to-a-person"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:many-projects-one-mind-brainstorm:dec:idea-intent-crosses-designs",
       "properties": {},
       "to_id": "epoch:many-projects-one-mind-brainstorm"
@@ -4956,6 +5010,12 @@
       "from_id": "snap:epoch:mode-chosen:proj:reflow2",
       "properties": {},
       "to_id": "epoch:mode-chosen"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:nudge-expands-tilde:art:nudge-detect",
+      "properties": {},
+      "to_id": "epoch:nudge-expands-tilde"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5196,6 +5256,12 @@
       "from_id": "snap:epoch:surface-export:dec:nested-graphs",
       "properties": {},
       "to_id": "epoch:surface-export"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-surface-stops-saying-false-things:art:verify",
+      "properties": {},
+      "to_id": "epoch:the-surface-stops-saying-false-things"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5904,6 +5970,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-discontinue-the-content-store",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-distributional-thresholds",
       "properties": {
         "acted_at": "2026-08-01",
@@ -5951,6 +6026,15 @@
       "from_id": "dec:idea-gap-flows-to-the-dependency",
       "properties": {
         "acted_at": "2026-08-06T09:40:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-how-flo2-stays-subscribed-to-reflow2",
+      "properties": {
+        "acted_at": "2026-08-09",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -7234,6 +7318,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-null-and-a-vacuous-zero-now-say-which-they-are",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:scope"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-null-and-a-vacuous-zero-now-say-which-they-are",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-null-and-a-vacuous-zero-now-say-which-they-are",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:a-refusal-names-its-own-fix-20260808",
       "properties": {
         "accepted_baseline": true,
@@ -7648,6 +7759,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-6b775d9494833102",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-6bf23f6f04f775a1",
       "properties": {
         "accepted_baseline": true,
@@ -7996,6 +8116,15 @@
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-d3ab18be0a502f54",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
     },
     {
       "edge_type": "CHANGED",
@@ -12652,6 +12781,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:loop-status-takes-a-contributor",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:loop-status-takes-a-contributor",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:loop-status-takes-a-contributor",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:loop-status-takes-a-contributor",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:owed-to-a-contributor"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:machine-state-not-shared",
       "properties": {
         "accepted_baseline": true,
@@ -12985,6 +13150,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:nudge-resolves-home-relative-hooks",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nudge-detect"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:nudge-state-integrity",
       "properties": {
         "accepted_baseline": true,
@@ -13009,6 +13183,42 @@
         "action": "modified"
       },
       "to_id": "dec:where-content-lives"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:omitting-last-run-at-no-longer-erases-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nudge-detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:omitting-last-run-at-no-longer-erases-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-nudge-path"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:omitting-last-run-at-no-longer-erases-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-assure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:omitting-last-run-at-no-longer-erases-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:verify"
     },
     {
       "edge_type": "CHANGED",
@@ -23267,6 +23477,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:nudge-detect",
+      "properties": {},
+      "to_id": "snap:epoch:nudge-expands-tilde:art:nudge-detect"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "art:planning-at-scale",
       "properties": {},
       "to_id": "snap:epoch:bl199-reattachment:art:planning-at-scale"
@@ -23297,6 +23513,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:tools-query",
+      "properties": {},
+      "to_id": "snap:epoch:a-zero-that-is-not-an-absence:art:tools-query"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "art:upgrading-v0120",
       "properties": {},
       "to_id": "snap:epoch:bl199-reattachment:art:upgrading-v0120"
@@ -23312,6 +23534,12 @@
       "from_id": "art:upgrading-v0210",
       "properties": {},
       "to_id": "snap:epoch:bl199-reattachment:art:upgrading-v0210"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:verify",
+      "properties": {},
+      "to_id": "snap:epoch:the-surface-stops-saying-false-things:art:verify"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -23402,6 +23630,12 @@
       "from_id": "cap:kpp-proposal",
       "properties": {},
       "to_id": "snap:epoch:kpp-capture:cap:kpp-proposal"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:owed-to-a-contributor",
+      "properties": {},
+      "to_id": "snap:epoch:loop-owed-to-a-person:cap:owed-to-a-contributor"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -49858,6 +50092,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:loop-status-scoped-to-a-contributor",
+      "properties": {},
+      "to_id": "cap:owed-to-a-contributor"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:maturity",
       "properties": {},
       "to_id": "cap:maturity-profile"
@@ -52419,10 +52659,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856",
+        "checksum": "sha256:90fdbfdb422ebd8d5fbf64c249ed3e4508538a01cb14090cc234d8ac2439e6b9",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/nudge.rs",
         "name": "nudge.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -52580,7 +52822,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:672d623cd26f73c4f88bb08497c8cdf25a40dfdacb0d4fac1905ec96f7d9dabc",
+        "checksum": "sha256:1b138dd1269260236a0b95dcb5948b9d92ce8ff295f5cf9f1167eec1204db09b",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
@@ -52757,10 +52999,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:47fa2c2aa8b402bb",
+        "checksum": "sha256:7c255df861c27d6db0392f2ca0baf6740c333dcc890e9b13e37624abd8f08512",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/scope.rs",
         "name": "scope.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -52862,7 +53106,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:86386eef65516f34f9018a5c651a6a654e70cdf56cf9a993da07ef60ba361ffa",
+        "checksum": "sha256:2bdb2e4e30e7a1f6cbc6e3c33e0105e8a38c841fa89ddb969c0e61a01b66eae1",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -53135,10 +53379,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:27f84b4a505d648f2b2b86033ed818a01f6adf50e59ab8a25e76d293daa57162",
+        "checksum": "sha256:39bcf1f944d3ceed42a1c6e10922eb00362b50cf37e8fefbee4a94ec4a35b8c6",
+        "granularity": "atomic",
         "location": "tools/test_nudge_path.py",
         "name": "test_nudge_path.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -53203,7 +53449,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:395195e896a9e9d2068f6c0d66e509a66600295237db4f642b7a88ce64bd9373",
+        "checksum": "sha256:1db5576a75566d013436134d2bd3e4dd0916f78d200c294ddf40011f17215910",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/assure.rs",
         "name": "tools/assure.rs",
@@ -53253,7 +53499,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:89aaf70aca277246eda1df18d33484f84ce1ddcd00bd27253f1d560ee16c02da",
+        "checksum": "sha256:31defd5c9145b730aaa69934ffc0f47c66e4b800a032365695cbaf251adb53b4",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -53301,10 +53547,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7ed16a594ed4a6c8894c6168f4a345a4f73a4e0ad9cabaa4a7b0d79c84f86174",
+        "checksum": "sha256:4eac13c1f1e3757cf1480f3d86d9c6d05c376011356062c22cd0c03727859570",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -53312,10 +53560,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:814d67ab62c1014e402611dc1f73028332d2af8ca95a159dbf70022086065b34",
+        "checksum": "sha256:f6a56f423d15e9e444f0a49e12879d8df34e1bb800244202ef1507fb109806f0",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -53435,10 +53685,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455",
+        "checksum": "sha256:3532d8866a760bb4b825dd11684e2b73d2c1751f1f9fd994e3a14ab9fb6ae224",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/verify.rs",
         "name": "verify.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -55317,6 +55569,14 @@
       }
     },
     {
+      "node_id": "chg:a-null-and-a-vacuous-zero-now-say-which-they-are",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "get_node refuses an unknown node_type instead of answering null, and a one-node scope says its answer is vacuous"
+      }
+    },
+    {
       "node_id": "chg:a-refusal-names-its-own-fix-20260808",
       "node_type": "ChangeEvent",
       "properties": {
@@ -55678,6 +55938,15 @@
       }
     },
     {
+      "node_id": "chg:accept-6b775d9494833102",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-09",
+        "name": "loop_status's served description trimmed from 2039 to under the 1500-char budget skill_lint enforces. Behaviour and parameters unchanged; every clause that survived is load-bearing (the approver discriminator, only-assignment-is-attributed, scoped-clean, the refusal on an unknown id). NO DESIGN MEANING. Worth recording as a real constraint rather than a nuisance: a served tool description is a BUDGETED surface, so a change that explains itself well in a commit message still has to earn its space in the description an agent reads at call time — and skill_lint is what enforces that, caught in CI after three local gates had already passed."
+      }
+    },
+    {
       "node_id": "chg:accept-6bf23f6f04f775a1",
       "node_type": "ChangeEvent",
       "properties": {
@@ -56015,6 +56284,15 @@
         "change_type": "refactor",
         "detected_at": "2026-07-28T18:30:00-04:00",
         "name": "v0.18.0 cut: the [reflow2] version field rolled 0.17.0 -> 0.18.0; the dependency pin itself did not move."
+      }
+    },
+    {
+      "node_id": "chg:accept-d3ab18be0a502f54",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-09",
+        "name": "Clippy collapsible_if: the contributor-existence guard became a let-chain. Behaviour identical, 1055 tests unchanged. NO DESIGN MEANING. Fifth instance of hashing before the last edit in one session — and the third distinct mechanism: fmt after the work (twice), and now a REQUIRED CLIPPY FIX after the work. The pattern is not carelessness about hashing; it is that every mandatory gate runs AFTER the code looks finished, so 'finished' is never the moment to hash. Hash immediately before the export, after every gate has run."
       }
     },
     {
@@ -57358,6 +57636,14 @@
       }
     },
     {
+      "node_id": "chg:loop-status-takes-a-contributor",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "loop_status takes an optional contributor_id and lists the assigned decisions — the asynchronous half of the loop, attributing assignment and refusing to attribute anything else"
+      }
+    },
+    {
       "node_id": "chg:machine-state-not-shared",
       "node_type": "ChangeEvent",
       "properties": {
@@ -57470,6 +57756,14 @@
       }
     },
     {
+      "node_id": "chg:nudge-resolves-home-relative-hooks",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "The nudge self-check resolves ~ and $HOME, and reports what it cannot resolve as unknowable rather than missing"
+      }
+    },
+    {
       "node_id": "chg:nudge-state-integrity",
       "node_type": "ChangeEvent",
       "properties": {
@@ -57483,6 +57777,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "object_store researched against dec:where-content-lives — the storage fork mostly dissolves, the sync/async one sharpens"
+      }
+    },
+    {
+      "node_id": "chg:omitting-last-run-at-no-longer-erases-it",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "set_verification_status stops deleting last_run_at when the optional parameter is omitted — the convention three sibling setters already documented"
       }
     },
     {
@@ -59626,6 +59928,16 @@
       }
     },
     {
+      "node_id": "dec:idea-discontinue-the-content-store",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-09, leaning towards discontinuing rather than phasing out: \\\"I don't think anybody is actually fully utilizing it anyways, so not a big deal I think if we just discontinue it now versus phasing it out.\\\"\n\nHIS ARGUMENT, in his words and not improved on: (1) the bytes cannot fully live in a repo because it would become a huge object rapidly; (2) dev_storyflow's 700+ documents have been actively ingested into the graph and \\\"those documents are no longer really needed\\\" — the documents that would have been put in the blob; (3) maybe the better approach is important design artifacts directly in the git repo in something like a design_artifacts folder and forget blob altogether; (4) it is another feature that must be maintained and must grow with the rest of reflow2; (5) in flo2 the blob could end up being terabytes that has to be backed up, secured, and somehow separable per project.\n\n⭐ MEASURED BEFORE ANY OPINION WAS FORMED, and it is the strongest thing in this node. REFLOW2'S OWN DESIGN USES THE CONTENT STORE ZERO TIMES: no `--content-path` is configured in .mcp.json, no `.reflow2/content` directory exists, and 0 of 148 Fragments carry a `content_ref`. This is a 1,867-node graph that has been dogfooded harder than any other. The feature is built, tested (ver:content-surface, 5 cases), documented, and unused by its own author's primary project. That is evidence for his (4) rather than a coincidence.\n\nCORROBORATING, from the consumer side: every dev_storyflow locator complaint filed on 2026-08-09 is about `Artifact.location`, `Fragment.title` and path resolution — a worker even wrote scripts/records/locator_validator.py because \\\"location is the join key between a corpus and the design and nothing validates it.\\\" NOBODY COMPLAINED ABOUT CONTENT HASHES, because nobody is using them. They are joining on PATHS.\n\n⭐ AND AN ARGUMENT NOBODY HAS MADE YET, which strengthens his case: dec:where-content-lives settled on a content-addressed store whose blobs are COMMITTED TO THE REPO. GIT IS ALREADY A CONTENT-ADDRESSED STORE. So the current design is a content-addressed layer inside a content-addressed system — the dedup and the integrity hash are both things git already provides for anything committed. A `design_artifacts/` folder would not be giving up content addressing; it would be using the one underneath.\n\nWHAT THIS WOULD RE-OPEN, stated so nothing is decided by accident: dec:where-content-lives (accepted), dec:what-lives-where (accepted), dec:content-growth-is-bounded-by-what-not-by-size (accepted), dec:content-store-implementation and dec:content-manifest. Per dec:reopen-supersedes a re-opening mints a NEW decision that obsoletes the old one; the accepted ones are never un-accepted.\n\n⚠️ AND IT WOULD ANSWER dec:what-lives-where's OWN FALSIFIABLE TEST — which is the most interesting thing here. That decision wrote its own refutation condition: \\\"IF REFLOW2 WORKS, STORYFLOW WOULD NOT HAVE NEEDED dev_storyflow. One repo, code native, the design in the graph, the sources in the store. If a user still ends up splitting their repo to stay sane, reflow2 has not delivered what this decision claims.\\\" Anthony's observation is a DIFFERENT and sharper result than that test anticipated: it is not that the split was still needed, it is that ONCE THE DOCUMENTS WERE MINED THEIR ROLE WAS SPENT. If what mattered became nodes with Fragments recording provenance, the bytes are archival — and a repo folder (or the existing dev_storyflow repo) already archives them.\n\nTHE OPTIONS, with what is cheap or expensive about each recorded beside rather than argued down:\n\n(A) DISCONTINUE NOW — remove content_put/content_get and the store, keep nothing. Cheapest to maintain, and honest given zero usage here. COUNTER: content_manifest answers a real question (\\\"I was handed this design on its own — what does it point at that I do not have?\\\"), and that question survives the store's removal; it would need re-pointing at repo paths rather than deleting.\n\n(B) DEPRECATE, KEEP THE READS — stop accepting new content, keep content_get/exists/manifest so an existing store still resolves. COUNTER: Anthony's own point is that phasing costs more than discontinuing when the user count is zero; this buys compatibility nobody needs.\n\n(C) KEEP IT, NARROW IT — retain for the one case a repo folder genuinely cannot hold (very large or non-diffable binaries) and say so. COUNTER: that is the status quo with better documentation, and the status quo has zero users; \\\"it might matter later\\\" is what the no-foreclosure rule exists to make a deliberate choice rather than a default.\n\n(D) REPLACE WITH A CONVENTION — a `design_artifacts/` folder plus a Fragment/Artifact `location` pointing into it, no new machinery. Uses git's own content addressing. COUNTER, and it is the real one: `location` is the field dev_storyflow just filed FOUR defects about (unvalidated paths, a literal ellipsis that matched nothing, title-vs-source ambiguity, no way to ask \\\"is this path already in the graph?\\\"). Moving weight onto `location` without fixing it moves weight onto the weakest join in the schema. That is an argument for fixing `location` FIRST, not against (D).\n\nWHAT NOBODY HAS ESTABLISHED, and it should not be guessed: whether any OTHER consumer has a populated store. This project has none; flo2 was checked and has no .mcp.json content path; dev_storyflow was not checked. A discontinue is cheap if the answer is nobody and expensive if it is somebody, and it is one call (content_manifest) per project to find out.\n\nNOTHING HERE IS PROMOTED. Anthony stated a lean, not a decision, and the options above are recorded as considered.",
+        "name": "OPEN — should the content store be discontinued outright, with design artifacts kept as ordinary files in the repo?",
+        "rationale": "Recorded via the brainstorm skill: one Decision per open question, at `proposed`, options in the prose with counters beside them, nothing promoted to intent without Anthony's word. Deliberately NOT recorded as a re-opening of dec:where-content-lives yet — that would assert the choice has been made and would obsolete an accepted decision on a lean rather than a decision. If he settles it, dec:reopen-supersedes says the re-opening mints its own node then.\n\nKept separate from dec:external-blob-store-pressure, which asks whether committed blobs should move to an EXTERNAL store — the opposite direction, and it assumes the store exists. This asks whether it should exist at all, and one node holding both could only ever be half-answered.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-distributional-thresholds",
       "node_type": "Decision",
       "properties": {
@@ -59672,6 +59984,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-06: \"having somewhat independent reflow2 projects linked allows for requirements from one project to flow naturally to another without a user specifying we need to update package x because package y has a gap that only package x can fix. having reflow2 be able to do this automatically would be great.\"\n\nTHE WORKED EXAMPLE IS THIS REPOSITORY, AND IT WAS ENTIRELY BY HAND. flo2 hit a wall it could not climb from inside itself — a proposed Decision that nothing reported — and the fix had to land in reflow2. What carried it across was a human writing a markdown proposal in the flo2 repo, a human reading it, and an agent re-typing it as reflow2 nodes (chg:flo2-proposal-multi-graph-hosting). NOTHING IN EITHER GRAPH KNEW.\n\n⭐ SHARPENED 2026-08-06 BY A CONCRETE CASE AND A SCALING ARGUMENT THAT CHANGES THE ANSWER. Anthony: \"say my brother, who only has read access for reflow2, needs place a requirement upon reflow2 in order for flo2 to properly function... should my brother have the ability to add proposed ideas to reflow2 (write only for proposed, else read only) or should my brother place the external requirement in flo2 and when I open all 3 of my projects, it'll (the agent) see this requirement in the flo2 graph. I'm leaning towards the prior because say projectA (the one being depended upon) is huge and has multiple other projects dependent upon it and don't actually track any of the dependent projects/graphs, then option B may not function... think of it like a Google service is project A...they are not going to load every graph that is dependent upon them.\"\n\n⭐ THAT ARGUMENT DEFEATS OPTION (C) BELOW, WHICH THIS AGENT HAD RECOMMENDED, AND THE REFUTATION IS RECORDED RATHER THAN THE RECOMMENDATION QUIETLY WITHDRAWN. \"The upstream pulls rather than the downstream pushes\" rests on the upstream being able to ENUMERATE ITS DEPENDENTS. A widely-depended-on design cannot: it does not know who depends on it, and would not load their graphs if it did. And DISCOVERY OF DEPENDENTS IS ITSELF A PUSH — either the upstream somehow learns of every consumer, or consumers register, and registering is a write. Pull cannot bootstrap itself. It survives only in the SMALL federation case Anthony described earlier (C's owner asking who declares a dependency on C, finding exactly D).\n\n⭐ THE ANALOGY IS AN ISSUE TRACKER, NOT PUB/SUB. Anthony reached for \"socket publish/subscribe\". Pub/sub is the right shape for the OTHER direction and already exists: the upstream publishes its surface (export_surface, built), consumers mirror it (mirror_surface, built). The REVERSE channel in every real ecosystem is a tracker: you do not get write access to Google's codebase, you file an issue. ANYONE MAY FILE; ONLY MAINTAINERS TRIAGE. That is precisely \"write only for proposed, else read only\", and it scales because the upstream keeps ONE inbox rather than N graphs.\n\n⭐⭐ IN SYSTEMS-ENGINEERING TERMS THIS IS NOT EXOTIC, IT IS THE NORMAL DIRECTION. flo2 is a CUSTOMER of reflow2; reflow2 is the SUPPLIER. A customer levying a requirement on a supplier is the most ordinary transaction in the discipline. Framing it as \"writing into a design you do not own\" made an unremarkable act sound like a violation.\n\n⭐⭐ THE VOCABULARY IS ALREADY THERE, WHICH THIS AGENT PREVIOUSLY GOT WRONG BY NOT LOOKING. Checked against describe_schema, a Requirement already carries every field this needs: `source` (\"who/what stated it — a user, a regulation, a stakeholder\"), `provenance` with an `imported` value, `designation` published/internal so the downstream can mark what it publishes, `status` starting at `proposed` with only the owner's word moving it off (set_requirement_status), and AUTHORED_BY carrying role author/reviewer/approver. A levied requirement is expressible TODAY as: add_requirement (lands proposed) + authored_by <them> role=author + source \"<their design>\" + provenance imported. NOTHING IN THE SCHEMA NEEDS TO CHANGE.\n\n⭐ AND IT IS ALREADY REPORTABLE, BY WORK MERGED THE SAME DAY. loop_status gained `unsettled_assigned_decisions` (PR #81, 2026-08-06) — a Decision left proposed while carrying an approver edge. The identical shape answers \"a proposed Requirement from an external source is waiting on you\". THE INBOX IS ALREADY COMPUTABLE; it has never been pointed at this case.\n\nSO WHAT IS MISSING IS TWO THINGS: (1) TRANSPORT — how a node gets from their machine into this graph; (2) ENFORCEMENT — nothing stops a writer doing more than filing, because reflow2 HAS NO AUTHENTICATION and cannot acquire one without becoming a different product.\n\n⭐ TRANSPORT ALREADY EXISTS, AND IT IS **GIT** — NOT ANY ONE PROVIDER.\n⚠️ CORRECTED BY ANTHONY, 2026-08-06, and the correction matters because the first version of this node named GitHub: \"we can probably use GitHub for this example, but not every project will use GitHub. every project is designed to use a git repo though so other git providers like gitlab can also work.\"\n\nThe mechanism is a BRANCH CARRYING A PROPOSED-STATUS NODE IN THE COMMITTED EXPORT, offered to the owner, who merges it or does not. Every primitive that needs is plain git — a branch, a diff, a merge — and reflow2's own three-way merge driver already operates on the export FILE, provider-agnostic by construction. A hosted forge (GitHub pull request, GitLab merge request, Gitea, Bitbucket) is one CONVENIENT UI over those primitives and supplies the review gate and audit trail for free; NONE OF IT IS REQUIRED. With no forge at all the same exchange works by `git format-patch` and email, `git request-pull`, or a shared bare repo over SSH — which is also what makes it usable where a forge cannot go, including the disconnected case dec:idea-need-to-know-compartments cares about.\n\nTHE LOAD-BEARING FACT: dec:multi-writer-architecture (accepted) already made the repo file the unit of exchange, and req:persistence puts the design inside the consumer project. So \"the design travels as a file in a git repo\" is not a workaround adopted for this feature — it is the architecture, and this transport falls out of it for free. ZERO NEW REFLOW2 CODE.\n\nITS LIMIT, STATED PLAINLY: it requires the filer to have a clone and a git workflow, which is exactly what flo2's non-technical contributors do not have — so for the HOSTED case flo2's own layer must be the mailbox, and that lands back on req:reflow2-consumable-as-an-image and dec:one-process-many-stores.\n\nOPTIONS, NONE CHOSEN — REORDERED BY THE ARGUMENT ABOVE.\n\n(A) ⭐ ANTHONY'S LEAN: WRITE-ONLY-AT-PROPOSED. A consumer may create nodes at `proposed`, attributed and sourced, and may do nothing else — no accepting, no editing, no deleting. Expressible in today's schema, reportable by today's loop, transportable by plain git, and it scales because the upstream keeps one inbox rather than N graphs. Counter, and it is the honest one: reflow2 cannot enforce it. \"Write only for proposed\" is a property of WHATEVER HOLDS THE MAILBOX — a forge's branch permissions, a maintainer's judgement, or flo2's own layer — and calling it a reflow2 feature would be the same overclaim dec:idea-need-to-know-compartments warns about.\n\n(B) THE REQUIREMENT STAYS IN THE DOWNSTREAM GRAPH and the upstream owner sees it when they open both. Anthony's own counter is decisive at scale: a heavily-depended-on design will not load its dependents' graphs and does not know who they are. Still fine for the two-brothers case, and it is what the composition machinery already supports with no new anything.\n\n(C) THE UPSTREAM PULLS. Refuted above as a general mechanism. Retained for the small federation case only.\n\n(D) A THIRD, PROGRAM-LEVEL GRAPH holding cross-project intent, with the others as composed children. dec:nested-graphs and cap:derived-completion anticipate the shape. Answers \"where does shared intent live\" rather than \"how does a need travel\", and adds a design to maintain.\n\n⚠️ THE PREREQUISITE THAT STILL BOUNDS ALL OF IT: dec:linked-repos-poc was RUN 2026-08-06 and found reflow2 declares NO `required` interface at all, so nothing pairs across any seam. The channel this node is about has no labelled boundary to run along.\n\n⚠️ AND THE CONSTRAINT FROM dec:idea-need-to-know-compartments: an automatic cross-graph write is a channel between compartments, and the safe direction is defined against SENSITIVITY, not against the dependency arrow. Option (A) is materially safer than any automatic flow precisely because a human files it and a human accepts it — the write is deliberate at both ends.",
         "name": "OPEN — how does a downstream owner levy a requirement on an upstream design they do not own? (Anthony leans: write-only-at-proposed, carried by git)",
         "rationale": "Captured under the brainstorm skill 2026-08-06, then SHARPENED twice the same day.\n\n⭐ THREE CORRECTIONS TO THIS AGENT ARE PRESERVED IN THE NODE rather than edited away, because each was a different failure worth keeping visible.\n\n(1) Option (C), upstream-pulls, was RECOMMENDED here and is refuted by Anthony's Google-service argument: pull requires enumerating dependents, a widely-used design cannot, and discovery of dependents is itself a push, so pull cannot bootstrap.\n\n(2) This node previously implied the graph could not express a levied requirement. describe_schema shows it already can — `source`, `provenance: imported`, `designation`, `status: proposed` and AUTHORED_BY roles are all present. Same failure dec:idea-intent-crosses-designs corrected on 2026-08-05: asserting an absence from a summary instead of reading the surface. READ THE SCHEMA, NOT THE SUMMARY.\n\n(3) The transport was first written as \"a pull request... enforced by GitHub\". Anthony corrected it: not every project uses GitHub, but every project uses a git repo. The distinction is not pedantic — coupling reflow2's answer to one vendor's feature would narrow a product whose whole persistence story (req:persistence, dec:multi-writer-architecture) is already vendor-neutral, and would exclude exactly the disconnected and self-hosted environments where the file-and-merge model is the ONLY workable one. The primitives are branch/diff/merge; a forge is a UI over them.\n\nKept SEPARATE from dec:idea-a-session-holds-several-graphs (ACCESS — which graphs a session can see) because this is AUTHORITY — who may write what, and at which status. The federation node localises this question to each ownership seam; this node is what happens at one.\n\nThe reframe worth keeping even if every option here is rejected: this is a CUSTOMER REQUIREMENT LEVIED ON A SUPPLIER, the most ordinary transaction in systems engineering.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-how-flo2-stays-subscribed-to-reflow2",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-09: \\\"how can we link reflow2 and flo2 — flo2 is dependent upon reflow2; we've discussed publisher → subscriber type relationships.\\\"\n\nWHAT SEARCHING FIRST CHANGED, and it changed the question rather than answering it: most of the linking machinery is DESIGNED AND BUILT, and it has already been RUN on exactly this pair. dec:linked-repos-poc (executed 2026-08-06) composed reflow2, flo2 and dynograph-foundation in a throwaway in-memory graph and found ONE true positive unprompted — ifc:core-api (ours, `library`) against flo2's ifc:model-provider-api (`REST`), 80/100 name match, \\\"very likely the same contract, but they cannot be connected as either is currently built.\\\" Nobody told it the answer. So the publisher/subscriber SHAPE is not the open question; dec:pairing-role-placement settled where the role lives, cap:publish-surface and cap:mirror-surface are built, and dec:nested-graphs settled that separately-owned designs are separate graphs.\n\nWHAT IS ACTUALLY OPEN IS THE TENSE. Every link so far has been a THING SOMEBODY RAN — a manual composition into a temporary graph, discarded afterwards. A subscription is a standing relationship: flo2 would be continuously answerable to what reflow2 currently publishes, and would learn when it moved. Nothing in the design says how that happens, and the two projects are on different machines, different release cadences and different owners.\n\nTHE OPTIONS, in Anthony's framing and with what is cheap or expensive about each recorded beside it rather than argued down:\n\n(A) PULL AT THE EXPORT. flo2 vendors reflow2's committed export (or its published surface via export_surface) and re-composes on each reflow2 release. Cheapest by far, needs nothing new, and rides git which both already use. COUNTER: it is a snapshot, so flo2 learns about a moved contract whenever it next remembers to pull — which is the failure mode this whole question is about, one level up.\n\n(B) PULL AT THE RUNNING SERVER. Once one process holds many designs (cap:graph-registry, reflow2_updates #1), flo2 could hold both graph_ids and ask across them live. COUNTER: gated on the largest outstanding piece of work, and dec:idea-a-session-holds-several-graphs is still proposed. Also flo2's graph_id is `1a97fc1f1de4d5d2` — an opaque mint beside two readable labels — so the addressing story needs a human-facing name first.\n\n(C) A DECLARED DEPENDENCY EDGE BETWEEN DESIGNS, not just between nodes. reflow2 already has req:design-dependencies-declared (accepted, verified) for library versions; the analogue for designs would let a consumer say \\\"I depend on reflow2's published surface at version X\\\" and make a stale subscription COMPUTABLE rather than remembered. COUNTER: it is new vocabulary, and dec:idea-intent-crosses-designs and dec:idea-gap-flows-to-the-dependency are both still open about what may legitimately cross a design boundary at all.\n\n(D) THE SEAM AS A GATE. flo2's CI composes against reflow2's published export and fails when a contract it consumes has moved — the ci-gate pattern pointed across a boundary instead of inward. COUNTER: it makes reflow2's release able to break flo2's build, which is a real coupling decision and Anthony's to make, not a technical detail.\n\n⚠️ THE BLOCKER IS THE SAME FOR ALL FOUR, AND IT IS ONE MISSING LABEL. dec:linked-repos-poc found it and deliberately did not fix it: REFLOW2 DECLARES NO `required` INTERFACE ANYWHERE. Pairing matches complements, so with nothing required, nothing can ever pair — paired=0 on BOTH pairs, 15 of dynograph-foundation's interfaces and 5 of flo2's landing in dead surface. Its most dangerous number was `unmet_needs: 0`, which reads as \\\"nothing is missing\\\" and means \\\"we never said we needed anything\\\". Until reflow2 says what it requires, every option above links two designs that cannot be compared. That PoC called declaring them \\\"the cheapest next step\\\" — a handful of nodes — and left it to Anthony's word because it is design about reflow2's own boundaries.\n\nAND A SECOND THING NO OPTION ADDRESSES, from reflow2_updates.md #7 (NOT DESIGNED): there are TWO version axes at this seam and only one negotiates. The MCP protocol version negotiates per connection; reflow2's 149-tool surface does not. The toolsnaps stop a surface change landing silently IN THIS REPO and tell flo2 nothing. Whatever subscription shape is chosen has to carry that, or \\\"clean module\\\" quietly becomes \\\"vendored fork\\\" — which dec:open-reflow2-as-core-module already names as the crux, with the cost falling on @ajs.\n\nNOTHING HERE IS PROMOTED. The options are recorded as considered; the one decision genuinely waiting is whether to declare reflow2's `required` interfaces, which is small, unblocks all four, and is not an agent's to make.",
+        "name": "OPEN — what makes the reflow2→flo2 link a STANDING subscription rather than a run somebody remembers to do?",
+        "rationale": "Recorded via the brainstorm skill: one Decision per open question, at `proposed`, options in the prose, nothing promoted to intent without Anthony's word. Kept SEPARATE from dec:linked-repos-poc because that node records a RUN and what it proved; this one asks what the relationship should be going forward, which the PoC explicitly did not answer. Kept separate from dec:idea-intent-crosses-designs and dec:idea-gap-flows-to-the-dependency because those ask WHAT may cross a design boundary, while this asks WHEN and BY WHAT MECHANISM — one node holding both could only ever be half-answered.",
         "status": "proposed"
       }
     },
@@ -61787,6 +62109,16 @@
       }
     },
     {
+      "node_id": "epoch:a-zero-that-is-not-an-absence",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "A zero that cannot be told from an absence, in two more places (2026-08-09)",
+        "sequence": 299,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:aggregate-gap-ack",
       "node_type": "DesignEpoch",
       "properties": {
@@ -62100,6 +62432,16 @@
       }
     },
     {
+      "node_id": "epoch:loop-owed-to-a-person",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The loop answers what is owed to a named person, and lists the assigned decisions (2026-08-09)",
+        "sequence": 297,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:many-graphs-one-store-brainstorm",
       "node_type": "DesignEpoch",
       "properties": {
@@ -62126,6 +62468,16 @@
         "epoch_type": "revision",
         "name": "The governance mode becomes a choice, and reflow2 makes one",
         "sequence": 234,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:nudge-expands-tilde",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The nudge self-check stops reporting a working hook as broken (2026-08-09)",
+        "sequence": 296,
         "status": "arrived"
       }
     },
@@ -62326,6 +62678,16 @@
         "epoch_type": "revision",
         "name": "Published-surface export (2026-07-25, post-v0.11.0)",
         "sequence": 140,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:the-surface-stops-saying-false-things",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "Three consumer-reported defects where a served surface destroyed data or stated something false (2026-08-09)",
+        "sequence": 298,
         "status": "arrived"
       }
     },
@@ -67745,6 +68107,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:a-zero-that-is-not-an-absence:art:tools-query",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:7ed16a594ed4a6c8894c6168f4a345a4f73a4e0ad9cabaa4a7b0d79c84f86174\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:7ed16a594ed4a6c8894c6168f4a345a4f73a4e0ad9cabaa4a7b0d79c84f86174\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:7ed16a594ed4a6c8894c6168f4a345a4f73a4e0ad9cabaa4a7b0d79c84f86174\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:7ed16a594ed4a6c8894c6168f4a345a4f73a4e0ad9cabaa4a7b0d79c84f86174\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:7ed16a594ed4a6c8894c6168f4a345a4f73a4e0ad9cabaa4a7b0d79c84f86174\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:bulk-forms\",\"properties\":{\"completeness\":\"partial\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:7ed16a594ed4a6c8894c6168f4a345a4f73a4e0ad9cabaa4a7b0d79c84f86174\",\"location\":\"crates/reflow2-mcp/src/tools/query.rs\",\"name\":\"tools/query.rs\",\"status\":\"realized\"}",
+        "target_id": "art:tools-query",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:aggregate-gap-ack:art:detect",
       "node_type": "Snapshot",
       "properties": {
@@ -68195,6 +68567,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:loop-owed-to-a-person:cap:owed-to-a-contributor",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:owed-to-a-contributor\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:report\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"sys:coherence-loop\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-05T23:10:00Z\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:an-assigned-open-decision-is-reported\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:no-idea-goes-quiet\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:ownership-is-an-edge-so-debt-has-an-addressee\",\"properties\":{\"coverage\":\"partial\",\"evidence\":\"cap:owed-to-a-contributor is in_progress and holds the same thesis, but its chosen first cut answers 'what has a named person been asked to settle' (proposed Decisions with an approver edge), not 'which gaps are in the part of the system I own'. The fleet's ask is the second one, so this covers the requirement only in part.\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:the-loop-says-what-is-owed-to-a-person\",\"properties\":{}}]",
+        "state": "{\"description\":\"A contributor scope on the loop's own reporting: today loop_status answers \\\"what does this design owe?\\\" and takes no arguments at all, while detect_gaps already accepts a scope for one part of the design — so this follows an established pattern rather than inventing one.\\n\\nThe input already exists and is already structured: AUTHORED_BY with role=approver is the graph SAYING that a named contributor owes an answer here. Nothing computes on it today. The narrowest useful first cut is a loop_status field counting Decisions that are proposed AND carry an approver edge, which closes the concrete instance without disturbing the deliberate quiet around brainstormed decisions.\\n\\nLarger shapes recorded but not chosen: a distinct gap source for a Decision proposed-and-assigned-but-not-settled (separate from undecided_decision_point, which reasonably wants real forks); and letting a Question be raised against a node directly, decoupling the Question machinery from gap derivation — the largest change, and the one that would let a specific question be put to a specific person and the answer tracked.\\n\\nNOTIFICATION IS DELIBERATELY NOT PART OF THIS. proxy.rs holds that the server never initiates a message, verified against the service rather than assumed; that property is worth keeping and a consumer can poll. What must live here is the ANSWER to \\\"what is owed to this person\\\", because only the graph knows.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"The loop answers what is owed to a named person, computed from edges the graph already carries\",\"provenance\":\"authored\",\"status\":\"in_progress\",\"tier\":\"operational\"}",
+        "target_id": "cap:owed-to-a-contributor",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:many-projects-one-mind-brainstorm:dec:idea-intent-crosses-designs",
       "node_type": "Snapshot",
       "properties": {
@@ -68212,6 +68594,16 @@
         "state": "{\"domain\":\"software\",\"mode\":\"flexible\",\"name\":\"Reflow 2.0\",\"objective\":\"Keep a design coherent from concept through operations\",\"status\":\"active\"}",
         "target_id": "proj:reflow2",
         "target_type": "Project"
+      }
+    },
+    {
+      "node_id": "snap:epoch:nudge-expands-tilde:art:nudge-detect",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:nudge-path-proven\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:nudge\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\",\"location\":\"crates/reflow2-mcp/src/nudge.rs\",\"name\":\"nudge.rs\",\"status\":\"realized\"}",
+        "target_id": "art:nudge-detect",
+        "target_type": "Artifact"
       }
     },
     {
@@ -68612,6 +69004,16 @@
         "state": "{\"decision\":\"UNDECIDED, and RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-07-25, explicitly not convinced by the collaboration design and thinking out loud: \\\"could you have small/mini reflow2 graphs inside itself... coming from a system of systems engineering approach, reflow2 may lay out the graph and how all the systems need to interact and where there are gaps, but what if we now had a mini-reflow2 graph for each system? And a mini-mini-reflow2 of the components in the system... the idea is that reflow2 has the tools to analyze the graph at each level and ensure there are no gaps and that it works with the higher level systems or system-of-systems.\\\" WHAT IS ALREADY TRUE, because it changes what the idea is asking for. Levels exist and are already checked: Component.level is an enum of component / subsystem / system / system_of_systems / enterprise, CONTAINS between Components is the axis-Y spine, and hierarchy_issues already reports level_mismatch, missing_intermediate_level and orphan_level — the carburetor-to-body problem, imported from chain_reflow's matryoshka insight (docs/three-axes.md). And the multi-graph primitive exists unused: every node and edge carries graph_id, pinned to the constant \\\"reflow2\\\". So the question is not whether reflow2 can express nesting. It can. The question is whether a level should be a SUBTREE of one graph or a GRAPH OF ITS OWN. THREE OPTIONS. (a) ONE GRAPH, ZOOM BY LEVEL — today's shape. What is missing is not nesting but SCOPING: no read takes a subtree as its subject, so detect_gaps and graph_report always answer for the whole design. Adding a scope argument is a filter, not an architecture, and it delivers most of what was asked — the tools analysing each level. (b) A GRAPH PER SYSTEM, COMPOSED — Anthony's idea. It buys four things one graph cannot: an independent write lock per system, which is a different and stronger answer to the collaboration problem than region claims, because separate graphs are PHYSICALLY separate where a claim is only advisory; an independent lifecycle, so a subsystem can be released, adopted or handed to a vendor on its own; selective publishing, which is exactly req:design-reachable-without-the-repo; and per-level scale, since detectors run over hundreds of nodes instead of tens of thousands. (c) A GRAPH PER OWNERSHIP BOUNDARY, LEVELS INSIDE EACH — the hybrid, and the shape federated systems engineering actually uses: you split where AUTHORITY splits, not where the hierarchy happens to have a layer. THE FOUR HARD PARTS of (b), each one real: the golden thread cannot cross a store boundary, because the schema validates both endpoints of every edge — so a parent's Component pointing at a child's design needs a typed COORDINATE (graph id + node id + the export's content hash at the moment the reference was made), which is precisely the choice dec:fork-point-address already made for fork points over a native ref layer. Gap detection goes blind at the seam: a parent requirement whose satisfying capability lives in a child graph would fire unsatisfied forever unless the child's evidence rolls up — and that roll-up is cap:derived-completion's computation applied one level higher, which is encouraging rather than novel. Freshness becomes load-bearing: a parent's view of a child is a claim about a VERSION of that child, so it is a dated examined claim and never a live truth (the cap:freshness and confirmation-ledger shape). And the seam becomes the new collision point: two people changing the interface across the boundary still collide, now in the one place with no merge machinery. THE TENSION WORTH KNOWING ABOUT: docs/org-scale-vision.md records the opposite destination — \\\"one graph the whole company plans in\\\", with the CEO's objectives at the top and everything tracing upward. Federation and one-big-graph cannot both be the end state, and nothing in the design has ever chosen between them. THE DISCRIMINATOR, offered as a finding and not a decision: depth alone does not justify a separate graph. Nesting three levels of graphs costs a coordinate, a roll-up and a freshness check at every seam, and buys nothing that a scope filter would not have delivered — unless something at that level is separately OWNED, separately RELEASED, or separately SHARED. Where those hold, a graph of its own is right. Where they do not, it is ceremony.\",\"name\":\"OPEN — one graph with levels, or a graph per system composed into a bigger one?\",\"rationale\":\"Recorded 2026-07-25 because Anthony said plainly he was not convinced by the collaboration design, and an unconvinced author is a finding rather than a disagreement to be argued down. PROMOTED THE SAME DAY on his word (\\\"let's promote both\\\"): the brainstorm produced two accepted requirements and stays open on the mechanism, which is the split that keeps both halves honest. req:analyse-at-any-level is the part he needed day to day and is ALREADY DELIVERED by cap:scoped-analysis (option (a), built first because it forecloses nothing). req:design-composes is the federation intent — a system's design as a unit that composes through interfaces — GOVERNED_BY this decision, so nothing gets built toward it until the mechanism is chosen. THIS DECISION THEREFORE STAYS PROPOSED, and that is not hedging: promoting an idea to intent is not the same act as choosing between three architectures, and collapsing this one would assert a shape Anthony has never chosen. Its options and the four hard parts of federation are unchanged above. The discriminator recorded then still stands as the thing to test when it is decided: depth alone does not earn a separate graph — ownership, separate release, or separate sharing does. NOTE FOR WHOEVER COLLAPSES IT: docs/org-scale-vision.md still records the opposite destination (one graph the whole company plans in), and req:design-composes now sits in the graph as accepted intent pointing the other way. That tension is real, on the record, and undecided; it is the strongest reason this decision should be made deliberately rather than discovered.\",\"status\":\"proposed\"}",
         "target_id": "dec:nested-graphs",
         "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:the-surface-stops-saying-false-things:art:verify",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0100\",\"properties\":{\"as_checksum\":\"sha256:d667d9a6a64a849e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0101\",\"properties\":{\"as_checksum\":\"sha256:d667d9a6a64a849e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0110\",\"properties\":{\"as_checksum\":\"sha256:d667d9a6a64a849e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0120\",\"properties\":{\"as_checksum\":\"sha256:d667d9a6a64a849e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:d667d9a6a64a849e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:d667d9a6a64a849e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:7c3bcd97918ee929\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:d391003bb5042e18\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:d391003bb5042e18\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:d391003bb5042e18\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:669e73b33ff4cbd1\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:669e73b33ff4cbd1\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:669e73b33ff4cbd1\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v040\",\"properties\":{\"as_checksum\":\"sha256:824287d5a22bd960\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v050\",\"properties\":{\"as_checksum\":\"sha256:824287d5a22bd960\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v060\",\"properties\":{\"as_checksum\":\"sha256:824287d5a22bd960\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v061\",\"properties\":{\"as_checksum\":\"sha256:824287d5a22bd960\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v070\",\"properties\":{\"as_checksum\":\"sha256:824287d5a22bd960\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v080\",\"properties\":{\"as_checksum\":\"sha256:824287d5a22bd960\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v090\",\"properties\":{\"as_checksum\":\"sha256:824287d5a22bd960\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:verify\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455\",\"location\":\"crates/reflow2-core/src/verify.rs\",\"name\":\"verify.rs\",\"status\":\"realized\"}",
+        "target_id": "art:verify",
+        "target_type": "Artifact"
       }
     },
     {
@@ -69907,6 +70309,20 @@
       }
     },
     {
+      "node_id": "fact:defect-nudge-self-check-called-a-working-hook-broken",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE NUDGE SELF-CHECK REPORTED A PRESENT, WORKING HOOK AS BROKEN WHENEVER ITS PATH WAS HOME-RELATIVE. Reported by flo2 (F1, 2026-08-09) and CONFIRMED IN THE SOURCE rather than from the report: `script_path` in crates/reflow2-mcp/src/nudge.rs resolved `$CLAUDE_PROJECT_DIR` and nothing else, so a literal `~/...` was not absolute and fell through to `project.join(\"~/.local/...\")` — a path that can never exist — and every `loop_status` said BROKEN. A shell expands `~` at run time, so the hook itself worked the entire time.\n\nWHY IT IS THE WORST PLACE FOR A FALSE ALARM, which is flo2's framing and is right: this is the one advisory whose entire job is to be trusted when nobody is watching, and it cried wolf about itself. It cost flo2 a real commit (538b460) documenting a problem that did not exist, and it trains a reader to ignore the advisory — the opposite of the lesson.\n\nSCOPE, CORRECTED AFTER ANTHONY PUSHED BACK TWICE, and the correction matters more than the bug. The first framing was 'every consumer following the shipped instructions hits this'. THAT WAS WRONG. The normal install path does NOT produce a tilde: tools/install.sh calls tools/reflow2_install.py, whose `hook_command()` is `python3 \"{nudge}\"` over a RESOLVED ABSOLUTE Path, and the old code handled that form correctly. So anyone who ran the installer was never affected. The exposed population is those who wire the hook BY HAND from getting-started/AGENTS.md, which documents the `~/.local/share/reflow2/kit/tools/loop_nudge.py` form three times — flo2 did exactly that. The real shape is a DOC-VERSUS-INSTALLER MISMATCH: two shipped surfaces disagreed about the hook's form, and the code only supported the installer's.\n\nALSO RULED OUT, because Anthony asked directly: it is NOT an artefact of flo2 running against a development build. `git diff v0.26.1..HEAD -- crates/reflow2-mcp/src/nudge.rs` is EMPTY, so the released 0.26.1 binary carries the identical unexpanded `script_path`.\n\nTHE FIX, and its direction is deliberate: resolve `~/`, `$HOME/` and `${HOME}/`, and treat anything still unresolved — `~someuser/`, an unknown `$VAR` — as UNKNOWABLE rather than missing, which `status` already reads as Installed. Reporting a working net as broken is the expensive direction; declining to judge a path we cannot resolve is the cheap one. The home directory is passed in rather than read inside, so the tests never mutate a process-wide `HOME` other tests share.\n\nPROVEN BY NEGATIVE CONTROL, not by the tests passing: with only the home-resolution disabled, four of the new tests FAIL — including `a_tilde_path_pointing_at_nothing_is_still_broken`, which is the positive control proving the fix did not simply turn the check into one that approves everything. `the_installers_own_quoted_absolute_form_still_resolves` pins the form that was already working, since that is the one a regression would silently take away.",
+        "subject_id": "cap:nudge-path-proven",
+        "valid_from": "2026-08-09",
+        "valid_to": "2026-08-09",
+        "value": "{\"reported_by\":\"flo2, reflow2_feedback.md F1, 2026-08-09\",\"confirmed_in\":\"crates/reflow2-mcp/src/nudge.rs script_path()\",\"root_cause\":\"$CLAUDE_PROJECT_DIR resolved; ~ and $HOME not. A tilde path is not absolute, so it was joined onto the project dir.\",\"scope_correction\":\"NOT all consumers - tools/reflow2_install.py writes a quoted ABSOLUTE path and was always handled. Exposed population is hand-wired hooks copied from getting-started/AGENTS.md.\",\"dev_build_ruled_out\":\"git diff v0.26.1..HEAD -- nudge.rs is empty; released binary identical\",\"fix\":\"resolve ~/ $HOME/ ${HOME}/; unresolvable => None => Installed (unknowable, not missing); home injected for testability\",\"negative_control\":\"disabling only home_relative() fails 4 of the new tests incl. the still-broken positive control\",\"cost_to_reporter\":\"flo2 commit 538b460 documented a non-existent problem\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-open-questions-zero-reads-as-an-all-clear",
       "node_type": "TemporalFact",
       "properties": {
@@ -69946,6 +70362,20 @@
       }
     },
     {
+      "node_id": "fact:defect-revise-design-skill-contradicted-create-node",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "A SERVED SKILL AND A SERVED TOOL STATED OPPOSITE SEMANTICS FOR THE SAME CALL, AND THE DISAGREEMENT WAS ABOUT WHETHER A WRITE DESTROYS DATA. FIXED 2026-08-09.\n\nThe tool description said create_node MERGES — 'the props you pass overwrite, every stored property you omit survives'. The revise-design skill said 'Do NOT reach for the generic create_node to revise. It is create-or-REPLACE, so passing only the changed field resets every other property to its schema default'.\n\nSETTLED FROM THE SOURCE: the served tool calls upsert_node (crates/reflow2-mcp/src/tools/query.rs), whose own doc reads 'Merge props onto id if it exists... every stored property the caller does not name survives'. THE TOOL WAS RIGHT AND THE SKILL WAS WRONG.\n\nTHE DIRECTION IS WHAT MAKES IT EXPENSIVE: the skill scared agents away from the SAFE call. A dev_storyflow worker filed it after being unable to tell which was true without risking nine accepted requirements, and passed the whole property set to be safe under either reading. A session here did exactly the same thing the same day on a DesignRule, for the same reason. Both paid the cost; neither lost data, which is why it went unnoticed.\n\nAND IT COMPOUNDS WITH A GAP THE SAME WORKER FOUND: the skill prescribes revising via a typed constructor, but there is no typed constructor for a DesignRule at all, and add_requirement accepts only id/name/statement — so a requirement's `source` is unreachable that way. The prescribed safe route did not exist for those fields, and nothing said so. The skill now says both things.\n\nGENERAL SHAPE, and it is the fourth skill-versus-tool drift recorded here: nothing checks a skill's claims about tool BEHAVIOUR. skill_lint verifies that every tool a skill NAMES exists on the served surface — which is why this survived: every name was real, only the semantics were wrong.",
+        "subject_id": "cap:skills-served",
+        "valid_from": "2026-08-09",
+        "valid_to": "2026-08-09",
+        "value": "{\"reported\":\"dev_storyflow w-d890d2b3 2026-08-09 item 1; hit independently in this repo the same day\",\"settled_by\":\"reading crates/reflow2-mcp/src/tools/query.rs — create_node calls upsert_node\",\"verdict\":\"tool description correct, skill wrong\",\"compounding_gap\":\"no typed constructor for DesignRule; add_requirement cannot express source\",\"class\":\"fourth skill-vs-tool drift; skill_lint checks tool NAMES, never tool BEHAVIOUR\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-rollups-became-fleet-numbers-without-saying-so",
       "node_type": "TemporalFact",
       "properties": {
@@ -69969,6 +70399,20 @@
         "subject_id": "cap:detect",
         "valid_from": "2026-08-07",
         "value": "{\"reported\":\"2026-08-07 dev_storyflow, six independent sessions: w-10f94d47, w-08baa598, w-fb7d30ab, w-ec25cf2c, w-deac0a1e, w-abbb53d2\",\"filed_separately\":\"per the feedback file's own no-consolidation rule; consolidated here as one defect with six corroborations\",\"what_works\":\"region_size being in the payload at all - explicitly credited by three reporters, keep it\",\"defect\":\"the interpretation of a degenerate region is left to a reader who may not think to caveat it\",\"worst_case_seen\":\"in_scope 0 over region_size 1 on an edgeless node, caught only by running a control on a sibling\",\"fix_shape\":\"a caveat/scope_note field when region_size <= 1 or the region contains nothing the detector can fire on\",\"severity\":\"opportunity, not breakage - nothing failed, the reader carried a rule the output could carry\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-set-verification-status-erased-last-run-at",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "set_verification_status SILENTLY DELETED `last_run_at` WHEN THE OPTIONAL PARAMETER WAS OMITTED — data loss from the most ordinary act there is. FIXED 2026-08-09.\n\nFiled by dev_storyflow 2026-08-08 and RE-FILED after retesting on 0.26.1, both times on a throwaway node created for the purpose and never on one whose timestamp anyone depended on. One variable: same node, same status, parameter omitted, key GONE. The key was REMOVED rather than set to null, so a wiped check was byte-identical to one that had never run.\n\nCONFIRMED IN THE SOURCE HERE RATHER THAN TAKEN FROM THE REPORT: verify.rs copied every existing property EXCEPT `status` and `last_run_at`, so an omitted `last_run_at` was excluded from the copy and never re-set.\n\nWHY THE DIRECTION WAS THE BAD ONE, and this is their argument, not a restatement: it fires from marking a check `failing` after a regression — which erases the evidence it ever ran — and it fails toward `never_run`, precisely the field a later session greps for unproven work. It was invisible at the call site because the response is success-shaped and dominated by a long `name`.\n\nAND IT BROKE A CONVENTION THIS CODEBASE STATES ELSEWHERE AS A PRINCIPLE, which is the cheapest thing to point at: set_interface_spec promises 'omitting one LEAVES IT ALONE', set_decision_status 'Every other property is preserved', set_epoch_status 'Everything else about the epoch is preserved'. This function's own first line said 'preserving its other properties' and then null-wrote one of them. One tool departing from a convention the others state is worse than no convention, because a caller who has read any sibling reasonably assumes it.\n\nTHE FIX: `last_run_at` is replaced only when the caller supplies one. Clearing a run time is therefore not expressible by omission, and should not be — erasing evidence is a deliberate act and deserves a deliberate call. PROVEN BY NEGATIVE CONTROL: restoring the old one-line condition fails the new test on exactly the data-loss assertion. The test also pins the other direction (an explicit timestamp still overwrites), because a fix that made the parameter inert would be the same bug pointing the other way.\n\n⚠️ WORTH CARRYING TO THE FLEET: they upgraded to 0.26.1 partly on the understanding that filed bugs were fixed, and said so — several were, this one was not, and a reader skimming 'we upgraded, bugs fixed' would reasonably have assumed otherwise. The retest is what caught it.",
+        "subject_id": "cmp:verify",
+        "valid_from": "2026-08-08",
+        "valid_to": "2026-08-09",
+        "value": "{\"reported\":\"dev_storyflow 2026-08-08, re-filed after 0.26.1 retest 2026-08-09\",\"root_cause\":\"verify.rs copied all properties except status and last_run_at, so an omitted last_run_at was dropped\",\"fix\":\"last_run_at replaced only when supplied\",\"negative_control\":\"old condition restored -> new test fails on the data-loss assertion\",\"siblings_documenting_the_opposite\":\"set_interface_spec, set_decision_status, set_epoch_status\"}"
       }
     },
     {
@@ -70910,6 +71354,18 @@
       }
     },
     {
+      "node_id": "ver:loop-status-scoped-to-a-contributor",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-09",
+        "level": "unit",
+        "method": "test",
+        "name": "loop_status answers what is owed to ONE NAMED PERSON, and a scoped answer can never be read as the design being clean (crates/reflow2-core/tests/report.rs, 5 cases). SPLIT OUT of ver:owed-to-a-contributor rather than widening it, because that check's statement is about the COUNTER and it was passing before any of this existed — a green check that quietly grows to stand for behaviour it never exercised is the failure this project has now written down twice. THE CASES: assigned decisions are LISTED, not merely counted, carrying decision_id, name and approver_id (flo2's F4, hit independently here the same day where finding two meant jq-ing the export); scoping to one contributor returns only their assigned decisions and names them in `next`; scoping does NOT make an unassigned musing somebody's problem, so the deliberate quiet around thinking out loud survives; an unknown contributor_id is REFUSED rather than answered with an empty list, with a positive control proving the same call succeeds for a real id — because a typo would otherwise produce 'nothing is owed to you', the most reassuring possible reply and the one least likely to be questioned. THE LOAD-BEARING CASE is a_scoped_answer_never_reads_as_the_design_being_clean: a contributor with nothing assigned gets clean=true, AND scope.not_attributable is non-empty, AND `next` says in words that the rest carries no per-person attribution, AND the design-wide counters come back unchanged by scoping. That is the guard against the defect class this project has now met four times — a value that cannot tell a real NONE from an I-CANNOT-SAY. WHAT IS NOT COVERED, stated rather than left to be discovered: nothing verifies attribution for any relationship OTHER than the approver edge, because none is attributed. Claim-derived ownership and gap-to-judge attribution are unbuilt, and req:the-loop-says-what-is-owed-to-a-person names that as a real open question rather than an oversight.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:maturity",
       "node_type": "Verification",
       "properties": {
@@ -71598,7 +72054,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:c5c0829c2eb569e3dbe11b57efe5c4e7e4e85501a18caf96f74ccf1e858c3b30",
+  "prev_content_hash": "sha256:eb2df40b1871dc374d6f584c0fb214497c95188a10585bc40504c03b9624909f",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

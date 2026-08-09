@@ -90,6 +90,20 @@ pub struct Scoped<T> {
     /// How many nodes the region covers — a one-node region usually means the
     /// seed was a leaf or a typo, and saying so beats returning nothing.
     pub region_size: usize,
+    /// Said in WORDS when the scoped answer cannot mean anything.
+    ///
+    /// A seed with no edges makes `in_scope: 0` **vacuous rather than clean** —
+    /// nothing could have been found there. The numbers already carried this
+    /// (`region_size: 1` beside `in_scope: 0`) and dev_storyflow (w-c216679a,
+    /// 2026-08-09) pointed out that it is exactly the shape most likely to be
+    /// banked as "my area is clean": they scoped to an Epoch and to a Fragment,
+    /// got `in_scope: 0` at depth 2 AND depth 5, and only caught it because
+    /// they ran a positive control on a Project.
+    ///
+    /// `None` when the region is real — the field appears only when it has
+    /// something to say, so its presence is the signal.
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    pub note: Option<String>,
     /// Findings across the WHOLE design, so a scoped view can never imply the
     /// rest is clean.
     pub total: usize,
@@ -172,6 +186,15 @@ impl DesignGraph {
             scope: seed_id.to_string(),
             depth,
             region_size: region.len(),
+            note: (region.len() == 1).then(|| {
+                format!(
+                    "`{seed_id}` has no edges, so this region is the seed alone and \
+                     `in_scope: 0` is VACUOUS rather than clean — nothing could have been \
+                     found here. Bookkeeping nodes (DesignEpoch, Fragment, Snapshot) are \
+                     islands in the propagation walk; scope a Component, Capability or \
+                     Project to ask a question that can have an answer."
+                )
+            }),
             total,
             in_scope: items.len(),
             out_of_scope: total - unanchored - items.len(),
@@ -205,6 +228,15 @@ impl DesignGraph {
             scope: seed_id.to_string(),
             depth,
             region_size: region.len(),
+            note: (region.len() == 1).then(|| {
+                format!(
+                    "`{seed_id}` has no edges, so this region is the seed alone and \
+                     `in_scope: 0` is VACUOUS rather than clean — nothing could have been \
+                     found here. Bookkeeping nodes (DesignEpoch, Fragment, Snapshot) are \
+                     islands in the propagation walk; scope a Component, Capability or \
+                     Project to ask a question that can have an answer."
+                )
+            }),
             total,
             in_scope: items.len(),
             out_of_scope: total - unanchored - items.len(),

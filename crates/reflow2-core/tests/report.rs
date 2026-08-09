@@ -212,6 +212,161 @@ fn an_open_decision_is_owed_only_once_somebody_has_been_asked_to_settle_it() {
     );
 }
 
+/// The count was never the hard part — finding out WHICH was.
+///
+/// flo2 filed this (F4): every other debt line names a tool to call next, and
+/// this one left the reader to walk `AUTHORED_BY` edges by hand. Hit
+/// independently in this repo the same day, where identifying two assigned
+/// decisions meant `jq`-ing the committed export.
+#[test]
+fn the_assigned_decisions_are_listed_and_not_merely_counted() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_contributor("who:a", "A", Some("person"), Some("a"), None)
+        .unwrap();
+    g.add_decision("dec:asked", "Which way?", "Two roads.", None)
+        .unwrap();
+    g.authored_by("Decision", "dec:asked", "who:a", Some("approver"), None)
+        .unwrap();
+
+    let s = g.loop_status().unwrap();
+    assert_eq!(s.unsettled_assigned_decisions, s.assigned_decisions.len());
+    let one = &s.assigned_decisions[0];
+    assert_eq!(one.decision_id, "dec:asked");
+    assert_eq!(one.approver_id, "who:a");
+    assert_eq!(
+        one.name, "Which way?",
+        "the reader needs the words, not the id"
+    );
+}
+
+/// "What needs ME" — the asynchronous form of the loop.
+#[test]
+fn the_loop_answers_what_is_owed_to_one_named_person() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    for (id, name) in [("who:a", "A"), ("who:b", "B")] {
+        g.add_contributor(id, name, Some("person"), Some(name), None)
+            .unwrap();
+    }
+    for (dec, who) in [("dec:for-a", "who:a"), ("dec:for-b", "who:b")] {
+        g.add_decision(dec, dec, "In prose.", None).unwrap();
+        g.authored_by("Decision", dec, who, Some("approver"), None)
+            .unwrap();
+    }
+
+    let all = g.loop_status().unwrap();
+    assert_eq!(all.unsettled_assigned_decisions, 2);
+    assert!(all.scope.is_none(), "unscoped carries no scope block");
+
+    let mine = g.loop_status_for(Some("who:a")).unwrap();
+    assert_eq!(mine.unsettled_assigned_decisions, 1);
+    assert_eq!(mine.assigned_decisions[0].decision_id, "dec:for-a");
+    assert_eq!(mine.scope.as_ref().unwrap().contributor_id, "who:a");
+    assert!(
+        mine.next.iter().any(|l| l.contains("who:a")),
+        "the line an agent reads aloud must name the person: {:?}",
+        mine.next
+    );
+}
+
+/// **The honesty test, and the reason this is not a filter.**
+///
+/// A person with nothing assigned must not be told the design is fine. Every
+/// debt class except assignment belongs to the DESIGN, so a scoped answer names
+/// those counts rather than zeroing them — otherwise `clean: true` would be the
+/// tool confidently reporting "nothing is owed to you" when the truth is "I
+/// cannot tell whose this is". That is the defect class this project has now
+/// found four times in other guises: a value that cannot tell a real NONE from
+/// an I-CANNOT-SAY.
+#[test]
+fn a_scoped_answer_never_reads_as_the_design_being_clean() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_contributor("who:idle", "Idle", Some("person"), Some("i"), None)
+        .unwrap();
+    // Real design debt that belongs to nobody in particular. A requirement
+    // needs a capability to exist before `unsatisfied_requirement` can fire —
+    // with none, "nothing satisfies it" is not yet a finding about anything.
+    g.add_requirement("req:orphan", "Orphan", "Something nothing satisfies")
+        .unwrap();
+    g.add_capability(
+        "cap:orphan",
+        "Orphan capability",
+        "Answers no stated need",
+        None,
+    )
+    .unwrap();
+
+    let design_wide = g.loop_status().unwrap();
+    assert!(
+        !design_wide.clean,
+        "precondition: the design must actually owe something"
+    );
+
+    let theirs = g.loop_status_for(Some("who:idle")).unwrap();
+    assert!(
+        theirs.clean,
+        "scoped, clean means nothing is assigned to this person"
+    );
+    let scope = theirs.scope.as_ref().unwrap();
+    assert!(
+        !scope.not_attributable.is_empty(),
+        "the design's own debt must still be reported, not filtered to zero"
+    );
+    assert!(
+        theirs
+            .next
+            .iter()
+            .any(|l| l.contains("no per-person attribution")),
+        "the not-attributable debt must be said in WORDS, not left in a field: {:?}",
+        theirs.next
+    );
+    // And the design-wide counters are untouched by scoping — they are facts
+    // about the design and scoping does not make them smaller.
+    assert_eq!(theirs.unsurfaced_gaps, design_wide.unsurfaced_gaps);
+}
+
+/// A mistyped or renamed id must not answer "nothing is owed to you" — the most
+/// reassuring reply available and the one nobody thinks to question.
+#[test]
+fn an_unknown_contributor_is_refused_rather_than_answered_with_an_empty_list() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_contributor("who:a", "A", Some("person"), Some("a"), None)
+        .unwrap();
+
+    let err = g.loop_status_for(Some("who:typo"));
+    assert!(
+        err.is_err(),
+        "an unknown contributor must be an error, not an empty answer"
+    );
+    // Positive control: the same call with a real id succeeds, so the refusal
+    // above is about the id and not about scoping being broken.
+    assert!(g.loop_status_for(Some("who:a")).is_ok());
+}
+
+/// Scoping must not disturb the deliberate quiet around thinking out loud.
+#[test]
+fn scoping_does_not_make_an_unassigned_decision_somebodys_problem() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_contributor("who:a", "A", Some("person"), Some("a"), None)
+        .unwrap();
+    g.add_decision("dec:musing", "Maybe X?", "Turning it over.", None)
+        .unwrap();
+    // Authored by them, but nobody was ASKED.
+    g.authored_by("Decision", "dec:musing", "who:a", Some("author"), None)
+        .unwrap();
+
+    let mine = g.loop_status_for(Some("who:a")).unwrap();
+    assert_eq!(
+        mine.unsettled_assigned_decisions, 0,
+        "authoring a musing is not being asked to settle it"
+    );
+    assert!(mine.assigned_decisions.is_empty());
+}
+
 #[test]
 fn captured_intent_owes_a_surface_pass_until_the_question_is_asked() {
     use reflow2_core::AskedQuestion;
@@ -484,6 +639,72 @@ fn both_report_surfaces_carry_when_each_check_last_ran() {
             "{surface}: a check that never ran must report None, not a fabricated time"
         );
     }
+}
+
+/// Omitting `last_run_at` must LEAVE IT ALONE, not erase it.
+///
+/// dev_storyflow filed this 2026-08-08 and re-filed it after retesting on
+/// 0.26.1, both times on a throwaway node created for the purpose. The key was
+/// REMOVED rather than nulled, so a wiped check was byte-identical to one that
+/// had never run — and it fired from the most ordinary act there is, marking a
+/// check `failing` after a regression, erasing the evidence it ever ran and
+/// failing toward `never_run`, the field a later session greps for unproven
+/// work.
+///
+/// Their sharpest argument is the one this test encodes: `set_interface_spec`,
+/// `set_decision_status` and `set_epoch_status` all document the opposite
+/// convention, and this function's own first line said "preserving its other
+/// properties" while null-writing one of them.
+#[test]
+fn setting_a_status_again_does_not_erase_when_the_check_last_ran() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_verification("ver:v", "a check", Some("test"), Some("unit"))
+        .unwrap();
+
+    let ran = g
+        .set_verification_status("ver:v", "passing", Some("2026-08-09T10:00:00Z"))
+        .unwrap();
+    assert_eq!(
+        ran.properties.get("last_run_at").and_then(|v| v.as_str()),
+        Some("2026-08-09T10:00:00Z"),
+        "precondition: the timestamp landed"
+    );
+
+    // THE REPRODUCTION, one variable: same node, omitted parameter.
+    let again = g.set_verification_status("ver:v", "failing", None).unwrap();
+    assert_eq!(
+        again.properties.get("last_run_at").and_then(|v| v.as_str()),
+        Some("2026-08-09T10:00:00Z"),
+        "omitting last_run_at must leave it alone — this is the data-loss bug"
+    );
+    assert_eq!(
+        again.properties.get("status").and_then(|v| v.as_str()),
+        Some("failing"),
+        "and the status the caller DID pass must still be applied"
+    );
+
+    // Supplying one still replaces it — the fix must not make the parameter
+    // inert, which would be the same bug pointing the other way.
+    let moved = g
+        .set_verification_status("ver:v", "passing", Some("2026-08-09T18:00:00Z"))
+        .unwrap();
+    assert_eq!(
+        moved.properties.get("last_run_at").and_then(|v| v.as_str()),
+        Some("2026-08-09T18:00:00Z"),
+        "an explicit timestamp must still overwrite"
+    );
+
+    // And a check that never ran still reports absence rather than a fabricated
+    // time — preserving nothing is not the same as inventing something.
+    g.add_verification("ver:fresh", "never run", Some("test"), Some("unit"))
+        .unwrap();
+    let fresh = g
+        .set_verification_status("ver:fresh", "planned", None)
+        .unwrap();
+    assert!(
+        !fresh.properties.contains_key("last_run_at"),
+        "a check with no run behind it must stay empty"
+    );
 }
 
 /// Visibility, not a new nag. A counter here would make `clean` unreachable on

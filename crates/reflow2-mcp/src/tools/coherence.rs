@@ -81,26 +81,36 @@ impl ReflowService {
     #[tool(
         description = "The coherence loop's outstanding debt, cheaply: what \
                        capture→detect→ask→decide steps are owed right now, computed from graph \
-                       state alone (never from run history — looking is not writing). One call \
-                       returns a short to-do list: anchored gaps never put to the user, \
-                       questions still waiting or answered-but-unwritten, open decisions a named \
-                       person was ASKED to settle (a `proposed` Decision carrying an \
-                       AUTHORED_BY `role=approver` — one with no approver is somebody thinking \
-                       out loud and stays deliberately quiet), structural defects, \
-                       capabilities claiming realized/verified with no passing check, recorded \
-                       drift awaiting a disposition, and built capabilities nobody has checked \
-                       against reality. Fire it between operational tasks instead of trying to \
-                       remember the loop; `clean: true` means nothing is owed. `verifications` is \
-                       a DIGEST, not the roll: counts by status, how many have never actually run, \
-                       and every check NOT currently passing in full — the passing remainder is \
-                       counted in `omitted` rather than listed, because a per-check dump is what \
-                       stopped this call being cheap. `graph_report` carries every check with its \
-                       last run.",
+                       state, never from run history. One call returns a short to-do list: \
+                       anchored gaps never put to the user, questions waiting or \
+                       answered-but-unwritten, open decisions a named person was ASKED to settle \
+                       (a `proposed` Decision carrying an AUTHORED_BY `role=approver`; one with \
+                       no approver is somebody thinking out loud and stays deliberately quiet), \
+                       structural defects, capabilities claiming realized/verified with no \
+                       passing check, recorded drift awaiting a disposition, and built \
+                       capabilities nobody has checked against reality. `clean: true` means \
+                       nothing is owed. Those decisions are LISTED in `assigned_decisions`, not \
+                       just counted. Pass `contributor_id` to ask WHAT NEEDS THIS PERSON. \
+                       Scoped, only ASSIGNMENT is attributed (the approver edge); every other \
+                       debt class is a fact about the DESIGN and comes back design-wide under \
+                       `scope.not_attributable` rather than filtered to zero, because \"nothing \
+                       is owed to you\" and \"I cannot tell whose this is\" must never be the \
+                       same answer — so scoped, `clean` means nothing is assigned to that \
+                       person, NOT that the design is clean. An unknown contributor_id is \
+                       REFUSED: a typo would otherwise give the most reassuring reply there is. \
+                       `verifications` is a DIGEST, not the roll: counts by status, how many \
+                       never ran, and every check not currently passing. `graph_report` carries \
+                       every check with its last run.",
         annotations(read_only_hint = true)
     )]
-    pub async fn loop_status(&self) -> Result<CallToolResult, McpError> {
+    pub async fn loop_status(
+        &self,
+        Parameters(req): Parameters<LoopScopeReq>,
+    ) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
-        let status = g.loop_status().map_err(dyno_err)?;
+        let status = g
+            .loop_status_for(req.contributor_id.as_deref())
+            .map_err(dyno_err)?;
         let mut payload = serde_json::to_value(&status).map_err(ser_err)?;
         // The debt rollup is seven integers and a to-do list; the per-check roll
         // beside it grew with the design until the whole reply was 74 KB and no
