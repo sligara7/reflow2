@@ -555,6 +555,41 @@ pub fn attached_seat_count() -> Option<usize> {
         .map(|reg| reg.attached.len())
 }
 
+/// Whether this process serves sessions OTHER than its own.
+///
+/// Set once at startup by `--serve-shared`; false everywhere else, which is the
+/// honest default because a plain stdio process really is exactly one session.
+///
+/// # Why the registry alone was not enough
+///
+/// The registry answers about seats it LEASED. A seat this process merely
+/// HANDED OUT — what the `mint_seat` tool returns — is in neither set, so it
+/// falls through to the pid probe, and the pid probe asks whether WE are alive.
+/// Under `--shared` that is trivially yes for every seat the daemon ever minted,
+/// which is the original defect wearing a different hat: the 2026-08-08 registry
+/// fixed the leased seat and left the handed-out one reading `live` forever.
+///
+/// The distinction this flag draws is the one that actually matters, and it
+/// cannot be derived from the registry: in a plain stdio server the process IS
+/// the session, so our-pid-is-alive is a TRUE and useful answer about a
+/// handed-out seat; in a shared daemon it is no answer at all. Counting attached
+/// seats cannot tell the two apart — a shared daemon serving one client looks
+/// exactly like stdio — so the mode is declared rather than guessed.
+static SERVES_MANY_SESSIONS: std::sync::atomic::AtomicBool =
+    std::sync::atomic::AtomicBool::new(false);
+
+/// Declare that this process serves sessions other than its own, so liveness
+/// stops answering about a client it cannot observe. Called by `--serve-shared`.
+pub fn declare_serving_many_sessions() {
+    SERVES_MANY_SESSIONS.store(true, std::sync::atomic::Ordering::Relaxed);
+}
+
+/// Whether this process serves sessions other than its own.
+#[must_use]
+pub fn serving_many_sessions() -> bool {
+    SERVES_MANY_SESSIONS.load(std::sync::atomic::Ordering::Relaxed)
+}
+
 /// A seat held for exactly as long as the session holding it.
 ///
 /// The registry is only as truthful as its removals, and "remember to release
@@ -626,6 +661,15 @@ pub fn seat_liveness(seat: &str) -> Liveness {
     // the registry's business and falls through to the probe below.
     if let Some(verdict) = registry_verdict(seat, pid) {
         return verdict;
+    }
+    // Our own pid, never leased, and we serve more than ourselves: this is a
+    // seat we HANDED OUT (the `mint_seat` tool) without holding anything that
+    // tracks its owner. The probe below would ask whether WE are alive and
+    // answer `live` for every such seat forever, so the honest answer is that we
+    // cannot see. `unknown` is never read as free, so this fails toward
+    // deferring to a claim rather than toward taking somebody's work.
+    if pid == std::process::id() && serving_many_sessions() {
+        return Liveness::Unknown;
     }
     if std::path::Path::new(&format!("/proc/{pid}")).exists() {
         return Liveness::Live;

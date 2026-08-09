@@ -801,6 +801,11 @@ async fn main() -> anyhow::Result<()> {
     // an ordinary HTTP server that additionally publishes where it landed, so
     // peers can find it without a port being agreed in advance.
     if cli.serve_shared {
+        // BEFORE the service is built, because building one mints a seat and the
+        // flag decides how that seat's siblings are answered. From here on, a
+        // seat carrying this pid that we never leased reads `unknown` rather
+        // than borrowing our liveness — see identity::SERVES_MANY_SESSIONS.
+        reflow2_core::identity::declare_serving_many_sessions();
         let (service, provenance) = ReflowService::new_reporting(&cli.graph_path).map_err(|e| {
             // A daemon that loses the store-lock race is the NORMAL outcome when
             // several sessions start at once — exactly one wins. Say so plainly

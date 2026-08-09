@@ -118,17 +118,34 @@ impl ReflowService {
             // value, and an agent that re-mints per call reintroduces the bug.
             "carry_it": "Pass this as `seat` on claim_region for the rest of this session. \
                          Minting a fresh one per call is the failure mode this prevents.",
-            // Until 2026-08-08 this field said the opposite, and it was true:
-            // liveness read the pid in the seat, that pid was the SERVER's, and
-            // so every claim stayed live while the server lived. The seat is now
-            // held by a lease that is released when this session's handler
-            // drops, so liveness answers about the session — which is what
-            // everyone reading claim_report already believed it meant.
-            "liveness_is_this_session": "claim_report answers liveness for this seat from the \
-                                         sessions this server is actually holding, not from its \
-                                         own pid. Your claims read `live` while you are attached \
-                                         and `gone` once you are not — including if this session \
-                                         crashes rather than exits cleanly.",
+            // THIS FIELD HAS NOW BEEN WRONG IN BOTH DIRECTIONS, which is why it
+            // is computed rather than written.
+            //
+            // Before 2026-08-08 it said liveness could not answer about the
+            // session, and that was true. #100 added the registry and this text
+            // was rewritten to promise the opposite — `live` while attached,
+            // `gone` once not. That promise holds only for the seat the SERVICE
+            // leases, and this tool does not hand that one out: it mints a bare
+            // seat nothing tracks. dev_storyflow measured the consequence the
+            // same day (w-aa0607ff) and it is the original defect intact.
+            //
+            // A correct caveat traded for an incorrect promise is strictly worse
+            // than the defect it was covering: a reader who believed the old
+            // text distrusted liveness and was right, and a reader who believes
+            // the new text trusts it and is wrong. So the answer is now derived
+            // from what this process can actually observe.
+            "liveness_of_this_seat": if reflow2_core::identity::serving_many_sessions() {
+                "UNOBSERVABLE for this seat, and claim_report will say `unknown` rather than \
+                 `live`. This server serves many sessions, and nothing ties a minted seat to your \
+                 connection — so it cannot tell that you have gone. `unknown` is never read as \
+                 free, so a claim you leave behind still makes a colleague pause; it will not \
+                 clear itself. RELEASE IT YOURSELF with release_claim when you are done, because \
+                 here that is the only thing that clears a claim."
+            } else {
+                "Tracked. This process serves exactly this session, so a claim carrying this seat \
+                 reads `live` while the session is running and `gone` once it is not — including \
+                 if it crashes rather than exits cleanly."
+            },
         }))
     }
 
