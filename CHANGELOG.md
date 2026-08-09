@@ -31,6 +31,30 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.26.1] — 2026-08-09
+
+Dependency bump only: **rmcp 3.0.1 → 3.1.2** (and `rmcp-macros` with it). Cut as its own tag
+rather than folded into v0.26.0, so that if the protocol layer misbehaves in the field there is
+exactly one candidate cause.
+
+**What you do: nothing.** No schema change, no stamp movement, and the served tool surface is
+byte-identical — all 149 tool schemas match their goldens.
+
+### Changed
+
+- **rmcp 3.0.1 → 3.1.2.** Verified against the instrument that exists because the suite is not
+  enough here: `stateless_seat_probe` reports one client → one seat on **all three** transports
+  (stdio, legacy HTTP 2025-06-18, stateless HTTP 2026-07-28), with a seatless claim refused
+  exactly where the session cannot supply one. That probe exists because the workspace suite
+  stayed green through the rmcp v2→v3 upgrade *while seat identity was already broken*.
+- The risk worth naming, and it did not materialise: `ProtocolVersion::LATEST` is still
+  `2025-11-25`. Had it crossed the 2026-07-28 threshold, the sessionless path would have become
+  the DEFAULT and `mint_seat` would have stopped being advisory for every claiming client — the
+  tripwire test in `service.rs` pins this rather than leaving it to inspection.
+- `darling` 0.24.0 joins the build graph via `rmcp-macros`, alongside the 0.23.0 that already
+  arrived through `tantivy`. Both are **proc-macro** dependencies: build-time only, nothing added
+  to the shipped binary.
+
 ## [0.26.0] — 2026-08-09
 
 Governance becomes a question the graph can be asked, and the server stops lying about its own
