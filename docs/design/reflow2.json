@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:c225bf1ca48be4be9e7aa1c85815c44e30671b7787b6f6d060675ad3bf4dcb89",
+  "content_hash": "sha256:c5c0829c2eb569e3dbe11b57efe5c4e7e4e85501a18caf96f74ccf1e858c3b30",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -678,6 +678,14 @@
       "from_id": "fact:the-stale-server-defect-recurred-to-the-people-who-wrote-it-down",
       "properties": {},
       "to_id": "req:the-server-is-the-authority-on-its-own-currency"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-decision-can-be-created-already-settled",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -2926,6 +2934,12 @@
       "from_id": "chg:aggregate-gap-ack",
       "properties": {},
       "to_id": "epoch:aggregate-gap-ack"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:alex-fleet-review-20260809",
+      "properties": {},
+      "to_id": "epoch:scaling-to-many-tenants-captured"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5878,6 +5892,23 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-does-a-capability-need-a-cancelled-state",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-does-a-capability-need-a-cancelled-state",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-embeddings-adoption",
       "properties": {
         "acted_at": "2026-08-01",
@@ -8223,6 +8254,42 @@
         "action": "modified"
       },
       "to_id": "req:set-scoped-acknowledgement-keys-on-its-rule"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:alex-fleet-review-20260809",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-decision-can-be-created-already-settled"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:alex-fleet-review-20260809",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:mcp-surface"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:alex-fleet-review-20260809",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:idea-does-a-capability-need-a-cancelled-state"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:alex-fleet-review-20260809",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "fact:the-decision-race-is-caller-ordering-not-read-after-write"
     },
     {
       "edge_type": "CHANGED",
@@ -23692,6 +23759,12 @@
       "from_id": "cap:content-store",
       "properties": {},
       "to_id": "fact:defect-content-store-invents-its-directory"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:mcp-surface",
+      "properties": {},
+      "to_id": "fact:the-decision-race-is-caller-ordering-not-read-after-write"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -53465,6 +53538,19 @@
       }
     },
     {
+      "node_id": "cap:a-decision-can-be-created-already-settled",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`add_decision` takes an OPTIONAL `status`, defaulting to `proposed` exactly as today. Nothing changes for a caller who omits it, and `dec:certainty-derived`'s guarantee is untouched: recording a choice is still not the same as settling it, and the default still refuses to assert the user's word. WHAT IT FIXES, and it is not convenience: Alex's fleet reported `set_decision_status` failing with `Node not found` immediately after a successful `add_decision`, and asked for read-after-write. Read-after-write already holds (fact:the-decision-race-is-caller-ordering-not-read-after-write). The real cause is that a parallel tool batch imposes NO ORDER on create-then-modify, so the modify can win the lock first. An optional status removes the pair entirely — one call cannot be misordered against itself. THE GUARD THAT MUST COME WITH IT: a status passed here is still the USER'S word, not the agent's. The same forgery rule that governs set_requirement_status applies, and the parameter description has to say so, or this becomes a convenient way for an agent to accept its own proposal in a single call. Sibling ask, cheaper and possibly sufficient on its own: say in the tool descriptions that parallel batches carry no ordering and a create-then-modify pair must be sequenced — no tool currently says it.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A decision can be created with its status, so a settled choice is one call rather than two that can be misordered",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:adopt",
       "node_type": "Capability",
       "properties": {
@@ -56178,6 +56264,14 @@
       "properties": {
         "change_type": "refactor",
         "name": "detect.rs: gap_id gained the aggregate branch"
+      }
+    },
+    {
+      "node_id": "chg:alex-fleet-review-20260809",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Alex's Grok Build report reviewed: the top-priority ask is misdiagnosed and should be dropped, its sibling fixes the real cause, and a third consumer is running two minors behind"
       }
     },
     {
@@ -59597,6 +59691,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL, from a first-pass review of openmbee.org — website and repository listing only, deep review pending. THE OBSERVATION: OpenMBEE's Model Development Kits 'implement DocGen language for dynamic, model-based document generation using view and viewpoint concepts'. Document generation is not a side feature there; it is half the value proposition, and the tagline 'Edit once, use everywhere' is largely a claim about documents — write the model once, and every specification, review pack and report derives from it rather than drifting from it. WHERE reflow2 STANDS, and the gap is narrower than it first looks: reflow2 already has the same underlying idea. `docs/viewpoints.md` is DoDAF-informed, `dec:views-are-projections` states that a view is a pure projection of the graph and that renderer fill-ins are DEFECTS, and `tools/render_views.py` projects six viewpoints and CONFESSES anything a view needs that the graph cannot supply — with every confession counted as a finding (BL-40). That confession discipline is arguably stronger than DocGen's, because it makes the gaps in a document visible instead of filling them. THE HONEST DIFFERENCE IS PRODUCT, NOT CONCEPT: `render_views.py` is a probe in the tools directory, run by developers of reflow2. DocGen is something an engineering organisation hands to its systems engineers to produce the artefacts a programme is contractually required to deliver. reflow2 has never claimed the second, and `req:no-se-knowledge` ('the user never needs systems engineering') suggests it may not want to. THE COUNTER-ARGUMENT: a document generator is a large surface with a long tail — templates, formats, numbering, review states — and every hour of it is an hour not spent on the coherence loop, which is the thing nobody else is building. WHAT WOULD CHANGE THE ANSWER: whether the projections reflow2 already computes are close enough to what a real programme must deliver that the remaining distance is rendering rather than modelling.",
         "name": "OPEN — should reflow2's viewpoints become a document product, the way DocGen is for OpenMBEE?",
         "rationale": "Recorded through the brainstorm skill at Anthony's request, ahead of a deep review against a clone of OpenMBEE's repository. The strength claim is deliberately hedged: reflow2 holds the concept (views as projections, confessions as findings) and OpenMBEE holds the product. Which of those is 'stronger' depends entirely on whether the user is a programme owing deliverables or a builder owing a coherent design, and reflow2 has so far chosen the second. Anthony's own position sits across both, which is why this is worth asking rather than assuming.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-does-a-capability-need-a-cancelled-state",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED FROM A CONSUMER REPORT, NOT YET DECIDED. Alex's fleet, 2026-08-09: 'Requirements: deferred / dropped. Capabilities: no equivalent — agents stuff DROPPED into description text.' CONFIRMED AGAINST THE SCHEMA rather than taken on trust: Requirement.status is [proposed, accepted, deferred, dropped, met]; Capability.status is [planned, in_progress, realized, verified]. There is no way to say a capability was abandoned, so the fact goes somewhere the graph cannot read it. WHY IT IS THE WEEK'S OWN DEFECT CLASS AGAIN: a state that cannot be expressed does not disappear — it gets smuggled into prose, exactly as time-bound claims were smuggled into Requirement.statement (req:a-dated-observation-does-not-read-as-standing-doctrine) and exactly as an unchosen `enforced` was smuggled into a default. Every instance this week has been a value that could not say what it needed to say. OPTIONS, none chosen: (a) add `cancelled` and/or `deferred` to Capability.status, symmetric with Requirement — simple, and a schema enum change that MOVES THE STAMP, so it owes an upgrade doc, unlike this week's other schema edits; (b) leave the enum and document the intended pattern (retire-from-design already asks the right question — was it ever true? — and SUPERSEDES/OBSOLETES already exist for the retire case), which costs nothing but leaves the state uncomputable; (c) treat an abandoned capability as a RETIREMENT rather than a status, which is what the retire-from-design skill already implies and may be the reason the enum was never widened. WORTH NOTING BEFORE DECIDING: option (a) is the only one that makes 'which capabilities were abandoned?' a question the graph can answer, and the reason to hesitate is that a lifecycle enum and a retirement edge are two ways to say the same thing — dec:one-retire-edge is already an open question about retirement being modelled twice, and widening the enum could make it three.",
+        "name": "OPEN — a Requirement can be deferred or dropped and a Capability cannot, so agents write \"DROPPED\" into prose the graph cannot compute on",
+        "rationale": "Raised by a second consumer project rather than found here, which is the useful part: reflow2's own graph never hit it because this project retires capabilities rather than cancelling them. Kept as a decision point rather than built because it is a schema enum change that would move the stamp and therefore owe an upgrade doc — the first this week that would — and because it touches an already-open question about retirement being modelled in two places. Anthony's to settle.",
         "status": "proposed"
       }
     },
@@ -69942,6 +70046,18 @@
       }
     },
     {
+      "node_id": "fact:the-decision-race-is-caller-ordering-not-read-after-write",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "correction",
+        "statement": "A CONSUMER'S NUMBER-ONE ASK IS MISDIAGNOSED, AND BUILDING IT WOULD CHANGE NOTHING. Alex's fleet (Grok Build harness, binary 0.24.0) filed a report on 2026-08-09 whose top-priority item is 'read-after-write for the creating session', from a real and repeatable symptom: immediately after a successful `add_decision`, a `set_decision_status` on the same id fails with `Node not found`, and a sequential retry succeeds. THE SYMPTOM IS REAL. THE CAUSE IS NOT WHAT THEY THINK. Read-after-write ALREADY HOLDS and cannot be the problem: `add_decision` takes an exclusive `write_lock()` (capture.rs:620), performs the write, and the guard drops before the response is returned, so any later lock acquisition sees the node. There is no visibility window to close. WHAT IS ACTUALLY HAPPENING is in their own environment notes: 'heavy parallel tool calls in a single agent turn'. Fire `add_decision` and `set_decision_status` concurrently and NOTHING ORDERS THEM. The RwLock serialises ACCESS, not INTENT — so `set_decision_status` can legitimately win the lock first, at which instant the node genuinely does not exist and `Node not found` is the correct answer. 'Retrying sequentially usually succeeds' is consistent with both readings, which is why the misdiagnosis is easy; the tell is that it reproduces ONLY in parallel batches. WHY THIS MATTERS MORE THAN THE BUG: their asks #1 and #2 are the same problem, and only #2 works. #1 (read-after-write) would be engineering effort spent making true something that is already true. #2 (optional `status` on `add_decision`) FIXES IT COMPLETELY, by collapsing two order-dependent calls into one that cannot be misordered. So the correct response to their highest-priority ask is to DROP IT and build their second. THE GENERAL FIX IS A DESCRIPTION, NOT A FEATURE: no tool description says that parallel batches carry no ordering, or that a create-then-modify pair must be sequenced. That is their section 1.2 ('parallel multi-write batches are fragile') and it is the honest root of both items. SAME SHAPE AS THIS WEEK'S OTHER FINDINGS: a caller cannot distinguish 'the write is not visible yet' from 'the write has not happened yet', and the surface never told them which world they are in — the same family as a value that cannot tell a choice from a default. NOT VERIFIED BY EXECUTION HERE: the mechanism was read from the code rather than reproduced with a concurrent client, so this is an analysis-grade finding. A reproduction would be two overlapping tool calls against one server asserting the failure disappears when they are sequenced.",
+        "subject_id": "cap:mcp-surface",
+        "valid_from": "2026-08-09"
+      }
+    },
+    {
       "node_id": "fact:the-stale-server-defect-recurred-to-the-people-who-wrote-it-down",
       "node_type": "TemporalFact",
       "properties": {
@@ -71453,7 +71569,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:fe4e4f2b74e6d89d4fa4501a622762f8faedf58bd269174445d08f1571ace4fa",
+  "prev_content_hash": "sha256:c225bf1ca48be4be9e7aa1c85815c44e30671b7787b6f6d060675ad3bf4dcb89",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
