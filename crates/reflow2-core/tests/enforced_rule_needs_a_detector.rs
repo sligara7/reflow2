@@ -72,16 +72,53 @@ fn an_enforced_rule_with_no_check_is_reported() {
     );
 }
 
-/// `enforced` DEFAULTS to true in schema/core.yaml, so SILENCE IS A CLAIM. A
-/// rule that never said otherwise is asserting it can fail a build, and four of
-/// reflow2's own five rules reached `enforced: true` exactly this way.
+fn unstated_gap_ids(g: &DesignGraph) -> Vec<String> {
+    g.detect_gaps()
+        .unwrap()
+        .into_iter()
+        .filter(|c| c.gap_source == reflow2_core::detect::GapSource::UnstatedRuleEnforcement)
+        .flat_map(|c| c.affected_ids)
+        .collect()
+}
+
+/// THE READING THAT CHANGED, and it read the other way round for exactly one
+/// day. `enforced` used to default to true, so a rule nobody had thought about
+/// was BILLED FOR A DETECTOR — which is how all four of reflow2's own enforced
+/// rules got that way, none of them chosen. The default is gone
+/// (dec:does-enforced-default-to-gate-blocking): absence now means nobody has
+/// said, and is not read as either answer.
 #[test]
-fn a_rule_that_never_mentioned_enforcement_is_still_asked_about() {
+fn a_rule_that_never_mentioned_enforcement_is_not_billed_for_a_detector() {
     let g = base_with_rule("rule:unstated", None);
     assert!(
-        rule_gap_ids(&g).contains(&"rule:unstated".to_string()),
-        "absence of `enforced` is the schema default TRUE, not an exemption"
+        !rule_gap_ids(&g).contains(&"rule:unstated".to_string()),
+        "an unstated rule must not owe a check nobody agreed to; only an explicit `true` is billed"
     );
+}
+
+/// But it is NOT silently let off either — that would just move the unchosen
+/// claim to the other side. It is ASKED, at a lower severity, because deciding
+/// what a rule is costs a word while proving one costs a detector.
+#[test]
+fn an_unstated_rule_is_asked_which_it_is() {
+    let g = base_with_rule("rule:unstated", None);
+    assert!(
+        unstated_gap_ids(&g).contains(&"rule:unstated".to_string()),
+        "absent must mean `nobody has said` and be asked, not quietly read as advisory"
+    );
+}
+
+/// The two findings must not both fire on one rule: they are different
+/// questions and a rule can only be in one of the three states.
+#[test]
+fn a_stated_rule_is_never_also_reported_as_unstated() {
+    for stated in [true, false] {
+        let g = base_with_rule("rule:stated", Some(stated));
+        assert!(
+            !unstated_gap_ids(&g).contains(&"rule:stated".to_string()),
+            "a rule that stated `{stated}` has said which it is"
+        );
+    }
 }
 
 /// The counterweight that keeps the list able to reach zero. An advisory rule is

@@ -102,7 +102,29 @@ schema:
         name: { type: string, required: true, indexed: true, fulltext: true }
         statement: { type: string, required: true, fulltext: true }
         category: { type: string, indexed: true, description: "tech_stack / convention / material / methodology / standard / style." }
-        enforced: { type: bool, default: true, description: "Whether violations are gate-blocking." }
+        # NO DEFAULT, DELIBERATELY (Anthony, 2026-08-08,
+        # dec:does-enforced-default-to-gate-blocking). Three states: true =
+        # violations are gate-blocking; false = advisory; ABSENT = nobody has
+        # said, which is REPORTED as unstated and never read as either.
+        #
+        # It defaulted to `true` until now, so a convention recorded in passing
+        # asserted it could fail somebody's build and then owed a detector
+        # nobody agreed to — which is how all four of this project's own
+        # enforced rules got that way, none of them chosen.
+        #
+        # Flipping the default to `false` was considered and REFUSED as unsafe:
+        # the value is materialized into the store at write time (confirmed by
+        # its presence in a 0.24.0 export, which omits unset properties), so an
+        # inherited `true` is indistinguishable from a chosen one and any
+        # migration would either silently downgrade rules somebody meant or
+        # preserve rules nobody chose, undetectably.
+        #
+        # Absence-is-reported-as-absence is this schema's own most consistent
+        # rule — VERIFIES.pinned ("unset means the scope was never stated"),
+        # Constraint.objective ("unset is a true answer"), weight_basis,
+        # DUPLICATES.basis — and `enforced` was the one place it was broken, in
+        # the dangerous direction.
+        enforced: { type: bool, description: "Whether violations are gate-blocking. THREE STATES: true = gate-blocking (and owes a detector); false = advisory; ABSENT = nobody has stated it, reported as unstated and never read as enforced. Never defaulted: whether breaking a rule should stop somebody's build is a policy about consequence, and it is the user's to state (the GATED_ON.min_level argument, one layer along)." }
       embedding_field: statement
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 80 }
       extraction_hint: >

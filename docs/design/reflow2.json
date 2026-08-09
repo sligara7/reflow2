@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:cb1792abcd84b65fb7de5f66525bb38ddc43cb103a4492b9110d2e47e185a7c9",
+  "content_hash": "sha256:d398aab86d8159bcda48a9e346a8d573c34e6a580c570d2d11a67f9950e198cb",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3479,6 +3479,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:enforced-is-stated-not-defaulted-20260808",
+      "properties": {},
+      "to_id": "epoch:enforced-is-stated-not-defaulted"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:external-store-argument-sharpened",
       "properties": {},
       "to_id": "epoch:arrival-delta"
@@ -4742,6 +4748,12 @@
       "from_id": "snap:epoch:embeddings-question-gets-its-findings:dec:idea-embeddings-adoption",
       "properties": {},
       "to_id": "epoch:embeddings-question-gets-its-findings"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:enforced-is-stated-not-defaulted:dec:does-enforced-default-to-gate-blocking",
+      "properties": {},
+      "to_id": "epoch:enforced-is-stated-not-defaulted"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -11335,6 +11347,69 @@
         "action": "modified"
       },
       "to_id": "dec:idea-embeddings-adoption"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:enforced-is-stated-not-defaulted-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:enforced-is-stated-not-defaulted-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:enforced-rule-detector-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:enforced-is-stated-not-defaulted-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:governance-proposal-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:enforced-is-stated-not-defaulted-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:enforced-is-stated-not-defaulted-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:enforced-is-stated-not-defaulted-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:governance-proposal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:enforced-is-stated-not-defaulted-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:does-enforced-default-to-gate-blocking"
     },
     {
       "edge_type": "CHANGED",
@@ -22892,6 +22967,12 @@
       "from_id": "dec:coverage-scope-is-declared",
       "properties": {},
       "to_id": "snap:epoch:coverage-scope-settled:dec:coverage-scope-is-declared"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:does-enforced-default-to-gate-blocking",
+      "properties": {},
+      "to_id": "snap:epoch:enforced-is-stated-not-defaulted:dec:does-enforced-default-to-gate-blocking"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -47875,7 +47956,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:792de5516c2442e8f3c7ee34ba57432c88c9878904c6de6ce0fc2ae5d2cc045f",
+        "checksum": "sha256:0a72004a631748e26941f536cc6e47989fce27f9a164fc0ffeacf5462f56ade4",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -47979,7 +48060,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:62867f89a2a07d2beb155ef8cf06acc8cb004671f2c7c44da8e1da2e2a65387a",
+        "checksum": "sha256:c47b13eb09c349050fb843bd48937503bf18e5cba4cad9701c8aee2240473d12",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/enforced_rule_needs_a_detector.rs",
         "name": "enforced_rule_needs_a_detector.rs",
@@ -48122,7 +48203,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:4a8a87ebca3b4efcba06061556d367c3123bb6238b5b62e017ea4b129cfeef57",
+        "checksum": "sha256:fd8331443a248d4fbe0eb45a2888ff7deda5f059733753b7b43025ee0582147b",
         "granularity": "atomic",
         "location": "getting-started/skills/governance-proposal/SKILL.md",
         "name": "governance-proposal/SKILL.md",
@@ -48696,7 +48777,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:81403d844b84c265da25581c0e3794dbaabae825eebfca0de0917b7f2cfe5322",
+        "checksum": "sha256:eff268604fffe9e990ac8198445c9a577e7c444ce2b8067b2c21bb33776e9bb0",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/core.yaml",
@@ -48992,7 +49073,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2822653eae902dd0ff194eeaaceede448ef38af9f727c3f960deb667dc16d8da",
+        "checksum": "sha256:dd2287e53cd4edba0b6c983925310b6538930c20dd93e061dbb3b1dfa85792d9",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -53147,6 +53228,14 @@
       }
     },
     {
+      "node_id": "chg:enforced-is-stated-not-defaulted-20260808",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "constraint_change",
+        "name": "Snapshot of the enforced-default decision while it still reads NOT DECIDED with three lettered options, before Anthony's ruling is written into it"
+      }
+    },
+    {
       "node_id": "chg:evidence-fidelity",
       "node_type": "ChangeEvent",
       "properties": {
@@ -55286,10 +55375,10 @@
       "node_id": "dec:does-enforced-default-to-gate-blocking",
       "node_type": "Decision",
       "properties": {
-        "decision": "NOT DECIDED. `schema/core.yaml` gives `DesignRule.enforced` a default of `true`, described as 'whether violations are gate-blocking'. So a rule captured without anyone saying a word about enforcement asserts that breaking it should stop the build. THE QUESTION: should an unstated `enforced` mean gate-blocking (today's answer), advisory, or should the property be REQUIRED so the choice is always somebody's rather than the schema's? OPTION A — leave it. Cheapest, and defensible: a rule worth recording is usually a rule you mean. Cost: reflow2's own four enforced rules all reached that status by silence, and none of them was a deliberate choice. OPTION B — flip the default to false. A convention becomes advice unless somebody promotes it. Cost: it is a behaviour change for every existing rule in every installed graph, and it would silently downgrade rules somebody DID mean; it also needs a decision about whether existing `true` values are explicit or inherited, which the graph cannot currently distinguish. OPTION C — make it required, so `add_*` refuses a rule that does not say. Most honest and most disruptive; it is the `GATED_ON.min_level` treatment (`dec:readiness-is-an-observation-the-threshold-is-the-judgement`: a threshold that encodes risk appetite is never defaulted), and the argument transfers almost word for word — whether breaking a rule should stop a build is a policy about consequence, which is the user's to state. WHY IT MATTERS NOW rather than as a curiosity: `unverified_enforced_rule` bills every enforced rule for a detector. With the default at `true`, that bill lands on rules nobody chose to enforce, which is how a true detector becomes a nag. THE COUPLING TO SAY OUT LOUD: whichever way this goes, the capture skill is what stops the schema deciding for the user — the same division kpp-proposal already draws, where the agent notices the shape and the human states the consequence.",
-        "name": "OPEN — `enforced` defaults to TRUE, so a convention recorded in passing claims the power to fail a build. Should silence mean gate-blocking, or advisory?",
-        "rationale": "Raised 2026-08-08 while building the governance detector, and deliberately NOT bundled into it. Changing a schema default is a behaviour change reaching every rule in every existing graph, and it encodes a policy — how much power an unstated convention should have — that belongs to the person whose builds it would stop. Recorded as its own decision point rather than resolved in passing, because a default IS a decision: it is currently making the gate-blocking claim on every user's behalf, silently, and it reached reflow2's own four enforced rules that way. Evidence for the discussion: 5 DesignRules here, 4 at `enforced: true`, none set deliberately, and 0 with any detector.",
-        "status": "proposed"
+        "decision": "DECIDED 2026-08-08, Anthony's word: REMOVE THE DEFAULT. `DesignRule.enforced` becomes three-state — `true` (gate-blocking, and owes a detector), `false` (advisory, owes nothing), and ABSENT, which means nobody has said and is REPORTED as unstated rather than read as either answer. None of the three options originally written here was taken; this is a fourth. WHAT IT CHANGES IN THE COMPUTATION: `unverified_enforced_rule` (0.6) now fires only on an EXPLICIT `true`, and a new `unstated_rule_enforcement` (0.4) asks an unstated rule which it is. Two findings rather than one, deliberately, because deciding what a rule IS costs a word while PROVING one costs a detector — and collapsing those two questions is exactly what the old default got wrong. NO MIGRATION, and that is the point: nothing is reinterpreted, so the five existing values stay exactly as stored. WHY OPTION B (flip the default to false) WAS REFUSED, and this is the part that decided it: the value is MATERIALIZED INTO THE STORE AT WRITE TIME, so an inherited `true` is indistinguishable from a chosen one. Confirmed rather than assumed — `enforced: true` is present on all four rules even in a 0.24.0-written export, which omits unset properties. Any migration would therefore either silently downgrade rules somebody meant or preserve rules nobody chose, and neither would be detectable afterwards. THE CONSEQUENCE ACCEPTED WITH IT: reflow2's own four rules keep their `true` and keep owing detectors, because the graph genuinely cannot tell they were never chosen. The remedy is Anthony restating the ones he actually meant, one call each — not a migration that guesses. THE PRECEDENT THIS RESTORES: absence-is-reported-as-absence is this schema's most consistent rule — VERIFIES.pinned ('unset means the scope was never stated, which is reported as unscoped and never read as full coverage'), Constraint.objective ('unset is a true answer'), DEPENDS_ON.weight_basis, DUPLICATES.basis — and `enforced` was the single place it was broken, in the dangerous direction. It also matches GATED_ON.min_level, required and never defaulted because a threshold encoding risk appetite is the user's to state (dec:readiness-is-an-observation-the-threshold-is-the-judgement); whether breaking a rule should stop somebody's build is the same kind of claim one layer along. WHY REQUIRED (option C) WAS NOT TAKEN EITHER: an ingest pass reading a folder of documents genuinely does not know whether a convention should be gate-blocking, and refusing the write would either block bulk ingest or force an extractor to invent a policy. Unstated exists so that case can be recorded honestly.",
+        "name": "A rule's power is stated, never defaulted: `enforced` is true / false / unstated, and absence is reported rather than read as either",
+        "rationale": "The deciding argument was not this field's own merits but a pattern: THIS IS THE THIRD TIME IN ONE DAY that a value which could not distinguish a choice from a default caused real harm. `DUPLICATES.basis` could not tell asserted from suspected and cost dev_storyflow ten proposed node deletions, fixed by making provenance explicit and defaulting to the safe value. Serialized defaults in the export could not tell a default from a decision, produced 108 phantom property changes between two builds one release apart, and led an agent (me) to file a false data-loss defect and block a PR on it. And `enforced` cannot tell chosen from inherited, which is how four rules acquired detector obligations nobody agreed to. Each time the fix that worked was MAKING THE CHOICE EXPLICIT rather than picking a safer default — tuning which default is less harmful is the move that keeps producing this class of bug. Recorded here because the next person tempted to add a convenient default should meet this argument first. Audited before implementing rather than after: `enforced` had exactly ONE production reader (detect.rs), so the change is contained; everything else naming it is a test or the skill-lint allowlist.",
+        "status": "accepted"
       }
     },
     {
@@ -57973,6 +58062,16 @@
         "epoch_type": "revision",
         "name": "The embeddings question gets measured findings, and stops being an orphan (2026-08-04)",
         "sequence": 269,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:enforced-is-stated-not-defaulted",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "Anthony removes the `enforced` default: a rule's power becomes three-state, and absence is reported rather than read as either answer (2026-08-08)",
+        "sequence": 290,
         "status": "arrived"
       }
     },
@@ -63910,6 +64009,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:enforced-is-stated-not-defaulted:dec:does-enforced-default-to-gate-blocking",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Capability\",\"other_id\":\"cap:governance-proposal\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"role\":\"approver\"}}]",
+        "state": "{\"decision\":\"NOT DECIDED. `schema/core.yaml` gives `DesignRule.enforced` a default of `true`, described as 'whether violations are gate-blocking'. So a rule captured without anyone saying a word about enforcement asserts that breaking it should stop the build. THE QUESTION: should an unstated `enforced` mean gate-blocking (today's answer), advisory, or should the property be REQUIRED so the choice is always somebody's rather than the schema's? OPTION A — leave it. Cheapest, and defensible: a rule worth recording is usually a rule you mean. Cost: reflow2's own four enforced rules all reached that status by silence, and none of them was a deliberate choice. OPTION B — flip the default to false. A convention becomes advice unless somebody promotes it. Cost: it is a behaviour change for every existing rule in every installed graph, and it would silently downgrade rules somebody DID mean; it also needs a decision about whether existing `true` values are explicit or inherited, which the graph cannot currently distinguish. OPTION C — make it required, so `add_*` refuses a rule that does not say. Most honest and most disruptive; it is the `GATED_ON.min_level` treatment (`dec:readiness-is-an-observation-the-threshold-is-the-judgement`: a threshold that encodes risk appetite is never defaulted), and the argument transfers almost word for word — whether breaking a rule should stop a build is a policy about consequence, which is the user's to state. WHY IT MATTERS NOW rather than as a curiosity: `unverified_enforced_rule` bills every enforced rule for a detector. With the default at `true`, that bill lands on rules nobody chose to enforce, which is how a true detector becomes a nag. THE COUPLING TO SAY OUT LOUD: whichever way this goes, the capture skill is what stops the schema deciding for the user — the same division kpp-proposal already draws, where the agent notices the shape and the human states the consequence.\",\"name\":\"OPEN — `enforced` defaults to TRUE, so a convention recorded in passing claims the power to fail a build. Should silence mean gate-blocking, or advisory?\",\"rationale\":\"Raised 2026-08-08 while building the governance detector, and deliberately NOT bundled into it. Changing a schema default is a behaviour change reaching every rule in every existing graph, and it encodes a policy — how much power an unstated convention should have — that belongs to the person whose builds it would stop. Recorded as its own decision point rather than resolved in passing, because a default IS a decision: it is currently making the gate-blocking claim on every user's behalf, silently, and it reached reflow2's own four enforced rules that way. Evidence for the discussion: 5 DesignRules here, 4 at `enforced: true`, none set deliberately, and 0 with any detector.\",\"status\":\"proposed\"}",
+        "target_id": "dec:does-enforced-default-to-gate-blocking",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:hxm-field-report:req:a-session-chooses-its-design",
       "node_type": "Snapshot",
       "properties": {
@@ -67332,7 +67441,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:62e2b64ba95135f24c746464246efb2c2a5c6bc450222c4f563f38010d9ba680",
+  "prev_content_hash": "sha256:cb1792abcd84b65fb7de5f66525bb38ddc43cb103a4492b9110d2e47e185a7c9",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
