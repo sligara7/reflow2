@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:eb2df40b1871dc374d6f584c0fb214497c95188a10585bc40504c03b9624909f",
+  "content_hash": "sha256:df4d1075858e95c7815cb1c700f8513efa41e70a4fee6b3c9733449cec035c60",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -606,6 +606,12 @@
       "from_id": "fact:defect-no-way-to-mark-a-capability-contested",
       "properties": {},
       "to_id": "cap:reconcile-verified"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-nudge-self-check-called-a-working-hook-broken",
+      "properties": {},
+      "to_id": "cap:nudge-path-proven"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3819,6 +3825,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:nudge-resolves-home-relative-hooks",
+      "properties": {},
+      "to_id": "epoch:nudge-expands-tilde"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:nudge-state-integrity",
       "properties": {},
       "to_id": "epoch:v0220"
@@ -4956,6 +4968,12 @@
       "from_id": "snap:epoch:mode-chosen:proj:reflow2",
       "properties": {},
       "to_id": "epoch:mode-chosen"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:nudge-expands-tilde:art:nudge-detect",
+      "properties": {},
+      "to_id": "epoch:nudge-expands-tilde"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -12982,6 +13000,15 @@
         "action": "added"
       },
       "to_id": "cap:nudge-path-proven"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:nudge-resolves-home-relative-hooks",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nudge-detect"
     },
     {
       "edge_type": "CHANGED",
@@ -23264,6 +23291,12 @@
       "from_id": "art:main",
       "properties": {},
       "to_id": "snap:epoch:rmcp-v3:art:main"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:nudge-detect",
+      "properties": {},
+      "to_id": "snap:epoch:nudge-expands-tilde:art:nudge-detect"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -52419,10 +52452,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856",
+        "checksum": "sha256:ebb93de15ef78e8001fdee164341ce3c113965bfc8f73b2a00737595a841f4ad",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/nudge.rs",
         "name": "nudge.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -57470,6 +57505,14 @@
       }
     },
     {
+      "node_id": "chg:nudge-resolves-home-relative-hooks",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "The nudge self-check resolves ~ and $HOME, and reports what it cannot resolve as unknowable rather than missing"
+      }
+    },
+    {
       "node_id": "chg:nudge-state-integrity",
       "node_type": "ChangeEvent",
       "properties": {
@@ -62126,6 +62169,16 @@
         "epoch_type": "revision",
         "name": "The governance mode becomes a choice, and reflow2 makes one",
         "sequence": 234,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:nudge-expands-tilde",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The nudge self-check stops reporting a working hook as broken (2026-08-09)",
+        "sequence": 296,
         "status": "arrived"
       }
     },
@@ -68215,6 +68268,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:nudge-expands-tilde:art:nudge-detect",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:nudge-path-proven\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:nudge\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856\",\"location\":\"crates/reflow2-mcp/src/nudge.rs\",\"name\":\"nudge.rs\",\"status\":\"realized\"}",
+        "target_id": "art:nudge-detect",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:planning-axis-intent:dec:where-plans-live",
       "node_type": "Snapshot",
       "properties": {
@@ -69904,6 +69967,20 @@
         "subject_id": "cap:reconcile-verified",
         "valid_from": "2026-08-08",
         "value": "{\"reported\":\"2026-08-08 dev_storyflow, sb-boss ab2291fa item 4\",\"case\":\"cap:storybook_output demoted realized -> in_progress after a failing walk; the window between asserted something false\",\"shared_graph\":\"the stale claim is visible to every attached session during that window\",\"gap\":\"no status value or marker means 'disputed pending evidence'; demoting early is itself a claim\",\"fix_shape_a\":\"a lightweight contested marker\",\"fix_shape_b\":\"a failing kind=validation VERIFIES edge flags the capability as unsafe to trust - computed, not remembered\",\"fits_existing\":\"dec:passing-is-verified already computes verified from a passing check; this is the same move inverted\",\"adjacent\":\"req:blocking-is-partial\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-nudge-self-check-called-a-working-hook-broken",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE NUDGE SELF-CHECK REPORTED A PRESENT, WORKING HOOK AS BROKEN WHENEVER ITS PATH WAS HOME-RELATIVE. Reported by flo2 (F1, 2026-08-09) and CONFIRMED IN THE SOURCE rather than from the report: `script_path` in crates/reflow2-mcp/src/nudge.rs resolved `$CLAUDE_PROJECT_DIR` and nothing else, so a literal `~/...` was not absolute and fell through to `project.join(\"~/.local/...\")` — a path that can never exist — and every `loop_status` said BROKEN. A shell expands `~` at run time, so the hook itself worked the entire time.\n\nWHY IT IS THE WORST PLACE FOR A FALSE ALARM, which is flo2's framing and is right: this is the one advisory whose entire job is to be trusted when nobody is watching, and it cried wolf about itself. It cost flo2 a real commit (538b460) documenting a problem that did not exist, and it trains a reader to ignore the advisory — the opposite of the lesson.\n\nSCOPE, CORRECTED AFTER ANTHONY PUSHED BACK TWICE, and the correction matters more than the bug. The first framing was 'every consumer following the shipped instructions hits this'. THAT WAS WRONG. The normal install path does NOT produce a tilde: tools/install.sh calls tools/reflow2_install.py, whose `hook_command()` is `python3 \"{nudge}\"` over a RESOLVED ABSOLUTE Path, and the old code handled that form correctly. So anyone who ran the installer was never affected. The exposed population is those who wire the hook BY HAND from getting-started/AGENTS.md, which documents the `~/.local/share/reflow2/kit/tools/loop_nudge.py` form three times — flo2 did exactly that. The real shape is a DOC-VERSUS-INSTALLER MISMATCH: two shipped surfaces disagreed about the hook's form, and the code only supported the installer's.\n\nALSO RULED OUT, because Anthony asked directly: it is NOT an artefact of flo2 running against a development build. `git diff v0.26.1..HEAD -- crates/reflow2-mcp/src/nudge.rs` is EMPTY, so the released 0.26.1 binary carries the identical unexpanded `script_path`.\n\nTHE FIX, and its direction is deliberate: resolve `~/`, `$HOME/` and `${HOME}/`, and treat anything still unresolved — `~someuser/`, an unknown `$VAR` — as UNKNOWABLE rather than missing, which `status` already reads as Installed. Reporting a working net as broken is the expensive direction; declining to judge a path we cannot resolve is the cheap one. The home directory is passed in rather than read inside, so the tests never mutate a process-wide `HOME` other tests share.\n\nPROVEN BY NEGATIVE CONTROL, not by the tests passing: with only the home-resolution disabled, four of the new tests FAIL — including `a_tilde_path_pointing_at_nothing_is_still_broken`, which is the positive control proving the fix did not simply turn the check into one that approves everything. `the_installers_own_quoted_absolute_form_still_resolves` pins the form that was already working, since that is the one a regression would silently take away.",
+        "subject_id": "cap:nudge-path-proven",
+        "valid_from": "2026-08-09",
+        "valid_to": "2026-08-09",
+        "value": "{\"reported_by\":\"flo2, reflow2_feedback.md F1, 2026-08-09\",\"confirmed_in\":\"crates/reflow2-mcp/src/nudge.rs script_path()\",\"root_cause\":\"$CLAUDE_PROJECT_DIR resolved; ~ and $HOME not. A tilde path is not absolute, so it was joined onto the project dir.\",\"scope_correction\":\"NOT all consumers - tools/reflow2_install.py writes a quoted ABSOLUTE path and was always handled. Exposed population is hand-wired hooks copied from getting-started/AGENTS.md.\",\"dev_build_ruled_out\":\"git diff v0.26.1..HEAD -- nudge.rs is empty; released binary identical\",\"fix\":\"resolve ~/ $HOME/ ${HOME}/; unresolvable => None => Installed (unknowable, not missing); home injected for testability\",\"negative_control\":\"disabling only home_relative() fails 4 of the new tests incl. the still-broken positive control\",\"cost_to_reporter\":\"flo2 commit 538b460 documented a non-existent problem\"}"
       }
     },
     {
@@ -71598,7 +71675,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:c5c0829c2eb569e3dbe11b57efe5c4e7e4e85501a18caf96f74ccf1e858c3b30",
+  "prev_content_hash": "sha256:eb2df40b1871dc374d6f584c0fb214497c95188a10585bc40504c03b9624909f",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
