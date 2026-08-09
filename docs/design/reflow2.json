@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:c5c0829c2eb569e3dbe11b57efe5c4e7e4e85501a18caf96f74ccf1e858c3b30",
+  "content_hash": "sha256:eb2df40b1871dc374d6f584c0fb214497c95188a10585bc40504c03b9624909f",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -528,6 +528,12 @@
       "from_id": "fact:defect-duplicate-findings-hide-a-hub-so-five-are-two",
       "properties": {},
       "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-evidence-scope-is-stored-and-not-read-by-unverified-enforced-rule",
+      "properties": {},
+      "to_id": "cap:governance-proposal"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2178,6 +2184,12 @@
       "from_id": "question:b8af9d16871259e9",
       "properties": {},
       "to_id": "req:content-reaches-every-seat"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:ba21fb8550a81e07",
+      "properties": {},
+      "to_id": "rule:per-design-state-is-never-a-process-global"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -3981,6 +3993,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:rule-narrowed-to-the-globals-clause",
+      "properties": {},
+      "to_id": "epoch:rule-enforcement-split"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:rules-can-be-verified-20260808",
       "properties": {},
       "to_id": "epoch:v0260"
@@ -4140,6 +4158,12 @@
       "from_id": "chg:surface-export",
       "properties": {},
       "to_id": "epoch:surface-export"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-enforced-rule-gets-its-detector",
+      "properties": {},
+      "to_id": "epoch:rule-enforcement-split"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5118,6 +5142,12 @@
       "from_id": "snap:epoch:rmcp-v3:dec:stateless-seat-handle",
       "properties": {},
       "to_id": "epoch:rmcp-v3"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:rule-enforcement-split:rule:per-design-state-is-never-a-process-global",
+      "properties": {},
+      "to_id": "epoch:rule-enforcement-split"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -6918,6 +6948,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "rule:a-design-is-named-by-an-id-not-a-path",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "rule:bl-135",
       "properties": {
         "acted_at": "2026-08-08",
@@ -7987,6 +8026,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-d7aae58830cf84a6",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-no-per-design-globals"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-d98d4bdc9939d8fb",
       "properties": {
         "accepted_baseline": true,
@@ -8596,6 +8644,15 @@
         "action": "modified"
       },
       "to_id": "art:updating-doc"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-3ed7b0364f3ac3e6",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-no-per-design-globals"
     },
     {
       "edge_type": "CHANGED",
@@ -13684,6 +13741,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:rule-narrowed-to-the-globals-clause",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "rule:per-design-state-is-never-a-process-global"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:rules-can-be-verified-20260808",
       "properties": {
         "accepted_baseline": true,
@@ -14635,6 +14701,15 @@
         "action": "modified"
       },
       "to_id": "cap:portability"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-enforced-rule-gets-its-detector",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "rule:a-design-is-named-by-an-id-not-a-path"
     },
     {
       "edge_type": "CHANGED",
@@ -21614,6 +21689,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:select-graph-by-id",
+      "properties": {},
+      "to_id": "rule:a-design-is-named-by-an-id-not-a-path"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:session-artifacts",
       "properties": {},
       "to_id": "decision:ack:9eb6b2b4c5513865"
@@ -23729,6 +23810,12 @@
       "from_id": "rule:fixes-are-judged-by-the-third-party",
       "properties": {},
       "to_id": "snap:epoch:reflow2-states-its-own-rules:rule:fixes-are-judged-by-the-third-party"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "rule:per-design-state-is-never-a-process-global",
+      "properties": {},
+      "to_id": "snap:epoch:rule-enforcement-split:rule:per-design-state-is-never-a-process-global"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -47494,6 +47581,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-no-per-design-globals",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:no-per-design-process-globals"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-nudge-path",
       "properties": {
         "completeness": "complete"
@@ -49805,6 +49900,15 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:no-per-design-process-globals",
+      "properties": {
+        "pinned": "struct_field_scoping,runtime_behaviour,whether_a_global_is_semantically_per_design",
+        "swept": "declaration_kind,crate,visibility,function_body_scope,macro_form"
+      },
+      "to_id": "rule:per-design-state-is-never-a-process-global"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:nudge-path",
       "properties": {},
       "to_id": "cap:nudge-path-proven"
@@ -51110,6 +51214,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-no-per-design-globals",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-no-per-design-globals"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-nudge-path",
       "properties": {
         "action": "created"
@@ -51360,11 +51472,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:8f8a543ba59ec079",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/acknowledgement_not_structure.rs",
         "name": "acknowledgement_not_structure.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51373,11 +51483,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:14b6b93d62aa5ff7",
-        "granularity": "atomic",
         "location": "getting-started/skills/adopt/SKILL.md",
         "name": "adopt/SKILL.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51386,11 +51494,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c33a33c15e2611b3",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/agent.rs",
         "name": "agent.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51399,11 +51505,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:d282035a162e3e56",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/allocate.rs",
         "name": "allocate.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51412,11 +51516,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c87a79726aeb111b",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/alternatives.rs",
         "name": "alternatives.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51451,11 +51553,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:49f1f3095ea2707d",
-        "granularity": "atomic",
         "location": "tools/bl124_instrument.py",
         "name": "bl124_instrument.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51477,11 +51577,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6aeb7aaf31ccdd875990bce6735c75eeead49c7371c4bc39064d4e7f478733e8",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/budget.rs",
         "name": "budget.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51490,11 +51588,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:8f5ffbc7c6e84b5e",
-        "granularity": "atomic",
         "location": "docs/built-right-review.md",
         "name": "built-right-review.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51503,11 +51599,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6e8e23fce35b21d6",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/bulk.rs",
         "name": "bulk.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51516,11 +51610,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c2bea913c620128c1e602aed078713c7598f92e7cada4024c67777584b23b8be",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/changelog.rs",
         "name": "tests/changelog.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51568,11 +51660,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:a84c2afa299b6793cb78ae9aad6fda8cf659780728e38da0906ffa629dd41919",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/checksum_dialect.rs",
         "name": "checksum_dialect.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51594,11 +51684,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:2575d415a74a3266b208ddf798e5e6516186d6c345324efb6f9b66e46b7367a3",
-        "granularity": "atomic",
         "location": "docs/collaborating.md",
         "name": "collaborating.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51607,11 +51695,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b73161a0fd04efee",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/compare.rs",
         "name": "compare.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51620,11 +51706,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b9f6ec2a69d7cfbc6041c2cf7d0bbb5a409a981cd3c44a36672f4b3a375a4558",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/compose.rs",
         "name": "compose.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51633,11 +51717,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6b58139a0fd5f095c64c4c465f03cfed8200015ef0e7af3a4e7cca064727de39",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/compose.rs",
         "name": "tests/compose.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51646,11 +51728,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:276c4e707db8d55a34f673a533dcaa15629d6bd59be4d3232df21bff1e6ce7c3",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/confirm.rs",
         "name": "confirm.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51659,11 +51739,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b4fd5760c54b234a4c8d4031c4dba9610db59dfb10cabc0dfc3907e143442344",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/confirmation_vocabulary.rs",
         "name": "confirmation_vocabulary.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51698,11 +51776,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:2459979bcda2901dc08307b0211763a91245cdfd4727c9ab967039b2c154f2ed",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/contradiction_alignment.rs",
         "name": "tests/contradiction_alignment.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51737,11 +51813,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c30ee52bd7c3ec95",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/coverage.rs",
         "name": "tests/coverage.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51750,11 +51824,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:adfea07b2891743b",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/cycles.rs",
         "name": "Circular-dependency suite — detection, selectivity, and what the finding says it walked",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51763,11 +51835,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:eb126729e08e8d8d3ac45acec3a2e291e068dc1e9afed14a8647edf73300bdde",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/degraded.rs",
         "name": "degraded.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51828,11 +51898,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:59ef210d5f8576a9f07b321dc546b653056ab4ecda17e0ec9269ed87a52c27dc",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/dimensions.rs",
         "name": "dimensions.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51906,11 +51974,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:74c0459e03ad38ce",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/dto.rs",
         "name": "dto.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51932,11 +51998,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:8956d2d0d4f31fe1",
-        "granularity": "atomic",
         "location": "tools/evidence_quality_instrument.py",
         "name": "Evidence-quality instrument — what the three axes report on a real design",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51945,11 +52009,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:0f66b31cfaca4944",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/evidence_quality.rs",
         "name": "The evidence-quality family suite — all three axes with their counterweights",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51958,11 +52020,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:58443db75d9199e7addc3f4673d84e1249df60fc563237475636f8e0713f6896",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/evidence.rs",
         "name": "tests/evidence.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51971,11 +52031,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:cbba2d0c482d766c6dae2ca016e0b9fd2f760a9987febfa7e9b477a2414df079",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/export.rs",
         "name": "export.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -51997,11 +52055,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:cfdf82f1a6497595",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/fielded.rs",
         "name": "fielded.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52010,11 +52066,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2",
-        "granularity": "atomic",
         "location": "docs/fleet-lessons.md",
         "name": "fleet-lessons.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52023,11 +52077,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:f6abe031170cd8123c44b3f87248b9841f9b31117d78d8325769fea6a34a5d8e",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/flow.rs",
         "name": "flow.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52036,11 +52088,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:8196df94f5775161",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/genesis.rs",
         "name": "genesis.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52049,11 +52099,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:34701500af93dbcf",
-        "granularity": "atomic",
         "location": "docs/github-mcp-nuggets.md",
         "name": "github-mcp-nuggets.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52075,11 +52123,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:199301145284e0fb30cfec667a6adb26c3af9db724a2f3049474659ee07c7f15",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/granularity.rs",
         "name": "granularity.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52114,11 +52160,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:30fc1a09862792a9",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/hierarchy.rs",
         "name": "hierarchy.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52140,11 +52184,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:889393466bafe709429fc137dd4d2e1a372990c6486d7a85dec07c630a51cbb3",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/ility.rs",
         "name": "ility.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52179,11 +52221,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:ddfa7e13d3b56156a9b463f434cd691718e1af489f27aaba169395c226d14b9a",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/ingest_handshake.rs",
         "name": "tests/ingest_handshake.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52205,11 +52245,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:07c82cd7671c1241",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/interface_spec.rs",
         "name": "tests/interface_spec.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52218,11 +52256,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:13f19b14c25c9300",
-        "granularity": "atomic",
         "location": "getting-started/AGENTS.md",
         "name": "getting-started/AGENTS.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52231,11 +52267,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:feebbdb1438ff2c52e51cb0fbb004476378ffa97d3c9aa72890b7aa92f4b81b5",
-        "granularity": "atomic",
         "location": "getting-started/POINTER.md",
         "name": "POINTER.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52244,11 +52278,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:65a01535f32f023e",
-        "granularity": "atomic",
         "location": "getting-started/skills/kpp-proposal/SKILL.md",
         "name": "kpp-proposal/SKILL.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52270,11 +52302,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6869d93e97fc9393",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/llm.rs",
         "name": "llm.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52296,11 +52326,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b41bc1c569e39c7ab7d8d72d667fe56870b53eb720be82e6e4b6d7b870023c82",
-        "granularity": "atomic",
         "location": "tools/reflow2_install.py",
         "name": "reflow2_install.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52322,11 +52350,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:f743c9902452b2b7b15da4df3d62a92d9dca2bdbbd0efcff7e3625eb9b809e9a",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/maturity.rs",
         "name": "maturity.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52335,11 +52361,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:075bab31f3c131b6",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/merge.rs",
         "name": "merge.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52348,11 +52372,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:cddbea4165e0e3b0",
-        "granularity": "atomic",
         "location": "tools/test_merge_driver.py",
         "name": "test_merge_driver.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52387,11 +52409,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:774ad95db84666b3",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52400,11 +52420,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:51b530104d6f6681e939f7225b67c52db7d3de6af7584e1f2d0d194fc070d856",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/nudge.rs",
         "name": "nudge.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52413,11 +52431,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:e95e6f4c2658ebd1c7afa6e23385256e51272860a0cb56e2046d4c1b581881d0",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/operate.rs",
         "name": "operate.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52426,11 +52442,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:9b388fef123f04c5",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/orphan_attachment.rs",
         "name": "orphan_attachment.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52439,11 +52453,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:9cbea33b6a561a9e",
-        "granularity": "atomic",
         "location": "getting-started/skills/parallel-work/SKILL.md",
         "name": "parallel-work/SKILL.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52465,11 +52477,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14",
-        "granularity": "atomic",
         "location": "docs/planning-at-scale.md",
         "name": "planning-at-scale.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52478,11 +52488,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:59b6e751c18dfc67d4546b6d6d70e1305b64864d3890d8cf786320687c9b84d4",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/preserve.rs",
         "name": "preserve.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52491,11 +52499,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:26dde99a1df42e6f",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/propagate.rs",
         "name": "propagate.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52504,11 +52510,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b3cd0321b5dcda802926f3247ab45b6c1bbfc7bbd60ed38d2d95da29a3d6caf0",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/provenance.rs",
         "name": "provenance.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52517,11 +52521,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:7979028e8c95724dd5696d9b1fee3f307c718b7d9f4e086a968620b602eec420",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/publishable_promise.rs",
         "name": "tests/publishable_promise.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52530,12 +52532,10 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:f01d1b8a9f04a3efd4efe0fa05d12f9d1b330e4c4f16b9f1781ae6e645a38fa5",
-        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "crates/reflow2-core/src/readiness.rs",
         "name": "readiness.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52570,11 +52570,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:99fc5da421a04f5e",
-        "granularity": "atomic",
         "location": "tools/render_views.py",
         "name": "render_views.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52596,11 +52594,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:dc88dfbc4e1aacbc",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/sanitize.rs",
         "name": "sanitize.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52609,11 +52605,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:56201fe977dc874f",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/schema.rs",
         "name": "schema.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52650,12 +52644,10 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:815273502db4fed6800182446fb496a08aace3a9b34757395892e6da37dbcdb9",
-        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/dimensions.yaml",
         "name": "dimensions.yaml",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52664,12 +52656,10 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:7201c53b7e2c794b871f3d48b7da761884f5bccd7d9f90b9b7d07210e79053cc",
-        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/environment.yaml",
         "name": "environment.yaml",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52678,12 +52668,10 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:831166aee7d4de9bd90e5826d4b6ef474dd8be49f2cc14609f32d12039893222",
-        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/functional.yaml",
         "name": "functional.yaml",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52706,12 +52694,10 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:543955d24d224ff0c0aff6f28928fa728248dc7694662b22cab0e8d1f1cc5168",
-        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/operate.yaml",
         "name": "operate.yaml",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52720,12 +52706,10 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:daf8ea6b9399cb16edfd8849adcd1bcd37ac1a7f3ae3acea80ecca8e035fdc9a",
-        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/readiness.yaml",
         "name": "readiness.yaml",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52748,12 +52732,10 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09",
-        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/temporal.yaml",
         "name": "temporal.yaml",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52776,11 +52758,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:47fa2c2aa8b402bb",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/scope.rs",
         "name": "scope.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52802,11 +52782,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea",
-        "granularity": "atomic",
         "location": "docs/scope-read-while-held.md",
         "name": "scope-read-while-held.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52815,11 +52793,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:45aaec579dc701380a04d4f12b59a6b14ba5aeb619e823c021b0b21ed08e5caa",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/seam.rs",
         "name": "seam.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52828,11 +52804,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:efb2faf35ec4cc6ed3df5a61f8fdf2af77aded2a6eb29ddabf2394dfc7ed195d",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/seam.rs",
         "name": "tests/seam.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52841,11 +52815,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c421c3496192d22d",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/search.rs",
         "name": "search.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52867,11 +52839,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:4d824c873120e938",
-        "granularity": "atomic",
         "location": "tools/self_host_uses_documents.py",
         "name": "self_host_uses_documents.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52906,11 +52876,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:f6e66fec577e59d755de63c38fc02c7227eb28a64a7e33dc6cd4ab60a2c6b293",
-        "granularity": "atomic",
         "location": "getting-started/SETUP.md",
         "name": "getting-started/SETUP.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52958,11 +52926,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:9352eb7ec610eb6187d482730ea021c18883d4548f4ba2ed3ab3b3fac0451bda",
-        "granularity": "atomic",
         "location": "tools/test_skill_lint.py",
         "name": "test_skill_lint.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52984,11 +52950,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:beaa4bd48ef2fae4b6cdb0604f5e0ff9ce644d9bb39f1a9c6a7f7f2a630aa797",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/build.rs",
         "name": "build.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -52997,11 +52961,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:c09cc6f310635d1b2fb9a888f38c323fbd2ae2fb9e816586a32f2c00c87a46fb",
-        "granularity": "atomic",
         "location": "SKILLS.md",
         "name": "SKILLS.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53010,11 +52972,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:772b73a05ff491fe6dbca6adeb9697ad84e1ad9592e24b66793aae2716ae0783",
-        "granularity": "atomic",
         "location": "tools/stateless_seat_probe.py",
         "name": "stateless_seat_probe.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53023,11 +52983,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:ce30365401d775a82585729349538efe1a0fa43625783b2a39a6dc30f7d9ce83",
-        "granularity": "atomic",
         "location": "docs/storyflow-resolution-nuggets.md",
         "name": "storyflow-resolution-nuggets.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53036,11 +52994,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:76f2dec276b09685",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/structure.rs",
         "name": "structure.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53049,11 +53005,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b3b2bac1387c9c53",
-        "granularity": "atomic",
         "location": "tools/surface_usage.py",
         "name": "Surface-usage instrument — which parts of reflow2 real sessions actually drive",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53062,11 +53016,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b1cec4ec107ef2b1",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/surprises.rs",
         "name": "surprises.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53075,11 +53027,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:e792e6bab2ad48527428df1c015f6ebe20fec9d79da22657f7ed088f8d605c56",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/sync.rs",
         "name": "sync.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53088,11 +53038,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:829e4905cc5f40a8b24e6027b5522780c90e8c133742299549e80880b2f6abef",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "temporal.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53114,11 +53062,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:25db9bfb196de65609c48f3aec924f55bdcac7c8492066658f310832b17156ef",
-        "granularity": "atomic",
         "location": "tools/test_degraded_server.py",
         "name": "test_degraded_server.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53127,11 +53073,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:cba77191420374d58d2360da9c1d2a73adcdd1d750d25dafc3991c1a525773af",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/design_identity.rs",
         "name": "design_identity.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53174,16 +53118,27 @@
       }
     },
     {
+      "node_id": "art:test-no-per-design-globals",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:4a6daa9a696479a7f84646fcfbf1da7b3f8ad7d31a13ea2441f714b9e50bfc7a",
+        "granularity": "atomic",
+        "location": "crates/reflow2-mcp/tests/no_per_design_process_globals.rs",
+        "name": "no_per_design_process_globals.rs",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
       "node_id": "art:test-nudge-path",
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:27f84b4a505d648f2b2b86033ed818a01f6adf50e59ab8a25e76d293daa57162",
-        "granularity": "atomic",
         "location": "tools/test_nudge_path.py",
         "name": "test_nudge_path.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53192,11 +53147,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b2626bc9b41065d45a47391988fb51f056c5e65c76a2347b2efd47a086547888",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/served_skills.rs",
         "name": "served_skills.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53218,11 +53171,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:21673699d9d326c9db310fcb24068fa38074634b1949d2708c56f9f77a6c2e5f",
-        "granularity": "atomic",
         "location": "tools/test_shared_sessions.py",
         "name": "test_shared_sessions.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53231,11 +53182,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:78b994c3da2476c2560bcd53dd776eb2232a1c4856a8427c63e9a08235cc628d",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/stale_seat.rs",
         "name": "stale_seat.rs + test_stale_seat.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53244,11 +53193,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:288dce9896555156f11fda2a204efb826780699e0e9e97d61474911f62d8a639",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/ask.rs",
         "name": "tools/ask.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53283,11 +53230,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:e7724d05c7d0e386ebb9a85f531244fae78746c127aee3855d2dcd312563569b",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "tools/capture.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53335,11 +53280,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:059eb65c3bb6904b292fef5655a51942079caac0aa0a8c86b0013d4d049cc79f",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53348,11 +53291,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:25ab6353c7864b55aa042ac631ecc7ab16daef10aa8024927ecb840158aacbd5",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/operate_tools.rs",
         "name": "tools/operate_tools.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53361,11 +53302,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:7ed16a594ed4a6c8894c6168f4a345a4f73a4e0ad9cabaa4a7b0d79c84f86174",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53374,11 +53313,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:814d67ab62c1014e402611dc1f73028332d2af8ca95a159dbf70022086065b34",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53387,11 +53324,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:1dab58f5049860d865ed9351a40393fd093212bb6ae82952e1f136d56cadc21f",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/unreachable_decision.rs",
         "name": "unreachable_decision.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53413,11 +53348,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:ef7dbb708e027df2",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.11.0.md",
         "name": "upgrading-to-v0.11.0.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53426,11 +53359,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.12.0.md",
         "name": "upgrading-to-v0.12.0.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53439,11 +53370,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.13.0.md",
         "name": "upgrading-to-v0.13.0.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53452,11 +53381,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:b1e1cee221b0bc6ed7f9e4411cda9dcd50a2dc2647785e06eaa7b1ce7329da28",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.15.0.md",
         "name": "upgrading-to-v0.15.0.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53465,11 +53392,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:00eea80c2a79cc4eed4d1db9402a4e90e23231745a8fdd4117f44a9f22f58f24",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.16.0.md",
         "name": "upgrading-to-v0.16.0.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53478,11 +53403,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:d1c21f5330ad0ea05f4efe46c08a010d5fb22ece05523922bb6324c7ec8a2eda",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.18.0.md",
         "name": "upgrading-to-v0.18.0.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53491,11 +53414,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:3a36b9b6b248af09",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.19.0.md",
         "name": "upgrading-to-v0.19.0.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53504,11 +53425,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:d16abc28ea59e3f9",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.21.0.md",
         "name": "Upgrading to v0.21.0 — the stamp moves, and your evidence can say what it covers",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -53517,11 +53436,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/verify.rs",
         "name": "verify.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -56128,6 +56045,15 @@
       }
     },
     {
+      "node_id": "chg:accept-d7aae58830cf84a6",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-09",
+        "name": "rustfmt reflowed the file after the first baseline was taken; behaviour is unchanged and all three tests still pass. NO DESIGN MEANING. Caught by the CI design-coherence gate, not by me — and it is the fourth instance of the same self-inflicted error: HASHING BEFORE THE LAST EDIT. The specific trap here is new and worth naming: `cargo fmt --check` is a CI gate, so running fmt is a REQUIRED step that happens AFTER the work looks finished, which puts a file mutation after the natural moment to hash. The rule that actually holds is hash last, after fmt, immediately before the export."
+      }
+    },
+    {
       "node_id": "chg:accept-d98d4bdc9939d8fb",
       "node_type": "ChangeEvent",
       "properties": {
@@ -56386,6 +56312,15 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-06T15:00:00Z",
         "name": "First baseline for the update runbook that ships in the consumer kit. Nothing moved — the file is new."
+      }
+    },
+    {
+      "node_id": "chg:baseline-3ed7b0364f3ac3e6",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-09",
+        "name": "First baseline for the detector owed by rule:per-design-state-is-never-a-process-global becoming enforced. Hashed after the file was final and after the negative control was reverted — the artifact-checksum mistake this project has made three times is hashing before the last edit."
       }
     },
     {
@@ -57759,6 +57694,14 @@
       }
     },
     {
+      "node_id": "chg:rule-narrowed-to-the-globals-clause",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "The two-clause rule narrows to clause 1 and becomes enforced; clause 2 leaves as its own advisory rule"
+      }
+    },
+    {
       "node_id": "chg:rules-can-be-verified-20260808",
       "node_type": "ChangeEvent",
       "properties": {
@@ -57964,6 +57907,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Export just the published surface — the one piece of composition that every architecture option needs"
+      }
+    },
+    {
+      "node_id": "chg:the-enforced-rule-gets-its-detector",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "The id-not-a-path clause becomes its own advisory rule, and the enforced clause gets the detector it now owes"
       }
     },
     {
@@ -62309,6 +62260,16 @@
       }
     },
     {
+      "node_id": "epoch:rule-enforcement-split",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The per-design-state rule is split so each clause carries the enforcement it can honestly bear (2026-08-09)",
+        "sequence": 295,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:scaling-to-many-tenants-captured",
       "node_type": "DesignEpoch",
       "properties": {
@@ -62728,6 +62689,16 @@
       }
     },
     {
+      "node_id": "rule:a-design-is-named-by-an-id-not-a-path",
+      "node_type": "DesignRule",
+      "properties": {
+        "category": "convention",
+        "enforced": false,
+        "name": "A design is named by an id that resolves to a location — never by the path itself",
+        "statement": "A DESIGN IS NAMED BY AN ID THAT RESOLVES TO A LOCATION. cap:select-graph-by-id frames it correctly — the server maps id to path — so the id is primary and the path is a storage detail. A surface that treats a filesystem path as the canonical identity forecloses object storage, where the location is a key and the identity rides as metadata.\n\nADVISORY — Anthony, 2026-08-09, splitting this clause out of rule:per-design-state-is-never-a-process-global and answering the enforcement question for both halves at once (gap:ba21fb8550a81e07): \"Split it: clause 1 enforced, clause 2 advice.\"\n\nWHY IT IS ADVISORY AND ITS SIBLING IS NOT, which is the reason the split was worth making rather than a hedge. The two clauses sit in OPPOSITE positions against the code. The no-globals clause is already satisfied — three runtime process-globals exist and two of them are legitimately process-wide — so a detector for it passes today and its only job is to stop the fourth one. This clause has no compliant surface at all: `--graph-path` is how a server is pointed at a design, `compare_designs` takes `base_path`, `describe_designs` answers about a path, and cap:select-graph-by-id is `planned` with nothing realizing it. An honest detector would therefore fail against the entire existing tool surface on the day it was written, and the only ways to make it green would be to block every build or to attach a check that proves nothing — which is precisely the failure the `enforced` tri-state was introduced to end (dec:does-enforced-default-to-gate-blocking: \"a KPP that nothing checks is a comment\").\n\nSo the flag says what is true: this is the project's rule, confirmed by its author, and no build has been stopped by it because nothing can yet tell compliance from the status quo.\n\nWHEN IT SHOULD FLIP. The honest trigger is cap:select-graph-by-id becoming realized — once a surface exists on which a session names a design by id, \"a NEW surface must not take a path as identity\" becomes checkable against something other than the whole codebase. Until then this rule does its work at the moment of the decision it would break, which is the same mechanism rule:no-foreclosure runs on and the same reason that rule is also advisory.\n\nWHAT IT DOES NOT SAY: nothing about WHERE a design is stored, nothing about hosting, and nothing that requires the registry to be built. It only keeps the door open."
+      }
+    },
+    {
       "node_id": "rule:bl-135",
       "node_type": "DesignRule",
       "properties": {
@@ -62778,8 +62749,9 @@
       "node_type": "DesignRule",
       "properties": {
         "category": "convention",
-        "name": "Per-design state never lives in a process-global, and identity is an id that resolves to a location — never a path",
-        "statement": "TWO CLAUSES, ONE PURPOSE: keep reflow2 able to hold many designs in one process without a rewrite.\n\n(1) STATE THAT BELONGS TO A DESIGN LIVES ON THE DESIGN HANDLE, NOT IN A `static`. cap:graph-registry already names the ones that must move — graph_path, content_path, identity, and the write_gen counter the loop nudge reads — and every new process-global that is secretly per-design adds another line to that migration. Legitimately process-wide state is fine and exists today (the seat registry, the serve-shared mode flag); the test is not 'is it a static' but 'would this need a different value for a second design open in the same process'.\n\n(2) A DESIGN IS NAMED BY AN ID THAT RESOLVES TO A LOCATION. cap:select-graph-by-id frames it correctly — the server maps id to path — so the id is primary and the path is a storage detail. A surface that treats a filesystem path as the canonical identity forecloses object storage, where the location is a key and the identity rides as metadata.\n\nWHY THIS IS A RULE RATHER THAN A REQUIREMENT: it constrains HOW every other change is made rather than describing behaviour anything can satisfy — the same shape as rule:no-foreclosure and rule:fixes-are-judged-by-the-third-party.\n\nEVIDENCE, 2026-08-09, from Anthony's question about running reflow2 behind a web app at 1k / 100k / 1M tenants (dec:idea-a-hosted-tier-of-many-single-writer-tenants). Neither clause costs anything today; both are expensive to retrofit, and the failure mode is erosion rather than a decision — one convenient global at a time, invisible until the migration. reflow2's own design measured 1,828 nodes = 3.8 MB export vs 33 MB store, which is what makes hold-many-designs-per-process the architecture rather than an option.\n\nWHAT IT DOES NOT SAY: nothing about WHERE a design is stored, nothing about hosting, and nothing that requires the registry to be built. It only keeps the door open."
+        "enforced": true,
+        "name": "Per-design state never lives in a process-global",
+        "statement": "STATE THAT BELONGS TO A DESIGN LIVES ON THE DESIGN HANDLE, NOT IN A `static`. cap:graph-registry names the metadata that must become per-graph rather than per-process; every new process-global that is secretly per-design adds another line to that migration. Legitimately process-wide state is fine and exists today — the seat registry and the serve-shared mode flag are facts about the PROCESS, not about a design. The test is not 'is it a static' but 'would this need a different value for a second design open in the same process'.\n\nENFORCED — Anthony, 2026-08-09, answering the enforcement question as it was put to him (gap:ba21fb8550a81e07, \"should the build have stopped them, or is that advice?\"): \"Split it: clause 1 enforced, clause 2 advice.\"\n\nWHY THIS HALF CAN CARRY ENFORCEMENT AND ITS SIBLING CANNOT — the whole reason the split happened, and it was MEASURED BEFORE THE DECISION RATHER THAN AFTER. A violation of this clause is mechanically visible, because a process-global is a declaration in the source. The codebase holds exactly three runtime process-globals, all in crates/reflow2-core/src/identity.rs: the process's own seat id (`seat_id`, line 357), the attached-seat registry (`ATTACHED_SEATS`, line 486), and the shared-mode flag (`SERVES_MANY_SESSIONS`, line 578). The last two are the ones this rule's own text already calls legitimately process-wide. So enforcement stops nothing today and costs nobody a build; what it stops is the FOURTH one — which is exactly the erosion this rule was written against, one convenient global at a time, invisible until the migration.\n\nWHAT THE CHECK ACTUALLY DETECTS, AND WHAT IT DOES NOT. ver:no-per-design-process-globals is an allowlist over runtime `static` / `OnceLock` / `OnceCell` / `thread_local!` declarations in the crates' `src` trees. It FAILS when a global appears that the allowlist does not name, so the cost of adding one is stating why it is not per-design. It CANNOT judge whether a struct field is correctly scoped: the per-design metadata that rides on `ReflowService` today (graph_path, write_gen, read_hint) is not a global and the check has nothing to say about it — that is cap:graph-registry's work, and its absence is planned, not a violation. A check that claimed otherwise would be the green-washing the governance skill warns about: attaching a passing check to silence a finding rather than to detect a fault.\n\nTHE CLAUSE THAT LEFT: \"a design is named by an id that resolves to a location — never a path\" is now rule:a-design-is-named-by-an-id-not-a-path, and it is ADVISORY. It was split out rather than dropped because the two clauses sit in opposite positions against the code — that one has no compliant surface today, so an honest detector would fail against the entire existing tool surface, and the only ways to make it pass would be to block everything or to attach a check that proves nothing.\n\nEVIDENCE, 2026-08-09, from Anthony's question about running reflow2 behind a web app at 1k / 100k / 1M tenants (dec:idea-a-hosted-tier-of-many-single-writer-tenants). This costs nothing today and is expensive to retrofit, and the failure mode is erosion rather than a decision. reflow2's own design measured 1,828 nodes = 3.8 MB export vs 33 MB store, which is what makes hold-many-designs-per-process the architecture rather than an option.\n\nWHAT IT DOES NOT SAY: nothing about WHERE a design is stored, nothing about hosting, and nothing that requires the registry to be built. It only keeps the door open."
       }
     },
     {
@@ -64489,6 +64461,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-no-per-design-globals",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered no_per_design_process_globals.rs"
+      }
+    },
+    {
       "node_id": "frag:art:test-nudge-path",
       "node_type": "Fragment",
       "properties": {
@@ -65246,6 +65228,18 @@
         "context_setter": "Nothing satisfies requirement “A pointer resolves for everyone holding the design, not only for the machine that wrote it”",
         "gap_id": "gap:b8af9d16871259e9",
         "question": "If you and your brother are both working on the same design from different machines, the diagrams and notes need to open for both of you — or clearly say they are missing. Should they travel in the git repository alongside the design, or be kept somewhere separate that each person sets up?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
+      "node_id": "question:ba21fb8550a81e07",
+      "node_type": "Question",
+      "properties": {
+        "answer": "Split it: clause 1 enforced, clause 2 advice. Anthony, 2026-08-09, choosing from three options after being shown that the two clauses sit in opposite positions against the code. The no-per-design-process-globals half becomes gate-blocking with a real allowlist check that passes today (three runtime process-globals exist, all in crates/reflow2-core/src/identity.rs, and two of them the rule itself already calls legitimately process-wide). The identity-is-an-id-never-a-path half stays advisory until the registry exists, because the whole surface is path-based today and an honest detector would fire immediately with nothing able to make it pass.",
+        "context_setter": "“Per-design state never lives in a process-global, and identity is an id that resolves to a location — never a path” does not say whether breaking it stops the build",
+        "gap_id": "gap:ba21fb8550a81e07",
+        "question": "You've said this project should never stash one design's details somewhere the whole program can see, and should identify a design by its name rather than by where its files happen to sit. If somebody broke that — their change worked, the tests passed — should the build have stopped them, or is that advice?",
         "rephrase_degraded": false,
         "status": "answered"
       }
@@ -68531,6 +68525,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:rule-enforcement-split:rule:per-design-state-is-never-a-process-global",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Capability\",\"other_id\":\"cap:graph-registry\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-09\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"CONSTRAINS\",\"other_type\":\"Component\",\"other_id\":\"cmp:service\",\"properties\":{\"basis\":\"estimated\",\"note\":\"The service is where per-design state accretes: cap:graph-registry names graph_path, content_path, identity and write_gen as things that must become per-graph, and all four ride the service today.\"}}]",
+        "state": "{\"category\":\"convention\",\"name\":\"Per-design state never lives in a process-global, and identity is an id that resolves to a location — never a path\",\"statement\":\"TWO CLAUSES, ONE PURPOSE: keep reflow2 able to hold many designs in one process without a rewrite.\\n\\n(1) STATE THAT BELONGS TO A DESIGN LIVES ON THE DESIGN HANDLE, NOT IN A `static`. cap:graph-registry already names the ones that must move — graph_path, content_path, identity, and the write_gen counter the loop nudge reads — and every new process-global that is secretly per-design adds another line to that migration. Legitimately process-wide state is fine and exists today (the seat registry, the serve-shared mode flag); the test is not 'is it a static' but 'would this need a different value for a second design open in the same process'.\\n\\n(2) A DESIGN IS NAMED BY AN ID THAT RESOLVES TO A LOCATION. cap:select-graph-by-id frames it correctly — the server maps id to path — so the id is primary and the path is a storage detail. A surface that treats a filesystem path as the canonical identity forecloses object storage, where the location is a key and the identity rides as metadata.\\n\\nWHY THIS IS A RULE RATHER THAN A REQUIREMENT: it constrains HOW every other change is made rather than describing behaviour anything can satisfy — the same shape as rule:no-foreclosure and rule:fixes-are-judged-by-the-third-party.\\n\\nEVIDENCE, 2026-08-09, from Anthony's question about running reflow2 behind a web app at 1k / 100k / 1M tenants (dec:idea-a-hosted-tier-of-many-single-writer-tenants). Neither clause costs anything today; both are expensive to retrofit, and the failure mode is erosion rather than a decision — one convenient global at a time, invisible until the migration. reflow2's own design measured 1,828 nodes = 3.8 MB export vs 33 MB store, which is what makes hold-many-designs-per-process the architecture rather than an option.\\n\\nWHAT IT DOES NOT SAY: nothing about WHERE a design is stored, nothing about hosting, and nothing that requires the registry to be built. It only keeps the door open.\"}",
+        "target_id": "rule:per-design-state-is-never-a-process-global",
+        "target_type": "DesignRule"
+      }
+    },
+    {
       "node_id": "snap:epoch:service-split:art:service",
       "node_type": "Snapshot",
       "properties": {
@@ -69719,6 +69723,19 @@
         "subject_id": "cap:heal",
         "valid_from": "2026-08-08",
         "value": "{\"reported\":\"2026-08-08 dev_storyflow, w-3f408ab0, LANE STORYBOOK-WALK\",\"measured\":\"detect_defects scope cap:storybook_output depth 3 region_size 71 -> in_scope 5, all duplicate/merge\",\"actual\":\"dec:edge_reads_derive_from_schema_not_allowlist in 3 of 5 pairs; req:backend_as_product in the other 2\",\"harm\":\"a count makes correlated findings read as independent corroboration, during a stand-down\",\"fix_shape\":\"hub: true when a node appears in >=N pairs, or group pairs by shared member; the pairs are already in hand\",\"not_covered_by\":\"PR #99 DUPLICATES.basis - that gates deletion, not the counting\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-evidence-scope-is-stored-and-not-read-by-unverified-enforced-rule",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "A VERIFIES EDGE CARRYING AN EXPLICIT `pinned` LIST SILENCES `unverified_enforced_rule` EXACTLY AS AN UNQUALIFIED ONE DOES — the evidence scope is stored and never read by the detector. REPORTED by the dev_storyflow api-boss fleet (`05af57c1`, 2026-08-09, governance trial-case report, finding ①) as `coverage: partial` failing to soften the detector. INDEPENDENTLY REPRODUCED HERE THE SAME DAY, on a different graph, a different rule and by a different author, within roughly an hour of the rule being created — which is why it is recorded as measured rather than relayed.\n\nTHE REPRODUCTION, one variable: rule:per-design-state-is-never-a-process-global was set enforced=true and given ver:no-per-design-process-globals, a real detector with a run negative control. `set_evidence_scope` was then called on the VERIFIES edge pinning three parameters — struct_field_scoping, runtime_behaviour, and whether_a_global_is_semantically_per_design. That third pinned parameter IS THE RULE'S OWN STATED TEST: the rule says in so many words that 'the test is not is-it-a-static but would-this-need-a-different-value-for-a-second-design'. So the edge now declares, in a structured field, that the check does not exercise the rule's central question. `detect_gaps(scope=that rule, depth=1)` afterwards: `unverified_enforced_rule` DOES NOT FIRE, and nothing in the output mentions the pinned list. Before and after are identical.\n\nTHE DIRECTION IS THE POINT, and the fleet stated it best: supplying MORE information made the graph LESS accurate, because the extra information is stored and not read. An author who calls set_evidence_scope honestly and an author who never calls it are indistinguishable to the detector — so the tool that exists to record a check's limits cannot make those limits count anywhere.\n\nAND IT IS THIS PROJECT'S OWN WRITTEN GUIDANCE ARRIVING AS A MECHANISM RATHER THAN AS ADVICE. The check-health and governance-proposal skills both say, verbatim: 'Never attach a check to close a finding. Attach it because it detects the violation, and if it does not, say so and leave the finding open.' Both authors DID say so, in the structured field provided for it, and the finding closed anyway. The guidance is currently enforceable only by conscience — which is the same class of defect as an enforced rule with no detector, one level up.\n\nWHAT IS NOT CLAIMED: the two cases differ in severity and that difference matters. The fleet's check never exercised the only path its rule existed to protect (an uncontested CAS standing in for a contended one), so their rule read as detected while its central case was untested. This check DOES cover its clause as literally worded — a new process-global fails the build, proven by planting one in a third crate — and what it pins is the rule's broader semantic test, which no source scan could decide. So the defect being reported is not 'these checks are bad'; it is that THE DETECTOR CANNOT TELL THE TWO APART, and neither can a reader of loop_status.\n\nFIX SHAPES, the fleet's, cheapest first and recorded as theirs rather than adopted: (1) have `unverified_enforced_rule` treat a pinned/partial scope as not-yet-verified, or fire a softer sibling naming the pinned string, since the author already wrote the reason and the gap can quote it; (2) at minimum surface pinned/swept in loop_status's verification digest so a partial check is visibly partial without opening the node; (3) the general form, which is their ratified rule: presence of a check is not adequacy of a check, and a detector that reduces 'is it verified' to 'does a VERIFIES edge exist' can only ever detect the edge disappearing.",
+        "subject_id": "cap:governance-proposal",
+        "valid_from": "2026-08-09",
+        "value": "{\"reported\":\"dev_storyflow api-boss 05af57c1, 2026-08-09, governance trial-case report finding ①, measured on v0.26.1\",\"reproduced_here\":\"2026-08-09, reflow2 repo, rule:per-design-state-is-never-a-process-global + ver:no-per-design-process-globals\",\"pinned_set\":\"struct_field_scoping, runtime_behaviour, whether_a_global_is_semantically_per_design\",\"swept_set\":\"declaration_kind, crate, visibility, function_body_scope, macro_form\",\"detector_before\":\"unverified_enforced_rule absent\",\"detector_after\":\"unverified_enforced_rule absent - identical\",\"third_pinned_param_is_the_rules_own_test\":true,\"corroborating_findings_same_report\":\"⑥ scoping detect_gaps to a DesignRule returns almost nothing about the rule - reproduced here: depth=1 gave region_size 4, in_scope 2, and both in-scope items were about cap:graph-registry rather than the rule\",\"independent\":\"different graph, different rule, different author, same day\"}"
       }
     },
     {
@@ -70962,6 +70979,18 @@
       }
     },
     {
+      "node_id": "ver:no-per-design-process-globals",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-09",
+        "level": "unit",
+        "method": "test",
+        "name": "A process-global that is secretly per-design cannot be added without accounting for it. An allowlist over runtime `static` / `thread_local!` / `lazy_static!` declarations across every crate's `src` tree: an unlisted global FAILS the build, and adding one costs a written reason why it is not per-design. Owed by rule:per-design-state-is-never-a-process-global from the moment it was set enforced (Anthony, 2026-08-09). BOUND, stated rather than left to be discovered: it detects DECLARATIONS only. It says nothing about whether a struct field is correctly scoped — the per-design metadata riding on ReflowService today (graph_path, write_gen, read_hint) is not a global, and moving it per-graph is cap:graph-registry's planned work rather than a violation. NEGATIVE CONTROL RUN, not assumed: a static planted in crates/reflow2-core/src/temporal.rs (a different crate from every allowlist entry) failed the check by name and line, and the file was reverted. A second test guards the guard — an allowlist entry naming a global that no longer exists fails, because a stale exemption pre-authorises the name for whoever adds it back.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:nudge-path",
       "node_type": "Verification",
       "properties": {
@@ -71569,7 +71598,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:c225bf1ca48be4be9e7aa1c85815c44e30671b7787b6f6d060675ad3bf4dcb89",
+  "prev_content_hash": "sha256:c5c0829c2eb569e3dbe11b57efe5c4e7e4e85501a18caf96f74ccf1e858c3b30",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
