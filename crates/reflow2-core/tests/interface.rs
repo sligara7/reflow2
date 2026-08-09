@@ -167,3 +167,51 @@ fn interface_pairing_is_keyed_on_identity_not_name() {
         "the consumed-but-unprovided contract must be caught despite the shared name"
     );
 }
+
+/// A `required` boundary is one this design needs FROM OUTSIDE, so "nothing
+/// here provides it" is its DEFINITION rather than a gap.
+///
+/// Found 2026-08-09 by doing the thing `dec:linked-repos-poc` asked for.
+/// Declaring reflow2's nine required interfaces immediately produced nine
+/// `unprovided_interface` gaps at severity 0.72 — the detector nagging correct
+/// modelling, once per requirement, forever. Any consumer following the same
+/// advice gets the same, which is the "fires on correct work" failure
+/// `dec:read-hint-shape` exists to prevent.
+#[test]
+fn a_required_interface_is_not_reported_as_unprovided() {
+    let mut g = DesignGraph::open_in_memory().expect("open");
+    g.add_project("proj:1", "Scoreboard").expect("project");
+    g.add_component("comp:ui", "Scoreboard UI", "Displays scores", None)
+        .expect("consumer");
+
+    // Needed from outside, and consumed here. Nothing inside provides it, and
+    // nothing inside should.
+    g.add_interface("iface:clock", "Time service")
+        .expect("interface");
+    g.set_interface_designation("iface:clock", "required")
+        .expect("designation");
+    g.consumes("comp:ui", "iface:clock").expect("consumes");
+
+    // POSITIVE CONTROL: an undesignated boundary in the identical shape MUST
+    // still fire, or this exemption has silently disabled the detector.
+    g.add_interface("iface:scores", "Scores endpoint")
+        .expect("interface");
+    g.consumes("comp:ui", "iface:scores").expect("consumes");
+
+    let gaps = g.detect_gaps().expect("detect");
+    let unprovided: Vec<&str> = gaps
+        .iter()
+        .filter(|c| c.gap_source == GapSource::UnprovidedInterface)
+        .flat_map(|c| c.affected_ids.iter().map(String::as_str))
+        .collect();
+
+    assert!(
+        !unprovided.contains(&"iface:clock"),
+        "a `required` boundary must not be reported as unprovided: {unprovided:?}"
+    );
+    assert!(
+        unprovided.contains(&"iface:scores"),
+        "the exemption must be about `required` only — an undesignated \
+         interface in the same shape must still fire: {unprovided:?}"
+    );
+}

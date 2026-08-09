@@ -1621,6 +1621,29 @@ impl DesignGraph {
             let providers = self.incoming(&iface.node_id, Some(edge::PROVIDES))?;
             let consumers = self.incoming(&iface.node_id, Some(edge::CONSUMES))?;
             let name = node_name(&iface);
+            // A `required` boundary is one this design needs FROM OUTSIDE, so
+            // "nothing here provides it" is its DEFINITION rather than a gap.
+            //
+            // Found 2026-08-09 by doing the thing dec:linked-repos-poc asked
+            // for: declaring reflow2's nine required interfaces immediately
+            // produced nine `unprovided_interface` gaps at severity 0.72 — the
+            // detector nagging correct modelling, once per requirement, forever.
+            // Any consumer who follows the same advice gets the same, which is
+            // the "fires on correct work" failure dec:read-hint-shape exists to
+            // prevent.
+            //
+            // `both` is deliberately NOT exempt: a design that publishes a
+            // contract as well as needing one owes an internal provider for the
+            // half it publishes.
+            let required_from_outside = iface
+                .properties
+                .get("designation")
+                .and_then(dynograph_core::Value::as_str)
+                == Some("required");
+
+            if required_from_outside {
+                continue;
+            }
 
             if providers.is_empty() && !consumers.is_empty() {
                 gaps.push(GapCandidate {

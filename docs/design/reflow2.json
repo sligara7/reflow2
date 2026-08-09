@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b2de73972e736142e35683fefc49ba2dc9e4b354ea6892d98298c3741525ab7d",
+  "content_hash": "sha256:cf3b87f997c01e2ea40a22634ac46ed0f3c75a6f005e6a80ad2f1b1d76095a67",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -696,6 +696,12 @@
       "from_id": "fact:shared-graph-field-report-what-held",
       "properties": {},
       "to_id": "cap:shared-sessions"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:the-seam-pairs-and-seam-report-has-now-run",
+      "properties": {},
+      "to_id": "cap:complementary-pairing"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2705,6 +2711,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-required-interface-is-not-an-unprovided-one",
+      "properties": {},
+      "to_id": "epoch:reflow2-declares-what-it-requires"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:a-rule-binding-a-component-is-modelled-20260808",
       "properties": {},
       "to_id": "epoch:v0260"
@@ -3977,6 +3989,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:reflow2-declares-its-required-interfaces",
+      "properties": {},
+      "to_id": "epoch:reflow2-declares-what-it-requires"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:reflow2-states-its-own-rules-20260808",
       "properties": {},
       "to_id": "epoch:reflow2-states-its-own-rules"
@@ -5177,6 +5195,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:reflow2-declares-what-it-requires:art:detect",
+      "properties": {},
+      "to_id": "epoch:reflow2-declares-what-it-requires"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:reflow2-declares-what-it-requires:cap:complementary-pairing",
+      "properties": {},
+      "to_id": "epoch:reflow2-declares-what-it-requires"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:reflow2-states-its-own-rules:rule:bl-135",
       "properties": {},
       "to_id": "epoch:reflow2-states-its-own-rules"
@@ -5960,6 +5990,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-detect-ownership-orphans",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-detect-vocabulary-that-nothing-reaches",
       "properties": {
         "acted_at": "2026-08-09",
@@ -6172,6 +6211,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-ownership-is-the-third-who-axis",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -6547,9 +6595,90 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "ifc:ambient-agent",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "ifc:authenticating-gateway",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "ifc:exclusive-local-store",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "ifc:mcp-protocol",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "ifc:rendezvous-sidecar",
       "properties": {
         "acted_at": "2026-08-05T23:10:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "ifc:req-dyno-core-api",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "ifc:req-dyno-graph-api",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "ifc:req-dyno-resolution-api",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "ifc:req-dyno-storage-api",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "ifc:req-dyno-vector-api",
+      "properties": {
+        "acted_at": "2026-08-09",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -7422,6 +7551,15 @@
         "action": "modified"
       },
       "to_id": "cap:vocabulary"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-required-interface-is-not-an-unprovided-one",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
     },
     {
       "edge_type": "CHANGED",
@@ -13644,6 +13782,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:reflow2-declares-its-required-interfaces",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:complementary-pairing"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:reflow2-states-its-own-rules-20260808",
       "properties": {
         "accepted_baseline": false,
@@ -15450,6 +15597,42 @@
     },
     {
       "edge_type": "CONSUMES",
+      "from_id": "cmp:agent",
+      "properties": {
+        "weight": 0.9,
+        "weight_basis": "evidence"
+      },
+      "to_id": "ifc:ambient-agent"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:graph",
+      "properties": {
+        "weight": 0.9,
+        "weight_basis": "evidence"
+      },
+      "to_id": "ifc:req-dyno-core-api"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:heal",
+      "properties": {
+        "weight": 0.7,
+        "weight_basis": "evidence"
+      },
+      "to_id": "ifc:req-dyno-resolution-api"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:ingest",
+      "properties": {
+        "weight": 0.8,
+        "weight_basis": "evidence"
+      },
+      "to_id": "ifc:ambient-agent"
+    },
+    {
+      "edge_type": "CONSUMES",
       "from_id": "cmp:init",
       "properties": {
         "weight_basis": "estimated"
@@ -15466,11 +15649,48 @@
     },
     {
       "edge_type": "CONSUMES",
+      "from_id": "cmp:propagate",
+      "properties": {
+        "weight": 0.8,
+        "weight_basis": "evidence"
+      },
+      "to_id": "ifc:req-dyno-graph-api"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:search",
+      "properties": {
+        "optional": true,
+        "weight": 0.4,
+        "weight_basis": "evidence"
+      },
+      "to_id": "ifc:req-dyno-vector-api"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:service",
+      "properties": {
+        "weight": 0.7,
+        "weight_basis": "evidence"
+      },
+      "to_id": "ifc:authenticating-gateway"
+    },
+    {
+      "edge_type": "CONSUMES",
       "from_id": "cmp:service",
       "properties": {
         "weight_basis": "estimated"
       },
       "to_id": "ifc:core-api"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:service",
+      "properties": {
+        "weight": 0.9,
+        "weight_basis": "evidence"
+      },
+      "to_id": "ifc:mcp-protocol"
     },
     {
       "edge_type": "CONSUMES",
@@ -15487,6 +15707,24 @@
         "weight_basis": "estimated"
       },
       "to_id": "ifc:mcp-tools"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "sys:store",
+      "properties": {
+        "weight": 0.9,
+        "weight_basis": "evidence"
+      },
+      "to_id": "ifc:exclusive-local-store"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "sys:store",
+      "properties": {
+        "weight": 0.9,
+        "weight_basis": "evidence"
+      },
+      "to_id": "ifc:req-dyno-storage-api"
     },
     {
       "edge_type": "CONTAINS",
@@ -16251,6 +16489,24 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-detect-ownership-orphans",
+      "properties": {
+        "alignment": "supporting",
+        "evidence": "Strictly dependent: there is nothing to detect the absence of until ownership is expressible. The edge can exist without the detector; the detector cannot exist without the edge."
+      },
+      "to_id": "dec:idea-ownership-is-the-third-who-axis"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-detect-ownership-orphans",
+      "properties": {
+        "alignment": "supporting",
+        "evidence": "Third member of one family found in a single day: built-but-unconsumed, declared-but-unread, shipping-but-unowned. Every existing gap asks what is missing FROM a node; all three ask what is missing AROUND one."
+      },
+      "to_id": "req:the-design-says-what-was-built-and-never-used"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "dec:idea-detect-vocabulary-that-nothing-reaches",
       "properties": {
         "alignment": "supporting",
@@ -16320,6 +16576,15 @@
         "evidence": "Removes one of the content store's founding motivations. cap:session-memory's own design needs no store — takeaways are first-class graph content and the transcript is a Fragment carrying a session UUID, a pointer rather than bytes. So the session-context justification does not survive, and it strengthens the discontinue case rather than complicating it."
       },
       "to_id": "dec:idea-discontinue-the-content-store"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-ownership-is-the-third-who-axis",
+      "properties": {
+        "alignment": "supporting",
+        "evidence": "That decision is ACCEPTED and set the condition: decide on OWNED_BY only after the claims-based cut is built and shown insufficient. Its rationale named the disqualifying evidence in advance — claims being transient work-in-hand while ownership is durable. dev_storyflow filed exactly that distinction one day later, and Anthony supplied the two-person use case himself. This node records the evidence arriving; whether it closes the condition is his call."
+      },
+      "to_id": "dec:ownership-reads-claims-before-adding-an-edge"
     },
     {
       "edge_type": "CONTRADICTS",
@@ -23616,6 +23881,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:detect",
+      "properties": {},
+      "to_id": "snap:epoch:reflow2-declares-what-it-requires:art:detect"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "art:fleet-lessons",
       "properties": {},
       "to_id": "snap:epoch:bl199-reattachment:art:fleet-lessons"
@@ -23703,6 +23974,12 @@
       "from_id": "cap:changelog-view",
       "properties": {},
       "to_id": "snap:epoch:v0200-scoped:cap:changelog-view"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:complementary-pairing",
+      "properties": {},
+      "to_id": "snap:epoch:reflow2-declares-what-it-requires:cap:complementary-pairing"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -52281,7 +52558,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0a72004a631748e26941f536cc6e47989fce27f9a164fc0ffeacf5462f56ade4",
+        "checksum": "sha256:5f95eeacfab2df5b5c1a0e149b5165403e9d817d0cb2d8d92d8e7e10c51acc7f",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -55755,6 +56032,14 @@
       }
     },
     {
+      "node_id": "chg:a-required-interface-is-not-an-unprovided-one",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "unprovided_interface stops firing on `required` boundaries — declaring what you need from outside was creating one 0.72 nag per requirement, forever"
+      }
+    },
+    {
       "node_id": "chg:a-rule-binding-a-component-is-modelled-20260808",
       "node_type": "ChangeEvent",
       "properties": {
@@ -58078,6 +58363,14 @@
       }
     },
     {
+      "node_id": "chg:reflow2-declares-its-required-interfaces",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Nine required interfaces declared on Anthony's word — five dynograph crate APIs at the publisher's granularity, plus the ambient agent, the MCP protocol, an exclusive local store and an authenticating gateway"
+      }
+    },
+    {
       "node_id": "chg:reflow2-states-its-own-rules-20260808",
       "node_type": "ChangeEvent",
       "properties": {
@@ -60078,6 +60371,16 @@
       }
     },
     {
+      "node_id": "dec:idea-detect-ownership-orphans",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-09, relayed via dev_storyflow's api-boss: \\\"If nothing else, we'll see what areas of the graph are not claimed by anyone (orphans). Not sure reflow2 has this feature to detect orphans in ownership.\\\"\n\n⭐ IT IS A DIFFERENT AXIS FROM orphan_node, AND THE DIFFERENCE IS THE WHOLE POINT.\n  orphan_node        structurally disconnected — nothing says what it is FOR.\n  ownership orphan   well-connected, realized, verified, SHIPPING — and nobody accountable.\n\n⚠️ A NODE CAN BE STRUCTURALLY PERFECT AND GOVERNANCE-ORPHANED, and that is the more dangerous state precisely because NOTHING ABOUT IT LOOKS WRONG. Every existing detector would pass it: it satisfies a requirement, a component holds it, an artifact realizes it, a check verifies it. The only thing missing is a person, and no detector asks about people.\n\nIT IS ALSO THE THIRD MEMBER OF A FAMILY THIS PROJECT FOUND TWICE TODAY, which is why it is worth naming as a class rather than a feature:\n  - req:the-design-says-what-was-built-and-never-used — built, and NOTHING CONSUMES IT.\n  - req:a-vocabulary-distinction-proves-it-is-read — declared, and NOTHING READS IT.\n  - this one — shipping, and NOBODY OWNS IT.\nEvery existing gap asks what is MISSING FROM A NODE. All three of these ask what is missing AROUND a node, and none of the seven capability gaps can express that shape.\n\nSTRICTLY DEPENDENT ON THE EDGE. There is nothing to detect the absence of until ownership is expressible — dec:idea-ownership-is-the-third-who-axis holds that question. Recorded separately for exactly that reason: the edge can exist without the detector, the detector cannot exist without the edge, and a single node holding both could only be half-answered.\n\n⚠️ THE HARD PART, AND IT IS A DESIGN INPUT RATHER THAN A SETTING — api-boss's, and it is the strongest objection on the table: WHICH NODE TYPES ARE OWNABLE? In their 1,127-node graph most nodes legitimately have no owner; their example is exact — \\\"a Constraint about prose rendering is nobody's in the accountability sense.\\\" A naive detector therefore fires on the MAJORITY of a mature graph and becomes a signal trained to be ignored, which is the permanently-red-check failure this project has now written down three times. But in a two-person project the design is probably mostly partitioned, so the same detector is nearly silent and genuinely useful. ⇒ OWNABILITY LOOKS LIKE A PER-PROJECT DECLARATION, NOT A FIXED RULE, and the same feature behaves very differently at those two scales.\n\nTHE SHAPES, with counters beside rather than argued down:\n\n(A) A GAP — `unowned_region`, one per ownable node with no owner. Appears in the loop where people already look. COUNTER: the ownability problem above hits this hardest, because a gap that fires on the majority is worse than no gap.\n\n(B) A REPORT — an ownership census: what is owned, by whom, and what is not, reported as a FACT the way granularity_report and surprising_connections are. Cannot nag. COUNTER: a report nobody runs is invisible; it would need a line in graph_report to be seen.\n\n(C) A COVERAGE NUMBER — \\\"N of M ownable nodes have an owner\\\", one line, the same shape as the trajectory bands and the certainty line. Cheapest to read, hardest to ignore, and it degrades gracefully at both scales because a low number in a fleet graph is a true statement rather than N nags. COUNTER: a number says nothing about WHICH, so it needs (B) behind it to be actionable.\n\n(D) SCOPED TO A DECLARED PARTITION — a project declares which types are ownable, and the detector only speaks about those. Answers the hard part directly. COUNTER: it is a new declaration to maintain, and an unmaintained one silently narrows the detector to nothing, which is the same class as an unread marker.\n\n⚠️ WHAT MUST NOT HAPPEN, and it is the trap all three of today's findings share: shipping the marker without the computation that reads it, or shipping a computation that fires on correct work. reflow2 has now met the first failure eight times over in its own edge vocabulary and has doctrine against the second in dec:read-hint-shape.\n\nNOTHING IS PROMOTED. Anthony raised the question and said he was not sure the feature existed; it does not.",
+        "name": "OPEN — should reflow2 detect OWNERSHIP orphans: well-connected, realized, shipping, and nobody accountable?",
+        "rationale": "Recorded via the brainstorm skill: `proposed`, options with counters, nothing promoted, and separated from the edge question it depends on so neither can be half-answered.\n\nWorth stating why this one is recorded at all when it cannot be built yet: it is the third instance in one day of a shape reflow2 has no vocabulary for — absence AROUND a node rather than absence IN it — and the other two were captured as intent this session. Recording it keeps the family visible; whether it becomes a fourth requirement is Anthony's call, not a consequence of the first three.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-detect-vocabulary-that-nothing-reaches",
       "node_type": "Decision",
       "properties": {
@@ -60304,6 +60607,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — from the 2026-08-01 dynograph-foundation review. Recorded for completeness; this is the WEAKEST of the ideas in this batch and is written down mainly so a later session knows it was considered and not chosen.\n\nTHE UNUSED FUNCTIONS: degree_centrality (with DegreeMode), closeness_centrality, eigenvector_centrality, and clustering (local clustering coefficient). All exact, all already available.\n\nWHAT EACH WOULD MEAN HERE: closeness = how near a node is to everything else, so \"how quickly does a change here reach the whole design\". Eigenvector = importance by association with important nodes. Clustering coefficient = how tightly a node's neighbourhood is interconnected, a possible signal for over-coupled subsystems.\n\nTHE HONEST COUNTER-ARGUMENT, which is why this ranks last: betweenness is the RIGHT measure for the question reflow2 asks — how much of the golden thread routes THROUGH this node — and the others answer questions nobody has asked yet. Degree is already computed locally in structure.rs and needs no crate. Adding measures because they exist is how a report becomes a dashboard nobody reads, and reflow2 has an explicit instinct against that (dec:report-dont-judge, and BL-42's noise-floor lesson).\n\nIF ANY: clustering coefficient is the only one with a question attached that reflow2 does not already answer — \"is this subsystem more tangled inside than the design says it should be?\" — and even that overlaps leiden communities.",
         "name": "OPEN — is betweenness the right centrality, or should closeness / eigenvector / clustering also be read?",
         "rationale": "Recorded deliberately as a considered-and-not-chosen idea. The brainstorm skill's rule is that roads not taken are part of the design's memory; without this node a later reviewer would rediscover four unused centrality functions and re-litigate them.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-ownership-is-the-third-who-axis",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.\n\n⭐⭐ THE HEADLINE: AN ACCEPTED DECISION SET A CONDITION, AND THE CONDITION HAS NOW BEEN MET BY EXACTLY THE EVIDENCE IT ASKED FOR.\n\ndec:ownership-reads-claims-before-adding-an-edge (ACCEPTED, Anthony's word 2026-08-08) says: build the first cut from CLAIMS rather than a new edge, and \\\"DECIDE ON OWNED_BY ONLY AFTER THAT IS BUILT AND SHOWN TO BE INSUFFICIENT.\\\" Its rationale names the disqualifying evidence in advance: \\\"If claims turn out to model the wrong thing (THEY ARE TRANSIENT WORK-IN-HAND, WHILE OWNERSHIP IS DURABLE AND SURVIVES THE SESSION), that is a real distinction and the edge becomes justified on evidence rather than on anticipation.\\\"\n\nONE DAY LATER, dev_storyflow filed precisely that distinction, and Anthony supplied the use case himself (2026-08-09, relayed by api-boss 05af57c1):\n\n  \\\"As my brother and I collaborate on another project, there are areas of the design that are his and areas that are mine. This is probably a different 'ownership' of something than the claim_region type descriptor... it is probably DURABLE, SURVIVES EVERY SESSION, and SHOULD NEVER BE RELEASED.\\\"\n\n⭐ THE FRAMING THAT MAKES IT LEGIBLE — reflow2 has two of the three WHO axes:\n  AUTHORED_BY   who WROTE this          past tense · historical · never changes\n  CLAIMS        who is IN it RIGHT NOW  transient · advisory · released at checkout\n  ???           whose AREA this is      durable · standing · never released\n\nWHY CLAIMS CANNOT BE STRETCHED TO COVER THE THIRD, which is the \\\"shown to be insufficient\\\" the accepted decision demanded, and it is operational rather than theoretical: claim_region's own description says ADVISORY and session-scoped; the parallel-work skill says release at checkout; on a shared server a claim reads `unknown` rather than `live` and NEVER EXPIRES ON ITS OWN. So standing ownership claims would permanently drown the tool's actual job — showing who is ACTIVELY in your ground. api-boss noted they hold one claim, released and re-took it once today purely to fix its note, and asked what three permanent graph-wide claims would do to that surface.\n\n⚠️ AND THE FLEET RETRACTED ITS OWN COUNTER-ARGUMENT, which is worth more than the ask. They had argued that recording ownership in the graph duplicates their PROTOCOL.md ownership matrix and would rot the way six of their copied rules already have. Their retraction: \\\"That objection is specific to an organisation that ALREADY writes ownership down. A PAIR OF COLLABORATORS HAS NO MATRIX — the knowledge lives in their heads and in habit. For most projects the graph would be the FIRST place ownership was ever recorded, not the second, and the duplication risk is simply absent.\\\" They kept only the narrow fleet-specific form.\n\n⭐ AND THE REFRAME THAT MATTERS MOST FOR SCOPE: every earlier version of this ask was framed around an AGENT FLEET, which invites the reply \\\"that is exotica\\\". The two-person case is not exotica. It is two people splitting a design, which is the ORDINARY case of collaborative design work.\n\n=== WHERE THIS SITS AGAINST WHAT SHIPPED TODAY ===\n\ncap:owed-to-a-contributor shipped `loop_status(contributor_id)` on 2026-08-09. IT IS NOT THE FIRST CUT THAT ACCEPTED DECISION SPECIFIED: it attributes via the AUTHORED_BY `role=approver` edge, not via CLAIMS. That is already recorded honestly — the SATISFIES edge to req:ownership-is-an-edge-so-debt-has-an-addressee carries `coverage: partial` and says so: \\\"its chosen first cut answers 'what has a named person been asked to settle', not 'which gaps are in the part of the system I own'. The fleet's ask is the second one.\\\"\n\n⇒ SO THE CLAIMS-BASED FIRST CUT WAS NEVER BUILT, and the question is whether it still should be. Two readings, both honest:\n  (a) The decision's build order stands: build the claims-based cut, THEN judge. The insufficiency argument above is about claims as a DURABLE record, and a claims-scoped debt report might still be useful for its actual purpose without ever being ownership.\n  (b) The insufficiency is already established by inspection — claims are advisory, session-scoped and released by doctrine, so building a durable ownership view on them would be building on a foundation whose own description forbids it. Under this reading the condition is met and the edge is justified now.\n\nAND IT FITS WHAT SHIPPED: loop_status's scoped answer deliberately attributes ONLY assignment and reports everything else under `scope.not_attributable`. AN OWNED_BY EDGE IS EXACTLY WHAT WOULD LET THE REST BECOME ATTRIBUTABLE. The restraint shipped today is waiting for this.\n\n=== THE SHAPES, with counters beside rather than argued down ===\n\n(A) AN OWNED_BY / ACCOUNTABILITY EDGE — Contributor → any node, explicitly NOT in the decomposition spine and NOT a traceability edge. THE PRECEDENT EXISTS TWICE: AUTHORED_BY and CLAIMS are both already deliberately excluded from impact propagation (nodes.rs structural_rule), so this would be the third of a kind rather than a novelty. COUNTER, and it is this project's own: dec:ownership-reads-claims-before-adding-an-edge warns that adding an edge type is the most expensive and least reversible change to this schema, and today's measurement found EIGHT of sixty edge types declared and reached by nothing. An unused OWNED_BY would not be a novel failure here; it is the common one.\n\n(B) REUSE CLAIMS WITH A DURABILITY FLAG — a `durable: true` property that exempts a claim from release and from the overlap report. Cheapest, no new edge type. COUNTER: it makes one edge mean two things whose lifecycles are opposite, and the tool's descriptions would have to say both. That is how a vocabulary rots — the same sentence dec:one-retire-edge uses about two words for one relationship, running the other way.\n\n(C) OWNERSHIP AS A PROPERTY ON THE NODE — an `owner` field. Cheapest of all to read. COUNTER: it cannot express shared or partial ownership, cannot carry a note about WHAT is owned, and puts a person's id inside design content where every export and every merge has to reconcile it.\n\n⚠️ THE HARD PART, WHICH IS A DESIGN INPUT RATHER THAN A SETTING, and it comes from the fleet: WHICH NODE TYPES ARE OWNABLE? In their 1,127-node graph most nodes legitimately have no owner — \\\"a Constraint about prose rendering is nobody's in the accountability sense\\\" — so a naive detector fires on the majority and becomes a signal trained to be ignored. In a two-person project the design is probably mostly partitioned. ⇒ OWNABILITY LOOKS LIKE A PER-PROJECT DECLARATION, NOT A FIXED RULE, and the same feature behaves very differently at those two scales.\n\nNOTHING IS PROMOTED. The accepted decision's condition may now be met; saying so is Anthony's to do, and dec:reopen-supersedes says a re-opening mints its own node rather than un-accepting the old one.",
+        "name": "OPEN — the condition dec:ownership-reads-claims-before-adding-an-edge set has now been met: are CLAIMS shown insufficient, and does OWNED_BY become justified?",
+        "rationale": "Recorded via the brainstorm skill: `proposed`, options with counters, nothing promoted.\n\nKept SEPARATE from dec:ownership-reads-claims-before-adding-an-edge rather than editing it, because that decision is ACCEPTED and dec:reopen-supersedes is explicit that a re-opening mints a new Decision which obsoletes the old one — the accepted one is never un-accepted. This node is the evidence arriving that its own condition named; whether that closes it is Anthony's call.\n\nSeparated from the ownership-orphan detector question (dec:idea-detect-ownership-orphans) because the edge could exist without the detector and the detector cannot exist without the edge — one node holding both could only be half-answered.",
         "status": "proposed"
       }
     },
@@ -62778,6 +63091,16 @@
         "epoch_type": "revision",
         "name": "Reading the original reflow's workflows back against reflow2 (2026-07-28)",
         "sequence": 220,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:reflow2-declares-what-it-requires",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "reflow2 declares its required interfaces, and the seam pairs for the first time (2026-08-09)",
+        "sequence": 300,
         "status": "arrived"
       }
     },
@@ -65303,6 +65626,36 @@
       }
     },
     {
+      "node_id": "ifc:ambient-agent",
+      "node_type": "Interface",
+      "properties": {
+        "auth": "unspecified",
+        "designation": "required",
+        "medium": "library",
+        "name": "The ambient agent — the caller performs the LLM work and hands the answers back",
+        "paradigm": "synchronous",
+        "payload_format": "json",
+        "provenance": "authored",
+        "spec": "REQUIRED, declared 2026-08-09 on Anthony's word. THE CONTRACT: reflow2 never calls a model. It returns `status: needs_llm` with a list of AgentPrompts, and the CALLER runs them and calls back with AgentAnswers keyed by prompt id. gap_to_prompt, ingest_step and ingest_corpus_step all work this way (crates/reflow2-core/src/agent.rs, ingest.rs, corpus.rs).\n\nWHY IT IS A REQUIRED INTERFACE AND NOT AN IMPLEMENTATION DETAIL: it is a capability reflow2 DOES NOT HAVE and cannot supply itself. A consumer without an LLM cannot use the ask half of the loop at all. That is the definition of a contract needed from outside, and it was invisible because nothing declared it.\n\n⭐ AND IT IS PROBABLY THE PAIR THE PoC MIS-MATCHED. dec:linked-repos-poc's one true positive paired OUR `ifc:core-api` (library) against flo2's `ifc:model-provider-api` (REST) at an 80/100 NAME match — \"very likely the same contract, but they cannot be connected as either is currently built.\" The finding was right that a seam exists there; the pairing was on spelling. flo2's model-provider-api is about LLM provision, and THIS is the interface that actually needs it. Declaring it lets the seam pair on meaning.\n\nDELIBERATELY MEDIUM `library`: the handshake crosses reflow2's own tool boundary as JSON, but the party that must satisfy it is whatever harness or service is driving the session — an MCP client, an agent loop, or flo2's design pipeline. How they reach a model is theirs; that they must is ours.\n\nWHAT IT DOES NOT REQUIRE: any particular model, vendor or protocol. dec:three-party-checks holds the division — the LLM speaks, the graph remembers and counts, the human decides.",
+        "transport_security": "unspecified"
+      }
+    },
+    {
+      "node_id": "ifc:authenticating-gateway",
+      "node_type": "Interface",
+      "properties": {
+        "auth": "unspecified",
+        "designation": "required",
+        "medium": "REST",
+        "name": "An authenticating gateway in front — reflow2 has no authentication and is not getting any",
+        "paradigm": "synchronous",
+        "payload_format": "unspecified",
+        "provenance": "authored",
+        "spec": "REQUIRED, declared 2026-08-09 on Anthony's word. reflow2 performs NO authentication and NO authorization, by design, and this node makes that a declared dependency rather than a caveat somebody has to find.\n\nTHE PUBLISHED IMAGE SAYS IT VERBATIM in its org.opencontainers.image.description label: \"NO AUTHENTICATION — deploy on a private network behind a gateway that authenticates.\" `--http-allow-host` is Host-header allowlisting — DNS-rebinding protection, NOT auth, and reading it as auth is the mistake this node exists to prevent.\n\nWHY IT IS reflow2'S DEPENDENCY RATHER THAN ITS OMISSION, and rule:no-foreclosure states the principle: reflow2 must never become the thing that decides who may read what. It delegates to an authority that already exists, on the stated principle that a server must not let anyone reach more than they could reach without it. Building an account system would foreclose that by making reflow2 the authority. So the absence is a POSITION, and the gateway is a contract the deployer owes.\n\nflo2's reflow2_updates.md lists this among the two things reflow2 will NEVER do, stated once so nothing waits on them. Declaring it `required` is what turns that sentence into something the seam machinery can compute against — an unmet need on any deployment that has not supplied one, rather than a paragraph in a tracker.\n\nSCOPE, stated so it is not over-read: this says an authenticating layer must exist in front. It says nothing about WHICH — flo2 uses Clerk (dec:stack-clerk); anyone else may use anything.",
+        "transport_security": "unspecified"
+      }
+    },
+    {
       "node_id": "ifc:core-api",
       "node_type": "Interface",
       "properties": {
@@ -65318,6 +65671,21 @@
       }
     },
     {
+      "node_id": "ifc:exclusive-local-store",
+      "node_type": "Interface",
+      "properties": {
+        "auth": "unspecified",
+        "designation": "required",
+        "medium": "data",
+        "name": "A real local block device the store can hold an exclusive lock on — never a network filesystem",
+        "paradigm": "synchronous",
+        "payload_format": "unspecified",
+        "provenance": "authored",
+        "spec": "REQUIRED, declared 2026-08-09 on Anthony's word. reflow2's single-writer guarantee is enforced by RocksDB's exclusive lock on the store directory, and that lock is only meaningful on a real block device or local volume.\n\n⚠️ ON NFS THE LOCK STOPS EXCLUDING AND SINGLE-WRITER IS SILENTLY GONE — flo2's reflow2_updates.md states this as a hard constraint on their side, and it is the failure mode req:single-writer-graph exists to prevent: two writers against one store is precisely the corruption case. The failure is SILENT, which is why it belongs in the design rather than in a deployment note.\n\nWHY IT IS AN INTERFACE RATHER THAN A CONSTRAINT: it is a contract somebody else must satisfy — the host, the orchestrator, the volume driver — and reflow2 cannot check it or enforce it. That is the shape of a required interface. Anthony chose to declare the environmental boundaries alongside the code ones (2026-08-09) so reflow2's hard requirements are computable rather than prose in a tracker.\n\nMEDIUM `data` rather than a filesystem value, because the enum has none — the contract is a durable byte store with real exclusive locking, however it is presented.\n\nIT ALSO BOUNDS THE HOSTING SHAPE: this container holds RocksDB open and cannot scale to zero. dec:open-hosting-shape-vs-long-lived-reflow2 remains open, and dec:stack-fly-staging-ci is scoped to api and web precisely because min_machines_running = 0 plus auto-stop would kill it.",
+        "transport_security": "unspecified"
+      }
+    },
+    {
       "node_id": "ifc:graph-export",
       "node_type": "Interface",
       "properties": {
@@ -65329,6 +65697,21 @@
         "payload_format": "json",
         "provenance": "authored",
         "spec": "Corrected 2026-07-28: claimed `medium: REST` by default. It is a JSON document written to a path and read back — a data contract, not a network one. Its shape is the export schema (nodes, edges, graph_id, stamp, content_hash, prev_content_hash).",
+        "transport_security": "unspecified"
+      }
+    },
+    {
+      "node_id": "ifc:mcp-protocol",
+      "node_type": "Interface",
+      "properties": {
+        "auth": "unspecified",
+        "designation": "required",
+        "medium": "unspecified",
+        "name": "The MCP protocol revision reflow2 negotiates — a contract defined elsewhere and implemented here",
+        "paradigm": "synchronous",
+        "payload_format": "json",
+        "provenance": "authored",
+        "spec": "REQUIRED, declared 2026-08-09 on Anthony's word. reflow2 IMPLEMENTS the Model Context Protocol; it does not define it. The revision is negotiated per connection by rmcp, and reflow2 supports three transports: stdio, legacy Streamable HTTP (2025-06-18), and stateless HTTP (2026-07-28).\n\nDISTINCT FROM ifc:mcp-tools, WHICH IS PUBLISHED. That node is reflow2's OWN tool surface — the 149 tools it offers. THIS node is the protocol those tools are carried over, which somebody else owns and can change underneath. Two different contracts pointing in opposite directions across the same wire, and only one of them is reflow2's to keep.\n\nWHY DECLARING IT MATTERS RATHER THAN BEING BOOKKEEPING — flo2's reflow2_updates.md §7 names it: there are TWO version axes at this seam and only ONE negotiates. The protocol version negotiates per connection and rmcp handles it. reflow2's own tool surface does NOT, and the toolsnaps stop a surface change landing silently in THIS repo while telling a consumer nothing. A consumer that pins an image gets a surface it cannot interrogate.\n\nTHE LIVE DETAIL WORTH PINNING: rmcp 3.1.2's ProtocolVersion::LATEST is still 2025-11-25, so the sessionless path is NOT yet the default. There is a tripwire test at service.rs that fires when it crosses. dec:stateless-seat-handle turns on that boundary: on the sessionless transport the server builds a handler per REQUEST and cannot infer who is calling, so `seat` may not be omitted — a wrapper written against stdio habits works in development and is refused in production.",
         "transport_security": "unspecified"
       }
     },
@@ -65358,6 +65741,81 @@
         "paradigm": "unspecified",
         "payload_format": "unspecified",
         "provenance": "authored",
+        "transport_security": "unspecified"
+      }
+    },
+    {
+      "node_id": "ifc:req-dyno-core-api",
+      "node_type": "Interface",
+      "properties": {
+        "auth": "unspecified",
+        "designation": "required",
+        "medium": "library",
+        "name": "Core model types (Schema, Value, DynoError)",
+        "paradigm": "synchronous",
+        "payload_format": "unspecified",
+        "provenance": "authored",
+        "spec": "REQUIRED FROM dynograph-foundation. reflow2 links `dynograph-core`, pinned by git tag v0.12.0.\n\nNAMED TO MATCH THE PUBLISHER DELIBERATELY, and that is a finding rather than a convenience. The first attempt declared ONE umbrella interface for the whole dynograph dependency; pairing returned NINE candidates and ZERO pairs, because a pair needs a name match at or above 85/100 and an umbrella scores 62-78 against nine crisp names. Two causes, and the first was ours: THEY DECOMPOSED AND WE LUMPED. reflow2 links five named crates that map 1:1 onto five of their published interfaces, so the honest model is five requirements at their granularity.\n\nTHE SECOND CAUSE IS WORTH REPORTING UPSTREAM: pairing matches on NAME similarity, so a long explanatory name systematically undershoots the bar while a short parallel one clears it. That rewards naming an interface for the contract rather than describing it — defensible — but it means the seam is only as good as two teams independently choosing similar words, and nothing says so.",
+        "transport_security": "unspecified"
+      }
+    },
+    {
+      "node_id": "ifc:req-dyno-graph-api",
+      "node_type": "Interface",
+      "properties": {
+        "auth": "unspecified",
+        "designation": "required",
+        "medium": "library",
+        "name": "Graph algorithms API",
+        "paradigm": "synchronous",
+        "payload_format": "unspecified",
+        "provenance": "authored",
+        "spec": "REQUIRED FROM dynograph-foundation. reflow2 links `dynograph-graph`, pinned at v0.12.0. Traversal and the community/centrality work that propagate_change, disconnected_community and the modularity score rest on — so a change here reaches HEAL and the allocation report, not just the store.",
+        "transport_security": "unspecified"
+      }
+    },
+    {
+      "node_id": "ifc:req-dyno-resolution-api",
+      "node_type": "Interface",
+      "properties": {
+        "auth": "unspecified",
+        "designation": "required",
+        "medium": "library",
+        "name": "EntityResolver API",
+        "paradigm": "synchronous",
+        "payload_format": "unspecified",
+        "provenance": "authored",
+        "spec": "REQUIRED FROM dynograph-foundation. reflow2 links `dynograph-resolution`, pinned at v0.12.0. Entity resolution is what the duplicate detector and the corpus-ingest identity work sit on — the same machinery dec:auto-merge-at-90-destroys-sibling-names constrained, and the same path dev_storyflow's merge-survivor findings landed in.",
+        "transport_security": "unspecified"
+      }
+    },
+    {
+      "node_id": "ifc:req-dyno-storage-api",
+      "node_type": "Interface",
+      "properties": {
+        "auth": "unspecified",
+        "designation": "required",
+        "medium": "library",
+        "name": "StorageEngine Rust API",
+        "paradigm": "synchronous",
+        "payload_format": "unspecified",
+        "provenance": "authored",
+        "spec": "REQUIRED FROM dynograph-foundation. reflow2 links `dynograph-storage` (default-features off), pinned at v0.12.0. This is the RocksDB-backed store beneath every DesignGraph write, and it is what makes ifc:exclusive-local-store a real requirement rather than a preference — the single-writer guarantee is that engine's exclusive lock.",
+        "transport_security": "unspecified"
+      }
+    },
+    {
+      "node_id": "ifc:req-dyno-vector-api",
+      "node_type": "Interface",
+      "properties": {
+        "auth": "unspecified",
+        "designation": "required",
+        "medium": "library",
+        "name": "Vector, HNSW and statistics API",
+        "paradigm": "synchronous",
+        "payload_format": "unspecified",
+        "provenance": "authored",
+        "spec": "REQUIRED FROM dynograph-foundation. reflow2 links `dynograph-vector`, pinned at v0.12.0.\n\n⚠️ DECLARED BECAUSE IT IS LINKED, NOT BECAUSE IT IS USED HEAVILY. reflow2's search is lexical BM25 today and dec:idea-embeddings-adoption is still open about whether embeddings and HNSW get adopted at all. So this is a real compile-time dependency whose runtime use is thin — exactly the kind of thing req:the-design-says-what-was-built-and-never-used was captured to surface, and worth revisiting if that detector ever lands.",
         "transport_security": "unspecified"
       }
     },
@@ -69087,6 +69545,26 @@
       }
     },
     {
+      "node_id": "snap:epoch:reflow2-declares-what-it-requires:art:detect",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0100\",\"properties\":{\"as_checksum\":\"sha256:223fdc794d10db78\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0101\",\"properties\":{\"as_checksum\":\"sha256:223fdc794d10db78\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0110\",\"properties\":{\"as_checksum\":\"sha256:32d0609430669c46\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0120\",\"properties\":{\"as_checksum\":\"sha256:32d0609430669c46\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:32d0609430669c46\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:32d0609430669c46\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:32d0609430669c46\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:bba1328a493968c4\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:95413535822be8f6\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:6d274cf0f687fd7b3031761e30c174abfd473599c0fd64299fdb88cb71517c0f\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:6d274cf0f687fd7b3031761e30c174abfd473599c0fd64299fdb88cb71517c0f\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:6d274cf0f687fd7b3031761e30c174abfd473599c0fd64299fdb88cb71517c0f\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:6d274cf0f687fd7b3031761e30c174abfd473599c0fd64299fdb88cb71517c0f\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:f238a133af03041c96e7ba81f74232a1f6215033e8d3fcafb8db284950269007\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:0a72004a631748e26941f536cc6e47989fce27f9a164fc0ffeacf5462f56ade4\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:0a72004a631748e26941f536cc6e47989fce27f9a164fc0ffeacf5462f56ade4\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v040\",\"properties\":{\"as_checksum\":\"sha256:a25ed6b6f633a3aa\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v050\",\"properties\":{\"as_checksum\":\"sha256:a25ed6b6f633a3aa\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v060\",\"properties\":{\"as_checksum\":\"sha256:a25ed6b6f633a3aa\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v061\",\"properties\":{\"as_checksum\":\"sha256:e22fc5ee8aa08964\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v070\",\"properties\":{\"as_checksum\":\"sha256:e22fc5ee8aa08964\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v080\",\"properties\":{\"as_checksum\":\"sha256:e22fc5ee8aa08964\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v090\",\"properties\":{\"as_checksum\":\"sha256:e22fc5ee8aa08964\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:aggregate-gap-keying\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:kpp\",\"properties\":{\"completeness\":\"partial\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:release-pinned-to-time\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:detect\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:0a72004a631748e26941f536cc6e47989fce27f9a164fc0ffeacf5462f56ade4\",\"granularity\":\"atomic\",\"location\":\"crates/reflow2-core/src/detect.rs\",\"name\":\"detect.rs\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:detect",
+        "target_type": "Artifact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:reflow2-declares-what-it-requires:cap:complementary-pairing",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:seam\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-exchange\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:complementary-pairing\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:export\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:complementary-pairing\",\"properties\":{}}]",
+        "state": "{\"description\":\"`Interface.designation` carries the boundary's external ROLE — `published` (offers), `required` (needs one from outside), `both`, or `internal` — and `pair_designs` matches COMPLEMENTS across two designs: published/both against required/both, never like with like. The `required` half did not exist before 2026-07-30, which is why a design could say what it offered but not what it needed in any form another design could be matched against.\\n\\nTwo boundaries pair when their names match fuzzily (reusing ingest's two-band resolution rather than a second matcher) AND they agree on `medium`, `transport_security` and `auth`. Five outcomes: paired, CONFLICTS (names match, axes refuse — reported with every refusing axis), unmet needs, dead surface, and duplicate providers. Uncertain names are candidates to ask about, never actions. Boundaries with no role are counted and named, because `internal` is the default and cannot distinguish a deliberate choice from an unlabelled one. Produces the pairs `seam_report` previously had to be handed by a person.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Two designs pair by complementary role, so the seam is computed rather than hand-wired\",\"provenance\":\"authored\",\"status\":\"realized\",\"tier\":\"operational\"}",
+        "target_id": "cap:complementary-pairing",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:reflow2-states-its-own-rules:rule:bl-135",
       "node_type": "Snapshot",
       "properties": {
@@ -70749,6 +71227,18 @@
       }
     },
     {
+      "node_id": "fact:the-seam-pairs-and-seam-report-has-now-run",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "THE SEAM PAIRS. dec:linked-repos-poc's remaining half is now satisfied, and seam_report has been exercised for the first time.\n\nTHAT PoC (2026-08-06) reported paired=0 against BOTH dynograph-foundation and flo2, with 15 and 5 published interfaces landing in dead surface, and named the cause exactly: reflow2 declared no `required` interface anywhere, so pairing — which matches complements, never like with like — could never produce a pair. It called declaring them \"the cheapest next step\" and deliberately left it to Anthony's word. He gave it 2026-08-09, choosing to declare the environmental boundaries alongside the code ones.\n\nMEASURED, BEFORE AND AFTER, against dynograph-foundation:\n  paired         0  ->  5   (all at name_score 100)\n  dead_surface  15  ->  1   (only their /v1 REST API, which reflow2 genuinely does not use)\n  unmet_needs    0  ->  3   ambient-agent, exclusive-local-store, mcp-protocol\n\nAnd against flo2: unmet_needs 0 -> 4, dead_surface 5 -> 3.\n\n⚠️ THE MOST IMPORTANT NUMBER IS THE ONE THAT STOPPED BEING ZERO. The PoC called `unmet_needs: 0` \"the most dangerous number in the run\" — it reads as \"nothing is missing\" and meant \"we never said we needed anything\". It is now 3 and 4, which are real findings rather than an absence.\n\n⭐ A MODELLING ERROR MADE AND CORRECTED IN THE SAME SITTING, recorded because the correction is the lesson. The first attempt declared ONE umbrella interface for the whole dynograph dependency. Pairing returned NINE candidates and ZERO pairs: a pair needs a name match at or above 85/100, and an umbrella scored 62-78 against nine crisp names. THEY DECOMPOSED AND WE LUMPED. reflow2 links five named crates that map 1:1 onto five of their published interfaces, so the umbrella was deleted (never committed, never true — a mistake rather than history) and replaced with five requirements at the publisher's granularity, named to match. All five then paired at 100.\n\nSEAM_REPORT, RUN FOR THE FIRST TIME EVER — the PoC listed this as what it could NOT answer, because the check needs pairs and there were none: 5 pairs checked, 10 axes agreed, 0 incompatible, 0 differing, AND 30 AXES STATED BY NOBODY. The tool refuses to read that as compatibility, and says so unprompted: \"an unstated axis is not an agreed one, and this is not a claim of compatibility.\" It also names what it did not examine — the TYPES crossing the boundaries. So the honest verdict is that the machinery works and the contracts on both sides are almost entirely unstated, which is a true statement about two designs nobody wrote to be composed.\n\nA REAL WEAKNESS FOUND WHILE DOING IT, worth filing rather than working around: candidate noise scales as N×M. Five requirements against nine published library APIs produced 33 candidates, of which 5 were the real pairs. Every \"X API\" scores 60-83 against every other \"Y API\" on string similarity. Worse, an interface that has ALREADY paired at 100 still appears as a candidate against seven others — ifc:req-dyno-storage-api paired exactly with storage-api and is still offered against cluster-api, game-api, graph-api and four more. Suppressing candidates for a side that already has an exact match would remove most of the noise at no cost to the signal.",
+        "subject_id": "cap:complementary-pairing",
+        "valid_from": "2026-08-09"
+      }
+    },
+    {
       "node_id": "fact:the-stale-server-defect-recurred-to-the-people-who-wrote-it-down",
       "node_type": "TemporalFact",
       "properties": {
@@ -72284,7 +72774,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:27e0483a57e8b2efda4b737b1a80ec4ddcf48c6c5c2bb25f84e2d50a2c3a6dc8",
+  "prev_content_hash": "sha256:b2de73972e736142e35683fefc49ba2dc9e4b354ea6892d98298c3741525ab7d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
