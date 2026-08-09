@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:df4d1075858e95c7815cb1c700f8513efa41e70a4fee6b3c9733449cec035c60",
+  "content_hash": "sha256:9c4f8ec15ef7a4c594f68254c530d5be05b70432ddf06f057fef5ff7a252807d",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3729,6 +3729,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:loop-status-takes-a-contributor",
+      "properties": {},
+      "to_id": "epoch:loop-owed-to-a-person"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:machine-state-not-shared",
       "properties": {},
       "to_id": "epoch:v0120"
@@ -4959,6 +4965,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:loop-owed-to-a-person:cap:owed-to-a-contributor",
+      "properties": {},
+      "to_id": "epoch:loop-owed-to-a-person"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:many-projects-one-mind-brainstorm:dec:idea-intent-crosses-designs",
       "properties": {},
       "to_id": "epoch:many-projects-one-mind-brainstorm"
@@ -5969,6 +5981,15 @@
       "from_id": "dec:idea-gap-flows-to-the-dependency",
       "properties": {
         "acted_at": "2026-08-06T09:40:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-how-flo2-stays-subscribed-to-reflow2",
+      "properties": {
+        "acted_at": "2026-08-09",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -7666,6 +7687,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-6b775d9494833102",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-6bf23f6f04f775a1",
       "properties": {
         "accepted_baseline": true,
@@ -8014,6 +8044,15 @@
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-d3ab18be0a502f54",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
     },
     {
       "edge_type": "CHANGED",
@@ -12662,6 +12701,42 @@
     {
       "edge_type": "CHANGED",
       "from_id": "chg:loop-reports-assigned-decisions",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:owed-to-a-contributor"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:loop-status-takes-a-contributor",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:loop-status-takes-a-contributor",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:loop-status-takes-a-contributor",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:loop-status-takes-a-contributor",
       "properties": {
         "accepted_baseline": false,
         "action": "modified"
@@ -23435,6 +23510,12 @@
       "from_id": "cap:kpp-proposal",
       "properties": {},
       "to_id": "snap:epoch:kpp-capture:cap:kpp-proposal"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:owed-to-a-contributor",
+      "properties": {},
+      "to_id": "snap:epoch:loop-owed-to-a-person:cap:owed-to-a-contributor"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -49891,6 +49972,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:loop-status-scoped-to-a-contributor",
+      "properties": {},
+      "to_id": "cap:owed-to-a-contributor"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:maturity",
       "properties": {},
       "to_id": "cap:maturity-profile"
@@ -52615,7 +52702,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:672d623cd26f73c4f88bb08497c8cdf25a40dfdacb0d4fac1905ec96f7d9dabc",
+        "checksum": "sha256:1b138dd1269260236a0b95dcb5948b9d92ce8ff295f5cf9f1167eec1204db09b",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
@@ -52897,7 +52984,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:86386eef65516f34f9018a5c651a6a654e70cdf56cf9a993da07ef60ba361ffa",
+        "checksum": "sha256:2bdb2e4e30e7a1f6cbc6e3c33e0105e8a38c841fa89ddb969c0e61a01b66eae1",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -53288,7 +53375,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:89aaf70aca277246eda1df18d33484f84ce1ddcd00bd27253f1d560ee16c02da",
+        "checksum": "sha256:31defd5c9145b730aaa69934ffc0f47c66e4b800a032365695cbaf251adb53b4",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -55713,6 +55800,15 @@
       }
     },
     {
+      "node_id": "chg:accept-6b775d9494833102",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-09",
+        "name": "loop_status's served description trimmed from 2039 to under the 1500-char budget skill_lint enforces. Behaviour and parameters unchanged; every clause that survived is load-bearing (the approver discriminator, only-assignment-is-attributed, scoped-clean, the refusal on an unknown id). NO DESIGN MEANING. Worth recording as a real constraint rather than a nuisance: a served tool description is a BUDGETED surface, so a change that explains itself well in a commit message still has to earn its space in the description an agent reads at call time — and skill_lint is what enforces that, caught in CI after three local gates had already passed."
+      }
+    },
+    {
       "node_id": "chg:accept-6bf23f6f04f775a1",
       "node_type": "ChangeEvent",
       "properties": {
@@ -56050,6 +56146,15 @@
         "change_type": "refactor",
         "detected_at": "2026-07-28T18:30:00-04:00",
         "name": "v0.18.0 cut: the [reflow2] version field rolled 0.17.0 -> 0.18.0; the dependency pin itself did not move."
+      }
+    },
+    {
+      "node_id": "chg:accept-d3ab18be0a502f54",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-09",
+        "name": "Clippy collapsible_if: the contributor-existence guard became a let-chain. Behaviour identical, 1055 tests unchanged. NO DESIGN MEANING. Fifth instance of hashing before the last edit in one session — and the third distinct mechanism: fmt after the work (twice), and now a REQUIRED CLIPPY FIX after the work. The pattern is not carelessness about hashing; it is that every mandatory gate runs AFTER the code looks finished, so 'finished' is never the moment to hash. Hash immediately before the export, after every gate has run."
       }
     },
     {
@@ -57390,6 +57495,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "loop_status grows unsettled_assigned_decisions — a Decision left proposed while carrying an AUTHORED_BY role=approver is now reported, and one with no approver stays deliberately quiet. The first cut of cap:owed-to-a-contributor, and the narrowest thing that closes req:an-assigned-open-decision-is-reported."
+      }
+    },
+    {
+      "node_id": "chg:loop-status-takes-a-contributor",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "loop_status takes an optional contributor_id and lists the assigned decisions — the asynchronous half of the loop, attributing assignment and refusing to attribute anything else"
       }
     },
     {
@@ -59715,6 +59828,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-06: \"having somewhat independent reflow2 projects linked allows for requirements from one project to flow naturally to another without a user specifying we need to update package x because package y has a gap that only package x can fix. having reflow2 be able to do this automatically would be great.\"\n\nTHE WORKED EXAMPLE IS THIS REPOSITORY, AND IT WAS ENTIRELY BY HAND. flo2 hit a wall it could not climb from inside itself — a proposed Decision that nothing reported — and the fix had to land in reflow2. What carried it across was a human writing a markdown proposal in the flo2 repo, a human reading it, and an agent re-typing it as reflow2 nodes (chg:flo2-proposal-multi-graph-hosting). NOTHING IN EITHER GRAPH KNEW.\n\n⭐ SHARPENED 2026-08-06 BY A CONCRETE CASE AND A SCALING ARGUMENT THAT CHANGES THE ANSWER. Anthony: \"say my brother, who only has read access for reflow2, needs place a requirement upon reflow2 in order for flo2 to properly function... should my brother have the ability to add proposed ideas to reflow2 (write only for proposed, else read only) or should my brother place the external requirement in flo2 and when I open all 3 of my projects, it'll (the agent) see this requirement in the flo2 graph. I'm leaning towards the prior because say projectA (the one being depended upon) is huge and has multiple other projects dependent upon it and don't actually track any of the dependent projects/graphs, then option B may not function... think of it like a Google service is project A...they are not going to load every graph that is dependent upon them.\"\n\n⭐ THAT ARGUMENT DEFEATS OPTION (C) BELOW, WHICH THIS AGENT HAD RECOMMENDED, AND THE REFUTATION IS RECORDED RATHER THAN THE RECOMMENDATION QUIETLY WITHDRAWN. \"The upstream pulls rather than the downstream pushes\" rests on the upstream being able to ENUMERATE ITS DEPENDENTS. A widely-depended-on design cannot: it does not know who depends on it, and would not load their graphs if it did. And DISCOVERY OF DEPENDENTS IS ITSELF A PUSH — either the upstream somehow learns of every consumer, or consumers register, and registering is a write. Pull cannot bootstrap itself. It survives only in the SMALL federation case Anthony described earlier (C's owner asking who declares a dependency on C, finding exactly D).\n\n⭐ THE ANALOGY IS AN ISSUE TRACKER, NOT PUB/SUB. Anthony reached for \"socket publish/subscribe\". Pub/sub is the right shape for the OTHER direction and already exists: the upstream publishes its surface (export_surface, built), consumers mirror it (mirror_surface, built). The REVERSE channel in every real ecosystem is a tracker: you do not get write access to Google's codebase, you file an issue. ANYONE MAY FILE; ONLY MAINTAINERS TRIAGE. That is precisely \"write only for proposed, else read only\", and it scales because the upstream keeps ONE inbox rather than N graphs.\n\n⭐⭐ IN SYSTEMS-ENGINEERING TERMS THIS IS NOT EXOTIC, IT IS THE NORMAL DIRECTION. flo2 is a CUSTOMER of reflow2; reflow2 is the SUPPLIER. A customer levying a requirement on a supplier is the most ordinary transaction in the discipline. Framing it as \"writing into a design you do not own\" made an unremarkable act sound like a violation.\n\n⭐⭐ THE VOCABULARY IS ALREADY THERE, WHICH THIS AGENT PREVIOUSLY GOT WRONG BY NOT LOOKING. Checked against describe_schema, a Requirement already carries every field this needs: `source` (\"who/what stated it — a user, a regulation, a stakeholder\"), `provenance` with an `imported` value, `designation` published/internal so the downstream can mark what it publishes, `status` starting at `proposed` with only the owner's word moving it off (set_requirement_status), and AUTHORED_BY carrying role author/reviewer/approver. A levied requirement is expressible TODAY as: add_requirement (lands proposed) + authored_by <them> role=author + source \"<their design>\" + provenance imported. NOTHING IN THE SCHEMA NEEDS TO CHANGE.\n\n⭐ AND IT IS ALREADY REPORTABLE, BY WORK MERGED THE SAME DAY. loop_status gained `unsettled_assigned_decisions` (PR #81, 2026-08-06) — a Decision left proposed while carrying an approver edge. The identical shape answers \"a proposed Requirement from an external source is waiting on you\". THE INBOX IS ALREADY COMPUTABLE; it has never been pointed at this case.\n\nSO WHAT IS MISSING IS TWO THINGS: (1) TRANSPORT — how a node gets from their machine into this graph; (2) ENFORCEMENT — nothing stops a writer doing more than filing, because reflow2 HAS NO AUTHENTICATION and cannot acquire one without becoming a different product.\n\n⭐ TRANSPORT ALREADY EXISTS, AND IT IS **GIT** — NOT ANY ONE PROVIDER.\n⚠️ CORRECTED BY ANTHONY, 2026-08-06, and the correction matters because the first version of this node named GitHub: \"we can probably use GitHub for this example, but not every project will use GitHub. every project is designed to use a git repo though so other git providers like gitlab can also work.\"\n\nThe mechanism is a BRANCH CARRYING A PROPOSED-STATUS NODE IN THE COMMITTED EXPORT, offered to the owner, who merges it or does not. Every primitive that needs is plain git — a branch, a diff, a merge — and reflow2's own three-way merge driver already operates on the export FILE, provider-agnostic by construction. A hosted forge (GitHub pull request, GitLab merge request, Gitea, Bitbucket) is one CONVENIENT UI over those primitives and supplies the review gate and audit trail for free; NONE OF IT IS REQUIRED. With no forge at all the same exchange works by `git format-patch` and email, `git request-pull`, or a shared bare repo over SSH — which is also what makes it usable where a forge cannot go, including the disconnected case dec:idea-need-to-know-compartments cares about.\n\nTHE LOAD-BEARING FACT: dec:multi-writer-architecture (accepted) already made the repo file the unit of exchange, and req:persistence puts the design inside the consumer project. So \"the design travels as a file in a git repo\" is not a workaround adopted for this feature — it is the architecture, and this transport falls out of it for free. ZERO NEW REFLOW2 CODE.\n\nITS LIMIT, STATED PLAINLY: it requires the filer to have a clone and a git workflow, which is exactly what flo2's non-technical contributors do not have — so for the HOSTED case flo2's own layer must be the mailbox, and that lands back on req:reflow2-consumable-as-an-image and dec:one-process-many-stores.\n\nOPTIONS, NONE CHOSEN — REORDERED BY THE ARGUMENT ABOVE.\n\n(A) ⭐ ANTHONY'S LEAN: WRITE-ONLY-AT-PROPOSED. A consumer may create nodes at `proposed`, attributed and sourced, and may do nothing else — no accepting, no editing, no deleting. Expressible in today's schema, reportable by today's loop, transportable by plain git, and it scales because the upstream keeps one inbox rather than N graphs. Counter, and it is the honest one: reflow2 cannot enforce it. \"Write only for proposed\" is a property of WHATEVER HOLDS THE MAILBOX — a forge's branch permissions, a maintainer's judgement, or flo2's own layer — and calling it a reflow2 feature would be the same overclaim dec:idea-need-to-know-compartments warns about.\n\n(B) THE REQUIREMENT STAYS IN THE DOWNSTREAM GRAPH and the upstream owner sees it when they open both. Anthony's own counter is decisive at scale: a heavily-depended-on design will not load its dependents' graphs and does not know who they are. Still fine for the two-brothers case, and it is what the composition machinery already supports with no new anything.\n\n(C) THE UPSTREAM PULLS. Refuted above as a general mechanism. Retained for the small federation case only.\n\n(D) A THIRD, PROGRAM-LEVEL GRAPH holding cross-project intent, with the others as composed children. dec:nested-graphs and cap:derived-completion anticipate the shape. Answers \"where does shared intent live\" rather than \"how does a need travel\", and adds a design to maintain.\n\n⚠️ THE PREREQUISITE THAT STILL BOUNDS ALL OF IT: dec:linked-repos-poc was RUN 2026-08-06 and found reflow2 declares NO `required` interface at all, so nothing pairs across any seam. The channel this node is about has no labelled boundary to run along.\n\n⚠️ AND THE CONSTRAINT FROM dec:idea-need-to-know-compartments: an automatic cross-graph write is a channel between compartments, and the safe direction is defined against SENSITIVITY, not against the dependency arrow. Option (A) is materially safer than any automatic flow precisely because a human files it and a human accepts it — the write is deliberate at both ends.",
         "name": "OPEN — how does a downstream owner levy a requirement on an upstream design they do not own? (Anthony leans: write-only-at-proposed, carried by git)",
         "rationale": "Captured under the brainstorm skill 2026-08-06, then SHARPENED twice the same day.\n\n⭐ THREE CORRECTIONS TO THIS AGENT ARE PRESERVED IN THE NODE rather than edited away, because each was a different failure worth keeping visible.\n\n(1) Option (C), upstream-pulls, was RECOMMENDED here and is refuted by Anthony's Google-service argument: pull requires enumerating dependents, a widely-used design cannot, and discovery of dependents is itself a push, so pull cannot bootstrap.\n\n(2) This node previously implied the graph could not express a levied requirement. describe_schema shows it already can — `source`, `provenance: imported`, `designation`, `status: proposed` and AUTHORED_BY roles are all present. Same failure dec:idea-intent-crosses-designs corrected on 2026-08-05: asserting an absence from a summary instead of reading the surface. READ THE SCHEMA, NOT THE SUMMARY.\n\n(3) The transport was first written as \"a pull request... enforced by GitHub\". Anthony corrected it: not every project uses GitHub, but every project uses a git repo. The distinction is not pedantic — coupling reflow2's answer to one vendor's feature would narrow a product whose whole persistence story (req:persistence, dec:multi-writer-architecture) is already vendor-neutral, and would exclude exactly the disconnected and self-hosted environments where the file-and-merge model is the ONLY workable one. The primitives are branch/diff/merge; a forge is a UI over them.\n\nKept SEPARATE from dec:idea-a-session-holds-several-graphs (ACCESS — which graphs a session can see) because this is AUTHORITY — who may write what, and at which status. The federation node localises this question to each ownership seam; this node is what happens at one.\n\nThe reframe worth keeping even if every option here is rejected: this is a CUSTOMER REQUIREMENT LEVIED ON A SUPPLIER, the most ordinary transaction in systems engineering.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-how-flo2-stays-subscribed-to-reflow2",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-09: \\\"how can we link reflow2 and flo2 — flo2 is dependent upon reflow2; we've discussed publisher → subscriber type relationships.\\\"\n\nWHAT SEARCHING FIRST CHANGED, and it changed the question rather than answering it: most of the linking machinery is DESIGNED AND BUILT, and it has already been RUN on exactly this pair. dec:linked-repos-poc (executed 2026-08-06) composed reflow2, flo2 and dynograph-foundation in a throwaway in-memory graph and found ONE true positive unprompted — ifc:core-api (ours, `library`) against flo2's ifc:model-provider-api (`REST`), 80/100 name match, \\\"very likely the same contract, but they cannot be connected as either is currently built.\\\" Nobody told it the answer. So the publisher/subscriber SHAPE is not the open question; dec:pairing-role-placement settled where the role lives, cap:publish-surface and cap:mirror-surface are built, and dec:nested-graphs settled that separately-owned designs are separate graphs.\n\nWHAT IS ACTUALLY OPEN IS THE TENSE. Every link so far has been a THING SOMEBODY RAN — a manual composition into a temporary graph, discarded afterwards. A subscription is a standing relationship: flo2 would be continuously answerable to what reflow2 currently publishes, and would learn when it moved. Nothing in the design says how that happens, and the two projects are on different machines, different release cadences and different owners.\n\nTHE OPTIONS, in Anthony's framing and with what is cheap or expensive about each recorded beside it rather than argued down:\n\n(A) PULL AT THE EXPORT. flo2 vendors reflow2's committed export (or its published surface via export_surface) and re-composes on each reflow2 release. Cheapest by far, needs nothing new, and rides git which both already use. COUNTER: it is a snapshot, so flo2 learns about a moved contract whenever it next remembers to pull — which is the failure mode this whole question is about, one level up.\n\n(B) PULL AT THE RUNNING SERVER. Once one process holds many designs (cap:graph-registry, reflow2_updates #1), flo2 could hold both graph_ids and ask across them live. COUNTER: gated on the largest outstanding piece of work, and dec:idea-a-session-holds-several-graphs is still proposed. Also flo2's graph_id is `1a97fc1f1de4d5d2` — an opaque mint beside two readable labels — so the addressing story needs a human-facing name first.\n\n(C) A DECLARED DEPENDENCY EDGE BETWEEN DESIGNS, not just between nodes. reflow2 already has req:design-dependencies-declared (accepted, verified) for library versions; the analogue for designs would let a consumer say \\\"I depend on reflow2's published surface at version X\\\" and make a stale subscription COMPUTABLE rather than remembered. COUNTER: it is new vocabulary, and dec:idea-intent-crosses-designs and dec:idea-gap-flows-to-the-dependency are both still open about what may legitimately cross a design boundary at all.\n\n(D) THE SEAM AS A GATE. flo2's CI composes against reflow2's published export and fails when a contract it consumes has moved — the ci-gate pattern pointed across a boundary instead of inward. COUNTER: it makes reflow2's release able to break flo2's build, which is a real coupling decision and Anthony's to make, not a technical detail.\n\n⚠️ THE BLOCKER IS THE SAME FOR ALL FOUR, AND IT IS ONE MISSING LABEL. dec:linked-repos-poc found it and deliberately did not fix it: REFLOW2 DECLARES NO `required` INTERFACE ANYWHERE. Pairing matches complements, so with nothing required, nothing can ever pair — paired=0 on BOTH pairs, 15 of dynograph-foundation's interfaces and 5 of flo2's landing in dead surface. Its most dangerous number was `unmet_needs: 0`, which reads as \\\"nothing is missing\\\" and means \\\"we never said we needed anything\\\". Until reflow2 says what it requires, every option above links two designs that cannot be compared. That PoC called declaring them \\\"the cheapest next step\\\" — a handful of nodes — and left it to Anthony's word because it is design about reflow2's own boundaries.\n\nAND A SECOND THING NO OPTION ADDRESSES, from reflow2_updates.md #7 (NOT DESIGNED): there are TWO version axes at this seam and only one negotiates. The MCP protocol version negotiates per connection; reflow2's 149-tool surface does not. The toolsnaps stop a surface change landing silently IN THIS REPO and tell flo2 nothing. Whatever subscription shape is chosen has to carry that, or \\\"clean module\\\" quietly becomes \\\"vendored fork\\\" — which dec:open-reflow2-as-core-module already names as the crux, with the cost falling on @ajs.\n\nNOTHING HERE IS PROMOTED. The options are recorded as considered; the one decision genuinely waiting is whether to declare reflow2's `required` interfaces, which is small, unblocks all four, and is not an agent's to make.",
+        "name": "OPEN — what makes the reflow2→flo2 link a STANDING subscription rather than a run somebody remembers to do?",
+        "rationale": "Recorded via the brainstorm skill: one Decision per open question, at `proposed`, options in the prose, nothing promoted to intent without Anthony's word. Kept SEPARATE from dec:linked-repos-poc because that node records a RUN and what it proved; this one asks what the relationship should be going forward, which the PoC explicitly did not answer. Kept separate from dec:idea-intent-crosses-designs and dec:idea-gap-flows-to-the-dependency because those ask WHAT may cross a design boundary, while this asks WHEN and BY WHAT MECHANISM — one node holding both could only ever be half-answered.",
         "status": "proposed"
       }
     },
@@ -62139,6 +62262,16 @@
         "epoch_type": "revision",
         "name": "Linking repos: a design analysed against its dependency's design, and an interface that publishes a complete contract (2026-07-27, post-v0.16.0)",
         "sequence": 200,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:loop-owed-to-a-person",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The loop answers what is owed to a named person, and lists the assigned decisions (2026-08-09)",
+        "sequence": 297,
         "status": "arrived"
       }
     },
@@ -68248,6 +68381,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:loop-owed-to-a-person:cap:owed-to-a-contributor",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:owed-to-a-contributor\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:report\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"sys:coherence-loop\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-05T23:10:00Z\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:an-assigned-open-decision-is-reported\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:no-idea-goes-quiet\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:ownership-is-an-edge-so-debt-has-an-addressee\",\"properties\":{\"coverage\":\"partial\",\"evidence\":\"cap:owed-to-a-contributor is in_progress and holds the same thesis, but its chosen first cut answers 'what has a named person been asked to settle' (proposed Decisions with an approver edge), not 'which gaps are in the part of the system I own'. The fleet's ask is the second one, so this covers the requirement only in part.\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:the-loop-says-what-is-owed-to-a-person\",\"properties\":{}}]",
+        "state": "{\"description\":\"A contributor scope on the loop's own reporting: today loop_status answers \\\"what does this design owe?\\\" and takes no arguments at all, while detect_gaps already accepts a scope for one part of the design — so this follows an established pattern rather than inventing one.\\n\\nThe input already exists and is already structured: AUTHORED_BY with role=approver is the graph SAYING that a named contributor owes an answer here. Nothing computes on it today. The narrowest useful first cut is a loop_status field counting Decisions that are proposed AND carry an approver edge, which closes the concrete instance without disturbing the deliberate quiet around brainstormed decisions.\\n\\nLarger shapes recorded but not chosen: a distinct gap source for a Decision proposed-and-assigned-but-not-settled (separate from undecided_decision_point, which reasonably wants real forks); and letting a Question be raised against a node directly, decoupling the Question machinery from gap derivation — the largest change, and the one that would let a specific question be put to a specific person and the answer tracked.\\n\\nNOTIFICATION IS DELIBERATELY NOT PART OF THIS. proxy.rs holds that the server never initiates a message, verified against the service rather than assumed; that property is worth keeping and a consumer can poll. What must live here is the ANSWER to \\\"what is owed to this person\\\", because only the graph knows.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"The loop answers what is owed to a named person, computed from edges the graph already carries\",\"provenance\":\"authored\",\"status\":\"in_progress\",\"tier\":\"operational\"}",
+        "target_id": "cap:owed-to-a-contributor",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:many-projects-one-mind-brainstorm:dec:idea-intent-crosses-designs",
       "node_type": "Snapshot",
       "properties": {
@@ -70987,6 +71130,18 @@
       }
     },
     {
+      "node_id": "ver:loop-status-scoped-to-a-contributor",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-09",
+        "level": "unit",
+        "method": "test",
+        "name": "loop_status answers what is owed to ONE NAMED PERSON, and a scoped answer can never be read as the design being clean (crates/reflow2-core/tests/report.rs, 5 cases). SPLIT OUT of ver:owed-to-a-contributor rather than widening it, because that check's statement is about the COUNTER and it was passing before any of this existed — a green check that quietly grows to stand for behaviour it never exercised is the failure this project has now written down twice. THE CASES: assigned decisions are LISTED, not merely counted, carrying decision_id, name and approver_id (flo2's F4, hit independently here the same day where finding two meant jq-ing the export); scoping to one contributor returns only their assigned decisions and names them in `next`; scoping does NOT make an unassigned musing somebody's problem, so the deliberate quiet around thinking out loud survives; an unknown contributor_id is REFUSED rather than answered with an empty list, with a positive control proving the same call succeeds for a real id — because a typo would otherwise produce 'nothing is owed to you', the most reassuring possible reply and the one least likely to be questioned. THE LOAD-BEARING CASE is a_scoped_answer_never_reads_as_the_design_being_clean: a contributor with nothing assigned gets clean=true, AND scope.not_attributable is non-empty, AND `next` says in words that the rest carries no per-person attribution, AND the design-wide counters come back unchanged by scoping. That is the guard against the defect class this project has now met four times — a value that cannot tell a real NONE from an I-CANNOT-SAY. WHAT IS NOT COVERED, stated rather than left to be discovered: nothing verifies attribution for any relationship OTHER than the approver edge, because none is attributed. Claim-derived ownership and gap-to-judge attribution are unbuilt, and req:the-loop-says-what-is-owed-to-a-person names that as a real open question rather than an oversight.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:maturity",
       "node_type": "Verification",
       "properties": {
@@ -71675,7 +71830,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:eb2df40b1871dc374d6f584c0fb214497c95188a10585bc40504c03b9624909f",
+  "prev_content_hash": "sha256:df4d1075858e95c7815cb1c700f8513efa41e70a4fee6b3c9733449cec035c60",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -1653,7 +1653,7 @@ async fn loop_status_reports_debt_and_the_write_tools_point_at_the_loop() {
         "{cap}"
     );
 
-    let status = j!(s.loop_status());
+    let status = j!(s.loop_status(Parameters(Default::default())));
     assert_eq!(status["clean"], false);
     assert!(
         status["unproven_capabilities"].as_u64().unwrap() >= 1,
@@ -1723,7 +1723,7 @@ async fn loop_status_digests_the_verification_roll_instead_of_rolling_it() {
         })));
     }
 
-    let status = j!(s.loop_status());
+    let status = j!(s.loop_status(Parameters(Default::default())));
     let v = &status["verifications"];
 
     assert!(
@@ -2224,7 +2224,7 @@ async fn read_side_loop_hint_fires_on_debt_then_only_on_change() {
 async fn read_side_loop_hint_silent_when_the_loop_is_clean() {
     // An empty graph owes nothing.
     let s = ReflowService::in_memory().expect("in-memory service");
-    let status = j!(s.loop_status());
+    let status = j!(s.loop_status(Parameters(Default::default())));
     assert_eq!(status["clean"], true, "empty graph: the loop is clean");
 
     // A clean loop attaches no read hint — the pointer is state-derived, not

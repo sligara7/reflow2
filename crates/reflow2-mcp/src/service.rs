@@ -1839,6 +1839,25 @@ pub struct RequirementDesignationReq {
 
 #[derive(Debug, Default, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct LoopScopeReq {
+    /// Narrow the debt to what this CONTRIBUTOR was asked to settle — "what
+    /// needs me". Omit for the whole design, which is the historical behaviour.
+    ///
+    /// Only ASSIGNMENT is attributed: an `AUTHORED_BY role=approver` edge, the
+    /// graph saying in structure that this named person was asked. Every other
+    /// debt class belongs to the design rather than to a person and comes back
+    /// under `scope.not_attributable` instead of being filtered away — a scoped
+    /// answer must never be readable as "the design is fine".
+    ///
+    /// An id that names no Contributor is REFUSED. A typo would otherwise
+    /// answer "nothing is owed to you", which is the most reassuring reply the
+    /// tool can give and the one least likely to be questioned.
+    #[serde(default)]
+    pub contributor_id: Option<String>,
+}
+
+#[derive(Debug, Default, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ScopeReq {
     /// Narrow the answer to the part of the design around this node — a
     /// Component a team owns, a Project, a Capability. Omit for the whole design,

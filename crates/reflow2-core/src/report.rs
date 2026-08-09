@@ -407,8 +407,62 @@ pub struct LoopStatus {
     /// would make `clean` unreachable on any design whose last run was
     /// yesterday, which is the permanently-red-check failure rebuilt.
     pub verifications: Vec<VerificationRecency>,
-    /// Every counter zero.
+    /// The assigned decisions THEMSELVES, not only how many.
+    ///
+    /// `unsettled_assigned_decisions` counted them and nothing listed them, so
+    /// the one debt line with an obvious owner was the one with no obvious next
+    /// call: every other line names a tool (`detect_gaps`, `detect_defects`)
+    /// while this one left the reader to walk `AUTHORED_BY` edges by hand.
+    /// Reported by flo2 (F4, 2026-08-09) and hit independently in this repo the
+    /// same day, where finding two of them meant `jq`-ing the committed export.
+    pub assigned_decisions: Vec<AssignedDecision>,
+    /// Set when the report was narrowed to one contributor.
+    pub scope: Option<LoopScope>,
+    /// Every counter zero. **When `scope` is set this means "nothing is
+    /// assigned to that person"** — not that the design is clean. `scope`
+    /// carries what could not be attributed, and `next` says so in words.
     pub clean: bool,
+}
+
+/// An open Decision somebody was explicitly asked to settle.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct AssignedDecision {
+    pub decision_id: String,
+    pub name: String,
+    /// The Contributor the `AUTHORED_BY role=approver` edge points at.
+    pub approver_id: String,
+}
+
+/// What a contributor-scoped answer covered, and what it could not.
+///
+/// The scoped report exists because `loop_status` could say what a design owes
+/// in total but not what it owes a PERSON (`req:the-loop-says-what-is-owed-to-a-person`),
+/// which is the axis on which `req:no-idea-goes-quiet` fails for anybody who is
+/// not the one person at the keyboard.
+///
+/// # Why only assignment is attributed
+///
+/// The requirement names the trap and refuses to paper over it: *what "owed to"
+/// MEANS per item type* is a real question, and "a gap on a requirement Shawn
+/// raised is arguably owed to whoever must judge it, not to him". So exactly one
+/// relationship is attributed here — an `AUTHORED_BY role=approver` edge, which
+/// is the graph saying in structure that a NAMED person was asked. Everything
+/// else is reported as design-wide and named in [`Self::not_attributable`].
+///
+/// **Filtering the rest to zero would be the worse bug**, and it is one this
+/// project has now found four times in other guises: a value that cannot tell
+/// NOTHING IS OWED from I CANNOT SAY. A person reading `clean: true` while 55
+/// gaps sit in the design would be reading a lie the tool told confidently.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct LoopScope {
+    /// The contributor asked about. Verified to exist — a mistyped id is an
+    /// error, never an empty answer, because "nothing is owed to you" is
+    /// exactly what a typo would produce and exactly what nobody would question.
+    pub contributor_id: String,
+    /// Debt classes that are real design-wide but carry no per-person
+    /// attribution, with their counts. Present so a scoped answer can never be
+    /// read as "the design is fine".
+    pub not_attributable: Vec<String>,
 }
 
 impl DesignGraph {
@@ -490,6 +544,37 @@ impl DesignGraph {
     }
 
     pub fn loop_status(&self) -> Result<LoopStatus, DynoError> {
+        self.loop_status_for(None)
+    }
+
+    /// The loop's debt, optionally narrowed to what one CONTRIBUTOR was asked
+    /// to settle.
+    ///
+    /// `None` is the whole design and is byte-identical to what `loop_status`
+    /// always returned, plus the new `assigned_decisions` listing.
+    ///
+    /// `Some(id)` answers "what needs ME" — the screen a person working
+    /// asynchronously actually wants, and the thing that today can only be
+    /// produced by a human opening the design and reading it. It follows
+    /// `detect_gaps`'s established shape: narrow the answer, and always say
+    /// what was left out.
+    ///
+    /// **A scoped answer attributes assignment and nothing else** — see
+    /// [`LoopScope`] for why that restraint is the design rather than a
+    /// shortcut.
+    pub fn loop_status_for(&self, contributor: Option<&str>) -> Result<LoopStatus, DynoError> {
+        // A contributor we cannot find is an ERROR, not an empty answer. The
+        // failure mode being avoided is specific: a mistyped or renamed id
+        // silently produces "nothing is owed to you", which is both the most
+        // reassuring possible response and the one nobody thinks to question.
+        if let Some(id) = contributor
+            && self.get_node(node::CONTRIBUTOR, id)?.is_none()
+        {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::CONTRIBUTOR.to_string(),
+                node_id: id.to_string(),
+            });
+        }
         let questions = self.open_questions()?;
         let surfaced: std::collections::BTreeSet<&str> =
             questions.iter().map(|q| q.gap_id.as_str()).collect();
@@ -510,7 +595,7 @@ impl DesignGraph {
         // somebody was asked to decide and nothing else says so. The approver
         // edge is the discriminator — without it a `proposed` Decision is a
         // brainstorm, and staying quiet about those is deliberate.
-        let mut unsettled_assigned_decisions = 0usize;
+        let mut assigned_decisions = Vec::new();
         for dec in self.scan_nodes(node::DECISION)? {
             let proposed = dec
                 .properties
@@ -520,19 +605,33 @@ impl DesignGraph {
             if !proposed {
                 continue;
             }
-            let has_approver = self
-                .outgoing(&dec.node_id, Some(edge::AUTHORED_BY))?
-                .iter()
-                .any(|e| {
-                    e.properties
-                        .get("role")
+            for edge in self.outgoing(&dec.node_id, Some(edge::AUTHORED_BY))? {
+                if edge
+                    .properties
+                    .get("role")
+                    .and_then(dynograph_core::Value::as_str)
+                    != Some("approver")
+                {
+                    continue;
+                }
+                // Scoping happens HERE, on the one edge that names a person,
+                // and nowhere else in this function.
+                if contributor.is_some_and(|want| want != edge.to_id) {
+                    continue;
+                }
+                assigned_decisions.push(AssignedDecision {
+                    decision_id: dec.node_id.clone(),
+                    name: dec
+                        .properties
+                        .get("name")
                         .and_then(dynograph_core::Value::as_str)
-                        == Some("approver")
+                        .unwrap_or_default()
+                        .to_string(),
+                    approver_id: edge.to_id.clone(),
                 });
-            if has_approver {
-                unsettled_assigned_decisions += 1;
             }
         }
+        let unsettled_assigned_decisions = assigned_decisions.len();
 
         let structural_defects = self.detect_defects()?.len();
 
@@ -642,6 +741,78 @@ impl DesignGraph {
             ));
         }
 
+        // Narrowing, and saying what the narrowing left out. Everything above
+        // except `assigned_decisions` is a fact about the DESIGN, not about a
+        // person, so a scoped answer names those counts rather than zeroing
+        // them — the difference between "nothing is owed to you" and "I cannot
+        // tell whose this is", which must never be the same answer.
+        let scope = contributor.map(|id| {
+            let mut not_attributable = Vec::new();
+            for (n, what) in [
+                (unsurfaced_gaps, "open gap(s) never put to anyone"),
+                (unanswered_questions, "question(s) waiting on the user"),
+                (
+                    unwritten_answers,
+                    "answered question(s) not yet written into the design",
+                ),
+                (structural_defects, "structural defect(s)"),
+                (
+                    unproven_capabilities,
+                    "capability(ies) claiming built with no passing check",
+                ),
+                (
+                    undispositioned_drift,
+                    "recorded divergence(s) awaiting a disposition",
+                ),
+                (
+                    unexamined_claims,
+                    "built capability(ies) never checked against reality",
+                ),
+            ] {
+                if n > 0 {
+                    not_attributable.push(format!("{n} {what}"));
+                }
+            }
+            LoopScope {
+                contributor_id: id.to_string(),
+                not_attributable,
+            }
+        });
+
+        if let Some(s) = &scope {
+            next.clear();
+            if unsettled_assigned_decisions > 0 {
+                next.push(format!(
+                    "{unsettled_assigned_decisions} open decision(s) name {} as the person \
+                     asked to settle them — decide (set_decision_status), or drop the \
+                     approver if nobody was actually asked. They are listed in \
+                     `assigned_decisions`.",
+                    s.contributor_id
+                ));
+            } else {
+                next.push(format!("Nothing is assigned to {}.", s.contributor_id));
+            }
+            if !s.not_attributable.is_empty() {
+                // Said in words rather than left to the reader to infer from a
+                // field, because `next` is the line an agent reads aloud.
+                next.push(format!(
+                    "The rest of the loop's debt carries no per-person attribution and is \
+                     NOT counted as {}'s: {}. Call loop_status without a contributor for \
+                     the design-wide picture.",
+                    s.contributor_id,
+                    s.not_attributable.join(", ")
+                ));
+            }
+        }
+
+        // Scoped, `clean` means "nothing is assigned to this person" — it is
+        // deliberately NOT `next.is_empty()`, because a scoped answer always
+        // carries the not-attributable line and would otherwise never be clean.
+        let clean = match &scope {
+            Some(_) => unsettled_assigned_decisions == 0,
+            None => next.is_empty(),
+        };
+
         Ok(LoopStatus {
             unsurfaced_gaps,
             unanswered_questions,
@@ -652,7 +823,9 @@ impl DesignGraph {
             undispositioned_drift,
             unexamined_claims,
             verifications: self.verification_recency()?,
-            clean: next.is_empty(),
+            assigned_decisions,
+            scope,
+            clean,
             next,
         })
     }
