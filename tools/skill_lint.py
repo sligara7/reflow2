@@ -87,6 +87,23 @@ NON_TOOL_TERMS = {
     "priority",
     "status",
     "false",
+    # DesignRule properties and the two governance gap keys (2026-08-08) — the
+    # governance-proposal skill names the field whose DEFAULT is the whole
+    # hazard (`enforced` defaults to true, so silence claims gate-blocking) and
+    # the findings that bill a rule for a detector. `true` is that default,
+    # quoted while explaining why it must be written explicitly; the six
+    # category values are DesignRule.category's suggested vocabulary.
+    "enforced",
+    "statement",
+    "true",
+    "build_without_governance",
+    "unverified_enforced_rule",
+    "tech_stack",
+    "convention",
+    "material",
+    "methodology",
+    "standard",
+    "style",
     # Artifact.granularity and Artifact.volatility values (BL-188, BL-191) —
     # property enums the link-artifacts skill names, not tools.
     "granularity",

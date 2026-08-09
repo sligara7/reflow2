@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:62e2b64ba95135f24c746464246efb2c2a5c6bc450222c4f563f38010d9ba680",
+  "content_hash": "sha256:cb1792abcd84b65fb7de5f66525bb38ddc43cb103a4492b9110d2e47e185a7c9",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1184,6 +1184,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:governance-proposal",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -2901,6 +2909,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:allocation-subquestions-narrowed-20260808",
+      "properties": {},
+      "to_id": "epoch:allocation-subquestions-narrowed"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:anchor-decision-second-hint",
       "properties": {},
       "to_id": "epoch:reflow-workflow-review"
@@ -4545,6 +4559,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:allocation-subquestions-narrowed:dec:idea-allocation-waits-for-the-last-responsible-moment",
+      "properties": {},
+      "to_id": "epoch:allocation-subquestions-narrowed"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:arrival-delta:cap:arrival-delta",
       "properties": {},
       "to_id": "epoch:arrival-delta"
@@ -5640,6 +5660,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-allocation-waits-for-the-last-responsible-moment",
+      "properties": {
+        "acted_at": "2026-08-08",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-an-unplanned-cut-takes-an-in-between-number",
       "properties": {
         "acted_at": "2026-08-08",
@@ -5905,6 +5934,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-ility-chooses-the-allocation-graph",
+      "properties": {
+        "acted_at": "2026-08-08",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -7976,6 +8014,15 @@
         "action": "modified"
       },
       "to_id": "req:set-scoped-acknowledgement-keys-on-its-rule"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:allocation-subquestions-narrowed-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-allocation-waits-for-the-last-responsible-moment"
     },
     {
       "edge_type": "CHANGED",
@@ -11495,6 +11542,33 @@
         "action": "modified"
       },
       "to_id": "cap:sanitize-ingress"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:governance-proposal-skill-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:governance-proposal-skill-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:governance-proposal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:governance-proposal-skill-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:skills"
     },
     {
       "edge_type": "CHANGED",
@@ -19035,6 +19109,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:governance-proposal",
+      "properties": {},
+      "to_id": "dec:does-enforced-default-to-gate-blocking"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:governance-proposal",
+      "properties": {},
+      "to_id": "dec:three-party-checks"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:granularity-observation",
       "properties": {},
       "to_id": "dec:maturity-restructuring-delta"
@@ -22818,6 +22904,12 @@
       "from_id": "dec:external-blob-store-pressure",
       "properties": {},
       "to_id": "snap:epoch:arrival-delta:dec:external-blob-store-pressure"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-allocation-waits-for-the-last-responsible-moment",
+      "properties": {},
+      "to_id": "snap:epoch:allocation-subquestions-narrowed:dec:idea-allocation-waits-for-the-last-responsible-moment"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -42643,6 +42735,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:governance-proposal-skill",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:governance-proposal"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:granularity",
       "properties": {
         "completeness": "complete"
@@ -46511,6 +46611,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:governance-proposal-skill",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:governance-proposal-skill"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:granularity",
       "properties": {
         "action": "created"
@@ -48010,6 +48118,19 @@
       }
     },
     {
+      "node_id": "art:governance-proposal-skill",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:4a8a87ebca3b4efcba06061556d367c3123bb6238b5b62e017ea4b129cfeef57",
+        "granularity": "atomic",
+        "location": "getting-started/skills/governance-proposal/SKILL.md",
+        "name": "governance-proposal/SKILL.md",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
       "node_id": "art:granularity",
       "node_type": "Artifact",
       "properties": {
@@ -48871,7 +48992,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2a0d95cf199f0a46d893e098279061a1be5959278021113570f759bfabab46f4",
+        "checksum": "sha256:2822653eae902dd0ff194eeaaceede448ef38af9f727c3f960deb667dc16d8da",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -50293,6 +50414,19 @@
         "name": "The governance mode is a choice a project makes and can revisit",
         "provenance": "authored",
         "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:governance-proposal",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The capture half of governance, mirroring cap:kpp-proposal one layer along. An agent notices the shape of a rule — \"we always…\", a convention the build already follows but nothing records, a choice about HOW rather than WHAT — and asks the user what breaking it should cost, in language needing no vocabulary: \"if somebody pushed straight to main, should the build have stopped them, or is that advice?\" The answer is written to `enforced` EXPLICITLY in both directions. That is the load-bearing part: `enforced` defaults to true, so leaving it unset does not mean advisory, it means gate-blocking — and a rule that reaches that status by silence then owes a detector it never agreed to, which is exactly how all four of reflow2's own enforced rules got there. Also states what an enforced answer costs (unverified_enforced_rule, 0.6, until a PASSING check exists) and refuses the shortcut its own proposers warned about: never attach a verification to close the finding, because a graph node green-washes exactly like a document.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A rule the project follows is captured with its consequence stated, not inherited from a default",
+        "provenance": "authored",
+        "status": "planned",
         "tier": "operational"
       }
     },
@@ -52129,6 +52263,14 @@
       }
     },
     {
+      "node_id": "chg:allocation-subquestions-narrowed-20260808",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Snapshot of the late-allocation idea while all three sub-questions still read as open, before Anthony's answers are written into it"
+      }
+    },
+    {
       "node_id": "chg:anchor-decision-second-hint",
       "node_type": "ChangeEvent",
       "properties": {
@@ -53066,6 +53208,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Import three lessons from the GitHub MCP study: the ingress trust boundary, bounded reads, and a catalogue for the tool surface"
+      }
+    },
+    {
+      "node_id": "chg:governance-proposal-skill-20260808",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The capture half of governance ships: a rule's consequence is asked in plain language and written explicitly, so `enforced` stops being inherited from a default nobody chose"
       }
     },
     {
@@ -55373,6 +55523,16 @@
       }
     },
     {
+      "node_id": "dec:idea-allocation-waits-for-the-last-responsible-moment",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "STILL PROPOSED: the parent question is open. Recorded as brainstorming 2026-08-08 and NARROWED the same day — three sub-questions went in, one remains, and the remainder is blocked on data the graph does not hold. THE IDEA, Anthony's words: \"the allocation of functions to systems/services should be done as late as possible (agreeing that doing it at genesis is too early). I feel like doing it at the last possible moment before functional allocation to system/service is the right call.\" It answers a caution raised against the sibling idea (dec:idea-the-ility-chooses-the-allocation-graph), which proposed asking at GENESIS what quality attribute a system is for: the objection was that at genesis you frequently do not know yet, and premature commitment costs as much as late discovery. His resolution keeps the question and moves WHEN it is asked — to the moment allocation must actually be committed. THE HOOK MAY ALREADY EXIST: `unallocated_capability` is already a detected gap, so \"capabilities exist, bound to nothing\" is visible from graph state alone — the same state-not-history discipline dec:loop-status-state-not-history commits to. If that is the trigger, nothing new needs remembering.\\n\\n(a) PER-PROJECT OR PER-CAPABILITY — SETTLED 2026-08-08, Anthony agreeing with the recommendation put to him. PER-CAPABILITY SCOPE, PROJECT-LEVEL DEFAULT, RE-ASKED ONLY ON DIVERGENCE. The schema already leans this way: DimensionAssessment attaches to ANY node, not to the Project, and a telemetry path and a config service in one system genuinely want different objectives. The recurrence worry — a mature design allocates continuously, so the moment repeats — is answered by machinery that already exists rather than by new vocabulary: an acknowledgement LAPSES when the shape it was accepted about changes, so the answer is recorded once and re-asked only when a new capability diverges from it. Recurring without being repetitive. Held most loosely of the three by the person who proposed it, and worth revisiting if the divergence test proves hard to state.\\n\\n(b) IS 100% ALLOCATION AGAINST 0% SEAMS AN INVERSION — STILL OPEN, AND NOW KNOWN TO BE UNMEASURABLE TODAY. Anthony agreed with the recommendation, which was a METHOD rather than an answer: do not reason about it, measure reflow2's own allocation timing first, because changing a model on a hunch is what the unexpected_coupling retirement already cost. MEASURED IMMEDIATELY, and the measurement failed for a reason worth recording: 156 ALLOCATED_TO edges exist and their ONLY property is `weight_basis` — nothing dates an allocation — and exactly 1 of 320 ChangeEvents mentions one. So WHEN any allocation was made is not recorded anywhere in this design. The question is answerable in principle and unanswerable from the data that exists, which is the same shape as the coupling graph being empty in the sibling idea: the algorithm is not the blocker, the substrate is. THE TRIGGER THAT WOULD ANSWER IT is therefore not \"run the query\" but \"allocation timing becomes recordable at all\" — either ALLOCATED_TO carries a date, or allocations pass through record_change the way other design moves do. Until then the trajectory model's current excuse (\"bands running ahead of the frontier is the normal shape of a design that got function right first\") stands unchallenged BY DEFAULT rather than on evidence, and that distinction should not be forgotten.\\n\\n(c) A DESIGN THAT NEVER REACHES THE MOMENT — CLOSED 2026-08-08 on Anthony's word, answered by doctrine that already existed rather than by a new ruling. maturity_report deliberately refuses to say where a design SHOULD be, and its own output says a demonstrator \"may sit here forever and be right\". So never allocating is a LEGITIMATE TERMINAL STATE, not an error or a stalled process. The only thing any future prompt owes is to be acknowledgeable like every other gap — which every gap already is. No new decision node was minted for this: recording it here is the point, so nobody re-derives it.\\n\\nCOUNTER-ARGUMENT TO THE PARENT, recorded beside rather than against, and untouched by the above: the last-responsible-moment principle assumes deciding late costs less than deciding wrong, which holds only when deferral is free. Here it may not be — artifacts get written against an assumed structure long before anyone calls `allocate`. If real files already embody a de facto allocation then deferring the decision defers only the RECORD of it, and the graph arrives late to something the build already did. That is the as-designed-versus-as-built gap granularity_report exists to surface, and it argues the trigger should watch ARTIFACTS APPEARING rather than the `allocate` call.",
+        "name": "OPEN — is allocating functions to systems/services something to defer to the last responsible moment? (one sub-question left: whether the current trajectory shape is an inversion, and it cannot be measured yet)",
+        "rationale": "Revised under revise-design with a snapshot taken while all three sub-questions still read open (epoch:allocation-subquestions-narrowed, seq 289), so the state before the narrowing survives. Status stays `proposed` deliberately: two sub-questions closing does not settle the parent, and flipping it would assert a decision Anthony has not made. The most valuable thing added is not either answer but the finding under (b) — that the agreed method could not be executed, and why. A parked question with a stated trigger is recognisable when someone walks past the answer months later; a parked question with none is indistinguishable from a forgotten one, which is a distinction reflow2 cannot currently draw at all (detect_defects reports parked decisions as `orphan_node`, info severity, and two of the four outstanding structural defects are exactly that).",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-an-unplanned-cut-takes-an-in-between-number",
       "node_type": "Decision",
       "properties": {
@@ -55669,6 +55829,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL, from a first-pass review of openmbee.org — website and repository listing only, deep review pending. THE OBSERVATION: OpenMBEE's active development is not its stable product. MMS 4 stores models in SQL; the successor, Flexo / MMS 5, moves to an RDF quadstore and is described as 'GitHub for graphs', exposing SPARQL, GraphQL, OSLC and a SysML v2 API. A separate experimental SysML v2 execution environment (`Systemica`, Go) is also under way. Commits across those repositories were days old when reviewed (July–August 2026), so this is a live bet, not an aspiration. WHERE reflow2 STANDS: it has its own vocabulary — 29 node types, 60 edge types — and no standard interchange of any kind. It publishes three interfaces (`ifc:core-api`, `ifc:graph-export`, `ifc:mcp-tools`), and `export_surface` already emits a subset of a design deliberately. THE QUESTION IS NOT WHETHER TO ADOPT SysML v2 INTERNALLY — the vocabulary is load-bearing and `dec:bl83a-functional-decomposition` and `req:functional-vocabulary-computes` both depend on it — but whether reflow2 should be able to SPEAK it at the edge, in and out. THE ARGUMENT FOR: Anthony works in a defence/aerospace systems-engineering context and will be asked, professionally, why a design tool does not interoperate with the standard his field is converging on. An export that a SysML v2 service can ingest is a different claim from an export only reflow2 reads. THE HONEST COUNTER-ARGUMENT: SysML v2 is large, its tooling is young, and a partial mapping that silently drops what it cannot express would be worse than none — reflow2's whole posture is that a lossy translation must be reported, not quietly performed. Mapping 29 types onto SysML v2 would need the same no-silent-drop discipline `changelog_view` holds with `unmapped`. WHAT WOULD CHANGE THE ANSWER: whether a faithful SUBSET mapping exists that reports what it could not carry.",
         "name": "OPEN — should reflow2 speak SysML v2 at its boundary, given that is where the standards gravity has moved?",
         "rationale": "Recorded through the brainstorm skill at Anthony's request to capture, as proposed ideas, the areas where OpenMBEE is stronger than reflow2 — before a deep review he intends to run against a clone of their repository. The strength claimed here is narrow and should be read narrowly: OpenMBEE has committed to a standard interchange and reflow2 has none. Whether their SysML v2 implementation is any good is exactly what the deep review is for, and nothing in this node asserts that it is.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-the-ility-chooses-the-allocation-graph",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony thinking out loud, 2026-08-08. Nothing here is intent and nothing has been chosen. THE IDEA, his words: allocation of functions to systems/services could be driven by what the system is for — \"maybe you allocate functions based on it being fault tolerant or very highly reliable or easily maintainable or based on maximal performance\" — and the agent would deduce the likely answer and then ASK (\"is this design about performance or reliability or maintainability or highly secure\"), because \"answering that question really determines how you allocate functions to which services\" and \"if you don't ask upfront, these cost a lot in having to rework services after they've been already developed\". It follows an earlier thought of his in the same conversation: that allocation could be decided by graph theory alone — Leiden communities for clustering, or PageRank to avoid bottlenecks and god nodes — with domain-oriented and function-oriented decomposition \"thrown out the window\". WHAT ALREADY EXISTS, checked rather than assumed: the `dimension` enum in schema/dimensions.yaml already carries reliability, performance, maintainability, security, scalability, observability, testability, coupling and maturity, attachable to ANY node; `propose_allocation` already clusters the weighted capability graph with Leiden and never auto-applies; `evaluate_allocation` already computes modularity, misplaced capabilities and god-components as selective articulation points; and `ility_report` (BL-184, from Anthony's own correction on 2026-08-03) already maps those computations onto the axis each one informs, emitting named findings and never a score. SO THE DIRECTION IS THE NEW PART: everything above runs GRAPH → ILITY, reading structure and saying what it implies. This idea runs ILITY → GRAPH, stating the attribute and letting it drive the allocation. Same vocabulary, opposite direction of inference, and that direction does not exist. AN OBSERVATION WORTH KEEPING WHATEVER IS DECIDED: the attribute may change not just the OBJECTIVE FUNCTION but WHICH GRAPH IS BUILT. Performance wants the call-frequency / data-volume graph and minimal cross-boundary chatter, which is what Leiden on DEPENDS_ON.weight already does. Reliability wants no articulation points and may deliberately DUPLICATE a function across services so one failure domain cannot take everything — which directly OPPOSES maximal modularity, since a modularity-optimal partition is often reliability-hostile. Maintainability wants things that change together to live together, which is a CO-CHANGE graph, a different edge set entirely. Security wants boundaries following trust and data classification with some nodes separated regardless of coupling — constrained partitioning, not clustering at all. Four attributes, four different graphs over the same functions; any single \"run Leiden and allocate\" answer silently picks performance. THE ONE THAT IS RUNNABLE TODAY, and it is a cheap falsifiable experiment: maintainability. reflow2 already holds 316 ChangeEvents with CHANGED edges, which IS a co-change graph, already populated, needing no instrumentation — cluster it and diff against evaluate_allocation's current map to see whether things that change together are allocated together. Performance is NOT runnable: evaluate_allocation reports total_internal 1, total_external 0, unweighted_dependencies 1 — one capability-to-capability dependency edge in the whole design, unweighted, which is why modularity reads a meaningless 1.00. Reliability and security have no substrate at all yet. COUNTER-ARGUMENTS, recorded beside the idea rather than used to argue it down: (1) a service boundary carries obligations no coupling graph encodes — deployment unit, failure domain, team ownership, release cadence, data residency, regulatory scope — so two functions Leiden puts together may belong apart because one is audited and one is not, and no resolution parameter can see that; (2) this project has already paid twice for metric-driven verdicts, retiring `unexpected_coupling` because it fired on correct architecture (\"that coupling IS the product\") and accepting SPOFs deliberately in dec:sanitize-spof-accepted and dec:service-spof-accepted, so a purely metric-driven allocator would flag all three and be wrong each time; (3) clustering on ESTIMATED weights is an opinion with extra steps and a modularity score on top, which is worse than the opinion because it looks objective — the schema's own weight_basis (estimated / evidence / measured) exists to keep that distinction visible. WHERE THE IDEA IS STRONGEST, narrower than \"replace the old methods\": it makes allocation ARGUABLE. Today domain-versus-function is unfalsifiable and the louder voice wins; computing modularity, bottleneck centrality and cross-boundary weight for candidate allocations turns it into evidence — which is the shape register_alternative / analyze_alternatives already have, with dec:parallel-alternatives putting AoA alternatives in design-space via CONTRADICTS.",
+        "name": "OPEN — does the quality attribute a system is FOR decide how functions are allocated, and does each attribute need its own graph?",
+        "rationale": "Recorded under the brainstorm skill so the thinking survives without being claimed as intent. Three things make it worth keeping even if none of it is built: the ility-to-graph direction is genuinely absent while its whole vocabulary is present; the four-graphs observation would change what any future allocation feature computes rather than merely how it weights; and the co-change experiment is runnable today on data already in the graph, which makes at least one branch falsifiable now instead of after instrumentation. The counter-arguments are recorded beside rather than against — an idea killed in conversation loses its reasoning, an idea recorded with its objection keeps both.",
         "status": "proposed"
       }
     },
@@ -57604,6 +57774,16 @@
       }
     },
     {
+      "node_id": "epoch:allocation-subquestions-narrowed",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "Anthony closes one sub-question of the late-allocation idea and settles a second; the third turns out to be unmeasurable with the data the graph holds (2026-08-08)",
+        "sequence": 289,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:anthony-rules-on-five",
       "node_type": "DesignEpoch",
       "properties": {
@@ -59465,6 +59645,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered github-mcp-nuggets.md"
+      }
+    },
+    {
+      "node_id": "frag:art:governance-proposal-skill",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered governance-proposal/SKILL.md"
       }
     },
     {
@@ -63410,6 +63600,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:allocation-subquestions-narrowed:dec:idea-allocation-waits-for-the-last-responsible-moment",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-08\",\"role\":\"author\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony thinking out loud, 2026-08-08. Nothing here is intent and nothing has been chosen. THE IDEA, his words: \\\"the allocation of functions to systems/services should be done as late as possible (agreeing that doing it at genesis is too early). I feel like doing it at the last possible moment before functional allocation to system/service is the right call.\\\" It is the answer he reached to a caution raised against the sibling idea (dec:idea-the-ility-chooses-the-allocation-graph), which proposed ASKING at genesis what quality attribute the system is for: the objection was that at genesis you frequently do not know yet, and premature commitment can cost as much as late discovery. His resolution keeps the question and moves WHEN it is asked — not at genesis, but at the moment allocation actually has to be committed. WHAT THIS WOULD MEAN CONCRETELY: the quality-attribute question rides the ALLOCATION event rather than the project's beginning, so a design accumulates requirements and capabilities freely and is asked what it is optimising for only when something is about to be bound to a component. THE HOOK MAY ALREADY EXIST, and this is the cheap part worth checking before anything is built: `unallocated_capability` is already a detected gap, so the graph can already see capabilities that exist and are bound to nothing. The transition from \\\"capabilities exist, none allocated\\\" to \\\"the first allocation is being made\\\" is observable from graph state alone, which is the same state-not-history discipline dec:loop-status-state-not-history already commits to. If that is the trigger, nothing new needs remembering. OPEN SUB-QUESTIONS, none answered here: (a) is the moment per-PROJECT or per-CAPABILITY — a mature design allocates new capabilities continuously, so \\\"the last responsible moment\\\" may recur rather than happen once, which would make this a repeating prompt rather than a milestone; (b) does deferring allocation conflict with reflow2's own trajectory model, where `allocation` currently reads 100% and sits ahead of the `seams` frontier at 0% — if allocation is supposed to be late, a design showing allocation complete and seams empty may be describing a real inversion rather than healthy progress; (c) what happens to a design that never reaches the moment, since a demonstrator may sit unallocated forever and be right (maturity_report already refuses to say where a design SHOULD be). COUNTER-ARGUMENT, recorded beside rather than against: the last-responsible-moment principle assumes the cost of deciding late is lower than the cost of deciding wrong, which holds when deferral is free — and here it may not be, because artifacts get written against an assumed structure long before anyone calls `allocate`. If real files already embody a de facto allocation, then \\\"deferring the decision\\\" defers only the RECORD of it, and the graph would be late to something the build already did. That is the same as-designed-versus-as-built gap that granularity_report exists to surface, and it argues the trigger should watch ARTIFACTS appearing rather than the `allocate` call.\",\"name\":\"OPEN — is allocating functions to systems/services something to defer to the last responsible moment, and can reflow2 tell when that moment has come?\",\"rationale\":\"Recorded under the brainstorm skill, separately from the ility idea, because the two are genuinely different questions — WHAT drives allocation and WHEN it happens — and can be answered independently; one node holding both could only ever be half-answered. Worth keeping because it converts a raised objection into a design position rather than losing it: the caution was \\\"at genesis you do not know yet\\\", and this answers it without abandoning the question. The `unallocated_capability` hook and the artifacts-versus-allocate-call counter-argument are the two things a later session would otherwise have to re-derive.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-allocation-waits-for-the-last-responsible-moment",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:arrival-delta:cap:arrival-delta",
       "node_type": "Snapshot",
       "properties": {
@@ -67132,7 +67332,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:25c8c45de0cd640c873dfa7bf39b5fb20d28f09b2e525a723f8be74c4d648ae8",
+  "prev_content_hash": "sha256:62e2b64ba95135f24c746464246efb2c2a5c6bc450222c4f563f38010d9ba680",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
