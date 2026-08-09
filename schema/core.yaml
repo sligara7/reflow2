@@ -255,11 +255,39 @@ schema:
         note: { type: string }
 
     CONSTRAINS:
-      from: "*"
+      # SOURCE ENUMERATED, TARGET DELIBERATELY LEFT WILDCARD.
+      #
+      # Found 2026-08-08 while writing the governance-proposal skill:
+      # `describe_schema(from: DesignRule, to: Component)` reported ZERO exact
+      # and zero half-exact matches, and its own note said the seventeen
+      # candidates "accept the pair only because an endpoint is the `*`
+      # wildcard: they will validate, but validating is not the same as meaning
+      # what you intended." A rule binding a component is the most ordinary
+      # thing governance does, and no edge modelled it.
+      #
+      # Same defect as the VERIFIES wildcard closed in #112, one edge along.
+      #
+      # THE SOURCE LIST IS NOT A GUESS: the hint below has always asserted
+      # exactly these two, and every CONSTRAINS edge in this design agrees —
+      # 3 from Constraint, 3 from DesignRule, nothing else. Semantically nothing
+      # else can be a constraint source, so enumerating it forecloses nothing.
+      #
+      # THE TARGET STAYS `*` ON PURPOSE, and that restraint is the point.
+      # Narrowing a wildcard is a CONSUMER-FACING BREAK: another project's graph
+      # may legitimately constrain a node type this one happens not to, and this
+      # repo is the test rig, not the target
+      # (rule:fixes-are-judged-by-the-third-party). "What a rule limits" is
+      # genuinely open — capability, requirement, component, interface, flow —
+      # so the honest declaration is open too. Enumerating the source alone is
+      # already enough for describe_schema to rank the pair as modelled rather
+      # than merely tolerated, which was the whole complaint.
+      from: [Constraint, DesignRule]
       to: "*"
       extraction_hint: >
         A Constraint or DesignRule binds a target node. Source = the
-        Constraint/DesignRule, target = what it limits.
+        Constraint/DesignRule, target = what it limits — a Component, a
+        Capability, a Requirement, an Interface: whatever the rule actually
+        governs.
       properties:
         note: { type: string }
         # BL-11: this target's share of the source Constraint's budget, in the
