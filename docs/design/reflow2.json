@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b2de73972e736142e35683fefc49ba2dc9e4b354ea6892d98298c3741525ab7d",
+  "content_hash": "sha256:4f00977901823bbdebb92f2fff78af17cb9c46513a3883f4780c5a605d71ee79",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -5960,6 +5960,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-detect-ownership-orphans",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-detect-vocabulary-that-nothing-reaches",
       "properties": {
         "acted_at": "2026-08-09",
@@ -6172,6 +6181,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-ownership-is-the-third-who-axis",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -16251,6 +16269,24 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-detect-ownership-orphans",
+      "properties": {
+        "alignment": "supporting",
+        "evidence": "Strictly dependent: there is nothing to detect the absence of until ownership is expressible. The edge can exist without the detector; the detector cannot exist without the edge."
+      },
+      "to_id": "dec:idea-ownership-is-the-third-who-axis"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-detect-ownership-orphans",
+      "properties": {
+        "alignment": "supporting",
+        "evidence": "Third member of one family found in a single day: built-but-unconsumed, declared-but-unread, shipping-but-unowned. Every existing gap asks what is missing FROM a node; all three ask what is missing AROUND one."
+      },
+      "to_id": "req:the-design-says-what-was-built-and-never-used"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "dec:idea-detect-vocabulary-that-nothing-reaches",
       "properties": {
         "alignment": "supporting",
@@ -16320,6 +16356,15 @@
         "evidence": "Removes one of the content store's founding motivations. cap:session-memory's own design needs no store — takeaways are first-class graph content and the transcript is a Fragment carrying a session UUID, a pointer rather than bytes. So the session-context justification does not survive, and it strengthens the discontinue case rather than complicating it."
       },
       "to_id": "dec:idea-discontinue-the-content-store"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-ownership-is-the-third-who-axis",
+      "properties": {
+        "alignment": "supporting",
+        "evidence": "That decision is ACCEPTED and set the condition: decide on OWNED_BY only after the claims-based cut is built and shown insufficient. Its rationale named the disqualifying evidence in advance — claims being transient work-in-hand while ownership is durable. dev_storyflow filed exactly that distinction one day later, and Anthony supplied the two-person use case himself. This node records the evidence arriving; whether it closes the condition is his call."
+      },
+      "to_id": "dec:ownership-reads-claims-before-adding-an-edge"
     },
     {
       "edge_type": "CONTRADICTS",
@@ -60078,6 +60123,16 @@
       }
     },
     {
+      "node_id": "dec:idea-detect-ownership-orphans",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-09, relayed via dev_storyflow's api-boss: \\\"If nothing else, we'll see what areas of the graph are not claimed by anyone (orphans). Not sure reflow2 has this feature to detect orphans in ownership.\\\"\n\n⭐ IT IS A DIFFERENT AXIS FROM orphan_node, AND THE DIFFERENCE IS THE WHOLE POINT.\n  orphan_node        structurally disconnected — nothing says what it is FOR.\n  ownership orphan   well-connected, realized, verified, SHIPPING — and nobody accountable.\n\n⚠️ A NODE CAN BE STRUCTURALLY PERFECT AND GOVERNANCE-ORPHANED, and that is the more dangerous state precisely because NOTHING ABOUT IT LOOKS WRONG. Every existing detector would pass it: it satisfies a requirement, a component holds it, an artifact realizes it, a check verifies it. The only thing missing is a person, and no detector asks about people.\n\nIT IS ALSO THE THIRD MEMBER OF A FAMILY THIS PROJECT FOUND TWICE TODAY, which is why it is worth naming as a class rather than a feature:\n  - req:the-design-says-what-was-built-and-never-used — built, and NOTHING CONSUMES IT.\n  - req:a-vocabulary-distinction-proves-it-is-read — declared, and NOTHING READS IT.\n  - this one — shipping, and NOBODY OWNS IT.\nEvery existing gap asks what is MISSING FROM A NODE. All three of these ask what is missing AROUND a node, and none of the seven capability gaps can express that shape.\n\nSTRICTLY DEPENDENT ON THE EDGE. There is nothing to detect the absence of until ownership is expressible — dec:idea-ownership-is-the-third-who-axis holds that question. Recorded separately for exactly that reason: the edge can exist without the detector, the detector cannot exist without the edge, and a single node holding both could only be half-answered.\n\n⚠️ THE HARD PART, AND IT IS A DESIGN INPUT RATHER THAN A SETTING — api-boss's, and it is the strongest objection on the table: WHICH NODE TYPES ARE OWNABLE? In their 1,127-node graph most nodes legitimately have no owner; their example is exact — \\\"a Constraint about prose rendering is nobody's in the accountability sense.\\\" A naive detector therefore fires on the MAJORITY of a mature graph and becomes a signal trained to be ignored, which is the permanently-red-check failure this project has now written down three times. But in a two-person project the design is probably mostly partitioned, so the same detector is nearly silent and genuinely useful. ⇒ OWNABILITY LOOKS LIKE A PER-PROJECT DECLARATION, NOT A FIXED RULE, and the same feature behaves very differently at those two scales.\n\nTHE SHAPES, with counters beside rather than argued down:\n\n(A) A GAP — `unowned_region`, one per ownable node with no owner. Appears in the loop where people already look. COUNTER: the ownability problem above hits this hardest, because a gap that fires on the majority is worse than no gap.\n\n(B) A REPORT — an ownership census: what is owned, by whom, and what is not, reported as a FACT the way granularity_report and surprising_connections are. Cannot nag. COUNTER: a report nobody runs is invisible; it would need a line in graph_report to be seen.\n\n(C) A COVERAGE NUMBER — \\\"N of M ownable nodes have an owner\\\", one line, the same shape as the trajectory bands and the certainty line. Cheapest to read, hardest to ignore, and it degrades gracefully at both scales because a low number in a fleet graph is a true statement rather than N nags. COUNTER: a number says nothing about WHICH, so it needs (B) behind it to be actionable.\n\n(D) SCOPED TO A DECLARED PARTITION — a project declares which types are ownable, and the detector only speaks about those. Answers the hard part directly. COUNTER: it is a new declaration to maintain, and an unmaintained one silently narrows the detector to nothing, which is the same class as an unread marker.\n\n⚠️ WHAT MUST NOT HAPPEN, and it is the trap all three of today's findings share: shipping the marker without the computation that reads it, or shipping a computation that fires on correct work. reflow2 has now met the first failure eight times over in its own edge vocabulary and has doctrine against the second in dec:read-hint-shape.\n\nNOTHING IS PROMOTED. Anthony raised the question and said he was not sure the feature existed; it does not.",
+        "name": "OPEN — should reflow2 detect OWNERSHIP orphans: well-connected, realized, shipping, and nobody accountable?",
+        "rationale": "Recorded via the brainstorm skill: `proposed`, options with counters, nothing promoted, and separated from the edge question it depends on so neither can be half-answered.\n\nWorth stating why this one is recorded at all when it cannot be built yet: it is the third instance in one day of a shape reflow2 has no vocabulary for — absence AROUND a node rather than absence IN it — and the other two were captured as intent this session. Recording it keeps the family visible; whether it becomes a fourth requirement is Anthony's call, not a consequence of the first three.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-detect-vocabulary-that-nothing-reaches",
       "node_type": "Decision",
       "properties": {
@@ -60304,6 +60359,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — from the 2026-08-01 dynograph-foundation review. Recorded for completeness; this is the WEAKEST of the ideas in this batch and is written down mainly so a later session knows it was considered and not chosen.\n\nTHE UNUSED FUNCTIONS: degree_centrality (with DegreeMode), closeness_centrality, eigenvector_centrality, and clustering (local clustering coefficient). All exact, all already available.\n\nWHAT EACH WOULD MEAN HERE: closeness = how near a node is to everything else, so \"how quickly does a change here reach the whole design\". Eigenvector = importance by association with important nodes. Clustering coefficient = how tightly a node's neighbourhood is interconnected, a possible signal for over-coupled subsystems.\n\nTHE HONEST COUNTER-ARGUMENT, which is why this ranks last: betweenness is the RIGHT measure for the question reflow2 asks — how much of the golden thread routes THROUGH this node — and the others answer questions nobody has asked yet. Degree is already computed locally in structure.rs and needs no crate. Adding measures because they exist is how a report becomes a dashboard nobody reads, and reflow2 has an explicit instinct against that (dec:report-dont-judge, and BL-42's noise-floor lesson).\n\nIF ANY: clustering coefficient is the only one with a question attached that reflow2 does not already answer — \"is this subsystem more tangled inside than the design says it should be?\" — and even that overlaps leiden communities.",
         "name": "OPEN — is betweenness the right centrality, or should closeness / eigenvector / clustering also be read?",
         "rationale": "Recorded deliberately as a considered-and-not-chosen idea. The brainstorm skill's rule is that roads not taken are part of the design's memory; without this node a later reviewer would rediscover four unused centrality functions and re-litigate them.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-ownership-is-the-third-who-axis",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.\n\n⭐⭐ THE HEADLINE: AN ACCEPTED DECISION SET A CONDITION, AND THE CONDITION HAS NOW BEEN MET BY EXACTLY THE EVIDENCE IT ASKED FOR.\n\ndec:ownership-reads-claims-before-adding-an-edge (ACCEPTED, Anthony's word 2026-08-08) says: build the first cut from CLAIMS rather than a new edge, and \\\"DECIDE ON OWNED_BY ONLY AFTER THAT IS BUILT AND SHOWN TO BE INSUFFICIENT.\\\" Its rationale names the disqualifying evidence in advance: \\\"If claims turn out to model the wrong thing (THEY ARE TRANSIENT WORK-IN-HAND, WHILE OWNERSHIP IS DURABLE AND SURVIVES THE SESSION), that is a real distinction and the edge becomes justified on evidence rather than on anticipation.\\\"\n\nONE DAY LATER, dev_storyflow filed precisely that distinction, and Anthony supplied the use case himself (2026-08-09, relayed by api-boss 05af57c1):\n\n  \\\"As my brother and I collaborate on another project, there are areas of the design that are his and areas that are mine. This is probably a different 'ownership' of something than the claim_region type descriptor... it is probably DURABLE, SURVIVES EVERY SESSION, and SHOULD NEVER BE RELEASED.\\\"\n\n⭐ THE FRAMING THAT MAKES IT LEGIBLE — reflow2 has two of the three WHO axes:\n  AUTHORED_BY   who WROTE this          past tense · historical · never changes\n  CLAIMS        who is IN it RIGHT NOW  transient · advisory · released at checkout\n  ???           whose AREA this is      durable · standing · never released\n\nWHY CLAIMS CANNOT BE STRETCHED TO COVER THE THIRD, which is the \\\"shown to be insufficient\\\" the accepted decision demanded, and it is operational rather than theoretical: claim_region's own description says ADVISORY and session-scoped; the parallel-work skill says release at checkout; on a shared server a claim reads `unknown` rather than `live` and NEVER EXPIRES ON ITS OWN. So standing ownership claims would permanently drown the tool's actual job — showing who is ACTIVELY in your ground. api-boss noted they hold one claim, released and re-took it once today purely to fix its note, and asked what three permanent graph-wide claims would do to that surface.\n\n⚠️ AND THE FLEET RETRACTED ITS OWN COUNTER-ARGUMENT, which is worth more than the ask. They had argued that recording ownership in the graph duplicates their PROTOCOL.md ownership matrix and would rot the way six of their copied rules already have. Their retraction: \\\"That objection is specific to an organisation that ALREADY writes ownership down. A PAIR OF COLLABORATORS HAS NO MATRIX — the knowledge lives in their heads and in habit. For most projects the graph would be the FIRST place ownership was ever recorded, not the second, and the duplication risk is simply absent.\\\" They kept only the narrow fleet-specific form.\n\n⭐ AND THE REFRAME THAT MATTERS MOST FOR SCOPE: every earlier version of this ask was framed around an AGENT FLEET, which invites the reply \\\"that is exotica\\\". The two-person case is not exotica. It is two people splitting a design, which is the ORDINARY case of collaborative design work.\n\n=== WHERE THIS SITS AGAINST WHAT SHIPPED TODAY ===\n\ncap:owed-to-a-contributor shipped `loop_status(contributor_id)` on 2026-08-09. IT IS NOT THE FIRST CUT THAT ACCEPTED DECISION SPECIFIED: it attributes via the AUTHORED_BY `role=approver` edge, not via CLAIMS. That is already recorded honestly — the SATISFIES edge to req:ownership-is-an-edge-so-debt-has-an-addressee carries `coverage: partial` and says so: \\\"its chosen first cut answers 'what has a named person been asked to settle', not 'which gaps are in the part of the system I own'. The fleet's ask is the second one.\\\"\n\n⇒ SO THE CLAIMS-BASED FIRST CUT WAS NEVER BUILT, and the question is whether it still should be. Two readings, both honest:\n  (a) The decision's build order stands: build the claims-based cut, THEN judge. The insufficiency argument above is about claims as a DURABLE record, and a claims-scoped debt report might still be useful for its actual purpose without ever being ownership.\n  (b) The insufficiency is already established by inspection — claims are advisory, session-scoped and released by doctrine, so building a durable ownership view on them would be building on a foundation whose own description forbids it. Under this reading the condition is met and the edge is justified now.\n\nAND IT FITS WHAT SHIPPED: loop_status's scoped answer deliberately attributes ONLY assignment and reports everything else under `scope.not_attributable`. AN OWNED_BY EDGE IS EXACTLY WHAT WOULD LET THE REST BECOME ATTRIBUTABLE. The restraint shipped today is waiting for this.\n\n=== THE SHAPES, with counters beside rather than argued down ===\n\n(A) AN OWNED_BY / ACCOUNTABILITY EDGE — Contributor → any node, explicitly NOT in the decomposition spine and NOT a traceability edge. THE PRECEDENT EXISTS TWICE: AUTHORED_BY and CLAIMS are both already deliberately excluded from impact propagation (nodes.rs structural_rule), so this would be the third of a kind rather than a novelty. COUNTER, and it is this project's own: dec:ownership-reads-claims-before-adding-an-edge warns that adding an edge type is the most expensive and least reversible change to this schema, and today's measurement found EIGHT of sixty edge types declared and reached by nothing. An unused OWNED_BY would not be a novel failure here; it is the common one.\n\n(B) REUSE CLAIMS WITH A DURABILITY FLAG — a `durable: true` property that exempts a claim from release and from the overlap report. Cheapest, no new edge type. COUNTER: it makes one edge mean two things whose lifecycles are opposite, and the tool's descriptions would have to say both. That is how a vocabulary rots — the same sentence dec:one-retire-edge uses about two words for one relationship, running the other way.\n\n(C) OWNERSHIP AS A PROPERTY ON THE NODE — an `owner` field. Cheapest of all to read. COUNTER: it cannot express shared or partial ownership, cannot carry a note about WHAT is owned, and puts a person's id inside design content where every export and every merge has to reconcile it.\n\n⚠️ THE HARD PART, WHICH IS A DESIGN INPUT RATHER THAN A SETTING, and it comes from the fleet: WHICH NODE TYPES ARE OWNABLE? In their 1,127-node graph most nodes legitimately have no owner — \\\"a Constraint about prose rendering is nobody's in the accountability sense\\\" — so a naive detector fires on the majority and becomes a signal trained to be ignored. In a two-person project the design is probably mostly partitioned. ⇒ OWNABILITY LOOKS LIKE A PER-PROJECT DECLARATION, NOT A FIXED RULE, and the same feature behaves very differently at those two scales.\n\nNOTHING IS PROMOTED. The accepted decision's condition may now be met; saying so is Anthony's to do, and dec:reopen-supersedes says a re-opening mints its own node rather than un-accepting the old one.",
+        "name": "OPEN — the condition dec:ownership-reads-claims-before-adding-an-edge set has now been met: are CLAIMS shown insufficient, and does OWNED_BY become justified?",
+        "rationale": "Recorded via the brainstorm skill: `proposed`, options with counters, nothing promoted.\n\nKept SEPARATE from dec:ownership-reads-claims-before-adding-an-edge rather than editing it, because that decision is ACCEPTED and dec:reopen-supersedes is explicit that a re-opening mints a new Decision which obsoletes the old one — the accepted one is never un-accepted. This node is the evidence arriving that its own condition named; whether that closes it is Anthony's call.\n\nSeparated from the ownership-orphan detector question (dec:idea-detect-ownership-orphans) because the edge could exist without the detector and the detector cannot exist without the edge — one node holding both could only be half-answered.",
         "status": "proposed"
       }
     },
@@ -72284,7 +72349,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:27e0483a57e8b2efda4b737b1a80ec4ddcf48c6c5c2bb25f84e2d50a2c3a6dc8",
+  "prev_content_hash": "sha256:b2de73972e736142e35683fefc49ba2dc9e4b354ea6892d98298c3741525ab7d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
