@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:0702509a41f8058353dcc02866cba93052626ec400519dd0fb81af28c9b593f1",
+  "content_hash": "sha256:27e0483a57e8b2efda4b737b1a80ec4ddcf48c6c5c2bb25f84e2d50a2c3a6dc8",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -918,6 +918,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:budget"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:built-and-consumed-by-nothing",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:detect"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -5952,6 +5960,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-detect-vocabulary-that-nothing-reaches",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-diff-driven-impact",
       "properties": {
         "acted_at": "2026-08-05",
@@ -5971,6 +5988,15 @@
     {
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-discontinue-the-content-store",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-discontinued-is-a-first-class-state",
       "properties": {
         "acted_at": "2026-08-09",
         "role": "author"
@@ -6065,6 +6091,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-is-session-context-already-in-the-graph",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -6946,6 +6981,15 @@
       "from_id": "req:sources-are-kept-not-just-parsed",
       "properties": {
         "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:the-design-says-what-was-built-and-never-used",
+      "properties": {
+        "acted_at": "2026-08-09",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -16198,6 +16242,78 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-detect-vocabulary-that-nothing-reaches",
+      "properties": {
+        "alignment": "supporting",
+        "evidence": "The same shape one level out: 40 of 132 served tools never called, and reflow2 cannot tell unused from unreachable. Both come from reflow2 measuring how well the design covers the system and never how well anything covers the surface reflow2 ships."
+      },
+      "to_id": "dec:bl-155"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-detect-vocabulary-that-nothing-reaches",
+      "properties": {
+        "alignment": "supporting",
+        "evidence": "dec:edge-orthogonality is ACCEPTED and states the rule this node found unenforced: a vocabulary distinction earns its keep only if a computation reads it. It was applied once by hand (retiring VALIDATES and ENABLES); eight more unreached edge types accumulated afterwards because nothing computes it."
+      },
+      "to_id": "dec:edge-orthogonality"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-detect-vocabulary-that-nothing-reaches",
+      "properties": {
+        "alignment": "supporting",
+        "evidence": "dec:one-retire-edge is the instance that surfaced the class: SUPERSEDES and OBSOLETES both declared, neither read. This node asks whether the class should be detected rather than which of the two survives."
+      },
+      "to_id": "dec:one-retire-edge"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-discontinued-is-a-first-class-state",
+      "properties": {
+        "alignment": "supporting",
+        "evidence": "The content store is the first real instance of the thing this node is trying to name, and its handling sets the precedent whether or not anyone names it."
+      },
+      "to_id": "dec:idea-discontinue-the-content-store"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-discontinued-is-a-first-class-state",
+      "properties": {
+        "alignment": "supporting",
+        "evidence": "Two independent arrivals at one gap on the same day: Alex from outside (agents write DROPPED into prose because Capability.status has no such value) and Anthony from inside (a real built thing to withdraw). Neither node knew about the other."
+      },
+      "to_id": "dec:idea-does-a-capability-need-a-cancelled-state"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-discontinued-is-a-first-class-state",
+      "properties": {
+        "alignment": "supporting",
+        "evidence": "Both are about retirement vocabulary and the answer to one bears on the other: dec:one-retire-edge asks which of two unread edges survives, this asks what a successor-less withdrawal IS. Linked as supporting rather than opposing — they are the same problem at two altitudes, not a conflict."
+      },
+      "to_id": "dec:one-retire-edge"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-is-session-context-already-in-the-graph",
+      "properties": {
+        "alignment": "supporting",
+        "evidence": "cap:session-memory already holds the answer to the moot question — the connective tissue (what was tried, what was rejected, what turned up sideways) is what lives only in the session. This node records that the question was asked again and that the capability's load-bearing gap is still open: the only mechanism forcing a session to leave takeaways behind still watches markdown file mtimes and points away from the graph."
+      },
+      "to_id": "cap:session-memory"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-is-session-context-already-in-the-graph",
+      "properties": {
+        "alignment": "supporting",
+        "evidence": "Removes one of the content store's founding motivations. cap:session-memory's own design needs no store — takeaways are first-class graph content and the transcript is a Fragment carrying a session UUID, a pointer rather than bytes. So the session-context justification does not survive, and it strengthens the discontinue case rather than complicating it."
+      },
+      "to_id": "dec:idea-discontinue-the-content-store"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "fact:correction-stranded-server-is-recoverable-without-a-reconnect",
       "properties": {
         "alignment": "opposing",
@@ -16285,6 +16401,15 @@
         "evidence": "Corroboration, not conflict. is_entry_point and is_exit_point default to false on every Capability, which asserts 'not an entry point' across the whole design without anyone choosing it — a concrete field instance of the general rule. Found 2026-07-28 via the system_of_systems_graph_v2.py comparison, where three ported functional-mode detectors turned out to be unimplementable because of it."
       },
       "to_id": "req:defaults-do-not-assert"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "req:the-design-says-what-was-built-and-never-used",
+      "properties": {
+        "alignment": "supporting",
+        "evidence": "The consumer-facing generalisation of the same finding. The vocabulary sweep found eight declared edge types nothing reaches inside reflow2; this asks the same question about a consumer's own built features, which is the larger of the two and the one rule:fixes-are-judged-by-the-third-party asks for."
+      },
+      "to_id": "dec:idea-detect-vocabulary-that-nothing-reaches"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -48163,6 +48288,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:built-and-consumed-by-nothing",
+      "properties": {},
+      "to_id": "req:the-design-says-what-was-built-and-never-used"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:bulk-forms",
       "properties": {},
       "to_id": "req:agent-native"
@@ -54058,6 +54189,19 @@
       }
     },
     {
+      "node_id": "cap:built-and-consumed-by-nothing",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The surplus half of DETECT. Every existing gap asks what is MISSING; this asks what is SURPLUS — realized or verified, and downstream of nothing.\n\nTHE SIGNAL, computable from the graph as it stands: a Capability at `realized`/`verified` with no incoming DEPENDS_ON, no PART_OF_FLOW into any Flow, and no Actor INTERACTS_WITH. The same shape generalises to a Component whose Interfaces nothing CONSUMES, and to an Artifact realizing only capabilities that are themselves unconsumed.\n\n⚠️ THE WORDING IS THE FEATURE, not a caveat on it. The graph knows DESIGN-LEVEL demand and nothing about runtime usage, so the honest finding is \\\"NOTHING IN THIS DESIGN CONSUMES X\\\" — never \\\"X is unused\\\". A feature real users call daily whose consumer was never modelled produces exactly the same graph shape as a dead one, and a detector that did not say so would confidently recommend deleting working code. Reported as a FACT rather than a gap for the same reason granularity_report and surprising_connections are: which side is wrong is the user's to say.\n\nWHY IT IS NOT unmotivated_capability: that fires on a capability satisfying no REQUIREMENT — a question about intent, gated on requirements existing at all. A capability can satisfy a requirement perfectly and still be consumed by nothing, and that is the expensive case, because the paperwork is complete and the code is dead.\n\nDELIBERATELY NOT COVERED HERE: runtime usage. dec:bl-155 and dec:idea-measure-the-surface hold that question, and answering it needs telemetry rather than the graph.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A built thing that nothing in the design consumes is surfaced, and says so as a design-completeness finding rather than a verdict on the system",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:bulk-forms",
       "node_type": "Capability",
       "properties": {
@@ -59908,6 +60052,16 @@
       }
     },
     {
+      "node_id": "dec:idea-detect-vocabulary-that-nothing-reaches",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-09, on being told that two retirement edges exist and neither is read: \\\"these are a new type of orphans that I never thought about and curious why until now haven't they surfaced? ... should reflow2 have something that detects these class of orphans, and are there other orphan developments (actually implemented design) that nothing detects or surfaces?\\\"\n\n⚠️ PROVENANCE CORRECTION FIRST, because he asked what search produced the SUPERSEDES claim and the honest answer is NONE. It was read out of dec:one-retire-edge, which records a schema sweep another session ran on 2026-07-28. It was relayed as though freshly measured. THE MEASUREMENT BELOW WAS THEN ACTUALLY RUN, and it is what this node is for.\n\n=== THE MEASUREMENT, 2026-08-09, against reflow2's own 1,869-node / 7,051-edge design ===\n\nMethod, stated because the first cut of it was too crude to trust: an edge type counts as REACHED if it is instantiated in this design, OR named in `structural_rule`'s propagation table (11 edges), OR named anywhere in non-test Rust outside its own `pub const` declaration. Anything failing all three is declared vocabulary with nothing behind it.\n\nEIGHT OF SIXTY EDGE TYPES ARE DECLARED AND UNREACHED ON EVERY TEST:\n  COMPLIES_WITH · CONTAINS_EPOCH · EVOLVES_INTO · IMPOSES · MITIGATES · SUPERSEDES · SUPPLEMENTS · VIOLATES_RULE\n\nSEVEN OF TWENTY-NINE NODE TYPES HAVE ZERO INSTANCES HERE:\n  Anchor · DimensionAssessment · DimensionObservation · EnvironmentRule · Flow · QualityGate · ReadinessAssessment\n\nFIVE MORE EDGE TYPES ARE INSTANTIATED BUT REACHED ONLY GENERICALLY — not in the propagation table, never named in code: ABOUT_ENTITY (117 instances), CAUSES (9), INTERACTS_WITH (4), OPERATES_IN (3), VALID_TO (2). These are not dead; they are unnamed, which means nothing would notice if they stopped working.\n\n⭐ THREE OF THESE ALREADY HAVE INDEPENDENT CORROBORATION, which is why this is a class and not a curiosity:\n  - VIOLATES_RULE — dev_storyflow filed it HOURS before this measurement: `describe_schema{from:Component, to:DesignRule}` returns 17 candidates and VIOLATES_RULE is not among them, so a session doing the documented thing cannot discover the edge named for the job. They used VIOLATES instead and said it is presumably wrong.\n  - QualityGate — dev_storyflow's governance trial, item ⑦: \\\"I could not find an honest use, and I think that is informative... Recording the decline, because 'the type exists and nobody instantiated it' is otherwise indistinguishable from nobody having tried.\\\"\n  - Anchor — dec:anchor-retire-or-implement is already OPEN on exactly this: \\\"superseded by Snapshot but still advertised: retire it or implement it?\\\"\n\n=== WHY IT NEVER SURFACED, which is his real question ===\n\nEVERY DETECTOR IS INSTANCE-LEVEL AND THIS IS A VOCABULARY-LEVEL FACT. detect_gaps computes over nodes and edges that EXIST — unsatisfied_requirement needs a Requirement, disconnected_community needs a cluster of two or more, orphan_node needs a node. A declared type with zero instances produces NOTHING for any of them to anchor on. The blind spot is not an oversight in any one detector; it is that no detector asks a question ABOUT THE SCHEMA rather than about the design.\n\n⭐⭐ AND THE SHARPEST PART: THE RULE ABOUT UNREAD THINGS IS ITSELF UNREAD. dec:edge-orthogonality is ACCEPTED and says a vocabulary distinction earns its keep ONLY IF A COMPUTATION READS IT — it is the decision that retired VALIDATES and ENABLES on precisely this reasoning. Nothing computes it. So the principle was applied ONCE, by hand, and the eight above accumulated afterwards with nobody to notice.\n\n=== ARE THERE OTHER UNSURFACED ORPHAN DEVELOPMENTS? YES, AND ONE IS ALREADY OPEN ===\n\ndec:bl-155 (OPEN): \\\"40 of 132 served tools were never called in the retained sample, and reflow2 cannot tell 'unused' from 'unreachable'.\\\" That is the same shape one level out — built surface nobody reaches — and it has the same cause: reflow2 measures how well the DESIGN covers the SYSTEM, and never how well anything covers the SURFACE reflow2 itself ships.\n\nTHE OPTIONS, with what is cheap or expensive about each:\n\n(A) A CENSUS REPORT, NOT A GAP — a `vocabulary_census` naming declared-but-unreached types, reported as a FACT the way granularity_report and surprising_connections are. CHEAPEST, and it cannot false-positive into nagging. COUNTER: a report nobody runs is the same failure one level along; it would need a line in graph_report to be seen.\n\n(B) A GAP AT LOW SEVERITY — `unreached_vocabulary`, one per declared type with nothing behind it, acknowledgeable. Makes it appear in the loop where people already look. COUNTER, AND IT IS SERIOUS: a demonstrator legitimately does not use Flow or ReadinessAssessment, so this would fire on correct work in every young design — the exact thing dec:read-hint-shape and the phase-nudge doctrine were built to avoid. Firing on the SCHEMA (a fixed 60/29) rather than on the user's design might dodge that, since it is reflow2's own vocabulary being judged rather than the consumer's modelling.\n\n(C) SCOPE IT TO THE SHIPPED SURFACE ONLY — make it reflow2's own maintenance instrument (a tools/ script, like toolsnap), not a served capability. Honest about who the finding is for: a consumer does not care that reflow2 declares SUPPLEMENTS, and rule:fixes-are-judged-by-the-third-party would ask what the CONSUMER gets. COUNTER: the consumer DOES get something — describe_schema offers them these types, and VIOLATES_RULE proves a consumer can waste time on one.\n\n(D) DO NOTHING NEW AND JUST PRUNE — decide dec:one-retire-edge and dec:anchor-retire-or-implement, delete what loses, and accept that the next accumulation goes unnoticed too. COUNTER: this is exactly what happened after dec:edge-orthogonality, and eight more arrived.\n\n⚠️ WHAT MUST NOT HAPPEN, whichever is chosen: another marker nothing reads. That is the finding this node is about, and it would be a fourth instance of it.\n\nBOUND, stated rather than glossed: this measured ONE design — reflow2's own. A type with zero instances HERE may be in daily use in dev_storyflow or flo2, and the census would need to be per-design to mean anything to a consumer. The 8 unreached-on-every-test edges are the stronger claim, because those have no code behind them anywhere and that is a property of the SHIPPED BUILD rather than of this graph.\n\nNOTHING IS PROMOTED.",
+        "name": "OPEN — should reflow2 detect DECLARED-BUT-UNREACHED vocabulary, when its own accepted rule that a distinction must earn its keep is itself unread?",
+        "rationale": "Recorded via the brainstorm skill: one Decision per open question, at `proposed`, options with counters beside them, nothing promoted without Anthony's word.\n\nThe provenance correction is inside the decision text rather than only in conversation, because the claim that started this thread was relayed from another session's sweep as if freshly measured, and a later reader deserves to know which parts were measured today and which were quoted. The measurement in this node WAS run today, with its method stated so it can be re-run or disputed.\n\nKept separate from dec:one-retire-edge (which asks which of two edges survives) and dec:bl-155 (which asks the same question about served TOOLS): this one asks whether the class should be DETECTED at all. Linked to both rather than merged, because a node holding all three could only ever be part-answered.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-diff-driven-impact",
       "node_type": "Decision",
       "properties": {
@@ -59934,6 +60088,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-09, leaning towards discontinuing rather than phasing out: \\\"I don't think anybody is actually fully utilizing it anyways, so not a big deal I think if we just discontinue it now versus phasing it out.\\\"\n\nHIS ARGUMENT, in his words and not improved on: (1) the bytes cannot fully live in a repo because it would become a huge object rapidly; (2) dev_storyflow's 700+ documents have been actively ingested into the graph and \\\"those documents are no longer really needed\\\" — the documents that would have been put in the blob; (3) maybe the better approach is important design artifacts directly in the git repo in something like a design_artifacts folder and forget blob altogether; (4) it is another feature that must be maintained and must grow with the rest of reflow2; (5) in flo2 the blob could end up being terabytes that has to be backed up, secured, and somehow separable per project.\n\n⭐ MEASURED BEFORE ANY OPINION WAS FORMED, and it is the strongest thing in this node. REFLOW2'S OWN DESIGN USES THE CONTENT STORE ZERO TIMES: no `--content-path` is configured in .mcp.json, no `.reflow2/content` directory exists, and 0 of 148 Fragments carry a `content_ref`. This is a 1,867-node graph that has been dogfooded harder than any other. The feature is built, tested (ver:content-surface, 5 cases), documented, and unused by its own author's primary project. That is evidence for his (4) rather than a coincidence.\n\nCORROBORATING, from the consumer side: every dev_storyflow locator complaint filed on 2026-08-09 is about `Artifact.location`, `Fragment.title` and path resolution — a worker even wrote scripts/records/locator_validator.py because \\\"location is the join key between a corpus and the design and nothing validates it.\\\" NOBODY COMPLAINED ABOUT CONTENT HASHES, because nobody is using them. They are joining on PATHS.\n\n⭐ AND AN ARGUMENT NOBODY HAS MADE YET, which strengthens his case: dec:where-content-lives settled on a content-addressed store whose blobs are COMMITTED TO THE REPO. GIT IS ALREADY A CONTENT-ADDRESSED STORE. So the current design is a content-addressed layer inside a content-addressed system — the dedup and the integrity hash are both things git already provides for anything committed. A `design_artifacts/` folder would not be giving up content addressing; it would be using the one underneath.\n\nWHAT THIS WOULD RE-OPEN, stated so nothing is decided by accident: dec:where-content-lives (accepted), dec:what-lives-where (accepted), dec:content-growth-is-bounded-by-what-not-by-size (accepted), dec:content-store-implementation and dec:content-manifest. Per dec:reopen-supersedes a re-opening mints a NEW decision that obsoletes the old one; the accepted ones are never un-accepted.\n\n⚠️ AND IT WOULD ANSWER dec:what-lives-where's OWN FALSIFIABLE TEST — which is the most interesting thing here. That decision wrote its own refutation condition: \\\"IF REFLOW2 WORKS, STORYFLOW WOULD NOT HAVE NEEDED dev_storyflow. One repo, code native, the design in the graph, the sources in the store. If a user still ends up splitting their repo to stay sane, reflow2 has not delivered what this decision claims.\\\" Anthony's observation is a DIFFERENT and sharper result than that test anticipated: it is not that the split was still needed, it is that ONCE THE DOCUMENTS WERE MINED THEIR ROLE WAS SPENT. If what mattered became nodes with Fragments recording provenance, the bytes are archival — and a repo folder (or the existing dev_storyflow repo) already archives them.\n\nTHE OPTIONS, with what is cheap or expensive about each recorded beside rather than argued down:\n\n(A) DISCONTINUE NOW — remove content_put/content_get and the store, keep nothing. Cheapest to maintain, and honest given zero usage here. COUNTER: content_manifest answers a real question (\\\"I was handed this design on its own — what does it point at that I do not have?\\\"), and that question survives the store's removal; it would need re-pointing at repo paths rather than deleting.\n\n(B) DEPRECATE, KEEP THE READS — stop accepting new content, keep content_get/exists/manifest so an existing store still resolves. COUNTER: Anthony's own point is that phasing costs more than discontinuing when the user count is zero; this buys compatibility nobody needs.\n\n(C) KEEP IT, NARROW IT — retain for the one case a repo folder genuinely cannot hold (very large or non-diffable binaries) and say so. COUNTER: that is the status quo with better documentation, and the status quo has zero users; \\\"it might matter later\\\" is what the no-foreclosure rule exists to make a deliberate choice rather than a default.\n\n(D) REPLACE WITH A CONVENTION — a `design_artifacts/` folder plus a Fragment/Artifact `location` pointing into it, no new machinery. Uses git's own content addressing. COUNTER, and it is the real one: `location` is the field dev_storyflow just filed FOUR defects about (unvalidated paths, a literal ellipsis that matched nothing, title-vs-source ambiguity, no way to ask \\\"is this path already in the graph?\\\"). Moving weight onto `location` without fixing it moves weight onto the weakest join in the schema. That is an argument for fixing `location` FIRST, not against (D).\n\nWHAT NOBODY HAS ESTABLISHED, and it should not be guessed: whether any OTHER consumer has a populated store. This project has none; flo2 was checked and has no .mcp.json content path; dev_storyflow was not checked. A discontinue is cheap if the answer is nobody and expensive if it is somebody, and it is one call (content_manifest) per project to find out.\n\nNOTHING HERE IS PROMOTED. Anthony stated a lean, not a decision, and the options above are recorded as considered.",
         "name": "OPEN — should the content store be discontinued outright, with design artifacts kept as ordinary files in the repo?",
         "rationale": "Recorded via the brainstorm skill: one Decision per open question, at `proposed`, options in the prose with counters beside them, nothing promoted to intent without Anthony's word. Deliberately NOT recorded as a re-opening of dec:where-content-lives yet — that would assert the choice has been made and would obsolete an accepted decision on a lean rather than a decision. If he settles it, dec:reopen-supersedes says the re-opening mints its own node then.\n\nKept separate from dec:external-blob-store-pressure, which asks whether committed blobs should move to an EXTERNAL store — the opposite direction, and it assumes the store exists. This asks whether it should exist at all, and one node holding both could only ever be half-answered.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-discontinued-is-a-first-class-state",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-09, prompted by the content-store question: \\\"this might be an opportunity to have a 'discontinued' edge type in reflow2 as it is something we built that didn't pan out like expected and that we've decided to discontinue in development. this is almost like a decision that was not chosen, but this is something that was implemented and later decided against for whatever reasons.\\\"\n\nHIS DISTINCTION IS REAL AND THE VOCABULARY DOES NOT HOLD IT. A decision not chosen was never built. A mistake is deleted. A thing SUPERSEDED has a successor. His case is the fourth: it was built, it shipped, it worked, and it is being withdrawn — with NOTHING TAKING ITS PLACE.\n\n⭐ WHAT SEARCHING FIRST FOUND, and it complicates the proposal rather than supporting it:\n\n(1) TWO RETIREMENT EDGES ALREADY EXIST AND NEITHER IS READ BY ANYTHING. `SUPERSEDES` has ZERO references in the entire Rust source — nothing creates it, nothing reads it — while being documented in nodes.rs and named in docs/three-axes.md. `OBSOLETES` is created by collapse_decision and the retire-from-design skill instructs users to draw it, and it has NO READER either: the constant, one create site, one doc comment, and nothing else. dec:one-retire-edge (OPEN, ANTHONY'S CALL) measured this on 2026-07-28 and its own text says: \\\"two words for one relationship is how a vocabulary rots.\\\" A THIRD WORD WOULD BE THAT SENTENCE HAPPENING.\n\n(2) RETIREMENT CURRENTLY CHANGES NOTHING DOWNSTREAM. Quoting that decision exactly: \\\"retiring something marks it and changes nothing. A retired capability still counts in every rollup, still raises its gaps, still appears in delivery arithmetic.\\\" reflow2's own design holds ZERO instances of either edge, so the retire path has never been exercised here.\n\n(3) BUT NEITHER EXISTING EDGE FITS HIS CASE, and this is the part that makes the proposal more than housekeeping. Both are directional BETWEEN TWO NODES — OBSOLETES' hint is \\\"source makes target redundant or deprecated\\\" — so both presume a successor to sit at the source end. A discontinued thing with no replacement has NOTHING TO PUT THERE. You cannot draw OBSOLETES from nothing.\n\n(4) ⭐⭐ AND IT IS THE SAME QUESTION AS AN OPEN DECISION HE IS ALREADY THE NAMED APPROVER ON, arriving from the opposite direction. dec:idea-does-a-capability-need-a-cancelled-state came from Alex on 2026-08-09: Requirement.status is [proposed, accepted, deferred, dropped, met] and Capability.status is [planned, in_progress, realized, verified] — so a Requirement can be dropped and a Capability cannot, and agents write \\\"DROPPED\\\" into prose the graph cannot compute on. Alex hit it from the outside as a modelling nuisance; Anthony has now hit it from the inside with a real thing to retire. TWO INDEPENDENT ARRIVALS AT ONE GAP.\n\nTHE SHAPES, with what is cheap or expensive about each recorded beside rather than argued down:\n\n(A) A STATUS VALUE — add `discontinued` (or `cancelled`) to Capability.status, and to whatever other types need it. CHEAP to state, and it is exactly what Alex asked for. COUNTER: it is an ENUM CHANGE THAT MOVES THE SCHEMA STAMP and therefore owes an upgrade doc — the first this week to do so. And a status says THAT, never WHY: the content store is being discontinued for reasons that took three paragraphs, and none of them fit in an enum.\n\n(B) AN EDGE TO THE DECISION — `DISCONTINUED_BY` from the thing to the Decision that killed it. The successor problem disappears, because a discontinuation ALWAYS has a decision even when it has no replacement, and the edge carries the WHY by pointing at prose that can hold it. It also works across every type at once, which matters here: discontinuing the content store touches capabilities, a component, artifacts, a verification and served tools, and a per-type enum needs the value added to each. COUNTER: it is a third retirement edge in a schema where two already sit unread, and GOVERNED_BY already links anything to the Decision that shapes it — the gap may be a MEANING rather than a missing edge type.\n\n(C) BOTH, WITH A STATED DIVISION — the status answers \\\"does this still count?\\\", the edge answers \\\"who decided, and why?\\\". COUNTER: this is option C of dec:one-retire-edge restated one level up, and that node has been waiting since July precisely because nobody has said what the distinction would be.\n\n(D) DECIDE dec:one-retire-edge FIRST AND GIVE THE SURVIVOR A READER. Pick OBSOLETES or SUPERSEDES, delete the other, and answer the question that decision says is the real one: \\\"what SHOULD consult it — delivery roll-up, the gap detectors, graph_report's counts — and does a retired node stop counting, or count separately?\\\" Then see whether discontinuation still needs its own vocabulary or is just that machinery with a null successor. COUNTER: it is the slowest route, and it answers Anthony's question with a question.\n\n⚠️ THE ONE THING EVERY OPTION MUST NOT REPEAT, and it is this project's own most-repeated finding: A MARKER NOTHING READS IS A COMMENT. Two retirement edges are already in that state, and `enforced` was in it until v0.26.0. Whatever is added here should ship WITH the computation that consults it — otherwise the honest outcome is that reflow2 gains a third way to write \\\"DISCONTINUED\\\" into a place the graph cannot compute on, which is the exact defect Alex reported.\n\nNOTHING IS PROMOTED. Anthony described an opportunity, not a decision.",
+        "name": "OPEN — how does the design say \"we built this and then decided against it\", when both existing retirement edges presume a successor and neither is read by anything?",
+        "rationale": "Recorded via the brainstorm skill: one Decision per open question, at `proposed`, options in the prose with their counters beside them, nothing promoted without his word.\n\nDeliberately kept SEPARATE from dec:one-retire-edge and dec:idea-does-a-capability-need-a-cancelled-state rather than folded into either, and the reason is the one the skill gives: one node holding two questions can only ever be half-answered. dec:one-retire-edge asks WHICH OF TWO EXISTING EDGES SURVIVES. Alex's asks whether a Capability needs a terminal state. This asks what \\\"built, then withdrawn, with no successor\\\" IS — a question neither of those poses, and the answer to it probably decides both.\n\nRecorded now rather than after the content-store question settles, because the content store is the first real instance and its handling will set the precedent whether or not anyone names it.",
         "status": "proposed"
       }
     },
@@ -60024,6 +60188,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — from the 2026-08-01 dynograph-foundation review. The most interesting idea in the batch and the least evidenced. Nothing here is settled.\n\nTHE CRATE: dynograph-game is not even a dependency of reflow2 today. It is closed-form normal-form analysis — per-player dominant strategies, pure Nash equilibria, Pareto-optimal outcomes, the interior 2x2 mixed equilibrium, and a headline classification `nash_is_pareto_suboptimal` with the Pareto outcome that dominates each suboptimal equilibrium.\n\nTHE FIT, and it is to a context Anthony has stated rather than one invented here: his real operating environment is several organisations with competing, partially-built, differently-motivated designs — A wants X, B wants Y, C built its own because it could not wait — and the job is making them interoperate when they were never designed to. That is a normal-form game. Players are organisations. Strategies are {adopt the shared interface, build our own}. And `nash_is_pareto_suboptimal` is exactly the interoperability tragedy: every organisation behaves rationally, every one builds its own, and the system of systems is collectively worse. The crate names both the equilibrium and the outcome that dominates it.\n\nADJACENT: dec:mosa-conformance is open, and MOSA is fundamentally an argument about the incentives to use open interfaces rather than about the interfaces themselves.\n\nTHE CONFLICT TO BE CLEAR ABOUT: the OBVIOUS application is analysis of alternatives — score the options, compute the equilibrium. That would CONTRADICT dec:alternatives-unranked-forkable, which is accepted and says \"alternatives are unranked forkable siblings; the human judges in hindsight, not a stored score\". Computing an equilibrium over design alternatives IS a stored recommendation. This must not be done without reopening that decision explicitly (dec:reopen-supersedes gives the mechanism). The interoperability reading does NOT conflict, because reflow2 would be reporting a structural property of an incentive situation a human described, not preferring a design — the same posture as dec:report-dont-judge.\n\nTHE HARD COST: payoffs are not in the graph and cannot be invented. This needs new vocabulary (players, strategies, payoff matrix) and a capture path, so it is M-to-L, not a spike. It is a product question about what reflow2 is for, and wants a conversation and a Decision before any code.",
         "name": "OPEN — should reflow2 model multi-organisation interoperability as a normal-form game?",
         "rationale": "Recorded because the fit to the stated multi-organisation context is unusually good, and recorded WITH the conflict against dec:alternatives-unranked-forkable stated in the same node, so nobody can pick this up later without meeting the objection.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-is-session-context-already-in-the-graph",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-09, on why he built the content store in the first place: \\\"one of the primary reasons I had also developed the blob was to capture actual agent session context. from my limited understanding, an agent is stateless because it can't recall previous session's context. by storing in the blob, I thought I could make a session 'stateful'. ... however, every decision that an agent makes and implements is already embedded in the graph because it is already using reflow2, therefore, ingesting session context is moot or not needed?\\\"\n\n⭐ THE QUESTION HAS A RECORDED ANSWER ALREADY, and it is sharper than either yes or no. cap:session-memory (PLANNED, framing settled by Anthony himself on 2026-07-25) states it directly: \\\"Decision.rationale and ChangeEvent already capture fragments of the why; WHAT LIVES ONLY IN THE SESSION IS THE CONNECTIVE TISSUE — what was tried, what was rejected and on what grounds, which findings turned up while doing something else.\\\"\n\nSo the split is:\n  MOOT — the design content. Decisions, their rationale, requirements, changes, snapshots, questions and answers all land in the graph as they happen. Storing a transcript to preserve those would be a second copy of something already held better.\n  NOT MOOT — the connective tissue. What was attempted and abandoned, what failed and why, what cost more than expected, what was noticed sideways. None of that is design intent, so none of it has a natural node, and it is precisely what a later session needs in order not to repeat the work.\n\n⭐⭐ THIS SESSION IS THE EVIDENCE, and it is self-implicating rather than hypothetical. 2026-08-09 produced a great deal of design content, all of it now in the graph. It also produced process knowledge that is in NONE of it: hashing an artifact before the last edit FIVE times (because every mandatory gate — fmt, a clippy fix, a skill_lint trim — mutates the file AFTER the work looks finished); piping a gate into `tail` so the pipe returned tail's exit code and a red gate was pushed past; merging a four-PR stack in one loop so three PRs landed in already-squashed base branches and were stranded while GitHub reported all four as MERGED. **Every one of those lives in a markdown memory file OUTSIDE reflow2 entirely.** That is the connective tissue cap:session-memory names, currently housed in exactly the kind of file dec:what-lives-where was written to retire.\n\n=== AND THE PART THAT BEARS ON THE BLOB ===\n\nTHE STORE WAS NEVER THE RIGHT MECHANISM FOR THIS, AND cap:session-memory ALREADY SAYS SO: \\\"a pointer to a 3 MB transcript is a RECEIPT, not documentation: leaning on it recreates the markdown problem one level down, since 'it is all in the transcript' is the same excuse as 'it is all in the backlog file'.\\\"\n\nIts actual design needs no content store at all: session takeaways as FIRST-CLASS GRAPH CONTENT, written when they happen, anchored to the session's epoch, queryable afterwards. The transcript is modelled as a Fragment carrying the session UUID as portable identity — A POINTER, NOT BYTES — with the absolute path explicitly demoted to a machine-scoped hint, because a path stored as identity resolves for one person and silently misses for everyone else.\n\n⇒ SO THE SESSION-CONTEXT JUSTIFICATION FOR THE BLOB DOES NOT SURVIVE, but not for the reason the question proposes. It is not that session context is worthless — it is that ITS VALUE IS IN DISTILLED NODES, WHICH NEED NO STORE. Storing the transcript would preserve the receipt and lose the documentation.\n\nTHE FRAMING THAT MAKES THIS MORE THAN CLEANUP, and it is Anthony's own from 2026-07-25: a session's context IS documentation — the how-and-why record of a design's evolution — and documentation is part of the product. That changes the standard rather than the mechanism: \\\"a convenience can be skipped under load, a deliverable cannot.\\\"\n\n=== WHAT IS ACTUALLY OPEN ===\n\n(1) IS THE STATELESSNESS PREMISE ALREADY ANSWERED? reflow2's whole pitch is that the graph is the memory (req:persistence). If so, a transcript store would be a SECOND, lossier memory competing with the first — and two sources of truth is the failure this project designs out everywhere else. That reading says the blob's session justification was solving a problem reflow2 already solves.\n\n(2) WHAT FORCES THE CONNECTIVE TISSUE TO BE WRITTEN? cap:session-memory names this as its load-bearing gap: \\\"the existing handoff enforcement watches the modification time of MARKDOWN files, so the only mechanism forcing a session to leave takeaways behind POINTS AWAY FROM THE GRAPH.\\\" That is still true today — it is why this session's process findings are in a memory file. Fixing it is a nudge/hook question, not a storage question.\n\n(3) DOES PROCESS KNOWLEDGE BELONG IN A DESIGN GRAPH AT ALL? Honest counter, recorded beside rather than argued down: \\\"I hashed before running fmt\\\" is not design intent. It may belong to the harness or to a project's own working notes, and forcing it into the design graph could make the graph a log — which is the failure mode dec:orientation-is-computed-not-written warns about from the other direction. cap:session-memory's answer is the documentation reframe; whether that reframe holds for PROCESS failures as well as DESIGN reasoning is genuinely unsettled.\n\nNOTHING IS PROMOTED. Anthony asked a question; cap:session-memory remains PLANNED and unchanged.",
+        "name": "OPEN — if every decision an agent makes is already in the graph, is capturing session context moot? (No, but the part that isn't moot never needed a blob)",
+        "rationale": "Recorded via the brainstorm skill: one Decision per open question, at `proposed`, counters beside the options, nothing promoted.\n\nDeliberately NOT folded into cap:session-memory, and not used to edit it. That capability already holds the answer to the moot question and its framing is Anthony's own; this node records that the question was asked again, what the existing answer is, and the one part that genuinely bears on the content-store decision — that the session-context justification for the blob does not survive, because the value is in distilled nodes rather than stored bytes.\n\nLinked to dec:idea-discontinue-the-content-store because it removes one of that decision's stated motivations, which is a material change to the argument rather than a footnote.",
         "status": "proposed"
       }
     },
@@ -67840,6 +68014,21 @@
       }
     },
     {
+      "node_id": "req:the-design-says-what-was-built-and-never-used",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "The design surfaces what was BUILT and is USED BY NOTHING — implemented effort that no longer earns its keep",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-08-09, promoting this from the vocabulary finding to a stated need: \\\"I know in the storyflow set of services, there are going to be multiple designed and implemented, but unused features. so having something in reflow2 that is able to automatically detect and surface these types 'implemented, but unused' aspects would be very beneficial.\\\"\n\nTHE NEED, and it is the mirror of everything reflow2 already computes. Every existing gap asks whether something is MISSING — nothing satisfies this requirement, nothing builds this capability, nothing verifies it. Not one asks whether something is SURPLUS: built, working, and consumed by nothing. On a long-lived system that is where the cost accumulates, because unused code is maintained, upgraded, secured and carried into every migration by people who cannot tell it is dead.\n\nWHY NO EXISTING DETECTOR COVERS IT, checked against all seven capability gaps rather than assumed. `unallocated_capability` asks if it has a component. `unmotivated_capability` asks if it satisfies a requirement — INTENT, not use, and it is gated on requirements > 0. `unrealized_capability` asks if anything builds it. `unverified_capability` and `unvalidated_capability` ask about checks. NONE OF THEM ASKS WHETHER ANYTHING IS DOWNSTREAM OF IT.\n\nTHE COMPUTABLE FORM, and it is genuinely available today: a Capability at `realized`/`verified` that nothing DEPENDS_ON, that no Flow includes via PART_OF_FLOW, and that no Actor INTERACTS_WITH — built, and nothing in the design consumes it. The same shape reads for a Component (nothing CONSUMES its Interfaces) and for an Artifact (realizes nothing that anything needs).\n\n⚠️ THE BOUND, WHICH MUST SHIP WITH IT AND NOT BE DISCOVERED LATER: THE GRAPH SEES DESIGN-LEVEL DEMAND, NEVER RUNTIME USAGE. A feature real users call every day, whose consumer was simply never modelled, is indistinguishable from a dead one. So this finding is \\\"NOTHING IN THE DESIGN CONSUMES THIS\\\", which is a statement about the design's completeness as much as about the system — and it must SAY that, or it becomes a tool that confidently recommends deleting working features. That is the same class as `unmet_needs: 0` reading as \\\"nothing is missing\\\" when it meant \\\"we never said we needed anything\\\".\n\nTWO TIERS, and only the first is buildable now:\n  (1) DESIGN-LEVEL — built, and nothing the design records consumes it. Computable from the graph as it stands.\n  (2) RUNTIME-LEVEL — consumed in the design, but no real user ever calls it. Needs telemetry, and reflow2 already holds that question twice: dec:bl-155 (40 of 132 served tools never called, and reflow2 cannot tell unused from unreachable) and dec:idea-measure-the-surface (should real usage telemetry be a standing instrument, and how far may it go). Tier 2 belongs to those, not here.\n\nPROVENANCE OF THE ASK: it arrived from the vocabulary sweep in dec:idea-detect-vocabulary-that-nothing-reaches — eight declared edge types nothing reaches — but Anthony's need is the CONSUMER-FACING generalisation, and it is the larger of the two. This one is about somebody else's services, which is what rule:fixes-are-judged-by-the-third-party asks for.\n\nRECORDED AT `proposed`: he stated a need clearly, and only his word moves a requirement off proposed.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:the-export-is-serialised-rather-than-socially-enforced",
       "node_type": "Requirement",
       "properties": {
@@ -72054,7 +72243,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:eb2df40b1871dc374d6f584c0fb214497c95188a10585bc40504c03b9624909f",
+  "prev_content_hash": "sha256:0702509a41f8058353dcc02866cba93052626ec400519dd0fb81af28c9b593f1",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
