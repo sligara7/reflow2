@@ -1,0 +1,53 @@
+Take dec:edge-orthogonality forward, and remove a temp file I committed by mistake
+
+TWO THINGS, one of them cleanup of my own litter.
+
+① req:a-vocabulary-distinction-proves-it-is-read (proposed)
+
+Anthony: "agree on taking forward dec:edge-orthogonality."
+
+That decision is ACCEPTED and states the principle — a vocabulary distinction
+earns its keep only if a computation reads it. It was applied ONCE, by hand,
+retiring VALIDATES and ENABLES on exactly that reasoning, and nothing has
+computed it since. The principle has been true and unenforced ever since.
+
+The measurement that made the case, run against reflow2's own 1,873-node design:
+EIGHT of sixty edge types are declared and unreached on every test (not
+instantiated, not in the propagation table, never named in non-test Rust) —
+COMPLIES_WITH, CONTAINS_EPOCH, EVOLVES_INTO, IMPOSES, MITIGATES, SUPERSEDES,
+SUPPLEMENTS, VIOLATES_RULE. Seven of twenty-nine node types have zero instances.
+Five more edges are instantiated but reached only generically.
+
+THREE HAD COMPLAINTS FILED BY dev_storyflow HOURS EARLIER, which is what makes
+it a class rather than tidiness: VIOLATES_RULE undiscoverable through
+describe_schema for the pair its name describes; QualityGate "I could not find
+an honest use"; Anchor already open as its own decision.
+
+WHY IT NEVER SURFACED: every detector is instance-level and this is a
+vocabulary-level fact. A declared type with zero instances produces nothing for
+any detector to anchor on, so the accumulation is invisible by construction.
+
+⚠️ TWO BOUNDS WRITTEN INTO THE REQUIREMENT RATHER THAN LEFT TO BE FOUND. It must
+not fire on a CONSUMER'S design for not using reflow2's whole vocabulary — a
+demonstrator legitimately has empty node types, and nagging correct work is the
+failure the phase-nudge doctrine exists to prevent; the defensible subject is
+reflow2's own shipped vocabulary. And whatever is built must be READ by
+something, or it becomes a ninth unreached thing — which has already happened to
+`enforced` and to both retirement edges.
+
+MECHANISM DELIBERATELY LEFT OPEN. dec:idea-detect-vocabulary-that-nothing-reaches
+holds four shapes with their counters. Anthony agreed the principle should be
+carried forward; he has not chosen the shape, and dec:certainty-derived forbids
+recording that on his behalf.
+
+② Remove msg.tmp.txt
+
+A scratch commit-message file I wrote during an amend and then committed to main
+in #127. Third consequence of that one botched sequence: the same amend also
+truncated #127's commit subject, and the shell-quoting attempt before it mangled
+a PR body. Deleted here rather than left as litter.
+
+reflow2_check: OK.
+
+Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_017mwo9Gsx12wT6zvM5LpHD9
