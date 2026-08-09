@@ -164,6 +164,20 @@ pub enum GapSource {
     /// pass — and a passing check that tests nothing is still a lie the graph
     /// cannot see. The detector informs; it does not certify.
     UnverifiedEnforcedRule,
+    /// A `DesignRule` that has not said whether breaking it is gate-blocking.
+    ///
+    /// The third state `enforced` gained when its default was removed
+    /// (`dec:does-enforced-default-to-gate-blocking`). Absent no longer means
+    /// enforced, so it must not silently mean advisory either — that would
+    /// simply move the unchosen claim to the other side. It means nobody has
+    /// said, and this ASKS.
+    ///
+    /// Deliberately a separate finding from `unverified_enforced_rule` and
+    /// deliberately gentler: "decide what this rule is" costs one word, while
+    /// "prove this rule" costs a detector. Collapsing them is precisely what
+    /// made the pre-2026-08-08 reading wrong, where a rule nobody had thought
+    /// about was billed for a check nobody agreed to.
+    UnstatedRuleEnforcement,
     /// A build exists and the design records no adopted conventions at all.
     ///
     /// THE SIBLING THAT MAKES GOVERNANCE SELF-SEEDING, and without it the rest
@@ -314,6 +328,7 @@ impl GapSource {
             GapSource::StatusContradiction => "status_contradiction",
             GapSource::UnverifiedCapability => "unverified_capability",
             GapSource::UnverifiedEnforcedRule => "unverified_enforced_rule",
+            GapSource::UnstatedRuleEnforcement => "unstated_rule_enforcement",
             GapSource::BuildWithoutGovernance => "build_without_governance",
             GapSource::ComponentGranularityVerification => "component_granularity_verification",
             GapSource::UnverifiedArtifact => "unverified_artifact",
@@ -384,6 +399,7 @@ impl GapSource {
             // accepting "this rule is checked by review, not by code" must not
             // also accept the next enforced rule somebody writes.
             | GapSource::UnverifiedEnforcedRule
+            | GapSource::UnstatedRuleEnforcement
             | GapSource::BuildWithoutGovernance
             | GapSource::ComponentGranularityVerification
             | GapSource::UnverifiedArtifact
@@ -2207,12 +2223,28 @@ impl DesignGraph {
         // a rule is not allocated anywhere, so there is no carrier one hop away
         // and no third state to compute. Either something checks this rule or
         // nothing does.
+        let mut unstated = Vec::new();
         for n in self.scan_nodes(node::DESIGN_RULE)? {
-            // `enforced` DEFAULTS to true (schema/core.yaml), so absence is a
-            // claim, not silence: a rule that never said otherwise is asserting
-            // that violations block the build. Only an explicit `false` — a rule
-            // offered as guidance — is exempt.
-            if n.properties.get("enforced").and_then(|v| v.as_bool()) == Some(false) {
+            let enforced = n.properties.get("enforced").and_then(|v| v.as_bool());
+            // ONLY AN EXPLICIT `true` IS BILLED FOR A DETECTOR.
+            //
+            // This read the other way round for exactly one day. `enforced`
+            // defaulted to true, so absence was a claim and this detector
+            // exempted only an explicit `false` — which meant a convention
+            // recorded in passing was charged for a check nobody agreed to.
+            // The default is gone (dec:does-enforced-default-to-gate-blocking,
+            // Anthony 2026-08-08) and absence now means nobody has said.
+            //
+            // An unstated rule is NOT silently let off: it raises
+            // `unstated_rule_enforcement` below, which asks the question
+            // instead of billing for the answer. Two findings rather than one,
+            // because "prove this rule" and "decide what this rule is" are
+            // different questions and collapsing them is what made the old
+            // reading wrong.
+            if enforced != Some(true) {
+                if enforced.is_none() {
+                    unstated.push(n);
+                }
                 continue;
             }
             // `dec:passing-is-verified`: attaching a `planned` check must not
@@ -2260,6 +2292,37 @@ impl DesignGraph {
                         )
                     }
                 },
+            });
+        }
+        for n in unstated {
+            let name = node_name(&n);
+            gaps.push(GapCandidate {
+                id: gap_id(
+                    GapSource::UnstatedRuleEnforcement,
+                    std::slice::from_ref(&n.node_id),
+                ),
+                gap_source: GapSource::UnstatedRuleEnforcement,
+                scope: GapScope::Project,
+                // Below build_without_governance (0.45): a rule exists and only
+                // its consequence is open, which is a smaller hole than no
+                // conventions at all. Well below unverified_enforced_rule
+                // (0.6), because this asks for a word and that asks for a check.
+                severity: 0.4,
+                title: format!(
+                    "\u{201c}{name}\u{201d} does not say whether breaking it stops the build"
+                ),
+                description: format!(
+                    "The rule \u{201c}{name}\u{201d} does not say whether its violations are \
+                     gate-blocking. Absent is not read as either answer \u{2014} is breaking this \
+                     rule something that should stop the build, or is it advice?"
+                ),
+                affected_ids: vec![n.node_id.clone()],
+                suggested_depth: 2,
+                evidence: format!(
+                    "DesignRule '{}' has no `enforced` property. It is neither billed for a \
+                     detector nor treated as advisory until somebody says which.",
+                    n.node_id
+                ),
             });
         }
         Ok(())

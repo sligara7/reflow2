@@ -98,6 +98,7 @@ NON_TOOL_TERMS = {
     "true",
     "build_without_governance",
     "unverified_enforced_rule",
+    "unstated_rule_enforcement",
     "tech_stack",
     "convention",
     "material",
