@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:25c8c45de0cd640c873dfa7bf39b5fb20d28f09b2e525a723f8be74c4d648ae8",
+  "content_hash": "sha256:62e2b64ba95135f24c746464246efb2c2a5c6bc450222c4f563f38010d9ba680",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -5502,6 +5502,14 @@
       "properties": {
         "acted_at": "2026-07-24",
         "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:does-enforced-default-to-gate-blocking",
+      "properties": {
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -13206,6 +13214,42 @@
         "action": "modified"
       },
       "to_id": "req:seat-identity-survives-stateless-mcp"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:rules-can-be-verified-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:rules-can-be-verified-20260808",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:rules-can-be-verified-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:vocabulary"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:rules-can-be-verified-20260808",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:does-enforced-default-to-gate-blocking"
     },
     {
       "edge_type": "CHANGED",
@@ -42511,6 +42555,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:enforced-rule-detector-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:rules-can-be-verified"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:evidence-quality-instrument",
       "properties": {
         "completeness": "complete"
@@ -45860,6 +45912,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:rules-can-be-verified",
+      "properties": {},
+      "to_id": "cap:vocabulary"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:sanitize-ingress",
       "properties": {},
       "to_id": "cap:sanitize-ingress"
@@ -46362,6 +46420,14 @@
         "action": "created"
       },
       "to_id": "art:dto"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:enforced-rule-detector-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:enforced-rule-detector-test"
     },
     {
       "edge_type": "YIELDED",
@@ -47701,7 +47767,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f238a133af03041c96e7ba81f74232a1f6215033e8d3fcafb8db284950269007",
+        "checksum": "sha256:792de5516c2442e8f3c7ee34ba57432c88c9878904c6de6ce0fc2ae5d2cc045f",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -47796,6 +47862,19 @@
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/dto.rs",
         "name": "dto.rs",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:enforced-rule-detector-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:62867f89a2a07d2beb155ef8cf06acc8cb004671f2c7c44da8e1da2e2a65387a",
+        "granularity": "atomic",
+        "location": "crates/reflow2-core/tests/enforced_rule_needs_a_detector.rs",
+        "name": "enforced_rule_needs_a_detector.rs",
         "status": "realized",
         "volatility": "stable"
       }
@@ -48622,7 +48701,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:31bc6ca6b00b389dced1dd7ad29164bd2be7b080d6c8a948be99ad57430cf980",
+        "checksum": "sha256:1418c86a6303e07bc4ad46637cd321420d11e337e8a0d447338e5de316c9d990",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/verify.yaml",
@@ -53494,6 +53573,14 @@
       }
     },
     {
+      "node_id": "chg:rules-can-be-verified-20260808",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "VERIFIES enumerates its targets so a DesignRule is modelled rather than merely accepted, and two gaps ask what checks a gate-blocking rule — and what conventions a build follows at all"
+      }
+    },
+    {
       "node_id": "chg:schedule-is-structural",
       "node_type": "ChangeEvent",
       "properties": {
@@ -55043,6 +55130,16 @@
         "name": "Documentation is part of the product but has no operational coupling, so its island is accepted — and the detector should learn this",
         "rationale": "Decided 2026-07-24, immediately after the user answered that documentation belongs to reflow2 rather than sitting outside it (\"it'd be like if I designed a fighter jet using reflow2, but then didn't deliver any documentation on it to the user\"). Three bridges were attempted before accepting: project containment, which is how every other subsystem attaches; then DOCUMENTS edges to the project, the installer and the service. The detector still fired, and reading structure.rs explains why — the design network admits a defined TRACEABILITY set (SATISFIES, ALLOCATED_TO, REALIZES, VERIFIES, GOVERNED_BY, PROVIDES/CONSUMES, DEPENDS_ON, INCLUDES) and DOCUMENTS is simply not in it, while CONTAINS is deliberately excluded. That selectivity is correct and should not be weakened to silence this. THE GENERAL PRINCIPLE, which is why this is worth recording rather than shrugging at: dec:operational-spof already established that only things which OPERATE can be single points of failure, because the suggested fix — add redundancy — is meaningless for intent. The identical argument applies one category over. Only things that operate can be meaningfully disconnected FROM the operational network; a documentation subsystem has no operational coupling by its nature, so flagging it is a false positive of the BL-84 family, and the fix belongs in the detector rather than in the design. RESOLVED 2026-07-25, and NOT by the fix this decision anticipated — recorded because a decision that goes on claiming to accept something that no longer happens is exactly the drift this project exists to catch. The island dissolved on its own when cap:session-memory turned out to belong to BOTH cmp:docs and cmp:temporal: the user's point that a session's context is itself documentation gave documentation a genuine, non-cosmetic tie to the rest of the design, through ALLOCATED_TO edges that are true rather than manufactured. So the detector was never wrong about the topology — the topology changed, because the design gained a real connection it had been missing. The PRINCIPLE above stands unaltered and still applies to any future documentation-only cluster; only the specific defect it dispositioned has gone. Worth keeping as evidence for the detector fix: an island can be legitimate AND later dissolve legitimately, so the exemption must not be written in a way that hides a genuine disconnection.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:does-enforced-default-to-gate-blocking",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "NOT DECIDED. `schema/core.yaml` gives `DesignRule.enforced` a default of `true`, described as 'whether violations are gate-blocking'. So a rule captured without anyone saying a word about enforcement asserts that breaking it should stop the build. THE QUESTION: should an unstated `enforced` mean gate-blocking (today's answer), advisory, or should the property be REQUIRED so the choice is always somebody's rather than the schema's? OPTION A — leave it. Cheapest, and defensible: a rule worth recording is usually a rule you mean. Cost: reflow2's own four enforced rules all reached that status by silence, and none of them was a deliberate choice. OPTION B — flip the default to false. A convention becomes advice unless somebody promotes it. Cost: it is a behaviour change for every existing rule in every installed graph, and it would silently downgrade rules somebody DID mean; it also needs a decision about whether existing `true` values are explicit or inherited, which the graph cannot currently distinguish. OPTION C — make it required, so `add_*` refuses a rule that does not say. Most honest and most disruptive; it is the `GATED_ON.min_level` treatment (`dec:readiness-is-an-observation-the-threshold-is-the-judgement`: a threshold that encodes risk appetite is never defaulted), and the argument transfers almost word for word — whether breaking a rule should stop a build is a policy about consequence, which is the user's to state. WHY IT MATTERS NOW rather than as a curiosity: `unverified_enforced_rule` bills every enforced rule for a detector. With the default at `true`, that bill lands on rules nobody chose to enforce, which is how a true detector becomes a nag. THE COUPLING TO SAY OUT LOUD: whichever way this goes, the capture skill is what stops the schema deciding for the user — the same division kpp-proposal already draws, where the agent notices the shape and the human states the consequence.",
+        "name": "OPEN — `enforced` defaults to TRUE, so a convention recorded in passing claims the power to fail a build. Should silence mean gate-blocking, or advisory?",
+        "rationale": "Raised 2026-08-08 while building the governance detector, and deliberately NOT bundled into it. Changing a schema default is a behaviour change reaching every rule in every existing graph, and it encodes a policy — how much power an unstated convention should have — that belongs to the person whose builds it would stop. Recorded as its own decision point rather than resolved in passing, because a default IS a decision: it is currently making the gate-blocking claim on every user's behalf, silently, and it reached reflow2's own four enforced rules that way. Evidence for the discussion: 5 DesignRules here, 4 at `enforced: true`, none set deliberately, and 0 with any detector.",
+        "status": "proposed"
       }
     },
     {
@@ -59258,6 +59355,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered dto.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:enforced-rule-detector-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered enforced_rule_needs_a_detector.rs"
       }
     },
     {
@@ -66685,6 +66792,18 @@
       }
     },
     {
+      "node_id": "ver:rules-can-be-verified",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-08",
+        "level": "integration",
+        "method": "test",
+        "name": "\"Which of my rules have no detector?\" is askable, and asked: an enforced DesignRule with no PASSING verification is a 0.6 gap; an advisory one is not; a `planned` check does not silence it; a passing one closes it; `enforced` absent reads as the schema default TRUE and is still asked about. Plus the self-seeding half — a build with zero recorded conventions is asked once at 0.45, a design with no build yet is NOT (artifacts are the trigger, not components, because at genesis no convention has been chosen), and one recorded convention answers it. Eight cases in crates/reflow2-core/tests/enforced_rule_needs_a_detector.rs. VERIFIED AGAINST REALITY, not just fixtures: run over reflow2's own committed export it returns exactly four gaps, naming rule:bl-135, rule:bl-212, rule:bl-41 and rule:fixes-are-judged-by-the-third-party — reproducing the reported four-of-four. The placement was found BY a test, not by review: the first draft sat inside detect_unverified_capabilities, which early-returns when a project has zero verifications, so it silently never fired on a young design.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:sanitize-ingress",
       "node_type": "Verification",
       "properties": {
@@ -67013,7 +67132,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:a1664268f405b0e9c05b0c224f942240a93dd6be87f70517e1f164b3eccf8bbc",
+  "prev_content_hash": "sha256:25c8c45de0cd640c873dfa7bf39b5fb20d28f09b2e525a723f8be74c4d648ae8",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -118,6 +118,23 @@ fn baseline() -> DesignGraph {
     )
     .unwrap();
 
+    // One adopted convention, because this fixture claims to be a COMPLETE
+    // thread and a complete design has said what it is built to. Added when
+    // `build_without_governance` landed and fired here: a design with real
+    // artifacts already follows conventions, and recording none of them is a
+    // genuine hole rather than fixture noise. Advisory rather than enforced, so
+    // it answers the absence question WITHOUT owing a detector — which keeps
+    // this baseline at zero gaps and pins both rules at once.
+    g.create_node(
+        node::DESIGN_RULE,
+        "rule:house-style",
+        Props::new()
+            .set("name", "Cache reads go through the cache port")
+            .set("statement", "No component talks to the store directly.")
+            .set("enforced", false),
+    )
+    .unwrap();
+
     g.add_epoch("epoch:v1", "v1 baseline", EpochType::Baseline, 1)
         .unwrap();
     g
