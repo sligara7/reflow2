@@ -50,10 +50,90 @@ pub(crate) fn served_by() -> serde_json::Value {
             })
         })
     });
-    serde_json::json!({
+    let mut out = serde_json::json!({
         "reflow2_version": env!("CARGO_PKG_VERSION"),
         "binary_mtime_unix": mtime,
-    })
+    });
+    let (stale, note) = exe_replaced_since_start();
+    out["stale"] = json!(stale);
+    out["stale_note"] = json!(note);
+    out
+}
+
+/// What `served_by.stale_note` says when the binary was replaced under us.
+///
+/// A PUBLIC CONSTANT so a test can assert its wording WITHOUT arranging a
+/// genuinely replaced binary. The first draft asserted this inside
+/// `if stale == true`, which never runs in a test process — a branch that can
+/// only be checked by hand is the vacuous-test problem this session kept
+/// finding in other people's code, so it is not left in ours.
+pub const STALE_NOTE: &str = "STALE: this server's executable has been replaced since it \
+     started, so every computed rollup it returns came from code that is no longer on disk. \
+     Graph WRITES are unaffected (the store is the store), and so are `cargo` and reflow2_check, \
+     which read the working tree. TO REFRESH: `reflow2-mcp --graph-path <path> --stop-shared`, \
+     then make any tool call. THAT MAY NOT BE ENOUGH, and the reason is worth knowing: if YOUR \
+     CLIENT's binary was replaced too — which is the normal case after a rebuild — its respawn \
+     fails with `No such file or directory`, because it spawns via its own `(deleted)` path. \
+     Measured 2026-08-09. When that happens, start one by hand (`<current-binary> --graph-path \
+     <path> --serve-shared &`) or restart the session, which gets a client whose binary exists. \
+     A SESSION RESTART ALONE, WITHOUT `--stop-shared`, CHANGES NOTHING: `--shared` re-attaches \
+     to the same daemon.";
+
+/// What it says when the executable is still the file we started from.
+pub const CURRENT_NOTE: &str =
+    "current: this server's executable is still the file it was started from.";
+
+/// What it says when the question could not be asked at all.
+pub const UNKNOWN_NOTE: &str = "unknown: /proc/self/exe is unreadable (non-Linux, or a \
+     restricted environment). Unknown is not `false` — this server cannot tell you whether it is \
+     current, so verify the running version another way before trusting a rollup.";
+
+/// Has this process's own executable been replaced since it started?
+///
+/// `req:the-server-is-the-authority-on-its-own-currency`. Returns
+/// `(Some(true) | Some(false) | None, note)` — **`None` is `unknown`, never
+/// `false`**, because "I could not look" and "I looked and I am current" are
+/// different answers and only one of them licenses trusting the surface.
+///
+/// # Why this, and not a version comparison
+///
+/// The old `served_by` block reported a version LITERAL and left the comparison
+/// to the reader. dev_storyflow measured what that costs: four sessions read
+/// `0.22.1` out of it on two different days and drew OPPOSITE conclusions from
+/// the same true value, and one reported a PASS on a broken invariant because a
+/// stand-down post had told it to demand exactly that literal. A version string
+/// also cannot answer the question at all when two builds share a version —
+/// which is every `cargo build` during a working session.
+///
+/// # The mechanism, which the kernel gives away for free
+///
+/// When a running binary is replaced, the kernel marks that process's
+/// `/proc/self/exe` link `(deleted)`. The inode lives on, so the process keeps
+/// running happily — that is precisely why nothing else notices. Reading the
+/// link is ONE SYSCALL, needs no second binary, no path re-resolution, and no
+/// assumption that the launch path still exists.
+///
+/// # This signal was already here, mis-reported as absence
+///
+/// `binary_mtime_unix` came back `null` in the field report and was written off
+/// as "best-effort, unavailable". It was not unavailable — it was the SAME
+/// SIGNAL: `current_exe()` hands back a path carrying the `(deleted)` marker,
+/// so `metadata()` on it fails and the mtime goes `None`. The block had the
+/// evidence and reported it as a shrug. That is why `stale` is stated
+/// explicitly rather than left to be inferred from a missing field.
+///
+/// Non-Linux has no `/proc`, so the honest answer there is `unknown`.
+fn exe_replaced_since_start() -> (Option<bool>, &'static str) {
+    let Ok(link) = std::fs::read_link("/proc/self/exe") else {
+        return (None, UNKNOWN_NOTE);
+    };
+    // The marker is on the LINK TEXT, not the target: the inode still exists,
+    // which is exactly why the process keeps serving and nothing else notices.
+    if link.to_string_lossy().ends_with(" (deleted)") {
+        (Some(true), STALE_NOTE)
+    } else {
+        (Some(false), CURRENT_NOTE)
+    }
 }
 
 /// A JSON object, as a tool parameter type.
