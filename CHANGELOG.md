@@ -31,6 +31,70 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.26.0] — 2026-08-09
+
+Governance becomes a question the graph can be asked, and the server stops lying about its own
+currency. Drafted from `changelog_view` between `rel:v0250` and `rel:v0260` (60 entries,
+`unmapped: []`) and curated by hand — the graph holds what moved, never what it costs you.
+
+**No upgrade doc: the schema stamp did not move** (29 node types, 60 edge types,
+`schema_version: 1`, unchanged from v0.25.0). Nothing in your graph is reinterpreted and no
+migration is needed. One default changed, though, and it is worth thirty seconds of your time —
+see the first Changed entry.
+
+### Added
+
+- **`served_by.stale` — the server now tells you whether it is still the code it was started
+  from.** Derived from `/proc/self/exe`, which the kernel marks `(deleted)` when a running
+  binary is replaced: one syscall, no version comparison, and it works when two builds share a
+  version. Three-valued — `true` / `false` / `null` for *unknown*, and **unknown never reads as
+  current**. `stale_note` carries the remedy, including the part that is easy to get wrong: a
+  session restart alone changes nothing under `--shared`, because the client re-attaches to the
+  same daemon. **What you do:** read `stale` before trusting any rollup from a long-running
+  server; if it is `true`, the numbers came from code that is no longer on disk (your graph
+  writes are unaffected).
+- **`governance-proposal` skill and the `/rules` command** — the capture half of governance.
+  It notices a rule you state in passing and asks what breaking it should COST, rather than
+  deciding for you. **What you do:** nothing, unless you record design rules; if you do, invoke
+  it (or `/rules`) and answer one question per rule.
+- **Two governance gaps.** `unverified_enforced_rule` (0.60) asks what detects a violation of a
+  rule that claims to be gate-blocking; `unstated_rule_enforcement` (0.40) asks an unstated rule
+  which it is. **What you do:** expect new gaps if you have `DesignRule`s — see below for why
+  they may be answerable with one word.
+- **`build_without_governance` (0.45)** — a project with real artifacts and no recorded
+  conventions is asked once, and it is acknowledgeable if the honest answer is "none worth
+  stating". Keyed on artifacts, not components, so it never fires on a design still on paper.
+
+### Changed
+
+- **⭐ `DesignRule.enforced` no longer defaults to `true`. It is now three-state: `true`,
+  `false`, and ABSENT meaning nobody has said.** Previously a convention recorded in passing
+  asserted it could fail your build — and then owed a detector nobody agreed to. **What you do:
+  nothing is reinterpreted; every stored value stays exactly as it is.** But rules that reached
+  `enforced: true` by silence will now raise `unverified_enforced_rule`, and the honest fix is
+  usually one call setting `enforced: false` on the ones you meant as guidance. reflow2 did this
+  to its own four rules and three of them were advisory.
+- **`VERIFIES` and `CONSTRAINS` enumerate their endpoints** instead of accepting anything through
+  a `*` wildcard. `VERIFIES` now models `DesignRule`, which is what made "which of my rules have
+  no detector?" askable at all; `CONSTRAINS` names its source as `Constraint`/`DesignRule`, so a
+  rule binding a component is a modelled fit rather than a tolerated one. **What you do:**
+  nothing — both lists were derived from live edges, so no existing edge is invalidated.
+  `GOVERNED_BY` was deliberately NOT narrowed, because another project may legitimately use pairs
+  this one does not; only its hint was corrected.
+- **`graph_report`'s description** stops telling you to compare `served_by` against your repo by
+  hand, and stops prescribing a session restart.
+
+### Fixed
+
+- **⭐ Seat liveness now answers about the session for the seat you actually carry.** v0.25.0's
+  fix covered the seat the service leases — which is used only when you OMIT `seat`, and
+  `dec:stateless-seat-handle` refuses that on the sessionless transport. A seat from `mint_seat`
+  was never registered, so `gone` stayed unreachable and every claim read `live` forever. It now
+  reads `unknown` on a server that cannot observe your session, and `mint_seat` stopped promising
+  liveness it cannot compute. Reported by dev_storyflow (w-aa0607ff). **What you do:** if you
+  rely on `claim_report` to tell you a colleague has left, note that `unknown` means *cannot
+  see* — `release_claim` is what clears a claim on a shared server.
+
 ## [0.25.0] — 2026-08-08
 
 ### Fixed
