@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:27e0483a57e8b2efda4b737b1a80ec4ddcf48c6c5c2bb25f84e2d50a2c3a6dc8",
+  "content_hash": "sha256:b2de73972e736142e35683fefc49ba2dc9e4b354ea6892d98298c3741525ab7d",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -6613,6 +6613,15 @@
       "from_id": "req:a-session-chooses-its-design",
       "properties": {
         "acted_at": "2026-08-05",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-vocabulary-distinction-proves-it-is-read",
+      "properties": {
+        "acted_at": "2026-08-09",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -16384,6 +16393,15 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "req:a-vocabulary-distinction-proves-it-is-read",
+      "properties": {
+        "alignment": "supporting",
+        "evidence": "That decision holds the four candidate mechanisms and their counters. The principle is now agreed; the shape is not, and is deliberately left there rather than assumed here."
+      },
+      "to_id": "dec:idea-detect-vocabulary-that-nothing-reaches"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "req:framework-is-chosen-not-defaulted",
       "properties": {
         "alignment": "supporting",
@@ -22999,6 +23017,14 @@
       "from_id": "req:a-session-cannot-address-another-design",
       "properties": {},
       "to_id": "dec:one-process-many-stores"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:a-vocabulary-distinction-proves-it-is-read",
+      "properties": {
+        "note": "This requirement exists to make the accepted decision computable. dec:edge-orthogonality states the principle and was applied once by hand; this is the carry-forward Anthony agreed to on 2026-08-09."
+      },
+      "to_id": "dec:edge-orthogonality"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -66377,6 +66403,21 @@
       }
     },
     {
+      "node_id": "req:a-vocabulary-distinction-proves-it-is-read",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "The rule that a vocabulary distinction must be read by a computation is itself computed, not applied by hand",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-08-09: \\\"agree on taking forward dec:edge-orthogonality.\\\"\n\nWHAT IS BEING TAKEN FORWARD. dec:edge-orthogonality is ACCEPTED and states the principle: a vocabulary distinction earns its keep ONLY IF A COMPUTATION READS IT. It was applied ONCE, by hand, retiring the VALIDATES and ENABLES edges on exactly that reasoning. Nothing has computed it since, so the principle has been true and unenforced ever since.\n\nTHE MEASUREMENT THAT MADE THE CASE, run 2026-08-09 against reflow2's own 1,873-node design. An edge type counts as REACHED if it is instantiated in this design, OR named in structural_rule's propagation table, OR named anywhere in non-test Rust outside its own const declaration:\n  EIGHT OF SIXTY EDGE TYPES fail all three — COMPLIES_WITH, CONTAINS_EPOCH, EVOLVES_INTO, IMPOSES, MITIGATES, SUPERSEDES, SUPPLEMENTS, VIOLATES_RULE.\n  SEVEN OF TWENTY-NINE NODE TYPES have zero instances — Anchor, DimensionAssessment, DimensionObservation, EnvironmentRule, Flow, QualityGate, ReadinessAssessment.\n  FIVE MORE EDGE TYPES are instantiated but reached only generically: ABOUT_ENTITY (117 instances), CAUSES (9), INTERACTS_WITH (4), OPERATES_IN (3), VALID_TO (2).\n\n⭐ THREE HAD INDEPENDENT COMPLAINTS FILED BY dev_storyflow HOURS EARLIER, which is what makes this a class rather than tidiness: VIOLATES_RULE is not offered by describe_schema for the pair its name describes, so a session doing the documented thing cannot discover it and used VIOLATES instead; QualityGate drew \\\"I could not find an honest use, and I think that is informative\\\"; Anchor is already open as dec:anchor-retire-or-implement.\n\nWHY IT NEVER SURFACED, and it is the reason a computation is needed rather than more discipline: EVERY DETECTOR IS INSTANCE-LEVEL AND THIS IS A VOCABULARY-LEVEL FACT. unsatisfied_requirement needs a Requirement, disconnected_community needs a cluster of two or more, orphan_node needs a node. A declared type with ZERO instances produces nothing for any of them to anchor on. No detector asks a question about the SCHEMA rather than about the design, so the accumulation is invisible by construction.\n\nWHAT THIS REQUIRES: that the principle be answerable by calling something, not by remembering to look. Declared-but-unreached vocabulary must be nameable on demand — which types, and on which of the three tests they failed — so that the next accumulation is visible when it happens rather than eight items later.\n\n⚠️ WHAT IT MUST NOT BECOME, and this is load-bearing rather than a caveat. A demonstrator legitimately does not use Flow or ReadinessAssessment; a young design legitimately has empty node types. A finding that fires on a CONSUMER'S design for not using reflow2's whole vocabulary would nag correct work, which is the failure dec:read-hint-shape and the phase-nudge doctrine exist to prevent. The defensible subject is REFLOW2'S OWN SHIPPED VOCABULARY — a fixed 60 edges and 29 node types with code behind them or not — because that is a property of the build rather than of anybody's modelling.\n\nAND IT MUST NOT REPEAT THE DEFECT IT DESCRIBES: whatever is built here has to be READ by something, or it becomes a ninth unreached thing. That is not a joke about the requirement; it is the specific failure mode, and it has already happened to `enforced` (unread until v0.26.0) and to both retirement edges (unread today).\n\nMECHANISM DELIBERATELY LEFT OPEN — dec:idea-detect-vocabulary-that-nothing-reaches records four shapes with their counters: a census report, a low-severity gap, a tools/ maintenance instrument like toolsnap, or prune-and-accept. Anthony agreed the principle should be carried forward; he has not chosen the shape, and dec:certainty-derived forbids recording that on his behalf.\n\nBOUND, stated rather than glossed: the measurement covered ONE design. A type with zero instances here may be in daily use in dev_storyflow or flo2. The eight unreached-on-every-test EDGES are the stronger claim, because those have no code behind them anywhere and that is a fact about the shipped build.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:accreted-intent-becomes-a-design",
       "node_type": "Requirement",
       "properties": {
@@ -72243,7 +72284,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:0702509a41f8058353dcc02866cba93052626ec400519dd0fb81af28c9b593f1",
+  "prev_content_hash": "sha256:27e0483a57e8b2efda4b737b1a80ec4ddcf48c6c5c2bb25f84e2d50a2c3a6dc8",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
