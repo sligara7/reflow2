@@ -114,6 +114,78 @@ fn a_planned_check_does_not_silence_the_question() {
     );
 }
 
+// ---------------------------------------------------------------------------
+// The sibling that makes the family self-seeding.
+//
+// Everything above fires on a rule that ALREADY EXISTS. On a design where
+// nobody ever wrote one down they are all silent, so governance would never
+// surface at all — Anthony's question when he read the first draft, and he was
+// right: a gap that only speaks about recorded things cannot ask for the thing
+// itself.
+// ---------------------------------------------------------------------------
+
+fn governance_rollup_fires(g: &DesignGraph) -> bool {
+    g.detect_gaps()
+        .unwrap()
+        .iter()
+        .any(|c| c.gap_source == reflow2_core::detect::GapSource::BuildWithoutGovernance)
+}
+
+/// A design with real files and no recorded conventions. Those files already
+/// follow rules — a branching rule, a review step, a house style — and nothing
+/// says what they are. This is the adopt case, where the rules exist in the code
+/// and only the record is missing.
+#[test]
+fn a_build_with_no_adopted_conventions_is_asked_about() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:x", "X").unwrap();
+    g.add_capability("cap:a", "Cap A", "does a", None).unwrap();
+    g.add_artifact("art:a", "a.rs", Some("code"), Some("src/a.rs"))
+        .unwrap();
+    g.realizes("art:a", node::CAPABILITY, "cap:a", None)
+        .unwrap();
+
+    assert!(
+        governance_rollup_fires(&g),
+        "files exist, so conventions exist; the design recording none of them is the question"
+    );
+}
+
+/// THE COUNTERWEIGHT THAT DECIDED THE TRIGGER. At genesis there is intent and no
+/// build — no convention has been chosen yet, and asking gets a shrug. Keying
+/// this on artifacts rather than components is what keeps it from firing on
+/// every design on its first day.
+#[test]
+fn a_design_with_no_build_yet_is_not_asked_about() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:x", "X").unwrap();
+    g.add_requirement("req:r", "R", "need r").unwrap();
+    g.add_capability("cap:a", "Cap A", "does a", None).unwrap();
+    g.add_component("cmp:c", "C", "part c", None).unwrap();
+
+    assert!(
+        !governance_rollup_fires(&g),
+        "a design on paper has not chosen how it will be built; asking now is asking too early"
+    );
+}
+
+/// And it can reach zero. One recorded convention answers it — the question is
+/// "what conventions?", not "have you written enough of them?".
+#[test]
+fn one_recorded_convention_answers_the_rollup() {
+    let mut g = base_with_rule("rule:prs-only", Some(false));
+    g.add_capability("cap:a", "Cap A", "does a", None).unwrap();
+    g.add_artifact("art:a", "a.rs", Some("code"), Some("src/a.rs"))
+        .unwrap();
+    g.realizes("art:a", node::CAPABILITY, "cap:a", None)
+        .unwrap();
+
+    assert!(
+        !governance_rollup_fires(&g),
+        "a detector that cannot reach zero teaches you to skim it"
+    );
+}
+
 /// And the close: a passing check answers it. This also pins that the edge is
 /// legal at all — `VERIFIES` now ENUMERATES DesignRule rather than tolerating it
 /// through a `*` wildcard, which is what made the question expressible.

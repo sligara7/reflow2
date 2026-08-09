@@ -213,6 +213,22 @@ fn complete_thread_yields_no_traceability_gaps() {
     )
     .unwrap();
 
+    // A complete thread has said what it is built to. Added when
+    // `build_without_governance` landed and fired here: real artifacts exist, so
+    // conventions exist, and recording none of them is a genuine hole rather
+    // than fixture noise. ADVISORY on purpose — it answers the absence question
+    // without owing a detector, so this stays an empty gap set and pins the
+    // interaction between the two new rules in one place.
+    g.create_node(
+        node::DESIGN_RULE,
+        "rule:house-style",
+        Props::new()
+            .set("name", "One capability per module")
+            .set("statement", "A module holds exactly one capability's code.")
+            .set("enforced", false),
+    )
+    .unwrap();
+
     let gaps = g.detect_gaps().unwrap();
     let srcs = sources(&gaps);
     // No traceability gaps at all.

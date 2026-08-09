@@ -164,6 +164,27 @@ pub enum GapSource {
     /// pass — and a passing check that tests nothing is still a lie the graph
     /// cannot see. The detector informs; it does not certify.
     UnverifiedEnforcedRule,
+    /// A build exists and the design records no adopted conventions at all.
+    ///
+    /// THE SIBLING THAT MAKES GOVERNANCE SELF-SEEDING, and without it the rest
+    /// of this family cannot start. Every other rule finding fires on a rule
+    /// that ALREADY EXISTS — so on a design where nobody ever wrote one down,
+    /// they are all silent and governance is invisible forever. A detector that
+    /// only speaks about recorded things can never ask for the thing itself;
+    /// the same blind spot let a zero-edge requirement hide from HEAL until
+    /// something finally pointed at it.
+    ///
+    /// KEYED ON ARTIFACTS, NOT COMPONENTS, and the difference is the whole
+    /// argument. At genesis there are no conventions yet and asking gets a
+    /// shrug — a design on paper has not chosen how it will be built. Once real
+    /// FILES exist they already follow conventions, written down or not, which
+    /// is exactly the adopt case: a system that exists has de facto rules living
+    /// in the code that nobody recorded. So this waits for a build.
+    ///
+    /// Fires once, at the project level, and is acknowledgeable — "no adopted
+    /// conventions" is a legitimate answer for a prototype, and a detector that
+    /// cannot reach zero teaches you to skim it.
+    BuildWithoutGovernance,
     /// Capabilities with no check of their own, riding a passing check on the
     /// component they are allocated to (BL-73). One gap per carrying
     /// component, at 0.35 — the question is "is component granularity enough
@@ -293,6 +314,7 @@ impl GapSource {
             GapSource::StatusContradiction => "status_contradiction",
             GapSource::UnverifiedCapability => "unverified_capability",
             GapSource::UnverifiedEnforcedRule => "unverified_enforced_rule",
+            GapSource::BuildWithoutGovernance => "build_without_governance",
             GapSource::ComponentGranularityVerification => "component_granularity_verification",
             GapSource::UnverifiedArtifact => "unverified_artifact",
             GapSource::UnprovidedInterface => "unprovided_interface",
@@ -362,6 +384,7 @@ impl GapSource {
             // accepting "this rule is checked by review, not by code" must not
             // also accept the next enforced rule somebody writes.
             | GapSource::UnverifiedEnforcedRule
+            | GapSource::BuildWithoutGovernance
             | GapSource::ComponentGranularityVerification
             | GapSource::UnverifiedArtifact
             | GapSource::UnprovidedInterface
@@ -605,6 +628,10 @@ struct Population {
     artifacts: usize,
     verifications: usize,
     operate: usize, // Release + Environment + Resource
+    /// Adopted conventions. Counted so the ABSENCE of governance can be asked
+    /// about — every other rule detector fires on a rule that already exists,
+    /// which cannot surface the case where nobody wrote one down.
+    design_rules: usize,
 }
 
 impl DesignGraph {
@@ -620,6 +647,7 @@ impl DesignGraph {
             operate: self.count_nodes(node::RELEASE)?
                 + self.count_nodes(node::ENVIRONMENT)?
                 + self.count_nodes(node::RESOURCE)?,
+            design_rules: self.count_nodes(node::DESIGN_RULE)?,
         })
     }
 
@@ -1109,6 +1137,28 @@ impl DesignGraph {
                 format!(
                     "{} artifact(s) + {} capability(ies) exist; 0 Verifications.",
                     pop.artifacts, pop.capabilities
+                ),
+            );
+        }
+        // Governance-as-design (Anthony's framing, proposed with evidence by
+        // dev_storyflow's api-boss 2026-08-08). Deliberately AFTER a build
+        // exists: see GapSource::BuildWithoutGovernance for why artifacts and
+        // not components are the trigger.
+        if pop.artifacts > 0 && pop.design_rules == 0 {
+            push(
+                gaps,
+                GapSource::BuildWithoutGovernance,
+                0.45,
+                3,
+                "Nothing records the conventions this build follows",
+                "Real files exist, so this build already follows conventions — a branching \
+                 rule, a review step, a house style — but the design records none of them. \
+                 Which ones has it adopted, and should breaking any of them stop the build?",
+                format!(
+                    "{} artifact(s) exist; 0 DesignRules. Note `enforced` defaults to TRUE, so a \
+                     rule recorded without a word about enforcement is claiming to be \
+                     gate-blocking.",
+                    pop.artifacts
                 ),
             );
         }
