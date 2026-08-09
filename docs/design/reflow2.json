@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:fe4e4f2b74e6d89d4fa4501a622762f8faedf58bd269174445d08f1571ace4fa",
+  "content_hash": "sha256:c225bf1ca48be4be9e7aa1c85815c44e30671b7787b6f6d060675ad3bf4dcb89",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3973,6 +3973,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:scaling-to-many-tenants-20260809",
+      "properties": {},
+      "to_id": "epoch:scaling-to-many-tenants-captured"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:schedule-is-structural",
       "properties": {},
       "to_id": "epoch:arrival-delta"
@@ -5746,6 +5752,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-hosted-tier-of-many-single-writer-tenants",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-planned-increment-is-named-by-content-not-by-number",
       "properties": {
         "acted_at": "2026-08-08",
@@ -6923,6 +6938,15 @@
         "role": "reviewer"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "rule:per-design-state-is-never-a-process-global",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -13629,6 +13653,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:scaling-to-many-tenants-20260809",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:graph-registry"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:scaling-to-many-tenants-20260809",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:idea-a-hosted-tier-of-many-single-writer-tenants"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:scaling-to-many-tenants-20260809",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "rule:per-design-state-is-never-a-process-global"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:schedule-is-structural",
       "properties": {
         "accepted_baseline": true,
@@ -14982,6 +15033,15 @@
         "note": "Migrated from docs/backlog.md BL-41 on 2026-08-07 (epoch:backlog-retired). Size estimate carried from the row: ~~S~~ + M."
       },
       "to_id": "sys:agent-surface"
+    },
+    {
+      "edge_type": "CONSTRAINS",
+      "from_id": "rule:per-design-state-is-never-a-process-global",
+      "properties": {
+        "basis": "estimated",
+        "note": "The service is where per-design state accretes: cap:graph-registry names graph_path, content_path, identity and write_gen as things that must become per-graph, and all four ride the service today."
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "CONSUMES",
@@ -19516,6 +19576,12 @@
       "from_id": "cap:graph-registry",
       "properties": {},
       "to_id": "dec:one-process-many-stores"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:graph-registry",
+      "properties": {},
+      "to_id": "rule:per-design-state-is-never-a-process-global"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -45881,6 +45947,12 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:v0261",
+      "properties": {},
+      "to_id": "epoch:scaling-to-many-tenants-captured"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:v0270-planned",
       "properties": {},
       "to_id": "epoch:v0280-planned"
@@ -57601,6 +57673,14 @@
       }
     },
     {
+      "node_id": "chg:scaling-to-many-tenants-20260809",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Scaling to 1k/100k/1M single-writer tenants captured as a distinct operating context from the state-funeral case, with the non-foreclosure rule recorded unstated for Anthony to rule on"
+      }
+    },
+    {
       "node_id": "chg:schedule-is-structural",
       "node_type": "ChangeEvent",
       "properties": {
@@ -59367,6 +59447,16 @@
         "decision": "UNSETTLED, and it must be settled as ONE question rather than two. Two dev_storyflow reports a day apart ask for different fields on the same node for the same underlying reason — a Verification's qualifications have nowhere to live except its name. (A) 2026-08-07: structured RESULT fields — `exit_code`, `command`, `observed`/`expected` — so the graph can flag `status: passing` beside a non-zero exit as incoherent, and a re-run can be compared mechanically. (B) 2026-08-08: a `bounds`/`caveats` field and ideally a `grade`, plus a `findings`/`report` field, so `name` can go back to being a name and the qualifications become data the loop can reason about. Also on the table, and cheaper than either: truncate `name` in loop_status's rollup, or return `name` + `detail` separately, which fixes the READ cost without touching the schema. THE COUNTER-ARGUMENT DESERVES AIRING: reflow2 already has cap:evidence-scope (what a check pinned and swept, on the VERIFIES edge per dec:evidence-scope-on-the-verifies-edge) and reconcile_verification for feeding real outcomes back, so the machinery for \"evidence is structured, not prose\" is PARTLY BUILT — and the honest question may be whether these are extensions of it or a second, competing home for the same information.",
         "name": "OPEN — does a Verification gain structured fields for its BOUNDS and its FINDINGS, and is that the same decision as giving it structured RESULT fields?",
         "rationale": "Recorded as one decision because settling either half alone would put two structured homes for a check's qualifications into the same node type, which is how a schema acquires an overlap nobody can later explain. The urgency is not theoretical: the missing field has already become fleet DOCTRINE at dev_storyflow (\"carry the grading and all bounds in the node NAME\"), it has made graph_report.top_gaps titles ~2,000-character essays, and reflow2's OWN loop_status digest reads the same way for the same reason. Evidence: fact:defect-a-finding-has-no-bounds-so-grading-goes-in-the-name and fact:defect-verification-evidence-is-prose-so-passing-can-contradict-itself.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-a-hosted-tier-of-many-single-writer-tenants",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony thinking out loud, 2026-08-09, about using reflow2 behind a web app. Nothing here is intent and nothing has been chosen. DISTINCT FROM dec:live-tier, and the distinction is the whole point: that decision is about MANY WRITERS ON ONE DESIGN (the state-funeral case — thousands replanning one echeloned plan, which needs consensus and would mean replacing single-writer RocksDB). This is the opposite shape: N TENANTS, EACH WITH THEIR OWN graph_id AND ONE WRITER. No write contention, no consensus, no shared-store rewrite. The two cases share a tier and share almost none of their difficulty. THE SCALE STEPS ARE NOT EVENLY SPACED. 1k is a deployment problem and the design already points at it: cap:graph-registry (planned) specifies a bounded, evict-when-idle map from graph key to open design, and cap:select-graph-by-id (unrealized) lets a session name what it wants. Hold a few hundred designs hot, evict the rest. THE STEP CHANGE IS 1k TO 100k, and it is forced by one measured number: reflow2's OWN design is 1,828 nodes = a 3.8 MB export and a 33 MB store on disk — roughly 9x inflation, being RocksDB plus the tantivy index. At 100k tenants that is ~3.3 TB if all were resident, so the hot set is necessarily ~1% or less, which INVERTS the problem: cold open stops being an edge case and becomes the steady state. shared.rs budgets 30 SECONDS for a cold open today. The engineering question changes from 'hold many designs' (which the registry answers) to 'make opening a design cheap' (which it does not address at all). 100k TO 1M IS THEN HORIZONTAL: ~4 TB of cold blobs is unremarkable for object storage and the hot set grows with concurrency, not with registrations. A FIFTH ROAD, alongside dec:live-tier's four, and it fits what reflow2 already believes: OBJECT STORAGE HOLDS THE EXPORT AS THE SOURCE OF TRUTH, a node HYDRATES a RocksDB+tantivy cache on demand, and eviction is free because the cache is derived. This dissolves placement (any node can serve any tenant), dissolves durability (the object store's problem), and makes an idle tenant cost a ~3.8 MB cold blob instead of a 33 MB live store. reflow2 already has the primitive: the export is deterministic, sorted, content-hashed and self-contained — that IS a per-tenant blob, and the store is already derived rather than authoritative. WHAT IS ACTUALLY MISSING TODAY, recorded as unbuilt rather than merely absent: cap:graph-registry is planned and nothing builds it; cap:select-graph-by-id is unrealized and unverified; ver:a-session-cannot-name-another-design is PLANNED, and dec:one-process-many-stores was accepted CONDITIONAL on it, so that condition is half met; and dec:live-tier names 'no identity or authorization', which at this scale is not a gap but the product. THE FOUR WAYS TO FORECLOSE, all cheap to avoid now: (1) PROCESS-GLOBALS THAT ARE REALLY PER-DESIGN — cap:graph-registry's own text already lists graph_path, content_path, identity and write_gen as things that must become per-graph; every new static that is secretly per-design is a future migration. (2) PATH AS IDENTITY — cap:select-graph-by-id frames it correctly as 'the server maps id to path', id primary and path derived; sidecar files beside the store (.id.json, .sync.json) want to become object metadata resolved by a resolver. (3) A WHOLE-DOCUMENT WRITE ON A HOT PATH — the export being whole-document is correct for an archival action and fatal on a per-change path, which also makes BL-198 (stop serializing defaults) a SCALING decision rather than tidiness, since blob size is hydrate time. (4) BUILDING MULTI-TENANCY BEFORE PROVING ISOLATION — at this scale that is a security boundary, and retrofitting one into a running multi-tenant system is the sequencing mistake that cannot be walked back. WHAT IS NOT A PROBLEM, worth stating because it is counter-intuitive: the scaling axis is the NUMBER OF TENANTS, not the size of one design. A tenant's graph is small, so full scans, Leiden, modularity and every detector remain cheap per tenant. Single-writer-per-design is a FEATURE here rather than a limit — it is what makes N tenants embarrassingly parallel — so the box would be removing it, not keeping it. THE ONE MEASUREMENT WORTH TAKING NOW, while nothing depends on the answer: hydrate-and-index time as a function of design size (200 / 2k / 20k nodes, import to first query). Under a second for a typical tenant and the cache model is routine engineering; seconds and a read model in front becomes necessary — and that is better known before designing around the opposite assumption.",
+        "name": "OPEN — what does reflow2 look like at 1k / 100k / 1M tenants each holding their OWN design, and what must not be foreclosed now?",
+        "rationale": "Recorded under the brainstorm skill so the thinking survives without being claimed as intent. Kept SEPARATE from dec:live-tier rather than appended to it, because one node holding two questions can only ever be half-answered and these two differ in their hardest part: many-writers-one-design needs consensus, many-single-writer-tenants needs cheap hydration. Worth keeping even if none of it is built, for three reasons: the 9x store-to-export ratio is a measured anchor that decides the architecture and was not previously written down anywhere; the fifth road follows from a primitive reflow2 already has rather than from new invention; and the four foreclosures are cheap now and expensive later, which is exactly the class of thing a design graph exists to hold. Anthony's framing was explicitly about not painting into a corner rather than about building this, and the record should keep that distinction.",
         "status": "proposed"
       }
     },
@@ -62115,6 +62205,16 @@
       }
     },
     {
+      "node_id": "epoch:scaling-to-many-tenants-captured",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The hosted-tier scaling question is captured as its own operating context, and the rule that keeps the door open is recorded with its power deliberately unstated (2026-08-09)",
+        "sequence": 294,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:service-split",
       "node_type": "DesignEpoch",
       "properties": {
@@ -62567,6 +62667,15 @@
         "enforced": false,
         "name": "Build nothing today that forecloses growing into a hosted, multi-user, multi-project service",
         "statement": "Anthony's reframe, 2026-07-25, of what to do with the GitHub-MCP study's larger lessons: rather than hold them as a roadmap of features to build, hold them as a rule about what NOT to do now — do not take a shortcut today that would make it impossible for reflow2 to become what GitHub's MCP server is. A roadmap ages badly and gets stale in a document nobody reads; a non-foreclosure rule is checkable at the moment of the decision that would break it, which is the only moment it matters. THE SPECIFIC FORECLOSURES, from reading github-mcp-server (each one a shortcut that is tempting precisely because there is one writer today): (1) IDENTITY IN A GLOBAL. Authority must arrive with the caller and be read from the request, never stashed in a process-wide variable or resolved once at startup — GitHub constructs a fresh server per request in stateless mode for exactly this reason, and their lockdown cache carries the warning that a viewer-scoped lookup shared across requests runs under the wrong user's credentials. (2) INVENTING AUTHORITY. reflow2 must never become the thing that decides who may read what; it delegates to an authority that already exists, on GitHub's stated principle that a server must not let anyone reach more than they could reach without it. Building an account system would foreclose that by making reflow2 the authority. (3) TREATING THE SINGLE-WRITER LOCK AS A CONTRACT. One RocksDB handle is an implementation fact; the day it is a promise in a tool description or a skill, concurrency becomes a breaking change rather than a build. (4) CONFIG THAT WIDENS. Per-request configuration must only ever NARROW what the deployment allowed — GitHub's headers can restrict within static bounds and can never re-include what was excluded, and any read-only surface that a header can talk out of read-only was never read-only. (5) ONE GRAPH ASSUMED EVERYWHERE. graph_id already exists on every node and edge and is pinned to a constant; code that assumes the constant rather than reading the field is the foreclosure, not the constant itself. (6) TRUSTING TEXT BY ITS LOCATION. Once a design can arrive from someone else, text is untrusted because of where it came from, not because of which field it sits in — so the trust boundary belongs at ingress, before anything reads it. WHAT THIS RULE IS NOT: it is not a licence to build the hosted service, and not a reason to add abstraction now. Every item above is a constraint on shortcuts, satisfiable by writing the simple version carefully — the point is that the simple version stays a strict subset of the eventual one, so nothing has to be undone. ENFORCEMENT DECIDED 2026-07-25 (Anthony: \"go with your recommendation\"): ADVISORY, `enforced: false`, and deliberately so. VIOLATES_RULE is a vocabulary item no detector reads, so declaring this gate-blocking would promise a check that does not exist — the exact failure the KPP work was built to end (\"a KPP that nothing checks is a comment\"). The rule is the project's rule, confirmed by its author; the flag says only that no build has been stopped by it yet. It flips to enforced the day a detector can read a foreclosure from graph state — the honest first candidate being (4) and (5), which are mechanically checkable, unlike (2), which is a judgement about architecture."
+      }
+    },
+    {
+      "node_id": "rule:per-design-state-is-never-a-process-global",
+      "node_type": "DesignRule",
+      "properties": {
+        "category": "convention",
+        "name": "Per-design state never lives in a process-global, and identity is an id that resolves to a location — never a path",
+        "statement": "TWO CLAUSES, ONE PURPOSE: keep reflow2 able to hold many designs in one process without a rewrite.\n\n(1) STATE THAT BELONGS TO A DESIGN LIVES ON THE DESIGN HANDLE, NOT IN A `static`. cap:graph-registry already names the ones that must move — graph_path, content_path, identity, and the write_gen counter the loop nudge reads — and every new process-global that is secretly per-design adds another line to that migration. Legitimately process-wide state is fine and exists today (the seat registry, the serve-shared mode flag); the test is not 'is it a static' but 'would this need a different value for a second design open in the same process'.\n\n(2) A DESIGN IS NAMED BY AN ID THAT RESOLVES TO A LOCATION. cap:select-graph-by-id frames it correctly — the server maps id to path — so the id is primary and the path is a storage detail. A surface that treats a filesystem path as the canonical identity forecloses object storage, where the location is a key and the identity rides as metadata.\n\nWHY THIS IS A RULE RATHER THAN A REQUIREMENT: it constrains HOW every other change is made rather than describing behaviour anything can satisfy — the same shape as rule:no-foreclosure and rule:fixes-are-judged-by-the-third-party.\n\nEVIDENCE, 2026-08-09, from Anthony's question about running reflow2 behind a web app at 1k / 100k / 1M tenants (dec:idea-a-hosted-tier-of-many-single-writer-tenants). Neither clause costs anything today; both are expensive to retrofit, and the failure mode is erosion rather than a decision — one convenient global at a time, invisible until the migration. reflow2's own design measured 1,828 nodes = 3.8 MB export vs 33 MB store, which is what makes hold-many-designs-per-process the architecture rather than an option.\n\nWHAT IT DOES NOT SAY: nothing about WHERE a design is stored, nothing about hosting, and nothing that requires the registry to be built. It only keeps the door open."
       }
     },
     {
@@ -71344,7 +71453,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:2414b2f13780a51274261454a05d8c4d6b0b3566eb0c5a5c8627113374bd6be2",
+  "prev_content_hash": "sha256:fe4e4f2b74e6d89d4fa4501a622762f8faedf58bd269174445d08f1571ace4fa",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
