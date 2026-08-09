@@ -1653,7 +1653,7 @@ async fn loop_status_reports_debt_and_the_write_tools_point_at_the_loop() {
         "{cap}"
     );
 
-    let status = j!(s.loop_status());
+    let status = j!(s.loop_status(Parameters(Default::default())));
     assert_eq!(status["clean"], false);
     assert!(
         status["unproven_capabilities"].as_u64().unwrap() >= 1,
@@ -1723,7 +1723,7 @@ async fn loop_status_digests_the_verification_roll_instead_of_rolling_it() {
         })));
     }
 
-    let status = j!(s.loop_status());
+    let status = j!(s.loop_status(Parameters(Default::default())));
     let v = &status["verifications"];
 
     assert!(
@@ -2224,7 +2224,7 @@ async fn read_side_loop_hint_fires_on_debt_then_only_on_change() {
 async fn read_side_loop_hint_silent_when_the_loop_is_clean() {
     // An empty graph owes nothing.
     let s = ReflowService::in_memory().expect("in-memory service");
-    let status = j!(s.loop_status());
+    let status = j!(s.loop_status(Parameters(Default::default())));
     assert_eq!(status["clean"], true, "empty graph: the loop is clean");
 
     // A clean loop attaches no read hint — the pointer is state-derived, not
@@ -3056,5 +3056,62 @@ fn add_contributor_accepts_contributor_id_as_an_alias_for_id() {
         bogus.is_err(),
         "an unknown field must still be refused; the alias forgives one known mistake, \
          not every mistake"
+    );
+}
+
+/// A WRONG TYPE NAME and an ABSENT NODE must not answer identically.
+///
+/// dev_storyflow (w-c216679a, 2026-08-09) called `get_node("Epoch", …)` — the
+/// stored type is `DesignEpoch` — got a bare `null`, read it as "it isn't
+/// there", and their brief then told them to mint a second epoch it explicitly
+/// forbids. They caught it only because they distrusted the null.
+///
+/// The type name is checkable against the schema for free, so answering `null`
+/// for it is a fact the server HAS and declines to give.
+#[tokio::test]
+async fn an_unknown_node_type_is_refused_rather_than_answered_null() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    j!(s.add_epoch(Parameters(AddEpochReq {
+        id: "epoch:real".into(),
+        name: "a real epoch".into(),
+        epoch_type: "revision".into(),
+        sequence: 1,
+    })));
+
+    // THE REPRODUCTION: the type name they used.
+    let err = s
+        .get_node(Parameters(TypedIdReq {
+            node_type: "Epoch".into(),
+            id: "epoch:real".into(),
+        }))
+        .await
+        .expect_err("an unknown node type must be refused, not answered null");
+    let msg = format!("{err:?}");
+    assert!(
+        msg.contains("not a node type"),
+        "it must say the TYPE is unknown: {msg}"
+    );
+    assert!(
+        msg.contains("DesignEpoch"),
+        "and point at the one they meant: {msg}"
+    );
+
+    // POSITIVE CONTROL, both directions — the refusal must be about the type
+    // and nothing else.
+    let found = j!(s.get_node(Parameters(TypedIdReq {
+        node_type: "DesignEpoch".into(),
+        id: "epoch:real".into()
+    })));
+    assert_eq!(found["node"]["node_id"], "epoch:real");
+
+    // A REAL type with an absent id still answers null — that is the honest
+    // "no such node", and it must not have been collateral damage.
+    let absent = j!(s.get_node(Parameters(TypedIdReq {
+        node_type: "DesignEpoch".into(),
+        id: "epoch:nope".into()
+    })));
+    assert!(
+        absent["node"].is_null(),
+        "an absent node under a real type is still null: {absent}"
     );
 }

@@ -178,7 +178,10 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Fetch a node by type and id (null if absent).",
+        description = "Fetch a node by type and id — `{node: {...}}` when present, \
+                       `{node: null}` when absent. An unknown `node_type` is REFUSED rather \
+                       than answered `null`, because \"no such type\" and \"no such node\" are \
+                       different facts and must not share one reply.",
         annotations(read_only_hint = true)
     )]
     pub async fn get_node(
@@ -186,6 +189,52 @@ impl ReflowService {
         Parameters(req): Parameters<TypedIdReq>,
     ) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
+        // A WRONG TYPE NAME and an ABSENT NODE used to answer identically: a
+        // bare `null`. dev_storyflow (w-c216679a, 2026-08-09) asked for
+        // `get_node("Epoch", …)` — the stored type is `DesignEpoch` — read the
+        // null as "it isn't there", and their brief then told them to mint a
+        // second epoch it explicitly forbids. They caught it only because they
+        // distrusted the null.
+        //
+        // The type name is checkable against the schema for free, so answering
+        // `null` for it is a fact the server HAS and declines to give. Same
+        // class as `unmet_needs: 0` meaning "we never said we needed anything"
+        // — a zero that cannot be told from an absence.
+        if g.describe_node_type(&req.node_type).is_err() {
+            let vocabulary = g.describe_vocabulary();
+            let known: Vec<&str> = vocabulary
+                .node_types
+                .iter()
+                .map(|n| n.node_type.as_str())
+                .collect();
+            // `Epoch` → `DesignEpoch` is the reported case, and containment
+            // either way catches the whole family of dropped/added prefixes.
+            let asked = req.node_type.to_ascii_lowercase();
+            let near: Vec<&str> = known
+                .iter()
+                .copied()
+                .filter(|n| {
+                    let n = n.to_ascii_lowercase();
+                    !asked.is_empty() && (n.contains(&asked) || asked.contains(&n))
+                })
+                .collect();
+            let hint = if near.is_empty() {
+                String::new()
+            } else {
+                format!(" Did you mean {}?", near.join(" or "))
+            };
+            return Err(McpError::invalid_params(
+                format!(
+                    "`{}` is not a node type in this schema, so `null` here would mean \"no \
+                     such TYPE\" rather than \"no such node\" — and those are different facts.\
+                     {hint}\n\nKnown node types: {}.\n\nCall `describe_schema` for the full \
+                     vocabulary.",
+                    req.node_type,
+                    known.join(", ")
+                ),
+                None,
+            ));
+        }
         let node = g.get_node(&req.node_type, &req.id).map_err(dyno_err)?;
         // One named shape both ways (BL-57): `{node: {...}}` when present,
         // `{node: null}` when absent. Before, present returned a bare object

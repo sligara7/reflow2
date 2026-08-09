@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Fetch a node by type and id (null if absent).",
+  "description": "Fetch a node by type and id — `{node: {...}}` when present, `{node: null}` when absent. An unknown `node_type` is REFUSED rather than answered `null`, because \"no such type\" and \"no such node\" are different facts and must not share one reply.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

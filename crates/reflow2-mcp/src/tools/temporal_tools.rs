@@ -185,10 +185,12 @@ impl ReflowService {
     // ---- Temporal / CHANGE (deterministic, mutating) ----
 
     #[tool(
-        description = "Create an Epoch that HAS HAPPENED — a point on the time axis you are \
-                       recording, which is what an epoch has always meant here. For a point that \
-                       has NOT happened yet, use plan_epoch instead; planning is a deliberate act \
-                       and reads better as its own verb than as a flag.",
+        description = "Create a `DesignEpoch` that HAS HAPPENED — a point on the time axis you \
+                       are recording, which is what an epoch has always meant here. NOTE THE \
+                       STORED TYPE NAME is `DesignEpoch`, not `Epoch`: that is the string \
+                       `get_node` and `scan_nodes` want. For a point that has NOT happened yet, \
+                       use plan_epoch instead; planning is a deliberate act and reads better as \
+                       its own verb than as a flag.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_epoch(

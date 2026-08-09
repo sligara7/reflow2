@@ -52,11 +52,26 @@ impl NudgeStatus {
     pub fn advisory(&self) -> Option<String> {
         match self {
             NudgeStatus::Installed | NudgeStatus::Unknown => None,
+            // Reports what reflow2 LOOKED AT, not a claim about the world.
+            //
+            // This used to read "NO SESSION-END NUDGE IS INSTALLED… so nothing
+            // will remind you". dev_storyflow filed it on 2026-08-09: their
+            // `loop_status` said exactly that, and a Stop hook fired at them
+            // minutes later — the very reminder the sentence said did not
+            // exist. Their hook is harness-side rather than one reflow2
+            // installed, so the FIELD was right and the SENTENCE was not.
+            //
+            // Why the wording matters more than it looks: the advisory exists to
+            // make a session self-police because nothing else will, and **a
+            // session that believes it is unwatched budgets differently from one
+            // that knows a hook will catch it.** Arguing for the first while the
+            // second is true is the wrong error to make.
             NudgeStatus::Absent => Some(
-                "NO SESSION-END NUDGE IS INSTALLED in this project, so nothing will remind you \
-                 when the coherence loop is owed something. Call `loop_status` before you finish \
-                 any session in which you changed the design, and after a batch of captures — it \
-                 is one cheap call that says what is owed."
+                "REFLOW2 HAS NOT INSTALLED A SESSION-END NUDGE in this project — your harness \
+                 may have one of its own, which reflow2 cannot see. If nothing reminds you, \
+                 nothing will say the coherence loop is owed something. Call `loop_status` \
+                 before you finish any session in which you changed the design, and after a \
+                 batch of captures — it is one cheap call that says what is owed."
                     .to_string(),
             ),
             NudgeStatus::Broken { command } => Some(format!(
@@ -124,21 +139,77 @@ fn stop_hook_command(settings: &serde_json::Value) -> Option<String> {
     None
 }
 
-/// Pull the script path out of a hook command, resolving `$CLAUDE_PROJECT_DIR`.
+/// Pull the script path out of a hook command, resolving the forms a hook
+/// legitimately uses: `$CLAUDE_PROJECT_DIR`, and `~` / `$HOME`.
+///
+/// **`None` means "we cannot say where this points" — never "it is missing".**
+/// That distinction is the whole point of this function: `status` reads `None`
+/// as `Installed`, so anything we fail to resolve is left alone rather than
+/// called broken. Reporting a working safety net as broken is the expensive
+/// direction, because it trains the reader to ignore the one advisory whose job
+/// is to be trusted when nobody is watching.
+///
+/// # Why `~` needs handling at all
+///
+/// A shell expands `~` when the hook actually runs, so the hook WORKS; but a
+/// literal `~/...` string is not an absolute path, so it used to fall through to
+/// `project.join("~/.local/...")` — a path that can never exist — and every
+/// `loop_status` reported the nudge BROKEN. Reported from flo2 on 2026-08-09,
+/// where it cost a real commit documenting a problem that did not exist.
+///
+/// The installer never produces this form (`reflow2_install.py` writes a quoted
+/// absolute path), which is why it stayed invisible here; `getting-started/AGENTS.md`
+/// documents it for hand-wiring, which is the path flo2 took.
 fn script_path(command: &str, project: &Path) -> Option<PathBuf> {
+    script_path_with(command, project, home_dir().as_deref())
+}
+
+/// The home directory, or `None` where the environment does not say.
+fn home_dir() -> Option<PathBuf> {
+    std::env::var_os("HOME")
+        .or_else(|| std::env::var_os("USERPROFILE"))
+        .map(PathBuf::from)
+}
+
+/// `script_path` with the home directory supplied, so it is testable without
+/// mutating process-wide environment that other tests share.
+fn script_path_with(command: &str, project: &Path, home: Option<&Path>) -> Option<PathBuf> {
     let raw = command
         .split_whitespace()
         .find(|t| t.contains("loop_nudge"))?;
     let cleaned = raw.trim_matches(|c| c == '"' || c == '\'');
     let resolved = cleaned
-        .replace("$CLAUDE_PROJECT_DIR/", "")
-        .replace("${CLAUDE_PROJECT_DIR}/", "");
+        .replace("${CLAUDE_PROJECT_DIR}/", "")
+        .replace("$CLAUDE_PROJECT_DIR/", "");
+
+    let resolved = match home_relative(&resolved) {
+        // `~/x`, `$HOME/x`, `${HOME}/x` — resolvable only if we know home.
+        Some(rest) => home?.join(rest).to_string_lossy().into_owned(),
+        // A bare `~user/x` names somebody else's home and no environment
+        // variable answers it. Decline rather than guess.
+        None if resolved.starts_with('~') => return None,
+        None => resolved,
+    };
+
+    // Any variable we did not expand means the path is unknown to us — a
+    // wrapper, a pipeline, someone's own indirection. Not our business.
+    if resolved.contains('$') {
+        return None;
+    }
+
     let path = Path::new(&resolved);
     Some(if path.is_absolute() {
         path.to_path_buf()
     } else {
         project.join(path)
     })
+}
+
+/// The tail after a leading home marker, if the path is home-relative.
+fn home_relative(path: &str) -> Option<&str> {
+    ["~/", "$HOME/", "${HOME}/"]
+        .iter()
+        .find_map(|prefix| path.strip_prefix(prefix))
 }
 
 /// `<project>/.reflow2/graph` → `<project>`; otherwise the working directory.
@@ -199,10 +270,151 @@ mod tests {
         assert!(advisory.contains("loop_status"), "{advisory}");
     }
 
+    /// The advisory reports what reflow2 LOOKED AT, never a claim about the
+    /// world it cannot see.
+    ///
+    /// dev_storyflow, 2026-08-09: `loop_status` told them "nothing will remind
+    /// you" and a Stop hook fired at them minutes later. Their hook was
+    /// harness-side, so reflow2's FIELD was right and its SENTENCE was not — and
+    /// a session that believes it is unwatched budgets differently from one that
+    /// knows a hook will catch it.
+    #[test]
+    fn the_absent_advisory_does_not_claim_nothing_else_will_remind_you() {
+        let p = project_with(r#"{"hooks":{}}"#);
+        let advisory = status(Some(&p.graph())).advisory().unwrap();
+        assert!(
+            advisory.contains("REFLOW2 HAS NOT INSTALLED"),
+            "it must say what reflow2 did, not what the world contains: {advisory}"
+        );
+        assert!(
+            advisory.contains("your harness"),
+            "and must allow for a hook reflow2 cannot see: {advisory}"
+        );
+        assert!(
+            !advisory.contains("so nothing will remind you"),
+            "the overclaim must be gone: {advisory}"
+        );
+    }
+
     #[test]
     fn a_settings_file_that_is_not_json_does_not_read_as_installed() {
         let p = project_with("{ not json");
         assert_eq!(status(Some(&p.graph())), NudgeStatus::Absent);
+    }
+
+    // ---------------------------------------------------------------- `~`
+    //
+    // Reported from flo2, 2026-08-09: a hook wired by hand from
+    // getting-started/AGENTS.md uses `~/.local/share/reflow2/kit/tools/loop_nudge.py`,
+    // the script is there, the hook demonstrably runs — and every `loop_status`
+    // said BROKEN, because a literal `~` is not an absolute path and the check
+    // joined it onto the project directory.
+
+    /// The home directory is supplied rather than read from the environment,
+    /// so these never race with other tests over a process-wide `HOME`.
+    fn resolve(command: &str, home: &Path) -> Option<PathBuf> {
+        script_path_with(command, Path::new("/nonexistent-project"), Some(home))
+    }
+
+    #[test]
+    fn a_tilde_path_resolves_against_home_rather_than_the_project() {
+        let got = resolve(r#"python3 ~/kit/tools/loop_nudge.py"#, Path::new("/home/x"));
+        assert_eq!(got, Some(PathBuf::from("/home/x/kit/tools/loop_nudge.py")));
+    }
+
+    #[test]
+    fn home_variable_forms_resolve_the_same_way() {
+        for command in [
+            r#"python3 "$HOME/kit/tools/loop_nudge.py""#,
+            r#"python3 "${HOME}/kit/tools/loop_nudge.py""#,
+        ] {
+            assert_eq!(
+                resolve(command, Path::new("/home/x")),
+                Some(PathBuf::from("/home/x/kit/tools/loop_nudge.py")),
+                "{command}"
+            );
+        }
+    }
+
+    /// The positive control. Expanding `~` must not turn the check into one that
+    /// approves everything — a home-relative path to a script that is genuinely
+    /// absent is still the dangerous middle case this whole module exists for.
+    #[test]
+    fn a_tilde_path_pointing_at_nothing_is_still_broken() {
+        let p = project_with(
+            r#"{"hooks":{"Stop":[{"hooks":[{"type":"command",
+               "command":"python3 ~/.reflow2-no-such-dir-8f3a/loop_nudge.py"}]}]}}"#,
+        );
+        let NudgeStatus::Broken { command } = status(Some(&p.graph())) else {
+            panic!("expanding ~ must not make a missing script read as installed");
+        };
+        assert!(command.contains("loop_nudge"));
+    }
+
+    #[test]
+    fn a_tilde_path_whose_script_exists_is_installed() {
+        let p = project_with(
+            r#"{"hooks":{"Stop":[{"hooks":[{"type":"command",
+               "command":"python3 ~/kit/loop_nudge.py"}]}]}}"#,
+        );
+        // Point "home" at the temp project itself, so no real home is touched.
+        std::fs::create_dir_all(p.dir.join("kit")).unwrap();
+        std::fs::write(p.dir.join("kit/loop_nudge.py"), "#!/usr/bin/env python3\n").unwrap();
+        assert_eq!(
+            resolve("python3 ~/kit/loop_nudge.py", &p.dir),
+            Some(p.dir.join("kit/loop_nudge.py"))
+        );
+        assert!(
+            resolve("python3 ~/kit/loop_nudge.py", &p.dir)
+                .unwrap()
+                .exists()
+        );
+    }
+
+    /// What we cannot resolve, we do not judge — `None` becomes `Installed`.
+    #[test]
+    fn a_path_we_cannot_resolve_is_never_called_broken() {
+        for command in [
+            // Somebody else's home: no variable answers this.
+            "python3 ~someone/kit/loop_nudge.py",
+            // A variable we do not know.
+            "python3 $MY_KIT/tools/loop_nudge.py",
+            "python3 ${XDG_DATA_HOME}/reflow2/loop_nudge.py",
+        ] {
+            assert_eq!(
+                resolve(command, Path::new("/home/x")),
+                None,
+                "{command} — an unresolvable path must yield None, which status() reads as Installed"
+            );
+        }
+    }
+
+    /// And with no home in the environment at all, a `~` path is unknowable
+    /// rather than missing.
+    #[test]
+    fn without_a_home_a_tilde_path_is_unknowable_not_missing() {
+        let got = script_path_with(
+            "python3 ~/kit/loop_nudge.py",
+            Path::new("/nonexistent-project"),
+            None,
+        );
+        assert_eq!(got, None);
+    }
+
+    /// The form the installer actually writes must keep working — a quoted
+    /// absolute path. This is why the bug stayed invisible in this repo.
+    #[test]
+    fn the_installers_own_quoted_absolute_form_still_resolves() {
+        let got = resolve(
+            r#"python3 "/home/x/.local/share/reflow2/kit/tools/loop_nudge.py""#,
+            Path::new("/home/x"),
+        );
+        assert_eq!(
+            got,
+            Some(PathBuf::from(
+                "/home/x/.local/share/reflow2/kit/tools/loop_nudge.py"
+            ))
+        );
     }
 
     mod tempdir {

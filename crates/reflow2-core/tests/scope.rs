@@ -9,7 +9,7 @@
 //! does not exist rather than reporting an empty region as good news.
 
 use reflow2_core::detect::GapSource;
-use reflow2_core::nodes::node;
+use reflow2_core::nodes::{Props, edge, node};
 use reflow2_core::{DesignGraph, LinkArtifactOptions};
 
 /// Three segments, two of them with a hole of their own.
@@ -243,4 +243,85 @@ fn structural_defects_scope_the_same_way() {
     let scoped = g.detect_defects_in_scope("cmp:laser", 3).unwrap();
     assert_eq!(scoped.total, all.len());
     assert_eq!(scoped.in_scope + scoped.out_of_scope, scoped.total);
+}
+
+/// A seed with no edges makes `in_scope: 0` VACUOUS, and the result must say so
+/// in words rather than leave it to be inferred from `region_size: 1`.
+///
+/// dev_storyflow (w-c216679a, 2026-08-09) scoped to an Epoch and to a Fragment,
+/// got `in_scope: 0` at depth 2 AND at depth 5, and caught it only because they
+/// ran a positive control on a Project. Their framing is the one this encodes:
+/// a bare `in_scope: 0` beside `region_size: 1` is the shape most likely to be
+/// banked as "my area is clean".
+#[test]
+fn a_seed_with_no_edges_says_its_scoped_answer_is_vacuous() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_requirement("req:r", "R", "nothing satisfies this")
+        .unwrap();
+    g.add_capability("cap:c", "C", "answers no stated need", None)
+        .unwrap();
+    g.create_edge(
+        edge::CONTAINS,
+        node::PROJECT,
+        "proj:p",
+        node::REQUIREMENT,
+        "req:r",
+        Props::new(),
+    )
+    .unwrap();
+    // An island: recorded, real, and connected to nothing.
+    g.add_epoch(
+        "epoch:island",
+        "an epoch",
+        reflow2_core::EpochType::Revision,
+        1,
+    )
+    .unwrap();
+
+    let vacuous = g.detect_gaps_in_scope("epoch:island", 2).unwrap();
+    assert_eq!(
+        vacuous.region_size, 1,
+        "precondition: the seed is an island"
+    );
+    assert_eq!(vacuous.in_scope, 0);
+    let note = vacuous
+        .note
+        .as_deref()
+        .expect("a one-node region must say its answer is vacuous");
+    assert!(note.contains("VACUOUS"), "{note}");
+    assert!(
+        note.contains("epoch:island"),
+        "it must name the seed the caller passed: {note}"
+    );
+    assert!(
+        vacuous.total > 0,
+        "and the design's real findings are still counted, so nothing reads as clean"
+    );
+
+    // Depth does not rescue it — theirs was vacuous at 5 too.
+    assert!(
+        g.detect_gaps_in_scope("epoch:island", 5)
+            .unwrap()
+            .note
+            .is_some()
+    );
+
+    // POSITIVE CONTROL: a real region must NOT carry the note, or its presence
+    // stops being a signal and becomes noise on every call.
+    let real = g.detect_gaps_in_scope("proj:p", 2).unwrap();
+    assert!(real.region_size > 1, "precondition: a real region");
+    assert!(
+        real.note.is_none(),
+        "a region that can answer must stay quiet: {:?}",
+        real.note
+    );
+
+    // The defect detector is scoped by the same machinery and gets the same say.
+    assert!(
+        g.detect_defects_in_scope("epoch:island", 2)
+            .unwrap()
+            .note
+            .is_some()
+    );
 }
