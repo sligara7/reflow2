@@ -533,12 +533,53 @@ pub(crate) fn ok_markdown(text: String) -> CallToolResult {
 }
 
 /// Parse a snake_case enum key (the schema vocabulary) into a core enum.
+///
+/// **The rejection NAMES THE LEGAL VALUES.** It used to say only `unknown
+/// change type: "correction"`, leaving the caller to guess or to go and read
+/// `describe_schema` — and the caller is usually an agent mid-task, for whom a
+/// refusal that does not say what would have worked costs a whole round trip.
+/// dev_storyflow filed it on 2026-08-03 (*"enum rejections should list the
+/// legal values… this alone kills three of the eight"*), confirmed it still
+/// reproduced on 2026-08-09, and a session here hit it the same day while
+/// recording a correction.
+///
+/// The values were never unavailable: `serde` already builds `unknown variant
+/// \`x\`, expected one of \`a\`, \`b\`` and this function was **discarding that
+/// error** with `map_err(|_| …)`. So the fix is to stop throwing the answer
+/// away, not to hand-maintain a list per call site — which would rot the first
+/// time a variant was added, and is the reason it is done here rather than in
+/// `add_change_event`. Every enum argument on the served surface goes through
+/// this one function, so every one of them gains the list at once.
 pub(crate) fn parse_enum<T: serde::de::DeserializeOwned>(
     s: &str,
     what: &str,
 ) -> Result<T, McpError> {
-    serde_json::from_value(JsonValue::String(s.to_string()))
-        .map_err(|_| McpError::invalid_params(format!("unknown {what}: {s:?}"), None))
+    serde_json::from_value(JsonValue::String(s.to_string())).map_err(|e| {
+        let detail = serde_expected_list(&e.to_string())
+            .map(|legal| format!("unknown {what}: {s:?}. Legal values: {legal}"))
+            // Fall back to serde's own words rather than to the old bare
+            // refusal: an unrecognised message shape is still more use to the
+            // caller than nothing, and this keeps the failure mode "less
+            // pretty" instead of "silently back to useless".
+            .unwrap_or_else(|| format!("unknown {what}: {s:?} ({e})"));
+        McpError::invalid_params(detail, None)
+    })
+}
+
+/// Pull the variant list out of serde's unknown-variant message.
+///
+/// serde writes ``unknown variant `x`, expected one of `a`, `b` `` for two or
+/// more variants and ``… expected `a` `` for exactly one. Returns the list
+/// with the backticks stripped, or `None` when the message is some other
+/// shape — a parse failure that is not an unknown variant at all, or a serde
+/// version that words it differently.
+fn serde_expected_list(msg: &str) -> Option<String> {
+    let tail = msg
+        .split_once("expected one of ")
+        .or_else(|| msg.split_once("expected "))
+        .map(|(_, rest)| rest)?;
+    let list = tail.trim().trim_end_matches('.').replace('`', "");
+    (!list.is_empty()).then_some(list)
 }
 
 /// Convert a JSON object of properties into the core's `HashMap<String, Value>`.
@@ -2761,6 +2802,65 @@ impl ServerHandler for ReflowService {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// A rejected enum names what WOULD have worked.
+    ///
+    /// The consumer report this pins (dev_storyflow, 2026-08-03, re-confirmed
+    /// 2026-08-09): `add_change_event{change_type: "correction"}` refused with
+    /// `unknown change type: "correction"` and no enumeration, no nearest
+    /// match, no pointer — so the caller had to go and read `describe_schema`
+    /// to learn the eleven legal values.
+    ///
+    /// Asserting on the LIST rather than on the message shape, because the
+    /// wording may be improved and the contract is that the values are there.
+    #[test]
+    fn a_rejected_enum_lists_the_legal_values() {
+        let err = parse_enum::<reflow2_core::ChangeType>("correction", "change type")
+            .expect_err("`correction` is not a ChangeType and must be refused");
+        let msg = format!("{err:?}");
+
+        // The refusal still says what was wrong with the input...
+        assert!(
+            msg.contains("correction"),
+            "the rejection must echo the offending value; got: {msg}"
+        );
+
+        // ...and now also what would have been right. This is the assertion
+        // that FAILS against the old `map_err(|_| …)`, which is the whole
+        // point of the test: it is a positive control, not a restatement.
+        for legal in [
+            "requirement_creep",
+            "new_feature",
+            "test_failure_fix",
+            "refactor",
+            "scope_change",
+            "resync",
+            "baseline_established",
+        ] {
+            assert!(
+                msg.contains(legal),
+                "the rejection must name the legal value {legal}; got: {msg}"
+            );
+        }
+    }
+
+    /// The extractor handles serde's two shapes and refuses to invent a list.
+    ///
+    /// The `None` case is the one worth pinning: a parse failure that is NOT
+    /// an unknown variant must not be dressed up as if it enumerated
+    /// something, or the caller is handed a confident empty answer.
+    #[test]
+    fn the_expected_list_is_extracted_or_honestly_absent() {
+        assert_eq!(
+            serde_expected_list("unknown variant `x`, expected one of `a`, `b`").as_deref(),
+            Some("a, b")
+        );
+        assert_eq!(
+            serde_expected_list("unknown variant `x`, expected `only`").as_deref(),
+            Some("only")
+        );
+        assert_eq!(serde_expected_list("invalid type: integer `3`"), None);
+    }
 
     /// The threshold that decides whether reflow2 can trust `self.seat`.
     ///

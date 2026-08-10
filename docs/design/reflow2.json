@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:10e86d43883eeea45801627dccb1d5f5d7760a3264768192814ee171bbae3d3a",
+  "content_hash": "sha256:eb39e35718748a07287cb89f58311b94b04ce038ea650f1696d0c4da2bb83300",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2736,6 +2736,12 @@
       "from_id": "chg:a-refusal-names-its-own-fix-20260808",
       "properties": {},
       "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-refusal-names-what-would-have-worked",
+      "properties": {},
+      "to_id": "epoch:a-refusal-names-what-would-have-worked"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -6956,6 +6962,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-refusal-names-what-would-have-worked",
+      "properties": {
+        "acted_at": "2026-08-03",
+        "role": "author"
+      },
+      "to_id": "who:storyflow-api-boss"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-rule-knows-where-else-it-is-written-down",
       "properties": {
         "acted_at": "2026-08-09",
@@ -7822,6 +7837,24 @@
         "action": "modified"
       },
       "to_id": "cap:vocabulary"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-refusal-names-what-would-have-worked",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-refusal-names-what-would-have-worked",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:a-refusal-names-what-would-have-worked"
     },
     {
       "edge_type": "CHANGED",
@@ -48674,6 +48707,12 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:detector-spec-cannot-name-a-forked-identity",
+      "properties": {},
+      "to_id": "epoch:a-refusal-names-what-would-have-worked"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:genesis",
       "properties": {},
       "to_id": "epoch:v040"
@@ -50549,6 +50588,15 @@
         "evidence": "dec:export-serialisation-belongs-to-the-gate places this requirement's implementation in reflow2_check.py, which already reads the committed export and so already holds the evidence a second exporting commit would break. PLANNED, not partial: nothing in the script checks the lineage chain today, so this edge records WHERE the work lands rather than claiming any of it is done. Drawn because the requirement and its decision were otherwise a two-node island disconnected from the rest of the design -- true, and a true statement about accepted work that is wired to nothing is worth fixing rather than acknowledging away."
       },
       "to_id": "req:the-export-is-serialised-rather-than-socially-enforced"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "art:service",
+      "properties": {
+        "coverage": "full",
+        "evidence": "parse_enum in crates/reflow2-mcp/src/service.rs is the single helper every served enum argument passes through; the test a_rejected_enum_lists_the_legal_values fails against the prior map_err(|_| ...) implementation"
+      },
+      "to_id": "req:a-refusal-names-what-would-have-worked"
     },
     {
       "edge_type": "SATISFIES",
@@ -55667,7 +55715,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:406c1a320b66b3079c8b30cbe18c815832a89f581e0eebfb813932305783c572",
+        "checksum": "sha256:e5782512201c0726147794c605b1c891c109b525babf2d595543eec98e5525de",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -58227,6 +58275,14 @@
       "properties": {
         "change_type": "refactor",
         "name": "A refusal names the call that fixes it, add_contributor forgives the sibling field name, and a schema hint stops offering values its enum rejects"
+      }
+    },
+    {
+      "node_id": "chg:a-refusal-names-what-would-have-worked",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "A refused enum argument now names its legal values — fixed in the one shared helper every served enum passes through, so all of them gain it at once"
       }
     },
     {
@@ -64956,6 +65012,16 @@
       }
     },
     {
+      "node_id": "epoch:a-refusal-names-what-would-have-worked",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "Enum rejections stop withholding the answer they already built",
+        "sequence": 305,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:a-zero-that-is-not-an-absence",
       "node_type": "DesignEpoch",
       "properties": {
@@ -69244,6 +69310,21 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A RISKS edge is surfaced by the routine calls people actually make — `loop_status` reporting recorded risks to what you own, and `detect_gaps(scope=…)` including risks that terminate inside the region — rather than being reachable only by someone who already suspects a change and asks for its blast radius.\n\nTHE EVIDENCE IS A SUCCESS STORY WEARING A FAILURE'S CLOTHES, which is why it is worth a primitive. In storyflow, `cap:fleet_step_reset` --RISKS--> `req:fleet_no_idle_worker` was recorded in advance, verified in the committed export. Hours later that exact causal chain ran: the user reset seats, the reset seats were invisible to every boss because a roster row is the product of a WRITE and an arriving seat has not written, a boss measured an empty pool and staffed nobody, and workers idled while a boss with lanes stood by. Somebody modelled their own incident correctly and in advance — AND IT REACHED NO ONE. `loop_status` never mentions RISKS. `detect_gaps` scoped to the owning component returned 12 gaps and this was not among them, because RISKS is not a gap source. Writing it down was never the hard part.\n\nMEASURED IN REFLOW2'S OWN DESIGN, 2026-08-09: ONE RISKS edge in 7,097. And the source tells the rest — `RISKS` appears in exactly one place in the entire codebase, `crates/reflow2-core/src/propagate.rs:34`, inside a `RISK_EDGES` constant. It is therefore reachable ONLY through `propagate_change`, which a caller reaches by already knowing something changed. No detector, no gap source, no report. `BLOCKS` (2 edges) and `MASKS` (0) sit in the same constant and have the same problem.\n\n⭐ THIS SHARPENS AN OPEN QUESTION RATHER THAN DUPLICATING IT. dec:idea-detect-vocabulary-that-nothing-reaches counts an edge type as REACHED if it is instantiated, named in the propagation table, or named anywhere in non-test Rust. RISKS PASSES THAT TEST AND IS STILL WRITE-ONLY. So the census as specified would clear it, and a second test is needed: not \"is this vocabulary named in code\" but \"can a reader who does not already know about it ever be shown it\". Declared-versus-code and code-versus-retrieval are different failures, and only the first is currently modelled.\n\nTHE COUNTER-DISCIPLINE, recorded because it is part of the proposal rather than an objection to it: two edges in a whole graph means the type is effectively unused, so surfacing it will not be noisy. If it later becomes noisy, the answer is to require an assessment date on the edge — not to stop reporting.\n\nSOURCE: storyflow gap A of the peer set — found by storybug Boss (47accf78), filed by api-boss (05af57c1), 2026-08-09, v0.26.1.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:a-refusal-names-what-would-have-worked",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A refusal names what would have worked — a rejected argument comes back with its legal values, not just a verdict",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "WHEN A SERVED TOOL REFUSES AN ARGUMENT BECAUSE IT IS NOT ONE OF A FIXED SET, THE REFUSAL NAMES THE SET. The caller should not have to make a second call to learn what would have worked.\n\nTHE GAP THIS CLOSES. `parse_enum` — the single helper every enum argument on the served surface passes through — refused with `unknown change type: \"correction\"` and nothing else. No enumeration, no nearest match, no pointer to `describe_schema`. The caller is usually an AGENT MID-TASK, for whom a refusal that does not say what would have worked costs a whole round trip and a context switch into schema reading.\n\n⭐ THE VALUES WERE NEVER UNAVAILABLE, WHICH IS WHAT MAKES THIS A DEFECT RATHER THAN A FEATURE REQUEST. serde already builds `unknown variant `correction`, expected one of `requirement_creep`, `new_feature`, …` and the helper was DISCARDING it with `map_err(|_| …)`. The answer was constructed and thrown away on every rejection.\n\nWHY THE FIX BELONGS IN THE SHARED HELPER, not at the call site that was reported: a hand-maintained list per tool rots the first time a variant is added, and one function serves every enum argument reflow2 exposes. Fixing it there means every refusal gains the list at once — which is what the reporter meant by \\\"this alone kills three of the eight\\\".\n\nEVIDENCE. Filed by dev_storyflow 2026-08-03 (api-boss): \\\"enum rejections should list the legal values… this alone kills three of the eight.\\\" RE-CONFIRMED STILL LIVE 2026-08-09 by dragon Boss (`cca98fbf`), who recorded the cost precisely: \\\"one wasted call, then describe_schema{node_type: ChangeEvent, required_only: true} to learn the 11 legal values.\\\" And reproduced a third time the same day by a session in THIS repo while recording a correction — which is how it came to be fixed.\n\nWHAT THIS REQUIREMENT DOES NOT SAY, so the scope is not read wider than it is: it does not ask for fuzzy nearest-match suggestions, and it does not ask that every refusal of any kind enumerate an alternative — only that a CLOSED SET, which the surface already knows, is stated rather than withheld. Where the message shape is unrecognised, the honest fallback is the underlying error's own words rather than a silent return to the bare verdict.\n\n⚠️ A SEPARATE AND UNRESOLVED HALF, recorded here so it is not mistaken for closed: dragon Boss's second point was that NONE of the eleven legal `change_type` values means \\\"the record was WRONG about reality\\\". `resync` connotes reality moving and the design catching up. Adding a value would move the schema stamp and is Anthony's call; this requirement is only about the refusal being useful, not about the vocabulary being complete.",
         "status": "proposed"
       }
     },
@@ -75367,7 +75448,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:2d1be2d1f6b2bca1cb2406c49b25f45221ee8227e88bff38150c039709eb5038",
+  "prev_content_hash": "sha256:10e86d43883eeea45801627dccb1d5f5d7760a3264768192814ee171bbae3d3a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
