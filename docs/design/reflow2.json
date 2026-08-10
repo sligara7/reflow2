@@ -1,6 +1,12 @@
 {
-  "content_hash": "sha256:eb39e35718748a07287cb89f58311b94b04ce038ea650f1696d0c4da2bb83300",
+  "content_hash": "sha256:6a060f4b3f05a2191018b8f8b544b23e35de3a44a024b2133d4385c45b556a88",
   "edges": [
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:apply-heal-would-have-destroyed-the-wrong-contributor",
+      "properties": {},
+      "to_id": "dec:merge-survivor-provenance"
+    },
     {
       "edge_type": "ABOUT_ENTITY",
       "from_id": "fact:bl-105",
@@ -4347,6 +4353,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-owners-identity-is-one-node-again",
+      "properties": {},
+      "to_id": "epoch:the-owners-identity-is-one-node-again"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-server-says-when-it-is-stale-20260809",
       "properties": {},
       "to_id": "epoch:v0260"
@@ -5439,6 +5451,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-owners-identity-is-one-node-again:ctr:anthony",
+      "properties": {},
+      "to_id": "epoch:the-owners-identity-is-one-node-again"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:the-surface-stops-saying-false-things:art:verify",
       "properties": {},
       "to_id": "epoch:the-surface-stops-saying-false-things"
@@ -5546,7 +5564,7 @@
         "acted_at": "2026-07-28",
         "role": "author"
       },
-      "to_id": "ctr:anthony"
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -5956,18 +5974,18 @@
       "from_id": "dec:epoch-roadmap-storage",
       "properties": {
         "acted_at": "2026-07-28",
-        "role": "author"
+        "role": "reviewer"
       },
-      "to_id": "ctr:anthony"
+      "to_id": "ctr:claude-fable"
     },
     {
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:epoch-roadmap-storage",
       "properties": {
         "acted_at": "2026-07-28",
-        "role": "reviewer"
+        "role": "author"
       },
-      "to_id": "ctr:claude-fable"
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -6940,7 +6958,7 @@
         "acted_at": "2026-07-31",
         "role": "author"
       },
-      "to_id": "ctr:anthony"
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -7156,7 +7174,7 @@
         "acted_at": "2026-07-28",
         "role": "author"
       },
-      "to_id": "ctr:anthony"
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -7183,7 +7201,7 @@
         "acted_at": "2026-07-28",
         "role": "author"
       },
-      "to_id": "ctr:anthony"
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -7192,7 +7210,7 @@
         "acted_at": "2026-07-28",
         "role": "author"
       },
-      "to_id": "ctr:anthony"
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -7272,7 +7290,7 @@
         "acted_at": "2026-07-28",
         "role": "author"
       },
-      "to_id": "ctr:anthony"
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -7281,7 +7299,7 @@
         "acted_at": "2026-07-28",
         "role": "author"
       },
-      "to_id": "ctr:anthony"
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -17010,6 +17028,16 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "fact:apply-heal-would-have-destroyed-the-wrong-contributor",
+      "properties": {
+        "alignment": "opposing",
+        "confidence": 1.0,
+        "evidence": "The accepted rule's alphabetical tie-break selected an 8-edge node over a 161-edge node on a real, authorised merge"
+      },
+      "to_id": "dec:merge-survivor-provenance"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "fact:correction-stranded-server-is-recoverable-without-a-reconnect",
       "properties": {
         "alignment": "opposing",
@@ -25474,6 +25502,12 @@
       "from_id": "dec:idea-detect-vocabulary-that-nothing-reaches",
       "properties": {},
       "to_id": "fact:precedes-is-unused-in-storyflow-and-flowless-here"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:merge-survivor-provenance",
+      "properties": {},
+      "to_id": "fact:apply-heal-would-have-destroyed-the-wrong-contributor"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -48689,6 +48723,12 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:a-refusal-names-what-would-have-worked",
+      "properties": {},
+      "to_id": "epoch:the-owners-identity-is-one-node-again"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:arrival-delta",
       "properties": {},
       "to_id": "epoch:v0190"
@@ -61011,6 +61051,14 @@
       }
     },
     {
+      "node_id": "chg:the-owners-identity-is-one-node-again",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "resync",
+        "name": "MERGE ON ANTHONY'S EXPLICIT INSTRUCTION: `ctr:anthony` folds into `who:ajs`. Its 8 AUTHORED_BY edges are re-pointed with acted_at and role preserved, then the node is deleted. Done BY HAND because apply_heal would have destroyed the wrong node — see the snapshot and the ChangeEvent text"
+      }
+    },
+    {
       "node_id": "chg:the-server-says-when-it-is-stale-20260809",
       "node_type": "ChangeEvent",
       "properties": {
@@ -61885,15 +61933,6 @@
         "name": "Pairing sees boundaries, not the types that cross them",
         "priority": "medium",
         "statement": "A HARD LIMIT ON WHAT `req:complementary-pairing` CAN EVER CATCH, found by the dynograph-foundation trial on 2026-07-28 and not by review.\n\nTHE CASE, verified from both sides. dynograph-foundation's `ifc:storage-api` exposes `search_fulltext`, whose signature returns `Vec<dynograph_text::TextHit>`. reflow2 consumes that call and reads all three of the struct's public fields — `node_id`, `node_type`, `score` (`crates/reflow2-core/src/search.rs:67-79`). So reflow2 structurally depends on a type belonging to `dynograph-text`, a crate it NEVER NAMES as a dependency, through a boundary belonging to `dynograph-storage`. Two separately published boundaries are entangled by a type that crosses one of them, and the offer document says they are separate.\n\nWHY PAIRING CANNOT SEE IT. Every axis in the pairing key is a property OF A BOUNDARY: `medium`, `transport_security`, `auth`, the name, the payload format. This seam agrees on all of them. Provider publishes a `library` boundary, consumer requires a `library` boundary, both `unspecified` on transport and auth because a linked crate has neither — the match is clean and correct at every level the rule inspects. The break lives one layer down, in a struct's field list, which no boundary property mentions. A change to `TextHit` breaks a consumer that no document either side holds would predict.\n\nTHE GENERAL FORM: a type that crosses a boundary is part of the contract, and the offer models boundaries, not types. `payload_format` says `json` and not which fields; `payload_schema` can point at a schema for a wire format, but nothing does the equivalent for a linked-library signature, where the \"wire\" is the type system itself.\n\nCONSEQUENCE FOR THE PAIRING RULE — this is what makes it a constraint rather than a to-do. Pairing must NOT report a clean match as evidence of compatibility. It can honestly say \"these two boundaries can be connected\"; it cannot say \"and nothing crossing them will break you\". Those are different claims, and conflating them rebuilds the false green the same trial already produced once. The pairing report should say what it did not examine, the way `coverage_report` says what it never heard of.\n\nWHAT WOULD ACTUALLY CLOSE IT, noted so the constraint is not mistaken for permanent: comparing the TYPES that cross a boundary, not just the boundary. For a library seam that is signature and struct-shape comparison — real work, language-specific, and nothing reflow2 does today is close to it. For a wire seam `payload_schema` already points at the answer if both sides fill it in. Until one of those exists, this limit stands and must be STATED rather than discovered.\n\nTWO SMALLER LESSONS FROM THE SAME FINDING. First, the counterparty found it, not the owner of either half — reflow2 could not see that its own `cmp:search` edge pointed at the wrong boundary, and dynograph could not see that its type had escaped. Second, both sides had over-attributed a DIFFERENT risk (`TextError::ReadOnly`) in opposite directions for a day, because both were reasoning about the type and neither had read the call: `search_fulltext` flattens `TextError` to a string, so it never crosses at all. The type that crosses is the one that matters, and only the signature says which that is."
-      }
-    },
-    {
-      "node_id": "ctr:anthony",
-      "node_type": "Contributor",
-      "properties": {
-        "handle": "@ajs",
-        "kind": "person",
-        "name": "Anthony Sligar"
       }
     },
     {
@@ -65631,6 +65670,16 @@
         "epoch_type": "revision",
         "name": "Published-surface export (2026-07-25, post-v0.11.0)",
         "sequence": 140,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:the-owners-identity-is-one-node-again",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The owner's forked Contributor identity is merged — ctr:anthony folds into who:ajs",
+        "sequence": 306,
         "status": "arrived"
       }
     },
@@ -72355,6 +72404,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:the-owners-identity-is-one-node-again:ctr:anthony",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Capability\",\"other_id\":\"cap:changelog-view\",\"properties\":{\"acted_at\":\"2026-07-28\",\"role\":\"author\"}},{\"direction\":\"in\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:epoch-roadmap-storage\",\"properties\":{\"acted_at\":\"2026-07-28\",\"role\":\"author\"}},{\"direction\":\"in\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-project-records-how-it-ships\",\"properties\":{\"acted_at\":\"2026-07-31\",\"role\":\"author\"}},{\"direction\":\"in\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Requirement\",\"other_id\":\"req:epochs-can-be-planned\",\"properties\":{\"acted_at\":\"2026-07-28\",\"role\":\"author\"}},{\"direction\":\"in\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Requirement\",\"other_id\":\"req:graph-catches-up\",\"properties\":{\"acted_at\":\"2026-07-28\",\"role\":\"author\"}},{\"direction\":\"in\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Requirement\",\"other_id\":\"req:graph-indexes-snapshots\",\"properties\":{\"acted_at\":\"2026-07-28\",\"role\":\"author\"}},{\"direction\":\"in\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Requirement\",\"other_id\":\"req:plans-move-honestly\",\"properties\":{\"acted_at\":\"2026-07-28\",\"role\":\"author\"}},{\"direction\":\"in\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Requirement\",\"other_id\":\"req:pr-is-a-delta\",\"properties\":{\"acted_at\":\"2026-07-28\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"DUPLICATES\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"basis\":\"asserted\",\"confidence\":1.0}}]",
+        "state": "{\"handle\":\"@ajs\",\"kind\":\"person\",\"name\":\"Anthony Sligar\"}",
+        "target_id": "ctr:anthony",
+        "target_type": "Contributor"
+      }
+    },
+    {
       "node_id": "snap:epoch:the-surface-stops-saying-false-things:art:verify",
       "node_type": "Snapshot",
       "properties": {
@@ -72462,6 +72521,17 @@
         "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.\\n\\nANTHONY'S CLARIFICATION, 2026-07-30, and it corrects the framing this node was first written with: what he wants committed is NOT the realized product or a future codebase. It is a SLICE OF THE REFLOW2 GRAPH ITSELF — \\\"this is the planned capabilities of epoch_1, epoch_2 … epoch_n\\\" — so that he can open the repo and see \\\"that is when I get capability X\\\", or \\\"capability Y is not expected until increment_13\\\". His words: \\\"it isn't the realized product/artifact of the project, but snapshot of the project at epoch or increment that I'm looking to capture in git.\\\" He is explicitly open to something other than git.\\n\\nTHE FIRST FRAMING HERE WAS WRONG AND IS CORRECTED. This node originally organised everything around \\\"git can only store the past, and a plan is not a past\\\". That is too glib. A plan document is a PRESENT artifact describing a future, and committing one is ordinary — git stores plans perfectly well. The real objection was never to committing plans; it was only ever to using BRANCHES as the record, and that narrower objection stands.\\n\\n(a) BRANCH PER EPOCH — `epoch_1`, `epoch_2`, each holding a projected design. Matches the mental model directly: check out `epoch_n`, look.\\n    Costs: checking out a branch normally makes the whole REPO reflect that state, and here there is no future code to reflect, so the branch buys nothing the file would not. A full export is 1.6 MB today, so N epochs is N × 1.6 MB of near-identical JSON, rewritten on every replan. Branches also invite merge semantics that do not apply — nobody merges epoch_2 into main. And the plan's MOVEMENT stays invisible: a branch pointer moves silently, which is exactly what `req:plans-move-honestly` needs to see.\\n\\n(b) A FILE PER EPOCH ON MAIN — `docs/design/epochs/epoch_3.{md,json}`. Browsing is easier than a checkout, there is one history rather than N, and every replan is an ordinary commit to that file.\\n    THE PROPERTY THIS BUYS FOR FREE: `git log -p docs/design/epochs/epoch_3.md` IS the plan's revision history. A large part of `req:plans-move-honestly` — \\\"when a planned epoch's content moves, the plan's own change is a dated event on the record\\\" — would be satisfied by git doing what git is good at, rather than by new machinery in reflow2.\\n\\n(c) RENDER IT, DO NOT AUTHOR IT — and this is what (b) should probably be generated BY. An epoch slice is a VIEWPOINT. `tools/render_views.py` already renders viewpoints as pure projections of the graph, already confesses anything a view needs that the graph cannot supply, and ALREADY RENDERS THE EPOCH CHAIN BACKWARD (\\\"Axis Z as a viewpoint: the epoch chain, and what happened at each\\\"). The forward direction is the same renderer reading scheduled edges instead of recorded ones. Under this option the graph holds the schedule as single source of truth, the renderer emits one small file per epoch, and git holds their history.\\n    Cost: a generated file can go stale against the graph — which is a drift check reflow2 already knows how to do, and the same one `dataflow.html` staleness already gets in another repo.\\n\\nWHAT A SLICE ACTUALLY CONTAINS, since \\\"slice\\\" is the word he used and it is much smaller than an export: the epoch and its date, capabilities expected by then, requirements expected satisfied, KPPs required by then, the version combination pinned once it arrives, and the delta against the previous epoch. Kilobytes, not megabytes.\\n\\nTHE OPEN QUESTION IS NARROWER THAN IT WAS: not \\\"git or not git\\\", but WHICH JOB GIT DOES. Git looks right for the HISTORY of the plan document and for pinning arrived epochs; the graph looks right for the schedule itself. The failure mode to avoid is making git the source of truth for the schedule, because then two places disagree about when capability X arrives and neither is wrong.\",\"name\":\"OPEN — how per-epoch slices of the design become browsable: branches, files, or a rendered viewpoint\",\"rationale\":\"Anthony's idea, his clarification, and his invitation to suggest something better; recorded so the reasoning survives whichever way it goes.\\n\\nKept rather than tidied away: the original framing of this node (\\\"git can only store the past\\\") was mine and was misleading, and the correction is recorded rather than silently overwritten because the prior text is what a reader would otherwise have found and believed. The snapshot at `epoch:wire-planning-cluster` holds the earlier wording.\\n\\nNot argued down: option (a) is his own original mechanism and is recorded with the mental model it serves stated first. Its costs are listed beside it, not in place of it.\",\"status\":\"proposed\"}",
         "target_id": "dec:where-plans-live",
         "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "fact:apply-heal-would-have-destroyed-the-wrong-contributor",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "MEASURED 2026-08-09 ON THIS GRAPH, ON A REAL MERGE ANTHONY AUTHORISED. `propose_heal` offered to merge the owner's two Contributor nodes and CHOSE THE WRONG SURVIVOR: keep `ctr:anthony` (8 edges, no description), destroy `who:ajs` (161 edges, the full description, and the id form `add_contributor`'s own parameter description gives as its example).\n\n⭐ AND IT SAID SO ITSELF, WHICH IS THE PART WORTH KEEPING. Verbatim from `would_destroy`: \"deleting 'who:ajs' keeps only 'ctr:anthony's properties; also replaced: description. THE ALPHABET CHOSE THE VICTIM: both carry the same provenance, so the smaller id survived (BL-29) — nothing about the design decided which of these two lives.\" The disclosure is exemplary and it is the only reason the merge was not applied as proposed. A tool that names its own arbitrariness is doing the right thing; a tool whose arbitrariness DECIDES is still wrong.\n\nWHY THIS IS EVIDENCE AND NOT AN OPINION: `dec:merge-survivor-provenance` (ACCEPTED) says the survivor is chosen by provenance with id breaking ties. Here both nodes carry the SAME provenance, so the tie-break ran — and the tie-break is alphabetical, which has no relationship to which node the design actually depends on. `fact:defect-merge-survivor-ignores-priority-and-status` already contradicts that decision and the pair has been a standing structural defect (`heal:7456a4d260ca45ce`). THIS IS THE FIRST TIME THE DEFECT HAS BEEN OBSERVED COSTING SOMETHING ON A REAL MERGE rather than argued in the abstract.\n\nA CHEAP SIGNAL THE RULE COULD READ, offered because naming the fix is more useful than naming the fault: EDGE COUNT. 161 against 8 is not a close call, and neither is \"has a description\" against \"has none\". Degree is already computable and would have picked correctly here without any new vocabulary. Provenance-then-alphabet is the rule that produced the wrong answer; provenance-then-degree would not have.\n\nWHAT WAS ACTUALLY DONE: the merge was performed BY HAND — `record_change` first so the snapshot holds `ctr:anthony` and all 9 of its edges, then the 8 AUTHORED_BY edges re-pointed to `who:ajs` with `role` and `acted_at` preserved and checked for pre-existing overlap (none, so nothing was overwritten), then the node deleted. `detect_defects` went 7 findings to 6 with the duplicate gone.\n\n📝 ONE THING THIS DOES NOT SHOW, stated so the finding is not read wider than it is: `propose_heal --conservative` proposed NOTHING for this duplicate, and only `--aggressive` offered the merge. So the dangerous proposal is not the default. What the default gives instead is silence on a duplicate a human had explicitly asserted, which is its own question.",
+        "subject_id": "dec:merge-survivor-provenance"
       }
     },
     {
@@ -75448,7 +75518,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:10e86d43883eeea45801627dccb1d5f5d7760a3264768192814ee171bbae3d3a",
+  "prev_content_hash": "sha256:eb39e35718748a07287cb89f58311b94b04ce038ea650f1696d0c4da2bb83300",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
