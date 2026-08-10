@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:6a060f4b3f05a2191018b8f8b544b23e35de3a44a024b2133d4385c45b556a88",
+  "content_hash": "sha256:14ce0efa9b3afca69c11e1e5848521ec47a730ebf11d82f46f93ce4dafee230e",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -6738,6 +6738,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:should-propagate-seed-from-a-drift-event",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:storyflow-api-boss"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:the-content-store-is-discontinued",
       "properties": {
         "acted_at": "2026-08-09",
@@ -7417,6 +7426,15 @@
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:the-ledger-can-say-the-record-was-wrong",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:storyflow-api-boss"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -23656,6 +23674,14 @@
         "note": "The LLM speaks, the graph counts, the human decides - the division this rule states as policy"
       },
       "to_id": "rule:design-intent-moves-only-on-the-owners-word"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "epoch:governance-becomes-expressible",
+      "properties": {
+        "note": "This increment is the catch-up work that decision named: governance stays here and gets properly wired"
+      },
+      "to_id": "dec:governance-integrates-not-splits"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -48807,6 +48833,12 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:the-owners-identity-is-one-node-again",
+      "properties": {},
+      "to_id": "epoch:governance-becomes-expressible"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:v0100",
       "properties": {},
       "to_id": "epoch:v0101"
@@ -51768,6 +51800,51 @@
         "recorded_at": "2026-07-31"
       },
       "to_id": "rel:v0210"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:a-decision-states-what-it-binds",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-09"
+      },
+      "to_id": "epoch:governance-becomes-expressible"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:a-node-can-say-who-may-change-it",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-09"
+      },
+      "to_id": "epoch:governance-becomes-expressible"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:a-rule-knows-where-else-it-is-written-down",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-09"
+      },
+      "to_id": "epoch:governance-becomes-expressible"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:a-rule-says-whether-it-can-be-checked-at-all",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-09"
+      },
+      "to_id": "epoch:governance-becomes-expressible"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:the-ledger-can-say-the-record-was-wrong",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-09"
+      },
+      "to_id": "epoch:governance-becomes-expressible"
     },
     {
       "edge_type": "VALID_FROM",
@@ -63611,6 +63688,16 @@
       }
     },
     {
+      "node_id": "dec:should-propagate-seed-from-a-drift-event",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED SO THE CHOICE IS MADE DELIBERATELY RATHER THAN BY DEFAULT. Anthony approved bundling `record_was_incorrect` into the schema increment (2026-08-09); this node exists so that adding the enum value does not silently foreclose the better fix, which may make it unnecessary.\n\nTHE OBSERVATION THAT STARTED IT, dragon Boss (`cca98fbf`, dev_storyflow, 2026-08-09), correcting an edge that asserted a runtime dependency the code never had: *\"the ChangeEvent hint itself says DriftEvent is the design-vs-reality construct, BUT `propagate_change` takes a ChangeEvent, so recording it as drift would have cost me the impact check.\"* And the conclusion, which is the part worth keeping: **\"the honest modelling and the useful tooling point at different node types, and I chose the tooling.\"**\n\nTHAT IS A TOOL SHAPING THE RECORD. A caller who wants a blast radius must record their finding as a ChangeEvent whether or not it is one, because that is the only node type `propagate_change` accepts. So the ledger fills with design-evolution entries that are actually drift observations — and no detector can tell them apart afterwards, because by then they are the same type.\n\n--- OPTION A — ADD `record_was_incorrect` TO ChangeEvent (the approved path) ---\nFOR: cheap, certain, and read — `changelog_view` buckets on `change_type`, so the value does work immediately. Bundled into a schema-clustered increment, its stamp cost is shared. AGAINST: it grows ChangeEvent to cover a case the schema already says belongs elsewhere. `ChangeEvent`'s own hint calls itself \"the design-evolution log; DISTINCT from DriftEvent, which records design-vs-reality divergence rather than intended change\" — and a record that was wrong from the start is divergence, not intended change. So A makes the ledger MORE expressive and the type boundary LESS true.\n\n--- OPTION B — TEACH `propagate_change` TO SEED FROM A DriftEvent ---\nFOR: fixes the cause rather than the symptom. `DriftEvent` already exists and already means exactly this; nothing new is declared, so `dec:edge-orthogonality`'s test is satisfied without growing vocabulary. It would also remove the incentive that currently mis-types every drift finding somebody wanted a blast radius for. AGAINST: a real piece of design work, not a one-line enum addition — the propagation walk starts from what a ChangeEvent CHANGED, and a DriftEvent's equivalent anchor has to be defined rather than assumed. Unknown whether it moves the stamp.\n\n--- OPTION C — BOTH ---\nThey are not exclusive: A gives the ledger a truthful value for corrections that ARE design evolution; B gives drift findings their impact check without lying about their type. FOR: the two solve different halves. AGAINST: doing A first removes most of the pain, which is exactly how B never gets built.\n\n⚠️ WHAT MUST NOT HAPPEN: A ships, the pain goes away, and B is never revisited — leaving the tool still shaping the record for every future drift finding. This node is the guard against that, and it should be read before `req:the-ledger-can-say-the-record-was-wrong` is built.\n\nNOTHING IS PROMOTED. Anthony has approved the bundling of A, not a choice between A and B.",
+        "name": "OPEN — should `propagate_change` seed from a DriftEvent, so the honest modelling and the useful tooling stop pointing at different node types?",
+        "rationale": "Minted alongside Anthony's approval to bundle the enum value, precisely because approving A is not the same as rejecting B, and an unrecorded alternative is one nobody argues with later. The evidence is a consumer's account of choosing the wrong node type on purpose because the right one lost them a tool — which is a stronger signal than a feature request, since it shows the surface changing what people record rather than merely what they can express.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:sidecar-loss-guarded-by-store-evidence",
       "node_type": "Decision",
       "properties": {
@@ -65331,6 +65418,16 @@
         "name": "Genesis",
         "sequence": 0,
         "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:governance-becomes-expressible",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "Governance becomes expressible — the four missing primitives and a ledger that can say a record was wrong, grouped so one stamp move pays for all five",
+        "sequence": 307,
+        "status": "planned"
       }
     },
     {
@@ -71183,6 +71280,21 @@
       }
     },
     {
+      "node_id": "req:the-ledger-can-say-the-record-was-wrong",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "The change ledger can say a record was WRONG from the start, distinct from reality having moved",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A ChangeEvent can record that THE DESIGN RECORD WAS INCORRECT, as distinct from reality having moved and the design catching up. Proposed value: `record_was_incorrect`.\n\nWHY THE NAME IS `record_was_incorrect` AND NOT `correction`: every existing `change_type` names WHY THE RECORD MOVED — `requirement_creep`, `new_feature`, `test_failure_fix`, `refactor`, `scope_change`, `deprecation`. \\\"Correction\\\" names the ACT rather than the cause and would read oddly beside its siblings. The eleventh value, `baseline_established`, already sets the precedent for a value that says the thing did not change and only the design's knowledge of it did.\n\nTHE GAP. None of the eleven legal values means this. `resync` is the least-wrong and CONNOTES SOMETHING FALSE: it reads as a re-sync back to coherence after reality moved. Where the record was simply wrong when written, `resync` puts a fiction into the ledger that exists to prevent fiction.\n\nWHY IT MATTERS BEYOND TIDINESS: `changelog_view` MAPS BUCKETS FROM `change_type`. A correction recorded as `resync` therefore lands in a bucket that misdescribes it, in the document consumers read. That is the test `dec:edge-orthogonality` sets — a vocabulary distinction earns its keep only if a computation reads it — and this one is read.\n\nEVIDENCE, three independent hits. Filed by dragon Boss (`cca98fbf`, dev_storyflow, 2026-08-09) while correcting an edge that asserted a runtime dependency the code never had: \\\"resync connotes reality moved and the design caught up — here the design was simply wrong from the start.\\\" Reproduced twice in this repo the same day: recording the detector-spec correction, and recording this merge, both of which used `resync` and had to say so in the event name to avoid implying something false.\n\n⚠️ COST, STATED BECAUSE IT DECIDES THE TIMING: adding an enum value MOVES THE SCHEMA STAMP, which pulls a version bump, an upgrade note, and locks older reflow2 out of designs written by the newer one. That cost is why this is scheduled into a SCHEMA-CLUSTERED increment rather than shipped alone (Anthony, 2026-08-09: \\\"go with your recommendation on bundle it with the governance primitives\\\").\n\n⚠️ AND THE SHARPER ALTERNATIVE IS NOT FORECLOSED: `dec:should-propagate-seed-from-a-drift-event` records dragon Boss's other suggestion, which may make this requirement unnecessary. Read that before building this.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:the-loop-says-what-is-owed-to-a-person",
       "node_type": "Requirement",
       "properties": {
@@ -75518,7 +75630,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:eb39e35718748a07287cb89f58311b94b04ce038ea650f1696d0c4da2bb83300",
+  "prev_content_hash": "sha256:6a060f4b3f05a2191018b8f8b544b23e35de3a44a024b2133d4385c45b556a88",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
