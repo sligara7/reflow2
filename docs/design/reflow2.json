@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e6a3b71b743eed19dfdee0002f7c28b460a73ae42983e084d006d041cf4c568f",
+  "content_hash": "sha256:5a646b719ecd63734aeb52b2d215ffb769032f24560ad989e72c0cccdd2abcc7",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -525,6 +525,12 @@
     },
     {
       "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:defect-create-node-merge-versus-replace-is-fixed-but-unreleased",
+      "properties": {},
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
       "from_id": "fact:defect-duplicate-findings-hide-a-hub-so-five-are-two",
       "properties": {},
       "to_id": "cap:heal"
@@ -690,6 +696,12 @@
       "from_id": "fact:defect-write-response-describes-the-write-not-the-state",
       "properties": {},
       "to_id": "cap:shared-sessions"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:precedes-is-unused-in-storyflow-and-flowless-here",
+      "properties": {},
+      "to_id": "dec:idea-detect-vocabulary-that-nothing-reaches"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1996,6 +2008,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:documentation-has-no-operational-coupling",
+      "properties": {
+        "confidence": 0.9
+      },
+      "to_id": "dec:legitimate-islands-need-the-detector-fix"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -5953,6 +5973,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:governance-integrates-not-splits",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:how-a-session-is-pointed-at-a-design",
       "properties": {
         "acted_at": "2026-08-05",
@@ -6153,6 +6182,15 @@
       "from_id": "dec:idea-gap-flows-to-the-dependency",
       "properties": {
         "acted_at": "2026-08-06T09:40:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-governance-management-split",
+      "properties": {
+        "acted_at": "2026-08-09",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -6370,6 +6408,15 @@
         "role": "author"
       },
       "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:legitimate-islands-need-the-detector-fix",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -6675,6 +6722,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "fact:precedes-is-unused-in-storyflow-and-flowless-here",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:storyflow-storybug-boss"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "ifc:ambient-agent",
       "properties": {
         "acted_at": "2026-08-09",
@@ -6774,6 +6830,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-cluster-can-be-declared-deliberately-separate",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:storyflow-storybug-boss"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-dated-observation-does-not-read-as-standing-doctrine",
       "properties": {
         "acted_at": "2026-08-08",
@@ -6783,12 +6848,30 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-decision-states-what-it-binds",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:storyflow-api-boss"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-hint-names-its-next-call",
       "properties": {
         "acted_at": "2026-07-31",
         "role": "author"
       },
       "to_id": "ctr:claude-fable"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-node-can-say-who-may-change-it",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:storyflow-api-boss"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -6807,6 +6890,42 @@
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-recorded-risk-reaches-someone",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:storyflow-storybug-boss"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-rule-knows-where-else-it-is-written-down",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:storyflow-api-boss"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-rule-says-whether-it-can-be-checked-at-all",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:storyflow-api-boss"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-rule-states-its-scope-and-a-conflict-is-surfaced",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:storyflow-storybug-boss"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -23451,9 +23570,73 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:a-cluster-can-be-declared-deliberately-separate",
+      "properties": {
+        "note": "The cluster that fires is governance, and that decision commits the project to growing it here"
+      },
+      "to_id": "dec:governance-integrates-not-splits"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:a-cluster-can-be-declared-deliberately-separate",
+      "properties": {
+        "note": "This requirement states the need; that decision holds the unmade choice about its shape"
+      },
+      "to_id": "dec:legitimate-islands-need-the-detector-fix"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:a-decision-states-what-it-binds",
+      "properties": {
+        "note": "Captured under the decision that governance is integrated here rather than split out"
+      },
+      "to_id": "dec:governance-integrates-not-splits"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:a-node-can-say-who-may-change-it",
+      "properties": {
+        "note": "Captured under the decision that governance is integrated here rather than split out"
+      },
+      "to_id": "dec:governance-integrates-not-splits"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:a-project-records-how-it-ships",
       "properties": {},
       "to_id": "decision:ack:c628f709c27ad035"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:a-recorded-risk-reaches-someone",
+      "properties": {
+        "note": "RISKS is an instance of that accepted rule going unmet: a distinction earns its keep only if a computation reads it"
+      },
+      "to_id": "dec:edge-orthogonality"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:a-rule-knows-where-else-it-is-written-down",
+      "properties": {
+        "note": "Captured under the decision that governance is integrated here rather than split out"
+      },
+      "to_id": "dec:governance-integrates-not-splits"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:a-rule-says-whether-it-can-be-checked-at-all",
+      "properties": {
+        "note": "Captured under the decision that governance is integrated here rather than split out"
+      },
+      "to_id": "dec:governance-integrates-not-splits"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:a-rule-states-its-scope-and-a-conflict-is-surfaced",
+      "properties": {
+        "note": "That rule is one half of the tension, and the requirement asks it to state the scope it binds in"
+      },
+      "to_id": "dec:export-once-per-pr"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -25025,6 +25208,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cmp:skills",
+      "properties": {},
+      "to_id": "fact:defect-create-node-merge-versus-replace-is-fixed-but-unreleased"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cmp:structure",
       "properties": {},
       "to_id": "fact:bl-151"
@@ -25088,6 +25277,12 @@
       "from_id": "dec:export-once-per-pr",
       "properties": {},
       "to_id": "fact:defect-lineage-message-omits-its-own-decision"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-detect-vocabulary-that-nothing-reaches",
+      "properties": {},
+      "to_id": "fact:precedes-is-unused-in-storyflow-and-flowless-here"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -46527,6 +46722,12 @@
     },
     {
       "edge_type": "OBSOLETES",
+      "from_id": "dec:governance-integrates-not-splits",
+      "properties": {},
+      "to_id": "dec:idea-governance-management-split"
+    },
+    {
+      "edge_type": "OBSOLETES",
       "from_id": "dec:idea-a-planned-increment-is-named-by-content-not-by-number",
       "properties": {
         "confidence": 1.0
@@ -59616,6 +59817,26 @@
       }
     },
     {
+      "node_id": "who:storyflow-api-boss",
+      "node_type": "Contributor",
+      "properties": {
+        "description": "The coordinating seat of the dragon.rocks StoryFlow agent fleet — Anthony's own deployment, so its feedback is his usage rather than a third party's. Author of the 2026-08-09 governance trial-case report and the generalized governance primitives written to a mechanism-vs-policy frame at his request. Recorded as a Contributor so the four governance requirements attribute to the analysis that produced them rather than defaulting to whoever relayed them — the same reason who:alex exists. CAVEAT WORTH KEEPING: this is a SEAT, not a person, and successive sessions have filled it under different ids (07426210, 3fbdc241, 5d608b85, 05af57c1). That reflow2 has no vocabulary for a seat distinct from a Contributor is a gap THIS SEAT ITSELF FILED (generalized governance primitive ②), so this node is a deliberate approximation, not a claim that the distinction does not matter.",
+        "handle": "api-boss",
+        "kind": "automated_agent",
+        "name": "api-boss (storyflow fleet)"
+      }
+    },
+    {
+      "node_id": "who:storyflow-storybug-boss",
+      "node_type": "Contributor",
+      "properties": {
+        "description": "A boss seat of the dragon.rocks StoryFlow agent fleet (47accf78), Anthony's own deployment. Found gaps A, C and D of the 2026-08-09 peer set — the write-only RISKS edge, the two export rules in tension, and disconnected_community's generate_bridge remedy — which api-boss (who:storyflow-api-boss) then characterised and filed. Recorded separately so the findings attribute to the seat that made them rather than to the one that relayed them, the same reason who:alex exists. Carries the same caveat as its peer: this is a SEAT rather than a person, and reflow2 has no vocabulary for that distinction — a gap the fleet itself filed.",
+        "handle": "storybug-boss",
+        "kind": "automated_agent",
+        "name": "storybug Boss (storyflow fleet)"
+      }
+    },
+    {
       "node_id": "dec:a-claim-may-need-a-list-rather-than-a-radius",
       "node_type": "Decision",
       "properties": {
@@ -60211,6 +60432,16 @@
       }
     },
     {
+      "node_id": "dec:governance-integrates-not-splits",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED — Anthony, 2026-08-09, answering dec:idea-governance-management-split: \"my decision is not to split governance/management out from reflow2, but integrate it properly into reflow2.\"\n\nGovernance and management stay inside reflow2. No sister package, no second binary, no separate vocabulary. The work that follows is INTEGRATION work.\n\nANTHONY'S DIAGNOSIS, and it is the part that changes what happens next: \"it is kind of the late addition, so that is probably why it isn't very well connected/integrated into reflow2 — so we're playing a little bit of catch up.\"\n\nThis reclassifies the evidence rather than dismissing it. Every observation that looked like a case for splitting is re-read as arrears owed by a late arrival:\n- DesignRule being \"the least-connected type in the schema, which is odd for the one whose whole job is to bind other things\" (storyflow trial case, 2026-08-09) is not a sign the type belongs elsewhere. It is a sign the type was added after the edges were drawn.\n- dec:bl-155's finding that ~17 of the 40 never-called tools are the management/governance/coordination family is not evidence of an unwanted surface. BL-155's own conclusion already said these tools are UNREACHABLE FROM ANY SKILL rather than unwanted, and a late addition is exactly what fails to get wired into the skills that would name it.\n- reflow2's eight functional systems (dec:bl83a-functional-decomposition) containing no management or governance system is, on this reading, the same debt stated structurally: the decomposition was drawn before the concern arrived and was never revised to hold it.\n\nWHY THIS IS A DECISION AND NOT A PREFERENCE: it settles what to do with every future governance finding. The question stops being \"does this belong here?\" and becomes \"what is it not yet connected to?\" — which is answerable from the graph, unlike the first.\n\nWHAT IT DOES NOT DECIDE: it does not say governance vocabulary must be mandatory for every project, and it does not rule out the optional-profile shape (option C of the brainstorm) as an INTERNAL organising idea. It rules out the PACKAGE split only. It also does not say the integration is small — the storyflow fleet sized the missing primitives as \"a small declarative field plus a report — not a subsystem\", and that estimate is theirs, not confirmed here.\n\nCONSISTENT WITH the accepted requirements the split would have cost: req:thin-install and req:no-setup-per-project both survive untouched, which they would not have under a second package. And with proj:reflow2's objective, \"keep a design coherent from concept through operations\", which names the whole lifecycle as scope rather than design alone.\n\nSUPERSEDES dec:idea-governance-management-split, which stays on the record with all four options so the roads not taken remain visible.",
+        "name": "Governance and management stay in reflow2 and get properly integrated — the weak connection is catch-up debt from a late addition, not a boundary asking to be drawn",
+        "rationale": "Anthony's word, given directly on 2026-08-09 after the brainstorm was put to him. The reasoning worth preserving is his causal one: governance arrived late, so its poor integration is chronology rather than architecture — which means the fix is wiring, not relocation. Recorded because a later session finding governance badly connected would otherwise be entitled to re-open the split question, and this says it was asked and answered.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:graph-spof-accepted",
       "node_type": "Decision",
       "properties": {
@@ -60478,6 +60709,16 @@
         "name": "OPEN — how does a downstream owner levy a requirement on an upstream design they do not own? (Anthony leans: write-only-at-proposed, carried by git)",
         "rationale": "Captured under the brainstorm skill 2026-08-06, then SHARPENED twice the same day.\n\n⭐ THREE CORRECTIONS TO THIS AGENT ARE PRESERVED IN THE NODE rather than edited away, because each was a different failure worth keeping visible.\n\n(1) Option (C), upstream-pulls, was RECOMMENDED here and is refuted by Anthony's Google-service argument: pull requires enumerating dependents, a widely-used design cannot, and discovery of dependents is itself a push, so pull cannot bootstrap.\n\n(2) This node previously implied the graph could not express a levied requirement. describe_schema shows it already can — `source`, `provenance: imported`, `designation`, `status: proposed` and AUTHORED_BY roles are all present. Same failure dec:idea-intent-crosses-designs corrected on 2026-08-05: asserting an absence from a summary instead of reading the surface. READ THE SCHEMA, NOT THE SUMMARY.\n\n(3) The transport was first written as \"a pull request... enforced by GitHub\". Anthony corrected it: not every project uses GitHub, but every project uses a git repo. The distinction is not pedantic — coupling reflow2's answer to one vendor's feature would narrow a product whose whole persistence story (req:persistence, dec:multi-writer-architecture) is already vendor-neutral, and would exclude exactly the disconnected and self-hosted environments where the file-and-merge model is the ONLY workable one. The primitives are branch/diff/merge; a forge is a UI over them.\n\nKept SEPARATE from dec:idea-a-session-holds-several-graphs (ACCESS — which graphs a session can see) because this is AUTHORITY — who may write what, and at which status. The federation node localises this question to each ownership seam; this node is what happens at one.\n\nThe reframe worth keeping even if every option here is rejected: this is a CUSTOMER REQUIREMENT LEVIED ON A SUPPLIER, the most ordinary transaction in systems engineering.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-governance-management-split",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony raised this at the very end of 2026-08-09 and it got no thinking because the session was out of context. Nothing below is intent; the options are recorded so the roads not taken survive.\n\nANTHONY'S QUESTION, and he brought the strongest counter himself: should reflow2's management and governance surface (rules, enforcement, claims/seats, epochs, releases, readiness, budget, ownership) live where it does, or become a sister package? HIS OWN COUNTER-ARGUMENT: **UAF does not separate them** — Architecture Management, Project, Standards and Strategic are all viewpoints inside one framework. That counter is strong and is engaged below rather than waved at.\n\n--- OPTION A — STAY UNIFIED (status quo, no work) ---\nOne package, one vocabulary, one graph. FOR: proj:reflow2's objective is already \"Keep a design coherent from concept THROUGH OPERATIONS\" — the whole lifecycle is the stated scope, so a split narrows an objective held since genesis. The management surface is DEFINED BY READING DESIGN STATE: dec:release-trigger computes a cut from what is delivered, req:readiness-gates-the-roadmap computes the epoch from readiness rather than declaring it, req:plans-move-honestly puts plan movement on the record. None of that is a layer on top; it is a reader of the coherence graph, so a sister package would need full read access anyway — at which point ask what was actually separated. AGAINST: this is also the option that requires nobody to think, which is not the same as being right.\n\n--- OPTION B — SPLIT INTO A SISTER PACKAGE ---\nA second crate / MCP server with its own vocabulary, sharing the graph. FOR, and this is the real evidence: dec:bl-155 measured 40 of 132 served tools never called, and roughly SEVENTEEN of those forty are the management/governance/coordination family (claim_region, claim_report, release_claim, mint_seat, apply_merge, merge_designs, recall_resolutions, plan_epoch, set_epoch_status, arrival_delta, budget_report, add_flow, part_of_flow, performed_in, add_resource, add_environment, set_project_mode). The management half is measurably the least-exercised part of reflow2. Also: the natural users differ — governance's natural consumer is an agent fleet, design coherence's is a person designing. AGAINST, and it is the same datum read the other way: BL-155's own conclusion is that these tools are UNREACHABLE FROM ANY SKILL, not unwanted — \"a capability nobody can find is worth what an absent one is worth\". Packaging is not the cause of the non-use, so packaging is not the cure; a split would make them less reachable, not more. SECOND COST, concrete: a sister package collides with two ACCEPTED requirements — req:thin-install (\"after setup, a project never has to change again for reflow2 to move\") and req:no-setup-per-project (\"setting up a project is not a step\"). The split is not free; it is paid for in install friction the design already refused once.\n\n--- OPTION C — SPLIT THE VOCABULARY, NOT THE PACKAGE ---\nOne binary; governance/management becomes a declared, optional PROFILE a project opts into. FOR: this is what UAF actually does, and it is where Anthony's counter is sharper than it first looks. UAF unifies VIEWPOINTS in one framework; it says nothing about whether one piece of software ships them. So the UAF precedent argues for one VOCABULARY and is silent on one PACKAGE — which suggests the question is a packaging question wearing a vocabulary question's clothes, and that separating the two axes may dissolve it. AGAINST: reflow2 has no profile mechanism today, so this is the option with the most unbuilt machinery behind it.\n\n--- OPTION D — NEITHER: THE LINE IS MECHANISM vs POLICY ---\nNot a package boundary at all. Mechanism lives in reflow2; policy lives in each project's own graph and reflow2 stays ignorant of it. FOR: this is the line the storyflow fleet drew after a month of operations, with the test \"could a solo hobbyist, a two-person team and a regulated enterprise each express THEIR governance with this, without reflow2 having an opinion about which is right?\" Their verdict sizes the missing work as small: \"reflow2 models the DESIGN well and the DECIDING poorly — it does not know who may decide, what a decision covers, which rules can even be checked, or where else a rule is written down. Those four are what a governance layer is, and each is a small declarative field plus a report — NOT A SUBSYSTEM.\" You do not split a package off four fields. AGAINST: the same report notes DesignRule is \"the least-connected type in the schema, which is odd for the one whose whole job is to bind other things\" — so governance here is an underfitted corner, and calling the remaining work small may be measuring the part already understood.\n\n--- WHAT THE GRAPH ITSELF SAYS, checked rather than assumed ---\nreflow2's own functional decomposition (dec:bl83a-functional-decomposition, \"reflow2's systems are functional, not its file tree\") holds EIGHT systems — Agent Surface, Coherence Loop, Documentation, Human Channel, Intake, Design Store, Time & History, Vocabulary — and NONE of them is management or governance. There is no existing seam to split on. That cuts both ways and the honest reading of both is recorded: it means a split must invent a boundary the design never drew, and it means the absence of that boundary may be exactly why the area is tangled.\n\nRELATED AND DELIBERATELY NOT MERGED: dec:idea-package-versus-shared-server asks a different packaging question (shared server vs self-contained package) on the same axis; rule:fixes-are-judged-by-the-third-party governs how any answer must be judged — by what it does for a consumer's project, never for this repo.",
+        "name": "OPEN — should management/governance stay inside reflow2, or split into a sister package?",
+        "rationale": "Recorded as brainstorming at Anthony's request (/brainstorm, 2026-08-09). Searching the graph first changed the shape of the question three times: proj:reflow2's objective already claims concept-through-operations, so a split narrows a stated scope; dec:bl-155's never-called list turns out to be ~17/40 management tools, which is the strongest datum on either side and reads both ways; and req:thin-install + req:no-setup-per-project give the split a concrete, already-accepted cost. The storyflow fleet's trial-case report (2026-08-09, api-boss 05af57c1) supplies option D from a month of live operation. No option is recommended and none is promoted to intent.",
+        "status": "superseded"
       }
     },
     {
@@ -60768,6 +61009,16 @@
         "name": "reflow2 installs once per machine; the in-repo half is optional and only for repos you share",
         "rationale": "WHY NOT \"MACHINE-WIDE ONLY\", which is simpler: a teammate cloning the repo would get no signal that reflow2 governs it unless they had already installed reflow2 themselves and thought to look. That is the invisibility `req:kit-reaches-the-agent` was raised for, and retiring the per-project installer would rebuild it deliberately.\n\nWHY NOT \"JUST MAKE IT ONE WORD\" (`reflow2 init .` instead of a python path): it fixes the typing and none of the arithmetic. Still one step per project, still a re-run after every upgrade, and still the case that a user who forgets it experiences reflow2 as absent.\n\nWHAT MADE MACHINE-WIDE SAFE TO CHOOSE AT ALL, and without it the answer would have been different: the server is registered with `--only-if-present`, so a directory that never opted into a design gets the LATENT surface and nothing is created in it. Without that flag, a user-scope registration would drop a RocksDB store into every folder a session is ever opened in — and litter in someone's repo is a worse first impression than the setup step it removed. The loop-nudge hook is gated the same way and for the same reason: registered globally, silent wherever `.reflow2/` does not exist.\n\nWHAT THIS DOES NOT CHANGE: `dec:skills-served` and `req:thin-install` stand exactly as they were. The skills and working instructions are still served, still never copied, and upgrading reflow2 still produces no diff in a consumer repo. This decision is about WHERE the pointers are installed, not about what is served — and it makes the thin install thinner, since the common case now installs nothing into a project at all.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:legitimate-islands-need-the-detector-fix",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RE-OPENED 2026-08-09 on Anthony's word, after storyflow gap D arrived and the same defect reproduced in this design within the hour.\n\nWHAT WAS DECIDED BEFORE, AND WHY IT IS NOT ENOUGH NOW. dec:documentation-has-no-operational-coupling (ACCEPTED, 2026-07-24) met a legitimate island, tried three bridges, refused all of them as lies, accepted the island, and concluded: \"flagging it is a false positive of the BL-84 family, and THE FIX BELONGS IN THE DETECTOR RATHER THAN IN THE DESIGN.\" That fix was never built. The decision records why — the specific island DISSOLVED on its own when cap:session-memory turned out to belong to both cmp:docs and cmp:temporal, giving documentation a real tie rather than a manufactured one. So the disposition became moot and the general principle it stated was left unimplemented. The old decision is NOT wrong and is NOT being un-accepted (dec:reopen-supersedes); what is re-opened is the clause it deferred.\n\nWHAT CHANGED, and it is two independent measurements on the same day. (1) storyflow's governance model is a 121-node cluster tripping `disconnected_community` with `generate_bridge` proposed — a remedy that would fabricate traceability between fleet-operations governance and product design, which are two genuinely separate concerns sharing a repo. (2) THIS DESIGN reproduced it at 5 nodes: capturing governance requirements under dec:governance-integrates-not-splits produced heal:33d1548dae64e97a with the same suggested fix, and no honest bridge existed.\n\n⭐ THE PART THAT MAKES THIS URGENT RATHER THAN TIDY: both clusters are GOVERNANCE, and both GROW as governance is captured properly. dec:governance-integrates-not-splits has just committed this project to exactly that growth. So the detector currently penalises the work the project decided to do, and gets louder the better the work goes.\n\n⚠️ AND THE CONSTRAINT BOTH PROJECTS ARRIVED AT INDEPENDENTLY, SIXTEEN DAYS APART — this is the strongest evidence available that the shape is right, and it is also the trap. The 2026-07-24 decision: \"the exemption must not be written in a way that hides a genuine disconnection.\" storyflow, 2026-08-09: \"a real disconnection would arrive inside a 121-node warning everybody has already learned to ignore.\" Same sentence, two authors, neither aware of the other.\n\nTHE OPTIONS.\n(A) A DECLARED PARTITION — a marker on a Project or Component saying this subtree is deliberately separate, so the detector reports \"N declared partitions, 0 undeclared\". Same shape as `granularity`'s opaque-vs-pending_expansion and as `enforced`'s tri-state, which is the argument for it: reflow2 has twice decided that a CHOICE and an UNFINISHED STATE must not look identical, and this is the third instance. COUNTER: a marker is exactly the kind of thing that gets set once and never revisited, and dec:idea-detect-vocabulary-that-nothing-reaches warns in its own text that \"another marker nothing reads\" would be a fourth instance of the very disease.\n(B) TEACH THE DETECTOR THE CATEGORY, as the 2026-07-24 decision assumed — infer that a cluster of purely-governance or purely-documentation nodes has no operational coupling by nature, the way dec:operational-spof already excludes non-operating things from SPOF findings. CHEAPER for the user, no new vocabulary. COUNTER: an inference cannot be argued with, and a genuine governance island would be hidden by the same rule that exempts the legitimate one.\n(C) FIX ONLY THE SUGGESTED REMEDY — leave the finding, drop `generate_bridge` where no honest edge exists, and say so. THE SMALLEST HONEST STEP, and it removes the part storyflow called corrupting. COUNTER: it leaves the permanent un-clearable warning, which is the half that makes people stop reading.\n(D) ACCEPT ISLAND BY ISLAND, as today. COUNTER: an acknowledgement is a one-time answer to a finding whose size keeps changing — acknowledged at 88 it now reads 121, and nothing says when it became a different finding.\n\nNOTHING IS PROMOTED. The requirement req:a-cluster-can-be-declared-deliberately-separate states the need; this node holds the unmade choice about its shape, and (A) is written first only because it is what both reporters proposed, not because it is recommended.",
+        "name": "OPEN — the detector fix that dec:documentation-has-no-operational-coupling deferred is now owed: does a legitimately separate cluster get a declared-partition marker?",
+        "rationale": "Minted rather than editing the 2026-07-24 decision, per dec:reopen-supersedes: an accepted Decision is never un-accepted, and re-opening mints a new one. Kept at `proposed` because the four options are genuinely open and option (A) carries a counter-argument from reflow2's own graph — dec:idea-detect-vocabulary-that-nothing-reaches explicitly warns against adding another marker nothing reads, which is what (A) would be if built carelessly. Recorded because the old decision currently reads as fully resolved, so a reader has no way to see that the detector work it named was deferred and is now due.",
+        "status": "proposed"
       }
     },
     {
@@ -66733,6 +66984,21 @@
       }
     },
     {
+      "node_id": "req:a-cluster-can-be-declared-deliberately-separate",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A cluster can be declared deliberately separate, so disconnected_community reports undeclared islands instead of one permanent warning",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A group of nodes can be declared a DELIBERATE PARTITION — a subsystem that genuinely does not couple to the rest of the design — so `disconnected_community` reports \"N declared partitions, 0 undeclared\" rather than one standing warning. The value is NOT silencing the finding. It is that a NEW accidental island becomes visible against the declared ones, which today it is not.\n\nTHE DEFECT IN THE CURRENT BEHAVIOUR IS THE SUGGESTED FIX, not the finding. `disconnected_community` proposes `generate_bridge` — creating edges to connect the cluster. Where the separation is correct, acting on that suggestion FABRICATES RELATIONSHIPS THAT DO NOT EXIST in order to silence a warning about a separation that is right. That is manufacturing connectivity, and it is the same act as formatting coverage into existence — with the difference that here THE TOOL PROPOSES IT.\n\nWHY ACKNOWLEDGEMENT IS NOT ENOUGH, which is the part that makes this a mechanism and not a workflow note: `acknowledge_defect` is a one-time answer to a finding whose SIZE keeps changing. Acknowledged at 88 nodes it now reads 121 — at what point is it a different finding? And an alarm that can never be cleared is one everyone learns to skip, so the real disconnection arrives inside a warning nobody reads.\n\nREFLOW2 HAS ALREADY MET THIS AND WROTE DOWN THE ANSWER, which is the strongest evidence that the shape is right. dec:documentation-has-no-operational-coupling (ACCEPTED, 2026-07-24) records the identical situation — three bridges attempted, all refused as lies, the island accepted — and concludes \"flagging it is a false positive of the BL-84 family, and THE FIX BELONGS IN THE DETECTOR RATHER THAN IN THE DESIGN.\" It also states the exact constraint storyflow independently arrived at sixteen days later: \"the exemption must not be written in a way that hides a genuine disconnection.\" The detector fix was never built, because that particular island dissolved on its own when a capability turned out to belong to two components.\n\nREPRODUCED IN THIS DESIGN, 2026-08-09, WITHIN THE HOUR OF THE REPORT ARRIVING: capturing four governance requirements under dec:governance-integrates-not-splits produced heal:33d1548dae64e97a — \"5 nodes form a cluster disconnected from the rest of the design\", suggested_fix_type `generate_bridge`. No honest bridge existed, so none was drawn. Storyflow hit it at 121 nodes; reflow2 hit it at 5. Both clusters are GOVERNANCE, and both GROW as governance is properly captured — so the detector currently penalises exactly the work dec:governance-integrates-not-splits committed to.\n\nSOURCE: storyflow gap D of the peer set — raised by storybug Boss (47accf78), characterised and filed by api-boss (05af57c1), 2026-08-09, v0.26.1. Their stated bound: the growth from 88 to 121 is suggestive, not proven, because the two measurements may not share a scope. What IS established is that the detector fires on a set provably containing nodes created hours earlier by the migration, and that its proposed remedy would corrupt the graph.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:a-dated-observation-does-not-read-as-standing-doctrine",
       "node_type": "Requirement",
       "properties": {
@@ -66744,6 +67010,21 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A statement about the system's CURRENT state must be recorded as a time-bounded assertion and surfaced with its age wherever it is read back, so it can go false. Prose written into a Requirement's `statement` has no expiry: it reads present-tense forever, no report flags it, and it is unfalsifiable by construction. The design already draws this line once — `dec:verification-freshness-not-a-gap` ruled that a check older than its code is a freshness FACT rather than a gap — and this is the same distinction one node type along: a claim about what the design SHOULD BE belongs in Requirement prose; a claim about what the system IS RIGHT NOW belongs in a TemporalFact, which keeps both states instead of overwriting. Reading a dated observation back to a person as settled doctrine upgrades it into a standing property that nobody chose.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:a-decision-states-what-it-binds",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A Decision can state what it binds, and an unstated scope is visible rather than inferred",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A Decision can declare its SCOPE — node ids, a node type, a region, or free text — and where nobody stated one, the absence is explicit and readable rather than left to inference.\n\nTHE GAP THIS CLOSES. A Decision records WHAT was decided and WHY. It does not record WHAT IT APPLIES TO. Six weeks later the question is never \"what did we decide\" — it is \"does that decision cover THIS?\", and the node cannot answer.\n\nTHE VALUABLE HALF IS THE HONEST ABSENCE, not the field. \"Nobody recorded a scope\" is a different fact from \"scope is everything\" and from \"scope is this one component\", and today all three look identical. An unstated scope must be VISIBLE, not inferred — which is the same shape as the tri-state reflow2 already accepted for rule enforcement (dec:does-enforced-default-to-gate-blocking: a rule's power is stated, never defaulted) and as dec:certainty-derived's refusal to let a default assert what nobody chose.\n\nEVIDENCE. A 2-of-3 ruling changed a trigger. Two documents were corrected; a third was found still teaching the old rule — and whether that third file was in scope had two defensible readings. The work stopped there, correctly. The stall was caused by a missing field, not by a hard question.\n\nGENERALITY: this is not a multi-agent problem. A solo developer six months later faces the identical question about their own past decision, with no colleague to ask.\n\nSOURCE: storyflow fleet governance report, api-boss (05af57c1), 2026-08-09, v0.26.1. Bound as stated by its author: one project, one month, one fleet shape — hypotheses to test, not requirements.",
         "status": "proposed"
       }
     },
@@ -66775,6 +67056,21 @@
         "provenance": "authored",
         "statement": "Where reflow2 tells an agent which skill to use, it must phrase it as the call to make next rather than as a trailing reference. MEASURED, and this is the whole evidence: `add_capability` returned `loop_hint: \"loop: wire satisfies to the requirement this serves, then run detect_gaps when the capture batch lands (detect-and-ask)\"`. The agent that received it DID wire `satisfies` and DID run `detect_gaps` — and did NOT load `detect-and-ask`. The imperative clauses were obeyed; the skill name in parentheses was read as an attribution for where the advice came from, not as a step to take.\n\nSo the pointer already exists and already names the right skill — `cap:read-loop-hint` and the write-side `loop_hint` are both `verified` — and it still failed. That makes this cheaper than anything else in this family: the mechanism is built, delivered and correct, and only the wording is losing the effect. `run get_skill(\"detect-and-ask\") first` is a step; `(detect-and-ask)` is a footnote.\n\nSCOPE: every place reflow2 names a skill to an agent — the write tools' `loop_hint`, the read-side hint, `loop_nudge.py`'s Stop message, the SessionStart orientation, and the MCP server instructions. The rule is one line: if a skill is worth naming, name the call.\n\nNOT PROPOSED: making the hints longer or more numerous. The finding is about grammar, not volume, and a hint that grows is a hint that gets skimmed — the failure `dec:read-hint-shape` already guarded against by firing only when the debt is real.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:a-node-can-say-who-may-change-it",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A node can declare who may change it, so \"what may I change alone?\" is answerable from the graph rather than from prose",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A design node can carry a declared CHANGE POLICY — who may alter it, how many approvals it takes, and whether the approval must be recorded before or after the change. reflow2 REPORTS violations (\"changed without the declared approval\") and NEVER blocks the write.\n\nTHE GAP THIS CLOSES. reflow2 can say who AUTHORED a node — AUTHORED_BY carries role author/reviewer/approver — which is a record of what DID happen. It cannot say who MAY change it, which is a constraint on what MAY happen. Those are different facts and only the first is modelled.\n\nWHY REPORTING AND NOT ENFORCING, which is the load-bearing half: a tool that blocks writes becomes a tool people route around, and then the graph stops matching reality — the one failure it cannot survive. Enforcement is itself a policy choice, so making it the mechanism would be reflow2 taking a position that belongs to the project. The value is that the boundary becomes QUERYABLE: \"what may I change alone?\" is the question every arriving session actually has, and today it can only be answered by reading prose that session may never read.\n\nWHAT IT MUST NOT BECOME: roles, permissions, identity, or a review workflow. Just a declared constraint and a report of whether it held. Who someone IS stays the harness's problem; Contributor is enough.\n\nGENERALITY, tested rather than assumed — the source applied the standard \"could a solo hobbyist, a two-person team and a regulated enterprise each express THEIR policy with this, without reflow2 having an opinion about which is right?\" Solo: nothing declared. Two people: \"my areas and my brother's\". Team: \"two reviewers on a migration\". Regulated: \"QA sign-off, recorded, before release\".\n\nEVIDENCE, frequency rather than drama: one storyflow session hit \"this is not mine to decide\" FIVE times in a single sitting — a rule change needing multi-party agreement, an idea that must not be promoted to intent by anyone but its author, a gate-blocking flag that was the human's call, a shared file two other parties depended on, and a scope question about someone else's earlier ruling. Every one is this same missing primitive.\n\nSOURCE: storyflow fleet governance report, api-boss (05af57c1), 2026-08-09, reflow2 v0.26.1, written to a deliberate MECHANISM-vs-POLICY frame at Anthony's request (\"keep it generally applicable — give reflow2 the set of tools that can make most governance strategies possible\"). Their own stated bound: one project, one month, one fleet shape, biased toward multi-agent operation — \"treat the shapes as hypotheses worth testing against other projects, not as requirements.\"",
+        "status": "proposed"
       }
     },
     {
@@ -66821,6 +67117,66 @@
         "provenance": "authored",
         "statement": "When reflow2 puts a gap to the user, the agent's READING of it travels with the question: what it would do and why, and what would change that answer. The user still decides; the agent stops pretending it has no view.\n\nTHE READING HAS A SHAPE, AND THE SHAPE IS PART OF THE REQUIREMENT — added 2026-07-31 on Anthony's word after the pattern was used on him for the five standing gaps: \"I really like when I say something like 'go through the decisions I need to make... put them in plain and simple english and offer a recommendation' and then you give me the options to select with your recommended choice on top. I believe there is already a proposed idea... but I really like this process (I think other users will really like this process also), so I'd either like to update the proposed req or cap or backlog item to CEMENT THIS BEHAVIOR.\"\n\nThree obligations, and they are separable:\n\n(1) THE OPTIONS ARE SELECTABLE, not buried in prose. The user picks rather than composing a reply. Prose that describes three courses of action still leaves them to name one; a list they can choose from does not.\n\n(2) THE RECOMMENDATION COMES FIRST and is marked as such. Position carries meaning: an unordered menu makes the user infer which the agent favours, which is the analysis req:no-se-knowledge exists to spare them. Marking it also makes an overrule VISIBLE — the user knows they are departing from the agent's view, which is the precondition for the finding below.\n\n(3) EVERY OPTION STILL CARRIES ITS CONSEQUENCE, including the ones not recommended. A list of bare labels is worse than prose, because it looks complete while withholding what each choice costs. The counterweight rule below is not relaxed by the format; it is what makes the format honest.\n\nAND THE LANGUAGE IS THE USER'S, NOT ENGLISH — Anthony, same exchange: \"with agents able to understand multiple languages, the 'simple english' should be 'simple whatever_language_user_is_writing_in'.\" The plainness obligation is about REGISTER, not about English: no jargon, no ids, short sentences, in whatever language the user is writing in. cap:surface already says \"in the user's WORDS\", and this makes the wider reading explicit so nobody implements it as an English-only rule. Every English-language phrasing in these design notes is an example of the register, never a specification of the language.\n\nWHAT IS MISSING TODAY, and it is an omission rather than a prohibition. `detect-and-ask` is explicit that the agent must \"never invent an answer on their behalf\", which is right and must not be weakened. But the skill says nothing about offering a reading, so the default behaviour is a bare question — `gap_to_prompt` returns \"is it covered, deferred, or dropped?\" and the agent relays it. `cap:surface` (\"turn a gap into a question in the user's words\", `verified`) delivers the translation and nothing more.\n\nWHY THAT IS A DEFECT AND NOT NEUTRALITY. `req:no-se-knowledge` says the user never needs systems engineering. A bare gap question hands them back the analysis the agent has already done and asks them to redo it in their own head — which is precisely the SE work that requirement exists to spare them. The agent has read the graph, seen the precedents, and formed a view; withholding it is not impartiality, it is making the user pay for the agent's caution.\n\nIT IS ALSO WHAT `dec:three-party-checks` ALREADY DESCRIBES: \"The LLM speaks, the graph remembers and counts, the human decides.\" Offering a reading IS the LLM speaking. The decision stays with the human, untouched — and `dec:certainty-derived` still governs the write, because a recommendation changes no status until the user answers.\n\nTHE LINE THAT MUST NOT BE CROSSED, stated so this cannot be read as licence. Recommending is not deciding: no requirement moves off `proposed`, no decision reaches `accepted`, no gap is acknowledged on a reading the user has not confirmed. And a recommendation must carry WHAT WOULD CHANGE IT — the condition under which the other option wins — or it is steering rather than advising. An option presented without its counterweight is a decision taken quietly.\n\nTHE PART WORTH RECORDING, and the reason this is design rather than style: WHEN THE USER OVERRULES A RECOMMENDATION, THAT IS INFORMATION. A design where the agent advised one way and the human chose another has learned something neither party knew alone, and today it is invisible because the recommendation was never on the record. Whether the recommendation itself should be stored beside the question is left open here rather than assumed. NOTE that obligation (2) sharpens this: marking the recommendation is what makes an overrule an identifiable EVENT rather than an unremarkable choice among equals.\n\nMEASURED, not theorised: every gap put to Anthony on 2026-07-31 needed the recommendation added by hand, and he asked for it explicitly TWICE that day — \"provide your recommendation\", \"present them in simple english and your recommendations for how to proceed\" — and a THIRD time in the same session, at which point he asked for the behaviour to be cemented rather than repeated. A shape a user has to request each time is a default in the wrong place. This requirement's own evidence therefore accumulated by the exact mechanism it describes.\n\nSCOPE, stated because the third request widened it: this began as a rule about GAPS, and Anthony's framing — \"the decisions I need to make\" — is broader. The obligation is read as covering any point where the agent puts a CHOICE to the user, not only where detect_gaps produced it. Whether that widening needs its own capability rather than riding this one is left open rather than assumed.\n\nTENSION NAMED SO IT IS NOT CONFLATED: `dec:report-dont-judge` says the confirmation ledger reports claim history and never judges a claim. That governs what a COMPUTATION may assert about evidence. It does not govern whether an agent may advise a human who asked — different actor, different act. Conflating the two would silence exactly the party `dec:three-party-checks` puts there to speak.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:a-recorded-risk-reaches-someone",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A recorded risk reaches someone — RISKS is a finding source, not an edge only propagation can see",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A RISKS edge is surfaced by the routine calls people actually make — `loop_status` reporting recorded risks to what you own, and `detect_gaps(scope=…)` including risks that terminate inside the region — rather than being reachable only by someone who already suspects a change and asks for its blast radius.\n\nTHE EVIDENCE IS A SUCCESS STORY WEARING A FAILURE'S CLOTHES, which is why it is worth a primitive. In storyflow, `cap:fleet_step_reset` --RISKS--> `req:fleet_no_idle_worker` was recorded in advance, verified in the committed export. Hours later that exact causal chain ran: the user reset seats, the reset seats were invisible to every boss because a roster row is the product of a WRITE and an arriving seat has not written, a boss measured an empty pool and staffed nobody, and workers idled while a boss with lanes stood by. Somebody modelled their own incident correctly and in advance — AND IT REACHED NO ONE. `loop_status` never mentions RISKS. `detect_gaps` scoped to the owning component returned 12 gaps and this was not among them, because RISKS is not a gap source. Writing it down was never the hard part.\n\nMEASURED IN REFLOW2'S OWN DESIGN, 2026-08-09: ONE RISKS edge in 7,097. And the source tells the rest — `RISKS` appears in exactly one place in the entire codebase, `crates/reflow2-core/src/propagate.rs:34`, inside a `RISK_EDGES` constant. It is therefore reachable ONLY through `propagate_change`, which a caller reaches by already knowing something changed. No detector, no gap source, no report. `BLOCKS` (2 edges) and `MASKS` (0) sit in the same constant and have the same problem.\n\n⭐ THIS SHARPENS AN OPEN QUESTION RATHER THAN DUPLICATING IT. dec:idea-detect-vocabulary-that-nothing-reaches counts an edge type as REACHED if it is instantiated, named in the propagation table, or named anywhere in non-test Rust. RISKS PASSES THAT TEST AND IS STILL WRITE-ONLY. So the census as specified would clear it, and a second test is needed: not \"is this vocabulary named in code\" but \"can a reader who does not already know about it ever be shown it\". Declared-versus-code and code-versus-retrieval are different failures, and only the first is currently modelled.\n\nTHE COUNTER-DISCIPLINE, recorded because it is part of the proposal rather than an objection to it: two edges in a whole graph means the type is effectively unused, so surfacing it will not be noisy. If it later becomes noisy, the answer is to require an assessment date on the edge — not to stop reporting.\n\nSOURCE: storyflow gap A of the peer set — found by storybug Boss (47accf78), filed by api-boss (05af57c1), 2026-08-09, v0.26.1.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:a-rule-knows-where-else-it-is-written-down",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A rule knows where it is authoritatively stated and where else it is repeated, so an amendment can find its own stale copies",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A rule can name the artifact that AUTHORITATIVELY states it, and the artifacts that merely REPEAT it — and a report answers \"if I change this rule, what documents claim to state it?\"\n\nTHE GAP THIS CLOSES. A rule that lives in the graph is usually also written in a README, an onboarding doc, a code comment, a CI config. Amending the graph does not tell you where else the old wording lives, and a stale restatement does not lag quietly — it keeps issuing the superseded instruction to whoever reads it. `DesignRule` today has name, statement, category and enforced, and NOWHERE to put the source of record; the storyflow trial ended up writing \"Source of record: PROTOCOL.md\" into the free-text statement of all eight of its rules, putting the property that most needs to be queryable into prose no detector can read.\n\nWHAT THE EDGE MAKES POSSIBLE, and this is the argument for modelling it rather than adding a string property: a rule with TWO authoritative sources is a duplication risk; a rule with NONE is folklore; an artifact that changed since the rule was recorded is a rot candidate. None of those three questions can be asked today. reflow2 already has DOCUMENTS — \"this file describes that node\"; what is missing is its inverse in spirit — \"this file REPEATS that node's content and will go stale when it changes.\"\n\nEVIDENCE. One rule existed in FIVE places. A correct amendment fixed the two a MACHINE reads and missed the three that bind HUMANS — for two days, during which the stale copies were ordering work the ruling had explicitly removed. Nobody was careless: there was no way to ask \"where else is this stated?\"\n\nTHE HARD HALF IS DELIBERATELY EXCLUDED. Detecting a CONTRADICTION between a rule and its restatement defeats every keyword method, because both copies contain the same words. reflow2 should not pretend to do it. LISTING the restatements would have prevented the incident on its own — the graph supplies the list, the human eye does the comparison.\n\nADJACENT SCHEMA FINDING, recorded because it is the same neglect: `describe_schema` reports that NO edge type models DesignRule → Component either. Both GOVERNED_BY and CONSTRAINS accept the pair only through a `*` wildcard. DesignRule is the least-connected type in the schema — odd for the one whose whole job is to bind other things, and precisely the catch-up debt dec:governance-integrates-not-splits names.\n\nSOURCE: storyflow fleet governance report, api-boss (05af57c1), 2026-08-09, v0.26.1. Bound as stated by its author: one project, one month, one fleet shape — hypotheses to test, not requirements.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:a-rule-says-whether-it-can-be-checked-at-all",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A rule says whether a check is even possible, so \"no detector\" splits into debt and accepted limit",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A rule or requirement can declare its VERIFIABILITY — detectable / detectable-but-unwritten / undetectable-by-nature, with a required reason for the last — so that \"which of my rules have no check?\" splits into a backlog and a set of accepted limits, and only the first is debt.\n\nTHE GAP THIS CLOSES. \"No check is possible\" and \"no check yet\" are OPPOSITE states that read identically today. Both surface as \"unverified\". A rule about INTENT — \"do not shape data to satisfy a tool\" — has no detectable signature by construction, because the compliant and non-compliant artefacts are byte-identical. A rule about a file layout is merely unwritten. Reporting them the same way makes the report untrustworthy: a reader cannot tell a permanent limit from a to-do.\n\nREFLOW2 HAS ALREADY SOLVED THIS EXACT SHAPE ONCE, one domain over, which is the strongest argument that the distinction is real and not a special case. `granularity` distinguishes `opaque` — a subtree claimed as a unit ON PURPOSE — from `pending_expansion` — a PLACEHOLDER for work not done — and reflow2's own tool documentation says they \"look identical to every report today and are opposite states: a decision versus unfinished work.\" The same distinction is missing for verifiability. It is also the same principle as dec:does-enforced-default-to-gate-blocking, where a rule's power is stated rather than defaulted.\n\nWHY IT MATTERS TO THE REPORT AND NOT ONLY TO THE RECORD. Of nine rules recorded in the storyflow trial, two got checks, one was detectable-but-unwritten, and THREE were undetectable by construction. Filing those three as unverified debt would misreport a third of the set forever — and a permanent red nobody can clear is how a report loses its readers.\n\nRELATED, AND THE REASON THIS IS URGENT RATHER THAN TIDY: `unverified_enforced_rule` already fires today on `enforced: true` with no incoming VERIFIES, and rule:bl-41 is currently caught by it. Without this distinction that detector cannot tell a rule that is waiting for a detector from one that can never have one.\n\nSOURCE: storyflow fleet governance report, api-boss (05af57c1), 2026-08-09, v0.26.1. Bound as stated by its author: one project, one month, one fleet shape — hypotheses to test, not requirements.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:a-rule-states-its-scope-and-a-conflict-is-surfaced",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A rule states the scope it binds in, and a conflict between two rules is surfaced — because a rule conflict selects against the careful",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A rule states the SCOPE it applies in, so a reader can tell whether it binds them; and where two rules cannot both be satisfied, that conflict is surfaced by the design rather than discovered by whoever loses work to it.\n\n⭐ THE GENERAL FINDING, and it is not about export: WHEN TWO SAFETY RULES CONFLICT, THE PARTICIPANT WHO REASONS MOST CAREFULLY ABOUT THE CONFLICT IS THE ONE WHO DOES NOTHING — and doing nothing is often the destructive option. A conflict between two safety rules is not neutral; IT SELECTS AGAINST THE CAREFUL. That is the mechanism this requirement exists to break, and it generalises far past the case that exposed it.\n\nTHE CASE. Two rules, both correct in isolation: any session that changed the design EXPORTS BEFORE STANDING DOWN (durability), versus the export is produced ONCE PER PULL REQUEST, LAST OF ALL, because two exporting commits on one branch break the lineage chain silently (integrity — dec:export-once-per-pr here). On a shared branch with several writers, BOTH CANNOT BE SATISFIED. A storyflow boss wrote two Requirements, one Contributor and two edges, then reported: \"I am NOT exporting, because I will not risk the lineage chain on a guess — and the cost of that correct-looking caution is that my writes exist in one untracked RocksDB directory on this host and nowhere else,\" which is precisely what the durability rule exists to prevent. Another session exported four times the same day. NEITHER BEHAVIOUR IS WRONG UNDER THE RULES AS WRITTEN.\n\nREPRODUCED HERE THE SAME DAY, and by the careful route: this session declined to export after recording dec:governance-integrates-not-splits and four requirements, because PR #132 was open and dec:export-once-per-pr applied. The design's own answer to the tension was to leave a session's work unexported — the identical outcome, arrived at by the identical reasoning, in the project that authors the rule.\n\nWHAT IS MISSING, in two parts. FIRST, SCOPE: the lineage warning does not say whether it is branch-local or any-branch, so a reader cannot tell whether it applies to them. This is the same missing field as req:a-decision-states-what-it-binds, one node type over — and where a single-writer discipline is required on shared state, reflow2 should be able to SAY so rather than leaving each project to find out by having someone lose work. SECOND, DETECTION: reflow2 surfaces a contradiction only where a human has already drawn a CONTRADICTS edge — two of this design's five current structural defects are exactly that. Nothing DISCOVERS a conflict between two rules nobody suspected, which is the only case that matters, because a suspected conflict is one somebody is already handling.\n\nFILED AS A REFLOW2 SEMANTICS GAP, NOT A PROJECT ONE, in the reporter's words: a project may rule its own cadence, but it should not have to discover the conflict first.\n\nSOURCE: storyflow gap C of the peer set — storybug Boss (47accf78), filed 2026-08-09, v0.26.1.",
+        "status": "proposed"
       }
     },
     {
@@ -70890,6 +71246,17 @@
       }
     },
     {
+      "node_id": "fact:defect-create-node-merge-versus-replace-is-fixed-but-unreleased",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE create_node MERGE-VERSUS-REPLACE CONTRADICTION IS ALREADY FIXED ON MAIN AND HAS NEVER BEEN RELEASED. Verified from source and git rather than reasoned about, 2026-08-09.\n\nWHAT WAS REPORTED (dragon Boss cca98fbf, storyflow, v0.26.1): two served surfaces contradict each other on a destructive operation. `create_node`'s tool description says an existing id MERGES; the `revise-design` skill said it is create-or-REPLACE and \"resets every other property to its schema default\". The reporter observed merging (N=2) and correctly declined to say which surface was authoritative.\n\nGROUND TRUTH, read from the code: the MCP tool calls `upsert_node`, not `create_node` — crates/reflow2-mcp/src/tools/query.rs:64. IT MERGES. The core does expose both semantics (graph.rs:232 create_node replaces, graph.rs:257 upsert_node merges) but no MCP caller can reach the replacing one. THE TOOL DESCRIPTION WAS RIGHT AND THE SKILL WAS WRONG — wrong in the safe direction for data, expensive in effort: it scared agents off the safe call.\n\n⭐ AND THE FIX ALREADY EXISTS. Commit 9b16162 (PR #126, 2026-08-09) rewrote that paragraph, and the corrected text ALREADY CITES THIS FLEET: \"It cost a dev_storyflow worker a hand-assembled whole-property write (filed 2026-08-09).\" So an earlier report from the same fleet produced the fix, and the fleet then re-filed the same defect because THEY CANNOT SEE MAIN.\n\n⚠️ THE ACTIONABLE FINDING IS THEREFORE NOT THE DEFECT. `git merge-base --is-ancestor 9b16162 v0.26.1` → FALSE, and `git tag --contains 9b16162` → EMPTY. storyflow runs v0.26.1. EIGHT merged PRs sit unreleased on main (#119 #120 #121 #126 #127 #128 #130 #131) and a ninth is open. The trial case for reflow2's governance is evaluating a build that predates every governance fix made in response to it, and is spending real effort re-filing things already repaired.\n\nTHIS IS THE SECOND CONFIRMED INSTANCE OF THE SAME PATTERN: a 2026-08-08 review found 2 of 4 storyflow reports had already shipped an hour before they were filed. The gap is DISTRIBUTION, not detection — and rule:fixes-are-judged-by-the-third-party makes it a product problem rather than a repo one, because every consumer is on the same released build the fleet is.\n\nWHAT REMAINS GENUINELY UNFIXED from the report: nothing about create_node. The reporter's wider point stands and is NOT closed by the release — two served surfaces can still disagree, and nothing checks a skill's claims about tool BEHAVIOUR. That is a standing hole with four prior instances.",
+        "subject_id": "cmp:skills"
+      }
+    },
+    {
       "node_id": "fact:defect-documented-hook-path-may-not-exist",
       "node_type": "TemporalFact",
       "properties": {
@@ -71279,6 +71646,17 @@
         "subject_id": "cap:shared-sessions",
         "valid_from": "2026-08-07",
         "value": "{\"reported\":\"2026-08-07 dev_storyflow, api-boss 5d608b85, deliberate experiment on the live shared graph\",\"held\":\"per-property merge under concurrency; clean serialization; no torn state\",\"defect\":\"same-property write is silent last-writer-wins AND the success payload reports the write, not the state\",\"evidence\":\"RACER_ONE got success for statement=RACER_ONE, priority=high; persisted was RACER_TWO/low\",\"missing_primitive\":\"no version/rev/etag/updated_at anywhere in the payload\",\"fix_shape\":\"monotonic per-node rev returned on write, optional if_rev; minimum: say the node was written by another seat since your read\",\"stated_bound\":\"two racers were one client process, not two OS sessions; server-side findings hold regardless\",\"graph_restored\":\"yes, verified by control\"}"
+      }
+    },
+    {
+      "node_id": "fact:precedes-is-unused-in-storyflow-and-flowless-here",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.95,
+        "fact_type": "measurement",
+        "statement": "GAP B OF THE STORYFLOW PEER SET, recorded as dated evidence ON the vocabulary census question rather than as a requirement of its own — Anthony's call, 2026-08-09.\n\nSTORYFLOW'S MEASUREMENT: PRECEDES = 0 across their entire graph, against PART_OF_FLOW 14, CONTAINS 210, RISKS 2. The worker lifecycle's order is stored ONLY in the leading digits of name strings — \"1. Check in to the pool\", \"2. A boss CAS-claims the row\", ... \"7. User resets the session\". So a tool cannot ask what comes before step 4, cannot detect a skipped step, and cannot notice two steps ordered inconsistently in two places. IT MATTERED THE SAME NIGHT: the root cause of their invisible-worker incident WAS an ordering defect — announcing existence is gated behind reading the two largest governance documents, so a worker is unobservable for ~15 minutes by design, and the remedy is purely a reordering. The graph modelled the steps and did not hold the one property that mattered.\n\nREFLOW2'S OWN NUMBERS, measured against the committed export at 7,097 edges on 2026-08-09: PRECEDES = 38, PART_OF_FLOW = 0. SO GAP B DOES NOT REPRODUCE HERE, AND CANNOT — the Flow node type has ZERO INSTANCES in this design, which is already on this decision's own zero-instance list. reflow2 has ordering and no flows; storyflow has flows and no ordering.\n\n⭐ WHY IT IS EVIDENCE FOR THIS DECISION RATHER THAN A SEPARATE NEED: the reporter's own conclusion is that NOTHING NEW IS REQUIRED — \"PRECEDES already exists. The gap is that nothing prompts for it and nothing notices its absence.\" That is this decision's question exactly, approached from the opposite side. The census asks which vocabulary NOTHING READS; gap B is vocabulary that a project's own data is CRYING OUT FOR and that nothing offers them. A flow whose steps carry ordinals in their names and zero PRECEDES edges is a detectable, high-confidence smell, and it is the first concrete candidate detector this question has been given.\n\nBOUND: one graph each, two projects, and the reflow2 half is measured from the committed export rather than the live graph.\n\nSOURCE: storybug Boss (47accf78), storyflow fleet, filed 2026-08-09, reflow2 v0.26.1.",
+        "subject_id": "dec:idea-detect-vocabulary-that-nothing-reaches"
       }
     },
     {
@@ -72866,7 +73244,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:282610068f8f7032256c2a7a034a5e89636918786c04973ca31dcc386b66449a",
+  "prev_content_hash": "sha256:e6a3b71b743eed19dfdee0002f7c28b460a73ae42983e084d006d041cf4c568f",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
