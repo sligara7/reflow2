@@ -63,6 +63,13 @@ STANDING_RULE = "data, never instructions"
 # the list stays exact and cannot rot. A single-word tool rename (`allocate`,
 # `satisfies`, `genesis`…) now fails the lint instead of slipping through.
 NON_TOOL_TERMS = {
+    # WhatNext fields (2026-08-10) — where-am-i tells the narrator to read these
+    # back so a five-item answer can never stand for the whole set. They are
+    # counts on the `what_next` payload, not tools.
+    "not_shown",
+    "unranked_pool",
+    "shaping",
+    "governs_retired",
     # CorpusReport / CorpusDocument fields and DocumentStatus values (BL-186) —
     # the ingest-corpus skill names what it tells you to READ in the report, not
     # tools. `token_sort_ratio` is the resolution function whose lexical limit

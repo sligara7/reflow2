@@ -140,7 +140,8 @@ pub use readiness::{
     ReadinessObservation, ReadinessReport, ReadinessVerdict,
 };
 pub use report::{
-    AllocationSummary, CertaintyBreakdown, GraphReport, LoopStatus, RequirementCertainty,
+    AllocationSummary, CertaintyBreakdown, GraphReport, LoopStatus, RankedDecision,
+    RequirementCertainty, ShapingDecision, WhatNext,
 };
 pub use sanitize::{SanitizeReport, sanitize_text};
 pub use schema::load_schema;

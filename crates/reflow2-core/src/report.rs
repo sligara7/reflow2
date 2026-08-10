@@ -1496,3 +1496,389 @@ impl GraphReport {
         m
     }
 }
+
+/// One open Decision the ranking surfaced, carrying WHY it surfaced.
+///
+/// The reasons are strings rather than a bare score because a ranking nobody
+/// can argue with is a ranking nobody can correct. `dec:anchored-first` already
+/// holds the general form: a finding that names nodes outranks a generic nudge.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct RankedDecision {
+    pub decision_id: String,
+    pub name: String,
+    /// Additive, deliberately coarse — see [`DesignGraph::what_next`].
+    pub score: u32,
+    /// Human-readable reasons, in the order they contributed. Empty for a draw
+    /// from the unranked pool, which is the point of that slot.
+    pub because: Vec<String>,
+}
+
+/// A bounded, deliberately approximate answer to "which decisions should I make
+/// next?", in three bands.
+///
+/// # Why three bands and not one list
+///
+/// `req:what-next` (accepted) requires that an unmade decision outrank the work
+/// waiting on it, and that the answer be a projection rather than a stored list.
+/// Two later constraints shaped this into bands:
+///
+/// **The user's own word is never outranked by a heuristic.** A `proposed`
+/// Decision carrying `AUTHORED_BY role=approver` is the user having said *I
+/// will settle this* — durable, surviving every session, and clearing itself
+/// when the status moves off `proposed`. That is already a self-prioritisation
+/// mechanism; it simply was not named one. It gets its own band so no computed
+/// score can ever reorder it.
+///
+/// **Ranking only earns its keep over what the user has NOT marked.** Ranking
+/// somebody's own marks back at them tells them nothing they do not know, so
+/// [`Self::ranked`] deliberately excludes them.
+///
+/// **The bottom slot is exploration, and it is required rather than decorative.**
+/// Any attention- or consequence-based ranking reinforces what is already
+/// connected: a decision nothing points at scores zero forever and is never
+/// surfaced. That is `dec:bl-155`'s unused-versus-unreachable trap, and the
+/// remedy is an exploration term (`dec:attention-is-measured-behaviourally-not-lexically`).
+/// [`Self::unexplored`] is that term.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct WhatNext {
+    /// Band 1 — decisions the user marked as theirs to settle. Their word.
+    pub marked: Vec<AssignedDecision>,
+    /// Band 2 — the highest-scoring open decisions the user has NOT marked.
+    pub ranked: Vec<RankedDecision>,
+    /// Band 3 — one decision drawn from the zero-scoring pool, on purpose.
+    /// `None` only when that pool is empty.
+    pub unexplored: Option<RankedDecision>,
+    /// Every open (`proposed`, non-review-record) Decision in the design.
+    pub open_total: usize,
+    /// How many open decisions this answer does NOT show. Present so a
+    /// five-item list can never be read as the whole set — the same
+    /// false-completeness the where-am-i skill forbids.
+    pub not_shown: usize,
+    /// How many open decisions score zero, i.e. the size of the pool
+    /// [`Self::unexplored`] samples. One slot per reading means this many
+    /// readings to see them all once; the number is the argument for widening
+    /// the slot, not a preference.
+    pub unranked_pool: usize,
+    /// What advanced the unexplored pick — the count of settled decisions. The
+    /// core takes no clock and no RNG, so the rotation is derived from graph
+    /// state instead, and it advances every time a decision is settled. That is
+    /// the right cadence by construction: make a decision, see a different
+    /// unexplored one.
+    pub rotation: usize,
+    /// Said in words, because a bare list would imply the bottom entry is the
+    /// least important thing rather than a deliberate sample.
+    pub note: String,
+    /// Band 4 — the few SETTLED decisions that shape the most of the live
+    /// design. Not a to-do list: these are `accepted` and need nothing from
+    /// anybody. They are what a newcomer needs in order to read the rest.
+    pub shaping: Vec<ShapingDecision>,
+}
+
+/// An accepted Decision that a lot of the LIVE design hangs off.
+///
+/// Answers Anthony's 2026-07-31 question directly — *which few choices explain
+/// why the rest looks as it does* — which `dec:orientation-is-computed-not-written`
+/// named as the one genuinely missing thing and insisted must be a COMPUTATION
+/// rather than another paragraph in a start-here file.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct ShapingDecision {
+    pub decision_id: String,
+    pub name: String,
+    /// Live nodes `GOVERNED_BY` it. The ranking signal.
+    pub governs_live: usize,
+    /// Governed nodes excluded as dead — dropped/deferred Requirements and
+    /// superseded/rejected Decisions. Reported rather than silently dropped,
+    /// because a decision whose whole footprint is retired is a fact about the
+    /// design's history and the reader may want to know it was pruned away.
+    pub governs_retired: usize,
+    /// What kinds of thing it shapes, e.g. `["Capability", "Component"]`.
+    /// Descriptive only — deliberately NOT part of the score, see `what_next`.
+    pub shapes: Vec<String>,
+}
+
+impl DesignGraph {
+    /// Rank the open decisions into [`WhatNext`]'s three bands.
+    ///
+    /// # The score, and why it is coarse on purpose
+    ///
+    /// Additive over three signals, all computable from edges that already
+    /// exist — no new vocabulary, no schema change:
+    ///
+    /// | signal | weight | reading |
+    /// |---|---|---|
+    /// | nodes `GOVERNED_BY` it | +1 each | how much of the design waits on this |
+    /// | of those, ones `SCHEDULED_FOR` an increment | +2 each | it blocks planned work |
+    /// | `CONTRADICTS` an accepted Decision | +2 each | the design is inconsistent until settled |
+    ///
+    /// It is **not exact science and is not meant to be**: the user's stated
+    /// acceptance criterion is that a rough top-N beats a flat list of sixty,
+    /// and the baseline being beaten is no ordering at all. Measured on
+    /// reflow2's own design the head of the list scores 5, 3, 3, 3 — nearly a
+    /// tie — which is fine for a guide and would be indefensible as a claim.
+    ///
+    /// **What it cannot do, stated rather than discovered later.** A `Decision`
+    /// carries no timestamp, so staleness cannot enter the score at all. And a
+    /// decision linked to nothing scores zero however important it is — on
+    /// reflow2's own design that is most of them, which is why band three
+    /// exists and why the count is reported rather than hidden.
+    ///
+    /// Review records (`decision:ack:`) are excluded from every part of this —
+    /// as decisions, as governed sources, and as contradiction endpoints. They
+    /// are judgements ABOUT the design rather than part of it
+    /// (`ver:acknowledgement-not-structure`), and leaving them in makes the
+    /// answer confidently wrong: they dominate raw `GOVERNED_BY` counts.
+    ///
+    /// # The fourth band: which few decisions shape everything else
+    ///
+    /// A different question from the other three, and for a different reader.
+    /// Bands one to three are a to-do list of things still OPEN; [`WhatNext::shaping`]
+    /// is `accepted` decisions that need nothing from anybody, and it exists
+    /// because `dec:orientation-is-computed-not-written` named *"which few
+    /// decisions shape everything else"* as the one genuinely missing thing —
+    /// what a newcomer needs, and a COMPUTATION rather than another paragraph.
+    ///
+    /// **Ranked by LIVE governed count, and the liveness is the whole
+    /// refinement.** `cap:what-next` recorded the trap before this was built:
+    /// raw in-degree's top hit was a pruning decision governing ten DROPPED
+    /// requirements — high-degree, and the last thing a newcomer needs. Measured
+    /// on reflow2's own design that decision governs 10 nodes of which **9 are
+    /// retired**, so excluding dead nodes removes it outright and nothing else
+    /// was needed.
+    ///
+    /// **Breadth was tried and REJECTED on measurement.** Weighting by how many
+    /// distinct node types a decision governs looks like the obvious reading of
+    /// "weight by what the governed nodes are" — and it demotes every exemplar
+    /// `cap:what-next` names as the right sort of thing, because functional
+    /// decomposition governs eight Components and the three-party division
+    /// governs seven Capabilities: one type each. **Governing eight Components
+    /// IS shaping; single-typedness is not shallowness.** `shapes` is therefore
+    /// reported for the reader and deliberately kept out of the score.
+    pub fn what_next(&self, limit: usize) -> Result<WhatNext, DynoError> {
+        let is_review = |id: &str| id.starts_with("decision:ack:");
+
+        let mut open: Vec<(String, String)> = Vec::new();
+        let mut accepted: std::collections::HashSet<String> = std::collections::HashSet::new();
+        let mut accepted_named: Vec<(String, String)> = Vec::new();
+        for dec in self.scan_nodes(node::DECISION)? {
+            if is_review(&dec.node_id) {
+                continue;
+            }
+            let status = dec
+                .properties
+                .get("status")
+                .and_then(dynograph_core::Value::as_str)
+                .unwrap_or_default();
+            let name = dec
+                .properties
+                .get("name")
+                .and_then(dynograph_core::Value::as_str)
+                .unwrap_or_default()
+                .to_string();
+            match status {
+                "proposed" => open.push((dec.node_id.clone(), name)),
+                "accepted" => {
+                    accepted.insert(dec.node_id.clone());
+                    accepted_named.push((dec.node_id.clone(), name));
+                }
+                _ => {}
+            }
+        }
+        accepted_named.sort();
+        // Deterministic order before any ranking, so equal scores break the
+        // same way on every run and two readings of an unchanged design agree.
+        open.sort();
+        let open_total = open.len();
+
+        let mut marked = Vec::new();
+        let mut scored: Vec<RankedDecision> = Vec::new();
+
+        for (id, name) in &open {
+            // Band 1: did the user ask for this one?
+            let mut approver = None;
+            for e in self.outgoing(id, Some(edge::AUTHORED_BY))? {
+                if e.properties
+                    .get("role")
+                    .and_then(dynograph_core::Value::as_str)
+                    == Some("approver")
+                {
+                    approver = Some(e.to_id.clone());
+                    break;
+                }
+            }
+            if let Some(approver_id) = approver {
+                marked.push(AssignedDecision {
+                    decision_id: id.clone(),
+                    name: name.clone(),
+                    approver_id,
+                });
+                continue;
+            }
+
+            // Band 2/3: score what the user has not marked.
+            let mut governs = 0u32;
+            let mut blocks_scheduled = 0u32;
+            for e in self.incoming(id, Some(edge::GOVERNED_BY))? {
+                if is_review(&e.from_id) {
+                    continue;
+                }
+                governs += 1;
+                if !self
+                    .outgoing(&e.from_id, Some(edge::SCHEDULED_FOR))?
+                    .is_empty()
+                {
+                    blocks_scheduled += 1;
+                }
+            }
+            let mut contradicts = 0u32;
+            for e in self
+                .outgoing(id, Some(edge::CONTRADICTS))?
+                .into_iter()
+                .chain(self.incoming(id, Some(edge::CONTRADICTS))?)
+            {
+                // `alignment: supporting` is corroboration, not conflict — the
+                // same property heal.rs reads, and reading only the edge TYPE
+                // is the bug that once turned every recorded corroboration into
+                // a structural defect.
+                if e.properties
+                    .get("alignment")
+                    .and_then(dynograph_core::Value::as_str)
+                    == Some("supporting")
+                {
+                    continue;
+                }
+                let other = if e.from_id == *id {
+                    &e.to_id
+                } else {
+                    &e.from_id
+                };
+                if accepted.contains(other) {
+                    contradicts += 1;
+                }
+            }
+
+            let score = governs + 2 * blocks_scheduled + 2 * contradicts;
+            let mut because = Vec::new();
+            if governs > 0 {
+                because.push(format!("{governs} node(s) are governed by it"));
+            }
+            if blocks_scheduled > 0 {
+                because.push(format!(
+                    "{blocks_scheduled} of them are scheduled into an increment"
+                ));
+            }
+            if contradicts > 0 {
+                because.push(format!(
+                    "contradicts {contradicts} accepted decision(s) — the design is inconsistent until this is settled"
+                ));
+            }
+            scored.push(RankedDecision {
+                decision_id: id.clone(),
+                name: name.clone(),
+                score,
+                because,
+            });
+        }
+
+        // Stable: highest score first, id ascending within a tie.
+        scored.sort_by(|a, b| {
+            b.score
+                .cmp(&a.score)
+                .then_with(|| a.decision_id.cmp(&b.decision_id))
+        });
+
+        let pool: Vec<RankedDecision> = scored.iter().filter(|d| d.score == 0).cloned().collect();
+        let unranked_pool = pool.len();
+
+        let ranked: Vec<RankedDecision> = scored
+            .into_iter()
+            .filter(|d| d.score > 0)
+            .take(limit)
+            .collect();
+
+        // No clock, no RNG: rotate on how many decisions have been SETTLED, so
+        // the slot moves exactly when the user makes a decision. Deterministic
+        // for a given graph, which also keeps two readings of an unchanged
+        // design identical.
+        let rotation = accepted.len();
+        let unexplored = if unranked_pool == 0 {
+            None
+        } else {
+            Some(pool[rotation % unranked_pool].clone())
+        };
+
+        // Band 4. A governed node is LIVE unless the design has retired it: a
+        // dropped or deferred Requirement, a superseded or rejected Decision.
+        // That single filter is what makes this readable — see the doc comment.
+        let mut shaping: Vec<ShapingDecision> = Vec::new();
+        let type_of = self.node_type_index()?;
+        for (id, name) in &accepted_named {
+            let mut live = 0usize;
+            let mut retired = 0usize;
+            let mut shapes: std::collections::BTreeSet<String> = std::collections::BTreeSet::new();
+            for e in self.incoming(id, Some(edge::GOVERNED_BY))? {
+                if is_review(&e.from_id) {
+                    continue;
+                }
+                let Some(src_type) = type_of.get(&e.from_id) else {
+                    continue;
+                };
+                let status = self
+                    .get_node(src_type, &e.from_id)?
+                    .and_then(|s| {
+                        s.properties
+                            .get("status")
+                            .and_then(dynograph_core::Value::as_str)
+                            .map(str::to_string)
+                    })
+                    .unwrap_or_default();
+                let dead = match src_type.as_str() {
+                    node::REQUIREMENT => matches!(status.as_str(), "dropped" | "deferred"),
+                    node::DECISION => matches!(status.as_str(), "superseded" | "rejected"),
+                    _ => false,
+                };
+                if dead {
+                    retired += 1;
+                } else {
+                    live += 1;
+                    shapes.insert(src_type.clone());
+                }
+            }
+            if live == 0 {
+                continue;
+            }
+            shaping.push(ShapingDecision {
+                decision_id: id.clone(),
+                name: name.clone(),
+                governs_live: live,
+                governs_retired: retired,
+                shapes: shapes.into_iter().collect(),
+            });
+        }
+        shaping.sort_by(|a, b| {
+            b.governs_live
+                .cmp(&a.governs_live)
+                .then_with(|| a.decision_id.cmp(&b.decision_id))
+        });
+        shaping.truncate(limit);
+
+        let shown = marked.len() + ranked.len() + usize::from(unexplored.is_some());
+        Ok(WhatNext {
+            shaping,
+            not_shown: open_total.saturating_sub(shown),
+            open_total,
+            unranked_pool,
+            rotation,
+            note: format!(
+                "`marked` is your own word and is never reordered by the score. `ranked` covers \
+                 only decisions you have NOT marked, because ranking your own marks back at you \
+                 says nothing. `unexplored` is a DELIBERATE sample of the {unranked_pool} open \
+                 decision(s) that score zero — it is not the least important one, and a decision \
+                 scoring zero means nothing in the graph points at it yet, never that it does not \
+                 matter. The score is a rough guide, not a claim."
+            ),
+            marked,
+            ranked,
+            unexplored,
+        })
+    }
+}

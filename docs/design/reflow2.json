@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:0847fa78407e3d784cf7e6472516569d144f4595786191050ccf3984877d717b",
+  "content_hash": "sha256:b284117423693cd7e10802a2454c62a9dcb69e42e99e9c94b9be124d8b594644",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -4515,9 +4515,21 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:what-next-built",
+      "properties": {},
+      "to_id": "epoch:what-next-built"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:what-next-capture",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:what-next-shaping-band",
+      "properties": {},
+      "to_id": "epoch:what-next-built"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5580,6 +5592,12 @@
       "from_id": "snap:epoch:v0250:epoch:v0280-planned",
       "properties": {},
       "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:what-next-built:cap:what-next",
+      "properties": {},
+      "to_id": "epoch:what-next-built"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -8506,6 +8524,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-5926becab7a70367",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-5bc5cc883edf7682",
       "properties": {
         "accepted_baseline": true,
@@ -8980,6 +9007,15 @@
         "action": "modified"
       },
       "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-e5e2eec3ed94eb2a",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
     },
     {
       "edge_type": "CHANGED",
@@ -16166,6 +16202,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:what-next-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:what-next-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:what-next-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:what-next-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:what-next"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:what-next-capture",
       "properties": {
         "accepted_baseline": false,
@@ -16181,6 +16253,33 @@
         "action": "added"
       },
       "to_id": "req:what-next"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:what-next-shaping-band",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:what-next-shaping-band",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:what-next-shaping-band",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:what-next"
     },
     {
       "edge_type": "CHANGED",
@@ -23600,6 +23699,12 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "cap:what-next",
       "properties": {},
+      "to_id": "dec:orientation-shows-four-ranked-and-one-unexplored"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:what-next",
+      "properties": {},
       "to_id": "decision:ack:7957f52a429a38a3"
     },
     {
@@ -25071,6 +25176,12 @@
       "from_id": "cap:what-next",
       "properties": {},
       "to_id": "snap:epoch:arrival-delta:cap:what-next"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:what-next",
+      "properties": {},
+      "to_id": "snap:epoch:what-next-built:cap:what-next"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -53613,6 +53724,12 @@
       "to_id": "cap:vocabulary"
     },
     {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:what-next-bands",
+      "properties": {},
+      "to_id": "cap:what-next"
+    },
+    {
       "edge_type": "VIOLATES",
       "from_id": "cap:corpus-ingest",
       "properties": {
@@ -55930,7 +56047,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:dbe01b770f41a1a88b3a1f89424db5d8e580a7ec70e1ad97010b7e2b43ffe699",
+        "checksum": "sha256:ae6f67516a82ff88d41f44cab0110db2c82eea7ebc9c4e22ca0bca583de34fee",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
@@ -56216,7 +56333,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e5782512201c0726147794c605b1c891c109b525babf2d595543eec98e5525de",
+        "checksum": "sha256:fd25c7aa9257cb96833944d4e491bed56a00972ab232922d17e0fca126f4f504",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -56266,7 +56383,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:dd2287e53cd4edba0b6c983925310b6538930c20dd93e061dbb3b1dfa85792d9",
+        "checksum": "sha256:94351d2b73603362bc135edf55fc1e6f5154e68d7ff2470872b6bd05794cfa6d",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -56611,7 +56728,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fb2b86352447cc177d270d580babb6892ec29f6bff79022f8135037094c82191",
+        "checksum": "sha256:274577dc78e9ce578b1d25a5ef8c76d153618c8ca8e105863025dd34c6422116",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -58720,12 +58837,12 @@
       "node_id": "cap:what-next",
       "node_type": "Capability",
       "properties": {
-        "description": "The answer to \"what is the most pressing item?\" once the backlog lives in the graph. NOT detect_gaps and NOT check-health, and the distinction is the design: detect_gaps asks what the design has not yet decided, check-health asks what shape is wrong, and this asks which of the agreed things to do now. Three questions needing three actions, often from three people. A view, never a second source of truth.\n\nTHE RANKING RULE THAT MATTERS MOST: an unmade decision outranks the work waiting on it. A proposed Decision with things GOVERNED_BY it is a blocker, and pointing someone at blocked work is worse than saying nothing, because it looks like progress.\n\nPREREQUISITE MET — 2026-07-31, and the finding is that NOBODY NOTICED. This capability recorded its own blocker: \"this cannot usefully ship first… distinguishing allocated from delivered needs cap:derived-completion (BL-104). Until that lands, this view can rank what is undecided and what is misshapen but is blind to what is merely unfinished.\" `cap:derived-completion` is now `verified`. It has been for some time, and the parked capability sat unchanged: nothing watches for a park whose CONDITION has expired, which is precisely what `cap:revise-trigger` exists to surface and did not. A prerequisite written into prose is a trigger nothing fires.\n\nALSO WANTED HERE, from Anthony's start-here question 2026-07-31: a WHICH-DECISIONS-SHAPE-EVERYTHING section, for the reader who has just cloned the repo and needs the few choices that explain the rest. Measured as computable — ranking Decisions by `GOVERNED_BY` in-degree surfaces the right sort of thing (functional decomposition, the three-party division, identity out of band) — with the caveat that RAW IN-DEGREE IS THE WRONG SIGNAL ON ITS OWN: the top hit was a pruning decision governing ten DROPPED requirements, high-degree and not something a newcomer must understand. It needs weighting by what the governed nodes are, not merely how many. PLANNED.",
+        "description": "The answer to \"what is the most pressing item?\" once the backlog lives in the graph. NOT detect_gaps and NOT check-health, and the distinction is the design: detect_gaps asks what the design has not yet decided, check-health asks what shape is wrong, and this asks which of the agreed things to do now. Three questions needing three actions, often from three people. A view, never a second source of truth.\n\nTHE RANKING RULE THAT MATTERS MOST: an unmade decision outranks the work waiting on it. A proposed Decision with things GOVERNED_BY it is a blocker, and pointing someone at blocked work is worse than saying nothing, because it looks like progress.\n\nBUILT 2026-08-10 as the served `what_next`, in FOUR BANDS. (1) `marked` — open decisions carrying AUTHORED_BY role=approver, which is the user's own durable self-prioritisation and is never reordered by any score. (2) `ranked` — the top few of what is NOT marked, scored by live governed count, work it blocks in an increment, and contradictions with settled decisions. (3) `unexplored` — one decision drawn from the zero-scoring pool, a required exploration term rather than a wooden spoon. (4) `shaping` — the few ACCEPTED decisions most of the live design hangs off.\n\nTHE PREREQUISITE THAT EXPIRED UNNOTICED, kept because it is the lesson rather than the history: this capability recorded its own blocker — \"distinguishing allocated from delivered needs cap:derived-completion (BL-104)\" — and that dependency reached `verified` long before anyone came back to it. Nothing watches for a park whose CONDITION has expired, which is precisely what `cap:revise-trigger` exists to surface and did not. A prerequisite written into prose is a trigger nothing fires.\n\nTHE WHICH-DECISIONS-SHAPE-EVERYTHING SECTION IS BUILT, and its recorded caveat turned out to need exactly one refinement. Anthony asked for it 2026-07-31: the reader who has just cloned the repo needs the few choices that explain why the rest looks as it does. The caveat said RAW IN-DEGREE IS THE WRONG SIGNAL because the top hit was a pruning decision governing ten DROPPED requirements. Measured 2026-08-10: that decision governs 10 nodes of which 9 are retired, so EXCLUDING DEAD NODES removes it outright and nothing further was needed. Live means: not a dropped or deferred Requirement, not a superseded or rejected Decision.\n\nBREADTH WAS TRIED AND REJECTED ON MEASUREMENT, which is worth keeping so nobody re-proposes it. Weighting by how many DISTINCT node types a decision governs is the obvious reading of \"weight by what the governed nodes are\" — and it demotes every exemplar named here as the right sort of thing, because functional decomposition governs eight Components and the three-party division seven Capabilities: one type each. GOVERNING EIGHT COMPONENTS IS SHAPING; SINGLE-TYPEDNESS IS NOT SHALLOWNESS. The type breadth is reported as `shapes` for the reader and deliberately kept out of the ranking.\n\nWHAT IT STILL CANNOT DO, stated rather than left to be discovered: a Decision carries no timestamp, so staleness cannot enter any of this; and a decision nothing points at scores zero however important it is, which is why band three exists and why the size of that pool is reported rather than hidden.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Say what to work on next, as a projection with its reasoning shown",
         "provenance": "authored",
-        "status": "planned",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -59093,6 +59210,15 @@
         "change_type": "refactor",
         "detected_at": "2026-07-26",
         "name": "Two findings updated in place after reading storyflow's entity resolution (art:storyflow-resolution-study), rather than leaving a scope document that its own companion study contradicts. Finding 4 gains the part that makes it cheap: dynograph-core ALREADY parses ResolutionConfig with both thresholds onto every node type and DesignGraph::schema() is already public, so the reader exists and only the call site is missing — and reflow2's declared per-type values (80-88) are all BELOW the hardcoded 90, so ingest is stricter than its own schema asks and merges LESS than intended. Finding 5's open question narrows from what-shape to which-numbers, because storyflow's answer is the two-band model with an ask-band in the middle, which satisfies dec:ask-not-repair exactly. And the study adds a mechanism the scope missed: ratio scoring is length-sensitive, so the most common corpus case fails at any threshold and needs a structural token-subset test instead."
+      }
+    },
+    {
+      "node_id": "chg:accept-5926becab7a70367",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-10",
+        "name": "Two WhatNext FIELD names added to NON_TOOL_TERMS. The lint refused the skill until they were declared — correctly, since `not_shown` and `unranked_pool` are backticked snake_case and read exactly like tool names. No design meaning: the allowlist is how the lint tells a field from a tool."
       }
     },
     {
@@ -59557,6 +59683,15 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-07-29",
         "name": "Catch-up for da50ae8 (\"A dangling edge was accepted, stored, and reported by nothing\"), which changed graph.rs to REFUSE an edge naming an id nobody created — matching what snapshot_node and add_change_event already did. The design held: req:no-silent-fallback already said this and the code was brought to meet it, so there is no design meaning to record. Same class as chg:accept-a2a035876eefa13a.\n\nFOUND BY THE GATE BEING RED, not by anyone noticing: da50ae8 landed without the reconcile, so main's CI has failed on this one finding for three commits (runs of 2026-07-29 03:33, 03:47, 03:54, all \"workspace + real-binary instruments\"). The registered checksum was also the full 64-char digest where every sibling registers 16 — harmless, since reconcile truncates the observation to the registered dialect, but it is why the mismatch reads oddly."
+      }
+    },
+    {
+      "node_id": "chg:accept-e5e2eec3ed94eb2a",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-10",
+        "name": "Two more WhatNext FIELD names declared in NON_TOOL_TERMS — `shaping` and `governs_retired`. The lint refused the skill until they were, correctly: they read exactly like tool names. No design meaning."
       }
     },
     {
@@ -61623,11 +61758,27 @@
       }
     },
     {
+      "node_id": "chg:what-next-built",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "what_next served: marked / ranked / one unexplored. Builds the ranking half of req:what-next (accepted 2026-07-31) whose capability had sat `planned` with an EXPIRED blocker nobody noticed. Three bands because the user's own approver-marking is durable self-prioritisation that no score may reorder, and ranking somebody's own marks back at them says nothing; the fifth slot is a required exploration term, derived independently from the Q-table framing and from Anthony's own \"top 4 and bottom 1\". Score is deliberately coarse against his stated criterion that a rough top-N beats a flat list of 86. Rotation for the unexplored pick comes from the count of settled decisions — no clock, no RNG, and it advances exactly when a decision is made."
+      }
+    },
+    {
       "node_id": "chg:what-next-capture",
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "new_feature",
         "name": "\"What should I work on next\" captured as a projection, distinct from detect and heal"
+      }
+    },
+    {
+      "node_id": "chg:what-next-shaping-band",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The shaping band lands, and cap:what-next is complete. Its own recorded caveat — that raw GOVERNED_BY in-degree is the wrong signal because the top hit was a pruning decision governing ten DROPPED requirements — turned out to need exactly ONE refinement: exclude retired nodes. Measured, that decision governs 10 of which 9 are dead, so liveness removes it outright. BREADTH WAS TRIED AND REJECTED ON MEASUREMENT: weighting by distinct governed types demotes every exemplar the capability names as the right sort of thing, because functional decomposition governs 8 Components and the three-party division 7 Capabilities — one type each. Governing eight Components IS shaping; single-typedness is not shallowness. `shapes` is reported for the reader and kept out of the ranking."
       }
     },
     {
@@ -63919,7 +64070,7 @@
         "decision": "PROPOSED, APPROVER `who:ajs`. His shape, 2026-08-10: *\"maybe we do a top 4 and bottom 1 that always appears in the where-am-i?\"*\n\nTWO CONSTRAINTS HE STATED IN THE SAME BREATH, AND BOTH LOWER THE BAR ON PURPOSE.\n\n(1) APPROXIMATION IS EXPLICITLY ACCEPTABLE: *\"this doesn't have to be an exact 'what is the most pressing decision'. getting something in the general ballpark of what decisions I need to make or a rough 'top 5' is better than an equal set of 60+ decisions.\"* THIS IS AN ACCEPTANCE CRITERION AND IT SHOULD BE READ AS ONE. It means the ranking need not be defensible item by item — only roughly right at the head — which disposes of the standing objection that every candidate signal is too noisy. A flat list of 83 is the baseline being beaten, and it is a low bar. RECORDED BECAUSE THE OPPOSITE INSTINCT IS THE DEFAULT ONE: this project's habit is to refuse to compute what it cannot compute honestly, and here the user has said in advance that rough is what he wants.\n\n(2) UNRANKED IS NOT DISCARDED: *\"it is not like we are throwing the unmade decisions aside and saying 'these are not ranked well, therefore not important and we'll never make a decision on them'.\"* Nothing leaves the pile by ranking low, and the display must not read as a shortlist of what matters.\n\n⭐⭐ AND HE NAMED THE FLAW HIMSELF, WHICH IS WHY THE SHAPE HAS FIVE SLOTS AND NOT FOUR: *\"which has a side effect of saying things not searched for are not important, which is not true.\"*\n\n⇒ THE BOTTOM SLOT IS THE EXPLORATION TERM, ARRIVED AT INDEPENDENTLY AND FROM THE OTHER DIRECTION. `dec:attention-is-measured-behaviourally-not-lexically` records, from the reinforcement-learning framing, that any attention ranking reinforces what has already been visited — so a node nothing surfaces is never read, never accumulates, and never rises, permanently; and that the standard remedies are an exploration term or optimistic initialisation. Anthony reached the same requirement from the user-experience side, before seeing that consequence applied. **THE TOP FOUR ARE EXPLOITATION AND THE BOTTOM ONE IS EXPLORATION.** A convergence from two independent directions is the strongest evidence this design gets that a property is real rather than clever.\n\nTHE SUBTLETY THAT DECIDES WHETHER THE BOTTOM SLOT WORKS AT ALL: \"bottom 1\" IS NOT A RANK, IT IS A HUGE TIE. Under any attention signal, everything never surfaced scores identically — measured 2026-08-10, 61 of 83 open decisions govern nothing and would sit in that tie under a consequence ranking too. So the slot needs a TIEBREAK, and the choice of tiebreak is the whole design:\n  - DETERMINISTIC (always the same one) STARVES THE REST and is the failure mode dressed as a feature.\n  - RANDOM among the never-touched is ε-greedy proper, and samples the set over time.\n  - OLDEST-UNSEEN is random's better-behaved cousin: it guarantees coverage instead of merely expecting it, and it makes the slot's promise checkable.\n\nCOVERAGE IS COMPUTABLE AND SHOULD BE STATED RATHER THAN FELT: one slot per orientation against 61 unranked items is 61 orientations to see them all once. That is months at any normal cadence. If that is too slow the answer is more slots or an oldest-first draw, and the number is the argument — not a preference.\n\nWHAT THIS SHAPE DOES NOT DEPEND ON, and why it can ship first: the slot structure is independent of HOW the top four are ranked. Any signal fills it — consequence (`dec:idea-a-critical-path-through-the-undecided`), attention (`dec:idea-what-gets-searched-repeatedly-is-becoming-important`), or the already-accepted rule in `req:what-next` that an unmade decision outranks the work waiting on it. IT IS THEREFORE BUILDABLE BEFORE EITHER OPEN QUESTION IS SETTLED, using whatever ranking exists, which makes it the smallest useful increment in this whole thread.\n\nTWO THINGS THE DISPLAY MUST SAY, given constraint (2): that the bottom slot is a DELIBERATE sample of the unranked and not the least important thing, and how many open decisions are not shown. A five-item list that silently stands for 83 is the false completeness `where-am-i` already forbids (\"never report from a page as if it were the whole set\").\n\nOPEN, NOT SETTLED HERE: the tiebreak (random vs oldest-unseen); whether four is the right exploitation width; whether the ranking behind the top four is one merged score or two lists; and whether the same shape belongs in `loop_status` as well as `where-am-i`.",
         "name": "PROPOSED — where-am-i shows four ranked open decisions and one deliberately UNRANKED, and a rough ranking is explicitly good enough",
         "rationale": "Anthony's shape, recorded as its own Decision rather than folded into either open ranking question because it is separable from both and shippable before either — the slot structure works with any ranking, including the one `req:what-next` already accepts. Folding it into a brainstorm node would bury the one piece of this thread that can be built now.\n\nThe convergence is the part worth preserving. The exploration requirement was derived an hour earlier from the Q-table framing as a consequence nobody had asked for; Anthony proposed the bottom slot from the user-experience side without reference to it. Two independent derivations of the same property is stronger evidence than either, and a later session that finds only one of them would be free to drop it as over-engineering.\n\nThe acceptance criterion is recorded as prominently as the shape because it cuts against this project's own reflex. reflow2 repeatedly refuses to compute what it cannot compute honestly — `dec:readiness-is-an-observation-the-threshold-is-the-judgement` is the canonical case. Here the user has pre-authorised a rough answer, and without that on the record the natural instinct is to refuse to rank at all and ship nothing.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -66691,6 +66842,16 @@
         "epoch_type": "release_cut",
         "name": "v0.9.0 release cut (2026-07-22)",
         "sequence": 70,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:what-next-built",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "what_next built — the undecided become a bounded guide: marked, ranked, and one deliberately unexplored (2026-08-10)",
+        "sequence": 314,
         "status": "arrived"
       }
     },
@@ -73276,6 +73437,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:what-next-built:cap:what-next",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:what-next-bands\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:report\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Capability\",\"other_id\":\"cap:derived-completion\",\"properties\":{\"evidence\":\"The prerequisite cap:what-next names in its own text: without derived completion it is blind to what is merely unfinished. Now verified, so the dependency is satisfied rather than blocking — and drawing it makes the condition computable instead of a sentence nothing reads.\",\"optional\":false,\"weight_basis\":\"evidence\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:orientation-is-computed-not-written\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:orientation-shows-four-ranked-and-one-unexplored\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:7957f52a429a38a3\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:what-next\",\"properties\":{}}]",
+        "state": "{\"description\":\"The answer to \\\"what is the most pressing item?\\\" once the backlog lives in the graph. NOT detect_gaps and NOT check-health, and the distinction is the design: detect_gaps asks what the design has not yet decided, check-health asks what shape is wrong, and this asks which of the agreed things to do now. Three questions needing three actions, often from three people. A view, never a second source of truth.\\n\\nTHE RANKING RULE THAT MATTERS MOST: an unmade decision outranks the work waiting on it. A proposed Decision with things GOVERNED_BY it is a blocker, and pointing someone at blocked work is worse than saying nothing, because it looks like progress.\\n\\nPREREQUISITE MET — 2026-07-31, and the finding is that NOBODY NOTICED. This capability recorded its own blocker: \\\"this cannot usefully ship first… distinguishing allocated from delivered needs cap:derived-completion (BL-104). Until that lands, this view can rank what is undecided and what is misshapen but is blind to what is merely unfinished.\\\" `cap:derived-completion` is now `verified`. It has been for some time, and the parked capability sat unchanged: nothing watches for a park whose CONDITION has expired, which is precisely what `cap:revise-trigger` exists to surface and did not. A prerequisite written into prose is a trigger nothing fires.\\n\\nALSO WANTED HERE, from Anthony's start-here question 2026-07-31: a WHICH-DECISIONS-SHAPE-EVERYTHING section, for the reader who has just cloned the repo and needs the few choices that explain the rest. Measured as computable — ranking Decisions by `GOVERNED_BY` in-degree surfaces the right sort of thing (functional decomposition, the three-party division, identity out of band) — with the caveat that RAW IN-DEGREE IS THE WRONG SIGNAL ON ITS OWN: the top hit was a pruning decision governing ten DROPPED requirements, high-degree and not something a newcomer must understand. It needs weighting by what the governed nodes are, not merely how many. PLANNED.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Say what to work on next, as a projection with its reasoning shown\",\"provenance\":\"authored\",\"status\":\"in_progress\",\"tier\":\"operational\"}",
+        "target_id": "cap:what-next",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:wire-planning-cluster:dec:where-plans-live",
       "node_type": "Snapshot",
       "properties": {
@@ -76380,9 +76551,21 @@
         "name": "write_side.rs",
         "status": "passing"
       }
+    },
+    {
+      "node_id": "ver:what-next-bands",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-10",
+        "level": "unit",
+        "method": "test",
+        "name": "what_next answers in four bands, the exploration slot is not optional, and liveness is what makes the shaping band readable (crates/reflow2-core/tests/what_next.rs, 11 cases). THE ONE THAT MUST NEVER REGRESS is a_marked_decision_is_never_ranked_however_it_would_score: a `proposed` Decision carrying AUTHORED_BY role=approver is the user's own durable self-prioritisation — it already existed and was simply never named one — and no computed score may reorder it or demote it into the ranked band, so the test gives a marked decision every scoring signal available and asserts it still never appears there. MUTATION-CHECKED: removing the band-1 short-circuit fails exactly that test and no other. THE SECOND LOAD-BEARING CASE is a_decision_nothing_points_at_is_still_surfaced. Every ranking signal here is built on connectedness, so a decision nothing points at scores zero forever and would never be shown — dec:bl-155's unused-versus-unreachable trap arriving through a ranking instead of a usage count. A suite that only checked the ranking would stay green while the fifth slot was dropped as over-engineering, which is precisely what the two independent derivations of that slot (the Q-table framing, and Anthony's own \"top 4 and bottom 1\") exist to prevent. THE SHAPING BAND'S CASES PIN A CAVEAT THIS DESIGN RECORDED BEFORE THE CODE EXISTED: cap:what-next warned that raw GOVERNED_BY in-degree is the wrong signal because its top hit was a pruning decision governing ten DROPPED requirements, and a_decision_governing_only_retired_work_does_not_shape_anything IS that fixture — a 9-dead-node decision must lose to a 3-live-node one. MUTATION-CHECKED: removing the liveness filter fails exactly the two liveness tests and no others. breadth_of_governed_types_is_reported_but_never_ranks pins the refinement that was TRIED AND REJECTED on measurement — weighting by distinct governed types demotes every exemplar the capability names as correct, because governing eight Components is shaping and single-typedness is not shallowness — so `shapes` is reported and kept out of the score. ALSO PINNED: retired governed nodes are COUNTED and reported rather than silently dropped; the shaping band holds only ACCEPTED decisions, never open ones, because it answers a different question for a different reader; `alignment: supporting` on a CONTRADICTS edge is corroboration and must not raise the score, which heal.rs paid for once already; `decision:ack:` review records are excluded both as decisions and as governed sources, because they dominate raw GOVERNED_BY counts (measured, excluding them took that edge type from 867 to 255) so leaving them in makes the answer confidently wrong rather than merely noisy; the unexplored pick is stable across two readings of an unchanged design and ADVANCES when a decision is settled, since the core takes no clock and no RNG and the rotation is derived from the count of accepted decisions; and `not_shown` accounts for every open decision the answer omitted. WHAT IS NOT COVERED, stated rather than left to be discovered: nothing here checks that the WEIGHTS are right. They are a deliberately coarse guide against a stated acceptance criterion of \"general ballpark\", and the tests assert the ORDER the signals produce, never the absolute numbers.",
+        "status": "passing"
+      }
     }
   ],
-  "prev_content_hash": "sha256:a72fe0212a1bafe387180658dbe3ffe02c481c6ba813e67ba5449bb92b6d530c",
+  "prev_content_hash": "sha256:0847fa78407e3d784cf7e6472516569d144f4595786191050ccf3984877d717b",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
