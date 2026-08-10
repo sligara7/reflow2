@@ -39,7 +39,7 @@ schema:
         title: { type: string, required: true, indexed: true, fulltext: true }
         summary: { type: string, fulltext: true }
         intent: { type: string, fulltext: true, description: "What this unit of work was meant to accomplish (the fragment's own inline author-intent)." }
-        fragment_type: { type: enum, values: [implementation, test, design, spec, config, review, bug_fix, refactor, documentation, note, pseudocode, feedback], default: implementation, indexed: true, description: "Purpose of the fragment. Primary content (implementation/test/spec/config) vs. the parallel NOTE layer (note=author intent, pseudocode=pre-implementation sketch, review/feedback=reviewer commentary) that ANNOTATES it." }
+        fragment_type: { type: enum, values: [implementation, test, design, spec, config, review, bug_fix, refactor, documentation, note, pseudocode, feedback], indexed: true, description: "Purpose of the fragment. Primary content (implementation/test/spec/config) vs. the parallel NOTE layer (note=author intent, pseudocode=pre-implementation sketch, review/feedback=reviewer commentary) that ANNOTATES it." }
         note_kind: { type: enum, values: [author, reviewer, director], description: "For note/review/feedback/pseudocode fragments: whose voice it is. author=the implementer's intent/pseudocode; reviewer=feedback; director=guidance on how to build. Mirrors storyflow SceneDirection.note_kind. Null for primary content." }
         phase: { type: enum, values: [P0, P1, P2, P3, P4, P5, PM], indexed: true }
         provenance: { type: enum, values: [authored, planned, inferred, healed, reconciled, imported], default: authored, indexed: true, description: "How this content entered the graph." }

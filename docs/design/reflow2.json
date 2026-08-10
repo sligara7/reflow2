@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b284117423693cd7e10802a2454c62a9dcb69e42e99e9c94b9be124d8b594644",
+  "content_hash": "sha256:0ca6c99e8a072d0ba06479e450ed599b0571199a282f05f7742c1d944804b1fe",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2823,6 +2823,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-wish-routed-to-capability-is-not-silent",
+      "properties": {},
+      "to_id": "epoch:the-wish-question-gains-its-capability-half"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-020a057ec12710f0",
       "properties": {},
       "to_id": "epoch:v0230"
@@ -4401,6 +4407,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:ten-defaults-stop-injecting",
+      "properties": {},
+      "to_id": "epoch:a-default-is-not-a-difference"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-enforced-rule-gets-its-detector",
       "properties": {},
       "to_id": "epoch:rule-enforcement-split"
@@ -4944,6 +4956,12 @@
       "from_id": "snap:epoch:a-claim-may-be-a-query:dec:a-claim-may-need-a-list-rather-than-a-radius",
       "properties": {},
       "to_id": "epoch:a-claim-may-be-a-query"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:a-default-is-not-a-difference:cap:defaults-are-not-serialized",
+      "properties": {},
+      "to_id": "epoch:a-default-is-not-a-difference"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5547,6 +5565,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-wish-question-gains-its-capability-half:dec:exploratory-staging",
+      "properties": {},
+      "to_id": "epoch:the-wish-question-gains-its-capability-half"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:v0120:cap:kit",
       "properties": {},
       "to_id": "epoch:v0120"
@@ -6126,7 +6150,7 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:exploratory-staging",
       "properties": {
-        "acted_at": "2026-07-24",
+        "acted_at": "2026-08-10",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -8206,6 +8230,15 @@
         "action": "modified"
       },
       "to_id": "cap:vocabulary"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-wish-routed-to-capability-is-not-silent",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:exploratory-staging"
     },
     {
       "edge_type": "CHANGED",
@@ -15851,6 +15884,69 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:ten-defaults-stop-injecting",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:ten-defaults-stop-injecting",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-build"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:ten-defaults-stop-injecting",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:ten-defaults-stop-injecting",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-functional"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:ten-defaults-stop-injecting",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-operate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:ten-defaults-stop-injecting",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:ten-defaults-stop-injecting",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:defaults-are-not-serialized"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-enforced-rule-gets-its-detector",
       "properties": {
         "accepted_baseline": false,
@@ -18294,6 +18390,15 @@
         "weight_basis": "evidence"
       },
       "to_id": "dec:where-content-lives"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:exploratory-staging",
+      "properties": {
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-does-a-capability-need-a-cancelled-state"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -24849,6 +24954,30 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:vocabulary-covers-information",
+      "properties": {},
+      "to_id": "dec:the-other-uaf-domains-wait-for-a-project-that-needs-them"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:vocabulary-covers-materiel",
+      "properties": {},
+      "to_id": "dec:the-other-uaf-domains-wait-for-a-project-that-needs-them"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:vocabulary-covers-personnel",
+      "properties": {},
+      "to_id": "dec:the-other-uaf-domains-wait-for-a-project-that-needs-them"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:vocabulary-covers-states",
+      "properties": {},
+      "to_id": "dec:the-other-uaf-domains-wait-for-a-project-that-needs-them"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "sys:agent-surface",
       "properties": {},
       "to_id": "dec:bl83a-functional-decomposition"
@@ -25095,6 +25224,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:defaults-are-not-serialized",
+      "properties": {},
+      "to_id": "snap:epoch:a-default-is-not-a-difference:cap:defaults-are-not-serialized"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:describe-design-at-path",
       "properties": {},
       "to_id": "snap:epoch:describe-designs-built:cap:describe-design-at-path"
@@ -25236,6 +25371,12 @@
       "from_id": "dec:exploratory-staging",
       "properties": {},
       "to_id": "snap:epoch:kpp-capture:dec:exploratory-staging"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:exploratory-staging",
+      "properties": {},
+      "to_id": "snap:epoch:the-wish-question-gains-its-capability-half:dec:exploratory-staging"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -51316,6 +51457,15 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:changelog-view",
+      "properties": {
+        "coverage": "partial",
+        "evidence": "PARTIAL, AND THE MISSING HALF IS NAMED. changelog_view answers WHAT changed between two moments (a Release or DesignEpoch at each end), bucketed by rules the graph records, returning `unmapped` rather than guesses. It does NOT answer BY WHOM, which the requirement asks for in the same sentence. Measured 2026-08-10 (fact:the-change-ledger-records-what-moved-never-who): 0 of 360 ChangeEvents carry AUTHORED_BY, only 79 of 378 changed subjects do, and no edge type but CLAIMS carries a seat - so neither 'which contributor' nor 'which seat' is derivable, and the requirement asks for the seat. Wired at `partial` rather than left unsatisfied, so accepted intent stops reading as untouched; and NOT at `full`, because a by-whom column over this data would be empty for 79% of subjects and an empty cell reads as NOBODY rather than NOT RECORDED."
+      },
+      "to_id": "req:what-changed-since-i-looked-and-by-whom"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:claim-a-region-by-query",
       "properties": {},
       "to_id": "req:concurrent-planning"
@@ -51514,6 +51664,12 @@
       "from_id": "cap:detect",
       "properties": {},
       "to_id": "req:no-se-knowledge"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:detect",
+      "properties": {},
+      "to_id": "req:the-tool-finds-its-own-blind-spots"
     },
     {
       "edge_type": "SATISFIES",
@@ -52057,6 +52213,12 @@
       "from_id": "cap:satisfaction-schedule",
       "properties": {},
       "to_id": "req:epochs-can-be-planned"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:scoped-analysis",
+      "properties": {},
+      "to_id": "req:a-surface-states-its-own-scope"
     },
     {
       "edge_type": "SATISFIES",
@@ -53089,6 +53251,12 @@
       "from_id": "ver:cycle-basis",
       "properties": {},
       "to_id": "cap:cycle-names-its-basis"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:defaults-are-declared-and-injected-deliberately",
+      "properties": {},
+      "to_id": "cap:defaults-are-not-serialized"
     },
     {
       "edge_type": "VERIFIES",
@@ -56071,7 +56239,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:36723891417d2685f602ae0a53211cb164f9bf6926ae7fec4f8a5664e3029412",
+        "checksum": "sha256:fff07736686cf6f57b72df0c050c1ab8fe590805891228dea6a08d7d3d3f3e58",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/schema.rs",
         "name": "schema.rs",
@@ -56084,7 +56252,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:30b38b621f4c98f2487b82076867f0574e96480043a799cadc433797e1774426",
+        "checksum": "sha256:2448c0f71235a67428cbb6cfff886aca6df3b1ad39413aee093ec7283d7f9ac6",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/build.yaml",
@@ -56098,7 +56266,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:d2df8ff9f93352a3a4d1948a62b35890862e2fed2e3aa53d67282637bb139b0a",
+        "checksum": "sha256:44024934a64197163ce3e1c5c43cd4f86214e8a4cf5ce44d98466d5f9da00a47",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/core.yaml",
@@ -56136,11 +56304,13 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:831166aee7d4de9bd90e5826d4b6ef474dd8be49f2cc14609f32d12039893222",
+        "checksum": "sha256:f39937cffe9c800a8f911a4181f1c09115dfe3e56f71600570b1311b43500c07",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/functional.yaml",
         "name": "functional.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -56162,11 +56332,13 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:543955d24d224ff0c0aff6f28928fa728248dc7694662b22cab0e8d1f1cc5168",
+        "checksum": "sha256:a986d436e5575b86d26ab38c52bbb37ff91e1ead726ad6e04fe0d74889b71361",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/operate.yaml",
         "name": "operate.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -56186,7 +56358,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:9ee06b41897eb4806fd2787a6d8219c545efe028d25adaa268be01fde04e2d3f",
+        "checksum": "sha256:76772cfe6dc4f7625bcdad2871a0388cf00710cde694ad88b2400cfbcf2ba00d",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/structure.yaml",
@@ -57563,12 +57735,12 @@
       "node_id": "cap:defaults-are-not-serialized",
       "node_type": "Capability",
       "properties": {
-        "description": "The export and every other design record omit a property whose value equals the schema default, so absence carries the meaning \"nobody said\" and presence carries \"somebody chose\". Partly realized already — the exporter stopped writing Artifact granularity/volatility defaults between 0.25.0 and 0.27.0 — and left at `planned` deliberately, because nothing has verified the behaviour across the whole property surface and `fact:bl-198` counts 28 single-valued properties, 22 of them the schema's own default. Status is a claim about the design, not about one observation.",
+        "description": "Where a schema property carries no information when unstated, the design does not store a value for it — so an ABSENT property honestly means \"nobody said\" and a PRESENT one means somebody chose.\n\nTHE ROUTE CHANGED ON A MEASUREMENT, and the old description had it backwards. This capability used to say the EXPORT omits a value equal to the default. That cannot work: `default:` in the schema YAML is not documentation, it is an instruction dynograph-core executes at WRITE time (`dynograph-core/src/schema.rs:507` inserts any missing property that declares one, before validation). So the store holds an injected `atomic` and a chosen `atomic` identically, and stripping value==default at export would destroy the choice along with the injection — absence would come to mean \"nobody said OR somebody said the default\", which looks like the distinction without being it.\n\n⇒ THE FIX IS ONE YAML TOKEN PER PROPERTY: remove `default:` where injection is wrong. No code, no repo boundary crossed (dynograph is not modified), and FORWARD-ONLY — nodes already written keep what they hold, so the committed export does not churn and `compare_designs` sees nothing. The phantom-diff cost `fact:bl-198` warned about, and that step 2 of `dec:fix-the-comparison-before-pointing-it-earlier` exists to disclose, DOES NOT ARISE on this route.\n\nTEN OF 81 REMOVED, 71 KEPT (2026-08-10, Anthony confirming each list). Removed: Requirement.kind/concern/designation, Capability.tier, Component.kind, Fragment.fragment_type — descriptive enums nobody chooses — plus Capability.is_entry_point/is_exit_point and Component.tier, which have ZERO string-literal occurrences anywhere in either crate and are dead vocabulary materialised on every node, and Release.unit_type, which asserted every release is a container while reflow2 ships tarballs.\n\n⭐ THE RATIO IS THE FINDING, not the removals. Three mechanically-obvious candidates were KEPT on evidence, each for a reason already on the record: `Requirement.lineage` is the base case of a three-way classification whose other values are set by operations (`requirement_lineage.rs` caught it); `Interface.auth`/`transport_security`/`medium = unspecified` were deliberately added and defaulted in 2026-07-28 after BL-129, where a defaulted REST made two boundaries falsely agree, and `seam.rs` already normalises `unspecified` to absent; `TemporalFact.basis = measured` is the base case of a binary whose other value `forecast` is set explicitly by readiness. The reflex that single-valued means informationless was wrong three times in ten.\n\n📌 AND A METHOD CORRECTION worth carrying: \"is this property read?\" cannot be answered by grepping `get(\"prop\")`. `seam.rs` reads interface properties by DYNAMIC STRING KEY (`BASE_AXES`), so `auth` and `transport_security` measured as unread and were not. The reliable test is any string-literal occurrence of the property name.\n\nWHAT REMAINS: the 3,207 values already stored stay, and always were indistinguishable — nothing can retroactively recover a choice nobody recorded. From here, absence is honest for anything newly written.",
         "is_entry_point": false,
         "is_exit_point": false,
-        "name": "A property equal to the schema default is omitted from the record",
+        "name": "A property nobody chose is not stored, so absence means nobody said",
         "provenance": "authored",
-        "status": "planned",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -58900,6 +59072,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "CONSTRAINS enumerates its source so a rule binding a component is modelled rather than tolerated — and GOVERNED_BY deliberately stays open, because narrowing a wildcard breaks consumers"
+      }
+    },
+    {
+      "node_id": "chg:a-wish-routed-to-capability-is-not-silent",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "dec:exploratory-staging gains the measured Capability half. Its 2026-07-25 finding — that a brainstormed idea is SILENT BY CONSTRUCTION because detect_gaps raises undecided_decision_point only on two or more REGISTERED alternatives — holds for Decisions and NOT for Capabilities. Measured 2026-08-10: 34 of 73 open gaps are the [BL-nnn] rows dec:backlog-is-retired routed to Capability, each generating up to three gaps forever (unmotivated, unrealized, unverified). The two accepted decisions therefore collide, and neither knew it."
       }
     },
     {
@@ -61614,6 +61794,14 @@
       }
     },
     {
+      "node_id": "chg:ten-defaults-stop-injecting",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "BL-198 step 1 landed by REMOVING `default:` from ten properties, not by changing code. The route changed on a measurement: `default:` in the schema YAML is not documentation — dynograph-core applies it at WRITE time (schema.rs:507 inserts any missing property that declares one), which is where 3,207 stored values across 59% of the design came from. So export-side suppression could never have worked — the store cannot tell a chosen value from an injected one — and the real fix is one YAML token per property. FORWARD-ONLY: nodes already written keep what they hold, so the export does not churn and compare_designs sees nothing; the phantom-diff cost this epoch was scoped around does not arise on this route at all. TEN of 81 removed, 71 kept, and the RATIO is the finding: three mechanically-obvious candidates turned out to be meaningful and were kept on evidence."
+      }
+    },
+    {
       "node_id": "chg:the-enforced-rule-gets-its-detector",
       "node_type": "ChangeEvent",
       "properties": {
@@ -63116,7 +63304,7 @@
       "node_id": "dec:exploratory-staging",
       "node_type": "Decision",
       "properties": {
-        "decision": "UNDECIDED as a vocabulary question, but MUCH SMALLER than it looked, and the skill that tests it is BUILT (2026-07-25, the brainstorm skill). REFRAMED by Anthony the same day, and the reframe was the useful part: what he and his brother were asking for is not a staging GATE, it is a KIND. \"I think I now realize what my brother's idea was trying to say — it is like a brainstorming session where you can work through ideas without committing to anything yet. These would be more like 'ideas' not yet fleshed out and could be held in the graph as just that, 'brainstorming ideas'.\" That dissolves the contradiction this decision was opened over: the git study rejected the index because a gate between every edit and the graph is where intent goes to be forgotten, whereas a brainstorm is the opposite move — the idea DOES enter the graph, immediately, labelled as what it is. Nothing waits outside, so nothing is lost, and the design still never claims a half-formed thought as intent. THE FINDING THAT SHRANK THE QUESTION, from reading the detector while building the skill: the existing vocabulary ALREADY tells a musing from a choice, and a computation already reads the difference. `detect_gaps` raises `undecided_decision_point` only on a proposed Decision holding TWO OR MORE REGISTERED ALTERNATIVES — a fork with a real design export behind each branch (detect.rs: `alts.len() < 2 { continue }`). A proposed Decision whose options live in its prose therefore raises NO gap at all. So brainstormed ideas are silent by construction, and the nudge to choose arrives exactly when the ideas stop being ideas: register_alternative turns an option into a fork, and being asked to decide a fork is correct. Nobody has to remember which is which, and no label was needed to get it. WHAT A `brainstorm` KIND WOULD STILL BUY, and it is now a short list rather than the four-item one recorded yesterday: (a) delivery and certainty counts already exclude Decisions, so nothing is owed there; (b) gap silence is already delivered, per the finding above; (c) what remains is RETIREMENT — an idea nobody has touched in months could be surfaced as a candidate for tidying rather than sitting in the decision list forever, which is a real computation and the only one left standing; and (d) READABILITY — a person scanning 70-odd Decisions cannot tell at a glance which were choices and which were musings, which the skill currently answers with a sentence of prose inside the node rather than with a queryable property. PRIOR FRAMING, KEPT because it was true when written: the ask read as an opt-in \"think first, commit later\" mode; a session making no write calls IS rubber-ducking and the read tools are the ducking aids; and the narrow question was what happens at the END — which the skill now answers as a PROMOTION step, not a commit step.",
+        "decision": "UNDECIDED as a vocabulary question, but MUCH SMALLER than it looked, and the skill that tests it is BUILT (2026-07-25, the brainstorm skill). REFRAMED by Anthony the same day, and the reframe was the useful part: what he and his brother were asking for is not a staging GATE, it is a KIND. \"I think I now realize what my brother's idea was trying to say — it is like a brainstorming session where you can work through ideas without committing to anything yet. These would be more like 'ideas' not yet fleshed out and could be held in the graph as just that, 'brainstorming ideas'.\" That dissolves the contradiction this decision was opened over: the git study rejected the index because a gate between every edit and the graph is where intent goes to be forgotten, whereas a brainstorm is the opposite move — the idea DOES enter the graph, immediately, labelled as what it is. Nothing waits outside, so nothing is lost, and the design still never claims a half-formed thought as intent. THE FINDING THAT SHRANK THE QUESTION, from reading the detector while building the skill: the existing vocabulary ALREADY tells a musing from a choice, and a computation already reads the difference. `detect_gaps` raises `undecided_decision_point` only on a proposed Decision holding TWO OR MORE REGISTERED ALTERNATIVES — a fork with a real design export behind each branch (detect.rs: `alts.len() < 2 { continue }`). A proposed Decision whose options live in its prose therefore raises NO gap at all. So brainstormed ideas are silent by construction, and the nudge to choose arrives exactly when the ideas stop being ideas: register_alternative turns an option into a fork, and being asked to decide a fork is correct. Nobody has to remember which is which, and no label was needed to get it. WHAT A `brainstorm` KIND WOULD STILL BUY, and it is now a short list rather than the four-item one recorded yesterday: (a) delivery and certainty counts already exclude Decisions, so nothing is owed there; (b) gap silence is already delivered, per the finding above; (c) what remains is RETIREMENT — an idea nobody has touched in months could be surfaced as a candidate for tidying rather than sitting in the decision list forever, which is a real computation and the only one left standing; and (d) READABILITY — a person scanning 70-odd Decisions cannot tell at a glance which were choices and which were musings, which the skill currently answers with a sentence of prose inside the node rather than with a queryable property. PRIOR FRAMING, KEPT because it was true when written: the ask read as an opt-in \"think first, commit later\" mode; a session making no write calls IS rubber-ducking and the read tools are the ducking aids; and the narrow question was what happens at the END — which the skill now answers as a PROMOTION step, not a commit step.\n\n=====================================================================\nADDED 2026-08-10 — THE CAPABILITY HALF, AND IT IS NOT SILENT.\nAnthony re-opened this by asking, of 34 stuck gaps: \"what a not-yet-agreed\nwish should be in this graph?\" RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.\n=====================================================================\n\nTHE FINDING ABOVE HOLDS FOR DECISIONS AND FAILS FOR CAPABILITIES. \"Silent by\nconstruction\" rests on detect.rs skipping a proposed Decision with fewer than two\nREGISTERED alternatives. Nothing analogous protects a Capability: one at `planned`\nwith no Requirement behind it raises `unmotivated_capability`, with no Artifact\n`unrealized_capability`, with no Verification `unverified_capability`. THREE GAPS\nEACH, FOREVER, BY CONSTRUCTION.\n\nMEASURED 2026-08-10: 34 of 73 open gaps — 47% — are the [BL-nnn] rows, and they\nhave sat unanswerable since 2026-08-07. The cost of the wrong home for a wish is\nnot theoretical; it is half the gap list.\n\n⭐ TWO ACCEPTED DECISIONS COLLIDE HERE AND NEITHER KNEW IT. `dec:backlog-is-retired`\nroutes unbuilt work to \"a Capability at `planned` BEHIND A REQUIREMENT\". Read\nstrictly it is coherent — the Requirement is what makes the Capability motivated.\nBut the migration wrote the Capability half and not the Requirement half, and the\nreason it did is the interesting part: A BACKLOG ROW USUALLY HAS NO REQUIREMENT\nTO WRITE. \"Advanced testing tiers\" is a wish nobody has agreed to; inventing a\nRequirement to motivate it would manufacture intent, which is precisely what this\nproject forbids everywhere else.\n\n⇒ SO THE ROUTING IS NOT WRONG, IT IS INCOMPLETE FOR A SUBSET: work somebody\nINTENDS is a Capability behind a Requirement; a wish nobody has agreed to has no\nhome, and got the Capability anyway.\n\nTHE OPTIONS.\n\n(a) FINISH THE PRESCRIBED SHAPE — write the missing Requirements. Counter: for most\nof the 34 there is no requirement anybody stated, so this manufactures intent to\nsilence a detector, and `graph_report`'s certainty line would count 18 new\n`asserted` requirements nobody confirmed.\n\n(b) A CAPABILITY GAINS A `proposed` STATUS. Requirement status models the INTENT\nlifecycle (proposed / accepted / deferred / dropped / met); Capability status models\nthe BUILD lifecycle (planned / in_progress / realized / verified) and has no way to\nsay \"wished for, not agreed\". Adding it lets the detectors stay quiet honestly.\n⭐ THIS IS THE SAME ROOT AS `dec:idea-does-a-capability-need-a-cancelled-state`,\nalready open and ALREADY ASSIGNED TO ANTHONY — that one asks for the other end of\nthe same missing axis. They should be decided together or one will foreclose the\nother. Counter: it MOVES THE SCHEMA STAMP, and two statuses on one type meaning\ntwo different lifecycles is a modelling smell in itself.\n\n(c) A WISH IS NOT A CAPABILITY AT ALL. Route it to a `proposed` Decision — which\nIS silent by construction, per this node's own finding — phrased as \"should we\nbuild X?\". Cheapest by far and needs no schema change. Counter: a Decision is a\nCHOICE somebody faces, and \"advanced testing tiers\" is not a choice, it is an item;\ncollapsing wishes into decisions makes the decision pile the backlog again, which\nis the thing Anthony already said is unwieldy at 85.\n\n(d) DROP THEM. If nobody has agreed to a wish in the months it has sat there, the\nhonest record may be that it is not wanted. Counter: `dec:bl-155` measured that\nreflow2 cannot tell \"unused\" from \"unreachable\", and the same applies to a wish\nnobody has looked at — dropping on silence deletes exactly what was never surfaced.\n\n(e) ACKNOWLEDGE EACH, INDIVIDUALLY AND HONESTLY. The tool already refuses the lazy\nform: `acknowledge_gaps` demands a reason PER GAP because \"a batch under one shared\nreason is exactly the erosion the ask-don't-repair rule exists to prevent\". Counter,\nand it is why this node exists rather than 34 acknowledgements: acknowledging is\ntreating the symptom. The detector is correctly reporting that a wish is wearing\nthe wrong type.\n\nWHAT IS NOT AN OPTION: 34 acknowledgements sharing one rationale with the subject\nswapped. That satisfies the letter of the tool's contract and defeats its purpose.\n\nTHE QUESTION THIS ACTUALLY TURNS ON, and it is the one to put to the user: DOES A\nNOT-YET-AGREED WISH BELONG IN THE DESIGN AT ALL? If yes, it needs a home that is\nsilent until somebody agrees to it — (b) or (c). If no, the backlog was retired\ninto the wrong place and (d) is the honest answer for most of the 34.",
         "name": "OPEN — do half-formed ideas get a place in the graph, distinct from things the design asserts?",
         "rationale": "Raised by Anthony and his brother 2026-07-24, reframed by Anthony 2026-07-25, and the skill built the same day on his word (\"go ahead with the brainstorm skill\"). Built as a SKILL and not a schema change deliberately: it tests the practice at the cost of prose, and if the practice sticks the vocabulary question can be answered with evidence instead of taste — whereas a new node type or an enum value would have bought an upgrade doc and a foundation-migration checklist for a noun nobody had used yet. The evidence for the feature is this session itself: Anthony produced four isolation ideas he explicitly did not want to commit to, and the only home for them was a proposed Decision. That worked (dec:concurrent-work-isolation), which is why this is not urgent; it is also a slightly wrong fit, since a Decision node is meant for a choice someone is actually facing, and knowing exactly which part of the fit is wrong is what the finding above now pins down. Left PROPOSED because two of the four original arguments for a kind have dissolved and the remaining two (retirement candidates, at-a-glance readability) are real but small — and whether they are worth a schema change is Anthony's call, not a judgement to be made by the agent that just wrote the skill.",
         "status": "proposed"
@@ -64380,6 +64568,15 @@
         "decision": "DECIDED AND DONE 2026-08-09, Anthony's word: \\\"let's discontinue the content store.\\\" Supersedes dec:where-content-lives, dec:what-lives-where, dec:content-store-implementation, dec:content-manifest and dec:content-growth-is-bounded-by-what-not-by-size.\n\n⭐ THE EVIDENCE WAS USAGE, MEASURED IN EVERY PROJECT THAT HAS IT — reflow2's own design: no --content-path configured, no .reflow2/content directory, and 0 of 148 Fragments carrying a content_ref. flo2: no content path. dev_storyflow: no content directory. THREE PROJECTS, ZERO USE, on a feature that is built, tested and documented.\n\nHIS ARGUMENT, in his words: the bytes cannot fully live in a repo because it would become a huge object rapidly; dev_storyflow's 700+ documents have been ingested and \\\"those documents are no longer really needed\\\"; better to put important design artifacts directly in the git repo in something like a design_artifacts folder; it is another feature that must be maintained; and in flo2 the blob could reach terabytes needing backup, security and per-project separation.\n\nAND AN ARGUMENT NOBODY HAD MADE: dec:where-content-lives settled on a content-addressed store whose blobs are COMMITTED TO GIT. Git is already a content-addressed store. The design was a content-addressed layer inside a content-addressed system, and the dedup and integrity hash it provided were both things git already gives anything committed.\n\nAND A FOUNDING MOTIVATION THAT DID NOT SURVIVE: the store was partly built to make sessions \\\"stateful\\\" by holding transcripts. cap:session-memory already rejected that mechanism in its own text — \\\"a pointer to a 3 MB transcript is a RECEIPT, not documentation: leaning on it recreates the markdown problem one level down.\\\" Its actual design needs no store: takeaways as first-class graph content, the transcript a Fragment carrying a session UUID. See dec:idea-is-session-context-already-in-the-graph.\n\nWHAT WAS REMOVED: content_put / content_get / content_exists / content_manifest, crates/reflow2-core/src/content.rs, crates/reflow2-mcp/src/tools/content_tools.rs, the --content-path flag, both test files, and the loop nudge's session-artifacts advisory (which told sessions to content_put a rendering).\n\n⚠️ TWO ACCEPTED REQUIREMENTS ARE NOW UNSATISFIED ON PURPOSE, AND THAT IS THE HONEST STATE RATHER THAN AN OVERSIGHT. Both are Anthony's own words from 2026-07-31 and the store was their answer:\n  · req:agent-artifacts-are-captured — \\\"in many sessions, the agent will create artifacts... having all these artifacts automatically stored in the reflow2 blob storage would be great.\\\"\n  · req:sources-are-kept-not-just-parsed — ingest keeps the original corpus documents, so the corpus becomes part of the design rather than an input consumed and discarded.\nHe was shown both in the impact check and chose to KEEP THEM OPEN AND UNANSWERED rather than drop them or claim a replacement. The design_artifacts folder is the intended answer and is UNBUILT, so recording it as satisfied would be fiction. detect_gaps will now ask about them, and that question is the retirement working rather than a bug.\n\nTHREE OTHER REQUIREMENTS EXISTED ONLY BECAUSE THE STORE DID and go quiet with it: req:the-store-is-reachable-from-a-session (a surface for it), req:export-says-what-it-cannot-carry (a warning about pointers the export cannot carry), and req:content-reaches-every-seat. Their statuses are Anthony's to move; nothing was changed on his behalf.\n\n⚠️ AND THE REPLACEMENT RESTS ON THE SCHEMA'S WEAKEST JOIN, stated so it is not discovered later: a design_artifacts folder puts the weight on Artifact.location and Fragment.title, which is the field dev_storyflow filed FOUR defects about on this same day — unvalidated paths, a literal ellipsis matching nothing, title-vs-source ambiguity, and no way to ask \\\"is this path already in the graph?\\\". That is an argument for fixing `location` before leaning on it, not against the plan.\n\nRETIRED ON THE RECORD, NOT DELETED (retire-from-design, Path A). The capability, its verifications and its artifacts keep their nodes and their history; the ChangeEvent carrying change_type `deprecation` is the marker, because Capability.status has no terminal value — which is exactly dec:idea-does-a-capability-need-a-cancelled-state, still open and still Anthony's, and this is now its first real instance.",
         "name": "The content store is discontinued — built, shipped, correct, and used zero times",
         "rationale": "Recorded as a new Decision rather than by editing the five it supersedes, per dec:reopen-supersedes: an accepted decision is never un-accepted, a later one obsoletes it.\n\nThe two unsatisfied requirements are named in the decision itself rather than left to be inferred from a gap report, because \\\"we removed the thing that answered your stated need\\\" is the part a later reader most needs and the part a tidy graph would hide.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:the-other-uaf-domains-wait-for-a-project-that-needs-them",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "ANTHONY, 2026-08-10, answering four gaps as one: req:vocabulary-covers-information, -materiel, -personnel and -states are DEFERRED as a class.\n\nWHY AS A CLASS. They are one question wearing four hats — does reflow2 model the other UAF domains, or is it deliberately scoped to function and structure? Answering them piecemeal would decide the scope by accident, four times, without anyone noticing they were the same decision. They came from Anthony UAF/DoDAF background (user-se-background-viewpoint-doctrine), so they are real vocabulary a systems engineer expects, not speculative additions.\n\nDEFERRED IS NOT DECLINED. Each is a coherent requirement and none was argued down. What is missing is a PROJECT THAT NEEDS THEM: reflow2 own design has no materiel, no personnel beyond Contributor, and no behavioural state machine, so building the vocabulary now would be declaring types nothing reads — which req:functional-vocabulary-computes forbids in as many words, and which dec:idea-detect-vocabulary-that-nothing-reaches exists to detect.\n\nTHE RE-ASK TRIGGER, NAMED SO DEFERRED CANNOT DEGRADE INTO NEVER ASKED AGAIN (the shape dec:the-telemetry-kpp-question-waits-for-flo2 set): re-open when a design reflow2 is actually pointed at needs one of them. Concretely — a project with physical parts to sustain (materiel), an organisation with roles performing activities (personnel), a protocol or device with modelled behavioural states (states), or a data contract whose entities and attributes must cross an interface (information). The bluesky/NSLS-II work is the likeliest source of the last two.\n\nWHAT WOULD MAKE THIS WRONG: if a consumer hits one of these and works around it in prose rather than asking, the deferral will look correct while costing exactly what it was meant to avoid. That is unobservable from inside this design, which is the honest limit of this decision.",
+        "name": "DEFERRED — whether reflow2 models information, materiel, personnel and state is a SCOPE question, and the re-ask trigger is named rather than left to memory",
         "status": "accepted"
       }
     },
@@ -65790,7 +65987,7 @@
         "epoch_type": "milestone",
         "name": "A default is not a difference — stop serializing schema defaults, so absence means nobody said. SPLIT OUT of epoch:planned-one-write-surface, which keeps BL-202/197/204: Anthony ordered THIS half first (dec:fix-the-comparison-before-pointing-it-earlier step 1), and making the whole one-write-surface epoch a prerequisite would overstate what he agreed. Partly landed already in the exporter between 0.25.0 and 0.27.0, so part of this is reconciling the plan with what shipped.",
         "sequence": 311,
-        "status": "planned"
+        "status": "arrived"
       }
     },
     {
@@ -66483,6 +66680,16 @@
         "epoch_type": "revision",
         "name": "Three consumer-reported defects where a served surface destroyed data or stated something false (2026-08-09)",
         "sequence": 298,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:the-wish-question-gains-its-capability-half",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The half-formed-idea question gains its Capability half (2026-08-10) — the silent-by-construction property that makes a brainstormed DECISION costless does not hold for a CAPABILITY",
+        "sequence": 315,
         "status": "arrived"
       }
     },
@@ -70252,7 +70459,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A rule or requirement can declare its VERIFIABILITY — detectable / detectable-but-unwritten / undetectable-by-nature, with a required reason for the last — so that \"which of my rules have no check?\" splits into a backlog and a set of accepted limits, and only the first is debt.\n\nTHE GAP THIS CLOSES. \"No check is possible\" and \"no check yet\" are OPPOSITE states that read identically today. Both surface as \"unverified\". A rule about INTENT — \"do not shape data to satisfy a tool\" — has no detectable signature by construction, because the compliant and non-compliant artefacts are byte-identical. A rule about a file layout is merely unwritten. Reporting them the same way makes the report untrustworthy: a reader cannot tell a permanent limit from a to-do.\n\nREFLOW2 HAS ALREADY SOLVED THIS EXACT SHAPE ONCE, one domain over, which is the strongest argument that the distinction is real and not a special case. `granularity` distinguishes `opaque` — a subtree claimed as a unit ON PURPOSE — from `pending_expansion` — a PLACEHOLDER for work not done — and reflow2's own tool documentation says they \"look identical to every report today and are opposite states: a decision versus unfinished work.\" The same distinction is missing for verifiability. It is also the same principle as dec:does-enforced-default-to-gate-blocking, where a rule's power is stated rather than defaulted.\n\nWHY IT MATTERS TO THE REPORT AND NOT ONLY TO THE RECORD. Of nine rules recorded in the storyflow trial, two got checks, one was detectable-but-unwritten, and THREE were undetectable by construction. Filing those three as unverified debt would misreport a third of the set forever — and a permanent red nobody can clear is how a report loses its readers.\n\nRELATED, AND THE REASON THIS IS URGENT RATHER THAN TIDY: `unverified_enforced_rule` already fires today on `enforced: true` with no incoming VERIFIES, and rule:bl-41 is currently caught by it. Without this distinction that detector cannot tell a rule that is waiting for a detector from one that can never have one.\n\nSOURCE: storyflow fleet governance report, api-boss (05af57c1), 2026-08-09, v0.26.1. Bound as stated by its author: one project, one month, one fleet shape — hypotheses to test, not requirements.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -72253,7 +72460,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Anthony, 2026-08-07, from the UAF audit: there is no data-entity or information-element type, so a logical data model has nothing to project from.\n\nWHAT EXISTS AND WHY IT IS NOT ENOUGH: `Interface` carries `operations` and `payload_format` as free text, and `SPECIFIES` exists for pointing an Interface at a machine-readable contract (an OpenAPI file, a protobuf schema) — with ZERO instances. So the graph can say a contract exists, what medium it uses and how it authenticates, but not WHAT TRAVELS OVER IT in any form a computation can read. An interface is currently a promise with no stated structure behind it.\n\nWHAT CANNOT BE SAID TODAY: the entities two components exchange; an entity's attributes; that two interfaces carry the SAME entity, which is what makes a change to it propagate to both; that one system's field maps to another's under a different name, which is the whole substance of making two organisations' designs interoperate.\n\nWHY IT MATTERS BEYOND reflow2, and this one bears directly on the stated purpose: `reflow2-real-operating-context` says the job is making partially-built, differently-motivated designs interoperate when they were never designed to. Interoperability failures are overwhelmingly SEMANTIC — the same concept under two names, two units, two precisions — and none of that is expressible. `con:pairing-stops-at-the-boundary` already records the ceiling in the graph's own words: pairing sees boundaries, not the types that cross them. That constraint is this requirement's evidence.\n\nNOT SPECIFIED HERE: whether this is a full entity-relationship layer or something much thinner, and whether reflow2 should model entities itself or only carry a locator to an external schema — `dec:agent-navigates-content` (the agent navigates content, the graph records where it landed) is an argument for the thinner answer, and the trade is not settled.",
-        "status": "proposed"
+        "status": "deferred"
       }
     },
     {
@@ -72268,7 +72475,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Anthony, 2026-08-07, from the UAF audit, asked as \"what if I said create/render me a logistics view\": there is no logistics vocabulary, and the type whose name promises it means something else entirely.\n\nTHE TRAP, MEASURED: `Resource` exists, and its only instance is `dep:dynograph-foundation` with `resource_type: design-dependency`, carrying a provider URL, a version, a feature list and the file it was declared in. It models a SOFTWARE DEPENDENCY. `REQUIRES_RESOURCE` has one instance and means \"this design depends on that library\". Of the four missing domains this is the one most likely to be assumed covered, because the name is already taken by something else.\n\nWHAT CANNOT BE SAID TODAY: a consumable and its consumption rate; a spare and its provisioning quantity; a maintenance action, interval or turnaround; transport, storage or shelf life; what a system needs to keep operating as opposed to what it needed to be built. A logistics view has no nouns to draw.\n\nWHY IT MATTERS BEYOND reflow2: software has no materiel, so this costs nothing here and is load-bearing for every physical programme — which `reflow2-real-operating-context` and the adopt skill both say are in scope (\"a satellite, a building or a fleet cannot live in a repository — its drawings, specs, models and analyses can\").\n\nNOT SPECIFIED HERE: whether the existing `Resource` type is generalised with a wider `resource_type` vocabulary or a separate type is added beside it. The first is cheaper and risks conflating a build-time dependency with an operational consumable; the second is cleaner and costs a type. That is a decision, and it should be made rather than defaulted.",
-        "status": "proposed"
+        "status": "deferred"
       }
     },
     {
@@ -72283,7 +72490,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Anthony, 2026-08-07, from the UAF audit: the Personnel domain has NO vocabulary in reflow2. Two people-shaped types exist and neither is this — `Contributor` is who authored the design, `Actor` is who the designed system serves. Both sit outside the system being designed.\n\nWHAT CANNOT BE SAID TODAY: which role performs a function; the organisation a function belongs to; a post, a competence, or a responsibility assignment; who is accountable for a component. So an organisational view, a manning view, or a responsibility matrix has nothing to project from — and \"which function is allocated to which system\" (already answered by ALLOCATED_TO) has no counterpart for \"which function is allocated to which PERSON or ROLE\".\n\nWHY IT MATTERS BEYOND reflow2, which is the reason this is a requirement and not a curiosity: reflow2 itself is a tool with an agent and one user, so people barely appear inside its design and their absence is invisible here. Almost every non-software project has people IN the design — a beamline has operators, a satellite programme has crews and controllers, a hospital system has clinicians. `rule:fixes-are-judged-by-the-third-party` says fixes are judged by what they do for somebody else's project, and this is a gap only somebody else's project would feel.\n\nNOT SPECIFIED HERE, deliberately: whether this is one node type or several, whether a role is a first-class node or a property on an edge, and whether reflow2 should follow UAF's Post/Role/Competence split or a simpler shape. Those are design questions and picking one now would foreclose them.",
-        "status": "proposed"
+        "status": "deferred"
       }
     },
     {
@@ -72298,7 +72505,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Anthony, 2026-08-07, from the UAF audit: there is no state machine anywhere in the schema, and a whole UAF model-kind column depends on one.\n\nTHE DISTINCTION THAT MAKES THIS A REAL GAP RATHER THAN A NAMING ONE: reflow2 has plenty of `status` fields — a Requirement is proposed/accepted/deferred/dropped/met, a Capability is planned/realized/verified, a Verification is planned/passing/failing. Every one of those is a LIFECYCLE status: where a design element has got to in its own maturation. None of them is a BEHAVIOURAL state: a mode the designed thing is in while it operates. And no transition is modelled between any of them — the enums are values, not a graph, so even the lifecycles cannot be projected as a state diagram.\n\nWHAT CANNOT BE SAID TODAY: that a detector is in acquiring / idle / faulted; that a vehicle is in launch / cruise / re-entry; that a protocol connection is in handshake / established / draining; which event causes which transition; which states are safe to be interrupted in. A state view is not expressible, and neither is \"what modes must this interface work across\".\n\nWHY IT MATTERS BEYOND reflow2: reflow2 is a request-response tool with no operating modes to speak of, so the absence costs nothing here and everything on anything with modes. Anthony's own current case is one — a beamline instrument has states, and the analysis stack behaves differently in each.\n\nNOT SPECIFIED HERE: whether states attach to Components, Capabilities or both; whether a transition is an edge or a node; and whether lifecycle status should be unified with behavioural state or kept firmly apart. Kept apart is the likelier answer and is still a decision, not an assumption.",
-        "status": "proposed"
+        "status": "deferred"
       }
     },
     {
@@ -72354,6 +72561,16 @@
         "state": "{\"decision\":\"RE-OPENS the settled choice that a claim's region is COMPUTED from a seed and a depth rather than stored as a node list. The existing rule is deliberate and stated in the tool itself — 'the region is COMPUTED from seed+depth rather than stored as a node list, so it follows the design as it changes' — and its benefit is real: a stored list goes stale the moment the design moves, which is the failure a claim board exists to avoid. The question re-opened is whether that is the ONLY shape a claim may take, or the default one. PROPOSED SHAPE, from the reporter: allow a claim over an explicit node LIST or over a QUERY, alongside seed+depth. A query would keep the follows-the-design property that motivated the original choice, which is the reason to prefer it over a bare list. NOT YET DECIDED — recorded so the trade is visible rather than re-derived.\",\"name\":\"OPEN — a claimed region is computed from seed+depth, and a cross-cutting duty is not a radius: does a claim also take a list?\",\"rationale\":\"Because the cost is now measured rather than argued. dev_storyflow w-aa0607ff, 2026-08-08: their lane was 'cold-test the retrievability of nodes another session mined', spanning two unrelated slices — there is no seed whose depth-2 radius is that work. They claimed a representative node and put the truth in the `note`, which means claim_report's PROSE was right while its STRUCTURED answer was wrong for them. That is the specific failure mode a structured board is supposed to remove. THE STRONGER EVIDENCE IS BEHAVIOURAL, AND IT IS THREE FOR THREE: both prior workers on the same lane skipped claim_region entirely and kept a text file of document paths instead, because a flat list described their actual region better than the graph could. A tool losing to a text file is the same shape as the finding that drove the read-half increment — 'today a document BEATS the graph for making a decision, and that is a fair fight the graph loses'. Cross-cutting duties (audit, cold-validation, a sweep over everything of one kind) are a general category, not one team's oddity, and the radius cannot express any of them. Counter-argument to weigh before deciding: a claim is ADVISORY and never a lock, so the cost of a wrong region is a colleague misreading who holds what, not a corrupted write — which is an argument for keeping the mechanism simple. Against that: an advisory board whose structured field is routinely wrong is how a signal gets trained into being ignored, which is the same objection raised against permanently-live seat liveness.\",\"status\":\"proposed\"}",
         "target_id": "dec:a-claim-may-need-a-list-rather-than-a-radius",
         "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:a-default-is-not-a-difference:cap:defaults-are-not-serialized",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:export\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:an-absent-property-means-nobody-said-it\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"DesignEpoch\",\"other_id\":\"epoch:a-default-is-not-a-difference\",\"properties\":{\"modality\":\"expected\",\"recorded_at\":\"2026-08-10\"}}]",
+        "state": "{\"description\":\"The export and every other design record omit a property whose value equals the schema default, so absence carries the meaning \\\"nobody said\\\" and presence carries \\\"somebody chose\\\". Partly realized already — the exporter stopped writing Artifact granularity/volatility defaults between 0.25.0 and 0.27.0 — and left at `planned` deliberately, because nothing has verified the behaviour across the whole property surface and `fact:bl-198` counts 28 single-valued properties, 22 of them the schema's own default. Status is a claim about the design, not about one observation.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"A property equal to the schema default is omitted from the record\",\"provenance\":\"authored\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cap:defaults-are-not-serialized",
+        "target_type": "Capability"
       }
     },
     {
@@ -73357,6 +73574,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:the-wish-question-gains-its-capability-half:dec:exploratory-staging",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Capability\",\"other_id\":\"cap:brainstorm\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-07-24\",\"role\":\"author\"}}]",
+        "state": "{\"decision\":\"UNDECIDED as a vocabulary question, but MUCH SMALLER than it looked, and the skill that tests it is BUILT (2026-07-25, the brainstorm skill). REFRAMED by Anthony the same day, and the reframe was the useful part: what he and his brother were asking for is not a staging GATE, it is a KIND. \\\"I think I now realize what my brother's idea was trying to say — it is like a brainstorming session where you can work through ideas without committing to anything yet. These would be more like 'ideas' not yet fleshed out and could be held in the graph as just that, 'brainstorming ideas'.\\\" That dissolves the contradiction this decision was opened over: the git study rejected the index because a gate between every edit and the graph is where intent goes to be forgotten, whereas a brainstorm is the opposite move — the idea DOES enter the graph, immediately, labelled as what it is. Nothing waits outside, so nothing is lost, and the design still never claims a half-formed thought as intent. THE FINDING THAT SHRANK THE QUESTION, from reading the detector while building the skill: the existing vocabulary ALREADY tells a musing from a choice, and a computation already reads the difference. `detect_gaps` raises `undecided_decision_point` only on a proposed Decision holding TWO OR MORE REGISTERED ALTERNATIVES — a fork with a real design export behind each branch (detect.rs: `alts.len() < 2 { continue }`). A proposed Decision whose options live in its prose therefore raises NO gap at all. So brainstormed ideas are silent by construction, and the nudge to choose arrives exactly when the ideas stop being ideas: register_alternative turns an option into a fork, and being asked to decide a fork is correct. Nobody has to remember which is which, and no label was needed to get it. WHAT A `brainstorm` KIND WOULD STILL BUY, and it is now a short list rather than the four-item one recorded yesterday: (a) delivery and certainty counts already exclude Decisions, so nothing is owed there; (b) gap silence is already delivered, per the finding above; (c) what remains is RETIREMENT — an idea nobody has touched in months could be surfaced as a candidate for tidying rather than sitting in the decision list forever, which is a real computation and the only one left standing; and (d) READABILITY — a person scanning 70-odd Decisions cannot tell at a glance which were choices and which were musings, which the skill currently answers with a sentence of prose inside the node rather than with a queryable property. PRIOR FRAMING, KEPT because it was true when written: the ask read as an opt-in \\\"think first, commit later\\\" mode; a session making no write calls IS rubber-ducking and the read tools are the ducking aids; and the narrow question was what happens at the END — which the skill now answers as a PROMOTION step, not a commit step.\",\"name\":\"OPEN — do half-formed ideas get a place in the graph, distinct from things the design asserts?\",\"rationale\":\"Raised by Anthony and his brother 2026-07-24, reframed by Anthony 2026-07-25, and the skill built the same day on his word (\\\"go ahead with the brainstorm skill\\\"). Built as a SKILL and not a schema change deliberately: it tests the practice at the cost of prose, and if the practice sticks the vocabulary question can be answered with evidence instead of taste — whereas a new node type or an enum value would have bought an upgrade doc and a foundation-migration checklist for a noun nobody had used yet. The evidence for the feature is this session itself: Anthony produced four isolation ideas he explicitly did not want to commit to, and the only home for them was a proposed Decision. That worked (dec:concurrent-work-isolation), which is why this is not urgent; it is also a slightly wrong fit, since a Decision node is meant for a choice someone is actually facing, and knowing exactly which part of the fit is wrong is what the finding above now pins down. Left PROPOSED because two of the four original arguments for a kind have dissolved and the remaining two (retirement candidates, at-a-glance readability) are real but small — and whether they are worth a schema change is Anthony's call, not a judgement to be made by the agent that just wrote the skill.\",\"status\":\"proposed\"}",
+        "target_id": "dec:exploratory-staging",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:v0120:cap:kit",
       "node_type": "Snapshot",
       "properties": {
@@ -74230,6 +74457,18 @@
       }
     },
     {
+      "node_id": "fact:defaults-are-injected-by-dynograph-at-write",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "READ FROM SOURCE 2026-08-10 while starting BL-198: reflow2's schema YAML declares 81 `default:` values across 39 node types, and **dynograph-core APPLIES THEM AT WRITE TIME**. `dynograph-core/src/schema.rs:507`, in the validation path every upsert goes through:\n\n    for (prop_name, prop_def) in &node_def.properties {\n        if !properties.contains_key(prop_name) && let Some(default) = &prop_def.default {\n            properties.insert(prop_name.clone(), default.clone());\n        }\n\nSo a caller who says nothing gets the default STORED. That is why `add_capability` never mentions `tier` and every Capability nonetheless carries `tier: operational`, and why 3,207 stored values across 1,178 of 1,980 nodes — 59% of this design — equal a schema-declared default.\n\n⚠️ THIS NODE REPLACES A WRONG ONE I RECORDED TEN MINUTES EARLIER, `fact:the-schema-declares-81-defaults-and-nothing-reads-them`, which claimed the declarations were parsed by nobody. DELETED RATHER THAN RETIRED, because it was never true (retire-from-design's one question). The error: I grepped dynograph's schema.rs for `default`, saw a screenful of `#[serde(default)]` attributes in the head of the output, and concluded the field did not exist. `pub default: Option<Value>` is on line 127 of that same file. A confident answer from an incomplete look — the session's own recurring failure, arrived at for the fourth time.\n\n⭐ THE CORRECTION IMPROVES THE PLAN RATHER THAN MERELY FIXING IT. `default:` in the YAML is not documentation, it is an INSTRUCTION TO INJECT. So BL-198's \"stop storing a value nobody chose\" has a route that needs no code change and crosses no repo boundary: **REMOVE THE `default:` KEY from the properties where injection is wrong.** dynograph then injects nothing, the property is genuinely absent, and absence honestly means nobody said.\n\nTHE CONSEQUENCE THAT MAKES THIS CHEAP: the change is FORWARD-ONLY. Existing nodes keep the values already stored, so the committed export does not churn and `compare_designs` sees nothing — the phantom-diff cost BL-198 warned about, and that step 2 of `dec:fix-the-comparison-before-pointing-it-earlier` exists to disclose, DOES NOT ARISE for this route at all. Removing a `default:` costs one YAML line per property and no migration.\n\nWHAT STILL NEEDS THE OWNER'S JUDGEMENT, per property: whether the value means \"nobody said\" or is a MEANINGFUL INITIAL STATE. `Requirement.status = proposed` is the latter — the whole certainty doctrine reads it (`dec:certainty-derived`, graph_report's certainty line, detect_gaps, loop_status, what_next), and removing its default would break derivation rather than clean it. The candidates that carry no information are the descriptive enums nobody chooses: Requirement.kind/concern/lineage/designation, Capability.tier, Component.kind, Fragment.fragment_type.\n\nAND A SECOND-ORDER QUESTION THIS OPENS: with the `default:` removed, where does the CONVENTIONAL value get stated for a reader who wants to know what absence implies? It cannot stay in the key dynograph consumes. Either reflow2 keeps its own table, or the value stops being conventional at all — which for a descriptive enum nobody chooses is arguably the honest answer.",
+        "subject_id": "cmp:schema",
+        "valid_from": "2026-08-10"
+      }
+    },
+    {
       "node_id": "fact:defect-a-contradiction-cannot-be-resolved-only-acknowledged",
       "node_type": "TemporalFact",
       "properties": {
@@ -74926,6 +75165,18 @@
       }
     },
     {
+      "node_id": "fact:the-change-ledger-records-what-moved-never-who",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "MEASURED 2026-08-10 while starting req:what-changed-since-i-looked-and-by-whom (accepted; dev_storyflow api-boss fleet ask #3): THE CHANGE LEDGER RECORDS WHAT MOVED AND NEVER WHO MOVED IT.\n\n    ChangeEvents in this design                     360\n    ChangeEvents carrying AUTHORED_BY                 0\n    changed subjects carrying AUTHORED_BY       79 of 378  (21%)\n    edge types carrying a `seat` property          NONE except CLAIMS\n\nTHE REQUIREMENT ASKS FOR SOMETHING THE GRAPH CANNOT ANSWER. Its words are 'what changed since time T, AND BY WHOM - writes by OTHER SEATS over an interval'. Neither half of the who is recorded: ChangeEvents have no author at all, and seat identity (<machine>:<pid>:<mint>) lives only on CLAIMS edges, which are advisory, session-scoped and released at checkout. So even perfect authorship on ChangeEvents would answer 'which contributor', never 'which seat' - and on a shared server, which is where api-boss asked the question from, those are different questions.\n\nWHAT EXISTS AND HOW FAR IT GETS. `changelog_view` already answers the WHAT half well: it compares two moments (Release or DesignEpoch ids), buckets the difference by rules the graph records, and returns `unmapped` rather than guessing. Its entries carry bucket, evidence, rule and subject_id - and no author. So the missing piece is exactly the who, not the what.\n\n⚠️ WHY BUILDING THE QUERY FIRST WOULD BE WRONG. A `by` column derived from what exists would be populated for 21% of subjects and empty for the rest, and an empty cell would read as 'nobody' rather than 'not recorded' - the CANNOT-TELL-NONE-FROM-CANNOT-SAY failure this project has now met five times and names in `req:the-loop-says-what-is-owed-to-a-person`. It would look like the requirement was satisfied.\n\n⇒ THE SUBSTRATE COMES FIRST: a ChangeEvent should carry who made it. That is a small change at every creation site and one open question - reflow2 has no notion of a CURRENT contributor, so the author must be supplied by the caller, and an optional parameter that is usually omitted reproduces the hole it was added to close. Whether attribution should be REQUIRED on a write, defaulted from a seat, or left optional is a real decision and it is the user's: making it required breaks every existing caller, and making it optional makes it decorative.\n\nNOT A BLOCKER FOR THE WHAT HALF: `changelog_view` could be wired to this requirement as PARTIAL coverage today, honestly labelled, so the accepted intent stops reading as untouched while the who half is decided.",
+        "subject_id": "cmp:temporal",
+        "valid_from": "2026-08-10"
+      }
+    },
+    {
       "node_id": "fact:the-decision-race-is-caller-ordering-not-read-after-write",
       "node_type": "TemporalFact",
       "properties": {
@@ -75403,6 +75654,18 @@
         "level": "integration",
         "method": "test",
         "name": "A cycle finding names what it walked (crates/reflow2-core/tests/cycles.rs) — 6 new cases of 15. A loop through ONE shared contract names that contract and says no DEPENDS_ON is involved; a genuine TWO-contract service cycle is NOT blamed on the model but still names both; a plain DEPENDS_ON tangle says it is direct and names no contract; a MIXED cycle claims neither pure case, because saying 'no DEPENDS_ON' there would send a reader to check their interface model while real code coupling sits in the loop. PLUS the medium pair, which is the case that matters: a round trip through two library/data contracts reports the medium, and THE SAME SHAPE over REST makes no foundation claim — without that counterweight the medium sentence would print on every contract cycle and mean nothing. MUTATION-CHECKED THREE WAYS: collapse the interface-count discriminator and exactly the two-contract counterweight fails; drop interface attribution entirely (the pre-BL-141 behaviour) and exactly the three tests naming the new behaviour fail while the direct-DEPENDS_ON case stays green; force the foundation-medium claim always-true and exactly the REST counterweight fails. THE DESIGN WAS CORRECTED BY MEASUREMENT, not reasoning: the first discriminator keyed on the INTERFACE COUNT (one shared contract = coarse model), and reproducing the reporter's own cycle on their real design showed it misses their actual case — their loop runs through TWO interfaces and is structurally identical to a genuine service cycle. Only the `medium` separates them. Verified end to end by reconstructing their pre-workaround model from a read-only snapshot of their live graph: the exact loop they reported, `cmp:fundamental-detection → cmp:midi-renderer → cmp:fundamental-detection`, now names both contracts and the medium.",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:defaults-are-declared-and-injected-deliberately",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-10",
+        "level": "unit",
+        "method": "test",
+        "name": "The schema's declared defaults are readable, checked, and injected only where injection is a statement (crates/reflow2-core/tests/schema_defaults.rs, 7 cases). WHY THIS EXISTS: `default:` in the schema YAML is executed by dynograph-core at WRITE time (schema.rs:507 inserts any missing property that declares one), which is where 3,207 stored values across 59% of this design came from — an injected value and a chosen one stored identically, so absence meant nothing. THE CASES: declared_defaults() parses all of them from the embedded YAML with no new dependency, and a floor assertion fails loudly if the line shape ever moves and the parser silently stops seeing them; schema_default() resolves by type and property, and answers None rather than guessing for a property that declares none — GATED_ON.min_level is deliberately undefaulted because defaulting it would pick a risk posture for the user; the ten properties removed for BL-198 step 1 are asserted ABSENT after a plain constructor call, which is the behaviour change itself; a value the caller DOES supply is still stored, so absence and choice are finally distinguishable. AND THE COUNTERWEIGHTS, which are the point rather than an afterthought: `Requirement.status = proposed` and `provenance` are asserted STILL INJECTED, because the whole certainty doctrine reads them and removing those would break derivation rather than clean it; `Requirement.lineage = original` is asserted still injected too, and it is there because it CAME OFF the confirmed removal list — requirement_lineage.rs refused the change, since `original` is the base case of a three-way classification whose other values (`decomposed`, `derived`) are set explicitly by operations. THE CASE THAT EARNS ITS KEEP BEYOND THIS ROUND: every_declared_default_is_a_legal_value_of_its_own_enum is a cross-check nothing could previously make — the validator checks stored values against `values`, the parser ignored `default` entirely, so a default naming a value its own enum forbids was invisible to both. WHAT IS NOT COVERED, stated rather than discovered later: nothing here proves the ten removed are the RIGHT ten. That was a per-property judgement made by the owner on measured evidence (single-valued in the data, no string-literal occurrence anywhere, no setter), and three mechanically-obvious candidates were kept on evidence — the reflex that single-valued means informationless was wrong three times in ten.",
         "status": "passing"
       }
     },
@@ -76565,7 +76828,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:0847fa78407e3d784cf7e6472516569d144f4595786191050ccf3984877d717b",
+  "prev_content_hash": "sha256:b284117423693cd7e10802a2454c62a9dcb69e42e99e9c94b9be124d8b594644",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

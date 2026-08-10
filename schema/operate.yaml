@@ -14,7 +14,7 @@ schema:
         name: { type: string, required: true, indexed: true, fulltext: true }
         version: { type: string, indexed: true }
         description: { type: string, fulltext: true }
-        unit_type: { type: enum, values: [container, package, binary, bundle, physical_build, publication], default: container, indexed: true }
+        unit_type: { type: enum, values: [container, package, binary, bundle, physical_build, publication], indexed: true }
         status: { type: enum, values: [planned, built, deployed, retired], default: planned, indexed: true }
         created_at: { type: string }
       embedding_field: description

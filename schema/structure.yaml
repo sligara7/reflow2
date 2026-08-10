@@ -14,9 +14,9 @@ schema:
       properties:
         name: { type: string, required: true, indexed: true, fulltext: true }
         purpose: { type: string, required: true, fulltext: true }
-        kind: { type: enum, values: [service, module, subsystem, assembly, part, section, layer], default: module, indexed: true, description: "The organizational/buildable shape. Domain-neutral." }
+        kind: { type: enum, values: [service, module, subsystem, assembly, part, section, layer], indexed: true, description: "The organizational/buildable shape. Domain-neutral." }
         level: { type: enum, values: [component, subsystem, system, system_of_systems, enterprise], default: component, indexed: true, description: "Axis-Y decomposition level (matryoshka). Used to detect missing-intermediate / level-mismatch gaps: never link across >1 level directly." }
-        tier: { type: enum, values: [strategic, operational, tactical], default: operational, indexed: true }
+        tier: { type: enum, values: [strategic, operational, tactical], indexed: true }
         location: { type: string, description: "Where it lives — a source dir, a physical location, a document path." }
         status: { type: enum, values: [planned, in_progress, realized, verified], default: planned, indexed: true }
         provenance: { type: enum, values: [authored, planned, inferred, healed, reconciled, imported], default: authored, indexed: true, description: "How this node entered the graph. Same vocabulary as Fragment.provenance." }
