@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:14ce0efa9b3afca69c11e1e5848521ec47a730ebf11d82f46f93ce4dafee230e",
+  "content_hash": "sha256:18230c7ccb692f38f59425828f613b49d87471e86dfd294a7c4aa30099dc9713",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -4359,6 +4359,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-partition-marker-must-be-read-back",
+      "properties": {},
+      "to_id": "epoch:legitimate-islands-answered"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-server-says-when-it-is-stale-20260809",
       "properties": {},
       "to_id": "epoch:v0260"
@@ -5154,6 +5160,12 @@
       "from_id": "snap:epoch:kpp-capture:req:reviewed-defects",
       "properties": {},
       "to_id": "epoch:kpp-capture"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:legitimate-islands-answered:req:a-cluster-can-be-declared-deliberately-separate",
+      "properties": {},
+      "to_id": "epoch:legitimate-islands-answered"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -6069,6 +6081,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:how-should-reflow2-log-its-own-usage",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-hosted-tier-of-many-single-writer-tenants",
       "properties": {
         "acted_at": "2026-08-09",
@@ -6492,7 +6513,7 @@
       "from_id": "dec:legitimate-islands-need-the-detector-fix",
       "properties": {
         "acted_at": "2026-08-09",
-        "role": "author"
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -6756,6 +6777,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-telemetry-kpp-question-waits-for-flo2",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one",
       "properties": {
         "acted_at": "2026-08-04",
@@ -6944,6 +6974,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-hint-names-its-next-call",
       "properties": {
         "acted_at": "2026-07-31",
@@ -6995,6 +7034,15 @@
         "role": "author"
       },
       "to_id": "who:storyflow-api-boss"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-repair-suggestion-never-proposes-fabrication",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:storyflow-storybug-boss"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -7330,6 +7378,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:reflow2-can-say-which-of-its-own-skills-a-session-reached-for",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:reflow2-consumable-as-an-image",
       "properties": {
         "acted_at": "2026-08-05T23:10:00Z",
@@ -7414,6 +7471,15 @@
       "from_id": "req:sources-are-kept-not-just-parsed",
       "properties": {
         "acted_at": "2026-07-31",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:telemetry-carries-usage-never-design-content",
+      "properties": {
+        "acted_at": "2026-08-09",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -15599,6 +15665,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-partition-marker-must-be-read-back",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:a-cluster-can-be-declared-deliberately-separate"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-server-says-when-it-is-stale-20260809",
       "properties": {
         "accepted_baseline": true,
@@ -18781,6 +18856,16 @@
         "weight_basis": "evidence"
       },
       "to_id": "req:corpus-ingest"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "req:telemetry-carries-usage-never-design-content",
+      "properties": {
+        "dependency_type": "data_flow",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:reflow2-can-say-which-of-its-own-skills-a-session-reached-for"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -23847,6 +23932,14 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:a-repair-suggestion-never-proposes-fabrication",
+      "properties": {
+        "note": "Option C of that decision, settled by Anthony as the half that ships first and independently"
+      },
+      "to_id": "dec:legitimate-islands-need-the-detector-fix"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:a-rule-knows-where-else-it-is-written-down",
       "properties": {
         "note": "Captured under the decision that governance is integrated here rather than split out"
@@ -24269,6 +24362,14 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:reflow2-can-say-which-of-its-own-skills-a-session-reached-for",
+      "properties": {
+        "note": "That decision holds the unsettled half: where the log lives, whether it records refusals, and how far telemetry may go"
+      },
+      "to_id": "dec:how-should-reflow2-log-its-own-usage"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:reflow2-consumable-as-an-image",
       "properties": {},
       "to_id": "dec:idea-package-versus-shared-server"
@@ -24356,6 +24457,22 @@
       "from_id": "req:stale-seat-knows",
       "properties": {},
       "to_id": "decision:ack:acaf4106e0b94ec0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:telemetry-carries-usage-never-design-content",
+      "properties": {
+        "note": "The KPP question was asked and deferred; the requirement itself is unaffected and buildable now"
+      },
+      "to_id": "dec:the-telemetry-kpp-question-waits-for-flo2"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:telemetry-carries-usage-never-design-content",
+      "properties": {
+        "note": "A single-tenant telemetry design would be a new foreclosure of exactly the kind that rule names"
+      },
+      "to_id": "rule:no-foreclosure"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -24904,6 +25021,12 @@
       "from_id": "rel:v0210",
       "properties": {},
       "to_id": "snap:epoch:v0210:rel:v0210"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:a-cluster-can-be-declared-deliberately-separate",
+      "properties": {},
+      "to_id": "snap:epoch:legitimate-islands-answered:req:a-cluster-can-be-declared-deliberately-separate"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -48833,9 +48956,21 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:skill-usage-becomes-measurable",
+      "properties": {},
+      "to_id": "epoch:a-discipline-arrives-when-it-applies"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:the-owners-identity-is-one-node-again",
       "properties": {},
       "to_id": "epoch:governance-becomes-expressible"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:the-owners-identity-is-one-node-again",
+      "properties": {},
+      "to_id": "epoch:legitimate-islands-answered"
     },
     {
       "edge_type": "PRECEDES",
@@ -51803,12 +51938,30 @@
     },
     {
       "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:a-cluster-can-be-declared-deliberately-separate",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-09"
+      },
+      "to_id": "epoch:governance-becomes-expressible"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
       "from_id": "req:a-decision-states-what-it-binds",
       "properties": {
         "modality": "expected",
         "recorded_at": "2026-08-09"
       },
       "to_id": "epoch:governance-becomes-expressible"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-09"
+      },
+      "to_id": "epoch:a-discipline-arrives-when-it-applies"
     },
     {
       "edge_type": "SCHEDULED_FOR",
@@ -51836,6 +51989,24 @@
         "recorded_at": "2026-08-09"
       },
       "to_id": "epoch:governance-becomes-expressible"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:reflow2-can-say-which-of-its-own-skills-a-session-reached-for",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-09"
+      },
+      "to_id": "epoch:skill-usage-becomes-measurable"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:telemetry-carries-usage-never-design-content",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-09"
+      },
+      "to_id": "epoch:skill-usage-becomes-measurable"
     },
     {
       "edge_type": "SCHEDULED_FOR",
@@ -61136,6 +61307,14 @@
       }
     },
     {
+      "node_id": "chg:the-partition-marker-must-be-read-back",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "constraint_change",
+        "name": "The declared-partition requirement gains a CONDITION: the marker must be read back with its size and its date, or it must not be built at all"
+      }
+    },
+    {
       "node_id": "chg:the-server-says-when-it-is-stale-20260809",
       "node_type": "ChangeEvent",
       "properties": {
@@ -62697,6 +62876,16 @@
       }
     },
     {
+      "node_id": "dec:how-should-reflow2-log-its-own-usage",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "ANTHONY'S IDEA, 2026-08-09, close to verbatim: \"adding some type of usage-log tool that captures what reflow2 skills and tools were used in a session would be a nice utility. maybe a tool is not the right option, but something that AUTOMATICALLY logs (maybe store it in project graph?) usage and issues (DOESN'T DIAGNOSE, JUST LOGS).\"\n\n⭐ HIS OWN DOUBT IS THE LOAD-BEARING PART AND IT IS CORRECT. **A TOOL IS THE WRONG SHAPE, and self-defeatingly so: a tool must be CALLED, and the population most worth measuring is precisely the one least likely to call it.** An agent that forgets `revise-design` forgets `log_usage`. The measurement would be biased toward the sessions that need no measuring. Every MCP call already passes through the server, so the server can record without the agent's cooperation — which is the only way the number means anything.\n\n\"DOESN'T DIAGNOSE, JUST LOGS\" IS ALREADY THIS PROJECT'S DOCTRINE, not a new constraint: `dec:report-dont-judge` holds that the confirmation ledger reports claim history and never judges a claim. Same shape, one domain over.\n\n--- WHERE IT LIVES: THE QUESTION HE FLAGGED ---\n\n(1) BESIDE THE STORE, NOT IN THE GRAPH — the recommendation. The graph is the DESIGN; usage is telemetry about a SESSION and belongs to the process, not to the design. Putting it in the graph means every export carries it (already 4.1 MB), every diff churns with it, and `compare_designs` reports telemetry as design divergence. `rule:per-design-state-is-never-a-process-global` draws the same line from the other side: the test is whether a second design open in the same process would need a different value, and session usage would not. PRECEDENT EXISTS AND IS NOT HYPOTHETICAL — reflow2 already keeps session-scoped state beside the store rather than inside it (the shared-mode rendezvous and log; `shared.rs` pins \"log sits beside the store too\" and \"rendezvous sits beside the store NOT INSIDE IT\").\n\n(2) IN THE GRAPH — what it would buy: usage becomes queryable with the same tools as everything else, and survives in the export. COUNTER: it makes the design record grow with facts that are not design, and the export is the thing consumers merge.\n\n⭐ THE RESOLUTION THAT USES BOTH, and it is an existing pattern rather than a compromise: LOG RAW TO THE SIDECAR, PROMOTE FINDINGS DELIBERATELY. `dec:manifest-derived-is-not-manifest-accepted` already holds that a bulk derivation is not a bulk accept and writes nothing until asked. Raw usage is derivation; a finding worth keeping (\"this rule was violated four times\") is something a human accepts INTO the design.\n\n--- WHY IT MATTERS MORE THAN IT SOUNDS ---\n\n**NOBODY HAS EVER MEASURED SKILL USAGE.** `dec:bl-155` measured TOOL calls — 6,095 across 46 retained transcripts — and found 40 of 132 tools never called. There is no equivalent for `get_skill`, which is server-side and trivially countable. So `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue` proposes to improve a rate NOBODY HAS EVER OBSERVED, and without this instrument there is no way to tell whether any hint changed anything.\n\n⚠️ AND BL-155'S CAVEAT TRAVELS WITH IT, because it is the trap: absence is WEAK evidence. `set_project_mode` appeared as text in ten transcripts with zero recorded calls despite having been used. A tool can be discussed far more than used; a skill can be FOLLOWED FROM MEMORY without being fetched, which this session did for revise-design. **So a usage log measures FETCHES, not COMPLIANCE, and reporting it as compliance would be exactly the false confidence the loop exists to prevent.**\n\n--- OPEN SUB-QUESTIONS ---\n- Does it log ISSUES as well as usage (his words: \"usage and issues\")? A refusal is already visible to the server; recording refusals would surface the enum-rejection class of defect without anyone filing a report.\n- Is it opt-in? `dec:idea-measure-the-surface` already asks how far usage telemetry may go, and this is that question made concrete.\n- Retention. `dec:content-growth-is-bounded-by-what-not-by-size` says what bounds a store is WHAT gets stored, not how big it is.\n\nNOTHING IS PROMOTED. Recorded so the shape is chosen deliberately rather than by whoever builds it first.",
+        "name": "OPEN — how should reflow2 log which of its own skills and tools a session used, and where does that log live?",
+        "rationale": "Anthony's idea, with his own doubt about the tool shape carried into the record rather than smoothed away, because that doubt is the part that decides the design. Kept OPEN rather than accepted: the storage question turns on how far telemetry may go, which is already an unanswered decision (dec:idea-measure-the-surface), and answering it here by implication would settle it without him.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-a-capability-can-be-marked-contested",
       "node_type": "Decision",
       "properties": {
@@ -63251,9 +63440,9 @@
       "node_type": "Decision",
       "properties": {
         "decision": "RE-OPENED 2026-08-09 on Anthony's word, after storyflow gap D arrived and the same defect reproduced in this design within the hour.\n\nWHAT WAS DECIDED BEFORE, AND WHY IT IS NOT ENOUGH NOW. dec:documentation-has-no-operational-coupling (ACCEPTED, 2026-07-24) met a legitimate island, tried three bridges, refused all of them as lies, accepted the island, and concluded: \"flagging it is a false positive of the BL-84 family, and THE FIX BELONGS IN THE DETECTOR RATHER THAN IN THE DESIGN.\" That fix was never built. The decision records why — the specific island DISSOLVED on its own when cap:session-memory turned out to belong to both cmp:docs and cmp:temporal, giving documentation a real tie rather than a manufactured one. So the disposition became moot and the general principle it stated was left unimplemented. The old decision is NOT wrong and is NOT being un-accepted (dec:reopen-supersedes); what is re-opened is the clause it deferred.\n\nWHAT CHANGED, and it is two independent measurements on the same day. (1) storyflow's governance model is a 121-node cluster tripping `disconnected_community` with `generate_bridge` proposed — a remedy that would fabricate traceability between fleet-operations governance and product design, which are two genuinely separate concerns sharing a repo. (2) THIS DESIGN reproduced it at 5 nodes: capturing governance requirements under dec:governance-integrates-not-splits produced heal:33d1548dae64e97a with the same suggested fix, and no honest bridge existed.\n\n⭐ THE PART THAT MAKES THIS URGENT RATHER THAN TIDY: both clusters are GOVERNANCE, and both GROW as governance is captured properly. dec:governance-integrates-not-splits has just committed this project to exactly that growth. So the detector currently penalises the work the project decided to do, and gets louder the better the work goes.\n\n⚠️ AND THE CONSTRAINT BOTH PROJECTS ARRIVED AT INDEPENDENTLY, SIXTEEN DAYS APART — this is the strongest evidence available that the shape is right, and it is also the trap. The 2026-07-24 decision: \"the exemption must not be written in a way that hides a genuine disconnection.\" storyflow, 2026-08-09: \"a real disconnection would arrive inside a 121-node warning everybody has already learned to ignore.\" Same sentence, two authors, neither aware of the other.\n\nTHE OPTIONS.\n(A) A DECLARED PARTITION — a marker on a Project or Component saying this subtree is deliberately separate, so the detector reports \"N declared partitions, 0 undeclared\". Same shape as `granularity`'s opaque-vs-pending_expansion and as `enforced`'s tri-state, which is the argument for it: reflow2 has twice decided that a CHOICE and an UNFINISHED STATE must not look identical, and this is the third instance. COUNTER: a marker is exactly the kind of thing that gets set once and never revisited, and dec:idea-detect-vocabulary-that-nothing-reaches warns in its own text that \"another marker nothing reads\" would be a fourth instance of the very disease.\n(B) TEACH THE DETECTOR THE CATEGORY, as the 2026-07-24 decision assumed — infer that a cluster of purely-governance or purely-documentation nodes has no operational coupling by nature, the way dec:operational-spof already excludes non-operating things from SPOF findings. CHEAPER for the user, no new vocabulary. COUNTER: an inference cannot be argued with, and a genuine governance island would be hidden by the same rule that exempts the legitimate one.\n(C) FIX ONLY THE SUGGESTED REMEDY — leave the finding, drop `generate_bridge` where no honest edge exists, and say so. THE SMALLEST HONEST STEP, and it removes the part storyflow called corrupting. COUNTER: it leaves the permanent un-clearable warning, which is the half that makes people stop reading.\n(D) ACCEPT ISLAND BY ISLAND, as today. COUNTER: an acknowledgement is a one-time answer to a finding whose size keeps changing — acknowledged at 88 it now reads 121, and nothing says when it became a different finding.\n\nNOTHING IS PROMOTED. The requirement req:a-cluster-can-be-declared-deliberately-separate states the need; this node holds the unmade choice about its shape, and (A) is written first only because it is what both reporters proposed, not because it is recommended.",
-        "name": "OPEN — the detector fix that dec:documentation-has-no-operational-coupling deferred is now owed: does a legitimately separate cluster get a declared-partition marker?",
-        "rationale": "Minted rather than editing the 2026-07-24 decision, per dec:reopen-supersedes: an accepted Decision is never un-accepted, and re-opening mints a new one. Kept at `proposed` because the four options are genuinely open and option (A) carries a counter-argument from reflow2's own graph — dec:idea-detect-vocabulary-that-nothing-reaches explicitly warns against adding another marker nothing reads, which is what (A) would be if built carelessly. Recorded because the old decision currently reads as fully resolved, so a reader has no way to see that the detector work it named was deferred and is now due.",
-        "status": "proposed"
+        "name": "DECIDED — stop proposing fabrication now; declare partitions next, and only if something reads the declaration back",
+        "rationale": "SETTLED 2026-08-09 by Anthony: \"agree with: C now, A next with the read-back, not B, not D.\" The four options and their counter-arguments are preserved above rather than pruned, so a later reader can see what was weighed and not merely what won. The read-back condition is not decoration: it is what stops option A becoming the fourth instance of the disease `dec:idea-detect-vocabulary-that-nothing-reaches` documents, and it is written into `req:a-cluster-can-be-declared-deliberately-separate` as an acceptance test rather than left as an intention.",
+        "status": "accepted"
       }
     },
     {
@@ -63764,6 +63953,16 @@
         "decision": "Where fact:defect-rebuild-strands-the-shared-server and fact:correction-stranded-server-is-recoverable-without-a-reconnect disagree, THE CORRECTION STANDS: a session stranded by the deleted-inode spawn failure IS recoverable in place, by starting a replacement daemon by hand from the on-disk path. The original node's remaining claims — the spawn failure itself, its cause in current_exe() resolving a deleted inode, and its misleading 'check the server log' advice — are unaffected and still hold.",
         "name": "The recoverability clause is withdrawn; the rest of the stranded-server defect stands",
         "rationale": "Recorded because detect_defects reported the CONTRADICTS edge as an unresolved contradiction, and it was right to: two facts about the same failure disagreed, and nothing said which a reader should act on. Left alone, the next stranded session finds both and has no way to choose — which is worse than either claim alone, because the expensive answer ('unrecoverable, restart the session') is the one written with more authority. WHY THE CORRECTION WINS ON EVIDENCE RATHER THAN ON RECENCY: it was established by execution on 2026-08-08 — the failure was hit, the recovery run, and a dozen subsequent tool calls succeeded in the same session with no reconnect. The original clause was inherited from a session handoff and reasoned from the spawn path, never tested; the node's own evidence field says the diagnosis was 'recorded ... as worth filing and still unfiled'. A measured claim beats a reasoned one about the same mechanism. THE DISTINCTION THAT MAKES BOTH NODES TRUE ONCE THIS IS APPLIED: the dead inode blocks the client from CREATING a daemon, not from FINDING one. Attaching is a separate act, and any daemon started by any means satisfies the lookup. So the original is right about spawn and wrong about the session. NOT DONE HERE, deliberately: the original node's statement is left intact rather than edited. Its wrong clause is now answered on the record instead of erased, which keeps visible that reflow2's own graph carried a confident untested claim for a day — the same failure class the design keeps finding elsewhere, and worth being able to point at.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:the-telemetry-kpp-question-waits-for-flo2",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "ASKED AND DEFERRED, 2026-08-09. Anthony was put the consequence question for `req:telemetry-carries-usage-never-design-content`: if flo2 ran at 1,000 users and one telemetry payload turned out to have carried a customer's node id or search query, would that sink the effort or would he fix it and move on? HIS ANSWER: **too early to say — flo2 isn't real yet.**\n\nTHAT IS A TRUE ANSWER AND IT IS RECORDED AS ONE. The requirement stands exactly as captured, at `proposed`, unpromoted and undowngraded. What is deferred is only whether it is INVIOLABLE — a KPP, ranked above every ordinary gap and owing a binding to the parts that could spend it.\n\nWHY IT IS RECORDED RATHER THAN SIMPLY NOT ACTED ON: the kpp-proposal skill's own instruction is to write down a non-yes, because the same signals will otherwise make the next session ask again, and *being asked the same question twice is how someone learns the tool is not listening*. This node is that record.\n\n⭐ THE DIFFERENCE BETWEEN THIS AND A DECLINE, which is the reason it is worth its own node: a DECLINE means the need is tradeable and the question is closed. A DEFERRAL means the question is LIVE and currently unanswerable — criticality is a claim about consequence, and the consequences here (customer trust, an accusation, a contract) do not exist yet because the customers do not. Nobody can honestly rate the severity of a breach against users who are hypothetical.\n\n=== THE TRIGGER, NAMED SO IT DOES NOT DEPEND ON ANYBODY REMEMBERING ===\n\nRE-ASK WHEN ANY OF THESE IS TRUE:\n- flo2 has real users who are not Anthony or Alex — the first outside tenant is the moment the consequence becomes real.\n- flo2 acquires a stated privacy posture, terms of service, or any promise made to a user about their data. A promise made externally is a commitment the design should already be holding.\n- Anyone begins BUILDING the telemetry emitter. The threshold has to exist before the thing that could breach it, or the binding is retrofitted onto a shipped surface.\n\n⚠️ AND THE ORDER MATTERS: `req:telemetry-carries-usage-never-design-content` is buildable NOW and does not wait for this. The structural guarantee it asks for — a payload schema whose every field is enum-valued or numeric, hence structurally incapable of carrying a design — is the right shape whether or not the threshold is ever declared inviolable. Deferring the KPP question must not be read as deferring the requirement.\n\n📌 WHAT IS ALSO NOT DEFERRED, because it is decidable today and independently: usage counts may justify OPTIMISING a hot tool and may NOT, alone, justify CUTTING a cold one. `dec:bl-155` already measured that reflow2 cannot tell \\\"unused\\\" from \\\"unreachable\\\", and a removal decided on counts would delete exactly the capabilities that were never surfaced.",
+        "name": "DEFERRED — whether a telemetry content leak is inviolable cannot be answered until flo2 has real users, and the trigger is named rather than left to memory",
+        "rationale": "Recorded per the kpp-proposal skill, which requires writing down a non-yes so the question is not re-litigated — but recorded as a DEFERRAL rather than the decline the skill's step 6 describes, because Anthony's answer was that the question is unanswerable yet rather than that the need is tradeable. The named trigger is the part that does the work: without it, \\\"too early\\\" degrades into \\\"never asked again\\\", which is the failure mode a decline at least records honestly.",
         "status": "accepted"
       }
     },
@@ -65138,6 +65337,16 @@
       }
     },
     {
+      "node_id": "epoch:a-discipline-arrives-when-it-applies",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "A discipline arrives at the moment it applies — skill_hint on the tools that trigger one, and snapshot-presence so neglect is computable rather than merely discouraged",
+        "sequence": 310,
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "epoch:a-refusal-names-what-would-have-worked",
       "node_type": "DesignEpoch",
       "properties": {
@@ -65491,6 +65700,16 @@
       }
     },
     {
+      "node_id": "epoch:legitimate-islands-answered",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The legitimate-island question is answered: stop proposing fabrication now, declare partitions next, and only if something reads the declaration back",
+        "sequence": 308,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:linking-repos",
       "node_type": "DesignEpoch",
       "properties": {
@@ -65728,6 +65947,16 @@
         "name": "The MCP tool surface is carved into the systems the design already named — the first maturity restructuring reflow2 has run on itself",
         "sequence": 261,
         "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:skill-usage-becomes-measurable",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "Skill and tool usage becomes measurable — the uninteresting increment that has to come first, because everything after it is judged against a number nobody can currently see",
+        "sequence": 309,
+        "status": "planned"
       }
     },
     {
@@ -69319,7 +69548,7 @@
         "name": "A cluster can be declared deliberately separate, so disconnected_community reports undeclared islands instead of one permanent warning",
         "priority": "medium",
         "provenance": "authored",
-        "statement": "A group of nodes can be declared a DELIBERATE PARTITION — a subsystem that genuinely does not couple to the rest of the design — so `disconnected_community` reports \"N declared partitions, 0 undeclared\" rather than one standing warning. The value is NOT silencing the finding. It is that a NEW accidental island becomes visible against the declared ones, which today it is not.\n\nTHE DEFECT IN THE CURRENT BEHAVIOUR IS THE SUGGESTED FIX, not the finding. `disconnected_community` proposes `generate_bridge` — creating edges to connect the cluster. Where the separation is correct, acting on that suggestion FABRICATES RELATIONSHIPS THAT DO NOT EXIST in order to silence a warning about a separation that is right. That is manufacturing connectivity, and it is the same act as formatting coverage into existence — with the difference that here THE TOOL PROPOSES IT.\n\nWHY ACKNOWLEDGEMENT IS NOT ENOUGH, which is the part that makes this a mechanism and not a workflow note: `acknowledge_defect` is a one-time answer to a finding whose SIZE keeps changing. Acknowledged at 88 nodes it now reads 121 — at what point is it a different finding? And an alarm that can never be cleared is one everyone learns to skip, so the real disconnection arrives inside a warning nobody reads.\n\nREFLOW2 HAS ALREADY MET THIS AND WROTE DOWN THE ANSWER, which is the strongest evidence that the shape is right. dec:documentation-has-no-operational-coupling (ACCEPTED, 2026-07-24) records the identical situation — three bridges attempted, all refused as lies, the island accepted — and concludes \"flagging it is a false positive of the BL-84 family, and THE FIX BELONGS IN THE DETECTOR RATHER THAN IN THE DESIGN.\" It also states the exact constraint storyflow independently arrived at sixteen days later: \"the exemption must not be written in a way that hides a genuine disconnection.\" The detector fix was never built, because that particular island dissolved on its own when a capability turned out to belong to two components.\n\nREPRODUCED IN THIS DESIGN, 2026-08-09, WITHIN THE HOUR OF THE REPORT ARRIVING: capturing four governance requirements under dec:governance-integrates-not-splits produced heal:33d1548dae64e97a — \"5 nodes form a cluster disconnected from the rest of the design\", suggested_fix_type `generate_bridge`. No honest bridge existed, so none was drawn. Storyflow hit it at 121 nodes; reflow2 hit it at 5. Both clusters are GOVERNANCE, and both GROW as governance is properly captured — so the detector currently penalises exactly the work dec:governance-integrates-not-splits committed to.\n\nSOURCE: storyflow gap D of the peer set — raised by storybug Boss (47accf78), characterised and filed by api-boss (05af57c1), 2026-08-09, v0.26.1. Their stated bound: the growth from 88 to 121 is suggestive, not proven, because the two measurements may not share a scope. What IS established is that the detector fires on a set provably containing nodes created hours earlier by the migration, and that its proposed remedy would corrupt the graph.",
+        "statement": "A group of nodes can be declared a DELIBERATE PARTITION — a subsystem that genuinely does not couple to the rest of the design — so `disconnected_community` reports \"N declared partitions, 0 undeclared\" rather than one standing warning. The value is NOT silencing the finding. It is that a NEW accidental island becomes visible against the declared ones, which today it is not.\n\n=== ⚠️ THE CONDITION THIS IS BUILT UNDER — Anthony, 2026-08-09 ===\n\nHe settled `dec:legitimate-islands-need-the-detector-fix` as: \"C now, A next with the read-back, not B, not D.\" THIS REQUIREMENT IS OPTION A, AND IT IS CONDITIONAL.\n\n**THE MARKER MUST BE READ BACK, OR IT MUST NOT BE BUILT.** A report must state, for each declared partition, ITS SIZE AND WHEN IT WAS DECLARED — \"declared separate 2026-08-09 at 5 nodes; now 121.\" A declaration that nothing reads is set once and never revisited, and a partition declared at 5 nodes is still declared at 500 with nobody looking.\n\nWHY THE CONDITION EXISTS RATHER THAN BEING TRUST IN GOOD PRACTICE: `dec:idea-detect-vocabulary-that-nothing-reaches` warns IN ITS OWN TEXT that \"another marker nothing reads\" would be a fourth instance of the very disease it documents — declared vocabulary with no computation behind it. Building A without the read-back would make this design's own recorded warning come true, in the increment that was supposed to answer it. `dec:edge-orthogonality` states the same test as an accepted rule: a vocabulary distinction earns its keep ONLY IF A COMPUTATION READS IT.\n\nSO THE ACCEPTANCE TEST IS NOT \"a partition can be declared\". It is: **a declared partition's size and age are visible without being asked for**, and a NEW undeclared island is distinguishable from the declared ones at a glance.\n\n=== THE REST OF THE CASE, UNCHANGED ===\n\nTHE DEFECT IN THE CURRENT BEHAVIOUR IS THE SUGGESTED FIX, not the finding. `disconnected_community` proposes `generate_bridge` — creating edges to connect the cluster. Where the separation is correct, acting on that suggestion FABRICATES RELATIONSHIPS THAT DO NOT EXIST in order to silence a warning about a separation that is right. That is manufacturing connectivity, and it is the same act as formatting coverage into existence — with the difference that here THE TOOL PROPOSES IT. **That half is now `req:a-repair-suggestion-never-proposes-fabrication` and ships FIRST, independently of this requirement** (option C), because it is a live hazard whether or not partitions are ever declarable.\n\nWHY ACKNOWLEDGEMENT IS NOT ENOUGH, which is the part that makes this a mechanism and not a workflow note: `acknowledge_defect` is a one-time answer to a finding whose SIZE keeps changing. Acknowledged at 88 nodes it now reads 121 — at what point is it a different finding? And an alarm that can never be cleared is one everyone learns to skip, so the real disconnection arrives inside a warning nobody reads. **MEASURED HERE, 2026-08-09: the heal id MOVED WITHIN ONE SESSION as the cluster grew 5 → 7 nodes (`heal:33d1548dae64e97a` → `heal:4dc24c4df2dd7aa7`), so an acknowledgement made at 5 would already point at a defect that no longer exists.** That is why option D was rejected.\n\nREFLOW2 HAS ALREADY MET THIS AND WROTE DOWN THE ANSWER. dec:documentation-has-no-operational-coupling (ACCEPTED, 2026-07-24) records the identical situation — three bridges attempted, all refused as lies, the island accepted — and concludes \"flagging it is a false positive of the BL-84 family, and THE FIX BELONGS IN THE DETECTOR RATHER THAN IN THE DESIGN.\" It also states the exact constraint storyflow independently arrived at sixteen days later: \"the exemption must not be written in a way that hides a genuine disconnection.\" **That sentence is also why option B was rejected: an INFERRED exemption is precisely the kind that hides, and an inference cannot be argued with.**\n\nREPRODUCED IN THIS DESIGN WITHIN THE HOUR OF THE REPORT ARRIVING: capturing four governance requirements under dec:governance-integrates-not-splits produced a 5-node disconnected cluster with `generate_bridge` proposed. No honest bridge existed, so none was drawn. Storyflow hit it at 121 nodes; reflow2 hit it at 5. Both clusters are GOVERNANCE, and both GROW as governance is properly captured — so the detector currently penalises exactly the work dec:governance-integrates-not-splits committed to.\n\nSOURCE: storyflow gap D of the peer set — raised by storybug Boss (47accf78), characterised and filed by api-boss (05af57c1), 2026-08-09, v0.26.1. Their stated bound: the growth from 88 to 121 is suggestive, not proven, because the two measurements may not share a scope.",
         "status": "proposed"
       }
     },
@@ -69350,6 +69579,21 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A Decision can declare its SCOPE — node ids, a node type, a region, or free text — and where nobody stated one, the absence is explicit and readable rather than left to inference.\n\nTHE GAP THIS CLOSES. A Decision records WHAT was decided and WHY. It does not record WHAT IT APPLIES TO. Six weeks later the question is never \"what did we decide\" — it is \"does that decision cover THIS?\", and the node cannot answer.\n\nTHE VALUABLE HALF IS THE HONEST ABSENCE, not the field. \"Nobody recorded a scope\" is a different fact from \"scope is everything\" and from \"scope is this one component\", and today all three look identical. An unstated scope must be VISIBLE, not inferred — which is the same shape as the tri-state reflow2 already accepted for rule enforcement (dec:does-enforced-default-to-gate-blocking: a rule's power is stated, never defaulted) and as dec:certainty-derived's refusal to let a default assert what nobody chose.\n\nEVIDENCE. A 2-of-3 ruling changed a trigger. Two documents were corrected; a third was found still teaching the old rule — and whether that third file was in scope had two defensible readings. The work stopped there, correctly. The stall was caused by a missing field, not by a hard question.\n\nGENERALITY: this is not a multi-agent problem. A solo developer six months later faces the identical question about their own past decision, with no colleague to ask.\n\nSOURCE: storyflow fleet governance report, api-boss (05af57c1), 2026-08-09, v0.26.1. Bound as stated by its author: one project, one month, one fleet shape — hypotheses to test, not requirements.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A discipline that applies mid-task is delivered at the tool that triggers it, not from a catalogue read once at handshake",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "SKILLS SPLIT INTO TWO KINDS AND THEY NEED DIFFERENT DELIVERY. A **task-skill** (genesis, adopt, capture-intent, governance-proposal, plan-increments) is reached for at a recognisable task boundary — the agent is STARTING something and asks what covers it. A **discipline-skill** (revise-design's snapshot-first, capture-intent's search-before-you-create, link-artifacts' hash-after) applies at an arbitrary instant INSIDE another task, when the agent is mid-flow and not asking anything.\\n\\nTHE CATALOGUE SERVES THE FIRST AND STRUCTURALLY CANNOT SERVE THE SECOND. `dec:skills-served` put the skill catalogue into the server instructions, which every client injects at handshake — deliberately, as \\\"progressive disclosure rebuilt by hand\\\", and it is the price of never being stale. It works: an agent that has read the catalogue reaches for the right task-skill. But a catalogue is read ONCE, and a discipline applies thousands of tokens later at a moment nothing announces. **The delivery mechanism and the trigger moment are mismatched, and no amount of restating the catalogue closes that gap.**\\n\\n⭐ MEASURED ON THIS SESSION, which is the evidence rather than the theory (2026-08-09, `fact:which-skills-a-session-reached-for-and-why`): every skill used unprompted followed a task boundary the user had just created. Every skill MISSED was a discipline applying incidentally inside other work — two revisions made without loading revise-design, and two Contributors minted without the namespace search capture-intent prescribes. The snapshot discipline was followed ONLY because a consumer's report quoting it happened to be open in context. That is a near miss, not self-direction.\\n\\nTHE MECHANISM THAT ALREADY WORKS AND IS NOT APPLIED HERE: `loop_hint` rides on tool RESPONSES — `add_requirement` returns \\\"when this capture batch lands, run detect_gaps\\\" — and it demonstrably changes behaviour, because it arrives at the moment of the action rather than at the start of the session. The same carrier should name the discipline: a revising `create_node` saying \\\"this is a revision; revise-design takes the snapshot FIRST, and after the edit it cannot be recreated\\\"; `delete_node` / `delete_edge` likewise. This is `rule:bl-135`'s guardrail principle — state the FAILURE MODE, not the rule — applied to routing rather than to warnings, and that principle carries a blind trial behind it: an agent complied with those docstrings without knowing they were interventions.\\n\\n⭐⭐ AND THE STRONGER FORM, WHICH DOES NOT DEPEND ON THE AGENT AT ALL. `dec:loop-status-state-not-history` holds that loop debt is computed from GRAPH STATE, never from run history. Apply the same rule to discipline: do not track whether a skill was INVOKED — compute whether its OUTCOME IS PRESENT. A node revised with no Snapshot at the current epoch is detectable from graph state alone, and that survives an agent which ignores every hint. dragon Boss (dev_storyflow) proposed the identical shape independently: \\\"have delete_edge / a revising create_node report whether the target has a snapshot at the current epoch — NOT BLOCK, JUST SAY.\\\"\\n\\n⚠️ THE ASYMMETRY THAT LIMITS THIS, stated so the requirement is not read as covering more than it can: a revision with no snapshot IS computable; a node created without a prior search is NOT — nothing distinguishes it from a node created after a search that found nothing. So discipline-skills split a second time. Those whose neglect leaves evidence get a detector; the rest can only ever get a hint, and a hint is what they get.\\n\\nWHAT THIS MUST NOT BECOME: a blocking gate. A tool that blocks becomes a tool people route around, and then the graph stops matching reality — the one failure it cannot survive. And not another restatement in AGENTS.md: four skill-versus-tool drifts are already on record, and `req:a-rule-knows-where-else-it-is-written-down` exists because restatements rot.\\n\\nRAISED BY ANTHONY, 2026-08-09: \\\"continue to think how do we continue to improve the probability that an agent will use reflow2's skills and tools without being reminded.\\\"",
         "status": "proposed"
       }
     },
@@ -69471,6 +69715,21 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "WHEN A SERVED TOOL REFUSES AN ARGUMENT BECAUSE IT IS NOT ONE OF A FIXED SET, THE REFUSAL NAMES THE SET. The caller should not have to make a second call to learn what would have worked.\n\nTHE GAP THIS CLOSES. `parse_enum` — the single helper every enum argument on the served surface passes through — refused with `unknown change type: \"correction\"` and nothing else. No enumeration, no nearest match, no pointer to `describe_schema`. The caller is usually an AGENT MID-TASK, for whom a refusal that does not say what would have worked costs a whole round trip and a context switch into schema reading.\n\n⭐ THE VALUES WERE NEVER UNAVAILABLE, WHICH IS WHAT MAKES THIS A DEFECT RATHER THAN A FEATURE REQUEST. serde already builds `unknown variant `correction`, expected one of `requirement_creep`, `new_feature`, …` and the helper was DISCARDING it with `map_err(|_| …)`. The answer was constructed and thrown away on every rejection.\n\nWHY THE FIX BELONGS IN THE SHARED HELPER, not at the call site that was reported: a hand-maintained list per tool rots the first time a variant is added, and one function serves every enum argument reflow2 exposes. Fixing it there means every refusal gains the list at once — which is what the reporter meant by \\\"this alone kills three of the eight\\\".\n\nEVIDENCE. Filed by dev_storyflow 2026-08-03 (api-boss): \\\"enum rejections should list the legal values… this alone kills three of the eight.\\\" RE-CONFIRMED STILL LIVE 2026-08-09 by dragon Boss (`cca98fbf`), who recorded the cost precisely: \\\"one wasted call, then describe_schema{node_type: ChangeEvent, required_only: true} to learn the 11 legal values.\\\" And reproduced a third time the same day by a session in THIS repo while recording a correction — which is how it came to be fixed.\n\nWHAT THIS REQUIREMENT DOES NOT SAY, so the scope is not read wider than it is: it does not ask for fuzzy nearest-match suggestions, and it does not ask that every refusal of any kind enumerate an alternative — only that a CLOSED SET, which the surface already knows, is stated rather than withheld. Where the message shape is unrecognised, the honest fallback is the underlying error's own words rather than a silent return to the bare verdict.\n\n⚠️ A SEPARATE AND UNRESOLVED HALF, recorded here so it is not mistaken for closed: dragon Boss's second point was that NONE of the eleven legal `change_type` values means \\\"the record was WRONG about reality\\\". `resync` connotes reality moving and the design catching up. Adding a value would move the schema stamp and is Anthony's call; this requirement is only about the refusal being useful, not about the vocabulary being complete.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:a-repair-suggestion-never-proposes-fabrication",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A repair suggestion never proposes fabricating a relationship — where no honest fix exists, the finding says so",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A HEAL suggestion must not propose creating a link that does not exist. Where a finding has no honest mechanical repair, the finding is reported WITHOUT a `suggested_fix_type` that would manufacture one, and says plainly that the repair is a judgement rather than an operation.\n\nTHE CONCRETE CASE. `disconnected_community` reports a cluster with `suggested_fix_type: generate_bridge` — create edges to connect it. Where the separation is CORRECT, acting on that suggestion fabricates relationships that do not exist, in order to silence a warning about a separation that is right. In dev_storyflow's words: \\\"acting on the suggestion would fabricate relationships that do not exist, to silence a warning about a separation that is correct. That is manufacturing connectivity, and it is the same act as formatting coverage into existence — WITH THE DIFFERENCE THAT HERE THE TOOL PROPOSES IT.\\\"\n\n⭐ WHY THIS SHIPS FIRST AND ALONE. Anthony, 2026-08-09, settling `dec:legitimate-islands-need-the-detector-fix`: \\\"C now, A next with the read-back, not B, not D.\\\" This half is a LIVE HAZARD and is true whether or not partitions ever become declarable — a tool that proposes corrupting the graph is wrong on its own terms. It needs no schema change, so it does not wait for the schema increment that `req:a-cluster-can-be-declared-deliberately-separate` belongs to.\n\nTHE GENERAL PRINCIPLE, which is what makes this a requirement rather than a one-line patch: reflow2 already refuses to let a check be attached in order to close a finding (the governance-proposal skill's standing warning against green-washing), and `dec:ask-not-repair` already holds that suspected duplicates are ASKED, never merged. THE SAME RULE HAS NOT BEEN APPLIED TO REPAIR SUGGESTIONS. A proposal to write a false edge is the mirror image of a passing check that tests nothing: both make a report go quiet without making anything true.\n\nWHAT IT DOES NOT SAY: it does not ask `disconnected_community` to stop firing, and it does not ask HEAL to stop proposing repairs generally. Mechanical repairs that restore a fact the design already holds remain correct. The line is narrow and it is about INVENTION: a suggestion may reorganise or restore, never assert a relationship nobody stated.\n\n⚠️ RELATED AND SEPARATE, so the two are not conflated: `fact:apply-heal-would-have-destroyed-the-wrong-contributor` records a different HEAL failure found the same day — a merge proposal that named the wrong survivor and DISCLOSED its own arbitrariness (\\\"THE ALPHABET CHOSE THE VICTIM\\\"). That one is about which node a correct operation destroys; this one is about an operation that should not be offered at all.\n\nSOURCE: storyflow gap D of the peer set — raised by storybug Boss (47accf78), characterised and filed by api-boss (05af57c1), 2026-08-09, v0.26.1. Reproduced in this design the same day at 5 nodes and again at 7.",
         "status": "proposed"
       }
     },
@@ -70904,6 +71163,21 @@
       }
     },
     {
+      "node_id": "req:reflow2-can-say-which-of-its-own-skills-a-session-reached-for",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "reflow2 can say which of its own skills and tools a session reached for — recorded automatically, reported without judgement",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "reflow2 RECORDS which of its own skills were fetched and which tools were called in a session, automatically and without the agent's cooperation, and reports it as a fact rather than a verdict.\n\nWHY IT IS FIRST, AND THIS IS THE WHOLE ARGUMENT FOR THE ORDERING: `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue` proposes to raise a rate that HAS NEVER BEEN OBSERVED. `dec:bl-155` measured TOOL calls — 6,095 across 46 retained transcripts, 40 of 132 tools never called — and there has never been an equivalent for `get_skill`, which is server-side and trivially countable. **Ship the hints first and there is no way to tell whether anything changed; the project would be optimising a number it cannot see.** So this is not the interesting work and it goes first anyway.\n\nAUTOMATIC, NOT A TOOL — and the reason is self-defeat rather than convenience. A tool must be CALLED, and the population most worth measuring is precisely the one least likely to call it: an agent that forgets `revise-design` forgets `log_usage` too. The measurement would be biased toward the sessions that need no measuring. Every MCP call already passes through the server, so the server records without being asked. Anthony reached this himself while proposing it (\\\"maybe a tool is not the right option\\\").\n\nREPORTS, DOES NOT DIAGNOSE — his constraint, and already this project's doctrine: `dec:report-dont-judge` holds that the confirmation ledger reports claim history and never judges a claim. Same shape one domain over.\n\n⚠️ WHAT IT CAN AND CANNOT MEASURE, stated up front because reporting the wrong one would be the exact false confidence the loop exists to prevent: **it measures FETCHES, NOT COMPLIANCE.** A skill can be followed correctly from memory without ever being fetched — this session followed revise-design's snapshot-first step without loading it — and a skill can be fetched and ignored. BL-155's own caveat travels: absence is WEAK evidence, and `set_project_mode` appeared as text in ten transcripts with zero recorded calls despite having been used. A rising fetch count is evidence that the routing changed, never evidence that the discipline held.\n\nWHERE THE LOG LIVES is deliberately NOT settled here — `dec:how-should-reflow2-log-its-own-usage` holds that question, with the recommendation (beside the store, not in the graph) and its precedent (the shared-mode rendezvous and log already sit beside the store rather than inside it).\n\nSOURCE: Anthony, 2026-08-09 — \\\"something that automatically logs usage and issues (doesn't diagnose, just logs)\\\".",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:reflow2-consumable-as-an-image",
       "node_type": "Requirement",
       "properties": {
@@ -71246,6 +71520,21 @@
         "provenance": "authored",
         "statement": "An existing graph opens, or is refused loudly with what to do.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:telemetry-carries-usage-never-design-content",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "Usage telemetry carries the verb and never the object — what was called, never what it was called on",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "WHEN REFLOW2 REPORTS ITS OWN USAGE FROM A HOSTED DEPLOYMENT, THE PAYLOAD CONTAINS WHAT WAS CALLED AND NEVER WHAT IT WAS CALLED ON. Tool name, skill name, outcome class, duration — yes. Node ids, statements, search queries, error messages quoting user text, tool arguments — no.\n\nANTHONY'S FRAMING, 2026-08-09, and the constraint is his: if he and Alex get flo2 (a web app around reflow2) running at ~1,000 users, usage statistics become the instrument for improving reflow2 — \\\"BUT NOT ON THE USER'S CONTENT, AS I DON'T WANT TO BE ACCUSED OF TAKING THEIR DESIGNS.\\\"\n\n⭐ THE LINE IS SHARPER THAN \\\"NO CONTENT\\\", AND IT HAS TO BE, BECAUSE THE LEAKS ARE NOT WHERE PEOPLE LOOK. A node id IS design content — `req:the-ledger-can-say-the-record-was-wrong` announces its own intent. A SEARCH QUERY is content and is the worst offender, because it names the user's domain in their own words. An ERROR MESSAGE is content whenever it quotes the input: \\\"unknown change type: correction\\\" is safe; \\\"node not found: cmp:secret-cooling-loop\\\" is not. TOOL ARGUMENTS are almost always content. So the rule that actually holds is: **LOG THE VERB, NEVER THE OBJECT.**\n\n⭐⭐ A STRUCTURE THAT CANNOT CARRY CONTENT BEATS A POLICY PROMISING NOT TO. If the payload is a fixed, published schema whose every field is enum-valued or numeric — tool name from the served set, outcome from a known set, duration as a bucket — then it is STRUCTURALLY INCAPABLE of carrying a design, and that is demonstrable to a suspicious customer rather than merely asserted. A free-text field anywhere in the payload defeats this no matter what the policy says, because the next contributor will put something useful in it. This is the same move reflow2 makes everywhere else: make the honest thing COMPUTABLE rather than PROMISED.\n\n--- WHAT THE STATISTICS MAY AND MAY NOT DECIDE ---\n\nAnthony named two uses. They do not carry equal weight and the difference is already recorded in this design.\n\n(1) A TOOL USED ORDERS OF MAGNITUDE MORE THAN OTHERS → OPTIMISE IT. Sound, and it needs LATENCY as well as counts: call volume alone does not say what is slow.\n\n(2) A TOOL RARELY OR NEVER USED → CUT IT OR IMPROVE ITS USEFULNESS. ⚠️ **THIS IS `dec:bl-155`'S TRAP AT SCALE, AND IT IS ALREADY MEASURED HERE.** That instrument found 40 of 132 tools never called, and its central finding was that **reflow2 CANNOT TELL \\\"unused\\\" FROM \\\"unreachable\\\"**. Its group (c) was the uncomfortable one: reads that answer real questions on designs that exist today, which nobody reaches for — `evidence_report` gained three axes in a release and appears in NO SKILL. A tool nobody can FIND is indistinguishable from a tool nobody WANTS.\n\n⇒ **USAGE COUNTS MAY JUSTIFY OPTIMISING. THEY MAY NOT, ALONE, JUSTIFY CUTTING.** Cutting on raw counts removes exactly the capabilities that were never surfaced, and does so with the confidence of a number. The discoverability question — is this tool named by any skill, nudge or report? — must be answered before a removal, and that question is answerable from the shipped build without any telemetry at all.\n\n--- WHY THE SHAPE MUST BE MULTI-TENANT NOW, NOT LATER ---\n\n`rule:no-foreclosure` (Anthony, 2026-07-25) forbids taking a shortcut today that makes it impossible to become a hosted multi-user service, and names identity-in-a-global and config-that-widens among the specific foreclosures. A telemetry design that assumes one tenant is a NEW foreclosure of exactly that kind. Per-tenant separation, and an aggregation threshold below which a cohort is not reported at all, belong in the first version even while there is one user — they cost nothing now and are expensive to retrofit.\n\nAND THE DEPLOYMENT MUST BE ABLE TO SAY NO. A self-hosted or air-gapped consumer must be able to run with telemetry off entirely. `rule:no-foreclosure`'s clause (4) applies directly: per-request configuration may only ever NARROW what the deployment allowed, never re-include what was excluded.\n\nRELATED, ALREADY OPEN, AND NOT DUPLICATED: `dec:idea-measure-the-surface` asks whether real usage telemetry should be a standing instrument and HOW FAR IT MAY GO. This requirement answers the second half — how far — and leaves the first to that decision. `dec:how-should-reflow2-log-its-own-usage` holds the mechanism and storage question.",
+        "status": "proposed"
       }
     },
     {
@@ -72022,6 +72311,16 @@
         "edges": "[{\"direction\":\"in\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Capability\",\"other_id\":\"cap:heal\",\"properties\":{}}]",
         "state": "{\"concern\":\"core\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"The open structural-defect list means still-needs-attention\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"A structural defect that has been reviewed and consciously accepted must move out of the open list into a reviewed one — not deleted, not hidden — the way an acknowledged gap already does. Found as friction 2026-07-25: detect_defects reports the same six findings every run, all six carrying recorded Decisions explaining why they stand, so a genuine seventh would arrive into a list nobody reads carefully and the count is the only signal. reviewed_gaps already keeps this promise for gaps on the stated grounds that \\\"a list that can never reach zero gets skimmed\\\"; the defect side makes the same promise in its docs and does not keep it. Two properties carried over from the gap side: the acceptance records WHY, as a real node that outlives the session, and it expires when the affected nodes change, so an accepted defect comes back for a fresh look rather than staying quietly accepted forever.\",\"status\":\"accepted\"}",
         "target_id": "req:reviewed-defects",
+        "target_type": "Requirement"
+      }
+    },
+    {
+      "node_id": "snap:epoch:legitimate-islands-answered:req:a-cluster-can-be-declared-deliberately-separate",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:storyflow-storybug-boss\",\"properties\":{\"acted_at\":\"2026-08-09\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:governance-integrates-not-splits\",\"properties\":{\"note\":\"The cluster that fires is governance, and that decision commits the project to growing it here\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:legitimate-islands-need-the-detector-fix\",\"properties\":{\"note\":\"This requirement states the need; that decision holds the unmade choice about its shape\"}}]",
+        "state": "{\"concern\":\"core\",\"designation\":\"internal\",\"kind\":\"functional\",\"lineage\":\"original\",\"name\":\"A cluster can be declared deliberately separate, so disconnected_community reports undeclared islands instead of one permanent warning\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"A group of nodes can be declared a DELIBERATE PARTITION — a subsystem that genuinely does not couple to the rest of the design — so `disconnected_community` reports \\\"N declared partitions, 0 undeclared\\\" rather than one standing warning. The value is NOT silencing the finding. It is that a NEW accidental island becomes visible against the declared ones, which today it is not.\\n\\nTHE DEFECT IN THE CURRENT BEHAVIOUR IS THE SUGGESTED FIX, not the finding. `disconnected_community` proposes `generate_bridge` — creating edges to connect the cluster. Where the separation is correct, acting on that suggestion FABRICATES RELATIONSHIPS THAT DO NOT EXIST in order to silence a warning about a separation that is right. That is manufacturing connectivity, and it is the same act as formatting coverage into existence — with the difference that here THE TOOL PROPOSES IT.\\n\\nWHY ACKNOWLEDGEMENT IS NOT ENOUGH, which is the part that makes this a mechanism and not a workflow note: `acknowledge_defect` is a one-time answer to a finding whose SIZE keeps changing. Acknowledged at 88 nodes it now reads 121 — at what point is it a different finding? And an alarm that can never be cleared is one everyone learns to skip, so the real disconnection arrives inside a warning nobody reads.\\n\\nREFLOW2 HAS ALREADY MET THIS AND WROTE DOWN THE ANSWER, which is the strongest evidence that the shape is right. dec:documentation-has-no-operational-coupling (ACCEPTED, 2026-07-24) records the identical situation — three bridges attempted, all refused as lies, the island accepted — and concludes \\\"flagging it is a false positive of the BL-84 family, and THE FIX BELONGS IN THE DETECTOR RATHER THAN IN THE DESIGN.\\\" It also states the exact constraint storyflow independently arrived at sixteen days later: \\\"the exemption must not be written in a way that hides a genuine disconnection.\\\" The detector fix was never built, because that particular island dissolved on its own when a capability turned out to belong to two components.\\n\\nREPRODUCED IN THIS DESIGN, 2026-08-09, WITHIN THE HOUR OF THE REPORT ARRIVING: capturing four governance requirements under dec:governance-integrates-not-splits produced heal:33d1548dae64e97a — \\\"5 nodes form a cluster disconnected from the rest of the design\\\", suggested_fix_type `generate_bridge`. No honest bridge existed, so none was drawn. Storyflow hit it at 121 nodes; reflow2 hit it at 5. Both clusters are GOVERNANCE, and both GROW as governance is properly captured — so the detector currently penalises exactly the work dec:governance-integrates-not-splits committed to.\\n\\nSOURCE: storyflow gap D of the peer set — raised by storybug Boss (47accf78), characterised and filed by api-boss (05af57c1), 2026-08-09, v0.26.1. Their stated bound: the growth from 88 to 121 is suggestive, not proven, because the two measurements may not share a scope. What IS established is that the detector fires on a set provably containing nodes created hours earlier by the migration, and that its proposed remedy would corrupt the graph.\",\"status\":\"proposed\"}",
+        "target_id": "req:a-cluster-can-be-declared-deliberately-separate",
         "target_type": "Requirement"
       }
     },
@@ -75630,7 +75929,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:6a060f4b3f05a2191018b8f8b544b23e35de3a44a024b2133d4385c45b556a88",
+  "prev_content_hash": "sha256:14ce0efa9b3afca69c11e1e5848521ec47a730ebf11d82f46f93ce4dafee230e",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
