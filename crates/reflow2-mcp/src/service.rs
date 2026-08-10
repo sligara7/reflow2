@@ -158,13 +158,6 @@ pub struct ReflowService {
     /// is (`req:design-identity` — both live in sidecars beside the store).
     /// `None` for an in-memory graph, which has no sidecar to remember in.
     pub(crate) graph_path: Option<String>,
-    /// Where this project's content store lives — the committed directory
-    /// holding the bytes the graph points at (`dec:where-content-lives`).
-    /// Deliberately NOT derived from `graph_path`: the graph lives under
-    /// `.reflow2/`, which is gitignored, and blobs must travel with the repo.
-    /// `None` means no store was configured, and the content tools say so
-    /// rather than inventing a location.
-    pub(crate) content_path: Option<String>,
     /// THIS SESSION's seat, minted per service instance rather than per process
     /// (`req:seat-per-client`). One server holds many client sessions — rmcp
     /// builds a service per session — so a process-wide seat would report every
@@ -1518,40 +1511,6 @@ pub struct ScheduleForReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
-pub struct ContentPutReq {
-    /// The content as text — markdown, mermaid, HTML, a transcript. Most of
-    /// what a design points at is text, so this is the ordinary case.
-    #[serde(default)]
-    pub text: Option<String>,
-    /// The content base64-encoded, for bytes that are not text: a photograph of
-    /// a whiteboard, a PNG, a PDF. Exactly one of `text` or `base64`.
-    #[serde(default)]
-    pub base64: Option<String>,
-    /// Store content over the size bar anyway, on the record. Blobs are
-    /// COMMITTED and git history cannot be trimmed without breaking every
-    /// clone, so this is a deliberate act rather than a retry flag.
-    #[serde(default)]
-    pub accept_large: Option<bool>,
-}
-
-#[derive(Debug, Deserialize, JsonSchema)]
-#[serde(deny_unknown_fields)]
-pub struct ContentRefReq {
-    /// The content hash, as `content_put` returned it.
-    pub hash: String,
-}
-
-#[derive(Debug, Deserialize, JsonSchema)]
-#[serde(deny_unknown_fields)]
-pub struct ContentManifestReq {
-    /// Write the rendered markdown manifest here as well as returning it —
-    /// the committed form that makes a blob change legible in a diff.
-    #[serde(default)]
-    pub path: Option<String>,
-}
-
-#[derive(Debug, Deserialize, JsonSchema)]
-#[serde(deny_unknown_fields)]
 pub struct ArrivalDeltaReq {
     /// The DesignEpoch or Release to read the schedule of.
     pub target_id: String,
@@ -2566,9 +2525,7 @@ impl ReflowService {
             graph: Arc::new(RwLock::new(graph)),
             seat: std::sync::Arc::new(reflow2_core::identity::SeatLease::attach()),
             graph_path,
-            // Set by the caller after construction (`with_content_path`), so
             // adding a store did not have to change every constructor.
-            content_path: None,
             // The skills are served, not installed (dec:skills-served), and
             // their tools live in their own module — combined here so
             // find_tools and tools/list see one surface.
@@ -2580,56 +2537,14 @@ impl ReflowService {
                 + Self::assure_router()
                 + Self::operate_tools_router()
                 + Self::temporal_tools_router()
+                + Self::ingest_tools_router()
                 + Self::built_router()
                 + Self::exchange_router()
-                + Self::content_tools_router()
                 + Self::query_router()
                 + Self::claims_tools_router(),
             write_gen: Arc::new(AtomicU64::new(0)),
             read_hint: Arc::new(std::sync::Mutex::new(ReadHintCache::default())),
         }
-    }
-
-    /// Point this service at a content store.
-    ///
-    /// A setter rather than a constructor parameter so adding the store did not
-    /// change the signature every caller and test already uses — the same
-    /// reason `graph_path` is carried rather than rediscovered.
-    pub fn with_content_path(mut self, path: Option<String>) -> Self {
-        self.content_path = path;
-        self
-    }
-
-    /// The content store for a READ that must still answer without one.
-    ///
-    /// `content_store` refuses when nothing is configured, which is right for
-    /// writes and for fetching bytes. It is wrong for `content_manifest` and
-    /// `content_exists`: those exist to tell somebody what they are MISSING, and
-    /// the person who needs that most is the one holding the design with no
-    /// store beside it. Refusing would make them configure storage before being
-    /// told what to put in it (`dec:manifest-answers-without-a-store`).
-    pub(crate) fn content_store_for_reading(&self) -> Option<reflow2_core::ContentStore> {
-        self.content_path
-            .as_deref()
-            .map(reflow2_core::ContentStore::new)
-    }
-
-    /// The content store, or a refusal that names why there is none.
-    ///
-    /// Fails loud rather than defaulting to a directory nobody chose
-    /// (`req:no-silent-fallback`): a store invented at call time would put a
-    /// consumer's diagrams somewhere they never agreed to, and blobs are meant
-    /// to be COMMITTED, so the location is a decision about their repo.
-    pub(crate) fn content_store(&self) -> Result<reflow2_core::ContentStore, McpError> {
-        let path = self.content_path.as_deref().ok_or_else(|| {
-            McpError::invalid_params(
-                "this server has no content store configured, so there is nowhere to put bytes. \
-                 Start it with --content-path <dir> (a directory inside the repo, since blobs are \
-                 committed and travel with the design).",
-                None,
-            )
-        })?;
-        Ok(reflow2_core::ContentStore::new(path))
     }
 
     /// Another session on the SAME design.
@@ -2648,7 +2563,6 @@ impl ReflowService {
             graph: Arc::clone(&self.graph),
             tool_router: self.tool_router.clone(),
             graph_path: self.graph_path.clone(),
-            content_path: self.content_path.clone(),
             write_gen: Arc::clone(&self.write_gen),
             // Fresh per session: a shared seat would report every client as the
             // same owner, and a shared hint memory would land one session's

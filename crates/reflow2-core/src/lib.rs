@@ -36,7 +36,6 @@ pub mod claims;
 pub mod compare;
 pub mod compose;
 pub mod confirm;
-pub mod content;
 pub mod corpus;
 pub mod coverage;
 pub mod depends;
@@ -93,9 +92,6 @@ pub use compare::{
 };
 pub use compose::{ComposedFinding, ComposedReport, Side};
 pub use confirm::{ClaimConfirmation, ConfirmationLedger, ConfirmationState};
-pub use content::{
-    ContentManifest, ContentStore, LARGE_CONTENT_BYTES, ManifestEntry, content_hash,
-};
 pub use corpus::{
     CorpusDocument, CorpusOptions, CorpusReport, CorpusStep, DocumentOutcome, DocumentStatus,
 };

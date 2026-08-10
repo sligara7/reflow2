@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:282610068f8f7032256c2a7a034a5e89636918786c04973ca31dcc386b66449a",
+  "content_hash": "sha256:e6a3b71b743eed19dfdee0002f7c28b460a73ae42983e084d006d041cf4c568f",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3427,6 +3427,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:content-store-discontinued",
+      "properties": {},
+      "to_id": "epoch:content-store-discontinued"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:content-store-files-removed",
+      "properties": {},
+      "to_id": "epoch:content-store-discontinued"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:content-store-hand-rolled",
       "properties": {},
       "to_id": "epoch:arrival-delta"
@@ -3436,6 +3448,18 @@
       "from_id": "chg:content-surface",
       "properties": {},
       "to_id": "epoch:arrival-delta"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:content-test-file-removed",
+      "properties": {},
+      "to_id": "epoch:content-store-discontinued"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:content-tools-file-removed",
+      "properties": {},
+      "to_id": "epoch:content-store-discontinued"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -4924,6 +4948,30 @@
       "from_id": "snap:epoch:bl213-sibling-discriminator:dec:auto-merge-at-90-destroys-sibling-names",
       "properties": {},
       "to_id": "epoch:bl213-sibling-discriminator"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:content-store-discontinued:art:content",
+      "properties": {},
+      "to_id": "epoch:content-store-discontinued"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:content-store-discontinued:art:content-test",
+      "properties": {},
+      "to_id": "epoch:content-store-discontinued"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:content-store-discontinued:art:tools-content",
+      "properties": {},
+      "to_id": "epoch:content-store-discontinued"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:content-store-discontinued:cap:content-store",
+      "properties": {},
+      "to_id": "epoch:content-store-discontinued"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -6559,6 +6607,15 @@
       "from_id": "dec:satisfaction-schedule-shape",
       "properties": {
         "acted_at": "2026-07-30",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-content-store-is-discontinued",
+      "properties": {
+        "acted_at": "2026-08-09",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -9622,15 +9679,6 @@
       "edge_type": "CHANGED",
       "from_id": "chg:bl186-folder-driver",
       "properties": {
-        "accepted_baseline": true,
-        "action": "modified"
-      },
-      "to_id": "art:tools-content"
-    },
-    {
-      "edge_type": "CHANGED",
-      "from_id": "chg:bl186-folder-driver",
-      "properties": {
         "accepted_baseline": false,
         "action": "modified"
       },
@@ -11227,15 +11275,6 @@
         "accepted_baseline": true,
         "action": "modified"
       },
-      "to_id": "art:content"
-    },
-    {
-      "edge_type": "CHANGED",
-      "from_id": "chg:content-growth-guard",
-      "properties": {
-        "accepted_baseline": true,
-        "action": "modified"
-      },
       "to_id": "art:service"
     },
     {
@@ -11255,15 +11294,6 @@
         "action": "modified"
       },
       "to_id": "dec:where-content-lives"
-    },
-    {
-      "edge_type": "CHANGED",
-      "from_id": "chg:content-manifest-built",
-      "properties": {
-        "accepted_baseline": true,
-        "action": "modified"
-      },
-      "to_id": "art:content"
     },
     {
       "edge_type": "CHANGED",
@@ -11307,6 +11337,51 @@
       "properties": {
         "accepted_baseline": false,
         "action": "modified"
+      },
+      "to_id": "cap:content-store"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-store-discontinued",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-store-discontinued",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-store-discontinued",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-store-discontinued",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:content-store-discontinued",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "removed"
       },
       "to_id": "cap:content-store"
     },
@@ -13054,34 +13129,7 @@
         "accepted_baseline": true,
         "action": "modified"
       },
-      "to_id": "art:content"
-    },
-    {
-      "edge_type": "CHANGED",
-      "from_id": "chg:manifest-answers-without-a-store",
-      "properties": {
-        "accepted_baseline": true,
-        "action": "modified"
-      },
-      "to_id": "art:content-test"
-    },
-    {
-      "edge_type": "CHANGED",
-      "from_id": "chg:manifest-answers-without-a-store",
-      "properties": {
-        "accepted_baseline": true,
-        "action": "modified"
-      },
       "to_id": "art:service"
-    },
-    {
-      "edge_type": "CHANGED",
-      "from_id": "chg:manifest-answers-without-a-store",
-      "properties": {
-        "accepted_baseline": true,
-        "action": "modified"
-      },
-      "to_id": "art:tools-content"
     },
     {
       "edge_type": "CHANGED",
@@ -16698,6 +16746,15 @@
         "evidence": "That decision is ACCEPTED and set the condition: decide on OWNED_BY only after the claims-based cut is built and shown insufficient. Its rationale named the disqualifying evidence in advance — claims being transient work-in-hand while ownership is durable. dev_storyflow filed exactly that distinction one day later, and Anthony supplied the two-person use case himself. This node records the evidence arriving; whether it closes the condition is his call."
       },
       "to_id": "dec:ownership-reads-claims-before-adding-an-edge"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "dec:the-content-store-is-discontinued",
+      "properties": {
+        "alignment": "supporting",
+        "evidence": "First real instance: cap:content-store is built, withdrawn, and has no terminal status to say so. The ChangeEvent carrying change_type `deprecation` is the only marker, which is exactly the gap Alex reported and Anthony reached from the other side."
+      },
+      "to_id": "dec:idea-does-a-capability-need-a-cancelled-state"
     },
     {
       "edge_type": "CONTRADICTS",
@@ -24134,6 +24191,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:content-store",
+      "properties": {},
+      "to_id": "snap:epoch:content-store-discontinued:cap:content-store"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:corpus-ingest",
       "properties": {},
       "to_id": "snap:epoch:bl186-corpus-ingest-lexical:cap:corpus-ingest"
@@ -30890,22 +30953,6 @@
       "edge_type": "INCLUDES",
       "from_id": "rel:v0190",
       "properties": {
-        "as_checksum": "sha256:c7b979d360e1e062"
-      },
-      "to_id": "art:content"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0190",
-      "properties": {
-        "as_checksum": "sha256:4f23c464539aed28"
-      },
-      "to_id": "art:content-test"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0190",
-      "properties": {
         "as_checksum": "sha256:2459979bcda2901dc08307b0211763a91245cdfd4727c9ab967039b2c154f2ed"
       },
       "to_id": "art:contradiction-alignment-test"
@@ -32024,22 +32071,6 @@
       "edge_type": "INCLUDES",
       "from_id": "rel:v0200",
       "properties": {
-        "as_checksum": "sha256:c7b979d360e1e062"
-      },
-      "to_id": "art:content"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0200",
-      "properties": {
-        "as_checksum": "sha256:4f23c464539aed28"
-      },
-      "to_id": "art:content-test"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0200",
-      "properties": {
         "as_checksum": "sha256:2459979bcda2901dc08307b0211763a91245cdfd4727c9ab967039b2c154f2ed"
       },
       "to_id": "art:contradiction-alignment-test"
@@ -33151,22 +33182,6 @@
         "as_checksum": "sha256:6570819382224b26"
       },
       "to_id": "art:confirm"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0210",
-      "properties": {
-        "as_checksum": "sha256:c7b979d360e1e062"
-      },
-      "to_id": "art:content"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0210",
-      "properties": {
-        "as_checksum": "sha256:4f23c464539aed28"
-      },
-      "to_id": "art:content-test"
     },
     {
       "edge_type": "INCLUDES",
@@ -34331,22 +34346,6 @@
         "as_checksum": "sha256:b4fd5760c54b234a4c8d4031c4dba9610db59dfb10cabc0dfc3907e143442344"
       },
       "to_id": "art:confirmation-vocabulary-test"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0220",
-      "properties": {
-        "as_checksum": "sha256:c7b979d360e1e062"
-      },
-      "to_id": "art:content"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0220",
-      "properties": {
-        "as_checksum": "sha256:4f23c464539aed28"
-      },
-      "to_id": "art:content-test"
     },
     {
       "edge_type": "INCLUDES",
@@ -35559,22 +35558,6 @@
         "as_checksum": "sha256:b4fd5760c54b234a4c8d4031c4dba9610db59dfb10cabc0dfc3907e143442344"
       },
       "to_id": "art:confirmation-vocabulary-test"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0221",
-      "properties": {
-        "as_checksum": "sha256:c7b979d360e1e062"
-      },
-      "to_id": "art:content"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0221",
-      "properties": {
-        "as_checksum": "sha256:4f23c464539aed28"
-      },
-      "to_id": "art:content-test"
     },
     {
       "edge_type": "INCLUDES",
@@ -36880,22 +36863,6 @@
       "edge_type": "INCLUDES",
       "from_id": "rel:v0230",
       "properties": {
-        "as_checksum": "sha256:c7b979d360e1e062"
-      },
-      "to_id": "art:content"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0230",
-      "properties": {
-        "as_checksum": "sha256:4f23c464539aed28"
-      },
-      "to_id": "art:content-test"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0230",
-      "properties": {
         "as_checksum": "sha256:2459979bcda2901dc08307b0211763a91245cdfd4727c9ab967039b2c154f2ed"
       },
       "to_id": "art:contradiction-alignment-test"
@@ -37704,14 +37671,6 @@
       "edge_type": "INCLUDES",
       "from_id": "rel:v0230",
       "properties": {
-        "as_checksum": "sha256:18d0d737affde3064dabb7c858fdefa64df918ee7088fe83f9b225229bb50a56"
-      },
-      "to_id": "art:tools-content"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0230",
-      "properties": {
         "as_checksum": "sha256:059eb65c3bb6904b292fef5655a51942079caac0aa0a8c86b0013d4d049cc79f"
       },
       "to_id": "art:tools-exchange"
@@ -38327,22 +38286,6 @@
         "as_checksum": "sha256:b4fd5760c54b234a4c8d4031c4dba9610db59dfb10cabc0dfc3907e143442344"
       },
       "to_id": "art:confirmation-vocabulary-test"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0240",
-      "properties": {
-        "as_checksum": "sha256:c7b979d360e1e062"
-      },
-      "to_id": "art:content"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0240",
-      "properties": {
-        "as_checksum": "sha256:4f23c464539aed28"
-      },
-      "to_id": "art:content-test"
     },
     {
       "edge_type": "INCLUDES",
@@ -39212,14 +39155,6 @@
       "edge_type": "INCLUDES",
       "from_id": "rel:v0240",
       "properties": {
-        "as_checksum": "sha256:5a81f97e05afd62edc28afabdf816c821216b14f0e7eaa2710acf600524b3019"
-      },
-      "to_id": "art:tools-content"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0240",
-      "properties": {
         "as_checksum": "sha256:059eb65c3bb6904b292fef5655a51942079caac0aa0a8c86b0013d4d049cc79f"
       },
       "to_id": "art:tools-exchange"
@@ -39851,22 +39786,6 @@
         "as_checksum": "sha256:b4fd5760c54b234a4c8d4031c4dba9610db59dfb10cabc0dfc3907e143442344"
       },
       "to_id": "art:confirmation-vocabulary-test"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0250",
-      "properties": {
-        "as_checksum": "sha256:2f61880580a26ac3d957ea9d9eb0702f562a3a6e2644d804738cb97a5c7a744d"
-      },
-      "to_id": "art:content"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0250",
-      "properties": {
-        "as_checksum": "sha256:e84a28c58a87148918055465167668cdc668ffaee148ed450e30f9e0bd4896f0"
-      },
-      "to_id": "art:content-test"
     },
     {
       "edge_type": "INCLUDES",
@@ -40824,14 +40743,6 @@
       "edge_type": "INCLUDES",
       "from_id": "rel:v0250",
       "properties": {
-        "as_checksum": "sha256:173cceae74216ee1deb6037dfc94b29d40678922d9d5313b14943b989418dadd"
-      },
-      "to_id": "art:tools-content"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0250",
-      "properties": {
         "as_checksum": "sha256:059eb65c3bb6904b292fef5655a51942079caac0aa0a8c86b0013d4d049cc79f"
       },
       "to_id": "art:tools-exchange"
@@ -41483,22 +41394,6 @@
         "as_checksum": "sha256:b4fd5760c54b234a4c8d4031c4dba9610db59dfb10cabc0dfc3907e143442344"
       },
       "to_id": "art:confirmation-vocabulary-test"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0260",
-      "properties": {
-        "as_checksum": "sha256:2f61880580a26ac3d957ea9d9eb0702f562a3a6e2644d804738cb97a5c7a744d"
-      },
-      "to_id": "art:content"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0260",
-      "properties": {
-        "as_checksum": "sha256:e84a28c58a87148918055465167668cdc668ffaee148ed450e30f9e0bd4896f0"
-      },
-      "to_id": "art:content-test"
     },
     {
       "edge_type": "INCLUDES",
@@ -42496,14 +42391,6 @@
       "edge_type": "INCLUDES",
       "from_id": "rel:v0260",
       "properties": {
-        "as_checksum": "sha256:173cceae74216ee1deb6037dfc94b29d40678922d9d5313b14943b989418dadd"
-      },
-      "to_id": "art:tools-content"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0260",
-      "properties": {
         "as_checksum": "sha256:059eb65c3bb6904b292fef5655a51942079caac0aa0a8c86b0013d4d049cc79f"
       },
       "to_id": "art:tools-exchange"
@@ -43155,22 +43042,6 @@
         "as_checksum": "sha256:b4fd5760c54b234a4c8d4031c4dba9610db59dfb10cabc0dfc3907e143442344"
       },
       "to_id": "art:confirmation-vocabulary-test"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0261",
-      "properties": {
-        "as_checksum": "sha256:2f61880580a26ac3d957ea9d9eb0702f562a3a6e2644d804738cb97a5c7a744d"
-      },
-      "to_id": "art:content"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0261",
-      "properties": {
-        "as_checksum": "sha256:e84a28c58a87148918055465167668cdc668ffaee148ed450e30f9e0bd4896f0"
-      },
-      "to_id": "art:content-test"
     },
     {
       "edge_type": "INCLUDES",
@@ -44163,14 +44034,6 @@
         "as_checksum": "sha256:89aaf70aca277246eda1df18d33484f84ce1ddcd00bd27253f1d560ee16c02da"
       },
       "to_id": "art:tools-coherence"
-    },
-    {
-      "edge_type": "INCLUDES",
-      "from_id": "rel:v0261",
-      "properties": {
-        "as_checksum": "sha256:173cceae74216ee1deb6037dfc94b29d40678922d9d5313b14943b989418dadd"
-      },
-      "to_id": "art:tools-content"
     },
     {
       "edge_type": "INCLUDES",
@@ -46680,6 +46543,46 @@
     },
     {
       "edge_type": "OBSOLETES",
+      "from_id": "dec:the-content-store-is-discontinued",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "dec:content-growth-is-bounded-by-what-not-by-size"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:the-content-store-is-discontinued",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "dec:content-manifest"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:the-content-store-is-discontinued",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "dec:content-store-implementation"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:the-content-store-is-discontinued",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "dec:what-lives-where"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:the-content-store-is-discontinued",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "dec:where-content-lives"
+    },
+    {
+      "edge_type": "OBSOLETES",
       "from_id": "epoch:planned-one-write-surface",
       "properties": {
         "confidence": 1.0
@@ -47217,30 +47120,6 @@
         "completeness": "complete"
       },
       "to_id": "cap:nothing-moved"
-    },
-    {
-      "edge_type": "REALIZES",
-      "from_id": "art:content",
-      "properties": {
-        "completeness": "complete"
-      },
-      "to_id": "cap:content-manifest"
-    },
-    {
-      "edge_type": "REALIZES",
-      "from_id": "art:content",
-      "properties": {
-        "completeness": "complete"
-      },
-      "to_id": "cap:content-store"
-    },
-    {
-      "edge_type": "REALIZES",
-      "from_id": "art:content-test",
-      "properties": {
-        "completeness": "complete"
-      },
-      "to_id": "ver:content-store"
     },
     {
       "edge_type": "REALIZES",
@@ -48505,22 +48384,6 @@
         "completeness": "partial"
       },
       "to_id": "cmp:service"
-    },
-    {
-      "edge_type": "REALIZES",
-      "from_id": "art:tools-content",
-      "properties": {
-        "completeness": "complete"
-      },
-      "to_id": "cap:content-manifest"
-    },
-    {
-      "edge_type": "REALIZES",
-      "from_id": "art:tools-content",
-      "properties": {
-        "completeness": "complete"
-      },
-      "to_id": "cap:content-store"
     },
     {
       "edge_type": "REALIZES",
@@ -51253,22 +51116,6 @@
     },
     {
       "edge_type": "YIELDED",
-      "from_id": "frag:art:content",
-      "properties": {
-        "action": "created"
-      },
-      "to_id": "art:content"
-    },
-    {
-      "edge_type": "YIELDED",
-      "from_id": "frag:art:content-test",
-      "properties": {
-        "action": "created"
-      },
-      "to_id": "art:content-test"
-    },
-    {
-      "edge_type": "YIELDED",
       "from_id": "frag:art:corpus",
       "properties": {
         "action": "created"
@@ -52125,14 +51972,6 @@
     },
     {
       "edge_type": "YIELDED",
-      "from_id": "frag:art:tools-content",
-      "properties": {
-        "action": "created"
-      },
-      "to_id": "art:tools-content"
-    },
-    {
-      "edge_type": "YIELDED",
       "from_id": "frag:art:tools-exchange",
       "properties": {
         "action": "created"
@@ -52557,32 +52396,6 @@
         "location": "crates/reflow2-core/tests/confirmation_vocabulary.rs",
         "name": "confirmation_vocabulary.rs",
         "status": "realized"
-      }
-    },
-    {
-      "node_id": "art:content",
-      "node_type": "Artifact",
-      "properties": {
-        "artifact_type": "code",
-        "checksum": "sha256:2f61880580a26ac3d957ea9d9eb0702f562a3a6e2644d804738cb97a5c7a744d",
-        "granularity": "atomic",
-        "location": "crates/reflow2-core/src/content.rs",
-        "name": "content.rs",
-        "status": "realized",
-        "volatility": "stable"
-      }
-    },
-    {
-      "node_id": "art:content-test",
-      "node_type": "Artifact",
-      "properties": {
-        "artifact_type": "code",
-        "checksum": "sha256:e84a28c58a87148918055465167668cdc668ffaee148ed450e30f9e0bd4896f0",
-        "granularity": "atomic",
-        "location": "crates/reflow2-core/tests/content.rs",
-        "name": "tests/content.rs",
-        "status": "realized",
-        "volatility": "stable"
       }
     },
     {
@@ -53127,7 +52940,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1b610577b6ffc1e8a4a08c8c00352b1a95a7e22a92e78fa56ba6b5206611a8c8",
+        "checksum": "sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528",
         "granularity": "atomic",
         "location": "tools/loop_nudge.py",
         "name": "loop_nudge.py",
@@ -53151,7 +52964,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:165cb2635beb44383f67fc440f8597956839feba946b485251d43445ed9b196d",
+        "checksum": "sha256:cd4dc46a42ac5da44ecf6f484eb33da8774333afc7fb13a13c554c0f395a766d",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
@@ -53685,7 +53498,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5c59e50c09a2a8d483e43ed9d8e68dba116249759de14960a8c6b603206897a7",
+        "checksum": "sha256:406c1a320b66b3079c8b30cbe18c815832a89f581e0eebfb813932305783c572",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -53932,7 +53745,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9cd27ccb7bdafea2079d2f691dd664085354c61f96185ff4d6956caba11184c9",
+        "checksum": "sha256:4d3313a3988968e436920662419a02f89fcc46d443d09ecd19d018bfe78dc688",
         "granularity": "atomic",
         "location": "tools/test_loop_nudge.py",
         "name": "test_loop_nudge.py",
@@ -54084,19 +53897,6 @@
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
-        "status": "realized",
-        "volatility": "stable"
-      }
-    },
-    {
-      "node_id": "art:tools-content",
-      "node_type": "Artifact",
-      "properties": {
-        "artifact_type": "code",
-        "checksum": "sha256:173cceae74216ee1deb6037dfc94b29d40678922d9d5313b14943b989418dadd",
-        "granularity": "atomic",
-        "location": "crates/reflow2-mcp/src/tools/content_tools.rs",
-        "name": "tools/content_tools.rs",
         "status": "realized",
         "volatility": "stable"
       }
@@ -57787,6 +57587,22 @@
       }
     },
     {
+      "node_id": "chg:content-store-discontinued",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "deprecation",
+        "name": "The content store is discontinued: four tools, the core module, the --content-path flag and both test files removed. Built, shipped, correct — and used zero times in every project that has it."
+      }
+    },
+    {
+      "node_id": "chg:content-store-files-removed",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "deprecation",
+        "name": "The content store's three artifacts are removed from the build — content.rs, content_tools.rs and the core content test"
+      }
+    },
+    {
       "node_id": "chg:content-store-hand-rolled",
       "node_type": "ChangeEvent",
       "properties": {
@@ -57800,6 +57616,22 @@
       "properties": {
         "change_type": "new_feature",
         "name": "content_put / content_get / content_exists — the store becomes reachable from a session"
+      }
+    },
+    {
+      "node_id": "chg:content-test-file-removed",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "deprecation",
+        "name": "The core content test is removed with the module it tested"
+      }
+    },
+    {
+      "node_id": "chg:content-tools-file-removed",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "deprecation",
+        "name": "content_tools.rs removed — its four content tools deleted, and its TWO ingest tools moved to ingest_tools.rs rather than lost"
       }
     },
     {
@@ -61420,6 +61252,16 @@
       }
     },
     {
+      "node_id": "dec:the-content-store-is-discontinued",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED AND DONE 2026-08-09, Anthony's word: \\\"let's discontinue the content store.\\\" Supersedes dec:where-content-lives, dec:what-lives-where, dec:content-store-implementation, dec:content-manifest and dec:content-growth-is-bounded-by-what-not-by-size.\n\n⭐ THE EVIDENCE WAS USAGE, MEASURED IN EVERY PROJECT THAT HAS IT — reflow2's own design: no --content-path configured, no .reflow2/content directory, and 0 of 148 Fragments carrying a content_ref. flo2: no content path. dev_storyflow: no content directory. THREE PROJECTS, ZERO USE, on a feature that is built, tested and documented.\n\nHIS ARGUMENT, in his words: the bytes cannot fully live in a repo because it would become a huge object rapidly; dev_storyflow's 700+ documents have been ingested and \\\"those documents are no longer really needed\\\"; better to put important design artifacts directly in the git repo in something like a design_artifacts folder; it is another feature that must be maintained; and in flo2 the blob could reach terabytes needing backup, security and per-project separation.\n\nAND AN ARGUMENT NOBODY HAD MADE: dec:where-content-lives settled on a content-addressed store whose blobs are COMMITTED TO GIT. Git is already a content-addressed store. The design was a content-addressed layer inside a content-addressed system, and the dedup and integrity hash it provided were both things git already gives anything committed.\n\nAND A FOUNDING MOTIVATION THAT DID NOT SURVIVE: the store was partly built to make sessions \\\"stateful\\\" by holding transcripts. cap:session-memory already rejected that mechanism in its own text — \\\"a pointer to a 3 MB transcript is a RECEIPT, not documentation: leaning on it recreates the markdown problem one level down.\\\" Its actual design needs no store: takeaways as first-class graph content, the transcript a Fragment carrying a session UUID. See dec:idea-is-session-context-already-in-the-graph.\n\nWHAT WAS REMOVED: content_put / content_get / content_exists / content_manifest, crates/reflow2-core/src/content.rs, crates/reflow2-mcp/src/tools/content_tools.rs, the --content-path flag, both test files, and the loop nudge's session-artifacts advisory (which told sessions to content_put a rendering).\n\n⚠️ TWO ACCEPTED REQUIREMENTS ARE NOW UNSATISFIED ON PURPOSE, AND THAT IS THE HONEST STATE RATHER THAN AN OVERSIGHT. Both are Anthony's own words from 2026-07-31 and the store was their answer:\n  · req:agent-artifacts-are-captured — \\\"in many sessions, the agent will create artifacts... having all these artifacts automatically stored in the reflow2 blob storage would be great.\\\"\n  · req:sources-are-kept-not-just-parsed — ingest keeps the original corpus documents, so the corpus becomes part of the design rather than an input consumed and discarded.\nHe was shown both in the impact check and chose to KEEP THEM OPEN AND UNANSWERED rather than drop them or claim a replacement. The design_artifacts folder is the intended answer and is UNBUILT, so recording it as satisfied would be fiction. detect_gaps will now ask about them, and that question is the retirement working rather than a bug.\n\nTHREE OTHER REQUIREMENTS EXISTED ONLY BECAUSE THE STORE DID and go quiet with it: req:the-store-is-reachable-from-a-session (a surface for it), req:export-says-what-it-cannot-carry (a warning about pointers the export cannot carry), and req:content-reaches-every-seat. Their statuses are Anthony's to move; nothing was changed on his behalf.\n\n⚠️ AND THE REPLACEMENT RESTS ON THE SCHEMA'S WEAKEST JOIN, stated so it is not discovered later: a design_artifacts folder puts the weight on Artifact.location and Fragment.title, which is the field dev_storyflow filed FOUR defects about on this same day — unvalidated paths, a literal ellipsis matching nothing, title-vs-source ambiguity, and no way to ask \\\"is this path already in the graph?\\\". That is an argument for fixing `location` before leaning on it, not against the plan.\n\nRETIRED ON THE RECORD, NOT DELETED (retire-from-design, Path A). The capability, its verifications and its artifacts keep their nodes and their history; the ChangeEvent carrying change_type `deprecation` is the marker, because Capability.status has no terminal value — which is exactly dec:idea-does-a-capability-need-a-cancelled-state, still open and still Anthony's, and this is now its first real instance.",
+        "name": "The content store is discontinued — built, shipped, correct, and used zero times",
+        "rationale": "Recorded as a new Decision rather than by editing the five it supersedes, per dec:reopen-supersedes: an accepted decision is never un-accepted, a later one obsoletes it.\n\nThe two unsatisfied requirements are named in the decision itself rather than left to be inferred from a gap report, because \\\"we removed the thing that answered your stated need\\\" is the part a later reader most needs and the part a tidy graph would hide.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:the-stranded-server-correction-stands",
       "node_type": "Decision",
       "properties": {
@@ -62937,6 +62779,16 @@
         "epoch_type": "revision",
         "name": "The subscribe side becomes declarable and the seam is computed",
         "sequence": 236,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:content-store-discontinued",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The content store is discontinued — built, shipped, never used, and withdrawn (2026-08-09)",
+        "sequence": 302,
         "status": "arrived"
       }
     },
@@ -69263,6 +69115,46 @@
       }
     },
     {
+      "node_id": "snap:epoch:content-store-discontinued:art:content",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:c7b979d360e1e062\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:c7b979d360e1e062\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:c7b979d360e1e062\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:c7b979d360e1e062\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:c7b979d360e1e062\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:c7b979d360e1e062\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:c7b979d360e1e062\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:2f61880580a26ac3d957ea9d9eb0702f562a3a6e2644d804738cb97a5c7a744d\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:2f61880580a26ac3d957ea9d9eb0702f562a3a6e2644d804738cb97a5c7a744d\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:2f61880580a26ac3d957ea9d9eb0702f562a3a6e2644d804738cb97a5c7a744d\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:content-manifest\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:content-store\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:2f61880580a26ac3d957ea9d9eb0702f562a3a6e2644d804738cb97a5c7a744d\",\"granularity\":\"atomic\",\"location\":\"crates/reflow2-core/src/content.rs\",\"name\":\"content.rs\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:content",
+        "target_type": "Artifact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:content-store-discontinued:art:content-test",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:4f23c464539aed28\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:4f23c464539aed28\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:4f23c464539aed28\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:4f23c464539aed28\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:4f23c464539aed28\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:4f23c464539aed28\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:4f23c464539aed28\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:e84a28c58a87148918055465167668cdc668ffaee148ed450e30f9e0bd4896f0\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:e84a28c58a87148918055465167668cdc668ffaee148ed450e30f9e0bd4896f0\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:e84a28c58a87148918055465167668cdc668ffaee148ed450e30f9e0bd4896f0\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Verification\",\"other_id\":\"ver:content-store\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:e84a28c58a87148918055465167668cdc668ffaee148ed450e30f9e0bd4896f0\",\"granularity\":\"atomic\",\"location\":\"crates/reflow2-core/tests/content.rs\",\"name\":\"tests/content.rs\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:content-test",
+        "target_type": "Artifact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:content-store-discontinued:art:tools-content",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:18d0d737affde3064dabb7c858fdefa64df918ee7088fe83f9b225229bb50a56\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:5a81f97e05afd62edc28afabdf816c821216b14f0e7eaa2710acf600524b3019\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:173cceae74216ee1deb6037dfc94b29d40678922d9d5313b14943b989418dadd\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:173cceae74216ee1deb6037dfc94b29d40678922d9d5313b14943b989418dadd\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:173cceae74216ee1deb6037dfc94b29d40678922d9d5313b14943b989418dadd\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:content-manifest\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:content-store\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:173cceae74216ee1deb6037dfc94b29d40678922d9d5313b14943b989418dadd\",\"granularity\":\"atomic\",\"location\":\"crates/reflow2-mcp/src/tools/content_tools.rs\",\"name\":\"tools/content_tools.rs\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:tools-content",
+        "target_type": "Artifact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:content-store-discontinued:cap:content-store",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:content\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-content\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:content-store\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:content-surface\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:artifact\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:agent-navigates-content\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:content-growth-is-bounded-by-what-not-by-size\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:content-store-implementation\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:what-lives-where\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:where-content-lives\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:content-reaches-every-seat\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:content-store-for-what-the-graph-points-at\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:the-store-is-reachable-from-a-session\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"modality\":\"required\",\"recorded_at\":\"2026-07-31\"}}]",
+        "state": "{\"description\":\"A content-addressed store for what the graph cannot hold inline — session transcripts, mermaid diagrams, HTML mockups, user-supplied drawings and photographs, and the source documents a corpus was extracted from. The graph records a CONTENT HASH; the bytes live in the store; an unresolvable pointer fails loud and names itself rather than rendering a design quietly missing its pictures.\\n\\nHAND-ROLLED AND SYNCHRONOUS, IN `reflow2-core` (`dec:content-store-implementation`). `put` / `get` / `exists` over `sha2` and `std::fs`. Zero new crates in the core, no async runtime. `object_store` was measured and recorded as the documented UPGRADE PATH rather than adopted: 36 crates new to reflow2, ~24 of them URL/ICU machinery a local store never calls, buying a feature set — paths, prefixes, listing, multipart, conditional writes — that immutable content addressing does not have.\\n\\nREACHABLE FROM A SESSION as `content_put` / `content_get` / `content_exists` (`req:the-store-is-reachable-from-a-session`). That requirement exists because this capability was first marked `realized` while NOTHING COULD CALL IT — complete in the core, tested, carrying a passing check, and unreachable by every agent and person who would use it. Content arrives as `text` or `base64` (JSON carries no raw bytes), exactly one, and the store's root comes from `--content-path` rather than being derived from `--graph-path`, because the graph lives under a gitignored directory and blobs are COMMITTED so they travel with the design.\\n\\nFOUR REFUSALS, which is where this earns its keep — each pinned by a test, two mutation-checked. `get` VERIFIES bytes against the hash they are stored under and refuses a mismatch: a content hash nobody checks is only a filename. A malformed hash is refused BEFORE it reaches the filesystem, since a hash is interpolated into a path. Passing both `text` and `base64` is refused rather than resolved by picking one. And a server with no store configured says so instead of inventing a directory — where blobs live is a decision about the consumer's repo.\\n\\nWrites are temp-then-rename, so a process that dies mid-write leaves nothing or a whole blob, and a stranded temp file is unreachable as content because its name is not a hash. Reading INTO stored content is not this capability's job and never becomes one — the agent navigates, the graph records an opaque locator reflow2 never parses (`dec:agent-navigates-content`). What belongs here versus natively in the repo is `dec:what-lives-where`. REALIZED; `ver:content-store` and `ver:content-surface` passing.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Store bytes beside the design and point at them by content hash\",\"provenance\":\"authored\",\"status\":\"realized\",\"tier\":\"operational\"}",
+        "target_id": "cap:content-store",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:coord-moves-into-the-graph:dec:coord-board-in-graph",
       "node_type": "Snapshot",
       "properties": {
@@ -72974,7 +72866,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:cf3b87f997c01e2ea40a22634ac46ed0f3c75a6f005e6a80ad2f1b1d76095a67",
+  "prev_content_hash": "sha256:282610068f8f7032256c2a7a034a5e89636918786c04973ca31dcc386b66449a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

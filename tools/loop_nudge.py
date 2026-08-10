@@ -187,8 +187,6 @@ RENDERING_SUFFIXES = (
     ".svg", ".png", ".jpg", ".jpeg", ".drawio", ".mmd", ".puml", ".dot", ".excalidraw",
 )
 
-# Putting bytes in the content store.
-CONTENT_OPS = {"content_put"}
 
 # Loading a skill (`cap:skill-loads-are-counted`). `get_skill` only: it is the
 # call that puts a skill's text in front of the agent. `list_skills` is
@@ -243,7 +241,7 @@ def blank_state() -> dict:
     whole bug this file once had."""
     return {"writes": 0, "edits": 0, "touched": False,
             "changes": 0, "propagates": 0, "artifacts": 0, "captures": 0,
-            "gap_pass": 0, "renderings": 0, "content": 0, "skills": 0,
+            "gap_pass": 0, "renderings": 0, "skills": 0,
             # Graph writes for the WHOLE session, never reset by a loop check —
             # distinct from `writes`, which is "unchecked since the last loop
             # check" and is deliberately cleared. Only this can answer "did this
@@ -293,7 +291,6 @@ def parse_state(text: str) -> dict | None:
             "captures": int(raw.get("captures", 0)),
             "gap_pass": int(raw.get("gap_pass", 0)),
             "renderings": int(raw.get("renderings", 0)),
-            "content": int(raw.get("content", 0)),
             # cap:skill-loads-are-counted. Absent in older state files and
             # defaulting to zero — the SAME shape as "this session loaded no
             # skill", so a tally written by the previous version is
@@ -427,7 +424,6 @@ def update_state(session_id: str, mutate) -> None:
                 "captures": int(state.get("captures", 0)),
                 "gap_pass": int(state.get("gap_pass", 0)),
                 "renderings": int(state.get("renderings", 0)),
-                "content": int(state.get("content", 0)),
                 # cap:skill-loads-are-counted. Added here THIRD, after the note
                 # above was read and then ignored anyway: both of these were
                 # incremented in memory and thrown away on every write, and the
@@ -570,13 +566,6 @@ def match_shape(state: dict) -> str | None:
     #    visual half of a rationale rather than a break in the thread. The
     #    sentence carries the FILTER as well as the trigger, because the hook
     #    cannot tell an orphan from an explanation and must not imply it can.
-    if state.get("renderings", 0) > 0 and state.get("content", 0) == 0:
-        return (
-            "session-artifacts — a diagram or rendering was written this session "
-            "and nothing was stored; if a Decision or Capability points at it, "
-            "content_put it and link it, and if nothing points at it, do not "
-            "store it"
-        )
     return None
 
 
@@ -629,8 +618,6 @@ def main() -> int:
                     state["captures"] += 1
                 if op in GAP_PASS_OPS:
                     state["gap_pass"] += 1
-                if op in CONTENT_OPS:
-                    state["content"] += 1
                 if op in SKILL_OPS:
                     state["skills"] += 1
 
