@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:06350adfd28533ad0f98ce160569948f15877be4bef2c1fbf2b8fee214b3980e",
+  "content_hash": "sha256:a72fe0212a1bafe387180658dbe3ffe02c481c6ba813e67ba5449bb92b6d530c",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2070,6 +2070,18 @@
         "confidence": 0.9
       },
       "to_id": "dec:legitimate-islands-need-the-detector-fix"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:merge-survivor-provenance",
+      "properties": {},
+      "to_id": "dec:a-tied-merge-breaks-by-degree-not-by-alphabet"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:orientation-is-computed-not-written",
+      "properties": {},
+      "to_id": "dec:a-projection-is-named-and-the-battery-runs-over-it"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -5831,6 +5843,42 @@
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:a-projection-is-named-and-the-battery-runs-over-it",
+      "properties": {
+        "acted_at": "2026-08-10",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:a-projection-is-named-and-the-battery-runs-over-it",
+      "properties": {
+        "acted_at": "2026-08-10",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:a-tied-merge-breaks-by-degree-not-by-alphabet",
+      "properties": {
+        "acted_at": "2026-08-10",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:a-tied-merge-breaks-by-degree-not-by-alphabet",
+      "properties": {
+        "acted_at": "2026-08-10",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -23715,6 +23763,12 @@
       "from_id": "dec:a-graph-claim-cannot-be-published-before-its-pr",
       "properties": {},
       "to_id": "dec:export-once-per-pr"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:a-projection-is-named-and-the-battery-runs-over-it",
+      "properties": {},
+      "to_id": "dec:views-are-projections"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -62375,6 +62429,26 @@
       }
     },
     {
+      "node_id": "dec:a-projection-is-named-and-the-battery-runs-over-it",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "PROPOSED, APPROVER `who:ajs`. Anthony's framing 2026-08-10, and it is correct: graph algorithms run on any set of nodes and edges, so the analyses should be available across the design rather than wired one-per-detector. Measured basis in `fact:graph-analysis-covers-a-third-of-the-edge-types` — 23 of 35 populated edge types and 31% of edges get no graph analysis at all, including the entire golden thread and the delivery plan.\n\nTHE SHAPE PROPOSED: a PROJECTION is a named edge set plus its exclusions. Given one, run the standard battery — strongly-connected components and cycles, connected components, centrality, communities and modularity, articulation points, toposort depth — and REPORT IT AS MEASUREMENT, NEVER AS A VERDICT. `flow.rs` already uses exactly that language for its own cycles (\"reported, never judged\") and `dec:views-are-projections` already says every view is a projection, so this adds a surface rather than a concept.\n\nFIVE STANDARD PROJECTIONS TO SHIP WITH IT, each already exercised by hand on 2026-08-10: golden thread (SATISFIES+REALIZES+VERIFIES+ALLOCATED_TO), reasoning (GOVERNED_BY+OBSOLETES+CAUSES+ANTICIPATES), the plan (PRECEDES+SCHEDULED_FOR), structure (the existing DEPENDS_ON + contract-derived set, unchanged), and risk (RISKS+BLOCKS+CONTRADICTS+VIOLATES+MASKS).\n\nTHE EXCLUSION LIST IS PART OF THE PROJECTION, NOT A CAVEAT. This is the one non-obvious requirement and it was learned the expensive way in the first run: centrality over raw GOVERNED_BY returned the ten most influential \"decisions\" as all `decision:ack:` review records, and excluding those took the edge set from 867 to 255 — two thirds of that edge type is bookkeeping. `structure.rs` already excludes review records and `heal.rs` already names ARTIFACT_BOOKKEEPING (INCLUDES, CHANGED, YIELDED, AT_EPOCH). Those exclusions exist as private constants inside detectors; a projection surface has to lift them into the projection definition or every general run gives a confident wrong answer.\n\nMEASUREMENT AND JUDGEMENT STAY SEPARATE, and this is the part that keeps it from becoming BL-42 again. A battery result is a reading. A finding becomes a DEFECT only where somebody has decided what that finding MEANS for that projection — a cycle in DEPENDS_ON is a defect, a cycle in CAUSES+OBSOLETES turned out to be an ordinary time sequence. Emitting defects from every projection by default is precisely BL-42's shape, where one broadly-firing detector became 20 of 31 defects and had to be cut back to a single rule, and this project has now met that failure mode enough times to name it in advance.\n\nWHAT IS EXPLICITLY NOT PROPOSED: running every algorithm over every edge type and raising what it finds. That is the naive reading of \"run it on all edges\" and it fails twice over — once on exclusions, once on meaning.\n\nHIGHEST VALUE FIRST, if only one thing is built: centrality over the reasoning projection, because `dec:orientation-is-computed-not-written` already records the missing capability in its own words — \"WHICH FEW DECISIONS SHAPE EVERYTHING ELSE... neither what-next nor where-am-i answers it today, and it is what a newcomer actually needs\" — and says it should be a COMPUTATION rather than another paragraph. The computation is one call away and has never been made.\n\nOPEN, NOT SETTLED HERE: whether this is a new served tool, an extension of `graph_report`, or a projection argument on the existing detectors; whether a projection is a first-class node type or a static list in code; and whether centrality should be betweenness (already imported) or reachability (what was computed by hand), which `dec:idea-is-betweenness-the-right-centrality` already asks and this decision does not answer.",
+        "name": "PROPOSED — a named edge-set projection gets the standard graph battery as MEASUREMENT, rather than each algorithm being nailed to one detector's edge subset",
+        "rationale": "Anthony asked for this to be captured after measuring the coverage gap himself in conversation — his assumption that the ops are edge-agnostic was right, and the measurement confirmed the wiring is what limits them.\n\nRecorded as `proposed` with him as approver rather than accepted, because the shape has three unsettled sub-questions and because the last time this project shipped a broadly-firing structural detector it cost a cut-back (BL-42). The counter-argument is therefore recorded INSIDE the decision rather than left for a reviewer to supply.\n\nThe evidence deliberately includes the failed first run. A proposal for a general analysis surface that did not mention that its own first trial returned garbage would be arguing from the successful half of one experiment.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:a-tied-merge-breaks-by-degree-not-by-alphabet",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "PROPOSED RESOLUTION of the standing contradiction between `dec:merge-survivor-provenance` and the two facts that contradict it (`fact:apply-heal-would-have-destroyed-the-wrong-contributor`, `fact:defect-merge-survivor-ignores-priority-and-status`). AWAITING ANTHONY'S WORD — recorded at `proposed` with him as approver, so the loop reports it as owed rather than letting it read as settled.\n\nDO NOT RE-OPEN THE PROVENANCE RANKING. It is correct and it is not what fails. The failure is entirely in the TIEBREAK beneath it: provenance ranks authored > planned > imported > reconciled > inferred > healed, and in practice both sides of a real collision are hand-authored, so the rank TIES and `a <= b` on the node id decides. Twice observed, twice choosing the worse node — `req:backend_as_product` (medium, accepted) over `req:graph_is_the_content_bible` (critical, proposed) at dev_storyflow 2026-08-08, and `ctr:anthony` (8 edges, no description) over `who:ajs` (161 edges, full description) here on 2026-08-09.\n\nTHE ARGUMENT THAT UNBLOCKS THIS, and it is the whole point of the node: DEGREE IS NOT A POLICY. The reason the rule was deliberately left alone is recorded in `fact:defect-merge-survivor-ignores-priority-and-status`: ranking priority above status, or the reverse, asserts a claim about what matters more in a design, and `dec:readiness-is-an-observation-the-threshold-is-the-judgement` says reflow2 must not default that — it is the user's. THAT REASONING IS SOUND AND IS NOT BEING OVERTURNED. But \"destroy fewer edges\" is not a claim about what design content matters; it is a property of the MERGE OPERATION. And the thing it would replace — alphabetical id order — is arbitrary by construction. Substituting a non-arbitrary tiebreak for an arbitrary one asserts no policy at all, which is exactly why this can be done while the priority/status question stays the user's.\n\nFOUR PARTS, SMALLEST FIRST.\n\n(1) WHERE PROVENANCE TIES, BREAK BY DEGREE — keep the node whose deletion destroys less of the design. Degree is already computed and 161 against 8 is not close.\n\n(2) WHERE DEGREE ALSO TIES, REFUSE RATHER THAN PICK. A merge that genuinely cannot distinguish should ask. `dec:ask-not-repair` already holds this shape for the suspicion half; this extends it to the survivor half. A refusal that names both candidates is strictly more useful than a coin toss that names neither.\n\n(3) KEEP PRIORITY AND STATUS OUT OF THE RULE, PUT THEM IN THE DISCLOSURE. \"You are deleting a critical, still-unconfirmed node in favour of a medium, accepted one\" is INFORMATION, not a policy, and the machinery to say it already exists — `chg:a-merge-proposal-discloses-what-it-would-destroy` built `would_destroy` and the alphabet-chose-the-victim line in August. This adds a sentence to an existing disclosure rather than a rule to an existing ranking.\n\n(4) THE SCORING HALF IS SEPARATE AND PROBABLY WORTH MORE. Similarity is prose-only, unweighted by shared referents, which is what let two requirements sharing no requirement, surface or actor score 81-85. Fixing the survivor rule makes a bad merge less destructive; fixing scoring stops the pair reaching a merge at all. Recorded here so the two halves are not confused, NOT claimed by this decision.\n\nWHAT THIS DOES NOT DO, stated because the defect count will not move and somebody will look for it: recording this does not clear `heal:0fc0362a90ff913b` or `heal:7456a4d260ca45ce`. The contradiction detector fires on every CONTRADICTS edge whose alignment is not `supporting` and NEVER LOOKS FOR A RESOLVING DECISION, despite its own doc comment and its `suggested_fix_type: generate_decision` saying otherwise. The honest closure path is that when the tiebreak actually changes, the two facts become historical observations about the OLD rule and their CONTRADICTS edges should be retired as part of that change — not silenced now.\n\nEVIDENCE GAP, stated rather than papered over: degree is KNOWN to decide the contributor case correctly (161 v 8). Whether it separates dev_storyflow's pair is UNVERIFIED — that is their graph and it was not read. If their two nodes have similar degree, part (1) helps less than this decision implies and part (4) carries more of the weight.",
+        "name": "PROPOSED — when provenance ties, the merge survivor is the node whose deletion destroys less, and a genuine tie refuses instead of picking",
+        "rationale": "Written at Anthony's request on 2026-08-10 after he asked for the merge-survivor pair in plain English and then for the recommendation to be recorded. The recommendation is mine; the decision is his to make, which is why this is `proposed` with an approver edge rather than accepted.\n\nThe load-bearing move is separating the tiebreak from the ranking. Reading `fact:defect-merge-survivor-ignores-priority-and-status` first is what made that possible — it states plainly that the rule was NOT re-opened on purpose, and names the principle. Without that, the obvious proposal is \"consult priority and status\", which walks straight into the judgement reflow2 refuses to default and would have been rejected for a good reason. The finding that the blocked path and the open path are different paths came from reading why it was blocked.\n\nDeliberately does not claim the scoring half, and deliberately records the unverified half of its own evidence.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:adoption-is-reported-the-loop-still-computes",
       "node_type": "Decision",
       "properties": {
@@ -74545,6 +74619,18 @@
       }
     },
     {
+      "node_id": "fact:graph-analysis-covers-a-third-of-the-edge-types",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "MEASURED 2026-08-10 by reading which edge constants each analysis module actually spans (structure.rs, flow.rs, budget.rs, hierarchy.rs, heal.rs, surprises.rs, allocate.rs, propagate.rs) and joining that against edge counts in the live export.\n\n    populated edge types                               35   (of 61 declared — 26 are never used at all)\n    types reached by ANY graph analysis                12\n    types reached by NONE                              23   = 2,293 of 7,446 edges, 31%\n\nTHE GOLDEN THREAD IS IN THE UNANALYSED SET. GOVERNED_BY (867), REALIZES (199), SATISFIES (175), VERIFIES (139) — the core traceability of the whole design — have never been cycle-checked, never had centrality run on them, never been community-detected. Nor has PRECEDES (47), which IS the delivery plan. Meanwhile DEPENDS_ON (173 edges) carries FOUR separate analyses (structure, budget, hierarchy, allocate).\n\nTHE CAUSE IS WIRING, NOT CAPABILITY. Every algorithm needed is already imported from dynograph and already runs: betweenness_centrality, leiden, cut_structure, connected_components, find_cycle, strongly_connected_components. Each is nailed to one purpose-specific edge subset at its call site. Graph algorithms are edge-type agnostic; the wiring is not. Anthony's own earlier tool (/home/ajs7/reflow/tools/system_of_systems_graph.py) took the opposite shape — ONE graph built from all edges, then nx.simple_cycles and degree analysis over it — and he ran it as a routine sanity check on nearly every graph.\n\nWHAT THE MISSING ANALYSES ACTUALLY FOUND WHEN RUN BY HAND, so the gap is not reported as hypothetical:\n\n    GOLDEN THREAD  SATISFIES+REALIZES+VERIFIES+ALLOCATED_TO   677 edges   0 cycles\n    REASONING      GOVERNED_BY+OBSOLETES+CAUSES+ANTICIPATES   893 edges   1 cycle\n    THE PLAN       PRECEDES+SCHEDULED_FOR                      70 edges   0 cycles\n    TIME/HISTORY   HAS_SNAPSHOT+AT_EPOCH+VALID_FROM+VALID_TO  646 edges   0 cycles\n    RISK           RISKS+BLOCKS+CONTRADICTS+VIOLATES+MASKS     35 edges   0 cycles\n\nThe single cycle is dec:an-unplanned-cut-slips-every-later-increment-by-one CAUSES dec:idea-a-planned-increment-is-named-by-content-not-by-number, which OBSOLETES it back — a TIME SEQUENCE rendered as a loop by a projection with no clock, not faulty reasoning. SO THE DESIGN IS STRUCTURALLY CLEAN EVERYWHERE NOBODY WAS LOOKING, which is a result worth having and could not previously be obtained.\n\nAND A SECOND READING THE DESIGN ALREADY ASKED FOR. dec:orientation-is-computed-not-written names the genuinely missing thing as \"WHICH FEW DECISIONS SHAPE EVERYTHING ELSE — neither what-next nor where-am-i answers it today, and it is what a newcomer actually needs\". Centrality over GOVERNED_BY is that computation and had never been run. Run: the top governors are rule:no-foreclosure, the owner's-word authority rule, a-graph-per-ownership-boundary, systems-are-functional-not-the-file-tree, and the-LLM-speaks-the-graph-remembers-the-human-decides. THE SHAPE MATTERS MORE THAN THE LIST: influence is FLAT, not concentrated — max reach 13, the top five carry 16% of the edges, and 66 of 120 governed nodes are governed by exactly one thing. There is no small set of load-bearing roots. That is evidence against the design being a deep decision tree: a tree has a trunk and this does not.\n\nTHE EXCLUSIONS ARE LOAD-BEARING AND THAT WAS PROVEN THE EXPENSIVE WAY. The first centrality run returned garbage — the ten most influential \"decisions\" were all decision:ack: review records, which structure.rs already excludes from the design network (ver:acknowledgement-not-structure). Excluding them took GOVERNED_BY from 867 edges to 255: TWO THIRDS OF THAT EDGE TYPE IS BOOKKEEPING. A naive run-everything-on-everything gives a confident wrong answer on the first attempt, so any general surface must carry the exclusion list as part of each projection's definition rather than as a caveat.",
+        "subject_id": "cmp:structure",
+        "valid_from": "2026-08-10"
+      }
+    },
+    {
       "node_id": "fact:orphan-decision-is-silenced-by-an-edge-that-does-not-reach-it",
       "node_type": "TemporalFact",
       "properties": {
@@ -74658,6 +74744,18 @@
         "statement": "THIRD INSTANCE, AND THE FIRST ONE WHERE THE PEOPLE LOSING THE CYCLE HAD ALREADY WRITTEN THE DEFECT DOWN. Deliberately NOT a new defect: fact:defect-a-running-server-cannot-say-it-is-stale (2026-08-07) already states this case in almost these words — '--serve-shared is detached on purpose, so every session that restarted RE-ATTACHED TO THE SAME STALE PROCESS and nothing anywhere reported a problem' — and fact:defect-stale-server-reproduced-first-hand-here records the second. This node exists for what those two do NOT say. WHAT HAPPENED, 2026-08-08 late: Anthony went home specifically to restart and pick up the new binary, restarted the session, and the served surface was unchanged. Measured rather than assumed: `describe_schema(from: DesignRule, to: Component)` still answered 'No edge type specifically models DesignRule -> Component' and still showed CONSTRAINS as `from: [\"*\"]`, minutes after that enumeration was built, gated and pushed. `ps` explains it: the `--serve-shared` daemon has held the graph since 10:16 that morning, while the restart spawned a NEW `--shared` CLIENT (23:50) which attached to it. WHAT IS NEW AND WORTH THE NODE: (1) THE DOCUMENTED REMEDY IS THE THING THAT FAILS. Every prior record treats 'restart' as the escape from a stale server. Under `--shared` a session restart does not touch the daemon, so the remedy silently does nothing and the user reasonably believes it worked. The actual remedy is `--stop-shared`, which appears in NEITHER prior fact. (2) IT COST A WHOLE DAY OF DOGFOODING. Five merged PRs — the seat-liveness fix, both governance detectors, the skill, the enforced tri-state — were built, gated and merged without one of them ever running through a live session, because the daemon predated all of it. The handoff note written that evening had to say 'check the version rather than assume', which is the workaround this requirement exists to abolish. (3) IT WAS CAUGHT ONLY BY DELIBERATE CHECKING. The session tested a schema fact it happened to know had changed. Nothing surfaced it, and a session without that specific memory would have proceeded on a stale surface believing it was current — which is exactly how the four sessions in the 2026-08-07 report drew opposite conclusions from the same true value. WHY THIS IS AN ARGUMENT AND NOT A COMPLAINT: `req:the-server-is-the-authority-on-its-own-currency` has NOTHING SATISFYING IT and has sat among the 0.60 unsatisfied-requirement gaps all day. The fix is not research: `/proc/self/exe` is marked `(deleted)` the moment the binary is replaced, w-6904efa6 demonstrated it live on a real pid, and it is one syscall with no second source and no version-string comparison. THREE INSTANCES ACROSS TWO PROJECTS AND TWO MACHINES, and the third landed on the maintainer. THE HONEST CAVEAT, because recurrence is not automatically corroboration: these three share a cause rather than a method — two were found by noticing an impossible value, this one by testing a remembered fact — so they add weight to the COST, not to the diagnosis, which was already certain.",
         "subject_id": "req:the-server-is-the-authority-on-its-own-currency",
         "valid_from": "2026-08-08"
+      }
+    },
+    {
+      "node_id": "fact:two-heal-rules-assert-a-condition-they-never-test",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "READ FROM SOURCE 2026-08-10, not inferred: two HEAL rules fire UNCONDITIONALLY on an edge type while their message names a condition the code never evaluates.\n\n    heal.rs:971  unresolved_setup   iterates every ANTICIPATES edge and emits\n                                    \"'X' anticipates 'Y' but nothing follows through\"\n                                    — there is no follow-through test anywhere in the loop.\n    heal.rs:906  contradiction      iterates every CONTRADICTS edge (unless alignment=supporting)\n                                    and suggests `generate_decision`, while the rule's own doc\n                                    comment at heal.rs:47 describes it as \"two nodes joined by\n                                    CONTRADICTS with NO RESOLVING DECISION\". Nothing looks for one.\n\nTHE CONSEQUENCE IS THE SAME IN BOTH CASES AND IT IS NOT NOISE: THE SUGGESTED FIX PROVABLY DOES NOT CLEAR THE FINDING. Write the resolving Decision the contradiction rule asks for and the contradiction still fires. Build the thing an ANTICIPATES edge anticipates and the unresolved_setup still fires. The only ways out are deleting the edge or acknowledging the defect — so a design is PUNISHED FOR RECORDING THE RELATIONSHIP, and the cheapest way to a clean report is to stop recording anticipation and contradiction at all.\n\nOBSERVED LIVE, WHICH IS HOW IT WAS FOUND. Recording `dec:merge-survivor-provenance` ANTICIPATES `dec:a-tied-merge-breaks-by-degree-not-by-alphabet` — an honest edge, since the older decision's own rationale says \"consider ranking unset below authored in a future revision\" — took detect_defects from 7 to 8 immediately, and no amount of building will take it back to 7.\n\nTHIS EXACT CLASS IS ALREADY FIXED ONCE IN THE SAME FUNCTION, sixty lines above. heal.rs:892-905 documents the CONTRADICTS/alignment=supporting bug: the loop read the edge TYPE and never the PROPERTY, so every correctly-modelled corroboration came back as a structural defect, and `dec:commands-are-the-exception` QUALIFYING `dec:skills-served` turned the graph red. Its recorded lesson is verbatim: \"A property the detector ignores is a property that lies.\" The same sentence applies to a CONDITION the detector never computes — and the damage named there applies here too: the only ways out were to acknowledge a defect that is not one, or to stop recording the relationship.\n\nWHAT A FIX WOULD HAVE TO DECIDE, because neither is obvious and this is not a repair proposal. For unresolved_setup: what COUNTS as follow-through — the anticipated node existing at all (trivially true, the edge points at it), reaching `accepted`, gaining a SATISFIES/REALIZES chain, or arriving in an epoch. For contradiction: what counts as RESOLVING — a Decision edged to both endpoints, or one edged to either, and whether a `proposed` Decision resolves anything. Both questions are real design questions and answering them wrongly converts an over-firing rule into an under-firing one, which is worse.\n\nDELIBERATELY NOT DONE: the ANTICIPATES edge was NOT deleted to restore the count to 7. The edge is true, and removing a true relationship to satisfy a detector that fires unconditionally is the gaming this project warns against everywhere else. The defect belongs to the rule, not to the edge.",
+        "subject_id": "cmp:heal",
+        "valid_from": "2026-08-10"
       }
     },
     {
@@ -76196,7 +76294,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:7415563cade3f637520ca732543aa3766ff613a24102c457f5bc5cc18985deea",
+  "prev_content_hash": "sha256:06350adfd28533ad0f98ce160569948f15877be4bef2c1fbf2b8fee214b3980e",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
