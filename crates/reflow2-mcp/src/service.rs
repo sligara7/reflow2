@@ -1877,6 +1877,20 @@ pub struct LoopScopeReq {
 
 #[derive(Debug, Default, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct WhatNextReq {
+    /// How many RANKED decisions to return in the middle band — the ones you
+    /// have not marked yourself. Default 4, which with the marked band and the
+    /// one deliberate unranked draw is the shape
+    /// `dec:orientation-shows-four-ranked-and-one-unexplored` proposes.
+    ///
+    /// Raising it does not make the answer more accurate, only longer: the
+    /// score is deliberately coarse and its head is nearly a tie.
+    #[serde(default)]
+    pub limit: Option<usize>,
+}
+
+#[derive(Debug, Default, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ScopeReq {
     /// Narrow the answer to the part of the design around this node — a
     /// Component a team owns, a Project, a Capability. Omit for the whole design,

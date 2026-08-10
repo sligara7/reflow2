@@ -142,6 +142,34 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Which decisions to settle next — a rough guide, not an ordering, for a design with more open \
+                       questions than anyone can hold at once. FOUR BANDS, and the split is the design. `marked`: \
+                       open decisions carrying AUTHORED_BY `role=approver` — the user's own word, durable across \
+                       sessions, self-clearing when the status moves. NO SCORE REORDERS THESE. `ranked`: the top \
+                       few of what is NOT marked, since ranking somebody's own marks back at them says nothing they \
+                       do not know. `unexplored`: ONE from the zero-scoring pool — a REQUIRED exploration term, \
+                       because every signal here is built on connectedness and would otherwise bury a decision \
+                       nothing points at, forever. `shaping`: the few ACCEPTED decisions most of the LIVE design \
+                       hangs off — not a to-do list, but what a newcomer needs to read the rest. SCORES ARE COARSE \
+                       ON PURPOSE. Ranked: governed nodes (+1 each), those SCHEDULED into an increment (+2), \
+                       CONTRADICTS an accepted Decision (+2). Shaping: live governed count, where live drops \
+                       dropped/deferred Requirements and superseded/rejected Decisions — that filter is the whole \
+                       refinement, since raw in-degree's top hit here governed ten requirements of which nine were \
+                       dropped. Type breadth is reported as `shapes`, never ranked. WHAT IT CANNOT DO: a Decision \
+                       has no timestamp, so staleness never enters; one linked to nothing scores zero however \
+                       important — `unranked_pool` and `not_shown` report how many, so a short answer never reads \
+                       as the whole set. Review records excluded throughout.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn what_next(
+        &self,
+        Parameters(req): Parameters<crate::service::WhatNextReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        ok_json(g.what_next(req.limit.unwrap_or(4)).map_err(dyno_err)?)
+    }
+
+    #[tool(
         description = "Blast radius of a recorded ChangeEvent along the golden thread. Returns \
                        a summary (counts by distance, the distance-1 ring, risk crossings); \
                        pass full=true for every impacted node with its hop chain.",

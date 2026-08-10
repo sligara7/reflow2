@@ -26,6 +26,9 @@ you. The standing rule is in AGENTS.md.
   most want and the report does not include it.**
 - `detect_gaps` — what still needs their input.
 - `reviewed_gaps` — what was raised and consciously accepted.
+- `what_next` — which decisions to settle next, in three bands. On a design with dozens of open
+  questions this is the part that turns a list into a starting point; on a small one it is cheap
+  and says so.
 - `scan_nodes` for `Requirement` / `Component` / `Interface` — the shape of the design.
 
 **On a mature design, read the shape before the prose.** `scan_nodes` answers with as many nodes
@@ -58,7 +61,32 @@ something they could read in under a minute:
      never got written into the design, or the gap should be acknowledged.
 5. **What's still open** — the *remaining* gaps that need them, phrased as the questions they are.
    Say how many there are and lead with the ones that actually block progress.
-6. **Where to go next** — the one or two things worth doing now, and offer the choice rather than
+6. **Which decisions to make next** — read `what_next` back as three bands, and keep them apart,
+   because they answer different questions:
+   - **What they marked** — decisions carrying their own approver edge. This is the user's word,
+     it survives every session, and no ranking reorders it. Lead with it.
+   - **The ranked few** — the highest-scoring decisions they have *not* marked. Say *why* each one
+     surfaced ("five things wait on it", "it contradicts a settled choice"), never the bare score.
+     This band is the only place the ranking earns anything: ranking their own marks back at them
+     tells them nothing they do not know.
+   - **The one unexplored** — say plainly that it is a deliberate sample of the decisions nothing
+     points at yet, **not the least important one**. Scoring zero means the graph has no opinion,
+     never that the question does not matter. Skipping this line is how a guide turns into a
+     verdict.
+
+   **Say what is not shown.** `not_shown` and `unranked_pool` exist so a five-item answer can
+   never read as the whole set — the same false completeness the paging rule above forbids.
+   **And say the ranking is rough.** It is a guide with a coarse score, not a claim: on a real
+   design the head of the list is often a near-tie. Offering it as an ordering oversells it.
+7. **Which few decisions shape everything else** — `what_next`'s `shaping` band, and it answers a
+   different question for a different reader than the three above. These are *settled* decisions
+   that need nothing from anybody; they are what someone who has just arrived needs in order to
+   read the rest of the design. Narrate two or three in plain language — "you decided the systems
+   are functional rather than the file tree, and eight components hang off that" — and say what
+   each one shapes. **Skip this for someone who already knows the design**; it is orientation, not
+   news. If `governs_retired` is high on one, that is worth a clause: it means most of what that
+   decision shaped has since been pruned.
+8. **Where to go next** — the one or two things worth doing now, and offer the choice rather than
    assuming: keep filling in the design, or start building.
 
 ## Keep it honest
@@ -72,6 +100,12 @@ something they could read in under a minute:
   Read it back to them instead of reconstructing it; the asserted and recovered counts are
   standing questions.
 - **Don't hide the open questions to make the summary tidy.** The gaps are the value.
+- **Never present the ranking as a verdict on what matters.** `what_next` scores what the graph
+  can see — how much waits on a decision, whether it blocks planned work, whether it conflicts
+  with something settled. A decision nobody has linked yet scores zero however important it is,
+  and a `Decision` carries no timestamp so nothing about age enters the score at all. Report it
+  as a starting point and let the user overrule it; the one signal that outranks the score is
+  their own marking, which is why it has its own band.
 - **If nothing has changed since last time, say so plainly.** A short honest answer beats a
   padded one.
 
