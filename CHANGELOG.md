@@ -31,7 +31,63 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
-## [0.26.1] — 2026-08-09
+## [0.27.0] — 2026-08-09
+
+Ownership becomes the third "who" axis, the content store is withdrawn, and the question of
+whether governance belongs in reflow2 at all is answered: it does.
+
+**Drafted from the measured surface** — `tools/toolsnaps/` goldens and the served-tool signatures
+diffed against `v0.26.1` — rather than from `changelog_view`, because `[Unreleased]` was empty
+across ten merged PRs and the toolsnap goldens are the ground truth for what a consumer can call.
+
+⚠️ **UPGRADE DOC OWED AND WRITTEN: the schema stamp moved** — 61 edge types, up from 60, with
+`OWNED_BY` added. Nothing in your graph is reinterpreted, but a new edge type means a new
+capability your existing designs do not yet use. See
+[docs/upgrading-to-v0.27.0.md](docs/upgrading-to-v0.27.0.md).
+
+⚠️ **Four served tools are GONE.** If you call `content_put`, `content_get`, `content_exists` or
+`content_manifest`, those calls now fail. See Removed.
+
+### Added
+
+- **`owned_by` — whose AREA a node is, durable and never released.** The third "who" axis, and the
+  one that was missing. `AUTHORED_BY` says who *wrote* this (past tense, historical);
+  `CLAIMS` says who is *in* it right now (transient, advisory, released at checkout); `OWNED_BY`
+  says whose ground it is, and it survives every session. Deliberately **not** a traceability
+  edge, so ownership never propagates a blast radius and never turns a Contributor into a hub.
+  `loop_status(contributor_id)` reads it as `gaps_on_owned_ground`.
+- **Most nodes legitimately have no owner, and that is not reported as a gap.** Whether unowned
+  ground should be detected at all is left open rather than assumed.
+
+### Changed
+
+- **`loop_status` lists the decisions assigned to a named approver** instead of only counting
+  them — you no longer have to read the export to find out which two they were.
+- **reflow2 declares the interfaces it *requires*, not only the ones it provides**, so `seam_report`
+  ran for the first time and `dead_surface` fell from 15 to 1. `unprovided_interface` no longer
+  fires on a `required` interface, which is that interface's definition rather than a gap.
+- **`get_node` refuses an unknown node type** rather than answering with a confident nothing.
+- **`set_verification_status` no longer destroys `last_run_at` when the optional parameter is
+  omitted** — consumer-reported, and the direction of the bug was the dangerous one.
+- **The `revise-design` skill no longer claims `create_node` replaces.** It **merges** — the served
+  tool upserts — and the old warning was scaring agents away from a safe call. Two served surfaces
+  disagreed about whether a write destroys data; the tool description was the correct one.
+
+### Removed
+
+- **The content store: `content_put`, `content_get`, `content_exists`, `content_manifest`.**
+  Built, shipped, correct, and used **zero times** across three projects in the retained sample.
+  Git is already content-addressed and the repo already holds what the design produced, so the
+  store was a second answer to a question that had one. Two accepted requirements are now
+  deliberately **unsatisfied** rather than quietly re-scoped — the design says so out loud.
+  `ingest_step` and `ingest_corpus_step` shared that source file and are **unaffected**; they moved
+  to `ingest_tools.rs` and their schemas are byte-identical.
+
+### Fixed
+
+- **Three consumer-reported defects where a served surface destroyed or withheld data**, landed
+  from PRs a bad merge had stranded.
+- **`loop_status` no longer reports a zero that cannot be told from an absence** in two more places.
 
 Dependency bump only: **rmcp 3.0.1 → 3.1.2** (and `rmcp-macros` with it). Cut as its own tag
 rather than folded into v0.26.0, so that if the protocol layer misbehaves in the field there is

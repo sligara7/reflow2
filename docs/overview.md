@@ -108,6 +108,13 @@ Three records, three questions — kept separate on purpose:
   to a collaborator as-is.
 
 ### 3½ · Upgrade notes — *read before updating a consumer project*
+- [upgrading-to-v0.27.0.md](upgrading-to-v0.27.0.md) — **upgrade everywhere, together**: one new edge
+  type (`OWNED_BY`) moves the version stamp, so an older reflow2 is locked out of a design written by
+  this one. Purely additive — nothing is reinterpreted or migrated. **But four served tools are gone:**
+  `content_put`, `content_get`, `content_exists` and `content_manifest` were built, correct, and called
+  zero times, and calls to them now fail. `ingest_step` and `ingest_corpus_step` are unaffected. What
+  you gain: ownership as the third "who" axis — whose *area* a node is, standing and never released,
+  distinct from who wrote it and who is in it right now.
 - [upgrading-to-v0.22.0.md](upgrading-to-v0.22.0.md) — **upgrade everywhere, together**: a new node
   type (`ReadinessAssessment`) and two new edge types (`GATED_ON`, `HAS_READINESS`) move both halves
   of the version stamp, so an older reflow2 is locked out of a design written by this one. No pin
