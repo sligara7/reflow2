@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:2d1be2d1f6b2bca1cb2406c49b25f45221ee8227e88bff38150c039709eb5038",
+  "content_hash": "sha256:10e86d43883eeea45801627dccb1d5f5d7760a3264768192814ee171bbae3d3a",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3615,6 +3615,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:detector-spec-forked-attribution",
+      "properties": {},
+      "to_id": "epoch:detector-spec-cannot-name-a-forked-identity"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:documentation-subsystem",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
@@ -5058,6 +5064,12 @@
       "from_id": "snap:epoch:describe-designs-built:cap:describe-design-at-path",
       "properties": {},
       "to_id": "epoch:describe-designs-built"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:detector-spec-cannot-name-a-forked-identity:rule:design-intent-moves-only-on-the-owners-word",
+      "properties": {},
+      "to_id": "epoch:detector-spec-cannot-name-a-forked-identity"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -12085,6 +12097,16 @@
         "action": "added"
       },
       "to_id": "cap:design-identity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:detector-spec-forked-attribution",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified",
+        "field": "statement"
+      },
+      "to_id": "rule:design-intent-moves-only-on-the-owners-word"
     },
     {
       "edge_type": "CHANGED",
@@ -24963,6 +24985,12 @@
       "from_id": "rule:bl-212",
       "properties": {},
       "to_id": "snap:epoch:reflow2-states-its-own-rules:rule:bl-212"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "rule:design-intent-moves-only-on-the-owners-word",
+      "properties": {},
+      "to_id": "snap:epoch:detector-spec-cannot-name-a-forked-identity:rule:design-intent-moves-only-on-the-owners-word"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -48808,6 +48836,12 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:v0270",
+      "properties": {},
+      "to_id": "epoch:detector-spec-cannot-name-a-forked-identity"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:v0270-planned",
       "properties": {},
       "to_id": "epoch:v0280-planned"
@@ -59985,6 +60019,14 @@
       }
     },
     {
+      "node_id": "chg:detector-spec-forked-attribution",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "resync",
+        "name": "CORRECTION (recorded as `resync` only because no change_type means \"the record was wrong from the start\"): the enforced authority rule's detector spec named `who:ajs` alone, and the owner also exists as `ctr:anthony` carrying 8 edges — a check written from that spec would have been queryable and wrong"
+      }
+    },
+    {
       "node_id": "chg:documentation-subsystem",
       "node_type": "ChangeEvent",
       "properties": {
@@ -65127,6 +65169,16 @@
       }
     },
     {
+      "node_id": "epoch:detector-spec-cannot-name-a-forked-identity",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The enforced authority rule's detector spec is corrected: it named one Contributor id, and the owner has two",
+        "sequence": 304,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:dev-storyflow-trial",
       "node_type": "DesignEpoch",
       "properties": {
@@ -65939,7 +65991,7 @@
         "category": "convention",
         "enforced": true,
         "name": "Design intent moves only on the owner's word — an agent may propose anything and settle nothing",
-        "statement": "A NODE THAT ASSERTS INTENT REACHES A SETTLED STATE ONLY BECAUSE ANTHONY SAID SO. An agent may create, draft, measure, argue and recommend without limit; it may not move a Requirement off `proposed`, mark a Decision `accepted`, or record a rule's enforcement on his behalf. Alex is a genuine design contributor and second user (`who:alex`), and his input is ADVISORY — it informs and gates nothing.\n\nENFORCED — Anthony, 2026-08-09, answering the consequence question directly (\"if a session recorded a decision as accepted without you saying so, should that stop the build, or is it advice?\"): stop the build.\n\n⭐ THE ASYMMETRY IS THE FINDING, and it was not predicted. Asked the same question about the branch-then-PR process rule minutes earlier, he answered ADVICE. So in a one-developer project the PROCESS rule is self-discipline and the AUTHORITY rule is inviolable — the opposite of the naive expectation that a solo project needs no authority modelling because there is only one person. What one person needs protection from is not another person; it is an AGENT WRITING IN HIS VOICE. That is a data point for `req:a-node-can-say-who-may-change-it` from the simple end of the scale, where every other data point so far came from a multi-agent fleet.\n\nWHAT IT OWES, stated plainly rather than quietly closed: a DETECTOR. `unverified_enforced_rule` will fire at 0.6 and stay until a PASSING Verification is attached — a `planned` one does not silence it. NO CHECK IS ATTACHED TODAY, deliberately: the governance-proposal skill's standing warning is that attaching a check to close a finding is green-washing, and a passing check that tests nothing is a lie the graph cannot see.\n\nTHE CHECK THAT WOULD ACTUALLY DETECT IT, so the debt is specific rather than vague: every Decision at `accepted` carries an AUTHORED_BY edge to `who:ajs`, and every Requirement off `proposed` likewise. This is unusually checkable for a governance rule — the graph already holds the edge, and `loop_status` already computes the mirror image (a `proposed` Decision with an approver who has not answered). What is missing is the inverse: a SETTLED node with nobody's name on it.\n\nALREADY PARTLY MECHANIZED, which is why enforcement is not a bluff: `add_decision` lands at `proposed`; `add_requirement` lands at `proposed`; `dec:certainty-derived` derives a requirement's certainty from status × provenance because every move off `proposed` records the user's word; `set_requirement_status`'s own guardrail says promoting it yourself forges their signature; and `dec:three-party-checks` states the division — the LLM speaks, the graph remembers and counts, the human decides. The rule names the policy those mechanisms serve, which until now was implemented everywhere and stated nowhere.\n\nHONEST BOUND: the tooling resists the violation but cannot presently REPORT one, which is exactly the gap the enforcement flag now makes visible instead of leaving to good behaviour."
+        "statement": "A NODE THAT ASSERTS INTENT REACHES A SETTLED STATE ONLY BECAUSE ANTHONY SAID SO. An agent may create, draft, measure, argue and recommend without limit; it may not move a Requirement off `proposed`, mark a Decision `accepted`, or record a rule's enforcement on his behalf. Alex is a genuine design contributor and second user (`who:alex`), and his input is ADVISORY — it informs and gates nothing.\n\nENFORCED — Anthony, 2026-08-09, answering the consequence question directly (\"if a session recorded a decision as accepted without you saying so, should that stop the build, or is it advice?\"): stop the build.\n\n⭐ THE ASYMMETRY IS THE FINDING, and it was not predicted. Asked the same question about the branch-then-PR process rule minutes earlier, he answered ADVICE. So in a one-developer project the PROCESS rule is self-discipline and the AUTHORITY rule is inviolable — the opposite of the naive expectation that a solo project needs no authority modelling because there is only one person. What one person needs protection from is not another person; it is an AGENT WRITING IN HIS VOICE. That is a data point for `req:a-node-can-say-who-may-change-it` from the simple end of the scale, where every other data point so far came from a multi-agent fleet.\n\nWHAT IT OWES, stated plainly rather than quietly closed: a DETECTOR. `unverified_enforced_rule` will fire at 0.6 and stay until a PASSING Verification is attached — a `planned` one does not silence it. NO CHECK IS ATTACHED TODAY, deliberately: the governance-proposal skill's standing warning is that attaching a check to close a finding is green-washing, and a passing check that tests nothing is a lie the graph cannot see.\n\n=== THE DETECTOR SPEC, CORRECTED 2026-08-09 — READ THIS BEFORE WRITING THE CHECK ===\n\n⚠️ THE FIRST SPEC WAS WRONG AND IS PRESERVED IN THE SNAPSHOT AT `epoch:detector-spec-cannot-name-a-forked-identity`. It read: \"every Decision at `accepted` carries an AUTHORED_BY edge to `who:ajs`.\" THAT CHECK WOULD HAVE BEEN QUERYABLE AND WRONG, because the owner exists as TWO Contributor nodes and both carry live edges.\n\nMEASURED ON THIS GRAPH, 2026-08-09, 7 Contributors under TWO id conventions (`ctr:` and `who:`):\n  @ajs        → `ctr:anthony` (8 edges)  AND  `who:ajs` (161 edges)\n  claude-code → `ctr:claude-fable` (11 edges) AND `who:claude-code` (39 edges)\nA check keyed on `who:ajs` alone would either fire false violations on everything attributed to `ctr:anthony`, or pass while the owner's authority is silently split across two identities. The second failure is the dangerous one: it reports green.\n\n⭐ WHY THIS IS THE RULE'S PROBLEM AND NOT A TIDINESS ONE. dev_storyflow filed exactly this hours before it was found here (finding ⑮ of their generalized set, api-boss `80c01d1f`, sharpened by a correction from storybug Boss `47accf78`): \"a governance layer built on a forked attribution namespace inherits the fork, AND GAINS CONFIDENCE WHILE DOING IT.\" They hit it trying to encode a tri-boss ruling as three approver edges and could not, because two of three approvers each matched two nodes and the third had no Contributor node at all. Their conclusion travels: edges that are queryable and wrong are STRICTLY WORSE than prose that is honestly informal.\n\nTHE CORRECTED SPEC, in two parts, and the first is a PRECONDITION rather than a step:\n\n(1) PRECONDITION — THE FORK MUST BE RESOLVED OR DECLARED FIRST. Either the duplicate identities are merged (a `DUPLICATES` edge with `basis: asserted`, which per dec:ask-not-repair is the only basis licensing a merge, and the merge is Anthony's call because it is destructive), or the check is given an explicit, recorded set of ids that mean the owner. WHAT IT MUST NOT DO IS HARD-CODE THE FORK SILENTLY — a check listing two ids without saying why is a check that has absorbed a defect and made it permanent.\n\n(2) THE CHECK ITSELF, once (1) holds: every Decision at `accepted`, and every Requirement moved off `proposed`, carries an AUTHORED_BY edge to a Contributor the design recognises AS THE OWNER — resolved through (1), never by matching an id literal in the check's source. `loop_status` already computes the mirror image (a `proposed` Decision whose named approver has not answered); what is missing is the inverse — a SETTLED node with nobody's name on it.\n\n📝 HOW IT WAS FOUND, recorded because the mechanism generalises: the same session that wrote the wrong spec also minted two new `who:` Contributors WITHOUT searching the namespace first, and landed on the documented convention only by copying the neighbouring `who:alex`. storybug Boss named this precisely — `who:` is not one convention among equals, it is the form `add_contributor`'s own parameter description gives as its example, so the deviations are deviations from a documented convention that no schema, validator or detector defends. And the deviation path is COPYING A NEIGHBOUR, not carelessness — so any fix that assumes authors read the parameter description will miss it.\n\nALREADY PARTLY MECHANIZED, which is why enforcement is not a bluff: `add_decision` lands at `proposed`; `add_requirement` lands at `proposed`; `dec:certainty-derived` derives a requirement's certainty from status × provenance because every move off `proposed` records the user's word; `set_requirement_status`'s own guardrail says promoting it yourself forges their signature; and `dec:three-party-checks` states the division — the LLM speaks, the graph remembers and counts, the human decides. The rule names the policy those mechanisms serve, which until now was implemented everywhere and stated nowhere.\n\nHONEST BOUND: the tooling resists the violation but cannot presently REPORT one, which is exactly the gap the enforcement flag now makes visible instead of leaving to good behaviour — and, until the precondition above is met, the gap cannot be closed correctly rather than merely closed."
       }
     },
     {
@@ -71612,6 +71664,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:detector-spec-cannot-name-a-forked-identity:rule:design-intent-moves-only-on-the-owners-word",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:certainty-derived\",\"properties\":{\"note\":\"Deriving certainty from status x provenance is this rule mechanized: every move off proposed records the owner's word\"}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:three-party-checks\",\"properties\":{\"note\":\"The LLM speaks, the graph counts, the human decides - the division this rule states as policy\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-09\",\"role\":\"author\"}}]",
+        "state": "{\"category\":\"convention\",\"enforced\":true,\"name\":\"Design intent moves only on the owner's word — an agent may propose anything and settle nothing\",\"statement\":\"A NODE THAT ASSERTS INTENT REACHES A SETTLED STATE ONLY BECAUSE ANTHONY SAID SO. An agent may create, draft, measure, argue and recommend without limit; it may not move a Requirement off `proposed`, mark a Decision `accepted`, or record a rule's enforcement on his behalf. Alex is a genuine design contributor and second user (`who:alex`), and his input is ADVISORY — it informs and gates nothing.\\n\\nENFORCED — Anthony, 2026-08-09, answering the consequence question directly (\\\"if a session recorded a decision as accepted without you saying so, should that stop the build, or is it advice?\\\"): stop the build.\\n\\n⭐ THE ASYMMETRY IS THE FINDING, and it was not predicted. Asked the same question about the branch-then-PR process rule minutes earlier, he answered ADVICE. So in a one-developer project the PROCESS rule is self-discipline and the AUTHORITY rule is inviolable — the opposite of the naive expectation that a solo project needs no authority modelling because there is only one person. What one person needs protection from is not another person; it is an AGENT WRITING IN HIS VOICE. That is a data point for `req:a-node-can-say-who-may-change-it` from the simple end of the scale, where every other data point so far came from a multi-agent fleet.\\n\\nWHAT IT OWES, stated plainly rather than quietly closed: a DETECTOR. `unverified_enforced_rule` will fire at 0.6 and stay until a PASSING Verification is attached — a `planned` one does not silence it. NO CHECK IS ATTACHED TODAY, deliberately: the governance-proposal skill's standing warning is that attaching a check to close a finding is green-washing, and a passing check that tests nothing is a lie the graph cannot see.\\n\\nTHE CHECK THAT WOULD ACTUALLY DETECT IT, so the debt is specific rather than vague: every Decision at `accepted` carries an AUTHORED_BY edge to `who:ajs`, and every Requirement off `proposed` likewise. This is unusually checkable for a governance rule — the graph already holds the edge, and `loop_status` already computes the mirror image (a `proposed` Decision with an approver who has not answered). What is missing is the inverse: a SETTLED node with nobody's name on it.\\n\\nALREADY PARTLY MECHANIZED, which is why enforcement is not a bluff: `add_decision` lands at `proposed`; `add_requirement` lands at `proposed`; `dec:certainty-derived` derives a requirement's certainty from status × provenance because every move off `proposed` records the user's word; `set_requirement_status`'s own guardrail says promoting it yourself forges their signature; and `dec:three-party-checks` states the division — the LLM speaks, the graph remembers and counts, the human decides. The rule names the policy those mechanisms serve, which until now was implemented everywhere and stated nowhere.\\n\\nHONEST BOUND: the tooling resists the violation but cannot presently REPORT one, which is exactly the gap the enforcement flag now makes visible instead of leaving to good behaviour.\"}",
+        "target_id": "rule:design-intent-moves-only-on-the-owners-word",
+        "target_type": "DesignRule"
+      }
+    },
+    {
       "node_id": "snap:epoch:embeddings-question-gets-its-findings:dec:idea-embeddings-adoption",
       "node_type": "Snapshot",
       "properties": {
@@ -75305,7 +75367,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:5a646b719ecd63734aeb52b2d215ffb769032f24560ad989e72c0cccdd2abcc7",
+  "prev_content_hash": "sha256:2d1be2d1f6b2bca1cb2406c49b25f45221ee8227e88bff38150c039709eb5038",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
