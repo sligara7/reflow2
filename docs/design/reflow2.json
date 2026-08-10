@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:7415563cade3f637520ca732543aa3766ff613a24102c457f5bc5cc18985deea",
+  "content_hash": "sha256:06350adfd28533ad0f98ce160569948f15877be4bef2c1fbf2b8fee214b3980e",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1065,6 +1065,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:comparison-discloses-build-skew",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:compare"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:complementary-pairing",
       "properties": {
         "weight_basis": "estimated"
@@ -1126,6 +1134,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:alternatives"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:defaults-are-not-serialized",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:export"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1198,6 +1214,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:dimensions"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:distribution-debt-is-reported",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:report"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -6052,6 +6076,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:fix-the-comparison-before-pointing-it-earlier",
+      "properties": {
+        "acted_at": "2026-08-10",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:fnv1a-foundational",
       "properties": {
         "acted_at": "2026-07-23",
@@ -6299,6 +6332,15 @@
         "role": "author"
       },
       "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-does-a-session-open-by-comparing-the-record",
+      "properties": {
+        "acted_at": "2026-08-10",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -23982,6 +24024,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:a-comparison-discloses-build-skew",
+      "properties": {},
+      "to_id": "dec:fix-the-comparison-before-pointing-it-earlier"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:a-decision-states-what-it-binds",
       "properties": {
         "note": "Captured under the decision that governance is integrated here rather than split out"
@@ -24067,6 +24115,12 @@
       "from_id": "req:adopt-says-how-much-it-got",
       "properties": {},
       "to_id": "decision:ack:3a667fe34b66bffd"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:an-absent-property-means-nobody-said-it",
+      "properties": {},
+      "to_id": "dec:fix-the-comparison-before-pointing-it-earlier"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -24561,6 +24615,12 @@
         "note": "The decision fixes WHERE this requirement is implemented -- reflow2_check.py rather than the server -- so the requirement is shaped by it and any later attempt to build it server-side should meet this first."
       },
       "to_id": "dec:export-serialisation-belongs-to-the-gate"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:the-loop-says-what-distribution-is-owed",
+      "properties": {},
+      "to_id": "dec:fix-the-comparison-before-pointing-it-earlier"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -48864,6 +48924,12 @@
     },
     {
       "edge_type": "OBSOLETES",
+      "from_id": "dec:fix-the-comparison-before-pointing-it-earlier",
+      "properties": {},
+      "to_id": "dec:idea-does-a-session-open-by-comparing-the-record"
+    },
+    {
+      "edge_type": "OBSOLETES",
       "from_id": "dec:governance-integrates-not-splits",
       "properties": {},
       "to_id": "dec:idea-governance-management-split"
@@ -48973,6 +49039,18 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "env:dev"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:a-comparison-discloses-its-own-confound",
+      "properties": {},
+      "to_id": "epoch:the-loop-says-what-distribution-is-owed"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:a-default-is-not-a-difference",
+      "properties": {},
+      "to_id": "epoch:a-comparison-discloses-its-own-confound"
     },
     {
       "edge_type": "PRECEDES",
@@ -51070,6 +51148,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:comparison-discloses-build-skew",
+      "properties": {},
+      "to_id": "req:a-comparison-discloses-build-skew"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:complementary-pairing",
       "properties": {},
       "to_id": "req:complementary-pairing"
@@ -51148,6 +51232,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:defaults-are-not-serialized",
+      "properties": {},
+      "to_id": "req:an-absent-property-means-nobody-said-it"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:degraded-surface",
       "properties": {},
       "to_id": "req:never-silently-absent"
@@ -51217,6 +51307,12 @@
       "from_id": "cap:dimensions",
       "properties": {},
       "to_id": "req:coherence"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:distribution-debt-is-reported",
+      "properties": {},
+      "to_id": "req:the-loop-says-what-distribution-is-owed"
     },
     {
       "edge_type": "SATISFIES",
@@ -51961,6 +52057,15 @@
     },
     {
       "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:comparison-discloses-build-skew",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-10"
+      },
+      "to_id": "epoch:a-comparison-discloses-its-own-confound"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
       "from_id": "cap:content-manifest",
       "properties": {
         "modality": "required",
@@ -51976,6 +52081,24 @@
         "recorded_at": "2026-07-31"
       },
       "to_id": "rel:v0190"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:defaults-are-not-serialized",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-10"
+      },
+      "to_id": "epoch:a-default-is-not-a-difference"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:distribution-debt-is-reported",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-10"
+      },
+      "to_id": "epoch:the-loop-says-what-distribution-is-owed"
     },
     {
       "edge_type": "SCHEDULED_FOR",
@@ -57101,6 +57224,19 @@
       }
     },
     {
+      "node_id": "cap:comparison-discloses-build-skew",
+      "node_type": "Capability",
+      "properties": {
+        "description": "compare_designs reads the `reflow2_version` each side's stamp already carries and, when they differ, says so in its result alongside the finding counts — naming build skew as a possible cause of property-only differences without suppressing, reweighting or hiding any of them. The reader is told what could confound the reading; nothing decides on their behalf.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A comparison discloses that its two sides came from different builds",
+        "provenance": "authored",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:complementary-pairing",
       "node_type": "Capability",
       "properties": {
@@ -57201,6 +57337,19 @@
         "name": "Hold and collapse a decision point (forkable alternatives)",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:defaults-are-not-serialized",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The export and every other design record omit a property whose value equals the schema default, so absence carries the meaning \"nobody said\" and presence carries \"somebody chose\". Partly realized already — the exporter stopped writing Artifact granularity/volatility defaults between 0.25.0 and 0.27.0 — and left at `planned` deliberately, because nothing has verified the behaviour across the whole property surface and `fact:bl-198` counts 28 single-valued properties, 22 of them the schema's own default. Status is a claim about the design, not about one observation.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "A property equal to the schema default is omitted from the record",
+        "provenance": "authored",
+        "status": "planned",
         "tier": "operational"
       }
     },
@@ -57318,6 +57467,19 @@
         "name": "Track quality over time",
         "provenance": "authored",
         "status": "verified",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:distribution-debt-is-reported",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Distribution debt — the live graph and the committed export having diverged — is computed from state and surfaced by the read-side hint chosen in dec:read-hint-shape: on orientation-shaped reads, only when true, firing when the owed set changes rather than on every read. Rides the existing mechanism rather than adding one.",
+        "is_entry_point": false,
+        "is_exit_point": false,
+        "name": "The loop reports that the record and the graph disagree",
+        "provenance": "authored",
+        "status": "planned",
         "tier": "operational"
       }
     },
@@ -62728,6 +62890,16 @@
       }
     },
     {
+      "node_id": "dec:fix-the-comparison-before-pointing-it-earlier",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "ANTHONY'S CHOICE, 2026-08-10: \"let's go with D, then a small addition, then B.\" Three steps in order, and the ordering is the substance — each one is cheap only because the one before it has landed.\n\nSTEP 1 — STOP SERIALIZING DEFAULTS (option D, `fact:bl-198`). Do not write a property value equal to the schema default, so an ABSENT property honestly means \"nobody said\". Partly landed already: 0.25.0 wrote defaults into the export and 0.27.0 does not, while BL-198 is still listed PLANNED in `epoch:planned-one-write-surface` — so part of this step is reconciling the plan with what shipped rather than building.\n\nTHE REASON THIS ORDERING PUTS D FIRST AND DROPS C, and it is the load-bearing argument: D DELIVERS C'S SEMANTICS DERIVATIONALLY. Option C was \"give a property difference provenance so a default never reads as a change\". BL-198's own fix shape already produces exactly that — presence means somebody said it, absence means nobody did — without storing a second provenance field, which is the form `dec:certainty-derived` insists on for requirement certainty and the same argument applies here. C is therefore NOT rejected on merit; it is rendered unnecessary by D, and stays on `dec:idea-does-a-session-open-by-comparing-the-record` in case something after D still cannot be answered.\n\nSTEP 2 — A COMPARISON DISCLOSES ITS OWN CONFOUND (the addition, not among the five options). Every export carries `reflow2_version` in its stamp. When two records being compared were written by different builds, the comparison SAYS SO and says that property-only differences may be attributable to that. This is the one change that would have prevented both false claims: 2026-08-08 and 2026-08-10 were both cross-build comparisons, and neither reader could see the confound. It is DISCLOSURE, not a threshold — the same move `propose_heal` makes when it says \"the alphabet chose the victim\", and deliberately NOT the rejected option of tuning severity until phantoms fall below it, which silences true and false findings at the same rate.\n\nIT IS ALSO WHAT D DOES NOT FIX. Suppressing defaults cleans the steady state and MOVES the disagreement to the version transition — every upgrading consumer meets it once. Step 2 is what makes that meeting survivable, which is why it follows D rather than replacing it.\n\nSTEP 3 — THE LOOP SAYS WHAT DISTRIBUTION IS OWED (option B, flo2's F5). Extend the read-side hint chosen in `dec:read-hint-shape` (state-derived, riding orientation reads, fire-on-change) to carry \"the live graph and the committed record disagree\" alongside coherence debt. LAST ON PURPOSE: a hint that fires on phantom findings teaches the agent to skim it, which would damage the one mechanism that currently earns attention — the exact failure `dec:read-hint-shape` rejected option B for. Its value is entirely downstream of the finding deserving belief.\n\nWHAT WAS NOT CHOSEN. (A) do nothing — the null option, and it was a real candidate: `where-am-i` already prescribes the comparison and what failed was belief, not compliance. Rejected because the record was wrong on main for an unknown number of PRs and `reflow2_check` structurally cannot notice, reading checksums and anchored gaps and never properties. (E) move the trigger to publish time — not rejected on merit, merely not now: it cannot catch what is already committed and wrong, which was the observed case, and it inherits the same confound until step 2 lands. It becomes nearly free afterwards.\n\nTHE QUESTION THIS ANSWERS was NOT \"when should the comparison run\". It was \"what has to be true before running it earlier makes anyone better off\", and all three steps are about making the instrument believable rather than about scheduling it. Whether it then becomes a session's opening move is left genuinely open on the superseded idea node.",
+        "name": "Fix the comparison before pointing it earlier — stop serializing defaults, then disclose build skew, then report distribution debt",
+        "rationale": "Recorded as a decision rather than left on the brainstorm node because Anthony chose, and `dec:governance-integrates-not-splits` set the precedent two days earlier for exactly this shape: a new accepted Decision OBSOLETES the brainstormed one, which goes `superseded` with all its options intact rather than being edited into an answer. The roads not taken keep their reasoning that way, and C in particular is worth being able to find again — it is superseded by an argument (D subsumes it) rather than by a judgement, and if that argument fails C is still there.\n\nThe measurements this rests on are recorded separately and independently: `fact:bl-198-cost-measured-twice-in-both-directions` (why the instrument is not believable) and `fact:orphan-decision-is-silenced-by-an-edge-that-does-not-reach-it` (found while checking this session's own work). Both carry their own counter-arguments, so a later session can attack the evidence without having to attack the decision.\n\nStep 2 is mine rather than Anthony's and is marked as such: it was not one of the five options put to him, and he adopted it on the argument that it is the smallest change that would have caught both incidents.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:fnv1a-foundational",
       "node_type": "Decision",
       "properties": {
@@ -63055,6 +63227,16 @@
         "name": "OPEN — a Requirement can be deferred or dropped and a Capability cannot, so agents write \"DROPPED\" into prose the graph cannot compute on",
         "rationale": "Raised by a second consumer project rather than found here, which is the useful part: reflow2's own graph never hit it because this project retires capabilities rather than cancelling them. Kept as a decision point rather than built because it is a schema enum change that would move the stamp and therefore owe an upgrade doc — the first this week that would — and because it touches an already-open question about retirement being modelled in two places. Anthony's to settle.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-does-a-session-open-by-comparing-the-record",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Nothing here is chosen; the options are ideas with their honest counter-arguments beside them, and the road not taken is kept on purpose.\n\nTHE PROMPT. I suggested (2026-08-10) that `compare_designs` against the committed export belongs at the OPEN of a session rather than being run when trouble is already suspected, because it was the only thing that found a record diverging from the graph on main. Anthony asked for it to be thought through rather than acted on.\n\nWHAT SEARCHING FIRST DID TO THE QUESTION — it inverted it. The same session then found `fact:correction-the-export-loses-nothing-the-108-were-serialized-defaults`: a 2026-08-08 session ran exactly this comparison, got 108 property-level findings, concluded `export_graph` was silently dropping design, wrote that into a PR body and a handoff note, and retracted it after one probe. They were serialized schema defaults. I had just made the same false claim on the same data, 95 findings instead of 108, without having read theirs. SO THE OBSERVED RECORD OF THIS INSTRUMENT AT ORIENTATION TIME IS TWO RUNS, TWO FALSE DEFECT CLAIMS, TWO RELEASES APART, BY DIFFERENT AGENTS. That is not an argument against comparing; it is an argument that the question is not \"when do we run it\" but \"what does it have to be able to say before running it earlier makes anyone better off\".\n\nTHE OPTIONS.\n\n(A) DO NOTHING — the null option, and it is stronger than it looks. `where-am-i` ALREADY names `compare_designs` as its first gather step. The failure on 2026-08-10 was not that the step was skipped; it was run, and misread. Adding a ritual does not fix a reading problem, and this project has already rejected the ritual shape twice (`dec:orientation-is-computed-not-written`: build the view, not the document; `dec:read-hint-shape` rejected option B because boilerplate on every return trains the agent to skim). Cheap: costs nothing. Counter: it leaves the actual observed harm — the record was wrong on `main` for an unknown number of PRs and `reflow2_check` is structurally incapable of noticing, since it reads artifact checksums and anchored gaps and never node properties.\n\n(B) COMPUTE IT, DO NOT PRESCRIBE IT — extend `dec:read-hint-shape`'s already-chosen option C (state-derived hint, riding the orientation-shaped reads, fire-on-change) to carry DISTRIBUTION debt alongside coherence debt: \"the record and the graph disagree\" surfacing at the moment of attention, only when true. This is flo2's F5 filed 2026-08-09 — `loop_status` tracks what COHERENCE is owed and nothing tracks what DISTRIBUTION is owed. Fits the strongest precedent in the design and needs no new vocabulary. Counter, and it is decisive as things stand: a hint that fires on phantom findings is a hint that teaches you to ignore it. Building B before C or D would ship the cry-wolf failure into the one mechanism that currently works.\n\n(C) FIX THE INSTRUMENT — make a property difference able to say WHICH SIDE MEANT IT, so a default never appears as a change. The 2026-08-08 correction already argues this and names the precedent: \"a comparison that cannot say which side meant it is the same shape as an edge that cannot say who asserted it (DUPLICATES `basis`, which cost dev_storyflow ten proposed deletions) — the fix there was to make provenance explicit rather than to tune the detector, and the same argument applies.\" Most expensive; also the only option that makes the finding trustworthy rather than quieter. Counter: property-level provenance is a large surface, and `dec:certainty-derived` would argue it should be DERIVED rather than stored — which may make (D) sufficient.\n\n(D) FINISH BL-198 — \"do not serialize a value equal to the default, so an absent property honestly means nobody said\". Cheaper than C, kills the noise at its source, and the exporter has evidently begun doing it already (0.25.0 wrote defaults, 0.27.0 does not) while `fact:bl-198` is still listed PLANNED in `epoch:planned-one-write-surface`. Counter, and it is the trap both incidents actually fell into: suppressing defaults does not remove the disagreement, it MOVES it to the transition. Two builds one release apart still differ on every default, and that window is exactly what produced both false claims. So D makes the steady state clean and the upgrade moment worse — which is an argument for D plus a version-aware comparison, not D alone.\n\n(E) WRONG TRIGGER ENTIRELY — the record diverging matters when it is PUBLISHED, not when a session starts. Put the check at export/commit/CI time, where something is about to be shipped, and leave session-open alone. Cheap and well-precedented (`ci-gate` exists). Counter: it cannot catch what is already committed and wrong, which is the case actually observed here; and it inherits the same default-vs-decision blindness, so it would go red on a version bump for no reason.\n\nWHAT IS NOT AN OPTION, said plainly so nobody re-derives it: tuning a threshold so the phantom findings fall below it. That silences the true findings at the same rate as the false ones, and it is the \"reduce a SET to a SCALAR\" failure this project has already written down.\n\nTHE ORDERING THAT FALLS OUT, offered as a finding and not as a decision: C or D before B, and A is a legitimate resting place if neither is worth the spend — because the value of running the comparison earlier is bounded above by the comparison's ability to be believed, and right now it has a 2-for-2 record of not deserving to be.",
+        "name": "OPEN — should comparing the live graph against the committed record be part of a session's opening move, when the comparison cannot yet tell a default from a decision?",
+        "rationale": "Recorded as an open question rather than an answer because the brainstorm materially changed what the question is. I opened arguing for a session-opening step; the design's own memory then supplied a two-instance record of that step producing confident false defect claims — one of them mine, an hour earlier. An idea that is weaker after searching is worth keeping in exactly that state, with the evidence that weakened it attached, so a later session does not re-propose it fresh and pay for the discovery a third time.\n\nKept deliberately open, and NOT registered as alternatives: each option here is a paragraph, not a design, so `detect_gaps` stays quiet (`undecided_decision_point` fires only on two or more registered alternatives). If one of these grows a design of its own — most likely C, which needs a property-provenance shape — `register_alternative` is what makes it a real fork, and being nudged to choose would then be correct.\n\nThe counter-arguments are recorded beside the options rather than used to kill any of them, including against my own opening position. (A) is listed first and honestly rather than as a foil: this project has twice chosen the computed form over the prescribed one, and \"the step was already prescribed and was run and was misread\" is a real answer to \"should we prescribe the step\".",
+        "status": "superseded"
       }
     },
     {
@@ -65279,6 +65461,26 @@
       }
     },
     {
+      "node_id": "epoch:a-comparison-discloses-its-own-confound",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "A comparison discloses its own confound — cross-build comparisons say so, because step 1 moves the disagreement to the version transition rather than removing it (dec:fix-the-comparison-before-pointing-it-earlier step 2)",
+        "sequence": 312,
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "epoch:a-default-is-not-a-difference",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "A default is not a difference — stop serializing schema defaults, so absence means nobody said. SPLIT OUT of epoch:planned-one-write-surface, which keeps BL-202/197/204: Anthony ordered THIS half first (dec:fix-the-comparison-before-pointing-it-earlier step 1), and making the whole one-write-surface epoch a prerequisite would overstate what he agreed. Partly landed already in the exporter between 0.25.0 and 0.27.0, so part of this is reconciling the plan with what shipped.",
+        "sequence": 311,
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "epoch:a-discipline-arrives-when-it-applies",
       "node_type": "DesignEpoch",
       "properties": {
@@ -65939,6 +66141,16 @@
         "name": "Published-surface export (2026-07-25, post-v0.11.0)",
         "sequence": 140,
         "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:the-loop-says-what-distribution-is-owed",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "The loop says what distribution is owed — flo2's F5, carried by the read-side hint. LAST ON PURPOSE: its value is downstream of the comparison deserving belief (dec:fix-the-comparison-before-pointing-it-earlier step 3)",
+        "sequence": 313,
+        "status": "planned"
       }
     },
     {
@@ -69495,6 +69707,21 @@
       }
     },
     {
+      "node_id": "req:a-comparison-discloses-build-skew",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "A comparison says when its two sides were written by different builds",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "When two design records being compared were written by different reflow2 builds, the comparison discloses that and says that property-only differences may be attributable to the build change rather than to anything anybody decided. Every export already carries `reflow2_version` in its stamp, so the input exists and is not read. THIS IS DISCLOSURE, NOT A THRESHOLD, and the distinction is the requirement: nothing is suppressed, reweighted or hidden — the reader is told what could confound their reading, the way `propose_heal` discloses that the alphabet chose a merge survivor. Tuning severity until phantom findings fall below a cut-off is explicitly NOT this, because it silences true and false findings at the same rate. THE EVIDENCE IS TWO INCIDENTS, NOT AN ARGUMENT: 2026-08-08 and 2026-08-10 were both cross-build comparisons, both produced a confident false data-loss claim written into a PR body, and neither reader could see the confound (`fact:bl-198-cost-measured-twice-in-both-directions`). It is also what step 1 does not fix — suppressing defaults cleans the steady state and moves the disagreement to the version transition, which every upgrading consumer meets once.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:a-dated-observation-does-not-read-as-standing-doctrine",
       "node_type": "Requirement",
       "properties": {
@@ -69885,6 +70112,21 @@
         "provenance": "authored",
         "statement": "Every capability is reachable from a coding agent over one surface.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:an-absent-property-means-nobody-said-it",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "An absent property means nobody said it — a value equal to the schema default is not written",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A design record does not serialize a property value that equals the schema's default, so the presence of a property means somebody chose it and its absence means nobody did. This is BL-198's own stated fix shape (`fact:bl-198`), captured as intent because Anthony agreed to it on 2026-08-10 (`dec:fix-the-comparison-before-pointing-it-earlier`, step 1). PARTLY LANDED ALREADY, which is why capturing it matters: 0.25.0 wrote defaults into the export and 0.27.0 does not, while BL-198 is still listed PLANNED — so satisfying this requirement is partly reconciling the plan with what shipped rather than building something new. THE POINT IS NOT BYTE SIZE. This is the property-level form of the confirmed-versus-asserted distinction the project already enforces for requirements: `graph_report`'s certainty line exists because status carries the user's word, and `dec:certainty-derived` argues that distinction must be DERIVABLE rather than stored. At property level it is currently neither, and omission makes it derivable for free.",
+        "status": "proposed"
       }
     },
     {
@@ -71522,6 +71764,21 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A ChangeEvent can record that THE DESIGN RECORD WAS INCORRECT, as distinct from reality having moved and the design catching up. Proposed value: `record_was_incorrect`.\n\nWHY THE NAME IS `record_was_incorrect` AND NOT `correction`: every existing `change_type` names WHY THE RECORD MOVED — `requirement_creep`, `new_feature`, `test_failure_fix`, `refactor`, `scope_change`, `deprecation`. \\\"Correction\\\" names the ACT rather than the cause and would read oddly beside its siblings. The eleventh value, `baseline_established`, already sets the precedent for a value that says the thing did not change and only the design's knowledge of it did.\n\nTHE GAP. None of the eleven legal values means this. `resync` is the least-wrong and CONNOTES SOMETHING FALSE: it reads as a re-sync back to coherence after reality moved. Where the record was simply wrong when written, `resync` puts a fiction into the ledger that exists to prevent fiction.\n\nWHY IT MATTERS BEYOND TIDINESS: `changelog_view` MAPS BUCKETS FROM `change_type`. A correction recorded as `resync` therefore lands in a bucket that misdescribes it, in the document consumers read. That is the test `dec:edge-orthogonality` sets — a vocabulary distinction earns its keep only if a computation reads it — and this one is read.\n\nEVIDENCE, three independent hits. Filed by dragon Boss (`cca98fbf`, dev_storyflow, 2026-08-09) while correcting an edge that asserted a runtime dependency the code never had: \\\"resync connotes reality moved and the design caught up — here the design was simply wrong from the start.\\\" Reproduced twice in this repo the same day: recording the detector-spec correction, and recording this merge, both of which used `resync` and had to say so in the event name to avoid implying something false.\n\n⚠️ COST, STATED BECAUSE IT DECIDES THE TIMING: adding an enum value MOVES THE SCHEMA STAMP, which pulls a version bump, an upgrade note, and locks older reflow2 out of designs written by the newer one. That cost is why this is scheduled into a SCHEMA-CLUSTERED increment rather than shipped alone (Anthony, 2026-08-09: \\\"go with your recommendation on bundle it with the governance primitives\\\").\n\n⚠️ AND THE SHARPER ALTERNATIVE IS NOT FORECLOSED: `dec:should-propagate-seed-from-a-drift-event` records dragon Boss's other suggestion, which may make this requirement unnecessary. Read that before building this.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:the-loop-says-what-distribution-is-owed",
+      "node_type": "Requirement",
+      "properties": {
+        "concern": "core",
+        "designation": "internal",
+        "kind": "functional",
+        "lineage": "original",
+        "name": "The loop says what DISTRIBUTION is owed, not only what coherence is owed",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "The loop reports that the live graph and the committed record disagree, alongside what coherence is owed. Filed by flo2 as F5 on 2026-08-09 — `loop_status` tracks what COHERENCE is owed and nothing tracks what DISTRIBUTION is owed — and observed here on 2026-08-10, where a record that had diverged from the graph sat on `main` for an unknown number of PRs while every gate reported green. THE SHAPE IS ALREADY DECIDED AND SHOULD NOT BE RE-OPENED: `dec:read-hint-shape` chose state-derived, riding the orientation-shaped reads, firing only when the owed set changes. This requirement asks for distribution debt to be carried by that mechanism, not for a new one. DELIBERATELY LAST of the three steps in `dec:fix-the-comparison-before-pointing-it-earlier`: a hint that fires on phantom findings teaches the agent to skim it, which is the failure `dec:read-hint-shape` rejected its own option B for. This requirement's value is entirely downstream of the comparison deserving belief, so satisfying it before the first two steps would damage the mechanism it rides on.",
         "status": "proposed"
       }
     },
@@ -73438,6 +73695,18 @@
       }
     },
     {
+      "node_id": "fact:bl-198-cost-measured-twice-in-both-directions",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "BL-198 ASKED FOR THIS MEASUREMENT AND IT HAS NOW BEEN TAKEN TWICE, IN OPPOSITE DIRECTIONS, ONE RELEASE APART. fact:bl-198 says: 'import_graph and the merge driver both compare property maps, so suppressing defaults changes what \"changed\" means to compare_designs and to merge=reflow2. That is the real cost of this row and it should be measured, not assumed.' The cost is now on the record from live data, and it is larger than byte bloat.\n\n    2026-08-08   0.24.0 server vs 0.25.0 binary        108 phantom property findings\n    2026-08-10   0.25.0-era committed file vs 0.27.0    95 phantom property findings\n\nBOTH RUNS PRODUCED A CONFIDENT FALSE DEFECT CLAIM, BY DIFFERENT AGENTS, NEITHER HAVING READ THE OTHER. The 2026-08-08 session concluded export_graph silently deletes property values and that its divergence guard is blind to property-level loss, wrote that into a PR body and a handoff note, and retracted it after one probe (fact:correction-the-export-loses-nothing-the-108-were-serialized-defaults). On 2026-08-10 I made the same claim about the same guard on the same two properties, in the opposite direction, and it was found only because search_design surfaced the earlier retraction. A REPRODUCED MISREADING IS STRONGER EVIDENCE THAN A REPORTED ONE: the instrument is not merely noisy, it is reliably misleading to a competent reader, which is the property that matters for a tool meant to be run at orientation time.\n\nTHE DIRECTION FLIPPED, WHICH IS THE NEW PART. 0.25.0 wrote schema defaults into the export; 0.27.0 does not. So the exporter has already begun doing what BL-198 asks, while BL-198 itself is still listed PLANNED in epoch:planned-one-write-surface — worth reconciling. And the flip demonstrates the trap in the fix: suppressing defaults does not remove the disagreement, it MOVES it to the version transition. Both incidents happened in exactly such a window, so 'stop serializing defaults' makes the steady state clean and the upgrade moment worse unless the comparison also becomes version-aware.\n\nWHAT THIS IS NOT: it is not evidence that export_graph loses design, and not evidence that its divergence guard is under-reporting. Both claims were made and both were wrong. The guard's message is accurate at node and edge granularity, and defaults were never design, so nothing was lost either time. Recorded here because the false claim is the measurement — what serialized defaults cost is precisely that two careful readers reached the same wrong conclusion from the same true output.\n\nSEPARATELY TRUE AND NOT A DEFECT: reflow2_check reads artifact checksums and anchored gaps, never node properties, so it stayed green through both episodes. That means the CI gate and compare_designs answer different questions about whether the record matches the graph, which is worth knowing before either is relied on as the other.",
+        "subject_id": "cmp:export",
+        "valid_from": "2026-08-10"
+      }
+    },
+    {
       "node_id": "fact:bl-200",
       "node_type": "TemporalFact",
       "properties": {
@@ -74273,6 +74542,18 @@
         "subject_id": "cap:shared-sessions",
         "valid_from": "2026-08-07",
         "value": "{\"reported\":\"2026-08-07 dev_storyflow, api-boss 5d608b85, deliberate experiment on the live shared graph\",\"held\":\"per-property merge under concurrency; clean serialization; no torn state\",\"defect\":\"same-property write is silent last-writer-wins AND the success payload reports the write, not the state\",\"evidence\":\"RACER_ONE got success for statement=RACER_ONE, priority=high; persisted was RACER_TWO/low\",\"missing_primitive\":\"no version/rev/etag/updated_at anywhere in the payload\",\"fix_shape\":\"monotonic per-node rev returned on write, optional if_rev; minimum: say the node was written by another seat since your read\",\"stated_bound\":\"two racers were one client process, not two OS sessions; server-side findings hold regardless\",\"graph_restored\":\"yes, verified by control\"}"
+      }
+    },
+    {
+      "node_id": "fact:orphan-decision-is-silenced-by-an-edge-that-does-not-reach-it",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "defect",
+        "statement": "MEASURED ON THIS DESIGN 2026-08-10 (docs/design/reflow2.json at 5180a41, 183 Decisions excluding decision:ack: review records): the orphan_node rule for Decisions fires on 2, and 32 MORE sit in the state the rule's own comment describes as the harm, silenced by an edge that does not relieve it.\n\n    degree-zero, detector fires                                     2\n    edges ONLY of type AUTHORED_BY — silenced, still unreachable    32   (31 proposed, 1 accepted)\n\nWHY THIS IS NOT THE NAIVE CLAIM. I first said AUTHORED_BY should not count toward the degree, and READING heal.rs:823-885 refuted that before it was written down. The degree-zero rule is deliberate and was settled by measurement, not taste: the narrow form (an accepted Decision with no incoming GOVERNED_BY) fires on SIX of reflow2's own, five of which have degree 1-3, and the comment names that as BL-42's shape exactly — the detector that became 20 of 31 defects and had to be cut back to one rule. The stated virtue is that ANY edge silences it, 'so it cannot grow into a per-convention nag'. That reasoning is sound and should not be undone.\n\nTHE NARROW THING THAT IS STILL TRUE. The rule's SILENCING CONDITION (any edge) is broader than the HARM IT NAMES. Its own words: a Decision with no edges 'cannot be reached by propagation, so it never enters an impact analysis; and for a disposition specifically it can never EXPIRE, because expiry is computed from the affected set'. AUTHORED_BY does not relieve either. The tool's own description says it is 'deliberately not a traceability edge, so it never enlarges a blast radius' — so a Decision whose only edge is AUTHORED_BY is exactly as propagation-unreachable as one with no edges, and exactly as unable to expire, while reporting clean. The population carrying that state is 16x the population reported.\n\nTHE ONE THAT MATTERS MOST IS THE ACCEPTED ONE. dec:commitment-edges-survive-snapshots is accepted with a single AUTHORED_BY edge. The rule grades accepted orphans at WARNING with the message 'is accepted but governs nothing — nothing links to it, so it shapes no part of the design, cannot appear in any impact analysis'. That sentence is true of this node and the detector does not say it.\n\nTHE SKILL AND THE DETECTOR INTERACT TO PRODUCE THIS. The brainstorm skill instructs authored_by on every brainstormed Decision (step 3.5, 'whoever's idea it was'). Following it correctly moves a parked decision from degree-0 to degree-1 and out of the report. 31 of the 32 are proposed and most are dec:idea-* — this is the brainstorm population, made structurally invisible by doing the right thing. Reproduced live: dec:idea-does-a-session-open-by-comparing-the-record was created and authored the same day and did not appear in detect_defects.\n\nWHAT WOULD BE THE WRONG FIX, recorded so nobody reaches for it: excluding AUTHORED_BY from the degree count would fire on 32 nodes at once, which is precisely the BL-42 explosion the degree-zero rule exists to prevent. If anything is done here it is probably narrower — the accepted-only case is ONE node today — or a distinct lower-severity reading rather than more orphan_node findings. Recorded as an observation with its own counter-argument, not as a repair proposal.\n\nCONFIDENCE 0.9 rather than 1: the 32 is computed from the committed export at 5180a41, which trails the live graph by the two nodes this session added, and 'propagating edge' is taken from AUTHORED_BY's own documented non-traceability rather than from reading propagate.rs's edge set directly.",
+        "subject_id": "cmp:heal",
+        "valid_from": "2026-08-10"
       }
     },
     {
@@ -75915,7 +76196,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:c9df9ce66bff8be673e183e1c303026419fba0b453310ca4cb25ec0145cac23c",
+  "prev_content_hash": "sha256:7415563cade3f637520ca732543aa3766ff613a24102c457f5bc5cc18985deea",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
