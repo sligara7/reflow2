@@ -43,8 +43,8 @@ schema:
       properties:
         name: { type: string, required: true, indexed: true, fulltext: true }
         statement: { type: string, required: true, fulltext: true, description: "The need in the stakeholder's own terms." }
-        kind: { type: enum, values: [functional, nonfunctional, quality, business], default: functional, indexed: true }
-        concern: { type: enum, values: [core, logistics, sustainment, safety, security, cost, schedule, manufacturability, usability, environmental, other], default: core, indexed: true, description: "Cross-cutting concern this need belongs to. 'logistics'/'sustainment' cover the ILS considerations an SME surfaces (supply, transport, build method, maintenance)." }
+        kind: { type: enum, values: [functional, nonfunctional, quality, business], indexed: true }
+        concern: { type: enum, values: [core, logistics, sustainment, safety, security, cost, schedule, manufacturability, usability, environmental, other], indexed: true, description: "Cross-cutting concern this need belongs to. 'logistics'/'sustainment' cover the ILS considerations an SME surfaces (supply, transport, build method, maintenance)." }
         priority: { type: enum, values: [low, medium, high, critical], default: medium, indexed: true }
         source: { type: string, description: "Who/what stated it — a user, a regulation, a stakeholder." }
         rationale: { type: string }
@@ -65,7 +65,7 @@ schema:
         # Interface.designation: publishing is a commitment, and defaulting to it
         # would assert one nobody made. Most requirements are internal intent and
         # must stay withheld — this is opt-in, per requirement.
-        designation: { type: enum, values: [internal, published], default: internal, indexed: true, description: "Whether this requirement is a PROMISE THIS DESIGN PUBLISHES — a behavioural commitment a consumer is entitled to rely on — or internal intent nobody outside gets to see. `published` is what an ICD states in prose and what no structural export can carry: 'fails loud rather than falling back', 'ordering is preserved', 'an empty result means no match, not an error'. Read by `export_surface`, which withholds every `internal` requirement and carries every `published` one, so a promise travels with the boundary it constrains and every existing drift and reconcile check applies to it unchanged. Default `internal` on purpose (req:publishable-promise): most requirements are the design's own reasoning, and publishing one is a commitment that must be made deliberately — the same rule as Interface.designation. NOT a claim the promise is kept: whether it held is its verification and drift history, which is evidence rather than a property anyone sets." }
+        designation: { type: enum, values: [internal, published], indexed: true, description: "Whether this requirement is a PROMISE THIS DESIGN PUBLISHES — a behavioural commitment a consumer is entitled to rely on — or internal intent nobody outside gets to see. `published` is what an ICD states in prose and what no structural export can carry: 'fails loud rather than falling back', 'ordering is preserved', 'an empty result means no match, not an error'. Read by `export_surface`, which withholds every `internal` requirement and carries every `published` one, so a promise travels with the boundary it constrains and every existing drift and reconcile check applies to it unchanged. Default `internal` on purpose (req:publishable-promise): most requirements are the design's own reasoning, and publishing one is a commitment that must be made deliberately — the same rule as Interface.designation. NOT a claim the promise is kept: whether it held is its verification and drift history, which is evidence rather than a property anyone sets." }
       embedding_field: statement
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 80 }
       extraction_hint: >

@@ -47,6 +47,114 @@ pub fn load_schema() -> Result<Schema, DynoError> {
     Schema::from_multiple_yamls(&yamls)
 }
 
+/// One `default:` the schema declares, with the enum values it must belong to.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct DeclaredDefault {
+    pub node_type: String,
+    pub property: String,
+    pub value: String,
+    /// The property's declared `values`, empty for non-enums (bool, int).
+    pub values: Vec<String>,
+}
+
+/// Every `default:` the schema declares, parsed from the embedded YAML.
+///
+/// # Why this exists at all
+///
+/// **The schema declared 81 defaults and nothing read a single one of them**
+/// (measured 2026-08-10, `fact:the-schema-declares-81-defaults-and-nothing-reads-them`).
+/// `dynograph_core::PropertySpec` has no `default` field, so the key parses to
+/// nobody and is silently dropped; nothing in this crate mentioned the word; and
+/// `describe_schema` surfaced `required` and `values` but never a default. They
+/// were documentation wearing the costume of behaviour — the declared-but-unread
+/// class this project keeps finding, arrived at from a new direction.
+///
+/// The values that DO appear in the data came from the typed constructors
+/// injecting them unconditionally, which is why 3,207 stored values across 59%
+/// of reflow2's own nodes equal a declared default.
+///
+/// # Why a hand parser rather than a YAML crate
+///
+/// `reflow2-core` carries no YAML dependency — dynograph does that parse — and
+/// adding one to read four tokens per line would be a dependency bought for a
+/// regex. The property lines are uniform by construction and
+/// `tools/validate_schema.py` already fails the build if they are not.
+///
+/// # What this deliberately does NOT do
+///
+/// It does not apply anything. Making a default *readable* is the precondition
+/// for BL-198 (stop storing a value nobody chose, so an absent property honestly
+/// means "nobody said"), and that change belongs at the WRITE surface — stripping
+/// `value == default` at export cannot work, because the store cannot tell an
+/// explicitly-chosen value from an injected one.
+pub fn declared_defaults() -> Vec<DeclaredDefault> {
+    let mut out = Vec::new();
+    for (_, yaml) in SCHEMA_DOMAINS {
+        // `    NodeType:` opens a type; its properties are indented further and
+        // each is a one-line inline map.
+        let mut node_type: Option<String> = None;
+        for line in yaml.lines() {
+            let indent = line.len() - line.trim_start().len();
+            let trimmed = line.trim_end();
+            if indent == 4
+                && let Some(name) = trimmed.trim().strip_suffix(':')
+                && !name.contains(' ')
+                && name.chars().next().is_some_and(char::is_uppercase)
+            {
+                node_type = Some(name.to_string());
+                continue;
+            }
+            let Some(ref nt) = node_type else { continue };
+            let Some((key, rest)) = trimmed.trim().split_once(':') else {
+                continue;
+            };
+            if !rest.trim_start().starts_with('{') {
+                continue;
+            }
+            let Some(value) = field(rest, "default") else {
+                continue;
+            };
+            out.push(DeclaredDefault {
+                node_type: nt.clone(),
+                property: key.trim().to_string(),
+                value,
+                values: field(rest, "values")
+                    .map(|v| {
+                        v.trim_matches(['[', ']'])
+                            .split(',')
+                            .map(|s| s.trim().to_string())
+                            .filter(|s| !s.is_empty())
+                            .collect()
+                    })
+                    .unwrap_or_default(),
+            });
+        }
+    }
+    out
+}
+
+/// Pull `name: <value>` out of an inline YAML map, honouring `[a, b]` lists.
+fn field(line: &str, name: &str) -> Option<String> {
+    let at = line.find(&format!("{name}:"))? + name.len() + 1;
+    let rest = line[at..].trim_start();
+    if let Some(close) = rest.strip_prefix('[').and_then(|r| r.find(']')) {
+        return Some(rest[..close + 2].to_string());
+    }
+    let end = rest
+        .find([',', '}'])
+        .unwrap_or_else(|| rest.trim_end().len());
+    let v = rest[..end].trim();
+    (!v.is_empty()).then(|| v.to_string())
+}
+
+/// The value the schema declares for a property when nobody said otherwise.
+pub fn schema_default(node_type: &str, property: &str) -> Option<String> {
+    declared_defaults()
+        .into_iter()
+        .find(|d| d.node_type == node_type && d.property == property)
+        .map(|d| d.value)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

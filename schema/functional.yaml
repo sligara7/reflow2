@@ -14,11 +14,11 @@ schema:
         name: { type: string, required: true, indexed: true, fulltext: true }
         description: { type: string, required: true, fulltext: true }
         capability_type: { type: string, indexed: true, description: "validation / transform / query / persistence / decision / actuation / io / compute — free text; domain-neutral." }
-        tier: { type: enum, values: [strategic, operational, tactical], default: operational, indexed: true }
+        tier: { type: enum, values: [strategic, operational, tactical], indexed: true }
         inputs: { type: string, description: "JSON array of input names/types the capability consumes." }
         outputs: { type: string, description: "JSON array of outputs it produces." }
-        is_entry_point: { type: bool, default: false, description: "A flow's starting capability." }
-        is_exit_point: { type: bool, default: false, description: "A flow's terminal capability." }
+        is_entry_point: { type: bool, description: "A flow's starting capability." }
+        is_exit_point: { type: bool, description: "A flow's terminal capability." }
         status: { type: enum, values: [planned, in_progress, realized, verified], default: planned, indexed: true }
         provenance: { type: enum, values: [authored, planned, inferred, healed, reconciled, imported], default: authored, indexed: true, description: "How this node entered the graph. Same vocabulary as Fragment.provenance." }
       embedding_field: description
