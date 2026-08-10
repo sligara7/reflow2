@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:18230c7ccb692f38f59425828f613b49d87471e86dfd294a7c4aa30099dc9713",
+  "content_hash": "sha256:c9df9ce66bff8be673e183e1c303026419fba0b453310ca4cb25ec0145cac23c",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -714,6 +714,30 @@
       "from_id": "fact:shared-graph-field-report-what-held",
       "properties": {},
       "to_id": "cap:shared-sessions"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:the-diamond-meets-at-dynographs-internals-not-its-interface",
+      "properties": {},
+      "to_id": "dec:idea-a-change-upstream-reaches-the-sibling-that-never-asked"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:the-five-project-census-2026-08-09",
+      "properties": {},
+      "to_id": "dec:idea-a-change-upstream-reaches-the-sibling-that-never-asked"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:the-hosted-case-breaks-the-git-transport-and-the-access-topology-is-now-stated",
+      "properties": {},
+      "to_id": "dec:idea-gap-flows-to-the-dependency"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:the-levied-requirement-blocker-cleared-and-the-workaround-recurred",
+      "properties": {},
+      "to_id": "dec:idea-gap-flows-to-the-dependency"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -6090,6 +6114,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-change-upstream-reaches-the-sibling-that-never-asked",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-hosted-tier-of-many-single-writer-tenants",
       "properties": {
         "acted_at": "2026-08-09",
@@ -6845,6 +6878,33 @@
         "role": "author"
       },
       "to_id": "who:storyflow-storybug-boss"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "fact:the-five-project-census-2026-08-09",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "fact:the-hosted-case-breaks-the-git-transport-and-the-access-topology-is-now-stated",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "fact:the-levied-requirement-blocker-cleared-and-the-workaround-recurred",
+      "properties": {
+        "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -16993,6 +17053,16 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-a-change-upstream-reaches-the-sibling-that-never-asked",
+      "properties": {
+        "alignment": "supporting",
+        "confidence": 0.9,
+        "evidence": "This node is the cross-graph case that node's own counter-argument anticipates: derived notification fails structurally when the dependency edge lives in the consumer's graph"
+      },
+      "to_id": "dec:who-needs-to-know"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "dec:idea-an-unplanned-cut-takes-an-in-between-number",
       "properties": {
         "alignment": "opposing",
@@ -18027,6 +18097,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:central-host"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-a-change-upstream-reaches-the-sibling-that-never-asked",
+      "properties": {
+        "dependency_type": "control_flow",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-gap-flows-to-the-dependency"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -25648,9 +25728,33 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-a-change-upstream-reaches-the-sibling-that-never-asked",
+      "properties": {},
+      "to_id": "fact:the-diamond-meets-at-dynographs-internals-not-its-interface"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "dec:idea-detect-vocabulary-that-nothing-reaches",
       "properties": {},
       "to_id": "fact:precedes-is-unused-in-storyflow-and-flowless-here"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-gap-flows-to-the-dependency",
+      "properties": {},
+      "to_id": "fact:the-five-project-census-2026-08-09"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-gap-flows-to-the-dependency",
+      "properties": {},
+      "to_id": "fact:the-levied-requirement-blocker-cleared-and-the-workaround-recurred"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-need-to-know-compartments",
+      "properties": {},
+      "to_id": "fact:the-hosted-case-breaks-the-git-transport-and-the-access-topology-is-now-stated"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -53302,6 +53406,24 @@
       "to_id": "req:no-silent-fallback"
     },
     {
+      "edge_type": "VIOLATES",
+      "from_id": "fact:the-diamond-meets-at-dynographs-internals-not-its-interface",
+      "properties": {
+        "confidence": 0.8,
+        "evidence": "Clause (5) observed in the field: two distinct designs both carry graph_id 'reflow2', so composition cannot tell their nodes apart by the field intended for it"
+      },
+      "to_id": "rule:no-foreclosure"
+    },
+    {
+      "edge_type": "VIOLATES",
+      "from_id": "fact:the-five-project-census-2026-08-09",
+      "properties": {
+        "confidence": 0.9,
+        "evidence": "Clause (5): graph_id pinned to a constant. Measured — dev_storyflow and reflow2 both carry graph_id 'reflow2', and flo2 uses a minted hash while dynograph-foundation uses its name. Three conventions, one collision."
+      },
+      "to_id": "rule:no-foreclosure"
+    },
+    {
       "edge_type": "YIELDED",
       "from_id": "frag:art-alternatives",
       "properties": {
@@ -62902,6 +63024,16 @@
         "decision": "UNSETTLED. dev_storyflow's most-wanted ask, 2026-08-08: express \"this capability needs a surface where a person (or an upstream system) actually writes the data it consumes\", so a capability that is realized, built and rendering — but dead because nothing ever writes its input — is caught by a detector rather than by three people producing three wrong root causes. Shapes worth weighing rather than a recommendation: (a) a new edge — cap FED_BY ifc/Actor — with an unrealized_input_path gap when a capability that consumes a field has no writer; (b) a property on the Capability (`needs_input_path: true`) with the detector reading it, which is cheaper and weaker because nothing forces the flag; (c) generalise the existing INTERACTS_WITH by adding a `required` property, so \"an actor interacts with this\" can become \"this does not function unless an actor does\"; (d) decline it as out of scope, on the ground that reflow2 models the design and not the operational data path. NOTE WHAT ALREADY EXISTS AND WHY IT IS NOT ENOUGH: req:the-store-is-reachable-from-a-session says \"a capability nothing can call is not delivered — the content store needs a surface\", which is exactly this insight scoped to ONE capability and written by hand; nothing generalises it and nothing detects it.",
         "name": "OPEN — should a capability be able to declare that it needs a human INPUT path, so that the absence of one is DETECTABLE rather than diagnosable only by three people failing?",
         "rationale": "Recorded because it is the one thing the fleet said would have saved the most time, and because it is a VOCABULARY question rather than a detector bug — detect_gaps structurally cannot ask about a surface the design has no way to say is required, which is req:the-tool-finds-its-own-blind-spots in its sharpest instance to date. Left `proposed` deliberately: every shape above changes the schema or the detector set, and which one is right is Anthony's call, not a field report's. The evidence is fact:defect-a-realized-capability-can-be-dead-for-want-of-an-input-path.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-a-change-upstream-reaches-the-sibling-that-never-asked",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-09, describing what has already happened rather than a hypothetical.\n\nTHE SHAPE, in his numbering: projectA = **dynograph-foundation**, projectB = **reflow2**, projectC = **flo2**, projectD = **storyflow**. C depends on B; B depends on A; **D ALSO depends on A, and not on B.** A diamond, with A at the point. (projectE = embeddings-rs, and whether it is even a reflow2 project is undecided — recorded as unknown rather than assumed either way.)\n\n⚠️ THE INCIDENT, WHICH IS THE EVIDENCE AND IS NOT HYPOTHETICAL. Anthony: \\\"projectB caused changes in projectA, which I implemented real time. **The risk was that the changes that projectB required on projectA might have caused issues with projectA now being able to support projectD** (I thought about it, but really didn't test that anything didn't break in projectD by using an updated projectA).\\\"\n\n⇒ A change was levied UP one arm of the diamond and shipped, and **nothing checked the other arm.** The owner noticed the risk by thinking, and the check was never run. That is the failure mode, already realised, on the real projects.\n\n=== WHY THIS IS NOT `dec:who-needs-to-know`, AND THE DIFFERENCE IS STRUCTURAL ===\n\nThat node asks whether notification is SUBSCRIBED or DERIVED from the blast radius, and prefers derived because `propagate_from` already computes who a change impacts. Its recorded counter-argument is: *\\\"a blast radius is only as good as the edges that exist, so an unrecorded dependency means a silent non-notification.\\\"*\n\n**IN THE CROSS-GRAPH CASE THAT COUNTER STOPS BEING A RISK AND BECOMES A CERTAINTY.** The edge D→A lives in **D's graph**. A's graph does not hold it and cannot. So A's blast radius is not *possibly* incomplete — it is **NECESSARILY TRUNCATED AT THE GRAPH BOUNDARY**, every time, by construction. Derived notification cannot work from the upstream side, and no amount of edge hygiene in A fixes it.\n\n⭐ AND IT IS THE SAME STRUCTURAL FACT `dec:idea-gap-flows-to-the-dependency` already turned on, pointing the other way. There, Anthony's Google-service argument defeated \\\"the upstream pulls\\\": a widely-depended-on design **cannot enumerate its dependents**. That killed pull for RECEIVING requirements. Here the identical fact kills push for SENDING warnings — A cannot warn D because A does not know D exists. **One fact, two directions, two different unbuildable mechanisms.** Which is a strong hint that the answer has to live on the CONSUMER side in both cases.\n\n=== OPTIONS, NONE CHOSEN ===\n\n**(A) THE CONSUMER MIRRORS AND NOTICES.** Each dependent mirrors the upstream's published surface and detects when the mirror drifts from the real one. **The machinery is already built and shipped** — `export_surface` (upstream publishes), `mirror_surface` / `mirrors` (consumer mirrors), `pair_designs`, `seam_report`. FOR: it scales exactly where push fails, because it needs no registry and no knowledge of who depends on you; each consumer looks after itself. It also inverts the burden onto the party who actually cares. COUNTER: it is a PULL, so it only fires when the consumer runs it — D learns it is broken when D next looks, not when A changes. For a project nobody has opened in three months, that is late.\n\n**(B) A COMPOSITION RUN ACROSS ALL THE GRAPHS AT ONCE.** `compose_and_analyse` and `pair_designs` exist; `dec:linked-repos-poc` RAN this on reflow2 + flo2 + dynograph-foundation on 2026-08-06 and found \\\"the linking works, the labelling does not exist.\\\" **THAT BLOCKER HAS SINCE CLEARED** — reflow2 now declares 9 `required` interfaces, five of them pointed at dynograph (`ifc:req-dyno-*`). FOR: it computes the diamond directly — two consumers requiring the same interface means a change to it touches both — and Anthony HOLDS ALL FOUR GRAPHS, so it is runnable today. COUNTER: it needs somebody with every graph in hand, which is exactly the arrangement the Google-service argument says does not generalise. **Fine for the trial, not the answer.**\n\n**(C) THE UPSTREAM KEEPS A REGISTRY OF ITS CONSUMERS.** FOR: A could then warn D. COUNTER: refuted twice already — registration is a write, so pull cannot bootstrap, and a heavily-depended-on design will not maintain it. Retained only for the small-federation case.\n\n**(D) NOTHING MECHANICAL; THE OWNER REMEMBERS.** COUNTER: this is what happened, and the record above is what it cost — the risk was identified and the test still was not run. Not because anyone was careless, but because nothing made the omission visible afterwards.\n\n=== THE FIRST TESTABLE STEP, WHICH COSTS ALMOST NOTHING ===\n\n**Does storyflow (D) DECLARE its dependency on dynograph-foundation (A) as a `required` interface, the way reflow2 (B) now does?** reflow2's five `ifc:req-dyno-*` interfaces exist; whether D has any equivalent is UNKNOWN AND CHECKABLE. If it does not, no mechanism in any option above can work for D, and declaring it is the prerequisite for all of them. If it does, the diamond is already computable with tools that shipped.\n\n📌 AND THE METHOD IS ANTHONY'S OWN, STATED THE SAME DAY: *\\\"the best development of reflow2 has been propose something — trial it with a real project — then learn from it — iterate upon the solution and try again.\\\"* These four projects are that trial, and the diamond is the first thing to run it on.\n\nNOTHING IS PROMOTED.",
+        "name": "OPEN — when a change to a shared upstream is driven by one dependent, how does the OTHER dependent find out? (the diamond: B and D both depend on A, and A's blast radius stops at its own graph)",
+        "rationale": "Captured under the brainstorm skill, and kept SEPARATE from two neighbours it would otherwise be merged into — a node holding two questions can only ever be half-answered. `dec:idea-gap-flows-to-the-dependency` is the UP direction (how a dependent levies a need on its upstream); this is the DOWN-AND-SIDEWAYS direction (how a change to a shared upstream reaches a sibling that never asked). `dec:who-needs-to-know` is the SAME-GRAPH version and prefers derived notification; the point of this node is that derivation is structurally impossible across a graph boundary, which that node's own counter-argument anticipates without naming the cross-graph case.\n\nRecorded because the failure has already occurred on the real projects and was survived by luck rather than by a check — and because the prerequisite that blocked every mechanism (no labelled seam) cleared three days after it was written down.",
         "status": "proposed"
       }
     },
@@ -74370,6 +74502,50 @@
       }
     },
     {
+      "node_id": "fact:the-diamond-meets-at-dynographs-internals-not-its-interface",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "measurement",
+        "statement": "MEASURED 2026-08-09 by READING dev_storyflow's committed export (1,373 nodes, 2,570 edges, stamp 0.26.1) at Anthony's direction. READ ONLY — nothing was written to storyflow, and `describe_designs` was used first precisely because it reads the sidecar without opening the store.\n\nANTHONY PREDICTED IT BEFORE THE MEASUREMENT: \"I can almost already tell you that reflow2 does not interface with dynograph-foundation the same way that storyflow interfaces with dynograph-foundation.\" **CONFIRMED, AND THE SHAPE IS MORE USEFUL THAN THE PREDICTION.**\n\n=== THE TWO CONSUMERS USE DIFFERENT SURFACES THROUGH DIFFERENT TRANSPORTS ===\n\nreflow2 (projectB) consumes dynograph as a **RUST LIBRARY API**, five `required` interfaces:\n  ifc:req-dyno-core-api        Core model types (Schema, Value, DynoError)\n  ifc:req-dyno-graph-api       Graph algorithms API\n  ifc:req-dyno-storage-api     StorageEngine Rust API\n  ifc:req-dyno-resolution-api  EntityResolver API\n  ifc:req-dyno-vector-api      Vector, HNSW and statistics API\n\nstoryflow (projectD) consumes it as a **REST API OVER HTTP**:\n  ifc:dynograph_api                      DynoGraph (dag_plus) REST API\n  ifc:dynograph_temporal_api             temporal endpoints\n  ifc:dynograph_inferences               generic inference-edge endpoint\n  ifc:dynograph_relationships_catalog    relationships catalog endpoint\n  ifc:dynograph_apply_fixes              apply-fixes proposal-batch contract\n  ifc:foundation_api                     Foundation engine API\n\n⭐⭐ SO THE DIAMOND DOES NOT MEET AT AN INTERFACE. IT MEETS AT DYNOGRAPH'S INTERNALS. Two consumers, two DISJOINT surfaces, one shared implementation beneath both. That reframes the risk rather than dissolving it: a change confined to the Rust crate API cannot touch storyflow's REST endpoints, and a change to the engine BENEATH both touches everything — and **neither consumer's graph can see that layer at all**, because each declares only the surface it personally uses.\n\n⇒ THE CHECK THAT WOULD ACTUALLY HAVE ANSWERED THE 2026 INCIDENT is therefore NOT \"do B and D require the same interface\" — they do not, and a naive diamond detector would have reported all-clear. It is \"**did the change reach below both published surfaces into shared implementation**\", which is a question about A's OWN internal structure and is answerable only inside A's graph.\n\n=== ⚠️ THE PREREQUISITE IS UNDONE ON D'S SIDE ===\n\n**storyflow declares ZERO `required` interfaces.** 53 Interfaces: 44 `internal`, 9 `unset`, 0 `required`, 0 `published`. That is EXACTLY the state reflow2 was in on 2026-08-06, before PR #130 — and `dec:linked-repos-poc` named it then: \"the linking works, the labelling does not exist.\" **The labelling now exists on B's side and not on D's, so the seam is still one-ended and nothing pairs.** Declaring dynograph's endpoints `required` in storyflow is the cheapest possible next step and it is entirely inside a graph Anthony owns.\n\n=== 🔴 AND AN OBSTACLE TO COMPOSITION THAT NOBODY HAS NAMED ===\n\n`describe_designs` reports BOTH stores with **`graph_id: \"reflow2\"`** — storyflow's design is LABELLED `dev_storyflow` but carries the same graph_id as reflow2's. This is `rule:no-foreclosure` clause (5) observed in the field: \"graph_id already exists on every node and edge and is PINNED TO A CONSTANT; code that assumes the constant rather than reading the field is the foreclosure.\" **Composing two designs whose nodes both claim graph_id \"reflow2\" is a collision waiting to happen**, and every cross-project mechanism in `dec:idea-a-change-upstream-reaches-the-sibling-that-never-asked` and `dec:idea-gap-flows-to-the-dependency` runs through composition. `label` distinguishes them; `graph_id` does not.\n\n📝 ALSO OBSERVED, unprompted and relevant to the projectE question: storyflow carries `ifc:embeddings_api` (\"Embeddings REST API\"), so D already declares a dependency on the embeddings service. Whether that is Anthony's `embeddings-rs` is NOT established here and is not assumed.\n\nBOUND: this reads storyflow's COMMITTED EXPORT, not its live store (the store is not present at that path — `describe_designs` reported \"identity recorded, but the store itself is not here\"). If storyflow's live graph has moved since its last export, these counts are stale by that much.",
+        "subject_id": "dec:idea-a-change-upstream-reaches-the-sibling-that-never-asked"
+      }
+    },
+    {
+      "node_id": "fact:the-five-project-census-2026-08-09",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "CENSUS OF ANTHONY'S FIVE PROJECTS, 2026-08-09, via `describe_designs` — which reads only the sidecar beside each store, opens nothing, takes no lock and writes nothing. READ ONLY.\n\n  project                     graph_id                label              minted_by   stamp\n  A dynograph-foundation      dynograph-foundation    dynograph-foundation  0.16.0    0.16.0  (56 edge / 28 node types)\n  B reflow2                   reflow2                 reflow2               0.13.0    0.26.1  (61 / 29)\n  C flo2                      1a97fc1f1de4d5d2        flo2                  0.24.0    0.26.1  (60 / 29)\n  D dev_storyflow             reflow2   ⚠️            dev_storyflow         0.14.0    0.26.1  (61 / 29)\n  E embeddings-rs             —                       —                     —         ABSENT\n\n=== ✅ PROJECT E IS NOT A REFLOW2 PROJECT — the open question is answered ===\n\nAnthony was unsure (\"technically, there is a projectE (embeddings-rs, though I'm not sure yet if this is a reflow2 project)\"). MEASURED: the `.reflow2` directory EXISTS and `describe_designs` reports `state: absent` — \"no design here.\" So it is OPTED IN AND EMPTY: somebody created the directory and no design was ever started. That is a distinct state from both \"is a reflow2 project\" and \"is not one\", and reflow2 reports it precisely because opening the store to find out would MINT an identity and make the answer true by asking.\n\n⚠️ AND STORYFLOW ALREADY DECLARES `ifc:embeddings_api` (\"Embeddings REST API\"), so D depends on an embeddings service that has no design at all. Whether that service IS embeddings-rs is still not established.\n\n=== 🔴 THREE IDENTITY CONVENTIONS ACROSS FOUR GRAPHS, AND ONE OUTRIGHT COLLISION ===\n\n- `dynograph-foundation` — graph_id equals the label. The convention working.\n- `flo2` — graph_id is a MINTED HASH `1a97fc1f1de4d5d2`, label `flo2`. Different convention, and it is the one `minted` origin among four.\n- **`dev_storyflow` carries graph_id `reflow2` — THE SAME ID AS REFLOW2 ITSELF.** Two distinct designs, one id.\n\n⇒ This is exactly the Contributor-fork defect found earlier today (`ctr:anthony` / `who:ajs`) ONE LEVEL UP: **the field whose entire purpose is identity is the one nothing checks for duplicate identity.** It is also `rule:no-foreclosure` clause (5) in the field. Every cross-project mechanism in `dec:idea-gap-flows-to-the-dependency` and `dec:idea-a-change-upstream-reaches-the-sibling-that-never-asked` runs through composition, and **composition cannot tell B's nodes from D's by graph_id.** `label` distinguishes them; the id does not.\n\n=== ⚠️⚠️ THE PROJECT AT THE BOTTOM OF THE STACK HAS THE STALEST DESIGN ===\n\n**dynograph-foundation's graph was written by reflow2 0.16.0 and has not moved since — roughly ELEVEN releases behind the 0.27.0 cut today.** Its stamp holds 56 edge types and 28 node types against the current 61 and 29. It predates `OWNED_BY`, `GATED_ON`, `HAS_READINESS`, `SCHEDULED_FOR`, `CALIBRATED_AGAINST` and the whole `ReadinessAssessment` type.\n\nTHE SHAPE IS THE FINDING: **A is what B, C and D all rest on, and A is the least-maintained design of the four.** Every consumer's graph is current; the thing they depend on is a year of releases behind in design terms. And the practical consequence bites immediately on the question Anthony asked — filing a proposed requirement INTO A's graph with a 0.27.0 binary will MOVE A'S STAMP from 0.16.0 to 0.27.0, which is a real and irreversible side effect of what looks like a read-mostly act of filing an issue.\n\nBOUND: `describe_designs` deliberately reports NO node counts, because counting means opening, and opening mints an identity where there is none. So this census says what each design IS, never how big it is. D's and A's contents are known here only from their committed exports, not their live stores.",
+        "subject_id": "dec:idea-a-change-upstream-reaches-the-sibling-that-never-asked"
+      }
+    },
+    {
+      "node_id": "fact:the-hosted-case-breaks-the-git-transport-and-the-access-topology-is-now-stated",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.85,
+        "fact_type": "measurement",
+        "statement": "STATED BY ANTHONY 2026-08-09, AND IT BREAKS THE ANSWER THE 2026-08-06 NODE SETTLED ON.\n\n=== THE ACCESS TOPOLOGY, FINALLY EXPLICIT ===\n\n\"My brother will be co-developing flo2 and we'll both have access to and work from the flo2 github repo. He doesn't have access to the other repos though (maybe reflow2, but I don't think so — he just installs it the standard manner and gives me feedback on it).\"\n\n  flo2 (C)     TWO WRITERS on one shared git repo — the multi-writer merge case dec:multi-writer-architecture was built for\n  reflow2 (B)  ONE WRITER, plus a consumer who installs the released kit and reports back. NO repo access.\n  A, D         Anthony only.\n\n⇒ The brother is a CONSUMER of reflow2 and a CO-AUTHOR of flo2, and those are different relationships needing different mechanisms. His reflow2 feedback already arrives the way `dec:idea-gap-flows-to-the-dependency` predicts a consumer's would — out of band, by hand, with nothing in either graph knowing.\n\n=== ⚠️⚠️ THE HOSTED CASE, WHICH THE GIT ANSWER DOES NOT REACH ===\n\n\"Some of this discussion may come into particular value in flo2 if we have MULTIPLE USERS AND MULTIPLE PROJECTS, SOME OF WHICH ARE DEPENDENT UPON OTHER'S PROJECTS WITHIN THE SAME DYNOGRAPH-FOUNDATION DB.\"\n\nTHAT IS A DIFFERENT TOPOLOGY, NOT A BIGGER ONE. The 2026-08-06 answer — file a proposed node on a BRANCH of the upstream's repo, merged by its owner — rests on three things the hosted case does not have:\n  (1) a git repo per design. In flo2 there is one shared database, not N repos.\n  (2) a branch and a merge as the review gate. A shared db has no branch to file against.\n  (3) the filer and the owner being the same KIND of party. Here they are different TENANTS.\n\n⇒ **THE TRANSPORT THAT MAKES THE REPO CASE COST ZERO NEW CODE IS UNAVAILABLE IN THE HOSTED CASE.** The 2026-08-06 node half-anticipated this — \"for the HOSTED case flo2's own layer must be the mailbox\" — but treated it as a deployment detail. With cross-TENANT dependencies it is not a detail: it is a second mechanism, and the one that has to be designed rather than inherited.\n\n⭐ AND IT MAKES THE COMPARTMENT QUESTION LOAD-BEARING. `dec:idea-need-to-know-compartments` asks whether per-user graph scope is a convenience or a COMPARTMENT. In the repo world that is abstract — each person holds their own clone. In one shared db where user X's project depends on user Y's, an automatic cross-project write is a channel BETWEEN TENANTS, and the safe direction is defined against SENSITIVITY rather than against the dependency arrow. A levied requirement is a write into someone else's design by someone who is not their collaborator.\n\n⚠️ ONE THING THAT DOES CARRY OVER, AND IT IS THE SAFETY PROPERTY: the repo answer is safe partly BECAUSE it never opens the upstream's store — it is a diff against a committed file, so it cannot move their schema stamp (see `fact:the-five-project-census-2026-08-09`: dynograph-foundation still stamps 0.16.0, and opening it with a current binary would upgrade it). **In a shared db every write opens the store by definition.** So the hosted mailbox must supply, by other means, the isolation the file transport gets for free.\n\nNOTHING IS DECIDED. This records that `dec:idea-gap-flows-to-the-dependency` has TWO environments and only one of them has an answer — which the options as written do not distinguish.",
+        "subject_id": "dec:idea-gap-flows-to-the-dependency"
+      }
+    },
+    {
+      "node_id": "fact:the-levied-requirement-blocker-cleared-and-the-workaround-recurred",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "TWO THINGS CHANGED FOR `dec:idea-gap-flows-to-the-dependency` BETWEEN 2026-08-06 AND 2026-08-09, AND NEITHER IS A NEW IDEA — the question, the four options and Anthony's lean were already recorded. This is evidence against them.\n\n=== ✅ (1) THE STATED PREREQUISITE IS MET ===\n\nThat node closes with: \"⚠️ THE PREREQUISITE THAT STILL BOUNDS ALL OF IT: dec:linked-repos-poc was RUN 2026-08-06 and found reflow2 declares NO `required` interface at all, so nothing pairs across any seam. The channel this node is about has no labelled boundary to run along.\"\n\nMEASURED 2026-08-09 against the committed export: **14 Interfaces, of which 9 are `required` and 3 `published`** — ifc:ambient-agent, ifc:authenticating-gateway, ifc:exclusive-local-store, ifc:mcp-protocol, and the five dynograph-foundation APIs. PR #130 (2026-08-09) landed this; `paired` went 0→5 and `seam_report` ran for the first time. **THE SEAM NOW HAS A LABELLED BOUNDARY. The blocker named in that node no longer holds.**\n\n⭐⭐ AND ONE OF THOSE NINE ANSWERS THE OTHER HALF OF THE QUESTION. The 2026-08-06 node said what was missing was TRANSPORT and ENFORCEMENT, and that enforcement was unfixable: \"nothing stops a writer doing more than filing, because reflow2 HAS NO AUTHENTICATION and cannot acquire one without becoming a different product.\" **`ifc:authenticating-gateway` is now a DECLARED REQUIRED INTERFACE** — \"an authenticating gateway in front; reflow2 has no authentication.\" The hole did not close, but it stopped being an unstated hole and became a stated DEPENDENCY, which is a different thing: the design now says somebody else must provide this, and names the shape. **flo2 is a candidate provider of exactly that interface**, which makes the two projects' relationship reciprocal rather than one-directional.\n\n=== 🔁 (2) THE MANUAL WORKAROUND RECURRED, AND ITS COST IS NOW STATED BY ITS AUTHOR ===\n\nThe 2026-08-06 node recorded the first occurrence: flo2 hit a wall it could not climb from inside itself, a human wrote a markdown proposal in the flo2 repo, a human read it, an agent re-typed it as reflow2 nodes, and NOTHING IN EITHER GRAPH KNEW.\n\nIT HAPPENED AGAIN, 2026-08-09, in Anthony's words: \"Earlier, I was working a bit on flo2 (projectB) and it will require some changes be made to reflow (projectA) to make it scalable to multiple users/multiple projects simultaneously. What I did earlier was ask the agent in flo2 what those changes will be. I then created a .md file and had the agent doing reflow2 session read that markdown file. **THAT IS HUGELY INEFFICIENT.**\"\n\n⭐ WHY A SECOND OCCURRENCE IS WORTH RECORDING RATHER THAN SHRUGGING AT: a workaround performed ONCE is an anecdote; a workaround performed TWICE, by the design's own author, on the design's own flagship dependency, is a measurement of what the absent feature costs. And the second time he named the cost himself rather than being asked.\n\n=== THE OWNERSHIP SHAPE, STATED PLAINLY FOR THE FIRST TIME ===\n\nAnthony, 2026-08-09: projectA (reflow2) and projectB (flo2) are both his responsibility; projectB is CO-DEVELOPED with his brother; projectB DEPENDS ON projectA; and **\"my brother who is building the web app around reflow2 doesn't need access to projectA.\"**\n\nThat is not a new constraint — it is the same one the 2026-08-06 node built option (A) around — but it is now stated as a fact about the actual arrangement rather than as a hypothetical, and it independently re-confirms his lean: write-only-at-proposed keeps the brother out of reflow2 entirely while still letting flo2 levy what it needs.\n\n⚠️ WHAT THIS FACT DOES NOT DO: it does not choose an option. (A), (B), (C) and (D) all stand exactly as recorded, with (C) still refuted by the Google-service argument and (A) still carrying its honest counter — that reflow2 CANNOT ENFORCE write-only-at-proposed, because that is a property of whatever holds the mailbox. The blocker clearing makes the question ANSWERABLE; it does not answer it.",
+        "subject_id": "dec:idea-gap-flows-to-the-dependency"
+      }
+    },
+    {
       "node_id": "fact:the-seam-pairs-and-seam-report-has-now-run",
       "node_type": "TemporalFact",
       "properties": {
@@ -75929,7 +76105,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:14ce0efa9b3afca69c11e1e5848521ec47a730ebf11d82f46f93ce4dafee230e",
+  "prev_content_hash": "sha256:18230c7ccb692f38f59425828f613b49d87471e86dfd294a7c4aa30099dc9713",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
