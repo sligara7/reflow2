@@ -21,6 +21,15 @@ Run this **after any structural change** (a new component, a new contract, edits
 Call `detect_defects`. It returns `HealIssue`s with `category`, `severity`
 (`critical`/`warning`/`info`), a `message`, `affected_ids`, and a `suggested_fix_type`.
 
+**A finding with NO `suggested_fix_type` is not an oversight — it is the answer.** Where the only
+way to quiet a finding would be to assert a relationship nobody stated, reflow2 offers no operation
+and puts a sentence in `repair_is_a_judgement` instead
+(`req:a-repair-suggestion-never-proposes-fabrication`). A disconnected cluster, a component wired
+to nothing, an orphan: each may be perfectly correct, and connecting it to make the warning stop
+would manufacture connectivity — the same act as formatting coverage into existence, except that
+the tool proposed it. Read the sentence to the user and let them judge. **Do not go looking for a
+fix the tool declined to name.**
+
 What the categories mean, and what to do about each:
 
 | Category | What it means | Who resolves it |

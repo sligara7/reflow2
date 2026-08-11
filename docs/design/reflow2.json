@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:0ca6c99e8a072d0ba06479e450ed599b0571199a282f05f7742c1d944804b1fe",
+  "content_hash": "sha256:45c03298eab544fbdf281209f2d1574748950e50c3ceb89a060ad31df94e135c",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1550,6 +1550,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:flow"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:no-fabricated-repair",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:heal"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -4023,6 +4031,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:no-fabricated-repairs",
+      "properties": {},
+      "to_id": "epoch:no-fabricated-repairs"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:no-idea-goes-quiet",
       "properties": {},
       "to_id": "epoch:ideas-stay-connected"
@@ -5909,7 +5923,7 @@
       "from_id": "dec:a-tied-merge-breaks-by-degree-not-by-alphabet",
       "properties": {
         "acted_at": "2026-08-10",
-        "role": "approver"
+        "role": "author"
       },
       "to_id": "who:ajs"
     },
@@ -8959,6 +8973,15 @@
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-d17a2d99810f2ba6",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
     },
     {
       "edge_type": "CHANGED",
@@ -13973,6 +13996,42 @@
         "action": "modified"
       },
       "to_id": "cap:loop-status"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:no-fabricated-repairs",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check-health-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:no-fabricated-repairs",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:cycles-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:no-fabricated-repairs",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:no-fabricated-repairs",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:no-fabricated-repair"
     },
     {
       "edge_type": "CHANGED",
@@ -51973,6 +52032,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:no-fabricated-repair",
+      "properties": {},
+      "to_id": "req:a-repair-suggestion-never-proposes-fabrication"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:nothing-moved",
       "properties": {},
       "to_id": "req:coherence"
@@ -53548,6 +53613,12 @@
       "from_id": "ver:model-process",
       "properties": {},
       "to_id": "cap:model-process"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:no-fabricated-repairs",
+      "properties": {},
+      "to_id": "cap:no-fabricated-repair"
     },
     {
       "edge_type": "VERIFIES",
@@ -55290,7 +55361,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:c89109a61fe5a9da6d097dd273a3e1b04b0d698d858b87ae3f25bf2139472ac7",
+        "checksum": "sha256:421fce94c82f958100d1ad9140ca53b5eff1e0ba30593c25dc79d37095d7a0e1",
         "granularity": "atomic",
         "location": "getting-started/skills/check-health/SKILL.md",
         "name": "check-health/SKILL.md",
@@ -55454,10 +55525,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:adfea07b2891743b",
+        "checksum": "sha256:c5a5a59a2a71f549745745c4f1151b8a48d5bfbc44c121320da963dc6b35b083",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/cycles.rs",
         "name": "Circular-dependency suite — detection, selectivity, and what the finding says it walked",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -55777,7 +55850,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:59747ef7945dd315f0ef154b20e5034b3c03506a27394e5ab19425383360758a",
+        "checksum": "sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
@@ -56555,7 +56628,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:94351d2b73603362bc135edf55fc1e6f5154e68d7ff2470872b6bd05794cfa6d",
+        "checksum": "sha256:705b57afbd3e0c6a2dc0095a66ce5681523b2eb1b2c19a4111c9ff153ce9b2ae",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -58330,6 +58403,16 @@
       }
     },
     {
+      "node_id": "cap:no-fabricated-repair",
+      "node_type": "Capability",
+      "properties": {
+        "description": "A HEAL finding carries a suggested_fix_type ONLY where a mechanical repair would restore or reorganise something the design already holds. Where the only way to quiet a finding would be to assert a relationship nobody stated, the fix type is ABSENT and `repair_is_a_judgement` carries the sentence a reader needs instead.\n\nTHREE FINDINGS CHANGED, all of them inventions: `disconnected_community` and `dead_end` both offered `generate_bridge` — create edges until it is connected — and `orphan_node` offered `generate_owner`, a link nobody drew. Each may be reporting something perfectly correct: a subsystem that genuinely does not couple, a component that is genuinely standalone, a parked thought that correctly governs nothing yet.\n\nTHE LINE IS NARROW AND THE COUNTERWEIGHT IS TESTED. `break_cycle` removes an edge that EXISTS; `merge` is gated on a human-asserted DUPLICATES; `generate_decision` writes a node recording a judgement somebody must make. None asserts a relationship about what already relates to what, and all three keep their suggestions. A test pins that, because a rule against invention silently becoming a refusal to help would be the worse outcome.\n\nWHY ABSENCE PLUS A SENTENCE RATHER THAN A `no_fix` VALUE: a field that still says here is the repair sends the next reader looking for one. Absence says there is no operation; the sentence says what to do instead. Same shape as the changelog draft `needs_a_human`.",
+        "name": "Where no honest repair exists, the finding says so instead of offering one",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "cap:nothing-moved",
       "node_type": "Capability",
       "properties": {
@@ -59783,6 +59866,15 @@
         "change_type": "refactor",
         "detected_at": "2026-07-28T18:30:00-04:00",
         "name": "v0.18.0 cut: the [reflow2] version field rolled 0.17.0 -> 0.18.0; the dependency pin itself did not move."
+      }
+    },
+    {
+      "node_id": "chg:accept-d17a2d99810f2ba6",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-10",
+        "name": "`repair_is_a_judgement` declared in NON_TOOL_TERMS - a HealIssue field the skill now names, not a tool."
       }
     },
     {
@@ -61295,6 +61387,14 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "The loop's to-do list names the read-only tool as the imperative, and the brainstorm skill stops citing a default that changed"
+      }
+    },
+    {
+      "node_id": "chg:no-fabricated-repairs",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "HEAL stops proposing fabrication. disconnected_community and dead_end no longer offer generate_bridge, orphan_node no longer offers generate_owner; each carries repair_is_a_judgement instead. Honest repairs (break_cycle, merge, generate_decision) keep their suggestions and a test pins that, because the narrow rule becoming a general refusal to help would be worse. Mutation-checked: restoring generate_bridge on the island fails exactly the filed case and no other."
       }
     },
     {
@@ -62832,7 +62932,7 @@
         "decision": "PROPOSED RESOLUTION of the standing contradiction between `dec:merge-survivor-provenance` and the two facts that contradict it (`fact:apply-heal-would-have-destroyed-the-wrong-contributor`, `fact:defect-merge-survivor-ignores-priority-and-status`). AWAITING ANTHONY'S WORD — recorded at `proposed` with him as approver, so the loop reports it as owed rather than letting it read as settled.\n\nDO NOT RE-OPEN THE PROVENANCE RANKING. It is correct and it is not what fails. The failure is entirely in the TIEBREAK beneath it: provenance ranks authored > planned > imported > reconciled > inferred > healed, and in practice both sides of a real collision are hand-authored, so the rank TIES and `a <= b` on the node id decides. Twice observed, twice choosing the worse node — `req:backend_as_product` (medium, accepted) over `req:graph_is_the_content_bible` (critical, proposed) at dev_storyflow 2026-08-08, and `ctr:anthony` (8 edges, no description) over `who:ajs` (161 edges, full description) here on 2026-08-09.\n\nTHE ARGUMENT THAT UNBLOCKS THIS, and it is the whole point of the node: DEGREE IS NOT A POLICY. The reason the rule was deliberately left alone is recorded in `fact:defect-merge-survivor-ignores-priority-and-status`: ranking priority above status, or the reverse, asserts a claim about what matters more in a design, and `dec:readiness-is-an-observation-the-threshold-is-the-judgement` says reflow2 must not default that — it is the user's. THAT REASONING IS SOUND AND IS NOT BEING OVERTURNED. But \"destroy fewer edges\" is not a claim about what design content matters; it is a property of the MERGE OPERATION. And the thing it would replace — alphabetical id order — is arbitrary by construction. Substituting a non-arbitrary tiebreak for an arbitrary one asserts no policy at all, which is exactly why this can be done while the priority/status question stays the user's.\n\nFOUR PARTS, SMALLEST FIRST.\n\n(1) WHERE PROVENANCE TIES, BREAK BY DEGREE — keep the node whose deletion destroys less of the design. Degree is already computed and 161 against 8 is not close.\n\n(2) WHERE DEGREE ALSO TIES, REFUSE RATHER THAN PICK. A merge that genuinely cannot distinguish should ask. `dec:ask-not-repair` already holds this shape for the suspicion half; this extends it to the survivor half. A refusal that names both candidates is strictly more useful than a coin toss that names neither.\n\n(3) KEEP PRIORITY AND STATUS OUT OF THE RULE, PUT THEM IN THE DISCLOSURE. \"You are deleting a critical, still-unconfirmed node in favour of a medium, accepted one\" is INFORMATION, not a policy, and the machinery to say it already exists — `chg:a-merge-proposal-discloses-what-it-would-destroy` built `would_destroy` and the alphabet-chose-the-victim line in August. This adds a sentence to an existing disclosure rather than a rule to an existing ranking.\n\n(4) THE SCORING HALF IS SEPARATE AND PROBABLY WORTH MORE. Similarity is prose-only, unweighted by shared referents, which is what let two requirements sharing no requirement, surface or actor score 81-85. Fixing the survivor rule makes a bad merge less destructive; fixing scoring stops the pair reaching a merge at all. Recorded here so the two halves are not confused, NOT claimed by this decision.\n\nWHAT THIS DOES NOT DO, stated because the defect count will not move and somebody will look for it: recording this does not clear `heal:0fc0362a90ff913b` or `heal:7456a4d260ca45ce`. The contradiction detector fires on every CONTRADICTS edge whose alignment is not `supporting` and NEVER LOOKS FOR A RESOLVING DECISION, despite its own doc comment and its `suggested_fix_type: generate_decision` saying otherwise. The honest closure path is that when the tiebreak actually changes, the two facts become historical observations about the OLD rule and their CONTRADICTS edges should be retired as part of that change — not silenced now.\n\nEVIDENCE GAP, stated rather than papered over: degree is KNOWN to decide the contributor case correctly (161 v 8). Whether it separates dev_storyflow's pair is UNVERIFIED — that is their graph and it was not read. If their two nodes have similar degree, part (1) helps less than this decision implies and part (4) carries more of the weight.",
         "name": "PROPOSED — when provenance ties, the merge survivor is the node whose deletion destroys less, and a genuine tie refuses instead of picking",
         "rationale": "Written at Anthony's request on 2026-08-10 after he asked for the merge-survivor pair in plain English and then for the recommendation to be recorded. The recommendation is mine; the decision is his to make, which is why this is `proposed` with an approver edge rather than accepted.\n\nThe load-bearing move is separating the tiebreak from the ranking. Reading `fact:defect-merge-survivor-ignores-priority-and-status` first is what made that possible — it states plainly that the rule was NOT re-opened on purpose, and names the principle. Without that, the obvious proposal is \"consult priority and status\", which walks straight into the judgement reflow2 refuses to default and would have been rejected for a good reason. The finding that the blocked path and the open path are different paths came from reading why it was blocked.\n\nDeliberately does not claim the scoring half, and deliberately records the unverified half of its own evidence.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -66410,6 +66510,16 @@
         "epoch_type": "revision",
         "name": "The governance mode becomes a choice, and reflow2 makes one",
         "sequence": 234,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:no-fabricated-repairs",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "A repair suggestion stops proposing fabrication (2026-08-10) — storyflow gap D, shipped alone because it needs no schema change and a tool that proposes corrupting the graph is wrong on its own terms",
+        "sequence": 316,
         "status": "arrived"
       }
     },
@@ -70429,7 +70539,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A HEAL suggestion must not propose creating a link that does not exist. Where a finding has no honest mechanical repair, the finding is reported WITHOUT a `suggested_fix_type` that would manufacture one, and says plainly that the repair is a judgement rather than an operation.\n\nTHE CONCRETE CASE. `disconnected_community` reports a cluster with `suggested_fix_type: generate_bridge` — create edges to connect it. Where the separation is CORRECT, acting on that suggestion fabricates relationships that do not exist, in order to silence a warning about a separation that is right. In dev_storyflow's words: \\\"acting on the suggestion would fabricate relationships that do not exist, to silence a warning about a separation that is correct. That is manufacturing connectivity, and it is the same act as formatting coverage into existence — WITH THE DIFFERENCE THAT HERE THE TOOL PROPOSES IT.\\\"\n\n⭐ WHY THIS SHIPS FIRST AND ALONE. Anthony, 2026-08-09, settling `dec:legitimate-islands-need-the-detector-fix`: \\\"C now, A next with the read-back, not B, not D.\\\" This half is a LIVE HAZARD and is true whether or not partitions ever become declarable — a tool that proposes corrupting the graph is wrong on its own terms. It needs no schema change, so it does not wait for the schema increment that `req:a-cluster-can-be-declared-deliberately-separate` belongs to.\n\nTHE GENERAL PRINCIPLE, which is what makes this a requirement rather than a one-line patch: reflow2 already refuses to let a check be attached in order to close a finding (the governance-proposal skill's standing warning against green-washing), and `dec:ask-not-repair` already holds that suspected duplicates are ASKED, never merged. THE SAME RULE HAS NOT BEEN APPLIED TO REPAIR SUGGESTIONS. A proposal to write a false edge is the mirror image of a passing check that tests nothing: both make a report go quiet without making anything true.\n\nWHAT IT DOES NOT SAY: it does not ask `disconnected_community` to stop firing, and it does not ask HEAL to stop proposing repairs generally. Mechanical repairs that restore a fact the design already holds remain correct. The line is narrow and it is about INVENTION: a suggestion may reorganise or restore, never assert a relationship nobody stated.\n\n⚠️ RELATED AND SEPARATE, so the two are not conflated: `fact:apply-heal-would-have-destroyed-the-wrong-contributor` records a different HEAL failure found the same day — a merge proposal that named the wrong survivor and DISCLOSED its own arbitrariness (\\\"THE ALPHABET CHOSE THE VICTIM\\\"). That one is about which node a correct operation destroys; this one is about an operation that should not be offered at all.\n\nSOURCE: storyflow gap D of the peer set — raised by storybug Boss (47accf78), characterised and filed by api-boss (05af57c1), 2026-08-09, v0.26.1. Reproduced in this design the same day at 5 nodes and again at 7.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -76185,6 +76295,18 @@
       }
     },
     {
+      "node_id": "ver:no-fabricated-repairs",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-10",
+        "level": "unit",
+        "method": "test",
+        "name": "A repair suggestion never proposes fabricating a relationship (crates/reflow2-core/tests/no_fabricated_repairs.rs, 4 cases). THE CASE THAT WAS FILED: a disconnected cluster is reported with NO suggested_fix_type and WITH repair_is_a_judgement naming it a judgement — `generate_bridge` used to sit there, and where the separation is correct, following it fabricates relationships nobody stated to silence a warning about a separation that is right. Same for a dead-end component, and for an orphan, which used to be offered `generate_owner` — a link nobody drew. MUTATION-CHECKED: restoring generate_bridge on the island fails EXACTLY the filed case and no other. THE COUNTERWEIGHT CARRIES AS MUCH WEIGHT AS THE THREE ABOVE, and is why this is not a general refusal: honest_repairs_keep_their_suggestions pins that `break_cycle` still suggests (removing an edge that EXISTS is not invention), that `generate_decision` still suggests (writing a node recording a judgement somebody must make asserts nothing about what already relates to what), and that a finding WITH an honest operation does NOT also claim to need a judgement. If a rule against invention ever became a refusal to help, that test fails first. WHAT IS NOT COVERED: nothing here proves the three chosen findings are the only inventions in HEAL. `add_redundancy` on a single point of failure was considered and LEFT — adding a redundant path is a design change somebody makes, not an assertion about what already exists — and that judgement is recorded rather than tested.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:no-per-design-process-globals",
       "node_type": "Verification",
       "properties": {
@@ -76828,7 +76950,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b284117423693cd7e10802a2454c62a9dcb69e42e99e9c94b9be124d8b594644",
+  "prev_content_hash": "sha256:0ca6c99e8a072d0ba06479e450ed599b0571199a282f05f7742c1d944804b1fe",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
