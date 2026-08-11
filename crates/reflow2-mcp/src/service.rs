@@ -2391,6 +2391,10 @@ pub struct GranularityReportReq {}
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct ConsumptionReportReq {}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct MaturityReportReq {}
 
 #[derive(Debug, Deserialize, JsonSchema)]

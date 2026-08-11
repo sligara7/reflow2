@@ -115,6 +115,11 @@ pub mod edge {
     /// `Capability → Flow` — a capability is a step of an ordered process
     /// (`step_order` carries its position).
     pub const PART_OF_FLOW: &str = "PART_OF_FLOW";
+    /// `Actor → *` — somebody outside the system reads, writes or triggers a
+    /// capability, flow or interface. In the schema since the functional layer
+    /// landed; it had no constant until [`crate::consumption`] needed to read
+    /// it, which is why the preservation invariant names it as a string.
+    pub const INTERACTS_WITH: &str = "INTERACTS_WITH";
     /// `Fragment → *` — the fragment that produced/updated a node (provenance).
     pub const YIELDED: &str = "YIELDED";
 

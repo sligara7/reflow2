@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:9454fad4d35c138423a039e58f397ef8906a1a14c3056965d7b7d1eabf1a172d",
+  "content_hash": "sha256:05ab3117133ab3a5431e0830a2566999d2118c520fe20b798412c5f364b3f566",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3607,6 +3607,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:consumption-detector-built",
+      "properties": {},
+      "to_id": "epoch:built-and-consumed-by-nothing"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:container-packaging",
       "properties": {},
       "to_id": "epoch:v0250"
@@ -5257,6 +5263,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:built-and-consumed-by-nothing:cap:built-and-consumed-by-nothing",
+      "properties": {},
+      "to_id": "epoch:built-and-consumed-by-nothing"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:capture-registers-its-source:cap:governance-proposal",
       "properties": {},
       "to_id": "epoch:capture-registers-its-source"
@@ -6729,6 +6741,15 @@
       "from_id": "dec:idea-is-session-context-already-in-the-graph",
       "properties": {
         "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-lifecycle-dimensions-on-a-requirement",
+      "properties": {
+        "acted_at": "2026-08-11",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -8993,6 +9014,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-75a29d674e9ab701",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-7602b38b560e21a5",
       "properties": {
         "accepted_baseline": true,
@@ -10007,6 +10037,15 @@
         "action": "modified"
       },
       "to_id": "art:migrate-backlog"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-62541d2bbec20b75",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:consumption"
     },
     {
       "edge_type": "CHANGED",
@@ -12212,6 +12251,33 @@
         "action": "modified"
       },
       "to_id": "cap:reconcile-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:consumption-detector-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:consumption-detector-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:consumption-detector-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:built-and-consumed-by-nothing"
     },
     {
       "edge_type": "CHANGED",
@@ -25788,6 +25854,12 @@
       "from_id": "cap:arrival-delta",
       "properties": {},
       "to_id": "snap:epoch:arrival-delta:cap:arrival-delta"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:built-and-consumed-by-nothing",
+      "properties": {},
+      "to_id": "snap:epoch:built-and-consumed-by-nothing:cap:built-and-consumed-by-nothing"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -50608,6 +50680,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:consumption",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:built-and-consumed-by-nothing"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:contradiction-alignment-test",
       "properties": {
         "completeness": "complete"
@@ -53917,6 +53997,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:consumed-by-nothing",
+      "properties": {},
+      "to_id": "cap:built-and-consumed-by-nothing"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:container-image",
       "properties": {},
       "to_id": "cap:release-publishes-a-container"
@@ -56171,6 +56257,19 @@
       }
     },
     {
+      "node_id": "art:consumption",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:e2efa0a05f6a46929a0f4634871281407af7b196061300cf9fdf63f9a06a6050",
+        "granularity": "atomic",
+        "location": "crates/reflow2-core/src/consumption.rs",
+        "name": "consumption.rs",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
       "node_id": "art:contradiction-alignment-test",
       "node_type": "Artifact",
       "properties": {
@@ -56823,7 +56922,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c3c47b379b7115ea09607d12bca888465018ffb9a3c4f086f25a5a70448ff053",
+        "checksum": "sha256:62f8fa3a5478b34ecef83d8e9ed054e35993522748a4a7ff80d9c7c5af308991",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
@@ -57289,7 +57388,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:42f601485a1855770500b9425d88fca013af1cbc77cb49a00bc7336a0f189460",
+        "checksum": "sha256:7d7424dbc8fbeae7f78f393a2414d64976928325ecb0c2455afdba91f952623f",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -57710,7 +57809,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:274577dc78e9ce578b1d25a5ef8c76d153618c8ca8e105863025dd34c6422116",
+        "checksum": "sha256:98b9246bba106f51fe0bd8d92669f944417e7bc5d5b25a13bb26b4bb59712d1a",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -58277,7 +58376,7 @@
         "is_exit_point": false,
         "name": "A built thing that nothing in the design consumes is surfaced, and says so as a design-completeness finding rather than a verdict on the system",
         "provenance": "authored",
-        "status": "planned",
+        "status": "verified",
         "tier": "operational"
       }
     },
@@ -60322,6 +60421,15 @@
       }
     },
     {
+      "node_id": "chg:accept-75a29d674e9ab701",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-11",
+        "name": "Adds edge::INTERACTS_WITH, a constant for an edge type the schema has carried since the functional layer landed. No design meaning moves: the edge already existed, was already exported, and is already named in FUNCTION_PRESERVATION_INVARIANT as a bare string. This only gives the reader a constant instead of a literal."
+      }
+    },
+    {
       "node_id": "chg:accept-7602b38b560e21a5",
       "node_type": "ChangeEvent",
       "properties": {
@@ -60977,6 +61085,15 @@
       }
     },
     {
+      "node_id": "chg:baseline-62541d2bbec20b75",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-11",
+        "name": "First baseline — the file is new in this change, so nothing moved."
+      }
+    },
+    {
       "node_id": "chg:baseline-689207db699d2712",
       "node_type": "ChangeEvent",
       "properties": {
@@ -61512,6 +61629,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "BL-157 + BL-158: the ledger gains a word for \"nothing moved\" — a first baseline is recorded as a first baseline, and a clean reconcile records what it confirmed"
+      }
+    },
+    {
+      "node_id": "chg:consumption-detector-built",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "cap:built-and-consumed-by-nothing goes planned → verified. Built TEST-FIRST — the tests in crates/reflow2-core/tests/consumed_by_nothing.rs were written from this capability's own description before crates/reflow2-core/src/consumption.rs existed, and they earned it immediately: measuring the spec's three signals (incoming DEPENDS_ON, outgoing PART_OF_FLOW, incoming INTERACTS_WITH) against reflow2's own design named 100 of 110 built capabilities, because this design holds twelve consumption edges in total and zero Flow nodes. That measurement, taken BEFORE any code was written, produced MIN_MODELLED_RATIO: absence of a recorded consumer is only informative where recording one is the design's habit, so below half the list is WITHHELD and the ratio itself is the finding. Implementation-first, this would have shipped naming 91% of the codebase and been switched off the same day. Also adds edge::INTERACTS_WITH, which was in the schema since the functional layer and had no constant — the preservation invariant names it as a bare string."
       }
     },
     {
@@ -64802,6 +64927,16 @@
       }
     },
     {
+      "node_id": "dec:idea-lifecycle-dimensions-on-a-requirement",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-11, thinking out loud — nothing here is settled and nothing should be quoted back as intent.\n\nHIS IDEA, IN HIS WORDS: \"attach some type of additional parameters to each requirement or capability node. something that accounts for the full lifecycle of that requirement/capability. for instance, have fields for: develop-using, development-test-plan, operational-test-plan, production-plan, operational-deployed. there might be other 'dimensions' to a requirement node, but having something at the very beginning of design that already has an agent/user thinking from the get-go how it will eventually be fielded in an operational environment is good to have upfront. many of the things may be unknown-at-this-moment or N/A, but at least something is there to drive the thought process.\"\n\n⭐ THE GOAL IS THE PROMPT, NOT THE FIELD. Read his last sentence: the value he names is that the question gets ASKED early, and he expects most answers to be empty. That is a statement about when a thought happens, not about where a value is stored — and it is what separates the options below. An option that stores five mostly-empty fields but never asks anything would miss the point entirely; an option that asks all five questions and stores nothing until there is an answer would meet it.\n\nWHAT THE DESIGN ALREADY HOLDS, so a later reader is not re-deciding settled ground. Each of his five axes already has machinery, but scattered and edge-shaped rather than gathered on the node:\n- development-test-plan / operational-test-plan — `dec:idea-verification-is-planned-with-the-requirement` is ALREADY OPEN and asks almost exactly this: \"should reflow2 guide a project to plan HOW a need will be verified when the need is stated, rather than only asking for a check once something is built?\" His two test-plan axes are that question, split into a development arm and an operational arm — which is a V-model distinction that open question does not currently draw.\n- operational-deployed — Environment nodes, `deploy_to`, `reconcile_deployment` and `cmp:fielded` already model where something actually runs.\n- production-plan / readiness to field — the Readiness layer (TRL/MRL, ReadinessAssessment, GATED_ON with a required `min_level`) already models whether a thing is mature enough to field, and `SCHEDULED_FOR` models when it is due.\n- develop-using — nothing obvious models this. It is the one axis with no existing home.\n- Requirement already carries a five-state lifecycle (proposed/accepted/deferred/dropped/met) of which THREE ARE UNUSED — recorded in `chg:bl104-derived-completion` as \"the requirement lifecycle is 3/5 unused\". Any new lifecycle vocabulary has to answer why it would fare better than the one already there and unused.\n\nTHE OPTIONS, with what is cheap and what is expensive about each.\n\nA — PROPERTIES ON THE NODE, his literal proposal. Five enum/string fields on Requirement and Capability. Cheapest to build (schema YAML), and the fields are visible in every export and every view, so they nag by existing. EXPENSIVE: BL-198 has just spent this month REMOVING stored defaults — 3,207 of them across 59% of nodes — because a value written by the tool rather than by a person makes `compare_designs` unable to tell a default from a decision. Five fields defaulting to \"unknown\" on every node is that exact shape, freshly re-introduced. And \"N/A\" written by an agent is a judgement about scope, which `dec:readiness-is-an-observation-the-threshold-is-the-judgement` says the tool does not get to make on the user's behalf.\n\nB — ASK THE FIVE QUESTIONS, STORE NOTHING UNTIL THERE IS AN ANSWER. A gap detector in the existing detect-and-ask loop that asks, of a requirement, \"how will this be developed / checked in development / checked in operations / produced / fielded?\" No schema change; nothing is stored until somebody answers, so silence stays silence and never becomes a stored \"unknown\". Matches the goal he actually stated, since the thought is what he wants triggered. EXPENSIVE: the loop already owes 67 unasked gaps, and five new questions on every requirement would swamp it — this needs a rule about WHICH requirements deserve the questions (and when), or it drowns the thing it is added to.\n\nC — EDGES TO REAL NODES, which is what reflow2 does today. A test plan is a Verification, a production plan is a Release/DesignEpoch, fielding is an Environment. Nothing new at all. CHEAP and already queryable end to end. EXPENSIVE, and this is Anthony's actual complaint: it only ever happens when somebody REMEMBERS to draw the edge, so the thinking never gets prompted at the start — which is the whole thing he is asking for.\n\nD — A SIDE NODE PER AXIS, on the DimensionAssessment pattern that already exists for cross-cutting concerns. Keeps the requirement clean, lets an axis carry its own provenance and date, and extends to \"other dimensions\" without another schema change each time — which is the extensibility his aside asks about. EXPENSIVE: a node per axis per requirement is a lot of graph for something usually empty, and it is the heaviest of the four.\n\nTHE HONEST COUNTER-ARGUMENT TO THE WHOLE IDEA, recorded beside it rather than used to kill it: a checklist filled with \"unknown-at-this-moment\" on every node teaches people to skip it, and then reflow2 holds five more fields nobody reads — the exact failure already measured twice here, in the 3-of-5 unused requirement lifecycle and in the two evidence-quality axes used zero times. Whatever is chosen has to say what READS the answer, because a marker nothing reads is a comment.\n\nNOT DECIDED, and deliberately not ranked. B and C are not exclusive — B could be the prompt that leads to C's edges, which would need no new vocabulary at all.",
+        "name": "OPEN — should a Requirement/Capability carry lifecycle dimensions from the moment it is written, so fielding is thought about at the start?",
+        "rationale": "Anthony's, 2026-08-11: \"having something at the very beginning of design that already has an agent/user thinking from the get-go how it will eventually be fielded in an operational environment is good to have upfront.\" The design's V-model has both arms and no rungs, and this is a proposal for rungs stated at the top of the left arm — which is why it is worth recording even though four of the five axes already have scattered machinery.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-many-graphs-one-store",
       "node_type": "Decision",
       "properties": {
@@ -67269,6 +67404,16 @@
         "epoch_type": "revision",
         "name": "BL-95 coverage detector captured (2026-07-24)",
         "sequence": 110,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:built-and-consumed-by-nothing",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The design can say what it built and records no consumer for — and refuses to say \"unused\". The detector Anthony asked for after the content store was withdrawn \"built, shipped, correct, and used zero times\", written TEST-FIRST, which is what produced its central rule: run over reflow2's own design the raw signal named 100 of 110 built capabilities, so absence of a recorded consumer is reported only where recording one is the design's habit, and otherwise the RATIO is the finding.",
+        "sequence": 117,
         "status": "arrived"
       }
     },
@@ -74130,6 +74275,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:built-and-consumed-by-nothing:cap:built-and-consumed-by-nothing",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:detect\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:the-design-says-what-was-built-and-never-used\",\"properties\":{}}]",
+        "state": "{\"description\":\"The surplus half of DETECT. Every existing gap asks what is MISSING; this asks what is SURPLUS — realized or verified, and downstream of nothing.\\n\\nTHE SIGNAL, computable from the graph as it stands: a Capability at `realized`/`verified` with no incoming DEPENDS_ON, no PART_OF_FLOW into any Flow, and no Actor INTERACTS_WITH. The same shape generalises to a Component whose Interfaces nothing CONSUMES, and to an Artifact realizing only capabilities that are themselves unconsumed.\\n\\n⚠️ THE WORDING IS THE FEATURE, not a caveat on it. The graph knows DESIGN-LEVEL demand and nothing about runtime usage, so the honest finding is \\\\\\\"NOTHING IN THIS DESIGN CONSUMES X\\\\\\\" — never \\\\\\\"X is unused\\\\\\\". A feature real users call daily whose consumer was never modelled produces exactly the same graph shape as a dead one, and a detector that did not say so would confidently recommend deleting working code. Reported as a FACT rather than a gap for the same reason granularity_report and surprising_connections are: which side is wrong is the user's to say.\\n\\nWHY IT IS NOT unmotivated_capability: that fires on a capability satisfying no REQUIREMENT — a question about intent, gated on requirements existing at all. A capability can satisfy a requirement perfectly and still be consumed by nothing, and that is the expensive case, because the paperwork is complete and the code is dead.\\n\\nDELIBERATELY NOT COVERED HERE: runtime usage. dec:bl-155 and dec:idea-measure-the-surface hold that question, and answering it needs telemetry rather than the graph.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"A built thing that nothing in the design consumes is surfaced, and says so as a design-completeness finding rather than a verdict on the system\",\"provenance\":\"authored\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cap:built-and-consumed-by-nothing",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:capture-registers-its-source:cap:governance-proposal",
       "node_type": "Snapshot",
       "properties": {
@@ -76621,6 +76776,18 @@
       }
     },
     {
+      "node_id": "fact:the-test-quality-axes-are-built-and-unused",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "REFLOW2 CAN ALREADY JUDGE TEST QUALITY STRUCTURALLY, ON THREE AXES, AND TWO OF THEM HAVE NEVER BEEN USED. Measured 2026-08-11 while asking where the line falls between test quality reflow2 can check and test quality only a person can judge.\n\nTHE LINE IS FURTHER OUT THAN IT LOOKED. The claim under test was that a test's quality is textual — valid, isolated, repeatable, focused, fast, covers edge cases and error conditions — and therefore out of reach for a deterministic core (`req:deterministic-core`). That is only partly true, and the interesting part is which half.\n\nMEASURED:\n\n  Verifications                                                  137\n  targets per check          1 -> 130    2 -> 6    3 -> 1\n  ⇒ FOCUS is already good here. 130 of 137 check exactly one thing, so a\n    focus detector modelled on granularity_report would find nothing on this\n    design. A useful NEGATIVE result: the metric exists and the problem does not.\n\n  THE THREE BUILT EVIDENCE-QUALITY AXES, IN USE:\n    TIME   (how old the check is)             99 of 137 carry last_run_at\n    INPUT  (what it PINNED vs SWEPT)          0 VERIFIES edges carry a scope\n    INDEP  (was the value fitted to it)       0 CALIBRATED_AGAINST edges\n\n  detectors mentioning scope, narrowness or circularity           0\n  surface for the two unused axes    evidence_report, confirmation_ledger\n                                     — read-only, and you must know to call them\n\n⭐ SO THE EDGE-CASE QUESTION IS ALREADY ANSWERABLE STRUCTURALLY. `set_evidence_scope` records what a check PINNED versus SWEPT, and `evidence_report` reads it: \"a parameter every passing check pins is reported as NARROW; ONE check that sweeps it ends the narrowness.\" That is a machine-checkable proxy for \"does the suite explore the boundaries\" — exactly one of the eight criteria that looked textual. `req:evidence-says-what-it-covered` is ACCEPTED. The machinery is 3 functions, 643 lines of test, 18 cases, mutation-checked on all three axes.\n\n⚠️⚠️ AND IT IS THE CONTENT STORE'S PROFILE EXACTLY. `dec:the-content-store-is-discontinued` (accepted, 2026-08-09) reads: \"built, shipped, correct, and used zero times in every project that has it.\" Two of these three axes are in that same state today. The parallel is not loose — both had an accepted requirement behind them, both were carefully built, both were tested well, and neither was ever reached for.\n\n📌 THE FORK THIS OPENS, and it is real rather than rhetorical:\n  (a) MAKE THEM ASKED-FOR. A detector — \"this passing check does not say what it covered\" — would surface the axes at the moment a check is recorded. Cheap, and it is the fourth instance today of the same diagnosis: the capability exists and nothing asks for it.\n  (b) DISCONTINUE THEM, on the test that killed the content store. There is now a mechanism for exactly that, shipped hours ago: an accepted Decision OBSOLETES what it withdrew, and four computations read it.\n  (c) NEITHER YET — zero usage on ONE design is thin evidence, and this design is the author's own. A consumer project's suite is where narrowness would actually bite.\n\n⭐⭐ WHAT THIS MEANS FOR THE PHILOSOPHY QUESTION IT IS FILED AGAINST. `dec:idea-verification-is-planned-with-the-requirement` proposes that reflow2 guide a project to plan verification when a need is stated. This measurement is a warning about HOW: reflow2 has already built test-quality machinery once and nobody used it, because nothing asked. Adding requirement-side planning WITHOUT asking would repeat that exactly — and would be the fifth instance today of a capability that exists and never fires.\n\nWHAT REMAINS GENUINELY TEXTUAL, and is not claimed to be checkable: VALID (does it measure what it claims, or a side effect), HAPPY PATH and ERROR CONDITIONS coverage, and whether a test reads the CONTRACT or the IMPLEMENTATION — that last being `dec:bl-185`, still open. ISOLATED, REPEATABLE and FAST are not textual but are simply ABSENT: the graph records no run history (one `last_run_at`, overwritten), no duration, and no dependency between checks, so a proxy for them would need new data rather than a new reading.",
+        "subject_id": "dec:idea-verification-is-planned-with-the-requirement",
+        "valid_from": "2026-08-11"
+      }
+    },
+    {
       "node_id": "fact:two-heal-rules-assert-a-condition-they-never-test",
       "node_type": "TemporalFact",
       "properties": {
@@ -76934,6 +77101,18 @@
         "level": "unit",
         "method": "test",
         "name": "Re-calling a constructor does not erase what the design already knew (crates/reflow2-core/tests/constructors_preserve.rs) — 9 cases. WRITTEN BEFORE THE FIX: all 6 defect cases failed and all 3 counterweights passed. THE AUDIT, not the instance, is the finding: 16 of 18 public add_* helpers named a SUBSET of their node type's properties and wrote create-or-REPLACE, so re-calling one to revise a node reset every unnamed property to its schema default. add_interface lost 13 including `designation` (which contracts are published boundaries, req:key-interfaces); add_requirement lost `status`, which IS certainty (dec:certainty-derived), so rewording forged the user's signature in reverse; add_capability un-built a verified capability; add_artifact was BL-166 still reachable one call away, that fix having landed on link_artifact only. It survived BL-46 and BL-166 because it is INVISIBLE until a property has been moved off its default. It violated req:no-silent-fallback, accepted and priority CRITICAL. THE COUNTERWEIGHTS ARE WHAT KEEP THE FIX FROM BEING A DIFFERENT BUG: a first call still writes schema defaults rather than inheriting, a named property is still overwritten, and an explicitly-passed optional still wins — so `merge` never became `first write wins` or `you may never change this back`. create_node and import_graph deliberately still REPLACE, because an import document is a complete statement of a node and merging there would resurrect properties it meant to omit.",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:consumed-by-nothing",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-11",
+        "level": "unit",
+        "method": "test",
+        "name": "A built capability with no recorded consumer is surfaced, and the report never says \"unused\". COVERS THE CAPABILITY SIGNAL ONLY — the three consumption edges read (incoming DEPENDS_ON, outgoing PART_OF_FLOW, incoming INTERACTS_WITH), the realized/verified population, discontinued capabilities and discontinued CONSUMERS excluded, the MIN_MODELLED_RATIO withholding rule with its ratio note, MIN_POPULATION, the stated signal boundary, and the wording discipline (the finding may not contain \"unused\"/\"dead\"/\"delete\"/\"surplus\"/severity, scanned over the OBSERVATIONS so the caveats may still name the failure mode they prevent). DELIBERATELY NOT COVERED: the generalisations the capability's description mentions in passing — a Component whose Interfaces nothing CONSUMES, and an Artifact realizing only unconsumed capabilities. Neither is built, and this check must not be read as standing for them (the ver:sessions-cannot-cross-designs precedent, 2026-08-07: a green check covering a clause it never tested is worse than an absent one). 15 cases, each mutation-checked — all eight mutations tried (dropping each of the three signals, admitting `planned` to the population, disabling either threshold, and removing either discontinued check) were killed.",
         "status": "passing"
       }
     },
@@ -78240,7 +78419,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ce447b33fd1845f62aec611cdd1db8804b27c6160a423dd3d5b2769a4cdf127c",
+  "prev_content_hash": "sha256:9454fad4d35c138423a039e58f397ef8906a1a14c3056965d7b7d1eabf1a172d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
