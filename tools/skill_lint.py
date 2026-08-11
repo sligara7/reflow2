@@ -68,6 +68,9 @@ NON_TOOL_TERMS = {
     # counts on the `what_next` payload, not tools.
     "not_shown",
     "unranked_pool",
+    # HealIssue's field for a finding with no honest mechanical repair
+    # (req:a-repair-suggestion-never-proposes-fabrication, 2026-08-10).
+    "repair_is_a_judgement",
     "shaping",
     "governs_retired",
     # CorpusReport / CorpusDocument fields and DocumentStatus values (BL-186) —

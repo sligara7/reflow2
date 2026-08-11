@@ -169,7 +169,7 @@ fn a_cycle_is_critical_and_never_auto_applied() {
         .find(|i| i.category == HealCategory::CircularDependency)
         .expect("cycle issue");
     assert_eq!(issue.severity, HealSeverity::Critical);
-    assert_eq!(issue.suggested_fix_type, "break_cycle");
+    assert_eq!(issue.suggested_fix_type, Some("break_cycle"));
     assert!(
         issue.message.contains("cmp:a → cmp:b → cmp:a"),
         "the loop must be shown as a readable path, got {:?}",
@@ -472,7 +472,7 @@ fn a_file_format_round_trip_is_a_warning_not_critical() {
     assert_eq!(i.severity, HealSeverity::Warning, "{}", i.message);
     // Downgraded, not silenced — everything else about the finding survives.
     assert_eq!(i.affected_ids, vec!["cmp:renderer", "cmp:transcriber"]);
-    assert_eq!(i.suggested_fix_type, "break_cycle");
+    assert_eq!(i.suggested_fix_type, Some("break_cycle"));
     assert!(i.message.contains("library/data medium"), "{}", i.message);
 }
 

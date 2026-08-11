@@ -130,7 +130,18 @@ pub struct HealIssue {
     /// Human-readable description.
     pub message: String,
     /// The suggested fix — structural (`merge`) or generative (`generate_*`).
-    pub suggested_fix_type: &'static str,
+    ///
+    /// `None` where NO HONEST MECHANICAL REPAIR EXISTS, and
+    /// [`Self::repair_is_a_judgement`] then says why in words.
+    /// `req:a-repair-suggestion-never-proposes-fabrication` (accepted
+    /// 2026-08-10): a suggestion may reorganise or restore, but must never
+    /// assert a relationship nobody stated.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub suggested_fix_type: Option<&'static str>,
+    /// Present exactly when [`Self::suggested_fix_type`] is `None`: the sentence
+    /// a reader needs instead of an operation they should not perform.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub repair_is_a_judgement: Option<&'static str>,
     /// Node ids involved.
     pub affected_ids: Vec<String>,
     /// Nodes in `affected_ids` that ALSO appear in other findings of the same
@@ -815,7 +826,7 @@ impl DesignGraph {
                     "is attached to nothing — no edge says what it is for \
                      (REALIZES / DOCUMENTS / SPECIFIES / PRODUCES / SATISFIES); \
                      release, change, provenance and epoch links do not count",
-                    "generate_owner",
+                    None,
                 ));
             }
         }
@@ -878,7 +889,7 @@ impl DesignGraph {
                 } else {
                     "has no links yet — a parked decision point, recorded but governing nothing"
                 },
-                "generate_owner",
+                None,
                 if accepted {
                     HealSeverity::Warning
                 } else {
@@ -917,7 +928,8 @@ impl DesignGraph {
                 category: HealCategory::Contradiction,
                 severity: HealSeverity::Warning,
                 message: format!("'{}' and '{}' contradict each other", e.from_id, e.to_id),
-                suggested_fix_type: "generate_decision",
+                suggested_fix_type: Some("generate_decision"),
+                repair_is_a_judgement: None,
                 affected_ids: affected,
                 hubs: Vec::new(),
             });
@@ -961,7 +973,8 @@ impl DesignGraph {
                     "'{}' and '{}' cover the same ground{because}",
                     e.from_id, e.to_id
                 ),
-                suggested_fix_type: "merge",
+                suggested_fix_type: Some("merge"),
+                repair_is_a_judgement: None,
                 affected_ids: affected,
                 hubs: Vec::new(),
             });
@@ -978,7 +991,8 @@ impl DesignGraph {
                     "'{}' anticipates '{}' but nothing follows through",
                     e.from_id, e.to_id
                 ),
-                suggested_fix_type: "generate_entity",
+                suggested_fix_type: Some("generate_entity"),
+                repair_is_a_judgement: None,
                 affected_ids: affected,
                 hubs: Vec::new(),
             });
@@ -1041,7 +1055,21 @@ impl DesignGraph {
                         "{} nodes form a cluster disconnected from the rest of the design",
                         affected.len()
                     ),
-                    suggested_fix_type: "generate_bridge",
+                    // NO SUGGESTION, DELIBERATELY. `generate_bridge` used to sit
+                    // here: create edges until the cluster is connected. Where the
+                    // separation is CORRECT that fabricates relationships nobody
+                    // stated, in order to silence a warning about a separation that
+                    // is right — dev_storyflow's gap D, reproduced in this design
+                    // twice on the day it was filed. Whether an island is an
+                    // accident or a deliberate partition is a judgement the graph
+                    // cannot make, and offering an operation implies it can.
+                    suggested_fix_type: None,
+                    repair_is_a_judgement: Some(
+                        "No mechanical repair. Connecting this cluster would assert \
+                         relationships nobody stated, which is worse than the finding: \
+                         whether the separation is an accident or deliberate is a \
+                         judgement, and only a person holds it.",
+                    ),
                     affected_ids: affected,
                     hubs: Vec::new(),
                 });
@@ -1108,7 +1136,8 @@ impl DesignGraph {
                     message: format!(
                         "every path between subsystems routes through '{id}' — a single point of failure"
                     ),
-                    suggested_fix_type: "add_redundancy",
+                    suggested_fix_type: Some("add_redundancy"),
+                    repair_is_a_judgement: None,
                     affected_ids: vec![id],
                     hubs: Vec::new(),
                 });
@@ -1215,7 +1244,8 @@ impl DesignGraph {
                 category: HealCategory::CircularDependency,
                 severity,
                 message: format!("circular dependency: {path}{basis}"),
-                suggested_fix_type: "break_cycle",
+                suggested_fix_type: Some("break_cycle"),
+                repair_is_a_judgement: None,
                 affected_ids: affected,
                 hubs: Vec::new(),
             });
@@ -1249,7 +1279,15 @@ impl DesignGraph {
                     category: HealCategory::DeadEnd,
                     severity: HealSeverity::Warning,
                     message: format!("component '{id}' is not connected to anything"),
-                    suggested_fix_type: "generate_bridge",
+                    // Same rule as the island above: a component connected to
+                    // nothing may be genuinely standalone, and wiring it to
+                    // something to quiet the finding invents a coupling.
+                    suggested_fix_type: None,
+                    repair_is_a_judgement: Some(
+                        "No mechanical repair. Wiring this component to something \
+                         would invent a coupling; whether it is genuinely standalone \
+                         or was left unwired by mistake is a judgement.",
+                    ),
                     affected_ids: vec![id],
                     hubs: Vec::new(),
                 });
@@ -2027,7 +2065,7 @@ const ARTIFACT_BOOKKEEPING: &[&str] =
     &[edge::INCLUDES, edge::CHANGED, edge::YIELDED, edge::AT_EPOCH];
 
 /// Build an `orphan_node` issue.
-fn orphan(id: &str, type_label: &str, what: &str, fix: &'static str) -> HealIssue {
+fn orphan(id: &str, type_label: &str, what: &str, fix: Option<&'static str>) -> HealIssue {
     orphan_at(id, type_label, what, fix, HealSeverity::Warning)
 }
 
@@ -2041,7 +2079,7 @@ fn orphan_at(
     id: &str,
     type_label: &str,
     what: &str,
-    fix: &'static str,
+    fix: Option<&'static str>,
     severity: HealSeverity,
 ) -> HealIssue {
     let affected = vec![id.to_string()];
@@ -2051,6 +2089,11 @@ fn orphan_at(
         severity,
         message: format!("{type_label} '{id}' {what}"),
         suggested_fix_type: fix,
+        repair_is_a_judgement: fix.is_none().then_some(
+            "No mechanical repair. Linking this node to something would assert a \
+             relationship nobody drew — whether it belongs somewhere, or is a parked \
+             thought that correctly governs nothing yet, is a judgement.",
+        ),
         affected_ids: affected,
         // Filled by annotate_hubs once every issue is collected — a single
         // orphan cannot know what else names its node.
