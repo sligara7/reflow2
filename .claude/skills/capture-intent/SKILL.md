@@ -37,7 +37,25 @@ summary written on the way out is the one the busy session never gets to write.
    this status, so promoting it yourself forges their signature. When they do confirm (often
    in the detect-and-ask pass that follows), `set_requirement_status` to `accepted` — that
    write *is* the confirmation record.
-3. Link the golden thread:
+3. **If you captured from a DOCUMENT, register it — now, while the file is still in front of you.**
+   When the intent came out of something you read (a brief, a feedback log, a handover note, a spec
+   someone sent), `add_artifact` with `artifact_type: document` and `location` set to the path, then
+   `documents` from it to every node that reading produced.
+
+   **The failure this prevents is the user having to remember where they wrote it.** That is
+   `req:no-idea-goes-quiet`, in their words: *"It was always manual process of me trying to find the
+   document or documents that I had written the idea/requirement in and then purposefully point the
+   agent to it."* A requirement with no recorded source can only be traced back by asking a person —
+   and the person is the one who asked not to be asked. Measured on reflow2's own design, 2026-08-11:
+   **153 of 154 requirements had no backward link at all**, because the only capture path that
+   records one is corpus ingest, and almost nothing arrives that way.
+
+   `DOCUMENTS` means *"this text is where that came from"* and claims nothing about delivery — do
+   **not** reach for `satisfies` or `realizes` to express provenance. And **if the intent arrived in
+   conversation with no document behind it, record nothing**: inventing an Artifact for a
+   conversation puts a file location in the graph that resolves for nobody, which is worse than an
+   honest absence.
+4. Link the golden thread:
    - `satisfies` — Capability → Requirement it fulfills.
    - `allocate` — Capability → Component that implements it.
    - `contains` — Project → each child (`add_project` first if the project node is missing).
@@ -48,10 +66,10 @@ summary written on the way out is the one the busy session never gets to write.
    invisible: change one component later and nothing will tell you the other one just broke.
    If you can only ground one side in what the user actually said, record that side and leave
    the other — **detect-and-ask** will raise it as a question. Do not invent the missing side.
-4. If a piece of intent is ambiguous or under-specified, do NOT invent an answer — leave it as
+5. If a piece of intent is ambiguous or under-specified, do NOT invent an answer — leave it as
    a gap for the **detect-and-ask** workflow to surface.
-5. Confirm back to the user what you captured (ids + names), briefly.
-6. **Before moving on, call `loop_status`.** Capturing nodes is bookkeeping, not the loop — a
+6. Confirm back to the user what you captured (ids + names), briefly.
+7. **Before moving on, call `loop_status`.** Capturing nodes is bookkeeping, not the loop — a
    busy session that only ever adds nodes leaves gaps nobody surfaced and claims nobody proved,
    and it *feels* like using reflow2 the whole time. `loop_status` is one cheap call that says
    what the loop is owed (its `next` list); when it names debt, run **detect-and-ask** before

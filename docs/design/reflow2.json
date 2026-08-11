@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:45c03298eab544fbdf281209f2d1574748950e50c3ceb89a060ad31df94e135c",
+  "content_hash": "sha256:b22b7873ac6403031ad210ad5e9138f7b61897ed16fcf629e74a531ec8b84284",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -982,6 +982,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:capture-registers-its-source",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -2135,6 +2143,12 @@
     },
     {
       "edge_type": "ASKS_ABOUT",
+      "from_id": "question:3f04e352bc497c5b",
+      "properties": {},
+      "to_id": "cap:governance-proposal"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
       "from_id": "question:3f38ed37a3d0f834",
       "properties": {},
       "to_id": "req:a-hint-names-its-next-call"
@@ -2276,6 +2290,12 @@
       "from_id": "question:95ddc1083445d73d",
       "properties": {},
       "to_id": "req:claims-have-owners"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:9d265ef455a2e245",
+      "properties": {},
+      "to_id": "rule:design-intent-moves-only-on-the-owners-word"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -3455,6 +3475,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:capture-intent-registers-its-source",
+      "properties": {},
+      "to_id": "epoch:capture-registers-its-source"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:central-host-status-corrected",
       "properties": {},
       "to_id": "epoch:v0250"
@@ -3797,6 +3823,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:governance-capability-gets-its-requirement",
+      "properties": {},
+      "to_id": "epoch:capture-registers-its-source"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:governance-proposal-skill-20260808",
       "properties": {},
       "to_id": "epoch:v0260"
@@ -3812,6 +3844,12 @@
       "from_id": "chg:hxm-field-report",
       "properties": {},
       "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:impact-propagation-is-rendered-not-written",
+      "properties": {},
+      "to_id": "epoch:first-rendered-doc"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5147,6 +5185,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:capture-registers-its-source:cap:governance-proposal",
+      "properties": {},
+      "to_id": "epoch:capture-registers-its-source"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:content-store-discontinued:art:content",
       "properties": {},
       "to_id": "epoch:content-store-discontinued"
@@ -6466,6 +6510,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-does-unmotivated-severity-key-on-built-not-provenance",
+      "properties": {
+        "acted_at": "2026-08-11",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-embeddings-adoption",
       "properties": {
         "acted_at": "2026-08-01",
@@ -6493,9 +6546,27 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-heals-catalog-is-8-of-13-and-one-blocker-has-expired",
+      "properties": {
+        "acted_at": "2026-08-11",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-how-flo2-stays-subscribed-to-reflow2",
       "properties": {
         "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-how-is-unrequested-work-dispositioned",
+      "properties": {
+        "acted_at": "2026-08-11",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -6610,6 +6681,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-outward-docs-are-rendered-from-the-graph",
+      "properties": {
+        "acted_at": "2026-08-11",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-ownership-is-the-third-who-axis",
       "properties": {
         "acted_at": "2026-08-09",
@@ -6662,6 +6742,33 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-a-requirement-trace-back-to-its-demand-signal",
+      "properties": {
+        "acted_at": "2026-08-11",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-an-understated-status-be-detected",
+      "properties": {
+        "acted_at": "2026-08-11",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-sme-augmentation-was-designed-and-never-built",
+      "properties": {
+        "acted_at": "2026-07-17",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-standards-at-every-interface",
       "properties": {
         "acted_at": "2026-08-03",
@@ -6677,6 +6784,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-environment-compliance-layer-was-designed-and-never-built",
+      "properties": {
+        "acted_at": "2026-07-17",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -6713,6 +6829,24 @@
         "role": "author"
       },
       "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-which-docs-can-never-be-a-projection",
+      "properties": {
+        "acted_at": "2026-08-11",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-who-judges-requirement-text-quality",
+      "properties": {
+        "acted_at": "2026-08-11",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -6980,6 +7114,15 @@
         "role": "author"
       },
       "to_id": "who:storyflow-api-boss"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-authority-check-guards-forward-not-backward",
+      "properties": {
+        "acted_at": "2026-08-11",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -7285,6 +7428,15 @@
         "role": "author"
       },
       "to_id": "who:storyflow-storybug-boss"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-rule-is-recorded-with-its-consequence",
+      "properties": {
+        "acted_at": "2026-08-08",
+        "role": "author"
+      },
+      "to_id": "who:storyflow-api-boss"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -9678,6 +9830,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:baseline-689207db699d2712",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:doc-impact-propagation"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:baseline-d99163203fbfee26",
       "properties": {
         "accepted_baseline": true,
@@ -11469,6 +11630,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:capture-intent-registers-its-source",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:capture-registers-its-source"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:central-host-status-corrected",
       "properties": {
         "accepted_baseline": false,
@@ -12991,6 +13161,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:governance-capability-gets-its-requirement",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:governance-proposal"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:governance-proposal-skill-20260808",
       "properties": {
         "accepted_baseline": true,
@@ -13069,6 +13248,15 @@
         "action": "added"
       },
       "to_id": "dec:no-design-here-never-looked"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:impact-propagation-is-rendered-not-written",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:doc-impact-propagation"
     },
     {
       "edge_type": "CHANGED",
@@ -19617,6 +19805,14 @@
     },
     {
       "edge_type": "DOCUMENTS",
+      "from_id": "art:doc-impact-propagation",
+      "properties": {
+        "doc_kind": "design_doc"
+      },
+      "to_id": "cap:propagate"
+    },
+    {
+      "edge_type": "DOCUMENTS",
       "from_id": "art:fleet-lessons",
       "properties": {
         "doc_kind": "design_doc"
@@ -20106,6 +20302,18 @@
       "from_id": "cap:bulk-forms",
       "properties": {},
       "to_id": "dec:bulk-keeps-the-judgement-per-item"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:capture-registers-its-source",
+      "properties": {},
+      "to_id": "dec:idea-how-is-a-source-outside-the-repo-registered"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:capture-registers-its-source",
+      "properties": {},
+      "to_id": "dec:idea-should-a-requirement-trace-back-to-its-demand-signal"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -25037,6 +25245,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "rule:design-intent-moves-only-on-the-owners-word",
+      "properties": {},
+      "to_id": "dec:the-authority-check-guards-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "sys:agent-surface",
       "properties": {},
       "to_id": "dec:bl83a-functional-decomposition"
@@ -25304,6 +25518,12 @@
       "from_id": "cap:gap-carries-a-reading",
       "properties": {},
       "to_id": "snap:epoch:reading-carries-options:cap:gap-carries-a-reading"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:governance-proposal",
+      "properties": {},
+      "to_id": "snap:epoch:capture-registers-its-source:cap:governance-proposal"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -49889,6 +50109,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:capture-intent-skill",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:capture-registers-its-source"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:changelog-test",
       "properties": {
         "completeness": "complete"
@@ -51480,6 +51708,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:capture-registers-its-source",
+      "properties": {},
+      "to_id": "req:no-idea-goes-quiet"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:certify-restructuring",
       "properties": {},
       "to_id": "req:restructuring-is-certified"
@@ -51807,6 +52041,12 @@
       "from_id": "cap:governance-mode",
       "properties": {},
       "to_id": "req:mode-is-chosen-and-changeable"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:governance-proposal",
+      "properties": {},
+      "to_id": "req:a-rule-is-recorded-with-its-consequence"
     },
     {
       "edge_type": "SATISFIES",
@@ -54126,6 +54366,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:capture-intent-skill",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:capture-intent-skill"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:changelog-test",
       "properties": {
         "action": "created"
@@ -55333,6 +55581,19 @@
       }
     },
     {
+      "node_id": "art:capture-intent-skill",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:d4c7461b15caac67aac0655982b09974948a4753948a45d11e941ffb2f50e4b3",
+        "granularity": "atomic",
+        "location": "getting-started/skills/capture-intent/SKILL.md",
+        "name": "capture-intent SKILL.md — the conversational capture path, now registering the document it captured from",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
       "node_id": "art:changelog-test",
       "node_type": "Artifact",
       "properties": {
@@ -55629,6 +55890,19 @@
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/discover.rs",
         "name": "discover.rs tests — describing changes nothing",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:doc-impact-propagation",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:43efb3dd59d17efa2aab4c25c5dc57495077f8d6fd31b1743e0bc8fa5df201fe",
+        "granularity": "atomic",
+        "location": "docs/impact-propagation.md",
+        "name": "impact-propagation.md — the first outward-facing doc rendered from the graph, with its confessions",
         "status": "realized",
         "volatility": "stable"
       }
@@ -57555,6 +57829,16 @@
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:capture-registers-its-source",
+      "node_type": "Capability",
+      "properties": {
+        "description": "When a session captures intent by READING a document — a feedback file, a brief, a handover note, a spec someone emailed — the skill registers that document as an Artifact and draws DOCUMENTS from it to every node the reading produced. The link is made at capture time, by the skill that is already holding the file open, rather than by anybody remembering to come back for it.\n\nWHY IT IS NEEDED, measured on reflow2's own design 2026-08-11 rather than assumed. `req:no-idea-goes-quiet` is ACCEPTED and requires the backward half explicitly — \"BACKWARD to the document and location it was written in. The user must never again have to recall that they wrote something, hunt for the file, and hand-point an agent at it.\" Its statement also says the backward half is handled: \"already carried by ingest: every extracted node gets YIELDED to its provenance Fragment.\"\n\n  Requirements in the design                                        154\n  with ANY backward provenance edge (YIELDED or DOCUMENTS)            1\n  without                                                           153\n\n⇒ THE CLAIM IS TRUE OF A PATH THIS DESIGN BARELY USES. 148 Fragments exist, and they hang off Artifacts, not Requirements. Requirements here arrive by CONVERSATION — an agent reads something or listens to somebody and calls `add_requirement` — and that path records no source at all. The covered path and the used path are different paths, which is why an accepted requirement can be 1/154 satisfied without anybody noticing.\n\n⭐ THE PROOF IS THE SESSION THAT FOUND IT. On 2026-08-11 Anthony had to tell an agent that reflow2's governance work came from `dev_storyflow/reflow2_feedback.md`, because nothing in the graph said so. `req:no-idea-goes-quiet` was captured on 2026-08-04 FROM HIS COMPLAINT ABOUT DOING EXACTLY THAT — \"It was always manual process of me trying to find the document or documents that I had written the idea/requirement in and then purposefully point the agent to it.\" Seven days after recording the complaint, the design made him do the thing he complained about.\n\nSCOPE, deliberately narrow. This covers capture FROM A DOCUMENT, where a file exists to point at. It does NOT attempt the harder case — intent that arrives in conversation with no document behind it, where the honest source is a session rather than a path — because inventing an Artifact for a conversation would put a fabricated file location in the graph, and `req:a-repair-suggestion-never-proposes-fabrication` is accepted. That case is left open rather than half-answered.\n\nWHAT IT MUST NOT DO, taken from the parent requirement's own warning: it must not auto-draw SATISFIES or REALIZES from similarity. DOCUMENTS is a provenance edge — \"this text is where that came from\" — and carries no claim that anything was delivered. The parent is explicit that auto-linking delivery \"would make every captured idea read as delivered and the completion reading say 100% forever.\"\n\nORIGIN: promoted from `dec:idea-should-a-requirement-trace-back-to-its-demand-signal`, option (b), on Anthony's word 2026-08-11. Option (a) — a detector for a Requirement with no origin edge — was NOT taken, because at genesis nobody has a source document and such a check would fire against an entire design on day one, with fabrication as the only way to green it.",
+        "name": "Capture FROM a document registers that document and links what came out of it, so the backward half of the thread exists by construction",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -60220,6 +60504,14 @@
       }
     },
     {
+      "node_id": "chg:baseline-689207db699d2712",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "name": "First baseline for the rendered doc. A future content change means the render was re-run — which is precisely the diff-churn caveat the page states about itself, so drift here will need reading as \"re-rendered\", not as \"the design moved\"."
+      }
+    },
+    {
       "node_id": "chg:baseline-d99163203fbfee26",
       "node_type": "ChangeEvent",
       "properties": {
@@ -60635,6 +60927,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "BL-153 fix shapes (1) and (3): the bulk forms, and the tool surface that carries them"
+      }
+    },
+    {
+      "node_id": "chg:capture-intent-registers-its-source",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "capture-intent/SKILL.md gains step 3: register the document you captured from. Measured 2026-08-11, 1 of 154 requirements carried any backward provenance edge — the accepted req:no-idea-goes-quiet was satisfied only on the corpus-ingest path, and 153 requirements arrived by conversation, which recorded no source at all. Narrow by design: capture FROM A DOCUMENT only; intent arriving in conversation with no file behind it records nothing rather than inventing a location."
       }
     },
     {
@@ -61102,6 +61402,14 @@
       }
     },
     {
+      "node_id": "chg:governance-capability-gets-its-requirement",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "cap:governance-proposal finally satisfies something. It shipped, was served and was realized while satisfying no requirement at all (gap:3f04e352bc497c5b, unmotivated_capability 0.55). Anthony chose the shape 2026-08-11 — a new requirement mirroring req:inviolable-intent one layer along, since cap:kpp-proposal already satisfies that one. req:defaults-do-not-assert was considered and declined: it names DesignRule.enforced explicitly and predates the skill by six weeks, but covers ten defaulted properties of which this addresses one, so the edge would make a tenth read as the whole. The requirement stays `proposed` — he chose the shape, the wording is an agent's draft."
+      }
+    },
+    {
       "node_id": "chg:governance-proposal-skill-20260808",
       "node_type": "ChangeEvent",
       "properties": {
@@ -61123,6 +61431,14 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "The hxm_program field report lands: an accidental third graph from an unchecked \"no design here\", a loop_status clean that never scanned, and cross-graph links done in prose the loop cannot see"
+      }
+    },
+    {
+      "node_id": "chg:impact-propagation-is-rendered-not-written",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "docs/impact-propagation.md is rewritten as a RENDERED VIEW — three blocks projected from propagate_from and nodes.rs::structural_rule, plus a confessions section. It replaces eight impact kinds that were presented as design and are not implemented (IP-6, deferred), and a reference to ENABLES, an edge type retired 2026-07-22 by dec:edge-orthogonality five days after the doc was written. Rendered by an agent rather than by render_views.py, so re-rendering churns the wording — the page states that caveat about itself. First evidence for dec:idea-outward-docs-are-rendered-from-the-graph, not its conclusion."
       }
     },
     {
@@ -63821,6 +64137,16 @@
       }
     },
     {
+      "node_id": "dec:idea-does-unmotivated-severity-key-on-built-not-provenance",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — thinking out loud with Anthony, 2026-08-11, from his question \"should reflow2 allow something to proceed without a requirement?\" Nothing here is intent.\n\nTHE MEASUREMENT THAT PROVOKED IT, taken on reflow2's own graph. 148 Capabilities, 18 with zero outgoing SATISFIES:\n\n  16  `imported` BL-nnn backlog rows      none realized   — wishes nobody has built\n   1  `authored`, not realized                            — a half-finished thought\n   1  `authored`, REALIZED BY AN ARTIFACT                 — cap:governance-proposal: SHIPPED CODE\n\nAll eighteen scored 0.55 with the same wording: \"satisfies no requirement — what need does it serve, or should it go?\" The one instance of shipped-but-unrequested in the entire design is indistinguishable from a parked backlog row.\n\nWHAT THE DETECTOR CURRENTLY GRADES ON (detect.rs:1269-1300): `provenance`. `inferred` → 0.70 with \"is built and running, but no requirement justifies it — is there a need nobody wrote down, or is this dead code?\"; everything else → 0.55. The docstring is explicit that the bump exists to catch a feature in production during an ADOPTION pass.\n\n⭐ THE OBSERVATION: `provenance` answers \"where did this node come from\" (recovered from a real system vs written into the design). It does NOT answer \"does code exist for this\". On the adopt path those coincide, which is why the split works there and was never wrong. On the GENESIS path — a design under control where somebody builds an unrequested feature, which is Anthony's scenario — the capability is `authored` because a person wrote it in deliberately, AND realized because they shipped it. It lands at 0.55 with wording that reads like tidying up an idea.\n\nIDEAS, unranked:\n(a) Add REALIZES-presence as a second axis: authored+realized reads at the higher severity with the \"built and running\" wording, because the cost of a wrong answer is a maintenance burden rather than a stray node.\n(b) Leave severity alone and change only the WORDING when realized, so the reader can tell shipped from unbuilt without the ranking moving.\n(c) Do nothing — 0.55 already surfaces it and the reader can look.\n\nCOUNTER-ARGUMENT, recorded beside rather than suppressed: the current 0.70/0.55 split was tuned so that `inferred` \"clears `unsatisfied_requirement`'s 0.60 default exactly on the graph where the trial wanted it to and nowhere else\" (detect.rs:1265-1268). Adding a second way to reach 0.70 changes a threshold that was set against a real trial, and nobody has re-run that trial. Option (b) is the version that costs nothing here.\n\nALSO UNRESOLVED: no detector reads Project.mode at all (`project_mode` is read in genesis.rs and heal.rs, never in detect.rs). Whether mode SHOULD enter this is a separate question — provenance may already be carrying it adequately.",
+        "name": "OPEN — should `unmotivated_capability` grade on whether the thing is BUILT, rather than only on provenance?",
+        "rationale": "Anthony asked whether reflow2 should allow a capability with no requirement. It does, and reports it — but the report cannot distinguish shipped code from a parked wish, which are the two ends of exactly the judgement he was worried about.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-embeddings-adoption",
       "node_type": "Decision",
       "properties": {
@@ -63851,12 +64177,42 @@
       }
     },
     {
+      "node_id": "dec:idea-heals-catalog-is-8-of-13-and-one-blocker-has-expired",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — surfaced 2026-08-11 checking `docs/requirements-coverage.md`'s deferrals against the code rather than trusting its status column. Nothing here is intent.\n\nWHAT WAS MEASURED. HEAL-3 says the catalogue is 8 of 13, with `unreachable`, `weak_connection`, `missing_link`, `missing_entity` and `missing_embedding` deferred. Grepping the core: the only hits for those five are a MODULE COMMENT at `crates/reflow2-core/src/heal.rs:27-29` and unrelated `unreachable!()` macros. So the five are genuinely absent — confirmed, not assumed.\n\n⭐ BUT THAT COMMENT IS ITSELF STALE, WHICH IS THE SHARPER FINDING. heal.rs:27-29 reads: \"Deferred (need `dynograph-graph` or the LLM): dead_end / unreachable / disconnected_community / weak_connection / single_point_of_failure / missing_link…\". Three of those — `dead_end`, `disconnected_community`, `single_point_of_failure` — ARE BUILT and were being proposed as fixes until PR #147 narrowed them this same session. A comment naming what is missing has kept naming things that arrived.\n\n⭐⭐ AND HEAL-14'S BLOCKER HAS EXPIRED. The row reads \"⬜ Missing-intermediate Component for hierarchy — matryoshka (needs `Component.level`)\". `Component.level` EXISTS: 3AX-9 is ✅, `hierarchy_issues` and `MissingIntermediateLevel` are in `crates/reflow2-core/src/hierarchy.rs` (5 references), and `missing_intermediate_level` is surfaced as a gap by `detect_gaps`. So the DETECTOR fires and the REPAIR was never written — `heal.rs` has zero references to it. The stated reason for deferring is gone and nothing noticed. This is the same shape as `cap:what-next`, whose blocker also expired unnoticed and which turned out to be buildable the moment anyone looked.\n\n⚠️ THE COUNTERWEIGHT, and it is not optional: PR #147 (merged today) REMOVED HEAL's ability to propose `generate_bridge`/`generate_owner` for `disconnected_community`/`dead_end`/`orphan`, because inventing a relationship nobody designed is not a repair. A `generate_component` for a missing intermediate level is EXACTLY THAT SHAPE — inventing a subsystem to sit between a system and a part. So HEAL-14 may not be \"unblocked and buildable\"; it may be \"unblocked and now forbidden by a rule accepted hours ago\". `req:a-repair-suggestion-never-proposes-fabrication` is accepted. That tension is the actual question here and it did not exist when the row was written.\n\nIDEAS, unranked:\n(a) Fix the stale module comment and the stale HEAL-14 blocker note — pure record-keeping, costs nothing, and stops the next reader inheriting both errors.\n(b) Decide HEAL-14 on the anti-fabrication rule: either the missing-intermediate repair is legitimate (the level is derivable from the two endpoints, not invented) or it is forbidden and the row should be RETIRED rather than left ⬜ forever.\n(c) Retire the five never-built categories from the catalogue. The project's own test is \"unused AND redundant → retire; unused AND not-redundant → defer, and say so\" — nobody has re-asked which of the five is which since 2026-07-22.\n(d) Nothing. 8 of 13 has been enough for every trial so far, and no friction report has asked for the missing five.\n\n📌 THE META-POINT, which is the reason this node exists at all: `requirements-coverage.md` carries a BINDING deferral discipline — \"a deferral that isn't written down is a silent stub, which this project treats as the same integrity breach as a silent drop.\" Three rows were checked today and three were wrong: SP-3b says ingest cannot be called from a session (it can), GS-17 says the polished PROMPT step is deferred (`gap_to_prompt` does it), 3AX-5 says TemporalFact usage is deferred (133 instances). The table goes stale in BOTH directions, and nothing computes on it. That is the argument for deferrals living where a detector can reach them — and equally the argument against trusting this table as the source for what to build.",
+        "name": "OPEN — HEAL's defect catalogue is 8 of 13, one deferral's blocker has EXPIRED unnoticed, and the module comment recording the gap is itself stale",
+        "rationale": "Checking three deferrals against the code found three stale rows and one expired blocker, plus a module comment that has kept naming built features as missing. The HEAL-14 question is genuinely live and genuinely changed: its blocker cleared, and hours later this session accepted a rule that may forbid the repair outright.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-how-flo2-stays-subscribed-to-reflow2",
       "node_type": "Decision",
       "properties": {
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-09: \\\"how can we link reflow2 and flo2 — flo2 is dependent upon reflow2; we've discussed publisher → subscriber type relationships.\\\"\n\nWHAT SEARCHING FIRST CHANGED, and it changed the question rather than answering it: most of the linking machinery is DESIGNED AND BUILT, and it has already been RUN on exactly this pair. dec:linked-repos-poc (executed 2026-08-06) composed reflow2, flo2 and dynograph-foundation in a throwaway in-memory graph and found ONE true positive unprompted — ifc:core-api (ours, `library`) against flo2's ifc:model-provider-api (`REST`), 80/100 name match, \\\"very likely the same contract, but they cannot be connected as either is currently built.\\\" Nobody told it the answer. So the publisher/subscriber SHAPE is not the open question; dec:pairing-role-placement settled where the role lives, cap:publish-surface and cap:mirror-surface are built, and dec:nested-graphs settled that separately-owned designs are separate graphs.\n\nWHAT IS ACTUALLY OPEN IS THE TENSE. Every link so far has been a THING SOMEBODY RAN — a manual composition into a temporary graph, discarded afterwards. A subscription is a standing relationship: flo2 would be continuously answerable to what reflow2 currently publishes, and would learn when it moved. Nothing in the design says how that happens, and the two projects are on different machines, different release cadences and different owners.\n\nTHE OPTIONS, in Anthony's framing and with what is cheap or expensive about each recorded beside it rather than argued down:\n\n(A) PULL AT THE EXPORT. flo2 vendors reflow2's committed export (or its published surface via export_surface) and re-composes on each reflow2 release. Cheapest by far, needs nothing new, and rides git which both already use. COUNTER: it is a snapshot, so flo2 learns about a moved contract whenever it next remembers to pull — which is the failure mode this whole question is about, one level up.\n\n(B) PULL AT THE RUNNING SERVER. Once one process holds many designs (cap:graph-registry, reflow2_updates #1), flo2 could hold both graph_ids and ask across them live. COUNTER: gated on the largest outstanding piece of work, and dec:idea-a-session-holds-several-graphs is still proposed. Also flo2's graph_id is `1a97fc1f1de4d5d2` — an opaque mint beside two readable labels — so the addressing story needs a human-facing name first.\n\n(C) A DECLARED DEPENDENCY EDGE BETWEEN DESIGNS, not just between nodes. reflow2 already has req:design-dependencies-declared (accepted, verified) for library versions; the analogue for designs would let a consumer say \\\"I depend on reflow2's published surface at version X\\\" and make a stale subscription COMPUTABLE rather than remembered. COUNTER: it is new vocabulary, and dec:idea-intent-crosses-designs and dec:idea-gap-flows-to-the-dependency are both still open about what may legitimately cross a design boundary at all.\n\n(D) THE SEAM AS A GATE. flo2's CI composes against reflow2's published export and fails when a contract it consumes has moved — the ci-gate pattern pointed across a boundary instead of inward. COUNTER: it makes reflow2's release able to break flo2's build, which is a real coupling decision and Anthony's to make, not a technical detail.\n\n⚠️ THE BLOCKER IS THE SAME FOR ALL FOUR, AND IT IS ONE MISSING LABEL. dec:linked-repos-poc found it and deliberately did not fix it: REFLOW2 DECLARES NO `required` INTERFACE ANYWHERE. Pairing matches complements, so with nothing required, nothing can ever pair — paired=0 on BOTH pairs, 15 of dynograph-foundation's interfaces and 5 of flo2's landing in dead surface. Its most dangerous number was `unmet_needs: 0`, which reads as \\\"nothing is missing\\\" and means \\\"we never said we needed anything\\\". Until reflow2 says what it requires, every option above links two designs that cannot be compared. That PoC called declaring them \\\"the cheapest next step\\\" — a handful of nodes — and left it to Anthony's word because it is design about reflow2's own boundaries.\n\nAND A SECOND THING NO OPTION ADDRESSES, from reflow2_updates.md #7 (NOT DESIGNED): there are TWO version axes at this seam and only one negotiates. The MCP protocol version negotiates per connection; reflow2's 149-tool surface does not. The toolsnaps stop a surface change landing silently IN THIS REPO and tell flo2 nothing. Whatever subscription shape is chosen has to carry that, or \\\"clean module\\\" quietly becomes \\\"vendored fork\\\" — which dec:open-reflow2-as-core-module already names as the crux, with the cost falling on @ajs.\n\nNOTHING HERE IS PROMOTED. The options are recorded as considered; the one decision genuinely waiting is whether to declare reflow2's `required` interfaces, which is small, unblocks all four, and is not an agent's to make.",
         "name": "OPEN — what makes the reflow2→flo2 link a STANDING subscription rather than a run somebody remembers to do?",
         "rationale": "Recorded via the brainstorm skill: one Decision per open question, at `proposed`, options in the prose, nothing promoted to intent without Anthony's word. Kept SEPARATE from dec:linked-repos-poc because that node records a RUN and what it proved; this one asks what the relationship should be going forward, which the PoC explicitly did not answer. Kept separate from dec:idea-intent-crosses-designs and dec:idea-gap-flows-to-the-dependency because those ask WHAT may cross a design boundary, while this asks WHEN and BY WHAT MECHANISM — one node holding both could only ever be half-answered.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-how-is-a-source-outside-the-repo-registered",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — found 2026-08-11 by breaking CI with it. Nothing here is intent.\n\nWHAT HAPPENED, and it is the cleanest possible demonstration. `cap:capture-registers-its-source` shipped, and the first thing it was pointed at was the document that actually drove reflow2's governance work: `dev_storyflow/reflow2_feedback.md`, in a SIBLING REPOSITORY. Registered as `art:storyflow-reflow2-feedback` with `location: ../dev_storyflow/reflow2_feedback.md`, plus DOCUMENTS edges to the seven governance requirements. Local gates passed. CI FAILED:\n\n  FAIL  DRIFT  art:storyflow-reflow2-feedback: missing_artifact\n\nCI checks out reflow2 alone, so the path resolves to nothing. `tools/reflow2_check.py` (line 615) reads `location` and FALLS BACK TO `name` when it is absent, then joins against `--root` — so there is NO WAY to register an out-of-repo source without failing the gate. Dropping the location does not help; it makes the check try the name as a path instead.\n\n⭐ THIS IS `req:content-reaches-every-seat` FIRING ON THE THING BUILT TO SATISFY `req:no-idea-goes-quiet`. \"A pointer resolves for everyone holding the design, not only for the machine that wrote it.\" A relative path into a sibling checkout resolves on exactly one machine. The two accepted requirements pull against each other in this case, and neither names the other.\n\n⚠️ THE CASE IS NOT EXOTIC — IT IS ANTHONY'S NORMAL. His operating context is several partially-built designs across repositories and organizations, with the source material for one living in another. `req:many-people-and-many-projects-compose` (proposed) is the axis; this is a concrete instance of it landing on the artifact layer rather than the design layer.\n\nIDEAS, unranked:\n(a) An `external: true` / `reachability` marker on Artifact that tells `reconcile_artifacts` the file is deliberately not part of this checkout, so ABSENCE is expected rather than drift. Mirrors what `volatility` already does for expected CONTENT change — this is the same move for expected ABSENCE. Risk: absence is the one finding `set_artifact_intent` deliberately keeps at full severity, so this weakens the strongest signal in the reconcile family and needs its own argument.\n(b) COPY the driving excerpt into this repo as a dated, attributed source document and register that. Honest, resolves everywhere, and is what `req:sources-are-kept-not-just-parsed` (accepted) arguably already implies — keep the source WITH the design. Cost: a copy can drift from its original, and nothing would detect that.\n(c) Treat the other repo as a DESIGN rather than a folder, and reach it through the cross-design machinery (`req:design-dependencies-declared`, accepted) instead of the artifact layer. Cleanest conceptually; costs the most, and dev_storyflow's feedback file is not a design.\n(d) Do nothing, and accept that a source outside the repo simply cannot be traced. Cheapest; it is also the status quo that made Anthony hand-point an agent at the file in the first place.\n\nWHAT WAS DONE MEANWHILE: the artifact and its seven DOCUMENTS edges were REMOVED so the gate is honest, and the backward trace is once again absent. That is a retreat, not a fix, and it is recorded here so the retreat is visible rather than quiet. `cap:capture-registers-its-source` remains correct for the in-repo case, which is the case its own description scoped it to — it says nothing about reachability, and that silence is the actual defect in it.",
+        "name": "OPEN — how does a design register a source document that lives OUTSIDE its own repository?",
+        "rationale": "The capability shipped and its first real use broke CI, because the only source document that mattered lives in a sibling repo. Two accepted requirements — no-idea-goes-quiet and content-reaches-every-seat — pull in opposite directions here and neither names the other. Recording the fork rather than picking one, because option (a) weakens the strongest signal the reconcile family has and option (b) crosses a repo boundary; both are Anthony's calls.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-how-is-unrequested-work-dispositioned",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony's question in his own words, 2026-08-11: \"now the project has things that weren't supposed to be built - should they maintain, delete it accept the work done without a requirement?\" Nothing here is intent.\n\nTHE SHAPE OF THE PROBLEM. Those three are a real disposition with real cost attached, and the graph has nowhere to put them. The two moves the tooling currently offers both lose information:\n\n  (1) WRITE A REQUIREMENT FOR IT. The detect-and-ask skill warns against this in its own table: \"The wrong move is to invent a requirement from the capability's own description: a requirement backed out of the thing that implements it is satisfied by construction and can never contradict anything.\" A retro-fitted requirement makes the gap disappear and makes the design lie.\n  (2) `acknowledge_gap`. Files it under \"reviewed and fine\". Cannot tell \"we accept this and will maintain it\" from \"we accept this and it is now debt somebody owns\" from \"this is scheduled for deletion\" — three different futures, one record.\n\nIDEAS, unranked:\n(a) A disposition property/edge on the acknowledgement itself: accepted-and-maintained / accepted-as-debt / scheduled-for-removal, with an owner. Cheap if it rides on the existing acknowledge_gap Decision.\n(b) Reuse the retire-from-design path for the delete branch and leave the other two to acknowledge_gap. Cheapest — no new vocabulary — but the accept-vs-debt distinction stays unexpressed.\n(c) Treat it as an ordinary Decision the user writes by hand, governed by nothing new. Zero build cost; costs the ability to ASK \"what unrequested work are we carrying?\" across a design.\n\n⭐ WHY THIS IS NOT A NICHE CASE, and it is Anthony's actual working context rather than a hypothetical: at NSLS-II he evolves a ~10-year-old bluesky stack where several organizations built partially-overlapping things because they could not wait for each other. Unrequested-but-built is the NORM on the brownfield path, not the anomaly. `req:accreted-intent-becomes-a-design` (proposed) is the adjacent capture; this is what to DO once it is captured.\n\nRELATED BUT DISTINCT, so it is not folded in here: `req:the-design-says-what-was-built-and-never-used` (proposed) surfaces implemented effort nothing depends on. That is BUILT-AND-UNUSED. This is BUILT-AND-UNREQUESTED. A capability can be either without the other, and conflating them would produce a detector that answers neither question.\n\nCOUNTER-ARGUMENT: reflow2 is a design-coherence tool, not a project-management tool. dev_storyflow's own feedback rejected importing PMBOK/WBS structure for exactly this reason — \"importing PM artifact structure would add a second, competing spine next to the golden thread.\" A disposition vocabulary is close to that line, and (c) is the option that respects it.",
+        "name": "OPEN — how does a project record what it DECIDED about work that was built without a requirement: maintain, delete, or accept?",
+        "rationale": "Anthony named three futures for unrequested work and the graph collapses all three into one acknowledgement. Recording the question keeps his framing intact; the ideas differ mainly in how much new vocabulary they cost.",
         "status": "proposed"
       }
     },
@@ -63981,6 +64337,16 @@
       }
     },
     {
+      "node_id": "dec:idea-outward-docs-are-rendered-from-the-graph",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony thinking out loud, 2026-08-11, in his words: \"reflow2 has a capability to return to the agent any systems engineering data (not view) and the agent can render it. would like to actually demonstrate this in the docs of these examples of different views of reflow2 using this rendering type construct.\" Nothing here is intent.\n\n⭐⭐ THIS IS ALREADY THE RECORDED DIRECTION, AND IT IS UNBUILT. `docs/viewpoints.md` §\"Direction (the rest of BL-40)\" says it almost exactly: \"once the catalogue's shape has settled here, move the projection data into core as typed read tools on the MCP surface (the `flow_report` shape — facts plus confessions — is the template), so the in-session agent renders views deterministically instead of re-deriving them through an LLM, which is exactly where extrapolation would creep back in.\" Same shape as `req:what-next` last month — accepted intent, blocker unexamined, nobody built it. This is not a new idea to decide; it is an old idea to finish.\n\nWHAT ALREADY EXISTS, measured 2026-08-11:\n  typed report-shaped read tools on the MCP surface   15  (graph_report, flow_report, maturity_report,\n                                                          granularity_report, ility_report, readiness_report,\n                                                          evidence_report, coverage_report, seam_report,\n                                                          budget_report, release_report, confirmation_ledger,\n                                                          changelog_view, claim_report, graph_report_markdown)\n  tools/render_views.py                               44 KB, renders 10 DoDAF-informed viewpoints\n  docs/design/views.html                              323 KB of rendered output\nSo the DATA side is largely built and the RENDER side exists as deterministic Python that writes one HTML file nobody links from the reading order.\n\n⭐ THE EVIDENCE FOR DOING IT IS FROM TODAY, AND IT IS DAMNING. Every one of these is a hand-maintained claim ABOUT THE GRAPH that the graph could have answered:\n  · `docs/overview.md:52` says the schema has 60 edge types. The export stamp says 61.\n  · `docs/three-axes.md` says axis Z is \"MISSING\". The graph holds 111 DesignEpochs, 133 TemporalFacts,\n    114 Snapshots and 362 ChangeEvents. The doc that would tell a reader whether time is modelled says it is not.\n  · 3 of 4 deferrals spot-checked in `requirements-coverage.md` were wrong (SP-3b, GS-17, 3AX-5).\n  · `crates/reflow2-core/src/heal.rs:27-29` lists dead_end, disconnected_community and single_point_of_failure\n    as deferred. All three are built.\nA rendered doc cannot make any of these mistakes, because it has no opinion of its own.\n\n⚠️⚠️ THE CENTRAL RISK, and it is this project's own doctrine pointed at the proposal. `viewpoints.md` rule 1: \"A projection may sort, group, count and draw — it may not infer, default, or improvise.\" An LLM's default behaviour IS to improvise, and Anthony's own standing position (UAF/DoDAF-trained: views must be pure projections; a renderer fill-in is a reflow2 defect) makes an improvised sentence in a rendered doc a DEFECT REPORT, not a cosmetic issue. The existing Python renderer cannot improvise by construction. Moving rendering to the agent trades staleness for extrapolation — and the doc's own Direction paragraph names that trade explicitly as the reason to move the DATA into typed tools first, so the agent has less room to invent.\n\n⚠️ SECOND RISK: DETERMINISM AND THE DIFF. A committed file rendered by an LLM churns on every regeneration — different wording, same facts — so `git diff` stops meaning \"the design changed\". `render_views.py` is deterministic and byte-stable; an agent is not.\n\n⚠️ THIRD, AND IT IS A JUDGEMENT CALL NOT A BUG: confessions become PUBLIC. Every renderer here is also a probe, and what it cannot project it confesses. Rendering the outward-facing docs means reflow2's adoption surface carries reflow2's own gaps to a first-time reader. `partnership.md` argues credibility is decided at the front door. A confessing doc reads either as unusually honest or as unfinished, and which one it is depends on the reader, not on us.\n\nIDEAS, unranked:\n(a) LIVE ONLY — the agent renders a view on demand from the typed tools; nothing is committed. Never stale by construction. Costs the browsable artifact: a stranger on GitHub sees no docs, and docs ARE the adoption surface.\n(b) COMMITTED + CHECKED — render into committed files and add a CI step that re-renders and diffs, so a stale doc fails the build. Turns doc staleness into a gate, which is the actual disease. Needs determinism, which argues for keeping the renderer deterministic (Python/Rust) rather than an LLM.\n(c) HYBRID — prose docs that EMBED rendered sections between markers, regenerated and diff-checked. Smallest change; keeps the argument-shaped docs intact and puts the facts under the gate. Every number that went stale today lives in an embeddable section.\n(d) DEMONSTRATION ONLY — pick two or three docs, render them as worked examples of the capability, leave the rest prose. This is closest to what Anthony literally asked for, and it is the cheapest way to find out whether the output is any good before committing the whole doc set to it.\n\n📌 SEQUENCING FINDING, recorded because it changes what to do NEXT. Anthony asked in the same breath for `genesis.md`, `artifact-linking.md`, `impact-propagation.md`, `gap-surfacing.md` and `heal-process.md` to be rewritten as outward-facing prose. Those five describe what `genesis`, `link_artifact`/`reconcile_artifacts`, `propagate_from`, `detect_gaps` and `propose_heal` DO AND RETURN — which makes them the FIRST candidates to become projections, not prose. Hand-rewriting 661 lines into a format that may be replaced is the wasteful order. Deciding (d) first costs one doc's worth of work and tells you whether the other four should be written at all.",
+        "name": "OPEN — should reflow2's outward-facing docs be RENDERED from the graph by the agent, rather than hand-written prose that goes stale?",
+        "rationale": "Four hand-maintained claims about the graph were found wrong in a single day, and every one was answerable from the graph. The data side is 15 typed tools already built and the direction is already recorded in viewpoints.md as the rest of BL-40. What is genuinely open is who renders — an LLM buys freshness and risks the extrapolation this project treats as a defect; deterministic code keeps the doctrine and keeps the diff meaningful.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-ownership-is-the-third-who-axis",
       "node_type": "Decision",
       "properties": {
@@ -64041,6 +64407,36 @@
       }
     },
     {
+      "node_id": "dec:idea-should-a-requirement-trace-back-to-its-demand-signal",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — 2026-08-11, from Anthony's observation that the governance work came from a real demand signal (\"it was all taken from feedback from the storyflow project... I told reflow2 to consider it and do it\"). Nothing here is intent.\n\nWHAT WAS MEASURED, and it is the reason the question exists. reflow2's own governance requirements DID come from a demand signal: `/home/ajs7/project/dev_storyflow/reflow2_feedback.md`, the GOVERNANCE-AS-DESIGN entry by api-boss, 2026-08-08. Six Requirements carry AUTHORED_BY to `who:storyflow-api-boss`, so the authorship survived. But:\n\n  · searched every node in the design for the string `reflow2_feedback` → 12 hits, NONE of them any of the six governance requirements\n  · the document is not registered as an Artifact\n  · so the origin of this work exists only in Anthony's head, and he had to tell an agent where to look\n\n⭐ THE SELF-INDICTMENT: `req:no-idea-goes-quiet` is ACCEPTED and reads \"an idea in the graph stays connected to whether it was built and to where it was written — THE USER NEVER HUNTS FOR THE SOURCE DOCUMENT AGAIN.\" reflow2's own governance capture violates an accepted reflow2 requirement, and no detector could see it.\n\n⭐ AND IT COST SOMETHING MEASURABLE, twice. The feedback entry ranked THREE asks. Only #1 reached the graph:\n  #1  model VERIFIES onto DesignRule so enforced+no-check is detectable   → BUILT (unverified_enforced_rule)\n  #2  a Role/Seat node distinct from Contributor — duties attach to the\n      SEAT, not the human                                                 → ABSENT, no such node type\n  #3  an `obligation` category on DesignRule: \"MUST do X AT MOMENT Y\"     → ABSENT; categories in use\n                                                                             are convention/methodology/None\n#3 carried the sharpest sentence in the entry — \"our doc map recorded WHO reads a file and WHAT it holds, and never WHEN — the missing axis was TIME, and no rule was being broken because no rule named a moment.\" That finding is nowhere in this design. The entry did say #1 was \"the whole idea's leverage and the rest is optional\", so building #1 first was RIGHT — but #2 and #3 were not DEFERRED, they evaporated, which is a different thing and the one nobody can see.\n\nIDEAS, unranked:\n(a) A gap for a Requirement with no incoming DOCUMENTS/Fragment/origin edge — \"what asked for this?\"\n(b) No new detector; instead make the capture skills register the source document as an Artifact by default, so the edge exists by construction rather than by discipline.\n(c) Do nothing structural, and treat the origin as prose in the requirement's own statement.\n\nCOUNTER-ARGUMENT TO (a), and it is the same trap that made `rule:a-design-is-named-by-an-id-not-a-path` advisory: at genesis NOBODY has a source document — intent arrives by someone talking. A detector demanding an origin edge would fire against the entire design on day one and the only way to green it would be to fabricate origins. That argues (b) is the honest shape and (a) is only safe if it fires on requirements whose provenance says they came from a DOCUMENT.\n\nNOTE ON WHY THE DAU FRAME FITS: of the nine DAU requirement characteristics Anthony cited, TRACEABLE is defined as connecting \"directly back to top-level strategic guidance and forward to system design specs.\" reflow2 checks FORWARD (the golden thread; unmotivated_capability fired on exactly this) and has no check at all for BACKWARD. COMPLETE failed too — 2 of 3 ranked asks are absent in any form.",
+        "name": "OPEN — should a Requirement with no recorded ORIGIN be a gap? The golden thread checks forward and nothing checks backward",
+        "rationale": "The demand signal existed and became requirements — the process was run. What broke was traceability backward to the source and completeness across the source's three asks. Both are invisible to every detector reflow2 has, and an accepted requirement already says they should not be.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-should-an-understated-status-be-detected",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — found 2026-08-11 while answering Anthony's question about work built without a requirement. Nothing here is intent.\n\nTHE ASYMMETRY, read from the code rather than assumed. `detect_status_contradictions` (detect.rs:2146) fires in exactly two places, and both are OVERSTATEMENTS:\n  · a Capability at `verified` with no passing check          → 0.70\n  · a Requirement at `met` with nothing satisfying it         → 0.70\nNothing anywhere looks at the opposite direction.\n\nTHE INSTANCE THAT SURFACED IT: `cap:governance-proposal` sits at `planned` while `art:governance-proposal-skill` REALIZES it, it is allocated to `cmp:skills`, and that component's check passes. The skill is being SERVED to sessions right now. The status claims less than the structure shows, and no detector has an opinion.\n\n⭐ THIS IS A NAMED-AND-UNBUILT CASE, NOT AN OVERSIGHT I INVENTED. The test at detect.rs:1401-1407 records the same limit from the Release side and assigns it: \"a status that claims less than the structure shows is `status_contradiction`'s territory, not this one's.\" It was allocated to that detector and never written there.\n\nIDEAS, unranked:\n(a) Add the mirror rule to status_contradiction: a Capability at `planned`/`unrealized` with an incoming REALIZES, or with a passing check, is understating.\n(b) Lower severity than 0.70. Overstating is a claim with nothing behind it; understating is a record that has fallen behind reality — arguably drift, not a contradiction, and drift already has its own machinery.\n(c) Do nothing, on the grounds that understating harms nobody.\n\nCOUNTER-ARGUMENT TO (c), which is why this is worth asking at all: understating is what makes `graph_report`'s delivery count too LOW, and a design that under-reports its own completion is the one nobody trusts the numbers on. It is also the direction that silently accumulates, because nothing complains.\n\n⚠️ SIZING CAVEAT before anyone treats (a) as small: `Release.status` and `Capability.status` both DEFAULT to `planned` (detect.rs:1401-1403 states this for Release). So \"planned + realized\" would fire on every capability whose status nobody ever set, which on a young design may be most of them. Whether that is signal or a flood is unmeasured, and measuring it is the first step, not the fix.",
+        "name": "OPEN — should a status that claims LESS than the structure shows be a gap, the way an overstated one already is?",
+        "rationale": "status_contradiction is one-directional and its own test file assigns the other direction to it. The instance that exposed it is shipped, served code recorded as `planned`. The open part is whether the mirror rule floods, because `planned` is a schema default nobody chose.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-sme-augmentation-was-designed-and-never-built",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — surfaced 2026-08-11 by reading reflow2's own founding docs against the build, on Anthony's rule: an already-satisfied doc requirement is dropped, a genuinely new one becomes a proposal. Nothing here is intent.\n\nWHAT EXISTS: `docs/sme-augmentation.md`, a full design dated 2026-07-17. WHAT IS IN THE GRAPH: nothing. No Capability, no Requirement, no detector. Verified — zero occurrences of `sme_consideration` anywhere in the codebase, and `docs/requirements-coverage.md` carries it as ⬜ twice (GS-10 \"SME gaps\", EX-SME \"SME augmentation post-pass\").\n\nTHE IDEA, in the doc's own framing: after faithful extraction, a gated pass in which the LLM adopts expert lenses for the project's domain and operating Environment and surfaces the considerations the user never stated — \"You want to build a house on Mars… launch windows, payload mass budget, teleoperated robots vs suited crew, in-situ resource use, radiation and dust mitigation.\" Each proposal labelled on a grounding spectrum (`verified` / `extrapolated` / `speculative` / `contradicts_known`) with domain, evidence and confidence, landing as a supplementary Fragment at `provenance: inferred` via SUPPLEMENTS, surfaced as `sme_consideration` gaps to accept, edit or dismiss.\n\n⭐ WHY IT MATTERS MORE THAN ITS ⬜ SUGGESTS. The doc calls it \"the capability that most directly serves the vision's premise\" — `req:no-se-knowledge` (accepted): the user never needs systems engineering. Every other mechanism reflow2 has REPORTS what the user already said or failed to say. This is the only designed mechanism that would supply expertise the user does not have. Without it, \"the user never needs to know systems engineering\" is carried entirely by the ambient agent's ad-hoc judgement, unrecorded and ungraded.\n\n⚠️ THE STRONGEST ARGUMENT AGAINST, and it may be decisive: the agent-native decision (2026-07-18, `dec:` surface-plan) made the ambient coding agent the LLM. An agent reading a brief ALREADY volunteers considerations — that is what agents do. So the question may not be \"should reflow2 build an SME pass\" but \"does reflow2 need to MODEL what the agent already does anyway?\" The doc's answer is implicitly yes — the value is the GROUNDING SPECTRUM and the `inferred` provenance, so the user can always tell what they said from what was proposed at them. That is a graph-shaped need, not an LLM-shaped one, and it survives the agent-native decision intact.\n\nIDEAS, unranked:\n(a) Build it as designed — a gated pass emitting `sme_consideration` gaps with the grounding spectrum.\n(b) Build only the RECORDING half: a way to mark a node as agent-proposed-not-user-stated with its grounding, and let the skills do the proposing. Much smaller; keeps the honest-provenance value and drops the pass machinery.\n(c) Declare it superseded by agent-native capture and retire the doc's requirement rather than leaving it ⬜ forever.\n(d) Nothing — it has been ⬜ for over three weeks and no user has asked for it.\n\nNOTE ON RELEVANCE, which is Anthony's actual question: `provenance: inferred` and the SUPPLEMENTS edge both already exist in the schema, so (b) is closer than (a) looks. Whether anyone WANTS this is unanswered — it has never been put to a user, and no friction report has asked for it.",
+        "name": "OPEN — should reflow2 build SME augmentation, the LLM-as-subject-matter-expert pass? Designed in full 2026-07-17, never built, never in the graph",
+        "rationale": "The only designed mechanism that would supply expertise the user lacks, rather than reporting what they already said. Fully specified, never built, never in the graph. The agent-native decision weakens the case for the pass but not for the grounded-provenance half, which is the part only the graph can hold.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-standards-at-every-interface",
       "node_type": "Decision",
       "properties": {
@@ -64057,6 +64453,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL, from a first-pass review of openmbee.org — website and repository listing only, deep review pending. THE OBSERVATION: OpenMBEE's active development is not its stable product. MMS 4 stores models in SQL; the successor, Flexo / MMS 5, moves to an RDF quadstore and is described as 'GitHub for graphs', exposing SPARQL, GraphQL, OSLC and a SysML v2 API. A separate experimental SysML v2 execution environment (`Systemica`, Go) is also under way. Commits across those repositories were days old when reviewed (July–August 2026), so this is a live bet, not an aspiration. WHERE reflow2 STANDS: it has its own vocabulary — 29 node types, 60 edge types — and no standard interchange of any kind. It publishes three interfaces (`ifc:core-api`, `ifc:graph-export`, `ifc:mcp-tools`), and `export_surface` already emits a subset of a design deliberately. THE QUESTION IS NOT WHETHER TO ADOPT SysML v2 INTERNALLY — the vocabulary is load-bearing and `dec:bl83a-functional-decomposition` and `req:functional-vocabulary-computes` both depend on it — but whether reflow2 should be able to SPEAK it at the edge, in and out. THE ARGUMENT FOR: Anthony works in a defence/aerospace systems-engineering context and will be asked, professionally, why a design tool does not interoperate with the standard his field is converging on. An export that a SysML v2 service can ingest is a different claim from an export only reflow2 reads. THE HONEST COUNTER-ARGUMENT: SysML v2 is large, its tooling is young, and a partial mapping that silently drops what it cannot express would be worse than none — reflow2's whole posture is that a lossy translation must be reported, not quietly performed. Mapping 29 types onto SysML v2 would need the same no-silent-drop discipline `changelog_view` holds with `unmapped`. WHAT WOULD CHANGE THE ANSWER: whether a faithful SUBSET mapping exists that reports what it could not carry.",
         "name": "OPEN — should reflow2 speak SysML v2 at its boundary, given that is where the standards gravity has moved?",
         "rationale": "Recorded through the brainstorm skill at Anthony's request to capture, as proposed ideas, the areas where OpenMBEE is stronger than reflow2 — before a deep review he intends to run against a clone of their repository. The strength claimed here is narrow and should be read narrowly: OpenMBEE has committed to a standard interchange and reflow2 has none. Whether their SysML v2 implementation is any good is exactly what the deep review is for, and nothing in this node asserts that it is.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-the-environment-compliance-layer-was-designed-and-never-built",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — surfaced 2026-08-11 reading reflow2's founding docs against the build. Nothing here is intent.\n\nMEASURED, not assumed:\n  EnvironmentRule instances in this design            0\n  QualityGate instances                               0\n  occurrences of `unchecked_compliance` in the code   0\n  occurrences of `open_violation` in the code         0\n  typed constructor for EnvironmentRule               none\n`docs/requirements-coverage.md` carries it as ⬜ three times (GS-9 compliance gaps, WS-4 the write side, WS-5 QualityGate) and its own \"Dormant schema scaffolding\" section lists Environment compliance as deferred-not-dead.\n\nTHE IDEA, from `docs/operating-environment.md` (2026-07-17): a design never exists in a vacuum. A house in Kennewick WA must meet city ordinances, county rules, state requirements, building and fire codes, seismic provisions and occupancy limits; the same house on Mars faces 0.38 g, no atmosphere, radiation shielding, pressure vessels and life support. Change the environment, change the entire constraint space. `Project OPERATES_IN Environment`; `Environment IMPOSES EnvironmentRule[]`; compliance emits `COMPLIES_WITH` or `VIOLATES_RULE`; two detectors (`unchecked_compliance`, `open_violation`) ask the human; swapping the environment is a first-class ChangeEvent that re-evaluates every compliance edge.\n\n⭐ THE DISTINCTION IT CARRIES IS ALREADY IN THE SCHEMA AND IS GOOD: three kinds of rule, kept apart. `Constraint` is SELF-IMPOSED (\"budget under $500k\"). `DesignRule` is a CHOSEN convention (\"branch before pushing\"). `EnvironmentRule` is EXTERNALLY IMPOSED — the design cannot negotiate it, only comply, seek a variance, or fail. Only the third is dictated by the world. reflow2 uses the middle one heavily (9 DesignRules, and this session settled the enforcement question on one); it has never used the third at all.\n\n⚠️ THE HONEST COUNTER, and it is strong: reflow2's own domain is SOFTWARE, where the operating environment rarely imposes an authoritative external ruleset, so dogfooding will never exercise this. Every instance would come from a consumer designing a house, a spacecraft or a regulated system — and no such consumer exists yet. Building it would mean building on the doc's argument alone, with no field evidence, which is the opposite of how everything else here has been decided. `rule:fixes-are-judged-by-the-third-party` cuts BOTH ways on this: the third party is exactly who would need it, and no third party has asked.\n\n⭐ AND IT IS ANTHONY'S ACTUAL DOMAIN. Space Force systems engineering and NSLS-II beamline work both sit in heavily-regulated operating environments with externally imposed rulesets. The one person using reflow2 is in the domain the feature was designed for and has not reached for it — which is either evidence it is not needed, or evidence that nothing surfaces it. Those are opposite readings of the same silence and nothing distinguishes them today.\n\nIDEAS, unranked:\n(a) Build the whole layer — constructors, the two detectors, the swap-the-environment ChangeEvent.\n(b) Build only the WRITE side (constructors for EnvironmentRule + OPERATES_IN/IMPOSES/COMPLIES_WITH) and no detector, so somebody can record a regulation and see whether the vocabulary fits before a detector is written for it. Contradicts the project's own standing rule that a write side should land WITH its read side (requirements-coverage's WS-4/WS-5 note says exactly this and defers both on purpose).\n(c) Retire the scaffolding — `QualityGate` and `EnvironmentRule` are two of the five node types with zero instances, and the project's own test is \"unused AND redundant → retire; unused AND not-redundant → defer\".\n(d) Ask a consumer first. Nothing here is urgent, and the deciding evidence is a real design in a regulated environment.",
+        "name": "OPEN — should the Environment / EnvironmentRule compliance layer be built? The schema declares it, nothing writes or reads it, and it is what makes \"design a house\" concrete",
+        "rationale": "Three doc requirements, a schema layer, and a worked Kennewick-vs-Mars argument, all dating to 2026-07-17 with zero instances and zero code. The vocabulary distinction it carries — self-imposed vs chosen vs externally imposed — is sound and already in the schema. What is missing is any evidence a user wants it, including from the one user whose own domain is regulated.",
         "status": "proposed"
       }
     },
@@ -64117,6 +64523,26 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Source: Alex Sligar's 2026-08-05 research, specifically Zep/Graphiti, described there as \"temporal knowledge graphs that encode what happened, when, and how entities relate over time\" for agents that \"must reason about evolving facts\". Graphiti's distinguishing feature in that family is BI-TEMPORALITY: every fact carries both when it was true in the world and when the system came to know it. STILL OPEN.\n\nWHAT REFLOW2 HAS, CHECKED IN schema/temporal.yaml RATHER THAN RECALLED: TemporalFact carries VALID_FROM and VALID_TO, both pointing at a DesignEpoch, plus `basis: measured|forecast` and an author-stated `confidence`. So the design already models world-time properly, and BL-68 already separated observation from projection — which is the harder half of what Graphiti does and reflow2 got there independently. What TemporalFact does NOT carry is any epoch for when the assertion ENTERED the record. ChangeEvent has `detected_at`, DriftEvent has `detected_at`, DimensionObservation has `observed_at` — the arrival time exists on the EVENTS but not on the FACT.\n\nTHE CONSEQUENCE, and it is why this may be worth more than schema tidiness: a retroactively discovered fact is written with VALID_FROM at the epoch it became true, and the record then reads as though the design always knew. \"The beamline analysis code has assumed a single detector since 2016\" and \"we discovered in August 2026 that the beamline analysis code has assumed a single detector since 2016\" become the same node. The second is the more useful sentence, because it tells a reader that everything designed between 2016 and 2026 was designed in ignorance of it — and that is exactly the reasoning a brownfield adoption needs. This is Anthony's own operating context (a ten-year-old bluesky/tiled stack being evolved on the fly), not a hypothetical.\n\nWHERE IT ALREADY BITES, POSSIBLY: cap:as-of-epoch answers \"what did the design say at epoch n\" from snapshots. If retroactive facts are written with early VALID_FROM, an as-of-epoch answer can attribute knowledge to a past epoch that nobody had then — a subtler version of the same fiction dec:readiness-forecast-is-a-temporal-fact was created to stop. NOT VERIFIED: whether as-of-epoch actually reads TemporalFact validity or only Snapshots was not checked, and that determines whether this is a live defect or only a modelling gap. Check before treating it as either.\n\nWHAT IS CHEAP: adding a RECORDED_AT epoch edge (or reusing AT_EPOCH, which already means \"belongs to\" for Snapshot and ChangeEvent) is additive, and req:defaults-do-not-assert has a clean answer for the backfill — absent means unstated, which reads as unstated.\n\nTHE COUNTER-ARGUMENT: nothing currently READS TemporalFact validity for anything a user sees, and reflow2's record already has a long list of declared-and-read-by-nothing fields (embedding_field, Project.domain) that this would join. A second time axis is also a real conceptual cost on a vocabulary that is already large, and the honest test is whether any computation would use it — which is the same bar dec:exploratory-staging is being held to. If the answer is \"only a human reading the node would notice\", the cheaper fix is prose in the fact's statement, not schema.",
         "name": "OPEN — should a TemporalFact record WHEN IT WAS LEARNED as well as when it was true, since VALID_FROM/VALID_TO carry only world-time and a retroactive discovery loses its own arrival?",
         "rationale": "Recorded as an idea because the missing half was verified in the schema and the brownfield consequence is Anthony's actual working context, but the deciding test — does any computation read it — is unanswered, and that test is what dec:exploratory-staging established as the bar for new vocabulary. Also recorded because BL-68 already made the harder measured/forecast distinction, which makes this the same argument one step along rather than a new idea.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-which-docs-can-never-be-a-projection",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — the boundary question underneath dec:idea-outward-docs-are-rendered-from-the-graph, 2026-08-11. Separate node because it has an answer whichever way that one goes. Nothing here is intent.\n\nTHE OBSERVATION: reflow2's outward-facing docs are not one kind of thing, and rendering the wrong ones would hollow them out.\n\n  PROJECTABLE — the content IS graph state, and every staleness found today lives here\n    three-axes.md      what the schema holds on each axis; the status column is a COUNT\n    overview.md        the type counts, the reading order, what is built vs planned\n    genesis.md         what the genesis tool does and what it returns\n    artifact-linking.md    what link_artifact / reconcile_artifacts return\n    impact-propagation.md  what propagate_from returns — a worked blast radius IS an example\n    gap-surfacing.md   what detect_gaps returns, and the live gap list\n    heal-process.md    what propose_heal returns\n    viewpoints.md      the catalogue itself is a table of what renders\n\n  IRREDUCIBLE ARGUMENT — no graph query produces this, and a rendered version would be worse\n    vision.md          the four lifecycle transitions and WHY they break. An argument, not data.\n    partnership.md     the LLM failure-mode taxonomy. Most of it is not in the graph and should\n                       not be — \"sycophancy\" is not a node type. Its value is the reasoning.\n    operating-environment.md   the Kennewick-vs-Mars argument for why environments matter, about\n                       a layer with ZERO instances — so a projection would render an empty page\n                       for the doc that explains why the layer should exist at all.\n\n⭐ THE THIRD CASE IS THE INTERESTING ONE AND IT BREAKS THE SIMPLE SPLIT. `operating-environment.md` argues for a capability that has never been used. A pure projection of it renders nothing, because there is nothing to project — the doc's whole job is to explain something the graph does NOT yet hold. Any rendering scheme has to allow a doc to be ABOUT AN ABSENCE without confessing itself into uselessness. The same is true of every doc describing planned work.\n\n⭐ AND THE SPLIT IS NOT PER-DOC, IT IS PER-PARAGRAPH. `overview.md` is mostly reading order and argument, with one sentence carrying \"29 node types, 60 edge types\" — which is the sentence that went wrong. `three-axes.md` is mostly explanation with one STATUS COLUMN that is wrong. So the natural unit is a SECTION, not a file, which is the argument for option (c) in the parent node — embed rendered blocks in prose — rather than rendering whole documents.\n\nIDEAS, unranked:\n(a) Per-section markers: prose files with fenced regions regenerated from a named tool call, and a CI check that re-renders and diffs. Facts under the gate, argument left alone, absence expressible because the prose around the block says what the empty block means.\n(b) Two doc classes with different rules — `docs/rendered/` regenerated wholesale and gate-checked, `docs/` hand-written and exempt. Cleaner to enforce, and it splits a reader's attention across two directories.\n(c) Render everything and accept that argument-shaped docs become thin. Rejected on sight here, recorded so nobody re-proposes it: it would delete the reasoning that is the most valuable content reflow2 has.\n(d) Render nothing; instead add a CHECK that every factual claim in a doc matches the graph. Keeps all prose, needs the claims to be machine-identifiable — which is `check_doc_versions.py` generalised beyond version strings, and that tool already proves the pattern works (it FAILS when a pattern matches nothing, so rewording a doc breaks the build loudly instead of silently disabling the check).\n\n📌 (d) IS CHEAPER THAN IT LOOKS AND IS NOT MUTUALLY EXCLUSIVE WITH (a). `tools/check_doc_versions.py` is already a CI gate that asserts doc claims against the build, anchored on literal phrases, deliberately failing when a pattern matches nothing. Extending its anchors from version strings to type counts would have caught `overview.md`'s \"60 edge types\" this morning for the cost of one line.",
+        "name": "OPEN — which outward-facing docs can NEVER be a projection, and how do rendered facts and irreducible argument sit together on one page?",
+        "rationale": "Rendering the docs is not one decision — some docs ARE graph state, some are argument no query produces, and one (operating-environment) argues for a layer with zero instances, so a projection of it renders an empty page. The natural unit turns out to be a section rather than a file, which changes what the parent question is actually choosing between.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-who-judges-requirement-text-quality",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — 2026-08-11, from Anthony bringing the Defense Acquisition University criteria for a good requirement into the discussion. Nothing here is intent.\n\nTHE CRITERIA HE CITED, in his framing. Individual requirement: NECESSARY (addresses a true operational gap), UNAMBIGUOUS (everyone reads it the same way), VERIFIABLE/TESTABLE (has criteria that can be practically proven), FEASIBLE (achievable within technology and budget), IMPLEMENTATION-FREE (what the system must deliver, not how to build it), MEASURABLE (quantifiable data, not vague adjectives). Full set: COMPLETE, CONSISTENT, TRACEABLE.\n\nWHAT REFLOW2 ACTUALLY CHECKS, sorted against that list:\n  SET-LEVEL — partially covered, structurally\n    Traceable   forward only, via the golden thread. Backward is unchecked — see\n                dec:idea-should-a-requirement-trace-back-to-its-demand-signal\n    Consistent  partially, via CONTRADICTS and dimension drift\n    Complete    approximated by the gap detectors, never claimed\n  INDIVIDUAL — ZERO OF SIX. Necessary, Unambiguous, Verifiable, Feasible, Implementation-Free and\n    Measurable are all properties of the TEXT, and no reflow2 computation reads requirement text\n    for quality at all. `unverified_capability` is the nearest thing and it asks whether a check\n    EXISTS, never whether the requirement is phrased so that a check is POSSIBLE — a different\n    question with the same words in it.\n\nIDEAS, unranked:\n(a) Nothing changes; state the boundary explicitly somewhere a user will read it, so \"reflow2 does\n    not grade your prose\" is a known limit rather than a surprise.\n(b) A three-party check: the LLM judges the six against the text, the graph records the judgement\n    and who made it, the human decides. Fits dec:three-party-checks exactly and needs no new\n    detector.\n(c) A deterministic subset only — e.g. MEASURABLE is partly mechanical (does the statement contain\n    a number and a unit?), and IMPLEMENTATION-FREE has weak mechanical tells. Cheap, and cheap in\n    the bad way: a keyword heuristic that grades prose will be wrong confidently.\n\n⭐ THE ARGUMENT FOR (a)/(b) OVER ANY DETECTOR: `req:deterministic-core` is accepted — the core is\ndeterministic and LLM-free. Judging \"is this unambiguous\" is irreducibly a language judgement. So\nthe six do not belong in detect.rs at all; if they belong anywhere it is the skill layer, where an\nLLM already reads and the human already decides.\n\n⚠️ THE HONEST COUNTER-EXAMPLE, recorded because it cuts against the whole frame. Of the storyflow\nfeedback's three ranked asks, #1 was NOT implementation-free — it named the mechanism outright\n(\"model VERIFIES onto DesignRule\") — and it is the one that got built. #2 and #3 were stated as\nnode-type wishes and did not. So on this evidence MEASURABLE and VERIFIABLE predicted delivery and\nIMPLEMENTATION-FREE anti-predicted it. When the system under design IS the modelling vocabulary,\n\"what not how\" gets genuinely slippery, and applying DAU to reflow2's own requirements needs that\ncaveat or it will reject the requirements that work.",
+        "name": "OPEN — does reflow2 have any opinion on whether a Requirement is WELL WRITTEN, and if so whose job is it?",
+        "rationale": "Anthony brought a mature external standard to bear and it partitions cleanly: reflow2 covers the set-level characteristics structurally and none of the six individual ones, because those are text judgements and the core is deliberately LLM-free. Whether that boundary is a deliberate design position or an unnoticed hole has never been stated either way.",
         "status": "proposed"
       }
     },
@@ -64658,6 +65084,16 @@
         "decision": "Every epoch on the retrospective chain corresponds to a real shipped release with a real git tag and date (v0.4.0 through v0.10.1), plus the pre-existing genesis and post-v0.5.0-hardening epochs. Each Decision is anchored to the epoch of the earliest release whose committed export actually contains it — evidence from the repo, not reconstruction from memory. Each Release is pinned to its own epoch. Epochs before v0.9.0 carry no checksum, because their exports predate the hash chain; they say so in their description rather than claiming one. Going forward, an epoch is cut as work happens so nothing needs backfilling again.",
         "name": "The epoch chain is backfilled from shipped releases only — real tags, or nothing",
         "rationale": "User decided 2026-07-24 among three options. THE REJECTED ALTERNATIVES: (a) forward-only — anchor from today and leave the past alone. Rejected because all 34 existing decisions are the ones actually worth re-opening; a fork layer that can only fork decisions made after it was built is a fork layer with nothing to fork. (b) full reconstruction — invent an epoch per work session across the whole history and synthesize the missing snapshots. Rejected because most of those boundaries are guesses, and a fabricated epoch is worse than an absent one: it looks like evidence. Release tags are the natural resolution because they are the only points in this project's history that are independently attested (a tag, a date, a published binary, a committed export), and because \"the design as of the release that shipped it\" is the question a fork actually asks. The cost is deliberately accepted: the 9 founding decisions anchor to v0.4.0, the earliest tag carrying an export, which is their earliest EVIDENCE rather than their origin — recorded as such in that epoch's description instead of being silently presented as the date they were made. FOUND WHILE DOING THIS: reflow2's own temporal axis was nearly unused — zero Snapshots, 8 of 42 ChangeEvents pinned, no Decision anchored at all, the chain stopped four days back — because add_change_event (cheap, epoch-free) had been used throughout where record_change (pins and snapshots) was meant. The fork layer's foundation was missing, not merely its ref layer.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:the-authority-check-guards-forward-not-backward",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "GRANDFATHER IT. The check owed by rule:design-intent-moves-only-on-the-owners-word applies only to nodes that reach a settled state AFTER a recorded cutoff. Everything settled before the cutoff is out of its scope permanently, and is NOT backfilled.\n\nAnthony, 2026-08-11, answering the question put to him as gap:9d265ef455a2e245 / question:9d265ef455a2e245.\n\nTHE MEASUREMENT THAT MADE THIS A QUESTION AT ALL, taken before it was asked rather than after:\n\n  accepted Decisions (excluding `decision:ack:` review records)   105, of which  50 carry any AUTHORED_BY,  47 to who:ajs\n  Requirements moved off `proposed`                               109, of which  43 carry any AUTHORED_BY,  36 to who:ajs\n  TOTAL SETTLED                                                   214, of which  93 carry any AUTHORED_BY,  83 to who:ajs\n\nSo 121 of 214 settled nodes carry nobody's name. Every one of them moved on the owner's word — the word simply was never recorded as an edge. A check written to the letter of the spec would therefore have gone red against 57% of the settled design on the day it landed, and NONE of those would have been violations.\n\n⭐ THIS IS THE SIBLING CLAUSE'S TRAP, ONE RULE OVER, AND IT WAS NOT NAMED IN THE SPEC. rule:a-design-is-named-by-an-id-not-a-path is advisory for exactly this reason, in its own words: \"an honest detector would fail against the entire existing tool surface on the day it was written, and the only ways to make it green would be to block every build or to attach a check that proves nothing.\" The authority rule's detector spec listed ONE precondition (resolve the forked owner identity) and missed this one. The fork is now resolved — 6 Contributors, `ctr:anthony` gone, `who:ajs` sole owner identity — so the FIRST precondition is met and this is what was underneath it.\n\nWHY FORWARD-ONLY IS THE ANSWER AND NOT A CONCESSION. The threat the rule was made enforced against is an AGENT WRITING IN THE OWNER'S VOICE (rule text, 2026-08-09: \"what one person needs protection from is not another person; it is an agent writing in his voice\"). That threat is entirely prospective. The 121 are not that threat; they are bookkeeping that predates the rule. A check scoped to them would be measuring conformance to a convention that did not exist when they were written — the same error as dec:reopen-supersedes' \"7 of 14 obsoleted-but-accepted\", which turned out to be measuring conformance and not deviation.\n\nWHAT WAS REJECTED AND WHY, recorded so neither is re-litigated:\n\n(1) BACKFILL THE 121, then enforce across everything. Rejected. It would record the owner's approval 121 times on nodes no agent can individually evidence, and it makes the check green BY CONSTRUCTION — which is precisely the green-washing cap:governance-proposal's own description forbids (\"never attach a verification to close the finding, because a graph node green-washes exactly like a document\"). The attribution would be defensible in aggregate and unevidenced one by one, which is the worst combination: queryable and unfounded. dev_storyflow's finding ⑮ is the same shape — edges that are queryable and wrong are strictly worse than prose that is honestly informal.\n\n(2) FLIP THE RULE BACK TO ADVISORY. Rejected. It reverses the owner's explicit 2026-08-09 answer (\"stop the build\") to buy nothing but a closed gap, and it would leave this project with zero enforced rules that actually enforce.\n\n⚠️ THE MECHANISM IS A REAL DESIGN CHOICE INSIDE THIS DECISION, NOT A FREE ONE. A Decision carries NO TIMESTAMP (the same limit that stops what_next scoring staleness), so \"after the cutoff\" cannot key on a date. It must key on the design's own time axis — a DesignEpoch, or the ChangeEvent boundary at which the detector lands — which is what req:graph-indexes-snapshots exists to make answerable without a git lookup. The cutoff epoch is to be recorded WHEN THE DETECTOR IS BUILT, not now: minting it in advance would date the rule to a moment nothing enforced.\n\nWHAT THIS DOES NOT DO. It does not close gap:9d265ef455a2e245. That gap is unverified_enforced_rule and needs a PASSING Verification, and no check exists yet — the gap stays open as honest debt, and acknowledging it here would be recording a judgement the owner did not make. It also says nothing about rule:bl-41, the OTHER enforced rule with no detector (gap:b5ca966a38d7f372), which is a different problem: a rule about LLM behaviour that graph state may not be able to detect at all, and the first real customer for req:a-rule-says-whether-it-can-be-checked-at-all.\n\n📌 THIS DECISION IS THE FIRST NODE BORN COMPLIANT WITH THE RULE IT SHAPES — settled only on the owner's word, and carrying an AUTHORED_BY approver edge to who:ajs recording that word at the moment it was given.",
+        "name": "The authority detector binds on what is settled from here, not on the 121 settled nodes that predate it",
+        "rationale": "The rule was made enforced to stop an agent settling intent in the owner's voice — a prospective threat. The 121 unattributed settled nodes are not that threat; they are bookkeeping predating the rule, and 121 of 214 means an unscoped check would go red on history rather than on violations. Backfilling would make the check green by construction on evidence no agent holds; reverting to advisory would discard the owner's explicit answer. Forward-only is the only option that leaves the check meaning something on the day it lands.",
         "status": "accepted"
       }
     },
@@ -66242,6 +66678,16 @@
       }
     },
     {
+      "node_id": "epoch:capture-registers-its-source",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The conversational capture path learns to register the document it captured from",
+        "sequence": 317,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:complementary-pairing",
       "node_type": "DesignEpoch",
       "properties": {
@@ -66370,6 +66816,16 @@
         "epoch_type": "revision",
         "name": "The evidence-quality family — a check's TIME, INPUT and INDEPENDENCE become facts the graph holds (BL-106/126/136)",
         "sequence": 250,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:first-rendered-doc",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The first outward-facing doc rendered from the graph instead of hand-written",
+        "sequence": 318,
         "status": "arrived"
       }
     },
@@ -67922,6 +68378,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered bulk.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:capture-intent-skill",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered capture-intent SKILL.md — the conversational capture path, now registering the document it captured from"
       }
     },
     {
@@ -69551,6 +70017,18 @@
       }
     },
     {
+      "node_id": "question:3f04e352bc497c5b",
+      "node_type": "Question",
+      "properties": {
+        "answer": "A new requirement, mirroring KPPs: a rule the project follows is recorded with its consequence stated, and a violation is computed rather than remembered. Not req:defaults-do-not-assert — that covers ten properties and this addresses one.",
+        "context_setter": "Nothing asked for capability “A rule the project follows is captured with its consequence stated, not inherited from a default”",
+        "gap_id": "gap:3f04e352bc497c5b",
+        "question": "The skill that asks you what breaking a project rule should cost is built and shipping, but nothing in the design says why it was needed — so what was the need it answers: that a rule's power over the build should never be inherited from a setting nobody chose, or that a rule the project follows should be written down with its consequence and a way to catch violations, the way you already require for intent that must hold no matter what?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
       "node_id": "question:3f38ed37a3d0f834",
       "node_type": "Question",
       "properties": {
@@ -69787,6 +70265,18 @@
         "context_setter": "Nothing satisfies requirement “A claim names its owner, and a claim with no live owner is reported stale”",
         "gap_id": "gap:95ddc1083445d73d",
         "question": "When somebody says “I have got this part”, should reflow2 record WHO said it and then tell you when that person is no longer around — so the list shows what is actually being worked on rather than what somebody claimed days ago and walked away from? Today a claim carries only a label, so an abandoned claim looks exactly like a live one.",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
+      "node_id": "question:9d265ef455a2e245",
+      "node_type": "Question",
+      "properties": {
+        "answer": "Grandfather it: the check should ignore everything settled up to now and only guard what gets settled from here. Do not backfill the 121, and do not put the rule back to advice.",
+        "context_setter": "Nothing detects a violation of “Design intent moves only on the owner's word — an agent may propose anything and settle nothing”",
+        "gap_id": "gap:9d265ef455a2e245",
+        "question": "You said a session recording something as settled without your say-so should stop the build — but nothing checks that today, and a check that looked for your name on everything already settled would flag 121 of the 214 settled items, none of which are actually violations: you did approve them, your name just never got written down. Should the check ignore everything settled up to now and only guard what gets settled from here, should we go back and put your name on the 121, or should the rule go back to being advice?",
         "rephrase_degraded": false,
         "status": "answered"
       }
@@ -70540,6 +71030,18 @@
         "provenance": "authored",
         "statement": "A HEAL suggestion must not propose creating a link that does not exist. Where a finding has no honest mechanical repair, the finding is reported WITHOUT a `suggested_fix_type` that would manufacture one, and says plainly that the repair is a judgement rather than an operation.\n\nTHE CONCRETE CASE. `disconnected_community` reports a cluster with `suggested_fix_type: generate_bridge` — create edges to connect it. Where the separation is CORRECT, acting on that suggestion fabricates relationships that do not exist, in order to silence a warning about a separation that is right. In dev_storyflow's words: \\\"acting on the suggestion would fabricate relationships that do not exist, to silence a warning about a separation that is correct. That is manufacturing connectivity, and it is the same act as formatting coverage into existence — WITH THE DIFFERENCE THAT HERE THE TOOL PROPOSES IT.\\\"\n\n⭐ WHY THIS SHIPS FIRST AND ALONE. Anthony, 2026-08-09, settling `dec:legitimate-islands-need-the-detector-fix`: \\\"C now, A next with the read-back, not B, not D.\\\" This half is a LIVE HAZARD and is true whether or not partitions ever become declarable — a tool that proposes corrupting the graph is wrong on its own terms. It needs no schema change, so it does not wait for the schema increment that `req:a-cluster-can-be-declared-deliberately-separate` belongs to.\n\nTHE GENERAL PRINCIPLE, which is what makes this a requirement rather than a one-line patch: reflow2 already refuses to let a check be attached in order to close a finding (the governance-proposal skill's standing warning against green-washing), and `dec:ask-not-repair` already holds that suspected duplicates are ASKED, never merged. THE SAME RULE HAS NOT BEEN APPLIED TO REPAIR SUGGESTIONS. A proposal to write a false edge is the mirror image of a passing check that tests nothing: both make a report go quiet without making anything true.\n\nWHAT IT DOES NOT SAY: it does not ask `disconnected_community` to stop firing, and it does not ask HEAL to stop proposing repairs generally. Mechanical repairs that restore a fact the design already holds remain correct. The line is narrow and it is about INVENTION: a suggestion may reorganise or restore, never assert a relationship nobody stated.\n\n⚠️ RELATED AND SEPARATE, so the two are not conflated: `fact:apply-heal-would-have-destroyed-the-wrong-contributor` records a different HEAL failure found the same day — a merge proposal that named the wrong survivor and DISCLOSED its own arbitrariness (\\\"THE ALPHABET CHOSE THE VICTIM\\\"). That one is about which node a correct operation destroys; this one is about an operation that should not be offered at all.\n\nSOURCE: storyflow gap D of the peer set — raised by storybug Boss (47accf78), characterised and filed by api-boss (05af57c1), 2026-08-09, v0.26.1. Reproduced in this design the same day at 5 nodes and again at 7.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:a-rule-is-recorded-with-its-consequence",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A rule the project follows is recorded with its consequence stated, and a violation is computed rather than remembered",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A project's own conventions — how it merges, who may sign off, what the build refuses — are part of its design and must be recordable as design, with the CONSEQUENCE of breaking each one stated by the person whose project it is. A rule whose power over the build was never chosen by anybody is not a rule the design can act on.\n\n⚠️ STATUS: `proposed`, and it stays there until Anthony has read these words. He chose the SHAPE on 2026-08-11 — \"a new requirement, mirroring KPPs\" — when asked what need `cap:governance-proposal` serves (question:3f04e352bc497c5b). The wording below is an agent's draft of that shape, not his sentence, and `rule:design-intent-moves-only-on-the-owners-word` is the reason the distinction is being made explicitly rather than quietly resolved in the agent's favour.\n\nTHE SHAPE, deliberately mirroring `req:inviolable-intent` one layer along. That requirement says intent that must hold no matter what is recorded as inviolable, and a violation is COMPUTED, not remembered; `cap:kpp-proposal` is the capture half that asks the user whether something is a KPP rather than deciding for them. This is the same sentence about RULES rather than about intent, and `cap:governance-proposal` is its capture half. The parallel is the argument: a project's policy deserves the same treatment as its performance parameters, because both are things a person committed to and neither survives as prose.\n\nWHAT IT REQUIRES, in three parts:\n  (1) A rule is recordable as a design object rather than as a paragraph in a markdown file nobody diffs.\n  (2) Its CONSEQUENCE — gate-blocking, advisory, or unstated — is the user's to state, never inherited. `DesignRule.enforced` is now genuinely three-state (schema/core.yaml:127, \"Never defaulted\"), so absence reads as \"nobody has said\" instead of as a choice.\n  (3) A rule declared gate-blocking OWES a detector, and the debt is computed. That is `unverified_enforced_rule` at 0.6, and it is the part that stops governance-in-graph being prettier prose.\n\nWHERE IT CAME FROM, recorded because this requirement exists partly BECAUSE that trace was missing. The demand signal is the GOVERNANCE-AS-DESIGN entry in dev_storyflow's `reflow2_feedback.md`, filed by api-boss (`5d608b85`) on 2026-08-08, carrying Anthony's own framing: \"every project will be managed differently and have differing sets of people running it with their own practices and policies about merging and who can merge and other governing mechanisms — but allowing reflow2 to setup a generic set of nodes/edges that allow a user or set of users to define their own project management policies/governance in graph form is something that I think would be really helpful. additionally, by putting in graph form, you can start seeing issues and gaps in their policies (like we are experiencing in storyflow) and help resolve them properly.\"\n\n⭐ WHY IT IS BEING WRITTEN NOW, MONTHS AFTER THE WORK SHIPPED. `cap:governance-proposal` was built, realized by `art:governance-proposal-skill`, and served to sessions while satisfying no requirement at all — surfaced as gap:3f04e352bc497c5b (unmotivated_capability, 0.55) and put to Anthony on 2026-08-11. Six sibling requirements from the same feedback entry DO exist and carry AUTHORED_BY to `who:storyflow-api-boss`; this one was the gap in that capture, not the whole of it. The honest reading is that the process ran and missed a step, not that the work was unrequested.\n\nWHY NOT `req:defaults-do-not-assert`, considered and declined on 2026-08-11 by Anthony. That requirement names `DesignRule.enforced` explicitly and predates this skill by six weeks, so it is a genuine historical driver rather than a retro-fit. It was declined as the parent because it covers TEN defaulted-and-unread properties of which this addresses one, and because the default-asserting half has since been fixed in the schema — so a SATISFIES edge would make a tenth of that work read as delivered while nine properties stay untouched. It remains at `proposed` with nothing satisfying it.\n\nWHAT IT DOES NOT SAY. It does not require any rule to be enforced — advisory is a first-class answer and six of reflow2's nine rules are advisory by the owner's explicit choice. It does not require every convention to be captured. And it says nothing about WHO may state a rule's consequence; that is `req:a-node-can-say-who-may-change-it`, still `proposed`.\n\nHONEST BOUND: the capture half only helps a session that invokes the skill. A rule recorded by an agent that never loads `governance-proposal` still lands with `enforced` unstated — which is now reported rather than asserted, so the failure is visible, but it is not prevented.",
+        "status": "proposed"
       }
     },
     {
@@ -72961,6 +73463,16 @@
         "state": "{\"decision\":\"RECORDED AS A MEASURED DEFECT PLUS AN OPEN QUESTION. Found 2026-08-05 by the FIRST REAL TRIAL of cap:corpus-ingest, over six architecture documents from dev_storyflow. Nothing here is settled, and the fix shape is genuinely open.\\n\\n⭐ THE MEASUREMENT, AND IT IS THE WHOLE FINDING. `dynograph_resolution::token_sort_ratio`, which `ingest::fuzzy_match` uses on node NAMES, against the auto-merge threshold of 90:\\n\\n  95  dynograph-vector   vs dynograph-core        <- SILENTLY MERGED\\n  94  dynograph-storage  vs dynograph-core        <- SILENTLY MERGED\\n  93  dynograph-extract  vs dynograph-context     <- SILENTLY MERGED\\n  91  dynograph-server   vs dynograph-query       <- SILENTLY MERGED\\n  89  dynograph-engine   vs dynograph-core        (asked)\\n  84  Auth Service       vs Authentication Service (NOT merged, NOT asked at Component's 90/80 bands)\\n\\nTHE THRESHOLD IS EXACTLY BACKWARDS FOR THE NAMES REAL SYSTEMS USE. Sibling modules sharing a prefix — the near-universal convention — score 91-95 and are merged without asking. The canonical duplicate the feature exists to catch, `Auth Service` ~ `Authentication Service`, scores 84 and is not. `docs/scope-corpus-ingest.md` asserted \\\"90 on a token-sorted ratio is near-identity\\\"; MEASURED, IT IS NOT.\\n\\nTHE IMPACT, MEASURED ON ONE DOCUMENT: dynograph.md declares NINE crates. After ingest the graph holds FIVE. FOUR CRATES — 44% of the architecture — WERE SILENTLY DESTROYED (dynograph-core, dynograph-vector, dynograph-query, dynograph-extract are gone as named nodes). And the survivors ASSERT SOMETHING FALSE rather than merely being incomplete: `cmp:dynograph-core` now carries the name \\\"dynograph-storage\\\", because the merged node keeps the first id and the longer name. The longer-name rule is BL-186's own #73 fix working exactly as designed — the defect is the merge, not the naming.\\n\\n⭐ THIS IS NOT A CORPUS DEFECT AND THE TRIAL NEARLY MISDIAGNOSED IT. The first reading blamed the new corpus driver. Isolating dynograph.md and ingesting it ALONE reproduces it exactly: 9 in, 5 out, 4 merges. So this is PRE-EXISTING IN `ingest` and has been true of every single-document ingest since fuzzy dedup landed. The corpus layer is only the first thing to put enough same-family names in front of it for the loss to be visible. Everything this project has ingested one document at a time may carry it.\\n\\nWHY NOBODY SAW IT: reflow2's own design uses prose names (\\\"The graph handle is an accepted single point of failure\\\"), not prefixed identifier names. `dev_storyflow` is a CODEBASE, so its architecture documents are full of `foo-bar` sibling crates. Self-host was structurally incapable of surfacing this — the same shape as BL-199, and the second time that shape has explained a long-invisible defect.\\n\\nDIRECTLY CONTRADICTS `dec:ask-not-repair` IN PRACTICE WHILE OBEYING IT IN FORM. The ruling says suspected duplicates are asked, never silently merged; the 90+ band is treated as \\\"not a suspicion\\\" and acts. The measurement says the 90+ band CONTAINS the very cases most in need of asking, so the rule is honoured and its purpose defeated.\\n\\nOPTIONS, NONE CHOSEN. (a) RAISE THE AUTO-MERGE THRESHOLD. Cheap, and wrong on its own: 95 was a sibling pair, so there is no threshold that separates them by score. (b) NEVER AUTO-MERGE — every match becomes a question, and the corpus batching (BL-186) is what makes that affordable. Honest and expensive; the 11-candidate band in the same trial was 11/11 FALSE POSITIVES, so a user would be answering \\\"no\\\" a great many times. (c) A DISCRIMINATOR BEYOND THE SCORE — refuse to merge when the names differ by a whole token that neither contains (\\\"core\\\" vs \\\"storage\\\" are not variants of each other, while \\\"Auth\\\" vs \\\"Authentication\\\" is a prefix). This targets the actual failure and is the option worth designing. (d) EMBEDDINGS as the tiebreaker in the band, which `dec:idea-embeddings-adoption` already asks about — and this trial is the strongest evidence yet FOR it, because the lexical signal is not merely weak here, it is INVERTED. (e) MAKE IT LOUD RATHER THAN CORRECT — keep merging but report every merge for review. Weakest alone, necessary in any case.\\n\\nMY OWN DEFECT, FOUND BY THE SAME TRIAL AND FIXED BY NOBODY YET: `CorpusReport.fuzzy_merges` is a `usize`. The single-document `IngestReport` carries `Vec<FuzzyMerge>` and its doc comment says \\\"auditable, never silent\\\" — the corpus aggregate reduces that to a COUNT, so at exactly the scale where silent merges matter most, WHAT was merged is unrecoverable from the report. That is a regression I introduced in BL-186 and it should be fixed before anyone runs a real corpus.\\n\\nNOT MEASURED, AND IT BOUNDS EVERYTHING ABOVE: what this does to the other 1,118 documents. The trial was SIX documents chosen for topical overlap. The 44% figure is one document's crate list, not a corpus-wide rate.\",\"name\":\"OPEN — auto-merge at 90 silently destroys SIBLING components and misses the duplicates it exists to catch; the threshold is backwards for real naming conventions\",\"rationale\":\"Filed the moment the trial produced it, with the scores rather than the impression, because \\\"fuzzy matching is too aggressive\\\" is the kind of claim that decays into folklore and then gets re-argued from scratch. The six numbers are reproducible from `dynograph_resolution::token_sort_ratio` directly.\\n\\nRecorded as its own node rather than as an amendment to `cap:corpus-ingest` because the capability is not where the defect lives — isolating a single document proved it is `ingest`'s, and attaching it to the corpus capability would have embalmed the misdiagnosis the trial itself corrected.\\n\\nThe self-criticism about `CorpusReport.fuzzy_merges` is on the node deliberately: the trial's most useful property was that it could show WHAT converged, and the shipped report cannot. Recording that where the fix will be read is worth more than recording it where it would be flattering.\",\"status\":\"proposed\"}",
         "target_id": "dec:auto-merge-at-90-destroys-sibling-names",
         "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:capture-registers-its-source:cap:governance-proposal",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:governance-proposal-skill\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:skills\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:does-enforced-default-to-gate-blocking\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:three-party-checks\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-rule-is-recorded-with-its-consequence\",\"properties\":{}}]",
+        "state": "{\"description\":\"The capture half of governance, mirroring cap:kpp-proposal one layer along. An agent notices the shape of a rule — \\\"we always…\\\", a convention the build already follows but nothing records, a choice about HOW rather than WHAT — and asks the user what breaking it should cost, in language needing no vocabulary: \\\"if somebody pushed straight to main, should the build have stopped them, or is that advice?\\\" The answer is written to `enforced` EXPLICITLY in both directions. That is the load-bearing part: `enforced` defaults to true, so leaving it unset does not mean advisory, it means gate-blocking — and a rule that reaches that status by silence then owes a detector it never agreed to, which is exactly how all four of reflow2's own enforced rules got there. Also states what an enforced answer costs (unverified_enforced_rule, 0.6, until a PASSING check exists) and refuses the shortcut its own proposers warned about: never attach a verification to close the finding, because a graph node green-washes exactly like a document.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"A rule the project follows is captured with its consequence stated, not inherited from a default\",\"provenance\":\"authored\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cap:governance-proposal",
+        "target_type": "Capability"
       }
     },
     {
@@ -76950,7 +77462,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:0ca6c99e8a072d0ba06479e450ed599b0571199a282f05f7742c1d944804b1fe",
+  "prev_content_hash": "sha256:45c03298eab544fbdf281209f2d1574748950e50c3ceb89a060ad31df94e135c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
