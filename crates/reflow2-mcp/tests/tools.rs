@@ -53,19 +53,22 @@ async fn seeded() -> ReflowService {
     j!(s.add_requirement(Parameters(RequirementReq {
         id: "req:physics".into(),
         name: "Realistic physics".into(),
-        statement: "Ball flight must be plausible.".into()
+        statement: "Ball flight must be plausible.".into(),
+        distinct_from: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:flight".into(),
         name: "Ball flight".into(),
         description: "Simulate ball trajectory.".into(),
-        status: None
+        status: None,
+        distinct_from: None,
     })));
     j!(s.add_component(Parameters(ComponentReq {
         id: "cmp:physics".into(),
         name: "Physics engine".into(),
         description: "Runs the sim.".into(),
         level: None,
+        distinct_from: None,
     })));
     j!(s.contains(Parameters(ContainsReq {
         project_id: "proj:sb".into(),
@@ -168,13 +171,15 @@ async fn genesis_bootstraps_then_detect_hands_off() {
     j!(s.add_requirement(Parameters(RequirementReq {
         id: "req:physics".into(),
         name: "Realistic physics".into(),
-        statement: "Ball flight must be plausible.".into()
+        statement: "Ball flight must be plausible.".into(),
+        distinct_from: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:flight".into(),
         name: "Ball flight".into(),
         description: "Simulate ball trajectory.".into(),
-        status: None
+        status: None,
+        distinct_from: None,
     })));
     j!(s.satisfies(Parameters(EdgePairReq {
         from_id: "cap:flight".into(),
@@ -202,7 +207,8 @@ async fn link_artifact_closes_the_unrealized_capability_gap() {
             id: id.into(),
             name: name.into(),
             description: "…".into(),
-            status: None
+            status: None,
+            distinct_from: None,
         })));
     }
 
@@ -322,6 +328,7 @@ async fn interface_tools_pair_both_sides_of_a_contract() {
         name: "Scoreboard UI".into(),
         description: "Shows the score.".into(),
         level: None,
+        distinct_from: None,
     })));
     j!(s.add_interface(Parameters(IdName {
         id: "ifc:state".into(),
@@ -954,6 +961,7 @@ async fn a_well_formed_hierarchy_reports_no_issues() {
             name: name.into(),
             description: "part".into(),
             level: Some(level.into()),
+            distinct_from: None,
         })));
     }
     j!(s.contain_component(Parameters(EdgePairReq {
@@ -982,6 +990,7 @@ async fn skipping_a_level_is_reported() {
             name: id.into(),
             description: "part".into(),
             level: Some(level.into()),
+            distinct_from: None,
         })));
     }
     j!(s.contain_component(Parameters(EdgePairReq {
@@ -1011,6 +1020,7 @@ async fn nesting_two_defaulted_components_is_a_mismatch_not_silence() {
             name: id.into(),
             description: "part".into(),
             level: None,
+            distinct_from: None,
         })));
     }
     j!(s.contain_component(Parameters(EdgePairReq {
@@ -1038,7 +1048,8 @@ async fn marking_a_requirement_dropped_stops_the_nagging() {
     j!(s.add_requirement(Parameters(RequirementReq {
         id: "req:maybe".into(),
         name: "Maybe".into(),
-        statement: "We might not do this.".into()
+        statement: "We might not do this.".into(),
+        distinct_from: None,
     })));
 
     let flagged = |v: &serde_json::Value| {
@@ -1060,6 +1071,7 @@ async fn marking_a_requirement_dropped_stops_the_nagging() {
         name: "Other".into(),
         description: "does something else".into(),
         status: None,
+        distinct_from: None,
     })));
     assert!(
         flagged(&jl!(s.detect_gaps(Parameters(ScopeReq::default())))),
@@ -1588,7 +1600,8 @@ async fn compare_designs_reports_divergence_from_a_base_export() {
         id: "cap:catch".into(),
         name: "Catching".into(),
         description: "Field the ball.".into(),
-        status: None
+        status: None,
+        distinct_from: None,
     })));
 
     let diff = j!(s.compare_designs(Parameters(CompareDesignsReq {
@@ -1644,7 +1657,8 @@ async fn loop_status_reports_debt_and_the_write_tools_point_at_the_loop() {
         id: "cap:shipped".into(),
         name: "Shipped".into(),
         description: "Claims to be built.".into(),
-        status: Some("realized".into())
+        status: Some("realized".into()),
+        distinct_from: None,
     })));
     assert!(
         cap["loop_hint"]
@@ -1677,6 +1691,7 @@ async fn loop_status_reports_debt_and_the_write_tools_point_at_the_loop() {
         name: "New part".into(),
         description: "Just added.".into(),
         level: None,
+        distinct_from: None,
     })));
     assert!(
         cmp["loop_hint"].as_str().unwrap().contains("check-health"),
@@ -1807,7 +1822,8 @@ async fn export_files_chain_by_content_hash() {
         id: "cap:chain".into(),
         name: "Chained".into(),
         description: "Content moved.".into(),
-        status: None
+        status: None,
+        distinct_from: None,
     })));
     let second = j!(s.export_graph(Parameters(ExportGraphToReq {
         path: Some(path_str.clone()),
@@ -2048,6 +2064,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         name: "Typo".into(),
         description: "created by mistake".into(),
         level: None,
+        distinct_from: None,
     })));
     let deleted = j!(s.delete_node(Parameters(TypedIdReq {
         node_type: "Component".into(),
@@ -2204,7 +2221,8 @@ async fn read_side_loop_hint_fires_on_debt_then_only_on_change() {
     j!(s.add_requirement(Parameters(RequirementReq {
         id: "req:latency".into(),
         name: "Low latency".into(),
-        statement: "Input to render under 50ms.".into()
+        statement: "Input to render under 50ms.".into(),
+        distinct_from: None,
     })));
     let grown = j!(s.scan_nodes(Parameters(ScanReq {
         node_type: "Capability".into(),
@@ -2256,6 +2274,7 @@ async fn a_read_too_large_to_return_says_what_it_left_out() {
             name: format!("Capability {i}"),
             description: prose.clone(),
             status: None,
+            distinct_from: None,
         })));
     }
 
@@ -2302,6 +2321,7 @@ async fn a_single_node_larger_than_the_budget_is_still_returned() {
         name: "Huge".into(),
         description: "y".repeat(60_000),
         status: None,
+        distinct_from: None,
     })));
 
     let page = j!(s.scan_nodes(Parameters(ScanReq {
@@ -2320,6 +2340,7 @@ async fn brief_gives_the_shape_without_the_prose() {
         name: "The one".into(),
         description: "z".repeat(5_000),
         status: None,
+        distinct_from: None,
     })));
 
     let page = j!(s.scan_nodes(Parameters(ScanReq {
@@ -2353,6 +2374,7 @@ async fn an_explicit_limit_is_reported_as_the_reason_it_stopped() {
             name: format!("Cap {i}"),
             description: "small".into(),
             status: None,
+            distinct_from: None,
         })));
     }
 

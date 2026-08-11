@@ -11,6 +11,17 @@
         "description": "What this capability does.",
         "type": "string"
       },
+      "distinct_from": {
+        "default": null,
+        "description": "Ids you read and judged DIFFERENT from this one, when reflow2 has\nalready told you something close exists. Naming them is the deliberate\ndecision: sharpen an existing node by calling with ITS id, or start a\nnew one and say what you rejected. Omit it on a first attempt — the\nrefusal, if any, lists exactly what to put here.",
+        "items": {
+          "type": "string"
+        },
+        "type": [
+          "array",
+          "null"
+        ]
+      },
       "id": {
         "type": "string"
       },

@@ -47,6 +47,266 @@ use reflow2_core::{
 use crate::dto::{EdgeDto, NodeDto};
 use crate::service::*;
 
+/// How many near matches to report. Small on purpose: a list nobody reads
+/// every time is worse than no list, which is why `unexpected_coupling` was
+/// retired as a gap.
+const NEAR_MATCH_LIMIT: usize = 3;
+
+/// How close to the NEW NODE'S OWN score a hit must be to count as near.
+///
+/// This is the whole reason the check can be honest. BM25 scores are NOT
+/// comparable across queries — measured on this design, the same topic scored
+/// 4.48 and 35.75 for two different phrasings — so no absolute threshold means
+/// anything. Within ONE query against ONE corpus they are comparable, and the
+/// node just written is in that corpus and ranks for its own text. So the
+/// baseline is the node itself, and every comparison stays inside a single
+/// query.
+const NEAR_MATCH_RATIO: f32 = 0.5;
+
+/// How many hits to ask the index for before filtering. Wider than the report
+/// so the self-hit is unlikely to fall outside the window.
+const NEAR_MATCH_WINDOW: usize = 12;
+
+/// Below this many words, the check DECLINES TO JUDGE.
+///
+/// Found by CI, on an unrelated test that writes `req:from-a` "Session A wrote
+/// this." and `req:from-b` "Session B wrote this." — refused as near-duplicates,
+/// which is plainly wrong to any reader.
+///
+/// The reason is not a bad threshold, it is an absent signal: two near-empty
+/// documents share most of their tokens BY CONSTRUCTION, so the ratio compares
+/// noise to noise and always fires. That is the genesis case as well — a young
+/// design is all short statements, and a check that refused every early
+/// requirement would be turned off on day one.
+///
+/// So this declines rather than guesses, which is the same answer
+/// `served_by.stale` gives with no `/proc` and `search_first` gives with no
+/// in-query baseline: "I cannot tell" is a real result and must not be dressed
+/// up as "nothing similar".
+const NEAR_MATCH_MIN_WORDS: usize = 12;
+
+/// What the design already holds that reads like what was just written.
+#[derive(serde::Serialize)]
+pub(crate) struct NearMatch {
+    node_id: String,
+    node_type: String,
+    name: String,
+}
+
+/// The advisory attached to a newly-created capture node: what already looked
+/// similar, or an honest statement that the check could not run.
+///
+/// # Why this exists at the TOOL and not in a skill
+///
+/// "Search before you add" is already written into FIVE served skills
+/// (capture-intent, revise-design, brainstorm, kpp-proposal,
+/// retire-from-design), and it still only fires when somebody loads one.
+/// `req:skill-use-survives-a-long-session` (accepted) says skill use must be
+/// triggered by the situation and "THE USER MUST NEVER BE THE TRIGGER" —
+/// measured on this repo 2026-07-31 and confirmed from the field 2026-08-11 by
+/// a second user who named exactly the two skills he types. This is
+/// `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue` applied to
+/// the one discipline whose absence produces near-duplicate nodes.
+///
+/// # What it never does
+///
+/// It never refuses a write and never merges anything. A near-duplicate is
+/// sometimes CORRECT — `req:accreted-intent-becomes-a-design` exists because a
+/// body of intent that contradicts itself is still a design, and somebody
+/// saying the same thing twice in different words is signal, not error. So this
+/// reports and the human decides, which is `dec:three-party-checks`.
+#[derive(serde::Serialize)]
+pub(crate) struct SearchFirst {
+    /// Existing nodes whose text overlaps. Empty means the check ran and found
+    /// nothing close — a real answer, not an absence.
+    near_matches: Vec<NearMatch>,
+    /// Set only when the check COULD NOT run. Distinguishing "nothing similar"
+    /// from "I could not look" is `req:no-silent-fallback`: an empty list that
+    /// might mean either would be the more reassuring reading and the wrong one.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    unavailable: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    note: Option<String>,
+}
+
+/// Look for what the design already says, using the new node as its own
+/// baseline. Returns `None` when the node id already existed — re-calling a
+/// constructor is a deliberate REVISION (BL-183), and reporting a node's
+/// resemblance to itself would be noise on every edit.
+pub(crate) fn search_first(
+    g: &DesignGraph,
+    node_id: &str,
+    existed_before: bool,
+    text: &str,
+) -> Option<SearchFirst> {
+    if existed_before {
+        return None;
+    }
+    if text.split_whitespace().count() < NEAR_MATCH_MIN_WORDS {
+        // Not enough text to carry a judgement. Silent by design: an
+        // `unavailable` note on every short capture would be the noise this
+        // check exists to avoid, and there is nothing actionable to say.
+        return None;
+    }
+    // Deliberately NOT scoped to node_type: a Requirement and a Capability can
+    // say the same thing, and that pair is the one worth catching.
+    let result = match g.search_design(text, None, NEAR_MATCH_WINDOW) {
+        Ok(r) => r,
+        Err(e) => {
+            return Some(SearchFirst {
+                near_matches: Vec::new(),
+                unavailable: Some(format!("could not search the design: {e}")),
+                note: Some(
+                    "Nothing is claimed about whether this duplicates something. The design was \
+                     not searched."
+                        .into(),
+                ),
+            });
+        }
+    };
+    let Some(self_score) = result
+        .hits
+        .iter()
+        .find(|h| h.node_id == node_id)
+        .map(|h| h.score)
+    else {
+        // The node did not rank for its own text, so there is no baseline and
+        // any comparison would be across-query. Say so rather than guess.
+        return Some(SearchFirst {
+            near_matches: Vec::new(),
+            unavailable: Some(
+                "the new node did not rank for its own text, so there was no in-query baseline to \
+                 compare against"
+                    .into(),
+            ),
+            note: None,
+        });
+    };
+    let floor = self_score * NEAR_MATCH_RATIO;
+    let near: Vec<NearMatch> = result
+        .hits
+        .iter()
+        .filter(|h| h.node_id != node_id && h.score >= floor)
+        .take(NEAR_MATCH_LIMIT)
+        .map(|h| NearMatch {
+            node_id: h.node_id.clone(),
+            node_type: h.node_type.clone(),
+            name: h.name.clone(),
+        })
+        .collect();
+    let note = (!near.is_empty()).then(|| {
+        "The design already holds these, and their wording overlaps what you just wrote. THIS IS \
+         NOT A DUPLICATE CLAIM — read them and decide. If one covers the same need, revise or \
+         link it instead (revise-design); if the overlap is only wording, ignore this."
+            .to_string()
+    });
+    Some(SearchFirst {
+        near_matches: near,
+        unavailable: None,
+        note,
+    })
+}
+
+/// Attach a `search_first` block to a capture result, when there is one.
+pub(crate) fn with_search_first<T: serde::Serialize>(
+    value: T,
+    hint: &str,
+    found: Option<SearchFirst>,
+) -> Result<CallToolResult, McpError> {
+    let mut v = serde_json::to_value(value).map_err(ser_err)?;
+    if let Some(obj) = v.as_object_mut() {
+        obj.insert("loop_hint".into(), JsonValue::String(hint.to_string()));
+        if let Some(sf) = found {
+            // Only speak when there is something to say: a block that is
+            // present and empty on every single create is the noise this is
+            // trying not to become.
+            if !sf.near_matches.is_empty() || sf.unavailable.is_some() {
+                obj.insert(
+                    "search_first".into(),
+                    serde_json::to_value(sf).map_err(ser_err)?,
+                );
+            }
+        }
+    }
+    ok_json(v)
+}
+
+/// Force the choice Anthony named: **sharpen the existing node, or say why this
+/// one is different.** Reporting alone is not enough, because by the time a
+/// report is read the near-duplicate already exists.
+///
+/// # The shape, and why it is this shape
+///
+/// This is the TWO-SIDED ACCEPT (BL-33), which `partnership.md` describes as
+/// forcing "the uncomfortable question at the exact moment an agreeable agent
+/// would glide past it". `set_artifact_checksum` already works this way: it
+/// refuses a first baseline recorded as `design_holds` and NAMES
+/// `baseline_established` as the way through. A refusal that names what would
+/// have worked is `req:a-refusal-names-what-would-have-worked`.
+///
+/// # Both routes already exist, which is why no new vocabulary is needed
+///
+/// * SHARPEN — call the same constructor with the EXISTING id. Constructors
+///   merge (BL-183), so what you pass overwrites and what you omit survives.
+///   A revision is exempt from this check by construction.
+/// * CREATE ANYWAY — pass `distinct_from` naming the ids you read and rejected.
+///   That is the deliberate decision, and it is recorded in the call rather
+///   than assumed from silence.
+///
+/// # What it must never do
+///
+/// It must never refuse on a WEAK resemblance. The bar is
+/// [`NEAR_MATCH_RATIO`], measured conservative: a moderately-similar pair did
+/// not clear it during development, which is the behaviour wanted — a check
+/// that refused often would be routed around, and a rule people route around
+/// is worse than no rule.
+fn refuse_unless_deliberate(
+    found: &Option<SearchFirst>,
+    distinct_from: Option<&Vec<String>>,
+    node_id: &str,
+) -> Result<(), McpError> {
+    let Some(sf) = found else { return Ok(()) };
+    if sf.near_matches.is_empty() {
+        return Ok(());
+    }
+    let acknowledged: std::collections::HashSet<&str> = distinct_from
+        .map(|v| v.iter().map(String::as_str).collect())
+        .unwrap_or_default();
+    let unacknowledged: Vec<&NearMatch> = sf
+        .near_matches
+        .iter()
+        .filter(|m| !acknowledged.contains(m.node_id.as_str()))
+        .collect();
+    if unacknowledged.is_empty() {
+        return Ok(());
+    }
+    let listed = unacknowledged
+        .iter()
+        .map(|m| format!("  {} ({}) — {}", m.node_id, m.node_type, m.name))
+        .collect::<Vec<_>>()
+        .join("\n");
+    let ids = unacknowledged
+        .iter()
+        .map(|m| format!("\"{}\"", m.node_id))
+        .collect::<Vec<_>>()
+        .join(", ");
+    Err(McpError::invalid_params(
+        format!(
+            "The design already says something close to this, so `{node_id}` was NOT created. \
+             Read these and decide — sharpening an existing node or starting a new one are \
+             different acts, and this is the moment to choose:\n\n{listed}\n\nTWO WAYS ON, both \
+             deliberate:\n  SHARPEN — call this same tool with the EXISTING id. Constructors \
+             merge, so what you pass overwrites and what you omit survives; nothing is lost and \
+             the new detail lands on the node that already holds the idea.\n  START A NEW ONE — \
+             call again with `distinct_from: [{ids}]`, which records that you read them and \
+             judged this different.\n\nThis is not a duplicate accusation. Saying the same thing \
+             twice in different words is sometimes real signal, which is why the second route \
+             exists and why nothing was merged for you."
+        ),
+        None,
+    ))
+}
+
 #[tool_router(router = capture_router, vis = "pub")]
 impl ReflowService {
     // ---- GENESIS (bootstrap the graph from a brief) ----
@@ -105,13 +365,33 @@ impl ReflowService {
         Parameters(req): Parameters<RequirementReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await;
-        with_loop_hint(
-            NodeDto::from(
-                g.add_requirement(&req.id, &req.name, &req.statement)
-                    .map_err(dyno_err)?,
-            ),
+        let node_ty = reflow2_core::nodes::node::REQUIREMENT;
+        let existed = g.get_node(node_ty, &req.id).map_err(dyno_err)?.is_some();
+        let node = NodeDto::from(
+            g.add_requirement(&req.id, &req.name, &req.statement)
+                .map_err(dyno_err)?,
+        );
+        let found = search_first(
+            &g,
+            &req.id,
+            existed,
+            &format!("{} {}", req.name, req.statement),
+        );
+        if let Err(e) = refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id) {
+            // Roll back the node we just wrote. The check needs the node in the
+            // index to have an in-query baseline, so the write comes first and
+            // is undone when the caller has not yet chosen. Only ever undoes a
+            // node THIS call created — `existed` guards a revision.
+            if !existed {
+                let _ = g.delete_node(node_ty, &req.id);
+            }
+            return Err(e);
+        }
+        with_search_first(
+            node,
             "loop: when this capture batch lands, run detect_gaps (detect-and-ask) — \
              loop_status says what's owed",
+            found,
         )
     }
 
@@ -130,13 +410,33 @@ impl ReflowService {
         Parameters(req): Parameters<CapabilityReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await;
-        with_loop_hint(
-            NodeDto::from(
-                g.add_capability(&req.id, &req.name, &req.description, req.status.as_deref())
-                    .map_err(dyno_err)?,
-            ),
+        let node_ty = reflow2_core::nodes::node::CAPABILITY;
+        let existed = g.get_node(node_ty, &req.id).map_err(dyno_err)?.is_some();
+        let node = NodeDto::from(
+            g.add_capability(&req.id, &req.name, &req.description, req.status.as_deref())
+                .map_err(dyno_err)?,
+        );
+        let found = search_first(
+            &g,
+            &req.id,
+            existed,
+            &format!("{} {}", req.name, req.description),
+        );
+        if let Err(e) = refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id) {
+            // Roll back the node we just wrote. The check needs the node in the
+            // index to have an in-query baseline, so the write comes first and
+            // is undone when the caller has not yet chosen. Only ever undoes a
+            // node THIS call created — `existed` guards a revision.
+            if !existed {
+                let _ = g.delete_node(node_ty, &req.id);
+            }
+            return Err(e);
+        }
+        with_search_first(
+            node,
             "loop: wire satisfies to the requirement this serves, then run detect_gaps when \
              the capture batch lands (detect-and-ask)",
+            found,
         )
     }
 
@@ -237,12 +537,32 @@ impl ReflowService {
         Parameters(req): Parameters<ComponentReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await;
-        with_loop_hint(
-            NodeDto::from(
-                g.add_component(&req.id, &req.name, &req.description, req.level.as_deref())
-                    .map_err(dyno_err)?,
-            ),
+        let node_ty = reflow2_core::nodes::node::COMPONENT;
+        let existed = g.get_node(node_ty, &req.id).map_err(dyno_err)?.is_some();
+        let node = NodeDto::from(
+            g.add_component(&req.id, &req.name, &req.description, req.level.as_deref())
+                .map_err(dyno_err)?,
+        );
+        let found = search_first(
+            &g,
+            &req.id,
+            existed,
+            &format!("{} {}", req.name, req.description),
+        );
+        if let Err(e) = refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id) {
+            // Roll back the node we just wrote. The check needs the node in the
+            // index to have an in-query baseline, so the write comes first and
+            // is undone when the caller has not yet chosen. Only ever undoes a
+            // node THIS call created — `existed` guards a revision.
+            if !existed {
+                let _ = g.delete_node(node_ty, &req.id);
+            }
+            return Err(e);
+        }
+        with_search_first(
+            node,
             "loop: structural change — run detect_defects (check-health) when the batch lands",
+            found,
         )
     }
 
@@ -352,10 +672,15 @@ impl ReflowService {
         Parameters(req): Parameters<IdName>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await;
-        with_loop_hint(
-            NodeDto::from(g.add_interface(&req.id, &req.name).map_err(dyno_err)?),
+        let node_ty = reflow2_core::nodes::node::INTERFACE;
+        let existed = g.get_node(node_ty, &req.id).map_err(dyno_err)?.is_some();
+        let node = NodeDto::from(g.add_interface(&req.id, &req.name).map_err(dyno_err)?);
+        let found = search_first(&g, &req.id, existed, &req.name);
+        with_search_first(
+            node,
             "loop: structural change — wire provides/consumes, then run detect_defects \
              (check-health) when the batch lands",
+            found,
         )
     }
 
@@ -489,7 +814,9 @@ impl ReflowService {
         Parameters(req): Parameters<AddConstraintReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await;
-        ok_json(NodeDto::from(
+        let node_ty = reflow2_core::nodes::node::CONSTRAINT;
+        let existed = g.get_node(node_ty, &req.id).map_err(dyno_err)?.is_some();
+        let node = NodeDto::from(
             g.add_constraint(
                 &req.id,
                 &req.name,
@@ -501,7 +828,18 @@ impl ReflowService {
                 req.direction.as_deref(),
             )
             .map_err(dyno_err)?,
-        ))
+        );
+        let found = search_first(
+            &g,
+            &req.id,
+            existed,
+            &format!("{} {}", req.name, req.statement),
+        );
+        with_search_first(
+            node,
+            "loop: a Constraint binds what it CONSTRAINS — wire it, then run detect_gaps",
+            found,
+        )
     }
 
     #[tool(
@@ -618,10 +956,34 @@ impl ReflowService {
         Parameters(req): Parameters<DecisionReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await;
-        ok_json(NodeDto::from(
+        let node_ty = reflow2_core::nodes::node::DECISION;
+        let existed = g.get_node(node_ty, &req.id).map_err(dyno_err)?.is_some();
+        let node = NodeDto::from(
             g.add_decision(&req.id, &req.name, &req.decision, req.rationale.as_deref())
                 .map_err(dyno_err)?,
-        ))
+        );
+        let found = search_first(
+            &g,
+            &req.id,
+            existed,
+            &format!("{} {}", req.name, req.decision),
+        );
+        if let Err(e) = refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id) {
+            // Roll back the node we just wrote. The check needs the node in the
+            // index to have an in-query baseline, so the write comes first and
+            // is undone when the caller has not yet chosen. Only ever undoes a
+            // node THIS call created — `existed` guards a revision.
+            if !existed {
+                let _ = g.delete_node(node_ty, &req.id);
+            }
+            return Err(e);
+        }
+        with_search_first(
+            node,
+            "loop: a Decision lands `proposed` — only the owner's word moves it \
+             (set_decision_status)",
+            found,
+        )
     }
 
     #[tool(
