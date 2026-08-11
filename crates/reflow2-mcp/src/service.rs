@@ -803,6 +803,13 @@ pub struct RequirementReq {
     pub name: String,
     /// The requirement statement.
     pub statement: String,
+    /// Ids you read and judged DIFFERENT from this one, when reflow2 has
+    /// already told you something close exists. Naming them is the deliberate
+    /// decision: sharpen an existing node by calling with ITS id, or start a
+    /// new one and say what you rejected. Omit it on a first attempt — the
+    /// refusal, if any, lists exactly what to put here.
+    #[serde(default)]
+    pub distinct_from: Option<Vec<String>>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -818,6 +825,13 @@ pub struct CapabilityReq {
     /// does not assert that a shipped system is entirely unbuilt.
     #[serde(default)]
     pub status: Option<String>,
+    /// Ids you read and judged DIFFERENT from this one, when reflow2 has
+    /// already told you something close exists. Naming them is the deliberate
+    /// decision: sharpen an existing node by calling with ITS id, or start a
+    /// new one and say what you rejected. Omit it on a first attempt — the
+    /// refusal, if any, lists exactly what to put here.
+    #[serde(default)]
+    pub distinct_from: Option<Vec<String>>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -913,6 +927,13 @@ pub struct ComponentReq {
     /// is no hierarchy to check.
     #[serde(default)]
     pub level: Option<String>,
+    /// Ids you read and judged DIFFERENT from this one, when reflow2 has
+    /// already told you something close exists. Naming them is the deliberate
+    /// decision: sharpen an existing node by calling with ITS id, or start a
+    /// new one and say what you rejected. Omit it on a first attempt — the
+    /// refusal, if any, lists exactly what to put here.
+    #[serde(default)]
+    pub distinct_from: Option<Vec<String>>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -1500,6 +1521,13 @@ pub struct AddConstraintReq {
     /// `maximum` (default: total must stay at or under) / `minimum`.
     #[serde(default)]
     pub direction: Option<String>,
+    /// Ids you read and judged DIFFERENT from this one, when reflow2 has
+    /// already told you something close exists. Naming them is the deliberate
+    /// decision: sharpen an existing node by calling with ITS id, or start a
+    /// new one and say what you rejected. Omit it on a first attempt — the
+    /// refusal, if any, lists exactly what to put here.
+    #[serde(default)]
+    pub distinct_from: Option<Vec<String>>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -1590,6 +1618,13 @@ pub struct DecisionReq {
     /// Why — the part worth recording.
     #[serde(default)]
     pub rationale: Option<String>,
+    /// Ids you read and judged DIFFERENT from this one, when reflow2 has
+    /// already told you something close exists. Naming them is the deliberate
+    /// decision: sharpen an existing node by calling with ITS id, or start a
+    /// new one and say what you rejected. Omit it on a first attempt — the
+    /// refusal, if any, lists exactly what to put here.
+    #[serde(default)]
+    pub distinct_from: Option<Vec<String>>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]

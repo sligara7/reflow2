@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:392dd476d2915aac25b687f3f6b2e09b6dbe273c9e83419be163df4ac620b057",
+  "content_hash": "sha256:c70deeb9de1aea82313b9ccf632e310861ea1234b31686684cfa76dab3f929a1",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -718,6 +718,14 @@
         "evidence": "The report's own synthesis, and the node it produced. Three of its separately-filed frictions — stale last_run, deferred artifact capture, prose asks that do not register — share this one cause."
       },
       "to_id": "dec:idea-the-loop-only-sees-what-an-agent-hand-carries"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:implement-first-cost-an-edge-case-2026-08-11",
+      "properties": {
+        "evidence": "The instance. Its suite is the one scored against the nine criteria, and its missing edge case is the one CI found rather than a test."
+      },
+      "to_id": "cap:search-first-at-the-tool"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1910,6 +1918,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:search"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:search-first-at-the-tool",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -4356,6 +4372,12 @@
       "from_id": "chg:seam-incompatibility",
       "properties": {},
       "to_id": "epoch:linking-repos"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:search-first-fires-at-the-tool",
+      "properties": {},
+      "to_id": "epoch:search-first-fires-at-the-tool"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -8151,6 +8173,15 @@
       "from_id": "rule:per-design-state-is-never-a-process-global",
       "properties": {
         "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "rule:the-self-host-always-trails-what-it-teaches",
+      "properties": {
+        "acted_at": "2026-08-11",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -15464,6 +15495,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:search-first-fires-at-the-tool",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:search-first-fires-at-the-tool",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-search-first"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:search-first-fires-at-the-tool",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:search-first-fires-at-the-tool",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:search-first-at-the-tool"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:search-nl-defect",
       "properties": {
         "accepted_baseline": false,
@@ -17991,6 +18058,16 @@
         "evidence": "The consumer-facing generalisation of the same finding. The vocabulary sweep found eight declared edge types nothing reaches inside reflow2; this asks the same question about a consumer's own built features, which is the larger of the two and the one rule:fixes-are-judged-by-the-third-party asks for."
       },
       "to_id": "dec:idea-detect-vocabulary-that-nothing-reaches"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "rule:the-self-host-always-trails-what-it-teaches",
+      "properties": {
+        "alignment": "supporting",
+        "confidence": 1.0,
+        "evidence": "Two halves of one arrangement, recorded as SUPPORTING so it reinforces rather than conflicts (req:supporting-is-not-conflict). The third-party rule says a fix is judged by what it does for somebody else's project; this says the self-host is what GENERATES the finding, because reflow2's own design is the first place a missing detector shows up as pain. Neither replaces the other, and this one explicitly does not weaken the third-party rule's named failure: patch it here, mark it met, leave every consumer with the hole."
+      },
+      "to_id": "rule:fixes-are-judged-by-the-third-party"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -23659,6 +23736,12 @@
       "from_id": "cap:search",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:search-first-at-the-tool",
+      "properties": {},
+      "to_id": "dec:idea-search-first-fires-without-being-remembered"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -51510,6 +51593,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-search-first",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:search-first-at-the-tool"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-served-skills",
       "properties": {
         "completeness": "complete"
@@ -52693,6 +52784,12 @@
       "from_id": "cap:search",
       "properties": {},
       "to_id": "req:no-se-knowledge"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:search-first-at-the-tool",
+      "properties": {},
+      "to_id": "req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue"
     },
     {
       "edge_type": "SATISFIES",
@@ -54184,6 +54281,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:search-first-forces-a-choice",
+      "properties": {},
+      "to_id": "cap:search-first-at-the-tool"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:search-natural-language",
       "properties": {},
       "to_id": "cap:search"
@@ -55350,6 +55453,14 @@
         "action": "created"
       },
       "to_id": "art:test-nudge-path"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-search-first",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-search-first"
     },
     {
       "edge_type": "YIELDED",
@@ -56991,7 +57102,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1a8d9d49e8ee6f507fc26dd489c763338a230861bf7c59fac1338b4309508d15",
+        "checksum": "sha256:42f601485a1855770500b9425d88fca013af1cbc77cb49a00bc7336a0f189460",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -57273,6 +57384,19 @@
       }
     },
     {
+      "node_id": "art:test-search-first",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:f43ed9a42160d5031a44160b361a07be164ebbfb6910639a63ead22078150b29",
+        "granularity": "atomic",
+        "location": "crates/reflow2-mcp/tests/search_first_fires_at_the_tool.rs",
+        "name": "search_first_fires_at_the_tool.rs — six cases: the refusal, the rollback, both deliberate routes, the no-false-refusal counterweight, and the cross-type catch",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
       "node_id": "art:test-served-skills",
       "node_type": "Artifact",
       "properties": {
@@ -57360,7 +57484,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4e81fcdb498f093fa95c964482a04079d16a6fbb7638609b560b580ed7b67eb7",
+        "checksum": "sha256:12bc49d9445b3825ffa1bb1ea43893854345d00c366df497a6cd4615b7e358bc",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "tools/capture.rs",
@@ -59262,6 +59386,16 @@
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:search-first-at-the-tool",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Creating a Requirement, Capability, Component, Decision or Constraint searches the design with the new node's own words. When something close already exists the write is REFUSED and both routes are named: sharpen the existing node by calling the same tool with ITS id (constructors merge, BL-183), or create anyway by passing `distinct_from` with the ids you read and rejected. Interface is report-only, because its parameter struct is shared with other tools and a field there would leak onto all of them.\n\nWHY THE TOOL AND NOT A SKILL. \"Search before you add\" was already written into FIVE served skills — capture-intent, revise-design, brainstorm, kpp-proposal, retire-from-design — and capture-intent's wording is almost exactly the ask. It still only fired when somebody loaded one. `req:skill-use-survives-a-long-session` (accepted) says skill use must be triggered by the situation and \"THE USER MUST NEVER BE THE TRIGGER\": measured here 2026-07-31, and confirmed from the field 2026-08-11 by a second user whose four-step working path named exactly the two skills he types and neither of the two that would have fired on situations he was already in.\n\n⭐ ANTHONY'S SHARPENING IS WHAT MAKES IT A REFUSAL RATHER THAN A REPORT. The first cut created the node and then listed what looked similar — useless, because by the time the list is read the near-duplicate exists. His words: \"there needs to be a deliberate decision of either update already existing node or if it is unique enough, create a new node.\" So it is the TWO-SIDED ACCEPT (BL-33), the shape `set_artifact_checksum` already uses when it refuses a first baseline and names `baseline_established` as the way through.\n\nHOW THE THRESHOLD AVOIDS THE BM25 TRAP. Scores are not comparable across queries — measured on this design, one topic scored 4.48 and 35.75 for two phrasings — so no absolute cutoff means anything. The node is written FIRST, so it is in the index and ranks for its own text; every other hit is compared to THAT score, inside one query against one corpus. A refusal then rolls the node back. Nothing is compared across queries at any point.\n\nMEASURED CONSERVATIVE, deliberately. During development a moderately-similar pair did NOT clear the bar, and that is the wanted behaviour: a check that refused often would be routed around, and a rule people route around is worse than no rule. The cost is recall — it will miss pairs that are similar but not strongly worded alike.\n\nWHAT IT NEVER DOES: it never merges, never edits, and never refuses a REVISION. Saying the same thing twice in different words is sometimes real signal — `req:accreted-intent-becomes-a-design` exists because a body of intent that contradicts itself is still a design — so the override is a first-class route rather than an escape hatch.\n\nBULK PATHS ARE UNAFFECTED: genesis, `create_nodes` and `import_graph` do not route through these tools, so seeding many similar nodes at once still works.",
+        "name": "A capture tool tells you what the design already says, and makes you choose — sharpen or start new",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -62186,6 +62320,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Two linked designs can be compared boundary by boundary, and Interface.medium stops defaulting to REST — a default that had been asserting a technology nobody chose"
+      }
+    },
+    {
+      "node_id": "chg:search-first-fires-at-the-tool",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The five intent-carrying constructors now search the design with the new node's own words and REFUSE a near-duplicate, naming both routes: sharpen the existing node with its id, or pass `distinct_from` to create anyway. Anthony asked for it implemented rather than captured, and sharpened it from a report into a forced choice — \"there needs to be a deliberate decision of either update already existing node or if it is unique enough, create a new node.\" Five toolsnaps move (add_requirement/capability/component/decision/constraint gain one optional parameter); add_interface stays report-only because IdName is shared. Threshold normalises against the new node's OWN in-query score, so BM25's across-query incomparability never enters."
       }
     },
     {
@@ -67357,6 +67499,16 @@
       }
     },
     {
+      "node_id": "epoch:search-first-fires-at-the-tool",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "Search-before-you-add stops depending on somebody loading a skill",
+        "sequence": 320,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:service-split",
       "node_type": "DesignEpoch",
       "properties": {
@@ -67929,6 +68081,15 @@
         "enforced": true,
         "name": "Per-design state never lives in a process-global",
         "statement": "STATE THAT BELONGS TO A DESIGN LIVES ON THE DESIGN HANDLE, NOT IN A `static`. cap:graph-registry names the metadata that must become per-graph rather than per-process; every new process-global that is secretly per-design adds another line to that migration. Legitimately process-wide state is fine and exists today — the seat registry and the serve-shared mode flag are facts about the PROCESS, not about a design. The test is not 'is it a static' but 'would this need a different value for a second design open in the same process'.\n\nENFORCED — Anthony, 2026-08-09, answering the enforcement question as it was put to him (gap:ba21fb8550a81e07, \"should the build have stopped them, or is that advice?\"): \"Split it: clause 1 enforced, clause 2 advice.\"\n\nWHY THIS HALF CAN CARRY ENFORCEMENT AND ITS SIBLING CANNOT — the whole reason the split happened, and it was MEASURED BEFORE THE DECISION RATHER THAN AFTER. A violation of this clause is mechanically visible, because a process-global is a declaration in the source. The codebase holds exactly three runtime process-globals, all in crates/reflow2-core/src/identity.rs: the process's own seat id (`seat_id`, line 357), the attached-seat registry (`ATTACHED_SEATS`, line 486), and the shared-mode flag (`SERVES_MANY_SESSIONS`, line 578). The last two are the ones this rule's own text already calls legitimately process-wide. So enforcement stops nothing today and costs nobody a build; what it stops is the FOURTH one — which is exactly the erosion this rule was written against, one convenient global at a time, invisible until the migration.\n\nWHAT THE CHECK ACTUALLY DETECTS, AND WHAT IT DOES NOT. ver:no-per-design-process-globals is an allowlist over runtime `static` / `OnceLock` / `OnceCell` / `thread_local!` declarations in the crates' `src` trees. It FAILS when a global appears that the allowlist does not name, so the cost of adding one is stating why it is not per-design. It CANNOT judge whether a struct field is correctly scoped: the per-design metadata that rides on `ReflowService` today (graph_path, write_gen, read_hint) is not a global and the check has nothing to say about it — that is cap:graph-registry's work, and its absence is planned, not a violation. A check that claimed otherwise would be the green-washing the governance skill warns about: attaching a passing check to silence a finding rather than to detect a fault.\n\nTHE CLAUSE THAT LEFT: \"a design is named by an id that resolves to a location — never a path\" is now rule:a-design-is-named-by-an-id-not-a-path, and it is ADVISORY. It was split out rather than dropped because the two clauses sit in opposite positions against the code — that one has no compliant surface today, so an honest detector would fail against the entire existing tool surface, and the only ways to make it pass would be to block everything or to attach a check that proves nothing.\n\nEVIDENCE, 2026-08-09, from Anthony's question about running reflow2 behind a web app at 1k / 100k / 1M tenants (dec:idea-a-hosted-tier-of-many-single-writer-tenants). This costs nothing today and is expensive to retrofit, and the failure mode is erosion rather than a decision. reflow2's own design measured 1,828 nodes = 3.8 MB export vs 33 MB store, which is what makes hold-many-designs-per-process the architecture rather than an option.\n\nWHAT IT DOES NOT SAY: nothing about WHERE a design is stored, nothing about hosting, and nothing that requires the registry to be built. It only keeps the door open."
+      }
+    },
+    {
+      "node_id": "rule:the-self-host-always-trails-what-it-teaches",
+      "node_type": "DesignRule",
+      "properties": {
+        "category": "methodology",
+        "name": "reflow2's own design always trails what reflow2 can catch — and that lag is the mechanism, not a failure",
+        "statement": "A TOOL CAN ONLY CATCH WHAT IT HAS ALREADY BEEN TAUGHT TO CATCH. So reflow2's own design will always contain the class of defect reflow2 is about to learn to detect, and the implementation will always sit behind the detector it is growing. That is the definition of self-hosting, not evidence that anything is wrong.\n\nAnthony, 2026-08-11, in his own words: \"we are designing reflow2 using reflow2, so there is always a lag in implementation behind what reflow2 would catch.\"\n\nWHAT THE RULE ACTUALLY BINDS, which is REPORTING rather than building. A finding of the shape \"reflow2 did not catch X in its own design\" is not an indictment and must not be written as one. The accurate reading is \"X is now catchable, for everyone\". Both sentences describe the same measurement; only the second is true about the situation. An agent that writes the first teaches the next reader that the project is failing at the exact moment it is working.\n\n⭐ THE LAG IS THE MECHANISM, WHICH IS THE PART WORTH KEEPING. Every defect reflow2 finds in its own design is one CONSUMERS WERE ALREADY EXPOSED TO and could not see. The stranded-server defect fixed on 2026-08-11 had hit two other projects before it reached the maintainer, and was reported independently by a third the same week. reflow2's own design is the canary: it is the first place a missing detector shows up as pain, because it is the design under the closest observation. That is why `rule:fixes-are-judged-by-the-third-party` works in practice rather than only in principle — the self-host generates the finding, and the third party is who the fix is FOR.\n\nHIS SECOND HALF, recorded because it is the reason the arrangement is worth its cost: \"the kind of cool thing is that because we are using reflow2 to develop itself, we get to see first hand how the things we develop/implement actually work immediately on reflow2 itself - kind of like an immediate feedback.\"\n\nMEASURED THE SAME DAY, and the shape of the evidence matters. `cap:search-first-at-the-tool` shipped with seven purpose-built tests, all passing and mutation-checked three ways. Within minutes CI surfaced a false-positive class NONE of them held: two requirements with three-word statements refused as near-duplicates, found by an unrelated suite exercising a REAL usage pattern. The synthetic cases came from what an author imagined; the correction came from actual use. A test suite structurally cannot supply that, and the self-host does it for free and immediately.\n\nWHAT THIS RULE DOES NOT LICENCE. It is not an excuse for a defect that was already detectable and was missed — those are ordinary misses and the graph should say so plainly. The lag it forgives is specifically the one between a detector EXISTING and the design it was built from being clean. Nor does it license fixing things here and calling them shipped: `rule:fixes-are-judged-by-the-third-party` still governs, and its named failure — patch it here, mark the requirement met, leave every consumer with the hole — is unaffected by this rule and is the more common error of the two.\n\nENFORCEMENT: NOT STATED. `DesignRule.enforced` is genuinely three-state and absent means nobody has said, which is the honest record here — Anthony has not been asked whether breaking this should stop a build, and it is a rule about how to READ a finding, so no detector could evaluate it. Asking the consequence question is `cap:governance-proposal`'s job and has not been done for this rule."
       }
     },
     {
@@ -69665,6 +69826,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered test_nudge_path.py"
+      }
+    },
+    {
+      "node_id": "frag:art:test-search-first",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered search_first_fires_at_the_tool.rs — six cases: the refusal, the rollback, both deliberate routes, the no-false-refusal counterweight, and the cross-type catch"
       }
     },
     {
@@ -75980,6 +76151,18 @@
       }
     },
     {
+      "node_id": "fact:implement-first-cost-an-edge-case-2026-08-11",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "AN INSTANCE OF THE RISK BL-185 RECORDS, WITH A MEASURED COST — and it is the agent's own working order, not somebody else's.\n\nBL-185 has carried Anthony's words since 2026-08-03: \"Developing tests as you design is extremely important. It shapes system architecture, forces clear thinking about edge cases early... Confirmation bias: Testing code you already wrote proves what it does, not necessarily what it should do.\" He raised the same question again on 2026-08-11 — the TENTH time in one session that a fresh thought landed on something the graph already held, and the only one where the prior record is his own verbatim reasoning on an OPEN fork nobody has chosen.\n\nWHAT WAS ACTUALLY DONE, TWICE, ON 2026-08-11:\n  PR #149 (spawn_daemon)      implementation first, then tests, then mutation-checking\n  PR #151 (search-first)      implementation first, then tests, then mutation-checking\nNeither was test-first. Both were mutation-checked, which is this repo's real rigour and is a DIFFERENT property: mutation-checking proves a test can fail, it does not prove the test asks the right question.\n\n⭐ THE COST WAS MEASURABLE AND IS THE POINT. PR #151's check refused two requirements whose statements were three words long (\"Session A wrote this.\" / \"Session B wrote this.\") — a plainly wrong result, found by CI on an unrelated suite, not by any test written for the feature. The cause was an absent signal rather than a bad threshold: near-empty documents share most of their tokens by construction. THAT IS A BOUNDARY CONDITION, and \"what are the boundary values\" is precisely the question test-first forces before an author is attached to an implementation. It is also the GENESIS case — a young design is all short statements — so the miss was not exotic.\n\nANTHONY'S CRITERIA, 2026-08-11, recorded because BL-185 does not carry them and the fork should be judged against something: a good test is VALID (measures what it claims, not a side effect), ISOLATED (no dependence on other tests or shared state), REPEATABLE (same result every run under identical conditions), FOCUSED (one behaviour, not several), and FAST. It should target the HAPPY PATH, EDGE CASES (boundaries, extremes, unusual inputs), ERROR CONDITIONS (failures, missing data, bad input, stress), and THE CONTRACT RATHER THAN THE IMPLEMENTATION, so an internal change does not produce a false failure.\n\n📌 SCORING PR #151's OWN SUITE AGAINST THEM, honestly, because a fact that only indicts the past is not evidence:\n  valid        yes — asserts the refusal, the rollback and the created node, not side effects\n  isolated     yes — each case builds its own in-memory service\n  repeatable   yes in practice, but SENSITIVE TO CORPUS CONTENT: the threshold is relative to\n               other nodes present, so a case is only as stable as its seeding. One test sat on\n               the boundary during development and had to be re-seeded.\n  focused      mostly; the revision case must seed a neighbour or it proves nothing\n  fast         yes, sub-second\n  happy path   covered\n  edge cases   COVERED ONLY AFTER CI FOUND ONE. Not designed in.\n  error cond.  NOT COVERED. The `unavailable` branch — the search itself failing — has ZERO\n               tests. It is the branch that exists to satisfy req:no-silent-fallback, and\n               nothing proves it fires.\n  contract     mixed. Two assertions match literal words in the refusal text (\"SHARPEN\",\n               \"distinct_from\"); the contract is that BOTH routes are named, and the test reads\n               the wording rather than the property.\n\nSO THE HONEST SCORE IS SIX AND A HALF OF NINE, with the two misses landing exactly where implement-first predicts they would: edge cases and error conditions.\n\n⚠️ WHAT THIS IS NOT EVIDENCE FOR. It is one agent, one day, two PRs, and both shipped working and gated. It says nothing about whether test-first would have been FASTER, and BL-185's own guard rail stands: Anthony's caveat that this \"may not apply to or be feasible for all project types\", and the adopt path where every recovered test is necessarily after the fact. A reading that scored implement-first as failure would repeat BL-179's punish-correct-work trap.\n\n📌 A SEPARATE FINDING FOUND WHILE CHECKING THIS: MUTATION-CHECKING IS THIS PROJECT'S STRONGEST TEST DISCIPLINE AND IS WRITTEN DOWN NOWHERE AS A RULE. At least eight Verifications record it in their own text (evidence-quality, ility, no-fabricated-repairs, siblings-are-not-merged-away, edges-need-both-ends, supporting-is-not-conflict, the-server-says-when-it-is-stale, search-first-forces-a-choice) and AGENTS.md does not mention it. It is a convention held by imitation — every agent that does it learned it by reading a test file. That is the same shape as the search-first rule living in five skills and firing only when one is loaded.",
+        "subject_id": "dec:bl-185",
+        "valid_from": "2026-08-11"
+      }
+    },
+    {
       "node_id": "fact:orphan-decision-is-silenced-by-an-edge-that-does-not-reach-it",
       "node_type": "TemporalFact",
       "properties": {
@@ -77422,6 +77605,18 @@
       }
     },
     {
+      "node_id": "ver:search-first-forces-a-choice",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-11",
+        "level": "unit",
+        "method": "test",
+        "name": "Search-before-you-add fires from the TOOL and forces a choice, and the check cannot quietly stop working. SIX CASES in crates/reflow2-mcp/tests/search_first_fires_at_the_tool.rs. THE DEFECT CASE: two requirements stating one idea in different words — the second is REFUSED, and the refusal NAMES the match and BOTH routes, so it is a choice rather than a wall. THE ROLLBACK CASE is what makes the design sound: the node must be written before it can be searched (it needs to rank for its own text to give an in-query baseline), so a refusal that left it behind would create the very duplicate it refused — asserted by reading the node back and requiring null. BOTH DELIBERATE ROUTES are tested because the refusal recommends them: SHARPEN (call with the existing id — a revision, never refused, and its neighbour is seeded so the guard is the only reason it passes) and CREATE ANYWAY (`distinct_from` naming what was read and rejected). THE COUNTERWEIGHT decides whether this is usable at all: an unrelated requirement is created with no friction and no advisory — a check that refused often would be routed around, and a rule people route around is worse than no rule. CROSS-TYPE: a Capability restating a Requirement is caught, the pair most worth catching because a capability backed out of a requirement's own words is unmotivated_capability waiting to happen. MUTATION-CHECKED THREE WAYS, each verified applied before running rather than assumed: disabling the refusal fails 3 cases; removing the rollback fails the rollback case alone; ignoring `distinct_from` fails both deliberate routes. ⚠️ A FOURTH MUTATION EXPOSED A VACUOUS TEST OF MY OWN and is why the neighbour seeding exists: the first revision test passed whether or not the guard was there, because a revision with no near neighbour has nothing to report either way — the same vacuous-branch failure ver:the-server-says-when-it-is-stale was written about, reproduced here and caught by mutating rather than by reading.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:search-natural-language",
       "node_type": "Verification",
       "properties": {
@@ -77715,7 +77910,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:35a940c429436e0b819e7e3d27cdd33a68a639aca6bf85c5656928ee53581c4d",
+  "prev_content_hash": "sha256:392dd476d2915aac25b687f3f6b2e09b6dbe273c9e83419be163df4ac620b057",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
