@@ -2,141 +2,195 @@
 
 > Part of the **Reflow 2.0** design docs — see **[overview.md](overview.md)** for the full map and reading order.
 
-> When something changes in any phase, this is what walks the **golden thread** to find
-> everything the change touches — the *blast radius* — so DETECT/SURFACE can flag the new
-> gaps and the graph can be healed back to coherence. This is the connective tissue of
-> [the vision](vision.md).
+> **This document is a RENDERED VIEW.** Everything below the line marked *rendered* is projected
+> from reflow2's own design graph and source, not written by hand. It is the first worked example
+> of the projection doctrine in [viewpoints.md](viewpoints.md): *the graph stores the detail, a
+> view is a projection of it, and the agent's only job is to render.* Anything a view needs and
+> the graph cannot supply is **confessed** rather than filled in — the confessions at the end are
+> the deliverable, not a defect in the page.
+>
+> Rendered 2026-08-11 against `docs/design/reflow2.json` and `crates/reflow2-core/`.
 
-Grounded in Reflow's existing `analyze_impact`
-(`tools/reflow_mcp/src/reflow_mcp/tools/graph_intelligence.py`): a bounded BFS over
-structural + inference edges, classifying direct vs. transitive impact, flagging risk
-edges, and finding coverage gaps. We keep that engine and mature it with **edge-semantic
-direction**, **the Z-axis** (change is a first-class event), and **dynograph-graph** for
-the traversal.
+When something changes in any phase, PROPAGATE walks the **golden thread** to find everything
+the change touches — the *blast radius* — so DETECT can flag the new gaps and HEAL can bring the
+graph back to coherence. It is the connective tissue of [the vision](vision.md).
 
----
+Two entry points, one engine:
 
-## Trigger
-
-Two entry points, same engine:
-
-1. **Reactive** — a `ChangeEvent` was recorded (Axis Z). Its `CHANGED` target(s) are the
-   propagation seeds. This is the automatic path the vision describes.
-2. **Speculative** — a "what if I change X?" query before committing. Runs the same
-   traversal without writing a `ChangeEvent`, so the user can see the blast radius first.
+- **Reactive** — `propagate_change(change_event_id)`. A `ChangeEvent`'s `CHANGED` targets are the
+  seeds. A ChangeEvent id that does not resolve is **refused**, not answered with an empty radius:
+  "no such event" and "this change harmed nothing" must not share a reply.
+- **Speculative** — `propagate_from(seed_ids)`. The same traversal without writing anything, so
+  you can see the blast radius before committing to the change.
 
 ---
 
-## The golden thread (what we traverse)
+## rendered · what actually propagates
 
-Impact flows along the traceability edges that tie intent → realization → operation:
+*Projected from `crates/reflow2-core/src/nodes.rs::structural_rule`. Sixteen edge types carry
+impact; every other edge type in the schema does not.*
 
-```mermaid
-flowchart LR
-    R["Requirement"] -->|SATISFIES⁻¹| CAP["Capability"]
-    CON["Constraint"] -->|CONSTRAINS| CAP
-    CAP -->|ALLOCATED_TO| COMP["Component"]
-    COMP -->|PROVIDES / CONSUMES| IFACE["Interface"]
-    CAP -->|REALIZES⁻¹| ART["Artifact"]
-    ART -->|VERIFIES⁻¹| VER["Verification"]
-    COMP -->|packaged in| REL["Release"]
-    REL -->|DEPLOYED_TO| ENV["Environment"]
-    REL -->|REQUIRES_RESOURCE| RES["Resource"]
-    D["Decision / DesignRule"] -->|GOVERNED_BY⁻¹| COMP
+| Edge | Walked forward | Walked backward |
+|---|---|---|
+| `SATISFIES` | upstream | downstream |
+| `DECOMPOSES` | upstream | downstream |
+| `REALIZES` | upstream | downstream |
+| `VERIFIES` | upstream | downstream |
+| `GOVERNED_BY` | upstream | downstream |
+| `INCLUDES` | upstream | downstream |
+| `CALIBRATED_AGAINST` | upstream | downstream |
+| `CONSTRAINS` | downstream | upstream |
+| `ALLOCATED_TO` | downstream | upstream |
+| `DEPLOYED_TO` | downstream | upstream |
+| `REQUIRES_RESOURCE` | downstream | upstream |
+| `SCHEDULED_FOR` | downstream | upstream |
+| `PROVIDES` · `CONSUMES` · `DEPENDS_ON` · `PART_OF_FLOW` | lateral | lateral |
+
+Any **inference** edge (`CAUSES`, `RISKS`, `MITIGATES`, `CONTRADICTS`, `ANTICIPATES`, `MASKS`, …)
+is classified `causal` regardless of direction.
+
+**`CONTAINS` is deliberately absent**, and the source says why: it is decomposition (axis Y), not
+traceability. Propagating along it would make the Project a hub that short-circuits every sibling
+to about two hops.
+
+> **Two recorded scars, kept because they are the same scar twice.** `INCLUDES` was missing from
+> this table until v0.5.0, which made every Release+Environment pair a disconnected island.
+> `SCHEDULED_FOR` was missing until 2026-07-31 and produced the identical failure the first time a
+> Release was modelled from its schedule rather than a manifest. Twice a new edge type has reached
+> a Release without anyone asking whether the impact table should know about it, **and nothing
+> checks that question.**
+
+---
+
+## rendered · a worked blast radius
+
+*Projected from `propagate_from(["cap:capture-registers-its-source"], max_depth: 2)`, run against
+the live graph. This capability was added on 2026-08-11, so its thread is small enough to show
+whole.*
+
+**The direct ring — five nodes, each explained by the edge that reached it:**
+
+| Impacted | Direction | Via |
+|---|---|---|
+| `cmp:skills` | downstream | `ALLOCATED_TO` |
+| `req:no-idea-goes-quiet` | upstream | `SATISFIES` |
+| `art:capture-intent-skill` | downstream | `REALIZES` |
+| `dec:idea-should-a-requirement-trace-back-to-its-demand-signal` | upstream | `GOVERNED_BY` |
+| `dec:idea-how-is-a-source-outside-the-repo-registered` | upstream | `GOVERNED_BY` |
+
+Read as prose: changing this capability reaches **down** to the component that hosts it and the
+file that implements it, **up** to the requirement it serves and the two open questions that shape
+it. Nothing is listed without the edge chain that put it there.
+
+**At depth 2 the shape changes character.** The walk crosses `cmp:skills` and picks up every other
+capability allocated there, every Release that ever included it, and the component's own check —
+plus one lateral hop:
+
+```
+boundary_crossings: ["ifc:mcp-tools"]
+truncated_beyond_depth: 286
 ```
 
-Plus the inference "why" edges (`CAUSES`, `ENABLES`, `BLOCKS`, `RISKS`, `MITIGATES`,
-`CONTRADICTS`, …) which carry `confidence` and let impact follow causal, not just
-structural, links.
+Two things worth reading off that. The lateral `CONSUMES` hop reaches a **published boundary**, so
+the walk flags it — a change here is visible on the far side of a declared contract. And **286
+further nodes exist beyond depth 2 and are counted, not hidden**: bounding the traversal is
+allowed, silently truncating it is not.
 
 ---
 
-## Direction matters (the maturation over plain BFS)
+## rendered · what a bound actually costs
 
-Reflow's BFS is undirected — correct for recall, but it loses *why* a node is impacted.
-We classify each traversal edge by the **semantic direction** of impact:
+*Projected from `propagate_from(["req:coherence"], max_depth: 3)`.*
 
-| Direction | Question it answers | Example |
-|---|---|---|
-| **Downstream** (realization) | "what did this node's existence justify or shape?" | change a `Requirement` → the `Capability` that `SATISFIES` it, the `Component`, `Artifact`, and `Verification` down the chain may now be wrong |
-| **Upstream** (rationale) | "what intent does this node serve, that may now be unmet?" | change a `Component` → the `Requirement`/`Constraint` it was satisfying may no longer be met |
-| **Lateral** (peers/contracts) | "what shares a contract or depends sideways?" | change an `Interface` → every `Component` that `CONSUMES` it |
-| **Causal** (inference) | "what did this cause/enable/risk?" | a failed `Verification` `CAUSES` a fix that ripples to its `Artifact` |
+`req:coherence` — *"design stays coherent across its lifecycle"* — is near the root of the thread.
+Its blast radius at depth 3:
 
-The traversal is edge-type-aware: each edge type declares which direction(s) it
-propagates, so the blast radius is *explained*, not just enumerated.
-
----
-
-## Impact kinds (what a ripple means, in design terms)
-
-As nodes are reached, each is tagged with the *kind* of breakage the change implies —
-these become the candidate gaps handed to SURFACE:
-
-| Impact kind | Fires when the change… |
+| | |
 |---|---|
-| `unmet_requirement` | breaks a `SATISFIES` link (the thing that met a Requirement changed) |
-| `stale_verification` | invalidates a `Verification` (its target moved; test no longer proves the claim) |
-| `violated_constraint` | pushes a node past a `Constraint`/`DesignRule` it must respect |
-| `orphaned_artifact` | removes/replaces what an `Artifact` `REALIZES` |
-| `phase_desync` | leaves a downstream phase (build/verify/operate) inconsistent with an upstream one |
-| `introduced_contradiction` | creates a `CONTRADICTS` between two now-incompatible nodes |
-| `undersized_resource` | changes a `Release`/`Component`'s needs beyond a `Resource` spec |
-| `coverage_gap` | adds/changes a node with no `Verification` yet (reuse Reflow's test-gap scan) |
+| impacted | **246** |
+| truncated beyond depth 3 | **484** |
+| by distance | 10 · 74 · 162 |
+| by direction | downstream 161 · upstream 64 · lateral 19 · **causal 2** |
+| paths crossing a risk edge | 2 |
+| published boundaries crossed | **0** |
+
+The distance profile is the reason bounding is not optional: each hop roughly doubles the answer,
+and two thirds of what a depth-3 walk finds is at the outer ring.
+
+**Causal 2 and boundary 0 are both findings about this design, not about the engine.** Only two
+inference edges are reachable from the requirement that governs coherence — the "why" layer is
+sparse here. And zero published boundaries are crossed anywhere in 246 nodes, which is the
+`seams: 0%` frontier from `maturity_report` showing up from a second direction: nothing in this
+design couples through a declared `Interface`.
 
 ---
 
-## Ranking the blast radius
+## rendered · confessions
 
-Not every affected node matters equally. Rank so SURFACE asks about the important ones
-first:
+*What this document asserted before it was rendered, that the graph and the build do not support.
+Each is a real deferral tracked in [requirements-coverage.md](requirements-coverage.md).*
 
-- **Distance** — direct (1 hop) outranks transitive; **confidence decays with depth**
-  (multiply inference-edge `confidence` along the chain).
-- **Risk edges** — a path crossing `RISKS`/`BLOCKS`/`CONTRADICTS`/`VIOLATES`/`MASKS`
-  amplifies severity (kept verbatim from Reflow's `risk_rel_types`).
-- **Centrality** — a change hitting a high-centrality / single-point-of-failure node
-  (via `dynograph-graph`) has a wider blast radius; weight it up.
-- **Criticality** — inherit the affected node's `priority`/`severity` (a `critical`
-  Constraint outranks an `info` one).
+- **`ENABLES` is a retired edge type.** The previous version of this page listed it among the
+  inference edges. It was real when this page was written on 2026-07-17 and **retired five days
+  later** — `dec:edge-orthogonality`, 2026-07-22, folded into `CAUSES` because the two were the
+  same causal axis and no computation read them apart (`schema/inference.yaml:35`). The doc was
+  not wrong when written; it went stale, and then stayed stale for three weeks while the schema
+  moved underneath it. **Nothing could tell** — no check reads a doc's vocabulary against the
+  schema's, so a retired edge type kept being taught to every reader of this page.
 
----
+- **The impact-kind table does not exist.** This page used to carry eight named impact kinds —
+  `unmet_requirement`, `stale_verification`, `violated_constraint`, `orphaned_artifact`,
+  `phase_desync`, `introduced_contradiction`, `undersized_resource`, `coverage_gap` — as though
+  they were the design. **None of them is implemented.** That is `IP-6` (⬜), and `IP-15` and
+  `IP-19` are partial *because* of it. Impacted nodes today carry a direction and an edge chain,
+  and no kind at all.
 
-## Axis-Z integration
+- **Confidence does not decay with depth** (`IP-7`, deferred) and **inference-edge confidence is
+  not weighted** (`IP-3`, deferred). Ranking is: distance → risk-edge crossing → centrality → id.
+  Nothing multiplies a confidence along a chain.
 
-- Propagation runs **in the current epoch**; each impacted node is flagged relative to the
-  `ChangeEvent` that seeded the run.
-- The change's *cause* is already on the graph (inference `CAUSES`/`TRIGGERS` into the
-  `ChangeEvent`), so impact can report the full chain: *cause → change → blast radius*.
-- Prior state is snapshotted (per the extraction plan's time-aware integration), so a
-  speculative run can diff "before vs. after this change" without mutating anything.
+- **Criticality is not inherited** (`IP-10`, deferred). A `critical` Constraint and an `info` one
+  rank identically.
 
----
+- **The cause is not surfaced** (`IP-12`, partial). The page promised *cause → change → blast
+  radius*; the `CAUSES`→ChangeEvent wiring is not there, so only *change → radius* is real.
 
-## Non-negotiable disciplines
+- **Speculative before/after diff is not wired** (`IP-13`, partial). `temporal::snapshot_node`
+  exists; nothing diffs a speculative run against it.
 
-1. **Bound the traversal, but never silently truncate.** Cap depth for performance, but
-   report "N further nodes beyond depth K" — a hidden truncation is a silent integrity
-   loss (same bar as the extraction no-silent-fallback rule).
-2. **Explain every impact.** Each affected node carries the `via` edge chain and the
-   impact `kind` — never an unexplained "this is affected."
-3. **Scope per project.** Traverse within the project's subgraph via an indexed
-   `project_id` where-prefilter (dynograph's per-property algo scoping), so one program's
-   ripple can't wander into another's.
-4. **Deterministic + cacheable.** Same seed + same graph epoch → same blast radius; cache
-   keyed by (seed, epoch-hash) with a short TTL.
-5. **Feed the loop, don't fix.** Impact propagation only *computes and tags*; turning
-   tags into questions is SURFACE (gap-surfacing), and repair is HEAL. Keep the concerns
-   separate.
+- **Propagation does not filter by epoch** (`IP-11`, partial), **does not prefilter by project**
+  (`IP-16`, partial — scoping is one graph per design), and **is not cached** (`IP-17`, partial:
+  deterministic, uncached).
 
 ---
 
-## Reuse vs. build
+## The disciplines — prose, and deliberately not rendered
 
-| asset | plan |
-|---|---|
-| Reflow `analyze_impact` (BFS, direct/transitive split, risk-edge flags, test-gap scan) | **reuse the engine**; add edge-semantic direction + impact-kind tagging |
-| `dynograph-graph` crate (paths, components, centrality) | **reuse** for the traversal + centrality weighting |
-| inference-edge `confidence` | **reuse** for depth-decay ranking |
-| Axis-Z `ChangeEvent` / snapshots ([schema/temporal.yaml](../schema/temporal.yaml)) | **reuse** as the reactive trigger + before/after diff |
-| change-type semantics (`modify` / `add` / `remove` / `deprecate`) | **extend** Reflow's `change_type` so removal propagates as orphaning, addition as coverage gaps |
+These are commitments about how the engine must behave. No query produces them, and a projection
+of them would say nothing.
+
+1. **Bound the traversal, never silently truncate.** `truncated_beyond_depth` is a count, always
+   reported. The 286 and the 484 above are that rule working.
+2. **Explain every impact.** Each impacted node carries its `via` edge chain. "This is affected"
+   with no path is not an answer.
+3. **Feed the loop, don't fix.** PROPAGATE computes and tags. Turning tags into questions is
+   [gap-surfacing](gap-surfacing.md); repair is [heal](heal-process.md). Keeping the three apart is
+   what stops an engine that finds problems from also deciding them.
+4. **Refuse, don't return empty.** An unresolvable seed or ChangeEvent id fails loudly, because a
+   typo and a harmless change must never produce the same reply.
+
+---
+
+## How this page is maintained
+
+Every table above names the tool call or source location it came from. Re-running those against a
+changed graph produces a different page; the prose sections do not move. Nothing here is a number
+a person typed and must remember to update — which is the whole point, and is why the retired
+`ENABLES` edge and the eight unbuilt impact kinds survived in this file for three and a half weeks.
+
+**One caveat this page has to state about itself.** It was rendered by an agent, not by a
+deterministic renderer, so re-rendering it will produce different *wording* for the same facts —
+which means `git diff` on this file no longer cleanly means "the design changed". `viewpoints.md`
+names that trade: `tools/render_views.py` cannot improvise by construction, and an agent can. The
+open question is `dec:idea-outward-docs-are-rendered-from-the-graph`, and this page is its first
+piece of evidence rather than its conclusion.
