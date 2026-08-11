@@ -297,6 +297,65 @@ pub fn daemon_log_path(graph_path: &str, log_to: Option<&Path>) -> PathBuf {
     }
 }
 
+/// The binary to relaunch from, with the kernel's `(deleted)` marker resolved.
+///
+/// # Why this is not just `current_exe()`
+///
+/// When a running binary is replaced, Linux marks that process's
+/// `/proc/self/exe` link `(deleted)` and `std::env::current_exe()` hands the
+/// marker back **as part of the path**. `Command::new` on that literal string is
+/// `ENOENT`, so a session whose binary was rebuilt underneath it can no longer
+/// start a shared server — while a perfectly good binary sits at the same path
+/// the whole time.
+///
+/// # Measured, four times, over five days
+///
+/// `fact:defect-rebuild-strands-the-shared-server` (2026-08-07) diagnosed it and
+/// named this fix: *"fall back to the resolved binary path when current_exe() no
+/// longer exists, or detect ENOENT on spawn and name the cause."* It was filed
+/// as issue #91, finding 2 of 3, and the issue was CLOSED with this finding
+/// unfixed. It then recurred on 2026-08-11 — a mid-session `cargo build` blocked
+/// every graph tool for forty minutes — and was reported independently the same
+/// week by an unrelated project, whose narrower ask was also right: **the error
+/// never named the file it could not find.**
+///
+/// # What this does and does not change
+///
+/// Stripping the marker relaunches from whatever is at that path NOW, which is
+/// the newer binary — deliberately, because that is the binary the operator just
+/// installed. The resulting version skew is exactly what `served_by.stale`
+/// already reports, so it is visible rather than silent. What this must never do
+/// is invent a path: if nothing is at the stripped location, that is a real
+/// absence and it is named, not guessed around.
+///
+/// Non-Linux never appends the marker, so the strip is a no-op there and the
+/// existence check is the only thing that runs.
+fn relaunchable_exe_from(raw: PathBuf) -> anyhow::Result<PathBuf> {
+    // The marker rides on the LINK TEXT, not the target. Same signal
+    // `exe_replaced_since_start` reads for `served_by.stale` — detected there
+    // since 2026-08-08, and unguarded here until now.
+    let text = raw.to_string_lossy().to_string();
+    let resolved = match text.strip_suffix(" (deleted)") {
+        Some(stripped) => PathBuf::from(stripped),
+        None => raw.clone(),
+    };
+    if resolved.exists() {
+        return Ok(resolved);
+    }
+    anyhow::bail!(
+        "could not find the reflow2-mcp binary to relaunch: {} does not exist{}. \
+         The running server's binary was replaced (a rebuild or an upgrade), and nothing \
+         is at the path it was started from. Reinstall, or start a server by hand with \
+         `reflow2-mcp --graph-path <path> --serve-shared`.",
+        resolved.display(),
+        if text.ends_with(" (deleted)") {
+            format!(" (resolved from `{text}`)")
+        } else {
+            String::new()
+        }
+    )
+}
+
 /// Start a detached server for this graph and return its pid.
 ///
 /// Detached on purpose, in both senses: its own process group, so a Ctrl-C in
@@ -304,7 +363,9 @@ pub fn daemon_log_path(graph_path: &str, log_to: Option<&Path>) -> PathBuf {
 /// with it; and no stdio inherited, so it cannot write a stray byte into a
 /// session's JSON-RPC channel.
 fn spawn_daemon(graph_path: &str, log_to: Option<&Path>) -> anyhow::Result<u32> {
-    let exe = std::env::current_exe().context("could not find the running reflow2-mcp binary")?;
+    let exe = relaunchable_exe_from(
+        std::env::current_exe().context("could not find the running reflow2-mcp binary")?,
+    )?;
     let log_path = daemon_log_path(graph_path, log_to);
     let log = std::fs::OpenOptions::new()
         .create(true)
@@ -312,7 +373,7 @@ fn spawn_daemon(graph_path: &str, log_to: Option<&Path>) -> anyhow::Result<u32> 
         .open(&log_path)
         .with_context(|| format!("could not open the server log at {}", log_path.display()))?;
 
-    let mut cmd = std::process::Command::new(exe);
+    let mut cmd = std::process::Command::new(&exe);
     cmd.arg("--graph-path")
         .arg(graph_path)
         .arg("--serve-shared")
@@ -336,9 +397,17 @@ fn spawn_daemon(graph_path: &str, log_to: Option<&Path>) -> anyhow::Result<u32> 
         cmd.process_group(0);
     }
 
-    let child = cmd
-        .spawn()
-        .context("could not spawn the shared reflow2 server")?;
+    // NAME THE PATH. The old message was "could not spawn the shared reflow2
+    // server: No such file or directory (os error 2)" and stopped there, so a
+    // reader could not tell whether the binary, the graph directory or the log
+    // had moved — three very different problems behind one errno. Two projects
+    // lost time to that in the same week; one path string ends it.
+    let child = cmd.spawn().with_context(|| {
+        format!(
+            "could not spawn the shared reflow2 server from {}",
+            exe.display()
+        )
+    })?;
     Ok(child.id())
 }
 
@@ -540,5 +609,87 @@ mod tests {
         assert_eq!(back.pid, 2);
         assert_eq!(back.url, "http://127.0.0.1:2/");
         let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    /// A scratch file standing in for a binary on disk.
+    fn a_binary_on_disk(tag: &str) -> (PathBuf, PathBuf) {
+        let dir = std::env::temp_dir().join(format!("reflow2-exe-{}-{}", tag, std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        let bin = dir.join("reflow2-mcp");
+        std::fs::write(&bin, b"not really a binary").unwrap();
+        (dir, bin)
+    }
+
+    // THE DEFECT CASE. Four recorded instances, and every one of them is this
+    // single string comparison: `current_exe()` returns the path with the
+    // kernel's marker glued on, and `Command::new` on it is ENOENT while the
+    // replacement binary sits at the same path.
+    #[test]
+    fn a_deleted_marker_resolves_to_the_binary_now_at_that_path() {
+        let (dir, bin) = a_binary_on_disk("deleted");
+        let marked = PathBuf::from(format!("{} (deleted)", bin.display()));
+        let got = relaunchable_exe_from(marked).expect("the replacement is right there");
+        assert_eq!(got, bin);
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    // The other half of the recorded fix_shape: when the strip leads nowhere,
+    // that is a REAL absence. Naming it is the whole difference between a
+    // reader checking one path and a reader guessing among three.
+    #[test]
+    fn a_path_with_no_binary_is_named_rather_than_guessed_around() {
+        let missing = std::env::temp_dir().join(format!("reflow2-gone-{}", std::process::id()));
+        let marked = PathBuf::from(format!("{} (deleted)", missing.display()));
+        let err = relaunchable_exe_from(marked).unwrap_err().to_string();
+        assert!(
+            err.contains(&missing.display().to_string()),
+            "the error must name the path it resolved to: {err}"
+        );
+        assert!(
+            err.contains("(deleted)"),
+            "and the marked original, so the cause is legible: {err}"
+        );
+    }
+
+    // COUNTERWEIGHT: the ordinary path must be untouched. A fix that rewrote
+    // every path would be a worse bug than the one it replaced.
+    #[test]
+    fn an_intact_path_is_returned_unchanged() {
+        let (dir, bin) = a_binary_on_disk("intact");
+        let got = relaunchable_exe_from(bin.clone()).unwrap();
+        assert_eq!(got, bin);
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    // COUNTERWEIGHT: only the exact trailing marker is stripped. A directory or
+    // binary whose real name merely CONTAINS the word must survive, or the fix
+    // starts inventing paths — which is the one thing its docstring forbids.
+    #[test]
+    fn a_name_that_merely_contains_deleted_is_not_stripped() {
+        let dir = std::env::temp_dir().join(format!("reflow2-kept-{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        let bin = dir.join("reflow2-mcp (deleted) backup");
+        std::fs::write(&bin, b"still a real file").unwrap();
+        let got = relaunchable_exe_from(bin.clone()).unwrap();
+        assert_eq!(
+            got, bin,
+            "the marker is a SUFFIX rule, not a substring rule"
+        );
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    // COUNTERWEIGHT: an intact path that does not exist still fails, so the
+    // existence check is not silently skipped on the unmarked branch.
+    #[test]
+    fn an_unmarked_path_that_does_not_exist_still_fails() {
+        let missing = std::env::temp_dir().join(format!("reflow2-absent-{}", std::process::id()));
+        let err = relaunchable_exe_from(missing.clone())
+            .unwrap_err()
+            .to_string();
+        assert!(err.contains(&missing.display().to_string()));
+        assert!(
+            !err.contains("resolved from"),
+            "nothing was resolved, so the clause must not appear: {err}"
+        );
     }
 }

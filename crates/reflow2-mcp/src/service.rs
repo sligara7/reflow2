@@ -71,13 +71,14 @@ pub const STALE_NOTE: &str = "STALE: this server's executable has been replaced 
      started, so every computed rollup it returns came from code that is no longer on disk. \
      Graph WRITES are unaffected (the store is the store), and so are `cargo` and reflow2_check, \
      which read the working tree. TO REFRESH: `reflow2-mcp --graph-path <path> --stop-shared`, \
-     then make any tool call. THAT MAY NOT BE ENOUGH, and the reason is worth knowing: if YOUR \
-     CLIENT's binary was replaced too — which is the normal case after a rebuild — its respawn \
-     fails with `No such file or directory`, because it spawns via its own `(deleted)` path. \
-     Measured 2026-08-09. When that happens, start one by hand (`<current-binary> --graph-path \
-     <path> --serve-shared &`) or restart the session, which gets a client whose binary exists. \
-     A SESSION RESTART ALONE, WITHOUT `--stop-shared`, CHANGES NOTHING: `--shared` re-attaches \
-     to the same daemon.";
+     then make any tool call. The respawn now survives your own client's binary having been \
+     replaced too — which is the normal case after a rebuild: it strips the kernel's `(deleted)` \
+     marker and relaunches from whatever is at that path, so the version you just built is the \
+     one that comes up. Before 2026-08-11 that respawn failed with `No such file or directory` \
+     and stranded the session; if you are reading this from an OLDER server, that is still true \
+     of it, and the escape is to start one by hand (`<current-binary> --graph-path <path> \
+     --serve-shared &`). A SESSION RESTART ALONE, WITHOUT `--stop-shared`, CHANGES NOTHING: \
+     `--shared` re-attaches to the same daemon.";
 
 /// What it says when the executable is still the file we started from.
 pub const CURRENT_NOTE: &str =

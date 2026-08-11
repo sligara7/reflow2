@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b22b7873ac6403031ad210ad5e9138f7b61897ed16fcf629e74a531ec8b84284",
+  "content_hash": "sha256:35a940c429436e0b819e7e3d27cdd33a68a639aca6bf85c5656928ee53581c4d",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -4423,6 +4423,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:spawn-daemon-survives-a-replaced-binary",
+      "properties": {},
+      "to_id": "epoch:spawn-survives-a-replaced-binary"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:stale-seat",
       "properties": {},
       "to_id": "epoch:surface-export"
@@ -5584,6 +5590,12 @@
       "from_id": "snap:epoch:snapshot-per-revision:req:snapshot-per-revision-not-per-epoch",
       "properties": {},
       "to_id": "epoch:snapshot-per-revision"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:spawn-survives-a-replaced-binary:cap:shared-sessions",
+      "properties": {},
+      "to_id": "epoch:spawn-survives-a-replaced-binary"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -15771,6 +15783,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:spawn-daemon-survives-a-replaced-binary",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:spawn-daemon-survives-a-replaced-binary",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:shared-sessions"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:stale-seat",
       "properties": {
         "accepted_baseline": true,
@@ -25578,6 +25608,12 @@
       "from_id": "cap:shared-sessions",
       "properties": {},
       "to_id": "snap:epoch:linking-repos:cap:shared-sessions"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:shared-sessions",
+      "properties": {},
+      "to_id": "snap:epoch:spawn-survives-a-replaced-binary:cap:shared-sessions"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -56852,7 +56888,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fd25c7aa9257cb96833944d4e491bed56a00972ab232922d17e0fca126f4f504",
+        "checksum": "sha256:1a8d9d49e8ee6f507fc26dd489c763338a230861bf7c59fac1338b4309508d15",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -62162,6 +62198,14 @@
       }
     },
     {
+      "node_id": "chg:spawn-daemon-survives-a-replaced-binary",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "spawn_daemon stops resolving a deleted inode. FOURTH INSTANCE, 2026-08-11: a mid-session `cargo build -p reflow2-mcp` relinked target/debug/reflow2-mcp under the attached daemon, so current_exe() returned a path ending ' (deleted)' and Command::new on that literal path returned ENOENT — blocking every graph tool for ~40 minutes. Implements the fix_shape fact:defect-rebuild-strands-the-shared-server recorded on 2026-08-07 and nobody built: fall back to the resolved binary path when current_exe() no longer exists, and name the path in the error. NOTE issue #91 (finding 2 of 3) is CLOSED with this finding unfixed. Independently reported the same week by an unrelated project's agent-side feedback, whose ask was narrower and also right: the error never names the file it could not find."
+      }
+    },
+    {
       "node_id": "chg:stale-seat",
       "node_type": "ChangeEvent",
       "properties": {
@@ -67196,6 +67240,16 @@
         "epoch_type": "revision",
         "name": "A second revision in one epoch stops overwriting the first snapshot (2026-07-29)",
         "sequence": 230,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:spawn-survives-a-replaced-binary",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The stranded-server defect is fixed rather than described — fourth instance, and the first after the issue was closed",
+        "sequence": 319,
         "status": "arrived"
       }
     },
@@ -74136,6 +74190,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:spawn-survives-a-replaced-binary:cap:shared-sessions",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:shared-sessions\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:main\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:central-host\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:07bb37be6d5cd129\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:785c79650b436ed3\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:b25bb8d8db80dfd3\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:c8cfb3f3be9183af\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:d1c2d599af5b45ce\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:many-people-and-many-projects-compose\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:seat-per-client\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:sessions-share-a-graph\",\"properties\":{}}]",
+        "state": "{\"description\":\"--http <addr> serves the design over streamable HTTP so many client sessions share one process. The store is single-writer PER PROCESS, so this satisfies the constraint rather than working around it: one server means exactly one writer. rmcp builds a service per session through a factory, and ReflowService::share decides the split — the graph and the write generation are shared because they are properties of the design; the seat and the read-hint memory are minted fresh because they are properties of whoever just connected. The graph moved from a Mutex to an RwLock so concurrent reads do not queue behind each other, and the compiler audited the read/write split in the process: all 32 read sites genuinely need only &DesignGraph. No authentication — the flag's help and the startup line both say to bind loopback or a private network.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Several sessions work one design at once, through one server\",\"provenance\":\"authored\",\"status\":\"verified\",\"tier\":\"operational\"}",
+        "target_id": "cap:shared-sessions",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:stateless-seat:art:service",
       "node_type": "Snapshot",
       "properties": {
@@ -77462,7 +77526,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:45c03298eab544fbdf281209f2d1574748950e50c3ceb89a060ad31df94e135c",
+  "prev_content_hash": "sha256:b22b7873ac6403031ad210ad5e9138f7b61897ed16fcf629e74a531ec8b84284",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
