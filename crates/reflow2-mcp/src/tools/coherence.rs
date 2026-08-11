@@ -587,6 +587,33 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "What did this design BUILD that it records no consumer for? Reports one \
+                       fact and refuses a verdict. A Capability at `realized`/`verified` with no \
+                       incoming DEPENDS_ON, no PART_OF_FLOW and no Actor INTERACTS_WITH is \
+                       reported as 'THIS DESIGN RECORDS NOTHING THAT CONSUMES IT' — and NEVER as \
+                       'unused', 'dead' or 'delete it'. THAT WORDING IS THE FEATURE: reflow2 \
+                       reads a design, never a running system, so a capability real users call \
+                       daily whose consumer nobody modelled is INDISTINGUISHABLE here from one \
+                       dead since it shipped, and a detector that collapsed the two would \
+                       recommend deleting working code. ABSENCE IS ONLY INFORMATIVE WHEN PRESENCE \
+                       IS THE HABIT: if the design records a consumer for fewer than half of what \
+                       it built, the list is WITHHELD and the ratio itself is the finding, \
+                       because naming everything would report the modelling style rather than \
+                       what was built (measured on reflow2's own design, where the raw signal \
+                       named 100 of 110). `signals_read` names the edges counted so a missing one \
+                       can be argued for, and `not_observed_about` names what it cannot see. Pure \
+                       arithmetic over existing edges — no file I/O.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn consumption_report(
+        &self,
+        Parameters(_req): Parameters<ConsumptionReportReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        ok_json(g.consumption_report().map_err(dyno_err)?)
+    }
+
+    #[tool(
         description = "Apply a reviewed HealProposal atomically (rigid mode = no-op). Pass a \
                        proposal `propose_heal` returned — every operation is checked against what \
                        HEAL proposes for the graph as it stands now, and anything else is refused \
