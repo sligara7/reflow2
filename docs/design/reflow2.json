@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ce447b33fd1845f62aec611cdd1db8804b27c6160a423dd3d5b2769a4cdf127c",
+  "content_hash": "sha256:9454fad4d35c138423a039e58f397ef8906a1a14c3056965d7b7d1eabf1a172d",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3781,6 +3781,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:discontinued-gets-its-readers",
+      "properties": {},
+      "to_id": "epoch:export-rule-enters-the-governance-layer"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:documentation-subsystem",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
@@ -5323,6 +5329,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:export-rule-enters-the-governance-layer:cap:content-store",
+      "properties": {},
+      "to_id": "epoch:export-rule-enters-the-governance-layer"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:export-rule-enters-the-governance-layer:req:the-export-is-serialised-rather-than-socially-enforced",
       "properties": {},
       "to_id": "epoch:export-rule-enters-the-governance-layer"
@@ -6546,8 +6558,8 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-discontinued-is-a-first-class-state",
       "properties": {
-        "acted_at": "2026-08-09",
-        "role": "author"
+        "acted_at": "2026-08-11",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -6958,6 +6970,15 @@
       "from_id": "dec:idea-trial-driven-choice-skill",
       "properties": {
         "acted_at": "2026-08-04",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-verification-is-planned-with-the-requirement",
+      "properties": {
+        "acted_at": "2026-08-11",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -12849,6 +12870,33 @@
         "field": "statement"
       },
       "to_id": "rule:design-intent-moves-only-on-the-owners-word"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:discontinued-gets-its-readers",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:discontinued-gets-its-readers",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:discontinued-gets-its-readers",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:content-store"
     },
     {
       "edge_type": "CHANGED",
@@ -18869,6 +18917,16 @@
         "weight_basis": "evidence"
       },
       "to_id": "dec:three-party-checks"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:bl-185",
+      "properties": {
+        "note": "BL-185 is the RECORDING question — can the graph tell a test written from the requirement from one written to match the code. This is the PROCESS question. If verification were planned when the need is stated, 'written from the requirement' becomes the normal case rather than something the graph must detect after the fact, so answering the process question shrinks the recording one. Deciding BL-185 first would be answering how to label a distinction nobody has yet made routine.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-verification-is-planned-with-the-requirement"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -25778,6 +25836,12 @@
       "from_id": "cap:content-store",
       "properties": {},
       "to_id": "snap:epoch:content-store-discontinued:cap:content-store"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:content-store",
+      "properties": {},
+      "to_id": "snap:epoch:export-rule-enters-the-governance-layer:cap:content-store"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -49895,6 +49959,15 @@
       "edge_type": "OBSOLETES",
       "from_id": "dec:the-content-store-is-discontinued",
       "properties": {
+        "confidence": 1.0,
+        "evidence": "The first real discontinuation, and the case that raised the question. Built, shipped, correct, used zero times in every project that had it; four served tools, the core module, the --content-path flag and both test files were removed for v0.27.0. Until this edge, the graph still said the capability was `realized`, its check `passing` and its requirements `accepted` — two days after the code was deleted. The Decision is the source because a discontinued thing has no successor to put there, which is exactly what made this look like it needed new vocabulary."
+      },
+      "to_id": "cap:content-store"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:the-content-store-is-discontinued",
+      "properties": {
         "confidence": 1.0
       },
       "to_id": "dec:content-growth-is-bounded-by-what-not-by-size"
@@ -51636,6 +51709,14 @@
         "completeness": "complete"
       },
       "to_id": "ver:design-identity"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-discontinued-is-read",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:detect"
     },
     {
       "edge_type": "REALIZES",
@@ -53956,6 +54037,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:discontinued-is-read",
+      "properties": {},
+      "to_id": "cap:detect"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:drift-direction",
       "properties": {},
       "to_id": "cap:drift-direction"
@@ -55516,6 +55603,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-discontinued-is-read",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-discontinued-is-read"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-edges-need-both-ends",
       "properties": {
         "action": "created"
@@ -56191,7 +56286,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5f95eeacfab2df5b5c1a0e149b5165403e9d817d0cb2d8d92d8e7e10c51acc7f",
+        "checksum": "sha256:ccefd06e43416b890edae2c1613b4faf16ebf79a2e0da77e7b0fc17d23cf26fa",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -56904,7 +56999,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ae6f67516a82ff88d41f44cab0110db2c82eea7ebc9c4e22ca0bca583de34fee",
+        "checksum": "sha256:3f25a21dc5e57a90ac12d787ccc3895c95ea5d1da7b79f3b405a9605e0295b2d",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
@@ -57408,6 +57503,19 @@
         "location": "crates/reflow2-mcp/tests/design_identity.rs",
         "name": "design_identity.rs",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-discontinued-is-read",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:e140a38bb3c4aaf02efb89af56188af47b022810b1600606e125265fd3378023",
+        "granularity": "atomic",
+        "location": "crates/reflow2-core/tests/discontinued_is_read.rs",
+        "name": "discontinued_is_read.rs — six cases: the defect, the authority check, the cascade, the visible count, and two counterweights",
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -61639,6 +61747,14 @@
       }
     },
     {
+      "node_id": "chg:discontinued-gets-its-readers",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "deprecation",
+        "name": "A Decision OBSOLETES what it withdrew, and four computations now read it: the three capability detectors fall silent and delivery stops counting a discontinued capability as a satisfier. NO SCHEMA CHANGE — OBSOLETES is already `* -> *` and putting the DECISION at the source dissolves the successor problem that made this look like it needed new vocabulary. Only an ACCEPTED decision discontinues anything. The cascade is deliberate: the requirement a withdrawn capability served drops back to unsatisfied and is asked about again. DeliveryCoverage gains `satisfied_only_by_discontinued` so the numbers say why they moved rather than shrinking silently. Applied to the content store, whose capability had read `realized` with a `passing` check for two days after its code was deleted. Gives OBSOLETES its first reader, which is what dec:one-retire-edge has been asking for since July."
+      }
+    },
+    {
       "node_id": "chg:documentation-subsystem",
       "node_type": "ChangeEvent",
       "properties": {
@@ -64489,10 +64605,10 @@
       "node_id": "dec:idea-discontinued-is-a-first-class-state",
       "node_type": "Decision",
       "properties": {
-        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-09, prompted by the content-store question: \\\"this might be an opportunity to have a 'discontinued' edge type in reflow2 as it is something we built that didn't pan out like expected and that we've decided to discontinue in development. this is almost like a decision that was not chosen, but this is something that was implemented and later decided against for whatever reasons.\\\"\n\nHIS DISTINCTION IS REAL AND THE VOCABULARY DOES NOT HOLD IT. A decision not chosen was never built. A mistake is deleted. A thing SUPERSEDED has a successor. His case is the fourth: it was built, it shipped, it worked, and it is being withdrawn — with NOTHING TAKING ITS PLACE.\n\n⭐ WHAT SEARCHING FIRST FOUND, and it complicates the proposal rather than supporting it:\n\n(1) TWO RETIREMENT EDGES ALREADY EXIST AND NEITHER IS READ BY ANYTHING. `SUPERSEDES` has ZERO references in the entire Rust source — nothing creates it, nothing reads it — while being documented in nodes.rs and named in docs/three-axes.md. `OBSOLETES` is created by collapse_decision and the retire-from-design skill instructs users to draw it, and it has NO READER either: the constant, one create site, one doc comment, and nothing else. dec:one-retire-edge (OPEN, ANTHONY'S CALL) measured this on 2026-07-28 and its own text says: \\\"two words for one relationship is how a vocabulary rots.\\\" A THIRD WORD WOULD BE THAT SENTENCE HAPPENING.\n\n(2) RETIREMENT CURRENTLY CHANGES NOTHING DOWNSTREAM. Quoting that decision exactly: \\\"retiring something marks it and changes nothing. A retired capability still counts in every rollup, still raises its gaps, still appears in delivery arithmetic.\\\" reflow2's own design holds ZERO instances of either edge, so the retire path has never been exercised here.\n\n(3) BUT NEITHER EXISTING EDGE FITS HIS CASE, and this is the part that makes the proposal more than housekeeping. Both are directional BETWEEN TWO NODES — OBSOLETES' hint is \\\"source makes target redundant or deprecated\\\" — so both presume a successor to sit at the source end. A discontinued thing with no replacement has NOTHING TO PUT THERE. You cannot draw OBSOLETES from nothing.\n\n(4) ⭐⭐ AND IT IS THE SAME QUESTION AS AN OPEN DECISION HE IS ALREADY THE NAMED APPROVER ON, arriving from the opposite direction. dec:idea-does-a-capability-need-a-cancelled-state came from Alex on 2026-08-09: Requirement.status is [proposed, accepted, deferred, dropped, met] and Capability.status is [planned, in_progress, realized, verified] — so a Requirement can be dropped and a Capability cannot, and agents write \\\"DROPPED\\\" into prose the graph cannot compute on. Alex hit it from the outside as a modelling nuisance; Anthony has now hit it from the inside with a real thing to retire. TWO INDEPENDENT ARRIVALS AT ONE GAP.\n\nTHE SHAPES, with what is cheap or expensive about each recorded beside rather than argued down:\n\n(A) A STATUS VALUE — add `discontinued` (or `cancelled`) to Capability.status, and to whatever other types need it. CHEAP to state, and it is exactly what Alex asked for. COUNTER: it is an ENUM CHANGE THAT MOVES THE SCHEMA STAMP and therefore owes an upgrade doc — the first this week to do so. And a status says THAT, never WHY: the content store is being discontinued for reasons that took three paragraphs, and none of them fit in an enum.\n\n(B) AN EDGE TO THE DECISION — `DISCONTINUED_BY` from the thing to the Decision that killed it. The successor problem disappears, because a discontinuation ALWAYS has a decision even when it has no replacement, and the edge carries the WHY by pointing at prose that can hold it. It also works across every type at once, which matters here: discontinuing the content store touches capabilities, a component, artifacts, a verification and served tools, and a per-type enum needs the value added to each. COUNTER: it is a third retirement edge in a schema where two already sit unread, and GOVERNED_BY already links anything to the Decision that shapes it — the gap may be a MEANING rather than a missing edge type.\n\n(C) BOTH, WITH A STATED DIVISION — the status answers \\\"does this still count?\\\", the edge answers \\\"who decided, and why?\\\". COUNTER: this is option C of dec:one-retire-edge restated one level up, and that node has been waiting since July precisely because nobody has said what the distinction would be.\n\n(D) DECIDE dec:one-retire-edge FIRST AND GIVE THE SURVIVOR A READER. Pick OBSOLETES or SUPERSEDES, delete the other, and answer the question that decision says is the real one: \\\"what SHOULD consult it — delivery roll-up, the gap detectors, graph_report's counts — and does a retired node stop counting, or count separately?\\\" Then see whether discontinuation still needs its own vocabulary or is just that machinery with a null successor. COUNTER: it is the slowest route, and it answers Anthony's question with a question.\n\n⚠️ THE ONE THING EVERY OPTION MUST NOT REPEAT, and it is this project's own most-repeated finding: A MARKER NOTHING READS IS A COMMENT. Two retirement edges are already in that state, and `enforced` was in it until v0.26.0. Whatever is added here should ship WITH the computation that consults it — otherwise the honest outcome is that reflow2 gains a third way to write \\\"DISCONTINUED\\\" into a place the graph cannot compute on, which is the exact defect Alex reported.\n\nNOTHING IS PROMOTED. Anthony described an opportunity, not a decision.",
-        "name": "OPEN — how does the design say \"we built this and then decided against it\", when both existing retirement edges presume a successor and neither is read by anything?",
-        "rationale": "Recorded via the brainstorm skill: one Decision per open question, at `proposed`, options in the prose with their counters beside them, nothing promoted without his word.\n\nDeliberately kept SEPARATE from dec:one-retire-edge and dec:idea-does-a-capability-need-a-cancelled-state rather than folded into either, and the reason is the one the skill gives: one node holding two questions can only ever be half-answered. dec:one-retire-edge asks WHICH OF TWO EXISTING EDGES SURVIVES. Alex's asks whether a Capability needs a terminal state. This asks what \\\"built, then withdrawn, with no successor\\\" IS — a question neither of those poses, and the answer to it probably decides both.\n\nRecorded now rather than after the content-store question settles, because the content store is the first real instance and its handling will set the precedent whether or not anyone names it.",
-        "status": "proposed"
+        "decision": "DECIDED 2026-08-11 on Anthony's word. NO NEW VOCABULARY WAS NEEDED, and finding that out is the whole result.\n\nTHE ANSWER: a Decision `OBSOLETES` the thing it withdrew. PUT THE DECISION AT THE SOURCE.\n\nThat dissolves the objection this node was opened over. Point (3) above says both retirement edges \"presume a successor to sit at the source end. A discontinued thing with no replacement has NOTHING TO PUT THERE. You cannot draw OBSOLETES from nothing.\" True — but a discontinuation ALWAYS has a decision behind it even when it has no replacement, so the decision is the honest source. `OBSOLETES` is already `* -> *` in schema/inference.yaml and its hint already reads \"source makes target redundant or deprecated\". So: no edge type, no enum value, NO SCHEMA STAMP MOVE, and no upgrade doc — none of which option (A) or (B) could have claimed.\n\n⭐ AND IT ANSWERS `dec:one-retire-edge`'S REAL QUESTION AS A SIDE EFFECT. That decision asked, since July, what SHOULD consult a retirement edge — \"retiring something marks it and changes nothing. A retired capability still counts in every rollup, still raises its gaps, still appears in delivery arithmetic.\" Four readers now exist, which is four more than either retirement edge has ever had:\n  · `unmotivated_capability`, `unrealized_capability`, `unverified_capability` fall silent\n  · delivery arithmetic stops counting a discontinued capability as a satisfier\nSo OBSOLETES is no longer a marker nothing reads. Whether SUPERSEDES survives at all is still `dec:one-retire-edge`'s to settle, and it is now a smaller question: one of the two words has a job.\n\n⚠️ ONLY AN ACCEPTED DECISION DISCONTINUES ANYTHING. A `proposed` withdrawal has withdrawn nothing; the thing keeps counting until somebody with the authority says so. That is `rule:design-intent-moves-only-on-the-owners-word` applied to the retire path, and it is pinned by a test that fails if the check is dropped.\n\n⚠️ THE CASCADE IS DELIBERATE. Withdrawing the thing that met a need does not meet the need, so the requirement it served drops back to UNSATISFIED and is asked about again — \"covered, deferred, or dropped?\". Without that, a discontinuation would be invisible one hop away and the design would keep reporting a need as met by something that no longer exists. Applying this to the content store surfaces exactly that, and the two requirements it served are now open questions for Anthony rather than silent claims.\n\n⚠️ AND THE NUMBERS SAY WHY THEY MOVED. `DeliveryCoverage.satisfied_only_by_discontinued` counts the skipped edges, because a discontinuation that made delivery fall with no mention is the silent-drop failure this project forbids everywhere else: the count drops, nothing explains it, and a reader concludes the design regressed.\n\nWHAT IS STILL OPEN AND IS NOT CLAIMED HERE:\n  · `dec:idea-does-a-capability-need-a-cancelled-state` (Alex's) is NOT closed by this. It covers the ABANDONED case; it says nothing about a WISH NOBODY EVER AGREED TO, which has no decision behind it to be the source of an OBSOLETES edge. That half is still `dec:exploratory-staging`'s.\n  · A Verification whose code was deleted still reads `passing`. `ver:content-store` is the live instance. Nothing here fixes that, and marking the verification obsoleted does not change its status field.\n  · Nothing reads discontinuation for Components, Interfaces or Artifacts. Only the capability detectors and delivery consult it today, which is stated rather than left to be discovered.",
+        "name": "DECIDED — a Decision OBSOLETES what it withdrew, and three detectors plus delivery now read it",
+        "rationale": "Anthony asked on 2026-08-09 for a way to say \"we built this and then decided against it\". Searching before building found that the vocabulary already held it, in a direction nobody had tried: the objection was that a discontinued thing has no successor for the source end of a retirement edge, and the answer is that the DECISION is the source. That costs nothing — no schema change, no stamp move, no upgrade doc — and it gives OBSOLETES its first reader in the process, which is the question dec:one-retire-edge has been waiting on since July. Shipped WITH its readers deliberately: this project has now found three markers nothing reads (enforced, SUPERSEDES, OBSOLETES itself), and a fourth would have been the defect rather than the fix.",
+        "status": "accepted"
       }
     },
     {
@@ -64962,6 +65078,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony, 2026-08-04, in his own words: \"I kind of like this idea of brainstorming ideas for how to solve a problem and laying out trials for how to figure out which is the best approach - maybe this is a future reflow2 skill??\" Raised while brainstorming the corpus-ingest strategies (dec:idea-corpus-ingest-strategies), which is the first concrete case for it.\n\nWHAT ALREADY EXISTS, AND IT IS MORE THAN HALF — the design-space version of this shipped as BL-70 and nothing in this idea should be built without reading it first. `register_alternative` forks a `proposed` Decision into alternatives, each a pointer to that branch's own design export, GOVERNED_BY the Decision and CONTRADICTS its siblings, and it REFUSES unless the Decision is proposed — you fork an open choice, not a settled one. `analyze_alternatives` then compares the branches ON THE SAME MEASURES — design nodes, open gaps, structural defects, allocation modularity, capabilities verified, plus each branch's structural divergence from the baseline — in throwaway graphs, so it never touches the live one. Its own words are \"makes alternatives comparable on measures, not advocacy\", which is this idea's thesis already stated. `collapse_decision` picks the winner, moves the Decision to accepted, and SUPERSEDES the losers with OBSOLETES so the roads not taken stay on the record. `detect_gaps` fires `undecided_decision_point` once a Decision holds two or more registered alternatives, so an open fork nags and a musing does not.\n\nTHE GAP, AND IT IS SPECIFIC — reflow2 can compare DESIGNS; it cannot compare RUNS. Every measure `analyze_alternatives` reports is a property of the resulting graph's shape. None of them is a property of the PROCESS that produced it: what it cost, how long it took, how much of the corpus it covered, how much noise it raised, how many questions a human then had to answer, and whether the result was recognisable to the person who owns the material. The corpus-ingest strategies are indistinguishable on graph shape and completely different on all of those. A trial produces evidence about a PROCESS and there is nowhere in the graph to put it. That is the same hole [BL-187] names from the other side — the corpus records when something was true and nothing computes whether it still is.\n\nTHE SECOND GAP, AND IT IS THE ONE THIS PROJECT KEEPS FINDING — no skill drives the alternatives family end to end. `brainstorm` mentions `register_alternative` in passing, as the line where a musing becomes a fork. Nothing tells anyone to then run `analyze_alternatives` or `collapse_decision`. Same shape as `ingest_step`, which is built, served, verified, and named in no skill at all: a tool nobody is told to call is a tool nobody calls ([BL-154]).\n\nHONEST COUNTER-ARGUMENTS, recorded beside the idea rather than used to kill it. (1) `dec:report-dont-judge` — a trial that picks a winner by number is arithmetic overruling a person, which is the move this project refuses everywhere else; the skill would have to REPORT the measures and leave the collapse to the human, exactly as `collapse_decision` already requires a stated winner and a rationale. (2) The api-boss's objection to PMBOK in `reflow2_feedback.md` applies here too: reflow2 is a design-coherence tool, and importing an experiment harness risks \"a second, competing spine next to the golden thread\". (3) Trials are expensive, and the cheapest honest version of this idea may be a SKILL over the existing tools plus a convention for recording run measures as evidence, rather than any new vocabulary — which is what the last two node-type proposals in this project both collapsed into after measurement (`Attestation` → `TemporalFact`, `Hazard` → `DesignRule`).\n\nNOT PROMOTED, NOT SIZED, AND NOT MINE — recorded so the idea is findable and so the next session does not re-derive BL-70, which is the specific failure this session hit three times.",
         "name": "OPEN — should reflow2 have a skill for \"brainstorm the options, then TRIAL them and let measurement choose\"?",
         "rationale": "Captured under the brainstorm skill because Anthony floated it as a question, not a request. The load-bearing content is the survey of what BL-70 already provides: the idea is substantially built for design alternatives and genuinely missing for process trials, and that distinction is what would make it worth building rather than a second name for something that exists.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-verification-is-planned-with-the-requirement",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Nothing here is intent. Anthony, 2026-08-11, and he was explicit that this is NOT a reflow2-repo question: \"this isn't just a 'do it for reflow2' type task. this is a more general philosophy that test planning should be before implementation (maybe even in the design stages of a reflow2 project)... reflow2 guides a user through systems engineering processes, implementation, testing and fielding/production — I'm saying reflow2 should define a design tests philosophy prior to development of the design.\"\n\n⭐⭐ MEASURED ON REFLOW2'S OWN DESIGN, 2026-08-11, AND IT IS ONE-SIDED:\n\n  verification detectors                                      6\n    build_without_verification, unverified_capability, unverified_artifact,\n    component_granularity_verification, failing_verification, build_without_governance\n  of those, asking a REQUIREMENT how it will be verified      0\n\n  live requirements                                         142\n    with a Verification pointed AT the requirement             2\n    stating a need with no stated way to know it is met       140\n\nEVERY detector fires in the same direction: you BUILT this, where is the check? Nothing anywhere asks: you STATED this need, how will you know it is met? So reflow2 today discovers the test question at the moment it is most expensive to answer and most likely to be answered by looking at the code.\n\n⭐ THE V-MODEL FRAMING, because it names the shape precisely. reflow2 models the descending arm (intent → allocation → build) and the ascending arm (verify → operate) — that is what the seven maturity bands measure. What it does not model is the CROSS-LINKS: in the V, the acceptance test is written when the requirement is written, and the integration test when the architecture is drawn. reflow2 has both arms and no rungs.\n\n📌 THE SIBLING QUESTION IS ALREADY OPEN AND THIS ONE MAKES IT MATTER MORE. `dec:bl-185` (Anthony, 2026-08-03) asks how the graph can tell a test written FROM THE REQUIREMENT from one written to match the code — \"a passing check written from the requirement and a passing check written to match the implementation are the same node, same status, same everything.\" That is the RECORDING question. This is the PROCESS one. If verification were planned at requirement time, \"written from the requirement\" would be the normal case rather than something the graph has to detect after the fact — so answering this one shrinks that one.\n\nWHAT ALREADY EXISTS, so nothing is built twice: `Verification` carries method and level and can already point at a Requirement (two do). `set_evidence_scope` records what a check PINNED versus SWEPT, and `evidence_report` reads it. `req:evidence-says-what-it-covered` is ACCEPTED. So the vocabulary for a planned check is there — a Verification at `planned` status IS a test plan. Nothing asks for one.\n\nIDEAS, unranked:\n(a) A DETECTOR: an accepted Requirement with no Verification pointed at it is a gap — \"how will you know this is met?\". Symmetric with `unsatisfied_requirement`, which already asks \"what delivers this?\". Cheapest, and it is the one that changes what gets built.\n(b) A SKILL STEP: capture-intent ends by asking, for each requirement, how it would be checked — recorded as a `planned` Verification. No detector, no gap pressure, and it fires only when the skill loads, which `req:skill-use-survives-a-long-session` says is not enough.\n(c) A STATED PHILOSOPHY the project chooses, captured as a DesignRule via governance-proposal, with the consequence asked rather than assumed. This is what Anthony literally said — \"reflow2 should DEFINE a design tests philosophy\" — and it is per-project, which matters because the answer differs between a demonstrator and a fielded system.\n(d) Nothing. The build-side detectors already catch an unverified capability before it ships, and adding a requirement-side one doubles the gap surface.\n\n⚠️⚠️ THE STRONGEST OBJECTION, AND IT IS THIS PROJECT'S OWN MOST-REPEATED TRAP. A detector demanding a verification plan for every accepted requirement would fire on 140 of 142 here ON DAY ONE — and on every young design, and on every ADOPT, where a recovered requirement never had a test plan and could not have. That is exactly the shape of `unexpected_coupling` (retired for firing on correct work), of the short-text false positive found by CI hours ago, and of BL-179's punish-correct-work trap. Whatever is built must distinguish \"nobody has planned this yet\" from \"this cannot be planned\", which is `req:a-rule-says-whether-it-can-be-checked-at-all` (ACCEPTED, unbuilt) pointed at requirements instead of rules.\n\n⚠️ SECOND: `req:no-se-knowledge` is accepted — the user must never need systems engineering. \"How will you verify this?\" is an SE question in SE words. It would have to arrive the way every other gap does, as a plain question the user can answer without knowing what a verification method is.\n\n⚠️ THIRD, and it is the honest limit on the whole idea: planning a test early does not make it a GOOD test. Anthony's own criteria — valid, isolated, repeatable, focused, fast; happy path, edge cases, error conditions, contract-not-implementation — are properties of the test's CONTENT, and `dec:idea-who-judges-requirement-text-quality` already found that reflow2 checks structure and never text. A `planned` Verification with an empty method satisfies a detector and proves nothing, which would be a marker nothing reads in a new place.",
+        "name": "OPEN — should reflow2 guide a project to plan HOW a need will be verified when the need is stated, rather than only asking for a check once something is built?",
+        "rationale": "Measured one-sidedness: all six verification detectors ask the build for a check, none asks a requirement how it will be known to be met, and 140 of 142 live requirements have no verification pointed at them. That is the V-model with both arms and no rungs. Anthony is proposing this as product philosophy rather than repo hygiene, which passes his own pruning test — it would change what reflow2 asks every project, not how this project manages itself. The blocker is precision: the naive detector fires on every young design and every adopt, which is the punish-correct-work trap this project has already retired one detector for.",
         "status": "proposed"
       }
     },
@@ -69939,6 +70065,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-discontinued-is-read",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered discontinued_is_read.rs — six cases: the defect, the authority check, the cascade, the visible count, and two counterweights"
+      }
+    },
+    {
       "node_id": "frag:art:test-edges-need-both-ends",
       "node_type": "Fragment",
       "properties": {
@@ -74114,6 +74250,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:export-rule-enters-the-governance-layer:cap:content-store",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"OBSOLETES\",\"other_type\":\"Decision\",\"other_id\":\"dec:the-content-store-is-discontinued\",\"properties\":{\"confidence\":1.0,\"evidence\":\"The first real discontinuation, and the case that raised the question. Built, shipped, correct, used zero times in every project that had it; four served tools, the core module, the --content-path flag and both test files were removed for v0.27.0. Until this edge, the graph still said the capability was `realized`, its check `passing` and its requirements `accepted` — two days after the code was deleted. The Decision is the source because a discontinued thing has no successor to put there, which is exactly what made this look like it needed new vocabulary.\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:content-store\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:content-surface\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:artifact\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:agent-navigates-content\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:content-growth-is-bounded-by-what-not-by-size\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:content-store-implementation\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:what-lives-where\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:where-content-lives\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:content-reaches-every-seat\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:content-store-for-what-the-graph-points-at\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:the-store-is-reachable-from-a-session\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"modality\":\"required\",\"recorded_at\":\"2026-07-31\"}}]",
+        "state": "{\"description\":\"A content-addressed store for what the graph cannot hold inline — session transcripts, mermaid diagrams, HTML mockups, user-supplied drawings and photographs, and the source documents a corpus was extracted from. The graph records a CONTENT HASH; the bytes live in the store; an unresolvable pointer fails loud and names itself rather than rendering a design quietly missing its pictures.\\n\\nHAND-ROLLED AND SYNCHRONOUS, IN `reflow2-core` (`dec:content-store-implementation`). `put` / `get` / `exists` over `sha2` and `std::fs`. Zero new crates in the core, no async runtime. `object_store` was measured and recorded as the documented UPGRADE PATH rather than adopted: 36 crates new to reflow2, ~24 of them URL/ICU machinery a local store never calls, buying a feature set — paths, prefixes, listing, multipart, conditional writes — that immutable content addressing does not have.\\n\\nREACHABLE FROM A SESSION as `content_put` / `content_get` / `content_exists` (`req:the-store-is-reachable-from-a-session`). That requirement exists because this capability was first marked `realized` while NOTHING COULD CALL IT — complete in the core, tested, carrying a passing check, and unreachable by every agent and person who would use it. Content arrives as `text` or `base64` (JSON carries no raw bytes), exactly one, and the store's root comes from `--content-path` rather than being derived from `--graph-path`, because the graph lives under a gitignored directory and blobs are COMMITTED so they travel with the design.\\n\\nFOUR REFUSALS, which is where this earns its keep — each pinned by a test, two mutation-checked. `get` VERIFIES bytes against the hash they are stored under and refuses a mismatch: a content hash nobody checks is only a filename. A malformed hash is refused BEFORE it reaches the filesystem, since a hash is interpolated into a path. Passing both `text` and `base64` is refused rather than resolved by picking one. And a server with no store configured says so instead of inventing a directory — where blobs live is a decision about the consumer's repo.\\n\\nWrites are temp-then-rename, so a process that dies mid-write leaves nothing or a whole blob, and a stranded temp file is unreachable as content because its name is not a hash. Reading INTO stored content is not this capability's job and never becomes one — the agent navigates, the graph records an opaque locator reflow2 never parses (`dec:agent-navigates-content`). What belongs here versus natively in the repo is `dec:what-lives-where`. REALIZED; `ver:content-store` and `ver:content-surface` passing.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Store bytes beside the design and point at them by content hash\",\"provenance\":\"authored\",\"status\":\"realized\",\"tier\":\"operational\"}",
+        "target_id": "cap:content-store",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:export-rule-enters-the-governance-layer:req:the-export-is-serialised-rather-than-socially-enforced",
       "node_type": "Snapshot",
       "properties": {
@@ -77004,6 +77150,18 @@
       }
     },
     {
+      "node_id": "ver:discontinued-is-read",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-11",
+        "level": "unit",
+        "method": "test",
+        "name": "A discontinued thing stops being unfinished work, and the marker is READ (crates/reflow2-core/tests/discontinued_is_read.rs, 6 cases). THE DEFECT CASE: a capability withdrawn by an accepted Decision raises no gaps — the content store had read `realized` with a `passing` check for two days after its code was deleted. THE AUTHORITY CASE: a `proposed` decision to withdraw has withdrawn nothing, which is rule:design-intent-moves-only-on-the-owners-word on the retire path. THE CASCADE: the requirement a withdrawn capability served drops back to unsatisfied and is asked about again, so a discontinuation is not invisible one hop away. THE VISIBLE COUNT: delivery falls AND reports satisfied_only_by_discontinued, because a number that moves with no explanation is the silent-drop failure forbidden everywhere else. TWO COUNTERWEIGHTS carry the weight: a live capability beside a discontinued one is still asked about, and OBSOLETES from something that is NOT a Decision (a superseding epoch) does not discontinue — without that, any obsoleting edge would silence a capability. MUTATION-CHECKED THREE WAYS, each verified applied before running: dropping the accepted-only check fails the authority case alone; accepting OBSOLETES from any source fails two; disabling all three detector reads fails the defect case. ⚠️ WRITTEN AFTER THE IMPLEMENTATION, not before — the third such instance recorded on 2026-08-11 (fact:implement-first-cost-an-edge-case-2026-08-11), and the cost showed up as a first draft asserting the wrong detector would fire: deleting the only artifact zeroes unrealized_capability's population, so unverified fired instead. The assertions now name the PROPERTY (it is asked about at all) rather than a detector, which is closer to the contract. NOT COVERED: an OBSOLETES edge whose target no longer exists, and discontinuation is read for Capabilities only — Components, Interfaces and Artifacts have no reader.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:drift-direction",
       "node_type": "Verification",
       "properties": {
@@ -78082,7 +78240,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:c70deeb9de1aea82313b9ccf632e310861ea1234b31686684cfa76dab3f929a1",
+  "prev_content_hash": "sha256:ce447b33fd1845f62aec611cdd1db8804b27c6160a423dd3d5b2769a4cdf127c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

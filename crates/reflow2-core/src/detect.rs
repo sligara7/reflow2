@@ -1214,10 +1214,18 @@ impl DesignGraph {
             if status == "dropped" || status == "met" {
                 continue;
             }
-            if self
-                .incoming(&req.node_id, Some(edge::SATISFIES))?
-                .is_empty()
-            {
+            // A DISCONTINUED capability is not a live satisfier, so a
+            // requirement whose only satisfier was withdrawn becomes
+            // unsatisfied and is ASKED about again. Delivery arithmetic makes
+            // the same exclusion; the two must agree or the report and the gap
+            // list say different things about one requirement.
+            let mut live_satisfiers = 0usize;
+            for e in self.incoming(&req.node_id, Some(edge::SATISFIES))? {
+                if !self.is_discontinued(&e.from_id)? {
+                    live_satisfiers += 1;
+                }
+            }
+            if live_satisfiers == 0 {
                 let name = node_name(&req);
                 let priority = req
                     .properties
@@ -1266,6 +1274,61 @@ impl DesignGraph {
     /// normally, 0.70 when inferred, which clears `unsatisfied_requirement`'s
     /// 0.60 default exactly on the graph where the trial wanted it to and
     /// nowhere else.
+    /// Has this node been DISCONTINUED — built, then decided against, with
+    /// nothing taking its place?
+    ///
+    /// # The shape, and why it needed no new vocabulary
+    ///
+    /// A Decision `OBSOLETES` the thing it withdrew. Putting the DECISION at
+    /// the source is what makes this work: `OBSOLETES` and `SUPERSEDES` are
+    /// both directional and both presume a SUCCESSOR at the source end, and a
+    /// discontinued thing has no successor to put there — which is exactly why
+    /// `dec:idea-discontinued-is-a-first-class-state` was opened. But a
+    /// discontinuation ALWAYS has a decision behind it even when it has no
+    /// replacement, so the decision is the honest source, and the edge carries
+    /// the WHY by pointing at prose that can hold it.
+    ///
+    /// `OBSOLETES` is already `* -> *` in the schema and its hint already reads
+    /// "source makes target redundant or deprecated". So no edge type is added,
+    /// no enum widens, and the version stamp does not move.
+    ///
+    /// # Only an ACCEPTED decision discontinues anything
+    ///
+    /// A `proposed` decision to withdraw something has withdrawn nothing. This
+    /// is `rule:design-intent-moves-only-on-the-owners-word` applied to the
+    /// retirement path: an agent may draw the edge and argue for it, and the
+    /// thing keeps counting until somebody accepts the decision.
+    ///
+    /// # This is the first READER either retirement edge has ever had
+    ///
+    /// `dec:one-retire-edge` measured on 2026-07-28 that "retiring something
+    /// marks it and changes nothing — a retired capability still counts in
+    /// every rollup, still raises its gaps, still appears in delivery
+    /// arithmetic", and asked what SHOULD consult it. This is that answer for
+    /// the discontinued case: the three capability detectors fall silent and
+    /// delivery stops counting it. A marker nothing reads is a comment, which
+    /// is the failure this project has now found in `enforced`, in `SUPERSEDES`
+    /// and in `OBSOLETES` itself.
+    pub(crate) fn is_discontinued(&self, node_id: &str) -> Result<bool, DynoError> {
+        for e in self.incoming(node_id, Some(edge::OBSOLETES))? {
+            let Some(src) = self.get_node(node::DECISION, &e.from_id)? else {
+                // Obsoleted by something that is not a Decision — a superseding
+                // epoch, say. That is a different relationship and this rule
+                // deliberately does not read it.
+                continue;
+            };
+            if src
+                .properties
+                .get("status")
+                .and_then(dynograph_core::Value::as_str)
+                == Some("accepted")
+            {
+                return Ok(true);
+            }
+        }
+        Ok(false)
+    }
+
     fn detect_unmotivated_capabilities(
         &self,
         pop: &Population,
@@ -1280,6 +1343,12 @@ impl DesignGraph {
             return Ok(());
         }
         for cap in self.scan_nodes(node::CAPABILITY)? {
+            // Discontinued: built, then decided against. It is not
+            // unfinished work and asking about it forever is how a gap list
+            // becomes unreadable.
+            if self.is_discontinued(&cap.node_id)? {
+                continue;
+            }
             if self
                 .outgoing(&cap.node_id, Some(edge::SATISFIES))?
                 .is_empty()
@@ -1721,6 +1790,10 @@ impl DesignGraph {
             return Ok(());
         }
         for cap in self.scan_nodes(node::CAPABILITY)? {
+            // Discontinued: built, then decided against. Not unfinished work.
+            if self.is_discontinued(&cap.node_id)? {
+                continue;
+            }
             if self
                 .incoming(&cap.node_id, Some(edge::REALIZES))?
                 .is_empty()
@@ -2391,6 +2464,12 @@ impl DesignGraph {
             // non-passing check, so this tightens the rule without moving any
             // existing verdict.
             if self.has_passing_verification(&n.node_id)? {
+                continue;
+            }
+            // Discontinued: built, then decided against. Demanding proof that
+            // withdrawn work still functions is the clearest case of a gap
+            // list asking a question nobody can act on.
+            if self.is_discontinued(&n.node_id)? {
                 continue;
             }
             let mut carrier = None;

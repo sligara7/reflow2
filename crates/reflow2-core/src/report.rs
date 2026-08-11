@@ -214,6 +214,15 @@ pub struct DeliveryCoverage {
     /// recovered by inference — excluded from `delivered` on purpose. See the
     /// type docs.
     pub inferred_only: usize,
+    /// SATISFIES edges skipped because the capability at the far end was
+    /// DISCONTINUED — built, then decided against by an accepted Decision.
+    ///
+    /// Reported rather than silently subtracted. A discontinuation that made
+    /// the numbers move with no mention would be the silent-drop failure this
+    /// project forbids everywhere else (`req:no-silent-fallback`), and it is
+    /// the specific way a withdrawal goes unnoticed: the count falls, nothing
+    /// says why, and a reader concludes the design regressed.
+    pub satisfied_only_by_discontinued: usize,
 }
 
 impl DeliveryCoverage {
@@ -1026,6 +1035,7 @@ impl DesignGraph {
             requirements: 0,
             satisfied: 0,
             delivered: 0,
+            satisfied_only_by_discontinued: 0,
             inferred_only: 0,
         };
         for req in self.scan_nodes(node::REQUIREMENT)? {
@@ -1037,11 +1047,20 @@ impl DesignGraph {
             }
             d.requirements += 1;
 
-            let satisfiers: Vec<String> = self
-                .incoming(&req.node_id, Some(edge::SATISFIES))?
-                .into_iter()
-                .map(|e| e.from_id)
-                .collect();
+            // A DISCONTINUED capability is not a live satisfier. Withdrawing
+            // the thing that met a need does not meet the need — so the
+            // requirement drops back to unsatisfied and the loop ASKS about it
+            // ("covered, deferred, or dropped?") instead of quietly counting a
+            // withdrawn capability as delivery. That cascade is the point: it
+            // is what stops a discontinuation being invisible one hop away.
+            let mut satisfiers: Vec<String> = Vec::new();
+            for e in self.incoming(&req.node_id, Some(edge::SATISFIES))? {
+                if self.is_discontinued(&e.from_id)? {
+                    d.satisfied_only_by_discontinued += 1;
+                    continue;
+                }
+                satisfiers.push(e.from_id);
+            }
 
             // A decomposed parent is carried by its children, not by a
             // capability of its own: splitting a requirement adds no new
