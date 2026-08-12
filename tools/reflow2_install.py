@@ -449,7 +449,12 @@ def main() -> int:
     binary = find_binary(args.binary)
     nudge = nudge_script()
 
-    say(f"Installing reflow2 for every project on this machine"
+    # WORDING MATTERS HERE, and this line was reported as alarming (Alex, 2026-08-12).
+    # "Installing reflow2 for every project on this machine" reads as though the
+    # installer is about to reach into every project directory and change it. It is
+    # not: nothing outside ~/.local and ~/.claude is touched, and a project only
+    # gains reflow2 when someone points it there. Say what it actually does.
+    say(f"Making reflow2 globally available to projects on this machine"
         + (" — CHECK ONLY, nothing written" if args.check else ""))
     say(f"  binary  {binary}")
     say("")
