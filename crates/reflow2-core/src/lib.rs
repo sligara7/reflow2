@@ -104,7 +104,8 @@ pub use dimensions::{Dimension, DimensionDrift, DriftDirection};
 pub use discover::{DesignAtPath, DesignPathState, describe_at};
 pub use drift::{DriftFinding, DriftKind, DriftReport, ObservedArtifact, ReconcileOptions};
 pub use export::{
-    ExportedEdge, ExportedNode, GraphExport, ImportReport, MirrorRef, MirrorReport, SurfaceExport,
+    ExportedEdge, ExportedNode, GraphExport, ImportReport, MirrorRef, MirrorReport,
+    SeveredContainment, SurfaceExport,
 };
 pub use fielded::{
     FieldedDriftKind, FieldedFinding, FieldedOptions, FieldedReport, ObservedEnvironment,
