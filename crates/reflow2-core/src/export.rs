@@ -735,6 +735,13 @@ pub struct MirrorReport {
     /// designs are using the same id for different things, which is a naming
     /// conversation between two owners, not a merge.
     pub collisions: Vec<String>,
+    /// True when this replaced a mirror of the SAME design rather than adding a
+    /// new one — the two are different operations and only one of them may
+    /// remove nodes.
+    pub refreshed: bool,
+    /// Ids this refresh REMOVED because the far side no longer publishes them.
+    /// Empty on a first mirror, which removes nothing by construction.
+    pub withdrawn: Vec<String>,
     /// Said in words, because the counts alone do not tell you whether to worry.
     pub note: String,
 }
@@ -795,6 +802,80 @@ impl DesignGraph {
                      restore a backup."
                 ),
             });
+        }
+
+        // IS THIS A REFRESH? A Project already carrying this `mirror_of` means we
+        // hold a copy of this design, so re-mirroring is "replace what I hold of
+        // theirs, at a new pin" — NOT "add a stranger and refuse clashes". Before
+        // this, the second mirror of one design collided with its own first
+        // (12 of 13 ids, measured 2026-08-12) and left the pin reporting the OLD
+        // hash, so the staleness register read FRESH after a failed refresh.
+        let held: Vec<MirrorRef> = self
+            .mirrors()?
+            .into_iter()
+            .filter(|m| m.mirror_of == source)
+            .collect();
+        let refreshed = !held.is_empty();
+
+        // What we currently hold of theirs. Recorded on the mirrored Project at
+        // mirror time, because it cannot be recovered afterwards: `provenance:
+        // imported` is also set by corpus ingest, and the project's CONTAINS
+        // edges do not span the mirrored set (measured: 5 of 13).
+        let mut previously: BTreeSet<String> = BTreeSet::new();
+        for m in &held {
+            if let Some(p) = self.get_node(node::PROJECT, &m.project_id)?
+                && let Some(list) = p.properties.get("mirror_nodes").and_then(Value::as_str)
+            {
+                previously.extend(
+                    list.split(',')
+                        .filter(|s| !s.is_empty())
+                        .map(str::to_string),
+                );
+            }
+            previously.insert(m.project_id.clone());
+        }
+
+        // WOULD THIS WITHDRAW SOMETHING WE CONSUME? A partner dropping a contract
+        // you depend on is a conversation, not a cleanup (dec:ask-not-repair), and
+        // reflow2 refuses dangling edges anyway — so this refuses BEFORE writing
+        // and names both the boundary and what of ours points at it.
+        let arriving: BTreeSet<String> = doc.nodes.iter().map(|n| n.node_id.clone()).collect();
+        let withdrawn: Vec<String> = previously.difference(&arriving).cloned().collect();
+        let mut blocked: Vec<String> = Vec::new();
+        for gone in &withdrawn {
+            for e in self.incoming(gone, None)? {
+                if !previously.contains(&e.from_id) {
+                    blocked.push(format!("{} {} -> {}", e.edge_type, e.from_id, gone));
+                }
+            }
+        }
+        if !blocked.is_empty() {
+            return Err(DynoError::Validation {
+                node_type: node::PROJECT.into(),
+                property: "mirror_of".into(),
+                message: format!(
+                    "REFUSED: this surface from '{source}' no longer publishes {} boundary(ies) \
+                     that YOUR design still points at, and nothing was changed. Withdrawn: {}. \
+                     Your edges: {}.\n\nA partner retiring a contract you consume is a \
+                     conversation between the two owners, not a cleanup this tool may do for \
+                     you. Re-point or remove your own edge first, then mirror again.",
+                    withdrawn.len(),
+                    withdrawn.join(", "),
+                    blocked.join(", "),
+                ),
+            });
+        }
+
+        // Nothing of ours depends on what went, so replace what we hold. Removal
+        // first, so a renamed node does not read as a collision with its own
+        // former self.
+        if refreshed {
+            for gone in &previously {
+                if let Some(t) = self.node_type_index()?.get(gone) {
+                    let t = t.clone();
+                    self.delete_node(&t, gone)?;
+                }
+            }
         }
 
         let existing = self.node_type_index()?;
@@ -884,9 +965,34 @@ impl DesignGraph {
                         collisions.join(", ")
                     )
                 };
+                // WHAT WE HOLD OF THEIRS, recorded on their mirrored Project so a
+                // later refresh can replace exactly this set. It cannot be
+                // recovered afterwards — `provenance: imported` is also set by
+                // corpus ingest, and the project's CONTAINS edges do not span the
+                // mirrored set (5 of 13, measured). A comma-joined id list follows
+                // the schema's existing precedent (`pinned` / `swept` on VERIFIES).
+                if let Some(proj) = doc
+                    .nodes
+                    .iter()
+                    .find(|n| n.node_type == node::PROJECT && mirrored.contains(&n.node_id))
+                {
+                    let list = mirrored.iter().cloned().collect::<Vec<_>>().join(",");
+                    // Re-written whole: core `create_node` validates the entire
+                    // node, so a partial props object is refused here even though
+                    // the MCP layer merges.
+                    if let Some(stored) = self.get_node(node::PROJECT, &proj.node_id)? {
+                        let mut props: std::collections::HashMap<String, Value> =
+                            stored.properties.into_iter().collect();
+                        props.insert("mirror_nodes".into(), Value::from(list.as_str()));
+                        self.create_node(node::PROJECT, &proj.node_id, props)?;
+                    }
+                }
+
                 Ok(MirrorReport {
                     mirror_of: source,
                     mirror_content_hash: doc.content_hash.clone(),
+                    refreshed,
+                    withdrawn: withdrawn.clone(),
                     mirrored_nodes,
                     mirrored_edges,
                     collisions,
