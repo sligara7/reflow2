@@ -31,6 +31,74 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.28.0] — 2026-08-12
+
+The surplus half of DETECT arrives, search-before-you-add stops depending on anyone reading a
+skill, and a seat learns the shared record moved *when it orients* rather than when it writes.
+
+**Derived from `changelog_view` between `rel:v0270` and `rel:v0280`** (57 drafted entries,
+`unmapped: []`), then curated — Keep a Changelog is for humans. Every one of the increment's 26
+ChangeEvents was pinned to its epoch first, because an unpinned event is silently dropped from
+the derivation.
+
+**No schema change.** The stamp is unmoved at 29 node types / 61 edge types, `schema_version: 1`,
+so **no upgrade doc is owed and no migration is needed** — update in place.
+
+### Added
+
+- **`consumption_report`** — the surplus half of DETECT. Which built capabilities does the design
+  record *no consumer* for? Reported as `nothing in this design consumes X`, never "unused":
+  reflow2 reads a design and never a running system, so a feature real users call daily whose
+  consumer nobody modelled is indistinguishable from a dead one. **Absence is only informative
+  when presence is the habit** — below `MIN_MODELLED_RATIO` the list is withheld and the ratio
+  itself is the finding. (Measured on reflow2's own design, the raw signal named 100 of 110.)
+- **`sync_status`**, plus `record_moved` on `loop_status` — has the shared record moved since this
+  seat last looked? `import_graph` already caught a graph up in one call; what was missing was
+  anything telling you it was due. Silent unless somebody *else* has been there, so ordinary
+  unexported work never fires it.
+- **`what_next`** — which decisions to settle next, in four bands: `marked` (your own approver
+  edge; no score reorders it), `ranked`, one deliberately `unexplored`, and `shaping` (the settled
+  decisions a newcomer needs to read the rest). Scores are coarse on purpose and say so.
+- **Capture registers the document it captured from**, so the backward half of the golden thread
+  exists by construction rather than by anyone remembering.
+- **The first outward-facing doc rendered from the graph** — `docs/impact-propagation.md`.
+
+### Changed
+
+- **`add_requirement` / `add_capability` / `add_component` / `add_decision` / `add_constraint` now
+  REFUSE a near-duplicate** instead of quietly creating one. ⚠️ **The most likely thing to surprise
+  an existing consumer.** The refusal names what it found and both routes out: call with the
+  existing id to *sharpen* it, or pass `distinct_from` to create anyway. Short statements are never
+  judged — there is no signal to judge on, and a young design is all short statements.
+- **HEAL no longer proposes fabrication.** `disconnected_community` and `dead_end` stop offering
+  `generate_bridge`, `orphan_node` stops offering `generate_owner`. `suggested_fix_type` is now
+  optional, and where absent `repair_is_a_judgement` carries the sentence instead. Repairs that
+  reorganise or restore what exists are untouched.
+- **A refused enum names its legal values** rather than only rejecting.
+- **An accepted Decision that `OBSOLETES` something now silences it** — a discontinued capability
+  stops raising gaps, its requirement drops back to unsatisfied and is asked about again, and
+  delivery reports `satisfied_only_by_discontinued` rather than shrinking quietly.
+- **Ten schema properties stopped injecting defaults**, so absence now means nobody said. Existing
+  nodes keep what they hold; the change is forward-only.
+- `loop_status`'s verification roll is a digest — the full list stays on `graph_report`.
+
+### Fixed
+
+- **A replaced binary no longer strands the shared server.** The daemon spawn resolved its own
+  executable through a path marked `(deleted)` after a rebuild, and failed with no usable message.
+- **The stale-seat guard trusted the content hash a document states about itself.** A record edited
+  by anything other than `export_graph` — a merge, a hand-fix — kept its old stamp, both fast paths
+  read `Clear`, and the refusal went quiet in exactly the case it exists to catch: on the export
+  path that silently deleted the other person's work. Now computed from content, with the
+  discrepancy reported as `stamp_disagrees`.
+
+### Build
+
+- `[profile.dev] debug = "line-tables-only"` and `split-debuginfo = "unpacked"`. Measured: 313 MB →
+  233 MB per test binary. Recorded honestly because the real cause of a 288 GB `target/` was that
+  cargo has no GC — 1,824 artifacts under 104 names — and sweeping stale duplicates recovered
+  225 GiB against these settings' 25%.
+
 ## [0.27.0] — 2026-08-09
 
 Ownership becomes the third "who" axis, the content store is withdrawn, and the question of
