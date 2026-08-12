@@ -9,6 +9,7 @@ pub mod dto;
 pub mod latent;
 pub mod nudge;
 pub mod proxy;
+pub mod registry;
 pub mod service;
 pub mod shared;
 pub mod skills;

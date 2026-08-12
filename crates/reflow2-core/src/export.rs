@@ -475,6 +475,19 @@ impl DesignGraph {
 
 /// What a published-surface export contains, and what it deliberately does not.
 ///
+/// A node this surface kept whose container it withheld.
+///
+/// Reported so a recipient can tell a genuinely top-level part from one this
+/// filtering orphaned — the two are indistinguishable in the document itself.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct SeveredContainment {
+    /// A node this surface KEPT.
+    pub node_id: String,
+    /// A container it has in the full design, which this surface WITHHELD — so
+    /// in the document the recipient holds, the node has no parent.
+    pub withheld_parent: String,
+}
+
 /// The report is the load-bearing half. A surface document is a *partial* design
 /// by construction, so shipping one without saying what was held back would be
 /// the silent drop rule 6 forbids — and worse than usual here, because the
@@ -490,6 +503,24 @@ pub struct SurfaceExport {
     pub withheld_nodes: usize,
     /// Edges dropped because at least one endpoint was withheld.
     pub withheld_edges: usize,
+    /// Nodes this surface KEPT whose container it WITHHELD, each naming the
+    /// container that went — so a recipient can tell a genuinely top-level part
+    /// from one this filtering orphaned.
+    ///
+    /// **Reported, never repaired.** Carrying the ancestry would disclose the
+    /// internals a surface exists to withhold; re-parenting the orphan to the
+    /// Project would assert a `CONTAINS` nobody drew, which is the fabrication
+    /// `req:a-repair-suggestion-never-proposes-fabrication` forbids; dropping the
+    /// child would delete the provider of a published contract. So the document
+    /// is unchanged and the severance is stated.
+    ///
+    /// Found 2026-08-12 on the first real cross-design trial: four `subsystem`
+    /// components travelled without the `system` that contains them, and
+    /// `hierarchy_issues` in the receiving graph went 0 → 4 `orphan_level` —
+    /// findings that were FALSE about the source design and CORRECT about the
+    /// document it was handed. The detector was innocent; the document lied by
+    /// omission.
+    pub severed_containment: Vec<SeveredContainment>,
     /// Said in words, because a count alone does not tell the recipient what
     /// kind of document they are holding.
     pub note: String,
@@ -582,6 +613,47 @@ impl DesignGraph {
 
         let withheld_nodes = total_nodes - nodes.len();
         let withheld_edges = total_edges - edges.len();
+
+        // What the withholding did to what we KEPT. A node whose every CONTAINS
+        // parent was filtered out arrives with no place in the hierarchy, and
+        // the recipient cannot tell that from a genuinely top-level part.
+        let mut severed_containment: Vec<SeveredContainment> = Vec::new();
+        for n in &nodes {
+            let mut lost: Vec<String> = Vec::new();
+            let mut survived = false;
+            for e in self.incoming(&n.node_id, Some(edge::CONTAINS))? {
+                if keep.contains(&e.from_id) {
+                    survived = true;
+                    break;
+                }
+                lost.push(e.from_id.clone());
+            }
+            if !survived {
+                lost.sort();
+                for parent in lost {
+                    severed_containment.push(SeveredContainment {
+                        node_id: n.node_id.clone(),
+                        withheld_parent: parent,
+                    });
+                }
+            }
+        }
+        severed_containment.sort_by(|a, b| {
+            (&a.node_id, &a.withheld_parent).cmp(&(&b.node_id, &b.withheld_parent))
+        });
+        let severance_note = if severed_containment.is_empty() {
+            String::new()
+        } else {
+            format!(
+                " ⚠️ {} kept node(s) LOST THEIR CONTAINER to this filtering and arrive with no                  parent: {}. They are not top-level in the source design — read them as                  structurally partial, and do not diagnose their hierarchy from this document.",
+                severed_containment.len(),
+                severed_containment
+                    .iter()
+                    .map(|s| format!("{} (was in {})", s.node_id, s.withheld_parent))
+                    .collect::<Vec<_>>()
+                    .join(", ")
+            )
+        };
         // Said plainly whichever way it comes out, because "no promises" and
         // "promises you cannot see" must never look alike (`req:publishable-promise`).
         let promise_note = if promises.is_empty() {
@@ -613,7 +685,7 @@ impl DesignGraph {
                 "Published surface: {} boundary(ies), {} node(s) exposed. WITHHELD as internal: \
                  {withheld_nodes} node(s), {withheld_edges} edge(s) — undesignated requirements, \
                  capabilities, decisions, verifications and history stay home. This is a partial \
-                 design by design; it is not a backup and cannot be imported as one.{promise_note}",
+                 design by design; it is not a backup and cannot be imported as one.                 {promise_note}{severance_note}",
                 published.len(),
                 nodes.len()
             )
@@ -635,6 +707,7 @@ impl DesignGraph {
             published: published.into_iter().collect(),
             withheld_nodes,
             withheld_edges,
+            severed_containment,
             note,
         })
     }

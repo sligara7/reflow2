@@ -373,37 +373,32 @@ fn a_store_whose_identity_sidecar_is_lost_is_refused_rather_than_opened_empty() 
 }
 
 #[test]
-fn the_registry_clauses_are_not_covered_here() {
-    // A TRIPWIRE, not a test of behaviour.
+fn the_registry_clauses_are_covered_now() {
+    // THE TRIPWIRE FIRED AND WAS RETIRED, 2026-08-12 — which is the whole point
+    // of having had one. `crates/reflow2-mcp/src/registry.rs` now exists, so a
+    // session CAN name a design by graph_id, and the two clauses this file could
+    // not reach are covered where that surface lives:
     //
-    // `ver:a-session-cannot-name-another-design` is the design-side record of the
-    // two clauses this file cannot reach — "a graph_id it was not attached to is
-    // REFUSED rather than served" and "a path is not an alternative route in".
-    // Both need a surface on which a session NAMES the design it wants;
-    // `cmp:registry` is `planned` and `cap:select-graph-by-id` has no artifact, so
-    // there is nothing to ask.
+    //   crates/reflow2-mcp/tests/a_session_names_its_design.rs
+    //     - an_id_the_registry_does_not_hold_is_refused
+    //     - a_real_design_outside_the_root_is_refused_like_any_other   (clause 1)
+    //     - a_filesystem_path_is_not_an_alternative_route_in           (clause 2)
+    //     - a_binding_carries_one_design_and_offers_no_way_to_ask_for_a_second
     //
-    // The risk guarded here is not the missing code, it is the missing test: the
-    // registry lands, the green tests above are taken as the precondition met, and
-    // the two clauses that motivated the condition are never written.
-    //
-    // Why BOTH this and the planned Verification, when either alone looks like
-    // enough: a Verification's status is a property, and any hand can set it to
-    // `passing` in one call without a check existing. A failing test cannot be
-    // waved through the same way. The node makes the gap COUNTABLE — it shows up
-    // in `detect_gaps` and keeps `dec:one-process-many-stores` reading as half
-    // met; this makes it UNIGNORABLE at the moment the surface appears.
-    let selection_surface_exists = std::path::Path::new("crates/reflow2-mcp/src/registry.rs")
-        .exists()
-        || std::path::Path::new("../reflow2-mcp/src/registry.rs").exists();
-
+    // The risk the tripwire named was never the missing code — it was that the
+    // registry would land, the store-level tests above would be read as the
+    // precondition met, and the clauses that motivated the condition would never
+    // be written. They are written. This assertion keeps the pointer, so a
+    // future reader of THIS file is sent to them rather than concluding the
+    // clauses are still uncovered.
+    let clauses_covered =
+        std::path::Path::new("crates/reflow2-mcp/tests/a_session_names_its_design.rs").exists()
+            || std::path::Path::new("../reflow2-mcp/tests/a_session_names_its_design.rs").exists();
     assert!(
-        !selection_surface_exists,
-        "a registry module now exists, so a session can name a design by graph_id \
-         — write ver:a-session-cannot-name-another-design against it (an id you \
-         were not attached to is REFUSED rather than served; a path is not an \
-         alternative route in), move it off `planned`, and then delete this \
-         tripwire. dec:one-process-many-stores was accepted conditional on those \
-         clauses too, not only on the store-level ones above."
+        clauses_covered,
+        "registry.rs exists but a_session_names_its_design.rs does not — the clauses of \
+         ver:a-session-cannot-name-another-design have lost their coverage. Restore them \
+         before shipping: an id you were not attached to is REFUSED rather than served, and \
+         a path is not an alternative route in."
     );
 }
