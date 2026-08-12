@@ -49,6 +49,33 @@ def rpc(proc, msg):
             return got
 
 
+
+def _materialized(source_path, out_path):
+    """Property values present in the WRITTEN export that the SOURCE omitted.
+
+    Keyed by (node_type, property) so the report names what was invented rather
+    than only how much. Absent-vs-null is the distinction that matters here: a
+    property the source never carried, now carrying a value, is an assertion the
+    design never made.
+    """
+    try:
+        src = {n["node_id"]: n for n in json.load(open(source_path))["nodes"]}
+        out = json.load(open(out_path))["nodes"]
+    except Exception:
+        return {}
+    counts = {}
+    for node in out:
+        before = src.get(node["node_id"])
+        if before is None:
+            continue
+        was = before.get("properties") or {}
+        now = node.get("properties") or {}
+        for prop, value in now.items():
+            if prop not in was and value is not None:
+                key = (node.get("node_type", "?"), prop)
+                counts[key] = counts.get(key, 0) + 1
+    return counts
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -109,9 +136,37 @@ def main() -> int:
         print(f"stamp reflow2_version : {sc['stamp']['reflow2_version']}")
         print(f"content_hash          : {sc['content_hash']}")
         print(f"prev_content_hash     : {sc['prev_content_hash']}")
+
+        # THE ROUND TRIP MATERIALIZES SCHEMA DEFAULTS, AND IT CANNOT UNDO ITSELF.
+        #
+        # Importing into a fresh graph runs every node through schema validation,
+        # which INSERTS any declared property the node omits. So a document that
+        # honestly said nothing about `Artifact.granularity` comes back out
+        # asserting `atomic` — a value nobody chose, now indistinguishable from
+        # one somebody did. That is exactly the defect `fact:bl-198` names, and
+        # after the round trip NOTHING can tell the injected from the chosen,
+        # which is why this reports rather than repairs.
+        #
+        # Measured 2026-08-12: v0.28.0 and PR #157 were both exported this way
+        # and took 91 artifacts from no granularity/volatility to all 172
+        # carrying both — 182 values nobody expressed, reaching a published
+        # release. `compare_designs` then reported 91 phantom changes against
+        # the live graph, which is the cost BL-198 predicted arriving for real.
+        injected = _materialized(args.source, os.path.abspath(args.out))
+        if injected:
+            print("\n⚠️  THIS ROUND TRIP MATERIALIZED VALUES NOBODY CHOSE:")
+            for (ntype, prop), n in sorted(injected.items(), key=lambda kv: -kv[1]):
+                print(f"      {n:5d}x  {ntype}.{prop}")
+            print("    The import injected these schema defaults; the source said nothing.")
+            print("    DO NOT COMMIT THIS unless you mean the record to assert them.")
+            print("    PREFER EXPORTING DIRECTLY from the real store with the new binary —")
+            print("    stop the running server so the lock frees, then call export_graph")
+            print("    against ./.reflow2/graph itself. That gets the correct stamp AND")
+            print("    changes no property, and makes this whole round trip unnecessary.")
+
         print("\nVerify prev_content_hash equals the content_hash of the export that was "
               "committed at --out before this ran, or the lineage chain has a hole.")
-        return 0
+        return 2 if injected else 0
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
 
