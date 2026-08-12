@@ -31,6 +31,78 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.29.0] — 2026-08-12
+
+Two projects were pointed at each other for the first time, and everything below except the last
+item was found by **running** that — not by reading code. A mirror could not be refreshed, a
+published surface silently orphaned what it kept, and the export tool was inventing property
+values nobody ever chose.
+
+**No upgrade doc is owed.** The stamp is unmoved at 29 node types / 61 edge types,
+`schema_version: 1` — update in place, no migration. The schema *did* gain one optional property
+(`mirror_nodes` on Project); existing graphs are unaffected, and the fact that the stamp cannot
+see a property change is a known blind spot, now on its fourth instance.
+
+### Added
+
+- **`capture-session`** — a skill you type, at any natural break or before a long session ends,
+  to write down the reasoning that exists *only* in the conversation: what was tried and
+  abandoned, what got measured, why the losing option lost. It does **not** ask an agent to rate
+  the importance of its own session — that is the self-report this project distrusts everywhere
+  else. Instead it gives six concrete tests under one question: *would a session six weeks from
+  now redo this work, or repeat this mistake, because nobody wrote it down?* Served set is now 19.
+- **`mirror_surface` can refresh** a design you already hold, rather than treating the second
+  mirror as a stranger. `MirrorReport` gains `refreshed` and `withdrawn`. A refresh that would
+  withdraw a boundary **you consume** is REFUSED and names both the node and your own edge into
+  it — a partner retiring a contract you depend on is a conversation, not a cleanup.
+- **`severed_containment` on `export_surface`** — a published surface already reported what it
+  withheld; it now reports what the withholding did to what it **kept**. A `subsystem` component
+  exposed for its published interface, whose parent was filtered out, arrives at the recipient
+  looking like an orphan. This reports it rather than repairing it: carrying the ancestry would
+  leak the internals the surface exists to withhold, and re-parenting to the Project would assert
+  a `CONTAINS` nobody drew.
+- **A registry that resolves `graph_id` → store path** (`reflow2-mcp`, internal). Groundwork for
+  `cap:select-graph-by-id`: an id the registry does not hold is refused, and a filesystem path is
+  refused as an unknown id rather than resolved — there is deliberately no path route in. **Not
+  reachable yet**; no transport is wired to it and the single-`--graph-path` server is untouched.
+
+### Fixed
+
+- **`mirror_surface` collided with its own previous mirror.** Re-mirroring a design after the far
+  side moved returned 12 of 13 ids as *collisions*, as if a stranger were squatting the
+  namespace — one node updated out of thirteen. Worse than a plain failure: the stale nodes kept
+  their old values, the host's edges still pointed at them, and `mirrors` still reported the
+  **first** content hash, so a failed refresh left the staleness register reading *fresh*. The
+  refusal was correct for a genuine cross-design clash and could not tell that case from this
+  one. **Live since v0.12.0** — anyone who mirrored the same design twice hit it.
+- **The export round trip injected 182 property values nobody chose.** `tools/export_via_binary.py`
+  imported into a temp graph and exported back out, and the round trip *materialised* schema
+  defaults — 91 artifacts silently gained `granularity` and `volatility`. The result is a record
+  asserting intent that was never stated, and it shipped in a release. The tool now diffs what it
+  wrote against its source and names every `(node_type, property)` pair the round trip invented,
+  exiting non-zero.
+- **A published surface's note** now says when something was orphaned, and names it, instead of
+  leaving the fact in a field nobody prints.
+
+### Changed
+
+- **The unit of immutability is the thread, not the requirement** — recorded as design intent, no
+  code yet. A satisfied requirement's text can currently move without a trace; what should be
+  guarded is the whole SATISFIES → ALLOCATED_TO → REALIZES → VERIFIES chain, once it is confirmed
+  operational.
+- **The registry root is the tenant boundary** — a design that genuinely exists elsewhere on the
+  machine is refused identically to one that was made up. Knowing a real `graph_id` is not a way
+  in.
+- **Fourteen delivered requirements got the owner's word**, moving off `proposed` on the record
+  rather than by inference.
+- **The installer stopped saying something alarming.** It announced *"Installing reflow2 for every
+  project on this machine"*, which reads as though it is about to reach into every project
+  directory and change it. It never was: nothing outside `~/.local` and `~/.claude` is touched,
+  and a project only gains reflow2 when someone points it there. It now says **"Making reflow2
+  globally available to projects on this machine"**, and `SETUP.md` matches. Reported by a user
+  reading the output for the first time — the wording had been there since the machine-wide
+  install shipped and nobody who already knew what it did had reason to notice.
+
 ## [0.28.0] — 2026-08-12
 
 The surplus half of DETECT arrives, search-before-you-add stops depending on anyone reading a

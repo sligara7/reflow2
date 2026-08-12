@@ -14,8 +14,8 @@ curl -fsSL https://raw.githubusercontent.com/sligara7/reflow2/main/tools/install
 ```
 
 That is the whole install. It puts the `reflow2-mcp` binary in `~/.local/bin` and the kit in
-`~/.local/share/reflow2/kit`, verifies checksums, and then **registers reflow2 with your agent
-for every project on this machine**: the MCP server at user scope, the slash commands in
+`~/.local/share/reflow2/kit`, verifies checksums, and then **makes reflow2 globally available to
+your agent, in any project on this machine**: the MCP server at user scope, the slash commands in
 `~/.claude/commands/`, and the coherence-loop hooks in `~/.claude/settings.json`. The repo is
 public, so plain `curl` works with no authentication — you only need the
 [GitHub CLI](https://cli.github.com) (`gh auth login`) if you fork it privately.
@@ -110,7 +110,7 @@ cargo build -p reflow2-mcp --release        # first build compiles RocksDB (~10 
 
 The binary lands at `reflow2/target/release/reflow2-mcp`.
 
-## 3. Register it for every project on this machine
+## 3. Make it globally available to projects on this machine
 
 ```bash
 python3 tools/reflow2_install.py
