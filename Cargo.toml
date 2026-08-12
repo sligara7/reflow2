@@ -44,3 +44,48 @@ dynograph-vector = { git = "https://github.com/sligara7/dynograph-foundation.git
 # dynograph-storage = { path = "../dynograph-foundation/crates/dynograph-storage" }
 # dynograph-graph = { path = "../dynograph-foundation/crates/dynograph-graph" }
 # dynograph-resolution = { path = "../dynograph-foundation/crates/dynograph-resolution" }
+
+# ── Build-artifact size, and why this is set ────────────────────────────────
+#
+# Measured 2026-08-11 on the dev box: target/ had reached 288 GB and filled the
+# root filesystem. It was not a leak — it is cargo's ordinary behaviour meeting
+# this project's shape, and cargo never garbage-collects:
+#
+#   target/debug/deps   1,824 artifacts, 104 distinct names, 252 GB
+#   the reflow2_mcp test binary alone      43 copies × ~313 MB
+#
+# Every integration test file links its own binary against RocksDB, and each
+# rebuild mints a NEW hash-suffixed copy while the old ones stay forever. With
+# ~50 test files and many rebuilds a day, that is several GB per working hour.
+#
+# `debug = "line-tables-only"` keeps what this project actually reads — panic
+# backtraces with file and line, which is what every test failure is diagnosed
+# from — and drops the variable/type DWARF that made each binary ~300 MB. It
+# does NOT keep full local-variable inspection under a debugger; if you need
+# that for a session, override it rather than removing this.
+#
+# This shrinks each NEW artifact. It does not collect old ones — cargo has no
+# GC, so a periodic sweep of target/debug/deps (keep the newest artifact per
+# name, delete the rest) is still worth running when the disk gets tight.
+[profile.dev]
+debug = "line-tables-only"
+# Kept, but it earned far less than predicted and the numbers are recorded so
+# nobody re-runs this experiment. The hypothesis was that since 88% of a test
+# binary is `.debug_*`, and ~50 test binaries each embed their own copy of the
+# same dependency DWARF, moving it beside the object files would be the big
+# win. MEASURED, per test binary: 313 MB → 249 MB with line-tables-only alone
+# → 233 MB adding this. So this line bought 6%, not a multiple.
+#
+# ⭐ THE REAL FIX WAS NOT A PROFILE SETTING AT ALL — it was that cargo has no
+# GC. target/debug/deps held 1,824 artifacts under 104 distinct names (43
+# copies of the reflow2_mcp test binary alone); sweeping the stale duplicates
+# recovered 225 GiB against these settings' ~25%. Sweep first when the disk is
+# tight; these settings only slow the refill.
+split-debuginfo = "unpacked"
+
+# Tests are the bulk of the artifacts, and they inherit dev rather than reading
+# [profile.dev] directly — stated explicitly so the intent survives a reader who
+# only greps for "test".
+[profile.test]
+debug = "line-tables-only"
+split-debuginfo = "unpacked"

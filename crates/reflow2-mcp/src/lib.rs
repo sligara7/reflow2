@@ -12,4 +12,5 @@ pub mod proxy;
 pub mod service;
 pub mod shared;
 pub mod skills;
+pub mod sync_debt;
 pub mod tools;

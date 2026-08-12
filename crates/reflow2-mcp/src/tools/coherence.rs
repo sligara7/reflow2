@@ -138,6 +138,44 @@ impl ReflowService {
                 obj.insert("nudge_advisory".into(), json!(advisory));
             }
         }
+        // Has the SHARED RECORD moved since this seat last looked? The signal
+        // existed and was read only by `export_graph`, so the design knew at
+        // the first moment of a session and spoke at the last
+        // (dec:idea-the-graph-notices-the-record-moved-without-being-asked,
+        // option A). Reported here because this is the orientation call the
+        // session-start hook already points sessions at.
+        //
+        // GATED, and the gate is the design: silent whenever the file has not
+        // moved, which is the whole of ordinary solo work. The export is built
+        // only when something HAS moved, so the common path costs one file read
+        // and no comparison.
+        if let Some(graph_path) = self.graph_path.as_deref() {
+            let debts = crate::sync_debt::sync_debt(graph_path, &|| g.export_graph().ok());
+            if let Some(obj) = payload.as_object_mut() {
+                let behind: Vec<_> = debts.iter().filter(|d| d.is_actionable()).collect();
+                if !behind.is_empty() {
+                    obj.insert(
+                        "record_moved".into(),
+                        json!(
+                            behind
+                                .iter()
+                                .map(|d| d.message())
+                                .collect::<Vec<_>>()
+                                .join(" ")
+                        ),
+                    );
+                }
+                // Every known target, including the quiet ones — "checked three
+                // records, all in step" and "checked nothing" must not share an
+                // answer.
+                if !debts.is_empty() {
+                    obj.insert(
+                        "sync".into(),
+                        serde_json::to_value(&debts).map_err(ser_err)?,
+                    );
+                }
+            }
+        }
         ok_json(payload)
     }
 
@@ -584,6 +622,45 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
         ok_json(g.granularity_report().map_err(dyno_err)?)
+    }
+
+    #[tool(
+        description = "Has the SHARED RECORD moved since this graph last looked? Answers the \
+                       question a session should ask FIRST when other people write to the same \
+                       design: somebody pulled their work into the committed export and this \
+                       graph has never seen it. One entry per file this seat has synced with — \
+                       `in_step` (exactly where this graph left it), `behind` (THE ACTIONABLE ONE \
+                       — the record holds nodes this graph lacks; the ids are named and \
+                       `import_graph` on that path takes them in), `moved_but_current` (somebody \
+                       exported, you already hold it all), `missing`, `unreadable`. AN EMPTY \
+                       ANSWER MEANS THIS SEAT HAS NEVER SYNCED WITH ANY FILE — never that all is \
+                       well; the quiet targets are listed for exactly that reason. BEING AHEAD OF \
+                       THE RECORD IS NOT REPORTED: unexported work is the normal state of a \
+                       working session, and the check is gated on the file's content hash so it \
+                       is silent unless somebody ELSE has been there. IT NEVER ACTS — no \
+                       auto-import, because import is an upsert and an unasked one would silently \
+                       overwrite live work (dec:ask-not-repair); it names the remedy and leaves \
+                       the choice. `loop_status` carries the same finding as `record_moved` when \
+                       there is one.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn sync_status(
+        &self,
+        Parameters(_req): Parameters<SyncStatusReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        let Some(graph_path) = self.graph_path.as_deref() else {
+            return ok_json(json!({
+                "sync": [],
+                "note": "this server holds no graph path, so it has no sync record to check",
+            }));
+        };
+        let debts = crate::sync_debt::sync_debt(graph_path, &|| g.export_graph().ok());
+        ok_json(json!({
+            "sync": debts,
+            "behind": debts.iter().filter(|d| d.is_actionable()).map(|d| d.message()).collect::<Vec<_>>(),
+            "checked": debts.len(),
+        }))
     }
 
     #[tool(
