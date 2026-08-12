@@ -1,6 +1,6 @@
 # The skills — which one, when
 
-Fifteen skills and eight slash commands. A **skill** is a prose workflow an agent loads by itself
+Nineteen skills and eight slash commands. A **skill** is a prose workflow an agent loads by itself
 when your situation matches its description, so the loop happens without you naming tools; a
 **slash command** is you asking for one on purpose.
 
