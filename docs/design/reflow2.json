@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:4b6b43e719b507628b7dc868e4d71921a1f993f39bd519fd07fa87d82acbcb94",
+  "content_hash": "sha256:dbf6659faff35474d90b656e65011ed0fa400f5c1f8ac9d38a0bace89f7c910e",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -6528,6 +6528,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-capture-session-skill-the-user-types",
+      "properties": {
+        "acted_at": "2026-08-12",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-change-upstream-reaches-the-sibling-that-never-asked",
       "properties": {
         "acted_at": "2026-08-09",
@@ -9118,6 +9127,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-56ea769be9fb3c84",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills-catalog"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-57815d3b012cb271",
       "properties": {
         "accepted_baseline": true,
@@ -9583,6 +9601,15 @@
         "action": "modified"
       },
       "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-d3cbeecdecc8d059",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills-catalog"
     },
     {
       "edge_type": "CHANGED",
@@ -21064,6 +21091,12 @@
       "from_id": "cap:capture-registers-its-source",
       "properties": {},
       "to_id": "dec:idea-should-a-requirement-trace-back-to-its-demand-signal"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:capture-session-skill",
+      "properties": {},
+      "to_id": "dec:idea-a-capture-session-skill-the-user-types"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -52678,6 +52711,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:capture-session-skill",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:capture-session-skill"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:changelog-test",
       "properties": {
         "completeness": "complete"
@@ -57047,6 +57088,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:capture-session-skill",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:capture-session-skill"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:changelog-test",
       "properties": {
         "action": "created"
@@ -58278,6 +58327,19 @@
         "granularity": "atomic",
         "location": "getting-started/skills/capture-intent/SKILL.md",
         "name": "capture-intent SKILL.md — the conversational capture path, now registering the document it captured from",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:capture-session-skill",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:a9698e861f183c96a564e22ceab750a9a5d336831b2b63c0c65e233c9ce43fc3",
+        "granularity": "atomic",
+        "location": "getting-started/skills/capture-session/SKILL.md",
+        "name": "getting-started/skills/capture-session/SKILL.md",
         "status": "realized",
         "volatility": "stable"
       }
@@ -59667,10 +59729,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:c09cc6f310635d1b2fb9a888f38c323fbd2ae2fb9e816586a32f2c00c87a46fb",
+        "checksum": "sha256:db23f88ec0a5536d085ec34a2f39276aef1eac93ae5d198196ad3a5234dd0f60",
+        "granularity": "atomic",
         "location": "SKILLS.md",
         "name": "SKILLS.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -60634,6 +60698,16 @@
       "properties": {
         "description": "When a session captures intent by READING a document — a feedback file, a brief, a handover note, a spec someone emailed — the skill registers that document as an Artifact and draws DOCUMENTS from it to every node the reading produced. The link is made at capture time, by the skill that is already holding the file open, rather than by anybody remembering to come back for it.\n\nWHY IT IS NEEDED, measured on reflow2's own design 2026-08-11 rather than assumed. `req:no-idea-goes-quiet` is ACCEPTED and requires the backward half explicitly — \"BACKWARD to the document and location it was written in. The user must never again have to recall that they wrote something, hunt for the file, and hand-point an agent at it.\" Its statement also says the backward half is handled: \"already carried by ingest: every extracted node gets YIELDED to its provenance Fragment.\"\n\n  Requirements in the design                                        154\n  with ANY backward provenance edge (YIELDED or DOCUMENTS)            1\n  without                                                           153\n\n⇒ THE CLAIM IS TRUE OF A PATH THIS DESIGN BARELY USES. 148 Fragments exist, and they hang off Artifacts, not Requirements. Requirements here arrive by CONVERSATION — an agent reads something or listens to somebody and calls `add_requirement` — and that path records no source at all. The covered path and the used path are different paths, which is why an accepted requirement can be 1/154 satisfied without anybody noticing.\n\n⭐ THE PROOF IS THE SESSION THAT FOUND IT. On 2026-08-11 Anthony had to tell an agent that reflow2's governance work came from `dev_storyflow/reflow2_feedback.md`, because nothing in the graph said so. `req:no-idea-goes-quiet` was captured on 2026-08-04 FROM HIS COMPLAINT ABOUT DOING EXACTLY THAT — \"It was always manual process of me trying to find the document or documents that I had written the idea/requirement in and then purposefully point the agent to it.\" Seven days after recording the complaint, the design made him do the thing he complained about.\n\nSCOPE, deliberately narrow. This covers capture FROM A DOCUMENT, where a file exists to point at. It does NOT attempt the harder case — intent that arrives in conversation with no document behind it, where the honest source is a session rather than a path — because inventing an Artifact for a conversation would put a fabricated file location in the graph, and `req:a-repair-suggestion-never-proposes-fabrication` is accepted. That case is left open rather than half-answered.\n\nWHAT IT MUST NOT DO, taken from the parent requirement's own warning: it must not auto-draw SATISFIES or REALIZES from similarity. DOCUMENTS is a provenance edge — \"this text is where that came from\" — and carries no claim that anything was delivered. The parent is explicit that auto-linking delivery \"would make every captured idea read as delivered and the completion reading say 100% forever.\"\n\nORIGIN: promoted from `dec:idea-should-a-requirement-trace-back-to-its-demand-signal`, option (b), on Anthony's word 2026-08-11. Option (a) — a detector for a Requirement with no origin edge — was NOT taken, because at genesis nobody has a source document and such a check would fire against an entire design on day one, with fabrication as the only way to green it.",
         "name": "Capture FROM a document registers that document and links what came out of it, so the backward half of the thread exists by construction",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:capture-session-skill",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The `capture-session` skill, shipped 2026-08-12 as the FIRST STEP settled in dec:idea-a-capture-session-skill-the-user-types. Served like every other skill (19 in the catalogue) and invocable at any point in a session, not only at the end.\n\nWHAT IT IS, PRECISELY: a TRIGGER, not a memory. cap:session-memory stays PLANNED and this does not realize it — the connective tissue still has no node type of its own, which the skill states as one of its own limits rather than papering over.\n\nTHE TWO PROBLEMS IT HAD TO SOLVE, both left open by the brainstorm node:\n  1. WHO JUDGES IMPORTANCE. Not solved by judgement — solved by removing the judgement. The skill gives six concrete tests (a reason that exists nowhere else / somebody measured something / the user corrected you / something was tried and abandoned / a finding arrived sideways / the user stated a rule in passing) under one question: would a session six weeks from now redo this work because nobody wrote it down?\n  2. NO HOME FOR THE TISSUE. Routed to nearest neighbours, explicitly and reversibly: reasoning into its Decision, a road not taken into that same Decision's text, a measurement to a TemporalFact, a project change to a ChangeEvent, a lesson to a DesignEpoch, a stated rule to a DesignRule, new intent OUT to capture-intent.\n\nHONEST STANDING: req:skill-use-survives-a-long-session is ACCEPTED, says the user must never be the trigger, and is NOT met by this. The skill says so in its own text so a reader cannot mistake shipped for satisfied.\n\n═══ FIRST DOGFOOD, 2026-08-12, WITHIN THE HOUR — AND IT FOUND A HOLE IN ITS OWN ROUTING TABLE ═══\n\nAnthony ran the skill to close the session it was built in (\"can we try our new skill out?\"). It worked, and the most useful output was a defect in itself.\n\n🛑 THE ROUTING TABLE HAS NO ROW FOR A FACT ABOUT THE USER. Test 3 (\"did the user correct you?\") and test 6 (\"did the user state a rule in passing?\") both fired on the same correction from earlier in the session: Anthony was referred to in the THIRD PERSON in a reply addressed TO HIM (\"the owner reports…\"). The rule that came out of it — SECOND PERSON when speaking to the user, THIRD PERSON in graph node text, because a node is a durable record for later readers who need a name — is exactly what test 6 is for. But the table's only offer is DesignRule, and that is wrong: this is not a rule about reflow2's design, it is a fact about a person. Writing it as a DesignRule would put a user preference into the design vocabulary where every future reader has to route around it.\n\n⇒ THE CORRECT HOME WAS THE AGENT'S OWN MEMORY, NOT THE GRAPH, and the skill does not say so. The gap is narrow and real: the six tests are written to catch things about the PERSON as readily as things about the DESIGN, while the routing table below them only knows how to place design content. An agent following the skill literally would either drop the finding or mis-file it.\n\nFIX DIRECTION (not applied — recorded so the next reader does not re-derive it): the routing table needs a row for \"a fact about the user, or how they want to be worked with\" pointing OUT of the graph, the same way \"new intent\" already points out to capture-intent. The skill already has the shape for this; it is one row.\n\n📌 WHAT THE SKILL GOT RIGHT ON ITS FIRST RUN, worth recording because it is the failure mode it was written against: it DECLINED to capture. A drifted prose count in getting-started/README.md (\"the 15 workflows\" while the kit served 18) was noticed, fixed in the same commit, and deliberately NOT given a node — a later session would have re-fixed it in two minutes, so nothing would have been lost. And the session's MCP outage was routed to an EXISTING fact as an addendum rather than a fifth near-duplicate node. Two of the four candidates that came up were correctly refused.\n\n⚠️ CAVEAT ON THIS RUN'S EVIDENCE, per the skill's own instruction to say what could not be verified: the session was COMPACTED, so its earlier hours survive only as a summary. Everything above is from the post-compaction stretch, which was directly observed.",
+        "name": "A user-typed trigger for capturing what only the session holds",
         "provenance": "authored",
         "status": "realized"
       }
@@ -62575,6 +62649,14 @@
       }
     },
     {
+      "node_id": "chg:accept-56ea769be9fb3c84",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "capture-session added to the catalogue and the opening count corrected 15 -> 19, 2026-08-12. The design HOLDS: SKILLS.md now matches cap:capture-session-skill (realized) and the 19 skills the binary actually serves. The stale count was pre-existing and nothing checks prose counts."
+      }
+    },
+    {
       "node_id": "chg:accept-57815d3b012cb271",
       "node_type": "ChangeEvent",
       "properties": {
@@ -63028,6 +63110,14 @@
         "change_type": "refactor",
         "detected_at": "2026-08-09",
         "name": "Clippy collapsible_if: the contributor-existence guard became a let-chain. Behaviour identical, 1055 tests unchanged. NO DESIGN MEANING. Fifth instance of hashing before the last edit in one session — and the third distinct mechanism: fmt after the work (twice), and now a REQUIRED CLIPPY FIX after the work. The pattern is not carelessness about hashing; it is that every mandatory gate runs AFTER the code looks finished, so 'finished' is never the moment to hash. Hash immediately before the export, after every gate has run."
+      }
+    },
+    {
+      "node_id": "chg:accept-d3cbeecdecc8d059",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "capture-session added to the catalogue, 2026-08-12. The design HOLDS: SKILLS.md gained one row for a skill the design already carries as cap:capture-session-skill (realized, governed by dec:idea-a-capture-session-skill-the-user-types). The catalogue moved to match the design, not the other way round."
       }
     },
     {
@@ -66881,6 +66971,16 @@
         "name": "OPEN — should a capability be able to declare that it needs a human INPUT path, so that the absence of one is DETECTABLE rather than diagnosable only by three people failing?",
         "rationale": "Recorded because it is the one thing the fleet said would have saved the most time, and because it is a VOCABULARY question rather than a detector bug — detect_gaps structurally cannot ask about a surface the design has no way to say is required, which is req:the-tool-finds-its-own-blind-spots in its sharpest instance to date. Left `proposed` deliberately: every shape above changes the schema or the detector set, and which one is right is Anthony's call, not a field report's. The evidence is fact:defect-a-realized-capability-can-be-dead-for-want-of-an-input-path.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-a-capture-session-skill-the-user-types",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED 2026-08-12 by Anthony. OPTION A, knowingly and as a first step. Originally recorded as brainstorming under the question \"should closing a session be a SKILL the user types, when the accepted requirement says the user must never be the trigger?\" — that question is now answered.\n\n⭐⭐ HIS DECIDING ARGUMENT, AND IT INVERTS THE TENSION THIS NODE WAS BUILT AROUND. His words: \"I don't mind the capture-session skill being manual and I can use it as I see fit throughout a session. I would prefer it be automatically done by the agent, but as seen elsewhere, then it is dependent upon the agent remembering or placing hooks to do so... so just being able to run this manually myself as a first step is fine with me.\"\n\nThe node above recorded option A as CONCEDING the central clause of `req:skill-use-survives-a-long-session` (\"the user must never be the trigger\"). Anthony's reasoning reframes that: options B and C depend on THE AGENT REMEMBERING — and agent forgetting is the documented, four-times-observed failure this whole thread exists because of (`epoch:skill-use-still-needs-reminding`, `chg:user-is-still-the-reminder`, `fact:second-user-report-2026-08-11`, and his own habit). ⇒ THE MANUAL TRIGGER IS NOT THE WEAK OPTION. It is the only one whose reliability does not rest on the thing that keeps failing. A human who types a skill remembers; the mechanism proposed to replace him is the one with the measured defect rate.\n\n📌 THE CLAUSE IS STILL CONCEDED, AND THAT IS RECORDED HONESTLY. `req:skill-use-survives-a-long-session` remains ACCEPTED and still says the user must never be the trigger. This decision does not amend it, does not weaken it, and does not close it. It ships a manual trigger AS A FIRST STEP while the requirement stands unmet — which is the accurate state, and better stated than papered over.\n\n═══ WHAT THIS DECIDES ═══\n\nA `capture-session` skill the user types, served like every other skill, invocable AT ANY POINT IN A SESSION and not only at the end — his words, \"I can use it as I see fit throughout a session\". That clause was NOT in the original option A and it matters: it directly answers counter-argument ⚠️2 (\"session end is the worst moment to ask, and this session is the evidence\"), because a skill usable mid-session is capture-as-you-go with a defined contract rather than a closing sweep over a compacted transcript.\n\n═══ WHAT THIS DOES NOT DECIDE ═══\n  • OPTION C REMAINS THE DESTINATION. \"First step\" is his phrasing. The skill defining WHAT capture means is precisely the half C needs; a later hook deciding WHEN sits on top of it without rework. Choosing A does not foreclose C — it builds C's first half.\n  • ⚠️1 WHO JUDGES \"ANYTHING IMPORTANT\" is untouched and is the skill's hardest content problem. The skill must STATE ITS CRITERIA rather than ask an agent to introspect on the significance of its own session.\n  • ⚠️3 THE CONNECTIVE TISSUE HAS NO NATURAL NODE — still true, still unresolved, and now load-bearing in a way it was not before: a skill that captures must write SOMETHING somewhere. `cap:session-memory` stays PLANNED.\n\n═══ THE ROADS NOT TAKEN (kept, per brainstorm doctrine) ═══\nB — automatic at the Stop hook. Not rejected; deferred. Its mechanism exists and works (it blocked this very session), but it fires per-TURN and cannot tell design-relevant work from any other edit.\nC — both, split by role. THE DESTINATION, not a rejection.\nD — build `cap:session-memory` instead. Not taken as a substitute, but the skill must answer D's question — what gets written — before it is worth much.",
+        "name": "SETTLED — a capture-session skill the user types, chosen as the FIRST STEP because it is the only trigger that does not depend on the mechanism that keeps failing",
+        "rationale": "Captured because the trigger question is genuinely open while the content question is not: dec:idea-is-session-context-already-in-the-graph settled that the connective tissue is what only the session holds, and cap:session-memory has been planned since 2026-07-25 with no trigger. What makes this worth its own node is the tension rather than the idea — req:skill-use-survives-a-long-session is accepted and says the user must never be the trigger, and a skill the user types institutionalises exactly that. Recorded with the counter-arguments beside it, including that this session was compacted, which makes session-end the worst moment to ask for a faithful account of session start.",
+        "status": "accepted"
       }
     },
     {
@@ -71614,6 +71714,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered capture-intent SKILL.md — the conversational capture path, now registering the document it captured from"
+      }
+    },
+    {
+      "node_id": "frag:art:capture-session-skill",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered getting-started/skills/capture-session/SKILL.md"
       }
     },
     {
@@ -78948,7 +79058,7 @@
         "basis": "measured",
         "confidence": 1.0,
         "fact_type": "defect",
-        "statement": "A REBUILD STRANDS AN ATTACHED SESSION'S SHARED SERVER, UNRECOVERABLY, AND THE ERROR POINTS AT A LOG THAT CANNOT EXPLAIN IT. Hit 2026-08-07 doing nothing unusual: `cargo test --workspace` with a Claude Code session attached over MCP. SEQUENCE: the shared daemon reached its 120-minute idle timeout and exited, releasing the store lock — correct, by design, and logged as such. The session's client then tried to auto-start a replacement and failed with \"could not spawn the shared reflow2 server: No such file or directory (os error 2)\". CAUSE: spawn_daemon resolves the binary with std::env::current_exe() (crates/reflow2-mcp/src/shared.rs). cargo test had relinked reflow2-mcp, so the running process's current_exe() resolved to a DELETED INODE, while a perfectly good binary sat at the same path the whole time. THREE THINGS MAKE IT WORSE THAN A TRANSIENT: (1) it is unrecoverable for the life of the session — every later respawn resolves the same dead inode, and only a full MCP reconnect clears it; (2) the error's advice, \"Check the server log beside the graph directory\", names the wrong file, because the failure is in the PARENT process and never reaches the daemon log — whose last line is the idle-timeout exit, which reads like the cause and is not; (3) it will hit anyone who runs the test suite while a session is attached, which on this repo is everyone. SAME SHAPE AS fact:defect-lineage-message-omits-its-own-decision: a message whose stated remedy cannot address the actual cause, so the reader spends their time in the wrong place. Note the idle expiry itself is not the defect and should not be 'fixed' — shared.rs documents why the daemon must expire (it holds the store's exclusive write lock, and an immortal daemon trades one lock problem for another).",
+        "statement": "A REBUILD STRANDS AN ATTACHED SESSION'S SHARED SERVER, UNRECOVERABLY, AND THE ERROR POINTS AT A LOG THAT CANNOT EXPLAIN IT. Hit 2026-08-07 doing nothing unusual: `cargo test --workspace` with a Claude Code session attached over MCP. SEQUENCE: the shared daemon reached its 120-minute idle timeout and exited, releasing the store lock — correct, by design, and logged as such. The session's client then tried to auto-start a replacement and failed with \"could not spawn the shared reflow2 server: No such file or directory (os error 2)\". CAUSE: spawn_daemon resolves the binary with std::env::current_exe() (crates/reflow2-mcp/src/shared.rs). cargo test had relinked reflow2-mcp, so the running process's current_exe() resolved to a DELETED INODE, while a perfectly good binary sat at the same path the whole time. THREE THINGS MAKE IT WORSE THAN A TRANSIENT: (1) it is unrecoverable for the life of the session — every later respawn resolves the same dead inode, and only a full MCP reconnect clears it; (2) the error's advice, \"Check the server log beside the graph directory\", names the wrong file, because the failure is in the PARENT process and never reaches the daemon log — whose last line is the idle-timeout exit, which reads like the cause and is not; (3) it will hit anyone who runs the test suite while a session is attached, which on this repo is everyone. SAME SHAPE AS fact:defect-lineage-message-omits-its-own-decision: a message whose stated remedy cannot address the actual cause, so the reader spends their time in the wrong place. Note the idle expiry itself is not the defect and should not be 'fixed' — shared.rs documents why the daemon must expire (it holds the store's exclusive write lock, and an immortal daemon trades one lock problem for another).\n\n═══ ADDENDUM 2026-08-12 — FIFTH SIGHTING, AND IT CORRECTS THE RECOVERY STEP ABOVE ═══\n\nHit again mid-session on 2026-08-12, same mechanism, confirmed by direct measurement rather than inference:\n  readlink /proc/341009/exe  -> /home/ajs7/project/reflow2/target/debug/reflow2-mcp (deleted)\n  readlink /proc/4067388/exe -> /home/ajs7/project/reflow2/target/debug/reflow2-mcp (deleted)\nBoth live client processes were executing a deleted inode while a current, executable binary sat at that exact path.\n\n⭐ WHY IT RECURRED DESPITE BEING FIXED, and this is the part worth keeping. The fix landed as `relaunchable_exe_from` in PR #149 (`dafa57f`, \"spawn_daemon survives a replaced binary\"), merged 2026-08-11. The two client processes started 2026-08-11 at 06:58 and 18:57 — BEFORE that merge. A fix to the spawn path cannot help a session that is already running the binary it fixes: the affected process is by definition the OLD one. ⇒ THE POPULATION THAT HITS THIS DEFECT IS EXACTLY THE POPULATION THE FIX CANNOT REACH, until every long-lived session has been restarted. Confirmed by the error text: the message received was the OLD wording, \"could not spawn the shared reflow2 server: No such file or directory (os error 2)\", which shared.rs:400 records as the pre-#149 message. The post-fix path names the file it could not find.\n\n🛑 AND IT CORRECTS THE RECOVERY CLAUSE ABOVE. This node says \"only a full MCP reconnect clears it\". MEASURED FALSE on 2026-08-12: a `/mcp` reconnect does NOT clear it, because a reconnect does not replace a running stdio server — the same process, with the same dead inode, continues serving. Only a FULL RESTART of the client does. The distinction is not pedantic: reconnect is the cheap thing a stranded user will try first, it appears to succeed, and it leaves them exactly as stranded while believing they have already tried the remedy.\n\nWHAT KEPT THE SESSION WORKING: `tools/reflow2_cli.py` spawns its own short-lived process against the store, so every graph write of that afternoon went through it and nothing was lost. Worth knowing — the outage is to the MCP transport, never to the design.",
         "subject_id": "cap:shared-sessions",
         "valid_from": "2026-08-07",
         "value": "{\"filed_as\":\"https://github.com/sligara7/reflow2/issues/91 (finding 2 of 3), 2026-08-07, on Anthony's word\",\"observed\":\"2026-08-07, cargo test --workspace with an MCP session attached\",\"error\":\"could not spawn the shared reflow2 server: No such file or directory (os error 2)\",\"cause\":\"std::env::current_exe() in crates/reflow2-mcp/src/shared.rs spawn_daemon resolves a deleted inode after a relink\",\"binary_was_fine\":\"target/debug/reflow2-mcp existed and ran throughout\",\"recovery\":\"full MCP reconnect only\",\"misleading_advice\":\"'Check the server log beside the graph directory' - failure is in the parent, never reaches that log\",\"blast\":\"anyone running the test suite with a session attached\",\"not_the_defect\":\"the 120-minute idle expiry, which shared.rs justifies: the daemon holds the store's exclusive write lock\",\"fix_shape\":\"fall back to the resolved binary path when current_exe() no longer exists, or detect ENOENT on spawn and name the cause\",\"prior_diagnoses\":\"recorded in session handoffs 2026-08-06 as 'worth filing and still unfiled'; this is the first time it is in the graph\"}"
@@ -80931,7 +81041,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:375d08fefb8fbfd352db85f432948782f5b9b2ea9c11157365a6de7e39f4711b",
+  "prev_content_hash": "sha256:4b6b43e719b507628b7dc868e4d71921a1f993f39bd519fd07fa87d82acbcb94",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
