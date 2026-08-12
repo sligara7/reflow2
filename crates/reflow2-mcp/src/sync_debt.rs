@@ -1,0 +1,276 @@
+//! Has the shared record moved since this seat last looked?
+//!
+//! # The finding this exists to fix
+//!
+//! `provenance::last_synced` — the content hash this seat believes is at a
+//! given path — was **written by two paths and read by one**. `record_sync` is
+//! called by `export_graph` and by `import_graph`; `last_synced()` was read
+//! inside `export_graph` and nowhere else.
+//!
+//! So reflow2 could already tell, at the first moment of a session, that
+//! somebody else's work had landed in the record — and said nothing until you
+//! tried to export, hours later, when [`crate::sync`]'s refusal finally fired.
+//! **It knew at the first moment and spoke at the last.** That is the same
+//! family as `dec:one-retire-edge`'s "a marker nothing reads is a comment",
+//! except here something did read it, at the wrong moment.
+//!
+//! # Option A, and what it deliberately is not
+//!
+//! Anthony chose "speak on read, gated on the hash" over three alternatives,
+//! 2026-08-11 (`dec:idea-the-graph-notices-the-record-moved-without-being-asked`).
+//!
+//! **THE GATE IS THE DESIGN.** A seat that is merely *ahead* of the file — the
+//! entire normal state of every working session — is silent, because the file
+//! has not moved and every difference is the caller's own unexported work. The
+//! check speaks only when the file's hash differs from what this seat recorded,
+//! which means somebody else has been there. That is what keeps it rare enough
+//! to be read; a check that fired on ordinary solo work would be ignored inside
+//! a week.
+//!
+//! - NOT auto-import (option B). `import_graph` is an UPSERT, so an unasked one
+//!   silently overwrites live session work with whatever the file holds, and
+//!   doing it unasked makes it invisible. `dec:ask-not-repair`.
+//! - NOT a refusal (option C). A refusal on READ is heavy-handed, and a session
+//!   deliberately working from an older design would meet it every time. These
+//!   findings carry a remedy and never block.
+//!
+//! # Why it lives here and not in the core
+//!
+//! `reflow2-core` does no file I/O, deliberately and repeatedly —
+//! `reconcile_artifacts` makes the caller supply hashes, and `granularity` and
+//! `consumption` both say so in their module docs. Reading the record off disk
+//! therefore cannot move into `loop_status`. It belongs at the MCP layer, in
+//! the same crate that already does exactly this comparison for `export_graph`.
+//!
+//! The comparison itself is NOT reimplemented: [`reflow2_core::sync`]'s
+//! `assess_overwrite` already answers "what does the file hold that this
+//! document does not", which is precisely the question, so this module supplies
+//! the enumeration and the wording and borrows the judgement.
+
+use reflow2_core::{GraphExport, sync::SyncVerdict};
+use serde::Serialize;
+
+pub use reflow2_core::provenance::SyncState;
+
+/// How many arrived node ids to name before summarising. Enough to recognise
+/// what landed, few enough that a big pull does not become a wall of ids.
+pub const NAMED_ARRIVALS: usize = 8;
+
+/// What this seat found at one target it has synced with before.
+///
+/// Every known target comes back, including the quiet ones: "checked three
+/// records, all in step" and "checked nothing" are different facts and must not
+/// share an answer.
+#[derive(Debug, Clone, PartialEq, Serialize)]
+pub struct SyncDebt {
+    /// The file this seat has synced with before.
+    pub path: String,
+    /// `in_step` · `behind` · `moved_but_current` · `missing` · `unreadable`.
+    /// A string rather than an enum so the served JSON is self-describing.
+    pub state: String,
+    /// The content hash this seat recorded for that path.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub expected: Option<String>,
+    /// The content hash actually on disk now.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub found: Option<String>,
+    /// Node ids the record holds that this graph does not, up to
+    /// [`NAMED_ARRIVALS`]. Names what arrived, so the reader can recognise it.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub nodes_not_here: Vec<String>,
+    /// How many nodes arrived in total — never truncated, so a capped list can
+    /// never read as the whole set.
+    pub nodes_not_here_total: usize,
+    /// How many edges the record holds that this graph does not.
+    pub edges_not_here_total: usize,
+    /// The file's OWN embedded `content_hash` disagrees with its actual
+    /// content — it was edited by something other than `export_graph`. Reported
+    /// rather than hidden: it is why this check computes the hash instead of
+    /// believing the one the file supplies about itself.
+    #[serde(skip_serializing_if = "std::ops::Not::not")]
+    pub stamp_disagrees: bool,
+}
+
+impl SyncDebt {
+    /// Is there something for the caller to actually do about this?
+    ///
+    /// Only `behind` — the record holds design this graph lacks. A record that
+    /// moved and left this seat a superset is worth knowing and not worth
+    /// acting on, and an in-step record is nothing at all.
+    pub fn is_actionable(&self) -> bool {
+        self.state == "behind"
+    }
+
+    /// The sentence a human needs: what happened, and what to call.
+    ///
+    /// Rule 4 — a finding that does not say what would fix it is a wall. This
+    /// is deliberately a HINT and not a refusal: it names the remedy and never
+    /// says the caller was stopped, because nothing was stopped.
+    pub fn message(&self) -> String {
+        match self.state.as_str() {
+            "behind" => format!(
+                "The shared record at {} has moved since this graph synced with it, and holds {} \
+                 node(s) and {} edge(s) this graph does not{}. To take them in, call import_graph \
+                 with path {} — or carry on if you meant to work from what you have.",
+                self.path,
+                self.nodes_not_here_total,
+                self.edges_not_here_total,
+                if self.nodes_not_here.is_empty() {
+                    String::new()
+                } else {
+                    format!(
+                        " ({}{})",
+                        self.nodes_not_here.join(", "),
+                        if self.nodes_not_here_total > self.nodes_not_here.len() {
+                            format!(
+                                ", +{} more",
+                                self.nodes_not_here_total - self.nodes_not_here.len()
+                            )
+                        } else {
+                            String::new()
+                        }
+                    )
+                },
+                self.path,
+            ),
+            "moved_but_current" => format!(
+                "The shared record at {} has moved since this graph synced with it, but everything \
+                 it holds is already here. Nothing to take in.",
+                self.path
+            ),
+            "missing" => format!(
+                "This seat has synced with {} before and there is no file there now.",
+                self.path
+            ),
+            "unreadable" => format!(
+                "This seat has synced with {} before and what is there now is not a readable \
+                 reflow2 export.",
+                self.path
+            ),
+            _ => format!("{} is exactly where this graph left it.", self.path),
+        }
+    }
+}
+
+/// Check every record this seat has synced with against what is on disk now.
+///
+/// Returns one [`SyncDebt`] per known target, in path order. An empty answer
+/// means this seat has never synced with anything — never that everything is
+/// fine.
+///
+/// `mine` is a CLOSURE and that is a cost decision, not a style one. Exporting
+/// this graph to compare against is the expensive half; the hash check is the
+/// cheap half, and on the overwhelmingly common in-step path the answer is
+/// known before any comparison is needed. So the export is built only if some
+/// record has actually moved, and never on the path every ordinary session
+/// takes. It is called at most once however many targets are stale.
+pub fn sync_debt(graph_path: &str, mine: &dyn Fn() -> Option<GraphExport>) -> Vec<SyncDebt> {
+    let mut built: Option<Option<GraphExport>> = None;
+    let state = reflow2_core::provenance::read_sync_state(graph_path);
+    let mut out = Vec::new();
+
+    for (path, expected) in &state.last_synced {
+        let target = std::path::Path::new(path);
+        if !target.exists() {
+            out.push(bare(path, "missing", Some(expected.clone()), None));
+            continue;
+        }
+        let on_disk = std::fs::read_to_string(target)
+            .ok()
+            .and_then(|raw| serde_json::from_str::<GraphExport>(&raw).ok());
+        let Some(on_disk) = on_disk else {
+            out.push(bare(path, "unreadable", Some(expected.clone()), None));
+            continue;
+        };
+        // ⚠️ COMPUTED, NEVER the hash the file states about itself.
+        // `effective_content_hash` TRUSTS the embedded `content_hash` and only
+        // computes when it is absent — so a document edited by anything other
+        // than `export_graph` (a merge, a hand-fix, another tool) keeps its old
+        // stamp and would read as "exactly where this graph left it" while its
+        // content had moved. Caught end-to-end on 2026-08-11 by simulating the
+        // very case this feature exists for: work appended to the record.
+        // The document is already parsed, so computing costs nothing extra.
+        let found = on_disk.compute_content_hash();
+        let stamp_disagrees = on_disk.verify_content_hash() == Some(false);
+
+        // THE CHEAP GATE, and the path every ordinary session takes: the file
+        // is exactly where this graph left it, so any difference is the
+        // caller's own unexported work. Answered without exporting anything.
+        if &found == expected {
+            let mut d = bare(path, "in_step", Some(expected.clone()), Some(found));
+            d.stamp_disagrees = stamp_disagrees;
+            out.push(d);
+            continue;
+        }
+
+        // Something moved. NOW the export is worth building — once, however
+        // many targets are stale.
+        let mine = built.get_or_insert_with(mine);
+        let Some(mine) = mine.as_ref() else {
+            out.push(bare(
+                path,
+                "unreadable",
+                Some(expected.clone()),
+                Some(found),
+            ));
+            continue;
+        };
+
+        // The judgement itself is borrowed whole from the write path rather
+        // than reimplemented — assess_overwrite already answers "what does the
+        // file hold that this document does not".
+        //
+        // ⚠️ `last_synced` IS PASSED AS `None` DELIBERATELY. Its only role in
+        // there is a fast path that compares against `effective_content_hash`,
+        // which believes the stamp the document states about itself; we have
+        // already made that comparison above with a COMPUTED hash and know the
+        // content moved, so handing it the shortcut would let a stale stamp
+        // send it straight back to `Clear`. Passing None asks for the full
+        // document comparison, which is the whole reason we got here.
+        match reflow2_core::sync::assess_overwrite(Some(&on_disk), mine, None) {
+            SyncVerdict::Clear => {
+                let mut d = bare(path, "in_step", Some(expected.clone()), Some(found));
+                d.stamp_disagrees = stamp_disagrees;
+                out.push(d)
+            }
+            SyncVerdict::MovedButNothingLost { .. } => {
+                let mut d = bare(
+                    path,
+                    "moved_but_current",
+                    Some(expected.clone()),
+                    Some(found),
+                );
+                d.stamp_disagrees = stamp_disagrees;
+                out.push(d)
+            }
+            SyncVerdict::WouldDrop {
+                dropped_nodes,
+                dropped_edges,
+                ..
+            } => out.push(SyncDebt {
+                path: path.clone(),
+                state: "behind".into(),
+                expected: Some(expected.clone()),
+                found: Some(found),
+                nodes_not_here: dropped_nodes.iter().take(NAMED_ARRIVALS).cloned().collect(),
+                nodes_not_here_total: dropped_nodes.len(),
+                edges_not_here_total: dropped_edges.len(),
+                stamp_disagrees,
+            }),
+        }
+    }
+    out
+}
+
+fn bare(path: &str, state: &str, expected: Option<String>, found: Option<String>) -> SyncDebt {
+    SyncDebt {
+        path: path.to_string(),
+        state: state.to_string(),
+        expected,
+        found,
+        nodes_not_here: Vec::new(),
+        nodes_not_here_total: 0,
+        edges_not_here_total: 0,
+        stamp_disagrees: false,
+    }
+}

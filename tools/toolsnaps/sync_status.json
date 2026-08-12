@@ -1,0 +1,12 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Has the SHARED RECORD moved since this graph last looked? Answers the question a session should ask FIRST when other people write to the same design: somebody pulled their work into the committed export and this graph has never seen it. One entry per file this seat has synced with — `in_step` (exactly where this graph left it), `behind` (THE ACTIONABLE ONE — the record holds nodes this graph lacks; the ids are named and `import_graph` on that path takes them in), `moved_but_current` (somebody exported, you already hold it all), `missing`, `unreadable`. AN EMPTY ANSWER MEANS THIS SEAT HAS NEVER SYNCED WITH ANY FILE — never that all is well; the quiet targets are listed for exactly that reason. BEING AHEAD OF THE RECORD IS NOT REPORTED: unexported work is the normal state of a working session, and the check is gated on the file's content hash so it is silent unless somebody ELSE has been there. IT NEVER ACTS — no auto-import, because import is an upsert and an unasked one would silently overwrite live work (dec:ask-not-repair); it names the remedy and leaves the choice. `loop_status` carries the same finding as `record_moved` when there is one.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "type": "object"
+  },
+  "name": "sync_status"
+}

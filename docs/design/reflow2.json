@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:05ab3117133ab3a5431e0830a2566999d2118c520fe20b798412c5f364b3f566",
+  "content_hash": "sha256:51fd16eba29d85af491a27e206afa079346c1c94af172b15681383f3102e3e72",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2070,6 +2070,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:llm"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-record-moved-is-surfaced",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:sync"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -4537,6 +4545,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:sync-debt-surfaced",
+      "properties": {},
+      "to_id": "epoch:the-record-moved-is-noticed"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:ten-defaults-stop-injecting",
       "properties": {},
       "to_id": "epoch:a-default-is-not-a-difference"
@@ -6970,6 +6984,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-graph-notices-the-record-moved-without-being-asked",
+      "properties": {
+        "acted_at": "2026-08-11",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-the-ility-chooses-the-allocation-graph",
       "properties": {
         "acted_at": "2026-08-08",
@@ -9221,6 +9244,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-acb06c45b63a7b6d",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:sync"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-af14fd0d926de4db",
       "properties": {
         "accepted_baseline": true,
@@ -10001,6 +10033,15 @@
         "action": "modified"
       },
       "to_id": "art:built-right-review"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-1241a97aff559918",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:sync-debt"
     },
     {
       "edge_type": "CHANGED",
@@ -16464,6 +16505,33 @@
         "action": "modified"
       },
       "to_id": "cap:portability"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:sync-debt-surfaced",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:sync-debt-surfaced",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:sync-debt-surfaced",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:the-record-moved-is-surfaced"
     },
     {
       "edge_type": "CHANGED",
@@ -24342,6 +24410,12 @@
       "from_id": "cap:surface",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:the-record-moved-is-surfaced",
+      "properties": {},
+      "to_id": "dec:idea-the-graph-notices-the-record-moved-without-being-asked"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -51728,6 +51802,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:sync-debt",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:the-record-moved-is-surfaced"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:temporal",
       "properties": {
         "completeness": "complete"
@@ -53157,6 +53239,12 @@
       "from_id": "cap:surface",
       "properties": {},
       "to_id": "req:no-se-knowledge"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:the-record-moved-is-surfaced",
+      "properties": {},
+      "to_id": "req:a-seat-learns-the-record-moved-before-it-writes"
     },
     {
       "edge_type": "SATISFIES",
@@ -54666,6 +54754,12 @@
       "from_id": "ver:the-export-chain-is-unbroken",
       "properties": {},
       "to_id": "rule:the-export-is-written-once-per-branch"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:the-record-moved-is-surfaced",
+      "properties": {},
+      "to_id": "cap:the-record-moved-is-surfaced"
     },
     {
       "edge_type": "VERIFIES",
@@ -57388,7 +57482,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7d7424dbc8fbeae7f78f393a2414d64976928325ecb0c2455afdba91f952623f",
+        "checksum": "sha256:b767c5da7864d4cd230f0b0cfc9dbe936c860cdb27809adc68d7ec6da77d861e",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -57552,10 +57646,25 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e792e6bab2ad48527428df1c015f6ebe20fec9d79da22657f7ed088f8d605c56",
+        "checksum": "sha256:c79d8c79905d00199a758e49e4ad91d27539c15223d89aeb675848a8cdfae464",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/sync.rs",
         "name": "sync.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:sync-debt",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:56cc3f8bd181db56332b9bf9b34d46127ef805da38a395a4c88e9322e175a99b",
+        "granularity": "atomic",
+        "location": "crates/reflow2-mcp/src/sync_debt.rs",
+        "name": "sync_debt.rs",
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -57809,7 +57918,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:98b9246bba106f51fe0bd8d92669f944417e7bc5d5b25a13bb26b4bb59712d1a",
+        "checksum": "sha256:b70b0fa010db32450a5c67327f4190edeee8c0db13b01c8491cfd2f2ee709c50",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -59880,6 +59989,16 @@
       }
     },
     {
+      "node_id": "cap:the-record-moved-is-surfaced",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Checks every file this seat has synced with before, and reports one finding each: `in_step` (exactly where this graph left it), `behind` (THE ACTIONABLE ONE — the record holds nodes this graph lacks, named, with `import_graph` as the remedy), `moved_but_current` (somebody exported, this seat already holds it all), `missing`, `unreadable`.\n\nServed as the `sync_status` tool, and carried on `loop_status` as `record_moved` when there is something to say.\n\nTHE GATE IS THE DESIGN, not an optimisation on it. A seat merely AHEAD of the record is silent, because the file has not moved and every difference is its own unexported work. The check speaks only when the record's content hash differs from what this seat recorded — meaning somebody else has been there. That is what keeps it rare enough to be read.\n\n⚠️ THE HASH IS COMPUTED, NEVER READ OFF THE DOCUMENT. `effective_content_hash` believes the `content_hash` a file states about itself and computes one only when absent, so a record edited by anything other than `export_graph` — a merge, a hand-fix, another tool — keeps its old stamp and reads as untouched. A check must never believe a claim made by the thing it is checking. The discrepancy is itself reported, as `stamp_disagrees`.\n\nIT NEVER ACTS. No auto-import: `import_graph` is an upsert, so an unasked one would silently overwrite live session work (`dec:ask-not-repair`). It names the remedy and leaves the choice.\n\nAN EMPTY ANSWER MEANS THIS SEAT HAS NEVER SYNCED WITH ANY FILE — never that all is well. Every known target is listed, including the quiet ones, so \"checked three records, all in step\" and \"checked nothing\" cannot share an answer.\n\nCOST: the export to compare against is built LAZILY and never on the in-step path, which is the one every ordinary session takes.\n\nNOT COVERED: anything about a record this seat has never synced with, and any design held somewhere this seat has no path to.",
+        "name": "A seat reports which shared records have moved ahead of it, and names what arrived",
+        "provenance": "authored",
+        "status": "verified"
+      }
+    },
+    {
       "node_id": "cap:the-server-knows-its-own-currency",
       "node_type": "Capability",
       "properties": {
@@ -60623,6 +60742,15 @@
       }
     },
     {
+      "node_id": "chg:accept-acb06c45b63a7b6d",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-11",
+        "name": "A DEFECT FIX, recorded under test_failure_fix because the enum has no value meaning \"the code was wrong\" — the same gap noted for `correction` on add_change_event. assess_overwrite now COMPUTES the target's content hash instead of reading effective_content_hash, which trusts the content_hash a document states about itself. A record edited by anything but export_graph kept its old stamp, both fast paths returned Clear, and the stale-seat refusal went quiet in exactly the case req:stale-seat-knows exists to catch — silent data loss on the next export, deleting the other person's work. THE DESIGN ALREADY SAID THIS; only the code was wrong, hence design_holds. Mutation-checked: restoring effective_content_hash fails exactly the one test that names the case."
+      }
+    },
+    {
       "node_id": "chg:accept-af14fd0d926de4db",
       "node_type": "ChangeEvent",
       "properties": {
@@ -61046,6 +61174,15 @@
       "properties": {
         "change_type": "baseline_established",
         "name": "First baseline for the census document, registered 2026-08-04 with DOCUMENTS per the link-artifacts skill."
+      }
+    },
+    {
+      "node_id": "chg:baseline-1241a97aff559918",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-11",
+        "name": "First baseline — the file is new in this change, so nothing moved."
       }
     },
     {
@@ -62840,6 +62977,14 @@
       }
     },
     {
+      "node_id": "chg:sync-debt-surfaced",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "cap:the-record-moved-is-surfaced built and verified, on Anthony's option A. Adds crates/reflow2-mcp/src/sync_debt.rs, served as the `sync_status` tool and carried on `loop_status` as `record_moved`. THE FINDING BEHIND IT: `provenance::last_synced` was written by two paths (export_graph, import_graph) and read by exactly one (inside export_graph) — so the design knew a shared record had moved at the first moment of a session and said nothing until the write, hours later. FIXES A REAL DEFECT FOUND WHILE BUILDING IT: `sync::assess_overwrite` computed its comparison from `effective_content_hash`, which TRUSTS the content_hash a document states about itself and computes one only when absent — so a record edited by anything but export_graph (a merge, a hand-fix) kept its old stamp, BOTH fast paths returned Clear, and the stale-seat refusal went quiet in exactly the case req:stale-seat-knows exists to catch. On the export path that is silent data loss: the write would delete the other person's work. Now computed from content, with the discrepancy itself reported as `stamp_disagrees`. Found end-to-end by appending a node to a record without restamping it — the shape a merge produces — after the first cut shipped believing the stamp."
+      }
+    },
+    {
       "node_id": "chg:ten-defaults-stop-injecting",
       "node_type": "ChangeEvent",
       "properties": {
@@ -64120,9 +64265,9 @@
       "node_id": "dec:central-host",
       "node_type": "Decision",
       "properties": {
-        "decision": "UNDECIDED. Raised by Anthony 2026-07-25 from his own situation: he is in Long Island, his brother is in Washington State, they want to work on one design at the same time and to see each other's projects. FOUR ROADS, and the middle ones are not the obvious winners. (a) GIT IS ALREADY THE CENTRAL SERVER — the design is a file in the repo, the repo already spans both coasts, and the claims layer that shipped 2026-07-25 already answers \"who has what in hand\" the moment either side pulls. Nothing to host, nothing to secure, nothing to pay for, and no new place for the design to live. What it cannot do is tell you about a claim before the other person pushes. (b) A HOSTED MCP over HTTPS — one server process holding the graph, both people's agents connecting to it, so a claim is visible the moment it is made and a design is reachable by someone who never cloned the repo. Costs: reflow2-mcp serves stdio only today (rmcp's streamable-HTTP transport exists, the binary does not use it), authentication does not exist at all, and it puts the design on a machine — which weakens but does not erase dec:repo-file-embedded's objection, since the machine would be Anthony's own droplet rather than a vendor's. NOTE WHAT MAKES (b) CHEAPER THAN IT LOOKS: one server process with many clients is ALREADY compatible with the single-writer store, because there is still exactly one writer — the server. (c) HYBRID — host a read/publish surface for reaching and browsing designs, keep writes local and merge through git, so the durable record never moves. THE CHEAPEST FIRST CUT, worth naming because it needs almost no core work: one server process PER PROJECT, each with its own graph path and its own token, and project selection becomes which URL the agent points at — no graph_id plumbing, no multi-tenancy, and a per-project blast radius if one goes wrong. A private tailnet instead of public TLS removes the authentication problem for exactly two people, which is the population this actually has. (d) ONE LIVE SHARED WORKING TREE on a droplet — both people editing the same checkout simultaneously, seeing each other's edits, with a push to a \"true\" git repo every so often for permanent storage (Anthony, 2026-07-25). THE DESIGN HALF OF THIS IS (b) AND IS SOUND; THE CODE HALF INVERTS THE PROPERTY IT IS REACHING FOR. A shared checkout does not remove conflicts, it removes conflict DETECTION: with one copy there is no common ancestor to merge against, so two agents doing read-modify-write on one file interleave into last-write-wins with no marker, no three-way merge and nothing to review — strictly less safe than what they have now. It also shares the things git assumes are private (one index, one HEAD, one branch: `git checkout` on his side changes files under her mid-edit), shares the build directory and the graph's single-writer lock, and makes the droplet a single point of failure for two people who can currently both work on a plane. The batched push is its own cost: history granularity, attribution and bisect all collapse into one commit, the gates that are supposed to gate a commit are replaced by a timer, and \"every so often\" is precisely the size of the loss window when the droplet dies.",
+        "decision": "UNDECIDED. Raised by Anthony 2026-07-25 from his own situation: he is in Long Island, his brother is in Washington State, they want to work on one design at the same time and to see each other's projects. FOUR ROADS, and the middle ones are not the obvious winners. (a) GIT IS ALREADY THE CENTRAL SERVER — the design is a file in the repo, the repo already spans both coasts, and the claims layer that shipped 2026-07-25 already answers \"who has what in hand\" the moment either side pulls. Nothing to host, nothing to secure, nothing to pay for, and no new place for the design to live. What it cannot do is tell you about a claim before the other person pushes. (b) A HOSTED MCP over HTTPS — one server process holding the graph, both people's agents connecting to it, so a claim is visible the moment it is made and a design is reachable by someone who never cloned the repo. Costs: reflow2-mcp serves stdio only today (rmcp's streamable-HTTP transport exists, the binary does not use it), authentication does not exist at all, and it puts the design on a machine — which weakens but does not erase dec:repo-file-embedded's objection, since the machine would be Anthony's own droplet rather than a vendor's. NOTE WHAT MAKES (b) CHEAPER THAN IT LOOKS: one server process with many clients is ALREADY compatible with the single-writer store, because there is still exactly one writer — the server. (c) HYBRID — host a read/publish surface for reaching and browsing designs, keep writes local and merge through git, so the durable record never moves. THE CHEAPEST FIRST CUT, worth naming because it needs almost no core work: one server process PER PROJECT, each with its own graph path and its own token, and project selection becomes which URL the agent points at — no graph_id plumbing, no multi-tenancy, and a per-project blast radius if one goes wrong. A private tailnet instead of public TLS removes the authentication problem for exactly two people, which is the population this actually has. (d) ONE LIVE SHARED WORKING TREE on a droplet — both people editing the same checkout simultaneously, seeing each other's edits, with a push to a \"true\" git repo every so often for permanent storage (Anthony, 2026-07-25). THE DESIGN HALF OF THIS IS (b) AND IS SOUND; THE CODE HALF INVERTS THE PROPERTY IT IS REACHING FOR. A shared checkout does not remove conflicts, it removes conflict DETECTION: with one copy there is no common ancestor to merge against, so two agents doing read-modify-write on one file interleave into last-write-wins with no marker, no three-way merge and nothing to review — strictly less safe than what they have now. It also shares the things git assumes are private (one index, one HEAD, one branch: `git checkout` on his side changes files under her mid-edit), shares the build directory and the graph's single-writer lock, and makes the droplet a single point of failure for two people who can currently both work on a plane. The batched push is its own cost: history granularity, attribution and bisect all collapse into one commit, the gates that are supposed to gate a commit are replaced by a timer, and \"every so often\" is precisely the size of the loss window when the droplet dies.\n\n═══════════════════════════════════════════════════════════════════\nSHARPENED 2026-08-11 — THE PUBLISHING CASE ARRIVES WITH A NAME, AND IT BREAKS AN ASSUMPTION EVERY OPTION ABOVE SHARES\n═══════════════════════════════════════════════════════════════════\n\nRECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony is thinking out loud; nothing here settles this decision, which stays `proposed`.\n\n⭐ DELIBERATELY SHARPENED RATHER THAN OPENED AS A NEW NODE. This node's own rationale already named the gap it is being filled with — \"what it does NOT deliver is the publishing case, and that is the strongest argument on the hosted side\" — so a second node would have been the near-duplicate the search-first rule exists to prevent. What follows is new EVIDENCE on the same question, not a new question.\n\nHIS WORDS, 2026-08-11: \"I want to use reflow2 within flo2. it is purposefully designed to allow collaboration on projects via a web app. if one user posts some brainstorm idea or identifies gaps, the other user shouldn't have to run some terminal commands in order to see that (especially non technical people using web app where no CLI exists).\"\n\n⭐⭐ THE ASSUMPTION THAT JUST BROKE, and it is the reason this is worth re-weighing rather than merely noting. EVERY option above was weighed for TWO TECHNICAL PEOPLE WITH TERMINALS. Option (a) — \"git is already the central server\" — is only free if both parties can run git. The moment one participant is a non-technical user of a web app, (a) stops being free and starts being impossible: there is no shell to run `git pull` in, no checkout to pull into, and no way to run the import that makes a pulled file readable by the tools.\n\nTHE CONCRETE FRICTION HE IS OBJECTING TO, measured today rather than supposed: for a second person to SEE a brainstormed idea in a form the tools can answer questions about, they must today (1) `git pull`, (2) run `reflow2-mcp --graph-path .reflow2/graph --import docs/design/reflow2.json`, and (3) have a merge driver configured per-clone or meet a raw text conflict in a 4 MB JSON file. That is three technical steps between one person recording a thought and another person seeing it. For an agent-driven CLI user it is friction; for a web-app user it is a wall.\n\nWHAT THIS DOES AND DOES NOT CHANGE, stated separately so neither is overclaimed:\n- It does NOT re-open `dec:multi-writer-architecture` (accepted 2026-07-25, \"no hosted service\"). That decision answered how two WRITERS avoid clobbering each other, and its rejection of hosting rested on `req:persistence` and `req:invocation` — both of which describe where a design DURABLY LIVES. A read/publish surface does not move the durable record, which is exactly why option (c) exists here.\n- It DOES weaken option (a) as a general answer, because (a)'s cheapness was priced for participants who all have a shell.\n- ⚠️ It sits against `dec:one-process-many-stores` (ACCEPTED, conditional) and `rule:per-design-state-is-never-a-process-global`, which already contemplate a hosted reflow2 holding N single-writer stores. So the hosted direction is NOT unexplored ground — it is partly built toward, and `req:a-session-cannot-address-another-design` is the guard that must be proven before it ships.\n- `fact:the-hosted-case-breaks-the-git-transport-and-the-access-topology-is-now-stated` already recorded the same collision from the other side, on 2026-08-09.\n\nTHE NEW QUESTION THIS RAISES, which none of (a)–(d) answers: WHO IS THE WRITER when the participant is a web-app user? reflow2's loop is ask-the-human-and-record-an-ATTRIBUTABLE-answer. Today attribution comes from a Contributor a local agent names. Through a web app, the app is the MCP client and the human is behind it — so either flo2 passes identity through to reflow2 on every write, or every contribution from that surface is attributed to \"flo2\" and the confirmation ledger stops meaning what it says. ⭐ THAT IS A HARDER PROBLEM THAN THE TRANSPORT, and it is the one most likely to be discovered late.\n\n⚠️ A REPO-BOUNDARY NOTE, so nobody skips it: flo2 is a SEPARATE PROJECT with its own design graph and its own owners. Nothing here may be built into flo2 from this repo without Anthony's word (AGENTS.md rule 6). What reflow2 can decide alone is whether it OFFERS a surface flo2 could consume; whether flo2 consumes it is flo2's decision to record.\n\nNOT DECIDED, and deliberately not ranked. Option (c) — publish/read hosted, writes stay local — is the one this evidence pushes hardest on, but it is also the one whose attribution story is least worked out.",
         "name": "OPEN — does reflow2 gain a hosted surface (one MCP over HTTPS) alongside the repo file?",
-        "rationale": "Held proposed, not built, because it sits against a decision made HOURS earlier on 2026-07-25 (dec:multi-writer-architecture: repo file plus merge on pull, no hosted service) and it must not be drifted into. Per dec:reopen-supersedes, the move is a NEW decision point rather than flipping that one back to proposed. What is genuinely new, and the reason this is not a rerun of the same argument: that decision answered \"how do two writers avoid clobbering each other\", and its rationale turned on concurrency being hypothetical and on not putting the user's design on someone else's machine. Neither objection addresses what was raised now — two machines that never share a filesystem, several projects per person, and wanting to READ and contribute to a design without cloning its repo. It is also the second field-sourced trigger in two days on the same seam, which is what cap:revise-trigger exists to notice; that it arrived by conversation rather than by detector is a finding about the detector, not about the trigger. THE HONEST COUNTER-ARGUMENT, recorded so nobody has to rediscover it: reflow2's loop is ask-the-human-and-record-the-decision, which is deliberate, attributable and slow — a shared live server optimises for simultaneity, which this tool does not need and may be harmed by. The thing the two of them described wanting is mostly non-colliding parallel work plus visibility, and git plus the claims layer already delivers most of that. What it does NOT deliver is the publishing case, and that is the strongest argument on the hosted side. WHAT OPTION (d) CLARIFIED, and it is the useful split: the appeal is real-time VISIBILITY, and visibility does not require a shared working tree. The graph is the artefact where simultaneity genuinely pays and where a single writer already exists to serialise it; source code is the artefact where the distributed copy is doing load-bearing work that a shared tree would silently undo. So the two halves of \"host it\" should be decided separately rather than together.",
+        "rationale": "Held proposed, not built, because it sits against a decision made HOURS earlier on 2026-07-25 (dec:multi-writer-architecture: repo file plus merge on pull, no hosted service) and it must not be drifted into. Per dec:reopen-supersedes, the move is a NEW decision point rather than flipping that one back to proposed. What is genuinely new, and the reason this is not a rerun of the same argument: that decision answered \"how do two writers avoid clobbering each other\", and its rationale turned on concurrency being hypothetical and on not putting the user's design on someone else's machine. Neither objection addresses what was raised now — two machines that never share a filesystem, several projects per person, and wanting to READ and contribute to a design without cloning its repo. It is also the second field-sourced trigger in two days on the same seam, which is what cap:revise-trigger exists to notice; that it arrived by conversation rather than by detector is a finding about the detector, not about the trigger. THE HONEST COUNTER-ARGUMENT, recorded so nobody has to rediscover it: reflow2's loop is ask-the-human-and-record-the-decision, which is deliberate, attributable and slow — a shared live server optimises for simultaneity, which this tool does not need and may be harmed by. The thing the two of them described wanting is mostly non-colliding parallel work plus visibility, and git plus the claims layer already delivers most of that. What it does NOT deliver is the publishing case, and that is the strongest argument on the hosted side. WHAT OPTION (d) CLARIFIED, and it is the useful split: the appeal is real-time VISIBILITY, and visibility does not require a shared working tree. The graph is the artefact where simultaneity genuinely pays and where a single writer already exists to serialise it; source code is the artefact where the distributed copy is doing load-bearing work that a shared tree would silently undo. So the two halves of \"host it\" should be decided separately rather than together. THIRD FIELD TRIGGER, 2026-08-11: the publishing case named in this rationale arrived concretely as flo2 — a web app whose users have no CLI at all — which breaks the shared assumption that every participant can run git. Sharpened in place rather than forked, because this node had already named the gap.",
         "status": "proposed"
       }
     },
@@ -65174,6 +65319,16 @@
         "name": "OPEN — should the Environment / EnvironmentRule compliance layer be built? The schema declares it, nothing writes or reads it, and it is what makes \"design a house\" concrete",
         "rationale": "Three doc requirements, a schema layer, and a worked Kennewick-vs-Mars argument, all dating to 2026-07-17 with zero instances and zero code. The vocabulary distinction it carries — self-imposed vs chosen vs externally imposed — is sound and already in the schema. What is missing is any evidence a user wants it, including from the one user whose own domain is regulated.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-the-graph-notices-the-record-moved-without-being-asked",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED 2026-08-11, Anthony's word: \"yes, I like option A - let's implement.\" OPTION A CHOSEN — speak on read, gated on the hash. B, C and D are recorded below as considered and not taken.\n\nHIS FRAMING, and it was the right diagnosis: \"It sounds like we have the tool, just not used well or surfaced.\"\n\n⚠️ THE TOOL WAS ALREADY BUILT. `import_graph` takes a `path`, so an agent catches a graph up with the committed record in ONE TOOL CALL and no terminal at all. The CLI flag `--import` is a second route for people without an agent, not the only one. So nothing new was needed on the doing side — only on the noticing side.\n\n⭐⭐ THE MEASURED FINDING THAT SHAPED THE BUILD: `provenance::last_synced` — the content hash this seat believes is at a given path — was WRITTEN BY TWO PATHS AND READ BY ONE. `record_sync` is called by `export_graph` (exchange.rs:207) and by `import_graph` (exchange.rs:382); `last_synced()` was read at exchange.rs:171, inside `export_graph`, and nowhere else. **The design knew at the first moment of a session and spoke at the last** — when you tried to export, hours later, and the stale-seat refusal finally fired. Same family as `dec:one-retire-edge`'s \"a marker nothing reads is a comment\", except here something did read it, at the wrong moment.\n\n🛑 AND THE COUNTER-ARGUMENT THIS NODE FIRST CARRIED WAS FALSE, which is why the option was buildable at all. It said \"I have unexported work\" and \"someone else's work has arrived\" look similar from inside. They do not: `crates/reflow2-core/src/sync.rs` already distinguishes them exactly. File hash == `last_synced` ⇒ the file has not moved ⇒ every difference is the caller's OWN unexported work ⇒ silent. File hash != `last_synced` ⇒ somebody else has been there ⇒ actionable. One comparison, and no false-positive mode on solo work.\n\nWHAT WAS BUILT: `crates/reflow2-mcp/src/sync_debt.rs`, served as the `sync_status` tool and carried on `loop_status` as `record_moved` when there is something to say. One finding per file this seat has synced with — `in_step` / `behind` (the actionable one) / `moved_but_current` / `missing` / `unreadable`. The judgement is BORROWED from `sync::assess_overwrite` rather than reimplemented; this module supplies the enumeration, the gate and the wording.\n\nWHY IT LIVES AT THE MCP LAYER: `reflow2-core` does no file I/O, deliberately and repeatedly (`reconcile_artifacts` makes the caller supply hashes; `granularity` and `consumption` both say so). So the check could NOT go into `loop_status` in core, and belongs in the crate that already does this comparison for `export_graph`.\n\n📌 A COST DECISION, PINNED BY A TEST: the export needed to compare against is the expensive half and the hash check is the cheap half, so `mine` is passed as a CLOSURE and is never built on the in-step path — the one every ordinary session takes. `the_expensive_export_is_not_built_on_the_ordinary_path` makes that a guarantee rather than a style choice.\n\n📌 THE DESCRIPTION BUDGET FORCED THE SHAPE OF THE SURFACE: `loop_status`'s tool description was already at 1493 of 1500 characters, so the contract could not be documented there. Hence a dedicated `sync_status` tool carrying the full contract, with `loop_status` carrying only the finding — which is a self-explaining English sentence and needs no schema to interpret.\n\nWHAT WAS NOT CHOSEN, kept because the roads not taken are part of the design's memory:\n- B — AUTO-IMPORT. Closest to what was first asked for. Rejected: `import_graph` is an UPSERT, so an unasked one silently overwrites live session work, and doing it unasked makes it invisible. `dec:ask-not-repair`.\n- C — REFUSE ON FIRST READ. Rejected: a refusal on READ is heavy-handed, and a session deliberately working from an older design would meet it every time.\n- D — DOCUMENTATION ONLY. Rejected: the answer this project has already found wanting twice; a discipline written down and not triggered is one that does not happen.\n\n⭐ THE DEPENDENCY STILL HOLDS: if `dec:central-host` goes the hosted way for the flo2 case, this question DISSOLVES for those users — there is no local store to catch up, because there is one graph everyone reads live. It stays live for anyone working from a checkout.",
+        "name": "DECIDED — a graph reports when the shared record has moved ahead of it, gated on a computed content hash, and never acts on it",
+        "rationale": "Anthony chose option A on 2026-08-11 after being shown that the tool already existed and only the trigger was missing. `dec:multi-writer-architecture` (accepted 2026-07-25) had already committed this project to building \"merge-on-pull ergonomics\" and that clause had never been cashed, so this settles an unbuilt commitment rather than adding new scope. The node keeps its own refuted counter-argument on the record: the claim that unexported work and somebody else's arrival look alike from inside was disproved by reading sync.rs the same day, and it was that refutation which made option A buildable.",
+        "status": "accepted"
       }
     },
     {
@@ -68006,6 +68161,16 @@
         "epoch_type": "revision",
         "name": "The owner's forked Contributor identity is merged — ctr:anthony folds into who:ajs",
         "sequence": 306,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:the-record-moved-is-noticed",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "A seat is told the shared record moved when it ORIENTS rather than when it writes — Anthony's option A. The signal existed and was read in exactly one place; this reads it at the first moment instead of the last. Carries a real defect fix found while building it: the stale-seat guard trusted the content hash a file states about ITSELF, so a merged or hand-edited record read as untouched and its work could be silently overwritten on the next export.",
+        "sequence": 118,
         "status": "arrived"
       }
     },
@@ -71895,6 +72060,18 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A rule states the SCOPE it applies in, so a reader can tell whether it binds them; and where two rules cannot both be satisfied, that conflict is surfaced by the design rather than discovered by whoever loses work to it.\n\n⭐ THE GENERAL FINDING, and it is not about export: WHEN TWO SAFETY RULES CONFLICT, THE PARTICIPANT WHO REASONS MOST CAREFULLY ABOUT THE CONFLICT IS THE ONE WHO DOES NOTHING — and doing nothing is often the destructive option. A conflict between two safety rules is not neutral; IT SELECTS AGAINST THE CAREFUL. That is the mechanism this requirement exists to break, and it generalises far past the case that exposed it.\n\nTHE CASE. Two rules, both correct in isolation: any session that changed the design EXPORTS BEFORE STANDING DOWN (durability), versus the export is produced ONCE PER PULL REQUEST, LAST OF ALL, because two exporting commits on one branch break the lineage chain silently (integrity — dec:export-once-per-pr here). On a shared branch with several writers, BOTH CANNOT BE SATISFIED. A storyflow boss wrote two Requirements, one Contributor and two edges, then reported: \"I am NOT exporting, because I will not risk the lineage chain on a guess — and the cost of that correct-looking caution is that my writes exist in one untracked RocksDB directory on this host and nowhere else,\" which is precisely what the durability rule exists to prevent. Another session exported four times the same day. NEITHER BEHAVIOUR IS WRONG UNDER THE RULES AS WRITTEN.\n\nREPRODUCED HERE THE SAME DAY, and by the careful route: this session declined to export after recording dec:governance-integrates-not-splits and four requirements, because PR #132 was open and dec:export-once-per-pr applied. The design's own answer to the tension was to leave a session's work unexported — the identical outcome, arrived at by the identical reasoning, in the project that authors the rule.\n\nWHAT IS MISSING, in two parts. FIRST, SCOPE: the lineage warning does not say whether it is branch-local or any-branch, so a reader cannot tell whether it applies to them. This is the same missing field as req:a-decision-states-what-it-binds, one node type over — and where a single-writer discipline is required on shared state, reflow2 should be able to SAY so rather than leaving each project to find out by having someone lose work. SECOND, DETECTION: reflow2 surfaces a contradiction only where a human has already drawn a CONTRADICTS edge — two of this design's five current structural defects are exactly that. Nothing DISCOVERS a conflict between two rules nobody suspected, which is the only case that matters, because a suspected conflict is one somebody is already handling.\n\nFILED AS A REFLOW2 SEMANTICS GAP, NOT A PROJECT ONE, in the reporter's words: a project may rule its own cadence, but it should not have to discover the conflict first.\n\nSOURCE: storyflow gap C of the peer set — storybug Boss (47accf78), filed 2026-08-09, v0.26.1.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:a-seat-learns-the-record-moved-before-it-writes",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A seat learns the shared record moved when it ORIENTS, not when it writes",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "When another contributor's work has arrived in the shared design record and this graph has never seen it, the seat is told so at the point it orients itself — not at the point it tries to write, hours later.\n\nWHY THE MOMENT IS THE REQUIREMENT AND NOT AN ERGONOMIC PREFERENCE: the signal already existed and was already correct. `provenance::last_synced` was maintained by both the export and import paths, and `sync::assess_overwrite` already turned it into a three-way verdict. It was consulted in exactly one place — inside `export_graph`. So the design knew at the first moment of a session and spoke at the last, by which point the session had done its work against a record it did not know had moved.\n\nWHAT SATISFYING THIS MUST NOT COST: silence during ordinary work. A seat that is merely AHEAD of the record — unexported work in progress — is the normal state of every working session and must never be reported, or the signal is ignored inside a week. The distinguishing test is whether the RECORD moved, not whether the two differ.\n\nAND IT REPORTS RATHER THAN ACTS: taking the arrived work in is an upsert over live session state, so it stays the human's call.\n\n⚠️ WORDING IS AN AGENT'S DRAFT. Anthony chose the MECHANISM (option A, 2026-08-11) and directed the build; he has not ruled on this statement's text, which is why this sits at `proposed`.",
         "status": "proposed"
       }
     },
@@ -78326,6 +78503,18 @@
       }
     },
     {
+      "node_id": "ver:the-record-moved-is-surfaced",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-11",
+        "level": "integration",
+        "method": "test",
+        "name": "A record that moved ahead of this seat is reported, and one that has not is silent. COVERS: the three consumption-free states (in_step / moved_but_current / behind) and the two fault states (missing / unreadable); that ordinary unexported work is NEVER reported, which is the property the whole design rests on; that two targets are independent and neither hides the other; that every known target is listed so an empty answer cannot read as all-clear; that the finding names both `import_graph` and the path and never reads as a refusal (no \"refused\"/\"error\"/\"cannot\"/\"blocked\"); that the expensive export is NOT built on the in-step path and is built exactly once when needed; and THE REGRESSION THAT MATTERS MOST — a record edited without restamping is still caught, because the check computes the content hash instead of believing the one the document states about itself. That last case was found end-to-end rather than by any unit test, after the first cut shipped believing the stamp and reported \"in step\" while somebody else's work sat in the file. NOT COVERED: the live MCP surface end-to-end (the served tool was exercised against a scratch graph via the CLI, not against a running server), and any behaviour of `import_graph` itself.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-server-says-when-it-is-stale",
       "node_type": "Verification",
       "properties": {
@@ -78419,7 +78608,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:9454fad4d35c138423a039e58f397ef8906a1a14c3056965d7b7d1eabf1a172d",
+  "prev_content_hash": "sha256:05ab3117133ab3a5431e0830a2566999d2118c520fe20b798412c5f364b3f566",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

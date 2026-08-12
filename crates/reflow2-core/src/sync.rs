@@ -145,7 +145,19 @@ pub fn assess_overwrite(
     let Some(target) = target else {
         return SyncVerdict::Clear;
     };
-    let found = target.effective_content_hash();
+    // ⚠️ COMPUTED FROM THE CONTENT, never the `content_hash` the document
+    // states about itself. `effective_content_hash` believes that stamp and
+    // only computes when it is absent — so a file edited by anything other
+    // than `export_graph` (a merge, a hand-fix, another tool) keeps its old
+    // stamp, and BOTH fast paths below would then return `Clear` while
+    // somebody else's work sat in the file. On the export path that is a
+    // refusal going quiet in exactly the case `req:stale-seat-knows` exists
+    // to catch, and the write would delete their work.
+    //
+    // Found 2026-08-11 while building the read-side check, by appending a node
+    // to a record without restamping it — the shape a merge produces. The
+    // document is already parsed here, so computing costs a hash and no I/O.
+    let found = target.compute_content_hash();
 
     // The fast path, and the one that runs on nearly every export: the file is
     // exactly where this graph left it.
