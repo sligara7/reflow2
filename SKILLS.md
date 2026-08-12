@@ -35,6 +35,7 @@ are a convenience for working on reflow2 itself.
 | **link-artifacts** | Right after you create or change a real file. Registers it with a checksum so drift is detectable. |
 | **check-health** | After structural changes. Cycles, single points of failure, duplicates, islands — how the design is *shaped*. |
 | **parallel-work** | Two people on one design. Claims the region, isolates the work in a worktree with its own graph, and merges the design semantically instead of by lines. |
+| **capture-session** | At any natural break, and before a long session ends. Writes down the reasoning that exists *only* in the conversation — what was tried and abandoned, what got measured, why the losing option lost — and routes each kind to the node type that already fits it. Not a transcript, and not for new intent. |
 
 ## Changing what is already there
 
