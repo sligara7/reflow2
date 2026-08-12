@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:83cd024d44027479c94992bac7bfaa62b27913524fa44d10ecd002f6435b8dfe",
+  "content_hash": "sha256:37012c82cb04c8e66c136b24e39711a11fee39685fca1f6f8c6b9e4ddd9d2923",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2877,6 +2877,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-mirror-can-be-refreshed",
+      "properties": {},
+      "to_id": "epoch:linking-two-designs"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:a-null-and-a-vacuous-zero-now-say-which-they-are",
       "properties": {},
       "to_id": "epoch:a-zero-that-is-not-an-absence"
@@ -5520,6 +5526,12 @@
       "from_id": "snap:epoch:linking-repos:dep:dynograph-foundation",
       "properties": {},
       "to_id": "epoch:linking-repos"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:linking-two-designs:cap:mirror-surface",
+      "properties": {},
+      "to_id": "epoch:linking-two-designs"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -8620,6 +8632,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-mirror-can-be-refreshed",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-mirror-can-be-refreshed",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-mirror-can-be-refreshed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:mirror-surface"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:a-null-and-a-vacuous-zero-now-say-which-they-are",
       "properties": {
         "accepted_baseline": true,
@@ -10291,6 +10330,15 @@
         "action": "modified"
       },
       "to_id": "art:kit-instructions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-f263ee42edd9fc43",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-mirror-refresh"
     },
     {
       "edge_type": "CHANGED",
@@ -26274,6 +26322,12 @@
       "from_id": "cap:kpp-proposal",
       "properties": {},
       "to_id": "snap:epoch:kpp-capture:cap:kpp-proposal"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:mirror-surface",
+      "properties": {},
+      "to_id": "snap:epoch:linking-two-designs:cap:mirror-surface"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -53870,6 +53924,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-mirror-refresh",
+      "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "cap:mirror-surface"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-no-per-design-globals",
       "properties": {
         "completeness": "complete"
@@ -58624,7 +58686,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:39bce53eff63835dee7595c1d14c8f946f6600f5d258c964b7b6b85092184bef",
+        "checksum": "sha256:80709df69bd60b7a5d2a4de8e1ccb80ebac37baf705fd24c9d2e7b3195d89b90",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/export.rs",
         "name": "export.rs",
@@ -59244,7 +59306,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:44024934a64197163ce3e1c5c43cd4f86214e8a4cf5ce44d98466d5f9da00a47",
+        "checksum": "sha256:7b5303233e9b8622836c1d1890481d82e59d2fb1dfc0cc056d6a10ccc01d3806",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/core.yaml",
@@ -59762,6 +59824,19 @@
         "granularity": "atomic",
         "location": "tools/test_loop_nudge.py",
         "name": "test_loop_nudge.py",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:test-mirror-refresh",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:259d5952c7c46f429b9341e49c0aa91d7a9e65fe573c9acd1ca9ec5466af28d6",
+        "granularity": "atomic",
+        "location": "crates/reflow2-core/tests/a_mirror_can_be_refreshed.rs",
+        "name": "a_mirror_can_be_refreshed.rs",
         "status": "realized",
         "volatility": "stable"
       }
@@ -62120,6 +62195,14 @@
       }
     },
     {
+      "node_id": "chg:a-mirror-can-be-refreshed",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "mirror_surface gains a REFRESH. FOUND BY RUNNING THE TOOL TWICE, 2026-08-12: a second mirror of the SAME design collided with its own first — 12 of 13 ids refused as collisions, mirrored_edges 0, mirror_content_hash null — leaving the stale node in place with the host edge still pointing at it while `mirrors` reported the OLD pin. So the staleness register read FRESH after a failed refresh, which is worse than never refreshing. Re-mirroring one mirror_of is a DIFFERENT OPERATION from mirroring a new design: replace-what-I-hold-at-a-new-pin versus add-a-stranger-and-refuse-clashes, and only the second existed. THE QUESTION SETTLED FIRST: what happens to a host edge whose foreign target is gone from the new surface? It REFUSES and names both the withdrawn boundary and the host edge pointing at it — reflow2 refuses dangling edges anyway, and a partner retiring a contract you consume is a conversation between two owners, not a cleanup this tool may do (dec:ask-not-repair). A refused refresh changes NOTHING and the pin does not advance, which is the lie the whole fix is about. MECHANISM: the mirrored Project now records `mirror_nodes`, the ids this mirror brought, because the set cannot be recovered afterwards — provenance:imported is also set by corpus ingest, and the project CONTAINS edges do not span the mirrored set (5 of 13, measured). One property on one node type that already carries three mirror properties, following the schema comma-list precedent (pinned/swept on VERIFIES). VERIFIED ON THE REAL PAIR: the exact flo2 scenario that produced the defect now gives 13 nodes, 19 edges, ZERO collisions, refreshed=true, withdrawn naming ifc:reflow2-design-api, the stale node gone and the renamed one present with its corrected medium. 7 tests written first, 4 mutations killed. NOTE FOR THE NEXT RELEASE: adding mirror_nodes moves no stamp count (29/61) but an older binary REFUSES an unknown property — the third instance today of the stamp being blind to a real compatibility event."
+      }
+    },
+    {
       "node_id": "chg:a-null-and-a-vacuous-zero-now-say-which-they-are",
       "node_type": "ChangeEvent",
       "properties": {
@@ -63334,6 +63417,15 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-02",
         "name": "First baseline. The file was never registered, so nothing moved — it is the text build.rs embeds as INSTRUCTIONS and get_instructions serves to every consumer project, and it was the one file in getting-started/ that the design could not see (POINTER.md and SETUP.md beside it were both registered). BL-165's shape a fourth time."
+      }
+    },
+    {
+      "node_id": "chg:baseline-f263ee42edd9fc43",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-12",
+        "name": "First baseline — new in this change."
       }
     },
     {
@@ -76878,6 +76970,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:linking-two-designs:cap:mirror-surface",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Project\",\"other_id\":\"proj:reflow2\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:github-mcp-tandem\",\"properties\":{\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:mirror-surface\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:export\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:identity-out-of-band\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:nested-graphs\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:07bb37be6d5cd129\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:6632226c74b49c3a\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:b25bb8d8db80dfd3\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:c8cfb3f3be9183af\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:d1c2d599af5b45ce\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:design-composes\",\"properties\":{}}]",
+        "state": "{\"description\":\"BUILT 2026-07-25, the first rung of dec:nested-graphs option (c). An edge cannot cross a store because the schema validates both endpoints, so designs link by MIRRORING: `mirror_surface` brings another design's published surface in as local nodes marked `provenance: imported`, and the mirrored Project carries the coordinate — `mirror_of` (whose design), `mirror_content_hash` (which version of their surface), `mirrored_at` (when). Afterwards your own components provides/consumes the mirrored Interface with ORDINARY LOCAL EDGES, so the golden thread, propagate, and every detector work unchanged: foreignness became a property of the NODE rather than of the link, which is what makes the whole approach cheap. `mirrors()` lists who you are composed with and at what version. THE GUARD THAT MATTERS: import_graph is an upsert, so mirroring a surface whose ids collide with local ones would silently overwrite your design with someone else's nodes. A collision is REPORTED AND SKIPPED — your node survives untouched, and an edge touching a collided id is dropped rather than rewired, because pointing their PROVIDES at your same-named component would fabricate a relationship neither design asserted (dec:ask-not-repair). Two designs using one id for different things is a naming conversation between owners, not a merge. Mirroring a design into itself is refused outright, naming import_graph as what you meant. WHAT THE BUILD EXPOSED, and it is the honest limit: every reflow2 graph carried the same hardcoded graph_id, so no design could tell another from itself — rule:no-foreclosure item 5 arriving as a concrete blocker rather than a hypothetical. `open_in_memory_as` lets a design name itself, which is enough for library use and for the tests, but a DURABLE design's identity has to be remembered beside the store (the id namespaces every key, so reopening under a different name would find nothing). That is req:design-identity, filed rather than half-built. 7 tests, including the seam one: after mirroring, consuming their contract reports a published-boundary crossing — which is exactly what changing your side of somebody else's interface is.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"Compose two designs by mirroring the other's published surface, coordinate and all\",\"provenance\":\"authored\",\"status\":\"verified\",\"tier\":\"operational\"}",
+        "target_id": "cap:mirror-surface",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:linking-two-designs:cap:publish-surface",
       "node_type": "Snapshot",
       "properties": {
@@ -80785,7 +80887,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:07d5be43873232d161712cbbcf7167645a63564fedf93df960c234ffa8ee80ed",
+  "prev_content_hash": "sha256:83cd024d44027479c94992bac7bfaa62b27913524fa44d10ecd002f6435b8dfe",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
