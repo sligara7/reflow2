@@ -77,6 +77,47 @@ This file is the third view: *what changed, and when*.
 
 ### Changed
 
+- **The MCP surface is two boundaries, not one wrong `medium`** (`dec:the-mcp-surface-is-two-boundaries-not-one-medium`,
+  accepted on Anthony's word; design record only, **no code, no schema move → patch**).
+
+  `ifc:mcp-tools` had claimed `medium: REST` since before `unspecified` became the default
+  (`req:seam-incompatibility`, 2026-07-28). The correction was blocked on a real vocabulary
+  question — MCP is JSON-RPC 2.0 over **either** a stdio pipe **or** streamable HTTP, and no enum
+  value names that — which was raised for him rather than guessed.
+
+  ⭐ **The question dissolved rather than being answered.** The node's own `endpoint` field already
+  said it: *"a stdio pipe to a launched process, **or** the address given to `--http`"*. One
+  Interface was describing two boundaries, and they differ in more than medium — the HTTP one can be
+  reached remotely, sit behind a gateway and terminate TLS; the stdio one can do none of those.
+
+  - `ifc:mcp-tools` → **MCP tool surface (stdio transport)**, `medium: cli` — simply correct for a
+    launched process spoken to on its stdin/stdout.
+  - `ifc:mcp-tools-http` → **new**, `published`, provided by `cmp:service`, `medium: unspecified`.
+    **Not an oversight**: the enum has no word for MCP over streamable HTTP, and `REST` is wrong —
+    a single endpoint carrying JSON-RPC, not a resource tree.
+
+  **No schema change**, which matters more than it looks: enum values are **not counted by the
+  version stamp** (it counts node and edge *types*), so adding `json_rpc` would have been a
+  compatibility event nothing can detect — the stamp-blindness pattern already recorded four times.
+
+  🛑 **It quarantines the problem rather than solving it, and that was said before the choice.**
+  `medium` is a pairing-key axis where `unspecified` reads as UNKNOWN and never as agreement, so the
+  HTTP boundary cannot pair with anything until the vocabulary question is settled. `json_rpc`
+  remains open and untaken.
+
+  **Measured immediately after, and it vindicates the cut** — `seam_report` against flo2's
+  `ifc:reflow2-design-api`, on both halves:
+
+  | ours | agreed | incompatible | unstated |
+  |---|---|---|---|
+  | `ifc:mcp-tools-http` | 3 | **1** — `transport_security` none/tls | 4 |
+  | `ifc:mcp-tools` (stdio) | 3 | **2** — also `medium` cli/REST | 3 |
+
+  The stdio boundary now says loudly that it is **not** what flo2 means. And it sharpens the open
+  TLS question: on a stdio pipe there is no transport to secure, so "segment artefact" was arguable;
+  on plain HTTP it is not, which makes **a real assumption gap** the likelier reading. Resolving it
+  needs flo2's side, deliberately not written to.
+
 - **reflow2's own published MCP boundary is specified — and a second project had to ask** (design
   record + docs only; **no code, no schema move → patch**).
 
