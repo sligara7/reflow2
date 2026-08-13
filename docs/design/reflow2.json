@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:de6f77fc954387c8abbd5729ea6a98b38c3558233826a1c72e5005b373a9b3c1",
+  "content_hash": "sha256:029fd47f3a188666ab8cc56cdb1d271b001832df535910035978405f72a1c515",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -6986,6 +6986,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-is-reflow2-itself-a-cp-store-behind-an-ap-record",
+      "properties": {
+        "acted_at": "2026-08-12",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-is-session-context-already-in-the-graph",
       "properties": {
         "acted_at": "2026-08-09",
@@ -7170,6 +7179,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-cap-pacelc-be-vocabulary-reflow2-offers",
+      "properties": {
+        "acted_at": "2026-08-12",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -17090,6 +17108,42 @@
         "action": "modified"
       },
       "to_id": "req:a-cluster-can-be-declared-deliberately-separate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-retirement-covers-what-it-removed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:content-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-retirement-covers-what-it-removed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:session-artifacts"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-retirement-covers-what-it-removed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ver:content-store"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-retirement-covers-what-it-removed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ver:content-surface"
     },
     {
       "edge_type": "CHANGED",
@@ -54086,11 +54140,23 @@
     {
       "edge_type": "OBSOLETES",
       "from_id": "dec:the-content-store-is-discontinued",
+      "properties": {},
+      "to_id": "cap:content-manifest"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:the-content-store-is-discontinued",
       "properties": {
         "confidence": 1.0,
         "evidence": "The first real discontinuation, and the case that raised the question. Built, shipped, correct, used zero times in every project that had it; four served tools, the core module, the --content-path flag and both test files were removed for v0.27.0. Until this edge, the graph still said the capability was `realized`, its check `passing` and its requirements `accepted` — two days after the code was deleted. The Decision is the source because a discontinued thing has no successor to put there, which is exactly what made this look like it needed new vocabulary."
       },
       "to_id": "cap:content-store"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:the-content-store-is-discontinued",
+      "properties": {},
+      "to_id": "cap:session-artifacts"
     },
     {
       "edge_type": "OBSOLETES",
@@ -54131,6 +54197,18 @@
         "confidence": 1.0
       },
       "to_id": "dec:where-content-lives"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:the-content-store-is-discontinued",
+      "properties": {},
+      "to_id": "ver:content-store"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:the-content-store-is-discontinued",
+      "properties": {},
+      "to_id": "ver:content-surface"
     },
     {
       "edge_type": "OBSOLETES",
@@ -67292,6 +67370,14 @@
       }
     },
     {
+      "node_id": "chg:the-retirement-covers-what-it-removed",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "deprecation",
+        "name": "The content-store retirement now OBSOLETES everything its own text says it removed, not just one capability of five. FOUND WITHIN MINUTES OF SHIPPING THE READER FIX, 2026-08-12, and BY that fix: with `discontinued` finally visible on a read, `cap:content-manifest` came back `realized / discontinued:false` for a tool that no longer exists. `dec:the-content-store-is-discontinued` (accepted 2026-08-09) names its casualties explicitly — \"content_put / content_get / content_exists / CONTENT_MANIFEST, content.rs, content_tools.rs, the --content-path flag, and BOTH TEST FILES\" — but its OBSOLETES edges reached `cap:content-store` and the five Decisions it supersedes, and nothing else. THE RECORD CONTRADICTED ITSELF: the prose said removed, the structure said live. FOUR NODES WERE STRANDED, AND THE TWO WORST ARE VERIFICATIONS. `ver:content-store` and `ver:content-surface` both read `passing`, last_run_at 2026-07-31, for test files deleted on 2026-08-09 — a PASSING CHECK IS THE STRONGEST CLAIM THIS SYSTEM MAKES, and both were attached to nothing while sitting inside the 138-passing count the graph report shows. `cap:content-manifest` (realized) and `cap:session-artifacts` (VERIFIED, and its whole mechanism was content_put) were the other two. THIS RECORDS AN EXISTING DECISION RATHER THAN MAKING A NEW ONE — Anthony's word 2026-08-12, \"go ahead and draw the edges\", given after being shown that it moves delivery arithmetic, silences three detectors on those nodes, and changes the confirmed/passing counts. He was asked precisely because this project treats those numbers carefully; the edges make the structure agree with prose he had already accepted. ⭐ THE GENERALISABLE PART, and the reason this is worth reading later: A RETIREMENT IS DRAWN ONE EDGE AT A TIME WHILE THE THING BEING RETIRED IS A CLUSTER — a capability, its siblings, its verifications, its artifacts. Nothing checks that a discontinuation covers everything its own decision text names, and nothing did here. That gap is why four nodes sat wrong for three days with every gate green, and it is a candidate detector: a Decision whose text names removals that carry no OBSOLETES."
+      }
+    },
+    {
       "node_id": "chg:the-server-says-when-it-is-stale-20260809",
       "node_type": "ChangeEvent",
       "properties": {
@@ -69369,6 +69455,16 @@
       }
     },
     {
+      "node_id": "dec:idea-is-reflow2-itself-a-cp-store-behind-an-ap-record",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-12, asking whether CAP/PACELC applies to reflow2's own design. Nothing here is intent and nothing has been chosen.\n\n⭐ THE FINDING THAT MAKES THIS WORTH KEEPING: reflow2 HAS ALREADY MADE THESE TRADE-OFFS, REPEATEDLY AND DELIBERATELY, AND HAS NEVER NAMED THEM AS ONE CLASS. Checked against the graph rather than asserted:\n\nTHE STORE IS CP. One RocksDB store, single-writer by construction. A second writer is refused rather than served — `cap:degraded-surface` exists precisely to explain that refusal, and `dec:read-while-held-mechanism` settled what a locked-out seat gets: \"a read-only view as of open, not a catchable-up secondary\". That is textbook CP with a stale-read escape hatch. `cap:stale-seat-refusal` and `req:stale-seat-knows` are the write half: refuse rather than clobber.\n\nTHE RECORD IS AP. `docs/design/reflow2.json` travels by git. Everyone works offline, diverges freely, reconciles later — `cap:merge-designs`, `cap:git-merge-driver`, `cap:portability`, three-way merge with rerere. Nobody blocks. `cap:the-record-moved-is-surfaced` and `sync_status` are, precisely, an eventual-consistency staleness detector: they tell a seat the shared record moved ahead of it and name what arrived.\n\nAND `dec:advisory-concurrency` IS AN EXPLICIT AP CHOICE WITH EMPIRICAL BACKING. Its words: \"seats coordinate by announcement and provable order, NEVER BY EXCLUSION… when two claims cross, the winner is whichever landed first in git history, and both parties can verify that independently.\" It names what it rejected — \"a coordination service or lock manager\" — and why: \"a lock is exactly what took FIVE OF SIX SESSIONS OFFLINE on 2026-07-25.\" That is choosing A over C after measuring the cost of C, which is the CAP decision made properly and never called by its name.\n\n⇒ SO THE CANDIDATE READING IS: reflow2 is PC/EC in the store and PA/EL in the record. In normal operation it does not block on syncing the record — you work locally and export later, which is choosing L. PACELC's actual contribution here is that second half: the store-versus-record tension is NOT rare-failure behaviour, it is what every ordinary session does all day.\n\n🛑 AND THE SHARP PART, WHICH IS WHY THIS MIGHT BE MORE THAN A RELABELLING: THE SEAM BETWEEN THE CP STORE AND THE AP RECORD IS WHERE AN UNUSUAL SHARE OF THIS PROJECT'S BUGS HAVE LIVED. Not a claim about all bugs — a pattern worth testing:\n  · \"the design graph does NOT branch with git\" — one store serves every branch, so an export carries another branch's writes. Caught once as four phantom drifts that would have merged cleanly.\n  · The whole export procedure — restore from origin/main, export exactly once, verify prev_content_hash — is a HAND-OPERATED RECONCILIATION PROTOCOL between the two models, and every one of its documented traps is a reconciliation bug.\n  · The mirror-refresh defect (v0.12.0 → v0.29.0): a stale pin reporting FRESH after a failed refresh is a staleness-register lie, which is the classic AP failure mode.\n  · 2026-08-12, this session: creating nodes after exporting silently put the record behind the graph. Nothing prevented it; only a later `compare_designs` would have caught it.\n\n═══ THE OPTIONS ═══\n\nA — NOTHING. Record the observation and stop. CHEAP, and possibly correct: nothing would compute differently, and the choices are already made, individually, with better-reasoned rationales than \"CAP says so.\"\n\nB — USE IT AS A LENS ONLY, in prose. Name the store/record split in AGENTS.md so a newcomer meets it once instead of rediscovering it through the export traps. Cheap, no code, no schema.\n\nC — MAKE THE SEAM A FIRST-CLASS THING THE GRAPH KNOWS. If the record and the store are two replicas with a hand-run reconciliation protocol, then the protocol deserves to be modelled — the traps are currently memory and prose, not structure. Most expensive, and the one where something could actually compute.\n\nD — TREAT IT AS A REQUIREMENTS SOURCE. Ask what reflow2's own availability target IS. It has never been stated, and `dec:read-while-held-mechanism` answered a CAP question without one.\n\n═══ COUNTER-ARGUMENTS, recorded beside the idea ═══\n\n⚠️ 1. CAP IS ABOUT REPLICATED DATA UNDER NETWORK PARTITION, and reflow2's \"partition\" is mostly a HUMAN and PROCESS boundary — git branches, separate sessions, a person on a plane. Borrowing a theorem outside its domain is how architectures acquire vocabulary they cannot cash. The single strongest objection.\n\n⚠️ 2. THERE IS NO REPLICATION PROTOCOL HERE. CAP's interesting cases begin with replicas that must agree. reflow2 has one writer per store and delegates the distributed half wholesale to git — so \"reflow2 is AP\" may be a statement about GIT, correctly, and nothing about reflow2.\n\n⚠️ 3. THE CHOICES ARE ALREADY MADE AND ALREADY BETTER-ARGUED. `dec:advisory-concurrency` rests on a measured outage of five of six sessions. Relabelling that as \"we chose AP\" is strictly less information than what is recorded.\n\n⚠️ 4. NOTHING WOULD COMPUTE DIFFERENTLY under A or B, and this project's own bar — `dec:exploratory-staging`, the ility work — is whether a distinction changes a computation.\n\n📌 A FAIR POINT FOR THE IDEA: the export traps keep being rediscovered, session after session, and live in a memory note rather than in the design. If naming the seam is what makes them explicable rather than a list of superstitions, that is worth something even under option B.",
+        "name": "OPEN — is reflow2 already a CP store behind an AP record, and is that seam where its recurring bugs live?",
+        "rationale": "Recorded under the brainstorm skill so the thinking survives without being claimed as intent. Kept because the descriptive half is verifiable today against existing nodes — dec:advisory-concurrency, dec:read-while-held-mechanism, cap:stale-seat-refusal, cap:the-record-moved-is-surfaced — and because it offers a single explanation for a family of recurring export and staleness bugs that are currently carried as procedure rather than as design. The counter-arguments are recorded beside rather than against; the strongest is that reflow2 delegates the distributed problem to git, which would make this a statement about git.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-is-session-context-already-in-the-graph",
       "node_type": "Decision",
       "properties": {
@@ -69575,6 +69671,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — found 2026-08-11 while answering Anthony's question about work built without a requirement. Nothing here is intent.\n\nTHE ASYMMETRY, read from the code rather than assumed. `detect_status_contradictions` (detect.rs:2146) fires in exactly two places, and both are OVERSTATEMENTS:\n  · a Capability at `verified` with no passing check          → 0.70\n  · a Requirement at `met` with nothing satisfying it         → 0.70\nNothing anywhere looks at the opposite direction.\n\nTHE INSTANCE THAT SURFACED IT: `cap:governance-proposal` sits at `planned` while `art:governance-proposal-skill` REALIZES it, it is allocated to `cmp:skills`, and that component's check passes. The skill is being SERVED to sessions right now. The status claims less than the structure shows, and no detector has an opinion.\n\n⭐ THIS IS A NAMED-AND-UNBUILT CASE, NOT AN OVERSIGHT I INVENTED. The test at detect.rs:1401-1407 records the same limit from the Release side and assigns it: \"a status that claims less than the structure shows is `status_contradiction`'s territory, not this one's.\" It was allocated to that detector and never written there.\n\nIDEAS, unranked:\n(a) Add the mirror rule to status_contradiction: a Capability at `planned`/`unrealized` with an incoming REALIZES, or with a passing check, is understating.\n(b) Lower severity than 0.70. Overstating is a claim with nothing behind it; understating is a record that has fallen behind reality — arguably drift, not a contradiction, and drift already has its own machinery.\n(c) Do nothing, on the grounds that understating harms nobody.\n\nCOUNTER-ARGUMENT TO (c), which is why this is worth asking at all: understating is what makes `graph_report`'s delivery count too LOW, and a design that under-reports its own completion is the one nobody trusts the numbers on. It is also the direction that silently accumulates, because nothing complains.\n\n⚠️ SIZING CAVEAT before anyone treats (a) as small: `Release.status` and `Capability.status` both DEFAULT to `planned` (detect.rs:1401-1403 states this for Release). So \"planned + realized\" would fire on every capability whose status nobody ever set, which on a young design may be most of them. Whether that is signal or a flood is unmeasured, and measuring it is the first step, not the fix.",
         "name": "OPEN — should a status that claims LESS than the structure shows be a gap, the way an overstated one already is?",
         "rationale": "status_contradiction is one-directional and its own test file assigns the other direction to it. The instance that exposed it is shipped, served code recorded as `planned`. The open part is whether the mirror rule floods, because `planned` is a schema default nobody chose.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-should-cap-pacelc-be-vocabulary-reflow2-offers",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-12, second half of his CAP question. Nothing here is intent and nothing has been chosen.\n\nDISTINCT FROM `dec:idea-is-reflow2-itself-a-cp-store-behind-an-ap-record`, deliberately kept apart: that one asks whether CAP describes reflow2's OWN architecture. This one asks whether CAP is vocabulary reflow2 should HAND ITS USERS. One node holding both could only ever be half-answered.\n\nSIBLING, NOT DUPLICATE, OF `dec:idea-the-ility-chooses-the-allocation-graph` (proposed, 2026-08-08). That node asks about the DIRECTION of inference — should the quality attribute drive allocation rather than be read off it. This asks whether a SPECIFIC well-known trade-off frame belongs in the vocabulary at all. Related, and the answers could differ: the ility→graph direction could be built without CAP ever appearing, and CAP could be added without changing allocation.\n\n⭐ THE CONCRETE GAP, checked rather than asserted. `schema/dimensions.yaml` already carries NINE axes attachable to any node: reliability, performance, maintainability, security, scalability, observability, testability, coupling, maturity. **Consistency is not among them. Availability is not among them. Partition tolerance is not among them.** For a tool whose owner's stated operating context includes federated, independently-evolving systems, that is a real absence rather than a stylistic one.\n\nAND ONE PIECE ALREADY EXISTS UNDER A DIFFERENT NAME: `cap:seam-incompatibility` — \"say when two linked designs disagree at a boundary\" — is, structurally, a consistency check across a partition between two independently-evolving replicas. The federation work (`cap:mirror-surface`, `cap:composed-analysis`, `cap:complementary-pairing`) is a distributed-design problem that has never been described in distributed-systems terms.\n\n═══ THE OPTIONS ═══\n\nA — NOTHING. CAP is domain knowledge the AGENT brings to a conversation, not vocabulary the graph must hold. An agent can already reason about it and record the resulting decision as an ordinary Decision node, today, with no change whatsoever. CHEAPEST, and the null hypothesis this has to beat.\n\nB — ADD `consistency` AND `availability` TO THE DIMENSION ENUM. Cheap, additive, existing graphs unaffected. `ility_report` already reports NOT INFORMED with a reason for axes it cannot compute — so honest silence is the built-in default and nothing pretends. NOTE: a new enum value moves NO stamp count, which would be the fifth recorded instance of the stamp being blind to a real compatibility event.\n\nC — ASK IT UPFRONT, at genesis or adopt: \"is this system CP or AP under partition, and L or C in normal operation?\" This is exactly the shape `dec:idea-the-ility-chooses-the-allocation-graph` argues for in Anthony's own words — \"if you don't ask upfront, these cost a lot in having to rework services after they've been already developed.\" A CAP posture chosen late is a rewrite; chosen early it is a constraint everything else obeys.\n\nD — A CONTRADICTION DETECTOR, and the only option where anything COMPUTES. A design asserting strict consistency AND high availability across a declared partition boundary is claiming something the theorem forbids. reflow2 already has the machinery: `CONTRADICTS`, `cap:kpp` for inviolable intent, `constrains`, and `cap:key-interfaces` for computing whether a change crosses a published boundary. This is a KPP breach with a known proof.\n\n═══ COUNTER-ARGUMENTS, recorded beside the idea ═══\n\n⚠️ 1. THE STRONGEST ONE — reflow2 IS DOMAIN-NEUTRAL AND CAP IS NOT. Its stated operating breadth is greenfield and brownfield and continual, across several organisations; the owner's own context is Space Force systems engineering and a Brookhaven beamline stack. CAP is meaningless for a beamline's mechanical design or a spacecraft thermal budget. Building a distributed-systems theorem into the core vocabulary privileges software architecture over every other domain the tool claims to serve.\n\n⚠️ 2. \"PICK TWO OF THREE\" IS ITSELF A MISLEADING FRAME, and shipping it would propagate the misreading. CAP forces a choice ONLY DURING a partition; in normal operation a system need not sacrifice either. That is precisely why PACELC exists. A tool that offers CAP as a first-class axis would be handing users the version practitioners most often get wrong.\n\n⚠️ 3. VOCABULARY NOBODY USES IS THE SHAPE THIS PROJECT SPENT A MONTH REMOVING. Requirement's five-state lifecycle runs 3-of-5 unused; BL-198 was the removal work. Nine dimensions already exist and the ility report cannot inform four of them. Two more unused axes make the enum longer and the design no truer.\n\n⚠️ 4. A PLANNED CAPABILITY COSTS THREE GAPS FOREVER (`dec:exploratory-staging`, measured: 34 of 73 open gaps came from routing wishes to Capability). Option D as a planned capability is a standing tax until someone builds it.\n\n📌 WHERE THE IDEA IS STRONGEST, narrower than \"add CAP\": not as a general axis, but where reflow2 ALREADY has the substrate — the federation seam. `cap:seam-incompatibility` computes disagreement between two independently-evolving designs, which is a consistency question with a real detector behind it. If any of this earns its place, that is the door, and it needs no enum change at all.",
+        "name": "PARKED, NOT ACCEPTED — should consistency/availability/partition-tolerance be vocabulary reflow2 offers? The federation seam is the road if any is ever taken. Anthony, 2026-08-12: revisit later, more important things first.",
+        "rationale": "PARKED ON ANTHONY'S WORD, 2026-08-12: \"we can add cap:seam-incompatibility as proposed, but leave it as not accepted. one day we can come back to this — it doesn't sound like it has huge applicability, so I think there are more important things to deal with in the interim.\"\n\nWHAT THAT SETTLES AND WHAT IT DOES NOT. It settles the ROAD: if consistency vocabulary is ever taken up, it enters through `cap:seam-incompatibility` — the federation seam, where reflow2 already computes when two independently-evolving designs disagree at a boundary — and NOT as new `dimension` enum values (option B) or a general axis. It does NOT accept the idea, schedule it, or claim it will happen. Status stays `proposed`.\n\n🛑 DELIBERATELY NOT MINTED AS A PLANNED CAPABILITY, and this is the one judgement made on his behalf rather than by his word. He said \"add cap:seam-incompatibility as proposed\" — but `cap:seam-incompatibility` ALREADY EXISTS and is `realized` (it is the built detector this idea would extend), and Capability has no `proposed` status: its lifecycle is planned / in_progress / realized / verified. Creating a NEW planned Capability to hold the idea would cost THREE GAPS FOREVER — unmotivated, unrealized, unverified — which is `dec:exploratory-staging`'s measured finding (34 of 73 open gaps came from exactly that routing). Parking something explicitly because there are MORE IMPORTANT THINGS TO DEAL WITH, and paying a standing three-gap nag for it, would defeat his own stated reason. A proposed Decision is SILENT by construction — `detect_gaps` fires `undecided_decision_point` only on two or more REGISTERED alternatives — so the idea is kept, findable by search, and costs nothing until someone registers real alternatives under it.\n\nIF HE WANTS IT TRACKED AS WORK rather than kept as a thought, that is one `add_capability` call away and the three gaps are the honest price of scheduling it. The choice is his; the default taken here is the quiet one, matching what he asked for.",
         "status": "proposed"
       }
     },
@@ -75293,7 +75399,7 @@
         "gap_id": "gap:159ab608b850e46d",
         "question": "Diagrams and mock-ups an assistant makes during a session are usually thrown away, even though they are often the clearest picture of what was agreed. Should reflow2 keep them automatically — and if so, all of them, or only the ones a decision actually points at?",
         "rephrase_degraded": false,
-        "status": "answered"
+        "status": "withdrawn"
       }
     },
     {
@@ -75331,7 +75437,7 @@
         "gap_id": "gap:31748fe70566dfa2",
         "question": "Once diagrams and documents are stored alongside the design, sending someone just the design file no longer gives them everything — their diagrams would quietly fail to open. Should the design file list what it depends on, so a person can tell at a glance whether they have it all?",
         "rephrase_degraded": false,
-        "status": "answered"
+        "status": "withdrawn"
       }
     },
     {
@@ -83046,7 +83152,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:1b518aa473fe70aa11f20b1c559118166922ad48d5e06f7071a04b8f26af193e",
+  "prev_content_hash": "sha256:de6f77fc954387c8abbd5729ea6a98b38c3558233826a1c72e5005b373a9b3c1",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
