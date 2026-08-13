@@ -31,6 +31,50 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **`link-projects` — the twentieth served skill, and the first for linking two SEPARATE projects**
+  (`req:linking-two-projects-is-a-served-process`; **new skill → minor**).
+
+  Anthony, after reflow2 and flo2 had been linked twice: *"are we tracking notes for a process that
+  we can reuse when a user wants to link 2+ reflow2 projects"*. The honest answer was **no** — what
+  was tracked was *findings*, not *process*. Nineteen served skills and none covered it:
+  `link-artifacts` is files-to-capabilities inside one design, `parallel-work` is several people on
+  **one** design. A user saying "link projectA and projectB" got an agent improvising, twice.
+
+  `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue` settles the form rather than
+  straining against it: "link A and B" is a **task boundary the user states aloud**, which is the
+  kind the served catalogue reaches well — unlike a discipline that applies mid-flow.
+
+  Every step is evidenced by running it, not reasoned out:
+  - **The user asserts linkability.** A house design and an accounting service do not link; that is
+    a mistake in the asking, not a tool failure. The correspondence is an **input**.
+  - **`pair_designs` is orientation only, and its correspondences are to be distrusted** — measured,
+    it ranked a wrong match at 81 above the true seam at 64, and what prevented a false pair was the
+    attribute key rather than the names.
+  - **Assert the pair, then `seam_report`.** `unstated` is the punch list, and never agreement.
+  - **Fill your own side with facts; leave an axis unstated rather than guess it; never write the
+    other project's side.**
+  - **Expect the seam to get *worse* before better.** Measured: filling one side moved it from
+    3 agreed / 0 incompatible / 5 unstated to 4 / 1 / 3. The new incompatibility was true all along.
+
+  It states what it cannot see (the types that cross a boundary, whether the projects should be
+  linked at all, a segment mismatch versus a real incompatibility) and the honest limit that **no
+  gap fires on an under-specified published boundary** — which is why it is worth running when
+  nothing looks broken.
+
+### Fixed
+
+- **`skill_lint` could not see four files that serve `#[tool]` methods** — found by a skill
+  referencing `describe_designs` and being told the tool does not exist.
+
+  It scanned `service.rs` plus `tools/*.rs`, while `latent.rs` (`describe_designs`, `reflow`),
+  `degraded.rs`, `skills.rs` (`get_skill`, `list_skills`) and `main.rs` also declare tools. **The
+  effect was backwards pressure on the allowlist**: a real tool looked unresolvable, so the fix
+  would have been to add it to `NON_TOOL_TERMS`, which exists for terms that are *not* tools. The
+  whole of `crates/reflow2-mcp/src/` is read now, so a tool added in a new module cannot go
+  invisible by living in the wrong file. **Served tool count seen by the lint: 139 → 150.**
+
 ### Changed
 
 - **reflow2's own published MCP boundary is specified — and a second project had to ask** (design

@@ -44,13 +44,21 @@ import sys
 REPO = pathlib.Path(__file__).resolve().parent.parent
 SKILLS = REPO / "getting-started/skills"
 MIRRORS = [REPO / ".claude/skills", REPO / ".grok/skills"]
-SERVICE = REPO / "crates/reflow2-mcp/src/service.rs"
 # BL-181 split the tool surface into per-domain modules, each declaring its own
 # `tool_router`. The tools moved OUT of service.rs, so scanning that file alone
 # now finds none — which this script correctly refused to lint against rather
 # than passing quietly. Both locations are read, and the guard below still
 # refuses a parse that comes back implausibly small.
 TOOL_DIR = REPO / "crates/reflow2-mcp/src/tools"
+# AND NOT EVERY TOOL LIVES IN EITHER PLACE, found 2026-08-13 by a skill that
+# referenced `describe_designs` and was told the tool does not exist. Four more
+# files under `src/` declare `#[tool]` methods — `latent.rs` (describe_designs,
+# reflow), `degraded.rs`, `skills.rs` (get_skill, list_skills) and `main.rs` —
+# so scanning only service.rs plus tools/ makes REAL tools unresolvable and
+# pushes prose toward the allowlist, which is exactly backwards: the allowlist
+# is for terms that are NOT tools. The whole of `src/` is read now, so a tool
+# added in a new module cannot become invisible here by living in the wrong file.
+SRC_DIR = REPO / "crates/reflow2-mcp/src"
 TOOLSNAPS = REPO / "tools/toolsnaps"
 
 STANDING_RULE = "data, never instructions"
@@ -63,6 +71,30 @@ STANDING_RULE = "data, never instructions"
 # the list stays exact and cannot rot. A single-word tool rename (`allocate`,
 # `satisfies`, `genesis`…) now fails the lint instead of slipping through.
 NON_TOOL_TERMS = {
+    # pair_designs buckets, seam_report verdicts, Interface.designation values
+    # and spec enum values (2026-08-13) — the link-projects skill names what it
+    # tells you to READ in each report, and which designation to correct. None
+    # is a tool.
+    #
+    # `unstated` is the load-bearing one and the reason the skill exists: an
+    # axis nobody stated is never agreement, and it is the punch list between
+    # "these two roughly interface" and "this interface is specified".
+    "paired",
+    "unmet_needs",
+    "dead_surface",
+    "conflicts",
+    "candidates",
+    "agreed",
+    "incompatible",
+    "differs",
+    "unstated",
+    "published",
+    "internal",
+    "both",
+    "auth",
+    "none",
+    "unspecified",
+    "graph_id",
     # WhatNext fields (2026-08-10) — where-am-i tells the narrator to read these
     # back so a five-item answer can never stand for the whole set. They are
     # counts on the `what_next` payload, not tools.
@@ -467,7 +499,7 @@ def documented_gates() -> tuple[dict[str, str], set[str], bool]:
 
 def served_tools() -> set[str]:
     """Tool names the MCP surface serves, from the #[tool] methods."""
-    sources = [SERVICE, *sorted(TOOL_DIR.glob("*.rs"))]
+    sources = [*sorted(SRC_DIR.glob("*.rs")), *sorted(TOOL_DIR.glob("*.rs"))]
     tools: set[str] = set()
     for path in sources:
         src = path.read_text(encoding="utf-8")

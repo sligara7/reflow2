@@ -1,6 +1,6 @@
 # The skills — which one, when
 
-Nineteen skills and eight slash commands. A **skill** is a prose workflow an agent loads by itself
+Twenty skills and eight slash commands. A **skill** is a prose workflow an agent loads by itself
 when your situation matches its description, so the loop happens without you naming tools; a
 **slash command** is you asking for one on purpose.
 
@@ -35,6 +35,7 @@ are a convenience for working on reflow2 itself.
 | **link-artifacts** | Right after you create or change a real file. Registers it with a checksum so drift is detectable. |
 | **check-health** | After structural changes. Cycles, single points of failure, duplicates, islands — how the design is *shaped*. |
 | **parallel-work** | Two people on one design. Claims the region, isolates the work in a worktree with its own graph, and merges the design semantically instead of by lines. |
+| **link-projects** | Two *separate* projects that must work together. You assert which boundary answers which — reflow2 drives that correspondence to a fully specified contract and names every axis nobody stated. Expect it to surface disagreements silence was hiding. |
 | **capture-session** | At any natural break, and before a long session ends. Writes down the reasoning that exists *only* in the conversation — what was tried and abandoned, what got measured, why the losing option lost — and routes each kind to the node type that already fits it. Not a transcript, and not for new intent. |
 
 ## Changing what is already there
