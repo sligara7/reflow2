@@ -31,6 +31,42 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed
+
+- **reflow2's own published MCP boundary is specified — and a second project had to ask** (design
+  record + docs only; **no code, no schema move → patch**).
+
+  `ifc:mcp-tools` is reflow2's `published` contract and carried `auth: unspecified` and
+  `transport_security: unspecified`, plus three empty free-text axes. **Nothing inside reflow2 was
+  ever going to say so**: `unprovided_interface` and `unconsumed_interface` read edges, not spec
+  completeness, and no detector reports an under-specified published boundary. It took running
+  `seam_report` against flo2 on an asserted pair — 3 agreed, 0 incompatible, **5 stated by nobody**,
+  with flo2 having answered on the two that matter and reflow2 not. The report's own wording:
+  *"we assume `unstated`, they require `none` — the side that assumed less finds out in production."*
+
+  Every filled value is a fact about what is built, not an intention: `auth: none` (no
+  authentication anywhere in `crates/`; `ifc:authenticating-gateway` is a *required* boundary whose
+  name says so, and `--http-allow-host` is a Host allowlist, not auth), `transport_security: none`
+  (no TLS anywhere; stdio pipe or plain HTTP), plus `endpoint`, `operations`, `error_model` and
+  `payload_schema` read off the served surface.
+
+  🛑 **Specifying honestly produced an incompatibility, and that is the point.** Re-running the seam:
+  agreed 3→4, unstated 5→3, incompatible **0→1** — `transport_security`, ours `none` against flo2's
+  `tls`. Two readings survive and the graph cannot choose: flo2 describing its own TLS-terminating
+  edge (an artefact of asserting the pair across two segments), or flo2 expecting TLS *from* reflow2's
+  HTTP surface (a real assumption gap). Either way it was invisible while reflow2 stayed silent.
+  Resolving it needs flo2's side, which was deliberately not written to.
+
+  `medium` is **left alone**: the node already records that `REST` is known-wrong and that the enum
+  has no right value for MCP (JSON-RPC over stdio *or* streamable HTTP). That is a vocabulary
+  decision, raised rather than guessed.
+
+- **`interfaceless_dependency` is marked superseded in the gap taxonomy.** It was a planned gap
+  source, never implemented under that key, describing the rule that shipped in v0.29.0+ as
+  `undeclared_seam` — so the doc briefly carried two rows for one rule. The shipped rule is the
+  stricter reading (an `Interface` must carry **both** a `PROVIDES` and a `CONSUMES`). The row is
+  kept rather than deleted so anyone who read the taxonomy earlier finds where the rule went.
+
 ### Added
 
 - **`undeclared_seam` — the coupling with no contract is now NAMED, in any project**
