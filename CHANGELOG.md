@@ -31,6 +31,42 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **`undeclared_seam` — the coupling with no contract is now NAMED, in any project**
+  (`req:an-undeclared-coupling-is-named-not-just-counted`; **new gap source → minor**).
+
+  Anthony's reframing is the whole point of this landing as code rather than as labelling work:
+  *"the step of adding seams for reflow2 needs to be something reflow2 does for ANY project."*
+  The prior plan was to hand-label reflow2's own 73 couplings, which fixes one design and teaches
+  reflow2 nothing. Every consumer arrives in the same state — parts that depend on each other with
+  no contract recorded between them — and the tool should meet them there.
+
+  **The mechanism already existed and was being discarded.** `maturity_report`'s `seams` band has
+  always computed two sets — `couplings` (Component pairs joined by `DEPENDS_ON`) and `declared`
+  (pairs joined by an `Interface` carrying **both** a `PROVIDES` and a `CONSUMES`, because one-sided
+  is exactly the unrecorded contract the capture skill warns about) — divided one by the other, and
+  dropped the difference on the floor. `couplings - declared` **is** the answer, computed on every
+  maturity run, for every design, and never named. On reflow2's own graph that set has 73 members
+  and the band reads 0%.
+
+  Nothing else covered it: `unprovided_interface` and `unconsumed_interface` run the **opposite**
+  direction and both require an `Interface` to exist already, so a design that has never declared
+  one was invisible to both.
+
+  - **It names the pair and asks. It never drafts the Interface.** reflow2 can see *that* two
+    components are coupled and cannot know *what* the contract is — the medium, the payload, the
+    auth, the direction. Proposing one would be `req:a-repair-suggestion-never-proposes-fabrication`
+    exactly. A test asserts the finding stays interrogative and contains no invented contract
+    vocabulary.
+  - **One aggregate question, keyed on the rule**, not 73 nags — the BL-73 lesson, and the same
+    flood `unexpected_coupling` was retired for. The acknowledgement therefore survives a new
+    coupling (`req:set-scoped-acknowledgement-keys-on-its-rule`) while the count in the title moves.
+  - **Silent when there is nothing to declare.** A design where no two Components depend on each
+    other reports nothing, matching the band's own wording: *"an absence, not a deficiency."*
+  - The computation is extracted to `DesignGraph::seam_sets`, shared by the band and the detector,
+    so a detector and a band can never disagree about what a contract is.
+
 ## [0.29.0] — 2026-08-12
 
 Two projects were pointed at each other for the first time, and everything below except the last

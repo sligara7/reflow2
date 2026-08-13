@@ -1456,3 +1456,212 @@ fn the_finding_names_the_edge_it_considered() {
         found[0].evidence
     );
 }
+
+// ---------------------------------------------------------------------------
+// undeclared_seam — the coupling nobody wrote a contract for
+//
+// `req:an-undeclared-coupling-is-named-not-just-counted`. The set was already
+// computed by `maturity_report`'s seams band and thrown away; these tests hold
+// the two silences and the one thing the finding must never do.
+// ---------------------------------------------------------------------------
+
+use std::collections::HashMap;
+
+fn depends_on(g: &mut DesignGraph, from: &str, to: &str) {
+    g.create_edge(
+        edge::DEPENDS_ON,
+        node::COMPONENT,
+        from,
+        node::COMPONENT,
+        to,
+        HashMap::new(),
+    )
+    .unwrap();
+}
+
+/// Two components that depend on each other with nothing recorded between them,
+/// plus enough thread that the phase detectors are not the only thing firing.
+fn coupled_pair() -> DesignGraph {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:a", "A", "need a").unwrap();
+    g.add_capability("cap:a", "Cap A", "does a", None).unwrap();
+    g.satisfies("cap:a", "req:a").unwrap();
+    g.add_component("cmp:service", "Service", "the service", None)
+        .unwrap();
+    g.add_component("cmp:store", "Store", "the store", None)
+        .unwrap();
+    g.allocate("cap:a", "cmp:service").unwrap();
+    depends_on(&mut g, "cmp:service", "cmp:store");
+    g
+}
+
+fn seam_gap(g: &DesignGraph) -> Option<reflow2_core::GapCandidate> {
+    g.detect_gaps()
+        .unwrap()
+        .into_iter()
+        .find(|x| x.gap_source == GapSource::UndeclaredSeam)
+}
+
+#[test]
+fn a_coupling_with_no_contract_is_named() {
+    let g = coupled_pair();
+    let gap =
+        seam_gap(&g).unwrap_or_else(|| panic!("got {:?}", sources(&g.detect_gaps().unwrap())));
+
+    // It names the PAIR — both ends, by name in the question and by id in the
+    // evidence, because a reader needs one and a tool needs the other.
+    assert!(
+        gap.description.contains("Service") && gap.description.contains("Store"),
+        "both ends must be named: {}",
+        gap.description
+    );
+    assert!(
+        gap.evidence.contains("cmp:service") && gap.evidence.contains("cmp:store"),
+        "evidence must carry the ids: {}",
+        gap.evidence
+    );
+    assert_eq!(
+        gap.affected_ids,
+        vec!["cmp:service".to_string(), "cmp:store".to_string()]
+    );
+    assert_eq!(gap.scope, GapScope::Project);
+}
+
+/// The whole constraint of `req:an-undeclared-coupling-is-named-not-just-counted`:
+/// reflow2 can see THAT two parts are coupled and cannot know WHAT crosses the
+/// boundary. Naming a medium, a payload or a direction would be exactly the
+/// fabrication `cap:no-fabricated-repair` exists to prevent — so the finding
+/// asks, and every word of it stays interrogative.
+#[test]
+fn the_finding_asks_for_the_contract_and_never_drafts_one() {
+    let g = coupled_pair();
+    let gap = seam_gap(&g).unwrap();
+    assert!(
+        gap.description.contains('?'),
+        "it must ask, not assert: {}",
+        gap.description
+    );
+    // No invented contract vocabulary. If any of these ever appear, something
+    // has started guessing what runs across a boundary it cannot see.
+    for fabricated in ["HTTP", "REST", "JSON", "gRPC", "TCP", "queue", "protobuf"] {
+        assert!(
+            !gap.description.contains(fabricated) && !gap.evidence.contains(fabricated),
+            "the finding must not propose a contract, found {fabricated:?} in: {} / {}",
+            gap.description,
+            gap.evidence
+        );
+    }
+}
+
+#[test]
+fn a_declared_seam_is_not_reported() {
+    let mut g = coupled_pair();
+    g.add_interface("iface:reads", "Reads").unwrap();
+    g.provides("cmp:store", "iface:reads").unwrap();
+    g.consumes("cmp:service", "iface:reads").unwrap();
+
+    assert!(
+        seam_gap(&g).is_none(),
+        "got {:?}",
+        sources(&g.detect_gaps().unwrap())
+    );
+}
+
+/// One-sided is exactly the unrecorded contract the capture skill warns about,
+/// and `maturity`'s seams band has always counted it as undeclared. The detector
+/// must agree with the band it was extracted from.
+#[test]
+fn a_one_sided_interface_does_not_close_the_seam() {
+    let mut g = coupled_pair();
+    g.add_interface("iface:reads", "Reads").unwrap();
+    g.provides("cmp:store", "iface:reads").unwrap();
+    // Nobody CONSUMES it.
+
+    assert!(seam_gap(&g).is_some(), "a half-written contract is not one");
+}
+
+/// `maturity` already words this exactly right — "no two Components depend on
+/// each other, so there is no seam to declare — an absence, not a deficiency".
+/// A detector that reported a clean zero as a fault would contradict its own band.
+#[test]
+fn a_design_with_no_component_dependencies_stays_silent() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:a", "A", "need a").unwrap();
+    g.add_capability("cap:a", "Cap A", "does a", None).unwrap();
+    g.satisfies("cap:a", "req:a").unwrap();
+    g.add_component("cmp:a", "A", "part a", None).unwrap();
+    g.add_component("cmp:b", "B", "part b", None).unwrap();
+    g.allocate("cap:a", "cmp:a").unwrap();
+
+    assert!(
+        seam_gap(&g).is_none(),
+        "got {:?}",
+        sources(&g.detect_gaps().unwrap())
+    );
+}
+
+/// The BL-73 lesson, and the reason this is an aggregate: reflow2's own design
+/// would emit 73 of these individually, and `unexpected_coupling` was retired
+/// for flooding on correct architecture.
+#[test]
+fn many_undeclared_couplings_are_one_question_not_many() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:a", "A", "need a").unwrap();
+    g.add_capability("cap:a", "Cap A", "does a", None).unwrap();
+    g.satisfies("cap:a", "req:a").unwrap();
+    for i in 0..10 {
+        g.add_component(&format!("cmp:{i}"), &format!("Part {i}"), "a part", None)
+            .unwrap();
+    }
+    g.allocate("cap:a", "cmp:0").unwrap();
+    for i in 0..9 {
+        depends_on(&mut g, &format!("cmp:{i}"), &format!("cmp:{}", i + 1));
+    }
+
+    let seams: Vec<_> = g
+        .detect_gaps()
+        .unwrap()
+        .into_iter()
+        .filter(|x| x.gap_source == GapSource::UndeclaredSeam)
+        .collect();
+    assert_eq!(seams.len(), 1, "one question keyed on the rule, not nine");
+    assert!(
+        seams[0].title.contains('9'),
+        "the count belongs in the title: {}",
+        seams[0].title
+    );
+    // The question shows a readable sample; the evidence carries all nine, so
+    // nothing is silently dropped.
+    assert!(seams[0].description.contains("and 3 more"));
+    for i in 0..10 {
+        assert!(
+            seams[0].evidence.contains(&format!("cmp:{i}")),
+            "evidence must list every pair"
+        );
+    }
+}
+
+/// Aggregate keying (`req:set-scoped-acknowledgement-keys-on-its-rule`): the
+/// standing judgement is about the practice, so adding a coupling must not
+/// expire it. This is the failure `unvalidated_capability` was re-acknowledged
+/// about twenty times for.
+#[test]
+fn the_seam_gap_id_survives_a_new_coupling() {
+    let mut g = coupled_pair();
+    let before = seam_gap(&g).unwrap().id;
+
+    g.add_component("cmp:third", "Third", "another part", None)
+        .unwrap();
+    depends_on(&mut g, "cmp:service", "cmp:third");
+
+    let after = seam_gap(&g).unwrap();
+    assert_eq!(
+        before, after.id,
+        "an aggregate is keyed on its rule, so the acknowledgement carries"
+    );
+    assert!(
+        after.title.contains('2'),
+        "but the count moves: {}",
+        after.title
+    );
+}

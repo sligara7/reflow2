@@ -227,6 +227,31 @@ pub enum GapSource {
     /// An `Interface` a Component `PROVIDES` that nothing `CONSUMES` — either a
     /// deliberate public contract or a leftover.
     UnconsumedInterface,
+    /// Components that depend on each other with **no contract recorded between
+    /// them** — the seam exists in the build and is written down nowhere.
+    ///
+    /// THE OPPOSITE DIRECTION FROM THE TWO ABOVE, and that is why it had to be
+    /// built. [`UnprovidedInterface`](Self::UnprovidedInterface) and
+    /// [`UnconsumedInterface`](Self::UnconsumedInterface) both require an
+    /// `Interface` to exist already; a design that has never declared one is
+    /// invisible to both. `maturity_report`'s `seams` band has always computed
+    /// exactly this set — `couplings - declared` — divided it into a ratio and
+    /// dropped the difference on the floor
+    /// (`req:an-undeclared-coupling-is-named-not-just-counted`).
+    ///
+    /// IT NAMES THE PAIR AND ASKS. It never drafts the Interface: reflow2 can
+    /// see *that* two components are coupled and cannot know *what* the contract
+    /// is — the medium, the payload, the auth, the direction. Proposing one
+    /// would be the fabrication `req:a-repair-suggestion-never-proposes-fabrication`
+    /// forbids.
+    ///
+    /// AGGREGATE, and deliberately so: reflow2's own design would emit 73 of
+    /// these individually. `chg:gap-reporting-at-corpus-scale` records the same
+    /// shape biting at an order of magnitude, and
+    /// [`UnexpectedCoupling`](Self::UnexpectedCoupling) was retired for
+    /// flooding. One question keyed on the rule, listing the pairs, is the
+    /// BL-73 answer.
+    UndeclaredSeam,
     // Graph-analysis (from the design network)
     /// **Retired as a gap.** A coupling edge bridging two otherwise-distant
     /// communities is a *signal*, not a question: `graph_report` lists it under
@@ -334,6 +359,7 @@ impl GapSource {
             GapSource::UnverifiedArtifact => "unverified_artifact",
             GapSource::UnprovidedInterface => "unprovided_interface",
             GapSource::UnconsumedInterface => "unconsumed_interface",
+            GapSource::UndeclaredSeam => "undeclared_seam",
             GapSource::UnexpectedCoupling => "unexpected_coupling",
             GapSource::DecliningDimension => "declining_dimension",
             GapSource::MissingIntermediateLevel => "missing_intermediate_level",
@@ -376,6 +402,13 @@ impl GapSource {
     fn is_aggregate(self) -> bool {
         match self {
             GapSource::UnvalidatedCapability => true,
+            // Per-rule, not per-pair: reflow2's own design has 73 undeclared
+            // couplings, and every consumer arrives with a comparable set. The
+            // standing judgement being accepted here is "our boundaries are
+            // recorded somewhere other than the graph", which is a claim about
+            // the practice, not about any one pair — and per-pair keying would
+            // expire it every time a component gained a dependency.
+            GapSource::UndeclaredSeam => true,
             // Everything else names the nodes the finding is actually about, so a
             // change to that set SHOULD expire the judgement. Listed exhaustively
             // rather than with a wildcard: a new aggregate detector must come here
@@ -405,6 +438,7 @@ impl GapSource {
             | GapSource::UnverifiedArtifact
             | GapSource::UnprovidedInterface
             | GapSource::UnconsumedInterface
+            // (UndeclaredSeam is aggregate — matched above.)
             | GapSource::UnexpectedCoupling
             | GapSource::DecliningDimension
             | GapSource::MissingIntermediateLevel
@@ -1039,6 +1073,9 @@ impl DesignGraph {
         self.detect_releases_without_epoch(&mut gaps)?;
         self.detect_status_contradictions(&mut gaps)?;
         self.detect_interface_pairing(&pop, &mut gaps)?;
+        // The other direction from interface pairing: those two need an
+        // Interface to exist, this one fires where none ever has.
+        self.detect_undeclared_seams(&mut gaps)?;
         // Deliberately absent: unexpected coupling. It is a *signal*, reported
         // by `graph_report` and `surprising_connections`, not a gap demanding
         // an answer — see `GapSource::UnexpectedCoupling`.
@@ -1775,6 +1812,102 @@ impl DesignGraph {
             }
         }
         Ok(())
+    }
+
+    /// Component pairs that depend on each other with no contract recorded
+    /// between them — the seam the build has and the design does not.
+    ///
+    /// THE SET WAS ALREADY BEING COMPUTED. `maturity_report`'s `seams` band
+    /// divides `declared` by `couplings` on every run and discards the
+    /// difference; [`DesignGraph::seam_sets`] is that computation, extracted so
+    /// the band and this detector cannot disagree about what a contract is.
+    ///
+    /// TWO SILENCES, both load-bearing:
+    ///
+    /// 1. **No couplings at all → nothing to say.** `maturity` already words
+    ///    this exactly right — "no two Components depend on each other, so there
+    ///    is no seam to declare — an absence, not a deficiency" — and a detector
+    ///    that reported a clean zero as a fault would contradict its own band.
+    /// 2. **Every coupling declared → nothing to say.** The obvious one, stated
+    ///    because it is the state this gap exists to reach.
+    ///
+    /// It names the pairs and asks. Drafting the Interface would be fabrication
+    /// (`cap:no-fabricated-repair`): the graph knows two components are coupled
+    /// and cannot know what runs across the boundary.
+    fn detect_undeclared_seams(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
+        let seams = self.seam_sets()?;
+        if seams.couplings.is_empty() {
+            return Ok(());
+        }
+        let undeclared = seams.undeclared();
+        if undeclared.is_empty() {
+            return Ok(());
+        }
+
+        // The pairs are the finding; the components are what a reader navigates
+        // to, so `affected_ids` carries each component once, in a stable order.
+        let mut affected: Vec<String> = Vec::new();
+        for (a, b) in &undeclared {
+            for id in [a, b] {
+                if !affected.contains(id) {
+                    affected.push(id.clone());
+                }
+            }
+        }
+        affected.sort();
+
+        let n = undeclared.len();
+        let named: Vec<String> = undeclared
+            .iter()
+            .map(|(a, b)| format!("{} ↔ {}", self.component_label(a), self.component_label(b)))
+            .collect();
+        // How many pairs to spell out in the question. The whole list goes in
+        // `evidence` regardless — this is only about what a person is asked to
+        // read at once, and 73 names in a prompt is a wall, not a question.
+        const SHOWN: usize = 6;
+        let sample = if n > SHOWN {
+            format!("{}, and {} more", named[..SHOWN].join("; "), n - SHOWN)
+        } else {
+            named.join("; ")
+        };
+
+        gaps.push(GapCandidate {
+            id: gap_id(GapSource::UndeclaredSeam, &affected),
+            gap_source: GapSource::UndeclaredSeam,
+            scope: GapScope::Project,
+            severity: 0.45,
+            title: format!(
+                "{n} pair(s) of parts depend on each other with no contract written down"
+            ),
+            description: format!(
+                "{sample} — each of these pairs is coupled in the design, and nothing records what \
+                 passes between them. What is the contract on each: what crosses the boundary, in \
+                 which direction, over what? Record it with add_interface plus provides/consumes, \
+                 or acknowledge that these boundaries are held somewhere other than the design.",
+            ),
+            affected_ids: affected,
+            suggested_depth: 2,
+            evidence: format!(
+                "Component pairs with a DEPENDS_ON edge and no Interface carrying BOTH a PROVIDES \
+                 and a CONSUMES between them ({n} of {} coupling(s)): {}.",
+                seams.couplings.len(),
+                undeclared
+                    .iter()
+                    .map(|(a, b)| format!("{a} ↔ {b}"))
+                    .collect::<Vec<_>>()
+                    .join(", ")
+            ),
+        });
+        Ok(())
+    }
+
+    /// A Component's human name, falling back to its id — the id is what a
+    /// reader can act on when a component was created without a name.
+    fn component_label(&self, id: &str) -> String {
+        match self.get_node(node::COMPONENT, id) {
+            Ok(Some(c)) => node_name(&c),
+            _ => id.to_string(),
+        }
     }
 
     /// A Capability nothing builds — where "builds" accepts **both** shapes the

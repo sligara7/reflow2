@@ -146,7 +146,88 @@ fn prop<'a>(n: &'a dynograph_storage::StoredNode, key: &str) -> Option<&'a str> 
     n.properties.get(key).and_then(Value::as_str)
 }
 
+/// The two Component-pair sets the `seams` band divides — named, because the
+/// difference between them is a finding and used to be thrown away.
+///
+/// Pairs are unordered and stored smaller-id-first, so `cmp:a`→`cmp:b` and
+/// `cmp:b`→`cmp:a` are one seam rather than two.
+pub(crate) struct SeamSets {
+    /// Component pairs joined by a `DEPENDS_ON` edge — the seams that exist.
+    pub couplings: BTreeSet<(String, String)>,
+    /// Component pairs joined by a real contract — the seams that are written
+    /// down. A subset of `couplings` only in practice: two components can share
+    /// an Interface without depending on each other, which is why the band
+    /// intersects rather than subtracts.
+    pub declared: BTreeSet<(String, String)>,
+}
+
+impl SeamSets {
+    /// The couplings with no contract recorded between them — what
+    /// `req:an-undeclared-coupling-is-named-not-just-counted` exists to name.
+    pub fn undeclared(&self) -> Vec<(String, String)> {
+        self.couplings.difference(&self.declared).cloned().collect()
+    }
+}
+
 impl DesignGraph {
+    /// Which Component pairs are coupled, and which of those run through a
+    /// declared contract.
+    ///
+    /// EXTRACTED SO THERE IS ONE DEFINITION. The `seams` band divides these two
+    /// sets and `detect_undeclared_seams` names their difference; computing
+    /// "declared" twice would let a detector and a band disagree about what a
+    /// contract is, and the band would be the one nobody could argue with.
+    pub(crate) fn seam_sets(&self) -> Result<SeamSets, DynoError> {
+        let mut provided: HashMap<String, HashSet<String>> = HashMap::new();
+        let mut consumed: HashMap<String, HashSet<String>> = HashMap::new();
+        for i in self.scan_nodes(node::INTERFACE)? {
+            for e in self.incoming(&i.node_id, Some(edge::PROVIDES))? {
+                provided
+                    .entry(i.node_id.clone())
+                    .or_default()
+                    .insert(e.from_id);
+            }
+            for e in self.incoming(&i.node_id, Some(edge::CONSUMES))? {
+                consumed
+                    .entry(i.node_id.clone())
+                    .or_default()
+                    .insert(e.from_id);
+            }
+        }
+        // A contract counts only when BOTH sides are recorded: one-sided is
+        // exactly the "unrecorded contract" the capture skill warns about.
+        let mut declared: BTreeSet<(String, String)> = BTreeSet::new();
+        for (iid, ps) in &provided {
+            if let Some(cs) = consumed.get(iid) {
+                for p in ps {
+                    for c in cs {
+                        if p != c {
+                            let (a, b) = if p < c { (p, c) } else { (c, p) };
+                            declared.insert((a.clone(), b.clone()));
+                        }
+                    }
+                }
+            }
+        }
+        let mut couplings: BTreeSet<(String, String)> = BTreeSet::new();
+        for c in self.scan_nodes(node::COMPONENT)? {
+            for e in self.outgoing(&c.node_id, Some(edge::DEPENDS_ON))? {
+                if self.get_node(node::COMPONENT, &e.to_id)?.is_some() && e.to_id != c.node_id {
+                    let (a, b) = if c.node_id < e.to_id {
+                        (c.node_id.clone(), e.to_id.clone())
+                    } else {
+                        (e.to_id.clone(), c.node_id.clone())
+                    };
+                    couplings.insert((a, b));
+                }
+            }
+        }
+        Ok(SeamSets {
+            couplings,
+            declared,
+        })
+    }
+
     /// Read where this design sits on the function-to-structure trajectory.
     ///
     /// See the module docs for what this reports and — more importantly — what
@@ -201,51 +282,11 @@ impl DesignGraph {
         }
 
         // ---- seams: which component pairs are joined by a real contract ----
-        let mut provided: HashMap<String, HashSet<String>> = HashMap::new();
-        let mut consumed: HashMap<String, HashSet<String>> = HashMap::new();
-        for i in self.scan_nodes(node::INTERFACE)? {
-            for e in self.incoming(&i.node_id, Some(edge::PROVIDES))? {
-                provided
-                    .entry(i.node_id.clone())
-                    .or_default()
-                    .insert(e.from_id);
-            }
-            for e in self.incoming(&i.node_id, Some(edge::CONSUMES))? {
-                consumed
-                    .entry(i.node_id.clone())
-                    .or_default()
-                    .insert(e.from_id);
-            }
-        }
-        // A contract counts only when BOTH sides are recorded: one-sided is
-        // exactly the "unrecorded contract" the capture skill warns about.
-        let mut declared: HashSet<(String, String)> = HashSet::new();
-        for (iid, ps) in &provided {
-            if let Some(cs) = consumed.get(iid) {
-                for p in ps {
-                    for c in cs {
-                        if p != c {
-                            let (a, b) = if p < c { (p, c) } else { (c, p) };
-                            declared.insert((a.clone(), b.clone()));
-                        }
-                    }
-                }
-            }
-        }
-        let mut couplings: HashSet<(String, String)> = HashSet::new();
-        for c in self.scan_nodes(node::COMPONENT)? {
-            for e in self.outgoing(&c.node_id, Some(edge::DEPENDS_ON))? {
-                if self.get_node(node::COMPONENT, &e.to_id)?.is_some() && e.to_id != c.node_id {
-                    let (a, b) = if c.node_id < e.to_id {
-                        (c.node_id.clone(), e.to_id.clone())
-                    } else {
-                        (e.to_id.clone(), c.node_id.clone())
-                    };
-                    couplings.insert((a, b));
-                }
-            }
-        }
-        let covered = couplings.intersection(&declared).count();
+        // `seam_sets` is shared with `detect_undeclared_seams`, which names the
+        // difference this line discards.
+        let seams = self.seam_sets()?;
+        let covered = seams.couplings.intersection(&seams.declared).count();
+        let couplings = seams.couplings;
 
         let releases = self.scan_nodes(node::RELEASE)?;
         let mut deployed = 0usize;
