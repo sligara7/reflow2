@@ -65,6 +65,78 @@ This file is the third view: *what changed, and when*.
 
 ### Fixed
 
+- **A fresh install had no shareable design record, and nothing said how to make one**
+  (`fact:second-user-first-run-report-2026-08-13`).
+
+  Alex, first run on a real work project: *"That .gitignore ignores .reflow2 folder. Where does it
+  store the JSON file that can be committed for the graph? I can't find the artifact that can be
+  shared by other project members."*
+
+  **He was right, and the reason is narrower and worse than "it was undocumented".** The convention
+  *was* written down — `getting-started/UPDATING.md` names `docs/design/<name>.json` as "the
+  committed export — the durable record", and the `ci-gate` and `parallel-work` skills both use it.
+  Two things defeated that:
+
+  - **Nothing INSTALLED INTO THE PROJECT said it.** Reproduced on a scratch project: `AGENTS.md`,
+    `CLAUDE.md` and the closing summary contain zero mentions of `export` or `docs/design`. The only
+    trace was a parenthetical inside the `.gitignore` — *"the durable record is an export"* — which
+    parses only if you already know what an export is. The real documentation lives in a file about
+    *updating* and in skills that must be deliberately loaded; a first run reaches neither.
+  - 🛑 **The one export init did produce went somewhere git cannot see.** `backup_graph` writes
+    `.reflow2/backups/design-<stamp>.json` — and `.reflow2/` is the very directory the same
+    installer ignores. **A user who went looking found an export that was invisible by
+    construction.** That is the shape of the whole defect: the machinery was all there and its
+    output landed inside the ignore rule.
+
+  The knock-on: `ci-gate` was unreachable for a new project, because `reflow2_check.py` runs against
+  a committed export that nothing had produced.
+
+  Now three places say it, in the words of whoever is reading:
+  - the `.gitignore` comment names `docs/design/<project>.json` and `export_graph` outright;
+  - the installer's closing summary has a **"The record you SHARE"** block naming the path;
+  - `POINTER.md` — the file the *agent* reads, which is what actually makes the export happen —
+    gains a section on the record, including that one commit per PR should write it.
+
+  **And `ensure_design_record` now WRITES THE FILE — always, including on a brand-new project.**
+  Alex again, when the first version of this fix was described to him: *"it should just make the
+  file and it should not be .gitignored. For some reason I thought it already created that file."*
+  Two users independently expected it to exist, which is the strongest evidence available about
+  where somebody looks.
+
+  ⚠️ That first version only wrote the record when a graph already existed — silent on exactly the
+  fresh project he was standing in. The reasoning was that exporting an empty graph mints an
+  identity nobody asked for, the thing `describe_designs` refuses to do. **The analogy does not
+  hold**: `describe_designs` inspects, and looking must not create; this is the installer, and
+  running it is the moment the project adopts reflow2. It already writes `.reflow2/`, the MCP
+  configs and an instruction file — minting the id is the smallest of those commitments, and an
+  empty export is a real document (stamp, `graph_id`, `content_hash`, zero nodes) whose value is
+  that the first real export **chains from it**.
+
+  It never overwrites an existing record, and it is **never fatal**: a missing or unrunnable binary
+  produces a line you can act on rather than a traceback over an otherwise-successful install.
+
+- **The installer stopped reformatting `.claude/settings.local.json`** (same report).
+
+  Alex: *"the init should not write over the .claude/settings.local.json if it already exists."*
+  Measured: it never overwrote — `ensure_hooks` merges, preserves a `permissions` block byte-for-byte
+  and keeps a hook you repointed. **But it re-serialised the whole document at a fixed 2-space
+  indent**, so a compact 10-line file came back as 58 expanded lines and every line showed in the
+  diff. **A merge you cannot distinguish from an overwrite is an overwrite as far as trust goes** —
+  the standard `ensure_hooks`' own docstring sets for itself.
+
+  It now keeps the indent the file already used (the whitespace itself, so a tab-indented file comes
+  back tab-indented), and the summary says outright that the file was **merged and nothing removed**.
+  Residual churn is documented rather than claimed away: `json.dumps` still normalises array layout,
+  and format-preserving JSON editing needs a parser the stdlib does not have.
+
+  ⚠️ **Not ruled out**: that Alex is on an older kit whose behaviour genuinely did lose content. His
+  version was not established, and a consumer kit can sit releases behind — `ver:kit-manifest-agrees`
+  exists because reflow2's own manifest was four releases stale and nothing noticed.
+
+  8 regression tests added (`tools/test_init.py`, 62 → 70). One of them caught a gap in its own fix:
+  the first `detected_indent` read only spaces, so a tab-indented file would still have been
+  normalised.
+
 - **`skill_lint` could not see four files that serve `#[tool]` methods** — found by a skill
   referencing `describe_designs` and being told the tool does not exist.
 

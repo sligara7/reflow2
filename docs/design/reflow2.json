@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:890bdee29e8c248ed02c64f2591885ab310cc48aa976db38dff70a2d9530ca9d",
+  "content_hash": "sha256:b1d19638a8ea86f0ec95751b5b016e061a5e48593c34ebbb5c3634a0906f4197",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1438,6 +1438,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:install-leaves-a-committable-record",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:init"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -17367,6 +17375,33 @@
         "action": "modified"
       },
       "to_id": "req:the-server-is-the-authority-on-its-own-currency"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-shareable-record-is-findable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-shareable-record-is-findable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:kit-pointer"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-shareable-record-is-findable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-init"
     },
     {
       "edge_type": "CHANGED",
@@ -57021,6 +57056,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:install-leaves-a-committable-record",
+      "properties": {},
+      "to_id": "req:a-consumer-project-ends-up-with-a-committable-record"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:install-reaches-the-agent",
       "properties": {},
       "to_id": "req:kit-reaches-the-agent"
@@ -58677,6 +58718,12 @@
       "from_id": "ver:ingest-handshake",
       "properties": {},
       "to_id": "cap:ingest"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:install-leaves-a-committable-record",
+      "properties": {},
+      "to_id": "cap:install-leaves-a-committable-record"
     },
     {
       "edge_type": "VERIFIES",
@@ -61231,7 +61278,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:34c58f8656dab4e6a1701fa06d3fed85d614afe192086cb172aa702e206dde50",
+        "checksum": "sha256:46cf0640b0e86fe1b8af9c2d60472511a8f4e662614c03c6e8e9b5d25aa9e97f",
         "granularity": "atomic",
         "location": "tools/reflow2_init.py",
         "name": "reflow2_init.py",
@@ -61266,10 +61313,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:feebbdb1438ff2c52e51cb0fbb004476378ffa97d3c9aa72890b7aa92f4b81b5",
+        "checksum": "sha256:4329e5563666ab6708edfe68c0d0188818571b39ea408c70ef71663bc2f98f36",
+        "granularity": "atomic",
         "location": "getting-started/POINTER.md",
         "name": "POINTER.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -62170,7 +62219,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:58addb37275ac51b74c0e00183b4a390b0eedd42813e317ce60d7d822824f87c",
+        "checksum": "sha256:29e39edfcce3645940f439681fb4fd82aa2df6c4c556f1719a45bca7cc991a58",
         "granularity": "atomic",
         "location": "tools/test_init.py",
         "name": "test_init.py",
@@ -63622,6 +63671,16 @@
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:install-leaves-a-committable-record",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`ensure_design_record` writes `docs/design/<project>.json` on every install — including a brand-new project, which is the only case either user actually hit. Never overwrites an existing record, and never fatal: a missing or unrunnable binary produces an actionable line rather than a traceback over an otherwise-successful install.\n\nThree surfaces say where it is, in the words of whoever is reading: the `.gitignore` comment (the human who goes looking), the installer's closing summary (the human who just ran it), and `POINTER.md` (the AGENT, which is what keeps the export current afterwards).\n\n⭐ THE VALUE OF WRITING AN EMPTY EXPORT rather than waiting for a design: it is a real document — stamp, `graph_id`, `content_hash`, zero nodes — so the first real export CHAINS FROM IT instead of starting a lineage nobody can check. And the file exists at the moment somebody goes looking, which is the entire complaint.\n\n📌 WHAT IT DOES NOT DO: keep the record current. That is the agent's job on every change, which is why `POINTER.md` carries the one-export-per-PR rule rather than the installer trying to enforce it.",
+        "name": "A fresh install leaves the shareable design record in the repo, git-visible, and says so where the user is looking",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -67709,6 +67768,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The server stops making a human compare two numbers: served_by derives `stale` from its own /proc/self/exe, and the note carries the remedy that actually works"
+      }
+    },
+    {
+      "node_id": "chg:the-shareable-record-is-findable",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "A fresh install now names the shareable design record, and the settings merge stops reformatting somebody else's file — both from Alex's first run on a real work project"
       }
     },
     {
@@ -76718,6 +76785,18 @@
       }
     },
     {
+      "node_id": "req:a-consumer-project-ends-up-with-a-committable-record",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "Installing reflow2 into a project leaves a committable design record in the repo — the artifact teammates read",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "ANTHONY, 2026-08-13, after Alex's first run on a real work project: *\"this is a core feature of reflow2. both my brother and I thought it already worked.\"*\n\n**IT DID NOT, AND IT NEVER HAD.** `git log -S \"docs/design\" -- tools/reflow2_init.py` returns exactly ONE commit — the one that fixed it. The same for any non-backup export destination. So this is NOT the regression it felt like: nothing was lost, and there was never a working version to lose.\n\n🛑 THE REASON IT WAS INVISIBLE, AND IT IS THE WHOLE POINT OF WRITING THIS DOWN: **no Requirement and no Capability ever said it.** A search of every Requirement and Capability for *durable record / committed export / shareable / docs/design* returns nothing about a consumer's committable record; the nearest, `req:design-reachable-without-the-repo`, is about reaching a design WITHOUT the repo, which is a different need.\n\n⇒ CONSEQUENCES, ALL OF WHICH ARE THE SYSTEM WORKING CORRECTLY:\n  · `cap:kit` reads `verified` and is NOT lying — its scope is *\"one command sets up or refreshes the design environment\"*, which it does.\n  · `detect_gaps` could not surface it. It finds Requirements nothing satisfies; **it cannot find a Requirement nobody wrote.**\n  · Every gate was green and every gate was right.\n\n⇒ **AN UNSTATED REQUIREMENT CANNOT BE UNMET.** That is the one class reflow2 is structurally blind to, and it produced a hole in the feature the whole tool exists for: the design record other people read.\n\n📌 WHAT THE INSTALLER DID INSTEAD, which is why two users believed it worked: it DID export — `backup_graph` writes `.reflow2/backups/design-<stamp>.json` — and `git check-ignore` confirms that path is covered by the `.gitignore` rule THE SAME INSTALLER WRITES. **The output of the one export landed inside the ignore rule.** Everything looked present and nothing was reachable.\n\n⚠️ AND THE PROTECTION THREAD WOULD NOT HAVE CAUGHT IT. `dec:idea-a-satisfied-requirement-earns-a-stricter-mutability-class` and `dec:idea-stability-is-earned-by-history-not-by-reaching-a-state` both protect what IS recorded — a satisfied requirement, an operational thread, a stable lifecycle. Alex's *\"don't change core functionality\"* is about DRIFT. This was ABSENCE from the first commit, so freezing, scoring or baselining would have left it exactly as open. **The measure this needs is different in kind, and confusing the two would build the wrong safeguard.**\n\nWHAT THE REQUIREMENT IS, stated so it can be checked: after `reflow2_init.py` runs, the project contains a design export at a path git will track — `docs/design/<project>.json` — and the user is told, where they are looking, that this is the file to commit. It must hold on a BRAND-NEW project, which is the only case either user actually hit.\n\n📌 EVIDENCE CLASS WORTH NOTING: both of Alex's reports (`fact:second-user-report-2026-08-11`, `fact:second-user-first-run-report-2026-08-13`) were found by somebody meeting the output for the first time, and neither was visible to anyone who already knew the system. That is now two data points for the same instrument.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:a-dated-observation-does-not-read-as-standing-doctrine",
       "node_type": "Requirement",
       "properties": {
@@ -81812,6 +81891,18 @@
       }
     },
     {
+      "node_id": "fact:second-user-first-run-report-2026-08-13",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "ALEX (`who:alex`), relayed by Anthony 2026-08-13, reporting a FIRST RUN ON A REAL WORK PROJECT — the second user again, and the same class as `fact:second-user-report-2026-08-11` and the installer-wording fix: **found by somebody meeting the output for the first time, where nobody who already knew what it did had reason to look.**\n\nHIS WORDS: *\"I initialized a new project to try this out with my work. It inserts a .gitignore into the repo. That .gitignore ignores .reflow2 folder. Where does it store the JSON file that can be committed for the graph? I can't find the artifact that can be shared by other project members.\"* And: *\"the init should not write over the .claude/settings.local.json if it already exists.\"*\n\nBOTH REPRODUCED against HEAD by running `tools/reflow2_init.py` on a scratch project.\n\n═══ 🛑🛑 DEFECT 1 — THE EXPORT EXISTED, WAS DOCUMENTED, AND STILL COULD NOT BE FOUND ═══\n\n⚠️ A FIRST VERSION OF THIS NODE CLAIMED THE CONVENTION WAS UNDOCUMENTED. **That was wrong, and Anthony caught it by asking \"didn't we already export the .json file of the graph?\"** Corrected here, because the true shape is narrower and more interesting than \"nobody wrote it down\".\n\nWHAT ALREADY EXISTED:\n  · `export_graph` — unchanged, and not the problem.\n  · `getting-started/UPDATING.md:19` NAMES IT: *\"`docs/design/<name>.json` | the committed export — the durable record | yes, it is in your repo\"*.\n  · The `ci-gate` and `parallel-work` skills both reference that path.\n  · **init ALREADY EXPORTED** — `backup_graph` writes `.reflow2/backups/design-<stamp>.json`.\n\n🛑 AND THAT LAST ONE IS THE DEFECT IN ONE LINE: **`git check-ignore` confirms `.reflow2/backups/design-<stamp>.json` is covered by the `.gitignore:22 -> .reflow2/` rule the same installer writes.** The one export init produced landed INSIDE THE IGNORE RULE. A user who went looking for the shareable artifact found an export that was invisible by construction. The machinery was all present and its output fell in the one directory git was told to skip.\n\nTHE SECOND HALF, MEASURED: **nothing INSTALLED INTO THE PROJECT said any of it.** `grep` over what a new project actually receives — `AGENTS.md`, `CLAUDE.md`, the closing summary — returns ZERO hits for `export` or `docs/design`. The only trace is a parenthetical inside the `.gitignore` (*\"the durable record is an export\"*) which parses only if you already know the word. The real documentation lives in a file about UPDATING and in skills that must be deliberately loaded — **a first run reaches neither.**\n\n⇒ SO IT IS NOT A DOCUMENTATION GAP BUT A REACHABILITY ONE, which is `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue`'s shape arriving in the installer: the information existed where the person was not.\n\n📌 KNOCK-ON: `ci-gate` was unreachable for a new project — `reflow2_check.py` runs against a committed export that nothing had produced.\n\n═══ ⚠️ DEFECT 2 — MERGED CORRECTLY, REWRITTEN WHOLESALE, INDISTINGUISHABLE ═══\n\nHIS CLAIM IS HALF RIGHT, AND THE HALF THAT IS WRONG STILL DESCRIBES A REAL DEFECT. Measured with a pre-existing `.claude/settings.local.json` holding a `permissions` block and his own `Stop` hook:\n\n  permissions preserved ......... TRUE (byte-identical)\n  his own Stop hook survived .... TRUE (reflow2's appended as a second group)\n\nNOTHING IS LOST ON HEAD. `ensure_hooks` merges, leaves a repointed reflow2 hook alone, and SKIPS on malformed JSON. That landed in `fc6c6d4`.\n\n🛑 **BUT THE WHOLE FILE WAS RE-SERIALISED AT A FIXED 2-SPACE INDENT, so every line changed** — a compact 10-line file came back as 58. **In a `git diff` that is indistinguishable from an overwrite**, and an installer that appears to have rewritten your settings is one nobody trusts near their settings again, which is the standard `ensure_hooks`' own docstring sets for itself.\n\n⚠️ NOT RULED OUT: that Alex is on an OLDER kit whose behaviour genuinely did lose content. `fc6c6d4` is not recent, but a consumer kit can sit releases behind — `ver:kit-manifest-agrees` exists because reflow2's own manifest was four releases stale and nothing noticed. **His version was not established. Ask before concluding the reformat is the whole of what he saw.**",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-13"
+      }
+    },
+    {
       "node_id": "fact:second-user-report-2026-08-11",
       "node_type": "TemporalFact",
       "properties": {
@@ -82737,6 +82828,18 @@
       }
     },
     {
+      "node_id": "ver:install-leaves-a-committable-record",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-13",
+        "level": "acceptance",
+        "method": "test",
+        "name": "A FRESH project gets docs/design/&lt;project&gt;.json, it is not covered by any ignore rule, and it is a real chainable document — plus the three surfaces that name it (tools/test_init.py, a CI gate at ci.yml:58)",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:install-reaches-the-agent",
       "node_type": "Verification",
       "properties": {
@@ -83651,7 +83754,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:9c0fc3b5b515c3173d2090fbeb860e2ec2825a0f251819872bb29a1e3fa13291",
+  "prev_content_hash": "sha256:890bdee29e8c248ed02c64f2591885ab310cc48aa976db38dff70a2d9530ca9d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

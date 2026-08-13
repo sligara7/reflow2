@@ -612,7 +612,10 @@ def existing_system(project: Path, cap: int = 25) -> str | None:
 # customised, so they get a loud line they have to notice and act on. Ignored,
 # each person's `reflow2_init.py` run just writes their own.
 IGNORE_LINES = [
-    ("# reflow2's local design graph (machine state; the durable record is an export)",
+    ("# reflow2's local design graph — machine state, NOT the design.\n"
+     "# The shareable record is an EXPORT, committed at docs/design/<project>.json.\n"
+     "# Ask your agent to `export_graph` there; that file is what teammates read and\n"
+     "# what the CI design gate checks. Do not ignore it.",
      ".reflow2/"),
     ("# reflow2's MCP configs — they carry an absolute path to YOUR binary",
      ".mcp.json"),
@@ -683,6 +686,37 @@ def hook_command() -> str:
     return f'python3 "{REPO / "tools" / "loop_nudge.py"}"'
 
 
+def detected_indent(text: str, default: str = "  ") -> str | int:
+    """The indent this file already uses, so re-serialising it does not
+    reformat every line somebody else wrote.
+
+    Returns the whitespace ITSELF rather than a width, because `json.dumps`
+    accepts either and a tab-indented file must come back tab-indented. The
+    width-only first version silently normalised tabs to two spaces — caught by
+    this function's own test rather than by a user, which is the order this
+    project prefers.
+
+    REPORTED BY ALEX, 2026-08-13, as *"the init should not write over the
+    .claude/settings.local.json if it already exists"*. It never did overwrite —
+    `ensure_hooks` merges, and a hook you repointed is left alone — but it
+    re-serialised the whole document with a fixed 2-space indent, so a compact
+    10-line settings file came back as 58 expanded lines and EVERY LINE SHOWED
+    IN THE DIFF. **A merge you cannot distinguish from an overwrite is an
+    overwrite as far as trust goes**, which is the standard `ensure_hooks`' own
+    docstring already sets for itself.
+
+    This does not make the diff minimal — `json.dumps` still normalises array
+    layout, and format-preserving JSON editing needs a different parser than the
+    stdlib has. It removes the largest and most alarming part of the churn, and
+    the summary line now says outright that nothing was removed.
+    """
+    for line in text.splitlines():
+        stripped = line.lstrip(" \t")
+        if stripped and stripped != line and not stripped.startswith("//"):
+            return line[: len(line) - len(stripped)]
+    return default
+
+
 def ensure_hooks(project: Path, force: bool) -> list[str]:
     """Register the loop nudge, disturbing nothing else in the settings file.
 
@@ -701,9 +735,11 @@ def ensure_hooks(project: Path, force: bool) -> list[str]:
         ]
 
     data: dict = {}
+    raw = ""
     if path.exists():
+        raw = path.read_text()
         try:
-            data = json.loads(path.read_text())
+            data = json.loads(raw)
         except json.JSONDecodeError:
             return [
                 f"{path.name}  SKIPPED (malformed JSON — left exactly as it is; reflow2 will "
@@ -745,9 +781,12 @@ def ensure_hooks(project: Path, force: bool) -> list[str]:
     notes = []
     if added:
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps(data, indent=2) + "\n")
+        # Keep the indent this file already used (see `detected_indent`): a
+        # merge that reformats every line is indistinguishable from a rewrite.
+        path.write_text(json.dumps(data, indent=detected_indent(raw)) + "\n")
+        existed = " MERGED into your existing file — nothing was removed;" if raw else ""
         notes.append(
-            f".claude/settings.local.json  (loop nudge registered: {', '.join(added)} — "
+            f".claude/settings.local.json {existed} (loop nudge registered: {', '.join(added)} — "
             f"the session-end backstop the coherence loop rests on)"
         )
     if kept:
@@ -758,6 +797,81 @@ def ensure_hooks(project: Path, force: bool) -> list[str]:
     if not notes:
         notes.append(".claude/settings.local.json unchanged (loop nudge already registered)")
     return notes
+
+
+def design_record_path(project: Path) -> Path:
+    """Where the SHAREABLE design record goes — the export teammates read.
+
+    `docs/design/<project>.json`, matching what reflow2 does for itself and what
+    `reflow2_check.py --export` expects. A convention rather than a setting: the
+    point of naming it here is that a new project no longer has to invent one,
+    and every message that mentions the record can name the same path.
+    """
+    return project / "docs" / "design" / f"{project.name}.json"
+
+
+def ensure_design_record(project: Path, binary: Path) -> str | None:
+    """Write the shareable export — ALWAYS, even on a brand-new project.
+
+    ALEX ASKED FOR EXACTLY THIS, 2026-08-13: *"it should just make the file and
+    it should not be .gitignored. For some reason I thought it already created
+    that file."* Two users independently expected the file to exist, which is
+    the strongest evidence there is about where somebody looks.
+
+    ⚠️ THE FIRST VERSION OF THIS ONLY WROTE THE FILE WHEN A GRAPH ALREADY
+    EXISTED, and that was wrong — it is silent on a FRESH project, which is the
+    only case Alex hit. The reasoning was that exporting an empty graph opens a
+    store and mints an identity nobody asked for, the thing `describe_designs`
+    refuses to do. **That analogy does not hold here.** `describe_designs`
+    INSPECTS, and looking must not create; this is the installer, and the moment
+    somebody runs it is exactly the moment the project adopts reflow2. It
+    already writes `.reflow2/`, the MCP configs and an instruction file — minting
+    the design id is the smallest of those commitments, and `design_identity`
+    says the id is assigned once and never changes, so doing it here is doing it
+    at the only unambiguous point.
+
+    An empty export is a real document: stamp, `graph_id`, `content_hash`, and
+    zero nodes. Committing it means the first real export CHAINS FROM IT rather
+    than starting a lineage nobody can check.
+
+    Never overwrites: a record already there may be one they committed.
+    """
+    dest = design_record_path(project)
+    if dest.exists():
+        return None  # theirs now — never overwrite a record they may have committed
+    graph = project / ".reflow2" / "graph"
+    rel = dest.relative_to(project)
+    manually = (
+        f"{rel}  NOT created — ask your agent to `export_graph` to that path. "
+        f"It is the record your teammates read and what the CI design gate checks."
+    )
+    # NEVER FATAL, and never an exception. This is the first tool a new user
+    # meets; a missing or unrunnable binary must produce a line they can act on,
+    # not a traceback over an installer that had otherwise succeeded. It also
+    # keeps `install()` callable without spawning anything, which is what the
+    # installer's own test suite relies on.
+    if binary is None or not Path(binary).exists():
+        return manually
+    try:
+        out = subprocess.run(
+            [str(binary), "--graph-path", str(graph), "--export"],
+            capture_output=True, text=True, timeout=120,
+        )
+        if out.returncode != 0:
+            out = subprocess.run(
+                [str(binary), "--graph-path", str(graph), "--export-snapshot"],
+                capture_output=True, text=True, timeout=120,
+            )
+    except (OSError, subprocess.SubprocessError):
+        return manually
+    if out.returncode != 0:
+        return manually
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_text(out.stdout)
+    return (
+        f"{dest.relative_to(project)}  (CREATED — the shareable design record. "
+        f".reflow2/ is machine state and ignored; THIS is the file to commit)"
+    )
 
 
 def ensure_gitignore(project: Path) -> list[str]:
@@ -1092,6 +1206,8 @@ def install(project: Path, binary: Path, force_mcp: bool) -> list[str]:
 
     (project / ".reflow2").mkdir(exist_ok=True)
     done.extend(ensure_gitignore(project))
+    if record := ensure_design_record(project, binary):
+        done.append(record)
     stamp = project / STAMP
     stamp_data = kit_version()
     stamp_data["installed_files"] = dict(sorted(new_manifest.items()))
@@ -1229,6 +1345,22 @@ def main() -> int:
             print("Next: open your agent here and tell it, in a paragraph, what you want to build.")
             print("  It reads AGENTS.md, connects to reflow2, and starts asking you about the")
             print("  parts you left out. The brief does not need to be complete — that is the point.")
+        # ALEX, 2026-08-13, first run on a real work project: "That .gitignore
+        # ignores .reflow2 folder. Where does it store the JSON file that can be
+        # committed for the graph? I can't find the artifact that can be shared
+        # by other project members." He was right, and it was worse than he put
+        # it: the word "export" appeared NOWHERE a user would read — not in
+        # AGENTS.md, not in this summary — only in a parenthetical inside the
+        # .gitignore, which parses only if you already know what an export is.
+        # reflow2's central promise is a shareable design record and a fresh
+        # install shipped neither the file nor the instruction to make one.
+        print()
+        rel = design_record_path(project).relative_to(project)
+        print(f"The record you SHARE: {rel}  — created, and NOT git-ignored.")
+        print("  .reflow2/ is this machine's store and is ignored on purpose; that file is the")
+        print("  EXPORT of it, and it is what your teammates read and what the CI design gate")
+        print("  checks. COMMIT IT. Re-export to the same path as the design grows — one")
+        print("  commit per pull request should write it, and it should be the last.")
     return 0
 
 
