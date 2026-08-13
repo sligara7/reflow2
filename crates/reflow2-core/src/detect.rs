@@ -1309,7 +1309,22 @@ impl DesignGraph {
     /// delivery stops counting it. A marker nothing reads is a comment, which
     /// is the failure this project has now found in `enforced`, in `SUPERSEDES`
     /// and in `OBSOLETES` itself.
-    pub(crate) fn is_discontinued(&self, node_id: &str) -> Result<bool, DynoError> {
+    /// # Public because the READERS needed it, not only the detectors
+    ///
+    /// This was `pub(crate)` until 2026-08-12, and every caller was a
+    /// computation: the three capability detectors, consumption, delivery
+    /// arithmetic. **None of them was a read.** So `scan_nodes` and `get_node`
+    /// went on answering `status: "realized"` for a capability an accepted
+    /// decision had withdrawn — which is what it says on the node, and not what
+    /// a reader needs to know. It cost a wrong recommendation to the owner's
+    /// face: a session read `cap:content-store` as live and proposed building a
+    /// surface for a feature he had deleted three days earlier.
+    ///
+    /// Derived on every read rather than written onto the node, so the reader
+    /// and the detectors can never disagree — and so
+    /// `dec:idea-does-a-capability-need-a-cancelled-state` stays open instead of
+    /// being settled by implementation.
+    pub fn is_discontinued(&self, node_id: &str) -> Result<bool, DynoError> {
         for e in self.incoming(node_id, Some(edge::OBSOLETES))? {
             let Some(src) = self.get_node(node::DECISION, &e.from_id)? else {
                 // Obsoleted by something that is not a Decision — a superseding

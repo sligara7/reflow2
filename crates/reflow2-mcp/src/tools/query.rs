@@ -181,7 +181,11 @@ impl ReflowService {
         description = "Fetch a node by type and id — `{node: {...}}` when present, \
                        `{node: null}` when absent. An unknown `node_type` is REFUSED rather \
                        than answered `null`, because \"no such type\" and \"no such node\" are \
-                       different facts and must not share one reply.",
+                       different facts and must not share one reply. Carries `discontinued`: \
+                       true when an ACCEPTED Decision has withdrawn this node (OBSOLETES). \
+                       READ IT — the stored `status` still records what was BUILT, so a \
+                       withdrawn capability goes on saying `realized` and only this field \
+                       tells you the thing is gone.",
         annotations(read_only_hint = true)
     )]
     pub async fn get_node(
@@ -240,7 +244,11 @@ impl ReflowService {
         // `{node: null}` when absent. Before, present returned a bare object
         // and absent returned `{value: null}` (the scalar wrap) — two shapes,
         // so an agent branching on the result read the absent case wrong.
-        self.ok_read(&g, json!({ "node": node.map(NodeDto::from) }))
+        let node = match node {
+            Some(stored) => decorate(&g, stored_to_value(stored.clone())?, &stored.node_id)?,
+            None => JsonValue::Null,
+        };
+        self.ok_read(&g, json!({ "node": node }))
     }
 
     #[tool(
@@ -252,7 +260,11 @@ impl ReflowService {
                        for id/name/status only when you want the shape of a large type, or \
                        `limit`/`offset` to page deliberately. On a mature design the full \
                        properties of one type can be tens of thousands of characters — read \
-                       brief first, then fetch the few nodes you actually need with get_node.",
+                       brief first, then fetch the few nodes you actually need with get_node. \
+                       Every node carries `discontinued` (brief included): true when an \
+                       ACCEPTED Decision has withdrawn it. The stored `status` records what was \
+                       BUILT and does not move on withdrawal, so filtering a list on `status` \
+                       alone will count things that no longer exist.",
         annotations(read_only_hint = true)
     )]
     pub async fn scan_nodes(
@@ -282,8 +294,20 @@ impl ReflowService {
             let rendered = if brief {
                 brief_node(node)
             } else {
-                serde_json::to_value(NodeDto::from(node.clone())).map_err(ser_err)?
+                stored_to_value(node.clone())?
             };
+            // Decorated BEFORE the size is measured, so the payload budget
+            // accounts for what actually goes out. Measuring the bare node and
+            // then growing it is how a "bounded" read quietly exceeds its bound.
+            //
+            // NOT PINNED BY A TEST, and said so rather than left to look
+            // verified: the ordering is reasoning, not measurement. Reversing
+            // these two lines kills no test in
+            // `discontinued_reaches_the_reader.rs`, because catching it needs a
+            // graph sitting within ~22 bytes per node of SCAN_PAYLOAD_BUDGET_BYTES.
+            // The overrun it would cause is bounded and small (one short bool
+            // per returned node), which is why this is a note and not a gate.
+            let rendered = decorate(&g, rendered, &node.node_id)?;
             let size = rendered.to_string().len();
             // Always return at least one node: a single node larger than the
             // whole budget must still be readable, or a big node becomes
@@ -447,4 +471,50 @@ impl ReflowService {
             .map_err(dyno_err)?;
         ok_json(json!({ "deleted": deleted }))
     }
+}
+
+/// Render a stored node the way the read tools have always rendered it.
+fn stored_to_value(node: StoredNode) -> Result<JsonValue, McpError> {
+    serde_json::to_value(NodeDto::from(node)).map_err(ser_err)
+}
+
+/// Add the one fact a stored node cannot carry: **has this been withdrawn?**
+///
+/// # Why this exists, measured 2026-08-12
+///
+/// `dec:idea-discontinued-is-a-first-class-state` gave `OBSOLETES` four readers
+/// — three capability detectors and delivery arithmetic — and every one of them
+/// is a COMPUTATION. None was a READ. So `cap:content-store`, discontinued on
+/// Anthony's word on 2026-08-09 with its code deleted, still came back from
+/// `scan_nodes` as `status: "realized"`, and a session believed it. It then
+/// recommended he build a surface for a feature he had personally removed three
+/// days earlier.
+///
+/// The graph was right and the detectors were right. The reader was told
+/// nothing — the same class of defect as `get_node` answering a bare `null` for
+/// an unknown TYPE: a fact the server holds and declines to give.
+///
+/// # Derived, never stored
+///
+/// Computed from the edge on every read, exactly as the detectors compute it,
+/// so a reader and a detector can never disagree about the same node. Nothing
+/// is written back: `Capability.status` keeps recording what was BUILT, and
+/// `dec:idea-does-a-capability-need-a-cancelled-state` — open, marked, and
+/// Anthony's — is not settled by implementation here.
+///
+/// # Present and false, never absent
+///
+/// Emitted on every node including live ones. "Not discontinued" and "this
+/// build does not report discontinuation" must not share one answer, which is
+/// the rule `severed_containment` and `not_observed_about` already follow.
+fn decorate(
+    g: &DesignGraph,
+    mut rendered: JsonValue,
+    node_id: &str,
+) -> Result<JsonValue, McpError> {
+    let discontinued = g.is_discontinued(node_id).map_err(dyno_err)?;
+    if let Some(obj) = rendered.as_object_mut() {
+        obj.insert("discontinued".to_string(), json!(discontinued));
+    }
+    Ok(rendered)
 }
