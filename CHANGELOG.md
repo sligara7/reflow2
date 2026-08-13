@@ -31,6 +31,19 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.30.0] — 2026-08-13
+
+**Minor because of the new skill and the new gap source, not because of the fixes** — the rule is
+the highest bucket present, and *"new capabilities or skills"* is minor. The schema stamp did
+**not** move (29 node types, 61 edge types, schema 1), so no upgrade note is owed.
+
+⭐ **The increment's lesson: every defect below was found by a person meeting the output for the
+first time, or by running two real projects at each other — none by reading code and none by a
+gate.** reflow2's own published boundary sat half-specified and no detector could say so; the
+installer's one export landed inside its own ignore rule; and a gate that checks skills could not
+see four files that serve tools. The three that a second user found were invisible to everyone who
+already knew the system.
+
 ### Added
 
 - **`link-projects` — the twentieth served skill, and the first for linking two SEPARATE projects**
