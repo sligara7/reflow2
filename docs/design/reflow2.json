@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:029fd47f3a188666ab8cc56cdb1d271b001832df535910035978405f72a1c515",
+  "content_hash": "sha256:1c8e3c1664692a9f456c30d1c036d00fa99d3bba2492cb7f08caab8528a81764",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2102,6 +2102,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:undeclared-seam-is-named",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:detect"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -6762,6 +6770,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-defined-pair-types-so-two-projects-combine-by-lookup",
+      "properties": {
+        "acted_at": "2026-08-13",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-detect-ownership-orphans",
       "properties": {
         "acted_at": "2026-08-09",
@@ -7209,6 +7226,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-stability-is-earned-by-history-not-by-reaching-a-state",
+      "properties": {
+        "acted_at": "2026-08-13",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-standards-at-every-interface",
       "properties": {
         "acted_at": "2026-08-03",
@@ -7284,6 +7310,15 @@
       "from_id": "dec:idea-what-gets-searched-repeatedly-is-becoming-important",
       "properties": {
         "acted_at": "2026-08-10",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-what-to-do-about-two-designs-answering-to-one-id",
+      "properties": {
+        "acted_at": "2026-08-13",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -8000,6 +8035,15 @@
       "from_id": "req:an-assigned-open-decision-is-reported",
       "properties": {
         "acted_at": "2026-08-05T23:10:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:an-undeclared-coupling-is-named-not-just-counted",
+      "properties": {
+        "acted_at": "2026-08-13",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -16136,6 +16180,51 @@
         "action": "added"
       },
       "to_id": "cap:seam-incompatibility"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seams-detector-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seams-detector-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:maturity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seams-detector-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:undeclared-seam-is-named"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seams-detector-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:an-undeclared-coupling-is-named-not-just-counted"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seams-detector-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "ver:undeclared-seam-is-named"
     },
     {
       "edge_type": "CHANGED",
@@ -54950,6 +55039,14 @@
       "properties": {
         "completeness": "complete"
       },
+      "to_id": "cap:undeclared-seam-is-named"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:detect",
+      "properties": {
+        "completeness": "complete"
+      },
       "to_id": "cmp:detect"
     },
     {
@@ -55343,6 +55440,14 @@
         "completeness": "complete"
       },
       "to_id": "cap:maturity-profile"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:maturity",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:undeclared-seam-is-named"
     },
     {
       "edge_type": "REALIZES",
@@ -57378,6 +57483,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:undeclared-seam-is-named",
+      "properties": {},
+      "to_id": "req:an-undeclared-coupling-is-named-not-just-counted"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:verification-freshness",
       "properties": {},
       "to_id": "req:verification-keeps-up"
@@ -58908,6 +59019,12 @@
       "from_id": "ver:tools-reject-unknown-args",
       "properties": {},
       "to_id": "cap:mcp-surface"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:undeclared-seam-is-named",
+      "properties": {},
+      "to_id": "cap:undeclared-seam-is-named"
     },
     {
       "edge_type": "VERIFIES",
@@ -60618,7 +60735,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f549b0c2972fc321f7f523cfe134dbf97066dbcbddcdc46257a0f1fb4b5d1707",
+        "checksum": "sha256:7d3e4ca05223083fe96dc03b1b305ae4cfcf44163bc57b881a81535e6c207277",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -61100,10 +61217,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f743c9902452b2b7b15da4df3d62a92d9dca2bdbbd0efcff7e3625eb9b809e9a",
+        "checksum": "sha256:f83c09736230e7d7359f69e72f64c70140cf609babb1b18f4661528193d38599",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/maturity.rs",
         "name": "maturity.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -64247,6 +64366,16 @@
       }
     },
     {
+      "node_id": "cap:undeclared-seam-is-named",
+      "node_type": "Capability",
+      "properties": {
+        "description": "DETECT names every Component pair joined by DEPENDS_ON with no Interface carrying BOTH a PROVIDES and a CONSUMES between them, as one aggregate gap (`undeclared_seam`) keyed on the rule.\n\nWHY IT IS A CAPABILITY AND NOT A CHORE: the set was already computed. maturity_report's `seams` band divides `declared` by `couplings` on every run, for every design, and discarded the difference. `DesignGraph::seam_sets` is that computation extracted, so the band and the detector cannot disagree about what a contract is.\n\nIT NAMES THE PAIR AND ASKS. It never drafts the Interface — reflow2 can see THAT two parts are coupled and cannot know WHAT crosses the boundary, so proposing a medium/payload/direction would be the fabrication `cap:no-fabricated-repair` exists to prevent. A test asserts the finding stays interrogative and carries no invented contract vocabulary.\n\nTWO SILENCES: no Component depends on another (an absence, not a deficiency — matching the band's own wording), and every coupling already declared.\n\nAGGREGATE, so the standing judgement survives a new coupling while the count in the title moves. reflow2's own design has 73 of these; `unexpected_coupling` was retired for exactly that flood.\n\nComplements `unprovided_interface` / `unconsumed_interface`, which run the opposite direction and both require an Interface to already exist.",
+        "name": "An undeclared coupling is named as a finding, not just counted into a ratio",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "cap:verification-freshness",
       "node_type": "Capability",
       "properties": {
@@ -67130,6 +67259,14 @@
       }
     },
     {
+      "node_id": "chg:seams-detector-built",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The seams band's discarded difference became a finding — undeclared_seam, and seam_sets extracted so the band and the detector share one definition of a contract"
+      }
+    },
+    {
       "node_id": "chg:search-first-fires-at-the-tool",
       "node_type": "ChangeEvent",
       "properties": {
@@ -69205,6 +69342,16 @@
       }
     },
     {
+      "node_id": "dec:idea-defined-pair-types-so-two-projects-combine-by-lookup",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-13, extending his own RNA analogy. Nothing here is intent and nothing has been chosen.\n\nHIS WORDS: \"going back to the RNA pairing discussion, can we have each project have a set of defined pair types that could facilitate the combining if two projects in a much faster manner?\" — and, earlier in the same message, the shape he was reaching for: \"not sure if one project carries a set of one side of the pairs and that would allow the other project to only line up with its corresponding pair on the other side.\"\n\n⭐ THE ANALOGY IS PRECISE ABOUT WHY PAIRING IS FAST, and that is the real content of the idea. Four bases, two valid pairs, an alphabet fixed by chemistry. Matching is a LOOKUP, not a comparison. reflow2 today does comparison: `req:complementary-pairing` keys on `medium` PLUS `transport_security` PLUS `auth`, then falls back to fuzzy name resolution with a reported middle band a human must answer. Declared pair types would replace the fuzzy step with an exact one.\n\n🛑 AND THE ANALOGY ALSO NAMES ITS OWN LIMIT, which is the honest counterweight. Bases pair by an alphabet that chemistry fixes GLOBALLY and nobody negotiates. Two organisations have no chemistry. A shared pair-type vocabulary requires prior agreement between the parties — and working WITHOUT prior agreement is exactly what the attribute key buys, in exactly the cross-organisation context reflow2 states as its operating breadth. The idea's power and its limit come from the same property.\n\n═══ THE OPTIONS ═══\n\nA — NOTHING. The attribute key already pairs two designs that never coordinated. Faster matching is not obviously the constraint. CHEAPEST, and the null hypothesis.\n\nB — A DECLARED PAIR-TYPE VOCABULARY, his idea literally: each project publishes named types, and combining is a type-name join. FASTEST when both sides share the vocabulary; USELESS when they do not, and worse than useless if two orgs use one name for different contracts — a false pair is more dangerous than no pair, which is the failure the dynograph-foundation trial already produced once from the provider side.\n\nC — ⭐ USE `SPECIFIES`, WHICH ALREADY EXISTS AND HAS NEVER BEEN DRAWN. The schema carries it: \"A machine-readable contract artifact defines an entity — an OpenAPI / protobuf / JSON-schema / IDL file SPECIFIES an Interface (its authoritative contract)\", with a `format` property. MEASURED 2026-08-13: **zero SPECIFIES edges in reflow2's design.** If two designs' Interfaces are both specified by the SAME artifact, matched on content hash, that is exact pairing with NO vocabulary to negotiate — THE HASH IS THE AGREEMENT. It is the ICD made first-class, which `Interface.designation` already gestures at when it cites 10 U.S.C. 4401 and \"what an ICD publishes\". Needs no new node type, no new edge type, no enum change, and no stamp move.\n\nD — HYBRID, AND THE ONE THAT DEGRADES HONESTLY: exact when a shared contract artifact is present, attribute-key-plus-fuzzy-name when it is not. Two designs that have agreed get a precise seam; two that have not still get today's answer. Costs a second matching path and a rule for which wins.\n\n═══ COUNTER-ARGUMENTS, recorded beside the idea ═══\n\n⚠️ 1. THE STRONGEST — SPEED IS NOT THE CONSTRAINT, AND MAY NEVER BE. reflow2's own frontier reads seams 0% : ZERO of 73 component couplings run through a declared Interface. There is nothing to pair yet. Optimising the matching step while nothing is labelled is optimising past the actual blocker, which is that boundaries are unclassified.\n⚠️ 2. THE FUZZY MIDDLE BAND IS NOT A DEFECT TO REMOVE. Asking a human about an uncertain name match is `dec:ask-not-repair` working as designed. Replacing it with exact lookup removes the question by removing the cases that raise it — which is only an improvement where the shared vocabulary is real.\n⚠️ 3. A SHARED VOCABULARY IS A COORDINATION COST, and this project spends heavily to avoid exactly that: `dec:identity-out-of-band` refuses a registry that hands out ids, `dec:advisory-concurrency` refuses a lock manager. A pair-type registry is the same shape as the things twice rejected.\n⚠️ 4. `SPECIFIES` IS UNUSED, SO THE SUBSTRATE IS UNTESTED. Zero edges means option C's mechanism has never run on real data, and every linking defect this project has found came from running the thing rather than reading it.\n\n📌 WHERE THE IDEA IS STRONGEST, and it is narrower than \"a vocabulary\": WITHIN ONE OWNER'S NEIGHBOURHOOD. Ten reflow2 designs live under ~/project, all Anthony's. A shared pair-type vocabulary across designs one person controls is entirely achievable, needs no negotiation, and would make combining them mechanical. It is the cross-ORGANISATION case that cannot assume it — so the honest question may be whether reflow2 supports both, with the vocabulary as an optional accelerator over an attribute-based floor. That is option D.\n\n\n═══════════ SHARPENED 2026-08-13, SAME SESSION ═══════════\n\nAnthony then described the combining PROCESS step by step: \"can first filter out interfaces in a graph. secondly, of the interfaces, can they be labeled as publisher, subscriber, or both. then you kind of have 3 RNA pairs. the agent then has the job of mapping publishers with subscribers (one RNA pair) and both with both. if the agent is unable to pair based on reason, you now have a gap or issue to solve.\"\n\n⭐⭐ THE FIRST FINDING IS THAT HE RE-DERIVED THE BUILT ALGORITHM, and this is recorded as a NON-finding on purpose rather than filed as new. Verified against `crates/reflow2-core/src/seam.rs:464` rather than assumed: `offers = published | both`, `needs = required | both`. Three labels, four valid combinations — published↔required, published↔both, both↔required, both↔both — never like-with-like, which `two_publishers_never_pair_with_each_other` pins as a test. And the unpairable DO become findings, in five buckets: `paired` (the seam), `unmet_needs` (a subscriber nothing publishes), `dead_surface` (a publisher nobody subscribes to), `conflicts` (role-compatible but cannot connect on medium/transport_security/auth), `candidates` (the fuzzy middle band — the code comment reads \"worth a human's attention, never acted on\").\n\nThe RNA analogy was his on 2026-07-27 and produced `req:complementary-pairing`. Reasoning from it again nine days later reproduced the same algorithm from a different starting point. THAT IS CORROBORATION, NOT REPETITION — an analogy that regenerates the same structure twice is doing work rather than decorating a decision already made.\n\n🛑 AND THE ONE GENUINE DELTA: \"if the agent is unable to pair BASED ON REASON\". His version has an AGENT JUDGEMENT step. The built version has none — pairing is a computed key end to end, and no LLM is consulted at any point. That opens three further options:\n\nE — THE AGENT PROPOSES ON `candidates`, THE GRAPH STILL COUNTS, THE HUMAN STILL DECIDES. Let an agent argue for or against each middle-band pair in prose, ATTACHED to the candidate rather than resolving it. Exactly `dec:three-party-checks` — \"the LLM speaks, the graph remembers and counts, the human decides\" — applied to a band that currently arrives with a score and no argument. A score says HOW CLOSE two names are; it never says WHY they might be the same contract.\n\nF — 📌 THE AGENT REASONS OVER `conflicts` INSTEAD, and this is the strongest narrow form. A conflict today says \"you publish REST/JWT/TLS, I need REST/none/none, we cannot connect\" — true, and silent on whether that is a real incompatibility or one side simply never filled in `auth`. An agent that has read both designs can tell \"they left it unspecified\" from \"these genuinely disagree\", and those need opposite actions. This is the one place a computed answer is PROVABLY incomplete, because `unspecified` is the honest default on three of the key's fields and the key cannot distinguish silence from disagreement.\n\nG — THE AGENT PAIRS OUTRIGHT where the key is silent. RECORDED AS REJECTED-LEANING so it is not re-proposed by someone who has not read the trial: a false pair is worse than no pair, and the dynograph-foundation session already produced one from the computed side — \"I require REST\" matching an unauthenticated liveness probe. An LLM guessing would be the same failure with less traceability.\n\n⚠️ 5. A FURTHER COUNTER-ARGUMENT ON E: the candidate band exists precisely so a HUMAN decides. Putting an agent between the score and the person risks the band being cleared by argument rather than by judgement, which is the erosion `dec:ask-not-repair` is written against.\n⚠️ 6. AND `unlabelled` MUST STILL BE COUNTED whatever is chosen. `req:complementary-pairing` already requires it: a boundary nobody classified must not read as `internal`, or a design that never did the labelling pairs with nothing and reports a clean seam.",
+        "name": "OPEN — how should two designs be paired: declared pair types, a shared contract artifact, or an agent reasoning where the computed key cannot decide?",
+        "rationale": "Recorded under the brainstorm skill so the thinking survives without being claimed as intent, and kept separate from the graph_id question because the two are unrelated. Worth keeping for one measured fact and one connection: SPECIFIES exists in the schema with a format property and has zero edges in reflow2's own design, so the mechanism for exact contract-based pairing is already built and never exercised; and the RNA analogy, which has already earned its place once by predicting that compatibility needs more than one point of contact, here argues BOTH ways — a fixed alphabet is why base pairing is fast AND why two organisations cannot borrow the trick.\n\n⭐ THE AGENT-REASONING BRANCH IS SETTLED, 2026-08-13, ANTHONY'S WORD: \"I agree with the approach without an agent 'reasoning'.\" Options E, F and G are CLOSED — no LLM enters the pairing loop, on candidates, on conflicts, or anywhere else. Pairing stays a computed key end to end.\n\nWHAT THAT COSTS, RECORDED SO IT IS NOT DISCOVERED LATER AS A SURPRISE: option F was the strongest of the three and it named a real hole. A `conflict` says \"you publish REST/JWT/TLS, I need REST/none/none\" and CANNOT distinguish a genuine disagreement from one side never having filled in `auth` — because `unspecified` is the honest default on three of the key's fields. That gap does not close by itself. It now has to be closed some other way, if it is closed at all: by a detector that reports HOW MUCH of a conflict rests on unspecified fields, by the pairing report naming which side was silent, or by a human reading the two boundaries. Declining the agent does not make the computed answer complete; it means the completion must be computed or asked, never inferred.\n\nWHY THIS IS CONSISTENT WITH THE PROJECT RATHER THAN A NARROWING OF IT: `dec:three-party-checks` gives the LLM the speaking role, not the counting one, and everything reflow2 computes is deliberately verdict-free — `granularity` refuses to call an observation a defect, `maturity` refuses to grade a band, `ility_report` refuses a score. An agent arguing a pair into or out of existence would be the LLM doing the counting. The A/B/C/D question — declared pair types, a shared contract artifact via SPECIFIES, or neither — REMAINS OPEN and is untouched by this.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-detect-ownership-orphans",
       "node_type": "Decision",
       "properties": {
@@ -69705,6 +69852,16 @@
       }
     },
     {
+      "node_id": "dec:idea-stability-is-earned-by-history-not-by-reaching-a-state",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-13.\n\nHIS WORDS: \"how does a requirement (actually the whole chain from idea --> fully implemented/fielded) become immutable? I suppose a user could declare at some point - this lifecycle is immutable, but for could we do something like the less times a full life cycle is adjusted/updated, the more stable it is - eventually becoming immutable - again, some parallels on Q-table from RL. like for instance, in reflow2, there are probably a few lifecycles that that have emerged as statistically stable and rarely changing\"\n\n⭐ WHY THIS IS A SEPARATE NODE FROM `dec:idea-a-satisfied-requirement-earns-a-stricter-mutability-class`. That node's triggers are all STATE-based — satisfied, verified, operational, shipped in a deployed release. This one is EVIDENCE-based: protection is inferred from observed behaviour rather than from a lifecycle position. They compose; they are not the same mechanism.\n\n📌 AND SEPARATE FROM `dec:idea-what-gets-searched-repeatedly-is-becoming-important`, which shares the RL framing and asks the opposite question about the opposite signal: that one would raise a node's IMPORTANCE from repeated READS, this one would raise a thread's IMMUTABILITY.\n\n═══════════════════════════════════════════════════════════════════\nSHARPENED SAME DAY — THE GOAL IS NOT IMMUTABILITY, IT IS KNOWING\nWHAT A SECOND USER DEPENDS ON, AND BOTH PROPOSALS ARE PROXIES FOR IT\n═══════════════════════════════════════════════════════════════════\n\nAnthony, 2026-08-13, naming where the whole thread came from:\n\n\"this all started out of a comment from my brother that was 'As long as it doesn't mess with the core functionality.' however, I don't know exactly how he uses reflow2. so trying to figure out something that is either use based (something that is used a lot is probably liked and stable) or has not changed (what we just discussed).\"\n\n⭐⭐ **THAT REFRAMES BOTH PROPOSALS AS PROXIES FOR ONE UNOBSERVABLE: what Alex depends on.** \"Core functionality\" is HIS phrase about HIS usage, and the reason a mechanism is being designed at all is that the fact is not available. Every option below should be judged on how well it stands in for asking him — not on how elegant the metric is.\n\n🛑 **AND THE BASELINE ANY PROXY MUST BEAT IS: ASK HIM.** He is one message away, `dec:three-party-checks` says the human decides, and a point-blank question returns the fact itself rather than a correlate of it. The honest case for a proxy is NOT that it beats asking Alex — it is that it generalises to the users who cannot be asked, which is the actual product case. Recorded so the cheap answer is not skipped on the way to the interesting one.\n\n═══ ⭐⭐⭐ THE GRAPH ALREADY PARTLY ANSWERS \"I DON'T KNOW HOW HE USES IT\" ═══\n\n`fact:second-user-report-2026-08-11` records Alex's own working path VERBATIM, and it is more specific than either proxy would produce:\n\n  step 1  \"record those at a high level\"     -> capture-intent    NOT NAMED BY HIM\n  step 2  \"now let's order them\"             -> plan-increments   NOT NAMED BY HIM\n  step 3  \"tackle them one at a time\"        -> his own framing\n  step 4  \"and brainstorm\"                   -> brainstorm        NAMED, he types it\n  entry   \"basically been using /where-am-i\" -> where-am-i        NAMED, he types it\n\n🛑🛑 **AND THIS IS THE MEASUREMENT THAT DAMAGES THE USE-BASED PROXY, taken from the one real second user we have.** A usage counter would have found `where-am-i` and `brainstorm` — the two he TYPES — and would have scored `capture-intent` and `plan-increments` at ZERO, even though he performs their function every session in his own words. **USE TELEMETRY MEASURES WHAT GETS INVOKED, NOT WHAT GETS DEPENDED ON**, and for this project the gap between those is not incidental: it is `req:skill-use-survives-a-long-session`, ACCEPTED, whose whole content is that the trigger mechanism does not reach the user.\n\n⇒ Worse for the proxy: the thing Alex most obviously depends on is the thing NOTHING would count. His four-step path silently assumes the design is still there and still coherent between sessions. No skill invocation represents \"the graph still says what I told it last week.\"\n\n═══ THE USE-BASED BRANCH IS NOT A NEW IDEA — IT IS A DESIGNED, UNBUILT THREAD ═══\n\n  `req:reflow2-can-say-which-of-its-own-skills-a-session-reached-for`  ACCEPTED, and it is one of the\n      top open gaps: NOTHING SATISFIES IT. \"recorded automatically, reported without judgement.\"\n  `dec:how-should-reflow2-log-its-own-usage`      OPEN — where the log lives. `what_next` ranks it\n      SECOND of the unmarked decisions (1 governed, 1 scheduled into an increment).\n  `dec:idea-measure-the-surface`                  OPEN — should real telemetry shape the surface, how far.\n  `req:telemetry-carries-usage-never-design-content`  ACCEPTED — the verb, never the object.\n  `dec:the-telemetry-kpp-question-waits-for-flo2` DEFERRED, with its trigger named.\n\n🛑 **THE FATAL CONSTRAINT ON THE USE-BASED BRANCH, AND IT IS STRUCTURAL: THE SIGNAL IS ON ALEX'S MACHINE.** Every design graph is local (`dec:multi-writer-architecture`); his usage never touches this store. So \"used a lot\" is unmeasurable HERE by construction, and no amount of instrumenting reflow2's own repo produces it — it would measure Anthony's usage and call it Alex's.\n\n⭐⭐ **WHICH MAKES THE PREREQUISITE A DECISION THAT SCORES ZERO — AND ALEX ASKED FOR IT HIMSELF.**\n`dec:idea-feedback-collection-is-asked-once-and-recorded` (\"should reflow2 ask, once, whether a project wants to send feedback back, and record that consent in the graph?\") is the gate on ever seeing another user's usage. `what_next` surfaced it as the **`unexplored` draw — score 0, nothing in the graph points at it.** And `fact:second-user-report-2026-08-11` records Alex requesting exactly it: *\"You should put in an update that asks me if I want to collect feedback and store my decision in the graph or something. That way you get what you want.\"*\n\n⇒ **THE SECOND USER ASKED FOR THE MECHANISM THAT WOULD ANSWER HIS OWN CONCERN, AND THE GRAPH SCORES IT AT ZERO BECAUSE NOTHING POINTS AT IT.** This is precisely the failure `what_next`'s exploration band exists for, arriving on a real question rather than as a worry about ranking.\n\n📌 AND `bl-155` APPLIES TO THE USE PROXY UNCHANGED: reflow2 cannot tell \"unused\" from \"unreachable\". `req:telemetry-carries-usage-never-design-content` already drew the consequence — counts may justify OPTIMISING and never, alone, justify CUTTING. A mutability class derived from use would be using counts to decide what is protected, which is the mirror of the move that rule forbids, and it inherits the same blindness: the four skills Alex never invokes are unreached, not unwanted.\n\n═══════════════════════════════════════════════════════════════════\nTHE Q-TABLE FRAMING IS ALREADY SETTLED DOCTRINE HERE, AND IT\nARRIVES IN THIS DOMAIN WITH ONE TERM ANSWERED DIFFERENTLY\n═══════════════════════════════════════════════════════════════════\n\n`dec:attention-is-measured-behaviourally-not-lexically` is **ACCEPTED** on Anthony's own word (2026-08-10). Its three consequences apply verbatim and should not be re-derived:\n\n(1) **A Q-VALUE DECAYS AND A COUNTER DOES NOT.** Here it bites harder: \"has not changed in three months\" IS a recency statement.\n\n(2) **VISIT COUNT IS NOT VALUE — and there, the analogy BROKE:** *\"THERE IS NO REWARD SIGNAL… The RL framing supplies STRUCTURE (decay, exploration) and does NOT supply the thing that makes Q-learning converge.\"*\n⭐⭐ **THIS IS WHERE THE DOMAINS PART.** A design thread HAS a reward signal already in the graph — 40 DriftEvents, verification runs with `last_run_at`, `OBSOLETES`, releases reaching an Environment. Contact with reality, observed rather than proxied. **Note this beats BOTH of Anthony's candidates on their own terms**: it is neither \"was not edited\" nor \"was invoked often\", but \"was exercised and did not break.\"\n\n(3) **THE EXPLORATION TRAP.** For stability it is a feedback loop with the sign wrong: the harder something is to change, the less it is revisited, the more stable it scores.\n\n═══ HIS EMPIRICAL CLAIM, TESTED ON REFLOW2'S OWN DESIGN 2026-08-13 ═══\n\n  ChangeEvents per ACCEPTED requirement (110):  0→67  1→21  2→21  5→1\n  ChangeEvents per Capability (152):            0→58  1→52  2→22  3→10  4→6  5→2  6→1  7→2\n  whole-thread (req + caps + artifacts) zero-change:  6 of 110\n  CHANGED edges land:  art 555 · cap 180 · req 87 · dec 62 · cmp 43 · other 59\n\n🛑🛑 **AT NODE LEVEL THE METRIC INVERTS.** `req:recursive-black-box-decomposition` carries an 8,842-character statement; the sibling node records +4,770 characters appended in a single session. Its history: **0 ChangeEvents, 0 Snapshots.** ⇒ **THE MOST HEAVILY REWRITTEN REQUIREMENT IN THE DESIGN SCORES MAXIMALLY STABLE.** It measures RECORDING DISCIPLINE.\n\n🛑 **AT THREAD LEVEL IT FAILS THE OPPOSITE WAY**, and the thread is the unit he chose: only 6 of 110 are quiet, because artifact churn dominates. Intent-only scoping (req 87 + dec 62 = 149 against art 555) may rescue it.\n\n═══ THE OPTIONS, none taken ═══\n\nA — COUNT RECORDED REVISIONS, threshold into a mutability class. **The measurements say do not build it**: it ranks the worst offenders safest.\n\nB — FIX THE RECORD FIRST, then count. Require a revision to a satisfied requirement to leave a Snapshot + ChangeEvent. Already named on the sibling node as \"the cheapest honest option\", and a prerequisite either way.\n\nC — SCORE ON EVIDENCE OF EXERCISE, NOT ON SILENCE OR ON INVOCATION. Checks that have RUN and passed across releases, no DriftEvent, no OBSOLETES. The only option with a real reward term, immune to the recording hole, and **local — it needs nothing from Alex's machine**. Expensive: 37 of 139 verifications have never run.\n\nD — SCOPE THE COUNTER TO INTENT ONLY (Requirement + Decision). Restores thread-level signal; concedes the code cannot be frozen.\n\nE — WITHHOLD UNTIL THE HABIT EXISTS. `consumption.rs`'s `MIN_MODELLED_RATIO` shape: **absence is only informative when presence is the habit.**\n\nF — USE-BASED, and it is a DEPENDENT rather than an alternative. Blocked on `dec:idea-feedback-collection-is-asked-once-and-recorded` (consent), `dec:how-should-reflow2-log-its-own-usage` (where the log lives) and `req:reflow2-can-say-which-of-its-own-skills-a-session-reached-for` (unsatisfied). Bounded by `req:telemetry-carries-usage-never-design-content`. **And measured against the one real second user it would have missed half his workflow.**\n\nG — ASK ALEX. Returns the fact rather than a correlate, costs one message, does not generalise. **The baseline the others must beat.**\n\n⇒ **C IS THE STRONGEST ON THE EVIDENCE** — it is the only candidate that is local, has a genuine reward term, and cannot be fooled by silence — with **B** as its prerequisite for anything history-shaped and **E** as the guard. **F is worth having for its own sake** (it answers \"what do users reach for\", which is an accepted unmet requirement) but is a poor instrument for THIS question. **G should happen regardless.**\n\n═══ THE HONEST COUNTER-ARGUMENT, recorded beside the idea ═══\n\nTIME-WITHOUT-CHANGE AND CORRECTNESS ARE NOT THE SAME THING, and neither are USE AND CORRECTNESS. A requirement nobody revisited may be settled, forgotten, or wrong in a way nobody looked hard enough to notice; a heavily-used path may be heavily used because it is unavoidable rather than because it is liked. Both proxies would make reflow2 most confident where it has looked least — and `bl-155`'s unused-versus-unreachable finding, now restated four times in this design, says the graph cannot tell the difference from inside.\n\nNOT DECIDED. The narrow question worth answering first is unchanged and now trebly supported — by both mutability proposals and by the use branch, which cannot detect a silent rewrite either: **should a revision to a satisfied requirement be required to leave a trace?**",
+        "name": "OPEN — what evidence says a thread must not break: that it never changed, that it is heavily USED, or asking the person who depends on it?",
+        "rationale": "Captured from Anthony's own framing, then SHARPENED the same day when he named where the thread came from: Alex's \"as long as it doesn't mess with the core functionality\", plus \"I don't know exactly how he uses reflow2.\" That reframes both candidates as PROXIES for one unobservable — what a second user depends on — and the right test for each becomes how well it stands in for asking him.\n\nTHE LOAD-BEARING FINDING OF THE SHARPENING: the graph already partly answers the question. fact:second-user-report-2026-08-11 records Alex's working path verbatim, and it shows the use-based proxy would have found the two skills he TYPES (where-am-i, brainstorm) and scored at zero the two whose function he performs every session without naming (capture-intent, plan-increments). Use telemetry measures what is invoked, not what is depended on — which is req:skill-use-survives-a-long-session, accepted, firing again.\n\nAND THE STRUCTURAL BLOCK: every design graph is local, so Alex's usage never reaches this store. The prerequisite is dec:idea-feedback-collection-is-asked-once-and-recorded — which what_next surfaced as its zero-scoring `unexplored` draw, and which Alex himself asked for. The second user requested the mechanism that would answer his own concern, and the graph scores it at zero because nothing points at it.\n\nRecorded separately from the state-based sibling because the trigger differs in kind, and separately from the search-attention nodes because those raise IMPORTANCE from reads while this raises IMMUTABILITY.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-standards-at-every-interface",
       "node_type": "Decision",
       "properties": {
@@ -69811,6 +69968,16 @@
         "decision": "PROPOSED IDEA, not a commitment: give the agent a lookup from a FILE (or symbol) to the Decisions, Requirements and Constraints that govern it — \"what does the design already say about the code I am about to change?\" — resolved by traversal rather than by keyword search.",
         "name": "IDEA — an agent about to edit a file can ask what the design already decided about it, without guessing search terms",
         "rationale": "RECORDED UNDER ANTHONY'S 2026-08-08 TEST PROTOCOL: run a task as if reflow2 did not exist, then run it leaning on reflow2, compare, and propose what would have helped. His stated aim, quoted so it is not lost: he is NOT trying to change how the agent functions, but to make available skills/tools that make the agent's job easier and better. This idea is scoped to that.\\n\\nTHE EVIDENCE IS TWO FIXES DONE THE SAME DAY, WITH DIFFERENT AMOUNTS OF REFLOW2.\\n\\n(1) THE DUPLICATES/MERGE FIX — reflow2 CHANGED THE OUTCOME, and the whole difference was one call. dev_storyflow reported merge candidates scoring 81-85 on unrelated nodes. Read as a code problem, the obvious fix is 'the scorer is bad, raise the threshold' — a plausible, shippable, WRONG fix. A `search_design` for 'duplicate merge similarity' returned `dec:ask-not-repair` as the top hit, and that decision reframed the entire task: possible_duplicate is a DETECT gap, HEAL merges only on a human-drawn edge, a heuristic must not drive it. The bug was not a bad threshold; it was an ACCEPTED DECISION DEFEATED BY THE BUILD, and the correct fix (mark the edge's basis, re-route suspicions to the gap layer) is not reachable from the code alone. Without reflow2 this session ships a threshold bump and the design stays quietly violated.\\n\\n(2) THE CLAIM-LIVENESS FIX — reflow2 helped at the FRAMING and not at all at the SOLUTION. The graph supplied the finding that mattered (`cap:claim-liveness` was status `verified` while its central claim was false under `--shared`) and `propagate_change` named exactly what to touch, including three Verifications that would be invalidated. But the fix itself — an RAII seat lease, and then a two-set registry after the first design proved unsafe — came entirely from reading code and from a FAILING TEST. No reflow2 detector had anything to say about it. Worth stating plainly rather than overclaiming: the two-set flaw was caught by `cargo test`, not by the design brain.\\n\\nTHE GENERALISATION, and it is the actionable part: REFLOW2'S LEVERAGE IS AT PROBLEM FRAMING AND BLAST RADIUS, NOT AT SOLUTION DESIGN. That is not a weakness — it is where a design brain SHOULD have leverage, and it argues for investing there rather than trying to help write the patch.\\n\\nSO WHAT IS MISSING, CONCRETELY: in case (1) the decision was found because a lucky choice of search words hit it. `search_design` is BM25 over node text, so the agent must already suspect what it is looking for. AN AGENT ABOUT TO EDIT `crates/reflow2-core/src/heal.rs` SHOULD BE ABLE TO ASK WHAT GOVERNS THAT FILE AND BE TOLD `dec:ask-not-repair`, WITHOUT KNOWING THE WORD 'DUPLICATE'. The graph already holds every hop needed: `art:heal` REALIZES `cap:heal`, which is GOVERNED_BY the decisions that constrain it, SATISFIES the requirements behind it, and is VERIFIED by the checks that would break. That is a traversal from a path to its governing intent, and today there is no tool for it — `propagate_change` is the closest but needs a recorded ChangeEvent and answers 'what does this touch', not 'what was already decided here'.\\n\\nWHY THIS FITS THE STATED AIM: it changes nothing about how the agent works. It is a lookup the agent chooses to make at the moment it is already opening a file, and it answers the one question a stateless agent cannot answer for itself and does not know to ask.\\n\\nCANDIDATE SHAPES, none chosen: (a) a `governs` tool taking a path or symbol, returning Decisions/Requirements/Constraints/Verifications reachable from the Artifact at that location, ranked by hop distance; (b) the same as a skill that runs before an edit, the read-side sibling of impact-check; (c) cheapest of all and worth pricing first — have `link_artifact`/`reconcile_artifacts` responses already carry the governing decisions for the artifact named, since the traversal is the same and the agent is already there.\\n\\nOPEN QUESTIONS THIS DOES NOT SETTLE: whether path-level granularity is enough (a 1,700-line file may be governed by decisions relevant to only one of its functions); whether an unregistered file — one with no Artifact — should answer 'nothing governs this' or 'this file is not in the design', which are very different statements and the second is the honest one; and whether ranking by hop distance is meaningful or merely plausible.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-what-to-do-about-two-designs-answering-to-one-id",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-13, from his own observation that graph_id may not be unique. Nothing here is intent and nothing has been chosen.\n\n⚙️ HOW THIS WAS CREATED, said plainly: `add_decision`'s search-first guard fired and named three nodes. All three were read and judged different (below). The `distinct_from` override could not be used because the parameter would not serialize as an array from this client — it arrived as a string and was refused — so the node was written with `create_node` instead. That is a workaround for a client serialization fault, NOT an evasion of the guard: the reading and the judgement the guard asks for were both done first, and are recorded here in place of the edge.\n\nREAD AND JUDGED DIFFERENT FROM THE THREE THE GUARD NAMED. `fact:two-adopted-stores-share-one-graph-id-2026-08-13` is the MEASUREMENT — two stores, one id, and why; this is the question of what to DO about it, which a fact cannot hold. `dec:identity-out-of-band` is the accepted PRINCIPLE, and this node defers to it entirely rather than reopening it. `dec:idea-a-session-holds-several-graphs` asks whether ONE SESSION should reason across several designs at once — orthogonal: that is breadth of attachment, this is two designs being indistinguishable by name.\n\n⭐ THIS IS NOT A MISSING DECISION. `dec:identity-out-of-band` is ACCEPTED and settles the principle: \"a design's identity is a UUID minted at genesis and stored in the graph; the friendly name is a label on top of it.\" It names what it rejected and why — \"deriving from the project name or path (TWO DESIGNS CAN SHARE BOTH, and the id must survive being copied)\". The shape of the answer is decided. What is open is what to do about designs adopted BEFORE it, and that touches HIS data.\n\n═══ THE OPTIONS ═══\n\nA — REFUSE THE AMBIGUOUS ID AND LIST WHAT IT MATCHED. The registry stops silently overwriting; `attach` on a duplicated id fails naming both paths, and discovery reports the collision instead of hiding one design. CHEAP, LOCAL, TOUCHES NO STORED DATA. Not a new policy either: `dec:how-a-session-is-pointed-at-a-design` already states the rule, written before this case was known — \"DEFAULT WHEN EXACTLY ONE DESIGN IS REACHABLE; REFUSE AND LIST THEM WHEN SEVERAL ARE. A design chosen by silence is how three graphs appeared on one repo.\" Leaves both designs unreachable by name, but LOUDLY rather than silently.\n\nB — RE-MINT THE COLLIDING LEGACY IDS. Fixes it at the root and matches `dec:identity-out-of-band` exactly. EXPENSIVE: `graph_id` is part of the export's content hash, so re-minting breaks every existing export, chain link and committed record for that design — precisely what adoption was introduced to protect. Anthony's data, Anthony's call, and it needs a migration story rather than a flag.\n\nC — ANTHONY'S COMPOSITE NAME, in his words: \"can you name a graph by graph_id.first_node_unique_id\". Recorded as offered, with three objections beside it rather than used to kill it. (1) A GRAPH CAN HOLD SEVERAL PROJECT NODES — dev_storyflow holds two, `proj:fleet_ops` and `proj:storyflow`, neither mirrored, and the schema says only that there is \"normally\" one, in an extraction hint. `Project.mirror_of` exists so a mirrored foreign project can sit alongside yours, so mirroring adds more. (2) \"FIRST\" IS UNDEFINED — no ordering exists; exports sort by id, so \"first\" means alphabetically first, an arbitrary tiebreak on a name. (3) IT IS CIRCULAR, and this is the strong one: identity lives in sidecars precisely so it is readable BEFORE opening, because opening MINTS an identity — the failure that once created a third graph beside two populated ones. `Registry::discover` and `describe_at` both depend on never opening. A name derived from a node inside the graph must be read by opening the graph you chose by name.\n  📌 THE RESCUE THAT KEEPS THE INSIGHT: the composite need not be DERIVED at read time — it could be WRITTEN into the sidecar at mint or adopt, staying pre-open readable. But then it is doing option B's job with extra steps, since the sidecar already carries `label` separately from `graph_id`.\n  ⚠️ THE TENSION TO NAME: deriving identity from graph content is the shape `dec:identity-out-of-band` rejected on principle — \"names are assigned with zero coordination, NEVER DERIVED FROM SHARED STATE\". Its rationale records the fleet DELETING a mint-race guard, because the race was an artifact of deriving the handle at all.\n\nD — SCOPE AROUND IT. One registry root per neighbourhood so colliding designs never co-occur. Does not survive his actual case: `~/project` IS the neighbourhood and both stores live in it.\n\n═══ COUNTER-ARGUMENTS ═══\n\n⚠️ 1. NOTHING IS BROKEN TODAY. No transport is wired to the registry, so no session can yet select a design by id. The collision is LATENT — which argues for fixing it BEFORE the transport ships rather than after.\n⚠️ 2. TWO STORES IS NOT A POPULATION. One owner's machine, and the count may never grow: the four minted designs are clean and every future design mints. Option A may be the whole of what is ever needed.\n⚠️ 3. RE-MINTING IS THE EXPENSIVE KIND OF RIGHT. It repairs the model and invalidates the record; the adoption decision already weighed that trade once and went the other way, for stated reasons that have not changed.\n\n📌 A FAIR POINT FOR ACTING: the registry's entire isolation guarantee — `ver:a-session-cannot-name-another-design`, passing — rests on ids being unique, and every fixture in it uses distinct ids. The guarantee is not wrong, but it has never been tested against the one case that is true on the owner's own disk.",
+        "name": "OPEN — what happens when two designs answer to one graph_id, now that the id is an ADDRESS and not just a label?",
+        "rationale": "Recorded under the brainstorm skill so the thinking survives without being claimed as intent. Kept separate from the pair-types question because the two are unrelated and one node holding both could only ever be half-answered. Worth keeping for three things: the principle is already settled by dec:identity-out-of-band so only the migration is open; Anthony's composite proposal is recorded in his own words with the circularity objection beside it rather than used to argue it down; and the latency point is time-sensitive, because the collision stays harmless only until a transport makes graph_id an address — which is the next thing the linking work would build.",
         "status": "proposed"
       }
     },
@@ -76787,6 +76954,18 @@
       }
     },
     {
+      "node_id": "req:an-undeclared-coupling-is-named-not-just-counted",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A coupling with no declared contract is NAMED as a finding, in any project — the seams ratio already knows which pairs they are and throws the list away",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-08-13, reframing what had been treated as a chore: \"the step of adding seams for reflow2 needs to be something reflow2 does for ANY project.\"\n\nHe is right that it was framed wrongly. The prior plan was to hand-label reflow2's own 73 couplings, which fixes one design and teaches reflow2 nothing. Every consumer arrives in the same state — components that depend on each other with no contract recorded between them — and the tool should meet them there.\n\n⭐ THE MECHANISM ALREADY EXISTS AND IS DISCARDED. `crates/reflow2-core/src/maturity.rs:203` computes exactly two sets to produce the `seams` band: `couplings` (Component pairs joined by DEPENDS_ON) and `declared` (pairs joined by a real contract — counted only when BOTH a PROVIDES and a CONSUMES are recorded on the same Interface, because \"one-sided is exactly the unrecorded contract the capture skill warns about\"). It divides one by the other, reports a ratio, and drops the difference on the floor.\n\n`couplings - declared` IS the answer, computed on every maturity run, for every design, and never named. On reflow2's own graph that set has 73 members and the band reads 0%.\n\n🛑 AND NOTHING ELSE COVERS IT. `grep seam` in detect.rs returns nothing: there is no gap source for \"these two components are coupled and no contract is declared between them.\" The two interface detectors run the OPPOSITE direction — `unprovided_interface` (an Interface nobody provides) and `unconsumed_interface` (an Interface nobody consumes) — and both require an Interface to already exist. A design that has never declared one is invisible to both.\n\nWHAT THIS MUST NOT DO, and it is the whole constraint. reflow2 can see THAT two components are coupled. It cannot know WHAT the contract is — the medium, the payload, the auth, the direction. Proposing one would be `req:a-repair-suggestion-never-proposes-fabrication` exactly, and `cap:no-fabricated-repair` is the built answer to that class. So the finding names the PAIR and asks; it never drafts the Interface.\n\nTHE SHAPE THAT FOLLOWS FROM THE ABOVE: report each undeclared coupling as a gap whose question is answerable by the person who owns the two components — \"cmp:A depends on cmp:B and no contract is recorded between them; is there one, and what is it?\" — routed through the ordinary detect→ask path, with `gap_to_prompt` doing the wording.\n\n⚠️ TWO THINGS TO GET RIGHT, both learned from detectors this project has already had to retune:\n  · VOLUME. reflow2 alone would emit 73. `chg:gap-reporting-at-corpus-scale` records the same shape biting at an order of magnitude (\"300 captured ideas produce 300 identical gaps\"), and `unexpected_coupling` was RETIRED for firing on correct architecture. An aggregate keyed on the rule — the shape `cap:aggregate-gap-keying` exists for — is more likely right than 73 individual nags.\n  · A DESIGN WITH NO COMPONENT DEPENDENCIES HAS NO SEAMS TO DECLARE, and maturity.rs already says so: \"no two Components depend on each other, so there is no seam to declare.\" The finding must stay silent there rather than reporting a clean 0 as a fault.\n\n📌 WHY IT IS WORTH BUILDING RATHER THAN LABELLING BY HAND: the seams band is reflow2's own frontier and has never moved. Every piece of federation machinery — pair_designs, cap:seam-incompatibility, cap:complementary-pairing, export_surface — is built and verified against fixtures, and has almost nothing to run on in any real design, because no real design has been given a reason to declare its boundaries.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:analyse-at-any-level",
       "node_type": "Requirement",
       "properties": {
@@ -81322,6 +81501,16 @@
       }
     },
     {
+      "node_id": "fact:id-uniqueness-has-three-levels-and-one-is-enforced-2026-08-13",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "schema_observation",
+        "statement": "MEASURED 2026-08-13 by experiment on a scratch graph, because the answer could not be read off the schema and reading `get_node`'s signature only hints at it.\n\nTHE QUESTION Anthony asked: does each node within a graph have a unique id? THE ANSWER: no — the unique key is (node_type, node_id), not node_id alone.\n\nWHAT WAS RUN. Created `thing:same` as a Capability and again as a Requirement in one graph: BOTH PERSISTED and both read back independently, with their own names. Then created `thing:same` as a Capability a second time: it MERGED with no error — the property passed overwrote, the `name` omitted survived, and `scan_nodes` reported one Capability. The storage key is `{graph_id}\\x00{type}\\x00{id}`, which is why `get_node` demands a type as well as an id.\n\n⭐ THREE LEVELS, AND ONLY THE MIDDLE ONE IS ENFORCED:\n  · `graph_id` ACROSS STORES — NOT unique, nothing checks it (see fact:two-adopted-stores-share-one-graph-id-2026-08-13)\n  · (type, id) WITHIN a graph — unique BY CONSTRUCTION, it is the storage key\n  · `id` ALONE within a graph — NOT unique; only the `cap:` / `req:` / `dec:` prefix convention keeps it clean\n\nTHE CONVENTION HOLDS IN PRACTICE AND IS NOT ENFORCED: across all 2,113 nodes of reflow2's own design, ZERO ids appear under more than one node type. Three types legitimately carry two prefixes each and none is a collision — Component `cmp:` (48) plus `sys:` (8, the functional systems from dec:bl83a-functional-decomposition); Decision `dec:` (222) plus `decision:` (126, the generated review-acknowledgement records); Contributor `who:` (5) plus ONE lingering `ctr:`, the residue of the Contributor fork.\n\n🛑 WHY IT MATTERS FOR FEDERATION, and this is the asymmetry worth keeping: reflow2 is careful about id collisions ONE LEVEL DOWN and has nothing one level up. `mirror_surface` REFUSES a colliding node id and leaves the local node untouched, on the stated ground that \"two designs using one id for different things is a naming conversation between their owners.\" The same hazard between two DESIGNS is a silent overwrite in a BTreeMap. Node collisions are a conversation; graph collisions are data loss.",
+        "subject_id": "cap:store"
+      }
+    },
+    {
       "node_id": "fact:implement-first-cost-an-edge-case-2026-08-11",
       "node_type": "TemporalFact",
       "properties": {
@@ -81460,6 +81649,16 @@
       }
     },
     {
+      "node_id": "fact:the-local-lineage-gate-cannot-see-a-stacked-export",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "method_defect",
+        "statement": "MEASURED 2026-08-13, by running the gate on both sides of the same commit.\n\nWHAT HAPPENED: a branch was based on another unmerged branch that had already exported. `reflow2_check` was reasoned to be safe because the chain was sound commit to commit — main `029fd47f` → `6e7f7717` → `bfcc8350`, each export recording its predecessor's content hash. CI FAILED the LINEAGE clause anyway, reporting that it found `6e7f7717` where `029fd47f` was expected.\n\n⭐ THE MEASUREMENT, taken afterwards on the exact commit CI rejected:\n\n    git checkout <the stacked commit>\n    python3 tools/reflow2_check.py --export docs/design/reflow2.json\n    → reflow2 check: OK — design and build agree (75 note(s))\n\n**THE LOCAL GATE PASSES ON THE COMMIT CI FAILS, AND BOTH ARE CORRECT.** `_export_pair` compares HEAD against HEAD~1. Locally HEAD~1 is the branch's own parent — the other unmerged branch — so the chain checks out. In CI, GitHub Actions checks out the PULL REQUEST'S MERGE COMMIT, whose first parent is MAIN. Against that base the branch holds TWO exporting commits, which is two hops, which is the violation.\n\n⇒ THE GENERAL FORM: **the local lineage check cannot detect a stacked-export violation by construction, because the thing that makes it a violation is the merge base, and locally there is no merge base.** A green local gate on a branch stacked on another unmerged branch is not weak evidence — it is no evidence, and it will read as reassurance.\n\nThis is not a defect in the gate. `dec:export-once-per-pr` is stated per PULL REQUEST, and the tool's own failure message already names this as its third cause — \"THIS PR ALREADY HAS AN EARLIER EXPORTING COMMIT, and your chain is sound… FOLD the exporting commits into a single last commit instead\" — added by `chg:lineage-message-names-its-decision` precisely because the earlier wording misled. The message was right and was reached only after CI had already spent the round trip.\n\n⇒ WHAT WOULD HAVE CAUGHT IT EARLIER, and it is one command rather than a build — **COUNT THE COMMITS, NOT THE PATHS**:\n\n    git log --format=%h origin/main..HEAD -- docs/design/reflow2.json | wc -l\n\nMore than 1 means the PR violates the rule whatever the hashes say. Measured on this branch: **1** after the fix, **2** on the version CI rejected.\n\n⚠️ THE OBVIOUS-LOOKING FORM OF THIS COMMAND IS BROKEN, and it was written into this node's first version before being caught: `git log --format= --name-only … | sort -u | wc -l` counts distinct PATHS, and since the path is pinned by the pathspec it prints 1 forever — including on the two-commit branch CI had already rejected. It is the same shape as `fact:a-piped-gate-reports-the-pipes-exit-code-not-the-gates`: a check whose output looks exactly like a pass no matter what is true.\n\n📌 AND THE REASON A STACKED BRANCH LOOKED RIGHT IN THE FIRST PLACE, recorded because the next person will have the same reason: the requirement being satisfied existed only in the other branch's export, so basing on main appeared to risk a SATISFIES edge pointing at a node main does not hold. That worry was unfounded — the export is written from the LIVE GRAPH, which holds every branch's writes (`dec:multi-writer-architecture`; the store does not branch with git), so exporting from a main-based branch carries those nodes anyway. **The design record and the code that happens to be committed alongside it are separable, and treating them as one thing is what produced the stack.**",
+        "subject_id": "proj:reflow2"
+      }
+    },
+    {
       "node_id": "fact:the-owner-uses-reflow2-as-a-funnel-for-random-order-input",
       "node_type": "TemporalFact",
       "properties": {
@@ -81505,6 +81704,16 @@
         "statement": "REFLOW2 CAN ALREADY JUDGE TEST QUALITY STRUCTURALLY, ON THREE AXES, AND TWO OF THEM HAVE NEVER BEEN USED. Measured 2026-08-11 while asking where the line falls between test quality reflow2 can check and test quality only a person can judge.\n\nTHE LINE IS FURTHER OUT THAN IT LOOKED. The claim under test was that a test's quality is textual — valid, isolated, repeatable, focused, fast, covers edge cases and error conditions — and therefore out of reach for a deterministic core (`req:deterministic-core`). That is only partly true, and the interesting part is which half.\n\nMEASURED:\n\n  Verifications                                                  137\n  targets per check          1 -> 130    2 -> 6    3 -> 1\n  ⇒ FOCUS is already good here. 130 of 137 check exactly one thing, so a\n    focus detector modelled on granularity_report would find nothing on this\n    design. A useful NEGATIVE result: the metric exists and the problem does not.\n\n  THE THREE BUILT EVIDENCE-QUALITY AXES, IN USE:\n    TIME   (how old the check is)             99 of 137 carry last_run_at\n    INPUT  (what it PINNED vs SWEPT)          0 VERIFIES edges carry a scope\n    INDEP  (was the value fitted to it)       0 CALIBRATED_AGAINST edges\n\n  detectors mentioning scope, narrowness or circularity           0\n  surface for the two unused axes    evidence_report, confirmation_ledger\n                                     — read-only, and you must know to call them\n\n⭐ SO THE EDGE-CASE QUESTION IS ALREADY ANSWERABLE STRUCTURALLY. `set_evidence_scope` records what a check PINNED versus SWEPT, and `evidence_report` reads it: \"a parameter every passing check pins is reported as NARROW; ONE check that sweeps it ends the narrowness.\" That is a machine-checkable proxy for \"does the suite explore the boundaries\" — exactly one of the eight criteria that looked textual. `req:evidence-says-what-it-covered` is ACCEPTED. The machinery is 3 functions, 643 lines of test, 18 cases, mutation-checked on all three axes.\n\n⚠️⚠️ AND IT IS THE CONTENT STORE'S PROFILE EXACTLY. `dec:the-content-store-is-discontinued` (accepted, 2026-08-09) reads: \"built, shipped, correct, and used zero times in every project that has it.\" Two of these three axes are in that same state today. The parallel is not loose — both had an accepted requirement behind them, both were carefully built, both were tested well, and neither was ever reached for.\n\n📌 THE FORK THIS OPENS, and it is real rather than rhetorical:\n  (a) MAKE THEM ASKED-FOR. A detector — \"this passing check does not say what it covered\" — would surface the axes at the moment a check is recorded. Cheap, and it is the fourth instance today of the same diagnosis: the capability exists and nothing asks for it.\n  (b) DISCONTINUE THEM, on the test that killed the content store. There is now a mechanism for exactly that, shipped hours ago: an accepted Decision OBSOLETES what it withdrew, and four computations read it.\n  (c) NEITHER YET — zero usage on ONE design is thin evidence, and this design is the author's own. A consumer project's suite is where narrowness would actually bite.\n\n⭐⭐ WHAT THIS MEANS FOR THE PHILOSOPHY QUESTION IT IS FILED AGAINST. `dec:idea-verification-is-planned-with-the-requirement` proposes that reflow2 guide a project to plan verification when a need is stated. This measurement is a warning about HOW: reflow2 has already built test-quality machinery once and nobody used it, because nothing asked. Adding requirement-side planning WITHOUT asking would repeat that exactly — and would be the fifth instance today of a capability that exists and never fires.\n\nWHAT REMAINS GENUINELY TEXTUAL, and is not claimed to be checkable: VALID (does it measure what it claims, or a side effect), HAPPY PATH and ERROR CONDITIONS coverage, and whether a test reads the CONTRACT or the IMPLEMENTATION — that last being `dec:bl-185`, still open. ISOLATED, REPEATABLE and FAST are not textual but are simply ABSENT: the graph records no run history (one `last_run_at`, overwritten), no duration, and no dependency between checks, so a proxy for them would need new data rather than a new reading.",
         "subject_id": "dec:idea-verification-is-planned-with-the-requirement",
         "valid_from": "2026-08-11"
+      }
+    },
+    {
+      "node_id": "fact:two-adopted-stores-share-one-graph-id-2026-08-13",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "defect_observation",
+        "statement": "MEASURED 2026-08-13 by reading identity sidecars only, never opening a store. Seven reflow2 designs under ~/project carry an identity file. TWO OF THEM ANSWER TO THE SAME NAME:\n\n  ~/project/reflow2/.reflow2/graph.id.json        graph_id \"reflow2\"  label \"reflow2\"        origin adopted\n  ~/project/dev_storyflow/.reflow2/graph.id.json  graph_id \"reflow2\"  label \"dev_storyflow\"  origin adopted\n\nBoth are real, both populated, and the collision has stood since 0.14.0.\n\n⭐ THE CAUSE IS NOT A BUG IN THE ADOPT PATH, and a first diagnosis that said so was wrong. `identity::resolve` adopts THE OLD SHARED DEFAULT ID when a store already holds design data under it — not the project name, not the path. Every graph used one constant before `cap:design-identity` landed, so EVERY PRE-IDENTITY STORE SERVED BY THIS BINARY ADOPTED THE SAME STRING. Two such stores therefore collide BY CONSTRUCTION, and n of them would give n.\n\nAND THE ADOPTION WAS RIGHT. identity.rs states the alternative plainly: minting a fresh id for a populated store would be \"a catastrophe of exactly the silent kind — the design would still be on disk, and reflow2 would open a new empty one beside it and report nothing wrong.\" `graph_id` is also part of the export's content hash, so adoption is what kept every existing export, chain link and committed record valid across the change. The migration chose correctly; the collision is its unpriced consequence.\n\nEVIDENCE THAT MINTING IS CLEAN: the four `minted` designs on this machine — brainmaker 683f0090c245a5f1, flo2 1a97fc1f1de4d5d2, music_graph 4a496c576800020c, quantum_benchmarking_initiative ff86353849198623 — have zero collisions. `mint()` seeds fnv1a with nanoseconds, pid and canonical path, so it is unique by construction. Only the adopted ones collide, and `dynograph-foundation` escapes only because its own codebase carried a different default constant.\n\n🛑 WHY IT MATTERS NOW RATHER THAN IN 0.14.0: `registry.rs` (2026-08-12) makes `graph_id` the KEY a session selects a design by — `rule:a-design-is-named-by-an-id-not-a-path` calls the id primary and the path a storage detail. `Registry::discover` accumulates into a `BTreeMap<String, String>` keyed on it, so a second design under the same id does not collide, warn or fail — IT OVERWRITES, and which one survives is decided by alphabetical order of the very path the id exists to hide. Demonstrated in crates/reflow2-mcp/tests/two_designs_can_share_one_id.rs: the registry reports 1 design where 2 exist, and `attach(\"reflow2\")` binds to whichever sorted last while the other is unreachable by its own name.\n\n⇒ So a defect that was harmless while ids were only labels became load-bearing the moment ids became addresses. Nothing enforces or checks graph_id uniqueness anywhere.\n\nTHE ASYMMETRY WORTH KEEPING: reflow2 is careful about id collisions ONE LEVEL DOWN and has nothing one level up. `mirror_surface` refuses a colliding NODE id and leaves the local node untouched, on the stated ground that \"two designs using one id for different things is a naming conversation between their owners.\" The same hazard between two DESIGNS is a silent overwrite.",
+        "subject_id": "cap:design-identity"
       }
     },
     {
@@ -83118,6 +83327,18 @@
       }
     },
     {
+      "node_id": "ver:undeclared-seam-is-named",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-13",
+        "level": "unit",
+        "method": "test",
+        "name": "A coupling with no contract is named as one aggregate question, asks rather than drafts, and stays silent where there is nothing to declare (crates/reflow2-core/tests/detect.rs)",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:views-suite",
       "node_type": "Verification",
       "properties": {
@@ -83152,7 +83373,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:de6f77fc954387c8abbd5729ea6a98b38c3558233826a1c72e5005b373a9b3c1",
+  "prev_content_hash": "sha256:029fd47f3a188666ab8cc56cdb1d271b001832df535910035978405f72a1c515",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
