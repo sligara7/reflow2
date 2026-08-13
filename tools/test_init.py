@@ -716,5 +716,134 @@ class ManifestTest(InstallerTest):
                          f"nothing is tracked, so nothing should be reported: {notes}")
 
 
+class SecondUserFirstRun(unittest.TestCase):
+    """Alex's first run on a real work project, 2026-08-13.
+
+    Two reports, both reproduced before being fixed, and this class exists so
+    neither can come back quietly. The class of finding matters as much as the
+    findings: BOTH were visible only to somebody meeting the output for the
+    first time (`fact:second-user-first-run-report-2026-08-13`).
+    """
+
+    def project(self):
+        d = pathlib.Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, d, True)
+        return d
+
+    # --- "I can't find the artifact that can be shared by other members" ----
+
+    def test_the_gitignore_names_where_the_shareable_record_goes(self):
+        p = self.project()
+        init.ensure_gitignore(p)
+        gi = (p / ".gitignore").read_text()
+
+        self.assertIn(".reflow2/", gi, "the store is still machine state")
+        # The whole defect: it ignored the store and never said what to commit.
+        self.assertIn("docs/design/", gi)
+        self.assertIn("export_graph", gi)
+
+    def test_the_agent_instructions_name_the_record_too(self):
+        # The .gitignore answers the human who goes looking. This answers the
+        # agent, which is what actually makes the file get written.
+        pointer = (HERE.parent / "getting-started" / "POINTER.md").read_text()
+        self.assertIn("docs/design/", pointer)
+        self.assertIn("export_graph", pointer)
+
+    def test_the_record_path_is_one_convention_not_a_guess(self):
+        p = self.project()
+        self.assertEqual(
+            init.design_record_path(p),
+            p / "docs" / "design" / f"{p.name}.json",
+        )
+
+    def test_a_fresh_project_gets_the_record_because_that_is_where_he_looked(self):
+        # THE CASE ALEX ACTUALLY HIT. An earlier version of the fix wrote the
+        # file only when a graph already existed, which is silent on exactly the
+        # fresh project he was standing in. "it should just make the file."
+        p = self.project()
+        binary = init.find_binary(None)
+        if binary is None:
+            self.skipTest("no reflow2-mcp binary to export with")
+
+        note = init.ensure_design_record(p, binary)
+        dest = init.design_record_path(p)
+
+        self.assertIsNotNone(note, "a fresh project must still get its record")
+        self.assertTrue(dest.exists(), f"{dest} must exist: {note}")
+        doc = json.loads(dest.read_text())
+        self.assertEqual(doc["nodes"], [], "an empty design is still a real document")
+        self.assertIn("content_hash", doc, "and it seeds the lineage chain")
+
+    def test_the_record_is_not_swept_up_by_the_ignore_rules(self):
+        # The defect in one line: init's other export lands in .reflow2/backups/,
+        # inside the very directory this same installer ignores.
+        p = self.project()
+        init.ensure_gitignore(p)
+        ignored = (p / ".gitignore").read_text()
+        rel = str(init.design_record_path(p).relative_to(p))
+        self.assertFalse(
+            any(line.strip() and rel.startswith(line.strip().rstrip("/"))
+                for line in ignored.splitlines() if not line.startswith("#")),
+            f"{rel} must not be covered by an ignore rule:\n{ignored}",
+        )
+
+    def test_an_existing_record_is_never_overwritten(self):
+        p = self.project()
+        (p / ".reflow2" / "graph").mkdir(parents=True)
+        dest = init.design_record_path(p)
+        dest.parent.mkdir(parents=True)
+        dest.write_text('{"theirs": true}')
+
+        self.assertIsNone(init.ensure_design_record(p, pathlib.Path("/nonexistent")))
+        self.assertEqual(dest.read_text(), '{"theirs": true}',
+                         "a record they may have committed is theirs, not ours")
+
+    # --- "init should not write over .claude/settings.local.json" ----------
+
+    def test_an_existing_settings_file_keeps_its_own_indent(self):
+        # It never overwrote — it MERGED and then re-serialised at a fixed
+        # 2-space indent, so every line moved and the diff was
+        # indistinguishable from a rewrite.
+        p = self.project()
+        (p / ".claude").mkdir()
+        settings = p / ".claude" / "settings.local.json"
+        settings.write_text(
+            '{\n'
+            '    "permissions": {\n'
+            '        "allow": ["Bash(x)"]\n'
+            '    }\n'
+            '}\n'
+        )
+        init.ensure_hooks(p, force=False)
+        after = settings.read_text()
+
+        self.assertIn('    "permissions"', after,
+                      f"their 4-space indent must survive:\n{after}")
+        self.assertEqual(json.loads(after)["permissions"], {"allow": ["Bash(x)"]},
+                         "and nothing of theirs may be lost")
+
+    def test_detected_indent_falls_back_when_there_is_nothing_to_read(self):
+        self.assertEqual(init.detected_indent(""), "  ")
+        self.assertEqual(init.detected_indent('{"a":1}'), "  ", "no indented line to learn from")
+        self.assertEqual(init.detected_indent('{\n\t"a": 1\n}'), "\t",
+                         "a tab-indented file must come back tab-indented, not normalised")
+        self.assertEqual(init.detected_indent('{\n    "a": 1\n}'), "    ")
+
+    def test_a_users_own_hook_survives_alongside_reflow2s(self):
+        p = self.project()
+        (p / ".claude").mkdir()
+        settings = p / ".claude" / "settings.local.json"
+        settings.write_text(json.dumps({
+            "hooks": {"Stop": [{"hooks": [{"type": "command", "command": "echo mine"}]}]}
+        }, indent=2))
+
+        init.ensure_hooks(p, force=False)
+        stop = json.loads(settings.read_text())["hooks"]["Stop"]
+        commands = [h.get("command", "") for g in stop for h in g.get("hooks", [])]
+
+        self.assertTrue(any("echo mine" in c for c in commands), "theirs must survive")
+        self.assertTrue(any("loop_nudge" in c for c in commands), "ours must be added")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
