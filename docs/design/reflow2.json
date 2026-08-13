@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:1b518aa473fe70aa11f20b1c559118166922ad48d5e06f7071a04b8f26af193e",
+  "content_hash": "sha256:de6f77fc954387c8abbd5729ea6a98b38c3558233826a1c72e5005b373a9b3c1",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -13391,6 +13391,42 @@
         "action": "modified"
       },
       "to_id": "cap:content-store"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:discontinued-reaches-the-reader",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:discontinued-reaches-the-reader",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:discontinued-reaches-the-reader",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:content-store"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:discontinued-reaches-the-reader",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-discontinued-is-a-first-class-state"
     },
     {
       "edge_type": "CHANGED",
@@ -60504,7 +60540,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ccefd06e43416b890edae2c1613b4faf16ebf79a2e0da77e7b0fc17d23cf26fa",
+        "checksum": "sha256:f549b0c2972fc321f7f523cfe134dbf97066dbcbddcdc46257a0f1fb4b5d1707",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -62038,7 +62074,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4eac13c1f1e3757cf1480f3d86d9c6d05c376011356062c22cd0c03727859570",
+        "checksum": "sha256:2365daa43bd2ee01d5dfa358ab7407791461c6066411170c1140603e3db8679a",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
@@ -66221,6 +66257,14 @@
       "properties": {
         "change_type": "deprecation",
         "name": "A Decision OBSOLETES what it withdrew, and four computations now read it: the three capability detectors fall silent and delivery stops counting a discontinued capability as a satisfier. NO SCHEMA CHANGE — OBSOLETES is already `* -> *` and putting the DECISION at the source dissolves the successor problem that made this look like it needed new vocabulary. Only an ACCEPTED decision discontinues anything. The cascade is deliberate: the requirement a withdrawn capability served drops back to unsatisfied and is asked about again. DeliveryCoverage gains `satisfied_only_by_discontinued` so the numbers say why they moved rather than shrinking silently. Applied to the content store, whose capability had read `realized` with a `passing` check for two days after its code was deleted. Gives OBSOLETES its first reader, which is what dec:one-retire-edge has been asking for since July."
+      }
+    },
+    {
+      "node_id": "chg:discontinued-reaches-the-reader",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "A discontinued node now SAYS SO to whoever reads it — `scan_nodes` and `get_node` carry a derived `discontinued`, because all four of the existing readers were computations and none was a READ. FOUND BY BEING WRONG IN FRONT OF THE OWNER, 2026-08-12: `cap:content-store` was discontinued 2026-08-09 on Anthony's word (`dec:the-content-store-is-discontinued`, accepted, OBSOLETES drawn correctly) and its code deleted — yet a brief scan returned `{\"node_id\":\"cap:content-store\",\"status\":\"realized\"}` with nothing marking the retirement. A session read that, believed the store was live and missing only a surface, and RECOMMENDED HE BUILD A SURFACE FOR A FEATURE HE HAD PERSONALLY REMOVED THREE DAYS EARLIER. He caught it himself and challenged the diagnosis, which was also wrong: the first explanation blamed `Capability.status` having no terminal value, when the mechanism `dec:idea-discontinued-is-a-first-class-state` settled needs no status at all. THE ACTUAL DEFECT is narrow — `is_discontinued` was `pub(crate)` and every caller was a computation (three capability detectors, consumption, delivery arithmetic, the report). All correct, all silent to a reader. Same class as `get_node` answering a bare `null` for an unknown TYPE: a fact the server HOLDS and declines to give. FIX: `is_discontinued` made `pub`; both read tools decorate every node with `discontinued`, PRESENT AND FALSE on live nodes so \"not withdrawn\" and \"this build does not report withdrawal\" cannot share an answer; both served descriptions now say the stored `status` records what was BUILT and does not move on withdrawal, so filtering a list on `status` alone counts things that no longer exist. DERIVED ON EVERY READ, NEVER WRITTEN BACK — so a reader and a detector cannot disagree, and `dec:idea-does-a-capability-need-a-cancelled-state` (open, marked, Anthony's) is not settled by implementation. 8 tests written first, 5 of 5 mutations killed. ONE CLAIM LEFT UNPINNED AND LABELLED AS SUCH: decoration happens before the payload size is measured so the budget stays honest, and reversing those two lines kills no test — catching it needs a graph within ~22 bytes per node of the scan budget. Toolsnaps regenerated: exactly 2 of 149 changed."
       }
     },
     {
@@ -75351,7 +75395,7 @@
         "gap_id": "gap:4c33841a4e6fef45",
         "question": "You want conversations, transcripts and hand-drawn diagrams kept as part of the design itself, with the design file just pointing at them. Nothing is being built for that yet — do you want it built now, and should those files live inside the project's repository or somewhere alongside it?",
         "rephrase_degraded": false,
-        "status": "answered"
+        "status": "withdrawn"
       }
     },
     {
@@ -75655,7 +75699,7 @@
         "gap_id": "gap:b8af9d16871259e9",
         "question": "If you and your brother are both working on the same design from different machines, the diagrams and notes need to open for both of you — or clearly say they are missing. Should they travel in the git repository alongside the design, or be kept somewhere separate that each person sets up?",
         "rephrase_degraded": false,
-        "status": "answered"
+        "status": "withdrawn"
       }
     },
     {
@@ -75806,7 +75850,7 @@
         "gap_id": "gap:ff976610480dab90",
         "question": "The storage for diagrams and documents is written and working, but nothing an assistant can actually call reaches it — so today nobody can put a file in or get one out. Should adding those calls be the next thing built?",
         "rephrase_degraded": false,
-        "status": "answered"
+        "status": "withdrawn"
       }
     },
     {
@@ -79715,6 +79759,16 @@
       }
     },
     {
+      "node_id": "fact:a-piped-gate-reports-the-pipes-exit-code-not-the-gates",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "method_defect",
+        "statement": "MEASURED 2026-08-12, and self-reported because it produced a false green in this session.\n\nWHAT HAPPENED: `cargo test --workspace 2>&1 | grep -E \"^test result:|FAILED\" | tail -20` was run as the pre-PR gate. It was reported to the owner as passing. ⚠️ THE EXIT CODE OF A SHELL PIPELINE IS THE EXIT CODE OF ITS LAST COMMAND — `tail` — which is 0 whether cargo passed, failed, or never compiled. The `tail -20` also truncated the evidence to the last 20 result lines, so the absence of a FAILED line in what came back proved nothing about the other 83 suites.\n\nCaught only by noticing the totals looked low: 20 suites / 250 tests against a project that runs 103 suites / 1,138 tests. The re-run with cargo's status captured directly (`cargo test --workspace > log 2>&1; echo $?`) reported exit 0, 103 suites, 1,138 tests, 0 failures — so the answer was right and the METHOD that produced it could not have known.\n\n⇒ THE GENERAL FORM, which is why this is worth a node: PIPING A GATE THROUGH A FILTER CONVERTS ITS VERDICT INTO ITS OUTPUT. Everything the filter drops is unfalsifiable, and the status that survives belongs to the filter. This is the same class as every finding this project already holds about self-report — a green that describes the reporter rather than the thing.\n\nIt is also unusually well-camouflaged HERE, because filtering long cargo output is the obviously sensible thing to do, and the filtered output looks like exactly what a passing run looks like.\n\nTHE RULE THAT FALLS OUT: redirect a gate to a file and read `$?` from the gate itself; filter the FILE afterwards. `set -o pipefail` also works and is easier to forget. Never take the presence-or-absence of a pattern in filtered output as the verdict.\n\nNOT BUILT INTO ANYTHING. Recorded as a fact rather than a rule because nothing detects it — an agent's shell pipeline is not something reflow2 can see, which is precisely why it needs to be written down where the next session will read it.",
+        "subject_id": "proj:reflow2"
+      }
+    },
+    {
       "node_id": "fact:apply-heal-would-have-destroyed-the-wrong-contributor",
       "node_type": "TemporalFact",
       "properties": {
@@ -81243,6 +81297,16 @@
         "statement": "A CONSUMER'S NUMBER-ONE ASK IS MISDIAGNOSED, AND BUILDING IT WOULD CHANGE NOTHING. Alex's fleet (Grok Build harness, binary 0.24.0) filed a report on 2026-08-09 whose top-priority item is 'read-after-write for the creating session', from a real and repeatable symptom: immediately after a successful `add_decision`, a `set_decision_status` on the same id fails with `Node not found`, and a sequential retry succeeds. THE SYMPTOM IS REAL. THE CAUSE IS NOT WHAT THEY THINK. Read-after-write ALREADY HOLDS and cannot be the problem: `add_decision` takes an exclusive `write_lock()` (capture.rs:620), performs the write, and the guard drops before the response is returned, so any later lock acquisition sees the node. There is no visibility window to close. WHAT IS ACTUALLY HAPPENING is in their own environment notes: 'heavy parallel tool calls in a single agent turn'. Fire `add_decision` and `set_decision_status` concurrently and NOTHING ORDERS THEM. The RwLock serialises ACCESS, not INTENT — so `set_decision_status` can legitimately win the lock first, at which instant the node genuinely does not exist and `Node not found` is the correct answer. 'Retrying sequentially usually succeeds' is consistent with both readings, which is why the misdiagnosis is easy; the tell is that it reproduces ONLY in parallel batches. WHY THIS MATTERS MORE THAN THE BUG: their asks #1 and #2 are the same problem, and only #2 works. #1 (read-after-write) would be engineering effort spent making true something that is already true. #2 (optional `status` on `add_decision`) FIXES IT COMPLETELY, by collapsing two order-dependent calls into one that cannot be misordered. So the correct response to their highest-priority ask is to DROP IT and build their second. THE GENERAL FIX IS A DESCRIPTION, NOT A FEATURE: no tool description says that parallel batches carry no ordering, or that a create-then-modify pair must be sequenced. That is their section 1.2 ('parallel multi-write batches are fragile') and it is the honest root of both items. SAME SHAPE AS THIS WEEK'S OTHER FINDINGS: a caller cannot distinguish 'the write is not visible yet' from 'the write has not happened yet', and the surface never told them which world they are in — the same family as a value that cannot tell a choice from a default. NOT VERIFIED BY EXECUTION HERE: the mechanism was read from the code rather than reproduced with a concurrent client, so this is an analysis-grade finding. A reproduction would be two overlapping tool calls against one server asserting the failure disappears when they are sequenced.",
         "subject_id": "cap:mcp-surface",
         "valid_from": "2026-08-09"
+      }
+    },
+    {
+      "node_id": "fact:the-degraded-surfaces-diagnosis-never-reaches-a-by-name-caller",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "defect_observation",
+        "statement": "MEASURED 2026-08-12, twice in one session. `cap:degraded-surface` is VERIFIED and this does NOT falsify it — the capability did exactly what it promises. What this records is that its diagnosis CANNOT REACH a whole class of caller.\n\nWHAT WAS OBSERVED: `tools/reflow2_cli.py` began answering `error: set_artifact_checksum: tool not found` for a tool that plainly exists and had worked minutes earlier. The natural reading is that the tool was renamed or removed. Both readings are wrong.\n\nTHE MECHANISM, traced rather than guessed. A `--serve-shared` daemon (pid 728580) held the store's write lock — confirmed with `fuser .reflow2/graph/LOCK`. A second server could not open the store, so it correctly served the DEGRADED SURFACE: a handshake plus exactly one tool, `reflow2_unavailable`, whose name is the diagnosis, with the translated reason in the server instructions, the remedies in the tool payload, and an explicit do-not-conclude-reflow2-is-missing. All of that was built, and all of it was present.\n\n⇒ AND NONE OF IT WAS SEEN, because the caller never asked for it. The CLI goes straight to `tools/call` by NAME. rmcp's tool router then answers `invalid_params(\"tool not found\")` — rmcp-2.2.0 `handler/server/router/tool.rs:567`, a generic string with no context, not reflow2's text at all. The CLI printed it faithfully. THE DIAGNOSIS LIVES IN THE HANDSHAKE AND THE TOOL LIST, AND A BY-NAME CALLER READS NEITHER.\n\nSo the careful part — \"do not conclude reflow2 is missing\" — was rendered as, precisely, \"this tool does not exist\". The capability's own stated purpose is that the server explains its own absence instead of vanishing; against a direct caller it vanishes.\n\nWHY IT MATTERS BEYOND THE CLI: any client that caches a tool list, or that calls by name from a script, is in this class. The degraded surface is reachable only by a client that re-reads the surface after failing — which is the client least likely to be a script.\n\nFIX DIRECTION, NOT DECIDED: the refusal for an unknown tool name is rmcp's, so reflow2 cannot reword it in place. Either the CLI re-reads `tools/list` on any `tool not found` and surfaces `reflow2_unavailable` if that is all there is, or the degraded server declines the call in a way that carries its own text. The first is cheap, local, and needs no upstream change.\n\nNOTE ON THE LOCK ITSELF: this is NOT `fact:defect-rebuild-strands-the-shared-server`, which is a deleted-inode spawn failure. Different cause, and that one is fixed. This is ordinary single-writer contention behaving as designed, reported unrecognisably.",
+        "subject_id": "cap:degraded-surface"
       }
     },
     {
@@ -82982,7 +83046,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:dbf6659faff35474d90b656e65011ed0fa400f5c1f8ac9d38a0bace89f7c910e",
+  "prev_content_hash": "sha256:1b518aa473fe70aa11f20b1c559118166922ad48d5e06f7071a04b8f26af193e",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

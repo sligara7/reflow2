@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Fetch a node by type and id — `{node: {...}}` when present, `{node: null}` when absent. An unknown `node_type` is REFUSED rather than answered `null`, because \"no such type\" and \"no such node\" are different facts and must not share one reply.",
+  "description": "Fetch a node by type and id — `{node: {...}}` when present, `{node: null}` when absent. An unknown `node_type` is REFUSED rather than answered `null`, because \"no such type\" and \"no such node\" are different facts and must not share one reply. Carries `discontinued`: true when an ACCEPTED Decision has withdrawn this node (OBSOLETES). READ IT — the stored `status` still records what was BUILT, so a withdrawn capability goes on saying `realized` and only this field tells you the thing is gone.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
