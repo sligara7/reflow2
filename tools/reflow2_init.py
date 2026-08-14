@@ -159,6 +159,14 @@ TREES: list[tuple[Path, str]] = [
     (KIT / "commands", ".claude/commands"),
 ]
 
+# Which harness reads each installed tree. `.claude/commands` is Claude Code's
+# slash-command format and no other harness loads it, so an OpenCode project
+# that received eleven of them got exactly the clutter Alex reported. A tree
+# absent from this map is harness-neutral and always installed.
+TREE_HARNESS: dict[str, str] = {
+    ".claude/commands": "claude",
+}
+
 
 # Frontmatter every harness agrees on. A skill whose `name` is malformed, or
 # does not match its directory, is **silently ignored** — no error anywhere, it
@@ -366,6 +374,7 @@ def binary_is_stale(binary: Path) -> str | None:
 # one server and is its only client).
 MCP_CONFIGS = [
     {
+        "harness": "claude",
         "path": ".mcp.json",
         "key": "mcpServers",
         "entry": lambda b, g: {
@@ -376,6 +385,7 @@ MCP_CONFIGS = [
         "extra": {},
     },
     {
+        "harness": "opencode",
         "path": "opencode.json",
         "key": "mcp",
         "entry": lambda b, g: {
@@ -388,6 +398,7 @@ MCP_CONFIGS = [
         "extra": {"$schema": "https://opencode.ai/config.json"},
     },
     {
+        "harness": "vscode",
         "path": ".vscode/mcp.json",
         "key": "servers",
         "entry": lambda b, g: {
@@ -398,6 +409,186 @@ MCP_CONFIGS = [
         "extra": {},
     },
 ]
+
+# The harnesses `--harness` accepts, in the order the prompt offers them. The
+# key is what the user types and what the stamp records; `label` is what the
+# prompt shows. `grok` is deliberately absent as a separate entry — Grok CLI
+# reads `.mcp.json`, so it is served by `claude` and a second entry would write
+# the same file twice under two names (req:init-installs-only-the-harness-you-name).
+HARNESSES = {
+    "claude": "Claude Code",
+    "opencode": "OpenCode",
+    "vscode": "VS Code",
+}
+
+# Shown beside a harness in the prompt only — a note about what else the same
+# files serve, which would read as noise in a one-line summary.
+HARNESS_NOTES = {
+    "claude": "also Grok CLI and GitHub Copilot CLI — choose this for those",
+}
+
+# Names that are a REAL answer to "which harness?" but are not their own entry,
+# because they read a config another entry already writes. They resolve rather
+# than being refused: `grok` is not a typo, it is somebody naming their own tool,
+# and answering "unknown harness 'grok'" to a Grok user is the install refusing
+# the correct answer. Kept OUT of HARNESSES so no second config file is written
+# for the same tool (2026-08-14, on learning the second user runs Grok at home
+# and Claude at work — both on macOS).
+HARNESS_ALIASES = {
+    "grok": "claude",
+    # MEASURED 2026-08-14, not assumed. `copilot mcp --help` states its sources:
+    #     User       ~/.copilot/mcp-config.json
+    #     Workspace  .mcp.json or .github/mcp.json
+    # so GitHub Copilot CLI reads the SAME workspace file Claude Code does, and
+    # does NOT read `.vscode/mcp.json` — that file is VS Code the editor. This
+    # was confirmed end to end: `copilot mcp list`, run inside a project set up
+    # by this installer, printed "Workspace servers: reflow2 (local)". The
+    # `vscode` entry was previously labelled "Copilot / VS Code", which promised
+    # a harness it does not serve.
+    "copilot": "claude",
+}
+
+
+def canonical_harness(name: str) -> str | None:
+    """The registry key a user-typed name means, or None if it means nothing."""
+    name = name.strip().lower()
+    if name in HARNESSES:
+        return name
+    return HARNESS_ALIASES.get(name)
+
+# Which harness carries the loop-nudge hook. Only Claude Code has an event model
+# reflow2 can register against today, so a project on any other harness gets the
+# MCP server and no session-end backstop. That absence is announced rather than
+# left silent — see `ensure_hooks` and `dec:idea-the-loop-nudge-exists-for-one-harness-only`.
+HOOK_HARNESS = "claude"
+
+
+def parse_harness_arg(raw: str) -> tuple[list[str], list[str]]:
+    """Split a `--harness` value into the names we know and the ones we do not.
+
+    Unknown names are RETURNED rather than ignored: a typo that silently
+    installs nothing for the harness you meant is the failure this whole
+    feature exists to remove.
+    """
+    names = [p.strip().lower() for p in raw.split(",") if p.strip()]
+    if "all" in names:
+        return list(HARNESSES), []
+    known = [c for n in names if (c := canonical_harness(n))]
+    unknown = [n for n in names if canonical_harness(n) is None]
+    # dict.fromkeys rather than set(): the order the user typed is the order we
+    # report back, so the summary reads like their own answer.
+    return list(dict.fromkeys(known)), unknown
+
+
+def recorded_harnesses(project: Path) -> list[str] | None:
+    """What a previous install recorded, or None if it never said.
+
+    None and [] are different answers and must stay different: None means
+    nobody has been asked, [] would mean somebody chose nothing. Only the first
+    is reachable today, and a re-run that finds None asks again.
+    """
+    try:
+        data = json.loads((project / STAMP).read_text())
+    except (OSError, json.JSONDecodeError):
+        return None
+    got = data.get("harnesses")
+    if not isinstance(got, list):
+        return None
+    keep = [h for h in got if h in HARNESSES]
+    return keep or None
+
+
+def prompt_for_harnesses() -> list[str]:
+    """Ask which harness will open this project. Only ever called on a tty.
+
+    ASKING RATHER THAN DETECTING is the decision this implements
+    (`dec:idea-init-asks-which-harness-and-installs-only-that`): a brand-new
+    repository carries no evidence of which harness will open it, and that is
+    exactly when `init` runs — so inference would guess, and a wrong guess is
+    silent. The user receives a config their tool never reads and nothing says
+    so.
+    """
+    order = list(HARNESSES)
+    print("\nWhich agent harness will open this project?")
+    for i, name in enumerate(order, 1):
+        note = HARNESS_NOTES.get(name)
+        print(f"  {i}  {HARNESSES[name]}" + (f"  ({note})" if note else ""))
+    print("  a  all of them")
+    print("\nNumbers or names, comma-separated. Enter accepts Claude Code.")
+    try:
+        raw = input("> ").strip()
+    except (EOFError, KeyboardInterrupt):
+        # Not a refusal to answer — the input went away. Say what that means
+        # rather than proceeding as though a choice had been made.
+        print("\n  no answer read — installing for all harnesses")
+        return list(HARNESSES)
+    if not raw:
+        return ["claude"]
+    if raw.lower() in {"a", "all"}:
+        return list(HARNESSES)
+    chosen: list[str] = []
+    for part in raw.split(","):
+        part = part.strip().lower()
+        if part.isdigit() and 1 <= int(part) <= len(order):
+            chosen.append(order[int(part) - 1])
+        elif (canon := canonical_harness(part)) is not None:
+            chosen.append(canon)
+        elif part:
+            print(f"  ignoring {part!r} — not one of: "
+                  f"{', '.join(list(order) + list(HARNESS_ALIASES))}, all")
+    if not chosen:
+        print("  nothing recognised — installing for all harnesses")
+        return list(HARNESSES)
+    return list(dict.fromkeys(chosen))
+
+
+def resolve_harnesses(
+    project: Path, requested: str | None, interactive: bool
+) -> tuple[list[str], str | None]:
+    """Decide which harnesses this install writes files for, and say why.
+
+    Precedence, and each step exists for a reason a later reader should not
+    have to reconstruct:
+
+    1. `--harness` — an explicit answer always wins, and it is what makes a
+       non-interactive caller (CI, a scripted install, `adopt`) able to answer
+       without a prompt. Passing it on a re-run is also how a project ADDS a
+       second harness later without reinstalling or hand-editing.
+    2. What a previous install recorded — so a re-run is quiet rather than
+       re-asking a question already answered.
+    3. The prompt, on a tty only.
+    4. Everything, when there is no tty and nobody has ever said. **This is the
+       old behaviour, kept deliberately for that case**: an install that hangs
+       waiting for an answer nobody can give is worse than the clutter this
+       feature removes, and silently narrowing an automated install would break
+       pipelines that were working. It is announced rather than assumed.
+    """
+    if requested is not None:
+        known, unknown = parse_harness_arg(requested)
+        if unknown:
+            print(
+                f"error: unknown harness {', '.join(repr(u) for u in unknown)} — "
+                f"choose from "
+                f"{', '.join(list(HARNESSES) + list(HARNESS_ALIASES))}, or 'all'",
+                file=sys.stderr,
+            )
+            return [], "unknown"
+        if not known:
+            print("error: --harness given with no recognisable name",
+                  file=sys.stderr)
+            return [], "unknown"
+        return known, None
+    if remembered := recorded_harnesses(project):
+        return remembered, (
+            f"harness: {', '.join(remembered)} (remembered from the last "
+            f"install — pass --harness to change or add one)"
+        )
+    if interactive:
+        return prompt_for_harnesses(), None
+    return list(HARNESSES), (
+        "harness: not asked (no tty and no --harness) — installed for ALL of "
+        f"{', '.join(HARNESSES)}. Pass --harness to narrow it."
+    )
 
 
 def write_mcp_config(project: Path, spec: dict, binary: Path, force: bool) -> str:
@@ -497,7 +688,9 @@ POINTER_LINE = (
 CREATE_IF_NO_INSTRUCTION_FILE = ["CLAUDE.md"]
 
 
-def pointer_targets(project: Path, reflow2_doc: str) -> list[Path]:
+def pointer_targets(
+    project: Path, reflow2_doc: str, harnesses: list[str] | None = None
+) -> list[Path]:
     """The project's own instruction files that should point at reflow2's.
 
     Every convention in [`INSTRUCTION_FILES`] that exists, except the file
@@ -515,6 +708,14 @@ def pointer_targets(project: Path, reflow2_doc: str) -> list[Path]:
     ]
     if existing:
         return existing
+    # Nothing to append to, so a file gets CREATED — and only for a harness the
+    # user actually named. `CREATE_IF_NO_INSTRUCTION_FILE` is CLAUDE.md, which
+    # no other tool reads; inventing it for an OpenCode project is the same spam
+    # this function refuses to commit with GEMINI.md and .cursorrules. Those
+    # projects are already served, because the AGENTS.md the installer writes IS
+    # the agents.md convention the others increasingly follow.
+    if harnesses is not None and "claude" not in harnesses:
+        return []
     return [
         project / rel for rel in CREATE_IF_NO_INSTRUCTION_FILE if rel != reflow2_doc
     ]
@@ -1021,7 +1222,7 @@ def ensure_gitignore(project: Path) -> list[str]:
     return notes
 
 
-def planned_changes(project: Path) -> list[str]:
+def planned_changes(project: Path, harnesses: list[str]) -> list[str]:
     """What a run would create or overwrite, without touching anything."""
     changes = []
     for src, rel in FILES:
@@ -1036,6 +1237,8 @@ def planned_changes(project: Path) -> list[str]:
         elif not filecmp.cmp(src, dst, shallow=False):
             changes.append(f"update  {rel}")
     for src, rel in TREES:
+        if (owner := TREE_HARNESS.get(rel)) and owner not in harnesses:
+            continue
         for path in sorted(src.rglob("*")):
             if path.is_dir():
                 continue
@@ -1063,6 +1266,8 @@ def planned_changes(project: Path) -> list[str]:
         else:
             changes.append(f"keep    {rel}  (your edits — not removed)")
     for spec in MCP_CONFIGS:
+        if spec["harness"] not in harnesses:
+            continue
         path = project / spec["path"]
         if not path.exists():
             changes.append(f"create  {spec['path']}")
@@ -1080,7 +1285,7 @@ def planned_changes(project: Path) -> list[str]:
     reflow2_doc = "REFLOW2.md" if (project / "REFLOW2.md").exists() or any(
         foreign_owner(src, project / rel) for src, rel in FILES if rel == "AGENTS.md"
     ) else "AGENTS.md"
-    for target in pointer_targets(project, reflow2_doc):
+    for target in pointer_targets(project, reflow2_doc, harnesses):
         # The target may not exist yet: `pointer_targets` deliberately returns
         # the primary-harness conventions when the project owns NO instruction
         # file, because that is the case `ensure_pointer` has to create rather
@@ -1219,7 +1424,9 @@ def place_kit_file(src: Path, dst: Path, rel: str, old_manifest: dict,
     return True
 
 
-def install(project: Path, binary: Path, force_mcp: bool) -> list[str]:
+def install(
+    project: Path, binary: Path, force_mcp: bool, harnesses: list[str]
+) -> list[str]:
     if problems := check_skills():
         raise SystemExit(
             "refusing to install: these skills would be silently ignored by the agent\n  "
@@ -1259,6 +1466,11 @@ def install(project: Path, binary: Path, force_mcp: bool) -> list[str]:
             continue
         place_kit_file(src, dst, rel, old_manifest, new_manifest, done)
     for src, rel in TREES:
+        # A tree only its own harness reads is not written for a project that
+        # named a different one — eleven Claude slash commands in an OpenCode
+        # repo is the clutter this feature exists to stop.
+        if (owner := TREE_HARNESS.get(rel)) and owner not in harnesses:
+            continue
         for path in sorted(src.rglob("*")):
             if path.is_dir():
                 continue
@@ -1294,19 +1506,38 @@ def install(project: Path, binary: Path, force_mcp: bool) -> list[str]:
 
     # MCP config, with the binary path already resolved — the step people
     # previously had to hand-edit, and the one most likely to be got wrong.
+    # ONLY for the harnesses the user named: writing every harness's config into
+    # a repo that asked for one is the clutter Alex reported 2026-08-14, and it
+    # is the same behaviour `pointer_targets` already calls spam for instruction
+    # files a few hundred lines below.
     for spec in MCP_CONFIGS:
-        done.append(write_mcp_config(project, spec, binary, force_mcp))
+        if spec["harness"] in harnesses:
+            done.append(write_mcp_config(project, spec, binary, force_mcp))
     # The loop's session-end backstop. Without it nothing interrupts a session
     # that finishes owing the design a check — and until 2026-07-25 the
     # installer wired none, so every consumer project ran without one.
-    done.extend(ensure_hooks(project, force_mcp))
+    #
+    # Only Claude Code has an event model reflow2 can register against, so a
+    # project on any other harness gets no session-end backstop. SAY SO rather
+    # than leaving the absence to be discovered: the user has just named their
+    # harness, and silence about what it cannot have is the failure the asking
+    # was meant to avoid.
+    if HOOK_HARNESS in harnesses:
+        done.extend(ensure_hooks(project, force_mcp))
+    else:
+        done.append(
+            f"loop nudge  NOT INSTALLED — reflow2 has no hook for "
+            f"{', '.join(harnesses)}; only {HARNESSES[HOOK_HARNESS]} has an "
+            f"event model it can register against. The coherence loop is yours "
+            f"to run: call loop_status between tasks."
+        )
 
     # A file nobody points at is invisible: an agent reads the project's own
     # instructions and never learns reflow2 exists (BL-22's lesson — shipping
     # the file is not shipping the capability). Every instruction file the
     # project already has gets one marked line, same rule as the merged MCP
     # configs: add and report, never overwrite. Idempotent by content.
-    for target in pointer_targets(project, reflow2_doc):
+    for target in pointer_targets(project, reflow2_doc, harnesses):
         if pointer := ensure_pointer(target, reflow2_doc):
             done.append(pointer)
 
@@ -1324,6 +1555,9 @@ def install(project: Path, binary: Path, force_mcp: bool) -> list[str]:
     stamp = project / STAMP
     stamp_data = kit_version()
     stamp_data["installed_files"] = dict(sorted(new_manifest.items()))
+    # Recorded so a re-run does not ask again, and so `--harness` on a later run
+    # is an EDIT to a known answer rather than a fresh guess.
+    stamp_data["harnesses"] = list(harnesses)
     stamp.write_text(json.dumps(stamp_data, indent=2) + "\n")
     return done
 
@@ -1340,6 +1574,14 @@ def main() -> int:
     ap.add_argument("--binary", metavar="PATH",
                     help="path to the reflow2-mcp binary (default: this "
                          "checkout's target/, then PATH)")
+    ap.add_argument("--harness", metavar="NAMES",
+                    help="which agent harness(es) open this project, "
+                         f"comma-separated: "
+                         f"{', '.join(list(HARNESSES) + list(HARNESS_ALIASES))}, "
+                         f"or 'all'. "
+                         "Only these harnesses' files are written. Omit it and "
+                         "you are asked on a tty, or the last answer is reused. "
+                         "Pass it on a re-run to add a harness.")
     opts = ap.parse_args()
 
     project = Path(opts.project).expanduser().resolve()
@@ -1375,7 +1617,17 @@ def main() -> int:
         if not project.exists():
             print(f"{project} does not exist yet — a run would create it.")
             return 0
-        changes = planned_changes(project)
+        # `--check` writes nothing, so it must not prompt: interactive=False
+        # falls back to the recorded answer, then to all — which is the honest
+        # report of what a run WOULD do if nobody answered.
+        check_harnesses, check_note = resolve_harnesses(
+            project, opts.harness, interactive=False
+        )
+        if not check_harnesses:
+            return 1
+        changes = planned_changes(project, check_harnesses)
+        if check_note:
+            changes.append(check_note)
         if previously:
             print(f"installed from reflow2 {previously.get('reflow2_version')} "
                   f"({previously.get('commit')})")
@@ -1398,7 +1650,14 @@ def main() -> int:
 
     updating = project.exists() and previously is not None
     project.mkdir(parents=True, exist_ok=True)
-    done = install(project, binary, opts.force_mcp)
+    # Asked BEFORE anything is written, so a refused or mistyped answer costs a
+    # prompt rather than a half-installed project.
+    harnesses, harness_note = resolve_harnesses(
+        project, opts.harness, sys.stdin.isatty() and sys.stdout.isatty()
+    )
+    if not harnesses:
+        return 1
+    done = install(project, binary, opts.force_mcp, harnesses)
 
     stale = binary_is_stale(binary)
 
@@ -1406,6 +1665,8 @@ def main() -> int:
     print(f"{verb} reflow2 in {project}\n")
     for d in done:
         print(f"  {d}")
+    if harness_note:
+        print(f"\n  {harness_note}")
     print()
 
     if stale:

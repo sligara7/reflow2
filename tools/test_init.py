@@ -43,8 +43,14 @@ class InstallerTest(unittest.TestCase):
         p.mkdir()
         return p
 
-    def install(self, project, force_mcp=False):
-        return init.install(project, FAKE_BINARY, force_mcp)
+    def install(self, project, force_mcp=False, harnesses=None):
+        # Defaults to every harness, which is what these tests were written
+        # against and what a non-interactive run with no --harness still does.
+        # Pass `harnesses` to exercise the narrowing.
+        return init.install(
+            project, FAKE_BINARY, force_mcp,
+            list(init.HARNESSES) if harnesses is None else harnesses,
+        )
 
     # ---- the full kit lands ------------------------------------------------
 
@@ -212,7 +218,7 @@ class InstallerTest(unittest.TestCase):
         stamp["installed_files"]["AGENTS.md"] = init.file_sha(doc)
         (p / ".reflow2/kit-version.json").write_text(json.dumps(stamp))
 
-        planned = init.planned_changes(p)
+        planned = init.planned_changes(p, list(init.HARNESSES))
 
         # The pointer file is allowed to be refreshed — it is small and stable —
         # but nothing about the WORKING INSTRUCTIONS or the skills may move,
@@ -344,7 +350,7 @@ class InstallerTest(unittest.TestCase):
         )
         # And --check says it too, before anything moves.
         self.assertTrue(
-            any("git rm --cached" in c for c in init.planned_changes(p)),
+            any("git rm --cached" in c for c in init.planned_changes(p, list(init.HARNESSES))),
             "--check must disclose it as well",
         )
 
@@ -597,7 +603,7 @@ class ManifestTest(InstallerTest):
         (p / ".reflow2/kit-version.json").write_text(json.dumps(stamp))
 
         # --check must say so BEFORE anything moves.
-        planned = init.planned_changes(p)
+        planned = init.planned_changes(p, list(init.HARNESSES))
         self.assertTrue(
             any("remove" in c and "adopt/SKILL.md" in c and "served" in c for c in planned),
             f"--check must disclose the removal: {planned}",
@@ -696,7 +702,7 @@ class ManifestTest(InstallerTest):
 
     def test_check_also_reports_it_because_check_is_what_you_run_first(self):
         p = self.tracked_graph_project()
-        changes = init.planned_changes(p)
+        changes = init.planned_changes(p, list(init.HARNESSES))
 
         self.assertTrue(
             any(".reflow2/" in c and "is committed" in c for c in changes),
@@ -913,6 +919,231 @@ class SecondUserFirstRun(unittest.TestCase):
         p = self.project()
         init.ensure_gitattributes(p)
         self.assertIsNone(init.ensure_merge_driver(p, pathlib.Path("/some/where/reflow2-mcp")))
+
+
+class HarnessChoice(unittest.TestCase):
+    """`init` writes files for the harness you named, and for no other.
+
+    Alex, 2026-08-14, on his first run against a real work project: init
+    "inserted several things into my project" — configs for three harnesses when
+    he uses one. Settled by Anthony as ASK rather than DETECT
+    (`dec:idea-init-asks-which-harness-and-installs-only-that`), because a fresh
+    repo carries no evidence of which harness will open it and a wrong guess is
+    silent.
+    """
+
+    def setUp(self):
+        self.tmp = pathlib.Path(tempfile.mkdtemp(prefix="reflow2-harness-test-"))
+        self.addCleanup(shutil.rmtree, self.tmp, ignore_errors=True)
+
+    def project(self, name="proj") -> pathlib.Path:
+        p = self.tmp / name
+        p.mkdir()
+        return p
+
+    def install(self, project, harnesses, force_mcp=False):
+        return init.install(project, FAKE_BINARY, force_mcp, harnesses)
+
+    # ---- only the named harness's files are written ------------------------
+
+    def test_naming_one_harness_writes_only_that_harnesss_config(self):
+        p = self.project()
+        self.install(p, ["opencode"])
+
+        self.assertTrue((p / "opencode.json").exists())
+        self.assertFalse((p / ".mcp.json").exists(),
+                         "Claude's config must not be written for an OpenCode project")
+        self.assertFalse((p / ".vscode" / "mcp.json").exists(),
+                         "VS Code's config must not be written either")
+
+    def test_naming_two_harnesses_writes_both_and_no_third(self):
+        p = self.project()
+        self.install(p, ["claude", "vscode"])
+
+        self.assertTrue((p / ".mcp.json").exists())
+        self.assertTrue((p / ".vscode" / "mcp.json").exists())
+        self.assertFalse((p / "opencode.json").exists())
+
+    def test_the_harness_neutral_half_is_written_whichever_harness_you_name(self):
+        # The requirement is explicit that only the harness-SPECIFIC files
+        # narrow. A project that gets no design record, no ignore rule and no
+        # merge attributes has not been set up at all.
+        p = self.project()
+        self.install(p, ["opencode"])
+
+        self.assertTrue((p / "AGENTS.md").exists(), "the instruction file always lands")
+        self.assertIn(".reflow2/", (p / ".gitignore").read_text())
+        self.assertTrue((p / ".gitattributes").exists())
+
+    # ---- the nudge absence is announced, not left silent -------------------
+
+    def test_a_harness_with_no_hook_is_told_so_rather_than_left_silent(self):
+        # Only Claude Code has an event model reflow2 can register against. The
+        # user has just NAMED their harness, so silence about what it cannot
+        # have is the failure the asking was meant to remove
+        # (`dec:idea-the-loop-nudge-exists-for-one-harness-only`).
+        p = self.project()
+        done = self.install(p, ["opencode"])
+
+        self.assertFalse((p / ".claude" / "settings.local.json").exists(),
+                         "no Claude hook file for a project that is not on Claude")
+        said = "\n".join(done)
+        self.assertIn("loop nudge", said)
+        self.assertIn("NOT INSTALLED", said)
+        self.assertIn("loop_status", said,
+                      "telling someone the trigger is absent is only useful "
+                      "with what to do instead")
+
+    def test_claude_still_gets_the_hook(self):
+        p = self.project()
+        done = self.install(p, ["claude"])
+        self.assertIn("settings.local.json", "\n".join(done))
+
+    # ---- the answer survives to the next run -------------------------------
+
+    def test_the_answer_is_recorded_so_a_rerun_does_not_ask_again(self):
+        p = self.project()
+        self.install(p, ["opencode"])
+
+        stamp = json.loads((p / ".reflow2" / "kit-version.json").read_text())
+        self.assertEqual(stamp.get("harnesses"), ["opencode"])
+        self.assertEqual(init.recorded_harnesses(p), ["opencode"])
+
+    def test_a_rerun_with_no_answer_reuses_the_recorded_one(self):
+        p = self.project()
+        self.install(p, ["opencode"])
+
+        chosen, note = init.resolve_harnesses(p, None, interactive=False)
+        self.assertEqual(chosen, ["opencode"])
+        self.assertIn("remembered", note or "")
+
+    def test_a_rerun_can_add_a_harness_without_reinstalling(self):
+        # req:init-installs-only-the-harness-you-name: "a project that later
+        # adds a second harness must be able to say so and get that harness's
+        # files without reinstalling or hand-editing".
+        p = self.project()
+        self.install(p, ["opencode"])
+        self.assertFalse((p / ".mcp.json").exists())
+
+        chosen, _ = init.resolve_harnesses(p, "opencode,claude", interactive=False)
+        self.install(p, chosen)
+
+        self.assertTrue((p / ".mcp.json").exists(), "the added harness gets its config")
+        self.assertTrue((p / "opencode.json").exists(), "the first one survives")
+        stamp = json.loads((p / ".reflow2" / "kit-version.json").read_text())
+        self.assertEqual(stamp.get("harnesses"), ["opencode", "claude"])
+
+    # ---- answering without a prompt ----------------------------------------
+
+    def test_an_unknown_harness_is_refused_rather_than_ignored(self):
+        # A typo that silently installs nothing for the harness you meant is the
+        # failure this whole feature exists to remove, so it must not pass.
+        p = self.project()
+        chosen, why = init.resolve_harnesses(p, "clyde", interactive=False)
+        self.assertEqual(chosen, [], "an unknown name must not resolve to anything")
+        self.assertEqual(why, "unknown")
+
+    def test_all_is_spelled_out_rather_than_needing_every_name(self):
+        p = self.project()
+        chosen, _ = init.resolve_harnesses(p, "all", interactive=False)
+        self.assertEqual(sorted(chosen), sorted(init.HARNESSES))
+
+    def test_no_tty_and_no_answer_installs_everything_and_says_so(self):
+        # Deliberately the OLD behaviour for this case. An install that hangs
+        # waiting for an answer nobody can give is worse than the clutter this
+        # feature removes, and silently narrowing an automated install would
+        # break pipelines that were working. It is announced, not assumed.
+        p = self.project()
+        chosen, note = init.resolve_harnesses(p, None, interactive=False)
+
+        self.assertEqual(sorted(chosen), sorted(init.HARNESSES))
+        self.assertIn("not asked", note or "")
+        self.assertIn("--harness", note or "",
+                      "telling someone it guessed is only useful with how to stop it")
+
+    def test_grok_is_served_by_the_claude_config_rather_than_a_name_of_its_own(self):
+        # Grok CLI reads .mcp.json. A separate entry would write the same file
+        # twice under two names and let a user "choose" a harness that installs
+        # nothing new.
+        self.assertNotIn("grok", init.HARNESSES)
+        paths = [s["path"] for s in init.MCP_CONFIGS]
+        self.assertEqual(len(paths), len(set(paths)),
+                         "two harnesses must not claim the same config file")
+
+    def test_naming_grok_is_answered_rather_than_refused(self):
+        # Alex runs Grok at home and Claude at work (2026-08-14). Keeping `grok`
+        # out of the registry is right — it would write .mcp.json twice — but
+        # REFUSING the name is the install rejecting a correct answer. "unknown
+        # harness 'grok'" to a Grok user is worse than the clutter this feature
+        # removes, because it stops the install entirely.
+        p = self.project()
+        chosen, why = init.resolve_harnesses(p, "grok", interactive=False)
+
+        self.assertEqual(chosen, ["claude"], "grok must resolve to the config it reads")
+        self.assertIsNone(why)
+
+        self.install(p, chosen)
+        self.assertTrue((p / ".mcp.json").exists(),
+                        "a Grok user must end up with the config Grok CLI reads")
+        self.assertFalse((p / "opencode.json").exists())
+
+    def test_naming_grok_and_claude_together_writes_one_config_not_two(self):
+        # They are the same file. Asking for both must not be an error, and must
+        # not produce a duplicate or a second entry.
+        p = self.project()
+        chosen, why = init.resolve_harnesses(p, "grok,claude", interactive=False)
+        self.assertIsNone(why)
+        self.assertEqual(chosen, ["claude"])
+
+    def test_copilot_cli_is_served_by_the_claude_config_and_not_by_vscode(self):
+        # MEASURED 2026-08-14 rather than assumed. `copilot mcp --help` names its
+        # sources — user ~/.copilot/mcp-config.json, workspace .mcp.json or
+        # .github/mcp.json — so Copilot CLI reads the SAME workspace file Claude
+        # Code does and does NOT read .vscode/mcp.json. Confirmed end to end:
+        # `copilot mcp list` inside an installed project printed
+        # "Workspace servers: reflow2 (local)".
+        p = self.project()
+        chosen, why = init.resolve_harnesses(p, "copilot", interactive=False)
+        self.assertIsNone(why)
+        self.assertEqual(chosen, ["claude"])
+
+        self.install(p, chosen)
+        self.assertTrue((p / ".mcp.json").exists(),
+                        "Copilot CLI reads .mcp.json — that is the file it needs")
+        self.assertFalse((p / ".vscode" / "mcp.json").exists(),
+                         ".vscode/mcp.json is VS Code the editor, not Copilot CLI")
+
+    def test_the_vscode_label_does_not_promise_copilot(self):
+        # The label said "Copilot / VS Code" and wrote .vscode/mcp.json, which
+        # promised a harness that file does not serve. A registry may be wrong
+        # about what it COVERS as easily as about what it ACCEPTS.
+        self.assertNotIn("Copilot", init.HARNESSES["vscode"])
+
+    def test_an_alias_is_offered_where_someone_would_look_for_it(self):
+        # Resolving the name is not enough if nobody can discover it: a Grok
+        # user reading the prompt must be able to tell which line is theirs.
+        self.assertIn("grok", init.HARNESS_ALIASES)
+        self.assertIn("Grok", init.HARNESS_NOTES[init.HARNESS_ALIASES["grok"]])
+
+    def test_every_alias_points_at_a_real_harness(self):
+        # An alias to a name that does not exist would resolve to something
+        # nothing installs, which is the silent-success failure again.
+        for alias, target in init.HARNESS_ALIASES.items():
+            self.assertIn(target, init.HARNESSES,
+                          f"alias {alias!r} points at {target!r}, which is not a harness")
+            self.assertNotIn(alias, init.HARNESSES,
+                             f"{alias!r} is both an alias and an entry — pick one")
+
+    def test_every_config_names_a_harness_that_can_be_chosen(self):
+        # The registry and the config list must not drift: a spec whose harness
+        # is not offerable is unreachable, and an offerable harness with no spec
+        # installs nothing while reporting success.
+        for spec in init.MCP_CONFIGS:
+            self.assertIn(spec["harness"], init.HARNESSES,
+                          f"{spec['path']} names a harness nobody can choose")
+        covered = {s["harness"] for s in init.MCP_CONFIGS}
+        self.assertEqual(covered, set(init.HARNESSES),
+                         "every offerable harness needs a config to write")
 
 
 if __name__ == "__main__":
