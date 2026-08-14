@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e3efc783e8aa355693e76ee6f69aec30c099daa229801f66882bbfbb27eee761",
+  "content_hash": "sha256:2202d8652eec41874143ed893a3900420b485a6bfb4c9070183c27f9f936ecc0",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -17644,6 +17644,33 @@
         "action": "modified"
       },
       "to_id": "cap:defaults-are-not-serialized"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-design-interview-precedes-the-capture",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:capture-intent-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-design-interview-precedes-the-capture",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-served-skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-design-interview-precedes-the-capture",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:the-design-interview-precedes-the-capture"
     },
     {
       "edge_type": "CHANGED",
@@ -57246,6 +57273,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:capture-intent-skill",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:the-design-interview-precedes-the-capture"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:capture-session-skill",
       "properties": {
         "completeness": "complete"
@@ -57649,6 +57684,22 @@
         "completeness": "complete"
       },
       "to_id": "cmp:genesis"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:genesis-skill",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:genesis"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:genesis-skill",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:the-design-interview-precedes-the-capture"
     },
     {
       "edge_type": "REALIZES",
@@ -61549,6 +61600,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-capture-skills-do-not-hand-the-vocabulary-back",
+      "properties": {},
+      "to_id": "cap:the-design-interview-precedes-the-capture"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-export-chain-is-unbroken",
       "properties": {},
       "to_id": "rule:the-export-is-written-once-per-branch"
@@ -62872,6 +62929,14 @@
         "action": "created"
       },
       "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:genesis-skill-registered",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:genesis-skill"
     }
   ],
   "graph_id": "reflow2",
@@ -63046,7 +63111,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:d4c7461b15caac67aac0655982b09974948a4753948a45d11e941ffb2f50e4b3",
+        "checksum": "sha256:a596ed5e34cdf3ecec3cd5f2d94731bacb2f66dee86874147f3a34dec42039f5",
         "granularity": "atomic",
         "location": "getting-started/skills/capture-intent/SKILL.md",
         "name": "capture-intent SKILL.md — the conversational capture path, now registering the document it captured from",
@@ -63558,6 +63623,19 @@
         "location": "crates/reflow2-core/src/genesis.rs",
         "name": "genesis.rs",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:genesis-skill",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:730e59e9cca3bdf7d6c19b02a4c21ce6e3fa1b4564adf6d202b72ba2fdc19b9f",
+        "granularity": "atomic",
+        "location": "getting-started/skills/genesis/SKILL.md",
+        "name": "genesis/SKILL.md",
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -64719,10 +64797,12 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b2626bc9b41065d45a47391988fb51f056c5e65c76a2347b2efd47a086547888",
+        "checksum": "sha256:3a28c5d6f3bc91ce95ad0bc3da6bcc85c1bbb71e73e42fa670b14b101b78629c",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/served_skills.rs",
         "name": "served_skills.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66991,7 +67071,7 @@
         "description": "Two halves, and neither is useful alone.\n\nINTERVIEW STEP — `genesis` and `capture-intent` gain an explicit early step: establish what KIND of thing is being designed by probing questions in the user's own domain (what must it do, what is it made of, what meets what, what counts as finished, what will you hand someone when it is done), and NEVER by asking the user to choose a node type. Modelled on reflow's S-01A semantic-matching interview, without its framework registry.\n\nROUTING TABLE — a served mapping from the user's phrasing to the node type it belongs in, plus the artifacts to expect for that kind of thing (structural / electrical / plumbing drawings for a facility; schemas and migrations for an IT system). Looked up rather than improvised. Follows `capture-session`'s precedent, whose own routing table's first dogfood found a hole in it — a table can be wrong in public, an improvisation cannot.\n\n📌 THE ANSWER SHAPES EXTRACTION AND PHRASING AND GATES NOTHING. Which questions get asked and which vocabulary is spoken back may vary by the kind of thing; which analyses reflow2 runs must not. A cycle detector runs wherever there are dependency edges, whoever calls them interfaces or interactions.",
         "name": "The agent asks about the thing, not about the schema — an interview step and a routing table",
         "provenance": "authored",
-        "status": "planned"
+        "status": "realized"
       }
     },
     {
@@ -70219,6 +70299,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "BL-198 step 1 landed by REMOVING `default:` from ten properties, not by changing code. The route changed on a measurement: `default:` in the schema YAML is not documentation — dynograph-core applies it at WRITE time (schema.rs:507 inserts any missing property that declares one), which is where 3,207 stored values across 59% of the design came from. So export-side suppression could never have worked — the store cannot tell a chosen value from an injected one — and the real fix is one YAML token per property. FORWARD-ONLY: nodes already written keep what they hold, so the export does not churn and compare_designs sees nothing; the phantom-diff cost this epoch was scoped around does not arise on this route at all. TEN of 81 removed, 71 kept, and the RATIO is the finding: three mechanically-obvious candidates turned out to be meaningful and were kept on evidence."
+      }
+    },
+    {
+      "node_id": "chg:the-design-interview-precedes-the-capture",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "capture-intent and genesis establish what KIND of thing is being designed before naming its parts, and never ask the user to pick a node type — with a routing table that names where it runs out"
       }
     },
     {
@@ -78329,6 +78417,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered vocabulary.rs"
+      }
+    },
+    {
+      "node_id": "frag:genesis-skill-registered",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered genesis/SKILL.md"
       }
     },
     {
@@ -86544,6 +86642,18 @@
       }
     },
     {
+      "node_id": "ver:the-capture-skills-do-not-hand-the-vocabulary-back",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-14",
+        "level": "integration",
+        "method": "test",
+        "name": "The conduct rule is pinned where an edit that drops it turns red: both capture-intent and genesis must forbid asking the user which node type to use AND name describe_schema as the alternative (forbidding a question without naming the alternative is half a rule), and capture-intent must carry the routing table as a lookup table that names where it runs out. 2 cases in crates/reflow2-mcp/tests/served_skills.rs, 8 in the file, all passing. MUTATION-CHECKED: replacing \"Never ask the user which node type\" with its opposite across all three skill trees turned exactly the conduct test red and left the routing-table test green; reverting restored both. THE POINT OF PINNING IT HERE: this is a rule about how an agent behaves in conversation, and conversation leaves no node — loop_status reads perfectly clean through a session that breaks it, so a test on the served text is the only place it can be observed at all.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-export-chain-is-unbroken",
       "node_type": "Verification",
       "properties": {
@@ -86709,7 +86819,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:00a5a3f9c851e625cc201beb58b86ee2b48eaabc3485776e4bf4b3f7cad3acb9",
+  "prev_content_hash": "sha256:e3efc783e8aa355693e76ee6f69aec30c099daa229801f66882bbfbb27eee761",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
