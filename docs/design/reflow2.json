@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ef318ca2341a04cebe3f5d6ddb5103e9e05056d0029c951e9461765bcc1c61c1",
+  "content_hash": "sha256:00a5a3f9c851e625cc201beb58b86ee2b48eaabc3485776e4bf4b3f7cad3acb9",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -14557,6 +14557,33 @@
         "action": "modified"
       },
       "to_id": "cap:ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:init-asks-which-harness",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:init-asks-which-harness",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:init-asks-which-harness",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:init-asks-which-harness"
     },
     {
       "edge_type": "CHANGED",
@@ -57722,6 +57749,14 @@
       "properties": {
         "completeness": "complete"
       },
+      "to_id": "cap:init-asks-which-harness"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:init",
+      "properties": {
+        "completeness": "complete"
+      },
       "to_id": "cap:install-reaches-the-agent"
     },
     {
@@ -58475,6 +58510,14 @@
         "completeness": "complete"
       },
       "to_id": "ver:edges-need-both-ends"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-init",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:init-asks-which-harness"
     },
     {
       "edge_type": "REALIZES",
@@ -61489,6 +61532,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-harness-registry-is-confirmed-by-the-harnesses",
+      "properties": {},
+      "to_id": "cap:init-asks-which-harness"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-record-moved-is-surfaced",
       "properties": {},
       "to_id": "cap:the-record-moved-is-surfaced"
@@ -63608,7 +63657,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c4963433af688ceb43e856f85c5754e0d2612205722014b2c0cd0e488713d036",
+        "checksum": "sha256:8c3067696c99cce78ac758cfa640d4cc1a6e7d325c0dc3b25dabbdd4ff481b26",
         "granularity": "atomic",
         "location": "tools/reflow2_init.py",
         "name": "reflow2_init.py",
@@ -64551,7 +64600,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2122c21dde0c8bef624a8668ece2659a3129623df9d53bd21bdfc21cb1d5409d",
+        "checksum": "sha256:60633c7dfd51a9244501b86c9f488cad734ac749c67c365b7f40b5ca305772d8",
         "granularity": "atomic",
         "location": "tools/test_init.py",
         "name": "test_init.py",
@@ -66022,7 +66071,7 @@
         "description": "`init` puts the harness question to the person running it and generates MCP configuration for the harnesses they name, rather than for every harness reflow2 supports. `--harness=…` carries the same answer for non-interactive callers, and a run with no tty resolves without blocking rather than waiting on a prompt nobody can see.\n\nDistinct from `cap:install-reaches-the-agent`, which is about the install reaching a harness that WILL read it — too little. This is the opposite failure: writing for harnesses nobody asked for. The two constrain the same generator from opposite sides, and neither subsumes the other.",
         "name": "The install asks which harness, and writes only that one's files",
         "provenance": "authored",
-        "status": "planned"
+        "status": "realized"
       }
     },
     {
@@ -69297,6 +69346,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "SP-3b: the agent drives INGEST, with no provider"
+      }
+    },
+    {
+      "node_id": "chg:init-asks-which-harness",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "init asks which agent harness opens this project and writes files for that one only — MCP configs, the loop-nudge hook, the slash commands and the CLAUDE.md pointer all narrow, and grok/copilot resolve to the config they actually read"
       }
     },
     {
@@ -84763,6 +84820,28 @@
       }
     },
     {
+      "node_id": "fact:the-machine-wide-installer-writes-configs-for-harnesses-you-do-not-have",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "**THE MACHINE-WIDE INSTALLER HAS THE SAME DEFECT ALEX REPORTED ABOUT THE PROJECT INSTALLER — ONE LEVEL UP, AND INTO THE USER'S HOME DIRECTORY.** Measured on Anthony's own machine, 2026-08-14.\n\n═══ ✅ THE EVIDENCE IS A FILE ON THIS MACHINE ═══\n\n```\n$ command -v opencode      -> absent\n$ cat ~/.config/opencode/opencode.json\n  top-level keys : [\"$schema\", \"mcp\"]\n  mcp entries    : [\"reflow2\"]        <- reflow2 and nothing else\n  command        : […/target/debug/reflow2-mcp, --graph-path, .reflow2/graph,\n                    --shared, --only-if-present]\n```\n⇒ **reflow2 CREATED an OpenCode configuration in the home directory of a user who does not have OpenCode installed.** The file holds no theme, no model, no other server — nothing but reflow2's own entry, which is what a file reflow2 wrote from scratch looks like. Anthony's primary agent is Claude Code.\n\n═══ THE MECHANISM ═══\n\n`tools/reflow2_install.py` registers unconditionally, with no harness question anywhere:\n```\nregister_claude(binary)      -> global Claude config\nregister_opencode(binary)    -> ~/.config/opencode/opencode.json\ninstall_commands()           -> global slash commands (Claude-shaped)\ninstall_hooks(nudge)         -> loop-nudge hooks (Claude only)\n```\nThere is no `register_vscode`, so the coverage is not even uniform: **Claude and OpenCode are written for everybody; VS Code is written for nobody.**\n\n═══ ⭐ WHY THIS MATTERS MORE THAN THE PROJECT-LEVEL CASE ═══\n\n`cap:init-asks-which-harness` (built the same day) fixed `reflow2_init.py`, which writes into a REPO the user chose to point at reflow2. **This writes into `$HOME`**, where the user never pointed anything. `cap:machine-wide-install`'s own installer output was already softened once for exactly this reason — Alex reported *\"Installing reflow2 for every project on this machine\"* as ALARMING, and it became *\"Making reflow2 globally available to projects on this machine\"*. **The wording was fixed; the behaviour it was describing was not.**\n\n📌 AND THE `--only-if-present` FLAG SHOWS THE PROBLEM WAS PARTLY UNDERSTOOD. A global entry carries `--only-if-present` so the server does not fire in directories with no graph — someone thought carefully about a global config being too eager at RUN time, and not at all about it existing at INSTALL time for a tool the user does not run.\n\n═══ WHAT IS NOT ESTABLISHED ═══\n\n⚠️ Whether the OpenCode entry is HARMFUL or merely present. An absent binary means nothing reads it, so the cost may be limited to a file nobody asked for — which is precisely the complaint Alex made about the repo, and which was judged worth fixing there.\n⚠️ Whether `~/.copilot/` (present, containing only `ide/`) is reflow2's doing or GitHub's. **Not reflow2's**: nothing in `reflow2_install.py` writes it.\n⚠️ Whether the same shape exists for the global Claude registration — it is the primary harness for both users, so it has never been the wrong thing to write, and this measurement says nothing about whether it should be conditional.\n\n⇒ **THE HONEST GENERALISATION**, and it is `req:init-installs-only-the-harness-you-name` with a wider scope than it was written for: an installer writes files for the harness the user has, and asks when it cannot know. The requirement names `init`; **the machine-wide installer was never in its scope and has the same defect.**",
+        "subject_id": "proj:reflow2"
+      }
+    },
+    {
+      "node_id": "fact:the-machines-reflow2-is-actually-run-on",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "**THE FOUR MACHINES REFLOW2 IS ACTUALLY RUN ON, as of 2026-08-14.** Reported by Anthony (his own setup, and Alex's relayed); the kit versions are measured, the rest is his word.\n\n```\nWHO      MACHINE   OS          AGENT                          PROJECTS      KIT SEEN\nAnthony  work      Ubuntu 24   Claude Code (primary)          reflow2 dev   —\n                               + OpenCode, GitHub Copilot CLI, VS Code\nAnthony  home      Ubuntu 24   Claude Code                    reflow2 dev   0.28.0 (this box)\nAlex     work      macOS       Claude Code                    real work     never measured\nAlex     home      macOS       Grok                           personal      0.11.0 (tarball)\n```\n\n═══ 🛑 WHAT THE TABLE SAYS THAT NOBODY HAD WRITTEN DOWN ═══\n\n**1. EVERY MEASUREMENT REFLOW2 HAS EVER MADE COMES FROM UBUNTU + CLAUDE CODE.** Both of Anthony's machines are that combination, and all development, all self-hosting and all of 2026-08-14's installer runs — including the harness wizard itself — happened there. **Every second-user REPORT comes from macOS.** The overlap between where reflow2 is TESTED and where it is USED by somebody other than its author is **empty**.\n\n**2. THREE AGENTS IN USE, NOT ONE.** Claude Code (both people), Grok (Alex at home), OpenCode and Copilot CLI available to Anthony at work. `dec:skills-served` guarantees the served skills match the running binary; **two different model families are already reading those skills** and nothing has ever checked that a skill written for one reads correctly to the other. The Grok `feedback.md` is evidence that they do — it followed `where-am-i` and `plan-increments` competently — but it is one sample, and it was never the question anyone asked.\n\n**3. 🛑🛑 THE HARNESS REGISTRY HAS NEVER BEEN CONFIRMED BY A HARNESS.** `cap:init-asks-which-harness` (built 2026-08-14) writes `.mcp.json`, `opencode.json` and `.vscode/mcp.json`. Its 94 tests assert **which files are written and which are not** — they assert NOTHING about whether any harness actually LOADS them. Only Claude Code's `.mcp.json` has ever been confirmed working, and that by daily use rather than by a check. **`opencode.json` and `.vscode/mcp.json` were written from documentation and have never been read by the tool they are for.** That is `req:the-tool-finds-its-own-blind-spots`' shape exactly: a green suite that only asks questions it can answer.\n\n**4. ⚠️ AND ONE REGISTRY CLAIM MAY SIMPLY BE WRONG.** The `vscode` entry is labelled **\"Copilot / VS Code\"**. `.vscode/mcp.json` with a `servers` key is right for VS Code; **GitHub Copilot CLI is a separate product and nothing in this project shows it reads that file.** If it does not, the label promises a harness the installer does not serve — the same defect class as `grok` being refused an hour earlier, one layer over: the registry wrong about what it COVERS rather than about what it ACCEPTS.\n\n═══ ✅ AND IT IS ALL CHEAPLY CHECKABLE, WHICH IT WAS NOT AN HOUR AGO ═══\n\nAnthony's work machine runs **Claude Code, OpenCode, Copilot CLI and VS Code**. Alex's home machine runs **Grok**. ⇒ **Every harness in the registry, and every alias, can be confirmed by somebody actually starting the tool and looking for reflow2's tools.** The honest check is not \"is the file written\" — the suite already proves that — but:\n\n```\ninit --harness=opencode  -> start OpenCode      -> are reflow2's tools there?\ninit --harness=vscode    -> start VS Code       -> are they there?\n                         -> start Copilot CLI   -> are they there?   (settles #4)\ninit --harness=grok      -> start Grok CLI      -> are they there?   (Alex)\n```\n\n📌 CONSEQUENCE FOR `epoch:a-project-is-set-up-right-on-the-first-run`: the wizard was built and measured entirely on Ubuntu with Claude Code, for a user whose reports all come from macOS with two other agents. **Nothing about it is known to work there** — not `install.sh`, not the `~/.local/share/reflow2/kit` layout, not the merge-driver registration, not `--harness`. Not a reason to hold the work; a reason not to call it verified on a Linux test run.\n\n📌 RELATED: `fact:the-second-user-runs-two-installs-not-one` records the correction that produced this table.",
+        "subject_id": "proj:reflow2"
+      }
+    },
+    {
       "node_id": "fact:the-owner-uses-reflow2-as-a-funnel-for-random-order-input",
       "node_type": "TemporalFact",
       "properties": {
@@ -84784,6 +84863,17 @@
         "statement": "THE SEAM PAIRS. dec:linked-repos-poc's remaining half is now satisfied, and seam_report has been exercised for the first time.\n\nTHAT PoC (2026-08-06) reported paired=0 against BOTH dynograph-foundation and flo2, with 15 and 5 published interfaces landing in dead surface, and named the cause exactly: reflow2 declared no `required` interface anywhere, so pairing — which matches complements, never like with like — could never produce a pair. It called declaring them \"the cheapest next step\" and deliberately left it to Anthony's word. He gave it 2026-08-09, choosing to declare the environmental boundaries alongside the code ones.\n\nMEASURED, BEFORE AND AFTER, against dynograph-foundation:\n  paired         0  ->  5   (all at name_score 100)\n  dead_surface  15  ->  1   (only their /v1 REST API, which reflow2 genuinely does not use)\n  unmet_needs    0  ->  3   ambient-agent, exclusive-local-store, mcp-protocol\n\nAnd against flo2: unmet_needs 0 -> 4, dead_surface 5 -> 3.\n\n⚠️ THE MOST IMPORTANT NUMBER IS THE ONE THAT STOPPED BEING ZERO. The PoC called `unmet_needs: 0` \"the most dangerous number in the run\" — it reads as \"nothing is missing\" and meant \"we never said we needed anything\". It is now 3 and 4, which are real findings rather than an absence.\n\n⭐ A MODELLING ERROR MADE AND CORRECTED IN THE SAME SITTING, recorded because the correction is the lesson. The first attempt declared ONE umbrella interface for the whole dynograph dependency. Pairing returned NINE candidates and ZERO pairs: a pair needs a name match at or above 85/100, and an umbrella scored 62-78 against nine crisp names. THEY DECOMPOSED AND WE LUMPED. reflow2 links five named crates that map 1:1 onto five of their published interfaces, so the umbrella was deleted (never committed, never true — a mistake rather than history) and replaced with five requirements at the publisher's granularity, named to match. All five then paired at 100.\n\nSEAM_REPORT, RUN FOR THE FIRST TIME EVER — the PoC listed this as what it could NOT answer, because the check needs pairs and there were none: 5 pairs checked, 10 axes agreed, 0 incompatible, 0 differing, AND 30 AXES STATED BY NOBODY. The tool refuses to read that as compatibility, and says so unprompted: \"an unstated axis is not an agreed one, and this is not a claim of compatibility.\" It also names what it did not examine — the TYPES crossing the boundaries. So the honest verdict is that the machinery works and the contracts on both sides are almost entirely unstated, which is a true statement about two designs nobody wrote to be composed.\n\nA REAL WEAKNESS FOUND WHILE DOING IT, worth filing rather than working around: candidate noise scales as N×M. Five requirements against nine published library APIs produced 33 candidates, of which 5 were the real pairs. Every \"X API\" scores 60-83 against every other \"Y API\" on string similarity. Worse, an interface that has ALREADY paired at 100 still appears as a candidate against seven others — ifc:req-dyno-storage-api paired exactly with storage-api and is still offered against cluster-api, game-api, graph-api and four more. Suppressing candidates for a side that already has an exact match would remove most of the noise at no cost to the signal.",
         "subject_id": "cap:complementary-pairing",
         "valid_from": "2026-08-09"
+      }
+    },
+    {
+      "node_id": "fact:the-second-user-runs-two-installs-not-one",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "🛑 **CORRECTION: ALEX'S TWO 2026-08-14 REPORTS CAME FROM TWO DIFFERENT MACHINES WITH TWO DIFFERENT AGENTS, AND THIS SESSION TREATED THEM AS ONE.** Anthony, relaying Alex's own question about which feedback was being discussed, then clarifying the setup:\n\n```\n              MACHINE            OS       AGENT    PROJECTS        REPORT\nwork          work laptop        macOS    Claude   real work       the 5 ideas\nhome          personal laptop    macOS    Grok     personal        the Grok feedback.md\n```\n\n⚠️ ON `basis`: the enum offers only `measured` or `forecast`. The machine/agent/OS attribution is REPORTED — Anthony relaying Alex — not observed by reflow2. The kit VERSIONS below are genuinely measured. Marked `measured` because most load-bearing content is, with the distinction stated here rather than lost to a missing enum value.\n\n⚠️ WHAT THIS SESSION GOT WRONG. `fact:agent-feedback-corroborated-2026-08-14` describes the Grok file as *\"a Grok 4.6 session on one of Alex's projects\"*, which reads as the same context that produced the five ideas. It is not. Any inference treating the two as evidence about ONE install is unsound as stated.\n\n═══ THE STALE-KIT CLAIM, RESTATED HONESTLY ═══\n\nThis session repeatedly said *\"three independent signals that consumers run stale kits\"*, implying mutual reinforcement about one user. **They are three SEPARATE installs, each stale:**\n```\nwork / Claude / macOS ..... two of five notes describe behaviour fixed in\n                            #172/#174 -> INFERRED stale, NEVER MEASURED\nhome / Grok / macOS ....... kit-version.json reads 0.11.0 / 0ec473e,\n                            a 2026-07-25 tarball -> MEASURED\nthis dev machine / Linux .. kit stamp 0.28.0 / e2b05c7 -> MEASURED\n```\n⇒ WEAKER as evidence about Alex — only his HOME install was measured, and the five ideas came from WORK. STRONGER as evidence about the UPDATE PATH: three machines, at least two install routes, three versions, none current. **Systemic, not one person forgetting.**\n\n🎯 THE VERSION QUESTION NEEDS A MACHINE. Anthony texted Alex asking what `reflow2 --version` says; **he has two installs and the answer differs.** The WORK one matters most — it produced the five ideas behind `epoch:a-project-is-set-up-right-on-the-first-run` and has never been measured.\n\n═══ ⭐⭐ IT IMMEDIATELY FOUND A DEFECT IN WORK SHIPPED THE SAME HOUR ═══\n\n`cap:init-asks-which-harness` had just been built with a deliberate decision: **`grok` is NOT a registry entry**, because Grok CLI reads `.mcp.json` and a second entry would write the same file twice under two names. A test asserted it. **The reasoning was right and the ergonomics were hostile: `--harness=grok` returned `error: unknown harness 'grok'` and exit 1** — the install REFUSING a correct answer from a user naming his own tool. Learning that Alex runs Grok at home is what surfaced it.\n\nFIXED the same hour, keeping the reasoning and dropping the hostility: `HARNESS_ALIASES = {\"grok\": \"claude\"}` resolves the name without adding a config, the prompt line reads *\"Claude Code (also read by Grok CLI — choose this for Grok)\"*, and `grok,claude` collapses to one config rather than erroring. Four tests guard it, including that every alias points at a real harness and that no name is both an alias and an entry.\n\n📌 **A GENERAL LESSON, since `rule:a-lesson-is-generalised-before-it-is-built` now exists:** a registry that is CORRECT about what to install can still be WRONG about what to accept. The two are different questions — what files does this harness need, and what might a user call it — and collapsing them refuses real answers.\n\n═══ 📌 ENVIRONMENT FACTS NEW TO THE DESIGN ═══\n\n  · **EVERY SECOND-USER REPORT REFLOW2 HAS EVER RECEIVED IS FROM macOS**, and **every measurement reflow2 has ever made is on Linux** — including all of 2026-08-14's installer runs and the harness wizard itself. Whether `tools/install.sh`, the `~/.local/share/reflow2/kit` layout, the merge-driver registration and `--harness` behave identically on macOS is **unverified, and nothing in the design claims it**.\n  · **A TARBALL install is in use** (`0ec473e`), a different update route from a checkout. `user-iterative-release-preference` sets the goal at a ONE-WORD UPDATE; whether the tarball route reaches that is untested.\n\n⭐ THE BREADTH IS ITSELF THE FINDING: the second user exercises reflow2 across two agents (Claude, Grok) and two project classes (work, personal) on one OS reflow2 has never been tested on. For evidence purposes his two report streams should be read as **two users**, and the two agents mean the served skills are being read by two different models.",
+        "subject_id": "proj:reflow2"
       }
     },
     {
@@ -84842,6 +84932,17 @@
         "statement": "READ FROM SOURCE 2026-08-10, not inferred: two HEAL rules fire UNCONDITIONALLY on an edge type while their message names a condition the code never evaluates.\n\n    heal.rs:971  unresolved_setup   iterates every ANTICIPATES edge and emits\n                                    \"'X' anticipates 'Y' but nothing follows through\"\n                                    — there is no follow-through test anywhere in the loop.\n    heal.rs:906  contradiction      iterates every CONTRADICTS edge (unless alignment=supporting)\n                                    and suggests `generate_decision`, while the rule's own doc\n                                    comment at heal.rs:47 describes it as \"two nodes joined by\n                                    CONTRADICTS with NO RESOLVING DECISION\". Nothing looks for one.\n\nTHE CONSEQUENCE IS THE SAME IN BOTH CASES AND IT IS NOT NOISE: THE SUGGESTED FIX PROVABLY DOES NOT CLEAR THE FINDING. Write the resolving Decision the contradiction rule asks for and the contradiction still fires. Build the thing an ANTICIPATES edge anticipates and the unresolved_setup still fires. The only ways out are deleting the edge or acknowledging the defect — so a design is PUNISHED FOR RECORDING THE RELATIONSHIP, and the cheapest way to a clean report is to stop recording anticipation and contradiction at all.\n\nOBSERVED LIVE, WHICH IS HOW IT WAS FOUND. Recording `dec:merge-survivor-provenance` ANTICIPATES `dec:a-tied-merge-breaks-by-degree-not-by-alphabet` — an honest edge, since the older decision's own rationale says \"consider ranking unset below authored in a future revision\" — took detect_defects from 7 to 8 immediately, and no amount of building will take it back to 7.\n\nTHIS EXACT CLASS IS ALREADY FIXED ONCE IN THE SAME FUNCTION, sixty lines above. heal.rs:892-905 documents the CONTRADICTS/alignment=supporting bug: the loop read the edge TYPE and never the PROPERTY, so every correctly-modelled corroboration came back as a structural defect, and `dec:commands-are-the-exception` QUALIFYING `dec:skills-served` turned the graph red. Its recorded lesson is verbatim: \"A property the detector ignores is a property that lies.\" The same sentence applies to a CONDITION the detector never computes — and the damage named there applies here too: the only ways out were to acknowledge a defect that is not one, or to stop recording the relationship.\n\nWHAT A FIX WOULD HAVE TO DECIDE, because neither is obvious and this is not a repair proposal. For unresolved_setup: what COUNTS as follow-through — the anticipated node existing at all (trivially true, the edge points at it), reaching `accepted`, gaining a SATISFIES/REALIZES chain, or arriving in an epoch. For contradiction: what counts as RESOLVING — a Decision edged to both endpoints, or one edged to either, and whether a `proposed` Decision resolves anything. Both questions are real design questions and answering them wrongly converts an over-firing rule into an under-firing one, which is worse.\n\nDELIBERATELY NOT DONE: the ANTICIPATES edge was NOT deleted to restore the count to 7. The edge is true, and removing a true relationship to satisfy a detector that fires unconditionally is the gaming this project warns against everywhere else. The defect belongs to the rule, not to the edge.",
         "subject_id": "cmp:heal",
         "valid_from": "2026-08-10"
+      }
+    },
+    {
+      "node_id": "fact:updating-reflow2-does-not-update-a-project-already-set-up",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "**UPDATING REFLOW2 UPDATES THE BINARY AND LEAVES EVERY ALREADY-INITIALISED PROJECT AT THE KIT VERSION THAT SET IT UP. NOTHING SAYS SO.** This explains Alex's 2026-08-14 reports completely, and it corrects an inference this session repeated all day.\n\n═══ 🛑 THE INFERENCE THAT WAS WRONG ═══\n\nThis session concluded, from two of his five notes describing already-fixed behaviour, that **\"Alex is probably on an old kit\"**. Alex then answered the version question: **`0.30.0` from home** — current. Not stale at all.\n\n⭐ **AND THE GROK AGENT HAD DIAGNOSED IT CORRECTLY ON 2026-08-13, IN ITS FIRST PARAGRAPH, WHILE THIS SESSION UNDER-WEIGHTED IT:** *\"`.reflow2/kit-version.json` says `0.11.0` / `0ec473e` (2026-07-25 tarball) while the live server already serves `loop_status`, `what_next`, `arrival_delta`, `plan_epoch`, `maturity_report`, served `get_skill`, etc. **The kit sidecar and the process you are talking to are not the same generation.**\"* It was read as evidence of a stale install. It was evidence of a SPLIT.\n\n═══ ✅ THE MECHANISM, MEASURED ═══\n\n`.reflow2/kit-version.json` is written by `reflow2_init.py` INTO THE PROJECT and records **which kit version set that project up**. It is a stamp of an install EVENT, not a reading of the currently-installed kit. So:\n\n```\nbinary      updated by install.sh    -> 0.30.0   (Alex, home)\nproject     written once at init     -> 0.11.0   (Alex, home, 2026-07-25)\n```\n\n🎯 **AND THIS IS WHY HIS \"NO COMMITTABLE GRAPH JSON\" REPORT WAS TRUE ON A CURRENT BINARY.** The fix (PR #172, `write_shareable_export`) lives in **`tools/reflow2_init.py` — a KIT file, not the binary.** Updating the binary to 0.30.0 cannot retrofit it into a project initialised by kit 0.11.0. **He had to re-run the installer, and nothing told him that.** Same for the settings-indent fix and anything else in the installer.\n\n═══ 🛑🛑 WHY THE MAINTAINER CANNOT REPRODUCE THIS ═══\n\nMeasured on Anthony's machine the same day:\n```\n~/.local/share/reflow2/kit -> /home/ajs7/project/reflow2      A SYMLINK to the checkout\n```\nwhile `tools/install.sh` gives a consumer a **tarball extraction** (`tar -C \"$KIT_DIR/kit.new\" --strip-components=1 -xzf \"$kit_asset\"`) — a frozen copy.\n\n⇒ **THE DEVELOPER'S KIT CANNOT GO STALE, BY CONSTRUCTION. THE CONSUMER'S ALWAYS CAN.** The defect is structurally invisible to the only person positioned to fix it — `req:the-tool-finds-its-own-blind-spots` arriving in the environment rather than in a detector, and the sharpest instance of it recorded so far.\n\n═══ WHAT IS STILL NOT KNOWN ═══\n\n⚠️ **Alex answered for HOME. The five ideas came from WORK, whose version has never been measured.** The question needs re-asking with the machine named.\n⚠️ Whether his machine-wide kit is also 0.11.0, or only the project stamp. `reflow2 --version` reports the BINARY; nothing surfaces the installed kit's version, which is the gap the Grok report's own \"opportunities\" section proposed closing (*\"document that kit-version.json can lag the shared server, or write the running binary identity somewhere loop_status / graph_report already expose\"*).\n⚠️ What a stale kit actually costs. `reflow2_check.py` at 0.11.0 would predate the LINEAGE (BL-107) and IDENTITY (BL-169) checks, so a consumer CI gate could be silently weaker than the one this project relies on — **not verified, and worth verifying.**\n\n⇒ THE HONEST GENERALISATION: reflow2 has TWO update surfaces — the binary and the per-project kit — and only one of them is served by `install.sh`. `user-iterative-release-preference` sets the goal at a ONE-WORD UPDATE; today that word updates half the system and reports success.",
+        "subject_id": "proj:reflow2"
       }
     },
     {
@@ -86408,6 +86509,18 @@
       }
     },
     {
+      "node_id": "ver:the-harness-registry-is-confirmed-by-the-harnesses",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-14",
+        "level": "acceptance",
+        "method": "demonstration",
+        "name": "Three of four harnesses were made to LOAD reflow2 from the file the installer writes — OpenCode reports it CONNECTED, Copilot CLI lists it as a workspace server, Claude Code is daily use. VS Code remains unconfirmed and is named as such. Run 2026-08-14 on Ubuntu 24 by installing the harnesses (npm, no sudo) into a project set up by tools/reflow2_init.py, then asking each tool what it sees: `opencode mcp list` -> \"✓ reflow2 connected\", `copilot mcp list` -> \"Workspace servers: reflow2 (local)\". THIS IS THE CHECK THE 96-CASE SUITE CANNOT MAKE: those cases assert which FILES are written, and assert nothing about whether any harness reads them. It also CORRECTED the registry rather than confirming it — `copilot mcp --help` names its sources as ~/.copilot/mcp-config.json and workspace .mcp.json / .github/mcp.json, so Copilot CLI does NOT read .vscode/mcp.json and the entry labelled \"Copilot / VS Code\" was promising a harness that file does not serve.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-record-moved-is-surfaced",
       "node_type": "Verification",
       "properties": {
@@ -86525,7 +86638,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:40c6cbcdb38ce72c8042f3128c9f39bb3afcd7c1cd32f88d0eaf8a9b4863152d",
+  "prev_content_hash": "sha256:ef318ca2341a04cebe3f5d6ddb5103e9e05056d0029c951e9461765bcc1c61c1",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
