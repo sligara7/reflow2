@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:40c6cbcdb38ce72c8042f3128c9f39bb3afcd7c1cd32f88d0eaf8a9b4863152d",
+  "content_hash": "sha256:ef318ca2341a04cebe3f5d6ddb5103e9e05056d0029c951e9461765bcc1c61c1",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -56730,6 +56730,12 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:a-project-is-set-up-right-on-the-first-run",
+      "properties": {},
+      "to_id": "epoch:tiering-and-proportion"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:a-refusal-names-what-would-have-worked",
       "properties": {},
       "to_id": "epoch:the-owners-identity-is-one-node-again"
@@ -59995,6 +60001,15 @@
     },
     {
       "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:decomposition-coverage-is-asked",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-14"
+      },
+      "to_id": "epoch:tiering-and-proportion"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
       "from_id": "cap:defaults-are-not-serialized",
       "properties": {
         "modality": "expected",
@@ -60019,6 +60034,24 @@
         "recorded_at": "2026-07-31"
       },
       "to_id": "rel:v0210"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:init-asks-which-harness",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-14"
+      },
+      "to_id": "epoch:a-project-is-set-up-right-on-the-first-run"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:nudge-absence-says-why",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-14"
+      },
+      "to_id": "epoch:a-project-is-set-up-right-on-the-first-run"
     },
     {
       "edge_type": "SCHEDULED_FOR",
@@ -60064,6 +60097,15 @@
         "recorded_at": "2026-07-31"
       },
       "to_id": "rel:v0210"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:the-design-interview-precedes-the-capture",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-14"
+      },
+      "to_id": "epoch:a-project-is-set-up-right-on-the-first-run"
     },
     {
       "edge_type": "SCHEDULED_FOR",
@@ -74791,6 +74833,16 @@
       }
     },
     {
+      "node_id": "epoch:a-project-is-set-up-right-on-the-first-run",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "A project is set up right on the first run — the three things the second user hit before he could design anything",
+        "sequence": 328,
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "epoch:a-refusal-names-what-would-have-worked",
       "node_type": "DesignEpoch",
       "properties": {
@@ -75571,6 +75623,16 @@
         "name": "The half-formed-idea question gains its Capability half (2026-08-10) — the silent-by-construction property that makes a brainstormed DECISION costless does not hold for a CAPABILITY",
         "sequence": 315,
         "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:tiering-and-proportion",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "Tiering and proportion — vertical linking, and whether a design's breadth and depth can be measured without inventing an ideal ratio",
+        "sequence": 329,
+        "status": "planned"
       }
     },
     {
@@ -84493,6 +84555,18 @@
       }
     },
     {
+      "node_id": "fact:nine-of-twenty-skills-are-edited-without-a-drift-signal",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "**ONLY 11 OF REFLOW2'S 20 SERVED SKILLS ARE REGISTERED AS ARTIFACTS, SO NINE CAN BE EDITED WITH NO DRIFT SIGNAL AT ALL.** Found sideways on 2026-08-14 while editing two skills: one produced a `DRIFT` finding and the other produced silence, and the silence was not a pass.\n\nREPRODUCTION (committed export at `c18a4a1`, then re-measured after the edits):\n```\nskills on disk ....................... 20\nregistered as Artifacts .............. 11\nunwatched ............................  9\n```\nUNWATCHED: `ci-gate`, `detect-and-ask`, `genesis`, `impact-check`, `link-artifacts`, `report-friction`, `retire-from-design`, `revise-design`, `where-am-i`.\n\n⭐ HOW IT SURFACED, WHICH IS THE POINT. Two served skills were edited the same hour — `ci-gate` (three documented omissions) and `parallel-work` (a contradiction with the lineage rule). `reflow2_check` reported **exactly one** finding: `DRIFT art:parallel-work-skill`. **`ci-gate` changed materially and the gate said nothing**, because no Artifact points at it. Had only `ci-gate` been edited, the gate would have reported OK and the change would have gone in unwatched.\n\n🛑 **THIS IS TODAY'S GENERAL FINDING ARRIVING UNPROMPTED FOR THE FIFTH TIME** (`dec:idea-silence-is-reported-not-inferred`): *reflow2 cannot distinguish \"nothing is wrong\" from \"I could not see it.\"* Here, **\"nothing drifted\" and \"nothing is watched\" are the same answer**, and the answer looks like health. The prior four instances that day: `unrealized_capability` suppressed by `realized_via_component`; the loop-nudge state `absent` meaning two different things; `loop_status` sync reporting `in_step` against an uncommitted graph; and `hierarchy_issues` returning 0 against 14 unparented components.\n\n⚠️ TWO ENTRIES ON THE UNWATCHED LIST ARE POINTED:\n  · **`link-artifacts`** — the skill whose entire job is registering artifacts and keeping as-designed honest against as-built — is itself unregistered.\n  · **`report-friction`** — the skill for reporting reflow2's own problems — is unregistered, so a change to how friction gets reported leaves no trace.\n\n✅ THE INSTRUMENT THAT WOULD CATCH THIS ALREADY EXISTS AND WAS NEVER POINTED HERE. `coverage_report` is built for exactly this class — its own contract says *\"every other detector reasons about nodes ALREADY in the graph, so without this a design covering 30% of a system reports the same 0 open gaps as one covering all of it.\"* It answers only as wide as the sweep it is handed, and **nobody has ever swept `getting-started/skills/`**. This is not a missing capability; it is a built capability never aimed at the tree it was built for.\n\n📌 WHAT THIS DOES NOT ESTABLISH: whether the 9 are unregistered by oversight or by a deliberate choice nobody wrote down — the 11 that ARE registered have no obvious property in common (they span `adopt`, `brainstorm`, `capture-intent`, `capture-session`, `check-health`, `governance-proposal`, `kpp-proposal`, `parallel-work`, `plan-increments`, `ingest-corpus`, `link-projects`), which weakens the deliberate reading but does not kill it. **Also unchecked: whether the same registration hole exists for `tools/`, `crates/` or `docs/`** — only the skills tree was counted, and the honest generalisation of this finding is that nobody knows the coverage of any of them.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-14"
+      }
+    },
+    {
       "node_id": "fact:orphan-decision-is-silenced-by-an-edge-that-does-not-reach-it",
       "node_type": "TemporalFact",
       "properties": {
@@ -86451,7 +86525,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:4b93b03dd8564577a9df898d832277b6625c4c17e5dafc2f43c31c31f1b80dbb",
+  "prev_content_hash": "sha256:40c6cbcdb38ce72c8042f3128c9f39bb3afcd7c1cd32f88d0eaf8a9b4863152d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
