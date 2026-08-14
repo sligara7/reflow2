@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:9b6baabace9012114acc6b9c19ca3a4daec0571ac487f0be14cb710e41d73152",
+  "content_hash": "sha256:f9a65a356b195ba253babe2b64acd2775abcad9acdd701c2425a7aafd1d439dd",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2089,7 +2089,23 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-design-record-merges-per-node-in-every-clone",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:init"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:the-record-moved-is-surfaced",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:sync"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-record-moved-reaches-an-ordinary-read",
       "properties": {
         "weight_basis": "estimated"
       },
@@ -5163,6 +5179,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "fact:a-fresh-server-on-an-old-build-is-not-stale-and-stamps-confidently",
+      "properties": {},
+      "to_id": "epoch:v0300"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "rel:v0100",
       "properties": {},
       "to_id": "epoch:v0100"
@@ -6977,6 +6999,15 @@
       "from_id": "dec:idea-every-project-shapes-its-own-git-governance",
       "properties": {
         "acted_at": "2026-08-11",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-feedback-arrives-by-git-push-and-pull",
+      "properties": {
+        "acted_at": "2026-08-13",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -17330,6 +17361,60 @@
         "action": "modified"
       },
       "to_id": "art:export-via-binary"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-git-exchange-path-is-defended",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-git-exchange-path-is-defended",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-git-exchange-path-is-defended",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-git-exchange-path-is-defended",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:the-design-record-merges-per-node-in-every-clone"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-git-exchange-path-is-defended",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:the-record-moved-reaches-an-ordinary-read"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-git-exchange-path-is-defended",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:the-git-exchange-path-is-defended-not-only-documented"
     },
     {
       "edge_type": "CHANGED",
@@ -59465,9 +59550,21 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:the-design-record-merges-per-node-in-every-clone",
+      "properties": {},
+      "to_id": "req:the-git-exchange-path-is-defended-not-only-documented"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:the-record-moved-is-surfaced",
       "properties": {},
       "to_id": "req:a-seat-learns-the-record-moved-before-it-writes"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:the-record-moved-reaches-an-ordinary-read",
+      "properties": {},
+      "to_id": "req:the-git-exchange-path-is-defended-not-only-documented"
     },
     {
       "edge_type": "SATISFIES",
@@ -61004,6 +61101,18 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-git-exchange-path-is-defended",
+      "properties": {},
+      "to_id": "cap:the-design-record-merges-per-node-in-every-clone"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:the-git-exchange-path-is-defended",
+      "properties": {},
+      "to_id": "cap:the-record-moved-reaches-an-ordinary-read"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-record-moved-is-surfaced",
       "properties": {},
       "to_id": "cap:the-record-moved-is-surfaced"
@@ -62334,11 +62443,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:8f8a543ba59ec079",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/acknowledgement_not_structure.rs",
         "name": "acknowledgement_not_structure.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62347,11 +62454,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:14b6b93d62aa5ff7",
-        "granularity": "atomic",
         "location": "getting-started/skills/adopt/SKILL.md",
         "name": "adopt/SKILL.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62360,11 +62465,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c33a33c15e2611b3",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/agent.rs",
         "name": "agent.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62373,11 +62476,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:d282035a162e3e56",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/allocate.rs",
         "name": "allocate.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62386,11 +62487,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c87a79726aeb111b",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/alternatives.rs",
         "name": "alternatives.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62425,11 +62524,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:49f1f3095ea2707d",
-        "granularity": "atomic",
         "location": "tools/bl124_instrument.py",
         "name": "bl124_instrument.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62451,11 +62548,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6aeb7aaf31ccdd875990bce6735c75eeead49c7371c4bc39064d4e7f478733e8",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/budget.rs",
         "name": "budget.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62464,11 +62559,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:8f5ffbc7c6e84b5e",
-        "granularity": "atomic",
         "location": "docs/built-right-review.md",
         "name": "built-right-review.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62477,11 +62570,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6e8e23fce35b21d6",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/bulk.rs",
         "name": "bulk.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62516,11 +62607,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c2bea913c620128c1e602aed078713c7598f92e7cada4024c67777584b23b8be",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/changelog.rs",
         "name": "tests/changelog.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62568,11 +62657,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:a84c2afa299b6793cb78ae9aad6fda8cf659780728e38da0906ffa629dd41919",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/checksum_dialect.rs",
         "name": "checksum_dialect.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62594,11 +62681,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:2575d415a74a3266b208ddf798e5e6516186d6c345324efb6f9b66e46b7367a3",
-        "granularity": "atomic",
         "location": "docs/collaborating.md",
         "name": "collaborating.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62607,11 +62692,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b73161a0fd04efee",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/compare.rs",
         "name": "compare.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62620,11 +62703,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b9f6ec2a69d7cfbc6041c2cf7d0bbb5a409a981cd3c44a36672f4b3a375a4558",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/compose.rs",
         "name": "compose.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62633,11 +62714,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6b58139a0fd5f095c64c4c465f03cfed8200015ef0e7af3a4e7cca064727de39",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/compose.rs",
         "name": "tests/compose.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62646,11 +62725,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:276c4e707db8d55a34f673a533dcaa15629d6bd59be4d3232df21bff1e6ce7c3",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/confirm.rs",
         "name": "confirm.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62659,11 +62736,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b4fd5760c54b234a4c8d4031c4dba9610db59dfb10cabc0dfc3907e143442344",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/confirmation_vocabulary.rs",
         "name": "confirmation_vocabulary.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62685,11 +62760,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:2459979bcda2901dc08307b0211763a91245cdfd4727c9ab967039b2c154f2ed",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/contradiction_alignment.rs",
         "name": "tests/contradiction_alignment.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62724,11 +62797,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c30ee52bd7c3ec95",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/coverage.rs",
         "name": "tests/coverage.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62750,11 +62821,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:eb126729e08e8d8d3ac45acec3a2e291e068dc1e9afed14a8647edf73300bdde",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/degraded.rs",
         "name": "degraded.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62815,11 +62884,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:59ef210d5f8576a9f07b321dc546b653056ab4ecda17e0ec9269ed87a52c27dc",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/dimensions.rs",
         "name": "dimensions.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62906,11 +62973,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:74c0459e03ad38ce",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/dto.rs",
         "name": "dto.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62932,11 +62997,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:8956d2d0d4f31fe1",
-        "granularity": "atomic",
         "location": "tools/evidence_quality_instrument.py",
         "name": "Evidence-quality instrument — what the three axes report on a real design",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62945,11 +63008,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:0f66b31cfaca4944",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/evidence_quality.rs",
         "name": "The evidence-quality family suite — all three axes with their counterweights",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62958,11 +63019,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:58443db75d9199e7addc3f4673d84e1249df60fc563237475636f8e0713f6896",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/evidence.rs",
         "name": "tests/evidence.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -62997,11 +63056,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:cfdf82f1a6497595",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/fielded.rs",
         "name": "fielded.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63010,11 +63067,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2",
-        "granularity": "atomic",
         "location": "docs/fleet-lessons.md",
         "name": "fleet-lessons.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63023,11 +63078,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:f6abe031170cd8123c44b3f87248b9841f9b31117d78d8325769fea6a34a5d8e",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/flow.rs",
         "name": "flow.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63036,11 +63089,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:8196df94f5775161",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/genesis.rs",
         "name": "genesis.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63049,11 +63100,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:34701500af93dbcf",
-        "granularity": "atomic",
         "location": "docs/github-mcp-nuggets.md",
         "name": "github-mcp-nuggets.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63075,11 +63124,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:199301145284e0fb30cfec667a6adb26c3af9db724a2f3049474659ee07c7f15",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/granularity.rs",
         "name": "granularity.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63114,11 +63161,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:30fc1a09862792a9",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/hierarchy.rs",
         "name": "hierarchy.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63140,11 +63185,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:889393466bafe709429fc137dd4d2e1a372990c6486d7a85dec07c630a51cbb3",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/ility.rs",
         "name": "ility.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63179,11 +63222,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:ddfa7e13d3b56156a9b463f434cd691718e1af489f27aaba169395c226d14b9a",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/ingest_handshake.rs",
         "name": "tests/ingest_handshake.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63191,7 +63232,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:46cf0640b0e86fe1b8af9c2d60472511a8f4e662614c03c6e8e9b5d25aa9e97f",
+        "checksum": "sha256:c4963433af688ceb43e856f85c5754e0d2612205722014b2c0cd0e488713d036",
         "granularity": "atomic",
         "location": "tools/reflow2_init.py",
         "name": "reflow2_init.py",
@@ -63205,11 +63246,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:07c82cd7671c1241",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/interface_spec.rs",
         "name": "tests/interface_spec.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63218,11 +63257,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:13f19b14c25c9300",
-        "granularity": "atomic",
         "location": "getting-started/AGENTS.md",
         "name": "getting-started/AGENTS.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63244,11 +63281,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:65a01535f32f023e",
-        "granularity": "atomic",
         "location": "getting-started/skills/kpp-proposal/SKILL.md",
         "name": "kpp-proposal/SKILL.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63270,11 +63305,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6869d93e97fc9393",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/llm.rs",
         "name": "llm.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63335,11 +63368,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:075bab31f3c131b6",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/merge.rs",
         "name": "merge.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63348,11 +63379,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:cddbea4165e0e3b0",
-        "granularity": "atomic",
         "location": "tools/test_merge_driver.py",
         "name": "test_merge_driver.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63413,11 +63442,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:e95e6f4c2658ebd1c7afa6e23385256e51272860a0cb56e2046d4c1b581881d0",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/operate.rs",
         "name": "operate.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63426,11 +63453,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:9b388fef123f04c5",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/orphan_attachment.rs",
         "name": "orphan_attachment.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63439,11 +63464,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:9cbea33b6a561a9e",
-        "granularity": "atomic",
         "location": "getting-started/skills/parallel-work/SKILL.md",
         "name": "parallel-work/SKILL.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63465,11 +63488,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14",
-        "granularity": "atomic",
         "location": "docs/planning-at-scale.md",
         "name": "planning-at-scale.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63478,11 +63499,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:59b6e751c18dfc67d4546b6d6d70e1305b64864d3890d8cf786320687c9b84d4",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/preserve.rs",
         "name": "preserve.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63491,11 +63510,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:26dde99a1df42e6f",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/propagate.rs",
         "name": "propagate.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63504,11 +63521,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b3cd0321b5dcda802926f3247ab45b6c1bbfc7bbd60ed38d2d95da29a3d6caf0",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/provenance.rs",
         "name": "provenance.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63517,11 +63532,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:7979028e8c95724dd5696d9b1fee3f307c718b7d9f4e086a968620b602eec420",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/publishable_promise.rs",
         "name": "tests/publishable_promise.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63530,12 +63543,10 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:f01d1b8a9f04a3efd4efe0fa05d12f9d1b330e4c4f16b9f1781ae6e645a38fa5",
-        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "crates/reflow2-core/src/readiness.rs",
         "name": "readiness.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63583,11 +63594,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:99fc5da421a04f5e",
-        "granularity": "atomic",
         "location": "tools/render_views.py",
         "name": "render_views.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63609,11 +63618,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:dc88dfbc4e1aacbc",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/sanitize.rs",
         "name": "sanitize.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63663,12 +63670,10 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:815273502db4fed6800182446fb496a08aace3a9b34757395892e6da37dbcdb9",
-        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/dimensions.yaml",
         "name": "dimensions.yaml",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63677,12 +63682,10 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:7201c53b7e2c794b871f3d48b7da761884f5bccd7d9f90b9b7d07210e79053cc",
-        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/environment.yaml",
         "name": "environment.yaml",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63733,12 +63736,10 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:daf8ea6b9399cb16edfd8849adcd1bcd37ac1a7f3ae3acea80ecca8e035fdc9a",
-        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/readiness.yaml",
         "name": "readiness.yaml",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63761,12 +63762,10 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09",
-        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/temporal.yaml",
         "name": "temporal.yaml",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63815,11 +63814,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea",
-        "granularity": "atomic",
         "location": "docs/scope-read-while-held.md",
         "name": "scope-read-while-held.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63828,11 +63825,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:45aaec579dc701380a04d4f12b59a6b14ba5aeb619e823c021b0b21ed08e5caa",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/seam.rs",
         "name": "seam.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63841,11 +63836,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:efb2faf35ec4cc6ed3df5a61f8fdf2af77aded2a6eb29ddabf2394dfc7ed195d",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/seam.rs",
         "name": "tests/seam.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63854,11 +63847,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c421c3496192d22d",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/search.rs",
         "name": "search.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63880,11 +63871,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:4d824c873120e938",
-        "granularity": "atomic",
         "location": "tools/self_host_uses_documents.py",
         "name": "self_host_uses_documents.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -63905,7 +63894,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b767c5da7864d4cd230f0b0cfc9dbe936c860cdb27809adc68d7ec6da77d861e",
+        "checksum": "sha256:8fb1db82fbd38c45d2323710b43f91f541f43d2732b72b3a997b768bdcd8ca90",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -63984,11 +63973,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:9352eb7ec610eb6187d482730ea021c18883d4548f4ba2ed3ab3b3fac0451bda",
-        "granularity": "atomic",
         "location": "tools/test_skill_lint.py",
         "name": "test_skill_lint.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64010,11 +63997,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:beaa4bd48ef2fae4b6cdb0604f5e0ff9ce644d9bb39f1a9c6a7f7f2a630aa797",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/build.rs",
         "name": "build.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64036,11 +64021,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:772b73a05ff491fe6dbca6adeb9697ad84e1ad9592e24b66793aae2716ae0783",
-        "granularity": "atomic",
         "location": "tools/stateless_seat_probe.py",
         "name": "stateless_seat_probe.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64049,11 +64032,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:ce30365401d775a82585729349538efe1a0fa43625783b2a39a6dc30f7d9ce83",
-        "granularity": "atomic",
         "location": "docs/storyflow-resolution-nuggets.md",
         "name": "storyflow-resolution-nuggets.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64062,11 +64043,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:76f2dec276b09685",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/structure.rs",
         "name": "structure.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64075,11 +64054,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b3b2bac1387c9c53",
-        "granularity": "atomic",
         "location": "tools/surface_usage.py",
         "name": "Surface-usage instrument — which parts of reflow2 real sessions actually drive",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64088,11 +64065,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b1cec4ec107ef2b1",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/surprises.rs",
         "name": "surprises.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64127,11 +64102,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:829e4905cc5f40a8b24e6027b5522780c90e8c133742299549e80880b2f6abef",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "temporal.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64153,11 +64126,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:25db9bfb196de65609c48f3aec924f55bdcac7c8492066658f310832b17156ef",
-        "granularity": "atomic",
         "location": "tools/test_degraded_server.py",
         "name": "test_degraded_server.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64166,11 +64137,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:cba77191420374d58d2360da9c1d2a73adcdd1d750d25dafc3991c1a525773af",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/design_identity.rs",
         "name": "design_identity.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64204,7 +64173,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:29e39edfcce3645940f439681fb4fd82aa2df6c4c556f1719a45bca7cc991a58",
+        "checksum": "sha256:2122c21dde0c8bef624a8668ece2659a3129623df9d53bd21bdfc21cb1d5409d",
         "granularity": "atomic",
         "location": "tools/test_init.py",
         "name": "test_init.py",
@@ -64283,11 +64252,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b2626bc9b41065d45a47391988fb51f056c5e65c76a2347b2efd47a086547888",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/served_skills.rs",
         "name": "served_skills.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64322,11 +64289,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:21673699d9d326c9db310fcb24068fa38074634b1949d2708c56f9f77a6c2e5f",
-        "granularity": "atomic",
         "location": "tools/test_shared_sessions.py",
         "name": "test_shared_sessions.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64335,11 +64300,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:78b994c3da2476c2560bcd53dd776eb2232a1c4856a8427c63e9a08235cc628d",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/stale_seat.rs",
         "name": "stale_seat.rs + test_stale_seat.py",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64361,11 +64324,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:288dce9896555156f11fda2a204efb826780699e0e9e97d61474911f62d8a639",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/ask.rs",
         "name": "tools/ask.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64439,11 +64400,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:059eb65c3bb6904b292fef5655a51942079caac0aa0a8c86b0013d4d049cc79f",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64452,11 +64411,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:25ab6353c7864b55aa042ac631ecc7ab16daef10aa8024927ecb840158aacbd5",
-        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/operate_tools.rs",
         "name": "tools/operate_tools.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64491,11 +64448,9 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:1dab58f5049860d865ed9351a40393fd093212bb6ae82952e1f136d56cadc21f",
-        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/unreachable_decision.rs",
         "name": "unreachable_decision.rs",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64517,11 +64472,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:ef7dbb708e027df2",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.11.0.md",
         "name": "upgrading-to-v0.11.0.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64530,11 +64483,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.12.0.md",
         "name": "upgrading-to-v0.12.0.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64543,11 +64494,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.13.0.md",
         "name": "upgrading-to-v0.13.0.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64556,11 +64505,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:b1e1cee221b0bc6ed7f9e4411cda9dcd50a2dc2647785e06eaa7b1ce7329da28",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.15.0.md",
         "name": "upgrading-to-v0.15.0.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64569,11 +64516,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:00eea80c2a79cc4eed4d1db9402a4e90e23231745a8fdd4117f44a9f22f58f24",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.16.0.md",
         "name": "upgrading-to-v0.16.0.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64582,11 +64527,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:d1c21f5330ad0ea05f4efe46c08a010d5fb22ece05523922bb6324c7ec8a2eda",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.18.0.md",
         "name": "upgrading-to-v0.18.0.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64595,11 +64538,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:3a36b9b6b248af09",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.19.0.md",
         "name": "upgrading-to-v0.19.0.md",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -64608,11 +64549,9 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:d16abc28ea59e3f9",
-        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.21.0.md",
         "name": "Upgrading to v0.21.0 — the stamp moves, and your evidence can say what it covers",
-        "status": "realized",
-        "volatility": "stable"
+        "status": "realized"
       }
     },
     {
@@ -66548,6 +66487,16 @@
       }
     },
     {
+      "node_id": "cap:the-design-record-merges-per-node-in-every-clone",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Option B, and it needs BOTH halves because git splits them deliberately.\n\n  · `ensure_gitattributes` writes the repo-side rule naming `docs/design/<project>.json merge=reflow2`. This TRAVELS, so every collaborator's clone agrees on which file needs the driver.\n  · `ensure_merge_driver` sets `merge.reflow2.name` and `.driver` with `git config --local`. This CANNOT travel: git refuses to let a repository configure an executable, which is why the rule alone was never enough.\n\n🛑 THE GAP IT CLOSES WAS SILENT AND OLD. reflow2's own `.gitattributes` has carried `merge=reflow2` for months, and nothing ever set the driver — so a fresh clone fell back to git's LINE merge on a multi-megabyte JSON graph, where two people who edited entirely different parts of the design still collide. `.gitattributes`' own comment calls that *\"safe — it just means you resolve the JSON by hand\"*, which is true and is not a thing anyone will do.\n\n📌 IT LEAVES ALONE A DRIVER SOMEBODY ELSE SET, and reports that it did — the same rule `write_mcp_config` and `ensure_hooks` follow, because a merge driver is exactly the kind of thing a person customises and an installer that silently repoints one is not trusted near a config again. Silent when the repo does not ask for the driver, and silent outside a git checkout: configuring one there would answer a question nobody asked.",
+        "name": "The installer registers reflow2's merge driver, so a collaborator's clone merges the design per node rather than by lines",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "cap:the-record-moved-is-surfaced",
       "node_type": "Capability",
       "properties": {
@@ -66555,6 +66504,16 @@
         "name": "A seat reports which shared records have moved ahead of it, and names what arrived",
         "provenance": "authored",
         "status": "verified"
+      }
+    },
+    {
+      "node_id": "cap:the-record-moved-reaches-an-ordinary-read",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Option D. `read_loop_hint` now computes the sync debt alongside `loop_status` and attaches the record-moved finding to the `loop_hint` that already rides on orientation reads.\n\n⭐ THE FINDING ALREADY EXISTED AND WAS UNREACHABLE. `loop_status` computed `record_moved` correctly and had done since `dec:idea-the-graph-notices-the-record-moved-without-being-asked`; the read hint built itself from the CORE `LoopStatus`, which has no sync knowledge at all. So the pull half of \"he pushes, I pull\" — the only one of four steps that is loud — was loud only inside a call nobody makes on the way past. Same shape as everything else in this increment: the information existed where the person was not.\n\n📌 EITHER DEBT ALONE FIRES. A design whose loop is otherwise CLEAN can still have a record that moved under it, and gating on `clean` would have made that the one case nothing says.\n\n🛑 IT SAYS, IT DOES NOT ACT. The hint names `import_graph` and stops there; import is an upsert and an unasked one would silently overwrite live session work (`dec:ask-not-repair`). That is why option C — import-on-first-use — was NOT taken alongside this one.\n\nThe existing fire-on-change cache carries it: computed once per write generation, so a standing state appears at the first read of a session and then stays quiet, which is the cost bound the read hint already rests on.",
+        "name": "A session is told the shared record moved on any read, not only when it calls loop_status",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -69755,6 +69714,14 @@
       }
     },
     {
+      "node_id": "chg:the-git-exchange-path-is-defended",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Options B and D built — the installer registers the merge driver in every clone, and a moved record reaches an ordinary read instead of waiting to be asked"
+      }
+    },
+    {
       "node_id": "chg:the-installer-says-the-graph-is-tracked-20260808",
       "node_type": "ChangeEvent",
       "properties": {
@@ -71779,6 +71746,16 @@
         "name": "OPEN — every reflow2 project uses a git repo, so should reflow2 PROMPT each one to shape its own workflow governance rather than wait for someone to state them?",
         "rationale": "Git is the substrate every reflow2 project stands on, which makes the governance questions predictable even though the answers differ per project. The capture half shipped and is reactive; nothing asks first. reflow2's own experience is the evidence that reactive is insufficient — its branch-then-PR rule existed nowhere in its design for weeks while being followed daily, because a rule everybody follows is the one nobody thinks to state.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-feedback-arrives-by-git-push-and-pull",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-13, after taking a pile of Alex's feedback over the phone.\n\nHIS WORDS: *\"I told him to just git clone the repo and then run via his agent/session to add the feedback directly into the graph. Then he should git push. My idea would be that next time I git pull, I should have all his feedback in the graph?\"*\n\n⭐ **THE ANSWER IS YES, AND IT IS WHAT THE DESIGN IS BUILT FOR** — `dec:multi-writer-architecture` (no server, the file is the transport), the three-way merge, and the `parallel-work` skill all exist for exactly this. It is not a new mechanism; it is the intended one.\n\n📌 SEPARATE FROM `dec:central-host`, which asks whether reflow2 gains a hosted MCP surface ALONGSIDE the repo file. That question is about REPLACING or supplementing the transport; this one is about whether the transport we already have is DEFENDED. A hosted surface would make all four steps below moot, which is an argument for that node rather than an answer to this one.\n\n🛑 **FOUR STEPS HAVE TO HAPPEN, AND THREE ARE SILENT IF MISSED.** Checked against the repo rather than assumed:\n\n  1. **ALEX MUST IMPORT FIRST, BEFORE HE WRITES ANYTHING.** A fresh clone has no `.reflow2/`, so his first reflow2 use MINTS A NEW DESIGN with a new `graph_id` — and his export would then be a different design that merely looks similar. Measured on the v0.30.0 cut: importing into an EMPTY store prints *\"this store was empty, so it takes the imported design's name (reflow2)\"*, so importing first preserves identity and writing first does not. **Silent either way.**\n\n  2. **ALEX MUST EXPORT TO `docs/design/<project>.json` BEFORE PUSHING.** `.reflow2/` is gitignored, so his graph writes are invisible to git; pushing without exporting sends NOTHING and the push succeeds. ⇒ **THIS IS THE EXACT DEFECT HE HIT TODAY** (`fact:second-user-first-run-report-2026-08-13`): he could not find the committable record because a fresh install never made one. **His feedback plan depends on the thing that was broken, and would have failed silently before this morning's fix.**\n\n  3. **HIS CLONE WILL NOT HAVE THE MERGE DRIVER.** `.gitattributes` declares `docs/design/reflow2.json merge=reflow2`, but its own comment says the driver *\"needs [to be] defined once per clone (git deliberately does not let a repository configure an executable)\"*. MEASURED: it IS configured in this clone, and **`tools/reflow2_init.py` does not install it** — grep for `merge.reflow2` / `gitattributes` in the installer returns nothing. So Alex gets git's LINE-BASED text merge on a 5 MB JSON graph document. The `.gitattributes` comment calls that *\"safe — it just means you resolve the JSON by hand\"*, which is true and is not a thing anyone will do.\n\n  4. **ANTHONY MUST IMPORT AFTER PULLING.** `git pull` updates the FILE; the live graph is a separate store. `sync_status` reports `behind` and names the missing ids — and it **deliberately never auto-imports**, because *\"import is an upsert and an unasked one would silently overwrite live work\"* (`dec:ask-not-repair`). So the last step is a conscious act by design, and it is at least LOUD.\n\n⇒ **THE PLAN IS RIGHT AND THE PATH IS UNDEFENDED.** Three of the four steps produce a successful-looking outcome when skipped: mint-instead-of-import, push-without-export, and a text merge on a graph.\n\n═══ THE OPTIONS, none taken ═══\n\nA — **NOTHING. Tell people the four steps.** The `parallel-work` skill already prescribes most of it. CHEAPEST; and this session is the evidence against it, because the skill exists and Alex still hit step 2 head-on. `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue` says a catalogue cannot deliver a discipline that applies mid-flow.\n\nB — **THE INSTALLER CONFIGURES THE MERGE DRIVER.** `reflow2_init.py` already writes `.mcp.json`, hooks and `.gitignore`; two `git config` calls close step 3 entirely. **The narrow, obviously-good one.** Costs: it must point at a binary path that exists on THAT machine — the same absolute-path problem `.mcp.json` already has and already solves.\n\nC — **IMPORT-ON-FIRST-USE.** If a store is empty and a committed export sits beside it, adopt rather than mint. Closes step 1, and it is the behaviour the import path ALREADY has once somebody thinks to call it. ⚠️ Adopting a design because a file happened to be present is the silent inference `describe_designs` refuses; it would have to say loudly what it did.\n\nD — **A PULL-SIDE NUDGE.** `sync_status` already computes `behind` with the ids; the loop hint could say it on the first call of a session rather than waiting to be asked. Closes step 4's discoverability without touching its deliberate manual-ness.\n\nE — **A `sync` SKILL** covering all four steps as one named workflow, the way `link-projects` now covers linking. Cheap, and the same shape that just worked for a process nobody could reconstruct.\n\n⚠️ **THE COUNTER-ARGUMENT WORTH KEEPING, AND IT ARGUES AGAINST C SPECIFICALLY:** every step here is silent-when-skipped, and the instinct is to automate all of them. But step 4 is deliberately manual on `dec:ask-not-repair`'s reasoning — an unasked upsert can overwrite live work — and step 1 has the same shape from the other side. **Automating an act because forgetting it is expensive is exactly how a tool starts making design decisions on somebody's behalf.** B and D add no inference and are safe; C infers.\n\n📌 A PRACTICAL NOTE THAT IS NOT PART OF THE DESIGN QUESTION: Alex pushing to `main` directly would collide with `dec:export-once-per-pr` and the branch-then-PR practice. Either he opens a PR, or his feedback lands on a branch Anthony merges — worth telling him before he tries, since a rejected push is a discouraging first experience of contributing.",
+        "name": "OPEN — a collaborator clones, writes feedback into the graph, pushes; the other pulls and has it. Four steps make that work and three of them fail silently — how much should be automatic?",
+        "rationale": "Recorded under the brainstorm skill: Anthony asked whether a plan would work rather than deciding anything, and the plan turns out to be the design's intended path with three undefended steps in it.\n\nWorth keeping for the measurements rather than the idea, which is not new: the merge driver is declared in .gitattributes but NOT installed by reflow2_init.py (grep confirms), so a fresh clone silently falls back to git's line merge on a 5 MB JSON graph; and a fresh store mints a new graph_id unless the export is imported first, measured on the v0.30.0 cut when an empty store reported taking the imported design's name.\n\nThe connection worth not losing: step 2 of Anthony's plan is precisely the defect Alex reported this morning. His feedback route depends on the committable record existing, and before today's fix it did not — so the plan would have produced a successful push carrying nothing.\n\nKept separate from dec:central-host because that asks whether to add a hosted surface alongside the repo file, which would make these four steps moot; this asks whether the transport already in use is defended.\n\nOptions B and D are recorded as the safe ones and C as the risky one on purpose. Automating a step because forgetting it is expensive is how a tool starts inferring intent, and step 4's manual-ness is a decision (dec:ask-not-repair), not an oversight.",
+        "status": "accepted"
       }
     },
     {
@@ -80920,6 +80897,18 @@
       }
     },
     {
+      "node_id": "req:the-git-exchange-path-is-defended-not-only-documented",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A collaborator's design work survives clone → write → push → pull without three silent failures on the way",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "ANTHONY, 2026-08-13, settling options B and D of `dec:idea-feedback-arrives-by-git-push-and-pull` after asking whether his brother could clone the repo, write feedback straight into the graph, push, and have it arrive on his next pull.\n\nTHE ANSWER WAS YES — that path is `dec:multi-writer-architecture`'s intended one, no server, the file is the transport — BUT FOUR STEPS HAVE TO HAPPEN AND THREE FAIL SILENTLY: import before writing (or the fresh store MINTS a new `graph_id`), export before pushing (or `.reflow2/` being ignored means the push carries nothing), a per-clone merge driver (or git line-merges a multi-megabyte JSON graph), and import after pulling.\n\n⇒ **B AND D WERE TAKEN. C WAS NOT, AND THE REASON IS THE REQUIREMENT'S OWN BOUNDARY:** every step here is silent-when-skipped and the instinct is to automate all of them, but step 4 is deliberately manual on `dec:ask-not-repair` — an unasked upsert can overwrite live session work. **Automating an act because forgetting it is expensive is how a tool starts making design decisions on somebody's behalf.** So what is owed is that each step SAYS what it needs, never that it acts unasked.\n\nWHAT THIS REQUIRES, stated so it can be checked:\n\n  B · A project's design record merges per NODE, not by lines. Both halves: the repo-side rule (`.gitattributes`, which travels) and the per-clone driver (`git config`, which cannot — git deliberately refuses to let a repository configure an executable). MEASURED 2026-08-13: `.gitattributes` in reflow2's own repo has carried `merge=reflow2` for months and **`reflow2_init.py` never set the driver**, so any fresh clone fell back to a line merge on a 5 MB graph document, silently.\n\n  D · The shared record having moved reaches a session on an ORDINARY READ, not only when somebody calls `loop_status`. MEASURED: `loop_status` already computed `record_moved` correctly; `read_loop_hint` built its hint from the core `LoopStatus`, which has no sync knowledge, so the one LOUD step of the four was loud only inside a call nobody makes on the way past.\n\n📌 NEITHER MAY ACT. The hint says the record moved and names `import_graph`; taking it in stays the reader's decision. The installer registers a driver and **leaves alone one somebody else set**, the same rule `write_mcp_config` and `ensure_hooks` already follow.\n\n⚠️ WHAT IS STILL OPEN, AND DELIBERATELY: step 1 (import-on-first-use, option C) and step 2's discoverability beyond what `req:a-consumer-project-ends-up-with-a-committable-record` already fixed. Step 2 is the one Alex actually hit, and it is worth recording that HIS FEEDBACK ROUTE DEPENDED ON A FEATURE THAT DID NOT EXIST UNTIL THE SAME DAY — before that fix his push would have succeeded and carried nothing.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:the-ledger-can-say-the-record-was-wrong",
       "node_type": "Requirement",
       "properties": {
@@ -82418,6 +82407,18 @@
         "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.\\n\\nANTHONY'S CLARIFICATION, 2026-07-30, and it corrects the framing this node was first written with: what he wants committed is NOT the realized product or a future codebase. It is a SLICE OF THE REFLOW2 GRAPH ITSELF — \\\"this is the planned capabilities of epoch_1, epoch_2 … epoch_n\\\" — so that he can open the repo and see \\\"that is when I get capability X\\\", or \\\"capability Y is not expected until increment_13\\\". His words: \\\"it isn't the realized product/artifact of the project, but snapshot of the project at epoch or increment that I'm looking to capture in git.\\\" He is explicitly open to something other than git.\\n\\nTHE FIRST FRAMING HERE WAS WRONG AND IS CORRECTED. This node originally organised everything around \\\"git can only store the past, and a plan is not a past\\\". That is too glib. A plan document is a PRESENT artifact describing a future, and committing one is ordinary — git stores plans perfectly well. The real objection was never to committing plans; it was only ever to using BRANCHES as the record, and that narrower objection stands.\\n\\n(a) BRANCH PER EPOCH — `epoch_1`, `epoch_2`, each holding a projected design. Matches the mental model directly: check out `epoch_n`, look.\\n    Costs: checking out a branch normally makes the whole REPO reflect that state, and here there is no future code to reflect, so the branch buys nothing the file would not. A full export is 1.6 MB today, so N epochs is N × 1.6 MB of near-identical JSON, rewritten on every replan. Branches also invite merge semantics that do not apply — nobody merges epoch_2 into main. And the plan's MOVEMENT stays invisible: a branch pointer moves silently, which is exactly what `req:plans-move-honestly` needs to see.\\n\\n(b) A FILE PER EPOCH ON MAIN — `docs/design/epochs/epoch_3.{md,json}`. Browsing is easier than a checkout, there is one history rather than N, and every replan is an ordinary commit to that file.\\n    THE PROPERTY THIS BUYS FOR FREE: `git log -p docs/design/epochs/epoch_3.md` IS the plan's revision history. A large part of `req:plans-move-honestly` — \\\"when a planned epoch's content moves, the plan's own change is a dated event on the record\\\" — would be satisfied by git doing what git is good at, rather than by new machinery in reflow2.\\n\\n(c) RENDER IT, DO NOT AUTHOR IT — and this is what (b) should probably be generated BY. An epoch slice is a VIEWPOINT. `tools/render_views.py` already renders viewpoints as pure projections of the graph, already confesses anything a view needs that the graph cannot supply, and ALREADY RENDERS THE EPOCH CHAIN BACKWARD (\\\"Axis Z as a viewpoint: the epoch chain, and what happened at each\\\"). The forward direction is the same renderer reading scheduled edges instead of recorded ones. Under this option the graph holds the schedule as single source of truth, the renderer emits one small file per epoch, and git holds their history.\\n    Cost: a generated file can go stale against the graph — which is a drift check reflow2 already knows how to do, and the same one `dataflow.html` staleness already gets in another repo.\\n\\nWHAT A SLICE ACTUALLY CONTAINS, since \\\"slice\\\" is the word he used and it is much smaller than an export: the epoch and its date, capabilities expected by then, requirements expected satisfied, KPPs required by then, the version combination pinned once it arrives, and the delta against the previous epoch. Kilobytes, not megabytes.\\n\\nTHE OPEN QUESTION IS NARROWER THAN IT WAS: not \\\"git or not git\\\", but WHICH JOB GIT DOES. Git looks right for the HISTORY of the plan document and for pinning arrived epochs; the graph looks right for the schedule itself. The failure mode to avoid is making git the source of truth for the schedule, because then two places disagree about when capability X arrives and neither is wrong.\",\"name\":\"OPEN — how per-epoch slices of the design become browsable: branches, files, or a rendered viewpoint\",\"rationale\":\"Anthony's idea, his clarification, and his invitation to suggest something better; recorded so the reasoning survives whichever way it goes.\\n\\nKept rather than tidied away: the original framing of this node (\\\"git can only store the past\\\") was mine and was misleading, and the correction is recorded rather than silently overwritten because the prior text is what a reader would otherwise have found and believed. The snapshot at `epoch:wire-planning-cluster` holds the earlier wording.\\n\\nNot argued down: option (a) is his own original mechanism and is recorded with the mental model it serves stated first. Its costs are listed beside it, not in place of it.\",\"status\":\"proposed\"}",
         "target_id": "dec:where-plans-live",
         "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "fact:a-fresh-server-on-an-old-build-is-not-stale-and-stamps-confidently",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "MEASURED ON THE v0.30.0 CUT, 2026-08-13, and it produced a WRONG COMMITTED RECORD that every other check passed.\n\nTHREE BINARY VERSIONS WERE IN PLAY ON ONE MACHINE:\n\n    live MCP server    0.29.0 image   (the session's own tools)\n    target/release/    0.28.0, Aug 11 (**what `tools/reflow2_cli.py`'s DEFAULT_BIN resolves to**)\n    target/debug/      0.30.0         (built minutes earlier, the only correct one)\n\nThe release procedure's replay exists precisely to avoid the live server's old stamp: import into a temp store, export from it with the NEW binary. I ran that replay and passed `C.DEFAULT_BIN`. **The committed export came back stamped `0.28.0` — with PERFECTLY CORRECT LINEAGE**, `prev_content_hash` equal to main's `content_hash`, 2144 nodes, 8447 edges, `graph_id: reflow2`. Every property anyone checks was right except the one that says which reflow2 wrote it. Caught only by reading `stamp.reflow2_version` out of the written file before committing.\n\n⭐⭐ AND THE EXISTING STALENESS CAPABILITY CANNOT SEE THIS, WHICH IS THE FINDING. `cap:the-server-knows-its-own-currency` reports whether **the server's own executable has been REPLACED SINCE IT STARTED** — `ver:the-server-says-when-it-is-stale` demonstrates it by relinking a binary under a running daemon and watching the same server flip to `stale: true`. A server freshly spawned from a THREE-VERSION-OLD build has had nothing replaced under it, so it reads a definite **`stale: false`** and is telling the truth.\n\n⇒ **\"MY EXECUTABLE CHANGED UNDER ME\" AND \"I AM AN OLD BUILD\" ARE DIFFERENT FACTS, AND ONLY THE FIRST IS DETECTED.** The second is the one that mis-stamps a release record, and it is undetectable from inside the server: the binary is internally consistent and confident. It is visible only by comparing the stamp against the version the SOURCE claims.\n\n📌 THE NARROW FIX IS FREE AND IS NOW IN [[reflow2-release-cut-procedure]]: name the freshly built binary explicitly in the replay, never `DEFAULT_BIN`, and READ `stamp.reflow2_version` OUT OF THE WRITTEN FILE BEFORE COMMITTING — every cut, every time.\n\n📌 THE WIDER ONE IS NOT TAKEN AND IS NOT OBVIOUS: whether `reflow2_cli.py` should refuse, or at least say, when the binary it is about to drive reports a version older than the workspace's `Cargo.toml`. That is a comparison the CLI can make and currently does not, and it is the same shape as every other finding in this increment — the information existed and did not reach the person.\n\n⚠️ STILL TRUE AT SESSION END: `target/release/reflow2-mcp` on this machine remains **0.28.0**. CI builds its own release artifacts, so the PUBLISHED v0.30.0 binaries are unaffected; anything local defaulting to that path is driving a three-version-old server.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-13"
       }
     },
     {
@@ -85681,6 +85682,18 @@
       }
     },
     {
+      "node_id": "ver:the-git-exchange-path-is-defended",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-13",
+        "level": "integration",
+        "method": "test",
+        "name": "A moved record reaches an ORDINARY read and names import_graph, an untouched one stays silent, and the installer writes both halves of the merge rule while leaving a driver somebody else set alone (crates/reflow2-mcp/tests/the_record_moved_and_the_session_is_told.rs + tools/test_init.py, both CI gates)",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-record-moved-is-surfaced",
       "node_type": "Verification",
       "properties": {
@@ -85798,7 +85811,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b1d19638a8ea86f0ec95751b5b016e061a5e48593c34ebbb5c3634a0906f4197",
+  "prev_content_hash": "sha256:9b6baabace9012114acc6b9c19ca3a4daec0571ac487f0be14cb710e41d73152",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

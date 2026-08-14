@@ -844,6 +844,76 @@ class SecondUserFirstRun(unittest.TestCase):
         self.assertTrue(any("echo mine" in c for c in commands), "theirs must survive")
         self.assertTrue(any("loop_nudge" in c for c in commands), "ours must be added")
 
+    # --- the merge driver, option B of the git-exchange decision -----------
+
+    def test_the_repo_side_rule_names_the_design_record(self):
+        # .gitattributes travels with the project, so every collaborator's clone
+        # agrees on WHICH file needs the driver.
+        p = self.project()
+        note = init.ensure_gitattributes(p)
+
+        self.assertIsNotNone(note)
+        attrs = (p / ".gitattributes").read_text()
+        self.assertIn("docs/design/", attrs)
+        self.assertIn("merge=reflow2", attrs)
+
+    def test_it_appends_rather_than_replacing_a_projects_own_rules(self):
+        p = self.project()
+        (p / ".gitattributes").write_text("*.png binary\n")
+        init.ensure_gitattributes(p)
+        attrs = (p / ".gitattributes").read_text()
+
+        self.assertIn("*.png binary", attrs, "their rules are theirs")
+        self.assertIn("merge=reflow2", attrs)
+
+    def test_saying_it_twice_is_not_saying_it_again(self):
+        p = self.project()
+        init.ensure_gitattributes(p)
+        first = (p / ".gitattributes").read_text()
+
+        self.assertIsNone(init.ensure_gitattributes(p), "second run has nothing to add")
+        self.assertEqual(first, (p / ".gitattributes").read_text())
+
+    def test_the_driver_is_configured_per_clone_because_git_will_not_carry_it(self):
+        p = self.project()
+        subprocess.run(["git", "init", "-q", "."], cwd=p, capture_output=True, check=True)
+        init.ensure_gitattributes(p)
+
+        note = init.ensure_merge_driver(p, pathlib.Path("/some/where/reflow2-mcp"))
+        got = subprocess.run(
+            ["git", "-C", str(p), "config", "--local", "--get", "merge.reflow2.driver"],
+            capture_output=True, text=True,
+        ).stdout.strip()
+
+        self.assertIsNotNone(note)
+        self.assertIn("--merge-driver", got, f"the driver must actually be set: {got!r}")
+        self.assertIn("/some/where/reflow2-mcp", got)
+
+    def test_a_driver_somebody_else_set_is_left_alone_and_reported(self):
+        # Same rule as the MCP config and the loop-nudge hook: a thing people
+        # customise is not something an installer silently repoints.
+        p = self.project()
+        subprocess.run(["git", "init", "-q", "."], cwd=p, capture_output=True, check=True)
+        init.ensure_gitattributes(p)
+        subprocess.run(
+            ["git", "-C", str(p), "config", "--local", "merge.reflow2.driver", "mine %O %A %B"],
+            capture_output=True, check=True,
+        )
+
+        note = init.ensure_merge_driver(p, pathlib.Path("/some/where/reflow2-mcp"))
+        got = subprocess.run(
+            ["git", "-C", str(p), "config", "--local", "--get", "merge.reflow2.driver"],
+            capture_output=True, text=True,
+        ).stdout.strip()
+
+        self.assertEqual(got, "mine %O %A %B", "theirs must survive")
+        self.assertIn("LEFT ALONE", note or "")
+
+    def test_no_git_checkout_means_nothing_to_configure_and_nothing_to_say(self):
+        p = self.project()
+        init.ensure_gitattributes(p)
+        self.assertIsNone(init.ensure_merge_driver(p, pathlib.Path("/some/where/reflow2-mcp")))
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
