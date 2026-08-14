@@ -2720,7 +2720,40 @@ impl ReflowService {
         }
         let status = g.loop_status().map_err(dyno_err)?;
         cache.computed_gen = Some(generation);
-        let hint = (!status.clean).then(|| read_debt_summary(&status));
+
+        // THE SHARED RECORD MOVING IS ALSO A DEBT, and until now it rode only
+        // on `loop_status` — so a session learned that a colleague's work had
+        // arrived only if it thought to ask (`dec:idea-feedback-arrives-by-git-push-and-pull`,
+        // option D, on Anthony's word 2026-08-13). The pull half of "he pushes,
+        // I pull" was the one step of four that is loud, and it was loud only
+        // in a call nobody makes on the way past.
+        //
+        // NOT AN AUTO-IMPORT, and that distinction is the whole option: the
+        // hint SAYS the record moved and names the remedy; taking it in stays a
+        // conscious act, because import is an upsert and an unasked one would
+        // silently overwrite live work (`dec:ask-not-repair`).
+        //
+        // Gated exactly as `loop_status`'s own copy is — silent whenever the
+        // file has not moved, which is the whole of ordinary solo work.
+        let record_moved = self.graph_path.as_deref().and_then(|graph_path| {
+            let debts = crate::sync_debt::sync_debt(graph_path, &|| g.export_graph().ok());
+            let behind: Vec<_> = debts
+                .iter()
+                .filter(|d| d.is_actionable())
+                .map(|d| d.message())
+                .collect();
+            (!behind.is_empty()).then(|| behind.join(" "))
+        });
+
+        // Either debt alone is worth surfacing: a design whose loop is
+        // otherwise CLEAN can still have a record that moved under it, and
+        // gating on `clean` alone would make that the one case nothing says.
+        let hint = match (!status.clean, record_moved) {
+            (true, Some(moved)) => Some(format!("{} — {moved}", read_debt_summary(&status))),
+            (true, None) => Some(read_debt_summary(&status)),
+            (false, Some(moved)) => Some(moved),
+            (false, None) => None,
+        };
         if hint == cache.surfaced {
             Ok(None)
         } else {

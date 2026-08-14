@@ -799,6 +799,112 @@ def ensure_hooks(project: Path, force: bool) -> list[str]:
     return notes
 
 
+def ensure_gitattributes(project: Path) -> str | None:
+    """Ask git to merge the design record with reflow2's driver, not by lines.
+
+    The repo-side half of the pair: `.gitattributes` names the file and the
+    driver, and travels with the project so every collaborator's clone agrees
+    on WHICH files need it. `ensure_merge_driver` supplies the other half, which
+    cannot travel.
+
+    Without this a consumer project gets git's line merge on its design export —
+    and two people who edited entirely DIFFERENT parts of the design still
+    collide, because a graph serialised as one JSON document has no line-level
+    independence. reflow2's own repo has carried this rule for months; a project
+    installed by this script never got it.
+    """
+    rel = design_record_path(project).relative_to(project).as_posix()
+    line = f"{rel} merge=reflow2"
+    attrs = project / ".gitattributes"
+    existing = attrs.read_text() if attrs.exists() else ""
+    if "merge=reflow2" in existing:
+        return None
+    block = (
+        "\n" if existing and not existing.endswith("\n") else ""
+    ) + (
+        "\n# The design export is one large JSON document, so two people who edited\n"
+        "# DIFFERENT parts of the design still collide here — and git resolves it by\n"
+        "# lines, which is the wrong unit for a graph. reflow2's three-way merge\n"
+        "# compares per node and per property against the common ancestor, so disjoint\n"
+        "# work merges itself and only a real both-sides conflict stops for a human.\n"
+        "#\n"
+        "# The driver itself is per-clone (git will not let a repo configure an\n"
+        "# executable); reflow2_init.py sets it. Without it git falls back to its\n"
+        "# normal text merge, which is safe — you just resolve the JSON by hand.\n"
+        f"{line}\n"
+    )
+    attrs.write_text(existing + block)
+    verb = "created" if not existing else "added to"
+    return (
+        f".gitattributes  ({verb} — {rel} merges per NODE, not by lines; "
+        f"git's line merge is the wrong unit for a graph)"
+    )
+
+
+def ensure_merge_driver(project: Path, binary: Path) -> str | None:
+    """Register reflow2's three-way merge driver in THIS clone.
+
+    `.gitattributes` already says `docs/design/<...>.json merge=reflow2`, and
+    that half travels with the repo. **The driver itself cannot**: git
+    deliberately refuses to let a repository configure an executable, so it must
+    be set per clone — and until now nothing set it. A collaborator who cloned
+    and pulled got git's LINE-BASED text merge on a multi-megabyte JSON graph,
+    where two people who edited entirely different parts of the design still
+    collide. `.gitattributes`' own comment calls that "safe — it just means you
+    resolve the JSON by hand", which is true and is not a thing anyone will do.
+
+    ANTHONY, 2026-08-13, option B of
+    `dec:idea-feedback-arrives-by-git-push-and-pull`: he asked whether his
+    brother could clone, write feedback into the graph, push, and have it arrive
+    on the next pull. That is the design's intended path — and this was one of
+    three steps in it that fail silently.
+
+    WRITTEN WITH `--local`, so it lands in this clone's own config and never
+    touches the user's global git. NEVER OVERWRITES a driver somebody already
+    set: a merge driver is exactly the kind of thing a person customises, and an
+    installer that silently repoints one is the same failure `write_mcp_config`
+    and `ensure_hooks` already refuse.
+    """
+    if not (project / ".git").exists():
+        return None  # not a git checkout; nothing to configure and nothing to say
+    attrs = project / ".gitattributes"
+    if not attrs.exists() or "merge=reflow2" not in attrs.read_text():
+        # The repo does not ask for the driver, so configuring one would be
+        # answering a question nobody asked.
+        return None
+
+    def git_config(*args: str) -> subprocess.CompletedProcess:
+        return subprocess.run(
+            ["git", "-C", str(project), "config", "--local", *args],
+            capture_output=True, text=True,
+        )
+
+    existing = git_config("--get", "merge.reflow2.driver")
+    driver = f'"{binary}" --merge-driver %O %A %B'
+    if existing.returncode == 0 and existing.stdout.strip():
+        if existing.stdout.strip() == driver:
+            return None  # already ours and already current
+        return (
+            "merge.reflow2.driver  LEFT ALONE — yours runs "
+            f"{existing.stdout.strip()} (a merge driver is something people "
+            "customise; change it yourself if that is stale)"
+        )
+    name = git_config("merge.reflow2.name", "reflow2 design export merge")
+    drv = git_config("merge.reflow2.driver", driver)
+    if name.returncode != 0 or drv.returncode != 0:
+        err = (drv.stderr or name.stderr or "").strip().splitlines()
+        return (
+            "merge.reflow2.driver  NOT set — "
+            f"{err[0] if err else 'git config failed'}. Without it git text-merges "
+            "the design export by LINES, which is the wrong unit for a graph."
+        )
+    return (
+        "merge.reflow2.driver  (registered — the design export now merges per "
+        "NODE against the common ancestor, so disjoint work merges itself; git "
+        "cannot carry this in the repo, so each clone sets it once)"
+    )
+
+
 def design_record_path(project: Path) -> Path:
     """Where the SHAREABLE design record goes — the export teammates read.
 
@@ -1208,6 +1314,13 @@ def install(project: Path, binary: Path, force_mcp: bool) -> list[str]:
     done.extend(ensure_gitignore(project))
     if record := ensure_design_record(project, binary):
         done.append(record)
+    # Order matters: the repo-side rule must exist before the per-clone driver
+    # looks for it, or a fresh project configures nothing on its first install
+    # and only picks the driver up on a later run.
+    if attrs := ensure_gitattributes(project):
+        done.append(attrs)
+    if driver := ensure_merge_driver(project, binary):
+        done.append(driver)
     stamp = project / STAMP
     stamp_data = kit_version()
     stamp_data["installed_files"] = dict(sorted(new_manifest.items()))

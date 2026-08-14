@@ -449,3 +449,83 @@ fn the_sync_record_is_readable_without_opening_the_graph() {
     let _ = &state;
     assert_eq!(state.last_synced.len(), 1);
 }
+
+// ---------------------------------------------------------------------------
+// The finding rides on the LOOP HINT, not only on loop_status
+//
+// `dec:idea-feedback-arrives-by-git-push-and-pull` option D, Anthony's word
+// 2026-08-13. He asked whether his brother could clone, write feedback into the
+// graph, push, and have it arrive on the next pull. That is the design's
+// intended path — and of its four steps, the pull-side import is the only LOUD
+// one. It was loud only inside `loop_status`, a call nobody makes on the way
+// past, so a session learned a colleague's work had landed only if it thought
+// to ask.
+//
+// Still NOT an auto-import. The hint SAYS and names the remedy; taking it in
+// stays a conscious act (`dec:ask-not-repair`).
+// ---------------------------------------------------------------------------
+
+use reflow2_mcp::service::ReflowService;
+
+/// A service over a real store, plus that store's path. `in_memory` will not do:
+/// the finding is gated on a `graph_path`, which an in-memory service has not
+/// got — and a test that passed without one would be asserting nothing.
+fn service_on_disk(tag: &str) -> (Scratch, ReflowService, String) {
+    let (scratch, graph_path) = scratch(tag);
+    let svc = ReflowService::new(&graph_path).expect("service over a real store");
+    (scratch, svc, graph_path)
+}
+
+/// Drive an ordinary orientation READ and hand back whatever hint a client
+/// would have seen. Deliberately through a real tool rather than the internal:
+/// what matters is that the finding reaches somebody who never asked for it.
+async fn hint_from_a_read(svc: &ReflowService) -> Option<String> {
+    let result = svc.graph_report().await.expect("tool ok");
+    let out = result
+        .structured_content
+        .as_ref()
+        .and_then(serde_json::Value::as_object)
+        .expect("structured content present");
+    out.get("loop_hint")
+        .and_then(serde_json::Value::as_str)
+        .map(str::to_string)
+}
+
+#[tokio::test]
+async fn a_moved_record_reaches_an_ordinary_read_without_anyone_calling_loop_status() {
+    let (scratch, svc, graph_path) = service_on_disk("hint-behind");
+    let record = scratch.path().join("record.json");
+
+    // This seat has seen the record, and the record then gained work.
+    let seen = design(&["req:mine"]);
+    put(&record, &seen);
+    mark_synced(&graph_path, &record, &seen);
+    put(&record, &design(&["req:mine", "req:theirs"]));
+
+    let hint = hint_from_a_read(&svc)
+        .await
+        .expect("a record holding work this graph lacks must reach an ordinary read");
+
+    assert!(
+        hint.contains("import_graph"),
+        "the hint must name the remedy, not merely report a state: {hint}"
+    );
+}
+
+#[tokio::test]
+async fn an_untouched_record_says_nothing_which_is_the_whole_gate() {
+    // The gate IS the design: silent whenever the file has not moved, which is
+    // the entirety of ordinary solo work. A hint that fired every read would be
+    // read by nobody.
+    let (scratch, svc, graph_path) = service_on_disk("hint-in-step");
+    let record = scratch.path().join("record.json");
+    let seen = design(&["req:mine"]);
+    put(&record, &seen);
+    mark_synced(&graph_path, &record, &seen);
+
+    let hint = hint_from_a_read(&svc).await;
+    assert!(
+        hint.as_deref().is_none_or(|h| !h.contains("import_graph")),
+        "nothing moved, so nothing about the record may be said: {hint:?}"
+    );
+}

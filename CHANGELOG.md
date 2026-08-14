@@ -31,6 +31,43 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **A collaborator's design work now survives clone → write → push → pull**
+  (`req:the-git-exchange-path-is-defended-not-only-documented`; options **B and D** of
+  `dec:idea-feedback-arrives-by-git-push-and-pull`, accepted on Anthony's word).
+
+  He asked whether his brother could clone the repo, write feedback straight into the graph, push,
+  and have it arrive on the next pull. **The answer was yes — that is the intended path**
+  (`dec:multi-writer-architecture`: no server, the file is the transport). But four steps have to
+  happen and **three fail silently**: import before writing, export before pushing, a per-clone
+  merge driver, and import after pulling.
+
+  - **The installer registers the merge driver** (`cap:the-design-record-merges-per-node-in-every-clone`).
+    Git splits this deliberately: `.gitattributes` names the file and **travels**; the driver is
+    `git config` and **cannot**, because git refuses to let a repository configure an executable.
+    reflow2's own `.gitattributes` has carried `merge=reflow2` for months and **nothing ever set the
+    driver** — so any fresh clone fell back to git's *line* merge on a multi-megabyte JSON graph,
+    where two people who edited entirely different parts of the design still collide. Both halves
+    are written now, and a driver somebody else set is **left alone and reported**, the same rule
+    `write_mcp_config` and `ensure_hooks` already follow.
+
+  - **The record having moved reaches an ordinary read** (`cap:the-record-moved-reaches-an-ordinary-read`).
+    `loop_status` already computed `record_moved` correctly; `read_loop_hint` built its hint from the
+    core `LoopStatus`, which has no sync knowledge — so the one **loud** step of the four was loud
+    only inside a call nobody makes on the way past. Either debt alone now fires, because a design
+    whose loop is otherwise clean can still have a record that moved under it.
+
+  🛑 **Neither acts.** The hint names `import_graph` and stops; import is an upsert and an unasked
+  one would silently overwrite live session work (`dec:ask-not-repair`). **Option C —
+  import-on-first-use — was deliberately NOT taken**: every step here is silent-when-skipped and the
+  instinct is to automate all of them, but automating an act because forgetting it is expensive is
+  how a tool starts making design decisions on somebody's behalf.
+
+  📌 And worth recording: **step 2 is the defect Alex reported the same morning.** His feedback route
+  depended on the committable record existing, and before that fix his push would have succeeded and
+  carried nothing.
+
 ## [0.30.0] — 2026-08-13
 
 **Minor because of the new skill and the new gap source, not because of the fixes** — the rule is
