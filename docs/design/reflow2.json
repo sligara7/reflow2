@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:2202d8652eec41874143ed893a3900420b485a6bfb4c9070183c27f9f936ecc0",
+  "content_hash": "sha256:46af582a6c6d9c3c0775628009c3105bc01b73f3d7926c5ec505bf75cf4467e7",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3941,6 +3941,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:decomposition-coverage-is-asked",
+      "properties": {},
+      "to_id": "epoch:decomposition-coverage-is-asked"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:deep-review-tier1",
       "properties": {},
       "to_id": "epoch:v050-hardening"
@@ -5645,6 +5651,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:decomposition-coverage-is-asked:cap:decomposition-coverage-is-asked",
+      "properties": {},
+      "to_id": "epoch:decomposition-coverage-is-asked"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:describe-designs-built:cap:describe-design-at-path",
       "properties": {},
       "to_id": "epoch:describe-designs-built"
@@ -7081,6 +7093,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-does-every-served-skill-get-a-command",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-does-unmotivated-severity-key-on-built-not-provenance",
       "properties": {
         "acted_at": "2026-08-11",
@@ -8008,6 +8029,15 @@
         "role": "author"
       },
       "to_id": "who:storyflow-storybug-boss"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "fact:the-commands-cover-nine-of-twenty-skills-and-the-checkout-cannot-feel-it",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -10231,6 +10261,15 @@
     {
       "edge_type": "CHANGED",
       "from_id": "chg:accept-e5e2eec3ed94eb2a",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-e688cb8f664f5e7f",
       "properties": {
         "accepted_baseline": true,
         "action": "modified"
@@ -13521,6 +13560,24 @@
         "action": "modified"
       },
       "to_id": "dec:bl83a-functional-decomposition"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:decomposition-coverage-is-asked",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:decomposition-coverage-is-asked",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:decomposition-coverage-is-asked"
     },
     {
       "edge_type": "CHANGED",
@@ -26118,6 +26175,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "dec:idea-does-every-served-skill-get-a-command",
+      "properties": {},
+      "to_id": "dec:commands-are-the-exception"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "dec:idea-gap-flows-to-the-dependency",
       "properties": {},
       "to_id": "dec:nested-graphs"
@@ -27331,6 +27394,12 @@
       "from_id": "cap:corpus-ingest",
       "properties": {},
       "to_id": "snap:epoch:bl186-folder-driver:cap:corpus-ingest"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:decomposition-coverage-is-asked",
+      "properties": {},
+      "to_id": "snap:epoch:decomposition-coverage-is-asked:cap:decomposition-coverage-is-asked"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -57497,6 +57566,14 @@
       "edge_type": "REALIZES",
       "from_id": "art:detect",
       "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "cap:decomposition-coverage-is-asked"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:detect",
+      "properties": {
         "completeness": "partial"
       },
       "to_id": "cap:kpp"
@@ -60973,6 +61050,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:decomposition-coverage-is-asked",
+      "properties": {},
+      "to_id": "cap:decomposition-coverage-is-asked"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:defaults-are-declared-and-injected-deliberately",
       "properties": {},
       "to_id": "cap:defaults-are-not-serialized"
@@ -63401,7 +63484,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7d3e4ca05223083fe96dc03b1b305ae4cfcf44163bc57b881a81535e6c207277",
+        "checksum": "sha256:a2593ce6fb88b8e837cea56bdb8888c60c343ab234a7db3ecc47d43baed7d673",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -64505,7 +64588,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:356a72ee5afe62a39604eda0c1f95af00ac0c784955f636a33c321dcec0a23d7",
+        "checksum": "sha256:30ece086170309bb75b197b1f89bb0986bbf1216239ee6c5083b5371957a2424",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -65792,7 +65875,7 @@
         "description": "When a requirement is decomposed, reflow2 raises the coverage question rather than answering it: what did the parent hold that no child holds? The answer is recorded, so a later reader can tell a DELIBERATE NARROWING from an ACCIDENTAL DROP — today both look identical, and both report DELIVERED once the children close.\n\nReports and asks, never judges (`dec:report-dont-judge`). It does not refuse a decomposition, and it does not put an LLM in charge of sufficiency — the honest form named on the requirement is a question put to the user with their answer written back, the same shape every other gap uses.\n\nAPPLIES TO DECOMPOSITION ONLY, not to derivation: a DERIVED requirement adds new technical necessity and is not expected to cover anything, and `cap:requirement-lineage` already holds that distinction (original / decomposed / derived).\n\nDistinct from `cap:derived-completion`, which computes delivery UPWARD from the golden thread and is verified. That computation is the one with the hole: `report.rs` treats a parent as delivered exactly when every child is, and never asks whether the children amount to the parent. This capability supplies the missing question; it does not change the arithmetic.",
         "name": "A decomposition is asked what it dropped, and the answer is on the record",
         "provenance": "authored",
-        "status": "planned"
+        "status": "realized"
       }
     },
     {
@@ -68143,6 +68226,15 @@
       }
     },
     {
+      "node_id": "chg:accept-e688cb8f664f5e7f",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-14",
+        "name": "One line: `decomposition_coverage` added to the not-a-tool term list, alphabetically beside `design_without_intent` and `missing_intermediate_level`, which are gap_source values too. The lint reads backticked identifiers in served skills and asks whether each names a tool; a new gap_source appearing in detect-and-ask's expectation list is a field term, not a tool, and the lint's own failure message names this list as the fix. NO RULE CHANGED — no check added, removed or weakened, and the trap this list can become (adding a REAL tool to it, which teaches you to lie to the gate) is not triggered here: nothing named decomposition_coverage is or ever was a served tool."
+      }
+    },
+    {
       "node_id": "chg:accept-e8649fb89e9ed28a",
       "node_type": "ChangeEvent",
       "properties": {
@@ -69163,6 +69255,14 @@
       "properties": {
         "change_type": "refactor",
         "name": "Snapshot before the correction: the decision said \"seven functional systems\" and enumerated seven"
+      }
+    },
+    {
+      "node_id": "chg:decomposition-coverage-is-asked",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "detect_gaps gains decomposition_coverage: per decomposed parent, \"what did this parent hold that none of its children hold?\" — asked, never answered, and re-asked when the split changes"
       }
     },
     {
@@ -72387,6 +72487,16 @@
       }
     },
     {
+      "node_id": "dec:idea-does-every-served-skill-get-a-command",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "UNDECIDED, raised 2026-08-14 after `/capture-session` came back `Unknown command` on Anthony's work computer. Eleven of the twenty served skills are fronted by no command. Anthony's call, because it qualifies `dec:skills-served` the same way the first eight did — an agent should not widen that exception on its own.\n\nDISTINCT FROM the two nodes reflow2 offered when this was written. `fact:the-commands-cover-nine-of-twenty-skills-and-the-checkout-cannot-feel-it` MEASURES the shortfall and takes no position on it. `dec:commands-are-the-exception` is ACCEPTED and settles a different question — whether commands may ship at all. This one is open and asks HOW MANY, and it exists separately so the accepted decision is not quietly reopened by editing its rationale.",
+        "name": "OPEN — does every served skill get a slash command, or is the shortfall the wrong thing to fix?",
+        "rationale": "THE OPTIONS, WITH WHAT EACH COSTS. None is recommended here; the measurement is the contribution.\n\n**A — ship all twenty.** Consistent, and it is the option `dec:commands-are-the-exception` already argues for: each command is four lines of pointer with no version-coupled content, so twenty rot no faster than eight. COST: twenty files in a consumer repo. Alex, 2026-08-14, on init: it *\"inserted several things into my project\"* — and that report is why `dec:idea-init-asks-which-harness-and-installs-only-that` narrowed the install. **Widening the command set runs directly against the complaint that was just settled**, and these are Claude-Code-only files, so an OpenCode project gets twenty it cannot read.\n\n**B — ship none of the missing eleven, and fix DISCOVERY instead.** The server instructions already list every skill; the failure is that a user reaches for `/name` and gets a flat `Unknown command` from the HARNESS, which reflow2 never sees and cannot answer. COST: does nothing for the person typing the slash. Nothing in reflow2 can intercept it.\n\n**C — cover the skills a user REACHES FOR by name, and say so.** capture-session is the demonstrated case. COST: the criterion is taste, and the current eleven were chosen by the same unstated taste — which is how the shortfall went unnoticed.\n\n**WHAT IS NOT OPTIONAL EITHER WAY, and is the cheaper half:** the guard is asymmetric. `skill_lint` fails a command naming a missing skill; **nothing fails a skill that no command names**, and nothing pins the count, so the record still says \"eight\" while eleven ship. Whichever option wins, the intended coverage should be asserted somewhere a test can read it — otherwise the next skill ships uncovered in silence exactly as these eleven did.\n\n**THE STANDING TRAP:** this is invisible from inside the checkout. `.claude/skills/` holds all twenty as compile sources, so Claude Code resolves every skill as `/name` HERE and on no consumer install. Any judgement about command ergonomics made in this repo is made in the one environment where the shortfall does not exist.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-does-link-projects-handle-n-projects-or-admit-it-handles-pairs",
       "node_type": "Decision",
       "properties": {
@@ -75258,6 +75368,16 @@
       }
     },
     {
+      "node_id": "epoch:decomposition-coverage-is-asked",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "The roll-up's blind spot becomes a question — a decomposition is asked what it dropped, and the prerequisite Anthony named for reopening the tier shape is now met. Alex's fourth note: he wanted a top-level graph over component graphs, and the shape was deferred behind THIS (dec:idea-a-top-level-graph-holds-what-the-component-graphs-share, option e) because settling a tier shape on a broken roll-up would bake the defect into the boundary where nobody can see it.",
+        "sequence": 330,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:defects-closed-2026-08-07",
       "node_type": "DesignEpoch",
       "properties": {
@@ -76361,7 +76481,7 @@
         "category": "convention",
         "enforced": true,
         "name": "Success is read from the authoritative object, never from a tool's local exit code",
-        "statement": "When a command acts on something outside itself — a remote service, a subprocess, a pipeline — read the OUTCOME from the authoritative object, not from the wrapper's exit status. A tool reporting failure on its local half is not evidence the act failed, and a zero exit is not evidence it succeeded.\n\nTWO MEASURED INSTANCES, both on this project:\n\n1. **`gh pr merge` — TWICE on 2026-08-14.** It printed `git: 'remote-https' is not a git command` and a fast-forward warning, which reads exactly like a failed merge. **The merge had already succeeded server-side both times**; what failed was gh's LOCAL post-merge sync. The authoritative read is `gh pr view <n> --json state,mergeCommit`. ⚠️ Retrying on the apparent failure is how a branch gets merged twice or force-pushed over.\n\n2. **`fact:a-piped-gate-reports-the-pipes-exit-code-not-the-gates`** — `cargo test --workspace | grep | tail` was reported as passing. **A pipeline's exit code is its LAST command's**, so that zero belonged to `tail`. Caught only because 20 suites / 250 tests looked low against the real 103 / 1,138. The correct form is to redirect the gate to a file and read `$?` from the gate itself.\n\nTHE SHAPE BOTH SHARE: **the value you read is not the value you think you are reading**, and in both cases the misreading looks exactly like the answer you wanted. That is why advice was not enough — AGENTS.md already tells agents to read results sceptically, and both failures happened anyway.\n\nENFORCEMENT: **ENFORCED, on Anthony's word 2026-08-14** — asked whether breaking it should stop the build, he said stop the build. He is the first person to choose an enforcement value on this project deliberately; `dec:does-enforced-default-to-gate-blocking` records that reflow2's other four enforced rules acquired that state from a default nobody chose.\n\n🛑 **WHAT THIS RULE NOW OWES, STATED RATHER THAN QUIETLY SATISFIED.** An enforced rule raises `unverified_enforced_rule` at severity 0.6 until a PASSING Verification detects violations of it. **No check is attached yet, and none should be attached to close the finding** — `governance-proposal` is explicit that a passing check which tests nothing is a lie the graph cannot see. The finding stays open until a real detector exists.\n\n✅ UNLIKE THE OTHER TWO RULES CAPTURED THE SAME DAY, THIS ONE IS ACTUALLY CHECKABLE, which is what makes enforcing it honest rather than aspirational. A violation is visible in the scripts themselves: a gate piped through `grep`/`tail`/`head` before its status is read, or a remote-acting CLI whose exit code is taken as the outcome. `tools/` and `.github/workflows/` are both in-repo and greppable."
+        "statement": "When a command acts on something outside itself — a remote service, a subprocess, a pipeline, a build artifact — read the OUTCOME from the authoritative object, not from the wrapper's exit status. A tool reporting failure on its local half is not evidence the act failed, and a zero exit is not evidence it succeeded.\n\nFOUR MEASURED INSTANCES, all on this project, all 2026-08-14 or earlier:\n\n1. **`gh pr merge` — FIVE TIMES on 2026-08-14.** It printed `git: 'remote-https' is not a git command` and a fast-forward warning, which reads exactly like a failed merge. **The merge had already succeeded server-side every time**; what failed was gh's LOCAL post-merge sync. The authoritative read is `gh pr view <n> --json state,mergeCommit`. ⚠️ Retrying on the apparent failure is how a branch gets merged twice or force-pushed over.\n\n2. **`fact:a-piped-gate-reports-the-pipes-exit-code-not-the-gates`** — `cargo test --workspace | grep | tail` was reported as passing. **A pipeline's exit code is its LAST command's**, so that zero belonged to `tail`. Caught only because 20 suites / 250 tests looked low against the real 103 / 1,138. Redirect the gate to a file and read `$?` from the gate itself.\n\n3. **🔴 NEW 2026-08-14 — A GREEN TEST SUITE IS NOT EVIDENCE THE BINARY DOES THE THING.** Building `cap:nudge-absence-says-why`, all 19 unit tests passed while `target/debug/reflow2-mcp` was still the PREVIOUS build: **`cargo test --lib` compiles the library and its test harness, not the executable target.** A live call against that binary still returned the old answer. Only `cargo build -p reflow2-mcp` then re-running the live call showed the change. **The suite was authoritative about the library and silent about the artifact a user runs, and those are different objects.**\n\n4. **🔴 NEW 2026-08-14 — A CORRECT SOURCE FILE IS NOT EVIDENCE OF WHAT IS SERVED.** Skills are embedded into the binary by `build.rs` at COMPILE TIME, so editing `getting-started/skills/<name>/SKILL.md` changes what is served only after a rebuild. `skill_lint` passing and the three trees being byte-identical say nothing about the running server. The authoritative read is asking the rebuilt binary: `get_skill` and check the body.\n\n⭐ **WHAT 3 AND 4 ADD TO THE RULE, AND IT WIDENS THE DETECTOR IT OWES:** the first two instances are about EXIT CODES; these two are about BUILD ARTIFACTS. Same shape — the value you read is not the value you think you are reading — but a check that only scans for piped gates and CLI exit codes would miss both. **A detector for this rule has to cover \"was the thing you measured the thing a user gets?\" as well as \"was the status you read the status of the thing you ran?\"**\n\nTHE SHAPE ALL FOUR SHARE: **the misreading looks exactly like the answer you wanted.** That is why advice was not enough — AGENTS.md already tells agents to read results sceptically, and all four happened anyway.\n\nENFORCEMENT: **ENFORCED, on Anthony's word 2026-08-14** — asked whether breaking it should stop the build, he said stop the build. He is the first person to choose an enforcement value on this project deliberately; `dec:does-enforced-default-to-gate-blocking` records that reflow2's other four enforced rules acquired that state from a default nobody chose.\n\n🛑 **WHAT THIS RULE OWES, STATED RATHER THAN QUIETLY SATISFIED.** An enforced rule raises `unverified_enforced_rule` at severity 0.6 until a PASSING Verification detects violations of it. **No check is attached, and none should be attached to close the finding** — `governance-proposal` is explicit that a passing check which tests nothing is a lie the graph cannot see. The finding stays open until a real detector exists.\n\n✅ THE EXIT-CODE HALF IS CHECKABLE FROM THE REPO: a gate piped through `grep`/`tail`/`head` before its status is read, or a remote-acting CLI whose exit code is taken as the outcome — `tools/` and `.github/workflows/` are both in-repo and greppable. ⚠️ **THE BUILD-ARTIFACT HALF MAY NOT BE**, since \"did you rebuild before you measured\" leaves no trace in the repository. That asymmetry is worth knowing before somebody attaches a check that covers half the rule and reads as covering all of it."
       }
     },
     {
@@ -82426,6 +82546,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:decomposition-coverage-is-asked:cap:decomposition-coverage-is-asked",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CLAIMS\",\"other_type\":\"Contributor\",\"other_id\":\"who:claude-code\",\"properties\":{\"claimed_at\":\"2026-08-14\",\"depth\":2,\"note\":\"Building the decomposition coverage detector (req:decomposition-covers-its-parent). detect.rs + tests + gap-surfacing.md.\",\"seat\":\"asligar-bitecool:1166803:c8628850\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:detect\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:decomposition-coverage-is-asked\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Component\",\"other_id\":\"cmp:detect\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-14\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:decomposition-covers-its-parent\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SCHEDULED_FOR\",\"other_type\":\"DesignEpoch\",\"other_id\":\"epoch:tiering-and-proportion\",\"properties\":{\"modality\":\"expected\",\"recorded_at\":\"2026-08-14\"}}]",
+        "state": "{\"description\":\"When a requirement is decomposed, reflow2 raises the coverage question rather than answering it: what did the parent hold that no child holds? The answer is recorded, so a later reader can tell a DELIBERATE NARROWING from an ACCIDENTAL DROP — today both look identical, and both report DELIVERED once the children close.\\n\\nReports and asks, never judges (`dec:report-dont-judge`). It does not refuse a decomposition, and it does not put an LLM in charge of sufficiency — the honest form named on the requirement is a question put to the user with their answer written back, the same shape every other gap uses.\\n\\nAPPLIES TO DECOMPOSITION ONLY, not to derivation: a DERIVED requirement adds new technical necessity and is not expected to cover anything, and `cap:requirement-lineage` already holds that distinction (original / decomposed / derived).\\n\\nDistinct from `cap:derived-completion`, which computes delivery UPWARD from the golden thread and is verified. That computation is the one with the hole: `report.rs` treats a parent as delivered exactly when every child is, and never asks whether the children amount to the parent. This capability supplies the missing question; it does not change the arithmetic.\",\"name\":\"A decomposition is asked what it dropped, and the answer is on the record\",\"provenance\":\"authored\",\"status\":\"realized\"}",
+        "target_id": "cap:decomposition-coverage-is-asked",
+        "target_type": "Capability"
+      }
+    },
+    {
       "node_id": "snap:epoch:describe-designs-built:cap:describe-design-at-path",
       "node_type": "Snapshot",
       "properties": {
@@ -84889,6 +85019,17 @@
       }
     },
     {
+      "node_id": "fact:the-commands-cover-nine-of-twenty-skills-and-the-checkout-cannot-feel-it",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "**ANTHONY, 2026-08-14, ON HIS WORK COMPUTER, JUST AFTER UPDATING: `● Unknown command: /capture-session`. THE SKILL EXISTS, IS SERVED, AND HAS NO COMMAND — AND THE ONE PLACE THAT CANNOT REPRODUCE THIS IS THE REPO WHERE THE DECISION WAS MADE.**\n\n═══ MEASURED, 2026-08-14 ═══\n```\ngetting-started/skills/     20 skills served\ngetting-started/commands/   11 command files\n```\nThe eleven: `/adopt /brainstorm /debt /decisions /gaps /genesis /health /kpp /req /rules /where`.\n\nTwo of them front a TOOL, not a skill — `debt.md` calls `loop_status`, `decisions.md` queries. So **nine commands front a skill, and ELEVEN OF THE TWENTY SKILLS ARE FRONTED BY NOTHING**: capture-session, ci-gate, impact-check, ingest-corpus, link-artifacts, link-projects, parallel-work, plan-increments, report-friction, retire-from-design, revise-design.\n\n⇒ On a consumer install those eleven are reachable only if the agent thinks to call `get_skill`. **`capture-session` is one of them, and it is the skill whose own text says the user should not have to be the trigger.**\n\n═══ ⭐⭐ WHY NOBODY HERE COULD SEE IT ═══\n\nAnthony, correcting this session: *\"seems to work here fine, as well as /capture-intent.\"* **He is right, and the reason is the finding.**\n```\n.claude/skills/   20 directories   <- the SOURCE the binary compiles in\n```\nClaude Code loads a project's `.claude/skills/<name>/SKILL.md` as `/<name>`. This checkout holds all twenty **as sources**, so in reflow2's own repo every skill resolves as a slash command — including the eleven that ship with none. `/capture-intent` resolves here for that reason and cannot resolve on a consumer install, where nothing is copied (`dec:skills-served`).\n\n**The decision's own question (`question:5aa0248a4e730d34`) asked whether commands should ship \"so a consumer project gets the same ergonomics reflow2's own repo has\". The repo's ergonomics come from the SKILL SOURCES, not from the commands — so the eleven were never sized against the twenty they were meant to match.** This is `req:the-tool-finds-its-own-blind-spots` arriving in the environment again, the same shape as the symlinked kit in `fact:updating-reflow2-does-not-update-a-project-already-set-up` and found the same day.\n\n═══ 🛑 THE GUARD IS ASYMMETRIC, AND THAT IS WHY IT STAYED QUIET ═══\n\n`dec:commands-are-the-exception` names ONE rot direction and closes it: *\"a command could name a skill that no longer exists. `skill_lint` fails on exactly that.\"* **The opposite direction — a skill that no command names — is checked by nothing.** Grepped `tools/test_init.py` and `tools/skill_lint.py`: no assertion pins the command count or compares the two sets, so every skill added since has shipped uncovered in silence. Nine of the eleven uncovered skills postdate the decision.\n\n═══ 🛑 AND THE RECORD SAYS EIGHT ═══\n\n`dec:commands-are-the-exception`, `chg:commands-ship` and `ver:install-reaches-the-agent` all say **eight** slash commands and enumerate them. **Eleven ship** — `/adopt`, `/genesis` and `/rules` were added without the record moving. Nothing pins the number, so nothing noticed.\n\n═══ WHAT THIS DOES AND DOES NOT ESTABLISH ═══\n\n✅ 20 skills, 11 commands, 9 skills fronted, 11 unfronted — counted from the kit source.\n✅ The symptom is real and was hit by the project owner on a real work project.\n✅ Neither test file constrains coverage in the skill→command direction.\n⚠️ WHY `/capture-session` was expected at all is NOT established. Two readings fit and this session did not distinguish them: he may have been reaching for a skill he knew existed, or that project may predate `dec:skills-served` and have carried copied `.claude/skills/` that this update pruned (`why_gone` prints *\"now served by the MCP server — call list_skills / get_skill\"*). **Worth asking him rather than inferring — the same backwards inference about a stale user was made and corrected earlier today.**\n⚠️ Whether the fix is more commands or a different discovery surface is NOT decided — see `dec:idea-does-every-served-skill-get-a-command`.\n\n⇒ **The decision's stated justification is the exact symptom that occurred: *\"without them a consumer install is experienced as BROKEN rather than thin — the skills are reachable and nothing tells you they are.\"* That reasoning was accepted, applied to eight of twenty, and never revisited as the twenty grew.",
+        "subject_id": "dec:commands-are-the-exception"
+      }
+    },
+    {
       "node_id": "fact:the-decision-race-is-caller-ordering-not-read-after-write",
       "node_type": "TemporalFact",
       "properties": {
@@ -85501,6 +85642,18 @@
         "level": "integration",
         "method": "test",
         "name": "A cycle finding names what it walked (crates/reflow2-core/tests/cycles.rs) — 6 new cases of 15. A loop through ONE shared contract names that contract and says no DEPENDS_ON is involved; a genuine TWO-contract service cycle is NOT blamed on the model but still names both; a plain DEPENDS_ON tangle says it is direct and names no contract; a MIXED cycle claims neither pure case, because saying 'no DEPENDS_ON' there would send a reader to check their interface model while real code coupling sits in the loop. PLUS the medium pair, which is the case that matters: a round trip through two library/data contracts reports the medium, and THE SAME SHAPE over REST makes no foundation claim — without that counterweight the medium sentence would print on every contract cycle and mean nothing. MUTATION-CHECKED THREE WAYS: collapse the interface-count discriminator and exactly the two-contract counterweight fails; drop interface attribution entirely (the pre-BL-141 behaviour) and exactly the three tests naming the new behaviour fail while the direct-DEPENDS_ON case stays green; force the foundation-medium claim always-true and exactly the REST counterweight fails. THE DESIGN WAS CORRECTED BY MEASUREMENT, not reasoning: the first discriminator keyed on the INTERFACE COUNT (one shared contract = coarse model), and reproducing the reporter's own cycle on their real design showed it misses their actual case — their loop runs through TWO interfaces and is structurally identical to a genuine service cycle. Only the `medium` separates them. Verified end to end by reconstructing their pre-workaround model from a read-only snapshot of their live graph: the exact loop they reported, `cmp:fundamental-detection → cmp:midi-renderer → cmp:fundamental-detection`, now names both contracts and the medium.",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:decomposition-coverage-is-asked",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-14",
+        "level": "unit",
+        "method": "test",
+        "name": "A decomposition is asked what it dropped: the question fires per decomposed parent and names the parent; a requirement nobody split is silent; only DECOMPOSES counts, so satisfaction and derivation never raise it; the recorded answer stops the question and survives in reviewed_gaps; CHANGING THE SPLIT RE-ASKS with a new id, because the earlier answer was about those children; a parent already reporting delivered outranks one still open AND says so; and the finding NEVER names what is missing (crates/reflow2-core/tests/detect.rs, 7 cases). MUTATION-CHECKED FIVE WAYS, each killed by exactly the test that names it: dropping the detector registration (5 dead), flipping is_aggregate to true so a stale answer silences a changed split (1), anchoring only the parent (2), removing the delivered severity bump (1), and making the finding suggest what to add (1).",
         "status": "passing"
       }
     },
@@ -86819,7 +86972,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e3efc783e8aa355693e76ee6f69aec30c099daa229801f66882bbfbb27eee761",
+  "prev_content_hash": "sha256:2202d8652eec41874143ed893a3900420b485a6bfb4c9070183c27f9f936ecc0",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

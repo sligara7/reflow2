@@ -14,7 +14,10 @@ AGENTS.md.
 1. Call `detect_gaps`. It returns a list of `GapCandidate`s ranked by severity — unsatisfied
    requirements, unallocated capabilities, phase-coverage holes, **contracts with a missing
    side** (`unprovided_interface` — something depends on it but nothing supplies it),
-   decomposition problems (`missing_intermediate_level`), surprising couplings, quality drift.
+   decomposition problems (`missing_intermediate_level`, and `decomposition_coverage` — a
+   requirement was split into children and nothing has checked that they cover it, which
+   matters because delivery rolls UP a decomposition and never asks), surprising couplings,
+   quality drift.
    If empty, the design is coherent for now — proceed to build.
 
    **On a large design, ask for your part.** Pass `scope` (a node id — the Component your team

@@ -33,6 +33,49 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **`decomposition_coverage` — the question the roll-up never asks**
+  (`req:decomposition-covers-its-parent` → `cap:decomposition-coverage-is-asked`, accepted on
+  Anthony's word; the check `dec:idea-a-top-level-graph-holds-what-the-component-graphs-share`
+  named as the prerequisite for reopening the tier question).
+
+  reflow2 rolls delivery **up** a decomposition and never checks that the children **cover** the
+  parent. `report.rs` treats a parent as delivered exactly when every child is, so a requirement
+  split into two children addressing a tenth of it reports `delivered` the moment both close —
+  inside `req:completion-computed`, the number this project trusts *because* it is computed from
+  the golden thread rather than asserted.
+
+  The mechanism is general: **a decomposition by SUBJECT drops what belongs to no single
+  subject**, because cross-cutting content has no natural child to land in. The instance is not
+  hypothetical — reflow's monolithic `01-systems_engineering` was split into 01a–01f, and
+  `context_management` and `self_improvement`, present in all six monolithic workflows, are absent
+  from all seven children. Nothing noticed for months, because a roll-up only ever asks whether
+  each child is done.
+
+  **It asks and never answers.** No refusal, no LLM ruling on sufficiency, and no guess at what is
+  missing — reflow2 can see *that* the question is unanswered and cannot know *what* fell between
+  the children, and a plausible wrong guess is worse than the question because it gets recorded as
+  the answer (`cap:no-fabricated-repair`). Held by a test, not by intent.
+
+  Severity 0.50, rising to **0.70 once the parent already reports delivered**, where the risk has
+  stopped being hypothetical. Per-parent rather than one project rollup, because "what did *this*
+  parent hold that none of its children hold?" is answerable only about one parent. Keyed on the
+  parent **and** its children, so changing the split re-asks — the recorded answer was about
+  *those* children. Decomposition only, never derivation: a DERIVED requirement adds new technical
+  necessity and is not expected to cover anything (`req:requirement-lineage`), and keying on the
+  `DECOMPOSES` edge gets that for free.
+
+  7 tests in `tests/detect.rs`, **5 mutations killed** — dropping the registration, flipping
+  `is_aggregate` to `true`, anchoring only the parent, removing the delivered severity bump, and
+  making the finding suggest what to add. Each died to exactly the test that names it.
+
+  ⚠️ **The self-host cannot exercise this rule.** reflow2's own design has **zero** `DECOMPOSES`
+  edges — all 164 requirements are lineage `original` — so this detector is silent here and will
+  stay silent until reflow2 splits a requirement. `rule:the-self-host-always-trails-what-it-teaches`,
+  and worth stating rather than discovering later from a green run.
+
+  Served: `detect-and-ask` now names the gap in the list it tells an agent to expect (all three
+  skill trees), and [docs/gap-surfacing.md](docs/gap-surfacing.md) carries the taxonomy row.
+
 - **A collaborator's design work now survives clone → write → push → pull**
   (`req:the-git-exchange-path-is-defended-not-only-documented`; options **B and D** of
   `dec:idea-feedback-arrives-by-git-push-and-pull`, accepted on Anthony's word).

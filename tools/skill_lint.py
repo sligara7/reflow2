@@ -202,6 +202,7 @@ NON_TOOL_TERMS = {
     "critical",
     "data",
     "dead_end",
+    "decomposition_coverage",
     "deferred",
     "deprecation",
     "design_change_event_id",

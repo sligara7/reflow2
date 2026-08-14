@@ -1665,3 +1665,247 @@ fn the_seam_gap_id_survives_a_new_coupling() {
         after.title
     );
 }
+
+// ---------------------------------------------------------------------------
+// decomposition_coverage — what the parent held that no child holds
+//
+// `req:decomposition-covers-its-parent`, `cap:decomposition-coverage-is-asked`.
+// reflow2 rolls delivery UP a decomposition (`report.rs`: a parent is delivered
+// exactly when every child is) and never asks whether the children AMOUNT TO
+// the parent. A parent split into two children addressing a tenth of it reports
+// `delivered` the moment both close — in the number this project treats as
+// ground truth (`req:completion-computed`).
+//
+// The field instance is not hypothetical: reflow's monolithic
+// 01-systems_engineering was split into 01a–01f, and two cross-cutting blocks
+// (`context_management`, `self_improvement`) were present in all six originals
+// and absent from all seven children. Nothing noticed for months. A
+// decomposition BY SUBJECT drops what belongs to no single subject.
+//
+// It ASKS and never judges (`dec:report-dont-judge`): no refusal, no LLM ruling
+// on sufficiency, and — the test at the bottom — no guess at what is missing.
+// ---------------------------------------------------------------------------
+
+/// A parent split into three children, the shape `requirement_lineage` uses.
+fn split_checkout() -> DesignGraph {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement(
+        "req:checkout",
+        "Checkout",
+        "The app must have a checkout system, and it must log every attempt.",
+    )
+    .unwrap();
+    for (id, name) in [
+        ("req:card", "Enter a card"),
+        ("req:discount", "Apply a discount code"),
+    ] {
+        g.add_requirement(id, name, "part of checkout").unwrap();
+        g.decomposes(id, "req:checkout").unwrap();
+    }
+    g
+}
+
+fn coverage_gaps(g: &DesignGraph) -> Vec<reflow2_core::GapCandidate> {
+    g.detect_gaps()
+        .unwrap()
+        .into_iter()
+        .filter(|x| x.gap_source == GapSource::DecompositionCoverage)
+        .collect()
+}
+
+#[test]
+fn a_decomposition_is_asked_what_it_dropped() {
+    let g = split_checkout();
+    let found = coverage_gaps(&g);
+    assert_eq!(
+        found.len(),
+        1,
+        "one question per decomposition, got {:?}",
+        sources(&g.detect_gaps().unwrap())
+    );
+    let gap = &found[0];
+
+    // The parent is what the reader has to re-read, so it is named.
+    assert!(
+        gap.description.contains("Checkout"),
+        "the parent must be named: {}",
+        gap.description
+    );
+    // Anchored on the whole decomposition: parent AND children. The children are
+    // the answer's working material — you cannot say what is missing without
+    // knowing what is there.
+    for id in ["req:checkout", "req:card", "req:discount"] {
+        assert!(
+            gap.affected_ids.iter().any(|a| a == id),
+            "{id} must be anchored: {:?}",
+            gap.affected_ids
+        );
+    }
+    assert!(
+        gap.evidence.contains("DECOMPOSES"),
+        "evidence must name the edge kind it ranged over: {}",
+        gap.evidence
+    );
+}
+
+#[test]
+fn a_requirement_nobody_split_is_silent() {
+    // Absence is not deficiency: an undecomposed requirement has no coverage
+    // question, and firing on one would make the detector a tax on flat designs.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:solo", "Solo", "one thing").unwrap();
+    assert!(coverage_gaps(&g).is_empty());
+}
+
+#[test]
+fn only_decomposes_counts_not_every_incoming_edge() {
+    // The boundary that matters for `req:requirement-lineage`: a DERIVED
+    // requirement adds new technical necessity and is not expected to cover
+    // anything, and satisfaction is not decomposition either. Counting any
+    // incoming edge would turn every satisfied requirement into a coverage
+    // question.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_requirement("req:parent", "Parent", "the need")
+        .unwrap();
+    for (cap, name) in [("cap:one", "One"), ("cap:two", "Two")] {
+        g.add_capability(cap, name, "does it", None).unwrap();
+        g.satisfies(cap, "req:parent").unwrap();
+    }
+    g.add_requirement("req:derived", "Derived", "technical necessity")
+        .unwrap();
+    g.set_requirement_lineage("req:derived", "derived").unwrap();
+
+    assert!(
+        coverage_gaps(&g).is_empty(),
+        "no DECOMPOSES edge exists, so there is no decomposition to check"
+    );
+}
+
+#[test]
+fn the_answer_is_recorded_and_the_question_stops() {
+    // The whole point: a deliberate narrowing and an accidental drop look
+    // identical today. Recording the answer is what separates them, and the
+    // acknowledgement's reason is where it lives.
+    let mut g = split_checkout();
+    let gap = coverage_gaps(&g).remove(0);
+    let affected = gap.affected_ids.clone();
+    g.acknowledge_gap(
+        &gap.id,
+        &affected,
+        "Deliberate: logging moved to req:audit-trail, tracked separately.",
+    )
+    .unwrap();
+
+    assert!(
+        coverage_gaps(&g).is_empty(),
+        "an answered question must stop being asked"
+    );
+    let reviewed = g.reviewed_gaps().unwrap();
+    assert!(
+        reviewed
+            .iter()
+            .any(|r| r.gap_id == gap.id && r.reason.contains("req:audit-trail")),
+        "the answer must survive where a later reader finds it"
+    );
+}
+
+#[test]
+fn changing_the_split_re_asks() {
+    // `is_aggregate = false` buys this, and it is the reason it must stay false:
+    // the judgement was about THESE children. Add one and the earlier answer is
+    // no longer an answer to the current question.
+    let mut g = split_checkout();
+    let first = coverage_gaps(&g).remove(0);
+    let affected = first.affected_ids.clone();
+    g.acknowledge_gap(&first.id, &affected, "covered, minus logging")
+        .unwrap();
+    assert!(coverage_gaps(&g).is_empty());
+
+    g.add_requirement(
+        "req:receipt",
+        "Receive an email receipt",
+        "part of checkout",
+    )
+    .unwrap();
+    g.decomposes("req:receipt", "req:checkout").unwrap();
+
+    let again = coverage_gaps(&g);
+    assert_eq!(
+        again.len(),
+        1,
+        "a changed decomposition is a fresh question"
+    );
+    assert_ne!(
+        again[0].id, first.id,
+        "the id must move with the child set, or the stale answer silences it"
+    );
+}
+
+#[test]
+fn a_parent_already_reporting_delivered_outranks_one_still_open() {
+    // The risk stops being hypothetical the moment the roll-up fires: the parent
+    // now asserts `delivered` in the coverage number, and nothing has ever asked
+    // whether its children amount to it.
+    let open = split_checkout();
+    let open_sev = coverage_gaps(&open)[0].severity;
+
+    let mut done = split_checkout();
+    for (req, tag) in [("req:card", "card"), ("req:discount", "discount")] {
+        let (cap, art, ver) = (
+            format!("cap:{tag}"),
+            format!("art:{tag}"),
+            format!("ver:{tag}"),
+        );
+        done.add_capability(&cap, tag, "does it", Some("realized"))
+            .unwrap();
+        done.satisfies(&cap, req).unwrap();
+        done.add_artifact(&art, tag, Some("code"), Some("src/x.rs"))
+            .unwrap();
+        done.realizes(&art, node::CAPABILITY, &cap, None).unwrap();
+        done.add_verification(&ver, tag, Some("test"), None)
+            .unwrap();
+        done.verifies(&ver, node::CAPABILITY, &cap).unwrap();
+        done.set_verification_status(&ver, "passing", None).unwrap();
+    }
+    assert!(
+        done.requirement_is_delivered("req:checkout").unwrap(),
+        "precondition: the roll-up has fired"
+    );
+
+    let done_gap = &coverage_gaps(&done)[0];
+    assert!(
+        done_gap.severity > open_sev,
+        "a delivered parent must outrank an open one: {} vs {open_sev}",
+        done_gap.severity
+    );
+    assert!(
+        done_gap.description.contains("delivered") || done_gap.title.contains("delivered"),
+        "and it must SAY the claim is already being made: {} / {}",
+        done_gap.title,
+        done_gap.description
+    );
+}
+
+#[test]
+fn it_never_says_what_is_missing() {
+    // The seams detector's constraint, in its own shape: reflow2 can see THAT a
+    // decomposition might not cover its parent and cannot know WHAT fell out.
+    // Naming the missing content would be fabrication (`cap:no-fabricated-repair`),
+    // and a plausible wrong answer is worse than the question, because it gets
+    // recorded as the answer.
+    let g = split_checkout();
+    let gap = &coverage_gaps(&g)[0];
+    let text = format!("{} {} {}", gap.title, gap.description, gap.evidence);
+    let lowered = text.to_lowercase();
+    for invented in ["log", "missing:", "should add", "you forgot", "suggest"] {
+        assert!(
+            !lowered.contains(invented),
+            "must not guess the dropped content ({invented:?}): {text}"
+        );
+    }
+    assert!(
+        gap.description.contains('?'),
+        "it is a question, not a verdict: {}",
+        gap.description
+    );
+}
