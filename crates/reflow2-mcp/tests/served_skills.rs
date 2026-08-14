@@ -150,3 +150,60 @@ fn the_working_instructions_are_served_and_the_project_holds_only_a_pointer() {
          reading the graph at all"
     );
 }
+
+#[test]
+fn the_capture_skills_never_ask_the_user_to_choose_a_node_type() {
+    // Alex, 2026-08-14, first run on a real work project: the agent asked him
+    // what node types to store his data models as. He said "you figure it out"
+    // and the result was fine — but a non-technical user has no such escape,
+    // and a wrong answer shapes their design where nobody can see it.
+    //
+    // req:the-kind-of-system-is-established-before-its-parts-are-captured makes
+    // the mapping the AGENT's job. That is a rule about conduct, and conduct is
+    // exactly what nothing can observe — so it is pinned here instead, where a
+    // future edit that quietly drops it turns this red.
+    for name in ["capture-intent", "genesis"] {
+        let skill = find(name).unwrap_or_else(|| panic!("{name} must be served"));
+        assert!(
+            skill.body.contains("Never ask the user which node type")
+                || skill.body.contains("Never ask which node type"),
+            "{name} must forbid handing the vocabulary question back to the user"
+        );
+        assert!(
+            skill.body.contains("describe_schema"),
+            "{name} must name the tool the agent looks the vocabulary up WITH — \
+             forbidding the question without naming the alternative is half a rule"
+        );
+    }
+}
+
+#[test]
+fn capture_intent_carries_a_routing_table_that_admits_where_it_runs_out() {
+    // A table is only better than improvisation because it can be WRONG IN
+    // PUBLIC. capture-session's own routing table shipped with a missing row
+    // and its first dogfood found it — which is the argument for having one,
+    // not against. So the honest boundary is part of the artifact: the row that
+    // says "nothing fits cleanly" is what stops an agent forcing operational
+    // know-how into a requirement's prose because the table looked complete.
+    let skill = find("capture-intent").expect("capture-intent must be served");
+    assert!(
+        skill.body.contains("| What they said | Where it goes |"),
+        "the mapping must be a table an agent can look up, not prose it re-derives"
+    );
+    assert!(
+        skill.body.contains("Nothing fits cleanly"),
+        "the table must name where it runs out — a routing table that pretends \
+         to be complete teaches you to mis-file things"
+    );
+    for tool in [
+        "add_requirement",
+        "add_capability",
+        "add_component",
+        "add_interface",
+    ] {
+        assert!(
+            skill.body.contains(tool),
+            "the table must name {tool} as the destination, not just the node type"
+        );
+    }
+}

@@ -19,6 +19,43 @@ with `authored_by` — whose word each one is. This is the structured "who" behi
 "how"; record it **when a node is captured or a decision is made**, not at session end, because a
 summary written on the way out is the one the busy session never gets to write.
 
+**Establish what KIND of thing this is before you name any part of it.** A data model, a machine
+shop, a beamline and a hiring process are not the same kind of object, and the parts worth
+capturing differ. Ask about the thing, in their words:
+
+- What must be true of it when it works?
+- What is it made of — what are the pieces?
+- Where do two pieces meet, or where does it meet something you don't control?
+- What would you hand somebody when it's finished? *(this is the artifact question, and it is
+  the one people answer most concretely — blueprints and permits, or schemas and migrations)*
+- How would you know it was done?
+
+**Never ask the user which node type to use.** Mapping their words onto the vocabulary is your
+job — that is what this skill is, and `describe_schema` exists so you can look the vocabulary up
+instead of asking. Handing that question back gives the one person in the room with no reason to
+know the answer the one decision they cannot check. *(Found in the field 2026-08-14: a first-time
+user was asked what node types to store his data models as, said "you figure it out", and it
+worked — but a non-technical user has no such escape, and a wrong answer shapes their design
+silently.)*
+
+**The mapping, so it is looked up rather than improvised:**
+
+| What they said | Where it goes |
+|---|---|
+| "it has to…", "it must never…", "it can't take longer than…" | **Requirement** → `add_requirement` |
+| "it does…", "it handles…", "it can…" | **Capability** → `add_capability` |
+| "the X part", "the bit that does the…" | **Component** → `add_component` |
+| "where X meets Y", "what we hand over", "the format between us" | **Interface** → `add_interface`, plus `provides` / `consumes` on BOTH sides |
+| "first this, then that" — an ordered process | **Flow** → `add_flow`, then `part_of_flow` per step |
+| a number with a unit — "under 200ms", "no more than 40kg", "£3k" | **Constraint** → `add_constraint`, then `constrains` each spender |
+| "we always…", "we never…" — how the team works, not what the thing does | **DesignRule** — stop and use **governance-proposal**, which asks whether breaking it should fail a build |
+| "here's the drawing / the spec / the doc" | **Artifact** → `add_artifact`, then `documents` to what you read out of it |
+| "this is how we do X here" — operational know-how attached to a part | ⚠️ **Nothing fits cleanly.** Say so rather than forcing it into a requirement's prose. Recorded as an open gap in reflow2's own design, not a row to guess at |
+
+The last row is the important one. **A routing table that pretends to be complete teaches you to
+mis-file things**; this one names where it runs out, and that boundary is where you tell the user
+"reflow2 has no good home for this yet" instead of inventing one.
+
 1. Read the user's message and identify:
    - **Requirements** — what must be true (a constraint, a must-have). → `add_requirement`
    - **Capabilities** — what the system does. → `add_capability`
