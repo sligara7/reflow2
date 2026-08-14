@@ -37,6 +37,17 @@ pub enum NudgeStatus {
     /// No Stop hook mentions the nudge — nothing will interrupt a session that
     /// finishes with the loop in debt.
     Absent,
+    /// No hook, and none is possible: this project named a harness reflow2 has
+    /// no event model for, so there is nothing to install and nothing to fix.
+    ///
+    /// **This exists because `Absent` was answering two different questions
+    /// with one word.** "Nobody installed it" is actionable — install it.
+    /// "Your harness cannot carry one" is permanent, and telling that user to
+    /// install it sends them after something that does not exist. The pair is
+    /// the same distinction `Unknown` already draws against `Absent` at the
+    /// other end: *could not look* is not *looked and found nothing*, and
+    /// *cannot be installed* is not *is not installed*.
+    NoHookForThisHarness { harnesses: String },
     /// A Stop hook is registered but points at a script that is not there. The
     /// worst of the three, because the settings file *looks* right: this is a
     /// safety net that will fail silently at the moment it is needed.
@@ -80,6 +91,19 @@ impl NudgeStatus {
                  is worse than having none — fix the path or remove the hook, and until then call \
                  `loop_status` yourself before finishing."
             )),
+            // Deliberately NOT phrased as a shortfall. Nothing here is missing,
+            // nobody skipped a step, and there is no command that would fix it —
+            // so the sentence says what is true and hands over the one thing the
+            // reader can actually do. Telling somebody to install a hook their
+            // harness cannot hold is how an advisory teaches people to skip
+            // advisories.
+            NudgeStatus::NoHookForThisHarness { harnesses } => Some(format!(
+                "THERE IS NO SESSION-END NUDGE FOR THIS HARNESS, and none is possible: this \
+                 project is set up for {harnesses}, and reflow2 only has a hook for Claude Code. \
+                 Nothing is missing and there is nothing to install — the coherence loop is \
+                 yours to run. Call `loop_status` before you finish any session in which you \
+                 changed the design, and after a batch of captures."
+            )),
         }
     }
 }
@@ -117,7 +141,47 @@ pub fn status(graph_path: Option<&str>) -> NudgeStatus {
             };
         }
     }
-    NudgeStatus::Absent
+    // No hook. Before calling that a shortfall, ask whether one was ever
+    // possible here — the installer records which harness this project named,
+    // and only Claude Code has an event model reflow2 can register against.
+    //
+    // ORDER MATTERS: the hook search runs FIRST and wins. Somebody on any
+    // harness may have wired their own Stop hook, and a project that HAS a
+    // working nudge must never be told its harness cannot have one.
+    match recorded_harnesses(&project) {
+        Some(harnesses) if !harnesses.iter().any(|h| h == HOOK_HARNESS) => {
+            NudgeStatus::NoHookForThisHarness {
+                harnesses: harnesses.join(", "),
+            }
+        }
+        // Recorded and includes Claude, or nothing recorded at all. The second
+        // is the pre-`--harness` project and every project set up before the
+        // installer asked: it could have a hook, so its absence is a real gap.
+        _ => NudgeStatus::Absent,
+    }
+}
+
+/// The harness reflow2 can register a session-end hook against. One, today.
+const HOOK_HARNESS: &str = "claude";
+
+/// Which harnesses this project was set up for, as `reflow2_init.py` recorded
+/// them in `.reflow2/kit-version.json`.
+///
+/// **`None` means nobody ever said** — an older project, or one set up before
+/// the installer asked. It is deliberately not read as "no harnesses": the
+/// whole point of this module is that *not knowing* and *knowing it is absent*
+/// are different answers, and inventing the second from the first here would
+/// reproduce the defect one layer down.
+fn recorded_harnesses(project: &Path) -> Option<Vec<String>> {
+    let text = std::fs::read_to_string(project.join(".reflow2/kit-version.json")).ok()?;
+    let json: serde_json::Value = serde_json::from_str(&text).ok()?;
+    let listed = json.get("harnesses")?.as_array()?;
+    let names: Vec<String> = listed
+        .iter()
+        .filter_map(|h| h.as_str().map(str::to_string))
+        .collect();
+    // An empty or unreadable list is nobody's answer, not an empty answer.
+    (!names.is_empty()).then_some(names)
 }
 
 /// The `Stop` hook command that mentions the nudge, if any.
@@ -414,6 +478,120 @@ mod tests {
             Some(PathBuf::from(
                 "/home/x/.local/share/reflow2/kit/tools/loop_nudge.py"
             ))
+        );
+    }
+
+    /// Write the installer's stamp, naming which harnesses set this project up.
+    fn set_up_for(p: &tempdir::TempProject, harnesses: &[&str]) {
+        let listed = harnesses
+            .iter()
+            .map(|h| format!("\"{h}\""))
+            .collect::<Vec<_>>()
+            .join(",");
+        std::fs::write(
+            p.dir.join(".reflow2/kit-version.json"),
+            format!(r#"{{"reflow2_version":"0.30.0","harnesses":[{listed}]}}"#),
+        )
+        .unwrap();
+    }
+
+    #[test]
+    fn a_harness_that_cannot_hold_a_hook_is_not_reported_as_a_missing_one() {
+        // The defect this variant exists for: `Absent` answered two questions
+        // with one word, and sent an OpenCode user after something that does
+        // not exist.
+        let p = project_with("{}");
+        set_up_for(&p, &["opencode"]);
+        assert_eq!(
+            status(Some(&p.graph())),
+            NudgeStatus::NoHookForThisHarness {
+                harnesses: "opencode".to_string()
+            }
+        );
+    }
+
+    #[test]
+    fn the_advisory_for_an_impossible_hook_asks_for_nothing_to_be_installed() {
+        // An advisory that tells somebody to fix an unfixable thing is how a
+        // reader learns to skip advisories.
+        let p = project_with("{}");
+        set_up_for(&p, &["opencode"]);
+        let said = status(Some(&p.graph()))
+            .advisory()
+            .expect("must say something");
+        assert!(said.contains("none is possible"), "{said}");
+        assert!(
+            said.contains("opencode"),
+            "it must name the harness: {said}"
+        );
+        assert!(
+            said.contains("loop_status"),
+            "saying the trigger is absent is only useful with what to do instead: {said}"
+        );
+        assert!(
+            !said.to_lowercase().contains("install a"),
+            "must not ask for an install that cannot happen: {said}"
+        );
+    }
+
+    #[test]
+    fn a_project_set_up_for_claude_still_reports_a_missing_hook_as_missing() {
+        // The counterweight. Narrowing must not silence the real gap.
+        let p = project_with("{}");
+        set_up_for(&p, &["claude"]);
+        assert_eq!(status(Some(&p.graph())), NudgeStatus::Absent);
+    }
+
+    #[test]
+    fn a_hook_the_user_wired_themselves_wins_over_the_recorded_harness() {
+        // Order matters: somebody on any harness may have wired their own Stop
+        // hook, and a project that HAS a working nudge must never be told its
+        // harness cannot have one.
+        let p = project_with(
+            r#"{"hooks":{"Stop":[{"hooks":[{"type":"command",
+               "command":"python3 \"$CLAUDE_PROJECT_DIR/tools/loop_nudge.py\""}]}]}}"#,
+        );
+        set_up_for(&p, &["opencode"]);
+        std::fs::create_dir_all(p.dir.join("tools")).unwrap();
+        std::fs::write(
+            p.dir.join("tools/loop_nudge.py"),
+            "#!/usr/bin/env python3\n",
+        )
+        .unwrap();
+        assert_eq!(status(Some(&p.graph())), NudgeStatus::Installed);
+    }
+
+    #[test]
+    fn a_project_that_never_said_which_harness_is_absent_not_impossible() {
+        // Every project set up before the installer asked. Not knowing must not
+        // become "cannot" — that would reproduce, one layer down, the very
+        // conflation this variant was added to fix.
+        let p = project_with("{}");
+        assert_eq!(status(Some(&p.graph())), NudgeStatus::Absent);
+    }
+
+    #[test]
+    fn a_multi_harness_project_including_claude_can_still_have_a_hook() {
+        let p = project_with("{}");
+        set_up_for(&p, &["opencode", "claude"]);
+        assert_eq!(status(Some(&p.graph())), NudgeStatus::Absent);
+    }
+
+    #[test]
+    fn the_two_absences_serialise_differently_so_a_reader_can_tell_them_apart() {
+        // loop_status carries this as a machine-readable field. If both states
+        // serialised the same, the distinction would exist in Rust and nowhere
+        // a consumer could act on it.
+        let absent = serde_json::to_value(NudgeStatus::Absent).unwrap();
+        let impossible = serde_json::to_value(NudgeStatus::NoHookForThisHarness {
+            harnesses: "opencode".to_string(),
+        })
+        .unwrap();
+        assert_ne!(absent, impossible);
+        assert_eq!(absent, serde_json::json!("absent"));
+        assert_eq!(
+            impossible,
+            serde_json::json!({"no_hook_for_this_harness": {"harnesses": "opencode"}})
         );
     }
 
