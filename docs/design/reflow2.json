@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:00a5a3f9c851e625cc201beb58b86ee2b48eaabc3485776e4bf4b3f7cad3acb9",
+  "content_hash": "sha256:e3efc783e8aa355693e76ee6f69aec30c099daa229801f66882bbfbb27eee761",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -7568,6 +7568,15 @@
       "from_id": "dec:idea-trial-driven-choice-skill",
       "properties": {
         "acted_at": "2026-08-04",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-v0300-is-the-stable-baseline-and-only-feedback-moves-it",
+      "properties": {
+        "acted_at": "2026-08-14",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -17734,6 +17743,24 @@
         "action": "modified"
       },
       "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-nudge-report-says-whether-a-hook-was-possible",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nudge-detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-nudge-report-says-whether-a-hook-was-possible",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:nudge-absence-says-why"
     },
     {
       "edge_type": "CHANGED",
@@ -57933,6 +57960,14 @@
       "properties": {
         "completeness": "complete"
       },
+      "to_id": "cap:nudge-absence-says-why"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:nudge-detect",
+      "properties": {
+        "completeness": "complete"
+      },
       "to_id": "cap:nudge-path-proven"
     },
     {
@@ -61538,6 +61573,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-nudge-absence-says-why",
+      "properties": {},
+      "to_id": "cap:nudge-absence-says-why"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-record-moved-is-surfaced",
       "properties": {},
       "to_id": "cap:the-record-moved-is-surfaced"
@@ -63853,7 +63894,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:90fdbfdb422ebd8d5fbf64c249ed3e4508538a01cb14090cc234d8ac2439e6b9",
+        "checksum": "sha256:728650e901174321fd684df8aa431ccfd84bc3e806f2d725c416a9d7f2445814",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/nudge.rs",
         "name": "nudge.rs",
@@ -66332,7 +66373,7 @@
         "description": "The loop-nudge state carried on the handshake instructions and on `loop_status` distinguishes a harness that has no hook reflow2 can register from one that supports the hook and lacks it, so only the actionable case reads as something to fix. Consumes the harness answer collected at install time, since the state cannot be derived from the filesystem alone.\n\nExtends `cap:nudge-path-proven` (verified) rather than duplicating it: that capability proves the hook path end to end and reports `installed | absent | broken | unknown`. This narrows `absent`, which today means both \"not registered\" and \"not registerable here\".",
         "name": "The nudge report says whether the trigger is missing or impossible",
         "provenance": "authored",
-        "status": "planned"
+        "status": "realized"
       }
     },
     {
@@ -70213,6 +70254,14 @@
       }
     },
     {
+      "node_id": "chg:the-nudge-report-says-whether-a-hook-was-possible",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The nudge state distinguishes \"not installed here\" from \"cannot be installed here\" — a new NoHookForThisHarness variant read from the harness answer the installer now records"
+      }
+    },
+    {
       "node_id": "chg:the-owners-identity-is-one-node-again",
       "node_type": "ChangeEvent",
       "properties": {
@@ -72807,6 +72856,16 @@
         "name": "OPEN — should reflow2 have a skill for \"brainstorm the options, then TRIAL them and let measurement choose\"?",
         "rationale": "Captured under the brainstorm skill because Anthony floated it as a question, not a request. The load-bearing content is the survey of what BL-70 already provides: the idea is substantially built for design alternatives and genuinely missing for process trials, and that distinction is what would make it worth building rather than a second name for something that exists.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-v0300-is-the-stable-baseline-and-only-feedback-moves-it",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "🛑 **WITHDRAWN BY ANTHONY THE SAME DAY IT WAS RAISED, 2026-08-14**, on noticing it contradicted his own standing practice: *\"you're right that my latest guidance is contradictory to previous, so please disregard. it is just my brother and developing. anytime a new version comes out, I tell him and he usually updates. so we'll just continue with this policy.\"*\n\n⇒ **THE REASON IS A FACT ABOUT THE USER POPULATION, AND IT IS WORTH KEEPING.** reflow2 has two users who talk to each other directly. A stable-baseline policy exists to tell strangers which releases are safe to adopt; **there are no strangers.** The distribution channel is a text message, and it works. At this scale a formal patch line would add ceremony to solve a problem nobody has.\n\n⭐ AND IT DISSOLVES THE CADENCE CONCERN RATHER THAN ANSWERING IT. Three releases in three days is only a problem if users discover versions passively. They do not — they are told. **The measurement that prompted this (`fact:updating-reflow2-does-not-update-a-project-already-set-up`) stays true and stops being a reason to slow down.**\n\n═══ ⚠️ WHAT DOES **NOT** GO AWAY WITH THIS WITHDRAWAL ═══\n\n**The kit/binary split survives, and this withdrawal sharpens it.** *\"He usually updates\"* updates the **BINARY**. `install.sh` does not touch a project that is already initialised, because the files that matter to a project (`reflow2_init.py` and what it wrote) are KIT, and a project's copy is fixed at the moment it was set up.\n\n⇒ **So the working update channel makes the remaining gap MORE visible, not less: the message arrives, the user updates, and their existing projects are exactly as stale as before.** Alex's home machine is the demonstration — binary 0.30.0, project stamped 0.11.0. The defect was never about him being told late.\n\n📌 STILL OWED, INDEPENDENT OF ANY RELEASE POLICY: something that surfaces the KIT's version (today only the binary's is reachable), and an update path for a project that already exists. Neither needs a stable line to justify it.\n\n═══ THE ANALYSIS THIS WAS WITHDRAWN FROM, kept because `req:roads-not-taken` says the roads not taken are part of the record ═══\n\nRAISED as: should v0.30.0 become a stable baseline that only external feedback moves, with changes shipped as patches?\n\nTwo objections were on the record before the withdrawal, and both stand as reasoning even though the question is closed:\n  · **THE RULE CONTAINED TWO RULES.** *\"Only external feedback\"* answers WHAT may change; *\"maybe these are patches\"* answers HOW BIG. `cap:init-asks-which-harness` is both external feedback and a new feature, so the halves disagreed in practice on the day they were written.\n  · **A STRICT READING WOULD HAVE PARKED FOUR MEASURED DEFECTS** found the same day, none of them user-reported — the machine-wide installer writing configs for absent harnesses, 9 of 20 skills with no drift signal, the enforced rule's missing detector, and 43 planned capabilities invisible to every tool. **Users cannot report what the tool hides from them.**\n\nOPTIONS, NONE TAKEN: (a) v0.30.x patch line, fixes only. (b) slow but not frozen. (c) baseline plus feature branch. (d) intent without policy. **The outcome is (d) by decision rather than by drift: continue as before, deliberately.**",
+        "name": "WITHDRAWN — a stable v0.30 baseline solves a distribution problem this project does not have; the update channel is one person telling the other",
+        "rationale": "Raised and withdrawn the same day, on Anthony's word. Recorded as rejected rather than deleted because the reasoning is worth more than the question: the withdrawal establishes that reflow2's user population is two people with a direct channel, which is a fact several other decisions could lean on, and it separates two things that had been travelling together all day — release cadence, which turns out not to be a problem, and the kit/binary update split, which is a real defect that the working update channel actually makes more visible rather than less.",
+        "status": "rejected"
       }
     },
     {
@@ -84941,7 +85000,7 @@
         "basis": "measured",
         "confidence": 1.0,
         "fact_type": "defect",
-        "statement": "**UPDATING REFLOW2 UPDATES THE BINARY AND LEAVES EVERY ALREADY-INITIALISED PROJECT AT THE KIT VERSION THAT SET IT UP. NOTHING SAYS SO.** This explains Alex's 2026-08-14 reports completely, and it corrects an inference this session repeated all day.\n\n═══ 🛑 THE INFERENCE THAT WAS WRONG ═══\n\nThis session concluded, from two of his five notes describing already-fixed behaviour, that **\"Alex is probably on an old kit\"**. Alex then answered the version question: **`0.30.0` from home** — current. Not stale at all.\n\n⭐ **AND THE GROK AGENT HAD DIAGNOSED IT CORRECTLY ON 2026-08-13, IN ITS FIRST PARAGRAPH, WHILE THIS SESSION UNDER-WEIGHTED IT:** *\"`.reflow2/kit-version.json` says `0.11.0` / `0ec473e` (2026-07-25 tarball) while the live server already serves `loop_status`, `what_next`, `arrival_delta`, `plan_epoch`, `maturity_report`, served `get_skill`, etc. **The kit sidecar and the process you are talking to are not the same generation.**\"* It was read as evidence of a stale install. It was evidence of a SPLIT.\n\n═══ ✅ THE MECHANISM, MEASURED ═══\n\n`.reflow2/kit-version.json` is written by `reflow2_init.py` INTO THE PROJECT and records **which kit version set that project up**. It is a stamp of an install EVENT, not a reading of the currently-installed kit. So:\n\n```\nbinary      updated by install.sh    -> 0.30.0   (Alex, home)\nproject     written once at init     -> 0.11.0   (Alex, home, 2026-07-25)\n```\n\n🎯 **AND THIS IS WHY HIS \"NO COMMITTABLE GRAPH JSON\" REPORT WAS TRUE ON A CURRENT BINARY.** The fix (PR #172, `write_shareable_export`) lives in **`tools/reflow2_init.py` — a KIT file, not the binary.** Updating the binary to 0.30.0 cannot retrofit it into a project initialised by kit 0.11.0. **He had to re-run the installer, and nothing told him that.** Same for the settings-indent fix and anything else in the installer.\n\n═══ 🛑🛑 WHY THE MAINTAINER CANNOT REPRODUCE THIS ═══\n\nMeasured on Anthony's machine the same day:\n```\n~/.local/share/reflow2/kit -> /home/ajs7/project/reflow2      A SYMLINK to the checkout\n```\nwhile `tools/install.sh` gives a consumer a **tarball extraction** (`tar -C \"$KIT_DIR/kit.new\" --strip-components=1 -xzf \"$kit_asset\"`) — a frozen copy.\n\n⇒ **THE DEVELOPER'S KIT CANNOT GO STALE, BY CONSTRUCTION. THE CONSUMER'S ALWAYS CAN.** The defect is structurally invisible to the only person positioned to fix it — `req:the-tool-finds-its-own-blind-spots` arriving in the environment rather than in a detector, and the sharpest instance of it recorded so far.\n\n═══ WHAT IS STILL NOT KNOWN ═══\n\n⚠️ **Alex answered for HOME. The five ideas came from WORK, whose version has never been measured.** The question needs re-asking with the machine named.\n⚠️ Whether his machine-wide kit is also 0.11.0, or only the project stamp. `reflow2 --version` reports the BINARY; nothing surfaces the installed kit's version, which is the gap the Grok report's own \"opportunities\" section proposed closing (*\"document that kit-version.json can lag the shared server, or write the running binary identity somewhere loop_status / graph_report already expose\"*).\n⚠️ What a stale kit actually costs. `reflow2_check.py` at 0.11.0 would predate the LINEAGE (BL-107) and IDENTITY (BL-169) checks, so a consumer CI gate could be silently weaker than the one this project relies on — **not verified, and worth verifying.**\n\n⇒ THE HONEST GENERALISATION: reflow2 has TWO update surfaces — the binary and the per-project kit — and only one of them is served by `install.sh`. `user-iterative-release-preference` sets the goal at a ONE-WORD UPDATE; today that word updates half the system and reports success.",
+        "statement": "**ALEX'S TWO MACHINES PRODUCED THE SAME SYMPTOM — \"he reported a bug that is already fixed\" — BY TWO DIFFERENT MECHANISMS, AND THIS SESSION GOT BOTH WRONG BEFORE MEASURING THEM.**\n\n═══ 🛑 WORK MACHINE (the five hand-typed ideas): HE WAS SIMPLY CORRECT ═══\n\nAlex, 2026-08-14: *\"My hand typed observations were using 0.28.0.\"* Measured against the tags:\n```\nv0.28.0   2026-08-11      <- what he was running\nv0.29.0   2026-08-12\nv0.30.0   2026-08-13\nfadc197   2026-08-13   PR #172 — write_shareable_export AND detected_indent\n```\n`git merge-base --is-ancestor fadc197 v0.28.0` → **NO.** **BOTH of the items this session called \"already fixed\" landed AFTER the version he was running.**\n\n⇒ **HIS REPORTS WERE ACCURATE FOR HIS VERSION. There was no missing committable export and no indent-preserving merge in 0.28.0, because neither existed yet.** This session repeatedly framed those two notes as describing behaviour that no longer exists and inferred a stale user from them. **The inference was backwards: he reported current behaviour, and it was fixed two days later.**\n\n⭐⭐ **AND THE REAL FINDING IS THE CADENCE, NOT THE USER.** Three releases in three days (0.28.0 → 0.29.0 → 0.30.0, 11th to 13th August). **At that rate every user is behind by construction**, and any report they write is against a version that has already moved. `user-iterative-release-preference` asks for BOTH frequent very-minor releases AND a one-word update — **the first without the second guarantees a stream of reports about bugs that are already fixed, and guarantees the maintainer misreads them as staleness.** That is exactly what happened here, all day.\n\n═══ 🛑 HOME MACHINE (the Grok feedback.md): A DIFFERENT MECHANISM ENTIRELY ═══\n\nAlex: *\"0.30.0 from home\"* — binary current. But the Grok agent measured the project's `.reflow2/kit-version.json` at **0.11.0 / 0ec473e (2026-07-25)** and diagnosed it in its first paragraph: *\"the kit sidecar and the process you are talking to are not the same generation.\"* This session read that as evidence of a stale install; it was evidence of a SPLIT.\n\n`.reflow2/kit-version.json` is written by `reflow2_init.py` INTO the project and records **which kit set that project up**. It is a receipt for an install EVENT, not a live reading. So a binary updated to 0.30.0 leaves a project initialised by kit 0.11.0 exactly where it was — and the fixes that matter to that project (`write_shareable_export`, `detected_indent`) live in `tools/reflow2_init.py`, **a KIT file, not the binary.** Re-running the installer is the only thing that applies them, and nothing says so.\n\n═══ 🛑🛑 WHY THE MAINTAINER CANNOT REPRODUCE THE HOME CASE ═══\n```\n~/.local/share/reflow2/kit -> /home/ajs7/project/reflow2      A SYMLINK to the checkout\n```\nwhile `tools/install.sh` gives a consumer a **tarball extraction** — a frozen copy. **The developer's kit cannot go stale by construction; the consumer's always can.** `req:the-tool-finds-its-own-blind-spots` arriving in the ENVIRONMENT rather than in a detector, and the sharpest instance recorded so far.\n\n═══ WHAT IS AND IS NOT ESTABLISHED ═══\n\n✅ Work machine ran 0.28.0 and its reports were correct for it.\n✅ Home binary is 0.30.0; the home project's sidecar was 0.11.0.\n⚠️ Whether the home machine's INSTALLED KIT is also old, or only that project's receipt — `reflow2 --version` reports the BINARY and nothing surfaces the kit's version. That is the gap the Grok report's own opportunities section proposed closing.\n⚠️ Whether a stale kit costs anything concrete. A 0.11.0 `reflow2_check.py` would predate the LINEAGE (BL-107) and IDENTITY (BL-169) checks, so a consumer's CI gate could be silently weaker than this project's — **not verified.**\n\n⇒ TWO UPDATE SURFACES, ONE UPDATE COMMAND: the binary and the per-project kit. `install.sh` serves the first. A project already set up is served by nothing.",
         "subject_id": "proj:reflow2"
       }
     },
@@ -86521,6 +86580,18 @@
       }
     },
     {
+      "node_id": "ver:the-nudge-absence-says-why",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-14",
+        "level": "integration",
+        "method": "test",
+        "name": "The two absences are told apart, and neither is invented: an OpenCode project reports no_hook_for_this_harness with an advisory that asks for nothing to be installed; a Claude project with no hook still reports absent; a project that never named a harness reports absent rather than impossible; and a hook the user wired themselves wins over the recorded harness, so a working nudge is never called unreachable. 7 cases in crates/reflow2-mcp/src/nudge.rs (19 in the module, 190 in the crate, all passing). ALSO DEMONSTRATED LIVE against real projects with the rebuilt binary — loop_status returned {\"no_hook_for_this_harness\":{\"harnesses\":\"opencode\"}} for an OpenCode project and \"absent\" for one that never said. THAT LIVE RUN EARNED ITS KEEP: the unit tests passed while target/debug/reflow2-mcp was still the previous build, so `cargo test --lib` was proving the library and not the binary a user runs — rule:success-is-read-from-the-authoritative-object, caught on the day it was enforced.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-record-moved-is-surfaced",
       "node_type": "Verification",
       "properties": {
@@ -86638,7 +86709,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ef318ca2341a04cebe3f5d6ddb5103e9e05056d0029c951e9461765bcc1c61c1",
+  "prev_content_hash": "sha256:00a5a3f9c851e625cc201beb58b86ee2b48eaabc3485776e4bf4b3f7cad3acb9",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
