@@ -127,7 +127,26 @@ schema:
       pass_1_extractable: true
       properties:
         confidence: { type: float, range: [0.0, 1.0] }
-      extraction_hint: Source makes target redundant or deprecated.
+      extraction_hint: >
+        Source makes target redundant or deprecated — and THIS IS HOW SOMETHING
+        IS RETIRED FROM A DESIGN, not a loose editorial relation. Draw it from
+        the ACCEPTED Decision that withdrew the thing to the thing itself
+        (dec:idea-discontinued-is-a-first-class-state). The decision is the
+        source deliberately: a retirement edge normally presumes a SUCCESSOR to
+        sit at the source end, and something discontinued with no replacement
+        has nothing to put there — but it always has a decision behind it.
+        ONLY AN ACCEPTED DECISION DISCONTINUES ANYTHING; a `proposed` withdrawal
+        has withdrawn nothing and the target keeps counting until someone with
+        the authority says so. IT IS READ, not merely stored — get_node returns
+        `discontinued: true` on the target, the unmotivated / unrealized /
+        unverified capability gaps fall silent, and delivery stops counting a
+        discontinued capability as a satisfier (DeliveryCoverage carries
+        `satisfied_only_by_discontinued` so the number never drops unexplained).
+        The target's own `status` does NOT move and must not be edited to say
+        it: that field records what was BUILT, and this edge records that it is
+        gone. Withdrawing what met a need does not meet the need, so the
+        requirement it served becomes unsatisfied again and is asked about
+        afresh — that cascade is deliberate.
 
     DUPLICATES:
       from: "*"

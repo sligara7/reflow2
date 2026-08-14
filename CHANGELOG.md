@@ -33,6 +33,92 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **The vocabulary now says where abandonment actually lives** — two descriptions, no schema move
+  (the discoverability half of `dec:idea-does-a-capability-need-a-cancelled-state`; the mechanism
+  itself was already decided at `dec:idea-discontinued-is-a-first-class-state`, 2026-08-11).
+
+  Alex's fleet reported that agents *"stuff DROPPED into description text"* because `Capability`
+  has no `cancelled` status. **The mechanism to record it already existed and worked** — an accepted
+  Decision drawing `OBSOLETES` at the capability computes `discontinued: true`, which three gap
+  detectors and delivery arithmetic already read. What did not exist was any way to **find** it.
+
+  **Measured via `describe_schema`, which the served routing table tells an agent to use for exactly
+  this lookup:** on `Capability`, `provenance`, `capability_type`, `inputs`, `outputs`,
+  `is_entry_point` and `is_exit_point` all carried teaching descriptions and **`status` carried
+  none** — four bare values and no fifth. The other half was as bare: `OBSOLETES`'s entire hint read
+  *"Source makes target redundant or deprecated"*, naming neither the retirement job, nor the
+  Decision as source, nor `discontinued`. **So an agent did everything right and still had nowhere
+  to put the fact except prose.**
+
+  `Capability.status` now says it records what was BUILT and only moves forward, that `cancelled`
+  and `dropped` are absent **on purpose**, and where abandonment goes instead. `OBSOLETES` now says
+  it is *the* retirement mechanism, that the **Decision** is the source end (a retirement edge
+  normally presumes a successor; a discontinued thing has none, but always has a decision), that
+  only an **accepted** decision discontinues anything, and that the target's own `status` must not
+  be edited to say it — that would create the second source of truth this design avoids.
+
+  **Not a schema change in the stamp's terms:** no new node type, edge type, property or enum value.
+  `node_types` 29, `edge_types` 61, `schema_version` 1, all unmoved — so it reaches every consumer
+  with no upgrade doc.
+
+  **Pinned, not trusted.** 2 tests in `tests/discontinued_is_read.rs` (8 in the file) assert both
+  descriptions carry the specific words a reader needs. Mutation-checked both ways: reverting
+  `Capability.status` to the bare enum kills the first and nothing else; reverting `OBSOLETES` to its
+  one-line hint kills the second and nothing else. A description nothing reads back is one edit from
+  silently disappearing — the same reason the standing rule is pinned in every skill.
+
+  ⚠️ **This fixes the abandoned case only.** A capability **nobody ever agreed to** has no decision
+  to hang the edge from; that residual stays with `dec:exploratory-staging`, and
+  `dec:idea-does-a-capability-need-a-cancelled-state` stays `proposed`.
+
+- **Every served skill now has a slash command, and the coverage is pinned by a test**
+  (`dec:idea-does-every-served-skill-get-a-command`, accepted 2026-08-14 on Anthony's word,
+  option A; qualifies `dec:commands-are-the-exception`).
+
+  **Found the way this project keeps finding things:** he typed `/capture-session` on a real work
+  project and got `Unknown command`. Measured — 20 skills served, 11 command files, of which two
+  front a tool (`debt.md` → `loop_status`, `decisions.md`), so **nine skills were fronted and
+  eleven were reachable only if an agent thought to call `get_skill`.**
+
+  ⚠️ **It was invisible from this repo, and that is the durable lesson.** `.claude/skills/` holds
+  all twenty as the compile sources, and Claude Code loads any of them as `/<name>` — so every
+  skill resolves *here* and eleven resolved nowhere on a consumer install. The question that
+  authorised shipping commands asked for "the same ergonomics reflow2's own repo has", but the
+  repo's ergonomics come from the **sources**, not the commands. The checkout does not merely fail
+  to reproduce the defect; **it teaches the wrong affordance** — he learned the skill's name in the
+  one place typing it works.
+
+  **NEW COMMANDS (11):** `/capture-session` `/ci-gate` `/impact-check` `/ingest-corpus`
+  `/link-artifacts` `/link-projects` `/parallel-work` `/plan-increments` `/report-friction`
+  `/retire-from-design` `/revise-design`. Named after their skills, because that is what a person
+  who knows the skill exists actually types. The existing short names (`/gaps` → detect-and-ask,
+  `/where` → where-am-i) are unchanged and are what people type today — measured 2026-08-14,
+  **37 `/where` invocations against 4 `get_skill` calls.**
+
+  **THE DURABLE HALF IS THE CHECK.** `skill_lint` already failed a command naming a skill that does
+  not exist; **nothing failed a skill that no command names**, and nothing pinned the count — which
+  is how the records went on saying "eight" while eleven shipped, and how nine of twenty sat
+  uncovered without one gate going red. `every served skill is named by at least one command` now
+  closes that direction. Coverage means *named by* a command, not *same name as* one, so the short
+  aliases still count. Mutation-checked: removing one command turns it red and names the skill.
+
+  **WHY THE COST CHANGED.** The case against widening was Alex's *"inserted several things into my
+  project"*. That was answered the same day by `init` asking which harness and writing
+  `.claude/commands` for Claude Code **only** — an OpenCode or VS Code project receives none of
+  them, so the projects that complained no longer pay for this.
+
+  ⚠️ **KNOWN CONSEQUENCE FOR THE INSTRUMENT:** `surface_usage.py` counts skill use as `get_skill`
+  calls, and a command never touches `get_skill`. Widening coverage will make apparent skill use
+  *fall*. That is a measurement artefact, not a regression — see
+  `fact:skill-use-measured-two-channels-2026-08-14`, which measures both channels (56% vs 87%).
+
+### Changed
+
+- **`REFLOW2.md` refreshed from the kit source**, which had drifted: the served file gained a
+  section on the committed export (`docs/design/<project>.json` is the record teammates read,
+  `.reflow2/` is machine state) and this repo's copy never received it. Surfaced by
+  `check_kit_manifest.py`, which was reporting two findings on `main` before this change.
+
 - **`decomposition_coverage` — the question the roll-up never asks**
   (`req:decomposition-covers-its-parent` → `cap:decomposition-coverage-is-asked`, accepted on
   Anthony's word; the check `dec:idea-a-top-level-graph-holds-what-the-component-graphs-share`
