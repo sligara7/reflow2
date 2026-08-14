@@ -62,12 +62,27 @@ until you push. Point your agent's MCP config at *this* worktree's graph path.
 If you are not using worktrees, an ordinary branch is fine — the isolation that matters is the
 branch, and a worktree only saves you from switching back and forth.
 
-## 3. Export before you commit, always
+## 3. Export once per branch, and make it the last commit
 
-The live graph is not what travels; the export is. Before every commit that touched the design,
-`export_graph` to the committed path — otherwise your branch carries code that moved and a design
-that did not, which is exactly the drift `reconcile_artifacts` exists to catch and the CI gate
-exists to fail on.
+The live graph is not what travels; the export is. A branch that pushes code the design does not
+describe carries exactly the drift `reconcile_artifacts` exists to catch and the CI gate exists to
+fail on — so the design must be exported before the branch leaves your machine.
+
+**But export ONCE, not once per commit.** A branch may hold as many commits as it likes; exactly
+one of them may write the export, and it should be the last. The reason is not tidiness: the
+export records the hash of the export it replaced, and CI checks out the pull request's *merge*
+commit — so its view of "the export before yours" is the base branch, not your branch's previous
+export. Two exporting commits chain perfectly against each other and still read as a severed
+chain from CI's position, which fails the lineage check.
+
+So: work, commit as often as you like, and when the branch is ready —
+
+1. restore the export from the base branch (`git checkout origin/main -- <the export>`), so the
+   new one chains from what CI will compare against;
+2. `export_graph` to the committed path, once;
+3. commit that, last.
+
+If you need to re-export after further design work, amend that commit rather than adding another.
 
 ## 4. Let reflow2 do the merge
 

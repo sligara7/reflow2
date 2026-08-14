@@ -612,6 +612,17 @@ reading order (Vision → Design → Process → Heritage). Then:
    providers like OpenRouter) — never conceptual content.
 6. **Don't touch the sibling source repos** (`../../storyflow`, etc.) — mine them for
    ideas, but all new work lands here.
+7. **A self-host finding owes a served fix.** reflow2 designing itself is a test harness, not
+   the point. A lesson recorded only in reflow2's own graph reaches nobody who uses reflow2:
+   graph nodes are project-local, and a consumer has their own graph and their own rules. So
+   before a finding is filed, ask **which served surface carries it** — a skill, a tool's
+   behaviour or output, the served instructions, or the kit. A finding that lands only in our
+   own record is unfinished work, not a completed capture. Measured 2026-08-14: three gate
+   lessons were captured as DesignRules here while `ci-gate` — served to every project — was
+   silent on all three *and* documented two of its four failure modes, and `parallel-work` told
+   users to export before every commit, which is exactly what the lineage check fails on.
+   The mirror error is real too: don't push our internal discipline into a served skill, where
+   it becomes a rule for somebody else's project that nobody there chose.
 
 ### What carries across sessions, and what does not
 
