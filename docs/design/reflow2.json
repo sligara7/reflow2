@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:f9a65a356b195ba253babe2b64acd2775abcad9acdd701c2425a7aafd1d439dd",
+  "content_hash": "sha256:4b93b03dd8564577a9df898d832277b6625c4c17e5dafc2f43c31c31f1b80dbb",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1185,6 +1185,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:decomposition-coverage-is-asked",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:defaults-are-not-serialized",
       "properties": {
         "weight_basis": "estimated"
@@ -1441,6 +1449,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:init-asks-which-harness",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:packaging"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:install-leaves-a-committable-record",
       "properties": {
         "weight_basis": "estimated"
@@ -1646,6 +1662,22 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:drift"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:nudge-absence-says-why",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:packaging"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:nudge-absence-says-why",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -2086,6 +2118,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:llm"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-design-interview-precedes-the-capture",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -6190,6 +6230,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "cap:decomposition-coverage-is-asked",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "cap:delta-reconcile",
       "properties": {
         "acted_at": "2026-07-28",
@@ -6781,6 +6830,51 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-top-level-graph-holds-what-the-component-graphs-share",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-top-level-graph-holds-what-the-component-graphs-share",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "author"
+      },
+      "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-view-can-slice-by-altitude-not-only-by-aspect",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-view-that-does-not-apply-is-said-so-before-it-is-drawn",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-agent-to-agent-feedback-is-a-formal-channel",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-allocation-waits-for-the-last-responsible-moment",
       "properties": {
         "acted_at": "2026-08-08",
@@ -7086,6 +7180,24 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-init-asks-which-harness-and-installs-only-that",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-init-asks-which-harness-and-installs-only-that",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "author"
+      },
+      "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-intent-crosses-designs",
       "properties": {
         "acted_at": "2026-08-05",
@@ -7239,6 +7351,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-reflow2-serves-a-project-that-is-not-software",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "author"
+      },
+      "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-relevance-ranking",
       "properties": {
         "acted_at": "2026-08-01",
@@ -7372,12 +7493,48 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-graph-vocabulary-never-reaches-the-user",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-graph-vocabulary-never-reaches-the-user",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "author"
+      },
+      "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-the-ility-chooses-the-allocation-graph",
       "properties": {
         "acted_at": "2026-08-08",
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-loop-nudge-exists-for-one-harness-only",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-loop-nudge-exists-for-one-harness-only",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "author"
+      },
+      "to_id": "who:alex"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -8133,6 +8290,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:agent-authored-feedback-is-reproducible-and-never-leaves-unasked",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:an-artifact-declares-what-only-its-author-knows",
       "properties": {
         "acted_at": "2026-08-05",
@@ -8148,6 +8314,15 @@
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:an-unavailable-loop-trigger-is-named-as-unavailable",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "author"
+      },
+      "to_id": "who:alex"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -8301,6 +8476,15 @@
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:init-installs-only-the-harness-you-name",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "author"
+      },
+      "to_id": "who:alex"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -8516,6 +8700,24 @@
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:the-kind-of-system-is-established-before-its-parts-are-captured",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:the-kind-of-system-is-established-before-its-parts-are-captured",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "reviewer"
+      },
+      "to_id": "who:alex"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -14058,6 +14260,24 @@
         "action": "added"
       },
       "to_id": "dec:gap-reporting-when-most-intent-is-unbuilt"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:gitattributes-widening-ruled-on",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:the-design-record-merges-per-node-in-every-clone"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:gitattributes-widening-ruled-on",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:the-git-exchange-path-is-defended-not-only-documented"
     },
     {
       "edge_type": "CHANGED",
@@ -26119,6 +26339,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:agent-authored-feedback-is-reproducible-and-never-leaves-unasked",
+      "properties": {},
+      "to_id": "dec:idea-agent-to-agent-feedback-is-a-formal-channel"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:an-absent-property-means-nobody-said-it",
       "properties": {},
       "to_id": "dec:fix-the-comparison-before-pointing-it-earlier"
@@ -26130,6 +26356,12 @@
         "note": "This requirement is the second guard for a decision that is already accepted and currently defeated in the build -- not new intent. Whether it should exist as a separate requirement at all, or be folded into enforcing dec:ask-not-repair, is Anthony's call."
       },
       "to_id": "dec:ask-not-repair"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:an-unavailable-loop-trigger-is-named-as-unavailable",
+      "properties": {},
+      "to_id": "dec:idea-the-loop-nudge-exists-for-one-harness-only"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -26389,6 +26621,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:init-installs-only-the-harness-you-name",
+      "properties": {},
+      "to_id": "dec:idea-init-asks-which-harness-and-installs-only-that"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:intent-is-reinjected",
       "properties": {
         "note": "Which node type carries the re-injected payload depends on this decision: Snapshot has 14 live instances and already generalizes the P2-to-P3 Anchor, while Anchor has zero and is still advertised by describe_schema."
@@ -26616,6 +26854,12 @@
         "note": "The decision fixes WHERE this requirement is implemented -- reflow2_check.py rather than the server -- so the requirement is shaped by it and any later attempt to build it server-side should meet this first."
       },
       "to_id": "dec:export-serialisation-belongs-to-the-gate"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:the-kind-of-system-is-established-before-its-parts-are-captured",
+      "properties": {},
+      "to_id": "dec:idea-the-graph-vocabulary-never-reaches-the-user"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -58743,6 +58987,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:decomposition-coverage-is-asked",
+      "properties": {},
+      "to_id": "req:decomposition-covers-its-parent"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:defaults-are-not-serialized",
       "properties": {},
       "to_id": "req:an-absent-property-means-nobody-said-it"
@@ -58986,6 +59236,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:init-asks-which-harness",
+      "properties": {},
+      "to_id": "req:init-installs-only-the-harness-you-name"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:install-leaves-a-committable-record",
       "properties": {},
       "to_id": "req:a-consumer-project-ends-up-with-a-committable-record"
@@ -59148,6 +59404,12 @@
       "from_id": "cap:nothing-moved",
       "properties": {},
       "to_id": "req:coherence"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:nudge-absence-says-why",
+      "properties": {},
+      "to_id": "req:an-unavailable-loop-trigger-is-named-as-unavailable"
     },
     {
       "edge_type": "SATISFIES",
@@ -59547,6 +59809,12 @@
       "from_id": "cap:surface",
       "properties": {},
       "to_id": "req:no-se-knowledge"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:the-design-interview-precedes-the-capture",
+      "properties": {},
+      "to_id": "req:the-kind-of-system-is-established-before-its-parts-are-captured"
     },
     {
       "edge_type": "SATISFIES",
@@ -65238,6 +65506,16 @@
       }
     },
     {
+      "node_id": "cap:decomposition-coverage-is-asked",
+      "node_type": "Capability",
+      "properties": {
+        "description": "When a requirement is decomposed, reflow2 raises the coverage question rather than answering it: what did the parent hold that no child holds? The answer is recorded, so a later reader can tell a DELIBERATE NARROWING from an ACCIDENTAL DROP — today both look identical, and both report DELIVERED once the children close.\n\nReports and asks, never judges (`dec:report-dont-judge`). It does not refuse a decomposition, and it does not put an LLM in charge of sufficiency — the honest form named on the requirement is a question put to the user with their answer written back, the same shape every other gap uses.\n\nAPPLIES TO DECOMPOSITION ONLY, not to derivation: a DERIVED requirement adds new technical necessity and is not expected to cover anything, and `cap:requirement-lineage` already holds that distinction (original / decomposed / derived).\n\nDistinct from `cap:derived-completion`, which computes delivery UPWARD from the golden thread and is verified. That computation is the one with the hole: `report.rs` treats a parent as delivered exactly when every child is, and never asks whether the children amount to the parent. This capability supplies the missing question; it does not change the arithmetic.",
+        "name": "A decomposition is asked what it dropped, and the answer is on the record",
+        "provenance": "authored",
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "cap:defaults-are-not-serialized",
       "node_type": "Capability",
       "properties": {
@@ -65628,6 +65906,16 @@
       }
     },
     {
+      "node_id": "cap:init-asks-which-harness",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`init` puts the harness question to the person running it and generates MCP configuration for the harnesses they name, rather than for every harness reflow2 supports. `--harness=…` carries the same answer for non-interactive callers, and a run with no tty resolves without blocking rather than waiting on a prompt nobody can see.\n\nDistinct from `cap:install-reaches-the-agent`, which is about the install reaching a harness that WILL read it — too little. This is the opposite failure: writing for harnesses nobody asked for. The two constrain the same generator from opposite sides, and neither subsumes the other.",
+        "name": "The install asks which harness, and writes only that one's files",
+        "provenance": "authored",
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "cap:install-leaves-a-committable-record",
       "node_type": "Capability",
       "properties": {
@@ -65876,6 +66164,16 @@
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:nudge-absence-says-why",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The loop-nudge state carried on the handshake instructions and on `loop_status` distinguishes a harness that has no hook reflow2 can register from one that supports the hook and lacks it, so only the actionable case reads as something to fix. Consumes the harness answer collected at install time, since the state cannot be derived from the filesystem alone.\n\nExtends `cap:nudge-path-proven` (verified) rather than duplicating it: that capability proves the hook path end to end and reports `installed | absent | broken | unknown`. This narrows `absent`, which today means both \"not registered\" and \"not registerable here\".",
+        "name": "The nudge report says whether the trigger is missing or impossible",
+        "provenance": "authored",
+        "status": "planned"
       }
     },
     {
@@ -66484,6 +66782,16 @@
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:the-design-interview-precedes-the-capture",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Two halves, and neither is useful alone.\n\nINTERVIEW STEP — `genesis` and `capture-intent` gain an explicit early step: establish what KIND of thing is being designed by probing questions in the user's own domain (what must it do, what is it made of, what meets what, what counts as finished, what will you hand someone when it is done), and NEVER by asking the user to choose a node type. Modelled on reflow's S-01A semantic-matching interview, without its framework registry.\n\nROUTING TABLE — a served mapping from the user's phrasing to the node type it belongs in, plus the artifacts to expect for that kind of thing (structural / electrical / plumbing drawings for a facility; schemas and migrations for an IT system). Looked up rather than improvised. Follows `capture-session`'s precedent, whose own routing table's first dogfood found a hole in it — a table can be wrong in public, an improvisation cannot.\n\n📌 THE ANSWER SHAPES EXTRACTION AND PHRASING AND GATES NOTHING. Which questions get asked and which vocabulary is spoken back may vary by the kind of thing; which analyses reflow2 runs must not. A cycle detector runs wherever there are dependency edges, whoever calls them interfaces or interactions.",
+        "name": "The agent asks about the thing, not about the schema — an interview step and a routing table",
+        "provenance": "authored",
+        "status": "planned"
       }
     },
     {
@@ -68799,6 +69107,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The scale finding is recorded: unsatisfied_requirement is per-node (verified in is_aggregate), so 300 captured ideas produce 300 identical gaps — BL-145 at an order of magnitude, against a base rate the detectors never assumed"
+      }
+    },
+    {
+      "node_id": "chg:gitattributes-widening-ruled-on",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "The installer writing .gitattributes into a project that has none is RULED IN on Anthony's word, and the requirement it belongs to is accepted"
       }
     },
     {
@@ -71499,6 +71815,46 @@
       }
     },
     {
+      "node_id": "dec:idea-a-top-level-graph-holds-what-the-component-graphs-share",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "🕐 DEFERRED 2026-08-14 BY ANTHONY — THE SHAPE ONLY, AND DEFERRED IS NOT DECLINED. Asked which form vertical linking should take, he chose to **fix `req:decomposition-covers-its-parent` FIRST and decide the shape after**: every option below makes decomposition more load-bearing, the coverage hole is already measured with a field instance, and settling a tier shape on top of a broken roll-up would bake the defect into precisely the boundary where nobody can see it.\n\n⭐ **AND THE ASK IS NARROWER THAN \"OPTIONS, NONE CHOSEN\" SUGGESTS — ANTHONY CLARIFIED WHAT ALEX MEANS:** *\"I think my brother is more indicating that each tier is its own reflow2 graph that others are linked to vertically.\"* ⇒ **ALEX IS ASKING FOR OPTION (b): A GRAPH PER TIER, WITH VERTICAL LINKS BETWEEN THEM.** Not one graph with levels, and not a rendering. When this re-opens, (b) is the stated starting position rather than an open field — the others stay on the record as roads, not as equals.\n\n⇒ WHAT IS SETTLED: nothing about the shape.\n⇒ WHAT IS NOW LIVE WORK: `req:decomposition-covers-its-parent` (moved to **accepted** on his word) → `cap:decomposition-coverage-is-asked` (planned, `cmp:detect`). ⚠️ Its gap acknowledgement `decision:ack:1947285897ace4dc` — *\"deferred on Anthony's word 2026-07-28… a handshake to design rather than a check to write\"* — was WITHDRAWN, since a parked gap and a planned capability cannot both describe the same work.\n\n🎯 **RE-ASK TRIGGER, NAMED SO THIS CANNOT DEGRADE INTO NEVER ASKED AGAIN** (the shape `dec:the-other-uaf-domains-wait-for-a-project-that-needs-them` set): re-open when the coverage check is BUILT and one of — (i) a real design is split across an authority boundary and someone needs a parent's number to mean something, (ii) `dec:idea-intent-crosses-designs` is settled, since binding-versus-visible is this question in disguise, or (iii) a second user asks for tiers.\n⚠️ WHAT WOULD MAKE THIS DEFERRAL WRONG: someone building a tier hierarchy in prose or file layout while waiting — the workaround that looks like patience and costs exactly what the deferral was meant to avoid.\n📌 NOT ANSWERED BY THE RENDERING ROUTE: `dec:idea-a-view-can-slice-by-altitude-not-only-by-aspect` covers what a reader is SHOWN. It composes with this and does not substitute for it — a first version of that node claimed otherwise and was corrected.\n\n═══════════════════════════════════════════════\n\nRECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Alex (`who:alex`) 2026-08-14, sharpened by Anthony's framing.\n\nALEX'S WORDS: *\"I found myself wanting a top level graph and then graphs for the different components. The top level graph could hold information about the project as a whole and be aware of the graphs for the subcomponents of the graph (UI, API, e2e tests, etc.). In those graphs, we can put the fine details of those components, such as storing information about how migrations are performed in the database. The top level graph could contain domain knowledge that is relevant to all the graphs. This is the system of systems concept.\"*\n\nANTHONY'S FRAMING: *\"instead of being peer-to-peer, this is more tier-to-tier. If peer-to-peer linking is 'horizontal', this idea is more 'vertical' between tiers… you could have a 'leadership' level that doesn't need to know every detail… a 'management' layer that knows more… a 'worker' graph that knows details. At each layer, it is probably the exchange of breadth for depth. In the military, we had 'strategic', 'operational', and 'tactical'.\"*\n\n═══ ⭐⭐ WHY VERTICAL IS NOT HORIZONTAL REUSED ═══\n\n**HORIZONTAL is an INTERFACE.** Two designs meet at a contract; neither contains the other; the coordinate is *\"I designed against your published surface at this hash\"* (`cap:mirror-surface`). A mirror is a REFERENCE.\n**VERTICAL is a DECOMPOSITION.** The upper tier holds intent, the lower tier holds requirements decomposed FROM it, and delivery ROLLS UP — a containment-and-satisfaction relation with arithmetic attached.\n\n⇒ **reflow2 HAS decomposition INSIDE a graph and mirroring ACROSS graphs. It does not have decomposition ACROSS graphs.** That is the gap, and the existing federation work does not close it.\n\n═══ 🛑 MEASURED CORRECTION TO THE RECORD — the parent direction is NOT built ═══\n\n`dec:idea-intent-crosses-designs` asserts *\"THE MECHANISM FOR THE PARENT DIRECTION ALREADY EXISTS… ANTICIPATED and BUILT, not missing.\"* **Too strong:**\n  1. `report.rs` rolls delivery up via `decomposed_children` = `self.incoming(parent_id, DECOMPOSES)` (`graph.rs:1143`).\n  2. Reads are scoped to the bound `graph_id` and `create_edge` resolves BOTH endpoints in scope — a `DECOMPOSES` edge between two graphs cannot be created at all.\n  3. ⇒ **Nothing rolls up across a design boundary.** `cap:derived-completion` is verified WITHIN one graph.\n  4. Mirroring does not rescue it: `export_surface` publishes published Interfaces, the artifacts that SPECIFY/REALIZE them, published Requirements and the Project — **no Verifications.** Delivery = satisfied AND realized AND PASSING CHECK, so **the evidence is exactly the part that does not cross.**\n📌 That node warns *\"READ THE EXPORT, NOT THE SUMMARY\"* after making this error once, then makes it again a paragraph later about a different mechanism.\n\n═══ ⭐⭐ THE TIER FRAMING TURNS A KNOWN DEFECT INTO A WORSE ONE ═══\n\n`req:decomposition-covers-its-parent`: reflow2 rolls delivery UP and **never checks that children COVER the parent** — a parent split into two children addressing a tenth reports DELIVERED once both close. Measured instance: reflow's monolith split into 01a–01f, `context_management` and `self_improvement` present in all six originals, absent from all seven children, **unnoticed for months**.\n\n🛑 **\"EXCHANGE OF BREADTH FOR DEPTH\" IS THE MECHANISM THAT HIDES IT.** A decomposition by SUBJECT drops what belongs to no single subject; trading breadth for depth is that drop made deliberately, tier after tier. Inside one graph a reader sees both sides. **Across an authority boundary they cannot: the strategic tier sees `delivered` and is structurally unable to see what fell between the children** — and it is the tier least likely to look.\n\n═══ 📌 WHAT THE DESIGN ALREADY HOLDS ═══\n\n  · `dec:nested-graphs` (ACCEPTED 2026-07-25) — a graph per OWNERSHIP boundary, `level`s inside; *a graph per system* rejected as a RULE because every seam costs a coordinate, a roll-up and a freshness check. **Alex's UI/API/e2e split is depth under one owner, so under today's rule it is ONE graph — which is exactly the rule his ask strains.**\n  · **THE LEADERSHIP TIER IS ALREADY THERE, EXPRESSED HORIZONTALLY** — that decision calls `docs/org-scale-vision.md`'s *\"one graph the whole company plans in\"* a road not taken and replaces it with *\"the CEO's objectives are one design that others MIRROR.\"* Anthony's point is that a mirror may be the wrong shape, and the roll-up finding says he is right: mirroring gives visibility, not arithmetic.\n  · `dec:idea-intent-crosses-designs` — requirements already cross; the **Decision** cannot. Its unanswered question is this one in disguise: **is a mirrored Decision BINDING on the far side, or only VISIBLE?** Binding is what a tier means; visible is what a peer means.\n  · `dec:idea-many-graphs-one-store`, `dec:idea-one-owner-many-projects` — both open, both the ownership rule strained by people with depth and no authority boundary.\n\n🛑 MODELLING TRAP TO NAME BEFORE ANYONE BUILDS: `Component.level` (component → subsystem → system → system_of_systems → enterprise) is an **ASSEMBLY** ladder — *part of*. Strategic/operational/tactical is an **AUTHORITY and ABSTRACTION** ladder — a tactical design is not PART OF a strategic one, it REALIZES it. Reusing `level` conflates two relations, and `hierarchy_issues` already reads it the assembly way.\n\n📌 UAF, CHECKED RATHER THAN ASSUMED: `dec:the-other-uaf-domains-wait-for-a-project-that-needs-them` names its re-ask trigger for the four DOMAINS (information, materiel, personnel, states), not for layering. **This note does not trigger it.**\n\nOPTIONS — SHAPE DEFERRED, and (b) is what Alex is asking for.\n(a) ANSWER WITH THE ACCEPTED RULE — one graph, `level`s, `cap:scoped-analysis`. Correct today; occurred to neither user.\n(b) ⭐ **ALEX'S ASK** — VERTICAL AS A FIRST-CLASS RELATION: a graph per tier, cross-graph decomposition, intent down and EVIDENCE up. Cost: cross-graph edges, or a mirror carrying verification state; reopens `create_edge`'s endpoint invariant, which is deliberate and well-argued.\n(c) VERTICAL AS MIRRORING, AS TODAY. Cheapest, already decided; the parent can compute nothing about its children.\n(d) TIERS INSIDE ONE GRAPH — an abstraction ladder distinct from `Component.level`, tiers as a projection. No separate ownership or write locks, which is most of what a tier split is for.\n(e) ⭐ **CHOSEN AS SEQUENCING, NOT AS SHAPE** — fix the coverage check first.\n\n📌 ALEX'S OWN EXAMPLE IS STILL UNHOUSED: *\"how migrations are performed in the database\"* is not a requirement, capability or interface — operational know-how attached to a component, with nowhere to go today but an Artifact or a requirement's prose.",
+        "name": "DEFERRED, SHAPE ONLY — vertical (tier-to-tier) linking: Alex means A GRAPH PER TIER linked vertically (option b), and the FORM waits behind the decomposition coverage check",
+        "rationale": "Captured under the brainstorm skill, sharpened by Anthony's vertical/horizontal framing, deferred as to shape on his word, and then narrowed again when he clarified that Alex means a graph per tier rather than levels or a view. That clarification is recorded on the options list itself rather than only in prose, because the re-ask trigger will bring someone back to this node months from now and \"options, none chosen\" would hand them a blank field when the user has in fact stated one. The re-ask trigger follows the precedent `dec:the-other-uaf-domains-wait-for-a-project-that-needs-them` set, including naming what would make the deferral wrong. The measured correction to `dec:idea-intent-crosses-designs` lives here rather than being edited into that node, because withdrawing another node's claim deserves its own visibility rather than a quiet overwrite.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-a-view-can-slice-by-altitude-not-only-by-aspect",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-14, extending Alex's system-of-systems note.\n\nHIS WORDS: *\"the graph is the systems engineering 'object' and can have all vertical tiers. However, when a user requests, give me the 'top level management' view, the agent should be able to get the info from the graph and render the user the requested 'view'. I don't know all the DoDAF and UAF views, but there is probably something for 'management' or 'vision'.\"*\n\n⚠️ **CORRECTED TWICE WITHIN THE HOUR. BOTH CORRECTIONS ARE ON HIS WORD AND BOTH MATTER.**\n\n**CORRECTION 1 — this does not answer Alex.** The first version claimed it *\"may dissolve half of the tier question\"* and read Alex's UI/API/e2e case as an altitude-view problem. Anthony: *\"I think my brother is more indicating that each tier is its own reflow2 graph that others are linked to vertically.\"* Alex wants SEPARATE GRAPHS PER TIER — a storage question. **The altitude view neither answers nor replaces it.** They compose: a tier-split design still wants an altitude view inside each graph.\n  · **ALTITUDE** — how much detail a reader is shown. A VIEW question. No new store, no seam. *This node.*\n  · **OWNERSHIP / TIER** — separate graphs, vertically linked. A STORE question. *`dec:idea-a-top-level-graph-holds-what-the-component-graphs-share`, option (b).*\n  📌 Kept on the record because an agent reading only Alex's words could build the view, declare the ask satisfied, and leave the real thing unbuilt — which is what this node nearly did.\n\n**CORRECTION 2 — option (c) is CLOSED: the UAF/DoDAF catalogue does not belong in reflow2.** It originally proposed rendering CV-1/CV-2/CV-3/AV-1 as first-class outputs. Anthony: *\"we purposefully did not define every UAF/DoDAF view as those are not appropriate for every design project AND reflow2 was meant as 'design anything' and 'build anything'… I left rendering the reflow2 graph to be able to store any design structure/content and left the agent the responsible party for 'rendering' the drawing.\"* **The division is deliberate: the graph stores any structure, the AGENT draws — mermaid, HTML, markdown, whatever suits.** `req:design-anything` (ACCEPTED) is what forbids binding a design-anything tool to one discipline's catalogue. See `dec:idea-a-view-that-does-not-apply-is-said-so-before-it-is-drawn` for the doctrine in full and for the idea it produced.\n\n═══ ✅ MEASURED: TEN VIEWS EXIST, ZERO SLICE BY ALTITUDE ═══\n\n`tools/render_views.py` renders `functional`, `flows`, `structural`, `traceability`, `released`, `decisions`, `evolution`, `provenance`, `fielded`, `budgets` — held to `dec:views-are-projections` (*\"renderer fill-ins are defects\"*) and `cap:bl-40` (no-extrapolation).\n\n🛑 **EVERY ONE IS AN ASPECT VIEW: the whole design through one lens. None answers *\"show me less.\"*** An altitude view trades depth for breadth by FILTERING what is shown — Anthony's *\"exchange of breadth for depth\"* done by the renderer instead of by a decomposition, and therefore **losing nothing**, since the detail stays in the graph. That is its one advantage over the tier-graph route, and it is not an argument against tier graphs, which exist for ownership reasons a view cannot supply.\n\n📌 THE DoDAF MAPPING, KEPT AS CONTEXT AND NOT AS A BUILD TARGET (see correction 2): **CV-1 is titled \"Vision\"** and is the leadership-facing view with no reflow2 equivalent; **AV-1** is the executive summary; CV-2 taxonomy and CV-3 phasing are largely derivable from `Capability` + containment + Epochs, which `view_evolution` and `view_released` already partly cover. ⚠️ The exact UAF abbreviations were NOT verified against the spec and are deliberately not asserted. **The useful reading is that the MATERIAL for a leadership view is already in the graph — not that reflow2 should ship named standard views.**\n\n═══ THE HARD PART ═══\n\n🛑 **WHAT COMPUTES WHICH NODES ARE \"TOP LEVEL\"?** An altitude view is only honest if the filter derives from something the design already records. Candidates, none chosen: `Requirement.designation` (`published` vs `internal` — an audience distinction that already exists, and the strongest candidate), `priority`, `concern`, KPP status, distance from the Project root, an explicit tier property. **A filter chosen by the renderer rather than derived from the graph is precisely the \"renderer fill-in\" the doctrine calls a defect**, so this cannot be settled by taste.\n\n🛑 MODELLING TRAP: `Component.level` (component → subsystem → system → system_of_systems → enterprise) is an **ASSEMBLY** ladder — *part of*. Management/vision altitude is an **ABSTRACTION** ladder. A subsystem is part of a system; a management view is not part of a worker view. Reusing `level` would make `hierarchy_issues` report nonsense.\n\nOPTIONS.\n(a) ALTITUDE VIEW DERIVED FROM AN EXISTING PROPERTY — most likely `designation`. Cheapest, no schema change, testable against the no-extrapolation standard.\n(b) AN EXPLICIT TIER PROPERTY, projected on. `req:a-vocabulary-distinction-proves-it-is-read` demands a computation read it, which this supplies. ⚠️ If tier GRAPHS are ever built, this property and that boundary must not disagree about what a tier is.\n(c) ~~RENDER THE NAMED DoDAF VIEWS AS FIRST-CLASS OUTPUTS~~ — **CLOSED on Anthony's word.** The catalogue belongs to the agent, not to reflow2.\n(d) LEAVE IT — an agent can answer \"show me the top level\" conversationally from `graph_report`. Counter: unrepeatable between sessions. ⚠️ Note this is NOT the same as correction 2: leaving the DRAWING to the agent is doctrine, while leaving the FILTER to the agent's judgement is a renderer fill-in. The distinction is what separates this option from (a).\n\n📌 RELATED AND SEPARATE: `dec:idea-document-generation` and `dec:idea-outward-docs-are-rendered-from-the-graph` ask what to DO with a rendered view; this asks whether the projection exists at all.",
+        "name": "OPEN — reflow2's ten views all slice by ASPECT and none by ALTITUDE, so \"show me the top level\" has no projection behind it (a SEPARATE need from tier graphs, and NOT a licence to hard-code the DoDAF catalogue)",
+        "rationale": "Captured under the brainstorm skill and corrected twice on Anthony's word within the hour — once for misreading Alex's ask as a rendering need, once for proposing that reflow2 ship the named DoDAF views. Both corrections are kept in the text rather than silently replacing it, following `dec:idea-intent-crosses-designs`' precedent, because the two failure modes are worth seeing together: an agent that finds a cheaper adjacent problem and declares the original satisfied, and an agent that reaches for a familiar standard catalogue in a tool deliberately built not to have one. The second is the more likely to recur, since the catalogue is genuinely useful and the pull toward it feels like expertise rather than like a mistake. What survives both corrections is the measurement — ten aspect views, zero altitude views — and the open question of what could honestly compute the filter.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-a-view-that-does-not-apply-is-said-so-before-it-is-drawn",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-14.\n\nHIS WORDS, restating settled doctrine first and then adding the new part: *\"we purposefully did not define every UAF/DoDAF view as those are not appropriate for every design project AND reflow2 was meant as 'design anything' and 'build anything' type construct. This is why I left rendering the reflow2 graph to be able to store any design structure/content and left the agent the responsible party for 'rendering' the drawing. It'd be like if I requested you to render me an OV-1 of reflow2 right now — you'd refer to the graph and pull what you need; then you'd build me a mermaid diagram or some html file or markdown file to show what the OV-1 is. That being said, sometimes not every systems engineering view is applicable to a given design. Feel like the agent should be able to also say, 'an OV-1 isn't applicable for your design; are you sure you want me to generate?'\"*\n\n═══ 📌 THE DOCTRINE THIS RESTS ON, RECORDED SO IT STOPS BEING RE-PROPOSED ═══\n\n**THE UAF/DoDAF VIEW CATALOGUE IS DELIBERATELY NOT IN REFLOW2.** The division is: the GRAPH stores any design structure or content; the AGENT renders the drawing, in whatever medium suits — mermaid, HTML, markdown. Enumerating standard views inside reflow2 would bind a \"design anything\" tool to one discipline's catalogue, and `req:design-anything` (ACCEPTED) is the requirement that forbids it.\n⚠️ **A SESSION PROPOSED EXACTLY THAT AN HOUR EARLIER** — option (c) of `dec:idea-a-view-can-slice-by-altitude-not-only-by-aspect` suggested rendering CV-1/CV-2/CV-3/AV-1 as first-class outputs. **Closed on his word.** It is recorded here because the pull toward hard-coding a familiar catalogue is strong and will recur.\n\n═══ ⭐⭐ THE FINDING: APPLICABILITY AND INVENTION ARE THE SAME QUESTION ═══\n\n`dec:views-are-projections` already holds that **a view is a projection of the graph and renderer fill-ins are DEFECTS**; `cap:bl-40` holds SYNTHESIZE to a no-extrapolation standard.\n\n🛑 **NOW NOTICE WHAT \"NOT APPLICABLE\" ACTUALLY MEANS.** A view does not apply to a design precisely when the graph lacks the material that view projects from. And if the material is absent, **rendering it anyway REQUIRES the agent to invent the content** — which is the defect the doctrine already forbids. So:\n\n  > *\"Is this view applicable?\"* and *\"would drawing it force me to make things up?\"* are **the same question asked at two different times.**\n\n⇒ This is not a new principle. **It is the existing no-fill-in rule moved EARLIER — from a defect caught after the fact, to a question asked before the pen touches paper.** That reframing is what makes it worth building: the rule currently has no moment at which it is enforced, because the only party who could notice is the agent that is already mid-render and motivated to produce something.\n\n⇒ AND IT MAKES APPLICABILITY COMPUTABLE RATHER THAN A JUDGEMENT. *\"Does an OV-1 apply?\"* is a matter of taste. *\"Does this graph hold operational actors, activities and the exchanges between them, and how many?\"* is a count. **The second is answerable by reflow2 without reflow2 ever knowing what an OV-1 is.**\n\n═══ THE SHAPE THAT KEEPS THE CATALOGUE OUT ═══\n\nThe agent DECLARES the projection it intends to draw — the node types and edge types it will read. reflow2 answers with what it actually holds and what is absent. The agent then either renders, or says *\"an OV-1 isn't applicable for your design; are you sure?\"* **reflow2 never learns the view's name, so the catalogue stays with the agent and the counting stays with the graph.** That division is the same one `dec:three-party-checks` already sets: the LLM speaks, the graph counts, the human decides.\n\n⚠️ AND IT MUST ASK, NEVER REFUSE. His wording is *\"are you sure you want me to generate?\"* — a warning with a way through, not a block. Consistent with `dec:ask-not-repair` and `dec:report-dont-judge`. A sparse view is sometimes exactly what the user wants to see; an empty OV-1 is itself a finding about the design.\n\nOPTIONS, NONE CHOSEN.\n(a) LEAVE IT TO THE AGENT — status quo. It can already look at the graph and judge. Counter: unrepeatable between sessions, and the party judging is the one being asked to produce a deliverable, which is the weakest possible position for saying \"this cannot honestly be drawn\".\n(b) ⭐ REFLOW2 ANSWERS A DECLARED PROJECTION — the agent names node/edge types, reflow2 returns counts and absences. Keeps the catalogue out, makes the answer computable and repeatable. Counter: an agent can declare the wrong projection and get a confident answer to the wrong question.\n(c) A SERVED SKILL carries the discipline — a render-a-view skill whose steps include checking the material before drawing. Cheapest, and consistent with skills being where disciplines live. Counter: it is another instruction, and `req:skill-use-survives-a-long-session` is the standing evidence that instructions lose to urgency.\n(d) HARD-CODE PER-VIEW APPLICABILITY RULES. **CLOSED on Anthony's word** — this is the catalogue-in-reflow2 route `req:design-anything` forbids.\n\n🛑 THE LIMIT WORTH STATING: material presence is necessary but not sufficient. A view can be structurally renderable and still be the wrong instrument for the domain — an OV-1 of a machine shop might have actors and activities to draw and still be a category error. **Counting cannot see that; only the human can.** So (b) at its best reports *\"here is what I hold and what I lack\"*, and the applicability verdict stays with the person — which is the same honest division reflow2 uses everywhere else.",
+        "name": "OPEN — should reflow2 be able to tell an agent that a requested view does not apply to this design, given \"would rendering it require invention?\" is the same question as \"is it applicable?\"",
+        "rationale": "Captured under the brainstorm skill. Recorded separately from the altitude-view node because they are separately answerable: reflow2 could learn to report what a declared projection would find without ever gaining an altitude view, and vice versa. The reason this is worth a node rather than a note is the equivalence at its centre — applicability and invention turn out to be one question asked at two times — which converts a matter of taste into a count, and gives the existing no-fill-in doctrine the enforcement moment it currently lacks. Anthony's restatement of why the view catalogue is deliberately absent is recorded here too, because a session proposed hard-coding it an hour earlier and the pull toward a familiar standard catalogue will recur.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-agent-to-agent-feedback-is-a-formal-channel",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-14, after relaying a Grok 4.6 feedback file from one of Alex's projects.\n\nHIS WORDS: *\"This type of feedback is generated by the agent for a project via something like the statement of 'reflow2 is still a development project - please note any issues or gaps or opportunities to improve reflow2 at path/to/feedback.md'. Then the agent provides this feedback. It is probably more 'machine-to-machine' type feedback… we should probably formalize this feedback option within reflow2 with the specific direction of that the agent writing it can write it specifically for another agent - this is cutting out the human to provide specific feedback from one agent to another (you in this case), so it can probably be very efficient and remove any fluff that is needed when a human is in the loop.\"*\n\n═══ ⭐⭐ THE EVIDENCE FOR IT IS ALREADY IN: THE INFORMAL VERSION WORKED ═══\n\nThe file this idea came from produced **four independently reproduced defects** (`fact:agent-feedback-corroborated-2026-08-14`) — the near-duplicate guard firing on golden-thread siblings and across node types, `add_decision` unable to merge without resending the body, correct capture inflating loop debt, and `get_node` missing silently on a type with one instance. **A different agent, on a different model, on a different graph, hit four of them the same day without having read the file.** That yield came from an ad-hoc prompt with no format, no channel and no tooling. Formalising raises the yield of something already proven rather than betting on an untested idea.\n\n😀 AND THE CAPTURE OF THIS VERY NODE SUPPLIED A SEVENTH INSTANCE OF ITS OWN HEADLINE DEFECT: creating this Decision was REFUSED as a near-duplicate of `fact:agent-feedback-corroborated-2026-08-14` — the TemporalFact recording that feedback, written two minutes earlier. A fact about what was reported and a decision about what channel should carry it are not the same write.\n\n═══ 🛑 THE COUNTER, AND IT IS ABOUT WHICH HUMAN IS BEING CUT OUT ═══\n\n**Two different humans are in this loop, and only one of them can be removed.**\n  · **THE ROUTING HUMAN** — the person who currently has to read an agent's friction note, understand it, and relay it. Removing them is pure gain and is what Anthony is describing.\n  · **THE CONSENTING HUMAN** — the person whose project the feedback was written inside. `report-friction` redacts the user's design content and **never files without asking**, and the Grok file honoured that unprompted: *\"Per report-friction: do not open a public issue without asking. This file is the local log.\"*\n\n⚠️ **A channel that carries agent-authored feedback off the machine without that second human is an exfiltration path**, however good the intent. `req:telemetry-carries-usage-never-design-content` exists for exactly this, and the file shows the discipline working — *\"Product/design content is summarized by type and count, not quoted.\"*\n⇒ THE HONEST FORM: **the agent WRITES freely for another agent; the human still decides whether it LEAVES.** Efficiency is gained in the authoring and the reading, never in the consent.\n\n═══ 🛑 A SHARPER COUNTER TO \"REMOVE THE FLUFF\" ═══\n\n**What made that file valuable was not its brevity — it was that its claims were CHECKABLE.** Item 5 named the tool, the arguments and the observed result (`get_node({node_type: Project, id: \"proj:…\"})` → `{node: null}`), so it could be re-run here in one call and confirmed on reflow2's own graph. Its neighbours that were only narrated could not be.\n\n⚠️ **Optimising for compactness could delete precisely what made corroboration possible.** The right target for a machine-to-machine format is REPRODUCIBILITY, not terseness: tool name, arguments, observed result, expected result, and an honest *what I did not check*. The Grok file has all of those — including a *\"Gaps (mine / process)\"* section admitting it skipped `compare_designs` and guessed a Project id. **That self-reporting is not fluff, and it is the first thing a brevity-optimised format would drop.**\n\n📌 IT ALSO SEPARATED CONFIRMED FROM UNCONFIRMED WITHOUT BEING ASKED. Its `get_instructions` truncation report did NOT reproduce here — the payload arrived complete — which is only discoverable because the report was specific enough to test. A format should make that distinction structural rather than leave it to the writer's conscience.\n\nOPTIONS, NONE CHOSEN.\n(a) EXTEND `report-friction` WITH AN AGENT-TO-AGENT MODE — one skill, a second output shape aimed at a maintainer's agent rather than a maintainer. Cheapest, and it inherits redaction discipline already written and honoured in the field.\n(b) A NEW SERVED SKILL, leaving `report-friction` human-facing. Cleaner separation; two skills that must not drift apart.\n(c) A STRUCTURED FORMAT (fields, not prose) so the receiving agent can parse and triage rather than read. Highest leverage for the receiver. ⚠️ The four corroborated items were reproduced from PROSE that happened to name tools and arguments, so a schema helps only if it MANDATES exactly those fields.\n(d) A GRAPH NODE TYPE for feedback. 🛑 Blocked by a real constraint: the authoring agent works inside SOMEONE ELSE'S design, so the note cannot be a node in reflow2's graph without crossing a boundary. It must travel as a DOCUMENT — the same wall `dec:idea-a-top-level-graph-holds-what-the-component-graphs-share` hit, where nothing crosses between graphs but a published surface.\n(e) LEAVE IT AD-HOC — the prompt already works. Counter: it worked because Anthony happened to ask for it and happened to relay it. Nothing makes that repeatable, and the second and third user reports both arrived as email.\n\n📌 THE CONSENT HALF IS ALREADY AN OPEN NODE, AND ALEX ASKED FOR IT HIMSELF: `dec:idea-feedback-collection-is-asked-once-and-recorded` — *\"put in an update that asks me if I want to collect feedback and store my decision in the graph.\"* **This is the CONTENT half of the same mechanism: his node decides whether feedback may travel, this one decides what it says and who it is written for.** Neither is built.\n\n⚠️ THE STANDING REASON THIS MATTERS: every defect in the last two increments was found by a first-time user, by running two real projects at each other, or by an agent writing down what fought it — none by reading code, none by a gate.",
+        "name": "OPEN — should reflow2 formalize agent-authored feedback written FOR another agent, and what exactly is gained by cutting the human out of the loop?",
+        "rationale": "Captured under the brainstorm skill. Two counters are recorded ahead of the options because both cut against the framing rather than against the idea, and an implementer reading only the proposal would miss them: \"cutting out the human\" describes two different humans and only the routing one can go, and the value of the example file came from its reproducibility rather than its economy — so a format optimised for the stated goal of removing fluff would likely delete the self-reported process gaps and the tool-and-arguments detail that made four items checkable in a single session. Kept separate from `dec:idea-feedback-collection-is-asked-once-and-recorded` because that node asks whether feedback may be collected at all and this asks what it contains and who writes it for whom.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-allocation-waits-for-the-last-responsible-moment",
       "node_type": "Decision",
       "properties": {
@@ -71849,6 +72205,16 @@
       }
     },
     {
+      "node_id": "dec:idea-init-asks-which-harness-and-installs-only-that",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED 2026-08-14 BY ANTHONY: **OPTION (c) — INIT ASKS.** Alex's literal request, taken over the recommendation recorded on this node, which was (b) *\"apply the instruction-pointer policy to MCP configs\"*. He chose with (b)'s argument and (c)'s stated costs both in front of him.\n\n⭐ THE STRONGEST CASE FOR HIS CHOICE, which the pre-decision text under-weighted: **(b) GUESSES, AND A WRONG GUESS IS SILENT.** Detection reads a fresh repo that has no signal, falls back to the primary harness, and hands an OpenCode user a `.mcp.json` their tool never opens — with nothing to tell them anything is missing. Asking is the only option on the list that cannot be silently wrong, and a silent wrong install is the exact failure class this project keeps finding (`cap:degraded-surface`'s diagnosis not reaching a by-name caller; the loop nudge registered against a script that is not there; the pointer written into a file the harness never reads). **A question costs one prompt; a silent miss costs a user who concludes reflow2 does not work.**\n\n⚠️ WHAT IT COSTS, RECORDED SO NOBODY IS SURPRISED LATER: the one-liner install becomes a conversation, which is in tension with `user-iterative-release-preference` (*one-liner install, one word to update*). So the non-interactive path is not optional garnish — it is part of the requirement: a flag must carry the answer, and a non-tty must never hang. CI, scripted installs and `adopt` runs are the common path, not the exception.\n\n📌 WHAT (c) DOES NOT SETTLE: the instruction-pointer policy stays as it is (already narrow and correct), and the loop-nudge asymmetry is a separate open question (`dec:idea-the-loop-nudge-exists-for-one-harness-only`) where the problem runs the other way — too little, not too much. Option (d), labelling the generated files, was not chosen but composes with (c) and remains available.\n\n═══ THE ANALYSIS THIS WAS DECIDED FROM, kept because `req:roads-not-taken` says the roads not taken are part of the record ═══\n\nRAISED AS BRAINSTORMING by Alex (`who:alex`), relayed by Anthony 2026-08-14.\n\nHIS WORDS: *\"`reflow2 init .` for a project should be more like a CLI wizard that asks you what agent harness you are utilizing (Claude, Grok, ChatGPT, open code, etc.) and only installs the necessary file changes based on your choice. It needs the correct mcp setup, the graph artifact that can be git committed and the agents.md reference.\"*\n\n✅ HIS THREE NAMED ESSENTIALS ARE ALL ALREADY PRODUCED on HEAD (`cbb1a19`): the MCP setup, the committed export at `docs/design/<project>.json` (since PR #172), and the `AGENTS.md` reference. **Nothing he needs is missing — the complaint is that things nobody asked for arrive alongside them.**\n\n⭐⭐ THE FINDING THAT REFRAMED THE QUESTION: `tools/reflow2_init.py` ALREADY IMPLEMENTS ALEX'S PRINCIPLE — for instruction files — AND THE OPPOSITE ONE FOR MCP CONFIGS, ABOUT 150 LINES APART. Both deliberate, each carrying its reasoning in a comment, and they contradict each other.\n\n  · INSTRUCTION POINTERS (`pointer_targets`, `CREATE_IF_NO_INSTRUCTION_FILE`) — appends only to instruction files the project ALREADY OWNS; when it owns none, creates just `CLAUDE.md`. The comment rejects the alternative in as many words: *\"writing GEMINI.md, .cursorrules and the rest into a repo that asked for none of them is **spam**, and the sidecar we create (AGENTS.md) already IS the agents.md convention that the others increasingly follow.\"*\n  · MCP CONFIGS (`MCP_CONFIGS`) — writes `.mcp.json`, `opencode.json` AND `.vscode/mcp.json` unconditionally: *\"One generator, several files — a project opened in a different tool should just work.\"*\n\n⇒ So the question was never \"should init ask?\" but \"which of init's two existing policies is right?\" — and (c) settles it toward the narrow one, by asking rather than by inferring.\n\nTHE OPTIONS AS THEY STOOD.\n(a) LEAVE IT — extras are inert. Counter: init's own code calls that spam one screen away, and a first-time user read it as clutter.\n(b) APPLY THE POINTER POLICY TO MCP CONFIGS — detect, falling back to the primary harness. No prompt, internally consistent. **Counter that decided it: detection has no signal on a fresh repo, which is exactly when init runs, so it guesses — and guesses silently.**\n(c) ⭐ **CHOSEN** — ASK, with `--harness=…` for non-interactive use.\n(d) INSTALL ALL, BUT LABEL each file with which tool reads it and that deleting it is safe. Not chosen; composes with (c).\n(e) ASK ONLY WHEN AMBIGUOUS — detect, prompt when detection is empty. Not chosen; two code paths, and behaviour that differs between a fresh and an established repo.\n\n📌 SCOPE, because it makes the change smaller than it sounds: most of what `init` writes is HARNESS-NEUTRAL and untouched — `AGENTS.md`/`REFLOW2.md`, the committed export, `.gitignore`, `.gitattributes`. The harness-specific surface is the three MCP configs, the instruction pointer (already policy-correct), and the loop-nudge hook.\n\n⚠️ VERSION CAVEAT: two of Alex's five notes describe defects already fixed, so he is probably on an older kit (`fact:second-user-notes-2026-08-14-two-items-already-fixed`). Measurements here are against HEAD; an older `init` may have written a different set of files than what he saw.",
+        "name": "DECIDED — `init` ASKS which harness you use and installs only that one's files (option c), settling init's two contradictory install policies in favour of the narrow one",
+        "rationale": "Raised under the brainstorm skill and settled the same day on Anthony's word. Two things are deliberately on the record rather than smoothed away: that the choice went AGAINST the option this node recommended, and the reason his choice is nonetheless the stronger one — detection guesses, and a wrong guess about which harness will open a repo produces a silent failure, which is the failure class this project has now hit four separate times. The pre-decision text is kept in full beneath the outcome because `req:roads-not-taken` makes the rejected options part of the record, and because the instruction-pointer contradiction it documents is a real finding about `reflow2_init.py` that survives whichever option was taken.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:idea-intent-crosses-designs",
       "node_type": "Decision",
       "properties": {
@@ -72019,6 +72385,16 @@
       }
     },
     {
+      "node_id": "dec:idea-reflow2-serves-a-project-that-is-not-software",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Alex (`who:alex`), relayed by Anthony 2026-08-14.\n\nHIS WORDS: *\"I don't think it should be focused on a specific topic like software engineering as I'd like to use it for other projects like my shop.\"*\n\n🛑 THE INTENT IS ALREADY ACCEPTED, SO THIS IS NOT A NEW REQUIREMENT. `req:design-anything` (ACCEPTED): *\"Software, hardware, a document, a process — the vocabulary stays neutral.\"* What Alex hit is not the vocabulary — it is EVERYTHING WRAPPED AROUND IT. The served instructions and skills assume a codebase throughout: Artifacts are source files with checksums, `link-artifacts` opens on *\"Unity C#, a spec, a doc\"*, `ci-gate` is a build gate, the loop's step 3 is *\"build only what the graph specifies\"*, and his own example — how database migrations are performed — is the one part of his note that IS software. **The nouns are neutral and the worked examples, defaults and skills are not.**\n\n⭐ SO THE HONEST STATEMENT OF THE GAP: reflow2 can MODEL a shop today, and nothing in what a shop owner would actually read shows them how. That is a delivery problem, and it is the same shape as two findings already on the record — `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue`, and the installer wording Alex himself caught, where the information existed somewhere the person was not.\n\n✅ TWO MEASURED FACTS THE OPTIONS HAVE TO LIVE WITH:\n  · `Project.domain` IS WRITTEN AND NEVER READ (`req:framework-is-chosen-not-defaulted`). The field that would carry \"this is a shop, not a service\" already exists and drives nothing.\n  · The Environment / EnvironmentRule compliance layer was DESIGNED IN FULL AND NEVER BUILT, and `dec:idea-the-environment-compliance-layer-was-designed-and-never-built` says in as many words that it *\"is what makes 'design a house' concrete\"*. The non-software story has a designed, unbuilt half already sitting in the graph.\n\nOPTIONS, NONE CHOSEN.\n(a) NOTHING TO DO — the requirement is accepted and the vocabulary is neutral; a competent agent adapts. Counter: the second user, holding the tool, concluded the opposite from what he actually saw.\n(b) ONE WORKED NON-SOFTWARE EXAMPLE end to end — his shop is the obvious candidate and he is volunteering to be the test case. Cheapest thing that would have prevented his impression, and it produces evidence rather than assertion.\n(c) MAKE `Project.domain` READ — let it select examples and defaults. **This is the option the design's own rules already point at:** `req:a-vocabulary-distinction-proves-it-is-read` says a distinction no computation reads should be removed or made real, and `domain` is currently the former.\n(d) BUILD THE ENVIRONMENT COMPLIANCE LAYER, on the grounds that regulation and physical context are what non-software design mostly IS. Largest, and it has its own open decision already.\n(e) SAY IT PLAINLY IN THE DOCS — reflow2 is software-first today, other domains work but are untravelled. Costs nothing, makes no promise it cannot keep, and is the only option that stays honest whichever of the others is chosen.\n\n📌 WORTH KNOWING WHO IS ASKING: this is the third distinct thread where Alex's use diverges from Anthony's, and his projects are the only non-reflow2, non-flo2 evidence the design has. `dec:idea-feedback-collection-is-asked-once-and-recorded` — which ALEX HIMSELF ASKED FOR — is the mechanism that would stop each of these arriving as a relayed email.",
+        "name": "OPEN — `req:design-anything` is accepted and the DELIVERY is still software-shaped; what closes the gap between a neutral vocabulary and a toolchain full of code?",
+        "rationale": "Captured under the brainstorm skill. Recorded as an open question rather than as a requirement precisely BECAUSE the requirement already exists and is accepted: the useful question is not \"should reflow2 design anything\" (settled, yes) but \"what is still software-shaped after that was settled\", and framing it the first way would have produced a duplicate of `req:design-anything` and lost Alex's actual point.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-relevance-ranking",
       "node_type": "Decision",
       "properties": {
@@ -72169,6 +72545,16 @@
       }
     },
     {
+      "node_id": "dec:idea-the-graph-vocabulary-never-reaches-the-user",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED 2026-08-14 BY ANTHONY: **BOTH (a) AND (b).** A served interview step carries *when and what to ask* — in domain language only — and a served routing table carries *how the user's words map to node types*, plus which artifacts to expect for that kind of thing. His reasoning: **neither half is useful alone.** A skill without a table leaves the mapping improvised, which is the failure Alex hit; a table without a skill is never consulted. Option (c), leaving it to agent judgement, is closed — it has now been observed failing on the second user's first real project. Option (d), detecting it, stays rejected-for-a-reason: the evidence never enters the graph.\n\n⇒ SATISFIES `req:the-kind-of-system-is-established-before-its-parts-are-captured` (captured the same day on Anthony's word, from Alex's report). This decision settles HOW that requirement is delivered; the requirement states WHAT is owed.\n\n⭐⭐ THE PRIOR ART SETTLES THE SHAPE, AND ONLY HALF OF IT SURVIVES — `reflow/workflows/00b-framework_selection.json`, read 2026-08-14 at Anthony's pointer:\n  · **THE TERMINOLOGY REGISTRY** (`definitions/framework_registry.json`: node → `service`/`gene`/`agent`/`species`) was CORRECTLY REJECTED by `req:framework-is-chosen-not-defaulted` (now `dropped`) — cosmetic renaming, plus a load-bearing claim that *\"framework choice determines which NetworkX analyses are available\"*, which gates capability on a self-declared label. **The routing table decided here is NOT that**: it maps the user's phrasing to reflow2's own unchanged vocabulary, and gates nothing.\n  · **THE SEMANTIC-MATCHING INTERVIEW** is what survives, and it is not cosmetic. S-01A: *\"Framework selection is an ARCHITECTURAL DECISION, not a configuration choice. Wrong framework = wrong insights.\"* LESSON-04: *\"Framework abstractions must match system semantics. Workflows are state machines (not services), even though both could be 'engineered systems'.\"* **Its first action is \"Ask user to describe the system\" — domain language, not node types.**\n\n🛑 **AND THE DROPPED REQUIREMENT HAD ALREADY WRITTEN DOWN THE SURVIVOR.** `req:framework-is-chosen-not-defaulted` closes: *\"domain as a hint to EXTRACTION and phrasing — what vocabulary the agent uses when talking to the user and reading their documents — without ever gating which computations run. That keeps the honest part of reflow's insight (a biologist should not be told about 'services').\"* It was dropped as a registry, its surviving half was named in its own text, **nobody built it, and the second user then walked into exactly that gap.** A road correctly not taken left a fork nobody came back for.\n\n═══════════════════════════════════════════════\n\nRECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Alex (`who:alex`), relayed by Anthony 2026-08-14.\n\nHIS WORDS: *\"It was a little unsure of how to store the data models for my project in the graph. It asked me what node types it should store them as. I didn't really know for sure so I told it to figure it out. It worked, but that might be confusing for someone who isn't technical… it should probably ask probing questions to figure this out without exposing internal components of the graph structure to the user.\"*\n\n⭐ THE INVERSION IS THE FINDING. Mapping a person's words onto node types IS the agent's job and is written down as such — `capture-intent` exists to turn what the user said into Requirements / Capabilities / Components / Interfaces, and `describe_schema` exists so the AGENT can discover the vocabulary rather than guess. **The agent had both and handed the question back to the user anyway.** The schema is not under-documented here; the labour was returned to the one person in the room with no reason to know the answer.\n\n🛑 AND REFLOW2 CANNOT SEE THIS HAPPEN. Every detector reasons over nodes already in the graph, and a leaked question leaves no node — the user's confusion lives in the conversation, never in the record. `loop_status` would have read perfectly clean through the whole exchange. **Same shape as `req:skill-use-survives-a-long-session`: a discipline that exists only as an instruction, with nothing able to observe whether it held.** That is the standing argument for why the table matters as much as the skill line: a table can be wrong in public, an improvisation cannot.\n\n📌 IT ALSO WORKED, WHICH IS THE UNCOMFORTABLE PART. He said *\"I told it to figure it out\"* and the result was fine. So the cost is not a wrong graph — it is that a non-technical user meeting the same prompt has no such escape, and answering it wrongly would put their design in the wrong shape without either party noticing.\n\nTHE OPTIONS AS THEY STOOD.\n(a) ⭐ **CHOSEN** — an interview step in the skills: never ask for a node type; ask about the thing itself and do the mapping yourself.\n(b) ⭐ **CHOSEN** — a served routing table, phrasing → node type, plus expected artifacts per kind of thing. Precedent: `capture-session` ships one and its first dogfood found a hole in it.\n(c) LEAVE IT TO AGENT JUDGEMENT — **CLOSED**, observed failing.\n(d) DETECT IT — rejected for a reason: the evidence never enters the graph, so any check would have to live in the harness and read the conversation.\n\n⚠️ ONE HONEST TENSION, UNCHANGED BY THE DECISION: some vocabulary reaching the user is CORRECT. `where-am-i` reports the design back in their words and gap questions are deliberately plain, so the rule is *never make the user choose the internal category* — not *never say a word from the schema*. Drawn loosely it would produce a skill that fights `describe_schema`'s legitimate use.",
+        "name": "DECIDED — the agent never asks the user to pick a node type: a served interview step carries WHEN and WHAT to ask, a served routing table carries HOW their words map",
+        "rationale": "Raised under the brainstorm skill from Alex's report and settled the same day on Anthony's word, after reading the reflow prior art he pointed at. The reading changed the shape of the answer: reflow's S-01A turns out to contain two separable things, and reflow2 had dropped both together when only the terminology registry deserved it. Recording that split matters because the surviving half — the semantic-matching interview — was already named in the dropped requirement's own closing paragraph, and a future session finding `req:framework-is-chosen-not-defaulted` at `dropped` would otherwise reasonably conclude the whole idea was rejected.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:idea-the-ility-chooses-the-allocation-graph",
       "node_type": "Decision",
       "properties": {
@@ -72186,6 +72572,16 @@
         "name": "OPEN — should the kit ship a command that tells a project how it is out of date, instead of every agent re-deriving the migration?",
         "rationale": "Raised because the evidence arrived in an unusually clean form. `req:thin-install` is ACCEPTED and quotes Alex asking for exactly this on 2026-07-25; `cap:skills-served` delivered the forward half; and on 2026-08-08 Alex — the requirement's own author — spent eight manual steps escaping a 0.11.0 kit under a 0.24.0 binary, because nothing exists for a project installed BEFORE served skills. TWO AGENTS DERIVED THAT MIGRATION INDEPENDENTLY THE SAME DAY AND DISAGREED: his eight steps against my seven, overlapping on six. His included a regression (rewriting `--graph-path` to a relative path, the configuration `dec:no-design-here-never-looked` records as minting an accidental third graph in Anthony's own repo); mine got the stamp filename wrong on first pass. Neither was careless — the knowledge is scattered across the installer source, three accepted decisions and two verifications, and is re-derived per session. That is the failure reflow2's own instructions name as its reason to exist, pointed at the migration rather than the design. Evidence: fact:defect-a-pre-served-skills-install-is-stranded and fact:defect-installer-cannot-warn-that-the-graph-dir-is-already-tracked.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-the-loop-nudge-exists-for-one-harness-only",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED 2026-08-14 BY ANTHONY: **ANNOUNCE THE ABSENCE (option c)** — install what the named harness can take, and say plainly when it gets no loop trigger. Option (b), registering a real per-harness equivalent, was NOT rejected: it is compatible with this and remains available wherever an event model turns out to exist. Option (a), leaving it Claude-only and silent, is closed.\n\n⭐⭐ AND READING `cap:nudge-path-proven` BEFORE CAPTURING CHANGED WHAT THIS REQUIRES. **The absence is ALREADY announced.** That capability is VERIFIED and its backstop reports `installed | absent | broken | unknown`, carried both on the handshake instructions — *\"the one channel every session reads unasked\"* — and as a machine-readable field on `loop_status`. A naive reading of \"announce the absence\" would have rebuilt something that exists.\n\n🛑 **THE ACTUAL GAP IS NARROWER AND SHARPER: THE ANNOUNCEMENT CANNOT SAY WHY.** The backstop looks for a registered Stop hook. On an OpenCode or Grok project it finds none and reports `absent` — which is TRUE and reads as *\"you forgot to install this\"*. **It tells the user to fix something they cannot fix.** That is a different state from a Claude project where the hook was genuinely skipped, and reporting them identically sends one of the two users on an impossible errand.\n\n⇒ SO THE REQUIREMENT IS A DISTINCTION, NOT A NEW ANNOUNCEMENT: *not installed here* (fixable — install it) versus *cannot be installed here* (permanent — the harness has no hook, so the loop is yours to run by hand). `absent` currently means both.\n\n📌 WHY THIS FOLLOWS FROM THE PREVIOUS DECISION RATHER THAN MERELY SITTING BESIDE IT. `dec:idea-init-asks-which-harness-and-installs-only-that` (ACCEPTED, same day) makes init ASK which harness. Once the user has NAMED OpenCode, handing them silence about a missing safety net is exactly the silent-wrong-install failure that decision was taken to avoid. **Asking makes staying quiet indefensible: the moment the user tells you their harness, you owe them an honest answer about what it can and cannot have.**\n\n🛑 A STALE CLAIM FOUND WHILE READING, AND IT IS A REAL DEFECT: `cap:nudge-path-proven`'s description ends *\"This matters because reflow2_init installs no hooks at all: every consumer project has no session-end nudge, and until now nothing said so.\"* **That is no longer true.** `ensure_hooks` registers four events (SessionStart, two PostToolUse matchers, Stop) into `.claude/settings.local.json`, measured by running init on 2026-08-14. A VERIFIED capability is carrying a claim about a peer that changed underneath it — the description was right when written and nothing re-read it. Worth correcting on its own, and worth noting as another instance of a fact that no computation reads and therefore nothing rechecks.\n\n═══ THE ANALYSIS THIS WAS DECIDED FROM ═══\n\nRAISED AS BRAINSTORMING by Alex (`who:alex`), relayed by Anthony 2026-08-14 — the parenthetical half of his settings note, NOT covered by the upsert fix that closed the rest of it.\n\nHIS WORDS: *\"`reflow2 init .` should upsert `settings.local.json` **(or whatever settings file is relevant for the agent harness)** instead of replacing it.\"*\n\n✅ MEASURED ON HEAD (`cbb1a19`): `ensure_hooks` writes to exactly ONE path — `project/.claude/settings.local.json`. `MCP_CONFIGS` generates three harnesses' server configs; `HOOK_EVENTS` is registered for one. **A project opened in OpenCode, Grok CLI or Copilot gets the MCP server and no loop nudge at all.**\n\n🛑 WHY THAT IS MORE THAN AN INSTALLER ASYMMETRY: the served instructions argue for the hook in the strongest terms available — *\"a discipline that depends on being remembered loses to urgency every time; fire it on a trigger, not on virtue\"* — and say so because real use showed an agent under load keeps ADDING NODES while the capture→detect→ask→decide loop silently stops. Those harnesses run reflow2 with exactly the mechanism removed that exists because virtue was measured to fail.\n\n⭐ IT COMPOUNDS WITH A SIBLING FINDING: `dec:idea-the-graph-vocabulary-never-reaches-the-user` records that reflow2 cannot observe an agent misbehaving in conversation. Here it cannot observe an agent that was never nudged either. Both are disciplines with no observer — and on a non-Claude harness there is not even a trigger.\n\n📌 A SMALLER TELL IN THE SAME FILE: in `IGNORE_LINES`, `.mcp.json` and `.claude/settings.local.json` each carry an explanatory comment while `opencode.json` and `.vscode/mcp.json` get an empty one. The Claude path is the travelled one.\n\nTHE OPTIONS AS THEY STOOD.\n(a) LEAVE IT Claude-only. **CLOSED** — after the asking decision, a named harness getting silence is indefensible.\n(b) REGISTER A PER-HARNESS EQUIVALENT, same generator shape as `MCP_CONFIGS`. Not chosen now, not rejected: needs a real event model per harness, and a wrong guess produces the silently-broken hook `ensure_hooks` already refuses to create. **Ship where an event model is confirmed to exist.**\n(c) ⭐ **CHOSEN** — announce the absence.\n(d) MOVE THE TRIGGER OFF THE HARNESS — the server sees every tool call. Counter that keeps it unchosen: the server cannot block a session's stop, which is the one moment the nudge is worth most.\n\n⚠️ VERSION CAVEAT: two of Alex's five notes describe defects already fixed, so he is probably on an older kit (`fact:second-user-notes-2026-08-14-two-items-already-fixed`). Measurements here are against HEAD.",
+        "name": "DECIDED — a harness that cannot take the loop nudge is TOLD so, and the announcement distinguishes \"not installed\" from \"cannot be installed here\"",
+        "rationale": "Raised under the brainstorm skill and settled the same day on Anthony's word. The capture deliberately read `cap:nudge-path-proven` in full BEFORE writing the requirement, and that read changed the answer: the announcement the decision asks for already exists, so the honest requirement is the DISTINCTION the existing announcement cannot draw rather than a second announcement beside it. Recorded that way so a later session does not build a duplicate reporter and then wonder why two things report the nudge. The stale sentence found in that capability's description is kept here as a finding rather than silently fixed, because a verified capability carrying an out-of-date claim about a peer is worth someone deciding about, not worth an agent quietly editing.",
+        "status": "accepted"
       }
     },
     {
@@ -73075,7 +73471,7 @@
         "decision": "Accepted the gap gap:1947285897ace4dc.",
         "name": "Reviewed: gap:1947285897ace4dc",
         "rationale": "Deferred on Anthony's word, 2026-07-28, closing the reflow workflow review. Accepted and not dropped, and better evidenced than most parked items: the risk was identified analytically the same day (report.rs:566 rolls delivery up a decomposition without ever asking whether the children cover the parent) and then observed in the field (reflow's own 01 monolith split into 01a-01f, losing context_management and self_improvement from every child, unnoticed for months). Deferred because the honest form is a QUESTION AT DECOMPOSITION TIME with the answer recorded, not a computed refusal — nothing can mechanically decide whether two children amount to a parent, and a detector that guessed would either block correct narrowing or bless real loss. That makes it a handshake to design (which question, asked when, recorded where) rather than a check to write. Must apply to decomposition alone: req:requirement-lineage distinguishes decomposed from derived, and a derived requirement adds new technical necessity nobody asked for, so it is not expected to cover anything.",
-        "status": "accepted"
+        "status": "superseded"
       }
     },
     {
@@ -79220,6 +79616,18 @@
       }
     },
     {
+      "node_id": "req:agent-authored-feedback-is-reproducible-and-never-leaves-unasked",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "Agent-to-agent feedback is written for reproduction, not for brevity — and the human whose project it was written inside still decides whether it leaves",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "ANTHONY, 2026-08-14, settling the two constraints on agent-authored feedback while the DELIVERY mechanism stays open on `dec:idea-agent-to-agent-feedback-is-a-formal-channel`. Both were raised as counters to his own proposal and he agreed with both.\n\n═══ 1 · THE CONSENT BOUNDARY — who may be cut out, and who may not ═══\n\n**TWO DIFFERENT HUMANS ARE IN THIS LOOP AND ONLY ONE MAY BE REMOVED.**\n  · **THE ROUTING HUMAN** — the person who today must read an agent's friction note, understand it, and relay it onward. Pure overhead. **Removing them is the point of the whole idea.**\n  · **THE CONSENTING HUMAN** — the person whose project the feedback was written INSIDE. **Not removable.**\n\nHIS WORDS: *\"the agent writes freely for another agent; the human still decides whether it leaves.\"*\n\n⇒ WHAT THIS REQUIRES: an agent may compose feedback for another agent without a human in the authoring loop, at any length and in any form useful to a machine reader. **Nothing may transmit it off the machine it was written on without that project's owner deciding.** A channel that ships unasked is an exfiltration path however good the intent, because the material was produced inside someone else's design.\n\n📌 THE DISCIPLINE ALREADY EXISTS AND WAS HONOURED UNPROMPTED IN THE FIELD. `report-friction` redacts the user's design content and never files without asking; the Grok 4.6 feedback file of 2026-08-13 wrote its own guard rail: *\"Per report-friction: do not open a public issue without asking. This file is the local log.\"* and *\"Product/design content is summarized by type and count, not quoted.\"* **This requirement does not invent that restraint — it says the new channel may not lose it.** `req:telemetry-carries-usage-never-design-content` is the standing rule it inherits.\n\n📌 CONSENT IS SEPARATELY MODELLED AND UNBUILT: `dec:idea-feedback-collection-is-asked-once-and-recorded` — asked for by Alex himself — decides WHETHER feedback may travel. This requirement decides that it may not travel without that answer.\n\n═══ 2 · THE FORMAT TARGET — reproducibility, not terseness ═══\n\nHIS WORDS: *\"The target should be reproducibility, not terseness.\"*\n\n⇒ WHAT THIS REQUIRES: agent-authored feedback is written so a receiving agent can RE-RUN the claim, not merely read it. Each report names the tool, the arguments, the observed result, the expected result, and — explicitly — **what the author did not check.**\n\n🛑 THE EVIDENCE, AND IT IS WHY THE OBVIOUS OPTIMISATION IS WRONG. The stated appeal of a machine-to-machine channel is that it can *\"be very efficient and remove any fluff that is needed when a human is in the loop.\"* **But brevity is not what made the 2026-08-13 file valuable.** Four of its items were independently reproduced by a different agent on a different graph within a day (`fact:agent-feedback-corroborated-2026-08-14`), and every one of the four was reproducible **because it named the tool and its arguments**: `get_node({node_type: Project, id: \"proj:…\"})` returning `{node: null}` could be re-run in a single call and confirmed. Its items that were only narrated could not be checked at all.\n\n⚠️ **A FORMAT OPTIMISED FOR COMPACTNESS WOULD DELETE EXACTLY THE PARTS THAT WORKED.** The same file carried a *\"Gaps (mine / process)\"* section admitting it had skipped `compare_designs`, guessed a Project id, and not exported after writing. That self-reporting reads as overhead and is the first thing terseness removes — yet it is what tells a reader which claims are load-bearing and which are unexamined.\n\n⚠️ AND THE CONFIRMED/UNCONFIRMED SPLIT MUST BE STRUCTURAL, not left to the writer's conscience. That file's `get_instructions` truncation report did NOT reproduce here — the payload arrived complete — which was only discoverable because the claim was specific enough to test. A report that cannot be tested cannot be disconfirmed either, and an untestable claim that hardens into folklore is the failure `dec:idea-intent-crosses-designs` already recorded once about this project.\n\n═══ WHAT THIS REQUIREMENT DOES NOT SETTLE ═══\n\nThe mechanism is open on `dec:idea-agent-to-agent-feedback-is-a-formal-channel`: extend `report-friction` with an agent-to-agent mode, a new served skill, a structured field format, or leave it ad-hoc. **Option (d), a graph node type, is blocked by a real constraint** — the authoring agent works inside someone else's design, so the note must travel as a DOCUMENT rather than as a node.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:agent-native",
       "node_type": "Requirement",
       "properties": {
@@ -79293,6 +79701,18 @@
         "rationale": "THE SAFETY MODEL IS CURRENTLY INVERTED, and it is not a hypothetical: propose_heal offered 10 operations, every one a Merge that DELETES its remove_id, including a load-bearing requirement — while the check-health skill tables `duplicate` as the machine-fixable half and tells the agent in terms that requires_human_review being true 'does not mean you should withhold the mechanical merge'. So THE HALF AN AGENT IS TOLD TO APPLY UNREVIEWED IS THE DESTRUCTIVE ONE, AND THE HALF IT IS TOLD TO ESCALATE MUTATES NOTHING. An agent following the skill exactly deletes ten design nodes; the reporter stopped only because the pairings looked implausible enough to read. Root cause and the full chain are recorded in fact:defect-ingest-writes-duplicates-that-heal-then-merges. THE SHARED-GRAPH MULTIPLIER, which is why this is a separate requirement from fixing the scorer: on a solo graph a bad merge is one person's undo. Here one session's apply hits three bosses and four workers instantly, with no undo and no notification to anyone else. All three bosses stood down on it 3/3 and the whole fleet was barred from check-health. A SECOND INSTANCE OF THE SAME SHAPE, different tool: propose_heal offered generate_bridge on req:stateless_scaling where the user had explicitly ruled that drawing a SATISFIES edge would be a forgery. THE TOOL'S SUGGESTED FIX BEING THE HARM IS NOW TWICE — a bridge adds a wrong edge; this deletes a node. NOTE THE TENSION TO RESOLVE DELIBERATELY: reflow2 already holds dec:ask-not-repair (accepted) saying merge is safe only because the endpoints were asserted by a human. This requirement is arguably not new intent but a second guard for a decision that is already accepted and currently defeated — worth deciding which of those it is before building.",
         "statement": "An operation that destroys design content SHALL NOT be classified as a mechanical fix an agent may apply without review, and on a shared graph it SHALL require the acting seat to acknowledge that other sessions are attached. Requested as the #6 fleet ask, and as the highest-severity item dev_storyflow has sent this channel (sb-boss ab2291fa, api-boss 5d608b85, 2026-08-07).",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:an-unavailable-loop-trigger-is-named-as-unavailable",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A harness that cannot carry the loop nudge is told so, distinctly from one that merely has not installed it",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "When a project runs on an agent harness reflow2 has no loop-nudge hook for, that is reported as a DISTINCT state from a harness that supports the hook and does not have it registered. The two are different situations and only one of them is actionable:\n\n  · NOT INSTALLED HERE — the harness can carry the trigger and it is missing. Fixable: install it.\n  · CANNOT BE INSTALLED HERE — the harness has no event reflow2 can register. Permanent: the coherence loop is the user's to run by hand, and saying so is the whole of what is owed.\n\nReporting them identically sends the second user to fix something that cannot be fixed, and leaves them believing reflow2 is misconfigured when it is working as designed.\n\nTHIS EXTENDS AN EXISTING ANNOUNCEMENT RATHER THAN ADDING A SECOND ONE. `cap:nudge-path-proven` already reports `installed | absent | broken | unknown` on the handshake instructions and as a machine-readable field on `loop_status`. `absent` currently carries both meanings above. The requirement is the distinction, not the channel — nothing new should be built to say it.\n\n⚠️ WHAT THIS COSTS, and it is the part most likely to be missed: the backstop infers the nudge's state by looking for a registered Stop hook in the Claude settings file. It does not know WHICH harness the project uses, so it cannot presently tell \"this harness has no hook\" from \"this hook is missing\". **The harness answer that `req:init-installs-only-the-harness-you-name` collects must therefore be PERSISTED somewhere the server can read it** — otherwise the distinction has no input, and the report can only ever guess.\n\nRaised by Alex (`who:alex`) 2026-08-14 as the parenthetical of his settings note — *\"or whatever settings file is relevant for the agent harness\"*; settled by Anthony the same day on `dec:idea-the-loop-nudge-exists-for-one-harness-only`.",
+        "status": "proposed"
       }
     },
     {
@@ -79634,7 +80054,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "reflow2 rolls delivery UP a decomposition and never checks that the children COVER the parent. report.rs:566 is explicit: if a requirement has decomposed children, it is delivered if and only if every child is delivered — \"let children = self.decomposed_children(requirement_id)?; if children.is_empty() { return Ok(false); } for child in &children { if !self.requirement_is_delivered_within(child, depth - 1)? { return Ok(false); } } Ok(true)\". Nothing anywhere asks whether the children, taken together, amount to the parent. So a parent split into two children that address a tenth of it reports DELIVERED the moment both close, in the coverage number this project treats as ground truth (req:completion-computed: delivery is computed from the golden thread, never asserted). THE CONCRETE INSTANCE, and it is not hypothetical. This was first noticed on 2026-07-28 as a modelling risk, when DECOMPOSES was rejected as the edge type for two new requirements precisely because decomposing req:defaults-do-not-assert (ten measured instances) into two children would have reported it delivered with eight outstanding. Reviewing 01-systems_engineering.json the same day turned that risk into a field observation: reflow's own monolithic workflow was decomposed into 01a through 01f, and TWO CROSS-CUTTING TOP-LEVEL BLOCKS DID NOT SURVIVE. context_management (operations counter, degradation signals, refresh sequence, pre-operation checklist) and self_improvement (retrospective questions, metrics, improvement backlog) are present in all six monolithic workflows — 00-setup, 01-systems_engineering, 02-artifacts_visualization, 03-development, 04-testing_operations, feature_update — and absent from every one of 00a, 01a, 01b, 01c, 01d, 01e and 01f. Cross-referenced against workflow_master's phase assignments, context_management survives in roughly two of about sixteen live workflows. The discipline lived in every original file and largely did not make it into the decomposition, and nothing noticed for months. THE MECHANISM OF THE LOSS IS THE GENERAL CASE: a decomposition by SUBJECT drops what belongs to no single subject. Cross-cutting content has no natural child to land in, so it lands in none. That is exactly the failure a coverage check would catch and a roll-up will never notice, because the roll-up only ever asks whether each child is done. WHAT IS NOT BEING ASKED FOR: automatic refusal, or an LLM judging sufficiency. The honest form is a question put to the user at decomposition time — \"does this set of children cover the parent, and what did the parent hold that none of them do?\" — with the answer recorded, so a later reader can tell a deliberate narrowing from an accident. That fits the pattern the project already uses for gaps: report and ask, per dec:report-dont-judge, never decide. Note also the interaction with req:requirement-lineage, which distinguishes decomposed from derived: a DERIVED requirement adds new technical necessity and is not expected to cover anything, so any check must apply to decomposition alone. Found 2026-07-28 reviewing 01-systems_engineering.json. Anthony's word: capture it.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -80025,6 +80445,18 @@
         "provenance": "authored",
         "statement": "Where the design is underspecified, the system must ask the human in plain language and record the answer, rather than silently choosing a default.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:init-installs-only-the-harness-you-name",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "The install asks which agent harness this project uses, and writes harness-specific files for that one only",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "`init` asks which agent harness(es) will open this project and installs the harness-specific files for those alone, instead of writing every supported harness's configuration unconditionally. The harness-neutral half of the install is unaffected and always written: the instruction file, the committed design export, the ignore rules and the merge attributes.\n\nTHE ANSWER MUST BE SUPPLIABLE WITHOUT A PROMPT, and this is part of the requirement rather than a refinement of it. A non-interactive caller — CI, a scripted install, an `adopt` run — must be able to name the harness on the command line, and a run with no tty must never block waiting for an answer. An install that hangs in CI is a worse defect than the one being fixed.\n\nTHE PROMPT MUST NOT BE THE ONLY WAY TO CHANGE THE ANSWER. `init` is re-runnable, and a project that later adds a second harness must be able to say so and get that harness's files without reinstalling or hand-editing.\n\nWHY ASKING RATHER THAN DETECTING, since the cheaper option was available and rejected: a brand-new repository carries no evidence of which harness will open it, and that is precisely when `init` runs. Inferring from what is present therefore guesses, and a wrong guess is SILENT — the user receives a configuration their tool never reads, with nothing to indicate anything is missing.\n\nRaised by Alex (`who:alex`) 2026-08-14 as a first-run report on a real work project; settled by Anthony the same day on `dec:idea-init-asks-which-harness-and-installs-only-that`, over a recommendation to detect instead.",
+        "status": "proposed"
       }
     },
     {
@@ -80904,7 +81336,19 @@
         "name": "A collaborator's design work survives clone → write → push → pull without three silent failures on the way",
         "priority": "medium",
         "provenance": "authored",
-        "statement": "ANTHONY, 2026-08-13, settling options B and D of `dec:idea-feedback-arrives-by-git-push-and-pull` after asking whether his brother could clone the repo, write feedback straight into the graph, push, and have it arrive on his next pull.\n\nTHE ANSWER WAS YES — that path is `dec:multi-writer-architecture`'s intended one, no server, the file is the transport — BUT FOUR STEPS HAVE TO HAPPEN AND THREE FAIL SILENTLY: import before writing (or the fresh store MINTS a new `graph_id`), export before pushing (or `.reflow2/` being ignored means the push carries nothing), a per-clone merge driver (or git line-merges a multi-megabyte JSON graph), and import after pulling.\n\n⇒ **B AND D WERE TAKEN. C WAS NOT, AND THE REASON IS THE REQUIREMENT'S OWN BOUNDARY:** every step here is silent-when-skipped and the instinct is to automate all of them, but step 4 is deliberately manual on `dec:ask-not-repair` — an unasked upsert can overwrite live session work. **Automating an act because forgetting it is expensive is how a tool starts making design decisions on somebody's behalf.** So what is owed is that each step SAYS what it needs, never that it acts unasked.\n\nWHAT THIS REQUIRES, stated so it can be checked:\n\n  B · A project's design record merges per NODE, not by lines. Both halves: the repo-side rule (`.gitattributes`, which travels) and the per-clone driver (`git config`, which cannot — git deliberately refuses to let a repository configure an executable). MEASURED 2026-08-13: `.gitattributes` in reflow2's own repo has carried `merge=reflow2` for months and **`reflow2_init.py` never set the driver**, so any fresh clone fell back to a line merge on a 5 MB graph document, silently.\n\n  D · The shared record having moved reaches a session on an ORDINARY READ, not only when somebody calls `loop_status`. MEASURED: `loop_status` already computed `record_moved` correctly; `read_loop_hint` built its hint from the core `LoopStatus`, which has no sync knowledge, so the one LOUD step of the four was loud only inside a call nobody makes on the way past.\n\n📌 NEITHER MAY ACT. The hint says the record moved and names `import_graph`; taking it in stays the reader's decision. The installer registers a driver and **leaves alone one somebody else set**, the same rule `write_mcp_config` and `ensure_hooks` already follow.\n\n⚠️ WHAT IS STILL OPEN, AND DELIBERATELY: step 1 (import-on-first-use, option C) and step 2's discoverability beyond what `req:a-consumer-project-ends-up-with-a-committable-record` already fixed. Step 2 is the one Alex actually hit, and it is worth recording that HIS FEEDBACK ROUTE DEPENDED ON A FEATURE THAT DID NOT EXIST UNTIL THE SAME DAY — before that fix his push would have succeeded and carried nothing.",
+        "statement": "ANTHONY, 2026-08-13, settling options B and D of `dec:idea-feedback-arrives-by-git-push-and-pull` after asking whether his brother could clone the repo, write feedback straight into the graph, push, and have it arrive on his next pull. **ACCEPTED 2026-08-14 on his word**, after Alex's independent report supplied field evidence for it (`fact:second-user-notes-2026-08-14-two-items-already-fixed`).\n\nTHE ANSWER WAS YES — that path is `dec:multi-writer-architecture`'s intended one, no server, the file is the transport — BUT FOUR STEPS HAVE TO HAPPEN AND THREE FAIL SILENTLY: import before writing (or the fresh store MINTS a new `graph_id`), export before pushing (or `.reflow2/` being ignored means the push carries nothing), a per-clone merge driver (or git line-merges a multi-megabyte JSON graph), and import after pulling.\n\n⇒ **B AND D WERE TAKEN. C WAS NOT, AND THE REASON IS THE REQUIREMENT'S OWN BOUNDARY:** every step here is silent-when-skipped and the instinct is to automate all of them, but step 4 is deliberately manual on `dec:ask-not-repair` — an unasked upsert can overwrite live session work. **Automating an act because forgetting it is expensive is how a tool starts making design decisions on somebody's behalf.** So what is owed is that each step SAYS what it needs, never that it acts unasked.\n\nWHAT THIS REQUIRES, stated so it can be checked:\n\n  B · A project's design record merges per NODE, not by lines. Both halves: the repo-side rule (`.gitattributes`, which travels) and the per-clone driver (`git config`, which cannot — git deliberately refuses to let a repository configure an executable). MEASURED 2026-08-13: `.gitattributes` in reflow2's own repo has carried `merge=reflow2` for months and **`reflow2_init.py` never set the driver**, so any fresh clone fell back to a line merge on a 5 MB graph document, silently.\n\n  D · The shared record having moved reaches a session on an ORDINARY READ, not only when somebody calls `loop_status`. MEASURED: `loop_status` already computed `record_moved` correctly; `read_loop_hint` built its hint from the core `LoopStatus`, which has no sync knowledge, so the one LOUD step of the four was loud only inside a call nobody makes on the way past.\n\n✅ **THE SCOPE OF B, RULED ON 2026-08-14 BY ANTHONY AND RECORDED BECAUSE IT WAS RAISED AS A WIDENING RATHER THAN DISCOVERED LATER.** Implementing B, the installer was given a second act nobody had approved: a consumer project with NO `.gitattributes` at all now gets one CREATED, where what he had approved was the per-clone `git config` driver. That was flagged to him at the time and left open; **he has now ruled it IN, on the ground that the two halves are one mechanism** — `git config` says HOW to merge and `.gitattributes` says WHICH files, so a driver without the repo-side rule is inert and the silent line-merge survives untouched. It appends to an existing file and **never replaces one**, the same restraint `write_mcp_config` and `ensure_hooks` already show.\n  ⚠️ THE COST HE ACCEPTED, stated plainly: `init` now writes a git configuration file into a repository that did not ask for one. Two narrower readings were on the table and were NOT taken — printing the line for the user to add (rejected: the step is silent-when-skipped, which is the failure class this requirement exists to close), and writing it only for a repo that has a remote (rejected as a refinement, though `dec:install-once-per-machine` — *\"the in-repo half is optional and only for repos you share\"* — is the argument that would revive it if the file is ever felt to be intrusive).\n\n📌 NEITHER MAY ACT. The hint says the record moved and names `import_graph`; taking it in stays the reader's decision. The installer registers a driver and **leaves alone one somebody else set**.\n\n⚠️ WHAT IS STILL OPEN, AND DELIBERATELY: step 1 (import-on-first-use, option C) and step 2's discoverability beyond what `req:a-consumer-project-ends-up-with-a-committable-record` already fixed. Step 2 is the one Alex actually hit, and it is worth recording that HIS FEEDBACK ROUTE DEPENDED ON A FEATURE THAT DID NOT EXIST UNTIL THE SAME DAY — before that fix his push would have succeeded and carried nothing.\n\n📌 CONFIRMED IN THE FIELD 2026-08-14: Alex's report *\"none of them were the graph json file that could be committed to a repo and pulled down and utilized by another project member\"* is THREE clauses, and it took two PRs to answer them — #172 made the record committable, #174 made it pullable and usable by a second person. #172 alone would have left him a file he could commit and a broken multi-writer path beneath it. His residual *\"I didn't think `.reflow2/` was loaded into a project anymore\"* is a mental-model gap now addressed in the ignore rule's own comment (*\"machine state, NOT the design\"*) and in the install summary: machine-wide INSTALL does not mean machine-wide GRAPH, because `req:persistence` keeps the design in-repo beside the code.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:the-kind-of-system-is-established-before-its-parts-are-captured",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "The agent establishes what KIND of thing is being designed, in the user's own domain language, before it captures the parts — and never by asking the user to pick node types",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "ANTHONY, 2026-08-14, from Alex's first-run report on a real work project.\n\nALEX'S EXPERIENCE: *\"It was a little unsure of how to store the data models for my project in the graph. It asked me what node types it should store them as. I didn't really know for sure so I told it to figure it out. It worked, but that might be confusing for someone who isn't technical… it should probably ask probing questions to figure this out without exposing internal components of the graph structure to the user.\"*\n\nANTHONY'S FRAMING: *\"this gets at that reflow2 claims to 'design anything', whether that be an IT system of systems that includes a 'data model' OR a physical 'shop' that my brother wants to design that will generate blueprints and architectural drawings (structural, electrical, plumbing, etc) as artifacts in the graph. I think this point is already clear in reflow2, but I think we need to sharpen the agent's questions so that the right graph and artifacts can be generated… we do need to follow this in principle that the agent asks or determines appropriate systems engineering models for the design so that the design entities/components can properly be captured.\"*\n\nWHAT IS REQUIRED:\n\n1. **THE AGENT ESTABLISHES WHAT KIND OF THING IS BEING DESIGNED BEFORE IT CAPTURES THE PARTS.** A data model, a machine shop, a beamline and a process are not the same kind of object, and the entities worth capturing differ accordingly. This is a question the agent ASKS OR DETERMINES — not one it silently assumes and not one it skips.\n\n2. **IT IS ASKED IN THE USER'S OWN DOMAIN LANGUAGE.** Probing questions about the thing — what it must do, what it is made of, what meets what, what would count as finished — never a request that the user choose a node type. **The mapping from their words to the schema is the agent's job**, which `capture-intent` already states and `describe_schema` already equips it for. Handing that question back is the inversion Alex hit, and it is the one behaviour this requirement forbids outright.\n\n3. **THE ANSWER SHAPES EXTRACTION AND PHRASING, AND NEVER GATES COMPUTATION.** What kind of system it is may determine which questions get asked, which vocabulary the agent speaks back, and which artifacts are expected (blueprints, structural/electrical/plumbing drawings for a shop; schemas and migrations for an IT system). **It must never determine which analyses reflow2 will run.** A cycle detector runs wherever there are dependency edges, whoever calls them interfaces or interactions.\n\n⭐ THE PRIOR ART, AND WHY ONLY HALF OF IT SURVIVES. reflow's `00b-framework_selection` / S-01A holds two separable things, and reflow2 dropped both together:\n  · **THE TERMINOLOGY REGISTRY** (`definitions/framework_registry.json`) maps node → `service` / `gene` / `agent` / `species` and edge → `interface` / `interaction` / `relationship` over one universal graph. **Correctly rejected** by `req:framework-is-chosen-not-defaulted` (now `dropped`): renaming the same structure changes nothing computable, adds a translation layer that can drift, and its load-bearing claim — *\"framework choice determines which NetworkX analyses are available\"* — makes capability conditional on a self-declared label, which is how a user gets a wrong answer for a reason they cannot see.\n  · **THE SEMANTIC-MATCHING INTERVIEW** is a different thing and was not cosmetic. S-01A's rationale: *\"Framework selection is an ARCHITECTURAL DECISION, not a configuration choice. Wrong framework = wrong insights.\"* LESSON-04: *\"Framework abstractions must match system semantics. Workflows are state machines (not services), even though both could be 'engineered systems'. Wrong abstraction = wrong insights.\"* Its first action is *\"Ask user to describe the system\"* — **domain language, not node types.** THAT is what survives, and it is what this requirement asks for.\n\n🛑 **THE DROPPED REQUIREMENT PREDICTED THIS AND NOBODY BUILT THE PART IT SAVED.** `req:framework-is-chosen-not-defaulted` closes by naming the middle path in as many words: *\"domain as a hint to EXTRACTION and phrasing — what vocabulary the agent uses when talking to the user and reading their documents — without ever gating which computations run. That keeps the honest part of reflow's insight (a biologist should not be told about 'services') and discards the part that would make analyses conditional on a label.\"* It was dropped as a REGISTRY, its surviving half was written down, and the second user then hit exactly that gap. **This requirement is that middle path, raised by a user rather than by a re-reading.**\n\n📌 RELATED AND NOT DUPLICATED: `req:defaults-do-not-assert` carries LESSON-01's real content (*do not default to UAF*) and forbids assuming the answer; this requires that the question be ASKED. `req:design-anything` establishes that the vocabulary is neutral; this is about the interview that makes a neutral vocabulary usable by someone who does not know it. `dec:idea-reflow2-serves-a-project-that-is-not-software` records that the DELIVERY is still software-shaped, which is the same gap seen from the documentation side.\n\n⚠️ WHAT IS NOT BEING ASKED FOR: a framework registry, a catalogue of systems-engineering models inside reflow2, or a `Project.domain` value that switches behaviour. `Project.domain` today is written by genesis and read by nothing; whether this requirement is what should finally read it — and whether it must therefore become an enum rather than free text — is deliberately left open here.",
         "status": "proposed"
       }
     },
@@ -82432,6 +82876,18 @@
       }
     },
     {
+      "node_id": "fact:agent-feedback-corroborated-2026-08-14",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "AGENT-GENERATED FEEDBACK from a Grok 4.6 session on one of Alex's projects (2026-08-13, two entries: a remaining-MVP readout and an encouragement capture session), relayed by Anthony 2026-08-14. Produced by telling the agent *\"reflow2 is still a development project - please note any issues or gaps or opportunities to improve reflow2 at path/to/feedback.md\"*.\n\n⭐⭐⭐ THE REASON THIS NODE EXISTS: **FOUR OF ITS ITEMS WERE INDEPENDENTLY REPRODUCED BY A DIFFERENT AGENT (Claude Opus 5), ON A DIFFERENT GRAPH (reflow2's own), IN A SESSION THAT HAD NOT READ THE FEEDBACK.** One agent reporting friction is an opinion; two agents on different models and different designs hitting the same edges is a defect report.\n\n═══ ✅ CORROBORATED — hit in this session before the file was read ═══\n\n**1. THE NEAR-DUPLICATE GUARD FIRES ON SIBLINGS AND ACROSS NODE TYPES** (their items 1 and 2, second entry). Six refusals in one capture session, every one of them a genuine non-duplicate:\n  · a Requirement refused because its OWN governing Decision was \"close\"\n  · a Capability refused because the Requirement it satisfies was \"close\"\n  · a Requirement refused because a Capability created MINUTES EARLIER in the same batch was \"close\"\n  · one Decision refused TWICE, each refusal naming a DIFFERENT batch of near-matches — the declared ones are excluded and the next-nearest surface, so `distinct_from` grows by retry\n⇒ **A Requirement, the Decision that governs it and the Capability that satisfies it are the GOLDEN THREAD. They are supposed to share wording.** A guard that reads them as candidate duplicates fires hardest on exactly the capture pattern the skills prescribe. Their words: *\"Each refusal named a sibling I had just created, not a true duplicate.\"*\n\n**2. `add_decision` CANNOT MERGE WITHOUT RESENDING THE BODY** (their item 3, second entry). Schema requires `id` + `name` + `decision`. Confirmed by cost, not just by reading: prepending a DECIDED header to three already-written decisions this session meant resending ~7 KB bodies verbatim each time. Their report adds the sharper risk: **the loop hint on such a merge still reads *\"a Decision lands `proposed`\"* even when merging an ACCEPTED node** — observed here too, status correctly stayed `accepted`, but the hint invites an agent to \"fix\" a status that was never wrong.\n\n**3. CAPTURING CORRECTLY INFLATES THE LOOP DEBT** (their item 5, second entry). Their measurement: 62 → 66 never-asked gaps after a capture session, because each new `planned` Capability immediately owes a verification it cannot yet have. **Measured identically here: 74 → 79 gaps across this session's captures.** Their sentence is exact: *\"this session created more of them by doing capture correctly.\"*\n\n**4. `get_node` MISSES SILENTLY** (their item 5, first entry). REPRODUCED ON REFLOW2'S OWN GRAPH: `get_node {node_type: Project, id: \"proj:does-not-exist-12345\"}` returns `{\"node\": null}` with no hint — **and this graph holds exactly ONE Project, `proj:reflow2`.** That is precisely the case they describe: *\"A miss on a type that has total: 1 should name the existing id.\"* ⚠️ A NEARBY EDGE, hit here the same day: passing `node_id` instead of `id` is REFUSED loudly and helpfully (*\"unknown field `node_id`, expected `node_type` or `id`\"*). So a malformed ARGUMENT is diagnosed and a missing NODE is not — the wrong way round, since the second is the commoner mistake.\n\n═══ ⚠️ NOT REPRODUCED HERE — recorded so it is not treated as confirmed ═══\n\n**`get_instructions` TRUNCATION** (their item 6, first entry): they report ~22.6 KB cut mid-sentence, with the standing rules after the cut never arriving — serious, because the repo file is only a pointer. **Called here the same day and the payload arrived COMPLETE**, ending cleanly on its closing line. ⇒ Likely CLIENT-SPECIFIC (an MCP payload budget in their harness) rather than server-side, which makes it a worse defect in one way: it is invisible from this side and the affected agent cannot tell that rules are missing. Their mitigation — serve it in named sections — survives regardless of cause.\n\n═══ 📌 THEIR ITEMS NOT YET ASSESSED HERE ═══\n\nFirst entry: (1) *\"what is left to build?\" is not a first-class query* — `what_next` ranks open DECISIONS, and a graph with one open Decision and a large build backlog gets nothing useful; four sources disagreed (Decision prose, Capability `status`, computed delivery, the repo). (2) status-vs-computed-delivery drift. (3) top gaps are hygiene, not product work — wrong default ranking for *\"what do we build next?\"*. (4) two sources of truth on one increment. (7) orientation tax. (8) *\"the loop and the delivery plan share a dashboard and they should not.\"* (9) **decision-as-checklist is invisible to the temporal axis** — they propose a detector for an accepted Decision whose statement is a running delivery list with no `SCHEDULED_FOR` edges. Second entry: (4) `detect_gaps(scope)` explodes via Project CONTAINS at depth 3 and returns unrelated planned work rather than the seed's own thread.\n\n📌 THEIR OWN PROCESS GAPS, WORTH KEEPING BECAUSE THEY ARE HONEST: they did not run `compare_designs` or `detect_gaps`, guessed a Project id rather than scanning, and did not export after graph writes — the last being the same omission `fact:second-user-first-run-report-2026-08-13` is about.\n\n⚠️ THEIR KIT SIDECAR READ `0.11.0` / `0ec473e` (a 2026-07-25 tarball) WHILE THE LIVE SERVER SERVED A MUCH NEWER SURFACE. **Third independent signal that consumers run stale kits** — with `fact:second-user-notes-2026-08-14-two-items-already-fixed`, which concluded the same about Alex from different evidence. Their suggestion: write the running binary identity where `loop_status` or `graph_report` already expose it (`served_by` exists on `graph_report`).",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-14"
+      }
+    },
+    {
       "node_id": "fact:apply-heal-would-have-destroyed-the-wrong-contributor",
       "node_type": "TemporalFact",
       "properties": {
@@ -83945,6 +84401,18 @@
         "statement": "ALEX (`who:alex`), relayed by Anthony 2026-08-13, reporting a FIRST RUN ON A REAL WORK PROJECT — the second user again, and the same class as `fact:second-user-report-2026-08-11` and the installer-wording fix: **found by somebody meeting the output for the first time, where nobody who already knew what it did had reason to look.**\n\nHIS WORDS: *\"I initialized a new project to try this out with my work. It inserts a .gitignore into the repo. That .gitignore ignores .reflow2 folder. Where does it store the JSON file that can be committed for the graph? I can't find the artifact that can be shared by other project members.\"* And: *\"the init should not write over the .claude/settings.local.json if it already exists.\"*\n\nBOTH REPRODUCED against HEAD by running `tools/reflow2_init.py` on a scratch project.\n\n═══ 🛑🛑 DEFECT 1 — THE EXPORT EXISTED, WAS DOCUMENTED, AND STILL COULD NOT BE FOUND ═══\n\n⚠️ A FIRST VERSION OF THIS NODE CLAIMED THE CONVENTION WAS UNDOCUMENTED. **That was wrong, and Anthony caught it by asking \"didn't we already export the .json file of the graph?\"** Corrected here, because the true shape is narrower and more interesting than \"nobody wrote it down\".\n\nWHAT ALREADY EXISTED:\n  · `export_graph` — unchanged, and not the problem.\n  · `getting-started/UPDATING.md:19` NAMES IT: *\"`docs/design/<name>.json` | the committed export — the durable record | yes, it is in your repo\"*.\n  · The `ci-gate` and `parallel-work` skills both reference that path.\n  · **init ALREADY EXPORTED** — `backup_graph` writes `.reflow2/backups/design-<stamp>.json`.\n\n🛑 AND THAT LAST ONE IS THE DEFECT IN ONE LINE: **`git check-ignore` confirms `.reflow2/backups/design-<stamp>.json` is covered by the `.gitignore:22 -> .reflow2/` rule the same installer writes.** The one export init produced landed INSIDE THE IGNORE RULE. A user who went looking for the shareable artifact found an export that was invisible by construction. The machinery was all present and its output fell in the one directory git was told to skip.\n\nTHE SECOND HALF, MEASURED: **nothing INSTALLED INTO THE PROJECT said any of it.** `grep` over what a new project actually receives — `AGENTS.md`, `CLAUDE.md`, the closing summary — returns ZERO hits for `export` or `docs/design`. The only trace is a parenthetical inside the `.gitignore` (*\"the durable record is an export\"*) which parses only if you already know the word. The real documentation lives in a file about UPDATING and in skills that must be deliberately loaded — **a first run reaches neither.**\n\n⇒ SO IT IS NOT A DOCUMENTATION GAP BUT A REACHABILITY ONE, which is `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue`'s shape arriving in the installer: the information existed where the person was not.\n\n📌 KNOCK-ON: `ci-gate` was unreachable for a new project — `reflow2_check.py` runs against a committed export that nothing had produced.\n\n═══ ⚠️ DEFECT 2 — MERGED CORRECTLY, REWRITTEN WHOLESALE, INDISTINGUISHABLE ═══\n\nHIS CLAIM IS HALF RIGHT, AND THE HALF THAT IS WRONG STILL DESCRIBES A REAL DEFECT. Measured with a pre-existing `.claude/settings.local.json` holding a `permissions` block and his own `Stop` hook:\n\n  permissions preserved ......... TRUE (byte-identical)\n  his own Stop hook survived .... TRUE (reflow2's appended as a second group)\n\nNOTHING IS LOST ON HEAD. `ensure_hooks` merges, leaves a repointed reflow2 hook alone, and SKIPS on malformed JSON. That landed in `fc6c6d4`.\n\n🛑 **BUT THE WHOLE FILE WAS RE-SERIALISED AT A FIXED 2-SPACE INDENT, so every line changed** — a compact 10-line file came back as 58. **In a `git diff` that is indistinguishable from an overwrite**, and an installer that appears to have rewritten your settings is one nobody trusts near their settings again, which is the standard `ensure_hooks`' own docstring sets for itself.\n\n⚠️ NOT RULED OUT: that Alex is on an OLDER kit whose behaviour genuinely did lose content. `fc6c6d4` is not recent, but a consumer kit can sit releases behind — `ver:kit-manifest-agrees` exists because reflow2's own manifest was four releases stale and nothing noticed. **His version was not established. Ask before concluding the reformat is the whole of what he saw.**",
         "subject_id": "proj:reflow2",
         "valid_from": "2026-08-13"
+      }
+    },
+    {
+      "node_id": "fact:second-user-notes-2026-08-14-two-items-already-fixed",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "ALEX (`who:alex`), relayed by Anthony 2026-08-14 as five written notes — the THIRD report from the second user, after `fact:second-user-report-2026-08-11` and `fact:second-user-first-run-report-2026-08-13`.\n\n⭐⭐ THIS NODE RECORDS THE TWO NOTES THAT ARE NOT IDEAS: THEY DESCRIBE DEFECTS ALREADY FIXED ON MAIN. That is the finding, and it answers a question the previous fact node left explicitly open.\n\n═══ 1. THE SETTINGS UPSERT — CLOSED, AND NOW MEASURED BY RUNNING IT, NOT BY READING CODE ═══\n\nHIS WORDS: *\"`reflow2 init .` should upsert `settings.local.json` (or whatever settings file is relevant for the agent harness) instead of replacing it.\"*\n\n✅ MEASURED 2026-08-14 by running `tools/reflow2_init.py` on HEAD (`cbb1a19`) against a scratch project holding a settings file the USER owns — 4-space indent, their own `permissions` block, their own `Stop` hook:\n```\npermissions identical  : True      (byte-for-byte)\ntheir own Stop hook    : survived  (reflow2's registered as a SECOND group)\nindent preserved       : True      (4-space in, 4-space out)\ndiff                   : 38 changed lines, 0 REMOVALS — purely additive\n21 -> 59 lines, entirely from reflow2's four hook-event registrations\n```\n⇒ **IT IS A GENUINE UPSERT ON HEAD.** Nothing removed, nothing reformatted. The original defect was never an overwrite — `ensure_hooks` always merged — it was that the whole file came back re-serialised at a fixed 2-space indent, making a merge INDISTINGUISHABLE FROM A REWRITE in `git diff`. `detected_indent(raw)` closed that, and the run above confirms it end to end.\n\n⚠️ THE ONE RESIDUAL, recorded because it is what a user actually sees and it is not a defect: a 21-line file becomes 59. The growth is real content — four hook events in verbose JSON — not reformatting, and zero lines are removed. But a first-time reader watching their small file nearly triple may still read it as being taken over, which is the same PERCEPTION problem the indent fix was aimed at rather than a separate bug.\n\n═══ 2. THE MISSING SHAREABLE ARTIFACT — CLOSED IN PR #172 ═══\n\nHIS WORDS: *\"I wasn't sure where the graph artifact was (reflow2-export.json) … none of them were the graph json file that could be committed to a repo and pulled down and utilized by another project member.\"*\n\n✅ FIXED in PR #172 (`fadc197`, 2026-08-13), and confirmed by the same scratch run above, which reported: *\"docs/design/upsert-probe.json (CREATED — the shareable design record. .reflow2/ is machine state and ignored; THIS is the file to commit)\"*. `write_shareable_export` now ALWAYS writes it, including on a brand-new project: an empty export is a real document (stamp, `graph_id`, `content_hash`, zero nodes) and committing it means the first real export CHAINS FROM IT.\n\n═══ 🛑 SO THE STANDING QUESTION IS ANSWERED, AND THE ANSWER MATTERS MORE THAN EITHER FIX ═══\n\n`fact:second-user-first-run-report-2026-08-13` ended with: *\"NOT RULED OUT: that Alex is on an OLDER kit … His version was not established. Ask before concluding.\"* **Two of five notes describing behaviour that no longer exists — both now reproduced as WORKING on HEAD — makes the older-kit reading the strong one.** The alternative, that both fixes are ineffective in the field, is now measured against and did not hold locally.\n\n⚠️ CONSEQUENCE FOR HOW HIS REPORTS ARE READ: a report from an old kit is still a true report about the version he ran, and it is NOT evidence about HEAD. Every idea captured from this batch was therefore measured against HEAD before being recorded.\n\n⇒ **ASK HIM WHAT VERSION HE IS RUNNING, AND WHETHER UPDATING WORKED.** The gap between what shipped and what a real user is running is itself unmeasured, and `user-iterative-release-preference` states the goal as a ONE-WORD UPDATE. If the second user is releases behind while fixes for his own reports sit in main, **the update path is the defect** — and nothing currently reports it.\n\n📌 THE LIVE HALF OF NOTE 1 IS THE PARENTHETICAL, not the upsert: *\"(or whatever settings file is relevant for the agent harness)\"* — reflow2 registers its loop nudge ONLY in `.claude/settings.local.json`. That is `dec:idea-the-loop-nudge-exists-for-one-harness-only`, and it is now downstream of `dec:idea-init-asks-which-harness-and-installs-only-that` (ACCEPTED 2026-08-14): once init ASKS which harness, the hook has an answer to follow.\n\n📌 PATTERN, NOW THREE FOR THREE: every defect in the last increment was found by a first-time user or by running two real projects at each other — none by reading code, none by a gate. `dec:idea-feedback-collection-is-asked-once-and-recorded` — the mechanism ALEX ASKED FOR HIMSELF — remains unbuilt, which is why his findings keep arriving as a relayed email.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-14"
       }
     },
     {
@@ -85811,7 +86279,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:9b6baabace9012114acc6b9c19ca3a4daec0571ac487f0be14cb710e41d73152",
+  "prev_content_hash": "sha256:f9a65a356b195ba253babe2b64acd2775abcad9acdd701c2425a7aafd1d439dd",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
