@@ -326,6 +326,39 @@ pub enum GapSource {
     /// human can make, and a release genuinely cut before the epoch spine
     /// existed is a real state to accept rather than repair.
     ReleaseWithoutEpoch,
+    /// A decomposed Requirement whose children have never been checked against
+    /// what the parent held: what did the parent say that no child says?
+    ///
+    /// THE HOLE IT COVERS IS IN THE ARITHMETIC THIS PROJECT TRUSTS MOST.
+    /// `report.rs` treats a parent as delivered exactly when every child is, and
+    /// nothing anywhere asks whether the children, taken together, amount to the
+    /// parent. So a requirement split into two children addressing a tenth of it
+    /// reports `delivered` the moment both close — inside `req:completion-computed`,
+    /// the number the design uses as ground truth precisely because it is computed
+    /// from the golden thread rather than asserted.
+    ///
+    /// THE MECHANISM OF THE LOSS IS GENERAL: a decomposition by SUBJECT drops
+    /// what belongs to no single subject. Cross-cutting content has no natural
+    /// child to land in, so it lands in none. Measured instance (2026-07-28,
+    /// reviewing reflow's `01-systems_engineering.json`): a monolithic workflow
+    /// was split into 01a–01f, and `context_management` and `self_improvement` —
+    /// present in all six monolithic workflows — are absent from every one of the
+    /// seven children. Nothing noticed for months, because a roll-up only ever
+    /// asks whether each child is done.
+    ///
+    /// ASKS, NEVER JUDGES (`dec:report-dont-judge`). It does not refuse a
+    /// decomposition and it does not put an LLM in charge of sufficiency. It also
+    /// never names what is missing: reflow2 can see THAT the question is
+    /// unanswered and cannot know WHAT fell between the children, and a plausible
+    /// wrong guess is worse than the question because it gets recorded as the
+    /// answer (`cap:no-fabricated-repair`).
+    ///
+    /// DECOMPOSITION ONLY, never derivation — a DERIVED requirement adds new
+    /// technical necessity and is not expected to cover anything
+    /// (`req:requirement-lineage`). Keying on the `DECOMPOSES` edge gets that for
+    /// free: derived requirements hang off the Decision that created them and
+    /// carry no such edge.
+    DecompositionCoverage,
 }
 
 impl GapSource {
@@ -371,6 +404,7 @@ impl GapSource {
             GapSource::KppBreached => "kpp_breached",
             GapSource::KppContradicted => "kpp_contradicted",
             GapSource::ReleaseWithoutEpoch => "release_without_epoch",
+            GapSource::DecompositionCoverage => "decomposition_coverage",
         }
     }
 
@@ -451,7 +485,13 @@ impl GapSource {
             // Per-release: the finding names the one release missing its edge,
             // so accepting "v0.17.0 predates the epoch spine" must not also
             // accept the next release cut without one.
-            | GapSource::ReleaseWithoutEpoch => false,
+            | GapSource::ReleaseWithoutEpoch
+            // Per-decomposition, and load-bearing rather than incidental. The
+            // recorded answer — "these children cover the parent, except X" — is
+            // a claim about THESE children. Adding or removing one makes the
+            // earlier answer an answer to a different question, so the id MUST
+            // move with the child set and the question MUST be re-asked.
+            | GapSource::DecompositionCoverage => false,
         }
     }
 }
@@ -1084,6 +1124,9 @@ impl DesignGraph {
         self.detect_undecided_decision_points(&mut gaps)?;
         self.detect_unvalidated_capabilities(&mut gaps)?;
         self.detect_kpp_violations(&mut gaps)?;
+        // The roll-up's blind spot: delivery climbs a decomposition without
+        // anything ever asking whether the children amount to the parent.
+        self.detect_decomposition_coverage(&mut gaps)?;
 
         gaps.sort_by(|a, b| {
             // `false` sorts before `true`, so "has anchors" comes first.
@@ -1898,6 +1941,84 @@ impl DesignGraph {
                     .join(", ")
             ),
         });
+        Ok(())
+    }
+
+    /// `req:decomposition-covers-its-parent` — the one question the roll-up
+    /// never asks.
+    ///
+    /// Fires per DECOMPOSED PARENT, not per project: "what did this parent hold
+    /// that none of its children hold?" is answerable only about one parent, and
+    /// aggregating would produce a question nobody can answer. Silent on a design
+    /// that has never decomposed anything, which is an absence rather than a
+    /// deficiency — and is the state reflow2's own design is in, so this detector
+    /// cannot be exercised by the self-host (`rule:the-self-host-always-trails-what-it-teaches`).
+    fn detect_decomposition_coverage(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
+        for parent in self.scan_nodes(node::REQUIREMENT)? {
+            let children = self.decomposed_children(&parent.node_id)?;
+            if children.is_empty() {
+                continue;
+            }
+
+            // Parent AND children. The children are the answer's working
+            // material — nobody can say what is missing without seeing what is
+            // there — and anchoring on the whole set is what makes the id expire
+            // when the split changes (see `is_aggregate`).
+            let mut affected = vec![parent.node_id.clone()];
+            affected.extend(children.iter().cloned());
+            affected.sort();
+
+            let n = children.len();
+            let label = node_name(&parent);
+            // The risk stops being hypothetical the moment the roll-up fires:
+            // the parent is then ASSERTING delivered on the strength of children
+            // nobody has checked it against.
+            let delivered = self.requirement_is_delivered(&parent.node_id)?;
+
+            gaps.push(GapCandidate {
+                id: gap_id(GapSource::DecompositionCoverage, &affected),
+                gap_source: GapSource::DecompositionCoverage,
+                scope: GapScope::Capability,
+                severity: if delivered { 0.70 } else { 0.50 },
+                title: format!(
+                    "'{label}' was split into {n} — nothing has checked that they cover it{}",
+                    if delivered {
+                        ", and it already reports delivered"
+                    } else {
+                        ""
+                    }
+                ),
+                description: format!(
+                    "'{label}' was split into {n} child requirement(s), and delivery rolls UP: it \
+                     counts as delivered exactly when all {n} are.{} What did '{label}' hold that \
+                     none of its children hold? Write the answer into the design — a child \
+                     carrying what fell out — or acknowledge_gap with the reason it was left out \
+                     on purpose. A narrowing you intended and a drop nobody noticed look identical \
+                     until one of them is written down.",
+                    if delivered {
+                        format!(
+                            " It already reports DELIVERED on the strength of those {n}, so \
+                             anything that fell between them is being counted as done."
+                        )
+                    } else {
+                        String::new()
+                    }
+                ),
+                affected_ids: affected,
+                suggested_depth: 3,
+                evidence: format!(
+                    "Requirement carrying incoming DECOMPOSES edge(s), with no coverage answer on \
+                     record: {} <- {}. Rolled-up delivery: {}.",
+                    parent.node_id,
+                    children.join(", "),
+                    if delivered {
+                        "delivered"
+                    } else {
+                        "not yet delivered"
+                    }
+                ),
+            });
+        }
         Ok(())
     }
 
