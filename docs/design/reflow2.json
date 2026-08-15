@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:191eda4cb9c5c0869153dfda1931f78a5bb98fe66a9a6a1e98141a99cb73f65d",
+  "content_hash": "sha256:7cdeafe45745d93e7e4c47eed8c9504f3cf2d59ebca1c5e89787a24453367935",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2310,6 +2310,15 @@
     },
     {
       "edge_type": "ANNOTATES",
+      "from_id": "frag:alex-2026-08-14-remainder",
+      "properties": {
+        "note_kind": "reviewer",
+        "resolved": false
+      },
+      "to_id": "art:alex-grok-feedback-2026-08-14"
+    },
+    {
+      "edge_type": "ANNOTATES",
       "from_id": "frag:usgov-2026-08-15-item-1",
       "properties": {
         "note_kind": "reviewer",
@@ -2338,6 +2347,15 @@
     {
       "edge_type": "ANNOTATES",
       "from_id": "frag:usgov-2026-08-15-item-4",
+      "properties": {
+        "note_kind": "reviewer",
+        "resolved": false
+      },
+      "to_id": "art:usgov-genesis-feedback-2026-08-15"
+    },
+    {
+      "edge_type": "ANNOTATES",
+      "from_id": "frag:usgov-2026-08-15-item-5",
       "properties": {
         "note_kind": "reviewer",
         "resolved": false
@@ -5054,6 +5072,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-no-documents-rule-gains-its-reasoning-and-its-exception",
+      "properties": {},
+      "to_id": "epoch:feedback-corpus-ingested-then-deleted"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-nudge-report-says-whether-a-hook-was-possible",
       "properties": {},
       "to_id": "epoch:v0310"
@@ -5957,6 +5981,12 @@
       "from_id": "snap:epoch:export-rule-enters-the-governance-layer:req:the-export-is-serialised-rather-than-socially-enforced",
       "properties": {},
       "to_id": "epoch:export-rule-enters-the-governance-layer"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:feedback-corpus-ingested-then-deleted:rule:design-information-lives-in-the-graph-not-in-documents",
+      "properties": {},
+      "to_id": "epoch:feedback-corpus-ingested-then-deleted"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -7235,6 +7265,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-can-the-graph-be-the-official-record-an-organisation-trusts",
+      "properties": {
+        "acted_at": "2026-08-15",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-can-the-unaccepted-be-purged-in-bulk",
       "properties": {
         "acted_at": "2026-08-12",
@@ -7384,6 +7423,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-does-change-type-need-more-values-or-a-second-axis",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "author"
+      },
+      "to_id": "who:alex"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -7558,6 +7606,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-is-there-a-feedback-intake-skill-and-is-it-a-router",
+      "properties": {
+        "acted_at": "2026-08-15",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-lifecycle-dimensions-on-a-requirement",
       "properties": {
         "acted_at": "2026-08-11",
@@ -7709,6 +7766,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-scoping-exists-and-did-not-narrow-what-a-builder-sees",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "author"
+      },
+      "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-search-first-fires-without-being-remembered",
       "properties": {
         "acted_at": "2026-08-11",
@@ -7754,12 +7820,39 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-propagate-change-separate-crossing-an-interface-from-a-component-dump",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "author"
+      },
+      "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-record-change-refuse-a-snapshot-of-state-that-already-moved",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "author"
+      },
+      "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-should-reflow2-carry-its-own-git-discipline",
       "properties": {
         "acted_at": "2026-08-11",
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-the-checksum-accept-have-an-as-built-aligned-disposition",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "author"
+      },
+      "to_id": "who:alex"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -8189,6 +8282,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:reflow2s-own-feedback-documents-are-removed-once-captured",
+      "properties": {
+        "acted_at": "2026-08-15",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -9269,6 +9371,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "rule:design-information-lives-in-the-graph-not-in-documents",
+      "properties": {
+        "acted_at": "2026-08-15",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "rule:design-intent-moves-only-on-the-owners-word",
       "properties": {
         "acted_at": "2026-08-09",
@@ -9660,6 +9771,24 @@
         "action": "modified"
       },
       "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-retired-artifact-may-be-absent",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-retired-artifact-may-be-absent",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "fact:defect-a-retired-artifact-still-reports-missing-forever"
     },
     {
       "edge_type": "CHANGED",
@@ -18250,6 +18379,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-gate-survives-a-directory-and-honours-its-exit-codes",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-git-exchange-path-is-defended",
       "properties": {
         "accepted_baseline": true,
@@ -18328,6 +18466,15 @@
         "action": "modified"
       },
       "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-no-documents-rule-gains-its-reasoning-and-its-exception",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "rule:design-information-lives-in-the-graph-not-in-documents"
     },
     {
       "edge_type": "CHANGED",
@@ -27806,6 +27953,14 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "sys:intake",
+      "properties": {
+        "note": "The front door is where the rule bites: everything this rule forbids arrives through intake, and the un-distilled remainder of a report is exactly what intake currently has nowhere to put."
+      },
+      "to_id": "rule:design-information-lives-in-the-graph-not-in-documents"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "sys:store",
       "properties": {},
       "to_id": "dec:bl83a-functional-decomposition"
@@ -28589,6 +28744,12 @@
       "from_id": "rule:bl-212",
       "properties": {},
       "to_id": "snap:epoch:reflow2-states-its-own-rules:rule:bl-212"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "rule:design-information-lives-in-the-graph-not-in-documents",
+      "properties": {},
+      "to_id": "snap:epoch:feedback-corpus-ingested-then-deleted:rule:design-information-lives-in-the-graph-not-in-documents"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -59246,6 +59407,22 @@
     },
     {
       "edge_type": "OBSOLETES",
+      "from_id": "dec:reflow2s-own-feedback-documents-are-removed-once-captured",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "art:alex-grok-feedback-2026-08-14"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:reflow2s-own-feedback-documents-are-removed-once-captured",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "art:usgov-genesis-feedback-2026-08-15"
+    },
+    {
+      "edge_type": "OBSOLETES",
       "from_id": "dec:the-content-store-is-discontinued",
       "properties": {},
       "to_id": "cap:content-manifest"
@@ -64446,6 +64623,118 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:alex-2026-08-14-remainder",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "dec:idea-does-change-type-need-more-values-or-a-second-axis"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:alex-2026-08-14-remainder",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "dec:idea-scoping-exists-and-did-not-narrow-what-a-builder-sees"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:alex-2026-08-14-remainder",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "dec:idea-should-propagate-change-separate-crossing-an-interface-from-a-component-dump"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:alex-2026-08-14-remainder",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "dec:idea-should-record-change-refuse-a-snapshot-of-state-that-already-moved"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:alex-2026-08-14-remainder",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "dec:idea-should-the-checksum-accept-have-an-as-built-aligned-disposition"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:alex-2026-08-14-remainder",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "fact:a-second-project-answered-what-is-left-to-build-from-decision-prose"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:alex-2026-08-14-remainder",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "fact:defect-add-decision-hints-lands-proposed-on-a-write-that-left-it-accepted"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:alex-2026-08-14-remainder",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "fact:defect-an-accepted-decision-can-be-widened-by-an-agents-diagnosis"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:alex-2026-08-14-remainder",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "fact:defect-propagate-change-distance-two-is-not-an-edit-list"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:alex-2026-08-14-remainder",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "fact:defect-realized-was-claimed-at-unit-and-nothing-in-the-loop-asked"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:alex-2026-08-14-remainder",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "fact:defect-the-checksum-disposition-has-no-answer-for-aligning-code-to-existing-intent"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:alex-2026-08-14-remainder",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "fact:defect-the-export-was-skipped-because-the-instructions-imply-a-stop-that-is-not-needed"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:alex-2026-08-14-remainder",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "fact:defect-the-loop-has-no-mode-for-work-a-user-is-waiting-on"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:alex-2026-08-14-remainder",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "fact:field-confirmations-from-two-external-sessions"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art-alternatives",
       "properties": {
         "action": "created"
@@ -65691,6 +65980,14 @@
         "action": "created"
       },
       "to_id": "dec:should-a-design-be-able-to-say-it-describes-something-that-already-exists"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:usgov-2026-08-15-item-5",
+      "properties": {
+        "action": "updated"
+      },
+      "to_id": "fact:field-confirmations-from-two-external-sessions"
     }
   ],
   "graph_id": "reflow2",
@@ -65935,7 +66232,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a663b78895bd7c095bc88340def62806526b14be46856c5b21cfc5eb0e7f67e2",
+        "checksum": "sha256:5094f46b5850818ca8b91c0cfdfc31226383b2cf66314a42706ad294c9f917a4",
         "granularity": "atomic",
         "location": "tools/reflow2_check.py",
         "name": "reflow2_check.py",
@@ -66312,7 +66609,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ad766fdd92b8a66a9237c04928ce4c07b4b3e938093c7e7879a9fa0077c7a0ee",
+        "checksum": "sha256:d03decfe05f40310f62a43ac0f6a81993dba777adb056040a1f0564b64d76f2c",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/drift.rs",
         "name": "drift.rs",
@@ -70218,6 +70515,14 @@
       }
     },
     {
+      "node_id": "chg:a-retired-artifact-may-be-absent",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "A retirement carried out stops being reported as drift: `DriftKind::ExpectedAbsence` is added, and `reconcile_artifacts` reads `is_discontinued` on the missing-file path so an accepted OBSOLETES decision turns a `high` failure into a `low` note. A distinct kind rather than silence, following ExpectedChange's precedent — a file deleted by accident after an unrelated retirement must still be visible."
+      }
+    },
+    {
       "node_id": "chg:a-rule-binding-a-component-is-modelled-20260808",
       "node_type": "ChangeEvent",
       "properties": {
@@ -73441,6 +73746,14 @@
       }
     },
     {
+      "node_id": "chg:the-gate-survives-a-directory-and-honours-its-exit-codes",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "name": "`reflow2_check.py` stops crashing on a directory Artifact and stops misfiling faults as gate failures: a directory is reported present-but-unhashable (`no_baseline`, a note), and the entrypoint becomes `run_guarded()` — a NAMED function, so the exit-code contract is callable and therefore checkable. Three mutations kill three tests."
+      }
+    },
+    {
       "node_id": "chg:the-git-exchange-path-is-defended",
       "node_type": "ChangeEvent",
       "properties": {
@@ -73454,6 +73767,14 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "The installer stops skipping the one ignore entry most likely to be already tracked, and the remedy it prints works on a directory"
+      }
+    },
+    {
+      "node_id": "chg:the-no-documents-rule-gains-its-reasoning-and-its-exception",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "requirement_creep",
+        "name": "The no-documents rule gains the three arguments behind it, the manual exception that scopes it, the pointer concession, the counter Anthony raised against himself, and the acquisition-world limit he named — plus the collision with `req:sources-are-kept-not-just-parsed`, which the discontinued content store left accepted and unsatisfied six days earlier"
       }
     },
     {
@@ -75376,6 +75697,16 @@
       }
     },
     {
+      "node_id": "dec:idea-can-the-graph-be-the-official-record-an-organisation-trusts",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony's idea, 2026-08-15, framed by him as aspiration rather than intent — his own words end \\\"but I don't think we are there yet\\\", preserved here as part of the idea rather than trimmed off it.\\n\\nHIS WORDS: \\\"in some designs, actual design reviews are done and official direction to proceed and other formal docs are required (coming from the US Air Force and US Space Force, documentation is required — maybe we can eventually get to where the graph tracks authorizations to proceed or other official acquisitions documents are in the graph and organizations trust the graph to hold such docs and therefore, keeping external docs is no longer needed — but I don't think we are there yet).\\\"\\n\\nDELIBERATELY DISTINCT FROM `rule:design-information-lives-in-the-graph-not-in-documents`, which the guard named because this node cites it. THAT RULE GOVERNS THIS REPOSITORY and is settled and enforced. THIS IS A QUESTION ABOUT THE PRODUCT, in a domain where a document is not a convenience: a signed authorisation to proceed is what makes work lawful to start, and whether an organisation will rely on a graph instead is a question about trust, audit and legal standing rather than about storage. The rule can hold while this stays open, and it does.\\n\\nWHAT ALREADY POINTS THIS WAY, so the starting position is not zero: `Contributor` with `AUTHORED_BY role: approver` records whose sign-off a node carries and when (`acted_at`); `Decision` with `status: accepted` records that something was settled and by whose word; `DesignEpoch` records when; and this project has already settled that rendered pages are ONLY projections of the graph rather than documents in their own right. An authorisation is structurally an approver plus a date plus a scope plus a decision — all four of which the schema can already say.\\n\\nWHAT IS MISSING IS NOT VOCABULARY, AND THAT IS THE INTERESTING PART: it is EVIDENCE and NON-REPUDIATION. The graph can record that somebody approved something; it cannot today demonstrate to a third party that they did, that the record has not moved since, or that the approver had the authority. A `status: accepted` written by an agent and one written by a general are the same bytes.\\n\\nTHE OPTIONS:\\n\\n(a) DO NOTHING; FORMAL DOCUMENTS STAY EXTERNAL and the graph points at them with `Artifact.location`. HONEST TODAY, costs nothing, and matches his own concession that a pointer \\\"might be okay\\\". COUNTER: it is exactly the arrangement the no-documents rule was made to end, so the product would be telling consumers to do what this project forbids itself.\\n\\n(b) THE GRAPH HOLDS THE AUTHORISATION AS TYPED NODES, the signed document stays external as evidence. Cheap, mostly expressible already. COUNTER: it splits the record — authority in the graph, proof in a file — which is the worst of both for an auditor.\\n\\n(c) THE GRAPH HOLDS THE BYTES TOO. A signed PDF is precisely \\\"what the graph cannot hold inline\\\", the sentence `cap:content-store` was built around — BUILT, VERIFIED, AND DISCONTINUED on his word on 2026-08-09 for zero use across three projects (`dec:the-content-store-is-discontinued`). ⭐ THIS WOULD BE THE FIRST REAL USE THAT DISCONTINUATION SAID DID NOT EXIST. COUNTER, and it is his own from that decision: bytes in a repo grow without bound, and in flo2 could reach terabytes needing backup, security and per-project separation — all MORE true, not less, for controlled or classified acquisition documents.\\n\\n(d) THE DOCUMENT IS DERIVED FROM THE GRAPH — the official record is generated as a rendering, so there is one source and the document is an output rather than an input. Consistent with the settled doctrine that pages are only renderings. COUNTER: a rendering is not a signature. Something must still capture the act of approval by a person with authority, and that act happens outside reflow2.\\n\\n⚠️ THE HONEST BLOCKER, stated so it is not rediscovered: whether an organisation trusts a graph is not a feature reflow2 can build. It is earned through audit, retention policy, access control and someone accepting liability. Everything above is necessary and none of it sufficient, and a version that shipped the mechanics while implying the trust would be the most damaging overclaim this project could make.\\n\\nNOT ESTABLISHED: whether any real programme would accept it; what standard would have to be met (none has been named); and whether this is one question or two — TRACKING authorisations, versus BEING the authoritative record.",
+        "name": "IDEA — in acquisition work the formal documents ARE the artefact: design reviews, authorisations to proceed, official direction. Could the graph hold them well enough that an organisation trusts it and stops keeping external docs?",
+        "rationale": "Recorded via the brainstorm skill at `proposed`, options with counters beside them, nothing promoted. Started as a new node rather than merged into the rule after the guard named it: the rule governs this repository and is settled, while this asks whether the product could carry legal-weight documents for someone else — different scope, different decider, and merging them would bury a product question inside a house rule. His \\\"I don't think we are there yet\\\" is preserved inside the idea, because a later reader would otherwise read the aspiration as a plan.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-can-the-unaccepted-be-purged-in-bulk",
       "node_type": "Decision",
       "properties": {
@@ -75533,6 +75864,16 @@
         "name": "OPEN — should comparing the live graph against the committed record be part of a session's opening move, when the comparison cannot yet tell a default from a decision?",
         "rationale": "Recorded as an open question rather than an answer because the brainstorm materially changed what the question is. I opened arguing for a session-opening step; the design's own memory then supplied a two-instance record of that step producing confident false defect claims — one of them mine, an hour earlier. An idea that is weaker after searching is worth keeping in exactly that state, with the evidence that weakened it attached, so a later session does not re-propose it fresh and pay for the discovery a third time.\n\nKept deliberately open, and NOT registered as alternatives: each option here is a paragraph, not a design, so `detect_gaps` stays quiet (`undecided_decision_point` fires only on two or more registered alternatives). If one of these grows a design of its own — most likely C, which needs a property-provenance shape — `register_alternative` is what makes it a real fork, and being nudged to choose would then be correct.\n\nThe counter-arguments are recorded beside the options rather than used to kill any of them, including against my own opening position. (A) is listed first and honestly rather than as a foil: this project has twice chosen the computed form over the prescribed one, and \"the step was already prescribed and was run and was misread\" is a real answer to \"should we prescribe the step\".",
         "status": "superseded"
+      }
+    },
+    {
+      "node_id": "dec:idea-does-change-type-need-more-values-or-a-second-axis",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Alex's idea, from the Opportunities section of his 2026-08-14 session (docs/feedback/2026-08-14-alex-grok-session.md), in his words: \"Add `change_type` for as-built defects (`defect_fix` / `as_built_fix`), or officially alias `test_failure_fix`.\"\n\nDELIBERATELY SEPARATE FROM `fact:defect-change-event-has-no-type-for-a-field-reported-defect`, which the near-duplicate guard correctly surfaced: that node MEASURES the problem and counts its five occurrences; this one holds the UNMADE CHOICE about the shape of the fix. Merging them would put an open question inside a settled measurement, and the fact would then read as though it had proposed its own answer.\n\nWHY IT IS WORTH MORE THAN ITS ONE LINE: the evidence is now five forced choices, not one — two maintainer sessions, one fleet, Alex, and the very edit that recorded his corroboration, each picking a different least-wrong value.\n\nTHE OPTIONS:\n\n(a) ADD `defect_fix` (or `field_report_fix`) — exactly what he proposed. CHEAP: enum values are not counted by the version stamp, so it is not a schema break. COUNTER, and the reason this is a question rather than a task: the five forced choices needed at least THREE different missing meanings — a defect fix, \"an open question was settled\" (`chg:arrival-delta-decided`), and \"the design's knowledge moved while the thing did not\". One value fixes the loudest instance and leaves the pattern.\n\n(b) OFFICIALLY ALIAS `test_failure_fix` — his cheaper alternative: document that this is the bucket. CHEAPEST, no schema move. COUNTER: it makes a structured field permanently mean something other than its name, and the project rejected that reasoning once already — `baseline_established` exists precisely because forcing a record-only change through a code category \"writes a fiction into the ledger that exists to prevent fiction\".\n\n(c) SPLIT THE AXIS — carry a `subject: system | record` alongside a narrower type. MOST HONEST: `baseline_established`'s own doc comment already names the axis — \"every other variant answers why the thing changed; this one says the thing did not change and only the design's knowledge of it did\" — then leaves it with one member, reserved. COUNTER: a real schema property on a type with a lot of history, and every existing ChangeEvent would carry an unstated subject, which is the \"absent means nobody said\" problem again.\n\n(d) A STRUCTURED `reported_by` / `found_by` PROPERTY — the other half of Alex's own suggestion. Keeps how-it-was-found structured rather than narrated. COUNTER: orthogonal to the gap; it records provenance of the discovery, not the kind of the change, so (a) or (c) would still be owed.\n\nNOT ESTABLISHED: whether the three missing meanings are all of them, or only the three that happen to have been hit.",
+        "name": "IDEA — `change_type` has no value for an as-built defect. Add one, alias an existing one, or split the axis it is actually conflating?",
+        "rationale": "Recorded via the brainstorm skill: one Decision per open question, at `proposed`, options with their counters beside them, nothing promoted. Started as a new node rather than merged into the measuring fact after the near-duplicate guard named it — a measurement and an unmade choice are different acts, and folding the second into the first would make the fact appear to answer itself.",
+        "status": "proposed"
       }
     },
     {
@@ -75745,6 +76086,16 @@
       }
     },
     {
+      "node_id": "dec:idea-is-there-a-feedback-intake-skill-and-is-it-a-router",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony's idea, 2026-08-15, in his words: \"maybe reflow2 needs a /feedback skill to insert feedback into the graph. we have a few capture type skills already and we've used a brainstorm at times, and we have mass ingest. the thing with feedback is you don't know if it is an idea or test results or maybe it's a word by your boss on something — my point being, the feedback skill needs to determine intent/content to properly address. like I said, we have a lot of already existing skills, so this probably isn't a create-from-scratch effort, but a question of how to quickly capture external feedback in the graph.\"\n\nDELIBERATELY DISTINCT FROM THE THREE NODES THE GUARD NAMED, all of which are about feedback LEAVING: `dec:idea-agent-to-agent-feedback-is-a-formal-channel` (should agents write reports for other agents), `req:agent-authored-feedback-is-reproducible-and-never-leaves-unasked` (nothing leaves without the human's word), `fact:second-user-report-2026-08-11` (one such report's content). THIS IS THE OPPOSITE DIRECTION — somebody else's report arriving, and what it becomes once it is here. Nothing in the design covers intake.\n\n⭐ EVIDENCE FROM DOING IT BY HAND, TWICE, TODAY. This session processed two external feedback documents — a Grok session's 14 items and a US-government genesis session's 4 — and INVENTED THE SAME ROUTING BOTH TIMES with nothing to consult: verify each claim against the running build; `search_design` for an existing node before writing; defects to `TemporalFact` per `dec:defects-are-temporal-facts`; open questions to `proposed` Decisions; ideas via brainstorm; provenance via Fragments and `YIELDED`. That is knowledge re-derived per session — the exact failure `fact:defect-a-pre-served-skills-install-is-stranded` names as reflow2's own reason to exist. It is also the shape that produced `link-projects`: a process performed ad hoc, noticed, and made a served skill.\n\n⭐⭐ THE SHARPENING, AND IT IS NOT WHAT THE QUESTION ASSUMES. He frames the discriminator as CONTENT — idea vs test result vs boss's word. Measured against what actually happened, the harder discriminator is AUTHORITY. The same sentence routes differently depending on who said it: \"this should be civil-date, not UTC\" from a user is an observation; from the design's owner it MOVES A STATUS. Moving a status is precisely what an agent may not do on its own (`dec:certainty-derived`). reflow2 already models this — `Contributor`, and `AUTHORED_BY` with `role: author | reviewer | approver` — and NOTHING READS IT AT INTAKE. A skill routing on content alone would take a boss's ruling and file it as somebody's opinion.\n\n⭐⭐ AND THE FIRST STEP IS NOT RECORDING, IT IS VERIFYING. Of the 18 items processed today, FOUR were wrong as stated: `get_instructions` truncating (it was the client's cap), the export needing the server stopped (it does not), `Constraint` requiring numeric fields (it does not — and that error had already cost that project eleven permanently-open gaps), and a claim of mine that `VIOLATES` was read by nothing. A skill whose first move is \"record what they said\" would have written four false facts into the graph, each carrying a real source's authority. NO EXISTING CAPTURE SKILL HAS A VERIFY STEP, because `capture-intent` takes the user's words AS intent by definition — right for intent, wrong for a report about a system that can be checked.\n\nTHE OPTIONS:\n\n(a) A NEW `feedback` SKILL THAT ROUTES — a triage front door: verify what is checkable, search for the node that already holds it, then hand off to `capture-intent` (new intent), `brainstorm` (an idea), `governance-proposal` (a rule), `revise-design` (a change to something recorded), `reconcile_verification` (a test result), or a `TemporalFact` (a defect found by use). CHEAPEST TO DESCRIBE, and it matches his read that this is composition rather than new machinery. COUNTER: a router that only routes leaves the two hard steps — verify, and read authority — to judgement, which is exactly where today's four errors would have come from.\n\n(b) A SKILL THAT DOES THE WHOLE JOB: verify → attribute authority → search → record → link provenance → report what was refuted. STRONGEST, and it captures what was actually derived twice. COUNTER: it duplicates chunks of four existing skills, and this project has been bitten before by instructions drifting out of step with the tools they describe.\n\n(c) NO NEW SKILL; EXTEND `capture-intent` with a triage section. No 21st skill, and capture-intent is already the front door people reach for. COUNTER: capture-intent's contract is that the user's words ARE intent; bolting \"first check whether they are true\" onto that changes what the skill IS.\n\n(d) DO NOTHING — the mapping table in `capture-intent` plus judgement covers it. COUNTER, measured: judgement produced the right answer twice today at considerable cost in re-derivation, and the same judgement also produced four claims that survived only because they were checked.\n\n⚠️ COST THAT MUST BE WEIGHED: twenty skills already ship, and eleven had no slash command until recently. A 21st has to earn its place against the context every session pays.\n\n⚠️ AND IT INHERITS AN UNRESOLVED PROBLEM: feedback usually arrives AS A DOCUMENT, and `rule:design-information-lives-in-the-graph-not-in-documents` is now enforced while `Fragment.content_ref` is explicitly a pointer \"rather than inlining\" the text. Until that is scoped, a feedback skill cannot say where a report's un-distilled remainder goes.\n\nNOT ESTABLISHED: whether feedback volume justifies a skill at all — three external reports in eight days is either a trend or a coincidence.",
+        "name": "IDEA — external feedback arrives undifferentiated: an idea, a test result, or the boss's word. Should reflow2 have a `feedback` skill that determines what it is and routes to the skills that already exist?",
+        "rationale": "Recorded via the brainstorm skill: one Decision per open question, at `proposed`, options with counters beside them, nothing promoted. Started as a new node rather than merged after the guard named three near matches — all three concern feedback LEAVING the project, and this is intake, which is the opposite direction and shares only the word. The two sharpenings — that authority rather than content is the harder discriminator, and that verification precedes recording — are findings from this session's measured work, stated as findings rather than as answers.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-lifecycle-dimensions-on-a-requirement",
       "node_type": "Decision",
       "properties": {
@@ -75925,6 +76276,16 @@
       }
     },
     {
+      "node_id": "dec:idea-scoping-exists-and-did-not-narrow-what-a-builder-sees",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Two of Alex's Opportunities, 2026-08-14 (docs/feedback/2026-08-14-alex-grok-session.md), kept together because they are one question asked of two tools — and separable if the answer differs.\n\nHIS WORDS. On detect_gaps: \"Scoped `detect_gaps`: filter to gaps whose `affected_ids` include the seed (or its SATISFIES/REALIZES neighbors), and do not raise `unverified_capability` for `planned` + zero artifacts.\" On loop_status: \"`loop_status` session mode: 'building this Capability' hides unsurfaced project-wide gaps unless they touch the seed.\"\n\n⭐ THE SHARPENING, AND IT CHANGES THE QUESTION: SCOPING IS NOT MISSING. `cap:scoped-analysis` is built and shipped — \"A team asks the detectors about its own part, and is told what it did not see\" (`chg:scoped-analysis-built`), and `loop_status` already takes a `contributor_id`. So this is not a request for a feature that does not exist. It is a report that THE FEATURE THAT EXISTS DID NOT HELP: he called `detect_gaps(scope: Capability)` at depth 1, 2 and 3, got `in_scope` of roughly 47–51 every time, \"almost every hit `unverified_capability` on unrelated planned work\", and still could not answer \"is THIS Capability still in an `unrealized_capability` gap?\" without grepping `affected_ids` by hand.\n\nTHAT REFRAMES IT: the scope is computed by GRAPH REACHABILITY, and on a connected design a few hops reaches most of it. The question is whether scope should mean \"what the seed can reach\" or \"what is actually about the seed\".\n\nTHE OPTIONS:\n\n(a) FILTER BY `affected_ids` — exactly his proposal: a gap is in scope when the seed (or its SATISFIES/REALIZES neighbours) is in the gap's own affected set. CHEAP, and it answers the question he actually had. COUNTER: it narrows to gaps that already name the seed, so a gap about a neighbour that WILL matter to him drops out — and `cap:scoped-analysis`'s whole promise is that it \"names what it did not see\", which this makes both more necessary and more voluminous.\n\n(b) SUPPRESS `unverified_capability` FOR `planned` + ZERO ARTIFACTS — his second clause, and independently useful. CHEAP. COUNTER: it is a phase judgement baked into a detector, and this project's standing preference is to report the fact and let the reader judge (`dec:report-dont-judge`). It may also be the same finding as `dec:should-a-design-be-able-to-say-it-describes-something-that-already-exists`, one layer along — a design that has not started building does not want build gaps at all.\n\n(c) A SESSION MODE ON `loop_status` — \"I am building this Capability\". Answers the noise complaint where he actually felt it: `next[0]` was detect-and-ask all session while the work was implement → user-correct → implement. COUNTER, and it is serious: `loop_status`'s contract is that a scoped answer must never read as \"the design is clean\" — it already keeps unattributable debt under `scope.not_attributable` for exactly this reason. A mode that HIDES project-wide gaps is the one thing that contract forbids, so this option must be built as \"rank differently\", not \"hide\".\n\n(d) DO NOTHING TO THE TOOLS; THE COMPLAINT IS ABOUT PHASE — he was mid-bugfix with a user watching a broken app, and reflow2 has no notion of that. His items 3 and 9 are the same complaint from the other side. COUNTER: \"wait for a phase model\" has been the answer to several of these, and nothing is scheduled.\n\nNOT ESTABLISHED: whether depth was the wrong control or scope was the wrong concept; and whether 47–51 in_scope on his design is large relative to the design's size, which nobody measured.",
+        "name": "IDEA — scoped detection is BUILT and a real session still could not ask \"is this one Capability still in a gap?\". Should scope filter by relevance rather than by reachability, and should loop_status get a session mode?",
+        "rationale": "Recorded via the brainstorm skill at `proposed`. Two ideas held in one node because they are one question asked of two surfaces; noted inside that they can be answered apart if the answer differs. The reframing — that scoping exists and did not narrow — is a finding, not a decision, and is stated as such.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-search-first-fires-without-being-remembered",
       "node_type": "Decision",
       "properties": {
@@ -75975,12 +76336,42 @@
       }
     },
     {
+      "node_id": "dec:idea-should-propagate-change-separate-crossing-an-interface-from-a-component-dump",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Alex's idea, 2026-08-14 (Opportunities), in his words: \"`propagate_change` summary: separate 'same Component dump' from 'crossed an Interface.' Default `full` off is right; the summary still needs a 'sibling Capabilities on the same Component, not actually impacted' band.\"\n\nDISTINCT FROM `fact:defect-propagate-change-distance-two-is-not-an-edit-list`, which measures what happened (~65 named, 113 truncated, the Interface signal buried). This holds the unmade choice about the fix.\n\nTHE OPTIONS:\n\n(a) BAND THE SUMMARY BY EDGE KIND — group the impacted set by HOW it was reached: through a shared Component, across a PROVIDES/CONSUMES Interface, along the Requirement/Decision thread. CHEAP, changes no traversal, and it makes the useful signal findable rather than smaller. COUNTER: it renames the problem if the bands are not ranked — a hundred nodes in three labelled groups is still a hundred nodes.\n\n(b) A NAMED \"NOT ACTUALLY IMPACTED\" BAND, his exact phrasing — siblings on the same Component, reported as reached-but-probably-irrelevant. HONEST, and it keeps the count visible rather than filtering it away, which matters because this project's standing preference is to report rather than judge. COUNTER: \"not actually impacted\" is a JUDGEMENT, and the tool would be making it. A sibling Capability on a shared Component sometimes IS impacted, and a band that says otherwise will eventually be believed on the day it is wrong.\n\n(c) WEIGHT THE TRAVERSAL rather than band the output — DEPENDS_ON already carries `weight` and `weight_basis`, and CONSUMES carries `weight` too. A radius that decayed through weak couplings would shrink honestly. COUNTER: almost nothing in a real design sets those weights, so the decay would be uniform and the answer unchanged — this is a fix that requires a habit nobody has.\n\n(d) DO NOTHING TO THE TOOL; FIX THE INSTRUCTION. The served loop says \"update ONLY what the blast radius names\", which is what makes a wide answer a defect rather than information. Softening the instruction costs nothing. COUNTER: it concedes that the radius cannot be acted on, which is most of what the tool is for.\n\n⚠️ AND A COUNTERWEIGHT FROM THE OTHER DIRECTION, measured on reflow2's own graph this session: `propagate_change` seeded from a TemporalFact returned ZERO impacted, because ABOUT_ENTITY is not traversed. ANY CHANGE HERE MUST NOT ASSUME THE TOOL'S PROBLEM IS ONLY THAT IT IS TOO WIDE. It is too wide from one seed type and silent from another, and a narrowing fix applied blind would make the silent case worse.\n\nNOT ESTABLISHED: the ratio — he did not report his design's total node count, so whether 178 is most of it or a tenth of it is unknown, and that number decides whether this is a threshold problem or a shape problem.",
+        "name": "IDEA — the blast radius reports one kind of reach. Should the summary band \"crossed a published Interface\" apart from \"sits on the same Component\", and name the siblings that are not actually impacted?",
+        "rationale": "Recorded via the brainstorm skill at `proposed`, options with counters beside them, nothing promoted. The zero-impacted counterweight is included because a fix aimed only at width would deepen the opposite failure, and that pairing was not visible to either reporter alone.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-should-record-change-refuse-a-snapshot-of-state-that-already-moved",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Alex's idea, 2026-08-14 (docs/feedback/2026-08-14-alex-grok-session.md, Opportunities), in his words: \"`record_change` should refuse (or warn) if the target's current hash already differs from what the caller thinks they are snapshotting — or be a required first step inside the typed merge when `status` is `accepted`.\"\n\nDELIBERATELY SEPARATE FROM `fact:defect-record-change-overwrites-the-name-of-the-event-it-is-filed-under`, which the near-duplicate guard surfaced: BOTH ARE FAILURES OF THE SAME CALL AND THEY ARE NOT THE SAME FAILURE. That fact is about `record_change` clobbering the ChangeEvent's `name`, found serially; this is about the SNAPSHOT capturing state that had already moved, found under parallel writes. Whether they get one fix is part of what is open here — which is an argument for keeping them separate until somebody decides, not for merging them now.\n\nWHAT HE HIT (his item 2): in one batch he `record_change`d a Decision AFTER a sibling `add_decision` on the same id had already merged. The Snapshot stored the NEW statement. Nothing warned. In his words: \"the timeline for that revision is a lie; easy for any agent that parallelizes writes.\"\n\nTHE OPTIONS:\n\n(a) REFUSE ON A HASH MISMATCH — the caller states what it believes it is snapshotting; a difference is refused. CHEAP, and it matches doctrine already applied elsewhere: `set_artifact_checksum` is a two-sided accept for this reason, and `export_graph` refuses a divergent write rather than silently discarding. COUNTER: the caller has no hash in hand today, so this needs a new argument, and an agent that cannot produce one gets a tool it cannot call.\n\n(b) WARN RATHER THAN REFUSE. CHEAP, breaks nothing. COUNTER: the loss is silent precisely because the call reports success, and a warning nobody reads is this project's own recurring failure.\n\n(c) FOLD IT INTO THE TYPED MERGE when `status` is `accepted` — his stronger form: you cannot edit an accepted Decision without the snapshot happening first, because the tool does it. STRONGEST; removes the ordering hazard rather than reporting it. COUNTER: it makes one write path do two things, and `dec:ask-not-repair` is the standing preference for naming a problem over acting on it.\n\n(d) DO NOTHING; THE DISCIPLINE IS THE ANSWER. COUNTER, and it is measured rather than argued: the sibling fact was found on 2026-08-15 doing exactly this, STRICTLY SERIALLY and in the order `revise-design` prescribes, and data was lost anyway. Ordering discipline is demonstrably not sufficient for this call — which is evidence against (d) rather than for any particular replacement.\n\nNOT ESTABLISHED: how often the parallel-write case actually occurs — one report, one session.",
+        "name": "IDEA — the record-before-you-edit discipline can silently snapshot the NEW state. Should `record_change` refuse when the target has already moved, or be folded into the typed merge itself?",
+        "rationale": "Recorded via the brainstorm skill at `proposed`, options with counters beside them, nothing promoted. Kept distinct from the name-overwrite fact after the guard named it: two failures of one call, found by two different routes, and whether one fix covers both is itself part of the open question.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-should-reflow2-carry-its-own-git-discipline",
       "node_type": "Decision",
       "properties": {
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Nothing here is intent.\n\n⚠️ REFRAMED 2026-08-11 AFTER GETTING IT WRONG. The first version of this node asked whether reflow2 should automate git. That was not the question. Anthony: \"I'm not saying that reflow2 does the actual git operations itself; I'm arguing that reflow2's own rules shouldn't be tracked by hand, but by some governance rules (and this may be different for every project, which is kind of how we designed the governance entities for reflow2 anyways).\" His original words were \"as part of governance\", and the word was doing the work.\n\n⭐⭐ THE FINDING, MEASURED 2026-08-11: REFLOW2 HAS A GOVERNANCE LAYER AND DOES NOT USE IT ON ITS OWN GOVERNANCE RULES.\n\n  DesignRules in this design                                        10\n  carrying a VERIFIES edge                                           1   (per-design-state-is-never-a-process-global)\n  `dec:export-once-per-pr` node type                            Decision   — so `unverified_enforced_rule`,\n                                                                            which scans DesignRules, CANNOT SEE IT\n  Verification node for the lineage gate                          none\n  `rule:nothing-lands-on-main-directly`                        advisory, unverified\n\nAND THE GATE IS REAL. `tools/reflow2_check.py` fails the build on a broken lineage chain — it did so twice on 2026-08-11 — and its own source at line 515 says: \"THE RULE THIS ENFORCES is `dec:export-once-per-pr`, accepted\". THE PYTHON NAMES THE RULE IT ENFORCES AND THE GRAPH DOES NOT KNOW THE CHECK EXISTS. Delete that check tomorrow and nothing in the design notices: no gap, no defect, no unverified rule. The rule keeps reading as governing while nothing governs.\n\n⭐ SO \"CARRIED BY HAND\" IS PRECISE AND IT IS NOT ABOUT GIT. The ENFORCEMENT is automated. The TRACKING of the enforcement is what is manual — a rule in one place, a check in another, and nothing joining them. That is the same shape this project keeps finding: the search-first rule living in five skills and firing only when one is loaded; the deferral discipline living in a table nothing computes on; mutation-checking practised in eight verifications and written down nowhere.\n\n⭐⭐ AND THE GENERALISATION IS THE PRODUCT POINT, in his words: \"this may be different for every project, which is kind of how we designed the governance entities for reflow2 anyways.\" The governance entities exist so ANY project can state its own policy and get gap detection on it — `DesignRule` with a three-state `enforced`, `unverified_enforced_rule` at 0.6, `cap:governance-proposal` to ask the consequence rather than inherit it. reflow2's own git and export policy is exactly the kind of project-specific rule that layer was built for, and it sits outside it. A consumer copying reflow2's example would copy the gap.\n\nWHAT WOULD ACTUALLY CHANGE, unranked:\n(a) MAKE THE EXISTING RULES FIRST-CLASS. `dec:export-once-per-pr` becomes (or gains) a DesignRule so the governance detector can see it; the lineage gate becomes a Verification with a VERIFIES edge to it; `rule:nothing-lands-on-main-directly` gets the same treatment or an honest statement that it cannot be checked. Pure wiring, no new mechanism, and it makes deleting a check visible.\n(b) ANSWER THE CHECKABILITY QUESTION PROPERLY. `req:a-rule-says-whether-it-can-be-checked-at-all` is ACCEPTED and unbuilt: it splits \"no detector\" into DEBT and ACCEPTED LIMIT. Nine of ten rules here are unverified and nothing distinguishes \"nobody has written the check\" from \"no check is possible\" — which is the difference between rule:bl-41 (LLM behaviour, arguably uncheckable) and the export rule (checked already, just not wired).\n(c) BOTH, since (b) is what stops (a) turning nine rules into nine permanent 0.6 gaps.\n(d) Nothing: the gate works, and wiring it into the graph changes no behaviour today.\n\n⚠️ THE COUNTER TO (a) AND IT IS REAL: making rules first-class means `unverified_enforced_rule` starts firing on rules nobody intends to check, and this project has retired a detector before (`unexpected_coupling`) precisely for firing on correct work. That is why (b) is not optional — the enforced flag without the checkability answer converts honest advisory rules into permanent debt.\n\n⚠️ THE NON-GITHUB CLAUSE STILL STANDS AND IS NOWHERE IN THE GRAPH. `rule:nothing-lands-on-main-directly` is stated entirely in GitHub's vocabulary — branch, open a PR, gates green, merge — and its four recorded traps are all forge mechanics. ON A BARE GIT REMOTE THERE IS NO PULL REQUEST. So the rule presumes a forge while reflow2 only requires git, and nothing says which parts survive. That is a live instance of `req:a-rule-states-its-scope-and-a-conflict-is-surfaced` (proposed): the rule does not state its scope, and on a plain remote it is partly UNFOLLOWABLE rather than merely unenforced. Any wiring must express the discipline in pure git — one commit per branch touches the export — with the PR being only where CI happens to notice.\n\n📌 EVIDENCE OF THE COST, one day of this project's own work, four PRs all merged: two CI failures caused by the export discipline alone; roughly ten hand-driven restore-then-export-once cycles; a rebase needing a re-export because the three-way merge driver merges CONTENT correctly and cannot repair LINEAGE; the local and CI gates disagreeing in BOTH directions because one compares against HEAD and the other against main; and one PR left in draft after going green. A fleet of seven sessions reports the same and mitigates it with a social convention — \"only the boss exports\" — which is the shape this project treats as a finding everywhere else.\n\n⚠️ WHAT MUST NOT HAPPEN regardless: reflow2 must not push, merge or open a PR. `dec:repo-file-embedded` weighs local-first deliberately, and a design tool that writes to a remote is categorically worse than the friction it removes. Nothing in (a)–(c) requires it.",
         "name": "OPEN — reflow2's own rules are tracked by hand while reflow2 has a governance layer built to track them. Should they be wired into it?",
         "rationale": "Reframed after misreading the question as git automation. The measurement is the argument: 10 DesignRules, 1 verified; the export rule is a Decision so the governance detector cannot see it; and the lineage gate that enforces it exists only as Python whose own source names the rule it enforces. The enforcement is automated and the tracking of it is not — so deleting the check would be invisible to the design. That is a product gap rather than a repo-hygiene one, because the governance entities exist precisely so any project can wire its own rules in.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-should-the-checksum-accept-have-an-as-built-aligned-disposition",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Alex's idea, 2026-08-14 (Opportunities), in his words: \"Checksum accept: allow `as_built_aligned` when a Requirement did not change and the file now matches it.\"\n\nDISTINCT FROM THE THREE NODES THE GUARD NAMED, and the distinction is the interesting part. `dec:idea-does-change-type-need-more-values-or-a-second-axis` and its fact concern `ChangeEvent.change_type` — WHY A CHANGE HAPPENED. This concerns `set_artifact_checksum.disposition` — WHAT A CHANGE MEANS FOR THE DESIGN. Two different enums on two different tools, answerable differently. ⭐ THAT THE SAME MISSING MEANING IS ABSENT FROM BOTH IS EVIDENCE, NOT DUPLICATION: one absence is a wording gap; two independent absences of the same category is a category the vocabulary does not have. The third node measures the case; this holds the unmade choice.\n\nTHE OPTIONS:\n\n(a) ADD `as_built_aligned` AS A THIRD DISPOSITION — exactly his proposal. It says the true thing: the design was right, the code was wrong, the code moved to meet it, intent never changed. CHEAP — enum values are not counted by the version stamp — with a precedent in `baseline_established`, added for the same reason one category along: forcing a record-only event through a code category \"writes a fiction into the ledger that exists to prevent fiction\". COUNTER: three dispositions is a decision an agent must get right under pressure, and his item 8 complaint was that choosing between TWO already costs a turn mid-bugfix.\n\n(b) LET `design_holds` CARRY IT, DOCUMENTED — say plainly that a fix restoring intended behaviour IS \"no design meaning\", because the design did not move. CHEAPEST, no schema change, defensible on the plain reading. COUNTER: it collapses \"this change was meaningless\" with \"this change repaired a violation of accepted intent\", and the confirmation ledger then cannot count the second — exactly the number somebody would want when asking how often code drifted from design.\n\n(c) DERIVE IT INSTEAD OF ASKING — if the artifact REALIZES a capability satisfying a Requirement unchanged since the last baseline, the disposition is inferable and the agent should not be asked. ELEGANT, and it removes the mid-bugfix turn he complained about. COUNTER: `dec:two-sided-accept` exists because a SILENT accept \"is how a design erodes into fiction over N fix cycles while reporting zero gaps\". An inferred disposition is a silent accept wearing a computation, and the fix-cycle case is precisely what that decision guards.\n\n(d) DO NOTHING — two dispositions plus a prose note is enough. COUNTER: see the two-surfaces argument above.\n\nWHATEVER IS CHOSEN, THE INVARIANT: any new disposition must stay a DATED, ATTRIBUTABLE CLAIM counted apart in the confirmation ledger, as `baseline_established` is. The ledger's value is that it says HOW a design was confirmed, not merely that it was.\n\nNOT ESTABLISHED: frequency. One report. The ledger could answer it by counting `design_holds` accepts whose events carry `test_failure_fix` — a cheap sweep nobody has run.",
+        "name": "IDEA — the two-sided accept has no answer for \"the code was wrong and now matches intent that never changed\". Should `as_built_aligned` be a third disposition?",
+        "rationale": "Recorded via the brainstorm skill at `proposed`, options with counters beside them, nothing promoted. Started as a new node rather than merged after the guard named the change_type pair: two enums on two tools answering two different questions, and the fact that the same meaning is missing from both is the evidence for acting rather than a reason to fold them together. Option (c) is included though it conflicts with an accepted decision, because it best answers his actual complaint and the conflict is worth seeing.",
         "status": "proposed"
       }
     },
@@ -76572,6 +76963,16 @@
         "decision": "BL-68 vocabulary question 2, answered by Anthony 2026-08-01. TWO PARTS, and the second is the load-bearing one. REPRESENTATION: readiness gets its OWN construct — an integer level 1-9 with a kind (TRL/MRL) — not a value in the `dimension` enum. Three reasons, all from the schema rather than preference: `DimensionAssessment.score` is a float 0.0-1.0 documented as \"0 = worst, 1 = best\", so a 1-9 ladder can only enter it lossily (TRL 7 as 0.78 asserts a precision the ladder does not have); the `dimension` enum is a closed list of QUALITY AXES — reliability, maintainability, coupling — and readiness is not a quality of the design, it is a fact about the maturity of an enabling technology; and `maturity` is ALREADY in that enum meaning code maturity, so adding TRL beside it would put two different things under one word, which is the [BL-115] shape (two states rendering identically because the vocabulary has no word for one of them). THRESHOLD: the level at which readiness GATES is stated on the thing being gated, and reflow2 REFUSES to supply a default. An absent threshold reports as ungated; it is never assumed. THIS IS THE PART THAT KEEPS THE FEATURE INSIDE `dec:report-dont-judge`: a TRL is an OBSERVATION, so computing over it is detect_gaps-shaped rather than ranking-shaped and does not conflict with `dec:alternatives-unranked-forkable`'s rule that the human does credit assignment. But the threshold IS a judgement — \"TRL below 5 means not buildable yet\" is a policy about risk appetite — and a default would let reflow2 silently decide buildability. THE PRECEDENT IS MEASURED, NOT ARGUED: `Interface.medium` defaulted to REST and thereby made two silent boundaries \"agree\" on a value neither had chosen, which `ver:seam-incompatibility` caught and BL-129 fixed. A defaulted readiness threshold is the same defect with a bigger blast radius, because it would gate a roadmap.",
         "name": "Readiness is its own construct, and the gating threshold is stated — never defaulted",
         "rationale": "Anthony's call, 2026-08-01, on the re-scoped BL-68 (PR #32) rather than on the row as filed in July. Chosen over adding `trl`/`mrl` to the dimension enum, which is cheaper and would have given the per-epoch forecast trail for free, and over a single project-wide threshold policy — rejected because it cannot express that a demonstrator tolerates TRL 4 while a fielded increment needs 8, which is exactly BL-68's own worked example (laser satellite refuelling: today's increment versus the ten-year one). Costs a schema change, so it pulls in the minor bump, the upgrade doc and the foundation-migration checklist.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:reflow2s-own-feedback-documents-are-removed-once-captured",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "ANTHONY'S WORD, 2026-08-15, given after the capture was complete and after he had been shown the collision with `req:sources-are-kept-not-just-parsed`: \"for our own reflow2 set of feedback docs; once ingested, please remove (this is my policy just for the reflow2 design because I don't want documents accumulating and have to clean up some day — I want to keep a nice clean repo)\".\n\nDISTINCT FROM `rule:design-information-lives-in-the-graph-not-in-documents`, which the guard named: THE RULE SAYS WHAT MAY NOT BE STORED; THIS SAYS WHAT HAPPENS TO A DOCUMENT THAT ALREADY EXISTS ONCE IT HAS BEEN CAPTURED. A prohibition and a lifecycle step. It is also the OBSOLETES source the retirement needs — only an ACCEPTED DECISION withdraws anything from a design, and a DesignRule cannot play that part.\n\nSCOPE, DELIBERATELY NARROW — his own framing, twice: \"our own reflow2 set of feedback docs\" and \"just for the reflow2 design\". This governs THIS repository's inbound feedback documents. It is NOT a product position, NOT advice to consumers, and NOT a general answer to where prose belongs. `dec:idea-can-the-graph-be-the-official-record-an-organisation-trusts` holds that larger question and stays open.\n\nTHE CONDITION IS 'ONCE INGESTED', WHICH IS THE LOAD-BEARING PART. Removal is licensed by capture having HAPPENED, not by the rule existing. Both documents removed under this decision were captured first, item by item, into TemporalFacts, Decisions and Fragments carrying the reporters' words verbatim — and the un-distilled remainder stays recoverable from git history, so the deletion costs reconstruction detail rather than findings.\n\n⚠️ WHAT THIS KNOWINGLY OVERRIDES, recorded rather than glossed: `req:sources-are-kept-not-just-parsed` is ACCEPTED and says ingest keeps the original corpus documents \"so the corpus becomes part of the design rather than an input consumed and discarded\". It was left accepted-and-unsatisfied on purpose when `cap:content-store` was discontinued (`dec:the-content-store-is-discontinued`, 2026-08-09), with a `design_artifacts` folder named as the replacement and still unbuilt. HE WAS SHOWN THAT COLLISION AND CHOSE REMOVAL ANYWAY. The requirement's status is his to move and has NOT been moved on his behalf; it stays accepted and unsatisfied, and this decision is the reason a later reader will find them pointing in opposite directions.\n\nWHY HE CHOSE IT, in his words from the same thread: documents \"get forgotten and hard to maintain\"; a corpus \"piling up\" is the fear (dev_storyflow's 900+ records now being read slowly); and \"documents are external and require grep to see contents… having in the graph is immediately searchable\". The backlog file that \"kept growing and growing\" is the precedent he cites, on the record as `dec:backlog-is-retired`.\n\nMECHANICS: the Artifact nodes are RETIRED ON THE RECORD, not deleted. They keep their names, their checksums — the proof of exactly what was captured — and their Fragments and YIELDED edges, so every finding can still be traced to the document that produced it. OBSOLETES is drawn from this decision to each Artifact (`dec:idea-discontinued-is-a-first-class-state`).",
+        "name": "reflow2's own feedback documents are deleted once their content is in the graph — a policy for THIS repository, not a claim about how consumers should work",
+        "rationale": "Recorded as its own accepted Decision rather than merged into the rule after the guard named it: a prohibition on storing and a lifecycle step for what already exists are different acts, and only an accepted Decision can be the source of the OBSOLETES edge that retires the two Artifacts. Accepted on his explicit word given in this session; no status was moved on his behalf, and the requirement it overrides was deliberately left where it stands.",
         "status": "accepted"
       }
     },
@@ -78608,6 +79009,16 @@
       }
     },
     {
+      "node_id": "epoch:feedback-corpus-ingested-then-deleted",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "The no-documents rule is stated and made gate-blocking on Anthony's word — and the deletion it implied is HELD, because mass ingest turned out not to move prose into the graph and `req:sources-are-kept-not-just-parsed` forbids consuming a source and discarding it (2026-08-15)",
+        "sequence": 341,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:first-rendered-doc",
       "node_type": "DesignEpoch",
       "properties": {
@@ -79614,6 +80025,16 @@
       }
     },
     {
+      "node_id": "rule:design-information-lives-in-the-graph-not-in-documents",
+      "node_type": "DesignRule",
+      "properties": {
+        "category": "convention",
+        "enforced": true,
+        "name": "Design information lives in the graph, not in documents",
+        "statement": "This project does not store design information in documents. What a document would have said belongs in the graph as typed nodes. Anthony's word, 2026-08-15: \"we no longer use documents to store info. should be in graph\" — and, on the buildup of two feedback files captured only partially, \"we can't let this buildup occur again\".\n\nENFORCEMENT IS HIS EXPLICIT ANSWER, NOT AN INHERITED DEFAULT. Asked what should happen if somebody added a markdown file holding design information — good content, tests passing — he chose STOP THE BUILD over advice and over leaving it unstated.\n\n═══ WHY, IN HIS WORDS (2026-08-15, the reasoning behind the rule) ═══\n\nTHREE ARGUMENTS, and each has a measured precedent in this project or a neighbouring one:\n\n(1) DOCUMENTS GET FORGOTTEN AND ARE HARD TO MAINTAIN. His example is this project's own: \"like our initial backlog file of tasks for reflow2 kept growing and growing\". That is `dec:backlog-is-retired` — 218 rows and 592 KB before it was retired into the graph on 2026-08-07, with an accepted decision violated and re-derived three times in the session that finally fixed it.\n\n(2) A CORPUS OF THEM PILES UP FASTER THAN ANYONE READS IT. \"what scared me was a corpus of feedback docs piling up. In dev_storyflow, I think I had 900+ documents of records that we're now having to go through slowly.\" The fear is not the first document; it is the nine hundredth, and the fact that the reading debt arrives long after the writing felt free.\n\n(3) A DOCUMENT IS NOT SEARCHABLE THE WAY THE GRAPH IS. \"documents are external and require grep to see contents (assuming markdown files, but that isn't always the case) — having in the graph is immediately searchable.\" The parenthesis is the sharp part: `search_design` works on any node, while grep only works on text formats, and a PDF, a spreadsheet or a drawing is opaque to it entirely.\n\n═══ THE EXCEPTION HE STATED, WHICH SCOPES THE RULE ═══\n\n⭐ \"unless they are like a manual for using the designed system\". THAT IS THE LINE: a document that is a DELIVERABLE OF the designed system — a user manual, an operator's guide — is not design information and this rule does not reach it. What the rule forbids is design information ABOUT the system living outside the graph.\n\n⭐ AND A CONCESSION HE OFFERED UNPROMPTED: \"If there was a way to put a pointer in the graph to the external document, that might be okay, but I think it is cleaner if we don't have external docs.\" A pointer is `Artifact.location` and `Fragment.content_ref`, both of which already exist and are exactly that — so the concession is already implementable, and he is stating a PREFERENCE for cleanliness over it rather than a prohibition on it.\n\n═══ THE COUNTER HE RAISED AGAINST HIMSELF ═══\n\n\"The counter in some ways is something like dev_storyflow that did maintain a lot of records of the design.\" Recorded because he raised it and because it cuts: the same 900+ documents that are now a reading debt are also a design record that survived, and no graph held it at the time.\n\n═══ THE LIMIT HE NAMED, AND IT IS THE REAL BOUNDARY ═══\n\nFrom the acquisition world he works in: \"in some designs, actual design reviews are done and official direction to proceed and other formal docs are required (coming from the US Air Force and US Space Force, documentation is required — maybe we can eventually get to where the graph tracks authorizations to proceed or other official acquisitions documents are in the graph and organizations trust the graph to hold such docs and therefore, keeping external docs is no longer needed — but I don't think we are there yet).\"\n\nSO THE RULE IS STATED FOR THIS PROJECT AND IS NOT YET CLAIMED TO GENERALISE. Whether reflow2 could become the system of record an organisation trusts for formal authorisation is open in `dec:idea-can-the-graph-be-the-official-record-an-organisation-trusts`, recorded separately because it is a question about the product rather than a rule about this repository.\n\n⚠️ THIS RULE OWES A DETECTOR AND CANNOT HAVE ONE YET, because two things must be scoped before a check could tell a violation from ordinary work:\n\n(1) SCOPE. 187 markdown files are tracked outside `docs/design/`. AGENTS.md, CLAUDE.md, COORD.md, REFLOW2.md, README, CHANGELOG and every served SKILL.md are documents, and several are load-bearing instructions the project cannot function without. The manual exception above narrows this but does not settle it: served SKILL.md files are closer to \"a manual for using the designed system\" than to design information, and nobody has ruled.\n\n(2) A CONFLICT WITH THE SCHEMA'S OWN DESIGN, measured 2026-08-15: `Fragment.content_ref` is \"a pointer to the source content RATHER THAN INLINING IT\", and Fragment carries no field for a document's text. `Artifact.location` and `DOCUMENTS` share that assumption. AND THE FEATURE THAT WOULD HAVE CLOSED IT WAS BUILT AND WITHDRAWN: `cap:content-store` held \"the source documents a corpus was extracted from\", was `realized` and verified, and was discontinued on his word on 2026-08-09 for zero use across three projects (`dec:the-content-store-is-discontinued`). That discontinuation left `req:sources-are-kept-not-just-parsed` accepted and unsatisfied ON PURPOSE, with a `design_artifacts` folder — a folder of documents — named as the intended replacement and still unbuilt. THIS RULE AND THAT REQUIREMENT CURRENTLY POINT IN OPPOSITE DIRECTIONS, six days apart, both on his word."
+      }
+    },
+    {
       "node_id": "rule:design-intent-moves-only-on-the-owners-word",
       "node_type": "DesignRule",
       "properties": {
@@ -80240,6 +80661,18 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Item 5: 'As-built semantic drift is invisible. A Requirement already said the calendar day is the person's civil date, not UTC midnight. The realizing check-in still used createdAt's ISO date (UTC). reconcile_artifacts can only see checksums. Status said realized. The user found it in the product.' Expected: not magic, but a documented hole."
+      }
+    },
+    {
+      "node_id": "frag:alex-2026-08-14-remainder",
+      "node_type": "Fragment",
+      "properties": {
+        "content_ref": "docs/feedback/2026-08-14-alex-grok-session.md",
+        "fragment_type": "feedback",
+        "note_kind": "reviewer",
+        "provenance": "imported",
+        "status": "ingested",
+        "title": "The remainder of Alex's 2026-08-14 report, captured 2026-08-15 on Anthony's word to keep the documents and move the rest into the graph: the six Strengths; issues 3, 4, 7, 8, 9, 10, 12 and 14; his four self-assessed process gaps; and the Opportunities not already routed to their own nodes. Items 1, 2, 5, 11 and 13 and the environment block were captured earlier and carry their own Fragments."
       }
     },
     {
@@ -81816,6 +82249,18 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Item 4 (graded MEDIUM): 'Capability.status conflates exists in the world with we built it. For a model of an institution that has operated since 1789, planned is plainly false... both readings are wrong in different directions, and the build/verify gaps fire on a design that is complete and correct for its phase.' Asks for a descriptive status or a project-level mode."
+      }
+    },
+    {
+      "node_id": "frag:usgov-2026-08-15-item-5",
+      "node_type": "Fragment",
+      "properties": {
+        "content_ref": "docs/feedback/2026-08-15-usgov-genesis-session.md",
+        "fragment_type": "feedback",
+        "note_kind": "reviewer",
+        "provenance": "imported",
+        "status": "ingested",
+        "title": "Item 5 of the usgov genesis report: 'Small things that went right, recorded so they don't get regressed' — batch failure reporting, describe_schema ranking modelled pairs above wildcards, Requirement.source vs provenance, CONTRADICTS with alignment (called the single most valuable thing reflow2 gave the model), and the gap_to_prompt two-step handshake."
       }
     },
     {
@@ -85957,6 +86402,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:feedback-corpus-ingested-then-deleted:rule:design-information-lives-in-the-graph-not-in-documents",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-15\",\"role\":\"author\"}}]",
+        "state": "{\"category\":\"convention\",\"enforced\":true,\"name\":\"Design information lives in the graph, not in documents\",\"statement\":\"This project does not store design information in documents. What a document would have said belongs in the graph as typed nodes. Anthony's word, 2026-08-15: \\\"we no longer use documents to store info. should be in graph\\\" — and, on the buildup of two feedback files captured only partially, \\\"we can't let this buildup occur again\\\".\\n\\nENFORCEMENT IS HIS EXPLICIT ANSWER, NOT AN INHERITED DEFAULT. Asked what should happen if somebody added a markdown file holding design information — good content, tests passing — he chose STOP THE BUILD over advice and over leaving it unstated.\\n\\n⚠️ THIS RULE OWES A DETECTOR AND CANNOT HAVE ONE YET, because two things must be scoped before a check could tell a violation from ordinary work:\\n\\n(1) SCOPE. 187 markdown files are tracked outside `docs/design/`. AGENTS.md, CLAUDE.md, COORD.md, REFLOW2.md, README, CHANGELOG and every served SKILL.md are documents, and several are load-bearing instructions the project cannot function without. A check that cannot say which of the 187 are violations would either fail every build or none.\\n\\n(2) A CONFLICT WITH THE SCHEMA'S OWN DESIGN, measured 2026-08-15 while trying to comply with this rule: `Fragment.content_ref` is described as a \\\"Pointer to the source content (path/hash) RATHER THAN INLINING IT\\\", and Fragment carries no field for a document's text — only title, summary, intent and that pointer. `Artifact.location` and the `DOCUMENTS` edge are built on the same assumption. So reflow2's vocabulary currently presumes documents EXIST and that the graph points AT them; it has no way to absorb prose. Under a literal reading of this rule, `capture-intent`'s own step 3 — which instructs an agent to register a source document as an Artifact with a location — would itself be a violation.\\n\\nSO THE RULE IS RECORDED AS STATED AND AS ENFORCED, and what it means operationally is the open part. Nothing here softens it: it is his rule and his enforcement choice. What is unresolved is what counts as \\\"design information\\\" versus operating instructions, and whether the graph gains a way to hold prose or the rule scopes around the fact that it cannot.\"}",
+        "target_id": "rule:design-information-lives-in-the-graph-not-in-documents",
+        "target_type": "DesignRule"
+      }
+    },
+    {
       "node_id": "snap:epoch:hxm-field-report:req:a-session-chooses-its-design",
       "node_type": "Snapshot",
       "properties": {
@@ -86786,6 +87241,19 @@
         "fact_type": "method_defect",
         "statement": "MEASURED 2026-08-12, and self-reported because it produced a false green in this session.\n\nWHAT HAPPENED: `cargo test --workspace 2>&1 | grep -E \"^test result:|FAILED\" | tail -20` was run as the pre-PR gate. It was reported to the owner as passing. ⚠️ THE EXIT CODE OF A SHELL PIPELINE IS THE EXIT CODE OF ITS LAST COMMAND — `tail` — which is 0 whether cargo passed, failed, or never compiled. The `tail -20` also truncated the evidence to the last 20 result lines, so the absence of a FAILED line in what came back proved nothing about the other 83 suites.\n\nCaught only by noticing the totals looked low: 20 suites / 250 tests against a project that runs 103 suites / 1,138 tests. The re-run with cargo's status captured directly (`cargo test --workspace > log 2>&1; echo $?`) reported exit 0, 103 suites, 1,138 tests, 0 failures — so the answer was right and the METHOD that produced it could not have known.\n\n⇒ THE GENERAL FORM, which is why this is worth a node: PIPING A GATE THROUGH A FILTER CONVERTS ITS VERDICT INTO ITS OUTPUT. Everything the filter drops is unfalsifiable, and the status that survives belongs to the filter. This is the same class as every finding this project already holds about self-report — a green that describes the reporter rather than the thing.\n\nIt is also unusually well-camouflaged HERE, because filtering long cargo output is the obviously sensible thing to do, and the filtered output looks like exactly what a passing run looks like.\n\nTHE RULE THAT FALLS OUT: redirect a gate to a file and read `$?` from the gate itself; filter the FILE afterwards. `set -o pipefail` also works and is easier to forget. Never take the presence-or-absence of a pattern in filtered output as the verdict.\n\nNOT BUILT INTO ANYTHING. Recorded as a fact rather than a rule because nothing detects it — an agent's shell pipeline is not something reflow2 can see, which is precisely why it needs to be written down where the next session will read it.",
         "subject_id": "proj:reflow2"
+      }
+    },
+    {
+      "node_id": "fact:a-second-project-answered-what-is-left-to-build-from-decision-prose",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "field_confirmation",
+        "statement": "A SECOND PROJECT HIT `dec:idea-remaining-work-has-no-answer-in-the-graph` AND WORKED AROUND IT THE SAME WAY, WHICH IS THE CORROBORATION THAT NODE DID NOT HAVE. Alex's Grok 4.6 session, 2026-08-14 (Opportunities), in his words: \"Remaining-work / increment view: this session used an accepted Decision's PROSE plus Capability `status` as the MVP list. `what_next` ranks open Decisions and does not answer 'what is left to build.'\"\n\nWHY IT MATTERS AS EVIDENCE RATHER THAN AS A NEW COMPLAINT: the open question already exists and already names the cause — the artifact layer is modelled at COMPONENT granularity, so it cannot answer a build question asked at capability granularity (see also `fact:the-build-list-is-suppressed-by-realized-via-component`). What was missing was whether anyone outside this project actually needs the answer. They do, and the workaround they reached for independently is identical: read an accepted Decision's PROSE as the plan, and use `Capability.status` as the checklist.\n\n⭐ THE WORKAROUND IS THE FINDING. Both projects fell back to reading a decision's narrative text — unstructured, uncomputable, and exactly the thing a design graph exists to replace. When the graph cannot answer a question people must answer daily, they do not stop asking it; they answer it from prose, and the prose becomes load-bearing without anyone deciding that it should.\n\nHE ALSO NAMES WHAT `what_next` DOES INSTEAD, which is accurate and not a criticism of it: it ranks open Decisions. That is a different question — what needs a human — from what is left to build, and the two are being conflated by callers because only one of them has a tool.\n\nNOT ESTABLISHED: whether an increment view should be derived from Capability status, from a Release manifest, from a plan-increments epoch, or from something new — that choice is the open question's, not this fact's.",
+        "subject_id": "cap:what-next",
+        "valid_from": "2026-08-14",
+        "value": "{\"reported\":\"2026-08-14, Alex's Grok 4.6 session, Opportunities\",\"corroborates\":\"dec:idea-remaining-work-has-no-answer-in-the-graph - which lacked evidence from outside this project\",\"their_workaround\":\"an accepted Decision's PROSE as the MVP plan, plus Capability.status as the checklist\",\"identical_to\":\"the workaround this project reached for, independently\",\"the_finding\":\"when the graph cannot answer a daily question, people answer it from prose and the prose silently becomes load-bearing\",\"what_next_does_instead\":\"ranks open Decisions - what needs a HUMAN, a different question from what is left to BUILD\",\"root_already_recorded\":\"artifact layer is at COMPONENT granularity; see fact:the-build-list-is-suppressed-by-realized-via-component\"}"
       }
     },
     {
@@ -87666,6 +88134,20 @@
       }
     },
     {
+      "node_id": "fact:defect-a-retired-artifact-still-reports-missing-forever",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "AN ARTIFACT RETIRED BY AN ACCEPTED DECISION STILL REPORTS `missing_artifact` AND STILL FAILS THE GATE. THERE IS NO WAY TO SAY A REGISTERED FILE WAS DELETED ON PURPOSE. Found by doing it, 2026-08-15, carrying out Anthony's policy that reflow2's own feedback documents are removed once captured (`dec:reflow2s-own-feedback-documents-are-removed-once-captured`).\n\nMEASURED. Both Artifacts were retired the modelled way — `OBSOLETES` drawn from an ACCEPTED Decision, which `dec:idea-discontinued-is-a-first-class-state` establishes as how something leaves a design. The files were then deleted. `reflow2_check.py --export docs/design/reflow2.json` → **FAILED, 2 findings**: `art:alex-grok-feedback-2026-08-14: missing_artifact` and `art:usgov-genesis-feedback-2026-08-15: missing_artifact`. The retirement changed nothing about the finding.\n\nAND THE REMEDY THE GATE OFFERS CANNOT BE PERFORMED: it says 'Reconcile and accept two-sided (`set_artifact_checksum`), then re-export.' There is no checksum to set, because there is no file. THE TOOL NAMED IN THE ERROR IS INAPPLICABLE TO THE ERROR.\n\nWHY IT HAPPENS, and it is a coherent omission rather than an oversight in one place: the `OBSOLETES` hint enumerates exactly which findings fall silent on a discontinued node — 'the unmotivated / unrealized / unverified capability gaps fall silent' — and drift is not among them. The retirement concept was built for Capabilities and the artifact layer was never taught it. `set_artifact_intent` does not help either, and `ver:artifact-intent` says so in terms: 'a MISSING append_only artifact still fires at FULL SEVERITY, because declaring content volatile never says the file may vanish.' That sentence is correct about volatility and leaves deliberate deletion with no expression at all.\n\nTHE THREE WAYS OUT, none clean: (1) `delete_node` the Artifacts — makes the gate green and ERASES that the documents ever existed, discarding the checksums that are the only proof of what was captured and orphaning six `ANNOTATES` edges from the Fragments that quote them; (2) leave the gate RED, which blocks the branch and trains people to ignore it; (3) teach the drift detector to honour `discontinued`, which is a code change and the only one that keeps the record honest.\n\n⭐ WHY (3) IS THE PRINCIPLED ANSWER: the design SHOULD go on saying these documents existed, carried these checksums, and produced these findings — that is the history retirement exists to preserve. What it should stop saying is that the files are still on disk. Those are different claims and the artifact layer currently conflates them, exactly as `Capability.status` conflated 'built' with 'still current' until `OBSOLETES` was taught to `get_node`.\n\nA POLICY THAT REMOVES CAPTURED DOCUMENTS THEREFORE CANNOT BE FOLLOWED WITHOUT EITHER LYING OR BREAKING THE BUILD, which makes this a prerequisite for that policy rather than a nuisance beside it.\n\nNOT ESTABLISHED: whether any other detector reads artifact existence and would need the same treatment, and whether `discontinued` is the right signal or an artifact wants its own `removed_at`.",
+        "subject_id": "cap:nothing-moved",
+        "valid_from": "2026-08-15",
+        "valid_to": "2026-08-15",
+        "value": "{\"found\":\"2026-08-15, carrying out dec:reflow2s-own-feedback-documents-are-removed-once-captured\",\"retirement_done_correctly\":\"OBSOLETES from an ACCEPTED Decision, per dec:idea-discontinued-is-a-first-class-state\",\"result\":\"reflow2_check FAILED with 2 missing_artifact findings; retirement changed nothing\",\"the_remedy_is_inapplicable\":\"the error says use set_artifact_checksum; there is no file to checksum\",\"why\":\"the OBSOLETES hint lists which findings fall silent - only the capability gaps; drift was never taught retirement\",\"set_artifact_intent_does_not_help\":\"ver:artifact-intent: 'a MISSING append_only artifact still fires at FULL SEVERITY, because declaring content volatile never says the file may vanish'\",\"options\":[\"delete_node - green gate, erases the record, orphans 6 ANNOTATES edges\",\"leave red - blocks the branch, trains people to ignore the gate\",\"teach drift to honour discontinued - code change, keeps the record honest\"],\"principle\":\"the design should keep saying the documents existed and what they produced, and stop saying the files are on disk - two claims the artifact layer conflates\",\"consequence\":\"the removal policy cannot be followed without lying or breaking the build\",\"not_established\":\"whether other detectors read artifact existence; whether discontinued is the right signal or an artifact wants removed_at\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-a-running-server-cannot-say-it-is-stale",
       "node_type": "TemporalFact",
       "properties": {
@@ -87704,6 +88186,19 @@
       }
     },
     {
+      "node_id": "fact:defect-add-decision-hints-lands-proposed-on-a-write-that-left-it-accepted",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "`add_decision`'s LOOP HINT SAYS 'lands proposed' EVEN WHEN THE WRITE LEFT THE NODE `accepted`, SO THE HINT INVITES A DEMOTION THE CALLER DID NOT MAKE. Alex's Grok 4.6 session, 2026-08-14, item 10, reported with unusual care: 'I did not accidentally demote this time; the hint still invites it.'\n\nTHE MECHANIC: `add_decision` is a merge. On a NEW node it lands `proposed`, and the hint is correct and useful. On an EXISTING node that is already `accepted`, the merge leaves the status untouched — correctly — and the same hint fires anyway, telling the caller a thing that is not true of the write they just made. An agent that believes it and 'corrects' the status with `set_decision_status` would demote a settled decision to `proposed` while thinking it was tidying up.\n\nWHY THE BLAST RADIUS IS LARGER THAN A WORDING BUG: `dec:certainty-derived` makes status the carrier of the user's word, and `where-am-i` reads accepted Decisions back to the user as 'what you decided'. A silent demotion does not lose data — it withdraws a settlement, and the next session reads an open question where the user believes they closed one.\n\nOBSERVED TWICE IN THIS PROJECT'S OWN HISTORY, which is what makes the hint dangerous rather than untidy: the brainstorm skill records that its step 2 ONCE READ 'this call is not optional: add_decision defaults to accepted' — true until 2026-07-25, then quietly false, and two dev_storyflow sessions measured and filed it independently on 2026-08-08. The skill was corrected to CHECK WHAT THE TOOL RETURNED rather than to name its default. THE HINT ON THE TOOL ITSELF WAS NOT GIVEN THE SAME TREATMENT.\n\nFIX SHAPE: emit the hint only when the write actually created a node at `proposed`, or state the status the node now holds rather than the status a new node would have had. The information needed is in hand at the moment the hint is written.\n\nNOT ESTABLISHED: whether any Decision in any project has actually been demoted this way — he explicitly did not do it, and nobody has swept the snapshots for an accepted-to-proposed transition with no user behind it.",
+        "subject_id": "cap:decision-point",
+        "valid_from": "2026-08-14",
+        "value": "{\"reported\":\"2026-08-14, Alex's Grok 4.6 session, item 10\",\"his_care\":\"'I did not accidentally demote this time; the hint still invites it'\",\"mechanic\":\"correct hint on a NEW node; fires unchanged on a merge that left an existing node accepted\",\"worst_case\":\"an agent 'corrects' the status and withdraws a settlement the user made\",\"why_it_matters\":\"dec:certainty-derived makes status the user's word; where-am-i reads accepted Decisions back as 'what you decided'\",\"precedent\":\"the brainstorm skill carried the mirror-image error until 2026-08-08 (two dev_storyflow sessions filed it independently) and was fixed to check the RETURNED status; the tool's own hint was not\",\"fix\":\"emit only when the write created a proposed node, or state the status the node now holds\",\"not_established\":\"whether any Decision has actually been demoted this way - snapshots unswept\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-add-verification-cannot-reach-its-own-fields",
       "node_type": "TemporalFact",
       "properties": {
@@ -87739,6 +88234,19 @@
         "subject_id": "cap:allocate",
         "valid_from": "2026-08-07",
         "value": "{\"found_while\":\"answering Anthony's question about recursive black-box decomposition, 2026-08-07\",\"evaluate_allocation\":{\"modularity\":1.0,\"total_internal\":1,\"total_external\":0,\"unweighted_dependencies\":1,\"components_listed\":44,\"components_with_nonzero_weight\":1,\"depends_on_edges_in_graph\":171},\"hierarchy_issues\":{\"count\":0,\"subsystems\":8,\"components_contained\":42,\"components_outside_any_subsystem\":6,\"component_roots\":14,\"max_depth\":2},\"interfaces\":{\"interface_nodes\":5,\"provides_edges\":5,\"consumes_edges\":5,\"components\":56},\"candid_by_contrast\":\"the trajectory reports seams 0% (0/73) honestly about the same emptiness\",\"requirement_this_hid\":\"req:recursive-black-box-decomposition\",\"analogous_recorded_defect\":\"dec:loop-status-cannot-say-it-never-looked — clean and never-scanned are the same answer\",\"not_asked_for\":\"a change to the modularity formula, or any judgement from granularity_report (dec:report-dont-judge)\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-an-accepted-decision-can-be-widened-by-an-agents-diagnosis",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "AN ACCEPTED DECISION WAS WIDENED BY AN AGENT'S DEBUGGING HYPOTHESIS, AND NOTHING ASKED WHETHER THE RULE WAS CHANGING OR THE CODE WAS WRONG. Alex's Grok 4.6 session, 2026-08-14 (item 4, graded by him as one of the report's most serious).\n\nWHAT HAPPENED, in his words: 'The UTC/civil-date bug and the \\\"just joined\\\" waiver are different claims. I merged a GENEROUS WAIVER into an ACCEPTED Decision while debugging the UTC bound... The user had to walk it back.' He notes correctly that graph-text-is-data did not stop him and should not have — this was his own write, not injected content.\n\nTHE MISSING QUESTION, which is the whole finding: 'Nothing in revise-design asks \\\"are you changing the rule or fixing as-built to match the rule you already have?\\\"' Those are opposite acts with identical mechanics — both are a typed merge onto a Decision — and only one of them is the user's to authorise.\n\nWHY IT MATTERS BEYOND ONE SESSION: `dec:certainty-derived` holds that moving a status is the user's word and an agent doing it forges their signature. WIDENING AN ACCEPTED DECISION'S TEXT IS THE SAME ACT WITHOUT TOUCHING THE STATUS FIELD — the decision still reads `accepted`, so every reader downstream treats the agent's hypothesis as something the owner settled. The protection is on the status and not on the content it certifies.\n\nHIS PROPOSED FIX, recorded as his: 'when merging an accepted Decision, require an explicit \\\"this is a new rule\\\" vs \\\"restore prior accepted text / as-built was wrong\\\". Or refuse to widen an accepted gate without `set_decision_status proposed` first.' The second form has a precedent in this design — `set_artifact_checksum` refuses a silent accept and demands a disposition for exactly this class of erosion.\n\nRELATED, AND MEASURED THE SAME DAY: `dec:idea-should-record-change-refuse-a-snapshot-of-state-that-already-moved` holds the sibling question about the snapshot, and `fact:defect-record-change-overwrites-the-name-of-the-event-it-is-filed-under` is a third failure of the same call. Three findings now converge on `record_change` and the typed merge onto accepted nodes.\n\nNOT ESTABLISHED: whether any accepted Decision in reflow2's own design has been silently widened this way — the snapshots exist to answer that and nobody has swept them.",
+        "subject_id": "cap:change",
+        "valid_from": "2026-08-14",
+        "value": "{\"reported\":\"2026-08-14, Alex's Grok 4.6 session, item 4\",\"what_happened\":\"a generous waiver merged into an ACCEPTED Decision while debugging a different bug; the user walked it back over two turns\",\"missing_question\":\"revise-design never asks: are you changing the rule, or fixing as-built to match the rule you already have?\",\"why_it_evades_dec_certainty_derived\":\"the status field is protected; the TEXT it certifies is not - the node still reads accepted while carrying an agent's hypothesis\",\"his_fix\":\"require an explicit new-rule vs restore-prior claim on merging an accepted Decision; or refuse to widen without set_decision_status proposed first\",\"precedent_for_the_second_form\":\"set_artifact_checksum refuses a silent accept and demands a disposition\",\"converging\":\"three findings now land on record_change / typed merge onto accepted nodes\",\"not_established\":\"whether any accepted Decision here has been silently widened - the snapshots could answer it and nobody has swept them\"}"
       }
     },
     {
@@ -88166,6 +88674,32 @@
       }
     },
     {
+      "node_id": "fact:defect-propagate-change-distance-two-is-not-an-edit-list",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "`propagate_change` FROM A CAPABILITY ON SHARED COMPONENTS RETURNED MOST OF THE DESIGN, AND THE ONE SIGNAL WORTH HAVING WAS BURIED IN IT. Alex's Grok 4.6 session, 2026-08-14, item 7.\n\nMEASURED: seeded from a Capability allocated to a shared API and a shared client. Distance-1 was useful — the two Components plus the Requirement/Decision thread. DISTANCE-2 WAS EVERY OTHER CAPABILITY ON THOSE COMPONENTS: ~65 named, 113 truncated. His verdict: 'Edit only what the radius names is UNUSABLE. The useful signal (Interface PROVIDES/CONSUMES) was buried.'\n\nWHY THE RADIUS BEHAVES THIS WAY AND IS NOT WRONG TO: sharing a Component is a real relation, and on a design where two Components host most of the system, one hop through them reaches most of it. The traversal is correct; what is missing is that IT REPORTS ONE KIND OF REACH. 'This Capability sits on the same Component as yours' and 'this change crosses a published Interface into something you do not own' are findings of completely different weight, arriving in one undifferentiated list.\n\nTHE INSTRUCTION THIS BREAKS is reflow2's own: step 4 of the served loop says 'Update ONLY the impacted capabilities/components/tests the blast radius names.' At 178 nodes that instruction cannot be followed, so an agent either ignores the radius or edits nothing — and both are worse than a smaller honest answer.\n\nWHAT IS ALREADY RIGHT, and he says so: the default is a bounded SUMMARY with the full dump behind `full=true` (`chg:bl48-bl49-tool-surface`). The problem is not volume control, which exists; it is that the summary has no BANDS.\n\nHIS PROPOSED SHAPE, held as an open question in `dec:idea-should-propagate-change-separate-crossing-an-interface-from-a-component-dump`: separate 'same Component dump' from 'crossed an Interface', and give the summary a 'sibling Capabilities on the same Component, not actually impacted' band.\n\nNOT ESTABLISHED: whether 178 is large for that design's size — he did not report the total node count, so the ratio that would make this a threshold question is unknown. This session hit the mirror image on reflow2's own graph: `propagate_change` from a TemporalFact returned ZERO impacted, because the edge connecting a defect to what it indicts is not traversed. THE SAME TOOL IS TOO WIDE ON ONE SEED TYPE AND SILENT ON ANOTHER.",
+        "subject_id": "cap:change",
+        "valid_from": "2026-08-14",
+        "value": "{\"reported\":\"2026-08-14, Alex's Grok 4.6 session, item 7\",\"measured\":\"distance-1 useful (2 Components + the Requirement/Decision thread); distance-2 = every other Capability on those Components, ~65 named and 113 truncated\",\"his_verdict\":\"'Edit only what the radius names' is unusable; the Interface PROVIDES/CONSUMES signal was buried\",\"instruction_it_breaks\":\"served loop step 4 - 'update ONLY the impacted nodes the blast radius names'\",\"already_right\":\"bounded summary by default with full=true for the dump (chg:bl48-bl49-tool-surface) - volume control exists, BANDS do not\",\"his_shape\":\"separate same-Component dump from crossed-an-Interface; add a 'siblings on the same Component, not actually impacted' band\",\"not_established\":\"whether 178 is large relative to that design - he did not report the total\",\"mirror_image_same_week\":\"propagate_change from a TemporalFact on reflow2's own graph returned ZERO impacted - too wide on one seed type, silent on another\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-realized-was-claimed-at-unit-and-nothing-in-the-loop-asked",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "TWO CAPABILITIES WERE MARKED `realized` ON PASSING UNIT TESTS, THE USER THEN FOUND FOUR BUGS IN THE PRODUCT, AND NOTHING IN THE LOOP HAD ASKED. Alex's Grok 4.6 session, 2026-08-14, item 14 — and he filed the same thing again in his own 'Gaps (mine / process)' section, which is why it is recorded as a loop defect rather than only as his error.\n\nHIS WORDS, item 14: 'I linked a passing unit Verification and marked the increment Capabilities realized. The user then found first-day, civil-vs-UTC, join-day-owed, and a cache miss. `realized` is a claim about THE THREAD, not about the running product. Nothing in the loop said \\\"realized at unit, unvalidated in the field.\\\"' And in his own gaps: 'I promoted two Capabilities to realized on unit tests before the user had clicked through. Should have left `in_progress` until the gate matched their account.'\n\n⭐ THE CONCEPT IS NOT MISSING — THE PROMPT IS. The capability lifecycle already distinguishes `realized` from `verified`, and `reconcile_verification` exists precisely to feed real run outcomes back in. So nothing in the vocabulary failed. What failed is that an agent with a green unit test had no moment at which anything asked 'green where?' — and the answer he needed was already expressible.\n\nWHY THIS IS A LOOP DEFECT AND NOT MERELY A MISTAKE: he identified it himself, unprompted, in the same document. An error a careful reporter catches on their own review is one the tooling could have caught at the moment it happened, and the cost of not catching it was borne by the user rather than by him.\n\nCONNECTED, AND THE REASON IT IS WORTH FIXING TOGETHER: `dec:should-a-realizes-edge-say-that-nobody-checked-the-file-still-obeys-the-rule` (his item 5) asks the deeper version — a checksum says the file has not moved, never that it still implements the rule. THIS one is the same hole at the STATUS layer rather than the edge layer: `realized` says a thread is complete, never that the thing works where people use it. Both were reported by the same session, an hour apart, and neither was noticed as the other's sibling until now.\n\nHIS OTHER SELF-REPORTED PROCESS GAPS, recorded because they are evidence about the loop rather than confessions: he widened an accepted Decision from a debugging hypothesis (see `fact:defect-an-accepted-decision-can-be-widened-by-an-agents-diagnosis`); he did not export the graph (see `fact:defect-the-export-was-skipped-because-the-instructions-imply-a-stop-that-is-not-needed`); he did not run detect-and-ask on 62 unsurfaced gaps and says so CORRECTLY — 'they were not the work'; and he did not install the loop nudge, calling `loop_status` by hand. THREE OF THE FOUR HAVE A TOOLING CAUSE RECORDED AGAINST THEM. The fourth — declining to detect-and-ask — was the right call and is recorded so a later reader does not treat it as debt.",
+        "subject_id": "cap:loop-status",
+        "valid_from": "2026-08-14",
+        "value": "{\"reported\":\"2026-08-14, Alex's Grok 4.6 session, item 14 AND his own process-gaps section\",\"what_happened\":\"two Capabilities set realized on passing unit tests; the user then found four product bugs\",\"his_framing\":\"realized is a claim about the THREAD, not about the running product\",\"concept_not_missing\":\"realized vs verified already exists, and reconcile_verification already feeds real outcomes back - the PROMPT is what is missing\",\"sibling\":\"dec:should-a-realizes-edge-say-that-nobody-checked-the-file-still-obeys-the-rule - same hole at the edge layer; this one is at the status layer\",\"his_four_process_gaps\":[\"promoted to realized on unit tests\",\"widened an accepted Decision from a debugging hypothesis\",\"did not export the graph\",\"did not install the loop nudge\"],\"three_of_four_have_a_tooling_cause_recorded\":true,\"the_fourth_was_correct\":\"declining detect-and-ask on 62 unsurfaced gaps - they were not the work\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-rebuild-strands-the-shared-server",
       "node_type": "TemporalFact",
       "properties": {
@@ -88296,6 +88830,19 @@
       }
     },
     {
+      "node_id": "fact:defect-the-checksum-disposition-has-no-answer-for-aligning-code-to-existing-intent",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "`set_artifact_checksum`'s TWO DISPOSITIONS HAVE NO ANSWER FOR THE COMMONEST FIX THERE IS: THE CODE WAS WRONG AND NOW MATCHES INTENT THAT NEVER CHANGED. Alex's Grok 4.6 session, 2026-08-14, item 8.\n\nHIS CASE: after aligning as-built to an ALREADY ACCEPTED Requirement, 'neither `design_holds` (no design meaning) nor `design_updated` (design moved; pass the ChangeEvent) fits cleanly if you ALSO revised a Decision in the same hour. Agents spend a turn picking a side instead of shipping the comparison fix.'\n\nWHY NEITHER FITS. `design_holds` says the change carries no design meaning — but a bug that violated an accepted Requirement carried a great deal of it; the design was right and the code was wrong, which is a fact worth recording rather than waving through. `design_updated` says the design moved with the code — and it did not; the Requirement is untouched and passing a ChangeEvent for it would assert a revision that never happened.\n\n⭐ THIS IS THE `change_type` GAP IN A SECOND VOCABULARY. `fact:defect-change-event-has-no-type-for-a-field-reported-defect` records that the enum has no value for 'the code was wrong'; here the DISPOSITION enum has no value for the same event. The same missing meaning is absent from two independent surfaces, which is evidence it is a real category rather than a wording quibble.\n\nHIS PROPOSED VALUE, held open in `dec:idea-should-the-checksum-accept-have-an-as-built-aligned-disposition`: `as_built_aligned` — 'allow it when a Requirement did not change and the file now matches it'.\n\nWHAT MUST NOT BE LOST IF IT IS ADDED: `dec:two-sided-accept` exists because a silent accept 'is how a design erodes into fiction over N fix cycles while reporting zero gaps'. A third disposition is only safe if it makes the SAME claim shape — dated, attributable, and counted apart in the confirmation ledger the way `baseline_established` already is.\n\nNOT ESTABLISHED: how often this case arises. One report, and the confirmation ledger could answer it by counting `design_holds` accepts whose events carry `test_failure_fix` — a sweep nobody has run.",
+        "subject_id": "cap:nothing-moved",
+        "valid_from": "2026-08-14",
+        "value": "{\"reported\":\"2026-08-14, Alex's Grok 4.6 session, item 8\",\"case\":\"as-built aligned to an already-accepted Requirement; the design never moved\",\"why_design_holds_is_wrong\":\"a bug violating an accepted Requirement carries design meaning\",\"why_design_updated_is_wrong\":\"the Requirement is untouched; passing a ChangeEvent asserts a revision that did not happen\",\"same_gap_second_surface\":\"fact:defect-change-event-has-no-type-for-a-field-reported-defect - the same missing meaning is absent from change_type AND from disposition\",\"his_value\":\"as_built_aligned - when a Requirement did not change and the file now matches it\",\"constraint\":\"dec:two-sided-accept - a third disposition must still be a dated attributable claim counted apart, like baseline_established\",\"not_established\":\"frequency; the confirmation ledger could count design_holds accepts carrying test_failure_fix, unswept\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-the-constraint-vocabulary-is-documented-as-numeric-so-the-right-node-is-ruled-out",
       "node_type": "TemporalFact",
       "properties": {
@@ -88309,6 +88856,33 @@
       }
     },
     {
+      "node_id": "fact:defect-the-export-was-skipped-because-the-instructions-imply-a-stop-that-is-not-needed",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "A SESSION'S GRAPH WRITES WENT UNEXPORTED BECAUSE THE SERVED INSTRUCTIONS IMPLY THE SHARED SERVER MUST BE STOPPED FIRST. IT MUST NOT. Alex's Grok 4.6 session, 2026-08-14, item 12 — recorded as a DOCUMENTATION defect, because the report's own reasoning is what turned out to be wrong.\n\nHIS CLAIM: 'This session wrote more and did not refresh the export (shared server holds the store; EXPORT WANTS IT STOPPED). Agents will not `--stop-shared` in the middle of a user-facing debug loop.' The behavioural prediction is sound. The premise is false.\n\nMEASURED HERE, 2026-08-15: `export_graph` takes a READ LOCK on the in-process graph (`crates/reflow2-mcp/src/tools/exchange.rs:128`) and never opens the store directly. It is callable at any time, from any session, with a shared server running — this session called it repeatedly while the daemon held the store. ONLY the CLI `--import` / `--export` path, which opens RocksDB itself, needs `--stop-shared`.\n\nWHERE THE MISTAKE COMES FROM, AND IT IS OURS: the served AGENTS.md section 'Restoring a design' says a command which opens the store DIRECTLY cannot run while the server holds it, gives the `--stop-shared` + `--import` recipe, and then says '`--export` writes one back out' — in the same breath, with no signal that the MCP TOOL of nearly the same name is unaffected. A careful reader generalises the caveat to both, which is what happened.\n\nCOST: a full session of design work — ChangeEvents, snapshots, Decision and Requirement merges, Artifact checksums — left unexported and therefore invisible to every other seat, because of one paragraph's arrangement. And the session was RIGHT that it would not stop a shared server mid-debug; it simply never needed to.\n\nFIX SHAPE: separate the CLI paragraph from the tool, and say plainly that `export_graph` needs no stop. `fact:defect-the-served-instructions-put-their-standing-rules-where-a-client-cap-deletes-them` is the sibling finding about the same document's shape.",
+        "subject_id": "cap:skills-served",
+        "valid_from": "2026-08-15",
+        "value": "{\"reported\":\"2026-08-14, Alex's Grok 4.6 session, item 12, with a FALSE premise\",\"his_premise\":\"export wants the shared server stopped\",\"measured\":\"export_graph takes a read lock on the in-process graph (exchange.rs:128); never opens the store; called repeatedly this session with the daemon running\",\"actually_needs_stop_shared\":\"only the CLI --import / --export path\",\"source_of_the_error\":\"served AGENTS.md 'Restoring a design' gives the --stop-shared recipe then says '--export writes one back out' in the same breath\",\"cost\":\"a full session of graph writes left unexported and invisible to other seats\",\"his_behavioural_prediction_was_right\":\"agents will not --stop-shared mid-debug - they simply never needed to\",\"fix\":\"separate the CLI paragraph from the tool and say export_graph needs no stop\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-the-gate-crashed-on-a-directory-artifact-and-misfiled-it-as-gate-failed",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "`reflow2_check.py` CRASHED ON A DIRECTORY ARTIFACT AND REPORTED THE CRASH AS 'GATE FAILED'. Reported by dev_storyflow's api-boss sidekick (`551d9718`), 2026-08-15, and VERIFIED HERE IN EVERY PARTICULAR before being acted on.\n\nWHAT THEY REPORTED: `IsADirectoryError: [Errno 21] Is a directory: './.claude/'` out of `hash_file`, exiting 1.\n\nVERIFIED, four ways: (1) `hash_file` opened the path with no directory guard; (2) `sys.exit(main())` had NO try/except, so an uncaught exception took Python's own exit 1; (3) the module docstring's contract is exactly as they quoted — '0 coherent · 1 gate failed · 2 could not run (… never a silent pass)'; (4) reflow2's own graph carries 182 artifacts with a location and NOT ONE resolves to a directory, against 11 in dev_storyflow.\n\n⭐ THE EXIT CODE WAS THE WORSE HALF, and their framing is right: a dedicated code exists for could-not-run precisely so a CI job can tell a drifted design from a broken tool. Landing in 1 made the ONE confusion the three-code design was built to prevent reachable from every line of it. NOT a silent pass — that credit stands — but a MISFILED one, invisible in a badge or a required-check summary where the traceback is the only tell.\n\n⭐⭐ AND IT IS THE SELF-HOST BLIND SPOT AGAIN, which is why reflow2 could never have found this alone: `ci.yml:102` runs this gate on every push and PR, against a graph with zero directory artifacts. THE GATE IS GENUINELY EXERCISED AND HAS NEVER EXECUTED THE BRANCH. The same shape as the kit-stamp finding earlier the same day — the maintainer's environment cannot produce the input that breaks the consumer's.\n\nFIXED THE SAME DAY, both halves: a directory is now reported PRESENT AND UNHASHABLE, which the core already had a word for (`no_baseline` — 'cannot be judged, surfaced rather than treated as unchanged'), so it is a note rather than a crash or a quiet pass; and the entrypoint became `run_guarded()`, a NAMED function so the contract is callable and therefore checkable.\n\n⚠️ AND THE FIX'S OWN FIRST TEST WAS WORTHLESS, recorded because it is the more useful lesson: it forced the fault with an unreadable export, which `die(2, …)` already handled, so IT PASSED WITH THE FIX REMOVED. Every fault this tool knows about is already routed to 2 correctly; the guard exists for the ones it does not. Caught by mutation-testing rather than by review, and only after a second error — the tests were first appended at the end of the file, which silently placed them in the NEXT test class, where they ran green in the wrong harness. TWO WAYS FOR A GREEN TEST TO PROVE NOTHING, both in one change.",
+        "subject_id": "art:check",
+        "valid_from": "2026-08-15",
+        "valid_to": "2026-08-15",
+        "value": "{\"reported\":\"2026-08-15, dev_storyflow api-boss sidekick 551d9718\",\"verified_here\":\"hash_file unguarded; sys.exit(main()) unwrapped; docstring contract as quoted; reflow2 182 artifacts with a location, 0 directories vs dev_storyflow 11\",\"worse_half\":\"the exit code - an unhandled fault landed in 1 (gate failed) though 2 (could not run) exists for it\",\"self_host_blindness\":\"ci.yml:102 runs this gate on every push against a graph with zero directory artifacts, so the branch was never executed\",\"fix\":\"directory reported present-without-checksum -> no_baseline (a note); entrypoint becomes run_guarded(), a named callable function\",\"the_fixs_own_first_test_was_worthless\":\"it forced a fault die(2) already handled, so it passed with the fix REMOVED; caught by mutation testing\",\"second_test_error\":\"tests appended at end of file landed in the NEXT class and ran green in the wrong harness\",\"mutations_that_now_kill\":[\"remove the directory branch -> real IsADirectoryError\",\"remove the guard -> raw RuntimeError escapes\",\"catch BaseException -> SystemExit swallowed, counterweight fails\"]}"
+      }
+    },
+    {
       "node_id": "fact:defect-the-git-merge-driver-writes-a-different-key-order-than-export-graph",
       "node_type": "TemporalFact",
       "properties": {
@@ -88319,6 +88893,19 @@
         "subject_id": "cmp:packaging",
         "valid_from": "2026-08-15",
         "value": "{\"found\":\"2026-08-15, by rebasing an open PR twice after three others landed\",\"main_file_first_key\":\"stamp\",\"canonical_export_first_key\":\"content_hash (alphabetical)\",\"diff\":\"60793 insertions / 60134 deletions on a ~90000-line file; content identical, order different\",\"contract_broken\":\"export_graph: 'sorted so two exports of an unchanged graph are byte-identical'; path: 'deterministic sorted-key JSON, diffable under git'\",\"cost\":\"the 15 nodes the PR actually added are invisible in the diff; a real regression would be too\",\"second_and_worse\":\"the merge driver updates the FILE not the STORE - next export regressed art:adopt-skill, art:graph, art:skill-lint to stale checksums against an untouched working tree; gate caught it; main was green\",\"why_sync_status_stayed_quiet\":\"in_step compares the recorded hash against the FILE, and the file was exactly where this seat left it - the STORE fell behind, which that check does not measure\",\"remedy_used\":\"import_graph on the committed export, then export once\",\"not_established\":\"whether the driver's order is stable; whether anything besides key order differs; how many past PRs merged a non-canonical export\",\"fix_shapes\":\"merge driver emits the canonical serializer's form; and make the post-merge store staleness visible\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-the-loop-has-no-mode-for-work-a-user-is-waiting-on",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE LOOP HAS NO NOTION OF A SESSION MID-BUGFIX WITH A USER WATCHING A BROKEN APP, AND UNDER THAT PRESSURE ITS CEREMONY IS SKIPPED AND ITS DASHBOARD IS NOISE. Alex's Grok 4.6 session, 2026-08-14, items 3 and 9 — filed as two, and they are ONE complaint seen from two sides.\n\nCEREMONY (item 3). Tightening a three-line product rule cost: an epoch, two `record_change`, two typed merges, tests, two checksum accepts. 'The user was iterating a live bug. The loop is right for a first capture; it is slow for \\\"you implemented the wrong comparison.\\\"' ⭐ AND THE SENTENCE THAT MATTERS MOST IN THE WHOLE REPORT: 'AGENTS WILL SKIP SNAPSHOTS UNDER THAT PRESSURE — I ALMOST DID.' That is a discipline losing to urgency, reported by the agent who nearly lost it — the exact failure the served instructions already name ('a discipline that depends on being remembered loses to urgency every time; fire it on a trigger, not on virtue').\n\nDASHBOARD (item 9). 'All session: ~62 never-asked gaps, 39 structural defects, 16 unproven claims, 10 unexamined artifacts. `next[0]` is ALWAYS detect-and-ask. The work was implement, user-correct, implement. That noise is worse when the user is waiting on a running app.' `loop_status` reports coherence debt truthfully and ranks it identically whatever the session is doing.\n\nWHY THEY ARE ONE THING: both are the loop having exactly one posture. A first capture and a live bugfix are different phases of work, and reflow2 models neither — so the same ranking, the same ceremony and the same next-step advice are served to both. The report's items 3 and 9 are the cost paid at the write side and the read side of that single absence.\n\nWHAT ALREADY BEARS ON IT AND IS NOT ENOUGH: `loop_status` takes a `contributor_id`, and `cap:scoped-analysis` scopes the detectors by region — but both scope by WHO or by WHERE, and this is a question of WHAT KIND OF WORK is happening. `dec:idea-scoping-exists-and-did-not-narrow-what-a-builder-sees` holds the open question, with a serious counter recorded against the obvious fix: `loop_status`'s contract forbids a scoped answer that could read as 'the design is clean', so any phase mode must RANK differently rather than HIDE.\n\nNOT ESTABLISHED: whether a phase is something reflow2 should infer, or something a session declares — and if declared, whether an agent may declare it or only the user. Nobody has proposed a mechanism.",
+        "subject_id": "cap:loop-status",
+        "valid_from": "2026-08-14",
+        "value": "{\"reported\":\"2026-08-14, Alex's Grok 4.6 session, items 3 and 9, filed separately\",\"claim\":\"they are one complaint - the loop has exactly one posture and cannot tell a first capture from a live bugfix\",\"ceremony_cost_measured\":\"one three-line rule correction = epoch + 2 record_change + 2 typed merges + tests + 2 checksum accepts\",\"the_sentence\":\"'Agents will skip snapshots under that pressure - I almost did.'\",\"dashboard_noise\":\"~62 never-asked gaps, 39 structural defects, 16 unproven claims, 10 unexamined artifacts; next[0] always detect-and-ask while the work was implement/user-correct/implement\",\"existing_and_insufficient\":\"loop_status contributor_id and cap:scoped-analysis scope by WHO and WHERE; this is WHAT KIND OF WORK\",\"constraint_on_any_fix\":\"loop_status must never let a scoped answer read as 'the design is clean' - rank differently, never hide\",\"not_established\":\"whether phase is inferred or declared, and if declared whether an agent may declare it\"}"
       }
     },
     {
@@ -88420,6 +89007,19 @@
         "statement": "AN AGENT-SIDE FIELD REPORT FROM AN UNRELATED PROJECT, 2026-08-11, RECORDED REDACTED ON ANTHONY'S INSTRUCTION — no project name, no design counts, no domain terms. Written by a coding agent that had driven reflow2 through capture, where-am-i readbacks, gap review and acknowledgement, verification recording, and a server upgrade mid-project. Recorded as a fact rather than as proposals because that is what it IS: measured evidence about how reflow2 behaves in someone else's hands, which is the input class dec:idea-field-evidence-is-a-prioritisation-input asks whether to read.\n\n=== SORTED THE WAY ANTHONY ASKED: CONFIRMS-ACCEPTED-INTENT vs NEW PROPOSAL vs ALREADY SATISFIED ===\n\nCONFIRMS ACCEPTED INTENT (the report did not propose these; it independently showed they matter):\n\n1. THE SPAWN ERROR NEVER NAMES THE FILE IT COULD NOT FIND. Confirms fact:defect-rebuild-strands-the-shared-server (measured here 2026-08-07, fix named in its own evidence field, filed and left unfixed). INDEPENDENT AND SIMULTANEOUS: the same defect blocked a session in this repo on 2026-08-11 for forty minutes. FIXED the same day; their narrower ask — name the path — is in that fix.\n\n2. RE-RUNNING A VERIFICATION IS MORE CEREMONY THAN THE EVENT DESERVES. A recorded check re-ran green twice and last_run_at was left stale, honestly, because updating an unchanged status felt like paperwork. Confirms req:verification-keeps-up (ACCEPTED: \"a 'verified' claim says how old the check behind it is\"). Their sentence is the sharp part and is not in this graph anywhere: STALE LAST-RUN UNDERMINES ASSURANCE MORE THAN A MISSING VERIFICATION DOES, BECAUSE IT LOOKS CURRENT. An accepted requirement is being defeated by friction rather than by absence.\n\n3. THE QUESTION LEDGER CANNOT SEE THE MOST NATURAL WAY QUESTIONS GET ASKED. The where-am-i skill instructs the agent to put open gaps to the user as prose; doing so leaves open_questions at zero and the loop still reporting the gaps as never asked, because only the gap_to_prompt handshake registers an ask. Confirms the ledger's own purpose (questions outlive sessions, in the wording the user saw, so nobody is re-asked) and reveals a SERVED SKILL BYPASSING IT. Their framing: the debt list nags about work that was done.\n\n4. A SATISFYING CAPABILITY IN ANOTHER GRAPH FORCES A PERMANENT ACKNOWLEDGEMENT. A program deliberately running several graphs found on day one that SATISFIES/REALIZES cannot point across a design boundary, so gaps that are structurally answered stay open forever as acknowledgements. Confirms req:design-composes and req:complementary-pairing (both accepted) and sharpens dec:idea-how-is-a-source-outside-the-repo-registered, recorded here hours earlier from the ARTIFACT side of the identical shape: a reference that cannot leave its own design's boundary.\n\nNEW PROPOSALS (nothing in the graph asks for these):\n\n5. AN ACKNOWLEDGEMENT CANNOT STATE A MACHINE-CHECKABLE RE-REVIEW TRIGGER. Several acknowledgements carried explicit retirement conditions in prose; one had been true for weeks and nothing surfaced it. NARROWER THAN THEY WROTE, and the narrowing matters: expiry machinery EXISTS and recomputes from the affected node set, so this is not \"acknowledgements never expire\" — it is that they cannot express a CONDITION. Their words: acknowledgements are where gaps go to be forgotten safely, and the safety decays silently.\n\n6. THE LOOP ONLY SEES WHAT AN AGENT HAND-CARRIES IN. Their own synthesis and the strongest thing in the report: the liveliest facts of the month — merged PRs, a review round addressed, a suite re-verified, work scheduled — all landed in commits and PR threads and almost none reached the graph without the agent carrying them. They ask for the loop to SUBSCRIBE to reality rather than be fed it.\n\n7. ARTIFACT CAPTURE IS THE LEAST-REWARDING STEP, SO IT IS THE ONE THAT GETS DEFERRED. Realization sat at zero while many PRs merged — consciously deferred, because modelling Artifacts is the most manual capture in the loop. Anything that makes registration near-free at merge time converts the graph's biggest systematic undercount into signal.\n\n8. THE VERIFICATION DIGEST NAMES COUNTS, NOT SUBJECTS. graph_report gives a per-check count but not WHICH capability, so narrating what a check covers costs extra round trips.\n\n9. TOOL-SURFACE SIZE. ~150 tools is workable behind deferred loading, but a client that eagerly loads schemas pays heavily; they suggest a curated core-subset server mode for small-context agents.\n\nALREADY SATISFIED — DROPPED PER ANTHONY'S TRIAGE RULE, NO NODE MINTED:\n\n10. CONTRADICTORY SESSION-END MESSAGING (loop_status saying no nudge is installed while a Stop hook fires). ALREADY FOUND AND ALREADY FIXED: filed by a different project on 2026-08-09 and corrected in nudge.rs, which now reports what reflow2 LOOKED AT rather than asserting the world. Their report straddles their own mid-project upgrade. THIS IS THE THIRD PROJECT TO MEET IT, and the first two are why it is fixed.\n\n=== WHAT THE REPORT SAYS REFLOW2 GETS RIGHT, recorded because praise is evidence too and this project keeps only its failures ===\n\nserved_by.stale and its derivation rather than version-literal comparison; honest computation over status fields (\"computed from the thread, not from a status field\", and the requirement-certainty split) which they say stops an agent laundering an assumption into a confirmed fact; refusal to default judgements (maturity_report declining to say where a design SHOULD be; loop_status refusing an unknown contributor id because \"nothing is owed to you\" is the most dangerous reply to a typo) — they call these the tool's epistemics and say the refusals TEACH them; the where-am-i structure, singling out the never-re-ask-in-different-words rule; acknowledged gaps carrying their full deferral reason, which made a months-long design legible in one call; and error messages that lead with \"the design is not lost\".\n\nTHEIR NET, verbatim and worth keeping intact: \"the epistemic core — honest computation, refusal to default judgments, questions as first-class debt — is the product. Most of the friction above is the same shape: reality moves outside the graph, and the loop only sees what the agent hand-carries in. Cheapening that carry (asks, re-runs, artifacts, cross-graph facts) is where the remaining leverage is.\"\n\nHONEST BOUND ON THIS NODE: one report, one agent, one project, and it is the agent's perspective rather than the human user's. Items 1 and 10 are independently corroborated by this repo's own measurements; items 2 through 9 are single-source, and recording them here is not evidence that anyone else needs them.",
         "subject_id": "dec:idea-field-evidence-is-a-prioritisation-input",
         "valid_from": "2026-08-11"
+      }
+    },
+    {
+      "node_id": "fact:field-confirmations-from-two-external-sessions",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "field_confirmation",
+        "statement": "ELEVEN THINGS TWO EXTERNAL SESSIONS SAID WORKED, RECORDED BECAUSE A REGRESSION IN ANY OF THEM WOULD OTHERWISE BE INVISIBLE. Both reporters wrote these deliberately — the usgov session titled its section 'Small things that went right, recorded so they don't get regressed'. `fact_type` is `field_confirmation` rather than `defect`: the field is free-form and indexed by design (`dec:defects-are-temporal-facts`), and a design that only records what broke cannot tell a capability that still works from one nobody has exercised.\n\n═══ FROM ALEX'S GROK 4.6 SESSION, 2026-08-14 (docs/feedback/2026-08-14-alex-grok-session.md) ═══\n\n1. CAPTURE-BEFORE-BUILD PAID OFF, which is the product's central claim: 'The graph held enough settled Decisions that the first implementation pass did not invent the verb, the daily cap, viewed-on-scroll, or topic list. That is the point of capture-before-build and it worked.'\n2. `compare_designs` against the committed export at session start 'was honest: live graph was already ahead. Better than guessing from counts.'\n3. `record_change` SNAPSHOTS SURVIVED THE GATE BEING REWRITTEN THREE TIMES — 'a later reader can see the swing without git archaeology' — with his own qualifier attached: 'when the snapshot was taken BEFORE the merge'.\n4. `add_change_event`'s refusal NAMED THE LEGAL VALUES when he passed an unknown one. 'Actionable error.' That is `req:a-refusal-names-what-would-have-worked` observed in the field.\n5. `link_artifact` + checksum closed `unrealized_capability`, and he ran the right check — confirming the capability had left that gap's `affected_ids` rather than watching the total, 'as the skill warns'.\n6. `search_design` 'still the right way to find the gate Requirement / Decision when the user describes a bug in their words'.\n\n═══ FROM THE US-GOVERNMENT GENESIS SESSION, 2026-08-15 (docs/feedback/2026-08-15-usgov-genesis-session.md, item 5) ═══\n\n7. BATCH FAILURE REPORTING: `create_nodes` 'listing EVERY failure rather than the first, and writing nothing, made a 32-node batch safe to attempt'. The all-or-nothing contract is what made the retry cheap.\n8. `describe_schema {from, to}` RANKING MODELLED PAIRS ABOVE WILDCARD ONES: 'ALLOCATED_TO was found in one call.' Same mechanism that this session used to prove `link_artifact` was accepting a Requirement by accident.\n9. `Requirement.source` AND `provenance` BEING SEPARATE FIELDS: source carried the citation ('US Const. art. I, sec. 7, cl. 2'), provenance carried whether a human stated it or a model inferred it. 'The user explicitly asked to be able to tell those apart later, and the schema already supported it.'\n10. ⭐ `CONTRADICTS` WITH `alignment: opposing|supporting` — called 'THE SINGLE MOST VALUABLE THING reflow2 gave this model'. It let live constitutional tensions (War Powers Resolution vs Commander in Chief; nondelegation) be first-class content 'instead of prose buried in a description'.\n11. The `gap_to_prompt` TWO-STEP HANDSHAKE 'produced better questions than were put in, and records them so a later session does not re-ask'.\n\nWHAT THIS IS EVIDENCE FOR, stated carefully: eleven behaviours worked for two independent users on two domains, one of which contains no software. WHAT IT IS NOT: a claim that any of them is verified — a user saying a thing worked is an observation, not a passing check, and several of these have no Verification behind them at all.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-15",
+        "value": "{\"sources\":[\"2026-08-14 Alex Grok 4.6 session, Strengths section, 6 items\",\"2026-08-15 US government genesis session, item 5, 5 items\"],\"most_valued_by_a_reporter\":\"CONTRADICTS with alignment opposing|supporting - 'the single most valuable thing reflow2 gave this model'\",\"central_claim_confirmed\":\"capture-before-build - the first implementation pass did not invent decisions the graph already held\",\"req_observed_in_field\":\"req:a-refusal-names-what-would-have-worked (add_change_event naming legal values)\",\"caveat\":\"an observation that something worked is not a passing check; several of these have no Verification behind them\"}"
       }
     },
     {
@@ -90616,7 +91216,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:2ccf15abd9f266d5d6be8f2b9ee30df3f4f2d29cbea151cd1465fcd60f5da15f",
+  "prev_content_hash": "sha256:191eda4cb9c5c0869153dfda1931f78a5bb98fe66a9a6a1e98141a99cb73f65d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

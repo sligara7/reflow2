@@ -786,3 +786,120 @@ fn a_fingerprint_that_is_not_a_bare_digest_is_stored_verbatim() {
         assert_eq!(stored, given, "{id} must be stored as written");
     }
 }
+
+/// Retire an artifact the modelled way: an ACCEPTED Decision drawing OBSOLETES
+/// at it. Anything less must not count, which the counterweights below pin.
+fn retire(g: &mut DesignGraph, decision_id: &str, artifact_id: &str, status: &str) {
+    g.add_decision(
+        decision_id,
+        "Removed once captured",
+        "The document's content is in the graph, so the file goes.",
+        None,
+    )
+    .expect("decision");
+    g.set_decision_status(decision_id, status).expect("status");
+    g.create_edge(
+        edge::OBSOLETES,
+        node::DECISION,
+        decision_id,
+        node::ARTIFACT,
+        artifact_id,
+        std::collections::HashMap::new(),
+    )
+    .expect("obsoletes");
+}
+
+/// A RETIREMENT CARRIED OUT IS NOT A DIVERGENCE.
+///
+/// Before this, deleting a registered file on purpose was impossible to express:
+/// retiring the Artifact changed nothing, it still reported `missing_artifact` at
+/// `high`, and the remedy the gate named — `set_artifact_checksum` — could not be
+/// performed because there was no file left to checksum. Found 2026-08-15 while
+/// carrying out `dec:reflow2s-own-feedback-documents-are-removed-once-captured`.
+#[test]
+fn a_file_deleted_by_an_accepted_decision_is_expected_absence_not_drift() {
+    let mut g = built_thread();
+    retire(&mut g, "dec:remove", "art:score", "accepted");
+
+    let report = g
+        .reconcile_artifacts(
+            &[observed("art:score", false, None)],
+            &ReconcileOptions::default(),
+        )
+        .expect("reconcile");
+
+    assert_eq!(report.findings.len(), 1, "reported, never silenced");
+    let f = &report.findings[0];
+    assert_eq!(
+        f.kind,
+        DriftKind::ExpectedAbsence,
+        "an authorised deletion is agreement, not divergence"
+    );
+    assert_eq!(DriftKind::ExpectedAbsence.as_str(), "expected_absence");
+    assert!(
+        f.message.contains("accepted decision retired it"),
+        "the message must say WHY it is not a failure; got: {}",
+        f.message
+    );
+}
+
+/// COUNTERWEIGHT 1 — the case this must not swallow. Without a retirement, a
+/// missing file is still the most severe drift there is.
+#[test]
+fn a_file_deleted_with_no_decision_behind_it_is_still_missing_artifact() {
+    let mut g = built_thread();
+    let report = g
+        .reconcile_artifacts(
+            &[observed("art:score", false, None)],
+            &ReconcileOptions::default(),
+        )
+        .expect("reconcile");
+
+    assert_eq!(report.findings[0].kind, DriftKind::MissingArtifact);
+}
+
+/// COUNTERWEIGHT 2 — only an ACCEPTED decision retires anything. A `proposed`
+/// withdrawal has withdrawn nothing, so the file is still missing and still
+/// fails. This is the counterweight that stops the fix becoming a way to
+/// silence the gate by drafting a decision nobody agreed to.
+#[test]
+fn a_proposed_withdrawal_does_not_excuse_a_missing_file() {
+    let mut g = built_thread();
+    retire(&mut g, "dec:maybe", "art:score", "proposed");
+
+    let report = g
+        .reconcile_artifacts(
+            &[observed("art:score", false, None)],
+            &ReconcileOptions::default(),
+        )
+        .expect("reconcile");
+
+    assert_eq!(
+        report.findings[0].kind,
+        DriftKind::MissingArtifact,
+        "a proposed withdrawal has withdrawn nothing"
+    );
+}
+
+/// COUNTERWEIGHT 3 — retirement excuses ABSENCE, never CONTENT. A retired
+/// artifact still on disk with changed bytes is still a checksum change: the
+/// decision authorised the file going away, not the file quietly becoming
+/// something else while it is still being shipped.
+#[test]
+fn a_retired_artifact_that_is_still_present_and_changed_is_still_drift() {
+    let mut g = built_thread();
+    retire(&mut g, "dec:remove", "art:score", "accepted");
+
+    let report = g
+        .reconcile_artifacts(
+            &[observed("art:score", true, Some("sha256:bbb"))],
+            &ReconcileOptions::default(),
+        )
+        .expect("reconcile");
+
+    assert_eq!(
+        report.findings[0].kind,
+        DriftKind::ChecksumChange,
+        "retirement authorises absence, not a rewrite"
+    );
+}

@@ -44,6 +44,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import traceback
 
 _REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -617,6 +618,26 @@ def main() -> int:
                 if not path or not os.path.exists(path):
                     observed.append({"artifact_id": art["node_id"], "present": False})
                     continue
+                # A DIRECTORY IS PRESENT AND UNHASHABLE, WHICH IS A THIRD STATE
+                # this loop did not have. It used to fall straight into
+                # hash_file() and raise IsADirectoryError out of main() — see
+                # below for why that exit code was the worse half of the bug.
+                #
+                # Reported as present WITHOUT a checksum, which the core already
+                # has a word for: `no_baseline`, "cannot be judged — surfaced
+                # rather than treated as unchanged". That is exactly true of a
+                # directory, and it is a note rather than a failure, so a
+                # consumer who registers one gets an honest "I could not judge
+                # this" instead of a crash or a quiet pass.
+                #
+                # ⭐ REFLOW2'S OWN GRAPH CANNOT REACH THIS LINE: 182 artifacts
+                # carry a location and NONE resolves to a directory, while
+                # dev_storyflow has 11. CI has run this gate on every push for
+                # weeks and never once executed this branch (reported by the
+                # api-boss fleet, 2026-08-15, and verified here).
+                if os.path.isdir(path):
+                    observed.append({"artifact_id": art["node_id"], "present": True})
+                    continue
                 observed.append(
                     {
                         "artifact_id": art["node_id"],
@@ -719,5 +740,40 @@ def main() -> int:
     return 0
 
 
+def run_guarded() -> int:
+    """`main()`, with the exit-code contract actually enforced.
+
+    THE CONTRACT IS ENFORCED HERE OR NOWHERE. This module's docstring promises
+    "0 coherent · 1 gate failed · 2 could not run", and a dedicated code exists
+    for could-not-run precisely so a CI job can tell a drifted design from a
+    broken tool. Until this guard existed, ANY unhandled exception in `main()`
+    landed in Python's own exit 1 — the code reserved for "gate failed" — so the
+    one confusion the three-code design was built to prevent was reachable from
+    every line of it. Not a silent pass; a MISFILED one, and invisible in a badge
+    or a required-check summary where the traceback is the only tell.
+
+    ⭐ A NAMED FUNCTION RATHER THAN A BARE `try` UNDER `__main__`, because a
+    guard nobody can call is a claim nobody can check. The first version of this
+    fix lived under `__main__` and its test passed with the guard REMOVED — it
+    forced a fault `die()` already handled, so it proved nothing. Every fault
+    this tool knows about is already routed to 2 correctly; the guard is for the
+    ones it does not know about, and the only honest way to exercise that is to
+    hand it one.
+
+    `die()` raises SystemExit, which must pass through untouched so an explicit
+    exit code wins — and it does, because SystemExit derives from BaseException
+    rather than Exception.
+    """
+    try:
+        return main()
+    except Exception:  # noqa: BLE001 — deliberate: any unexpected fault is a 2.
+        traceback.print_exc()
+        print(
+            "reflow2_check: the check could not run — this is exit 2, not a gate failure",
+            file=sys.stderr,
+        )
+        return 2
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(run_guarded())
