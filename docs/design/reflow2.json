@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e06ec81222cb8fcbba5001cc9bceed64de1beab89464575691febb8c0df6f77b",
+  "content_hash": "sha256:aea62733039407424e3d8f24779229fe610d1d01cfd0586c1f6df7199b0b2bf7",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -10080,6 +10080,15 @@
         "action": "modified"
       },
       "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-8bb3d7cc9dcc1e6d",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dockerfile"
     },
     {
       "edge_type": "CHANGED",
@@ -65117,9 +65126,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:8f8a543ba59ec079",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/acknowledgement_not_structure.rs",
         "name": "acknowledgement_not_structure.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65128,9 +65139,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:14b6b93d62aa5ff7",
+        "granularity": "atomic",
         "location": "getting-started/skills/adopt/SKILL.md",
         "name": "adopt/SKILL.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65139,9 +65152,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c33a33c15e2611b3",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/agent.rs",
         "name": "agent.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65150,9 +65165,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:d282035a162e3e56",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/allocate.rs",
         "name": "allocate.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65161,9 +65178,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c87a79726aeb111b",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/alternatives.rs",
         "name": "alternatives.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65198,9 +65217,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:49f1f3095ea2707d",
+        "granularity": "atomic",
         "location": "tools/bl124_instrument.py",
         "name": "bl124_instrument.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65222,9 +65243,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6aeb7aaf31ccdd875990bce6735c75eeead49c7371c4bc39064d4e7f478733e8",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/budget.rs",
         "name": "budget.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65233,9 +65256,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:8f5ffbc7c6e84b5e",
+        "granularity": "atomic",
         "location": "docs/built-right-review.md",
         "name": "built-right-review.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65244,9 +65269,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6e8e23fce35b21d6",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/bulk.rs",
         "name": "bulk.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65281,9 +65308,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c2bea913c620128c1e602aed078713c7598f92e7cada4024c67777584b23b8be",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/changelog.rs",
         "name": "tests/changelog.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65331,9 +65360,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:a84c2afa299b6793cb78ae9aad6fda8cf659780728e38da0906ffa629dd41919",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/checksum_dialect.rs",
         "name": "checksum_dialect.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65355,9 +65386,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:2575d415a74a3266b208ddf798e5e6516186d6c345324efb6f9b66e46b7367a3",
+        "granularity": "atomic",
         "location": "docs/collaborating.md",
         "name": "collaborating.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65366,9 +65399,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b73161a0fd04efee",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/compare.rs",
         "name": "compare.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65377,9 +65412,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b9f6ec2a69d7cfbc6041c2cf7d0bbb5a409a981cd3c44a36672f4b3a375a4558",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/compose.rs",
         "name": "compose.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65388,9 +65425,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6b58139a0fd5f095c64c4c465f03cfed8200015ef0e7af3a4e7cca064727de39",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/compose.rs",
         "name": "tests/compose.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65399,9 +65438,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:276c4e707db8d55a34f673a533dcaa15629d6bd59be4d3232df21bff1e6ce7c3",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/confirm.rs",
         "name": "confirm.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65410,9 +65451,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b4fd5760c54b234a4c8d4031c4dba9610db59dfb10cabc0dfc3907e143442344",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/confirmation_vocabulary.rs",
         "name": "confirmation_vocabulary.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65434,9 +65477,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:2459979bcda2901dc08307b0211763a91245cdfd4727c9ab967039b2c154f2ed",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/contradiction_alignment.rs",
         "name": "tests/contradiction_alignment.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65471,9 +65516,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c30ee52bd7c3ec95",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/coverage.rs",
         "name": "tests/coverage.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65495,9 +65542,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:eb126729e08e8d8d3ac45acec3a2e291e068dc1e9afed14a8647edf73300bdde",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/degraded.rs",
         "name": "degraded.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65558,9 +65607,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:59ef210d5f8576a9f07b321dc546b653056ab4ecda17e0ec9269ed87a52c27dc",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/dimensions.rs",
         "name": "dimensions.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65620,7 +65671,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7ba2d1770e2d3752216743b5de56505e2be2419498a3aab9c3cf62607603b422",
+        "checksum": "sha256:aa66c1059681a11386e7a737ae74aface79c60dbdee7cae753df31ced21498d6",
         "granularity": "atomic",
         "location": "Dockerfile",
         "name": "Dockerfile",
@@ -65647,9 +65698,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:74c0459e03ad38ce",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/dto.rs",
         "name": "dto.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65671,9 +65724,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:8956d2d0d4f31fe1",
+        "granularity": "atomic",
         "location": "tools/evidence_quality_instrument.py",
         "name": "Evidence-quality instrument — what the three axes report on a real design",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65682,9 +65737,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:0f66b31cfaca4944",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/evidence_quality.rs",
         "name": "The evidence-quality family suite — all three axes with their counterweights",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65693,9 +65750,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:58443db75d9199e7addc3f4673d84e1249df60fc563237475636f8e0713f6896",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/evidence.rs",
         "name": "tests/evidence.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65730,9 +65789,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:cfdf82f1a6497595",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/fielded.rs",
         "name": "fielded.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65741,9 +65802,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2",
+        "granularity": "atomic",
         "location": "docs/fleet-lessons.md",
         "name": "fleet-lessons.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65752,9 +65815,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:f6abe031170cd8123c44b3f87248b9841f9b31117d78d8325769fea6a34a5d8e",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/flow.rs",
         "name": "flow.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65763,9 +65828,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:8196df94f5775161",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/genesis.rs",
         "name": "genesis.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65787,9 +65854,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:34701500af93dbcf",
+        "granularity": "atomic",
         "location": "docs/github-mcp-nuggets.md",
         "name": "github-mcp-nuggets.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65811,9 +65880,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:199301145284e0fb30cfec667a6adb26c3af9db724a2f3049474659ee07c7f15",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/granularity.rs",
         "name": "granularity.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65848,9 +65919,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:30fc1a09862792a9",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/hierarchy.rs",
         "name": "hierarchy.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65872,9 +65945,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:889393466bafe709429fc137dd4d2e1a372990c6486d7a85dec07c630a51cbb3",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/ility.rs",
         "name": "ility.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65909,9 +65984,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:ddfa7e13d3b56156a9b463f434cd691718e1af489f27aaba169395c226d14b9a",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/ingest_handshake.rs",
         "name": "tests/ingest_handshake.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65933,9 +66010,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:07c82cd7671c1241",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/interface_spec.rs",
         "name": "tests/interface_spec.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65944,9 +66023,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:13f19b14c25c9300",
+        "granularity": "atomic",
         "location": "getting-started/AGENTS.md",
         "name": "getting-started/AGENTS.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65968,9 +66049,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:65a01535f32f023e",
+        "granularity": "atomic",
         "location": "getting-started/skills/kpp-proposal/SKILL.md",
         "name": "kpp-proposal/SKILL.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -65992,9 +66075,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:6869d93e97fc9393",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/llm.rs",
         "name": "llm.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66055,9 +66140,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:075bab31f3c131b6",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/merge.rs",
         "name": "merge.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66066,9 +66153,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:cddbea4165e0e3b0",
+        "granularity": "atomic",
         "location": "tools/test_merge_driver.py",
         "name": "test_merge_driver.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66129,9 +66218,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:e95e6f4c2658ebd1c7afa6e23385256e51272860a0cb56e2046d4c1b581881d0",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/operate.rs",
         "name": "operate.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66140,9 +66231,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:9b388fef123f04c5",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/orphan_attachment.rs",
         "name": "orphan_attachment.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66177,9 +66270,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14",
+        "granularity": "atomic",
         "location": "docs/planning-at-scale.md",
         "name": "planning-at-scale.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66188,9 +66283,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:59b6e751c18dfc67d4546b6d6d70e1305b64864d3890d8cf786320687c9b84d4",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/preserve.rs",
         "name": "preserve.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66199,9 +66296,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:26dde99a1df42e6f",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/propagate.rs",
         "name": "propagate.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66210,9 +66309,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b3cd0321b5dcda802926f3247ab45b6c1bbfc7bbd60ed38d2d95da29a3d6caf0",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/provenance.rs",
         "name": "provenance.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66221,9 +66322,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:7979028e8c95724dd5696d9b1fee3f307c718b7d9f4e086a968620b602eec420",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/publishable_promise.rs",
         "name": "tests/publishable_promise.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66232,10 +66335,12 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:f01d1b8a9f04a3efd4efe0fa05d12f9d1b330e4c4f16b9f1781ae6e645a38fa5",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "crates/reflow2-core/src/readiness.rs",
         "name": "readiness.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66283,9 +66388,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:99fc5da421a04f5e",
+        "granularity": "atomic",
         "location": "tools/render_views.py",
         "name": "render_views.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66307,9 +66414,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:dc88dfbc4e1aacbc",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/sanitize.rs",
         "name": "sanitize.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66359,10 +66468,12 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:815273502db4fed6800182446fb496a08aace3a9b34757395892e6da37dbcdb9",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/dimensions.yaml",
         "name": "dimensions.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66371,10 +66482,12 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:7201c53b7e2c794b871f3d48b7da761884f5bccd7d9f90b9b7d07210e79053cc",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/environment.yaml",
         "name": "environment.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66425,10 +66538,12 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:daf8ea6b9399cb16edfd8849adcd1bcd37ac1a7f3ae3acea80ecca8e035fdc9a",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/readiness.yaml",
         "name": "readiness.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66451,10 +66566,12 @@
       "properties": {
         "artifact_type": "spec",
         "checksum": "sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09",
+        "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/temporal.yaml",
         "name": "temporal.yaml",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66503,9 +66620,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea",
+        "granularity": "atomic",
         "location": "docs/scope-read-while-held.md",
         "name": "scope-read-while-held.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66514,9 +66633,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:45aaec579dc701380a04d4f12b59a6b14ba5aeb619e823c021b0b21ed08e5caa",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/seam.rs",
         "name": "seam.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66525,9 +66646,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:efb2faf35ec4cc6ed3df5a61f8fdf2af77aded2a6eb29ddabf2394dfc7ed195d",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/seam.rs",
         "name": "tests/seam.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66536,9 +66659,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:c421c3496192d22d",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/search.rs",
         "name": "search.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66560,9 +66685,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:4d824c873120e938",
+        "granularity": "atomic",
         "location": "tools/self_host_uses_documents.py",
         "name": "self_host_uses_documents.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66662,9 +66789,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:9352eb7ec610eb6187d482730ea021c18883d4548f4ba2ed3ab3b3fac0451bda",
+        "granularity": "atomic",
         "location": "tools/test_skill_lint.py",
         "name": "test_skill_lint.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66686,9 +66815,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:beaa4bd48ef2fae4b6cdb0604f5e0ff9ce644d9bb39f1a9c6a7f7f2a630aa797",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/build.rs",
         "name": "build.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66710,9 +66841,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:772b73a05ff491fe6dbca6adeb9697ad84e1ad9592e24b66793aae2716ae0783",
+        "granularity": "atomic",
         "location": "tools/stateless_seat_probe.py",
         "name": "stateless_seat_probe.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66721,9 +66854,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:ce30365401d775a82585729349538efe1a0fa43625783b2a39a6dc30f7d9ce83",
+        "granularity": "atomic",
         "location": "docs/storyflow-resolution-nuggets.md",
         "name": "storyflow-resolution-nuggets.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66732,9 +66867,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:76f2dec276b09685",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/structure.rs",
         "name": "structure.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66743,9 +66880,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b3b2bac1387c9c53",
+        "granularity": "atomic",
         "location": "tools/surface_usage.py",
         "name": "Surface-usage instrument — which parts of reflow2 real sessions actually drive",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66754,9 +66893,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:b1cec4ec107ef2b1",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/surprises.rs",
         "name": "surprises.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66791,9 +66932,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:829e4905cc5f40a8b24e6027b5522780c90e8c133742299549e80880b2f6abef",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "temporal.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66815,9 +66958,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:25db9bfb196de65609c48f3aec924f55bdcac7c8492066658f310832b17156ef",
+        "granularity": "atomic",
         "location": "tools/test_degraded_server.py",
         "name": "test_degraded_server.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66826,9 +66971,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:cba77191420374d58d2360da9c1d2a73adcdd1d750d25dafc3991c1a525773af",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/design_identity.rs",
         "name": "design_identity.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66980,9 +67127,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:21673699d9d326c9db310fcb24068fa38074634b1949d2708c56f9f77a6c2e5f",
+        "granularity": "atomic",
         "location": "tools/test_shared_sessions.py",
         "name": "test_shared_sessions.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -66991,9 +67140,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:78b994c3da2476c2560bcd53dd776eb2232a1c4856a8427c63e9a08235cc628d",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/stale_seat.rs",
         "name": "stale_seat.rs + test_stale_seat.py",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -67015,9 +67166,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:288dce9896555156f11fda2a204efb826780699e0e9e97d61474911f62d8a639",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/ask.rs",
         "name": "tools/ask.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -67091,9 +67244,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:059eb65c3bb6904b292fef5655a51942079caac0aa0a8c86b0013d4d049cc79f",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -67102,9 +67257,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:25ab6353c7864b55aa042ac631ecc7ab16daef10aa8024927ecb840158aacbd5",
+        "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/operate_tools.rs",
         "name": "tools/operate_tools.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -67139,9 +67296,11 @@
       "properties": {
         "artifact_type": "code",
         "checksum": "sha256:1dab58f5049860d865ed9351a40393fd093212bb6ae82952e1f136d56cadc21f",
+        "granularity": "atomic",
         "location": "crates/reflow2-core/tests/unreachable_decision.rs",
         "name": "unreachable_decision.rs",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -67163,9 +67322,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:ef7dbb708e027df2",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.11.0.md",
         "name": "upgrading-to-v0.11.0.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -67174,9 +67335,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.12.0.md",
         "name": "upgrading-to-v0.12.0.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -67185,9 +67348,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.13.0.md",
         "name": "upgrading-to-v0.13.0.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -67196,9 +67361,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:b1e1cee221b0bc6ed7f9e4411cda9dcd50a2dc2647785e06eaa7b1ce7329da28",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.15.0.md",
         "name": "upgrading-to-v0.15.0.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -67207,9 +67374,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:00eea80c2a79cc4eed4d1db9402a4e90e23231745a8fdd4117f44a9f22f58f24",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.16.0.md",
         "name": "upgrading-to-v0.16.0.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -67218,9 +67387,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:d1c21f5330ad0ea05f4efe46c08a010d5fb22ece05523922bb6324c7ec8a2eda",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.18.0.md",
         "name": "upgrading-to-v0.18.0.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -67229,9 +67400,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:3a36b9b6b248af09",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.19.0.md",
         "name": "upgrading-to-v0.19.0.md",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -67240,9 +67413,11 @@
       "properties": {
         "artifact_type": "document",
         "checksum": "sha256:d16abc28ea59e3f9",
+        "granularity": "atomic",
         "location": "docs/upgrading-to-v0.21.0.md",
         "name": "Upgrading to v0.21.0 — the stamp moves, and your evidence can say what it covers",
-        "status": "realized"
+        "status": "realized",
+        "volatility": "stable"
       }
     },
     {
@@ -69997,6 +70172,15 @@
         "change_type": "resync",
         "detected_at": "2026-08-05",
         "name": "The NON_TOOL_TERMS allowlist gained the CorpusReport field names and token_sort_ratio, which the ingest-corpus skill names in backticks. DESIGN_HOLDS deliberately: what skill_lint DOES is unchanged — only its data moved, to stay in agreement with a surface that grew elsewhere. The lint refusing the new skill until this was done is the guard working, not a defect."
+      }
+    },
+    {
+      "node_id": "chg:accept-8bb3d7cc9dcc1e6d",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-15",
+        "name": "Accepted a new baseline: the change carries no design meaning"
       }
     },
     {
@@ -89246,7 +89430,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b2d3b9eea37ce47f69c21e175e61ab4b4ae8ef0986b620ad72f22bd2ed9e21f0",
+  "prev_content_hash": "sha256:e06ec81222cb8fcbba5001cc9bceed64de1beab89464575691febb8c0df6f77b",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
