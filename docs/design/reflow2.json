@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ec2eb4d40fb99fda63f3e9c36f68e94489ee62359dcbfe5a8b4daa46c0376654",
+  "content_hash": "sha256:5bc917f5b4590334deedf7696a7fcdd7b32175e269b956aea682e43245993e2a",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -19226,7 +19226,25 @@
         "accepted_baseline": true,
         "action": "modified"
       },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:who-edges-name-their-fix",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
       "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:who-edges-name-their-fix",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
     },
     {
       "edge_type": "CHANGED",
@@ -66228,7 +66246,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:14b6b93d62aa5ff7",
+        "checksum": "sha256:14385c12b76516b9a8a8903216243912fcf602be1869d703c25af468a18a1e44",
         "granularity": "atomic",
         "location": "getting-started/skills/adopt/SKILL.md",
         "name": "adopt/SKILL.md",
@@ -67008,7 +67026,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b0aaf8f8a21fc5f7850298110bd13a9b1ae3aeca6d7463b79360371b7f3ce63a",
+        "checksum": "sha256:4bb2b37433d7a6cb11868f920fac033f840f0241dbc6ee185518829768e3e5b4",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
@@ -67891,7 +67909,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5557ad37ea0f4492f9ba6e67e8d2734900a65764bdb1487b05c5008aff3cd197",
+        "checksum": "sha256:1ee41e376d31e0f82c43993217ea4907b03161fe1fb0d351d85156d055425d6f",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -91627,7 +91645,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:04c0d07850918b8c6f8c54ea144088cad5208046e66b0f1937ac8b314f3ce658",
+  "prev_content_hash": "sha256:ec2eb4d40fb99fda63f3e9c36f68e94489ee62359dcbfe5a8b4daa46c0376654",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

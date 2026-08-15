@@ -1198,6 +1198,7 @@ impl DesignGraph {
         role: Option<&str>,
         acted_at: Option<&str>,
     ) -> Result<StoredEdge, DynoError> {
+        self.require_contributor(contributor_id, "authored_by", "author this")?;
         self.create_edge(
             edge::AUTHORED_BY,
             from_type,
@@ -1208,6 +1209,70 @@ impl DesignGraph {
                 .set_opt("role", role)
                 .set_opt("acted_at", acted_at),
         )
+    }
+
+    /// Refuse a who-edge in a way that says what WOULD have worked.
+    ///
+    /// # Why this exists, and why it is worth a function rather than a message
+    ///
+    /// Without it, both of these render identically as
+    /// `Node not found: Contributor <id>`, from `create_edge`'s endpoint rule:
+    ///
+    /// - the id names nothing at all (a typo), and
+    /// - the id names a real node that is an **`Actor`** rather than a
+    ///   `Contributor`.
+    ///
+    /// The second one is the trap, because the node *is* there. A caller told
+    /// "not found" goes looking for a wrong id and never suspects a wrong TYPE.
+    /// Reported by dev_storyflow on 2026-08-15, and reported **against the
+    /// reporter itself**, which is what makes it worth acting on: rather than
+    /// retry, the session wrote the user's authorship into Decision PROSE about
+    /// ten times, and that is the direct reason `what_next` had nothing to show
+    /// in its most important band. Its own conclusion — *"the failure mode of a
+    /// rejected typed call is not an error, it is prose"* — a capable agent
+    /// routes around the refusal and produces something that READS BETTER than
+    /// the edge would have, while quietly dropping the structure.
+    ///
+    /// **This is not a new principle here, it is an existing one applied to a
+    /// third case.** `claim_region` names its fix (and its comment records the
+    /// same shape: an unactionable refusal became a false correction that
+    /// travelled five hops through a fleet before anyone disproved it); the
+    /// missing-`seat` refusal has named its fix since 2026-07-30; and
+    /// `get_node` refuses an unknown node type rather than answering a
+    /// confident `None`, because "no such type" and "no such node" are
+    /// different facts that must not share one reply. This is that sentence,
+    /// one edge along.
+    ///
+    /// Only `Actor` is probed for the wrong-type case. That is deliberate
+    /// rather than lazy: it is the confusion actually observed, and the only
+    /// other person-shaped node type, so a general cross-type scan would cost
+    /// every caller a sweep to report a case that cannot arise.
+    fn require_contributor(&self, id: &str, tool: &str, verb: &str) -> Result<(), DynoError> {
+        if self.get_node(node::CONTRIBUTOR, id)?.is_some() {
+            return Ok(());
+        }
+        let message = if self.get_node(node::ACTOR, id)?.is_some() {
+            format!(
+                "'{id}' EXISTS BUT IS AN Actor, and `{tool}` needs a Contributor — so this is a \
+                 wrong TYPE, not a wrong id, and looking for a better id will not find one. The \
+                 two are different on purpose: an Actor is a role the DESIGNED SYSTEM interacts \
+                 with, a Contributor is a person who works on the design. To {verb}, call \
+                 `add_contributor` for the human (its id may differ from '{id}'), then call \
+                 `{tool}` again with that id."
+            )
+        } else {
+            format!(
+                "no Contributor '{id}' exists yet, so there is nobody to {verb}. CALL \
+                 `add_contributor` FIRST with id '{id}', then call `{tool}` again. (reflow2 will \
+                 not invent the person: authorship nobody declared is a name no colleague can ask \
+                 about.)"
+            )
+        };
+        Err(DynoError::Validation {
+            node_type: node::CONTRIBUTOR.into(),
+            property: "contributor_id".into(),
+            message,
+        })
     }
 
     /// Record that a design node is OWNED by a [`Contributor`](node::CONTRIBUTOR)
@@ -1249,6 +1314,9 @@ impl DesignGraph {
         note: Option<&str>,
         since: Option<&str>,
     ) -> Result<StoredEdge, DynoError> {
+        // Same refusal as `authored_by`: `owned_by` takes a Contributor for the
+        // same reasons and fails the same indistinguishable way without it.
+        self.require_contributor(contributor_id, "owned_by", "own this")?;
         self.create_edge(
             edge::OWNED_BY,
             from_type,
