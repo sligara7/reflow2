@@ -31,6 +31,8 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.31.0] — 2026-08-15
+
 ### Added
 
 - **`reflow2 update` — the second half of "install is one command, update is one word"**
