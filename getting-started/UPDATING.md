@@ -26,6 +26,33 @@ that was committed.
 
 ---
 
+## Two things can be out of date, and they update separately
+
+This is the single most common confusion, so it is stated before the procedures:
+
+| What | How it updates | What it is |
+|---|---|---|
+| **reflow2 itself** — the binary and the kit on this machine | re-run the installer (below) | needs the network |
+| **a project already set up** — its `AGENTS.md`, slash commands, MCP config, hooks | **`reflow2 update`** | purely local, never downloads |
+
+**Updating reflow2 does not update a project you set up earlier.** The per-project files were
+copied when you ran `reflow2 init`, and they stay at that generation until you say otherwise. A
+project installed at 0.16.0 under a 0.30.0 binary gets *current instructions driving an old kit*,
+and nothing announces it.
+
+```bash
+cd my-project
+reflow2 update --check     # what would change, writes nothing
+reflow2 update             # bring this project forward
+```
+
+It reuses the harness you chose the first time, keeps files you edited, and **never touches your
+design graph**. It refuses a project that was never set up rather than quietly performing a first
+install — absence of a kit is not staleness, and the message names `reflow2 init` instead.
+
+`reflow2 update` also *reports* when the binary itself is behind. It will not update it for you:
+that needs the network and is the procedure below.
+
 ## Updating a locally-installed reflow2
 
 Replace the binary. That is the whole procedure.
