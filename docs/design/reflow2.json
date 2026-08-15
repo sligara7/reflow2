@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:aea62733039407424e3d8f24779229fe610d1d01cfd0586c1f6df7199b0b2bf7",
+  "content_hash": "sha256:8c68c4824290633654a15a7ef85ee3f6506b16a29b5a3770d536e573cd04533e",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -4637,6 +4637,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:revision-block-on-constructors",
+      "properties": {},
+      "to_id": "epoch:constructors-say-what-they-replaced"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:rmcp-3-1-2-20260809",
       "properties": {},
       "to_id": "epoch:v0261"
@@ -5678,6 +5684,12 @@
       "from_id": "snap:epoch:capture-registers-its-source:cap:governance-proposal",
       "properties": {},
       "to_id": "epoch:capture-registers-its-source"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:constructors-say-what-they-replaced:art:tools-capture",
+      "properties": {},
+      "to_id": "epoch:constructors-say-what-they-replaced"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -16627,6 +16639,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:revision-block-on-constructors",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:rmcp-3-1-2-20260809",
       "properties": {
         "accepted_baseline": false,
@@ -27545,6 +27566,12 @@
       "from_id": "art:service",
       "properties": {},
       "to_id": "snap:epoch:stateless-seat:art:service"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:tools-capture",
+      "properties": {},
+      "to_id": "snap:epoch:constructors-say-what-they-replaced:art:tools-capture"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -67204,7 +67231,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:12bc49d9445b3825ffa1bb1ea43893854345d00c366df497a6cd4615b7e358bc",
+        "checksum": "sha256:1346752cf43f8682062468133186c2ac3e5b00888b13908a48e1c9bec2b11801",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "tools/capture.rs",
@@ -72390,6 +72417,14 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Accepted structural defects leave the open list — the gap side's bargain kept on the defect side"
+      }
+    },
+    {
+      "node_id": "chg:revision-block-on-constructors",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Constructors report the properties they overwrote, with the prior values"
       }
     },
     {
@@ -77640,6 +77675,16 @@
         "epoch_type": "revision",
         "name": "The subscribe side becomes declarable and the seam is computed",
         "sequence": 236,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:constructors-say-what-they-replaced",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "A typed constructor that lands on an existing node says what it replaced",
+        "sequence": 335,
         "status": "arrived"
       }
     },
@@ -84854,6 +84899,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:constructors-say-what-they-replaced:art:tools-capture",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:e7724d05c7d0e386ebb9a85f531244fae78746c127aee3855d2dcd312563569b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:e7724d05c7d0e386ebb9a85f531244fae78746c127aee3855d2dcd312563569b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:e7724d05c7d0e386ebb9a85f531244fae78746c127aee3855d2dcd312563569b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:e7724d05c7d0e386ebb9a85f531244fae78746c127aee3855d2dcd312563569b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:e7724d05c7d0e386ebb9a85f531244fae78746c127aee3855d2dcd312563569b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:4e81fcdb498f093fa95c964482a04079d16a6fbb7638609b560b580ed7b67eb7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:12bc49d9445b3825ffa1bb1ea43893854345d00c366df497a6cd4615b7e358bc\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:12bc49d9445b3825ffa1bb1ea43893854345d00c366df497a6cd4615b7e358bc\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:12bc49d9445b3825ffa1bb1ea43893854345d00c366df497a6cd4615b7e358bc\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:12bc49d9445b3825ffa1bb1ea43893854345d00c366df497a6cd4615b7e358bc\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:governance-mode\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:12bc49d9445b3825ffa1bb1ea43893854345d00c366df497a6cd4615b7e358bc\",\"granularity\":\"atomic\",\"location\":\"crates/reflow2-mcp/src/tools/capture.rs\",\"name\":\"tools/capture.rs\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:tools-capture",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:content-store-discontinued:art:content",
       "node_type": "Snapshot",
       "properties": {
@@ -89430,7 +89485,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e06ec81222cb8fcbba5001cc9bceed64de1beab89464575691febb8c0df6f77b",
+  "prev_content_hash": "sha256:aea62733039407424e3d8f24779229fe610d1d01cfd0586c1f6df7199b0b2bf7",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
