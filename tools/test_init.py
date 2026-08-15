@@ -1146,5 +1146,87 @@ class HarnessChoice(unittest.TestCase):
                          "every offerable harness needs a config to write")
 
 
+class UpdateIsItsOwnWord(unittest.TestCase):
+    """`reflow2 update` — the mechanism existed; the word did not.
+
+    Anthony, 2026-08-14: *"do we have a 'reflow2 update' cli command yet? ...
+    is there one to update a project graph? like cd to a reflow2 project repo,
+    then run 'reflow2 --update-project' ... to bring it up to current version
+    installed on machine."*
+
+    MEASURED THAT DAY: `reflow2 init <dir>` ALREADY did exactly that — it reads
+    the receipt, rewrites what moved, keeps your edits. Run against
+    dynograph-foundation it reported "installed from reflow2 0.16.0 / now at
+    reflow2 0.30.0" and named 16 changes. **The mechanism was complete and
+    unreachable by name**, because nobody types `init` at a project that is
+    already initialised. `req:frictionless-update` — "install is one command,
+    update is one word" — had its second half unbuilt for that reason alone.
+
+    THESE TESTS PIN THE DISTINCTION, not the refresh. The refresh is `install`
+    and is covered by every other case in this file. What is new, and what
+    would rot first, is that the two words keep meaning different things.
+    """
+
+    def setUp(self):
+        self.tmp = pathlib.Path(tempfile.mkdtemp(prefix="reflow2-update-test-"))
+        self.addCleanup(shutil.rmtree, self.tmp, ignore_errors=True)
+
+    def project(self, name="proj") -> pathlib.Path:
+        p = self.tmp / name
+        p.mkdir()
+        return p
+
+    def test_a_project_with_an_install_receipt_may_be_updated(self):
+        p = self.project()
+        init.install(p, FAKE_BINARY, False, list(init.HARNESSES))
+        self.assertTrue((p / init.STAMP).exists(), "precondition: a receipt exists")
+        self.assertIsNone(
+            init.why_not_an_update(p),
+            "a project that was set up is exactly what update is for",
+        )
+
+    def test_a_project_that_was_never_set_up_is_refused_and_told_the_word(self):
+        p = self.project()
+        why = init.why_not_an_update(p)
+        self.assertIsNotNone(why, "there is nothing here to bring forward")
+        self.assertIn("reflow2 init", why,
+                      "a refusal must name the command that would work")
+
+    def test_a_design_without_a_kit_is_a_first_install_not_an_update(self):
+        # THE CASE WORTH REFUSING LOUDLY, and the one a looser check would get
+        # wrong: this is the ORDINARY shape of dec:install-once-per-machine —
+        # reflow2 registered machine-wide, a design started by /genesis, and the
+        # in-repo half never run. Updating here would silently perform a FIRST
+        # install under a word that promises to bring something forward.
+        p = self.project()
+        (p / ".reflow2" / "graph").mkdir(parents=True)
+        self.assertFalse((p / init.STAMP).exists(), "precondition: no receipt")
+
+        why = init.why_not_an_update(p)
+        self.assertIsNotNone(why, "a design is not an installed kit")
+        self.assertIn("reflow2 init", why)
+        self.assertIn("machine-wide", why,
+                      "say WHY there is no kit, or the refusal reads as a fault")
+
+    def test_the_wrapper_offers_update_and_refuses_to_conflate_the_two_surfaces(self):
+        # The word has to exist in the shipped CLI, and it must not imply it
+        # updates reflow2 itself — that needs the network and this never
+        # touches it (fact:updating-reflow2-does-not-update-a-project-already-
+        # set-up: TWO update surfaces, and conflating them is the confusion).
+        import importlib.util as _ilu
+        spec = _ilu.spec_from_file_location("reflow2_install", HERE / "reflow2_install.py")
+        inst = _ilu.module_from_spec(spec)
+        spec.loader.exec_module(inst)
+
+        wrapper = inst.WRAPPER
+        self.assertIn("update)", wrapper, "the subcommand must be dispatched")
+        self.assertIn("--update", wrapper,
+                      "and it must reach the installer as an update, not a plain init")
+        self.assertIn("reflow2 update", wrapper, "the help must name it")
+        self.assertIn("never downloads", wrapper,
+                      "the help must say what it does NOT do, or a user will "
+                      "expect a new binary from it")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

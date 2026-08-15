@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:1da99760ae55070e5bb23c6ae59f3bb304f95fec5971379b81d42599a091450a",
+  "content_hash": "sha256:18cf29500253b7d07004489927845ad4c0f36bf75f889d71c87619cb5fdac0d9",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -4931,6 +4931,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:update-is-one-word",
+      "properties": {},
+      "to_id": "epoch:update-is-one-word"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:user-is-still-the-reminder",
       "properties": {},
       "to_id": "epoch:skill-use-still-needs-reminding"
@@ -6830,6 +6836,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-generated-explainer-for-someone-new",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-hosted-tier-of-many-single-writer-tenants",
       "properties": {
         "acted_at": "2026-08-09",
@@ -7650,6 +7665,15 @@
       "properties": {
         "acted_at": "2026-08-10",
         "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-what-is-on-reflow2s-public-page",
+      "properties": {
+        "acted_at": "2026-08-14",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -8697,6 +8721,15 @@
       "from_id": "req:reflow2-consumable-as-an-image",
       "properties": {
         "acted_at": "2026-08-05T23:10:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:reflow2-has-a-public-page-anyone-can-read",
+      "properties": {
+        "acted_at": "2026-08-14",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -18187,6 +18220,51 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:update-is-one-word",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:update-is-one-word",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:machine-install"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:update-is-one-word",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:update-is-one-word",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:updating-doc"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:update-is-one-word",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:update-is-one-word"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:user-is-still-the-reminder",
       "properties": {
         "accepted_baseline": false,
@@ -27052,6 +27130,12 @@
       "from_id": "req:reflow2-consumable-as-an-image",
       "properties": {},
       "to_id": "dec:idea-package-versus-shared-server"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:reflow2-has-a-public-page-anyone-can-read",
+      "properties": {},
+      "to_id": "dec:idea-what-is-on-reflow2s-public-page"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -60246,6 +60330,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:update-is-one-word",
+      "properties": {},
+      "to_id": "req:frictionless-update"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:verification-freshness",
       "properties": {},
       "to_id": "req:verification-keeps-up"
@@ -61878,6 +61968,12 @@
       "from_id": "ver:undeclared-seam-is-named",
       "properties": {},
       "to_id": "cap:undeclared-seam-is-named"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:update-is-its-own-word",
+      "properties": {},
+      "to_id": "cap:update-is-one-word"
     },
     {
       "edge_type": "VERIFIES",
@@ -63979,7 +64075,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8c3067696c99cce78ac758cfa640d4cc1a6e7d325c0dc3b25dabbdd4ff481b26",
+        "checksum": "sha256:2b0c9b500c5d5e1a45497d5deef3382a41a6374851d5ffbf4fa91ae6d5958059",
         "granularity": "atomic",
         "location": "tools/reflow2_init.py",
         "name": "reflow2_init.py",
@@ -64075,7 +64171,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:995468c9064fa4e17ec2fca78df621a285fe09a5a8a155d540dc9f3c8c42db16",
+        "checksum": "sha256:f7b21dc97aa8ee9f4a6b33f59ea944d3e900671479d79ee7a4c023877929f9b6",
         "granularity": "atomic",
         "location": "tools/reflow2_install.py",
         "name": "reflow2_install.py",
@@ -64922,7 +65018,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:60633c7dfd51a9244501b86c9f488cad734ac749c67c365b7f40b5ca305772d8",
+        "checksum": "sha256:80bb4b7b81a13ee0164d2e1c377ac326c95a2454b2a581cdfc9e86efc1dd8585",
         "granularity": "atomic",
         "location": "tools/test_init.py",
         "name": "test_init.py",
@@ -65209,7 +65305,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:47790db3adb4de239294068eb0bbe1b919a6203bb5385b4f47692b5288c7fa1c",
+        "checksum": "sha256:878315a480167a9296209d6b30a41f9f13318292db228829243a7acc24338c23",
         "granularity": "atomic",
         "location": "getting-started/UPDATING.md",
         "name": "UPDATING.md",
@@ -67352,6 +67448,16 @@
       "properties": {
         "description": "DETECT names every Component pair joined by DEPENDS_ON with no Interface carrying BOTH a PROVIDES and a CONSUMES between them, as one aggregate gap (`undeclared_seam`) keyed on the rule.\n\nWHY IT IS A CAPABILITY AND NOT A CHORE: the set was already computed. maturity_report's `seams` band divides `declared` by `couplings` on every run, for every design, and discarded the difference. `DesignGraph::seam_sets` is that computation extracted, so the band and the detector cannot disagree about what a contract is.\n\nIT NAMES THE PAIR AND ASKS. It never drafts the Interface — reflow2 can see THAT two parts are coupled and cannot know WHAT crosses the boundary, so proposing a medium/payload/direction would be the fabrication `cap:no-fabricated-repair` exists to prevent. A test asserts the finding stays interrogative and carries no invented contract vocabulary.\n\nTWO SILENCES: no Component depends on another (an absence, not a deficiency — matching the band's own wording), and every coupling already declared.\n\nAGGREGATE, so the standing judgement survives a new coupling while the count in the title moves. reflow2's own design has 73 of these; `unexpected_coupling` was retired for exactly that flood.\n\nComplements `unprovided_interface` / `unconsumed_interface`, which run the opposite direction and both require an Interface to already exist.",
         "name": "An undeclared coupling is named as a finding, not just counted into a ratio",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:update-is-one-word",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`reflow2 update` brings THIS project's installed reflow2 files — instruction file, slash commands, MCP config, hooks, ignore and merge rules — up to the version already installed on the machine. `--check` previews and writes nothing. It reuses the harness recorded at first install, keeps files the user edited, and never touches the design graph.\n\nTHE MECHANISM PRE-EXISTED THE WORD, which is why this is small: `reflow2 init <dir>` already did the refresh. What was missing was a name anybody would type at an initialised project, and `req:frictionless-update`'s update half went unbuilt for that reason alone.\n\nREFUSES RATHER THAN PERFORMING A FIRST INSTALL. The install receipt is the test. A directory holding a design but no kit is the ordinary shape of `dec:install-once-per-machine` — registered machine-wide, in-repo half never run — and updating there would be a first install under a word that promises otherwise. It exits non-zero and names `reflow2 init`.\n\nOWNS ONE OF TWO UPDATE SURFACES AND SAYS SO. Purely local; never downloads. Updating the binary remains the installer's job, and this command reports when it is behind rather than doing it.",
+        "name": "A project already set up is brought forward by one word, and a project that was never set up is told so instead",
         "provenance": "authored",
         "status": "realized"
       }
@@ -70682,6 +70788,14 @@
       }
     },
     {
+      "node_id": "chg:update-is-one-word",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "reflow2 update ships as its own subcommand, refusing a project with no install receipt and stating that it never downloads"
+      }
+    },
+    {
       "node_id": "chg:user-is-still-the-reminder",
       "node_type": "ChangeEvent",
       "properties": {
@@ -72313,6 +72427,16 @@
       }
     },
     {
+      "node_id": "dec:idea-a-generated-explainer-for-someone-new",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-14, in the same breath as settling the page and explicitly flagged as thinking out loud: *\"might even be fun to create/generate a small video explaining what reflow2 is for somebody new to it /brainstorm\"*.\n\nNothing here is intent. It is his idea and it is recorded so it is not lost, not so it is claimed.\n\nDISTINCT FROM the page decision on purpose: that one is SETTLED and covers what the page renders. This is an unsettled question about a different artefact, in a different medium, with a different failure mode. Folding it in would have made a decided node read as half-decided.\n\n═══ ⭐ WHY IT IS BETTER THAN \"A NICE EXTRA\", AND WORTH KEEPING EVEN IF DECLINED ═══\n\nIt plausibly answers the cost he accepted one sentence earlier. `dec:idea-what-is-on-reflow2s-public-page` rules that the page carries ONLY renderings, which means **it cannot carry a hand-written \"here is what reflow2 is\"** — so a newcomer meets a systems-engineering view before knowing what they are looking at. **An explainer is the orientation the ruling removed.** That is not why he suggested it, and the connection is recorded as an observation rather than attributed to him.\n\n═══ ⚠️ THE TENSION, RECORDED BESIDE THE IDEA RATHER THAN AGAINST IT ═══\n\n**A video is the least renderable artefact there is.** The page's whole claim is that its contents come out of the graph and are periodically refreshed. A video is hand-made, expensive to remake, and therefore **the one thing on that page guaranteed to go stale** — and it would sit there asserting, by adjacency, the same provenance as the renderings around it. That is the exact failure `dec:idea-outward-docs-are-rendered-from-the-graph` was opened about, in the medium where it is hardest to fix.\n\n⇒ Not an argument against it. An argument that **if it ships, it must be visibly a different KIND of thing from the renderings** — or the renderings' credibility pays for it.\n\nOPTIONS, NONE CHOSEN.\n(a) **A HAND-MADE VIDEO.** Best quality, highest staleness cost, remade by hand every time reflow2 moves.\n(b) **A GENERATED WALKTHROUGH DRIVEN BY THE GRAPH** — a scripted tour whose narration and visuals are projected from the same source as the views, so it re-renders with them. Closest to the page's own doctrine; unclear that the tooling exists.\n(c) **NOT A VIDEO — AN ANIMATED OR INTERACTIVE RENDERING.** The loop, drawn from the graph and stepped through. `docs/loop-dag.html` already exists as a rendered page and is the nearest thing to a starting point. Keeps the only-renderings rule intact.\n(d) **NOTHING, AND LET THE CONFESSIONS DO THE TALKING.** The page's honesty is the pitch; a newcomer who does not get it was not the audience. Cheapest, and consistent — at the cost of the orientation gap being real.\n\n📌 NOT ASSESSED: whether anything in reach can actually generate (b). Nothing in reflow2 renders video, and no attempt was made to find out — recording the idea is not the same as scoping it.\n\n⇒ SEQUENCED AFTER THE RELEASE, like the page. Nothing here is started.",
+        "name": "OPEN — a short generated video explaining reflow2 to someone new, and the tension that it is the one thing on the page that cannot be rendered from the graph",
+        "rationale": "Recorded under the brainstorm skill because he marked it as one. The skill's rule is followed exactly: the idea is not argued down, and the objection — that a video is the one artefact on that page which cannot be re-rendered — is recorded BESIDE it as an option-shaping constraint rather than used to dismiss it. An idea killed in conversation loses its reasoning; recorded with its objection, it keeps both.\n\nSplit from the page decision rather than appended to it, per the skill's rule that several unrelated questions mean several Decisions — and because that one is now settled, so anything unsettled living inside it would make a ruling look tentative.\n\nThe connection to the orientation gap is the one thing here he did not say. It is attributed as an observation, not to him, so a later reader can tell his idea from the reason it might matter.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-a-hosted-tier-of-many-single-writer-tenants",
       "node_type": "Decision",
       "properties": {
@@ -73239,6 +73363,16 @@
         "name": "IDEA — an agent about to edit a file can ask what the design already decided about it, without guessing search terms",
         "rationale": "RECORDED UNDER ANTHONY'S 2026-08-08 TEST PROTOCOL: run a task as if reflow2 did not exist, then run it leaning on reflow2, compare, and propose what would have helped. His stated aim, quoted so it is not lost: he is NOT trying to change how the agent functions, but to make available skills/tools that make the agent's job easier and better. This idea is scoped to that.\\n\\nTHE EVIDENCE IS TWO FIXES DONE THE SAME DAY, WITH DIFFERENT AMOUNTS OF REFLOW2.\\n\\n(1) THE DUPLICATES/MERGE FIX — reflow2 CHANGED THE OUTCOME, and the whole difference was one call. dev_storyflow reported merge candidates scoring 81-85 on unrelated nodes. Read as a code problem, the obvious fix is 'the scorer is bad, raise the threshold' — a plausible, shippable, WRONG fix. A `search_design` for 'duplicate merge similarity' returned `dec:ask-not-repair` as the top hit, and that decision reframed the entire task: possible_duplicate is a DETECT gap, HEAL merges only on a human-drawn edge, a heuristic must not drive it. The bug was not a bad threshold; it was an ACCEPTED DECISION DEFEATED BY THE BUILD, and the correct fix (mark the edge's basis, re-route suspicions to the gap layer) is not reachable from the code alone. Without reflow2 this session ships a threshold bump and the design stays quietly violated.\\n\\n(2) THE CLAIM-LIVENESS FIX — reflow2 helped at the FRAMING and not at all at the SOLUTION. The graph supplied the finding that mattered (`cap:claim-liveness` was status `verified` while its central claim was false under `--shared`) and `propagate_change` named exactly what to touch, including three Verifications that would be invalidated. But the fix itself — an RAII seat lease, and then a two-set registry after the first design proved unsafe — came entirely from reading code and from a FAILING TEST. No reflow2 detector had anything to say about it. Worth stating plainly rather than overclaiming: the two-set flaw was caught by `cargo test`, not by the design brain.\\n\\nTHE GENERALISATION, and it is the actionable part: REFLOW2'S LEVERAGE IS AT PROBLEM FRAMING AND BLAST RADIUS, NOT AT SOLUTION DESIGN. That is not a weakness — it is where a design brain SHOULD have leverage, and it argues for investing there rather than trying to help write the patch.\\n\\nSO WHAT IS MISSING, CONCRETELY: in case (1) the decision was found because a lucky choice of search words hit it. `search_design` is BM25 over node text, so the agent must already suspect what it is looking for. AN AGENT ABOUT TO EDIT `crates/reflow2-core/src/heal.rs` SHOULD BE ABLE TO ASK WHAT GOVERNS THAT FILE AND BE TOLD `dec:ask-not-repair`, WITHOUT KNOWING THE WORD 'DUPLICATE'. The graph already holds every hop needed: `art:heal` REALIZES `cap:heal`, which is GOVERNED_BY the decisions that constrain it, SATISFIES the requirements behind it, and is VERIFIED by the checks that would break. That is a traversal from a path to its governing intent, and today there is no tool for it — `propagate_change` is the closest but needs a recorded ChangeEvent and answers 'what does this touch', not 'what was already decided here'.\\n\\nWHY THIS FITS THE STATED AIM: it changes nothing about how the agent works. It is a lookup the agent chooses to make at the moment it is already opening a file, and it answers the one question a stateless agent cannot answer for itself and does not know to ask.\\n\\nCANDIDATE SHAPES, none chosen: (a) a `governs` tool taking a path or symbol, returning Decisions/Requirements/Constraints/Verifications reachable from the Artifact at that location, ranked by hop distance; (b) the same as a skill that runs before an edit, the read-side sibling of impact-check; (c) cheapest of all and worth pricing first — have `link_artifact`/`reconcile_artifacts` responses already carry the governing decisions for the artifact named, since the traversal is the same and the agent is already there.\\n\\nOPEN QUESTIONS THIS DOES NOT SETTLE: whether path-level granularity is enough (a 1,700-line file may be governed by decisions relevant to only one of its functions); whether an unregistered file — one with no Artifact — should answer 'nothing governs this' or 'this file is not in the design', which are very different statements and the second is the honest one; and whether ranking by hop distance is meaningful or merely plausible.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-what-is-on-reflow2s-public-page",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "✅ **DECIDED 2026-08-14 ON ANTHONY'S WORD — OPTION (b), AND NARROWER THAN (b) WAS WRITTEN.**\n\nHIS WORDS: *\"for the pages, I'd like to only use renderings of systems engineering views the agent generates from graph content of reflow2 itself. I'd like to have some cutting edge rendering (that we periodically update) to show that contents come from the graph and that with a good agent, you can create some pretty awesome views.\"*\n\n⇒ **ONLY renderings. Not \"mostly\", not \"landing page plus renderings\" — (a) and (c) are both declined.** The page is a DEMONSTRATION, and its subject is its own provenance: it exists to show that the content came out of the graph and that a capable agent can render it well.\n\n⭐⭐ **THAT PURPOSE SETS A HARDER HONESTY STANDARD THAN DOCUMENTATION, and it is the reason this is worth stating rather than just building.** A doc that drifts is stale. **A page whose entire claim is \"this came from the graph\" is FALSIFIED by one hand-written fact.** So `render_views.py`'s existing doctrine is not a nicety here, it is the product: *\"it may only emit what the graph states… anything a viewpoint NEEDS but the graph cannot supply goes on the CONFESSIONS list.\"* The confessions are not a blemish on the demo — **they are the strongest evidence the rest is real.**\n\n⚠️ **THE COST HE ACCEPTED, STATED PLAINLY: A NEWCOMER LANDS ON SYSTEMS-ENGINEERING VIEWS WITH NO ORIENTATION.** \"Only renderings\" means the page cannot carry a hand-written *\"reflow2 is a persistent design brain…\"* paragraph. Someone arriving cold meets a functional view before they know what they are looking at. **His own next sentence is plausibly the answer to this — see `dec:idea-a-generated-explainer-for-someone-new` — and that connection is recorded rather than assumed.**\n\n⚠️ **\"PERIODICALLY UPDATE\" CARRIES A KNOWN COST, ALREADY MEASURED HERE.** `chg:impact-propagation-is-rendered-not-written`: a re-render churns wording, so the diff is noisy and *\"drift here will need reading as 're-rendered', not as 'the design moved'\"*. A page refreshed on a schedule will do this every time. Worth deciding once whether the refresh is committed output (noisy diffs, reviewable) or an Actions deploy that never commits (clean repo, unreviewable) — which is the placement question below, now materially easier because **nothing on the page is hand-written, so nothing is lost by not committing it.**\n\n═══ WHAT STAYS OPEN, DELIBERATELY ═══\n\n· **WHICH views.** `docs/viewpoints.md` holds the catalogue and `render_views.py` renders several; which of them belong on a public page, and in what order, is unanswered.\n· **WHAT \"cutting edge rendering\" means.** He asked for it and did not specify. Not inferred.\n· **PLACEMENT.** `index.html` at the repo root was his sketch, prefaced *\"something like this\"*. This root is a Rust workspace; `/docs` already exists and already holds `loop-dag.html`; an Actions deploy commits nothing. **The ruling above makes the Actions route cheaper than it was**, but it is not chosen here.\n· **REFRESH CADENCE.** \"Periodically\" is not a schedule.\n\n📌 STILL NOT ASKED AND STILL NOT ASSUMED: whether this is reflow2's own design published, or a template a CONSUMER could use for theirs. His wording — *\"from graph content of reflow2 itself\"* — answers it for THIS page and says nothing about the general case.\n\n════════ THE OPTIONS AS PUT TO HIM, KEPT ════════\n\n**(a) A LANDING PAGE** — hand-written, an afternoon, and every other tool has one. **DECLINED.** It goes stale the way `dec:idea-outward-docs-are-rendered-from-the-graph` was opened about, and this project has been bitten: a doc presented eight impact kinds never implemented and referenced an edge type retired five days before it was written.\n\n**(b) ⭐ THE DESIGN GRAPH, RENDERED — CHOSEN**, and narrowed to *only* this.\n\n**(c) BOTH, LAYERED** — **DECLINED**, which also declines the shape `dec:idea-which-docs-can-never-be-a-projection` is open about. ⚠️ That decision stays open for the rest of reflow2's outward docs; this ruling covers the PAGE only, and does not settle it generally.",
+        "name": "DECIDED — the public page carries ONLY renderings the agent generates from reflow2's own graph; the page is the evidence for its own claim",
+        "rationale": "Captured under capture-intent rather than built, because he sequenced it explicitly (\"post release\") and because the one thing that decides the size of the work — what is on the page — is the one thing he did not say.\n\nThe mechanism he described is recorded as a SKETCH rather than a specification, on his own framing of \"something like this\". Transcribing `index.html` at the root into a requirement would have converted an illustration into a commitment, in a repository whose root is a cargo workspace.\n\nRecorded as its own node rather than folded into the requirement because it reaches two decisions that were already open before he asked — outward docs as projections, and which docs can never be one — and a question connecting three threads deserves to be findable from all of them. The near-duplicate guard fired on the requirement and was right to: they are the same subject, and saying so on the record is cheaper than a reader later wondering whether one supersedes the other.",
+        "status": "accepted"
       }
     },
     {
@@ -76122,6 +76256,16 @@
         "name": "Tiering and proportion — vertical linking, and whether a design's breadth and depth can be measured without inventing an ideal ratio",
         "sequence": 329,
         "status": "planned"
+      }
+    },
+    {
+      "node_id": "epoch:update-is-one-word",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "The update half of req:frictionless-update lands — a project already set up is brought forward by one word, and the mechanism that already existed stops hiding behind a word that says \"start\"",
+        "sequence": 333,
+        "status": "arrived"
       }
     },
     {
@@ -81650,6 +81794,18 @@
       }
     },
     {
+      "node_id": "req:reflow2-has-a-public-page-anyone-can-read",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "Someone can read what reflow2 is on the open web, without cloning it or installing anything",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "ANTHONY, 2026-08-14, sequenced explicitly AFTER the next release: *\"post release, i'd like to do something like this for: To show your repository's HTML files on a live web page like username.github.io, use GitHub Pages.\"*\n\nWHAT IS ASKED FOR, stated only as far as he stated it: reflow2's repository publishes a live web page on GitHub Pages, reachable at a public URL, so a reader meets the project without cloning the repo, installing the binary, or running an agent. Today every description of reflow2 lives in files you must already have checked out.\n\nHE SUPPLIED A MECHANISM SKETCH AND IT IS NOT TAKEN AS SETTLED, because he prefaced it with \"something like this\": `index.html` at the repository root, Pages configured to deploy from a branch (`main`, folder `/root`). ⚠️ THE ROOT PLACEMENT IS THE PART TO RE-EXAMINE RATHER THAN IMPLEMENT — this repository's root is a Rust workspace (`Cargo.toml`, `crates/`), and GitHub Pages also serves from `/docs` or from an Actions deploy, both of which keep generated HTML out of the build root. Which mechanism is right is a decision, not a transcription.\n\n📌 ALREADY PRESENT AND WORTH KNOWING BEFORE ANYTHING IS BUILT: `docs/loop-dag.html` is the repo's one existing HTML page, and `tools/render_views.py` already renders design viewpoints as pure projections with a CONFESSIONS list for anything the graph cannot supply.\n\n⚠️ WHAT THE PAGE SHOWS IS NOT STATED AND IS NOT INFERRED HERE. That question is `dec:idea-what-is-on-reflow2s-public-page`, and it is the one that decides how much work this is.\n\nStatus stays `proposed`: this is his word about wanting it, and the wording is not yet confirmed.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:released-eq-designed",
       "node_type": "Requirement",
       "properties": {
@@ -87171,6 +87327,18 @@
       }
     },
     {
+      "node_id": "ver:update-is-its-own-word",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-14",
+        "level": "integration",
+        "method": "test",
+        "name": "`reflow2 update` keeps its word distinct from `init`: a project carrying an install receipt may be updated; a project that was never set up is REFUSED and told to run `reflow2 init`; a project holding a DESIGN but no kit is refused too and told WHY (machine-wide install, in-repo half never run) rather than silently receiving a first install; and the shipped wrapper both dispatches `--update` and states that it never downloads, so nobody expects a new binary from it (tools/test_init.py, 4 cases, 100 in the file). Pins the DISTINCTION, not the refresh — the refresh is `install` and every other case in the file covers it. MUTATION-CHECKED THREE WAYS: accepting any directory kills two cases, dropping the design-without-kit branch kills exactly the one that names it, and dispatching `update` as a plain `init` kills the wrapper case. All refusals exit 1, verified by running them.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:views-suite",
       "node_type": "Verification",
       "properties": {
@@ -87205,7 +87373,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:46af582a6c6d9c3c0775628009c3105bc01b73f3d7926c5ec505bf75cf4467e7",
+  "prev_content_hash": "sha256:1da99760ae55070e5bb23c6ae59f3bb304f95fec5971379b81d42599a091450a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

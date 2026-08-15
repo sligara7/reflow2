@@ -33,6 +33,46 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **`reflow2 update` — the second half of "install is one command, update is one word"**
+  (`req:frictionless-update`, accepted 2026-07-20, its update half unbuilt until now).
+
+  Anthony, 2026-08-14: *"do we have a 'reflow2 update' cli command yet? ... is there one to update
+  a project graph? like cd to a reflow2 project repo, then run something ... to bring it up to
+  current version installed on machine."*
+
+  **Measured before building: the mechanism already existed and was unreachable by name.**
+  `reflow2 init <dir>` has always refreshed a project's kit — reads the receipt, rewrites what
+  moved, keeps your edits. Run against `dynograph-foundation` it reported *"installed from reflow2
+  0.16.0 / now at reflow2 0.30.0"* and named 16 changes. **Nobody types `init` at a project that is
+  already initialised**, so the capability sat behind a word that says the opposite.
+
+  ```bash
+  cd my-project
+  reflow2 update --check     # what would change; writes nothing
+  reflow2 update             # bring this project forward
+  ```
+
+  **IT REFUSES RATHER THAN QUIETLY DOING A FIRST INSTALL**, and the case that forced the guard is
+  the ordinary one: a project can hold a *design* and no kit — that is exactly
+  `dec:install-once-per-machine`, reflow2 registered machine-wide with the in-repo half never run.
+  Updating there would perform a first install under a word promising to bring something forward,
+  so it exits 1 and names `reflow2 init`. **Absence of a kit is not staleness.** The install
+  receipt (`.reflow2/kit-version.json`) is the test, because it is the one honest signal that
+  there is a prior install to carry.
+
+  ⚠️ **TWO SURFACES, AND THIS COMMAND OWNS ONE.** `reflow2 update` is purely local and **never
+  downloads anything** — it brings a project up to the reflow2 already on the machine. Updating
+  reflow2 *itself* still means re-running the installer. The command *reports* when the binary is
+  behind and refuses to do it for you; the help text and
+  [UPDATING.md](getting-started/UPDATING.md) both say so, because conflating the two is the
+  confusion `fact:updating-reflow2-does-not-update-a-project-already-set-up` records.
+
+  4 tests in `tools/test_init.py` (100 in the file), pinning the **distinction** rather than the
+  refresh — the refresh is `install` and every other case covers it; what would rot first is the
+  two words meaning different things. Mutation-checked three ways: accepting any directory kills
+  two, dropping the design-without-kit branch kills the one that names it, and dispatching
+  `update` as a plain `init` kills the wrapper case.
+
 - **The vocabulary now says where abandonment actually lives** — two descriptions, no schema move
   (the discoverability half of `dec:idea-does-a-capability-need-a-cancelled-state`; the mechanism
   itself was already decided at `dec:idea-discontinued-is-a-first-class-state`, 2026-08-11).

@@ -375,6 +375,7 @@ KIT="{kit}"
 BIN="{binary}"
 case "${{1:-}}" in
   init)      shift; exec python3 "$KIT/../tools/reflow2_init.py" --binary "$BIN" "$@" ;;
+  update)    shift; exec python3 "$KIT/../tools/reflow2_init.py" --binary "$BIN" --update "$@" ;;
   install)   shift; exec python3 "$KIT/../tools/reflow2_install.py" --binary "$BIN" "$@" ;;
   check)     shift; exec python3 "$KIT/../tools/reflow2_check.py" "$@" ;;
   ""|help|-h|--help)
@@ -383,9 +384,17 @@ reflow2 — a persistent design brain for building things with an AI agent.
 
   reflow2 install       install machine-wide (every project, no per-project setup)
   reflow2 init <dir>    set up ONE repo to carry its design (for a project you share)
+  reflow2 update        bring THIS project's reflow2 files up to the version
+                        installed on this machine  (--check to preview)
   reflow2 check         run the design gate against the committed export
 
 Anything else is passed to reflow2-mcp: reflow2 --version, reflow2 --export, ...
+
+TWO THINGS CAN BE OUT OF DATE, and one command does not do both.
+`reflow2 update` refreshes THIS PROJECT against the reflow2 already installed
+here; it never downloads anything. To update reflow2 ITSELF, re-run the
+installer — `reflow2 update` says so when it notices the binary is behind.
+Your design graph is never touched by either.
 
 Once installed, start a design by opening your agent in any directory and
 running /genesis (new project) or /adopt (code that already exists).

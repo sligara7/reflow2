@@ -1387,6 +1387,46 @@ def why_gone(rel: str) -> str:
             if is_skill_path(rel) else "no longer shipped by the kit")
 
 
+def why_not_an_update(project: Path) -> str | None:
+    """Why `reflow2 update` must not run here — `None` when it may.
+
+    UPDATE AND INIT ARE DIFFERENT ACTS, AND KEEPING THE WORDS DISTINCT IS THE
+    WHOLE VALUE OF ADDING THE SECOND ONE. `reflow2 init` was already the
+    command that refreshes a project's kit — it re-reads the stamp, rewrites
+    what moved and leaves your edits alone — but nobody types "init" at a
+    project that is already initialised, so the mechanism existed and was
+    unreachable by name (`fact:updating-reflow2-does-not-update-a-project-
+    already-set-up`: two update surfaces, one update command, and a project
+    already set up served by nothing).
+
+    THE RECEIPT IS THE TEST. `.reflow2/kit-version.json` is written by an
+    install and records which kit wrote it, so its presence is the one honest
+    signal that there is a prior install to bring forward. Anything else would
+    be guessing.
+
+    THE CASE WORTH REFUSING LOUDLY IS THE SECOND ONE. A project can hold a
+    DESIGN and no kit — that is the ordinary shape of `dec:install-once-per-
+    machine`, where reflow2 is registered machine-wide and the in-repo half is
+    optional. Running an update there would silently perform a FIRST install
+    under a word that promises to bring something forward, so it is refused and
+    the right command is named. Absence of a kit is not staleness.
+    """
+    if (project / STAMP).exists():
+        return None
+    if (project / ".reflow2").exists():
+        return (
+            f"{project} carries a design but no installed kit — reflow2 is "
+            "registered machine-wide and this project was never set up in "
+            "itself.\n"
+            "  There is nothing here to bring forward; that is a first "
+            f"install:\n      reflow2 init {project}"
+        )
+    return (
+        f"{project} has no reflow2 setup to update.\n"
+        f"  Set it up first:\n      reflow2 init {project}"
+    )
+
+
 def installed_manifest(project: Path) -> dict:
     """What the last install wrote, rel path -> sha256.
 
@@ -1566,7 +1606,14 @@ def main() -> int:
     ap = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
-    ap.add_argument("project", help="the project directory (created if absent)")
+    ap.add_argument("project", nargs="?",
+                    help="the project directory (created if absent). Optional "
+                         "with --update, which defaults to the current one")
+    ap.add_argument("--update", action="store_true",
+                    help="bring a project ALREADY set up forward to this "
+                         "machine's reflow2. Refuses a project with no install "
+                         "receipt rather than performing a first install under "
+                         "a word that promises otherwise")
     ap.add_argument("--check", action="store_true",
                     help="report what would change; write nothing")
     ap.add_argument("--force-mcp", action="store_true",
@@ -1584,7 +1631,20 @@ def main() -> int:
                          "Pass it on a re-run to add a harness.")
     opts = ap.parse_args()
 
+    if opts.project is None:
+        if not opts.update:
+            # `init` has always named its target, and defaulting it to the cwd
+            # would make a mistyped command create a kit wherever you happened
+            # to be standing. `update` may default because it refuses to act on
+            # a project that has no receipt.
+            print("error: which directory? (reflow2 init <dir>)", file=sys.stderr)
+            return 1
+        opts.project = "."
+
     project = Path(opts.project).expanduser().resolve()
+    if opts.update and (why := why_not_an_update(project)):
+        print(f"error: {why}", file=sys.stderr)
+        return 1
     if not KIT.exists():
         print(f"error: kit not found at {KIT}", file=sys.stderr)
         return 1
