@@ -299,11 +299,9 @@ pub(crate) fn revision_of(prior: Option<&StoredNode>, now: &NodeDto) -> Option<R
 
     let changed = !replaced.is_empty() || !added.is_empty();
     let note = if replaced.is_empty() && changed {
-        "This call added properties to an existing node and overwrote nothing."
-            .to_string()
+        "This call added properties to an existing node and overwrote nothing.".to_string()
     } else if !changed {
-        "This node already held exactly what this call passed; nothing moved."
-            .to_string()
+        "This node already held exactly what this call passed; nothing moved.".to_string()
     } else {
         format!(
             "This call REPLACED {} propert{} on a node that already existed. The prior \

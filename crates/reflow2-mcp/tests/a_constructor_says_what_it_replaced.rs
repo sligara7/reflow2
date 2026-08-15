@@ -186,7 +186,9 @@ async fn a_revision_that_changed_nothing_says_so() {
     j!(s.add_requirement(Parameters(call())));
     let out = j!(s.add_requirement(Parameters(call())));
 
-    let rev = out.get("revision").expect("a no-op revision is still a revision");
+    let rev = out
+        .get("revision")
+        .expect("a no-op revision is still a revision");
     assert_eq!(
         rev.get("changed"),
         Some(&JsonValue::Bool(false)),
