@@ -207,11 +207,138 @@ pub(crate) fn search_first(
     })
 }
 
-/// Attach a `search_first` block to a capture result, when there is one.
-pub(crate) fn with_search_first<T: serde::Serialize>(
+/// One property this call overwrote, and what it said before.
+///
+/// **The prior value is echoed in full, deliberately.** A hash tells a caller
+/// that something was lost; only the value lets them put it back. The whole
+/// reason this block exists is that the prior text was unrecoverable — a
+/// summary would reproduce the failure it is meant to end.
+#[derive(serde::Serialize)]
+pub(crate) struct ReplacedField {
+    field: String,
+    prior: JsonValue,
+}
+
+/// What a constructor call did to a node that was ALREADY THERE.
+///
+/// # Why this exists
+///
+/// `search_first` deliberately goes quiet on a revision (see its docs: a node's
+/// resemblance to itself is noise). Nothing filled that silence, so a merge onto
+/// an existing id and a fresh create returned **the same shape** — no signal that
+/// anything was replaced, and no prior value.
+///
+/// Reported four times by three agents across two versions and three projects
+/// before this was written: `add_constraint` twice on one id overwrote a
+/// multi-paragraph statement ("I lost the prior text and could not honestly
+/// reconstruct it"); a `record_change` snapshot taken after a sibling merge
+/// stored the NEW statement as the prior one ("the timeline for that revision is
+/// a lie"); an accepted Decision was widened from a debugging hypothesis and the
+/// user had to walk it back; and a malformed payload replaced a Decision's text
+/// while replying exactly like a create. Every one of those was caught — when it
+/// was caught at all — by an agent reading the echoed properties by hand.
+///
+/// # What it never does
+///
+/// It never refuses and never rolls back. Re-calling a constructor to sharpen a
+/// node is CORRECT and is what `revise-design` tells you to do; the merge is not
+/// the defect. Saying nothing about it is. So this reports and the caller
+/// decides, which is `dec:three-party-checks` — the same posture as
+/// `search_first` next to it.
+#[derive(serde::Serialize)]
+pub(crate) struct Revision {
+    /// Properties whose value this call CHANGED, with what they said before.
+    /// Empty with `changed: false` means the call rewrote the node with what it
+    /// already held.
+    replaced: Vec<ReplacedField>,
+    /// Properties this call introduced. Additive, nothing lost — separated from
+    /// `replaced` because conflating them would make every ordinary enrichment
+    /// look like an overwrite.
+    added: Vec<String>,
+    /// Whether this call changed anything at all. A revision that changed
+    /// nothing and one that replaced a paragraph are currently the same reply,
+    /// which is the `wrote nothing` / `wrote something` ambiguity reported
+    /// against `export_graph` in the same week.
+    changed: bool,
+    /// sha256 over the node's properties as they stood BEFORE this call,
+    /// canonically serialised. Lets a caller prove a restore landed.
+    prior_content_hash: String,
+    note: String,
+}
+
+/// Canonical sha256 of a property map — keys sorted, compact separators, so the
+/// same properties always hash the same regardless of map ordering.
+fn properties_hash(props: &HashMap<String, Value>) -> String {
+    use sha2::{Digest, Sha256};
+    let ordered: std::collections::BTreeMap<&String, &Value> = props.iter().collect();
+    let text = serde_json::to_string(&ordered).unwrap_or_default();
+    format!("sha256:{:x}", Sha256::digest(text.as_bytes()))
+}
+
+/// Compare what a node held before a constructor call against what it holds
+/// now. `None` when there was no prior node — a create has nothing to report,
+/// and a block present and empty on every create is the noise `search_first`
+/// already refuses to become.
+pub(crate) fn revision_of(prior: Option<&StoredNode>, now: &NodeDto) -> Option<Revision> {
+    let prior = prior?;
+    let mut replaced = Vec::new();
+    let mut added: Vec<String> = Vec::new();
+
+    for (key, new_value) in &now.properties {
+        match prior.properties.get(key) {
+            Some(old) if old != new_value => replaced.push(ReplacedField {
+                field: key.clone(),
+                prior: serde_json::to_value(old).unwrap_or(JsonValue::Null),
+            }),
+            Some(_) => {}
+            None => added.push(key.clone()),
+        }
+    }
+    replaced.sort_by(|a, b| a.field.cmp(&b.field));
+    added.sort();
+
+    let changed = !replaced.is_empty() || !added.is_empty();
+    let note = if replaced.is_empty() && changed {
+        "This call added properties to an existing node and overwrote nothing.".to_string()
+    } else if !changed {
+        "This node already held exactly what this call passed; nothing moved.".to_string()
+    } else {
+        format!(
+            "This call REPLACED {} propert{} on a node that already existed. The prior \
+             value{} above {} the only copy this reply carries — reflow2 has not stored {} \
+             anywhere else. If the replacement was intended, `record_change` BEFORE the \
+             merge is what puts the old state in the design's own timeline; called after, \
+             it snapshots the replacement and the history is wrong.",
+            replaced.len(),
+            if replaced.len() == 1 { "y" } else { "ies" },
+            if replaced.len() == 1 { "" } else { "s" },
+            if replaced.len() == 1 { "is" } else { "are" },
+            if replaced.len() == 1 { "it" } else { "them" },
+        )
+    };
+
+    Some(Revision {
+        replaced,
+        added,
+        changed,
+        prior_content_hash: properties_hash(&prior.properties),
+        note,
+    })
+}
+
+/// Attach the advisory blocks a capture result carries — `search_first` when a
+/// create resembles something already there, `revision` when the call landed on
+/// a node that already existed.
+///
+/// The two are mutually exclusive by construction and that is the design:
+/// `search_first` answers *should this be a new node at all*, `revision`
+/// answers *what did writing it cost*. A create can only face the first
+/// question and a revision can only face the second.
+pub(crate) fn with_capture_notes<T: serde::Serialize>(
     value: T,
     hint: &str,
     found: Option<SearchFirst>,
+    revision: Option<Revision>,
 ) -> Result<CallToolResult, McpError> {
     let mut v = serde_json::to_value(value).map_err(ser_err)?;
     if let Some(obj) = v.as_object_mut() {
@@ -226,6 +353,16 @@ pub(crate) fn with_search_first<T: serde::Serialize>(
                     serde_json::to_value(sf).map_err(ser_err)?,
                 );
             }
+        }
+        if let Some(rev) = revision {
+            // Always emitted on a revision, INCLUDING when nothing changed.
+            // "Your merge was a no-op" is exactly as worth knowing as "your
+            // merge replaced a paragraph", and the two are indistinguishable
+            // without it.
+            obj.insert(
+                "revision".into(),
+                serde_json::to_value(rev).map_err(ser_err)?,
+            );
         }
     }
     ok_json(v)
@@ -366,7 +503,8 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await;
         let node_ty = reflow2_core::nodes::node::REQUIREMENT;
-        let existed = g.get_node(node_ty, &req.id).map_err(dyno_err)?.is_some();
+        let prior = g.get_node(node_ty, &req.id).map_err(dyno_err)?;
+        let existed = prior.is_some();
         let node = NodeDto::from(
             g.add_requirement(&req.id, &req.name, &req.statement)
                 .map_err(dyno_err)?,
@@ -387,11 +525,13 @@ impl ReflowService {
             }
             return Err(e);
         }
-        with_search_first(
+        let revision = revision_of(prior.as_ref(), &node);
+        with_capture_notes(
             node,
             "loop: when this capture batch lands, run detect_gaps (detect-and-ask) — \
              loop_status says what's owed",
             found,
+            revision,
         )
     }
 
@@ -411,7 +551,8 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await;
         let node_ty = reflow2_core::nodes::node::CAPABILITY;
-        let existed = g.get_node(node_ty, &req.id).map_err(dyno_err)?.is_some();
+        let prior = g.get_node(node_ty, &req.id).map_err(dyno_err)?;
+        let existed = prior.is_some();
         let node = NodeDto::from(
             g.add_capability(&req.id, &req.name, &req.description, req.status.as_deref())
                 .map_err(dyno_err)?,
@@ -432,11 +573,13 @@ impl ReflowService {
             }
             return Err(e);
         }
-        with_search_first(
+        let revision = revision_of(prior.as_ref(), &node);
+        with_capture_notes(
             node,
             "loop: wire satisfies to the requirement this serves, then run detect_gaps when \
              the capture batch lands (detect-and-ask)",
             found,
+            revision,
         )
     }
 
@@ -538,7 +681,8 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await;
         let node_ty = reflow2_core::nodes::node::COMPONENT;
-        let existed = g.get_node(node_ty, &req.id).map_err(dyno_err)?.is_some();
+        let prior = g.get_node(node_ty, &req.id).map_err(dyno_err)?;
+        let existed = prior.is_some();
         let node = NodeDto::from(
             g.add_component(&req.id, &req.name, &req.description, req.level.as_deref())
                 .map_err(dyno_err)?,
@@ -559,10 +703,12 @@ impl ReflowService {
             }
             return Err(e);
         }
-        with_search_first(
+        let revision = revision_of(prior.as_ref(), &node);
+        with_capture_notes(
             node,
             "loop: structural change — run detect_defects (check-health) when the batch lands",
             found,
+            revision,
         )
     }
 
@@ -673,14 +819,17 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await;
         let node_ty = reflow2_core::nodes::node::INTERFACE;
-        let existed = g.get_node(node_ty, &req.id).map_err(dyno_err)?.is_some();
+        let prior = g.get_node(node_ty, &req.id).map_err(dyno_err)?;
+        let existed = prior.is_some();
         let node = NodeDto::from(g.add_interface(&req.id, &req.name).map_err(dyno_err)?);
         let found = search_first(&g, &req.id, existed, &req.name);
-        with_search_first(
+        let revision = revision_of(prior.as_ref(), &node);
+        with_capture_notes(
             node,
             "loop: structural change — wire provides/consumes, then run detect_defects \
              (check-health) when the batch lands",
             found,
+            revision,
         )
     }
 
@@ -815,7 +964,8 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await;
         let node_ty = reflow2_core::nodes::node::CONSTRAINT;
-        let existed = g.get_node(node_ty, &req.id).map_err(dyno_err)?.is_some();
+        let prior = g.get_node(node_ty, &req.id).map_err(dyno_err)?;
+        let existed = prior.is_some();
         let node = NodeDto::from(
             g.add_constraint(
                 &req.id,
@@ -835,10 +985,12 @@ impl ReflowService {
             existed,
             &format!("{} {}", req.name, req.statement),
         );
-        with_search_first(
+        let revision = revision_of(prior.as_ref(), &node);
+        with_capture_notes(
             node,
             "loop: a Constraint binds what it CONSTRAINS — wire it, then run detect_gaps",
             found,
+            revision,
         )
     }
 
@@ -957,7 +1109,8 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await;
         let node_ty = reflow2_core::nodes::node::DECISION;
-        let existed = g.get_node(node_ty, &req.id).map_err(dyno_err)?.is_some();
+        let prior = g.get_node(node_ty, &req.id).map_err(dyno_err)?;
+        let existed = prior.is_some();
         let node = NodeDto::from(
             g.add_decision(&req.id, &req.name, &req.decision, req.rationale.as_deref())
                 .map_err(dyno_err)?,
@@ -978,11 +1131,13 @@ impl ReflowService {
             }
             return Err(e);
         }
-        with_search_first(
+        let revision = revision_of(prior.as_ref(), &node);
+        with_capture_notes(
             node,
             "loop: a Decision lands `proposed` — only the owner's word moves it \
              (set_decision_status)",
             found,
+            revision,
         )
     }
 

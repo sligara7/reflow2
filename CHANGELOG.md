@@ -31,6 +31,42 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **A typed constructor that lands on an existing node says what it replaced** — a new
+  `revision` block on `add_requirement`, `add_capability`, `add_component`, `add_interface`,
+  `add_constraint` and `add_decision`. It carries the properties the call overwrote **with their
+  prior values in full**, the properties it added, a `changed` flag, and a `prior_content_hash`.
+
+  Constructors merge (BL-183) and `search_first` deliberately goes quiet on a revision, because a
+  node's resemblance to itself is noise. **Nothing filled that silence**: a merge onto an existing
+  id and a fresh create returned the same shape, with no signal that anything was replaced and no
+  prior value. Reported **four times, by three agents, across two versions and three projects** —
+  `add_constraint` twice on one id overwrote a multi-paragraph statement (*"could not honestly
+  reconstruct it"*); a `record_change` snapshot taken after a sibling merge stored the NEW
+  statement as the prior one (*"the timeline for that revision is a lie"*); an `accepted` Decision
+  was widened from a debugging hypothesis and the user had to walk it back; and a malformed
+  payload replaced a Decision's text while replying exactly like a create.
+
+  **The prior value is echoed in full, not hashed.** A hash says something was lost; only the
+  value puts it back, and being unrecoverable was the whole complaint. The `note` names the
+  ordering that makes `record_change` honest — snapshot BEFORE the merge, because afterwards it
+  files the replacement as the prior state.
+
+  **It never refuses and never rolls back.** Re-calling a constructor to sharpen a node is what
+  `revise-design` tells you to do; the merge is not the defect, the silence was. Reports, and the
+  caller decides — `dec:three-party-checks`, the same posture as `search_first` beside it.
+
+  Emitted on a revision even when **nothing changed** (`changed: false`), because "my merge was a
+  no-op" and "my merge replaced a paragraph" are otherwise the same reply — the same ambiguity
+  reported against `export_graph` in the same week.
+
+  **The served surface is unchanged: all 149 toolsnaps match.** Toolsnaps pin input schemas, and
+  this adds only a reply field, so nothing across the seam had to move. `sha2` is now a declared
+  dependency of `reflow2-mcp` rather than an implied one (already in the lock via `reflow2-core`);
+  zero new crates compile. Mutation-checked: reading the prior value from the node AFTER the write
+  — precisely the reported defect — fails 4 of the 6 new checks.
+
 ## [0.31.0] — 2026-08-15
 
 ### Added
