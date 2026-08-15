@@ -73,7 +73,6 @@ RUN chmod 0755 /usr/local/bin/reflow2-mcp
 #   /data/graphs/<design>/graph.id.json    identity  ┐ SIDECARS — these live
 #   /data/graphs/<design>/graph.meta.json  version   │ BESIDE the store, not
 #   /data/graphs/<design>/graph.sync.json  sync      ┘ inside it
-#   /data/content                          the content-addressed blob store
 #
 # ⚠️ THE SIDECARS ARE NOT OPTIONAL AND NOT SEPARABLE. A store opened without the
 # identity sidecar it was created with finds nothing and PRESENTS AS AN EMPTY
@@ -86,11 +85,7 @@ RUN chmod 0755 /usr/local/bin/reflow2-mcp
 # unreliably — a lock that silently fails to exclude is how two processes end up
 # writing one store, which is the corruption the single-writer design exists to
 # prevent, and it fails with no error saying so.
-#
-# `--content-path` defaults to a directory inside the consumer's REPO, because
-# blobs are committed so they travel with the design. A hosted server has no
-# repo, so that default does not hold here and the path is set explicitly.
-RUN mkdir -p /data/graphs/default /data/content \
+RUN mkdir -p /data/graphs/default \
     && chown -R 1000:1000 /data
 VOLUME ["/data"]
 
@@ -99,7 +94,6 @@ WORKDIR /data
 EXPOSE 8080
 
 ENV REFLOW2_GRAPH_PATH=/data/graphs/default/graph \
-    REFLOW2_CONTENT_PATH=/data/content \
     REFLOW2_BIND=0.0.0.0:8080
 
 # ⭐ READINESS: "the port is listening" is an HONEST readiness signal here, and
@@ -128,9 +122,17 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
 # itself and was never designed to. Authorization is the job of the layer in
 # front; reflow2's only obligation is that a session bound to one design cannot
 # address another.
+#
+# ⚠️ EVERY FLAG HERE MUST EXIST IN THE BINARY THIS IMAGE COPIES IN. clap exits 2
+# on an unknown argument, so a flag removed from the CLI and left here is not a
+# warning — it is a container that never starts, and the HEALTHCHECK below cannot
+# tell you why because the process is gone before the port is bound. This
+# happened: v0.27.0 withdrew the content store and its `--content-path`, this
+# ENTRYPOINT kept passing it, and FIVE releases (v0.27.0 through v0.31.0) each
+# published an image that exits 2. Nothing caught it because `release.yml`
+# verifies the image is PULLABLE, not that it RUNS.
 ENTRYPOINT ["/bin/sh", "-c", "exec /usr/local/bin/reflow2-mcp \
   --graph-path \"$REFLOW2_GRAPH_PATH\" \
-  --content-path \"$REFLOW2_CONTENT_PATH\" \
   --http \"$REFLOW2_BIND\" \
   ${REFLOW2_ALLOW_HOST:+--http-allow-host \"$REFLOW2_ALLOW_HOST\"} \
   \"$@\"", "reflow2-mcp"]
