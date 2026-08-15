@@ -75,6 +75,13 @@ docker build --build-arg "BASE=${base}" --tag "reflow2-mcp:${tag}" .
 cat >&2 <<EOF
 docker/build.sh: built reflow2-mcp:${tag}
 
+NOW PROVE IT STARTS — building is not evidence it runs:
+
+  docker/smoke.sh reflow2-mcp:${tag}
+
+Five releases shipped an image that exited 2 on an ENTRYPOINT flag the binary
+no longer had. That takes ~3 seconds to catch here and a release to catch later.
+
 Remember the volume layout — the sidecars live BESIDE the store, and a store
 opened without its identity sidecar presents as an EMPTY design rather than
 erroring:

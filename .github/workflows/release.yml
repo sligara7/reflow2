@@ -146,6 +146,24 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ github.token }}
+      # ⭐ THE IMAGE MUST START BEFORE IT IS PUBLISHED, AND THAT ORDER IS THE
+      # WHOLE POINT OF THIS STEP.
+      #
+      # v0.27.0 withdrew `--content-path` and the ENTRYPOINT went on passing it.
+      # clap exits 2 on an unknown argument, so the container died before it
+      # opened the graph — and FIVE releases (v0.27.0 … v0.31.0) each published
+      # that image. Nothing here was negligent; "Verify the image is actually
+      # pullable" below verified the wrong property, and was true the whole time.
+      # A pull is not a start.
+      #
+      # Built with --load rather than --push so this runs on an image that is
+      # still local. A smoke test after the push tells you what you shipped;
+      # this one exists to stop you shipping it.
+      - name: The image must start (gate — runs before anything is published)
+        run: |
+          set -euo pipefail
+          docker buildx build --platform linux/amd64 --load --tag reflow2-mcp:candidate .
+          docker/smoke.sh reflow2-mcp:candidate
       - name: Build and push
         env:
           TAG: ${{ inputs.tag || github.ref_name }}
@@ -174,6 +192,11 @@ jobs:
           # The release workflow already learned this lesson once (BL-55): a run
           # that goes green while shipping nothing is worse than a red one,
           # because nobody looks. Pushing is not evidence the manifest resolves.
+          #
+          # ⚠️ THIS IS A DISTRIBUTION CHECK AND NOTHING MORE. It answers "does
+          # the manifest resolve", which is worth asking and is NOT worth
+          # mistaking for "does the image work" — five broken releases passed
+          # this step. The gate above is the one that answers that.
           docker buildx imagetools inspect "${IMAGE}:${VERSION}" > /dev/null
           echo "published ${IMAGE}:${VERSION}"
 
