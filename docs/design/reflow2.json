@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:8c68c4824290633654a15a7ef85ee3f6506b16a29b5a3770d536e573cd04533e",
+  "content_hash": "sha256:364533940f88396e0100e6583925d62c49125a28f99e2021ddccf94a1ea5c6a8",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -4595,6 +4595,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:release-gates-on-a-running-image",
+      "properties": {},
+      "to_id": "epoch:the-image-must-start"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:remote-sessions",
       "properties": {},
       "to_id": "epoch:v0130"
@@ -6158,6 +6164,12 @@
       "from_id": "snap:epoch:surface-export:dec:nested-graphs",
       "properties": {},
       "to_id": "epoch:surface-export"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-image-must-start:art:release-workflow",
+      "properties": {},
+      "to_id": "epoch:the-image-must-start"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -9627,6 +9639,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-1e7665d6348d37ad",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:docker-build-script"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-1ea01d3ea7e8701a",
       "properties": {
         "accepted_baseline": true,
@@ -10254,6 +10275,15 @@
         "action": "modified"
       },
       "to_id": "art:fleet-lessons"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-bf7dcd75fd6be477",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dockerfile"
     },
     {
       "edge_type": "CHANGED",
@@ -11082,6 +11112,15 @@
         "action": "modified"
       },
       "to_id": "art:registry"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-abebf1584ca8593b",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:docker-smoke-script"
     },
     {
       "edge_type": "CHANGED",
@@ -16384,6 +16423,15 @@
         "action": "modified"
       },
       "to_id": "req:intent-is-reinjected"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:release-gates-on-a-running-image",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:release-workflow"
     },
     {
       "edge_type": "CHANGED",
@@ -27548,6 +27596,12 @@
       "from_id": "art:readme",
       "properties": {},
       "to_id": "snap:epoch:backlog-retired:art:readme"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:release-workflow",
+      "properties": {},
+      "to_id": "snap:epoch:the-image-must-start:art:release-workflow"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -59708,6 +59762,12 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:docker-smoke-script",
+      "properties": {},
+      "to_id": "cap:release-publishes-a-container"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:dockerfile",
       "properties": {
         "completeness": "partial"
@@ -63797,6 +63857,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-image-starts",
+      "properties": {},
+      "to_id": "req:reflow2-consumable-as-an-image"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-nudge-absence-says-why",
       "properties": {},
       "to_id": "cap:nudge-absence-says-why"
@@ -65685,10 +65751,23 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0d2baac279bc9cdc70b5567031d81347ca6412c994647ec5a4f8b9c81b1505f4",
+        "checksum": "sha256:9ad56c234dcffbca6f016d50b71c5ffab9e33a3380d18c5fafb445de5474e079",
         "granularity": "atomic",
         "location": "docker/build.sh",
         "name": "docker/build.sh",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:docker-smoke-script",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:f2019afd72ee2dbf3e3806a54e397a638e6b1ab37cc181c8a9b1f86c1089b229",
+        "granularity": "atomic",
+        "location": "docker/smoke.sh",
+        "name": "docker/smoke.sh",
         "status": "realized",
         "volatility": "stable"
       }
@@ -65698,7 +65777,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:aa66c1059681a11386e7a737ae74aface79c60dbdee7cae753df31ced21498d6",
+        "checksum": "sha256:f014e913ac9e61dc2112f4383c0cc94cdf9e5d78fe307bcb2ad45ae316d6e719",
         "granularity": "atomic",
         "location": "Dockerfile",
         "name": "Dockerfile",
@@ -66401,7 +66480,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e1a55d661c3b9ba857e4eb99d40e6d8b84db5c9e5009e3f3b43721507d2d1fcd",
+        "checksum": "sha256:079bd2025a17eeadc09a98cdfdf658b2cc78180bd06b11bb59fff5a410d011cc",
         "granularity": "atomic",
         "location": ".github/workflows/release.yml",
         "name": "release.yml",
@@ -69744,6 +69823,15 @@
       }
     },
     {
+      "node_id": "chg:accept-1e7665d6348d37ad",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-15",
+        "name": "Accepted a new baseline: the change carries no design meaning"
+      }
+    },
+    {
       "node_id": "chg:accept-1ea01d3ea7e8701a",
       "node_type": "ChangeEvent",
       "properties": {
@@ -70359,6 +70447,15 @@
       }
     },
     {
+      "node_id": "chg:accept-bf7dcd75fd6be477",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-15",
+        "name": "Accepted a new baseline: the change carries no design meaning"
+      }
+    },
+    {
       "node_id": "chg:accept-c299f999d01e4d26",
       "node_type": "ChangeEvent",
       "properties": {
@@ -70828,6 +70925,15 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-12",
         "name": "First baseline — new in this change."
+      }
+    },
+    {
+      "node_id": "chg:baseline-abebf1584ca8593b",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-15",
+        "name": "First baseline recorded: the artifact was registered without a checksum and nothing was compared"
       }
     },
     {
@@ -72361,6 +72467,14 @@
       "properties": {
         "change_type": "refactor",
         "name": "Amend req:intent-is-reinjected: the trigger question is answered by degradation signals plus an operations counter"
+      }
+    },
+    {
+      "node_id": "chg:release-gates-on-a-running-image",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The release builds --load and smoke-tests the image before publishing it"
       }
     },
     {
@@ -78267,6 +78381,16 @@
         "epoch_type": "revision",
         "name": "Published-surface export (2026-07-25, post-v0.11.0)",
         "sequence": 140,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:the-image-must-start",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The release proves the image starts before it publishes it",
+        "sequence": 336,
         "status": "arrived"
       }
     },
@@ -85689,6 +85813,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:the-image-must-start:art:release-workflow",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:e1a55d661c3b9ba857e4eb99d40e6d8b84db5c9e5009e3f3b43721507d2d1fcd\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:e1a55d661c3b9ba857e4eb99d40e6d8b84db5c9e5009e3f3b43721507d2d1fcd\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:e1a55d661c3b9ba857e4eb99d40e6d8b84db5c9e5009e3f3b43721507d2d1fcd\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:e1a55d661c3b9ba857e4eb99d40e6d8b84db5c9e5009e3f3b43721507d2d1fcd\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:e1a55d661c3b9ba857e4eb99d40e6d8b84db5c9e5009e3f3b43721507d2d1fcd\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:e1a55d661c3b9ba857e4eb99d40e6d8b84db5c9e5009e3f3b43721507d2d1fcd\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:e1a55d661c3b9ba857e4eb99d40e6d8b84db5c9e5009e3f3b43721507d2d1fcd\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:e1a55d661c3b9ba857e4eb99d40e6d8b84db5c9e5009e3f3b43721507d2d1fcd\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:packaging\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:e1a55d661c3b9ba857e4eb99d40e6d8b84db5c9e5009e3f3b43721507d2d1fcd\",\"granularity\":\"atomic\",\"location\":\".github/workflows/release.yml\",\"name\":\"release.yml\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:release-workflow",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:the-owners-identity-is-one-node-again:ctr:anthony",
       "node_type": "Snapshot",
       "properties": {
@@ -89332,6 +89466,19 @@
       }
     },
     {
+      "node_id": "ver:the-image-starts",
+      "node_type": "Verification",
+      "properties": {
+        "description": "`docker/smoke.sh`, run by release.yml against the candidate image BEFORE the push. Starts the container on a uid-1000 volume, refuses immediately if the process exited (the failure this exists for is an instant exit, and waiting on a health probe would report it as a timeout instead of naming the cause), then waits on the image's OWN HEALTHCHECK, then makes one request from OUTSIDE the container — because an in-container probe cannot catch a bind to loopback. DEMONSTRATED 2026-08-15 both ways on a locally built image: PASSES in ~8s on the fixed Dockerfile, and FAILS in ~3s on a Dockerfile with the pre-v0.27.0 `--content-path` restored, printing `error: unexpected argument '--content-path' found` and exit 2. SCOPE, stated so this is not read as more than it is: it has not yet run in CI, and it proves the image SERVES, not that any tool behaves correctly.",
+        "kind": "verification",
+        "last_run_at": "2026-08-15",
+        "level": "system",
+        "method": "demonstration",
+        "name": "The published image starts, reports healthy, and answers on its port",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-nudge-absence-says-why",
       "node_type": "Verification",
       "properties": {
@@ -89485,7 +89632,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:aea62733039407424e3d8f24779229fe610d1d01cfd0586c1f6df7199b0b2bf7",
+  "prev_content_hash": "sha256:8c68c4824290633654a15a7ef85ee3f6506b16a29b5a3770d536e573cd04533e",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

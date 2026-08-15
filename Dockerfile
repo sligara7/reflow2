@@ -130,7 +130,12 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
 # happened: v0.27.0 withdrew the content store and its `--content-path`, this
 # ENTRYPOINT kept passing it, and FIVE releases (v0.27.0 through v0.31.0) each
 # published an image that exits 2. Nothing caught it because `release.yml`
-# verifies the image is PULLABLE, not that it RUNS.
+# verified the image was PULLABLE, not that it RAN.
+#
+# ⭐ THAT HOLE IS NOW CLOSED, and you can close it yourself before pushing a
+# commit: `docker/build.sh && docker/smoke.sh reflow2-mcp:dev` starts the image
+# and fails in about three seconds on exactly this class of mistake. Release CI
+# runs the same script against the candidate image BEFORE it publishes anything.
 ENTRYPOINT ["/bin/sh", "-c", "exec /usr/local/bin/reflow2-mcp \
   --graph-path \"$REFLOW2_GRAPH_PATH\" \
   --http \"$REFLOW2_BIND\" \
