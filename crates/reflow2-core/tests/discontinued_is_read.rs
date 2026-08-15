@@ -245,3 +245,103 @@ fn obsoleted_by_something_other_than_a_decision_does_not_discontinue() {
         "only a Decision discontinues, got {after:?}"
     );
 }
+
+// ---------------------------------------------------------------------------
+// AND THE VOCABULARY HAS TO SAY SO, or the mechanism above is unreachable.
+//
+// Alex's fleet, 2026-08-09: "Requirements: deferred / dropped. Capabilities: no
+// equivalent — agents stuff DROPPED into description text." The mechanism above
+// already existed when that was reported and worked correctly. What did NOT
+// exist was any way to FIND it.
+//
+// MEASURED 2026-08-14 via `describe_schema`, which the served routing table
+// tells an agent to use for exactly this lookup: on Capability, `provenance`,
+// `capability_type`, `inputs`, `outputs`, `is_entry_point` and `is_exit_point`
+// all carried teaching descriptions and **`status` carried none** — four bare
+// values and no fifth. The other half of the pair was as bare: `OBSOLETES`'s
+// whole hint read "Source makes target redundant or deprecated", which names
+// neither the retirement job, nor the Decision as source, nor `discontinued`.
+//
+// So an agent looked up the four statuses, found nothing about abandonment, and
+// put the fact in the only place left — prose the graph cannot compute on.
+// `dec:idea-does-a-capability-need-a-cancelled-state`: the answer was never a
+// fifth enum value (that would be a SECOND way to say what the graph already
+// computes, and one that can disagree with it). It was that the vocabulary
+// never connected the two halves.
+//
+// Pinned here rather than trusted, for the reason the standing rule is pinned
+// in every skill: a description nothing reads back is one edit away from
+// silently disappearing, and this one is load-bearing precisely because it is
+// the only signpost between a stored status and an edge.
+// ---------------------------------------------------------------------------
+
+#[test]
+fn the_status_enum_says_where_abandonment_actually_lives() {
+    let g = DesignGraph::open_in_memory().unwrap();
+    let detail = g.describe_node_type(node::CAPABILITY).unwrap();
+    let status = detail
+        .spec
+        .properties
+        .iter()
+        .find(|p| p.name == "status")
+        .expect("Capability must have a status property");
+
+    let text = status.description.as_deref().expect(
+        "Capability.status must carry a description — without one an agent \
+                 sees four bare values and no hint that abandonment lives on an edge",
+    );
+
+    assert!(
+        text.contains("OBSOLETES"),
+        "it must name the edge that records abandonment: {text}"
+    );
+    assert!(
+        text.contains("discontinued"),
+        "it must name the field the edge computes, which is what a reader checks: {text}"
+    );
+    // The negative half, and the one an agent needs most: there is no fifth
+    // value, and saying so is what stops the search ending in `description`.
+    let lowered = text.to_lowercase();
+    assert!(
+        lowered.contains("cancelled") || lowered.contains("dropped"),
+        "it must name the value an agent came looking for, to say it is absent \
+         ON PURPOSE rather than merely missing: {text}"
+    );
+}
+
+#[test]
+fn the_obsoletes_hint_says_it_is_the_retirement_mechanism() {
+    let g = DesignGraph::open_in_memory().unwrap();
+    let detail = g.describe_node_type(node::CAPABILITY).unwrap();
+    let obsoletes = detail
+        .incoming
+        .iter()
+        .find(|e| e.spec.edge_type == edge::OBSOLETES)
+        .expect("OBSOLETES must be offered as an incoming edge on Capability");
+
+    let hint = obsoletes
+        .spec
+        .hint
+        .as_deref()
+        .expect("OBSOLETES must carry a hint");
+
+    assert!(
+        hint.contains("Decision"),
+        "the source end is the Decision that withdrew the thing, and that is the \
+         non-obvious half — a retirement edge normally presumes a successor: {hint}"
+    );
+    assert!(
+        hint.contains("discontinued"),
+        "it must name what the edge computes, or it reads as bookkeeping: {hint}"
+    );
+    assert!(
+        hint.contains("ACCEPTED") || hint.contains("accepted"),
+        "only an accepted Decision discontinues anything — a proposed withdrawal \
+         has withdrawn nothing: {hint}"
+    );
+    assert!(
+        hint.contains("status"),
+        "it must say the target's own status does NOT move, or an agent will \
+         'helpfully' edit it and create the second source of truth this avoids: {hint}"
+    );
+}

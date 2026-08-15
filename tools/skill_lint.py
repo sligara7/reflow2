@@ -694,6 +694,46 @@ def main() -> int:
           not dangling,
           f"these commands point at skills that are not served: {dangling}")
 
+    # THE OTHER DIRECTION, and it was checked by nothing until 2026-08-14.
+    #
+    # The rule above stops a command rotting into a dangling reference. It says
+    # nothing about a SKILL that no command names, and nothing pinned the count
+    # either — so `dec:commands-are-the-exception`, `chg:commands-ship` and
+    # `ver:install-reaches-the-agent` all still read "eight" while eleven
+    # shipped, and nine of the twenty skills sat unreachable by slash command
+    # without a single check going red.
+    #
+    # FOUND THE WAY THIS PROJECT KEEPS FINDING THINGS: Anthony typed
+    # `/capture-session` on a real work project and got `Unknown command`. It
+    # is INVISIBLE FROM THIS CHECKOUT, because `.claude/skills/` holds all
+    # twenty as the compile sources and Claude Code loads any of them as
+    # `/<name>` — so every skill resolves here and eleven resolved nowhere on a
+    # consumer install (`fact:the-commands-cover-nine-of-twenty-skills-and-the-
+    # checkout-cannot-feel-it`). The repo does not merely fail to reproduce the
+    # defect; it teaches the wrong affordance.
+    #
+    # `dec:idea-does-every-served-skill-get-a-command` (accepted 2026-08-14,
+    # option A) settles the coverage at ALL TWENTY and makes this check the
+    # durable half of the ruling: without it the set falls behind again the
+    # next time a skill is added, silently, exactly as it did before.
+    #
+    # Coverage is "named by at least one command", not "has a command of the
+    # same name" — `/gaps` fronts detect-and-ask and `/where` fronts
+    # where-am-i, and those short names are what people actually type (measured
+    # 2026-08-14: 37 `/where` invocations against 4 `get_skill` calls).
+    commanded = {
+        skill
+        for cmd in command_src.glob("*.md")
+        for skill in named.findall(cmd.read_text())
+    }
+    uncommanded = sorted(skill_names - commanded)
+    check("every served skill is named by at least one command",
+          not uncommanded,
+          f"these skills are reachable only via get_skill: {uncommanded} — "
+          f"add a command in getting-started/commands/ naming each as "
+          f"'**<skill>** skill', or change dec:idea-does-every-served-skill-"
+          f"get-a-command, which currently rules that all of them get one")
+
     cmd_src_files = {f.name for f in command_src.glob("*.md")}
     if command_mirror.exists():
         cmd_mirror_files = {f.name for f in command_mirror.glob("*.md")}
