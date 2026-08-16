@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:0013dafacb829b99380bfa72a302ce254e7e44b7977360c7d02861edb960640a",
+  "content_hash": "sha256:f438a603a6a0f36e4af18f94a89fca1ec512661e0db21b737fe32d45d111b023",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -5216,6 +5216,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:verifies-reaches-a-constraint",
+      "properties": {},
+      "to_id": "epoch:a-check-can-say-whether-a-limit-holds"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:what-next-built",
       "properties": {},
       "to_id": "epoch:what-next-built"
@@ -5675,6 +5681,12 @@
       "from_id": "rel:v090",
       "properties": {},
       "to_id": "epoch:v090"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:a-check-can-say-whether-a-limit-holds:dec:should-a-verification-be-able-to-verify-a-constraint",
+      "properties": {},
+      "to_id": "epoch:a-check-can-say-whether-a-limit-holds"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -18991,6 +19003,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:verifies-reaches-a-constraint",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:verifies-reaches-a-constraint",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:should-a-verification-be-able-to-verify-a-constraint"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:what-next-built",
       "properties": {
         "accepted_baseline": true,
@@ -28495,6 +28525,12 @@
       "from_id": "dec:proposed-requirements-pruned",
       "properties": {},
       "to_id": "snap:epoch:prune-proposed:dec:proposed-requirements-pruned"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:should-a-verification-be-able-to-verify-a-constraint",
+      "properties": {},
+      "to_id": "snap:epoch:a-check-can-say-whether-a-limit-holds:dec:should-a-verification-be-able-to-verify-a-constraint"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -67531,7 +67567,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:1418c86a6303e07bc4ad46637cd321420d11e337e8a0d447338e5de316c9d990",
+        "checksum": "sha256:9f5e06e9d9d3ad4da457aea1a582d56b2cf8a683b30beef2f2eb163415ebbee9",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/verify.yaml",
@@ -73989,6 +74025,14 @@
       }
     },
     {
+      "node_id": "chg:verifies-reaches-a-constraint",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "`VERIFIES` admits `Constraint` on Anthony's word — a check may now say whether a limit holds. Proven through the importer, the path that was actually broken, with the counterweight that `VERIFIES → Project` is still refused. Project stays out and dev_storyflow's export still will not import until that half is decided."
+      }
+    },
+    {
       "node_id": "chg:what-next-built",
       "node_type": "ChangeEvent",
       "properties": {
@@ -77155,10 +77199,10 @@
       "node_id": "dec:should-a-verification-be-able-to-verify-a-constraint",
       "node_type": "Decision",
       "properties": {
-        "decision": "OPEN QUESTION FOR ANTHONY, and dev_storyflow's reporter deliberately declined to answer it: \"Whether the fix is 'migrate the two edges' or 'the to-list is missing a member' is reflow2's call, not mine — but the question should be asked before anyone deletes data to satisfy a validator.\"\n\nDISTINCT FROM `fact:defect-a-schema-narrowing-orphaned-live-edges-and-no-export-is-ever-imported`, which measures the breakage. THIS asks what the vocabulary should say, and the answer decides whether a real edge is repaired or destroyed.\n\nTHE CASE. `ver:side_e_slo_gate_unwired_2026_08_09` VERIFIES `con:side_e_perf_slos_are_enforced_nowhere` — a check that measures whether a performance constraint is actually enforced. `schema/verify.yaml` lists `to: [Capability, Requirement, Artifact, Component, DesignRule]`, so the edge is unimportable and their export has not restored since at least 2026-08-11.\n\n⭐ IT READS AS A LEGITIMATE MODELLING NEED, NOT A SLIP. A Constraint is \"a limit or rule the design MUST respect\" — a latency budget, a mass cap, \"no PII leaves the device\". Asking whether a limit HOLDS is the most natural thing anyone would want to check about it, and it is exactly the question `budget_report` answers arithmetically for the numeric case. A Verification is how this design records that something was CHECKED. Refusing to connect them says a limit may be stated and computed but never independently verified.\n\nAND THE ASYMMETRY IS ODD ON ITS FACE: `DesignRule` IS in the list, and `unverified_enforced_rule` exists precisely so a gate-blocking rule owes a passing check. A Constraint is the DesignRule's sibling — the imposed limit beside the chosen one — and the same argument for verifying one applies to the other. Nothing in the schema explains why they were split.\n\nTHE OPTIONS:\n\n(a) ADD `Constraint` TO THE TO-LIST. Repairs their export, needs no data migration, and makes the vocabulary say the thing it appears to mean. COUNTER: the list was derived FROM live edges as evidence of use, and adding a type because one edge exists is the same reasoning that produced the incomplete enumeration — one edge is not a demonstrated need.\n\n(b) MIGRATE THE EDGE AWAY — a check about a Constraint could instead verify the Capability that honours it, or the DesignRule that expresses it. COUNTER, and it is `rule:never_shape_a_field_to_satisfy_an_instrument` from their own repo: reshaping real design to satisfy a validator is how a graph bends into fiction, and the edge was legal when written.\n\n(c) RE-DERIVE THE WHOLE LIST ACROSS EVERY KNOWN GRAPH and take the union — the census the original change should have run, now with three real designs to run it against rather than one. COUNTER: it settles this instance without settling the rule, and the next narrowing repeats it.\n\n(d) RESTORE `to: \"*\"` FOR VERIFIES. COUNTER: the enumeration was added for a reason recorded in the file, and reverting discards that.\n\n⚠️ WHAT MUST NOT HAPPEN, and it is the reporter's point: nobody deletes those two edges to make an import succeed before this is answered. `Project` is the other unlisted type and may well be a genuine mistake — the two should be judged separately rather than as a pair.\n\nNOT ESTABLISHED: how many `VERIFIES → Constraint` edges exist across all designs (one is confirmed), and whether any detector would read the edge if it were legal.",
-        "name": "OPEN — a check that measures whether a Constraint holds is refused by the schema. Is `VERIFIES → Constraint` a missing member of the to-list, or is the edge a mistake to migrate away?",
-        "rationale": "Recorded as a question rather than fixed, because the choice decides whether real design data is repaired or destroyed, and because the reporter who found it explicitly declined to make it. Left `proposed` with Anthony as approver: this is a schema change either way, and `dec:certainty-derived` puts that word with him.",
-        "status": "proposed"
+        "decision": "SETTLED ON ANTHONY'S WORD, 2026-08-15: \"allow VERIFIES → Constraint\". OPTION (a) of the four below.\n\nWHAT WAS BUILT, the same day: `schema/verify.yaml`'s `to:` list becomes `[Capability, Requirement, Artifact, Component, DesignRule, Constraint]`. The schema is compiled in via `include_str!`, so the rebuild carries it.\n\nPROVEN THROUGH THE PATH THAT WAS ACTUALLY BROKEN — the importer, not a unit assertion. A document holding `VERIFIES ver:latency_gate -> con:latency` now imports (exit 0, '2 node(s) and 1 edge(s)'). ⭐ AND THE COUNTERWEIGHT RAN IN THE SAME BREATH: a document holding `VERIFIES -> Project` is STILL REFUSED, with the same precise message. THE LIST DISCRIMINATES; IT WAS NOT QUIETLY WIDENED.\n\nPinned by `crates/reflow2-core/tests/verifies_reaches_a_constraint.rs`, 2 cases, MUTATION-CHECKED IN BOTH DIRECTIONS: removing `Constraint` fails the case and leaves the counterweight passing; restoring the pre-2026-08-08 `to: \\\"*\\\"` passes the case and FAILS THE COUNTERWEIGHT — which is what proves the counterweight is doing work rather than agreeing for free.\n\n⚠️ PROJECT IS DELIBERATELY STILL OUT, AND DEV_STORYFLOW'S EXPORT THEREFORE STILL WILL NOT IMPORT. Their file carries TWO illegal edges — one Constraint, one Project — and only the Constraint half was ruled on. A Verification that verifies a whole Project reads as a modelling slip rather than a need, but nobody has decided, and this decision deliberately does not decide it for them. Their backup remains unrestorable until either that edge is migrated by them or Project is admitted here.\n\nWHY (a) OVER THE OTHERS: (b) migrating the edge away would reshape a real design to satisfy a validator, which is the failure `rule:never_shape_a_field_to_satisfy_an_instrument` names and which their own reporter warned against — 'the question should be asked before anyone deletes data to satisfy a validator'. (c) re-deriving across every known graph settles this instance without settling the rule, and can still be done later. (d) restoring the wildcard discards the reason the enumeration was added, which is recorded in the file and was a real gain: it made 'which of my rules have no detector?' an askable question.\n\nTHE ORIGINAL QUESTION, PRESERVED so a later reader sees what was weighed:\n\nA Constraint is 'a limit or rule the design MUST respect' — a latency budget, a mass cap, 'no PII leaves the device'. Asking whether a limit HOLDS is the most natural thing anyone would want to check about it, and it is exactly what `budget_report` answers arithmetically for the numeric case. A Verification is how this design records that something was CHECKED. Refusing to connect them said a limit may be stated and computed but never independently verified. AND THE ASYMMETRY WAS ODD ON ITS FACE: `DesignRule` was already in the list, and `unverified_enforced_rule` exists precisely so a gate-blocking rule owes a passing check. A Constraint is the DesignRule's sibling — the imposed limit beside the chosen one — and nothing in the schema explained why they were split.\n\nHOW IT AROSE: `ver:side_e_slo_gate_unwired_2026_08_09` VERIFIES `con:side_e_perf_slos_are_enforced_nowhere` in dev_storyflow — a check measuring whether a performance constraint is actually enforced. The 2026-08-08 narrowing of `VERIFIES` from `*` to an enumeration derived its list from a census that found five types at 95/27/13/2/1 edges and MISSED TWO CARRYING ONE EDGE EACH. See `fact:defect-a-schema-narrowing-orphaned-live-edges-and-no-export-is-ever-imported`.\n\nNOT SETTLED BY THIS, and left open on purpose: whether `Project` belongs; whether the list should be re-derived across all three known designs; and whether any detector should READ the new edge — admitting it makes the claim expressible, and nothing yet computes anything from it.",
+        "name": "A Verification MAY verify a Constraint — a check that measures whether a limit holds is a real modelling need, and Project stays out",
+        "rationale": "Recorded as his ruling rather than as an agent's fix because it is a schema change with real data on both sides: the wrong answer either destroys a legitimate edge or admits everything. He chose the option that repairs the design without touching anyone's data. The Project half was deliberately NOT bundled with it — the reporter who found both asked for them to be judged separately, and folding them together would have settled a second question nobody put.",
+        "status": "accepted"
       }
     },
     {
@@ -78648,6 +78692,16 @@
         "name": "Reviewed: heal:f737a5cdf35a906d",
         "rationale": "Carries dec:sanitize-spof-accepted (2026-07-25): true and expected — cmp:sanitize is reached only through cmp:ingest, because INGEST is the only path foreign text currently enters by, so every route to the trust boundary runs through one component. `add_redundancy` is the wrong shape (a second copy of a pure text filter is duplication, not resilience). What dissolves it is the SECOND CALLER: detect-and-report on graph import. Deliberately NOT wiring cmp:export to cmp:sanitize to quiet the detector, because that edge does not exist in the code.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "epoch:a-check-can-say-whether-a-limit-holds",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "Anthony rules that a Verification may verify a Constraint — the half of an incomplete schema census that was a real modelling need, admitted on his word while Project is deliberately left out and still unruled (2026-08-15)",
+        "sequence": 342,
+        "status": "arrived"
       }
     },
     {
@@ -85947,6 +86001,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:a-check-can-say-whether-a-limit-holds:dec:should-a-verification-be-able-to-verify-a-constraint",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-15\",\"role\":\"approver\"}}]",
+        "state": "{\"decision\":\"OPEN QUESTION FOR ANTHONY, and dev_storyflow's reporter deliberately declined to answer it: \\\"Whether the fix is 'migrate the two edges' or 'the to-list is missing a member' is reflow2's call, not mine — but the question should be asked before anyone deletes data to satisfy a validator.\\\"\\n\\nDISTINCT FROM `fact:defect-a-schema-narrowing-orphaned-live-edges-and-no-export-is-ever-imported`, which measures the breakage. THIS asks what the vocabulary should say, and the answer decides whether a real edge is repaired or destroyed.\\n\\nTHE CASE. `ver:side_e_slo_gate_unwired_2026_08_09` VERIFIES `con:side_e_perf_slos_are_enforced_nowhere` — a check that measures whether a performance constraint is actually enforced. `schema/verify.yaml` lists `to: [Capability, Requirement, Artifact, Component, DesignRule]`, so the edge is unimportable and their export has not restored since at least 2026-08-11.\\n\\n⭐ IT READS AS A LEGITIMATE MODELLING NEED, NOT A SLIP. A Constraint is \\\"a limit or rule the design MUST respect\\\" — a latency budget, a mass cap, \\\"no PII leaves the device\\\". Asking whether a limit HOLDS is the most natural thing anyone would want to check about it, and it is exactly the question `budget_report` answers arithmetically for the numeric case. A Verification is how this design records that something was CHECKED. Refusing to connect them says a limit may be stated and computed but never independently verified.\\n\\nAND THE ASYMMETRY IS ODD ON ITS FACE: `DesignRule` IS in the list, and `unverified_enforced_rule` exists precisely so a gate-blocking rule owes a passing check. A Constraint is the DesignRule's sibling — the imposed limit beside the chosen one — and the same argument for verifying one applies to the other. Nothing in the schema explains why they were split.\\n\\nTHE OPTIONS:\\n\\n(a) ADD `Constraint` TO THE TO-LIST. Repairs their export, needs no data migration, and makes the vocabulary say the thing it appears to mean. COUNTER: the list was derived FROM live edges as evidence of use, and adding a type because one edge exists is the same reasoning that produced the incomplete enumeration — one edge is not a demonstrated need.\\n\\n(b) MIGRATE THE EDGE AWAY — a check about a Constraint could instead verify the Capability that honours it, or the DesignRule that expresses it. COUNTER, and it is `rule:never_shape_a_field_to_satisfy_an_instrument` from their own repo: reshaping real design to satisfy a validator is how a graph bends into fiction, and the edge was legal when written.\\n\\n(c) RE-DERIVE THE WHOLE LIST ACROSS EVERY KNOWN GRAPH and take the union — the census the original change should have run, now with three real designs to run it against rather than one. COUNTER: it settles this instance without settling the rule, and the next narrowing repeats it.\\n\\n(d) RESTORE `to: \\\"*\\\"` FOR VERIFIES. COUNTER: the enumeration was added for a reason recorded in the file, and reverting discards that.\\n\\n⚠️ WHAT MUST NOT HAPPEN, and it is the reporter's point: nobody deletes those two edges to make an import succeed before this is answered. `Project` is the other unlisted type and may well be a genuine mistake — the two should be judged separately rather than as a pair.\\n\\nNOT ESTABLISHED: how many `VERIFIES → Constraint` edges exist across all designs (one is confirmed), and whether any detector would read the edge if it were legal.\",\"name\":\"OPEN — a check that measures whether a Constraint holds is refused by the schema. Is `VERIFIES → Constraint` a missing member of the to-list, or is the edge a mistake to migrate away?\",\"rationale\":\"Recorded as a question rather than fixed, because the choice decides whether real design data is repaired or destroyed, and because the reporter who found it explicitly declined to make it. Left `proposed` with Anthony as approver: this is a schema change either way, and `dec:certainty-derived` puts that word with him.\",\"status\":\"proposed\"}",
+        "target_id": "dec:should-a-verification-be-able-to-verify-a-constraint",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:a-claim-may-be-a-query:dec:a-claim-may-need-a-list-rather-than-a-radius",
       "node_type": "Snapshot",
       "properties": {
@@ -91349,7 +91413,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:fc3402269f685aa94b39248216059ff23726e5a357670ca3d1106a05f63203c5",
+  "prev_content_hash": "sha256:0013dafacb829b99380bfa72a302ce254e7e44b7977360c7d02861edb960640a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -97,15 +97,49 @@ schema:
       # report could have listed them, because the graph cannot currently be
       # asked."
       #
-      # THE LIST MUST KEEP ALL FIVE. The first four are DERIVED from live edges,
+      # THE LIST MUST KEEP ALL SIX. The first four were DERIVED from live edges,
       # not copied from the report that proposed this: narrowing to fewer would
       # invalidate edges that exist today. Re-derive before ever trimming it.
-      to: [Capability, Requirement, Artifact, Component, DesignRule]
+      #
+      # ⚠️ AND THE GUARD ABOVE WAS NOT ENOUGH, WHICH IS WHY Constraint IS HERE.
+      # It protects against TRIMMING the list and says nothing about the
+      # enumeration being INCOMPLETE WHEN FIRST DERIVED. The 2026-08-08 census
+      # found five types at 95/27/13/2/1 edges and missed two carrying ONE edge
+      # each — a long tail invisible to a count. The moment `to` stopped being
+      # `*`, every unlisted-but-existing edge became unimportable, and
+      # dev_storyflow's committed export — the design that PROPOSED this change —
+      # could not be re-imported by the binary that wrote it for at least four
+      # days, across thirty export commits, while loop_status, sync_status and
+      # the content_hash chain all read green. A SCHEMA TIGHTENING THAT SILENTLY
+      # ORPHANS EXISTING DATA IS A BREAKING CHANGE WEARING A VALIDATION ERROR'S
+      # CLOTHES.
+      #
+      # ⭐ NOTE THE SHAPE, because this edge has now made the same mistake twice
+      # at two levels: the extraction_hint below records that it once named only
+      # three types while four were true. The hint under-enumerated, was caught,
+      # was fixed, and the lesson was written down — and then the LIST did it.
+      #
+      # Constraint added on Anthony's word, 2026-08-15
+      # (dec:should-a-verification-be-able-to-verify-a-constraint). A Constraint
+      # is a limit the design must respect, and asking whether a limit HOLDS is
+      # the most natural thing anyone would want to check about it — it is what
+      # budget_report already answers arithmetically for the numeric case.
+      # DesignRule was already here, and a Constraint is its sibling: the imposed
+      # limit beside the chosen rule. Nothing ever explained why they were split.
+      #
+      # 📌 Project remains UNLISTED and is deliberately a separate question. It
+      # is the other type the census missed, and a Verification that verifies a
+      # whole Project reads as a modelling slip rather than a need — but it has
+      # not been ruled on, and dev_storyflow's export still carries one, so that
+      # export still will not import until somebody decides.
+      to: [Capability, Requirement, Artifact, Component, DesignRule, Constraint]
       extraction_hint: >
-        A Verification checks a Capability, Artifact, Component, Requirement, or
-        DesignRule. Requirement was already true and unlisted here — three such
-        edges existed while this hint named only three types, which is how a hint
-        stops being a description and becomes a guess.
+        A Verification checks a Capability, Artifact, Component, Requirement,
+        DesignRule, or Constraint. Requirement was already true and unlisted here
+        — three such edges existed while this hint named only three types, which
+        is how a hint stops being a description and becomes a guess. Constraint
+        was added later for the same reason one level down: it was true in a real
+        design before the list admitted it.
       properties:
         coverage: { type: enum, values: [full, partial, smoke] }
         # BL-126, dec:evidence-scope-on-the-verifies-edge. WHAT PART of the
