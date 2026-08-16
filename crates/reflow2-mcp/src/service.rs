@@ -2539,7 +2539,14 @@ pub struct CollapseDecisionReq {
 #[serde(deny_unknown_fields)]
 pub struct AnswerQuestionReq {
     /// The gap the question was asked about (`gap_id` from `open_questions`).
-    pub gap_id: String,
+    /// Either this or `question_id` — whichever you have in hand.
+    #[serde(default)]
+    pub gap_id: Option<String>,
+    /// The Question's own id (`question_id` from `open_questions`). Accepts a
+    /// question this graph did not derive from a gap, which `gap_id` cannot
+    /// reach.
+    #[serde(default)]
+    pub question_id: Option<String>,
     /// What the user said, in their own words.
     pub answer: String,
 }
@@ -2750,7 +2757,9 @@ impl ReflowService {
         // Gated exactly as `loop_status`'s own copy is — silent whenever the
         // file has not moved, which is the whole of ordinary solo work.
         let record_moved = self.graph_path.as_deref().and_then(|graph_path| {
-            let debts = crate::sync_debt::sync_debt(graph_path, &|| g.export_graph().ok());
+            let live_nodes = g.count_all_nodes().unwrap_or(0);
+            let debts =
+                crate::sync_debt::sync_debt(graph_path, live_nodes, &|| g.export_graph().ok());
             let behind: Vec<_> = debts
                 .iter()
                 .filter(|d| d.is_actionable())

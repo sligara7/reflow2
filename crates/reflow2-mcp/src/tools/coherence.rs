@@ -150,7 +150,9 @@ impl ReflowService {
         // only when something HAS moved, so the common path costs one file read
         // and no comparison.
         if let Some(graph_path) = self.graph_path.as_deref() {
-            let debts = crate::sync_debt::sync_debt(graph_path, &|| g.export_graph().ok());
+            let live_nodes = g.count_all_nodes().unwrap_or(0);
+            let debts =
+                crate::sync_debt::sync_debt(graph_path, live_nodes, &|| g.export_graph().ok());
             if let Some(obj) = payload.as_object_mut() {
                 let behind: Vec<_> = debts.iter().filter(|d| d.is_actionable()).collect();
                 if !behind.is_empty() {
@@ -655,7 +657,8 @@ impl ReflowService {
                 "note": "this server holds no graph path, so it has no sync record to check",
             }));
         };
-        let debts = crate::sync_debt::sync_debt(graph_path, &|| g.export_graph().ok());
+        let live_nodes = g.count_all_nodes().unwrap_or(0);
+        let debts = crate::sync_debt::sync_debt(graph_path, live_nodes, &|| g.export_graph().ok());
         ok_json(json!({
             "sync": debts,
             "behind": debts.iter().filter(|d| d.is_actionable()).map(|d| d.message()).collect::<Vec<_>>(),

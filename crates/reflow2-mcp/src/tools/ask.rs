@@ -215,27 +215,50 @@ impl ReflowService {
     #[tool(
         description = "Record what the user said in reply to a question, closing it. Write the \
                        design nodes their answer implies separately — this is the record that \
-                       it was settled, not a substitute for the design. Precondition: the gap \
-                       must already have a recorded question (from gap_to_prompt's serve pass); \
-                       answering one that was never asked is refused, not silently accepted — \
-                       distinct from the withdraw_* tools, which no-op on an absent record.",
+                       it was settled, not a substitute for the design. Takes EITHER `gap_id` \
+                       or `question_id`; `open_questions` publishes both and either is accepted, \
+                       because a Question this graph did not derive from a gap is reachable only \
+                       by its own id. Answering one that was never asked is refused, not \
+                       silently accepted — distinct from the withdraw_* tools, which no-op on an \
+                       absent record — and the refusal names the ids that DO exist.",
         annotations(read_only_hint = false)
     )]
     pub async fn answer_question(
         &self,
         Parameters(req): Parameters<AnswerQuestionReq>,
     ) -> Result<CallToolResult, McpError> {
+        let id = match (req.question_id.as_deref(), req.gap_id.as_deref()) {
+            (Some(q), _) => q,
+            (None, Some(g)) => g,
+            (None, None) => {
+                return Err(McpError::invalid_params(
+                    "answer_question needs `gap_id` or `question_id` — open_questions returns \
+                     both on every item; pass either."
+                        .to_string(),
+                    None,
+                ));
+            }
+        };
         let mut g = self.write_lock().await;
-        let found = g
-            .answer_question(&req.gap_id, &req.answer)
-            .map_err(dyno_err)?;
+        let found = g.answer_question(id, &req.answer).map_err(dyno_err)?;
         if !found {
+            // Naming what EXISTS is the whole point: the old message said only
+            // that the lookup missed, which cost a round trip the caller had no
+            // way to shortcut — and both ids they held came from open_questions.
+            let known = g.known_question_ids().map_err(dyno_err)?;
             return Err(McpError::invalid_params(
-                format!("no recorded question for gap {}", req.gap_id),
+                if known.is_empty() {
+                    format!("no recorded question for {id}; this design has no questions at all")
+                } else {
+                    format!(
+                        "no recorded question for {id}; known question id(s): {}",
+                        known.join(", ")
+                    )
+                },
                 None,
             ));
         }
-        ok_json(json!({ "answered": true, "gap_id": req.gap_id }))
+        ok_json(json!({ "answered": true, "question": id }))
     }
 
     #[tool(

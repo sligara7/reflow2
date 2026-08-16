@@ -119,7 +119,7 @@ fn a_record_holding_work_this_graph_lacks_is_reported() {
     // Somebody else's work arrives in the file.
     put(&file, &design(&["cap:mine", "cap:theirs"]));
 
-    let found = sync_debt(&gp, &|| Some(mine.clone()));
+    let found = sync_debt(&gp, 0, &|| Some(mine.clone()));
     let actionable = behind(&found);
     assert_eq!(
         actionable.len(),
@@ -152,7 +152,7 @@ fn my_own_unexported_work_is_never_reported() {
     // every working session.
     let mine_now = design(&["cap:one", "cap:two", "cap:three"]);
 
-    let found = sync_debt(&gp, &|| Some(mine_now.clone()));
+    let found = sync_debt(&gp, 0, &|| Some(mine_now.clone()));
     assert!(
         behind(&found).is_empty(),
         "being ahead of the record is ordinary and must be silent: {found:?}"
@@ -178,7 +178,7 @@ fn a_record_that_moved_but_holds_nothing_new_is_not_actionable() {
     put(&file, &design(&["cap:one"]));
     let mine = design(&["cap:one", "cap:two"]);
 
-    let found = sync_debt(&gp, &|| Some(mine.clone()));
+    let found = sync_debt(&gp, 0, &|| Some(mine.clone()));
     assert_eq!(
         found[0].state, "moved_but_current",
         "precondition: the record must actually have MOVED, or this proves nothing: {found:?}"
@@ -203,7 +203,7 @@ fn the_expensive_export_is_not_built_on_the_ordinary_path() {
     mark_synced(&gp, &file, &mine);
 
     let built = std::cell::Cell::new(0usize);
-    let found = sync_debt(&gp, &|| {
+    let found = sync_debt(&gp, 0, &|| {
         built.set(built.get() + 1);
         Some(mine.clone())
     });
@@ -217,7 +217,7 @@ fn the_expensive_export_is_not_built_on_the_ordinary_path() {
     // And when something HAS moved, it is built — once.
     put(&file, &design(&["cap:one", "cap:theirs"]));
     let built = std::cell::Cell::new(0usize);
-    let found = sync_debt(&gp, &|| {
+    let found = sync_debt(&gp, 0, &|| {
         built.set(built.get() + 1);
         Some(mine.clone())
     });
@@ -269,7 +269,7 @@ fn a_record_edited_without_restamping_is_still_caught() {
         "precondition: the stamp must be UNCHANGED, or this tests nothing"
     );
 
-    let found = sync_debt(&gp, &|| Some(mine.clone()));
+    let found = sync_debt(&gp, 0, &|| Some(mine.clone()));
     assert!(
         found[0].is_actionable(),
         "content moved, so it must be caught however the file stamps itself: {found:?}"
@@ -294,7 +294,7 @@ fn a_record_edited_without_restamping_is_still_caught() {
 #[test]
 fn a_seat_that_never_synced_reports_nothing_rather_than_all_clear() {
     let (_dir, gp) = scratch("virgin");
-    let found = sync_debt(&gp, &|| Some(design(&["cap:one"])));
+    let found = sync_debt(&gp, 0, &|| Some(design(&["cap:one"])));
     assert!(
         found.is_empty(),
         "never synced with any file means nothing to say: {found:?}"
@@ -312,7 +312,7 @@ fn a_record_that_has_disappeared_is_reported_as_missing_not_skipped() {
     mark_synced(&gp, &file, &mine);
     std::fs::remove_file(&file).unwrap();
 
-    let found = sync_debt(&gp, &|| Some(mine.clone()));
+    let found = sync_debt(&gp, 0, &|| Some(mine.clone()));
     assert_eq!(
         found.len(),
         1,
@@ -338,7 +338,7 @@ fn the_finding_names_the_remedy_and_never_reads_as_a_refusal() {
     mark_synced(&gp, &file, &mine);
     put(&file, &design(&["cap:mine", "cap:theirs"]));
 
-    let found = sync_debt(&gp, &|| Some(mine.clone()));
+    let found = sync_debt(&gp, 0, &|| Some(mine.clone()));
     let msg = found[0].message();
     assert!(
         msg.contains("import_graph"),
@@ -375,7 +375,7 @@ fn one_stale_target_does_not_hide_or_imply_the_other() {
     // Only ONE of them moves.
     put(&full, &design(&["cap:mine", "cap:theirs"]));
 
-    let found = sync_debt(&gp, &|| Some(mine.clone()));
+    let found = sync_debt(&gp, 0, &|| Some(mine.clone()));
     let actionable = behind(&found);
     assert_eq!(actionable.len(), 1, "exactly one target moved: {found:?}");
     assert!(
@@ -402,7 +402,7 @@ fn a_target_that_is_not_an_export_is_reported_rather_than_assumed_fine() {
     mark_synced(&gp, &file, &mine);
     std::fs::write(&file, "this is not json").unwrap();
 
-    let found = sync_debt(&gp, &|| Some(mine.clone()));
+    let found = sync_debt(&gp, 0, &|| Some(mine.clone()));
     assert_eq!(found.len(), 1);
     assert!(
         found[0].state.contains("unreadable"),
@@ -421,7 +421,7 @@ fn every_known_target_is_accounted_for_even_when_all_are_in_step() {
     put(&file, &mine);
     mark_synced(&gp, &file, &mine);
 
-    let found = sync_debt(&gp, &|| Some(mine.clone()));
+    let found = sync_debt(&gp, 0, &|| Some(mine.clone()));
     assert_eq!(
         found.len(),
         1,
@@ -527,5 +527,114 @@ async fn an_untouched_record_says_nothing_which_is_the_whole_gate() {
     assert!(
         hint.as_deref().is_none_or(|h| !h.contains("import_graph")),
         "nothing moved, so nothing about the record may be said: {hint:?}"
+    );
+}
+
+// ---- the OTHER direction: work this seat has not exported ------------------
+//
+// Everything above asks "has the shared record moved ahead of me". Nothing did
+// — or could — ask "am I holding work the record has never seen", and
+// `in_step` was read as if it answered both. dragon Boss reported a live node
+// absent from the export with sync green (2026-08-16); the same shape was then
+// reproduced on reflow2's own graph, where two TemporalFacts sat unexported
+// behind an `in_step` that could not go red.
+//
+// The counts do NOT change what `sync` decides. They make its green readable.
+
+/// THE CASE. The file is exactly where this graph left it — and this graph has
+/// grown since. The state is still `in_step`, correctly, and the line now says
+/// what the hash cannot.
+#[test]
+fn unexported_work_is_named_on_the_in_step_line() {
+    let (dir, gp) = scratch("unexported");
+    let file = dir.path().join("reflow2.json");
+
+    let exported = design(&["cap:one"]);
+    put(&file, &exported);
+    mark_synced(&gp, &file, &exported);
+
+    // Two nodes live, one in the file: the seat wrote and never exported.
+    let found = sync_debt(&gp, 3, &|| Some(exported.clone()));
+    assert_eq!(found.len(), 1);
+    let d = &found[0];
+
+    assert_eq!(d.state, "in_step", "the file genuinely has not moved");
+    assert_eq!(d.live_nodes, 3);
+    assert_eq!(d.export_nodes, 1);
+    let msg = d.message();
+    assert!(
+        msg.contains('3') && msg.contains('1') && msg.contains("never been exported"),
+        "the line must say how much is unexported, not merely that all is well: {msg}"
+    );
+}
+
+/// COUNTERWEIGHT, and the one that stops this becoming a different bug: a seat
+/// that HAS exported must get the quiet answer. A reading aid that fires on
+/// correct work is a false alarm on the path every ordinary session takes, and
+/// it would be switched off inside a day.
+#[test]
+fn a_fully_exported_graph_says_nothing_extra() {
+    let (dir, gp) = scratch("exported");
+    let file = dir.path().join("reflow2.json");
+
+    let exported = design(&["cap:one", "cap:two"]);
+    put(&file, &exported);
+    mark_synced(&gp, &file, &exported);
+
+    let live = exported.nodes.len();
+    let found = sync_debt(&gp, live, &|| Some(exported.clone()));
+    let d = &found[0];
+
+    assert_eq!(d.state, "in_step");
+    assert_eq!(d.live_nodes, d.export_nodes);
+    let msg = d.message();
+    assert!(
+        !msg.contains("never been exported"),
+        "an in-step, fully-exported record must stay quiet: {msg}"
+    );
+}
+
+/// COUNTERWEIGHT 2: unexported work is NOT actionable sync debt. `behind` means
+/// somebody else's work is in the file and you should import it; exporting your
+/// own is a different act with a different remedy, and collapsing the two would
+/// tell a session to `import_graph` over its own unsaved work.
+#[test]
+fn unexported_work_is_not_reported_as_behind() {
+    let (dir, gp) = scratch("notbehind");
+    let file = dir.path().join("reflow2.json");
+
+    let exported = design(&["cap:one"]);
+    put(&file, &exported);
+    mark_synced(&gp, &file, &exported);
+
+    let found = sync_debt(&gp, 99, &|| Some(exported.clone()));
+    assert!(
+        behind(&found).is_empty(),
+        "holding unexported work is not the record moving ahead of you: {found:?}"
+    );
+}
+
+/// COUNTERWEIGHT 3: a seat BEHIND the record still reports that, and still
+/// names what arrived. The counts must not shadow the finding that has a
+/// remedy.
+#[test]
+fn the_counts_do_not_mask_a_record_that_moved_ahead() {
+    let (dir, gp) = scratch("bothways");
+    let file = dir.path().join("reflow2.json");
+
+    let mine = design(&["cap:mine"]);
+    put(&file, &mine);
+    mark_synced(&gp, &file, &mine);
+    put(&file, &design(&["cap:mine", "cap:theirs"]));
+
+    let found = sync_debt(&gp, 50, &|| Some(mine.clone()));
+    let actionable = behind(&found);
+    assert_eq!(actionable.len(), 1, "{found:?}");
+    assert!(
+        actionable[0]
+            .nodes_not_here
+            .contains(&"cap:theirs".to_string()),
+        "still names what arrived: {:?}",
+        actionable[0]
     );
 }

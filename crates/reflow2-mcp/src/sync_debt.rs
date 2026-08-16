@@ -89,6 +89,35 @@ pub struct SyncDebt {
     /// believing the one the file supplies about itself.
     #[serde(skip_serializing_if = "std::ops::Not::not")]
     pub stamp_disagrees: bool,
+    /// How many nodes the FILE holds, beside how many the LIVE graph holds.
+    ///
+    /// ⚠️ THESE EXIST TO MAKE `in_step` FALSIFIABLE, and the distinction they
+    /// carry is the whole reason (2026-08-16, dragon Boss + reproduced here).
+    /// This check answers ONE question — has the shared record moved ahead of
+    /// this seat — and `ver:the-record-moved-is-surfaced` pins "ordinary
+    /// unexported work is NEVER reported" as the property the design rests on.
+    /// But `in_step`, in a field called `sync`, was read as ALSO meaning "my
+    /// work is durable", and it never did: the cheap gate compares the file
+    /// against the hash this graph last wrote it with, so a seat that has
+    /// written since its last export gets a green that cannot go red.
+    /// MEASURED: `in_step` with `nodes_not_here_total: 0` while two
+    /// TemporalFacts sat live and absent from the export, one machine failure
+    /// from gone.
+    ///
+    /// A caller could not tell "I compared and they match" from "I compared the
+    /// file to its own recorded hash". Now they can: `live_nodes >
+    /// export_nodes` means unexported work, whatever `state` says.
+    ///
+    /// TWO BOUNDS, stated here rather than discovered later. (1) Counts, not
+    /// ids — equal counts with different ids still slip through, so this is a
+    /// READING AID and not a durability guarantee. (2) NODES ONLY, and
+    /// deliberately: counting edges means walking every node's adjacency, which
+    /// costs what the export costs, and paying that on the path every ordinary
+    /// session takes is the one thing this check was built to avoid. An
+    /// edge-only divergence is therefore invisible here.
+    pub export_nodes: usize,
+    /// Nodes in the live graph right now. See [`Self::export_nodes`].
+    pub live_nodes: usize,
 }
 
 impl SyncDebt {
@@ -147,6 +176,18 @@ impl SyncDebt {
                  reflow2 export.",
                 self.path
             ),
+            // The unexported-work sentence lives HERE, on the in-step line,
+            // because that is the line a session reads before standing down.
+            _ if self.live_nodes > self.export_nodes => format!(
+                "{} is exactly where this graph left it — but this graph holds {} node(s) and \
+                 that file holds {}, so {} node(s) here have never been exported. The file is \
+                 the only copy that survives losing the graph directory: export before you \
+                 finish.",
+                self.path,
+                self.live_nodes,
+                self.export_nodes,
+                self.live_nodes - self.export_nodes
+            ),
             _ => format!("{} is exactly where this graph left it.", self.path),
         }
     }
@@ -164,7 +205,11 @@ impl SyncDebt {
 /// known before any comparison is needed. So the export is built only if some
 /// record has actually moved, and never on the path every ordinary session
 /// takes. It is called at most once however many targets are stale.
-pub fn sync_debt(graph_path: &str, mine: &dyn Fn() -> Option<GraphExport>) -> Vec<SyncDebt> {
+pub fn sync_debt(
+    graph_path: &str,
+    live_nodes: usize,
+    mine: &dyn Fn() -> Option<GraphExport>,
+) -> Vec<SyncDebt> {
     let mut built: Option<Option<GraphExport>> = None;
     let state = reflow2_core::provenance::read_sync_state(graph_path);
     let mut out = Vec::new();
@@ -172,14 +217,28 @@ pub fn sync_debt(graph_path: &str, mine: &dyn Fn() -> Option<GraphExport>) -> Ve
     for (path, expected) in &state.last_synced {
         let target = std::path::Path::new(path);
         if !target.exists() {
-            out.push(bare(path, "missing", Some(expected.clone()), None));
+            out.push(bare(
+                path,
+                "missing",
+                Some(expected.clone()),
+                None,
+                live_nodes,
+                0,
+            ));
             continue;
         }
         let on_disk = std::fs::read_to_string(target)
             .ok()
             .and_then(|raw| serde_json::from_str::<GraphExport>(&raw).ok());
         let Some(on_disk) = on_disk else {
-            out.push(bare(path, "unreadable", Some(expected.clone()), None));
+            out.push(bare(
+                path,
+                "unreadable",
+                Some(expected.clone()),
+                None,
+                live_nodes,
+                0,
+            ));
             continue;
         };
         // ⚠️ COMPUTED, NEVER the hash the file states about itself.
@@ -193,11 +252,27 @@ pub fn sync_debt(graph_path: &str, mine: &dyn Fn() -> Option<GraphExport>) -> Ve
         let found = on_disk.compute_content_hash();
         let stamp_disagrees = on_disk.verify_content_hash() == Some(false);
 
+        let export_nodes = on_disk.nodes.len();
+
         // THE CHEAP GATE, and the path every ordinary session takes: the file
         // is exactly where this graph left it, so any difference is the
         // caller's own unexported work. Answered without exporting anything.
+        //
+        // ⚠️ AND THAT IS EXACTLY WHY THE COUNTS RIDE ALONG. This branch cannot
+        // go red for unexported work — it compares the file against the hash
+        // this graph last wrote it with, so a seat that has written since its
+        // last export lands here every time. `live_nodes` vs `export_nodes` is
+        // the only thing on this path that CAN disagree, which is what makes
+        // the green falsifiable rather than merely reassuring.
         if &found == expected {
-            let mut d = bare(path, "in_step", Some(expected.clone()), Some(found));
+            let mut d = bare(
+                path,
+                "in_step",
+                Some(expected.clone()),
+                Some(found),
+                live_nodes,
+                export_nodes,
+            );
             d.stamp_disagrees = stamp_disagrees;
             out.push(d);
             continue;
@@ -212,6 +287,8 @@ pub fn sync_debt(graph_path: &str, mine: &dyn Fn() -> Option<GraphExport>) -> Ve
                 "unreadable",
                 Some(expected.clone()),
                 Some(found),
+                live_nodes,
+                export_nodes,
             ));
             continue;
         };
@@ -229,7 +306,14 @@ pub fn sync_debt(graph_path: &str, mine: &dyn Fn() -> Option<GraphExport>) -> Ve
         // document comparison, which is the whole reason we got here.
         match reflow2_core::sync::assess_overwrite(Some(&on_disk), mine, None) {
             SyncVerdict::Clear => {
-                let mut d = bare(path, "in_step", Some(expected.clone()), Some(found));
+                let mut d = bare(
+                    path,
+                    "in_step",
+                    Some(expected.clone()),
+                    Some(found),
+                    live_nodes,
+                    export_nodes,
+                );
                 d.stamp_disagrees = stamp_disagrees;
                 out.push(d)
             }
@@ -239,6 +323,8 @@ pub fn sync_debt(graph_path: &str, mine: &dyn Fn() -> Option<GraphExport>) -> Ve
                     "moved_but_current",
                     Some(expected.clone()),
                     Some(found),
+                    live_nodes,
+                    export_nodes,
                 );
                 d.stamp_disagrees = stamp_disagrees;
                 out.push(d)
@@ -256,13 +342,22 @@ pub fn sync_debt(graph_path: &str, mine: &dyn Fn() -> Option<GraphExport>) -> Ve
                 nodes_not_here_total: dropped_nodes.len(),
                 edges_not_here_total: dropped_edges.len(),
                 stamp_disagrees,
+                export_nodes,
+                live_nodes,
             }),
         }
     }
     out
 }
 
-fn bare(path: &str, state: &str, expected: Option<String>, found: Option<String>) -> SyncDebt {
+fn bare(
+    path: &str,
+    state: &str,
+    expected: Option<String>,
+    found: Option<String>,
+    live_nodes: usize,
+    export_nodes: usize,
+) -> SyncDebt {
     SyncDebt {
         path: path.to_string(),
         state: state.to_string(),
@@ -272,5 +367,7 @@ fn bare(path: &str, state: &str, expected: Option<String>, found: Option<String>
         nodes_not_here_total: 0,
         edges_not_here_total: 0,
         stamp_disagrees: false,
+        export_nodes,
+        live_nodes,
     }
 }
