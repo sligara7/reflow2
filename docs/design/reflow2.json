@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:c40dc56a70be91589b470ea59559ed76d73fe78f7b9f22d0f3ce708dba39fd47",
+  "content_hash": "sha256:49db8de098d41c6e971ac0a3cd59c5b4de2d96729a36d350d6a1e83f2730710f",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -9930,6 +9930,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-measurement-says-when-it-was-taken",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-measurement-says-when-it-was-taken",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-measurement-says-when-it-was-taken",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-measurement-says-when-it-was-taken",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:a-merge-proposal-discloses-what-it-would-destroy",
       "properties": {
         "accepted_baseline": true,
@@ -10827,6 +10863,15 @@
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-8a485159aeb4cc93",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-edges-need-both-ends"
     },
     {
       "edge_type": "CHANGED",
@@ -66118,6 +66163,12 @@
       "edge_type": "SATISFIES",
       "from_id": "cap:budget",
       "properties": {},
+      "to_id": "req:evidence-carries-the-date-it-was-taken"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:budget",
+      "properties": {},
       "to_id": "req:golden-thread"
     },
     {
@@ -68000,6 +68051,12 @@
       "from_id": "ver:a-finding-names-its-hub",
       "properties": {},
       "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-measurement-says-when-it-was-taken",
+      "properties": {},
+      "to_id": "req:evidence-carries-the-date-it-was-taken"
     },
     {
       "edge_type": "VERIFIES",
@@ -70600,7 +70657,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6aeb7aaf31ccdd875990bce6735c75eeead49c7371c4bc39064d4e7f478733e8",
+        "checksum": "sha256:28210925da9f9641d9ca5d5a670c3da2c62be0a1d3be722fe4123823019d9c23",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/budget.rs",
         "name": "budget.rs",
@@ -71824,7 +71881,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:7b5303233e9b8622836c1d1890481d82e59d2fb1dfc0cc056d6a10ccc01d3806",
+        "checksum": "sha256:3c14debf63e30806550295d9645fa4c3d47da88e722c020053f66c07b52f36bb",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/core.yaml",
@@ -72081,7 +72138,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0cc254e5e29b72187e24e46f5fdebc9dd0220125a2ec38e32faac9a9782d51c5",
+        "checksum": "sha256:f783c860a0bfae5abf030ec3a1c226fda8dc0e22e08261319f92b1f3b1cd35c2",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -72367,7 +72424,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:adefdf5e47e07f96619a6aa0f32238c8beb42fbd1cc12c067cdcdba7cceb2f05",
+        "checksum": "sha256:d79efdde28d0a21b8d7a1b560f7acaaf0992348dfe7f0d569c8e104aebcd4f94",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/edges_need_both_ends.rs",
         "name": "edges_need_both_ends.rs",
@@ -72575,7 +72632,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1346752cf43f8682062468133186c2ac3e5b00888b13908a48e1c9bec2b11801",
+        "checksum": "sha256:7fafa7f11b420c3ab52b40856fdf8b6087cdcb722402c2d0bb576674710bcfd1",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "tools/capture.rs",
@@ -74913,6 +74970,14 @@
       }
     },
     {
+      "node_id": "chg:a-measurement-says-when-it-was-taken",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "A CONSTRAINS edge carries measured_at, and budget_report names a measurement that does not say when — fourth theme of the triage-fixes increment"
+      }
+    },
+    {
       "node_id": "chg:a-merge-proposal-discloses-what-it-would-destroy",
       "node_type": "ChangeEvent",
       "properties": {
@@ -75626,6 +75691,16 @@
         "change_type": "resync",
         "detected_at": "2026-08-09",
         "name": "The v0.26.1 version bump in reflow2.toml. `design_holds` because a version string carries no design meaning — the design meaning of a cut lives in rel:v0261 and epoch:v0261. Accepted BEFORE release_includes_all so the manifest freezes the post-bump value; doing it the other way round costs a second export (the v0.20.0 lesson, avoided twice now)."
+      }
+    },
+    {
+      "node_id": "chg:accept-8a485159aeb4cc93",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-16",
+        "name": "A call-site update only: constrains() gained a sixth argument and this test passes None. The case it pins — that a CONSTRAINS edge to a missing node is refused — is untouched, so the design holds.",
+        "subject": "system"
       }
     },
     {
@@ -94470,6 +94545,18 @@
       }
     },
     {
+      "node_id": "ver:a-measurement-says-when-it-was-taken",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-16",
+        "level": "unit",
+        "method": "test",
+        "name": "A budget names the measurements that do not say when they were taken (crates/reflow2-core/tests/budget.rs) — 4 cases. THE CASE: a contribution at `basis: measured` with no `measured_at` is listed in `undated_measurements`, and one that states a date is not. TWO COUNTERWEIGHTS DECIDE THE SHAPE. An undated ESTIMATE is NOT reported, because an estimate does not decay and demanding a date from it would raise a finding on correct work — the signal-trained-to-be-ignored failure. And an undated measurement STILL COUNTS toward the total and the verdict: undated is not unstated, and refusing to total it would break every design that has not started dating its numbers, so this reports without ever refusing. The fourth case pins that the date survives onto the edge and back out through the report. MUTATION-CHECKED BOTH WAYS, each killing exactly the right test: demanding a date from every basis fails ONLY the estimate counterweight, and reporting nothing fails the case plus the still-counts case. FROM music_graph F22, where a contribution of 6.9 fps at basis=measured stood against a 40 fps minimum while the true value was 55.06 — right when taken, wrong for days.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-merge-says-what-it-destroys",
       "node_type": "Verification",
       "properties": {
@@ -96284,7 +96371,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:3cbd36b84cc870b97730a7a6454c5e7cfd230ff5b059bd3d25a5e40d6b620181",
+  "prev_content_hash": "sha256:c40dc56a70be91589b470ea59559ed76d73fe78f7b9f22d0f3ce708dba39fd47",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

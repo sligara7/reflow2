@@ -1545,6 +1545,13 @@ pub struct ConstrainsReq {
     /// `estimated` (default) / `evidence` / `measured`.
     #[serde(default)]
     pub basis: Option<String>,
+    /// WHEN the contribution was observed. Pass it whenever `basis` is
+    /// `measured` — that is the strongest claim the schema offers and the only
+    /// one that goes stale, and `budget_report` lists an undated measurement
+    /// rather than treating it as fresh. An estimate does not decay and needs
+    /// no date.
+    #[serde(default)]
+    pub measured_at: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]

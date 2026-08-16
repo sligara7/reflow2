@@ -1067,6 +1067,7 @@ impl ReflowService {
                 &req.target_id,
                 req.contribution,
                 req.basis.as_deref(),
+                req.measured_at.as_deref(),
             )
             .map_err(dyno_err)?,
         ))

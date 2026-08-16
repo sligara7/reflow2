@@ -81,6 +81,7 @@ impl DesignGraph {
         target_id: &str,
         contribution: Option<f64>,
         basis: Option<&str>,
+        measured_at: Option<&str>,
     ) -> Result<StoredEdge, DynoError> {
         // Reject a non-finite contribution at the write seam (BL-58). A NaN
         // poisons the total (every comparison against it is false) and panics
@@ -103,7 +104,8 @@ impl DesignGraph {
             target_id,
             Props::new()
                 .set_opt("contribution", contribution)
-                .set_opt("basis", basis),
+                .set_opt("basis", basis)
+                .set_opt("measured_at", measured_at),
         )
     }
 }
@@ -115,6 +117,12 @@ pub struct BudgetContributor {
     /// `None` means the edge states no number — reported, never zeroed.
     pub contribution: Option<f64>,
     pub basis: Option<String>,
+    /// When the contribution was observed, where the caller said.
+    ///
+    /// Only meaningful for a `basis` that decays. An estimate does not go
+    /// stale; a MEASUREMENT is a statement about a system at a moment, and
+    /// nothing could previously say how old one was.
+    pub measured_at: Option<String>,
 }
 
 /// The verdict a rollup can honestly reach.
@@ -152,6 +160,24 @@ pub struct BudgetReport {
     /// numbers is a weaker claim than one over `measured`, and the caller
     /// must see that.
     pub basis_coverage: BTreeMap<String, usize>,
+    /// Contributors claiming `basis: measured` that do not say WHEN.
+    ///
+    /// ⚠️ REPORTED, NEVER GUESSED, and it is the same discipline `unstated`
+    /// above applies to a missing number: `measured` is the strongest evidence
+    /// claim this schema offers and the only one that decays, so an undated
+    /// one is a claim whose age nobody can check. music_graph F22 measured the
+    /// cost — a contribution of 6.9 fps against a 40 fps minimum whose true
+    /// value was 55.06, right when taken and wrong for days.
+    ///
+    /// `ver:evidence-quality` already holds this line for Verification
+    /// evidence, where an undated side is UNKNOWN and counted rather than
+    /// silently passed. This is that rule reaching the one number a KPP
+    /// verdict rests on.
+    ///
+    /// It does NOT change the verdict: an undated measurement is still a
+    /// stated number, and refusing to total it would break every design that
+    /// has not started dating them.
+    pub undated_measurements: Vec<String>,
     pub verdict: BudgetVerdict,
     /// The heaviest chain of contributors along `DEPENDS_ON` (contracts
     /// collapsed: consumer depends on provider), when any such edges join
@@ -193,6 +219,11 @@ impl DesignGraph {
                     .get("basis")
                     .and_then(Value::as_str)
                     .map(str::to_string),
+                measured_at: e
+                    .properties
+                    .get("measured_at")
+                    .and_then(Value::as_str)
+                    .map(str::to_string),
             });
         }
         contributors.sort_by(|a, b| a.node_id.cmp(&b.node_id));
@@ -201,6 +232,15 @@ impl DesignGraph {
         let unstated: Vec<String> = contributors
             .iter()
             .filter(|c| c.contribution.is_none())
+            .map(|c| c.node_id.clone())
+            .collect();
+        // Only `measured` is asked for a date. An `estimated` figure does not
+        // decay, so demanding one would raise a finding on correct work — the
+        // signal-trained-to-be-ignored failure this project keeps naming.
+        let undated_measurements: Vec<String> = contributors
+            .iter()
+            .filter(|c| c.contribution.is_some())
+            .filter(|c| c.basis.as_deref() == Some("measured") && c.measured_at.is_none())
             .map(|c| c.node_id.clone())
             .collect();
         let mut basis_coverage: BTreeMap<String, usize> = BTreeMap::new();
@@ -252,6 +292,7 @@ impl DesignGraph {
             total,
             unstated,
             basis_coverage,
+            undated_measurements,
             verdict,
             worst_path,
             worst_path_total,

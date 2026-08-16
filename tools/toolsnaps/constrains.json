@@ -27,6 +27,14 @@
           "null"
         ]
       },
+      "measured_at": {
+        "default": null,
+        "description": "WHEN the contribution was observed. Pass it whenever `basis` is\n`measured` — that is the strongest claim the schema offers and the only\none that goes stale, and `budget_report` lists an undated measurement\nrather than treating it as fresh. An estimate does not decay and needs\nno date.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "target_id": {
         "type": "string"
       },
