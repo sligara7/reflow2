@@ -1989,10 +1989,17 @@ pub struct PropagateChangeReq {
 pub struct ExportGraphToReq {
     /// Write the export to this file (deterministic sorted-key JSON, diffable
     /// under git) and return only {path, bytes, nodes, edges, content_hash,
-    /// prev_content_hash, stamp}. Replacing an existing export links the new
-    /// document to the old one's content hash (lineage; chain advances only
+    /// prev_content_hash, wrote, stamp}. Replacing an existing export links the
+    /// new document to the old one's content hash (lineage; chain advances only
     /// when content changed). Omit to get the whole document as the result
     /// payload.
+    ///
+    /// **READ `wrote`** — `created` / `changed` / `unchanged`. The hashes do NOT
+    /// answer it: an export that changed the file and one that changed nothing
+    /// return the same `content_hash` AND the same `prev_content_hash`, so a
+    /// no-op is indistinguishable from a save without this field. On a shared
+    /// server `unchanged` usually means a peer's export already carried your
+    /// work, which is worth knowing and reads like a failed save without it.
     #[serde(default)]
     pub path: Option<String>,
     /// Allow `path` to replace an existing file. Off by default: an export

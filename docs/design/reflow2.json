@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:5bc917f5b4590334deedf7696a7fcdd7b32175e269b956aea682e43245993e2a",
+  "content_hash": "sha256:f4a060db0df1d0126ffc23d24e1f55ace99ff36a132ae416fe4f5fb388326ad9",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -67844,7 +67844,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f0abf1d2bbde9ea3f8a8b355fe71c1dea97158a56057c9dab81f63db1c6beaa8",
+        "checksum": "sha256:e48970fe1d8cd0f8bcc3539748d5019a97722f42a25afa856274ef1be37bbadc",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -68377,7 +68377,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:059eb65c3bb6904b292fef5655a51942079caac0aa0a8c86b0013d4d049cc79f",
+        "checksum": "sha256:f6720b2e49607c8ae69b578db4ec19ce65e9ec9e2be8e13c3bc16ee0d795229e",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
@@ -91645,7 +91645,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ec2eb4d40fb99fda63f3e9c36f68e94489ee62359dcbfe5a8b4daa46c0376654",
+  "prev_content_hash": "sha256:5bc917f5b4590334deedf7696a7fcdd7b32175e269b956aea682e43245993e2a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
