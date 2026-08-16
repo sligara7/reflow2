@@ -31,7 +31,78 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.32.0] — 2026-08-16
+
+Fifteen merged changes, and the shape of the increment is that **every defect in it was found by
+running reflow2 against a real project or by a first-time user — none by reading code, none by a
+gate.** Four consumer projects reported in two days; verification against the running build changed
+the answer often enough that "recorded as filed" stopped being acceptable practice.
+
+### Fixed
+
+- **A restored design no longer gains two properties nobody chose.** `Artifact.granularity` and
+  `Artifact.volatility` declared `default:` in the schema, and `default:` is not documentation —
+  dynograph-core executes it at **write** time, so importing an export materialised an intent the
+  document never carried. Measured on music_graph's real committed export: restoring a design built
+  before v0.24.0 made **all 35 of their Artifacts come back different**, moving the content hash and
+  blocking the first commit on a machine where nobody had designed anything. The honest fix (refresh
+  the export) was indistinguishable from the dishonest one (`--no-verify`) without diffing property
+  by property first.
+
+  **The fix is two YAML tokens and no code, because the safe reading already lived in the reader** —
+  `coverage.rs` falls back to `atomic` and `drift.rs` to `stable`, and those are the only two
+  readers. So the schema default changed no report's verdict and bought nothing. Measured both
+  directions on their file: 35 nodes changed as shipped, **0** with the defaults removed.
+
+  This reverses a deliberate BL-198 keep. That reasoning was right — `stable` *is* the safe reading —
+  but storing it converted a fallback into an assertion. **Forward-only**: nothing already written
+  moves, so existing exports do not churn.
+
+- **A Question not created by `gap_to_prompt` was permanently unanswerable.** The lookup derived the
+  Question id from the gap id by string formatting and did a single fetch, so a hand-authored
+  Question could not be reached — while `open_questions` published its `question_id` and
+  `answer_question` refused to accept one. The loop then reported *"follow it up rather than asking
+  again"* about something it structurally could not close, and the next seat re-asks the user what
+  they already ruled on. `answer_question` and `withdraw_question` now take **either** identifier,
+  the derived id still wins when both could match, and the refusal names the ids that do exist.
+
+- **`reflow2_check.py` stopped crashing on a directory Artifact** and stopped misfiling faults as
+  gate failures — reflow2's own graph has zero directory artifacts, so its CI had never reached that
+  line.
+
+- **A retirement carried out stops being reported as drift** — `DriftKind::ExpectedAbsence`, so
+  deliberate deletion is finally expressible rather than nagging forever.
+
+- **The release proves the image starts before publishing it.** A flag removed in v0.27.0 was still
+  being passed, so five releases shipped an image that never started.
+
 ### Added
+
+- **The gate checks that a committed export can be read back.** `reflow2_check.py` gains a ROUND
+  TRIP check — export → import → re-export, compared structurally. It is the only probe that sees an
+  unrestorable design: `content_hash`, the lineage chain and `sync_status` all compare the export to
+  *itself* and never run the importer. dev_storyflow's export had been unrestorable for four days
+  with every one of those green. The `ci-gate` skill documents it, including the case where the
+  cause is reflow2's rather than the reader's and re-exporting is **not** the fix.
+
+- **An in-step record says how much of this graph it does not hold.** Every `sync` entry now carries
+  `live_nodes` beside `export_nodes`. `sync` answers one question — has the shared record moved ahead
+  of me — and answers it correctly; but nothing covered the *other* direction, and `in_step`, in a
+  field called `sync`, was read as covering both. Reproduced on reflow2's own graph: `in_step` while
+  two facts sat live and absent from the export. No state and no verdict changes — unexported work is
+  still not `behind`, because that would tell a session to import over its own unsaved work.
+
+- **`export_graph` says whether it wrote anything** — `wrote: created | changed | unchanged`. The
+  hashes cannot answer it: an export that changed the file and one that changed nothing return the
+  same `content_hash` *and* the same `prev_content_hash`, so a no-op was indistinguishable from a
+  save.
+
+- **`VERIFIES` admits `Constraint`** — a check may now say whether a limit holds. `Project` stays
+  out, deliberately.
+
+- **A refusal names what would have worked.** `authored_by` and `owned_by` distinguish a wrong
+  *type* from a missing node and name `add_contributor`; the `adopt` skill says why the document
+  wins.
 
 - **A typed constructor that lands on an existing node says what it replaced** — a new
   `revision` block on `add_requirement`, `add_capability`, `add_component`, `add_interface`,
@@ -66,6 +137,16 @@ This file is the third view: *what changed, and when*.
   dependency of `reflow2-mcp` rather than an implied one (already in the lock via `reflow2-core`);
   zero new crates compile. Mutation-checked: reading the prior value from the node AFTER the write
   — precisely the reported defect — fails 4 of the 6 new checks.
+
+### Changed
+
+- **`change_type` stops answering two questions at once.** `ChangeSubject {system, record}` is added
+  as an optional axis, and `defect_fix` joins the enum — "the design was right and the code was
+  wrong" previously had no value, and five sessions across three projects each picked a *different*
+  least-wrong one.
+
+- **The no-documents rule gains its reasoning and its exception**, so the rule can be argued with
+  rather than merely obeyed.
 
 ## [0.31.0] — 2026-08-15
 
