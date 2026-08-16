@@ -480,6 +480,89 @@ def check_export_identity(path: str, doc: dict) -> str | None:
     )
 
 
+def check_round_trip(doc: dict, server, tmp: str) -> str | None:
+    """Does this export survive being READ BACK? Export → import → re-export.
+
+    THE ONLY PROBE THAT SEES THIS CLASS, and it needs no knowledge of any
+    particular schema rule. Everything else here verifies the export against
+    ITSELF: `content_hash` re-hashes the same bytes, the chain links one export
+    to the last, `sync_status` compares a recorded hash to the file. All of them
+    stay green while the document is unreadable by the importer, because none of
+    them ever runs the importer.
+
+    dev_storyflow's committed export could not be imported by the binary that
+    wrote it, and had not been restorable for at least four days across thirty
+    export commits, while every one of those signals read clean (2026-08-15).
+    THE STAKE IS NOT CI: `.reflow2/graph` is gitignored, machine-local and
+    single-writer, so the committed export is the only copy of a design that
+    survives losing that directory. An export nobody has ever imported is a
+    backup nobody has ever restored.
+
+    The import leg already ran above — an unimportable document dies at exit 2
+    before this. What this adds is the RETURN LEG: a document can import cleanly
+    and still come back DIFFERENT, and a lossy round trip is silent in a way an
+    invalid one is not.
+
+    Compared structurally rather than by hash, deliberately: a hash says only
+    THAT they differ, and the useful answer is WHICH nodes and edges did not
+    survive. Lineage fields are excluded because they are expected to differ —
+    a re-export chains from what it replaced, which is a different question and
+    `check_export_chain` already owns it.
+    """
+    out = os.path.join(tmp, "round-trip.json")
+    try:
+        server.call("export_graph", {"path": out, "overwrite": True})
+        with open(out, encoding="utf-8") as f:
+            back = json.load(f)
+    except Exception as e:  # noqa: BLE001 — a failed re-export IS the finding
+        return f"ROUND TRIP  the design could not be re-exported after import: {e}"
+
+    def nodes_of(d):
+        return {(n.get("node_type"), n.get("node_id")): n.get("properties", {})
+                for n in d.get("nodes", [])}
+
+    def edges_of(d):
+        return {(e.get("edge_type"), e.get("from_id"), e.get("to_id")): e.get("properties", {})
+                for e in d.get("edges", [])}
+
+    before_n, after_n = nodes_of(doc), nodes_of(back)
+    before_e, after_e = edges_of(doc), edges_of(back)
+
+    lost_n = sorted(k for k in before_n if k not in after_n)
+    lost_e = sorted(k for k in before_e if k not in after_e)
+    gained_n = sorted(k for k in after_n if k not in before_n)
+    gained_e = sorted(k for k in after_e if k not in before_e)
+    changed = sorted(k for k in before_n if k in after_n and before_n[k] != after_n[k])
+
+    if not (lost_n or lost_e or gained_n or gained_e or changed):
+        return None
+
+    def sample(items, n=5):
+        shown = ", ".join(":".join(str(p) for p in k) for k in items[:n])
+        return shown + (f" (+{len(items) - n} more)" if len(items) > n else "")
+
+    parts = []
+    if lost_n:
+        parts.append(f"{len(lost_n)} node(s) did not survive: {sample(lost_n)}")
+    if lost_e:
+        parts.append(f"{len(lost_e)} edge(s) did not survive: {sample(lost_e)}")
+    if changed:
+        parts.append(f"{len(changed)} node(s) came back with different properties: {sample(changed)}")
+    if gained_n:
+        parts.append(f"{len(gained_n)} node(s) appeared that were not in the export: {sample(gained_n)}")
+    if gained_e:
+        parts.append(f"{len(gained_e)} edge(s) appeared that were not in the export: {sample(gained_e)}")
+
+    return (
+        "ROUND TRIP  this export does not survive being read back — "
+        + "; ".join(parts)
+        + ". The committed export is the only copy of this design that survives "
+        "losing the gitignored graph directory, so a lossy round trip is a backup "
+        "that would not restore. Every other check here compares the export to "
+        "ITSELF and cannot see this."
+    )
+
+
 def check_export_chain(path: str, doc: dict) -> str | None:
     """Verify this export links to its predecessor (`dec:export-hash-chain`).
 
@@ -607,6 +690,15 @@ def main() -> int:
 
         server = Server(opts.bin, graph)
         try:
+            # ROUND TRIP FIRST, because it is the only check here that asks
+            # whether the document can be READ BACK, and everything below this
+            # line is already reasoning about the imported copy rather than the
+            # committed one. If the two disagree, every finding after this is
+            # about a design that is not quite the one in the repository.
+            lossy = check_round_trip(doc, server, tmp)
+            if lossy:
+                failures.append(lossy)
+
             # Paged, not one reply: `exhaustive: true` below is a CLAIM, and it
             # was false by 20 artifacts until this used scan_all.
             artifacts = server.scan_all("Artifact")
