@@ -69,7 +69,24 @@ fn kinds(g: &mut DesignGraph, obs: &[ObservedArtifact]) -> Vec<DriftKind> {
 /// A source file that changed is drift, exactly as before.
 #[test]
 fn a_stable_artifact_still_reports_checksum_change() {
-    let mut g = graph_with(None); // no volatility set — defaults to `stable`
+    // No volatility set. Until 2026-08-15 the SCHEMA injected `stable` here at
+    // write time and this case proved the injected value behaved; since
+    // music_graph F23 removed that default, nothing is stored and `drift.rs`
+    // supplies `stable` via unwrap_or. The case is unchanged and still passes,
+    // which is the whole argument for the removal: the safe reading never came
+    // from the store.
+    let mut g = graph_with(None);
+    assert_eq!(
+        g.get_node(node::ARTIFACT, "art:bus")
+            .unwrap()
+            .unwrap()
+            .properties
+            .get("volatility"),
+        None,
+        "absence must be ABSENT — if the store still holds a value nobody chose, \
+         the round trip that F23 reported is still there and the case below is \
+         proving the wrong thing"
+    );
     assert_eq!(
         kinds(&mut g, &[observed("art:bus", true, Some("sha256:bbbb"))]),
         vec![DriftKind::ChecksumChange],
@@ -218,7 +235,19 @@ fn a_deliberately_opaque_claim_is_reported_apart_from_an_unfinished_one() {
 /// design is atomic, and a report that named them all would be noise.
 #[test]
 fn an_ordinary_artifact_is_not_reported_as_a_placeholder() {
-    let g = graph_with_granularity(None); // defaults to `atomic`
+    // Same shape as the volatility case above: nothing is stored since F23, and
+    // `coverage.rs` supplies `atomic` via unwrap_or.
+    let g = graph_with_granularity(None);
+    assert_eq!(
+        g.get_node(node::ARTIFACT, "art:docs")
+            .unwrap()
+            .unwrap()
+            .properties
+            .get("granularity"),
+        None,
+        "absence must be ABSENT — a stored `atomic` nobody chose is what made \
+         35 of music_graph's 35 Artifacts change across a round trip"
+    );
     let r = g.coverage_report(&swept(), &[], None).unwrap();
 
     assert!(r.pending_expansion.is_empty());

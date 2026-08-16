@@ -82,6 +82,18 @@ not run (no export, no binary) — also loud, never a silent pass.
 - **IDENTITY** — the design's name changed. Either you meant it (record why, and expect the chain
   to break here on purpose) or a fresh store minted a new id because nothing was imported before
   writing, which is the far more common cause and is a genuine mistake to fix rather than accept.
+- **ROUND TRIP** — the committed export does not survive being imported and written back out:
+  nodes, edges or properties come back different. **This is the one finding here whose cause may
+  not be yours**, so diagnose before you touch anything. If it names *properties* on nodes you
+  never edited, the importer is materialising schema defaults your document never carried — a
+  reflow2 defect, not a design problem, and there is no honest fix on your side: say so and
+  report it rather than re-exporting, because re-exporting bakes the invented values into the
+  record permanently and nothing afterwards can tell them from values somebody chose. If it names
+  *dropped* nodes or edges, a schema no longer accepts something your design holds — also ours,
+  and worth reporting with the ids it named. Only if it names something you genuinely changed is
+  a re-export the answer. `--no-verify` is not a fix in any of these cases; it is the laundering
+  this gate exists to catch, and here it also discards the only warning that your backup would
+  not restore.
 - **DRIFT on an artifact** — the code moved and nobody said what it meant. Run the
   **link-artifacts** reconcile flow: rehash, then `set_artifact_checksum` with a disposition
   (`design_holds` or `design_updated` + its ChangeEvent), then **re-export and commit the

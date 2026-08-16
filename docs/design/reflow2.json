@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:04c0d07850918b8c6f8c54ea144088cad5208046e66b0f1937ac8b314f3ce658",
+  "content_hash": "sha256:ec2eb4d40fb99fda63f3e9c36f68e94489ee62359dcbfe5a8b4daa46c0376654",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -9627,6 +9627,17 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "fact:defect-import-materialises-defaults-so-a-restored-graph-reads-as-changed",
+      "properties": {
+        "basis": "causal",
+        "confidence": 1.0,
+        "evidence": "The mechanism is known and was exercised in both directions on the reporter's own file, which is what makes this `causal` rather than `correlational`: dynograph-core inserts any missing property declaring a `default:` at write time (schema.rs:507), so import materialised granularity/volatility onto all 35 of music_graph's Artifacts. Removing the two `default:` tokens and re-running the same import -> re-export gave 0 changed nodes; restoring them gave 35 again. The shipped gate agrees — reflow2_check.py against their export dropped its ROUND TRIP finding, 5 findings -> 4.",
+        "validation_status": "validated"
+      },
+      "to_id": "chg:artifact-intent-stops-being-injected"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:defect-installer-cannot-warn-that-the-graph-dir-is-already-tracked",
       "properties": {
         "basis": "observed",
@@ -11313,6 +11324,42 @@
         "action": "modified"
       },
       "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:artifact-intent-stops-being-injected",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:artifact-intent-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:artifact-intent-stops-being-injected",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-build"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:artifact-intent-stops-being-injected",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:artifact-declares-its-own-shape"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:artifact-intent-stops-being-injected",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:defaults-are-not-serialized"
     },
     {
       "edge_type": "CHANGED",
@@ -22857,6 +22904,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:artifact-declares-its-own-shape",
+      "properties": {},
+      "to_id": "dec:the-safe-reading-lives-in-the-reader-not-the-store"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:as-of-epoch",
       "properties": {},
       "to_id": "dec:schedule-is-an-edge-with-modality"
@@ -23628,6 +23681,12 @@
       "from_id": "cap:decision-point",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:defaults-are-not-serialized",
+      "properties": {},
+      "to_id": "dec:the-safe-reading-lives-in-the-reader-not-the-store"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -29194,6 +29253,12 @@
       "from_id": "cmp:schema",
       "properties": {},
       "to_id": "fact:bl-164"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cmp:schema",
+      "properties": {},
+      "to_id": "fact:defect-the-launch-wrapper-cannot-see-a-schema-change"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -66241,7 +66306,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:35902cf49663ef135e774805a69f8b2b3fda3673af859d2289c90594ec1ea845",
+        "checksum": "sha256:7ca7db94d50589123a3b8a7fc7c3392b2dd9636e7be69c760f7990d9d8c77eeb",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/artifact_intent.rs",
         "name": "artifact_intent.rs",
@@ -67490,7 +67555,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:2448c0f71235a67428cbb6cfff886aca6df3b1ad39413aee093ec7283d7f9ac6",
+        "checksum": "sha256:094e3f8f61f0670012b15f19e01961a9260360addbdd7ac9e51f2e43797490c6",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/build.yaml",
@@ -71799,6 +71864,16 @@
       "properties": {
         "change_type": "new_feature",
         "name": "BL-188 + BL-191: an Artifact can declare what it stands for (granularity) and how its content behaves (volatility) — one schema touch, both aimed at the graph being unable to tell two opposite states apart"
+      }
+    },
+    {
+      "node_id": "chg:artifact-intent-stops-being-injected",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "description": "MEASURED, not argued, on music_graph's real committed export (327 nodes / 939 edges, store built under 0.20.0, both fields added later in v0.24.0 and never backfilled).\n\nTHE DEFECT: `default:` in the schema YAML is executed by dynograph-core at WRITE time (schema.rs:507 inserts any missing property that declares one), so importing an export MATERIALISED `granularity: atomic` and `volatility: stable` onto every Artifact the document honestly said nothing about. Their restore, walking the run-book's own §0b procedure on a fresh clone with no design work at all: `--diff` of the imported file against the store it had just built reported design_changed 35 of 35 Artifacts, edges_changed 0, content hash d10d80da -> cef7db52, and the pre-commit hook blocked a commit on a machine where nobody had designed anything.\n\nMEASURED HERE, BOTH DIRECTIONS, through import -> re-export on their real file: as shipped, 35 nodes came back different, gaining exactly Artifact.granularity and Artifact.volatility; with the two `default:` tokens removed, 0 nodes changed and nothing was invented. The real gate agrees — `reflow2_check.py` against their export went from 5 findings including ROUND TRIP to 4, the remaining four being their own genuine artifact drift, which they can fix honestly.\n\n⭐ WHY THIS ROUTE AND NOT THE THREE THEY PROPOSED. The reader ALREADY supplies the safe reading: coverage.rs:209 `.unwrap_or(\"atomic\")` and drift.rs:436 `.unwrap_or(\"stable\")`. So the schema default was redundant with the code — it changed no report's verdict and bought nothing, while costing the round trip. Their (a) backfill-on-import writes values nobody chose into every consumer store permanently; their (b) exclude-defaults-from-the-hash is the route cap:defaults-are-not-serialized argues CANNOT work, because absence would come to mean \"nobody said OR somebody chose the default\", and it would weaken the hash for the 71 properties that legitimately keep defaults; their (c) print-what-was-defaulted leaves the gate red and the restore broken and only explains it. Anthony chose the fourth.\n\n⚠️ THIS REVERSES A DELIBERATE BL-198 KEEP, on his word, and the earlier reasoning was not wrong: `stable` IS the safe reading. What changed is the measurement that the safe reading already lives in the reader. tests/schema_defaults.rs asserted `schema_default(\"Artifact\",\"granularity\") == Some(\"atomic\")`; it now asserts None, and the declared-defaults floor moves 71 -> 69.\n\nFORWARD-ONLY, so nothing already written moves: reflow2's own Artifacts keep the values they hold, its export does not churn, and its own round trip stays clean (verified — no ROUND TRIP finding on docs/design/reflow2.json). music_graph's store has no values to keep, which is exactly why their case comes out clean.\n\nNOT ESTABLISHED, and stated rather than discovered later: how many other consumer designs predate v0.24.0; whether any OTHER node type carries the same unbackfilled shape (the same defect would be invisible until someone restores); and F24, the latent-surface-never-re-probes finding, sits on the same restore path and is NOT addressed here.",
+        "name": "Artifact.granularity and .volatility stop declaring schema defaults, so an old export stops gaining two properties nobody chose on every import (music_graph F23)",
+        "subject": "system"
       }
     },
     {
@@ -77401,6 +77476,16 @@
         "decision": "DECIDED 2026-08-12, Anthony's word, on the question the registry raised the moment it existed: WHO MAY LIST WHICH DESIGNS.\n\n⚠️ THIS IS A DIFFERENT QUESTION FROM THE ONE ALREADY ANSWERED, and conflating them is the trap. `req:a-session-cannot-address-another-design` and `ver:a-session-cannot-name-another-design` settle ADDRESSING — can a session open a design it was not given? (No: refused by name, and a path is not an alternative route in.) This settles EXISTENCE — may a session learn a design is there at all? **A design can be perfectly isolated and still leak the list**, and for a hosted service the customer list is often the most sensitive thing it holds.\n\nTHE TWO CASES PULL OPPOSITE WAYS, AND BOTH ARE REAL.\n- ONE OWNER, MANY PROJECTS. Anthony holds reflow2, flo2, dynograph-foundation, dev_storyflow. He WANTS a session to list them and pick, and asked for exactly that on 2026-08-05: \"can a reflow2 tool be to simply return all graph_ids to the agent and the agent then can choose whichever graph_id the user specifies?\" — captured inside the ACCEPTED `req:a-session-chooses-its-design`.\n- MANY TENANTS, ONE SERVER. flo2's hosted case. A session working on one customer's project must not learn that another customer EXISTS.\n\nDECIDED: **THE REGISTRY'S ROOT IS THE TENANT BOUNDARY.** `Registry::discover(root)` reads what is under that root and nothing else; `graph_ids()` stays unfiltered and lists exactly that. An operator serving many tenants gives each its own root. Isolation is then a property of WHAT IS THERE rather than of a check on who is asking.\n\nWHY, and the first reason is the one that rules out the alternative on principle rather than on effort:\n\n1. **REFLOW2 HAS NO AUTHENTICATION AND IS NOT GETTING ANY.** Stated in the design and printed on the container image label: \"NO AUTHENTICATION — deploy on a private network behind a gateway that authenticates.\" A filtered listing REQUIRES knowing who is asking, so building one means reflow2 growing an identity system it has explicitly refused. That is not a cost, it is a contradiction.\n2. **IT IS FREE.** The root is already a parameter of `Registry::discover`. This is a deployment shape, not code.\n3. **IT IS THE BOUNDARY THAT ALREADY WORKS.** `a_real_design_outside_the_root_is_refused_like_any_other` proves a design genuinely present elsewhere on the machine is refused IDENTICALLY to one invented. The root is already the isolation boundary; making it the tenant boundary is the same mechanism, not a new one.\n4. ⭐ **IT IS ALREADY THE RECOMMENDED ANSWER TO A DIFFERENT QUESTION.** flo2's blast-radius section holds \"(a) Partition. Shard graphs across several reflow2 processes so a crash loses a subset\" and adds \"this is why it belongs with #1 — it is a property of the registry's routing, not a layer above it\", with the warning that designing them apart means designing the first one twice. **Partitioning gives tenant isolation and blast-radius containment from ONE decision.**\n\nWHAT WAS REJECTED, and why, so nobody re-proposes it:\n- A FILTERED LISTING (one registry, trimmed per caller). Rejected on (1): it needs identity reflow2 does not have and will not acquire.\n- NO LISTING AT ALL (you may only attach to an id you were handed). Safe, and it breaks `req:a-session-chooses-its-design` — which is ACCEPTED and whose whole first half is discovering what exists before choosing.\n- LIST EVERYTHING AND TRUST THE OPERATOR TO SCOPE IT. This is what shipped, and it is what this decision RATIFIES rather than changes — but only once the root is NAMED as the boundary. Undecided, the same code reads as an oversight; decided, it is the mechanism.\n\nWHAT IT COSTS, honestly: a root (and likely a process) per tenant is more resource-hungry than one shared server, and it pushes \"which tenant is this?\" up to flo2's gateway. That is where it already belongs — flo2's own boundary list says \"Authentication and authorization, entirely\" is flo2's job, and its only obligation on reflow2 is that a session bound to one graph cannot address another, which is now tested.\n\n⇒ WHAT THIS SETTLES FOR THE TRANSPORT (`cap:select-graph-by-id`, still `in_progress`): **the registry routes WITHIN a root and never across one.** A selection surface — the preferred HTTP path prefix `/g/<graph_id>/` — resolves against the root that server was given, and there is no cross-root operation to design. The security property is decided BEFORE the surface is built rather than retrofitted onto it, which is what flo2's tracker warns about: \"a handler that reaches the wrong graph corrupts a design rather than erroring, so this wants property tests, not examples.\"\n\n📌 NOT SETTLED HERE: whether one PROCESS may hold several roots. `dec:one-process-many-stores` (accepted, conditional) is about a process holding N stores; this is about what one REGISTRY offers. If a process ever serves two roots, the per-root boundary still holds and the routing question is separate.",
         "name": "The registry ROOT is the tenant boundary — listing stays unfiltered, and reflow2 still authenticates nothing",
         "rationale": "Anthony chose this over a filtered listing and over refusing to list at all, after the registry made the question live rather than theoretical. The load-bearing reason is that a filter would require reflow2 to know who is asking — an identity system the design has twice refused in writing — whereas the root is already a parameter, is already the isolation boundary the registry tests prove, and is the same partitioning that flo2's blast-radius section independently recommends. One decision covers tenant isolation and blast radius, which is what that section asked for when it said to decide them together rather than twice.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:the-safe-reading-lives-in-the-reader-not-the-store",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Remove `default:` from `Artifact.granularity` and `Artifact.volatility` in schema/build.yaml. Nothing else: no code change, no backfill, no change to the content hash, no tolerance added to the round-trip gate.",
+        "name": "Artifact.granularity and .volatility declare no schema default — the safe reading is supplied by the reader, so absence stays honest",
+        "rationale": "Anthony's word, 2026-08-15, choosing a FOURTH option over the three music_graph proposed in F23 — and this settles F23 and the round-trip gate's behaviour as ONE decision, which was his framing before it was anyone's analysis.\n\nTHE MEASUREMENT THAT DECIDED IT: the safe reading already lives in the reader. coverage.rs:209 reads granularity with `.unwrap_or(\"atomic\")`; drift.rs:436 reads volatility with `.unwrap_or(\"stable\")`. Those are the only two readers. So the schema default was redundant with the code — it changed no report's verdict, and its only observable effect was to write an intent nobody expressed onto every Artifact at import. Proven by the counterweights, which are the point: the two absence cases in tests/artifact_intent.rs (`graph_with(None)`, `graph_with_granularity(None)`) passed BEFORE this change because the schema injected the value and pass AFTER it because the reader supplies it, unchanged either way.\n\nWHY NOT THEIR THREE. (a) backfill on import and open — migrates a store once, but writes values nobody chose into every consumer store permanently, which is the exact erosion cap:defaults-are-not-serialized exists to prevent. (b) exclude default-valued properties from the content hash — their own preference, and the one route this design has already argued CANNOT work: absence would come to mean \"nobody said OR somebody chose the default\", the distinction lost in the act of protecting it, and it would weaken the hash for the 71 properties that legitimately keep defaults. (c) have --import print what it defaulted — leaves the gate red and the restore broken, and only makes the blocked commit self-explanatory.\n\n⚠️ IT REVERSES A DELIBERATE KEEP, and that is the honest cost. BL-198 removed ten of 81 defaults on 2026-08-10 and KEPT these two, on the reasoning that `stable` is the safe reading. That reasoning was correct and is untouched; what is new is the measurement that the reader already holds it. The reflex being corrected is the same one BL-198 named from the other side — there it was \"single-valued means informationless\", wrong three times in ten; here it is \"the safe reading must be stored\", wrong because storing it converts a fallback into an assertion.\n\nWHAT IT DOES NOT DO: nothing already written moves. reflow2's own Artifacts keep their values, so its export does not churn and its own round trip stays clean. It does not address F24 (the latent surface never re-probes after a CLI restore), which sits on the same restore path and is a separate defect.",
         "status": "accepted"
       }
     },
@@ -88714,6 +88799,19 @@
       }
     },
     {
+      "node_id": "fact:defect-import-materialises-defaults-so-a-restored-graph-reads-as-changed",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "IMPORTING AN EXPORT MATERIALISES SCHEMA DEFAULTS THE DOCUMENT NEVER CARRIED, SO A FRESHLY RESTORED GRAPH REPORTS ITSELF CHANGED AND BLOCKS THE NEXT COMMIT ON A MACHINE WHERE NOBODY HAS DESIGNED ANYTHING. music_graph, fourth pass, 2026-08-15, reflow2-mcp 0.31.0 on both sides — the run-book's own §0b restore procedure, walked on a fresh clone.\n\nMEASURED: `--import` took 327 nodes / 939 edges; `--diff` of that same file against the store it had just built reported `design_changed: 35`, `edges_changed: 0`. ALL 35 ARE ARTIFACTS — every Artifact in the graph — each differing in exactly two properties absent from the document and present in the store: `granularity: null → atomic`, `volatility: null → stable`. The content hash moves with them, and the pre-commit gate blocks: 'COMMIT BLOCKED — the design export is behind the live design graph.'\n\nTHEIR DIAGNOSIS IS PROBABLY RIGHT AND IS A MIGRATION, NOT AN EXPORT BUG: that store was built under 0.20.0, those two Artifact fields arrived later, the original store was never backfilled — so 0.31.0's export wrote faithfully what was there and 0.31.0's import filled in what was missing. AND IT CONVERGES: exporting the restored graph and re-importing that diffs `identical: true`. One cycle, then a fixed point.\n\n⭐⭐ THIS IS THE EXACT CLASS THE ROUND-TRIP GATE SHIPPED TODAY (PR #196) DETECTS — AND IT WILL FIRE ON THEM. `check_round_trip` compares node properties after an export→import→re-export and would report '35 node(s) came back with different properties'. THAT IS A TRUE POSITIVE BY ITS OWN DEFINITION (the document does not survive being read back unchanged) AND WILL READ AS A FAILURE ON ANY DESIGN BUILT BEFORE THOSE FIELDS EXISTED. reflow2's own design does NOT fire, because its Artifacts already carry both properties — the self-host blindness pattern for the fifth time today: the maintainer's graph cannot produce the input that breaks the consumer's.\n\n⚠️ SO THE GATE I SHIPPED TODAY AND THIS DEFECT ARE ONE DECISION, NOT TWO. Their option (b) — exclude default-valued properties from the content hash, so materialising a default is not a change — would settle both at once. Options (a) backfill on import and open, and (c) have `--import` print what it defaulted, leave the round-trip check reporting a difference that is real but uninteresting.\n\nTHEIR FRAMING OF THE COST IS THE PART TO KEEP: 'the first thing reflow2 does on a new machine is tell an agent the design has changed when it has not, and the honest fix (refresh the export, commit it) is INDISTINGUISHABLE FROM THE DISHONEST ONE (--no-verify) unless somebody diffs it property by property first.'\n\nNOT ESTABLISHED: how many consumer designs predate those fields; whether any other node type has the same unbackfilled shape; and whether excluding defaults from the hash would weaken the hash anywhere it matters.",
+        "subject_id": "cap:corpus-ingest",
+        "valid_from": "2026-08-15",
+        "value": "{\"reported\":\"2026-08-15, music_graph fourth pass, reflow2-mcp 0.31.0 both sides\",\"path\":\"the run-book's own §0b restore on a fresh clone - no design work at all\",\"measured\":\"import 327 nodes/939 edges; --diff of the same file vs the store it built: design_changed 35, edges_changed 0\",\"what_differs\":\"all 35 Artifacts, two properties each: granularity null->atomic, volatility null->stable\",\"consequence\":\"content hash moves; pre-commit hook blocks a commit on a machine where nobody designed anything\",\"converges\":\"export the restored graph, re-import: identical true. One cycle then a fixed point\",\"probable_cause\":\"store built under 0.20.0, fields arrived later, never backfilled - a migration rather than an export bug\",\"interacts_with_todays_work\":\"the round-trip gate in PR #196 detects exactly this and WILL fire on them; a true positive by its own definition\",\"why_reflow2_cannot_see_it\":\"reflow2's own Artifacts already carry both properties - self-host blindness, fifth instance today\",\"their_options\":[\"(a) backfill on import and open\",\"(b) exclude default-valued properties from the content hash\",\"(c) have --import print what it defaulted\"],\"note\":\"(b) settles this AND the round-trip gate's behaviour at once\",\"their_framing\":\"the honest fix is indistinguishable from --no-verify unless somebody diffs property by property first\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-ingest-corpus-answers-are-keyed-on-the-document-text",
       "node_type": "TemporalFact",
       "properties": {
@@ -89167,6 +89265,32 @@
         "subject_id": "cmp:packaging",
         "valid_from": "2026-08-15",
         "value": "{\"found\":\"2026-08-15, by rebasing an open PR twice after three others landed\",\"main_file_first_key\":\"stamp\",\"canonical_export_first_key\":\"content_hash (alphabetical)\",\"diff\":\"60793 insertions / 60134 deletions on a ~90000-line file; content identical, order different\",\"contract_broken\":\"export_graph: 'sorted so two exports of an unchanged graph are byte-identical'; path: 'deterministic sorted-key JSON, diffable under git'\",\"cost\":\"the 15 nodes the PR actually added are invisible in the diff; a real regression would be too\",\"second_and_worse\":\"the merge driver updates the FILE not the STORE - next export regressed art:adopt-skill, art:graph, art:skill-lint to stale checksums against an untouched working tree; gate caught it; main was green\",\"why_sync_status_stayed_quiet\":\"in_step compares the recorded hash against the FILE, and the file was exactly where this seat left it - the STORE fell behind, which that check does not measure\",\"remedy_used\":\"import_graph on the committed export, then export once\",\"not_established\":\"whether the driver's order is stable; whether anything besides key order differs; how many past PRs merged a non-canonical export\",\"fix_shapes\":\"merge driver emits the canonical serializer's form; and make the post-merge store staleness visible\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-the-latent-surface-never-re-probes-after-a-cli-restore",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "AFTER A CLI RESTORE, THE LATENT SURFACE STAYS LATENT FOR THE REST OF THE SESSION, AND THE ONE TOOL IT OFFERS IS THE WRONG ONE. music_graph, fourth pass, 2026-08-15, on the run-book's own documented restore path.\n\nWHAT HAPPENED: the MCP server started against an empty directory, correctly served the latent surface, and said so — 'no design graph has ever been started at .reflow2/graph … exactly one tool is served — reflow2_start_design.' TRUE WHEN PRINTED. False ninety seconds later, once `--import` had built the store. NOTHING RE-PROBES, so every design tool stayed unavailable and the export could not be refreshed from the very session that had just done the restore.\n\n⭐ THE SHARP EDGE IS THE COMBINATION WITH `fact:defect-import-materialises-defaults-so-a-restored-graph-reads-as-changed`. At that moment: the graph exists, the pre-commit hook is BLOCKING commits because the restored store reports itself changed, and THE ONLY TOOL ON OFFER IS THE ONE THAT STARTS A DESIGN — against a directory that now has one. The latent surface's own warning that it is 'easy to accept by accident' is aimed at exactly this situation AND CANNOT BE ACTED ON FROM INSIDE IT. The way out is to restart the client, which is not mentioned anywhere.\n\nTHEIR ASKS, in their order of preference: (a) RE-PROBE the graph path when a tool is called and promote latent → full surface in place — 'the latent server already knows the path it is watching'; (b) or have `reflow2_start_design` detect that a store appeared since startup and say 'a design exists here now, restart your client to attach' instead of offering to begin one over the top; (c) or have the latent blurb name the restore command and the restart requirement together, since `--import` is the documented way out of latent mode and currently leaves you stuck in it.\n\nSAME FAMILY AS A TRAP THIS PROJECT ALREADY KNOWS: a rebuilt binary does not replace a running stdio server, and only a full client restart does. THIS SESSION HIT THAT VERSION TODAY — the `subject` field built this afternoon was unreachable from the live server, and the ChangeEvent recording that work had to say so in its own name. THE SURFACE A SESSION BOUND TO AT STARTUP IS NOT RE-EXAMINED, WHICHEVER WAY IT IS WRONG.\n\nWHAT THEY PRAISED ON THE SAME PATH, recorded because it is the counterweight: `--diff <file>` against the live graph with no server running 'answered “did the restore work” completely in one call'. That it runs FILE-AGAINST-STORE rather than file-against-file is what made it usable — there was nothing else to compare to yet — and it is what turned a suspected broken hook into a two-line finding. The run-book's list of what does not travel with a clone was 'accurate on a real second machine, in the right order'.\n\nNOT ESTABLISHED: whether re-probing per call has a cost worth measuring, and whether any other surface decision is frozen at startup the same way.",
+        "subject_id": "cap:latent-surface",
+        "valid_from": "2026-08-15",
+        "value": "{\"reported\":\"2026-08-15, music_graph fourth pass, on the documented §0b restore path\",\"what_happened\":\"server started on an empty dir, served the latent surface correctly, then --import built the store and nothing re-probed\",\"consequence\":\"every design tool stayed unavailable; the export could not be refreshed from the session that did the restore\",\"the_sharp_edge\":\"graph exists + hook blocking commits + the only tool offered is the one that STARTS a design over the top of it\",\"their_own_warning_unusable\":\"the latent surface says it is 'easy to accept by accident' - aimed at exactly this and unactionable from inside it\",\"way_out\":\"restart the client, which is documented nowhere\",\"asks\":[\"(a) re-probe on tool call and promote latent->full in place\",\"(b) start_design detects a store appeared and says restart to attach\",\"(c) latent blurb names the restore command AND the restart requirement\"],\"same_family\":\"a rebuilt binary does not replace a running stdio server - this session hit that version today with the new subject field\",\"counterweight_praised\":\"--diff file-against-store with no server running answered 'did the restore work' in one call\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-the-launch-wrapper-cannot-see-a-schema-change",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE LAUNCH WRAPPER WHOSE ENTIRE PURPOSE IS \"NEVER SERVE A STALE BINARY\" IS BLIND TO THE SCHEMA. tools/reflow2-mcp-launch.sh:31-36 content-hashes `crates/**/src/*.rs` plus Cargo.toml/Cargo.lock/crates/*/Cargo.toml — and nothing else. The schema YAML is compiled into the binary with include_str! (crates/reflow2-core/src/schema.rs:19-38), so a schema-only change leaves the hash UNCHANGED, the wrapper prints \"binary current, skipping build\", and the server serves the previous vocabulary.\n\nMEASURED 2026-08-15, and it cost a wrong write that was caught only by chance: main already carried #199's `change_type: defect_fix` and the new `subject` axis in schema/temporal.yaml, but describe_schema on the running server returned the enum WITHOUT them. The value about to be recorded was the exact fiction #199 had been merged hours earlier to end. It was noticed only because the on-disk YAML was grepped and compared against what the tool reported — nothing in the tool's own answer says which build it came from.\n\nWHY IT IS WORSE THAN AN ORDINARY STALE BINARY: the wrapper's comment (lines 10-15) explains it hashes CONTENT precisely because cargo's mtime check is untrustworthy after a git operation — so it is a deliberate, reasoned guard that was simply pointed at the wrong file set. A session therefore gets a CONFIDENT \"binary current\" for the one class of change where being wrong silently corrupts the vocabulary the design is written in. `tests/**` is outside the hash too, which matters less.\n\nNOT FIXED HERE, and deliberately: it is a separate defect from the one this branch settles, and widening the change to include it was not asked for. The fix is one line — add schema/*.yaml to the srchash — and until it lands, a schema change on this repo requires a manual `cargo build -p reflow2-mcp` plus `--stop-shared` before the new vocabulary is served. IT DOES NOT AFFECT CONSUMERS: they run an installed release binary, not this wrapper.",
+        "subject_id": "cmp:schema",
+        "valid_from": "2026-08-15",
+        "value": "{\"file\":\"tools/reflow2-mcp-launch.sh:31-36\",\"hashes\":[\"crates/**/src/*.rs\",\"Cargo.toml\",\"Cargo.lock\",\"crates/*/Cargo.toml\"],\"omits\":[\"schema/*.yaml\",\"crates/**/tests/*.rs\"],\"mechanism\":\"schema is include_str! into the binary (crates/reflow2-core/src/schema.rs:19-38)\",\"observed\":\"describe_schema on the running server returned the pre-#199 change_type enum while main's schema/temporal.yaml already declared defect_fix and subject\",\"near_miss\":\"the ChangeEvent for this very branch was about to be recorded as test_failure_fix, the fiction #199 exists to end\",\"workaround\":\"cargo build -p reflow2-mcp, then reflow2-mcp --graph-path <path> --stop-shared\",\"blast_radius\":\"this repo only - consumers run an installed release binary\",\"fix\":\"add schema/*.yaml to srchash()\"}"
       }
     },
     {
@@ -91503,7 +91627,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f438a603a6a0f36e4af18f94a89fca1ec512661e0db21b737fe32d45d111b023",
+  "prev_content_hash": "sha256:04c0d07850918b8c6f8c54ea144088cad5208046e66b0f1937ac8b314f3ce658",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

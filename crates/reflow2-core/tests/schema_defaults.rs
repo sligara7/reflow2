@@ -32,7 +32,7 @@ use reflow2_core::schema::{declared_defaults, schema_default};
 fn the_declared_defaults_are_actually_parsed() {
     let d = declared_defaults();
     assert!(
-        d.len() >= 70,
+        d.len() >= 68,
         "the schema declares ~81 defaults; parsing {} means the line shape moved \
          and this parser stopped seeing them — silently, which is the failure it \
          exists to end",
@@ -50,13 +50,25 @@ fn a_known_default_resolves_by_type_and_property() {
         Some("proposed")
     );
     assert_eq!(
-        schema_default("Artifact", "granularity").as_deref(),
-        Some("atomic")
+        schema_default("Artifact", "status").as_deref(),
+        Some("realized")
     );
     // And the seven removed for BL-198 step 1 now resolve to nothing, which is
     // the change itself: dynograph injects only what still declares a default.
     assert_eq!(schema_default("Capability", "tier"), None);
     assert_eq!(schema_default("Requirement", "kind"), None);
+    // THE TWO ADDED 2026-08-15 (music_graph F23), and they are the interesting
+    // pair, because BL-198 KEPT them on the reasoning that `stable` is the safe
+    // reading. That reasoning was right and is untouched — what changed is the
+    // measurement that the SAFE READING ALREADY LIVES IN THE READER
+    // (`coverage.rs` unwrap_or("atomic"), `drift.rs` unwrap_or("stable")), so
+    // declaring it here only made every restored Artifact assert an intent
+    // nobody expressed. Measured on music_graph's real export: 35 of 35
+    // Artifacts gained both properties across import → re-export, moving the
+    // content hash and failing the round-trip gate on a machine where nobody
+    // had designed anything.
+    assert_eq!(schema_default("Artifact", "granularity"), None);
+    assert_eq!(schema_default("Artifact", "volatility"), None);
 }
 
 #[test]
