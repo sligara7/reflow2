@@ -118,7 +118,7 @@ fn the_golden_thread_closing_on_itself_is_not_a_cycle() {
     g.allocate("cap:1", "cmp:1").expect("allocate");
     g.add_artifact("art:1", "engine.rs", None, None)
         .expect("artifact");
-    g.realizes("art:1", node::CAPABILITY, "cap:1", None)
+    g.realizes("art:1", node::CAPABILITY, "cap:1", None, None)
         .expect("realizes");
 
     assert!(

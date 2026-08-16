@@ -827,7 +827,8 @@ fn deliver(g: &mut DesignGraph, req: &str, suffix: &str) {
     g.satisfies(&cap, req).unwrap();
     g.add_artifact(&art, suffix, Some("code"), Some("src/x.rs"))
         .unwrap();
-    g.realizes(&art, node::CAPABILITY, &cap, None).unwrap();
+    g.realizes(&art, node::CAPABILITY, &cap, None, None)
+        .unwrap();
     g.add_verification(&ver, suffix, Some("test"), None)
         .unwrap();
     g.verifies(&ver, node::CAPABILITY, &cap).unwrap();

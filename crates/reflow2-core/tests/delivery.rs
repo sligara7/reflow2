@@ -39,7 +39,7 @@ fn threaded() -> DesignGraph {
         Some("src/engine.rs"),
     )
     .unwrap();
-    g.realizes("art:engine", node::CAPABILITY, "cap:ship", None)
+    g.realizes("art:engine", node::CAPABILITY, "cap:ship", None, None)
         .unwrap();
 
     g.add_verification("ver:ship", "ship test", Some("test"), None)

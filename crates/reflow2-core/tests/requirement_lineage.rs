@@ -47,7 +47,8 @@ fn deliver(g: &mut DesignGraph, req: &str, tag: &str) {
     g.satisfies(&cap, req).unwrap();
     g.add_artifact(&art, tag, Some("code"), Some("src/x.rs"))
         .unwrap();
-    g.realizes(&art, node::CAPABILITY, &cap, None).unwrap();
+    g.realizes(&art, node::CAPABILITY, &cap, None, None)
+        .unwrap();
     g.add_verification(&ver, tag, Some("test"), None).unwrap();
     g.verifies(&ver, node::CAPABILITY, &cap).unwrap();
     g.set_verification_status(&ver, "passing", None).unwrap();

@@ -463,6 +463,7 @@ fn recorded_drift_is_owed_a_disposition_until_accepted() {
         target_type: node::CAPABILITY.into(),
         target_id: "cap:x".into(),
         completeness: None,
+        conformance: None,
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:old".into()),

@@ -185,7 +185,7 @@ fn a_code_artifact_that_realizes_is_not_an_orphan() {
     g.add_capability("cap:x", "Cap X", "does x", None).unwrap();
     g.add_artifact("art:x", "x.rs", Some("code"), Some("src/x.rs"))
         .unwrap();
-    g.realizes("art:x", node::CAPABILITY, "cap:x", None)
+    g.realizes("art:x", node::CAPABILITY, "cap:x", None, None)
         .unwrap();
 
     assert!(

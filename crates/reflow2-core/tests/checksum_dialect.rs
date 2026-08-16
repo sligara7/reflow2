@@ -70,6 +70,7 @@ fn thread_with_baseline(checksum: &str) -> DesignGraph {
         target_type: node::CAPABILITY.into(),
         target_id: "cap:score".into(),
         completeness: None,
+        conformance: None,
         provenance: None,
         fragment_id: None,
         checksum: Some(checksum.into()),

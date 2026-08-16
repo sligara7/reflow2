@@ -44,7 +44,7 @@ fn graph_with(volatility: Option<&str>) -> DesignGraph {
     g.add_capability("cap:c", "C", "does c", None).unwrap();
     g.add_artifact("art:bus", "B.md", Some("document"), Some("B.md"))
         .unwrap();
-    g.realizes("art:bus", node::CAPABILITY, "cap:c", None)
+    g.realizes("art:bus", node::CAPABILITY, "cap:c", None, None)
         .unwrap();
     let mut props = Props::new().set("checksum", "sha256:aaaa");
     if let Some(v) = volatility {

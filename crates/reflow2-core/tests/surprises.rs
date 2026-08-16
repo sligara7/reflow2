@@ -179,6 +179,7 @@ fn provenance_nodes_stay_out_of_the_topology() {
         target_type: node::CAPABILITY.into(),
         target_id: "cap:a1".into(),
         completeness: None,
+        conformance: None,
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:v1".into()),

@@ -682,6 +682,18 @@ pub struct EvidenceReport {
     pub with_unscoped_checks: usize,
     /// Capabilities whose every passing check is consumed (BL-136).
     pub not_independently_verified: usize,
+    /// Realizing links by whether anyone confirmed the artifact still does what
+    /// the target REQUIRES.
+    ///
+    /// Belongs here rather than in `coverage_report` because it is a fact about
+    /// the graph alone: `coverage_report` needs a file sweep supplied by the
+    /// caller, and making somebody sweep a tree to learn that nobody has checked
+    /// anything would put a cost in front of the one number that should be free.
+    /// And deliberately NOT in `loop_status`: every edge starts `unchecked`, so
+    /// a large figure that never moves would be exactly the
+    /// signal-trained-to-be-ignored failure `req:the-loop-can-say-what-this-session-owes`
+    /// was built to end. This is read on demand, not nagged.
+    pub conformance: crate::artifact::ConformanceTally,
 }
 
 impl DesignGraph {
@@ -872,6 +884,7 @@ impl DesignGraph {
             narrowly_proven,
             with_unscoped_checks,
             not_independently_verified,
+            conformance: self.conformance_tally()?,
         })
     }
 }

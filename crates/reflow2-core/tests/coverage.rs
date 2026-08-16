@@ -17,6 +17,7 @@ fn artifact(g: &mut DesignGraph, id: &str, location: &str) {
         target_type: node::CAPABILITY.into(),
         target_id: "cap:a".into(),
         completeness: None,
+        conformance: None,
         provenance: None,
         fragment_id: None,
         checksum: None,

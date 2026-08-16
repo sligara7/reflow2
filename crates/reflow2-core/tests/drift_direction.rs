@@ -38,6 +38,7 @@ fn grown() -> DesignGraph {
         target_type: node::CAPABILITY.into(),
         target_id: "cap:parse".into(),
         completeness: None,
+        conformance: None,
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:baseline".into()),
@@ -110,9 +111,9 @@ fn a_typo_fix_is_not_understatement() {
 #[test]
 fn a_design_claiming_more_than_exists_is_overstatement_and_ranks_higher() {
     let mut g = grown();
-    g.realizes("art:engine", node::CAPABILITY, "cap:render", None)
+    g.realizes("art:engine", node::CAPABILITY, "cap:render", None, None)
         .unwrap();
-    g.realizes("art:engine", node::CAPABILITY, "cap:cache", None)
+    g.realizes("art:engine", node::CAPABILITY, "cap:cache", None, None)
         .unwrap();
 
     let report = g
@@ -145,7 +146,7 @@ fn a_design_claiming_more_than_exists_is_overstatement_and_ranks_higher() {
 #[test]
 fn disagreement_in_both_directions_reports_diverged() {
     let mut g = grown();
-    g.realizes("art:engine", node::CAPABILITY, "cap:render", None)
+    g.realizes("art:engine", node::CAPABILITY, "cap:render", None, None)
         .unwrap();
 
     // Design says parse+render; reality says parse+cache.

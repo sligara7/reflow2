@@ -221,6 +221,7 @@ async fn link_artifact_closes_the_unrealized_capability_gap() {
         target_type: "Capability".into(),
         target_id: "cap:flight".into(),
         completeness: None,
+        conformance: None,
         provenance: None,
         fragment_id: None,
         checksum: None,
@@ -262,6 +263,7 @@ async fn link_artifact_closes_the_unrealized_capability_gap() {
         target_type: "Capability".into(),
         target_id: "cap:score".into(),
         completeness: None,
+        conformance: None,
         provenance: None,
         fragment_id: None,
         checksum: None,
@@ -406,6 +408,7 @@ async fn reconcile_surfaces_a_code_change_back_to_the_design() {
         target_type: "Capability".into(),
         target_id: "cap:flight".into(),
         completeness: None,
+        conformance: None,
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:v1".into()),
@@ -492,6 +495,7 @@ async fn the_surface_can_say_that_nothing_moved() {
         target_type: "Capability".into(),
         target_id: "cap:flight".into(),
         completeness: None,
+        conformance: None,
         provenance: None,
         fragment_id: None,
         checksum: None,
@@ -598,6 +602,7 @@ async fn the_write_side_can_answer_what_detect_asks_for() {
         target_type: "Capability".into(),
         target_id: "cap:flight".into(),
         completeness: None,
+        conformance: None,
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:v1".into()),
@@ -2030,6 +2035,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         target_type: "Capability".into(),
         target_id: "cap:flight".into(),
         completeness: Some("complete".into()),
+        conformance: None,
     })));
 
     // --- analysis tools (must return well-formed results, not error) ---

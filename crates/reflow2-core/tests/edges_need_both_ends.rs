@@ -152,7 +152,8 @@ fn helpers() -> Vec<(&'static str, Box<dyn Fn(&mut DesignGraph) -> bool>)> {
         (
             "realizes",
             Box::new(|g: &mut DesignGraph| {
-                g.realizes("art:a", node::CAPABILITY, GHOST, None).is_err()
+                g.realizes("art:a", node::CAPABILITY, GHOST, None, None)
+                    .is_err()
             }),
         ),
         (
@@ -264,7 +265,7 @@ fn the_helpers_still_draw_the_edge_when_both_ends_are_real() {
     let mut g = populated();
     g.satisfies("cap:c", "req:r")
         .expect("both ends real, so satisfies must write");
-    g.realizes("art:a", node::CAPABILITY, "cap:c", None)
+    g.realizes("art:a", node::CAPABILITY, "cap:c", None, None)
         .expect("both ends real, so realizes must write");
     g.deploy_to("rel:r", "env:e", None)
         .expect("both ends real, so deploy_to must write");
