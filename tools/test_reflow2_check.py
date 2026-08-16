@@ -304,6 +304,84 @@ class Reflow2Check(unittest.TestCase):
 
 
 
+    # ---- a directory artifact, and the exit-code contract -----------------
+
+    def test_a_directory_artifact_does_not_crash_the_gate(self):
+        """reflow2's own graph has 182 artifacts with a location and NOT ONE
+        resolves to a directory, so CI has run this gate on every push for weeks
+        and never executed the directory branch. dev_storyflow has 11, and the
+        gate died on the first one with IsADirectoryError. Reported by the
+        api-boss fleet 2026-08-15 and reproduced here before the fix."""
+        def with_dir_artifact(s):
+            coherent(s)
+            s.call("create_node", {"node_type": "Artifact", "id": "art:dir",
+                                   "props": {"name": "memory", "location": "memory",
+                                             "artifact_type": "document"}})
+            s.call("create_edge", {"edge_type": "REALIZES", "from_type": "Artifact",
+                                   "from_id": "art:dir", "to_type": "Capability",
+                                   "to_id": "cap:a"})
+
+        export = self.export(with_dir_artifact)
+        (self.tmp / "memory").mkdir()
+        r = self.gate(export)
+
+        self.assertNotIn("IsADirectoryError", r.stderr,
+                         f"a directory must not crash the gate\n{r.stderr}")
+        self.assertNotEqual(r.returncode, 2,
+                            f"the gate must still RUN\n{r.stdout}\n{r.stderr}")
+        # Present and unjudgeable is a NOTE, never a failure and never a silent
+        # pass: the design says a directory is there, and it is.
+        self.assertIn("no_baseline", r.stdout,
+                      f"a directory is present-but-unhashable\n{r.stdout}")
+
+    def test_an_unexpected_fault_is_exit_2_not_a_gate_failure(self):
+        """THE COUNTERWEIGHT THAT MATTERS, and it took two attempts to make it
+        mean anything. A dedicated code exists for "could not run" so CI can tell
+        a drifted design from a broken tool; every unhandled exception used to
+        land in 1, the code reserved for "gate failed".
+
+        THE FIRST VERSION OF THIS TEST PASSED WITH THE FIX REMOVED. It forced the
+        fault with an unreadable export, which `die(2, ...)` already handles — so
+        it exercised a path that was correct before the change and proved
+        nothing. Every fault this tool KNOWS about is already routed to 2; the
+        guard exists for the ones it does not, so the only honest exercise is to
+        hand it one directly."""
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location("reflow2_check_under_test", CHECK)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+
+        def boom() -> int:
+            raise RuntimeError("something nobody anticipated")
+
+        mod.main = boom
+        self.assertEqual(
+            mod.run_guarded(), 2,
+            "an unanticipated fault is could-not-run (2), never gate-failed (1)",
+        )
+
+    def test_an_explicit_exit_code_still_wins_over_the_guard(self):
+        """COUNTERWEIGHT to the counterweight: the guard must not swallow a
+        DELIBERATE exit. `die()` raises SystemExit to carry its own code, and a
+        guard that caught it would turn every honest 2 — and every gate failure —
+        into whatever it felt like. SystemExit is a BaseException for exactly
+        this reason, and this pins that it stays that way."""
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location("reflow2_check_exit_test", CHECK)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+
+        def deliberate() -> int:
+            mod.die(2, "a fault this tool does know about")
+
+        mod.main = deliberate
+        with self.assertRaises(SystemExit) as caught:
+            mod.run_guarded()
+        self.assertEqual(caught.exception.code, 2, "an explicit exit passes through")
+
+
 class ExportChain(unittest.TestCase):
     """BL-107. `dec:export-hash-chain` gives the design a history independent of
     git — each export records the `content_hash` of the one it replaced. Six
@@ -441,6 +519,7 @@ class ExportChain(unittest.TestCase):
         export = self.export(coherent)
         r = self.gate(export)
         self.assertNotIn("LINEAGE", r.stdout, f"no git, no claim\n{r.stdout}")
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

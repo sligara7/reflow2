@@ -130,6 +130,24 @@ pub enum DriftKind {
     /// append-only file replaced wholesale would then pass unmentioned — which
     /// is the strictly worse bug, and the trap BL-176 was careful to avoid.
     ExpectedChange,
+    /// The file is gone and an ACCEPTED Decision said it would be — the artifact
+    /// is `discontinued` (`OBSOLETES`, `dec:idea-discontinued-is-a-first-class-state`).
+    /// A retirement carried out is not a divergence.
+    ///
+    /// WITHOUT THIS THERE WAS NO WAY TO DELETE A REGISTERED FILE ON PURPOSE.
+    /// Retiring an Artifact the modelled way changed nothing: it still reported
+    /// `missing_artifact` at `high`, still failed the gate, and the remedy the
+    /// error named — `set_artifact_checksum` — could not be performed, because
+    /// there is no file left to checksum. Found 2026-08-15 carrying out
+    /// `dec:reflow2s-own-feedback-documents-are-removed-once-captured`, which the
+    /// policy could not obey without either lying or breaking the build.
+    ///
+    /// DISTINCT KIND RATHER THAN SILENCE, for `ExpectedChange`'s reason exactly:
+    /// suppressing it would mean a file deleted by accident *after* an unrelated
+    /// retirement passed unmentioned. The design should go on saying the artifact
+    /// existed and what it produced, and stop saying it is on disk — two claims
+    /// the artifact layer conflated until now.
+    ExpectedAbsence,
 }
 
 impl DriftKind {
@@ -143,6 +161,7 @@ impl DriftKind {
             DriftKind::Overstated => "overstated",
             DriftKind::NoBaseline => "no_baseline",
             DriftKind::ExpectedChange => "expected_change",
+            DriftKind::ExpectedAbsence => "expected_absence",
         }
     }
 
@@ -164,6 +183,12 @@ impl DriftKind {
             DriftKind::Overstated => Some("spec_mismatch"),
             DriftKind::NoBaseline => None,
             DriftKind::ExpectedChange => None,
+            // Nothing to record: the absence was authorised by the accepted
+            // Decision that retired it, and that decision is already on the
+            // record with an OBSOLETES edge. Filing a DriftEvent as well would
+            // record the retirement twice and leave the second copy owing a
+            // disposition nobody can give.
+            DriftKind::ExpectedAbsence => None,
         }
     }
 
@@ -184,6 +209,8 @@ impl DriftKind {
             // wholesale replacement is still visible to a reader, not because
             // anything is owed.
             DriftKind::ExpectedChange => "low",
+            // Same as ExpectedChange and for the same reason: nothing is wrong.
+            DriftKind::ExpectedAbsence => "low",
         }
     }
 }
@@ -328,13 +355,35 @@ impl DesignGraph {
             let realizes = self.realized_targets(&obs.artifact_id)?;
 
             if !obs.present {
+                // A retirement CARRIED OUT is not a divergence. An accepted
+                // Decision drawing OBSOLETES at this artifact is the design
+                // saying the file should be gone, so finding it gone is the
+                // design and the build agreeing — reported, never failed.
+                //
+                // Read through `is_discontinued` rather than off the node, for
+                // the reason that method's own doc gives: the stored properties
+                // go on describing what was BUILT, and only the derived answer
+                // says the thing is withdrawn.
+                let retired = self.is_discontinued(&obs.artifact_id)?;
                 findings.push(DriftFinding {
                     artifact_id: obs.artifact_id.clone(),
-                    kind: DriftKind::MissingArtifact,
-                    message: format!(
-                        "'{}' is registered in the design but no longer exists",
-                        obs.artifact_id
-                    ),
+                    kind: if retired {
+                        DriftKind::ExpectedAbsence
+                    } else {
+                        DriftKind::MissingArtifact
+                    },
+                    message: if retired {
+                        format!(
+                            "'{}' is gone, and an accepted decision retired it — the design and \
+                             the build agree",
+                            obs.artifact_id
+                        )
+                    } else {
+                        format!(
+                            "'{}' is registered in the design but no longer exists",
+                            obs.artifact_id
+                        )
+                    },
                     realizes,
                     observed_checksum: None,
                     event_id: None,
@@ -711,8 +760,9 @@ fn severity_rank(kind: DriftKind) -> u8 {
         DriftKind::Understated => 3,
         DriftKind::UndocumentedAddition => 4,
         DriftKind::NoBaseline => 5,
-        // Last on purpose: nothing is wrong. It sorts below `no_baseline`,
+        // Last on purpose: nothing is wrong. They sort below `no_baseline`,
         // which is at least an admission that something could not be judged.
         DriftKind::ExpectedChange => 6,
+        DriftKind::ExpectedAbsence => 7,
     }
 }
