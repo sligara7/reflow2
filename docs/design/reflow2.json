@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:7cdeafe45745d93e7e4c47eed8c9504f3cf2d59ebca1c5e89787a24453367935",
+  "content_hash": "sha256:fc3402269f685aa94b39248216059ff23726e5a357670ca3d1106a05f63203c5",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -8345,6 +8345,15 @@
         "role": "author"
       },
       "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:should-a-verification-be-able-to-verify-a-constraint",
+      "properties": {
+        "acted_at": "2026-08-15",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -18376,6 +18385,15 @@
         "action": "modified"
       },
       "to_id": "art:export-via-binary"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-gate-checks-the-export-can-be-read-back",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check"
     },
     {
       "edge_type": "CHANGED",
@@ -66232,7 +66250,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5094f46b5850818ca8b91c0cfdfc31226383b2cf66314a42706ad294c9f917a4",
+        "checksum": "sha256:cf4e86690ccd846f37228812ef55352845f046d0a4903b63cd08e5a4a3764528",
         "granularity": "atomic",
         "location": "tools/reflow2_check.py",
         "name": "reflow2_check.py",
@@ -73746,6 +73764,14 @@
       }
     },
     {
+      "node_id": "chg:the-gate-checks-the-export-can-be-read-back",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "`reflow2_check.py` gains a ROUND TRIP check: export → import → re-export, compared structurally, so a committed export that cannot be read back is caught. The only probe that sees this class — content_hash, the lineage chain and sync_status all compare the export to ITSELF and never run the importer. dev_storyflow's export had been unrestorable for four days with every one of those green."
+      }
+    },
+    {
       "node_id": "chg:the-gate-survives-a-directory-and-honours-its-exit-codes",
       "node_type": "ChangeEvent",
       "properties": {
@@ -77103,6 +77129,16 @@
         "decision": "OPEN QUESTION FOR ANTHONY, raised by Alex's Grok 4.6 session 2026-08-14 (docs/feedback/2026-08-14-alex-grok-session.md, item 5) and judged the deepest of its fourteen. NOT A BUG REPORT AND NOT BUILDABLE AS STATED — recorded as a question because the honest answer may be that this is a documented hole rather than a detector.\n\nWHAT HAPPENED. A Requirement in his project already said the calendar day is the person's CIVIL date, not UTC midnight. The realizing check-in used the ISO date of `createdAt`, which is UTC. The Capability's status said `realized`. The artifact's checksum matched its baseline, so `reconcile_artifacts` was silent. Every signal in the graph was green and the code did not do what the Requirement said. THE USER FOUND IT IN THE PRODUCT.\n\nTHE GENERAL SHAPE: REALIZES carries `completeness` (stub/partial/complete) and the Artifact carries a checksum. Between them they answer whether the file has moved since we looked — they do not answer, and cannot, whether the file still implements the property the Requirement states. Nothing in the graph distinguishes A FILE THAT WAS CHECKED AGAINST THE RULE from A FILE THAT WAS MERELY HASHED, and the two produce identical reports. His framing is the sharpest available: checksum honesty is not the same as this file still implementing the Requirement's date rule.\n\nWHY THIS IS NOT SIMPLY ADD A DETECTOR. reflow2 reads a DESIGN, never a running system; deciding whether code implements a civil-date rule is program analysis it has no business attempting, and `dec:agent-navigates-content` keeps it out of file IO entirely. So every candidate answer is about RECORDING what is known, not computing it:\n\n(a) DO NOTHING BUT SAY SO — document the hole where the claim is made (the link-artifacts skill, `set_artifact_checksum`'s description), so a reader stops mistaking a checksum accept for conformance. Cheapest, honest, no schema change. His own Expected asks for roughly this: not magic, but a documented hole.\n(b) A PROPERTY ON REALIZES — e.g. `conformance: unchecked | reviewed | verified`, defaulting to unchecked, so the absence is visible rather than implied. Makes nobody-ever-checked a first-class answer instead of a silence. Costs a schema property and a habit.\n(c) LEAN ON WHAT EXISTS — a Verification that names the PROPERTY rather than the file, verifying the Requirement, so the question becomes whether this Requirement is covered by a check that tests THIS rule. Adds no vocabulary and reuses `reconcile_verification`. The objection: his session HAD a passing unit Verification and still shipped the bug, so a Verification that does not name what it covers changes nothing.\n(d) SURFACE IT IN THE GAP LIST — a Requirement whose realizing artifacts carry no conformance evidence becomes a gap. Strongest, and the most likely to be noise on a large design.\n\nRELATED AND ALREADY SETTLED, so this does not reopen them: `req:completion-computed` (delivery is computed from the thread, never asserted) and `cap:independent-evidence`. The tension is that completion is computed from EDGES, and an edge asserting realization is exactly what nobody checked.\n\nWHAT THE SAME SESSION SHOWED ABOUT ITS OWN CASE, worth weighing: it also marked two Capabilities realized on unit tests before the user had clicked through, and named that as its own error. `realized` vs `verified` ALREADY EXISTS in the capability lifecycle — so part of this was not a missing concept but a missing prompt, which means (a) may cover more of the ground than it first looks.",
         "name": "OPEN — a matching checksum says the file has not changed, never that it still does what the Requirement says. Should the design be able to record that difference, and if so where?",
         "rationale": "Recorded as a question rather than a requirement because all four candidate answers are defensible and the choice is about how much ceremony the loop should carry — Anthony's call, not an agent's (dec:certainty-derived). Raised now because the evidence is fresh and specific: a real user found a real bug that every green signal in the design agreed was fine. That is the exact failure mode the served instructions warn about — a green gate is evidence about what it covers and silent about the rest — arriving from outside rather than from a detector.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:should-a-verification-be-able-to-verify-a-constraint",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "OPEN QUESTION FOR ANTHONY, and dev_storyflow's reporter deliberately declined to answer it: \"Whether the fix is 'migrate the two edges' or 'the to-list is missing a member' is reflow2's call, not mine — but the question should be asked before anyone deletes data to satisfy a validator.\"\n\nDISTINCT FROM `fact:defect-a-schema-narrowing-orphaned-live-edges-and-no-export-is-ever-imported`, which measures the breakage. THIS asks what the vocabulary should say, and the answer decides whether a real edge is repaired or destroyed.\n\nTHE CASE. `ver:side_e_slo_gate_unwired_2026_08_09` VERIFIES `con:side_e_perf_slos_are_enforced_nowhere` — a check that measures whether a performance constraint is actually enforced. `schema/verify.yaml` lists `to: [Capability, Requirement, Artifact, Component, DesignRule]`, so the edge is unimportable and their export has not restored since at least 2026-08-11.\n\n⭐ IT READS AS A LEGITIMATE MODELLING NEED, NOT A SLIP. A Constraint is \"a limit or rule the design MUST respect\" — a latency budget, a mass cap, \"no PII leaves the device\". Asking whether a limit HOLDS is the most natural thing anyone would want to check about it, and it is exactly the question `budget_report` answers arithmetically for the numeric case. A Verification is how this design records that something was CHECKED. Refusing to connect them says a limit may be stated and computed but never independently verified.\n\nAND THE ASYMMETRY IS ODD ON ITS FACE: `DesignRule` IS in the list, and `unverified_enforced_rule` exists precisely so a gate-blocking rule owes a passing check. A Constraint is the DesignRule's sibling — the imposed limit beside the chosen one — and the same argument for verifying one applies to the other. Nothing in the schema explains why they were split.\n\nTHE OPTIONS:\n\n(a) ADD `Constraint` TO THE TO-LIST. Repairs their export, needs no data migration, and makes the vocabulary say the thing it appears to mean. COUNTER: the list was derived FROM live edges as evidence of use, and adding a type because one edge exists is the same reasoning that produced the incomplete enumeration — one edge is not a demonstrated need.\n\n(b) MIGRATE THE EDGE AWAY — a check about a Constraint could instead verify the Capability that honours it, or the DesignRule that expresses it. COUNTER, and it is `rule:never_shape_a_field_to_satisfy_an_instrument` from their own repo: reshaping real design to satisfy a validator is how a graph bends into fiction, and the edge was legal when written.\n\n(c) RE-DERIVE THE WHOLE LIST ACROSS EVERY KNOWN GRAPH and take the union — the census the original change should have run, now with three real designs to run it against rather than one. COUNTER: it settles this instance without settling the rule, and the next narrowing repeats it.\n\n(d) RESTORE `to: \"*\"` FOR VERIFIES. COUNTER: the enumeration was added for a reason recorded in the file, and reverting discards that.\n\n⚠️ WHAT MUST NOT HAPPEN, and it is the reporter's point: nobody deletes those two edges to make an import succeed before this is answered. `Project` is the other unlisted type and may well be a genuine mistake — the two should be judged separately rather than as a pair.\n\nNOT ESTABLISHED: how many `VERIFIES → Constraint` edges exist across all designs (one is confirmed), and whether any detector would read the edge if it were legal.",
+        "name": "OPEN — a check that measures whether a Constraint holds is refused by the schema. Is `VERIFIES → Constraint` a missing member of the to-list, or is the edge a mistake to migrate away?",
+        "rationale": "Recorded as a question rather than fixed, because the choice decides whether real design data is repaired or destroyed, and because the reporter who found it explicitly declined to make it. Left `proposed` with Anthony as approver: this is a schema change either way, and `dec:certainty-derived` puts that word with him.",
         "status": "proposed"
       }
     },
@@ -88161,6 +88197,19 @@
       }
     },
     {
+      "node_id": "fact:defect-a-schema-narrowing-orphaned-live-edges-and-no-export-is-ever-imported",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "DEV_STORYFLOW'S COMMITTED EXPORT CANNOT BE RE-IMPORTED BY THE BINARY THAT WROTE IT, AND HAS NOT BEEN RESTORABLE SINCE AT LEAST 2026-08-11. Reported by their api-boss sidekick (`551d9718`) 2026-08-15; the checkable half VERIFIED HERE.\n\nWHAT FAILS: `import_graph` refuses their export with two invalid edges — `VERIFIES ver:integration_tests -> proj:storyflow` (Project) and `VERIFIES ver:side_e_slo_gate_unwired_2026_08_09 -> con:side_e_perf_slos_are_enforced_nowhere` (Constraint). The import is all-or-nothing, so NOTHING is written, and `reflow2_check.py` exits 2 without ever reaching gap detection.\n\nVERIFIED HERE: `schema/verify.yaml` carries the `to:` list `[Capability, Requirement, Artifact, Component, DesignRule]` and the comment they quote, word for word — 'THE LIST MUST KEEP ALL FIVE. The first four are DERIVED from live edges… narrowing to fewer would invalidate edges that exist today. Re-derive before ever trimming it.' POSITIVE CONTROL: reflow2's own graph holds 161 VERIFIES edges across exactly those five types and ZERO outside them, which is precisely why this project could never have found it.\n\n⭐⭐ AND THE FILE ALREADY RECORDS THE SAME MISTAKE ONE LAYER UP, which neither reporter saw. The `extraction_hint` on that very edge reads: 'Requirement was already true and unlisted here — three such edges existed while this hint named only three types, WHICH IS HOW A HINT STOPS BEING A DESCRIPTION AND BECOMES A GUESS.' So the HINT under-enumerated, was caught, was fixed, and the lesson was written down — and then the `to:` LIST made the identical error against the same edge. THE COMMENT GUARDS AGAINST TRIMMING THE LIST AND SAYS NOTHING ABOUT THE ENUMERATION BEING INCOMPLETE WHEN FIRST DERIVED. Their census found 5 types at 95/27/13/2/1 edges and missed two carrying one edge each: a long tail, invisible to a count.\n\n⚠️ THE CHANGE WAS PROPOSED BY DEV_STORYFLOW AND BROKE DEV_STORYFLOW. The derivation was almost certainly run against that graph. While `to` was `*` every edge was legal; the moment it became an enumeration, every unlisted-but-existing edge became unimportable. A SCHEMA TIGHTENING THAT SILENTLY ORPHANS EXISTING DATA IS A BREAKING CHANGE WEARING A VALIDATION ERROR'S CLOTHES.\n\n⭐ THE GENERALISABLE HALF, AND THE REASON THIS OUTRANKS ITS OWN SEVERITY: NOTHING EVER IMPORTS AN EXPORT. The graph is written incrementally by a long-lived server and the export is written OUT, never read BACK — so it has never been exercised as an INPUT. An export can be un-restorable for an unbounded time while every signal stays green: `loop_status` clean, `sync_status` `in_step`, the `content_hash` chain intact. ALL OF THOSE VERIFY THE EXPORT AGAINST ITSELF, NEVER AGAINST THE IMPORTER.\n\n⚠️ AND THE CONSEQUENCE IS NOT CI. `.reflow2/graph` is gitignored, machine-local and single-writer; the committed export is the ONLY copy of the design that survives losing that directory. Their disaster-recovery artifact would not restore today. The failing gate is the lesser casualty.\n\nWHAT REFLOW2 GOT RIGHT, recorded because it is most of the value: exit 2 rather than a silent pass, all-or-nothing so nothing was half-written, and BOTH offenders listed at once 'so you can fix them in one edit rather than learning them one import at a time'.\n\nTHEIR ASKS, in their order: (1) a ROUND-TRIP CHECK — export → import → re-export as a gate, the only probe that catches this class and one needing no knowledge of any particular schema rule; (2) treat narrowing a `from`/`to` from `*` to an enumeration as a MIGRATION that ships its census; (3) have `export_graph` validate what it emits, since an export that cannot be imported is arguably not a valid export and the write side is where the author is still present.\n\nNOT ESTABLISHED, and explicitly left to reflow2: whether `VERIFIES → Constraint` is a MODELLING NEED rather than a mistake. `ver:side_e_slo_gate_unwired` checks whether a constraint holds, which reads legitimate. Their own note is the right one: ask before deleting data to satisfy a validator.",
+        "subject_id": "cap:corpus-ingest",
+        "valid_from": "2026-08-15",
+        "value": "{\"reported\":\"2026-08-15, dev_storyflow api-boss sidekick 551d9718\",\"failure\":\"import_graph refuses their committed export: VERIFIES -> Project and VERIFIES -> Constraint; all-or-nothing, exit 2\",\"unrestorable_since\":\"at least 2026-08-11, across 30 export commits\",\"verified_here\":\"schema/verify.yaml to-list is the five types and the comment is verbatim; reflow2's own graph has 161 VERIFIES edges, all legal, zero illegal\",\"the_sharpening\":\"the extraction_hint on that SAME edge already records the identical under-enumeration one layer up - 'how a hint stops being a description and becomes a guess'\",\"why_the_comment_did_not_help\":\"it guards against TRIMMING the list, not against the enumeration being incomplete when first derived\",\"long_tail\":\"census found 95/27/13/2/1 and missed two types with 1 edge each\",\"generalisable\":\"nothing ever imports an export; loop_status, sync_status and content_hash all verify the export against ITSELF, never against the importer\",\"real_consequence\":\"the committed export is the only copy surviving loss of the gitignored graph dir - their disaster recovery would not restore\",\"reflow2_got_right\":\"exit 2 not a silent pass; all-or-nothing; both offenders listed at once\",\"asks\":[\"round-trip export->import gate\",\"narrowing * to an enumeration is a MIGRATION and ships its census\",\"export_graph validates what it emits\"],\"left_to_reflow2\":\"whether VERIFIES -> Constraint is a legitimate modelling need\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-a-stale-kit-receipt-silently-decides-whether-the-loop-nudge-is-owed",
       "node_type": "TemporalFact",
       "properties": {
@@ -91026,6 +91075,19 @@
       }
     },
     {
+      "node_id": "ver:the-export-survives-being-read-back",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-15",
+        "level": "unit",
+        "method": "test",
+        "name": "A committed export survives export → import → re-export (tools/test_reflow2_check.py) — 5 cases. END TO END through the real binary: a coherent design round-trips clean and gates 0. THREE DETECTION CASES against a stub re-export, because driving these through the real binary could only ever produce a FAITHFUL round trip — which is the case that must NOT fire: a dropped node is caught AND NAMED, a dropped EDGE is caught and named (the dev_storyflow case was two VERIFIES edges, so a check watching only nodes would have missed it), and a property that comes back different is caught (import is an upsert and the schema has defaults, so a document can return COMPLETE and still not be the same design — the half a count cannot see). THE COUNTERWEIGHT IS THE FOURTH: a faithful round trip reports NOTHING, because a check that fires on a correct design runs on every commit and would be switched off inside a day. MUTATION-CHECKED TWICE, each killing exactly what it should: forcing the comparison to always agree fails the three detection cases and leaves the counterweight passing, which is what proves the counterweight carries weight; ignoring edges fails exactly the edge case and nothing else. PROVEN ON THE REAL DESIGN: run against reflow2's own 2,308-node export through the built binary, the round trip is clean and the gate's only finding was the checksum of the file this change edited.",
+        "status": "passing",
+        "verification_type": "test"
+      }
+    },
+    {
       "node_id": "ver:the-git-exchange-path-is-defended",
       "node_type": "Verification",
       "properties": {
@@ -91216,7 +91278,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:191eda4cb9c5c0869153dfda1931f78a5bb98fe66a9a6a1e98141a99cb73f65d",
+  "prev_content_hash": "sha256:7cdeafe45745d93e7e4c47eed8c9504f3cf2d59ebca1c5e89787a24453367935",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

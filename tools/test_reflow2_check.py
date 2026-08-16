@@ -381,6 +381,90 @@ class Reflow2Check(unittest.TestCase):
             mod.run_guarded()
         self.assertEqual(caught.exception.code, 2, "an explicit exit passes through")
 
+    # ---- the round trip ---------------------------------------------------
+
+    def test_a_real_design_survives_the_round_trip(self):
+        """END TO END, through the real binary: export → import → re-export must
+        come back the same design, or the committed export is a backup that
+        would not restore."""
+        r = self.gate(self.export(coherent))
+        self.assertNotIn("ROUND TRIP", r.stdout,
+                         f"a clean design must round-trip\n{r.stdout}")
+        self.assertEqual(r.returncode, 0, f"{r.stdout}\n{r.stderr}")
+
+    def _check_mod(self):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("reflow2_check_rt", CHECK)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod
+
+    class _StubServer:
+        """A server whose re-export returns whatever the test hands it. The
+        comparison is the thing under test here, and driving it through the real
+        binary could only ever produce a FAITHFUL round trip — which is the case
+        that must NOT fire."""
+        def __init__(self, doc):
+            self.doc = doc
+
+        def call(self, name, args):
+            assert name == "export_graph"
+            with open(args["path"], "w", encoding="utf-8") as f:
+                json.dump(self.doc, f)
+            return {}
+
+    DOC = {
+        "nodes": [
+            {"node_type": "Requirement", "node_id": "req:a", "properties": {"statement": "x"}},
+            {"node_type": "Capability", "node_id": "cap:a", "properties": {"description": "y"}},
+        ],
+        "edges": [
+            {"edge_type": "SATISFIES", "from_id": "cap:a", "to_id": "req:a", "properties": {}},
+        ],
+    }
+
+    def test_a_faithful_round_trip_reports_nothing(self):
+        """THE COUNTERWEIGHT THAT KEEPS THIS HONEST. A check that fires on a
+        correct design is worse than no check: it would be switched off inside a
+        day, and this one runs on every commit."""
+        mod = self._check_mod()
+        import copy
+        stub = self._StubServer(copy.deepcopy(self.DOC))
+        self.assertIsNone(mod.check_round_trip(self.DOC, stub, str(self.tmp)))
+
+    def test_a_node_that_does_not_survive_is_named(self):
+        mod = self._check_mod()
+        import copy
+        lossy = copy.deepcopy(self.DOC)
+        lossy["nodes"] = [n for n in lossy["nodes"] if n["node_id"] != "cap:a"]
+        found = mod.check_round_trip(self.DOC, self._StubServer(lossy), str(self.tmp))
+        self.assertIsNotNone(found, "a dropped node must be caught")
+        self.assertIn("cap:a", found, f"the finding must NAME what was lost\n{found}")
+        self.assertIn("ROUND TRIP", found)
+
+    def test_an_edge_that_does_not_survive_is_named(self):
+        """The dev_storyflow case was an EDGE — two VERIFIES edges the importer
+        refused. A check that watched only nodes would have missed it."""
+        mod = self._check_mod()
+        import copy
+        lossy = copy.deepcopy(self.DOC)
+        lossy["edges"] = []
+        found = mod.check_round_trip(self.DOC, self._StubServer(lossy), str(self.tmp))
+        self.assertIsNotNone(found, "a dropped edge must be caught")
+        self.assertIn("SATISFIES", found, f"the finding must NAME the edge\n{found}")
+
+    def test_a_property_that_comes_back_different_is_caught(self):
+        """Import is an upsert and the schema has defaults; a document can come
+        back COMPLETE and still not be the same design. Silent mutation is the
+        half a count of nodes and edges cannot see."""
+        mod = self._check_mod()
+        import copy
+        mutated = copy.deepcopy(self.DOC)
+        mutated["nodes"][0]["properties"]["statement"] = "something else"
+        found = mod.check_round_trip(self.DOC, self._StubServer(mutated), str(self.tmp))
+        self.assertIsNotNone(found, "a mutated property must be caught")
+        self.assertIn("different properties", found, found)
+
 
 class ExportChain(unittest.TestCase):
     """BL-107. `dec:export-hash-chain` gives the design a history independent of
