@@ -592,6 +592,12 @@ fn hand_proposal(ops: Vec<HealOperation>) -> HealProposal {
         // must still be judged on its operations. That is the property these
         // refusal tests exist to pin.
         would_destroy: vec![],
+        // Same reasoning as `would_destroy` above: apply re-derives everything
+        // and never reads these, so a hand-built proposal may understate its
+        // own sweep and must still be judged on its operations.
+        scope: "whole design".into(),
+        projects_in_scope: 1,
+        merge_candidates_considered: 0,
         confidence: 0.9,
         requires_human_review: false,
         summary: "hand-built".into(),
@@ -1172,5 +1178,117 @@ fn an_ordinary_duplicate_pair_reports_no_hub() {
         dup.hubs.is_empty(),
         "one pair, no shared node, nothing to say: {:?}",
         dup.hubs
+    );
+}
+
+// ---- a proposal describes its own sweep -------------------------------------
+//
+// req:a-report-says-what-it-swept-and-whether-its-checks-ran.
+//
+// Both halves come from one fleet report (sb-boss, 2026-08-15) and both were
+// reproduced on reflow2's own graph. The stake is not tidiness: this fleet runs
+// propose_heal as the read-only evidence step of a standing stop on apply_heal,
+// which DELETES NODES. A zero that cannot say which kind it is sits one skim
+// away from lifting that gate.
+
+/// THE CASE. No duplicate exists, so the pair scorer never ran — and the reply
+/// must say so rather than presenting an empty operation list as a clean bill.
+#[test]
+fn a_zero_says_it_had_nothing_to_examine() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:x", "X").unwrap();
+    g.add_requirement("req:r", "R", "need r").unwrap();
+
+    let p = g.propose_heal(HealOptions::default()).unwrap();
+
+    assert!(p.operations.is_empty(), "precondition: nothing to merge");
+    assert_eq!(
+        p.merge_candidates_considered, 0,
+        "the scorer was given nothing"
+    );
+    assert!(
+        p.summary.contains("not a pass"),
+        "the line a person reads must say this zero is not a pass: {}",
+        p.summary
+    );
+}
+
+/// COUNTERWEIGHT, and the one that stops this becoming a different lie: when
+/// the scorer WAS given something, the reply must not claim it had nothing.
+#[test]
+fn a_scorer_that_ran_is_reported_as_having_run() {
+    let g = dup_graph();
+    let p = g.propose_heal(HealOptions::default()).unwrap();
+
+    assert_eq!(
+        p.merge_candidates_considered, 1,
+        "one asserted duplicate reached the scorer"
+    );
+    assert!(!p.operations.is_empty(), "and it proposed the merge");
+    assert!(
+        !p.summary.contains("not a pass"),
+        "an exercised check must NOT be labelled vacuous: {}",
+        p.summary
+    );
+}
+
+/// The third state, which is the one the fleet actually wanted to be able to
+/// see: candidates existed, were examined, and none survived scoring.
+#[test]
+fn examined_but_nothing_proposed_is_its_own_answer() {
+    let mut g = dup_graph();
+    // A `suspected` basis is deliberately never mergeable (dec:ask-not-repair),
+    // so the candidate is raised as a gap and no operation is built.
+    g.delete_edge(edge::DUPLICATES, "cap:a", "cap:b").unwrap();
+    g.create_edge(
+        edge::DUPLICATES,
+        node::CAPABILITY,
+        "cap:a",
+        node::CAPABILITY,
+        "cap:b",
+        Props::new().set("basis", "suspected"),
+    )
+    .unwrap();
+
+    let p = g.propose_heal(HealOptions::default()).unwrap();
+    assert!(p.operations.is_empty());
+    assert_eq!(
+        p.merge_candidates_considered, 0,
+        "a suspected pair never reaches the scorer, so it was not considered"
+    );
+}
+
+/// THE SCOPE HALF. One Project can be named without ambiguity.
+#[test]
+fn a_single_project_is_named_and_the_scope_is_still_the_whole_design() {
+    let g = dup_graph();
+    let p = g.propose_heal(HealOptions::default()).unwrap();
+
+    assert_eq!(p.target_id, "proj:x");
+    assert_eq!(p.projects_in_scope, 1);
+    assert_eq!(p.scope, "whole design", "the sweep is never one project");
+}
+
+/// COUNTERWEIGHT: with more than one Project, the label must STOP naming one.
+/// This is the case reflow2's own graph cannot produce — it holds exactly one
+/// Project, which is why the self-host never saw the defect.
+#[test]
+fn more_than_one_project_is_never_labelled_with_one_of_them() {
+    let mut g = dup_graph();
+    g.add_project("proj:a-sibling", "A sibling library")
+        .unwrap();
+
+    let p = g.propose_heal(HealOptions::default()).unwrap();
+
+    assert_eq!(p.projects_in_scope, 2);
+    assert_ne!(
+        p.target_id, "proj:a-sibling",
+        "naming the alphabetically-first project is the reported defect"
+    );
+    assert_ne!(p.target_id, "proj:x");
+    assert!(
+        p.summary.contains("whole design"),
+        "and the summary says what was actually swept: {}",
+        p.summary
     );
 }
