@@ -1040,9 +1040,17 @@ pub struct RealizesReq {
     /// Node type the artifact realizes (e.g. `Capability`, `Component`).
     pub target_type: String,
     pub target_id: String,
-    /// `stub` / `partial` / `complete`.
+    /// `stub` / `partial` / `complete` — how much of the thing EXISTS.
     #[serde(default)]
     pub completeness: Option<String>,
+    /// `unchecked` (default) / `reviewed` / `verified` — whether anyone
+    /// confirmed the artifact still DOES WHAT THE TARGET REQUIRES. A different
+    /// question from `completeness`, and from the Artifact's `checksum`, which
+    /// says only that the file has not MOVED. Leave it off unless somebody
+    /// actually checked: `unchecked` is the honest reading, and the count of
+    /// unchecked links is the point (`evidence_report`).
+    #[serde(default)]
+    pub conformance: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -1071,6 +1079,12 @@ pub struct LinkArtifactReq {
     pub target_id: String,
     #[serde(default)]
     pub completeness: Option<String>,
+    /// `unchecked` (default) / `reviewed` / `verified` — whether anyone
+    /// confirmed the artifact still does what the target requires. Registering
+    /// a file and checking it against its requirement are different acts, and
+    /// only the second one is evidence.
+    #[serde(default)]
+    pub conformance: Option<String>,
     /// Provenance stamped on the Fragment (default `authored`).
     #[serde(default)]
     pub provenance: Option<String>,

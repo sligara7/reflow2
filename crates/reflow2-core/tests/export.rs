@@ -29,6 +29,7 @@ fn a_design() -> DesignGraph {
         target_type: node::CAPABILITY.into(),
         target_id: "cap:read".into(),
         completeness: None,
+        conformance: None,
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:abc".into()),

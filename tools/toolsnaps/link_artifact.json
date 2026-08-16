@@ -32,6 +32,14 @@
           "null"
         ]
       },
+      "conformance": {
+        "default": null,
+        "description": "`unchecked` (default) / `reviewed` / `verified` — whether anyone\nconfirmed the artifact still does what the target requires. Registering\na file and checking it against its requirement are different acts, and\nonly the second one is evidence.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "fragment_id": {
         "default": null,
         "type": [

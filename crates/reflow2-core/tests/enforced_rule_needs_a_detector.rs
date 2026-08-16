@@ -179,7 +179,7 @@ fn a_build_with_no_adopted_conventions_is_asked_about() {
     g.add_capability("cap:a", "Cap A", "does a", None).unwrap();
     g.add_artifact("art:a", "a.rs", Some("code"), Some("src/a.rs"))
         .unwrap();
-    g.realizes("art:a", node::CAPABILITY, "cap:a", None)
+    g.realizes("art:a", node::CAPABILITY, "cap:a", None, None)
         .unwrap();
 
     assert!(
@@ -214,7 +214,7 @@ fn one_recorded_convention_answers_the_rollup() {
     g.add_capability("cap:a", "Cap A", "does a", None).unwrap();
     g.add_artifact("art:a", "a.rs", Some("code"), Some("src/a.rs"))
         .unwrap();
-    g.realizes("art:a", node::CAPABILITY, "cap:a", None)
+    g.realizes("art:a", node::CAPABILITY, "cap:a", None, None)
         .unwrap();
 
     assert!(

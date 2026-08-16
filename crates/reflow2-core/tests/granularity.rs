@@ -44,7 +44,7 @@ fn seed_ordinary(g: &mut DesignGraph, n: usize) {
         g.allocate(&cap, "cmp:main").expect("allocate");
         g.add_artifact(&art, &format!("ordinary{i}.rs"), Some("code"), None)
             .expect("artifact");
-        g.realizes(&art, "Capability", &cap, None)
+        g.realizes(&art, "Capability", &cap, None, None)
             .expect("realizes");
     }
 }
@@ -58,7 +58,8 @@ fn seed_coarse(g: &mut DesignGraph, id: &str, n: usize) {
         g.add_capability(&cap, &format!("Swallowed {i}"), "Does a thing.", None)
             .expect("capability");
         g.allocate(&cap, "cmp:main").expect("allocate");
-        g.realizes(id, "Capability", &cap, None).expect("realizes");
+        g.realizes(id, "Capability", &cap, None, None)
+            .expect("realizes");
     }
 }
 
@@ -260,9 +261,9 @@ fn realizing_a_component_does_not_count_as_a_distinction() {
     g.add_capability("cap:tidy", "Tidy", "One thing.", None)
         .expect("capability");
     g.allocate("cap:tidy", "cmp:main").expect("allocate");
-    g.realizes("art:tidy", "Capability", "cap:tidy", None)
+    g.realizes("art:tidy", "Capability", "cap:tidy", None, None)
         .expect("realizes cap");
-    g.realizes("art:tidy", "Component", "cmp:main", None)
+    g.realizes("art:tidy", "Component", "cmp:main", None, None)
         .expect("realizes component");
 
     let r = report(&g);

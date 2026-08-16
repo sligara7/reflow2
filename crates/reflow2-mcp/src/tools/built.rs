@@ -293,6 +293,7 @@ impl ReflowService {
                 &req.target_type,
                 &req.target_id,
                 req.completeness.as_deref(),
+                req.conformance.as_deref(),
             )
             .map_err(dyno_err)?,
         ))
@@ -342,6 +343,7 @@ impl ReflowService {
             target_type: req.target_type,
             target_id: req.target_id,
             completeness: req.completeness,
+            conformance: req.conformance,
             provenance: req.provenance,
             fragment_id: req.fragment_id,
             checksum: req.checksum,

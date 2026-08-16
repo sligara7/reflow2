@@ -56,8 +56,14 @@ fn a_delivered_capability(g: &mut DesignGraph) {
         Some("src/content.rs"),
     )
     .unwrap();
-    g.realizes("art:store", "Capability", "cap:store", Some("complete"))
-        .unwrap();
+    g.realizes(
+        "art:store",
+        "Capability",
+        "cap:store",
+        Some("complete"),
+        None,
+    )
+    .unwrap();
 }
 
 /// Withdraw it the way the content store was withdrawn: a Decision, accepted,

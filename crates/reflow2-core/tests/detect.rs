@@ -797,6 +797,7 @@ fn an_artifact_realizing_the_component_counts_as_building_its_capabilities() {
         target_type: node::COMPONENT.into(),
         target_id: "cmp:detect".into(),
         completeness: None,
+        conformance: None,
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:aaa".into()),
@@ -831,6 +832,7 @@ fn a_capability_in_an_unbuilt_component_is_still_reported() {
         target_type: node::COMPONENT.into(),
         target_id: "cmp:built".into(),
         completeness: None,
+        conformance: None,
         provenance: None,
         fragment_id: None,
         checksum: Some("sha256:bbb".into()),
@@ -1125,7 +1127,7 @@ fn a_component_claiming_to_be_built_is_not_asked_what_builds_it() {
     g.allocate("cap:modelled", "cmp:modelled").unwrap();
     g.add_artifact("art:m", "m.rs", Some("code"), Some("src/m.rs"))
         .unwrap();
-    g.realizes("art:m", node::COMPONENT, "cmp:modelled", None)
+    g.realizes("art:m", node::COMPONENT, "cmp:modelled", None, None)
         .unwrap();
 
     // A shipped component whose files were never modelled.
@@ -1861,7 +1863,8 @@ fn a_parent_already_reporting_delivered_outranks_one_still_open() {
         done.satisfies(&cap, req).unwrap();
         done.add_artifact(&art, tag, Some("code"), Some("src/x.rs"))
             .unwrap();
-        done.realizes(&art, node::CAPABILITY, &cap, None).unwrap();
+        done.realizes(&art, node::CAPABILITY, &cap, None, None)
+            .unwrap();
         done.add_verification(&ver, tag, Some("test"), None)
             .unwrap();
         done.verifies(&ver, node::CAPABILITY, &cap).unwrap();

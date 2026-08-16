@@ -98,6 +98,7 @@ fn program() -> DesignGraph {
         fragment_id: None,
         provenance: None,
         completeness: None,
+        conformance: None,
         checksum: None,
     })
     .unwrap();

@@ -15,8 +15,14 @@ fn add_artifact_and_realizes_link() {
     let mut g = graph_with_capability();
     g.add_artifact("art:ball", "Ball.cs", Some("code"), Some("src/Ball.cs"))
         .unwrap();
-    g.realizes("art:ball", node::CAPABILITY, "cap:flight", Some("partial"))
-        .unwrap();
+    g.realizes(
+        "art:ball",
+        node::CAPABILITY,
+        "cap:flight",
+        Some("partial"),
+        None,
+    )
+    .unwrap();
 
     let art = g.get_node(node::ARTIFACT, "art:ball").unwrap().unwrap();
     assert_eq!(art.properties["artifact_type"].as_str(), Some("code"));
@@ -44,9 +50,10 @@ fn link_artifact_creates_artifact_fragment_and_edges_with_provenance() {
             target_type: node::CAPABILITY.to_string(),
             target_id: "cap:flight".to_string(),
             completeness: None, // → default "complete"
-            provenance: None,   // → default "authored"
-            fragment_id: None,  // → "frag:art:ball"
-            checksum: None,     // → no drift baseline recorded
+            conformance: None,
+            provenance: None,  // → default "authored"
+            fragment_id: None, // → "frag:art:ball"
+            checksum: None,    // → no drift baseline recorded
         })
         .expect("link_artifact");
 
@@ -85,6 +92,7 @@ fn link_artifact_fails_loud_on_missing_target() {
         target_type: node::CAPABILITY.to_string(),
         target_id: "cap:nope".to_string(),
         completeness: None,
+        conformance: None,
         provenance: None,
         fragment_id: None,
         checksum: None,
@@ -212,6 +220,7 @@ fn re_linking_an_artifact_keeps_what_the_design_already_knew() {
         target_type: node::CAPABILITY.into(),
         target_id: "cap:flight".into(),
         completeness: None,
+        conformance: None,
         provenance: None,
         fragment_id: None,
     };

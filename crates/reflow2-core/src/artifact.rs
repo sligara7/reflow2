@@ -176,6 +176,11 @@ pub struct LinkArtifactOptions {
     /// REALIZES completeness: `stub` / `partial` / `complete`.
     #[serde(default)]
     pub completeness: Option<String>,
+    /// REALIZES conformance: `unchecked` / `reviewed` / `verified` — whether
+    /// anyone confirmed the file still does what the target requires. Omitted
+    /// leaves it at `unchecked`, which is what an unvouched-for link means.
+    #[serde(default)]
+    pub conformance: Option<String>,
     /// Provenance stamped on the Fragment (default `authored`).
     #[serde(default)]
     pub provenance: Option<String>,
@@ -202,6 +207,12 @@ pub struct ArtifactLink {
     pub fragment_id: String,
     /// The REALIZES completeness recorded (as stored).
     pub completeness: String,
+    /// The REALIZES conformance recorded (as stored) — `unchecked` unless the
+    /// caller said otherwise. Returned for the same reason the checksum is:
+    /// the caller must be able to see what was WRITTEN rather than assume it,
+    /// and "you registered this and nobody has checked it" is exactly the thing
+    /// a caller should read back at the moment they register it.
+    pub conformance: String,
     /// The provenance recorded on the Fragment (as stored).
     pub provenance: String,
 }
@@ -479,12 +490,19 @@ impl DesignGraph {
 
     /// Link an `Artifact` to the entity it implements via `REALIZES`. `target_type`
     /// is required because `REALIZES` accepts any target type (`to: "*"`).
+    ///
+    /// `conformance` answers a DIFFERENT question from `completeness`: how much
+    /// of the thing exists, versus whether anyone confirmed it still does what
+    /// the target requires. Omitting it leaves the edge at the schema default
+    /// `unchecked`, which is the honest reading of an edge nobody has vouched
+    /// for (`dec:should-a-realizes-edge-say-that-nobody-checked-the-file-still-obeys-the-rule`).
     pub fn realizes(
         &mut self,
         artifact_id: &str,
         target_type: &str,
         target_id: &str,
         completeness: Option<&str>,
+        conformance: Option<&str>,
     ) -> Result<StoredEdge, DynoError> {
         self.create_edge(
             edge::REALIZES,
@@ -492,7 +510,9 @@ impl DesignGraph {
             artifact_id,
             target_type,
             target_id,
-            Props::new().set_opt("completeness", completeness),
+            Props::new()
+                .set_opt("completeness", completeness)
+                .set_opt("conformance", conformance),
         )
     }
 
@@ -562,6 +582,11 @@ impl DesignGraph {
 
         let provenance = opts.provenance.as_deref().unwrap_or("authored");
         let completeness = opts.completeness.as_deref().unwrap_or("complete");
+        // NOT defaulted to "complete"'s optimism. Registering a file says it
+        // exists, never that anyone checked it against what the target requires,
+        // so an unstated conformance is `unchecked` and the caller reads that
+        // back at the moment they register it.
+        let conformance = opts.conformance.as_deref().unwrap_or("unchecked");
         let fragment_id = opts
             .fragment_id
             .clone()
@@ -570,7 +595,7 @@ impl DesignGraph {
         // All four writes land together or not at all — a failed one (e.g. a bad
         // enum value) leaves no half-linked Artifact behind.
         self.begin_batch();
-        match self.write_artifact_link(&opts, &fragment_id, provenance, completeness) {
+        match self.write_artifact_link(&opts, &fragment_id, provenance, completeness, conformance) {
             Ok(()) => {
                 self.commit_batch()?;
                 Ok(ArtifactLink {
@@ -578,6 +603,7 @@ impl DesignGraph {
                     target_id: opts.target_id,
                     fragment_id,
                     completeness: completeness.to_string(),
+                    conformance: conformance.to_string(),
                     provenance: provenance.to_string(),
                 })
             }
@@ -596,6 +622,7 @@ impl DesignGraph {
         fragment_id: &str,
         provenance: &str,
         completeness: &str,
+        conformance: &str,
     ) -> Result<(), DynoError> {
         // Provenance Fragment (invalid provenance fails loud via schema validation).
         //
@@ -652,6 +679,7 @@ impl DesignGraph {
             &opts.target_type,
             &opts.target_id,
             Some(completeness),
+            Some(conformance),
         )?;
         Ok(())
     }
@@ -730,4 +758,84 @@ impl DesignGraph {
         }
         self.create_node(node::ARTIFACT, artifact_id, props)
     }
+
+    /// How many realizing links anyone has actually checked against what the
+    /// target REQUIRES — and, the point of the whole thing, how many nobody has.
+    ///
+    /// **This is the reader that justifies the property.** A `conformance`
+    /// nothing counted would be a vocabulary distinction no computation reads,
+    /// which `dec:edge-orthogonality` forbids — and the decision that added it
+    /// said so explicitly: the property ships with the report that reads it, or
+    /// it does not ship. "412 of 460 realizing links were never checked against
+    /// their requirement" is a sentence this design could not previously produce.
+    ///
+    /// **A missing value counts as `unchecked`, never as absent.** The schema
+    /// defaults it, but edges written before the property existed carry nothing
+    /// at all, and treating those as a separate "unknown" bucket would let the
+    /// number that matters shrink for a reason that is not progress.
+    pub fn conformance_tally(&self) -> Result<ConformanceTally, DynoError> {
+        let mut t = ConformanceTally::default();
+        for art in self.scan_nodes(node::ARTIFACT)? {
+            for e in self.outgoing(&art.node_id, Some(edge::REALIZES))? {
+                t.total += 1;
+                let value = e
+                    .properties
+                    .get("conformance")
+                    .and_then(dynograph_core::Value::as_str)
+                    .filter(|s| !s.is_empty())
+                    .unwrap_or("unchecked");
+                match value {
+                    "unchecked" => {
+                        t.unchecked += 1;
+                        if t.unchecked_sample.len() < UNCHECKED_SAMPLE {
+                            t.unchecked_sample
+                                .push(format!("{} → {}", e.from_id, e.to_id));
+                        }
+                    }
+                    "reviewed" => t.reviewed += 1,
+                    "verified" => t.verified += 1,
+                    // Reported rather than folded into a bucket: a value the
+                    // enum does not know is a fact about the store, and
+                    // silently counting it as checked would be the flattering
+                    // reading of an unreadable one.
+                    other => t
+                        .unrecognised
+                        .push(format!("{} → {}: {other}", e.from_id, e.to_id)),
+                }
+            }
+        }
+        t.unchecked_sample.sort();
+        t.unrecognised.sort();
+        Ok(t)
+    }
+}
+
+/// How many unchecked links `conformance_tally` names before it stops.
+///
+/// Bounded so a design with hundreds does not return hundreds, and NAMED so the
+/// truncation is visible in the type rather than buried as a literal — the
+/// no-silent-caps rule. The full count is always in `unchecked`.
+const UNCHECKED_SAMPLE: usize = 10;
+
+/// The conformance of every `REALIZES` edge in the design, tallied.
+///
+/// See [`DesignGraph::conformance_tally`]. Reports; never judges — a design
+/// where everything is `unchecked` is not accused of anything, it is told.
+#[derive(Debug, Clone, Default, serde::Serialize)]
+pub struct ConformanceTally {
+    /// Every realizing link, whatever its conformance.
+    pub total: usize,
+    /// Nobody has confirmed the artifact still does what the target requires.
+    /// Includes edges written before the property existed, which is honest:
+    /// nobody checked those either.
+    pub unchecked: usize,
+    /// A person read it against the requirement.
+    pub reviewed: usize,
+    /// A check exercises the specific property.
+    pub verified: usize,
+    /// Values the enum does not know, named rather than counted as checked.
+    pub unrecognised: Vec<String>,
+    /// Up to [`UNCHECKED_SAMPLE`] unchecked links, so the number is actionable
+    /// and not merely alarming. `unchecked` carries the true total.
+    pub unchecked_sample: Vec<String>,
 }

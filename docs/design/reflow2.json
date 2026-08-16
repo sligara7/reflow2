@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:8593d97f18bbb29711aa775cf9a08b0f2695275b41dbb8c8bc92c7ec3a950363",
+  "content_hash": "sha256:abbfb70e8ed50913e560378031b023a5391316139739c5aba9434106e309f06b",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -11559,6 +11559,132 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:an-edge-says-whether-anyone-checked-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-edge-says-whether-anyone-checked-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:artifact-intent-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-edge-says-whether-anyone-checked-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:checksum-dialect-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-edge-says-whether-anyone-checked-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:confirmation-vocabulary-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-edge-says-whether-anyone-checked-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:coverage-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-edge-says-whether-anyone-checked-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:cycles-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-edge-says-whether-anyone-checked-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:enforced-rule-detector-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-edge-says-whether-anyone-checked-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:orphan-attachment-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-edge-says-whether-anyone-checked-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-build"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-edge-says-whether-anyone-checked-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-edge-says-whether-anyone-checked-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-discontinued-is-read"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-edge-says-whether-anyone-checked-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-edges-need-both-ends"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-edge-says-whether-anyone-checked-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-edge-says-whether-anyone-checked-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:anchor-decision-second-hint",
       "properties": {
         "accepted_baseline": false,
@@ -11970,6 +12096,15 @@
         "action": "modified"
       },
       "to_id": "art:dates"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-8097a796f7a6bbf9",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:conformance-test"
     },
     {
       "edge_type": "CHANGED",
@@ -64651,6 +64786,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:conformance-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "ver:a-realizing-link-says-whether-anyone-checked-it"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:consumption",
       "properties": {
         "completeness": "complete"
@@ -70728,7 +70872,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fa1941914915d0e312d0ac8691861163b50bd2135ba1c06ef8a33ae58fc04a70",
+        "checksum": "sha256:9c293b7111c7b029d49f9debb054d2f2660c43e70f2a6786fcd11d81ebe672bc",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/artifact.rs",
         "name": "artifact.rs",
@@ -70741,7 +70885,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7ca7db94d50589123a3b8a7fc7c3392b2dd9636e7be69c760f7990d9d8c77eeb",
+        "checksum": "sha256:7befd2e936958a6b7d3ea06a1ec1d2edde451ca31354d7c8b49719cddd0d4b75",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/artifact_intent.rs",
         "name": "artifact_intent.rs",
@@ -70897,7 +71041,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a84c2afa299b6793cb78ae9aad6fda8cf659780728e38da0906ffa629dd41919",
+        "checksum": "sha256:68138446368f22bbde0b1fe44360b85edeb941b4503dbb491750506a99c1711f",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/checksum_dialect.rs",
         "name": "checksum_dialect.rs",
@@ -70999,12 +71143,23 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b4fd5760c54b234a4c8d4031c4dba9610db59dfb10cabc0dfc3907e143442344",
+        "checksum": "sha256:d05e1b3fda9bfe39de9d621ed98b17d7c75cfec9fee2353549b836199fc11516",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/confirmation_vocabulary.rs",
         "name": "confirmation_vocabulary.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:conformance-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:7776124d5c2f276520f036b0414c9e143f6b45ae56f02d61cd672a343beb3fe0",
+        "location": "crates/reflow2-core/tests/an_edge_says_whether_anyone_checked.rs",
+        "name": "an_edge_says_whether_anyone_checked.rs",
+        "status": "realized"
       }
     },
     {
@@ -71064,7 +71219,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c30ee52bd7c3ec95",
+        "checksum": "sha256:da69705c4697580a151a6ee7355c388701d465220bf475c2ede5bac2b1469e25",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/coverage.rs",
         "name": "tests/coverage.rs",
@@ -71077,7 +71232,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c5a5a59a2a71f549745745c4f1151b8a48d5bfbc44c121320da963dc6b35b083",
+        "checksum": "sha256:52392a822a3b2853d8e12478d9cb1ee2656fec33f414260b2cf6562b079ed603",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/cycles.rs",
         "name": "Circular-dependency suite — detection, selectivity, and what the finding says it walked",
@@ -71283,7 +71438,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c47b13eb09c349050fb843bd48937503bf18e5cba4cad9701c8aee2240473d12",
+        "checksum": "sha256:d120c662cfdb98933337eefea8e9f5741f47fb7e8cb338a7a14836f748f4c156",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/enforced_rule_needs_a_detector.rs",
         "name": "enforced_rule_needs_a_detector.rs",
@@ -71803,7 +71958,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9b388fef123f04c5",
+        "checksum": "sha256:c181cfc2536fc5f0c6cb9786d7d13dc337e49e4081174fa165ad86b4c1acbd30",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/orphan_attachment.rs",
         "name": "orphan_attachment.rs",
@@ -72012,7 +72167,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:094e3f8f61f0670012b15f19e01961a9260360addbdd7ac9e51f2e43797490c6",
+        "checksum": "sha256:4c6d9b4d2298db40893e54004d41009a45bfd6757adc7dbd4cc510f39712a083",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/build.yaml",
@@ -72283,7 +72438,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:61afcdda332fda68a073bf5a1e65fba2d95c5942b255abc69f55d9d9d9d1596a",
+        "checksum": "sha256:c5fe05b922857d22df4460966310fb497932e4125b473e8a4c227fce52a7d497",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -72567,7 +72722,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:bbc83ab65067771dc49208c9f48b74070925d22127aa7a537db7e63501faf7f6",
+        "checksum": "sha256:02e7940e8095b74cc1d43e3f93741d217810fd947b3265e0db2c574b49405190",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/discontinued_is_read.rs",
         "name": "discontinued_is_read.rs — eight cases: the defect, the authority check, the cascade, the visible count, two counterweights, and the two that pin the VOCABULARY saying where abandonment lives",
@@ -72580,7 +72735,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d79efdde28d0a21b8d7a1b560f7acaaf0992348dfe7f0d569c8e104aebcd4f94",
+        "checksum": "sha256:40e6f3bee8bf7de3ef29ab16b317ab38adbf1dab2185481c2e3325b068c02871",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/edges_need_both_ends.rs",
         "name": "edges_need_both_ends.rs",
@@ -72775,7 +72930,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1fa0345d69bcb2799d61736814cdc79ebe12120a8967668b451ea8d74db1ab6d",
+        "checksum": "sha256:ba6f62e02f9872a33d62483cc0aeacaa3fd2ca93cbcb5616771165ccf02edb8d",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/built.rs",
         "name": "tools/built.rs",
@@ -73035,7 +73190,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3532d8866a760bb4b825dd11684e2b73d2c1751f1f9fd994e3a14ab9fb6ae224",
+        "checksum": "sha256:29e0670ce9e7fbf86537304333279919ff06c207c755b4322d0ea2f517cbf6cd",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/verify.rs",
         "name": "verify.rs",
@@ -76369,6 +76524,18 @@
       }
     },
     {
+      "node_id": "chg:an-edge-says-whether-anyone-checked-it",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-16",
+        "name": "A REALIZES edge says whether anyone checked the artifact against what the target requires",
+        "rationale": "A real user found a real bug that every green signal in the design agreed was fine. That is the failure the served instructions warn about — a green gate is evidence about what it covers and silent about the rest — arriving from outside rather than from a detector. Anthony chose to make the absence first-class rather than merely documented, and required that the property ship with the report that reads it, so the count is the deliverable.",
+        "subject": "system",
+        "summary": "Implements `dec:should-a-realizes-edge-say-that-nobody-checked-the-file-still-obeys-the-rule`, option (b), settled on Anthony's word 2026-08-16.\n\nWHAT CHANGED. `REALIZES` gains `conformance: unchecked | reviewed | verified`, defaulting to `unchecked` (`schema/build.yaml`). `realizes()` and `link_artifact` take it; `ArtifactLink` returns what was stored. `DesignGraph::conformance_tally()` counts every realizing link by bucket and names up to ten unchecked ones, and `evidence_report` carries the tally so the number is reachable from the served surface.\n\n⭐ THE MEASURED ANSWER ON REFLOW2'S OWN DESIGN, taken end-to-end through a restarted server: 223 REALIZING LINKS, 223 UNCHECKED, 0 reviewed, 0 verified, 0 unrecognised. That sentence could not be produced at all before this change, and it is the entire deliverable — not the ceremony of setting a field, but the count that makes the silence visible.\n\nWHY IT EXISTS, and the evidence came from OUTSIDE the project: a Requirement said the calendar day is the person's CIVIL date; the code used UTC; the Capability said `realized`; the artifact's checksum matched so `reconcile_artifacts` was silent. Every signal in the graph was green and A USER FOUND THE BUG IN THE PRODUCT. Nothing distinguished a file CHECKED AGAINST THE RULE from a file MERELY HASHED, and the two produced identical reports. Alex's Grok session, 2026-08-14, item 5.\n\nWHY IT IS NOT A DETECTOR: reflow2 reads a DESIGN, never a running system, and judging whether code implements a civil-date rule is program analysis it deliberately stays out of (`dec:agent-navigates-content`). This RECORDS what a person knows; it computes nothing about code.\n\n⭐ WHY (b) BEAT (a), documenting the hole — and this is the general principle rather than a preference: A DOCUMENTED HOLE IS SOMETHING A READER MUST REMEMBER; A DEFAULT OF `unchecked` IS SOMETHING THE GRAPH SAYS OUT LOUD EVERY TIME, WITH NOBODY REMEMBERING ANYTHING. The same move landed twice already this month and was right both times: #200 stopped INJECTING a default nobody chose, #213 started REPORTING the property nobody declared.\n\nWHERE THE READER LIVES, and both alternatives were rejected for stated reasons. NOT `coverage_report`: it requires a caller-supplied file sweep, and making somebody sweep a tree to learn that nobody has checked anything puts a cost in front of the one number that should be free. NOT `loop_status`: every edge starts `unchecked`, so a large figure that never moves is exactly the signal-trained-to-be-ignored failure `req:the-loop-can-say-what-this-session-owes` was built to end — hours earlier, in this same session. `evidence_report` takes no arguments, is read on demand rather than nagged, and already speaks in this idiom.\n\nDELIBERATE SHAPE:\n- `conformance` DOES NOT FOLLOW `completeness` INTO OPTIMISM. `completeness` defaults to `complete`; conformance defaults to `unchecked`, because registering a file says it exists and never that anyone checked it.\n- THE SAMPLE IS CAPPED AT TEN AND THE COUNT IS NOT. A truncated list that also truncated the count would under-report the problem, the one direction this must never fail in.\n- A MISSING VALUE COUNTS AS `unchecked`, never as a separate unknown bucket — otherwise the number that matters shrinks for a reason that is not progress.\n- AN UNRECOGNISED VALUE IS NAMED, not folded into a bucket: silently counting it as checked would be the flattering reading of an unreadable one.\n\n⚠️ WHAT MUTATION TESTING TAUGHT, and it changed what could be tested. Mutating the fallback to report a missing conformance as `verified` killed only ONE case, which was suspicious — and the reason is that the schema `default:` MATERIALISES the property at write time. A probe confirmed it: a freshly written edge stores `conformance: \"unchecked\"` explicitly. So the in-code fallback covers ONLY edges written before the property existed, and that shape CANNOT be constructed through the API, because a property once written cannot be removed (`fact:defect-a-property-once-written-cannot-be-removed`, found earlier the same day). It is therefore proven against the real graph rather than in a unit test — all 223 links predate the property and all 223 report `unchecked`.\n\nVERIFIED. 11 cases, all passing. Three mutations, each killing the right case: capping the count as well as the sample; defaulting link_artifact to optimism; and the fallback mutation above, whose partial kill was itself the finding. Two counterweights pin the distinction that defines the feature — a COMPLETE artifact is still unchecked, and a MATCHING CHECKSUM is still unchecked, which is precisely the shipped-bug case: complete, hashed, green, wrong.\n\nNO SCHEMA STAMP MOVEMENT: an edge PROPERTY is not counted by the version stamp — 29 node types, 61 edge types, unchanged — so no upgrade document is owed.\n\nNOT DONE, named rather than left to be discovered. Nothing MOVES an edge off `unchecked` except a caller saying so, and nothing forces that; the honest claim is that the silence is now countable, not that it will be broken. Option (d), raising unchecked links as a gap, is deliberately deferred — 223 gaps on day one is noise, and it costs almost nothing later because the data now exists. And the 223 are not triaged here; this change measures them, it does not fix them."
+      }
+    },
+    {
       "node_id": "chg:anchor-decision-second-hint",
       "node_type": "ChangeEvent",
       "properties": {
@@ -76563,6 +76730,16 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-16",
         "name": "First baseline. The whole of reflow2's calendar arithmetic: civil-date conversion in a closed form, no dependency, and `today` a parameter on everything that decides.",
+        "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:baseline-8097a796f7a6bbf9",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-16",
+        "name": "First baseline. 11 cases, three mutation-checked, and the two counterweights that keep `conformance` from collapsing into `completeness` or into the checksum.",
         "subject": "record"
       }
     },
@@ -94836,6 +95013,18 @@
       }
     },
     {
+      "node_id": "ver:a-realizing-link-says-whether-anyone-checked-it",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-16",
+        "level": "unit",
+        "method": "test",
+        "name": "A realizing link says whether anyone checked it, and the unchecked ones are counted (crates/reflow2-core/tests/an_edge_says_whether_anyone_checked.rs) — 11 cases, all passing 2026-08-16. THE MEASURED RESULT ON REFLOW2'S OWN DESIGN, end-to-end through a restarted server: 223 realizing links, 223 UNCHECKED, 0 reviewed, 0 verified, 0 unrecognised — a sentence the design could not produce at all before this. TWO COUNTERWEIGHTS DEFINE THE FEATURE, and they are the shipped-bug case restated: a COMPLETE artifact is still unchecked, and a MATCHING CHECKSUM is still unchecked. Complete, hashed, green, and wrong is exactly what happened to the user who found the civil-date bug in the product. If `conformance` and `completeness` ever collapse into one field, those two fail. NO SILENT CAPS: the unchecked SAMPLE stops at ten and the unchecked COUNT does not, because a truncated list that also truncated the count would under-report the problem — the one direction this must never fail in. `link_artifact` is pinned to return `completeness: complete` and `conformance: unchecked` from the same call, since registering a file is not checking it and the defaults must not drift together. And the tally is asserted to be reachable through `evidence_report`, so that if the property ever stops being read it stops being vocabulary and this says so (`dec:edge-orthogonality`). MUTATION-CHECKED THREE WAYS: capping the count as well as the sample fails the no-silent-caps case; defaulting link_artifact to optimism fails the read-back case; and mutating the missing-value fallback killed only ONE case — which was itself the finding. ⚠️ THAT PARTIAL KILL IS RECORDED RATHER THAN PAPERED OVER: a probe showed the schema `default:` MATERIALISES the property at write, so every new edge stores `unchecked` explicitly and the in-code fallback covers only edges written BEFORE the property existed. That shape cannot be built through the API, because a property once written cannot be removed. It is therefore proven on the real graph — all 223 links predate the property and all 223 report unchecked — and NOT by a unit case. NOT COVERED: nothing moves an edge off `unchecked` except a caller saying so, and no case here proves anyone ever will; the claim is that the silence is countable, not that it gets broken.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-refusal-names-its-own-fix",
       "node_type": "Verification",
       "properties": {
@@ -96638,7 +96827,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:01e1218f83aaca5f5c432b8ffdab8682a1dfa8b148216cbf2c153c60d67286f9",
+  "prev_content_hash": "sha256:8593d97f18bbb29711aa775cf9a08b0f2695275b41dbb8c8bc92c7ec3a950363",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
