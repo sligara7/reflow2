@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b69932aa06376ffb9a6f4ed2c5c6bdaca2ca395f12925420814a7687a86a77b8",
+  "content_hash": "sha256:f80d72866cbada2ba92192bf3f0aa39fb991c370ae10bbc5be40b0d9bc3cac97",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -7660,6 +7660,15 @@
       "from_id": "dec:idea-how-is-unrequested-work-dispositioned",
       "properties": {
         "acted_at": "2026-08-11",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-how-should-one-finding-say-it-corroborates-another",
+      "properties": {
+        "acted_at": "2026-08-16",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -20565,6 +20574,16 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "fact:a-pr-export-goes-stale-behind-a-green-mergeable-badge",
+      "properties": {
+        "alignment": "supporting",
+        "confidence": 1.0,
+        "evidence": "Corroboration rather than conflict, and the pair is the general shape: BOTH say a branch-local green says nothing about the merge base. The older fact measured it on the LOCAL gate (HEAD vs HEAD~1, so a stacked branch has no merge base to check against); this one measures the same blindness one level up, where the branch is internally coherent and the SUBTRACTION against main is what nothing checks. 2026-08-16 added a third instance on the same theme: #194's base branch was another PR's branch rather than main, so its green CI had been testing the wrong base entirely, `gh` reported MERGEABLE until that base was merged and deleted, and retargeting the base to main did NOT re-trigger CI — a force-push was needed. `SUPPLEMENTS` would be the better word; no edge type models TemporalFact to TemporalFact, so this uses the corroboration form rather than asserting a relation the schema does not carry."
+      },
+      "to_id": "fact:the-local-lineage-gate-cannot-see-a-stacked-export"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "fact:apply-heal-would-have-destroyed-the-wrong-contributor",
       "properties": {
         "alignment": "opposing",
@@ -27367,6 +27386,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "dec:idea-how-should-one-finding-say-it-corroborates-another",
+      "properties": {},
+      "to_id": "dec:edge-orthogonality"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "dec:idea-intent-crosses-designs",
       "properties": {},
       "to_id": "dec:nested-graphs"
@@ -29373,6 +29398,12 @@
       "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cmp:graph",
       "properties": {},
+      "to_id": "fact:defect-a-property-naming-a-node-is-unguarded-while-edges-are-not"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cmp:graph",
+      "properties": {},
       "to_id": "fact:defect-satisfies-helper-silently-flattens-coverage"
     },
     {
@@ -29704,6 +29735,12 @@
       "from_id": "dec:merge-survivor-provenance",
       "properties": {},
       "to_id": "fact:apply-heal-would-have-destroyed-the-wrong-contributor"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "proj:reflow2",
+      "properties": {},
+      "to_id": "fact:a-pr-export-goes-stale-behind-a-green-mergeable-badge"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -78308,6 +78345,16 @@
       }
     },
     {
+      "node_id": "dec:idea-how-should-one-finding-say-it-corroborates-another",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony asked how to choose this after a capture pass hit it; nothing here is intent, and the options are mine unless marked otherwise.\n\nMEASURED FIRST, because it changes the question. In reflow2's own graph today: 198 TemporalFacts, and SIX TemporalFact→TemporalFact edges — ALL of them CONTRADICTS, and FIVE of the six carry `alignment: supporting`, i.e. corroboration rather than conflict. Five earlier sessions independently reached for a negation type to say two findings AGREE. This is not one author's routing quirk.\n\nAND THE CURRENT ARRANGEMENT IS CORRECT, which is the strongest argument against touching it. Both computations that read CONTRADICTS skip `supporting` deliberately — `heal.rs:917-923` and `report.rs:1751-1766` — and report.rs carries a comment naming the bug that once existed: reading only the edge TYPE 'turned every recorded corroboration into a structural defect'. So there is NO live defect. The cost is a word that says the opposite of its meaning, and an author who must find a property to negate the type they just chose.\n\nTHE TEST THAT SHOULD DECIDE IT IS ALREADY ACCEPTED DOCTRINE: `dec:edge-orthogonality` — 'a vocabulary distinction earns its keep only if a computation reads it'. So the real question is not which word is nicer. It is: SHOULD REFLOW2 COMPUTE CORROBORATION? 'This finding is independently corroborated by N sources' is the same evidence-strength signal the design already cares about everywhere else (`basis: measured`, `confidence`, the whole verification doctrine), and the five supporting edges cluster on exactly the findings that recurred to different people. If that number should be reportable, the relation earns a type. If not, it is documentation and the cheapest option wins.\n\nTHE OPTIONS.\n\n(a) LEAVE IT. CONTRADICTS + `alignment: supporting`. Cheapest, five precedents, twice defended in code with a comment recording why. ⇒ Against: every future author reaches for a negation to express agreement, and only finds the escape hatch by reading the schema — which is how this came up.\n\n(b) WIDEN `SUPPLEMENTS`. It already exists and is declared `from: Fragment, to: Fragment` (build.yaml:133). A from/to list edit is the exact shape of #198 (VERIFIES admits Constraint), which shipped this increment, and it does NOT move the stamp — type counts and names are unchanged, so no upgrade doc is owed and nobody is locked out. ⇒ Against, and it is serious: SUPPLEMENTS has ZERO edges anywhere in this design, and its documented meaning is narrow and different (an LLM-as-SME supplementary-analysis Fragment augmenting its source). Nothing computes it. So this moves corroboration from an edge that IS read-and-correctly-skipped to one nothing reads at all — arguably backwards by `dec:edge-orthogonality`'s own test.\n\n(c) A NEW EDGE TYPE (`CORROBORATES`). Cleanest semantics, and the only option where the word matches the meaning. ⇒ Against: edge_types 61 → 62 MOVES THE STAMP, which owes an upgrade doc and makes older binaries refuse newer graphs. That is a real consumer cost for what may be documentation — and it only pays for itself under the computation test above.\n\n(d) SPLIT `alignment` OUT of CONTRADICTS ENTIRELY, so conflict and corroboration are separate types. Most honest model. ⇒ Against: same stamp cost as (c) PLUS a migration of the five existing supporting edges, and it would delete a working distinction to replace it with an equivalent one.\n\n(e) LEAVE THE SCHEMA AND FIX DISCOVERABILITY. CONTRADICTS's hint mentions the supporting case only as a trailing parenthetical — '(or, with alignment=supporting, reinforce)'. Lead with it instead. ⇒ Zero schema risk, zero stamp movement, and it addresses the ACTUAL failure, which was an author not finding the mechanism rather than the mechanism being absent. Weakest if the answer to the computation question is yes.\n\nWHAT NOBODY HAS MEASURED, and it would settle (c) vs (a): whether any consumer design has fact→fact corroboration at all, or whether this is a self-host pattern produced by reflow2 being the only project that records its own defects as TemporalFacts. If it is self-host-only, that is an argument for (a) or (e) on `rule:the-self-host-always-trails-what-it-teaches` grounds.\n\nRELATED AND DELIBERATELY NOT FOLDED IN: `dec:one-retire-edge` is the same shape one axis over — two edge types for retirement, neither consulted, and still open. If these are answered separately they may drift apart; whether edge-vocabulary questions should be settled as a batch is itself a question.",
+        "name": "OPEN — a finding that corroborates another has to say CONTRADICTS to do it, and two code paths then filter that back out. Leave it, widen an unused edge, or make corroboration something reflow2 computes?",
+        "rationale": "Not a proposal and not a ranking. The five-of-six measurement is the part worth keeping whatever is decided: a corroboration relation is being expressed through a negation type, five times, by different sessions, and the code correctly filters it back out in two places. Anthony asked how to choose; the honest answer is that `dec:edge-orthogonality` already supplies the test, and applying it needs one thing nobody has decided — whether 'independently corroborated by N sources' is a number reflow2 should report.\n\n⭐ THE OUTSTANDING MEASUREMENT WAS THEN TAKEN, 2026-08-16, AND IT LEANS HARD. The decision text asks whether any CONSUMER design has fact→fact corroboration. Measured across every committed export on this machine — dev_storyflow, dynograph-foundation, flo2, music_graph, quantum_benchmarking_initiative, storyflow — the answer is not 'no fact→fact edges'. It is ZERO TemporalFacts, in all six, full stop.\n\n⇒ THIS IS A SELF-HOST-ONLY PATTERN. reflow2 is the only project recording its own defects as TemporalFacts, because it is the only project whose subject is reflow2. That is `rule:the-self-host-always-trails-what-it-teaches` pointing the other way for once: normally the self-host lags what it teaches; here it has invented a usage no consumer has reached for.\n\n⇒ WHICH RE-RANKS THE OPTIONS, though it does not settle them. (c) a new edge type and (d) splitting `alignment` both move the stamp — an upgrade doc owed and older binaries refusing newer graphs — and would be paying a CONSUMER cost for a relation no consumer uses. (b) widening SUPPLEMENTS was already argued against on `dec:edge-orthogonality` grounds and this weakens it further. (e) fixing CONTRADICTS's hint so the `supporting` case leads rather than trails costs nothing, breaks nothing, and addresses the failure actually observed — an author not finding a mechanism that was already there and already correct.\n\n⚠️ THE BOUND ON THAT MEASUREMENT, stated rather than glossed: these are COMMITTED EXPORTS, which may trail those projects' live stores — music_graph's is dated 2026-08-01, and F23 is precisely a case of a committed export being behind. So this reads 'zero in the record I can see', not 'zero in existence'. Six-for-six at zero is still a strong signal, and it would take only one consumer starting to record findings to overturn it.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-human-newcomer-reader",
       "node_type": "Decision",
       "properties": {
@@ -89605,6 +89652,19 @@
       }
     },
     {
+      "node_id": "fact:a-pr-export-goes-stale-behind-a-green-mergeable-badge",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "method_defect",
+        "statement": "AN OPEN PR'S EXPORT GOES STALE WHILE ITS BADGE STAYS GREEN, AND MERGING IT WOULD SUBTRACT DESIGN. Measured on reflow2's own repo, 2026-08-16, on THREE PRs at once — not a hypothetical, and not caused by anything anyone did wrong.\n\nMEASURED, per PR, against `origin/main`:\n\n    #190  export 63 nodes BEHIND main   intended to add 9   — all 9 ALREADY IN MAIN\n    #191  export 59 nodes BEHIND main   intended to add 13  — all 13 ALREADY IN MAIN\n    #194  export 56 nodes BEHIND main   intended to add 16  — all 16 ALREADY IN MAIN\n\nAll three were green on both CI jobs. #194 read `MERGEABLE`.\n\n⭐ THE MECHANISM IS THE SHARED STORE, AND IT CUTS BOTH WAYS. The design graph does not branch with git (`dec:multi-writer-architecture`), so a later session's export from the same store CARRIED EVERY EARLIER BRANCH'S GRAPH WRITES INTO MAIN. Each PR's design content therefore arrived in main WITHOUT that PR being merged. What was left on the branch was a document that could only subtract — `req:stale-seat-knows`'s prediction arriving in practice: a stale export is a COMPLETE document, so it merges cleanly and the missing work simply vanishes.\n\n⚠️ THE HALF THAT MAKES IT DANGEROUS: nothing on the PR says so. The gate runs against the BRANCH's export and its own artifact checksums, so it passes; the branch is internally coherent. The subtraction is only visible by comparing the branch's export against MAIN, which no check does. A reviewer sees green, mergeable, and a diff of one JSON file.\n\n⇒ THE CHECK, cheap and reusable — TWO questions, and the second is the one that decides:\n\n    1. Does this PR's export ADD anything main lacks?\n         set(branch nodes) - set(main nodes)          -> 0 means it can only subtract\n    2. Are the nodes it INTENDED to add already in main?\n         set(branch nodes) - set(merge-base nodes), then test each against main\n\nWhen (1) is 0 and (2) is all-present, the PR's design half is ALREADY DELIVERED and the export is pure liability. #190 held nothing else, so it was CLOSED rather than merged — refreshing its export would have left an empty PR. #191 and #194 held real code, so each was rebased with `git checkout --ours docs/design/reflow2.json`, its artifact checksums re-accepted against its OWN existing ChangeEvent in main, and re-exported once.\n\n📌 AND THE TRAP INSIDE THE REPAIR: those three PRs were GREEN because their stale exports carried their own artifact checksums. Restoring main's export makes them go RED on DRIFT immediately — which is correct, and must be fixed by re-accepting, never by keeping the stale export that was hiding it.\n\nNOT ESTABLISHED: how long a PR can sit before this becomes true (all three were under 24 hours old), and whether anything could detect it automatically — the comparison needs main, and the gate deliberately only reads the committed export in front of it.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-16",
+        "value": "{\"measured\":\"2026-08-16, reflow2's own repo, three open PRs\",\"per_pr\":{\"#190\":{\"behind\":63,\"intended_add\":9,\"already_in_main\":9,\"outcome\":\"closed - held nothing but the export\"},\"#191\":{\"behind\":59,\"intended_add\":13,\"already_in_main\":13,\"outcome\":\"rebased, checksums re-accepted, re-exported, merged\"},\"#194\":{\"behind\":56,\"intended_add\":16,\"already_in_main\":16,\"outcome\":\"rebased, checksums re-accepted, re-exported, merged\"}},\"badges\":\"all three green on both CI jobs; #194 reported MERGEABLE\",\"mechanism\":\"shared store does not branch with git, so a later export carried every branch's writes into main\",\"check\":[\"branch nodes - main nodes == 0 means it can only subtract\",\"branch nodes - merge-base nodes, then test each against main\"],\"repair_trap\":\"restoring main's export makes the branch go RED on DRIFT, because the stale export was carrying its own checksums\"}"
+      }
+    },
+    {
       "node_id": "fact:a-second-project-answered-what-is-left-to-build-from-decision-prose",
       "node_type": "TemporalFact",
       "properties": {
@@ -90454,6 +90514,19 @@
         "subject_id": "req:thin-install",
         "valid_from": "2026-08-08",
         "value": "{\"reported\":\"2026-08-08, Alex's own project, fourteen days after he raised req:thin-install\",\"his_words_in_the_requirement\":\"you wouldn't need to change anything in your repo again and updates would be confined to the reflow package (2026-07-25)\",\"state_found\":\"binary 0.24.0, .reflow2/kit-version.json 0.11.0 - thirteen versions of frozen kit\",\"forward_half_delivered\":\"cap:skills-served - skills served from the binary, upgrade leaves a project byte-identical (ver:served-skills)\",\"missing_half\":\"no route out for a project installed BEFORE served skills\",\"cost\":\"eight manual steps, derived from first principles\",\"two_agents_disagreed\":\"his 8 steps vs my 7, overlapping on 6\",\"his_regression\":\"rewrote --graph-path absolute -> relative, the configuration dec:no-design-here-never-looked records as minting an accidental third graph in hxm_program\",\"my_error\":\"guessed .install-stamp for kit-version.json; shipped flagged as unverified\",\"root\":\"the knowledge is scattered across installer source, three decisions and two verifications, and is re-derived per session\",\"six_checkable_things\":\"tracked .reflow2/; tracked MCP configs; kit stamp vs installed kit; local skill copies shadowing served ones; --graph-path absolute; committed export present and current\",\"where_it_cannot_live\":\"the MCP surface - dec:agent-navigates-content keeps reflow2 out of file IO\",\"where_it_can\":\"the kit, beside reflow2_init.py --check, check_kit_manifest.py, reflow2_check.py\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-a-property-naming-a-node-is-unguarded-while-edges-are-not",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "A PROPERTY THAT NAMES A NODE ID IS ACCEPTED WITHOUT CHECKING THE NODE EXISTS — while an EDGE to the same missing node is refused by sixteen helpers and a dedicated test file. The guard was built for one shape of reference and the other shape has none.\n\nMEASURED 2026-08-16, and found sideways rather than by looking: `create_node` was called for a TemporalFact carrying `subject_id: \"cap:questions-are-tracked\"`. It was written and echoed back with no complaint. `get_node(Capability, \"cap:questions-are-tracked\")` then returned `{node: null}` — THE CAPABILITY HAS NEVER EXISTED. The id was invented while writing the node, and nothing objected. Corrected to `cmp:detect` only because the write was read back on the habit AGENTS.md prescribes; nothing in the tool's own reply would have revealed it.\n\n⭐ WHAT MAKES THIS WORTH RECORDING IS THE CONTRAST, not the slip. `ver:edges-need-both-ends` is an unusually thorough guard: an edge to a missing node is refused through ALL SIXTEEN typed helpers, with an atomicity case, a size-floor so the table cannot shrink, and a mutation check that found fourteen of sixteen depend on the shared guard. That work exists because `authored_by` once accepted `person:anthony`, which was never created, and a phantom AUTHORED_BY sat in the graph until somebody noticed BY EYE. ⇒ The identical failure is still reachable through a PROPERTY, and it lands in the same place: a dangling reference nothing reports.\n\nWHY IT IS NOT SIMPLY THE SAME BUG: an edge endpoint is structurally a reference and the schema knows it. A property is a string, and the schema does not record that `TemporalFact.subject_id` MEANS a node id — so there is nothing for a generic guard to key on. Any fix needs the schema to say which properties are references before validation can act, which is a real change rather than an oversight to patch.\n\nBLAST RADIUS, NOT ESTABLISHED and stated as such: `subject_id` is the case measured. Other properties across the schema plausibly name nodes the same way (`ABOUT_ENTITY` has an edge for this, which is the modelled route, so the property may be the redundant one) — nobody has enumerated them, and the count of already-dangling values across this design is unknown and unmeasured.",
+        "subject_id": "cmp:graph",
+        "valid_from": "2026-08-16",
+        "value": "{\"measured\":\"2026-08-16, reflow2's own graph\",\"call\":\"create_node TemporalFact with subject_id cap:questions-are-tracked\",\"result\":\"written and echoed back with no complaint\",\"probe\":\"get_node(Capability, cap:questions-are-tracked) -> {node: null}\",\"caught_by\":\"reading the write back, not by any tool reply\",\"contrast\":\"ver:edges-need-both-ends refuses an edge to a missing node through all 16 typed helpers, with atomicity, size-floor and mutation checks\",\"origin_of_that_guard\":\"authored_by once accepted person:anthony which never existed; the phantom edge was found by eye\",\"why_not_the_same_fix\":\"an edge endpoint is a declared reference; a property is a string and the schema does not record that subject_id MEANS a node id\",\"not_established\":\"which other properties name nodes, and how many dangling values already exist\"}"
       }
     },
     {
@@ -93720,7 +93793,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:2d32eb168ccdc6867be561090a3d069b5523bfaa929c7541a30e24504b17ac4b",
+  "prev_content_hash": "sha256:b69932aa06376ffb9a6f4ed2c5c6bdaca2ca395f12925420814a7687a86a77b8",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
