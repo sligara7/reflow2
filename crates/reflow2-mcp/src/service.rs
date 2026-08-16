@@ -2310,8 +2310,15 @@ pub struct EpochStatusReq {
 pub struct AddChangeEventReq {
     pub id: String,
     pub name: String,
-    /// Change type key (e.g. `new_feature`, `scope_change`).
+    /// Change type key (e.g. `new_feature`, `scope_change`, `defect_fix`).
     pub change_type: String,
+    /// WHICH AXIS this event is on — `system` (the thing changed) or `record`
+    /// (only the design's knowledge of it changed). OPTIONAL, and leaving it
+    /// out is a true answer: absent means nobody said, and it is never inferred
+    /// from `change_type`, because the mapping is not total — a `resync` can be
+    /// either.
+    #[serde(default)]
+    pub subject: Option<String>,
     /// What the change touched: a CHANGED edge is drawn from the event to each
     /// entry. Every entry must name an existing node — the whole call is
     /// refused before anything is written if one does not.

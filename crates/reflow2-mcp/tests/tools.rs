@@ -572,6 +572,7 @@ async fn the_surface_can_say_that_nothing_moved() {
             id: "chg:fake".into(),
             name: "not really a baseline".into(),
             change_type: "baseline_established".into(),
+            subject: None,
             affected: None,
         }))
         .await
@@ -1863,6 +1864,7 @@ async fn change_event_declares_what_it_changed_atomically() {
             id: "chg:wind".into(),
             name: "Add wind".into(),
             change_type: "new_feature".into(),
+            subject: None,
             affected: Some(vec![AffectedNodeReq {
                 node_type: "Capability".into(),
                 node_id: "cap:nope".into(),
@@ -1886,6 +1888,7 @@ async fn change_event_declares_what_it_changed_atomically() {
             id: "chg:wind".into(),
             name: "Add wind".into(),
             change_type: "new_feature".into(),
+            subject: None,
             affected: Some(vec![AffectedNodeReq {
                 node_type: "Requirement".into(),
                 node_id: "req:physics".into(),
@@ -1900,6 +1903,7 @@ async fn change_event_declares_what_it_changed_atomically() {
         id: "chg:wind".into(),
         name: "Add wind".into(),
         change_type: "new_feature".into(),
+        subject: None,
         affected: Some(vec![
             AffectedNodeReq {
                 node_type: "Requirement".into(),
@@ -1976,6 +1980,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         id: "chg:tune".into(),
         name: "Tune the model".into(),
         change_type: "refactor".into(),
+        subject: None,
         affected: None,
     })));
     // record_change snapshots the prior state before applying — the axis-Z write.

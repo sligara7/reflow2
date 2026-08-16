@@ -248,8 +248,13 @@ fn each_accepted_checksum_keeps_its_own_disposition() {
     // (BL-157). Establishing it is a separate, earlier act.
     baseline(&mut g, "art:a");
     baseline(&mut g, "art:b");
-    g.add_change_event("chg:real", "A real design change", ChangeType::NewFeature)
-        .unwrap();
+    g.add_change_event(
+        "chg:real",
+        "A real design change",
+        ChangeType::NewFeature,
+        None,
+    )
+    .unwrap();
 
     let items = [
         ChecksumAccept {
