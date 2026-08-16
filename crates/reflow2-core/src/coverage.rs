@@ -232,16 +232,32 @@ impl DesignGraph {
                 });
                 continue;
             }
-            match claims_list.iter().find(|c| claims(c, &path)) {
-                Some(c) => {
-                    matched_claims.insert(c.clone());
-                    claimed += 1;
-                    claimed_mass += obs.mass;
-                }
-                None => {
-                    unclaimed_mass += obs.mass;
-                    unclaimed.push((path, obs.mass));
-                }
+            // EVERY claim that covers this path is marked seen, not just the
+            // first one found (music_graph F10). A design may legitimately
+            // register `archive/` as a whole AND `archive/reco.py` inside it;
+            // with `find`, whichever came first absorbed the observation and
+            // the other was reported in `unobserved_locations` — a file the
+            // sweep had just handed us, named as never swept.
+            //
+            // That is worse than a wrong number. The field answers "did you
+            // forget to sweep something", so a false entry is an alarm on
+            // correct modelling, and a reader who meets one stops trusting the
+            // only thing the field was for.
+            //
+            // The COUNT deliberately stays one per observed path: two claims
+            // covering one file is one file, and incrementing per claim would
+            // trade this bug for an inflated `claimed`.
+            let mut covered = false;
+            for c in claims_list.iter().filter(|c| claims(c, &path)) {
+                matched_claims.insert(c.clone());
+                covered = true;
+            }
+            if covered {
+                claimed += 1;
+                claimed_mass += obs.mass;
+            } else {
+                unclaimed_mass += obs.mass;
+                unclaimed.push((path, obs.mass));
             }
         }
 
