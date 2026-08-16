@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Create a node of any schema type with a property object. An existing id MERGES: the props you pass overwrite, every stored property you omit survives — so a partial props object edits, it does not reset the rest to defaults.",
+  "description": "Create a node of any schema type with a property object. An existing id MERGES: the props you pass overwrite, every stored property you omit survives — so a partial props object edits, it does not reset the rest to defaults. READ `undeclared` IN THE REPLY: it names any property you sent that the schema does not declare for this type. The write still SUCCEEDS — the store is a property bag on purpose, so a design can record what reflow2 never anticipated — but a typo and a deliberate extension used to be indistinguishable, and this is how you tell them apart. Absent when there is nothing to say.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
