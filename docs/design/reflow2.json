@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:5897941100e30778eb81d291719e9c57525660fb6846041d6b77154896530069",
+  "content_hash": "sha256:e3f29f341e72c77923da461bbba5768f9483bdd7995b5ce451991a605501223b",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -9557,6 +9557,15 @@
       "from_id": "rule:design-intent-moves-only-on-the-owners-word",
       "properties": {
         "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "rule:feedback-sources-have-a-priority-order-and-anthony-set-it",
+      "properties": {
+        "acted_at": "2026-08-16",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -27704,6 +27713,14 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "fact:feedback-triage-status-across-three-sources-2026-08-16",
+      "properties": {
+        "note": "The sweep this fact records was ordered by that rule — dev_storyflow first, Alex level with it, music_graph after — which is why music_graph has thirteen items unassessed and dev_storyflow's newest block does not."
+      },
+      "to_id": "rule:feedback-sources-have-a-priority-order-and-anthony-set-it"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "ifc:core-api",
       "properties": {},
       "to_id": "dec:core-api-spof-accepted"
@@ -29503,6 +29520,12 @@
       "from_id": "cmp:graph",
       "properties": {},
       "to_id": "fact:defect-a-property-naming-a-node-is-unguarded-while-edges-are-not"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cmp:graph",
+      "properties": {},
+      "to_id": "fact:defect-an-undeclared-property-is-stored-without-complaint"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -84399,6 +84422,15 @@
       }
     },
     {
+      "node_id": "rule:feedback-sources-have-a-priority-order-and-anthony-set-it",
+      "node_type": "DesignRule",
+      "properties": {
+        "enforced": false,
+        "name": "Feedback sources are triaged in a stated order: dev_storyflow first, Alex level with it, music_graph after",
+        "statement": "ANTHONY'S WORD, 2026-08-16, stated in passing while asking for a triage sweep: \"dev_storyflow is a higher priority\" and \"any un-addressed feedback from my brother should be addressed — it is right up there in importance next to dev_storyflow\". Recorded because it is a STANDING ordering, not a one-off instruction for that sweep, and because a future session with three logs and finite attention will otherwise re-derive it wrongly or read them in whatever order they were handed over.\n\nTHE ORDER: dev_storyflow first — Alex level with it — music_graph after.\n\nWHY IT IS NOT ARBITRARY, inferred and marked as inference rather than as his stated reasoning: dev_storyflow is the fleet Anthony runs himself, so its log is his own usage at scale and arrives fastest; Alex is the SECOND HUMAN USER, and a second user's friction is the only evidence reflow2 has about anyone who did not build it; music_graph is a single consumer project whose reports, while excellent, have so far concentrated on one surface (restore and setup). ⚠️ HE DID NOT SAY THIS — he stated the order and not the grounds, and a later session should not quote the reasoning back to him as his.\n\nWHAT IT DOES NOT MEAN, since a priority order is easy to over-read: it is not a quality ranking. music_graph's F23 was the most consumer-blocking defect of the whole increment and was fixed first, before this ordering was stated. Priority here is about which log to READ when there is not time for all of them, not about whose findings matter.\n\n📌 `enforced: false` DELIBERATELY, and the reason is that no check is possible: nothing in the graph knows which log a session read, or in what order. So this is guidance for a reader and must not be raised as an unverified enforced rule.\n\n⚠️ THIS NODE WAS CREATED WRONG THE FIRST TIME AND THE ERROR IS RECORDED RATHER THAN QUIETLY FIXED: it was written with `enforcement: \"advisory\"`, a property the schema does not declare. It was ACCEPTED AND STORED, echoed back, and the enforcement gap fired anyway — which is what exposed it. See `fact:defect-an-undeclared-property-is-stored-without-complaint`.\n\nAN INPUT TO AN OPEN QUESTION: `dec:idea-is-there-a-feedback-intake-skill-and-is-it-a-router` asks whether reflow2 should have a feedback skill that routes external input. If that is ever built, THIS is a thing it would need to know and has nowhere to read."
+      }
+    },
+    {
       "node_id": "rule:fixes-are-judged-by-the-third-party",
       "node_type": "DesignRule",
       "properties": {
@@ -92764,6 +92796,19 @@
       }
     },
     {
+      "node_id": "fact:defect-an-undeclared-property-is-stored-without-complaint",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "A PROPERTY THE SCHEMA HAS NEVER HEARD OF IS ACCEPTED, STORED AND ECHOED BACK — so a plausible-sounding invented field looks exactly like a real one, and the setting it was supposed to control silently does nothing.\n\nMEASURED 2026-08-16, on my own write, and found only because a gap fired that should not have. Recording a DesignRule I intended to be advisory, I passed `enforcement: \"advisory\"`. `create_node` accepted it, stored it, and echoed it back in the reply. `get_node` returned it. THE SCHEMA DECLARES NO SUCH PROPERTY — `enforcement` appears nowhere in any schema file for DesignRule; the real field is `enforced`, a BOOL (`schema/core.yaml:107`, three states: true / false / unset), and the detector reads exactly that (`detect.rs:2634`).\n\n⇒ SO THE WRITE SUCCEEDED AND MEANT NOTHING. The rule stayed in the `unstated` band and `detect_gaps` raised '“…” does not say whether breaking it stops the build' at severity 0.40 — correctly, since nothing had said. The gap firing is what exposed it. Had that detector not existed, or had the rule been of a type nothing checks, the invented property would have sat there indefinitely, readable, plausible, and inert.\n\n⭐ WHAT MAKES THIS WORTH A NODE IS THE PAIRING WITH THE GUARDS THAT DO EXIST, which is the same argument as `fact:defect-a-property-naming-a-node-is-unguarded-while-edges-are-not` and strictly stronger. That one is about a DECLARED property (`subject_id`) holding a dangling value. This is about a property the schema never declared at all. Meanwhile `ver:edges-need-both-ends` refuses an edge to a missing node through sixteen typed helpers with an atomicity case and a size floor, and `create_node` itself refuses an unknown NODE TYPE by name rather than answering null. ⇒ The vocabulary is guarded at the type level and at the edge level, and unguarded at the property level in BOTH directions — unknown names in, dangling references out.\n\nTHE HONEST COUNTER-ARGUMENT, because it is a real design position and not an oversight to patch: the store is a property BAG, and open-world properties are what let a project record things reflow2 did not anticipate. Refusing unknown keys outright would break that. ⇒ The question is therefore not 'validate strictly' but 'can a caller tell an EXTENSION from a TYPO', and today it cannot — the reply is identical.\n\nCHEAPEST FORMS, in rising cost: (1) ECHO WHAT WAS UNRECOGNISED — the reply already lists the properties it stored, so naming which of them the schema does not declare costs one comparison and no policy; (2) name the nearest declared property, since `enforcement` vs `enforced` is one edit distance and the near-duplicate guard already does exactly this kind of suggestion for node ids; (3) a strict mode nobody has asked for.\n\n📌 REPORTED AGAINST MYSELF, and the honest half is that a schema read would have prevented it: `describe_schema {node_type: \"DesignRule\"}` lists the real fields and I did not call it before writing — I called it for the REQUIRED fields only (`required_only: true`), which by construction omits the optional property I then invented. That is a small trap of its own: the compact answer is the one most likely to be used before a write, and it is the one that cannot show you the field you are about to get wrong.",
+        "subject_id": "cmp:graph",
+        "valid_from": "2026-08-16",
+        "value": "{\"measured\":\"2026-08-16, reflow2's own graph, on my own write\",\"passed\":\"enforcement: advisory on a DesignRule\",\"result\":\"accepted, stored, echoed back by create_node and returned by get_node\",\"truth\":\"no such property in any schema file; the real field is `enforced`, a bool, schema/core.yaml:107, read at detect.rs:2634\",\"exposed_by\":\"the unstated-enforcement gap firing at 0.40 when it should have been silenced\",\"stronger_than\":\"fact:defect-a-property-naming-a-node-is-unguarded-while-edges-are-not - that is a declared property with a dangling value, this is an undeclared name\",\"contrast\":[\"ver:edges-need-both-ends refuses an edge to a missing node across 16 helpers\",\"create_node refuses an unknown NODE TYPE by name\",\"THE DECISIVE ONE: service.rs carries #[serde(deny_unknown_fields)] 134 TIMES, so an unknown tool ARGUMENT is refused everywhere - and CreateNodeReq.props is a free JsonObject, the one hole, and exactly where a property name lands\"],\"counter_argument\":\"the store is a property bag and open-world properties are deliberate; the question is whether a caller can tell an extension from a typo, and today the reply is identical\",\"cheapest_fix\":\"echo which stored properties the schema does not declare - one comparison, no policy change\",\"my_own_half\":\"describe_schema with required_only:true omits optional fields by construction, and it is the form most likely to be called before a write\",\"adjacent_planned_check\":\"ver:tools-reject-unknown-args is PLANNED and never run - 'a served tool refuses an argument it does not know'. It covers the argument half, which is already enforced 134 times; the property half has no check planned at all.\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-append-only-volatility-exempts-a-structural-rewrite",
       "node_type": "TemporalFact",
       "properties": {
@@ -95834,7 +95879,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:4ad809199360e5c327565089c1f98a2fcbcf456e536cfdc0771ae9562db85689",
+  "prev_content_hash": "sha256:5897941100e30778eb81d291719e9c57525660fb6846041d6b77154896530069",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
