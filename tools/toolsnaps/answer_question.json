@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Record what the user said in reply to a question, closing it. Write the design nodes their answer implies separately — this is the record that it was settled, not a substitute for the design. Precondition: the gap must already have a recorded question (from gap_to_prompt's serve pass); answering one that was never asked is refused, not silently accepted — distinct from the withdraw_* tools, which no-op on an absent record.",
+  "description": "Record what the user said in reply to a question, closing it. Write the design nodes their answer implies separately — this is the record that it was settled, not a substitute for the design. Takes EITHER `gap_id` or `question_id`; `open_questions` publishes both and either is accepted, because a Question this graph did not derive from a gap is reachable only by its own id. Answering one that was never asked is refused, not silently accepted — distinct from the withdraw_* tools, which no-op on an absent record — and the refusal names the ids that DO exist.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
@@ -12,12 +12,23 @@
         "type": "string"
       },
       "gap_id": {
-        "description": "The gap the question was asked about (`gap_id` from `open_questions`).",
-        "type": "string"
+        "default": null,
+        "description": "The gap the question was asked about (`gap_id` from `open_questions`).\nEither this or `question_id` — whichever you have in hand.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "question_id": {
+        "default": null,
+        "description": "The Question's own id (`question_id` from `open_questions`). Accepts a\nquestion this graph did not derive from a gap, which `gap_id` cannot\nreach.",
+        "type": [
+          "string",
+          "null"
+        ]
       }
     },
     "required": [
-      "gap_id",
       "answer"
     ],
     "type": "object"

@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:f4a060db0df1d0126ffc23d24e1f55ace99ff36a132ae416fe4f5fb388326ad9",
+  "content_hash": "sha256:2d32eb168ccdc6867be561090a3d069b5523bfaa929c7541a30e24504b17ac4b",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -18618,6 +18618,78 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-can-say-what-it-does-not-know",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-can-say-what-it-does-not-know",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-can-say-what-it-does-not-know",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-can-say-what-it-does-not-know",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:sync-debt"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-can-say-what-it-does-not-know",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-ask"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-can-say-what-it-does-not-know",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-can-say-what-it-does-not-know",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:the-record-moved-is-surfaced"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-can-say-what-it-does-not-know",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-no-documents-rule-gains-its-reasoning-and-its-exception",
       "properties": {
         "accepted_baseline": false,
@@ -29016,6 +29088,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:the-record-moved-is-surfaced",
+      "properties": {},
+      "to_id": "fact:defect-nothing-in-the-loop-reports-unexported-work-and-in-step-is-read-as-if-it-did"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cmp:artifact",
       "properties": {},
       "to_id": "fact:bl-134"
@@ -29097,6 +29175,12 @@
       "from_id": "cmp:detect",
       "properties": {},
       "to_id": "fact:bl-95"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cmp:detect",
+      "properties": {},
+      "to_id": "fact:defect-a-question-not-created-by-gap-to-prompt-can-never-be-answered"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -66714,7 +66798,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a2593ce6fb88b8e837cea56bdb8888c60c343ab234a7db3ecc47d43baed7d673",
+        "checksum": "sha256:4d66960946a3eb630f0a05d615861a6e244a3cc3e046e2e77241cd2255ba729a",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -67026,7 +67110,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4bb2b37433d7a6cb11868f920fac033f840f0241dbc6ee185518829768e3e5b4",
+        "checksum": "sha256:315568daf182e013ee9b07ea754ad5f8f35c15252712cf9963d63d09d97713d5",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
@@ -67844,7 +67928,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e48970fe1d8cd0f8bcc3539748d5019a97722f42a25afa856274ef1be37bbadc",
+        "checksum": "sha256:0cc254e5e29b72187e24e46f5fdebc9dd0220125a2ec38e32faac9a9782d51c5",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -68052,7 +68136,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:56cc3f8bd181db56332b9bf9b34d46127ef805da38a395a4c88e9322e175a99b",
+        "checksum": "sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/sync_debt.rs",
         "name": "sync_debt.rs",
@@ -68299,7 +68383,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:288dce9896555156f11fda2a204efb826780699e0e9e97d61474911f62d8a639",
+        "checksum": "sha256:de948f2045896274246a8d489c17f65f58595b1071d7ca897f8104b2ef52629b",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/ask.rs",
         "name": "tools/ask.rs",
@@ -68364,7 +68448,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b70b0fa010db32450a5c67327f4190edeee8c0db13b01c8491cfd2f2ee709c50",
+        "checksum": "sha256:bc3b84bc82a293f157d0df7c10490b27b1d69683621b535cab823c8d0d2e4bf3",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -74011,6 +74095,16 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "The installer stops skipping the one ignore entry most likely to be already tracked, and the remedy it prints works on a directory"
+      }
+    },
+    {
+      "node_id": "chg:the-loop-can-say-what-it-does-not-know",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "description": "TWO defects from the StoryFlow fleet's 2026-08-15/16 log, both verified in source before the fix and both with the reporter's diagnosis CORRECTED. They ship together because they are one shape: a signal that could not express its own limit.\n\n① A QUESTION NOT CREATED BY gap_to_prompt WAS PERMANENTLY UNANSWERABLE. `set_question_status` derived the Question id by string formatting from the gap id (`detect.rs:700-702`) and did a single `get_node`, so a hand-authored Question was unreachable — while `open_questions` published its `question_id` and `answer_question` refused to take one. The loop then reported 'follow it up rather than asking again' about something it structurally could not close, and the next seat re-asks the user what they already ruled on. FIX: `resolve_question_id` tries the DERIVED id first and the argument verbatim second, so every existing caller is byte-identical and the unreachable case becomes reachable; the MCP tool now accepts `gap_id` OR `question_id`; and the refusal names the ids that DO exist rather than only the miss — the round trip the reporter had no way to shortcut. `withdraw_question` shares the resolver and gains the same reach.\n\n② `sync` REPORTED `in_step` WHILE THIS GRAPH HELD UNEXPORTED WORK. ⚠️ THE REPORTER'S DIAGNOSIS WAS WRONG AND THE CORRECTION IS THE FINDING: they called it a measure-itself bug. The mechanism is exactly as they described — the cheap gate compares the file against the hash this graph last wrote it with (`sync_debt.rs:199`) and `bare()` hardcodes `nodes_not_here_total: 0` — but `ver:the-record-moved-is-surfaced` pins 'ordinary unexported work is NEVER reported' as the property the whole design rests on. The code is CORRECT. The defect is that NOTHING covered the other direction, and `in_step` in a field called `sync` was read as covering both. FIX: every sync entry now carries `live_nodes` beside `export_nodes`, and the in-step line says how many nodes have never been exported. It changes no state and no verdict — unexported work is still not `behind`, because that would tell a session to import over its own unsaved work.\n\nMEASURED, AND THE REPRODUCTION IS WHY ② IS RECORDED RATHER THAN FILED: at the start of the session that fixed it, `loop_status.sync` reported `in_step` with `nodes_not_here_total: 0` for reflow2's OWN export while two TemporalFacts sat live and absent from it — an earlier session's entire triage of music_graph F23 and F24. The previous handoff had recorded 'nothing behind' on the strength of that green. They survived only because this session exported for an unrelated reason.\n\nMUTATION-CHECKED THREE WAYS, each killing exactly the test that names it and no other: dropping the verbatim fallback fails the hand-authored and withdraw cases only; swapping the resolver order so the verbatim id wins fails ONLY the collision counterweight, which is the case proving a widened lookup did not become a guessing one; and firing the unexported warning on `live >= export` instead of `>` fails ONLY the fully-exported counterweight, which is what stops a reading aid becoming a false alarm on the path every ordinary session takes.\n\nTHE SERVED SURFACE CHANGED, deliberately and only by WIDENING: `answer_question.gap_id` leaves the required list and `question_id` joins the schema, so no existing caller breaks. Toolsnap regenerated (149).\n\nBOUNDS, stated rather than discovered later: the sync counts are NODES ONLY — counting edges means walking every node's adjacency, which costs what the export costs, and paying that on the ordinary path is the one thing this check exists to avoid, so an edge-only divergence stays invisible. They are counts, not ids, so equal counts with different ids still pass: this is a reading aid, never a durability guarantee. And neither fix addresses why an ANSWERED question still does not become design — reflow2's own loop has carried '1 answered question never reached the design' for days, and that gap is real independently of the id scheme.",
+        "name": "A question is answerable by either id, and an in-step record says how much of this graph it does not hold — two signals that could not previously be wrong out loud",
+        "subject": "system"
       }
     },
     {
@@ -88408,6 +88502,19 @@
       }
     },
     {
+      "node_id": "fact:defect-a-question-not-created-by-gap-to-prompt-can-never-be-answered",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "`answer_question` CAN ONLY REACH A QUESTION WHOSE ID IT CAN DERIVE, so any Question created by a route other than `gap_to_prompt` is PERMANENTLY UNANSWERABLE — and the loop keeps telling the next seat to follow up on it forever. Reported by api-boss (`79e8e8d5`) 2026-08-15 22:40 on the StoryFlow fleet graph; MECHANISM CONFIRMED IN SOURCE here, and their own diagnosis (i) is the right one of the three they offered.\n\nCONFIRMED, not inferred: `detect.rs:872` `answer_question(gap_id, answer)` delegates to `set_question_status`, which at `detect.rs:888` computes `question_id = asked_question_id(gap_id)` — and that helper is pure string derivation, `format!(\"question:{}\", gap_id.strip_prefix(\"gap:\"))` (`detect.rs:700-702`). It then does a single `get_node(QUESTION, &question_id)` and returns not-found if that exact id is absent. THERE IS NO LOOKUP BY QUESTION ID AND NO SEARCH. A Question stored under any other id cannot be addressed by this tool at all.\n\nTHEIR MEASURED CASE: `open_questions` returned `question_id: \"q:fleet_ops_as_reflow2_subproject\"` alongside `gap_id: \"gap:fleet_governance_has_no_executable_model\"`, `status: asked`. `answer_question{question_id: ...}` was rejected as an unknown field naming `gap_id` as the legal one; `answer_question{gap_id: ...}` then answered 'no recorded question for gap'. BOTH IDENTIFIERS CAME FROM THE SAME OBJECT IN THE SAME LISTING AND NEITHER IS ACCEPTED. The derivation would have wanted `question:fleet_governance_has_no_executable_model`, which is not what their Question is called.\n\n⭐ THE SHARP EDGE IS THE LOOP EATING ITSELF: `unanswered_questions` keeps counting it, `loop_status` keeps printing 'follow it up rather than asking again', and because the tool that implements following-up cannot close it, a later seat re-asks the user something they already ruled on — the exact failure the instruction exists to prevent, caused by the tool implementing the instruction.\n\nTHEIR WORKAROUND IS THE RIGHT SHAPE AND IS STATED RATHER THAN HIDDEN: they recorded the ruling as an accepted Decision. The substance is durable, the LINKAGE is not — nothing connects that Decision to the Question, so it still reads as open.\n\n⚠️ REFLOW2'S OWN GRAPH SHOWS THE SAME CLASS FROM THE OTHER SIDE, unresolved for days: `loop_status` here reports '1 answered question(s) never reached the design', and `open_questions` returns `question:9d265ef455a2e245` at `status: answered` carrying the user's full reply about grandfathering the 121 settled items. There the derivation MATCHES (it was made by `gap_to_prompt`) and the answer still never became design — so the gap between 'answered' and 'written in' is real independently of the id scheme.\n\nFIXES, cheapest first, theirs and sound: (1) accept `question_id` too, since `open_questions` publishes it — the id a caller holds should work; (2) make the second rejection name what it looked for and what exists, which is the same list-the-legal-values ask already in their log from 2026-08-03; (3) let a Decision CLOSE a Question with an edge, making the linkage first-class and surviving whichever id scheme wins.\n\nNOT ESTABLISHED: how many hand-authored Questions exist across consumer graphs, and whether `withdraw_question` (same derivation, `detect.rs:878`) leaves them equally unreachable — by inspection it does, but that was not exercised.",
+        "subject_id": "cmp:detect",
+        "valid_from": "2026-08-16",
+        "value": "{\"reported_by\":\"api-boss 79e8e8d5, 2026-08-15 22:40, StoryFlow fleet graph\",\"mechanism_confirmed\":\"detect.rs:872 -> set_question_status -> detect.rs:888 question_id = asked_question_id(gap_id); detect.rs:700-702 format!(question:{}, gap_id without gap: prefix); single get_node, no search\",\"their_case\":\"open_questions gave question_id q:fleet_ops_as_reflow2_subproject and gap_id gap:fleet_governance_has_no_executable_model; neither accepted\",\"derivation_wanted\":\"question:fleet_governance_has_no_executable_model\",\"consequence\":\"unanswered_questions never decrements; loop_status keeps saying follow up; a later seat re-asks the user\",\"their_workaround\":\"recorded the ruling as an accepted Decision - substance durable, linkage absent\",\"same_class_here\":\"reflow2's own loop reports 1 answered question never reached the design (question:9d265ef455a2e245, status answered)\",\"withdraw_question_likely_same\":\"detect.rs:878 uses the identical derivation - by inspection, not exercised\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-a-realized-capability-can-be-dead-for-want-of-an-input-path",
       "node_type": "TemporalFact",
       "properties": {
@@ -88995,6 +89102,19 @@
         "subject_id": "cap:gap-carries-a-reading",
         "valid_from": "2026-08-15",
         "value": "{\"raised_by\":\"2026-08-15, US government genesis session, item 3 suggestion (c)\",\"measured\":\"grep VIOLATES in crates/reflow2-core/src/detect.rs -> nothing; no gap type computed from it\",\"correction\":\"NOT read by nothing - named at crates/reflow2-core/src/propagate.rs:34 in RISK_EDGES; 4 instances in reflow2's own design\",\"how_the_error_was_made\":\"case-sensitive grep for the Rust-style 'Violates' misses the string constant 'VIOLATES'\",\"relation_to_existing\":\"OUTSIDE the 8 declared-and-unreached edges in dec:idea-detect-vocabulary-that-nothing-reaches - by that node's test VIOLATES is REACHED, correctly\",\"the_actual_defect\":\"storable, propagatable, undetectable - the one traceability claim with no detector asking about it\",\"prerequisite_dissolved\":\"once prohibitions are Constraints, unsatisfied_requirement stops firing on them, so the noise motive goes away and only the positive check remains\",\"not_established\":\"whether a recorded violation is a fault or an accepted tension (CONTRADICTS carries alignment for that; VIOLATES has no such property), and where severity would come from\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-nothing-in-the-loop-reports-unexported-work-and-in-step-is-read-as-if-it-did",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "`loop_status.sync` REPORTS `in_step` WHILE LIVE NODES ARE ABSENT FROM THE EXPORT, AND NOTHING ELSE IN THE LOOP REPORTS THEM EITHER — so the only recoverable copy can be stale with every signal green. Reported by dragon Boss (`e41c6fb8`) 2026-08-16 against the StoryFlow fleet graph; REPRODUCED INDEPENDENTLY in reflow2's own session the same day.\n\n⚠️ THEIR DIAGNOSIS IS WRONG AND THE CORRECTION IS THE FINDING. They hypothesised a measure-itself check that 'can only ever agree with itself'. The mechanism is real but it is NOT a bug: `sync_debt.rs:199` takes a cheap gate — `if &found == expected` where `found` is COMPUTED from the file on disk and `expected` is the hash recorded when THIS graph last wrote it — and returns `in_step` via `bare()`, which hardcodes `nodes_not_here_total: 0` (`sync_debt.rs:272`). So on that path the count is structurally always zero, exactly as they guessed. BUT `ver:the-record-moved-is-surfaced` names as a COVERED, TESTED property: 'that ordinary unexported work is NEVER reported, which is the property the whole design rests on.' The feature answers ONE question — has the SHARED RECORD moved ahead of me — and answers it correctly. `req:a-seat-learns-the-record-moved-before-it-writes` is about ANOTHER SEAT's work arriving, never about this seat's work leaving.\n\n⭐ SO THE DEFECT IS NOT IN sync. IT IS THAT NOTHING COVERS THE OTHER DIRECTION. `behind` detects 'someone else exported work I do not have'. There is no state, on `sync` or anywhere on `loop_status`, for 'I hold work I have not exported' — and `in_step`, in a field called `sync`, is read as if it were both. The word is doing damage the code is not.\n\nMY OWN REPRODUCTION, which is why this is recorded rather than filed as their claim: at the start of this session `loop_status.sync` reported `state: in_step` for `docs/design/reflow2.json` with `expected == found` and `nodes_not_here_total: 0`. A direct diff of the live store against that same committed export then found TWO TemporalFacts present live and absent from the file — `fact:defect-import-materialises-defaults-so-a-restored-graph-reads-as-changed` and `fact:defect-the-latent-surface-never-re-probes-after-a-cli-restore`, an earlier session's entire triage of music_graph F23 and F24. The previous session's handoff had recorded, on the strength of that same green, 'Graph in_step with the committed export, nothing behind.' It was not. Two facts were one machine failure from gone, and the only reason they survived is that this session exported for an unrelated reason.\n\nCOST, and it is asymmetric: the loss is SILENT, the graph keeps answering normally, and it becomes visible only when the machine does. dragon Boss's framing is the one to keep — a session that checks sync, sees `in_step`, and stands down reasonably believes its work is durable.\n\nCHEAPEST HONEST FIX, and it is theirs: report the LIVE node/edge count beside the export's on every sync entry. It needs no export build (the file is already parsed and `count_nodes` is cheap), it preserves the property the design rests on, and it converts an unfalsifiable green into a readable one. A caller today cannot tell 'I compared and they match' from 'I compared the file to its own recorded hash', and those are different claims with the same output.\n\nNOT ESTABLISHED: whether a count comparison alone is sufficient (equal counts with different ids would still pass), and whether the right home is `sync` or a separate loop debt class.",
+        "subject_id": "cap:the-record-moved-is-surfaced",
+        "valid_from": "2026-08-16",
+        "value": "{\"reported_by\":\"dragon Boss e41c6fb8, 2026-08-16, StoryFlow fleet graph\",\"their_evidence\":\"get_node returned art:character_eval_strictness_tests live; grep of the committed export returned 0, with two controls proving the probe\",\"their_diagnosis\":\"measure-itself check - CORRECT about the mechanism, WRONG that it is a bug\",\"mechanism\":\"sync_debt.rs:199 cheap gate compares file-on-disk hash against the hash recorded when this graph last wrote it; bare() at :272 hardcodes nodes_not_here_total 0\",\"by_design\":\"ver:the-record-moved-is-surfaced covers 'ordinary unexported work is NEVER reported' as the property the whole design rests on\",\"real_defect\":\"no state anywhere on loop_status for 'I hold work I have not exported'; in_step is read as covering both directions\",\"my_reproduction\":\"session start 2026-08-15: sync in_step, nodes_not_here_total 0, while 2 TemporalFacts existed live and were absent from the committed export\",\"which_facts\":[\"fact:defect-import-materialises-defaults-so-a-restored-graph-reads-as-changed\",\"fact:defect-the-latent-surface-never-re-probes-after-a-cli-restore\"],\"prior_handoff_claimed\":\"Graph in_step with the committed export, nothing behind - false on the strength of this same green\",\"cheapest_fix\":\"report live node/edge count beside the export's; no export build needed\"}"
       }
     },
     {
@@ -91645,7 +91765,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:5bc917f5b4590334deedf7696a7fcdd7b32175e269b956aea682e43245993e2a",
+  "prev_content_hash": "sha256:f4a060db0df1d0126ffc23d24e1f55ace99ff36a132ae416fe4f5fb388326ad9",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

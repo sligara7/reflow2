@@ -1161,7 +1161,8 @@ async fn asking_a_gap_records_the_question_it_asked() {
     // still open, now marked `answered` and carrying what they said — otherwise
     // a later session sees a bare open gap and asks all over again (BL-25).
     j!(s.answer_question(Parameters(AnswerQuestionReq {
-        gap_id: gap_id.clone(),
+        gap_id: Some(gap_id.clone()),
+        question_id: None,
         answer: "The physics engine.".into(),
     })));
     let after = jl!(s.open_questions());
@@ -1188,7 +1189,8 @@ async fn asking_a_gap_records_the_question_it_asked() {
     // Answering one nobody asked fails loud rather than inventing a record.
     assert!(
         s.answer_question(Parameters(AnswerQuestionReq {
-            gap_id: "gap:never".into(),
+            gap_id: Some("gap:never".into()),
+            question_id: None,
             answer: "…".into(),
         }))
         .await

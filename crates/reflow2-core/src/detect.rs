@@ -869,14 +869,53 @@ impl DesignGraph {
     /// The answer text is kept verbatim. Whatever design nodes it produces are
     /// written separately by the caller — this is the record that the question
     /// was settled and by what, not a substitute for the design itself.
+    /// Takes EITHER the gap id or the Question's own id — whichever the caller
+    /// has in hand, since `open_questions` publishes both.
     pub fn answer_question(&mut self, gap_id: &str, answer: &str) -> Result<bool, DynoError> {
         self.set_question_status(gap_id, "answered", Some(answer))
     }
 
     /// Withdraw a question — asked in error, or overtaken by events. Kept, not
-    /// deleted: the past is not overwritten.
+    /// deleted: the past is not overwritten. Takes either identifier, as
+    /// [`Self::answer_question`] does.
     pub fn withdraw_question(&mut self, gap_id: &str) -> Result<bool, DynoError> {
         self.set_question_status(gap_id, "withdrawn", None)
+    }
+
+    /// Every Question id currently stored, for an error that can say what it
+    /// looked for AND what exists. A rejection naming only the miss costs a
+    /// round trip the caller has no way to shortcut.
+    pub fn known_question_ids(&self) -> Result<Vec<String>, DynoError> {
+        Ok(self
+            .scan_nodes(node::QUESTION)?
+            .into_iter()
+            .map(|n| n.node_id)
+            .collect())
+    }
+
+    /// Resolve the Question a caller means, by EITHER identifier.
+    ///
+    /// The derived id is tried FIRST, so every caller that passes a `gap_id`
+    /// behaves exactly as before. Only if that finds nothing is the argument
+    /// tried as a Question id verbatim.
+    ///
+    /// WHY THE FALLBACK EXISTS (2026-08-16, StoryFlow fleet): the derivation is
+    /// pure string formatting, so it can only ever reach a Question that
+    /// `gap_to_prompt` named. A Question created any other way was
+    /// PERMANENTLY unanswerable — and `open_questions` publishes its
+    /// `question_id`, so the tool handed callers an identifier its sibling
+    /// refused. The loop then went on reporting "follow it up rather than
+    /// asking again" about something it structurally could not close, which is
+    /// the exact failure that instruction exists to prevent.
+    fn resolve_question_id(&self, id: &str) -> Result<Option<String>, DynoError> {
+        let derived = asked_question_id(id);
+        if self.get_node(node::QUESTION, &derived)?.is_some() {
+            return Ok(Some(derived));
+        }
+        if self.get_node(node::QUESTION, id)?.is_some() {
+            return Ok(Some(id.to_string()));
+        }
+        Ok(None)
     }
 
     fn set_question_status(
@@ -885,7 +924,9 @@ impl DesignGraph {
         status: &str,
         answer: Option<&str>,
     ) -> Result<bool, DynoError> {
-        let question_id = asked_question_id(gap_id);
+        let Some(question_id) = self.resolve_question_id(gap_id)? else {
+            return Ok(false);
+        };
         let Some(existing) = self.get_node(node::QUESTION, &question_id)? else {
             return Ok(false);
         };

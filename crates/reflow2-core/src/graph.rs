@@ -281,6 +281,21 @@ impl DesignGraph {
         self.engine.count_nodes(&self.graph_id, node_type)
     }
 
+    /// How many nodes this graph holds, across every schema type.
+    ///
+    /// One counted scan per node type and no adjacency walk, so this is cheap
+    /// enough for an orientation call — unlike an edge total, which would have
+    /// to visit every node's outgoing set and therefore cost what
+    /// `export_graph` costs.
+    pub fn count_all_nodes(&self) -> Result<usize, DynoError> {
+        let types: Vec<String> = self.schema().node_types.keys().cloned().collect();
+        let mut total = 0;
+        for t in types {
+            total += self.count_nodes(&t)?;
+        }
+        Ok(total)
+    }
+
     /// Create an edge of `edge_type` between typed endpoints. Endpoint types
     /// are validated against the edge's declared `from`/`to`, and both endpoint
     /// nodes must already exist — a dangling edge is refused before anything is
