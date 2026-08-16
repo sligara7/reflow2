@@ -186,7 +186,7 @@ fn helpers() -> Vec<(&'static str, Box<dyn Fn(&mut DesignGraph) -> bool>)> {
         (
             "constrains",
             Box::new(|g: &mut DesignGraph| {
-                g.constrains("con:c", node::CAPABILITY, GHOST, None, None)
+                g.constrains("con:c", node::CAPABILITY, GHOST, None, None, None)
                     .is_err()
             }),
         ),
