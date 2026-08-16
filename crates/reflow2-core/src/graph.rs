@@ -227,6 +227,44 @@ impl DesignGraph {
     // ---- Generic, schema-validated CRUD -----------------------------------
 
     /// Create (or replace) a node of `node_type` with `id` and `props`.
+    /// Which of `props` the schema does not declare for `node_type`, sorted.
+    ///
+    /// ⚠️ THIS REPORTS; IT NEVER REFUSES, and the distinction is the whole
+    /// design. The store is a property BAG on purpose — open-world properties
+    /// are what let a project record something reflow2 never anticipated — so
+    /// rejecting unknown keys would break a capability rather than fix a bug.
+    /// What was missing is that a caller could not tell an EXTENSION from a
+    /// TYPO, because the reply was identical either way.
+    ///
+    /// MEASURED 2026-08-16: `enforcement: "advisory"` was written to a
+    /// DesignRule, accepted, stored and echoed back. The schema declares no
+    /// such property — the real field is `enforced`, a bool — so the write
+    /// succeeded and meant nothing, and only an unrelated gap firing exposed
+    /// it. THE ASYMMETRY IS WHY THIS EXISTS: an unknown TOOL ARGUMENT is
+    /// refused in 134 places across the served surface, and an EDGE to a
+    /// missing node is refused through sixteen typed helpers — while the props
+    /// bag, which is exactly where a property name lands, said nothing at all.
+    ///
+    /// An unknown `node_type` yields an empty list rather than every key:
+    /// that case is already refused loudly by the write itself, and answering
+    /// "all of them are undeclared" would bury the real error under noise.
+    pub fn undeclared_properties(
+        &self,
+        node_type: &str,
+        props: &std::collections::HashMap<String, Value>,
+    ) -> Vec<String> {
+        let Some(def) = self.schema().node_types.get(node_type) else {
+            return Vec::new();
+        };
+        let mut out: Vec<String> = props
+            .keys()
+            .filter(|k| !def.properties.contains_key(*k))
+            .cloned()
+            .collect();
+        out.sort();
+        out
+    }
+
     /// Validates against the schema; unknown type or missing required property
     /// is an error, not a silent skip.
     pub fn create_node(

@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:3cbd36b84cc870b97730a7a6454c5e7cfd230ff5b059bd3d25a5e40d6b620181",
+  "content_hash": "sha256:c40dc56a70be91589b470ea59559ed76d73fe78f7b9f22d0f3ce708dba39fd47",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -10182,6 +10182,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-write-says-what-it-did-not-recognise",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dto"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-write-says-what-it-did-not-recognise",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-write-says-what-it-did-not-recognise",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-020a057ec12710f0",
       "properties": {
         "accepted_baseline": true,
@@ -19153,6 +19180,15 @@
         "action": "modified"
       },
       "to_id": "art:test-init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-surface-gate-says-which-binary-it-read",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:packaging"
     },
     {
       "edge_type": "CHANGED",
@@ -29741,6 +29777,12 @@
       "from_id": "cmp:operate",
       "properties": {},
       "to_id": "fact:bl-130"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cmp:packaging",
+      "properties": {},
+      "to_id": "fact:defect-the-toolsnap-gate-defaults-to-a-binary-nobody-rebuilt"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -67177,6 +67219,12 @@
       "edge_type": "SATISFIES",
       "from_id": "cap:vocabulary",
       "properties": {},
+      "to_id": "req:a-write-says-what-it-did-not-recognise"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:vocabulary",
+      "properties": {},
       "to_id": "req:agent-native"
     },
     {
@@ -67994,6 +68042,12 @@
       "from_id": "ver:a-withdrawn-decision-is-not-a-conflict",
       "properties": {},
       "to_id": "req:a-detector-reads-the-properties-that-qualify-its-own-finding"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-write-says-what-it-did-not-recognise",
+      "properties": {},
+      "to_id": "req:a-write-says-what-it-did-not-recognise"
     },
     {
       "edge_type": "VERIFIES",
@@ -71014,7 +71068,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:74c0459e03ad38ce",
+        "checksum": "sha256:7df4f44d215da1ed659c6bdf5fcc40df9d4f1bb00c8b7ecf982ab8e7732a3ba2",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/dto.rs",
         "name": "dto.rs",
@@ -71209,7 +71263,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:315568daf182e013ee9b07ea754ad5f8f35c15252712cf9963d63d09d97713d5",
+        "checksum": "sha256:d3b8b65c75b308b0554bd9135ba61f6e6878a6553c6bbd80a2fd689fefacdaec",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
@@ -72586,7 +72640,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2365daa43bd2ee01d5dfa358ab7407791461c6066411170c1140603e3db8679a",
+        "checksum": "sha256:177768078baa670d86629fe3710cb4390f4701be2b1d8d0b0b981b76957a1561",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
@@ -74952,6 +75006,14 @@
       "properties": {
         "change_type": "defect_fix",
         "name": "The contradiction detector reads endpoint status, so recording a refutation correctly stops costing a defect"
+      }
+    },
+    {
+      "node_id": "chg:a-write-says-what-it-did-not-recognise",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "create_node names the properties the schema does not declare, without refusing them — third theme of the triage-fixes increment"
       }
     },
     {
@@ -78324,6 +78386,16 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "A fresh install now names the shareable design record, and the settings merge stops reformatting somebody else's file — both from Alex's first run on a real work project"
+      }
+    },
+    {
+      "node_id": "chg:the-surface-gate-says-which-binary-it-read",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "description": "FOLDED INTO `req:a-report-says-what-it-swept-and-whether-its-checks-ran` on Anthony's word, because it is the same theme arriving from a different direction: `propose_heal` could not say whether its scorer RAN, and the toolsnap gate could not say WHAT IT READ.\n\nTHE DEFECT (`fact:defect-the-toolsnap-gate-defaults-to-a-binary-nobody-rebuilt`): `tools/toolsnap.py` defaulted `--bin` to `target/debug/reflow2-mcp` and printed 'ALL 149 TOOLSNAPS MATCH' against whatever build happened to be there. Found by accident — a tool description was changed, RELEASE was rebuilt, and the gate reported the surface unchanged while the committed snapshot still held the old text.\n\nTHE FIX IS OUTPUT, NOT POLICY: every verdict — match, drift AND regenerate — now ends with the binary it read and that binary's build time, and adds a loud STALE warning naming the offending file when any `crates/**/src/*.rs` is newer.\n\n⚠️ THE DEFAULT DELIBERATELY STAYS `target/debug`, which is the opposite of the obvious fix and the reason is measured: `ci.yml:93` runs `cargo build -p reflow2-mcp` — a debug build — in the same job before the toolsnap step at `:142`. Pointing the default at release would aim CI at a binary it never builds, converting a local-only defect into a CI one. This also CORRECTS the first version of the fact, which left CI's exposure unestablished: CI was never exposed.\n\nMTIME IS A WEAK SIGNAL AND IS USED ACCORDINGLY. Git operations can leave sources older than a build — which is exactly why the launch wrapper hashes CONTENT instead — so mtime here only ever ADDS a warning and never suppresses one. A false negative therefore costs nothing that was not already lost, and a false positive costs one rebuild.\n\nDEMONSTRATED LIVE, BOTH DIRECTIONS, on the working tree that produced it: against the stale binary the gate printed the STALE warning naming `crates/reflow2-mcp/src/tools/query.rs`; after `cargo build -p reflow2-mcp` the same command printed the verdict and the binary line with no warning. So the case fires and the counterweight is silent, measured rather than asserted.\n\nNOT DONE: `tools/toolsnap.py` is not a registered Artifact, so this change moved no checksum and the design records it against `cmp:packaging` instead. Several gate scripts are in that position and nobody has decided whether they should be registered.",
+        "name": "The toolsnap gate names the binary it compared against and warns when source is newer — folded into the same theme as propose_heal's vacuous zero",
+        "subject": "system"
       }
     },
     {
@@ -93869,6 +93941,19 @@
       }
     },
     {
+      "node_id": "fact:defect-the-toolsnap-gate-defaults-to-a-binary-nobody-rebuilt",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE SERVED-SURFACE GATE DEFAULTS TO `target/debug/reflow2-mcp` AND SAYS \"ALL 149 TOOLSNAPS MATCH\" AGAINST WHATEVER STALE BUILD IS SITTING THERE. A green from it is evidence about a binary nobody promised was current.\n\nMEASURED 2026-08-16, on my own change and by accident. I edited a `#[tool(description = …)]`, rebuilt RELEASE, ran `python3 tools/toolsnap.py`, and was told the surface was unchanged. It was not: the new sentence was present in the release binary (1 occurrence via `strings`) and ABSENT from the committed snapshot, which still held the old description. `tools/toolsnap.py:140` sets `--bin` default to `target/debug/reflow2-mcp`; debug was an hour older than release (11:27 vs 12:27). Rebuilding debug and re-running immediately reported `TOOLSNAP DRIFT (1)`.\n\n⚠️ THE SNAPSHOT DOES CONTAIN THE DESCRIPTION — this is not a scope limitation. `tools/toolsnaps/create_node.json` carries a `description` field and the file's own docstring says \"the whole served object is snapshotted — name, description, inputSchema\". So the comparison is right and the INPUT to it is wrong.\n\n⭐ THE SHAPE IS THE ONE THIS PROJECT KEEPS FINDING: a check that cannot fail reporting a pass. Same class as `propose_heal`'s vacuous zero fixed hours earlier, the piped-gate exit code, and `sync` reporting `in_step` over unexported work. Here the gate whose entire job is to notice a changed surface reported an unchanged one BECAUSE the surface it read had not been rebuilt.\n\n✅ CORRECTED SAME DAY, AND THE CORRECTION LOWERS THE SEVERITY. The first version of this fact said it was NOT ESTABLISHED whether CI had the same hole, because `.github/workflows/ci.yml:142` runs `toolsnap.py` with no `--bin` and so takes the same default. IT DOES NOT: `ci.yml:93` runs `cargo build -p reflow2-mcp` — a DEBUG build — in the same job, before the toolsnap step. So CI compares a freshly built debug binary every time and was never exposed. ⇒ THIS IS A LOCAL-DEVELOPER DEFECT ONLY, and specifically it bites the person following the RELEASE PROCEDURE, which instructs a release build and leaves debug behind.\n\nAND THAT IS ALSO WHY THE FIX MUST NOT CHANGE THE DEFAULT to `target/release`: CI builds debug and would then compare a binary that does not exist there. FIXED 2026-08-16 by `chg:the-surface-gate-says-which-binary-it-read` — every verdict now names the binary and its build time, and warns when any `crates/**/src/*.rs` is newer than it. mtime is a weak signal alone (git operations can leave sources older than a build, which is why the launch wrapper hashes content instead), but it is only ever used to ADD a warning and never to suppress one, so a false negative costs nothing that was not already lost.",
+        "subject_id": "cmp:packaging",
+        "valid_from": "2026-08-16",
+        "value": "{\"measured\":\"2026-08-16, reflow2's own repo, found while changing a tool description\",\"symptom\":\"toolsnap.py reported ALL 149 MATCH while the committed snapshot held the OLD description and the new one was in the release binary\",\"mechanism\":\"tools/toolsnap.py:140 defaults --bin to target/debug/reflow2-mcp; debug was an hour stale (11:27 vs release 12:27)\",\"proof\":\"rebuilt debug, re-ran, got TOOLSNAP DRIFT (1) immediately\",\"not_a_scope_limit\":\"the snapshot DOES contain description; the docstring says the whole served object is snapshotted\",\"class\":\"a check that cannot fail reporting a pass\",\"ci_ESTABLISHED_and_safe\":\"ci.yml:93 runs cargo build -p reflow2-mcp (debug) in the same job BEFORE the toolsnap step at :142, so CI always compares a fresh binary and was never exposed - this corrects the first version of this fact, which left it unchecked\",\"blast_radius\":\"local developers only, and specifically whoever follows the release procedure, which builds release and leaves debug behind\",\"why_the_default_must_stay_debug\":\"CI builds debug; defaulting to release would point CI at a binary it never built\",\"fixed_by\":\"chg:the-surface-gate-says-which-binary-it-read - every verdict names the binary and its build time and warns when any crates/**/src/*.rs is newer\"}"
+      }
+    },
+    {
       "node_id": "fact:defect-typed-tool-parameter-names-are-inconsistent",
       "node_type": "TemporalFact",
       "properties": {
@@ -94453,6 +94538,18 @@
         "level": "unit",
         "method": "test",
         "name": "A withdrawn Decision contradicting its successor is not reported as a defect (crates/reflow2-core/tests/heal.rs) — 5 cases. THE CASE: a `rejected` Decision linked by CONTRADICTS to what replaced it is the HEALTHY shape — tried in thought, refuted, here is what we did instead — and reporting it as a warning made recording a refutation CORRECTLY cost a defect while burying it in prose cost nothing. `superseded` is pinned as the same shape by a different route. TWO COUNTERWEIGHTS, and they are what stop the fix becoming a hole: two ACCEPTED decisions that contradict each other are still reported, because a live disagreement is the whole reason the detector exists and trading a false positive for a false negative is strictly the worse bug; and `proposed` is NOT treated as withdrawn, because undecided is not abandoned and silencing it would hide exactly the disagreements a brainstorm exists to surface. The sibling `alignment: supporting` rule is pinned separately so the two skips cannot be collapsed into one. MUTATION-CHECKED TWICE: removing the status check fails only the two withdrawn cases; widening it to \"anything not accepted\" fails ONLY the proposed counterweight, which is the case proving it does not silence too much. MEASURED ON THE REAL DESIGN: 16 defects and 4 contradictions before and after — reflow2 holds 10 superseded and 1 rejected Decision and ZERO CONTRADICTS edges from any of them, so nothing here was silenced.",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-write-says-what-it-did-not-recognise",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-16",
+        "level": "unit",
+        "method": "test",
+        "name": "A write names the properties the schema does not declare, and still stores them (crates/reflow2-core/tests/a_write_says_what_it_did_not_recognise.rs) — 6 cases. THE CASE is the exact write that exposed this: `enforcement: \\\"advisory\\\"` on a DesignRule, where the real field is `enforced`, a bool. TWO COUNTERWEIGHTS DECIDE WHETHER THIS IS A REPORT OR NOISE: an ordinary write using only declared properties says NOTHING, because a signal that fires on correct work is one people stop reading; and the correctly-spelled `enforced` is never named, since the pair is one edit apart and reporting it would make the check actively misleading. A THIRD holds the line the other way: an unknown NODE TYPE reports nothing rather than every key, because that case is already refused loudly by the write itself and answering \\\"all of them are undeclared\\\" would bury the real error. AND THE LAST IS THE POINT OF THE WHOLE THING: the undeclared property is STILL STORED. This reports; it never refuses — the property bag is a capability, not an oversight, and a fix that started rejecting unknown keys would break the thing it was meant to make honest. MUTATION-CHECKED BOTH WAYS: reporting nothing fails the two positive cases; reporting EVERY key fails those plus the silence counterweight, which is the case proving it does not become noise.",
         "status": "passing"
       }
     },
@@ -96187,7 +96284,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:2d73b19dd91353db964ab23d2aad5d49aa7576d8a16c5ca3414f5b60e425d214",
+  "prev_content_hash": "sha256:3cbd36b84cc870b97730a7a6454c5e7cfd230ff5b059bd3d25a5e40d6b620181",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

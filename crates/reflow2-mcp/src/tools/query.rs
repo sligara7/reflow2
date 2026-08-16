@@ -52,7 +52,7 @@ impl ReflowService {
     // ---- Generic CRUD (deterministic) ----
 
     #[tool(
-        description = "Create a node of any schema type with a property object. An existing id MERGES: the props you pass overwrite, every stored property you omit survives — so a partial props object edits, it does not reset the rest to defaults.",
+        description = "Create a node of any schema type with a property object. An existing id MERGES: the props you pass overwrite, every stored property you omit survives — so a partial props object edits, it does not reset the rest to defaults. READ `undeclared` IN THE REPLY: it names any property you sent that the schema does not declare for this type. The write still SUCCEEDS — the store is a property bag on purpose, so a design can record what reflow2 never anticipated — but a typo and a deliberate extension used to be indistinguishable, and this is how you tell them apart. Absent when there is nothing to say.",
         annotations(read_only_hint = false)
     )]
     pub async fn create_node(
@@ -61,8 +61,17 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let props = parse_props(req.props)?;
         let mut g = self.write_lock().await;
+        // Computed BEFORE the write, from what the caller actually sent: an
+        // upsert merges, so reading the stored node afterwards would also
+        // report undeclared properties somebody else wrote earlier, and blame
+        // this caller for them.
+        let undeclared = g.undeclared_properties(&req.node_type, &props);
         match g.upsert_node(&req.node_type, &req.id, props) {
-            Ok(n) => ok_json(NodeDto::from(n)),
+            Ok(n) => {
+                let mut dto = NodeDto::from(n);
+                dto.undeclared = undeclared;
+                ok_json(dto)
+            }
             Err(e) => Err(node_error(&g, &req.node_type, e)),
         }
     }

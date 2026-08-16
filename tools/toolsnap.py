@@ -32,12 +32,18 @@ import json
 import os
 import shutil
 import sys
+import time
 import tempfile
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from smoke_mcp import Server  # noqa: E402  (path set above)
 
 SNAP_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "toolsnaps")
+
+
+# Set by main() before any verdict is printed, so every outcome — match, drift
+# and regenerate — says which binary it read.
+BINARY_PROVENANCE = ""
 
 
 def canonical(tool: dict) -> str:
@@ -88,6 +94,45 @@ def update(live: dict[str, dict]) -> int:
     return 0
 
 
+def provenance(binary: str) -> str:
+    """What this comparison actually read, and whether it is current.
+
+    THE GATE USED TO SAY "ALL 149 TOOLSNAPS MATCH" WITHOUT SAYING AGAINST
+    WHAT. Measured 2026-08-16: a tool description was changed, RELEASE was
+    rebuilt, and this reported the surface unchanged — because `--bin`
+    defaults to `target/debug/reflow2-mcp`, which was an hour stale. The
+    committed snapshot still held the old text and the gate whose whole job is
+    noticing a changed surface reported an unchanged one.
+
+    So the verdict now names the binary and says whether any source file is
+    NEWER than it. mtime is a weak signal on its own — git operations can
+    leave sources older than a build, which is why the launch wrapper hashes
+    content instead — but it is only ever used here to ADD a warning, never to
+    suppress one, so a false negative costs nothing that was not already lost.
+
+    `req:a-report-says-what-it-swept-and-whether-its-checks-ran`.
+    """
+    built = os.path.getmtime(binary)
+    newest, newest_at = None, 0.0
+    for root, _dirs, files in os.walk("crates"):
+        if os.sep + "src" not in root + os.sep:
+            continue
+        for f in files:
+            if not f.endswith(".rs"):
+                continue
+            path = os.path.join(root, f)
+            at = os.path.getmtime(path)
+            if at > newest_at:
+                newest, newest_at = path, at
+    stamp = time.strftime("%Y-%m-%d %H:%M", time.localtime(built))
+    line = f"compared against {os.path.relpath(binary)} (built {stamp})"
+    if newest is not None and newest_at > built:
+        line += (f"\n⚠️  STALE: {newest} is newer than that binary. This verdict is "
+                 f"about code that is no longer on disk — rebuild and re-run:\n"
+                 f"       cargo build -p reflow2-mcp")
+    return line
+
+
 def check(live: dict[str, dict]) -> int:
     if not os.path.isdir(SNAP_DIR):
         print(f"no toolsnaps directory at {SNAP_DIR}\n"
@@ -129,8 +174,10 @@ def check(live: dict[str, dict]) -> int:
         print("If the surface change is intentional, regenerate deliberately:")
         print("    python3 tools/toolsnap.py --update")
         print("and commit the diff — a reviewer should see exactly what moved.")
+        print(BINARY_PROVENANCE)
         return 1
     print(f"ALL {len(live_names)} TOOLSNAPS MATCH — the served surface is unchanged.")
+    print(BINARY_PROVENANCE)
     return 0
 
 
@@ -147,6 +194,9 @@ def main() -> int:
     if not os.path.exists(binary):
         print(f"binary not found: {binary}\nBuild it first:  cargo build -p reflow2-mcp")
         return 1
+
+    global BINARY_PROVENANCE
+    BINARY_PROVENANCE = provenance(binary)
 
     live = live_tools(binary)
     return update(live) if args.update else check(live)

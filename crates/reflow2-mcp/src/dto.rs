@@ -16,6 +16,15 @@ pub struct NodeDto {
     pub node_type: String,
     pub node_id: String,
     pub properties: HashMap<String, Value>,
+    /// Property names STORED here that the schema does not declare.
+    ///
+    /// Absent when there are none, so an ordinary write is unchanged and only
+    /// a caller who wrote something unrecognised is told. It never refuses:
+    /// the store is deliberately a property bag, and the ask was only that an
+    /// EXTENSION be distinguishable from a TYPO
+    /// (`req:a-write-says-what-it-did-not-recognise`).
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    pub undeclared: Vec<String>,
 }
 
 impl From<StoredNode> for NodeDto {
@@ -25,6 +34,7 @@ impl From<StoredNode> for NodeDto {
             node_type: n.node_type,
             node_id: n.node_id,
             properties: n.properties,
+            undeclared: Vec::new(),
         }
     }
 }
