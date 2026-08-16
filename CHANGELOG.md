@@ -31,6 +31,114 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.33.0] — 2026-08-16
+
+Four merged changes, and the shape of the increment is that **three of the four exist because a
+number was being ignored, not because anything was broken**. A loop that reported the same figure
+every call, a date half the corpus wrote where nothing read it, a link that could not say whether
+anyone had checked it, and a field that cried wolf. None of them threw an error; all of them taught
+a reader to stop looking.
+
+### Why this is a minor and not a patch
+
+Stated rather than left implicit, because this file asks for the judgement to be shown. Three tool
+surfaces changed **shape**: `loop_status` gains `since_export`, `realizes` and `link_artifact` gain
+`conformance`, and `search_design` results gain `as_of` / `age_days` / `expired` on dated nodes.
+Under this file's own table that is minor — the input or output *structure* moved, not merely a
+swallowed failure becoming loud.
+
+**Every change is additive and no existing call changes behaviour.** The two new arguments are
+defaulted, so a caller who omits them gets exactly the previous result; the new result fields are
+omitted entirely on nodes that carry no dates.
+
+**The schema stamp did not move** — 29 node types, 61 edge types, `schema_version` 1. Two
+*properties* were added (`TemporalFact.valid_from` / `.valid_to`, `REALIZES.conformance`) and
+properties are not counted by the stamp, so **no upgrade doc is owed** and no consumer migration is
+required.
+
+### ⚠️ One thing to expect on upgrade, so it is not read as an alarm
+
+`evidence_report` now reports a `conformance` tally, and on any design that predates this release it
+will say **every realizing link is `unchecked`** — reflow2's own says 223 of 223. That is not a
+finding about your code. `unchecked` means *nobody has recorded that they checked it*, which was
+true before this release too and simply could not be said. Nothing is required of you; the number
+exists so the silence is countable.
+
+### Added
+
+- **The loop can be asked what THIS session added.** `loop_status` gains `since_export`, answering
+  what the committed record does not yet hold, so a mature graph's standing debt stops drowning the
+  debt just created. Measured beforehand: across an entire working session `loop_status` returned
+  the *identical* 80 unsurfaced gaps and 16 structural defects from the first call to the last,
+  through four merged PRs and two releases. The failure is behavioural rather than arithmetical —
+  **a number that never moves stops being read** — and it arrived on the one tool whose job is to
+  say what is owed. Asked for independently three times: twice by one consumer and once by another.
+
+  The baseline is the last export, which is the only session boundary a design with no clock and no
+  session identity can compute. An **empty baseline says it cannot tell** rather than reporting
+  everything as new: "you added 205 things" and "I have no record to compare against" are opposite
+  answers. The reply always states which boundary it used. Off by default, because the scan reads
+  and parses the committed export and an ordinary orientation call has no reason to pay for it.
+
+- **A fact may carry its date, and it is read back with its age.** `TemporalFact` declares
+  `valid_from` and `valid_to` as date-string properties, and `search_design` returns `as_of`,
+  `age_days` and `expired` for any dated node — so a six-week-old observation is no longer narrated
+  as current.
+
+  This was **measured before it was designed**: 112 of 205 TemporalFacts carried a `valid_from` the
+  schema did not declare, 76 carried the declared `VALID_FROM` *edge* to a DesignEpoch, and **zero
+  carried both**. A clean split with nothing caught between two conventions is what a *missing word*
+  looks like rather than what carelessness looks like — the edge needs an epoch, and a writer
+  holding a plain date has nothing to point it at.
+
+  The properties are not a second way to say one thing: the **edges** name a milestone and are what
+  a roadmap orders by `sequence`; the **properties** carry a calendar position. A roadmap wants the
+  first, an audit trail the second.
+
+  The scope grew on evidence and it is worth knowing why. The only reader of `VALID_FROM` filters to
+  `basis: forecast`, of which this design has **none** — so the 76 edge-bearing facts were as unread
+  in practice as the 112 property-bearing ones, and there was no reader to teach. Declaring the
+  property alone would have changed the schema and left the corpus exactly as inert, so the reader
+  ships with it.
+
+  Three refusals are deliberate: a **future** date reports a *negative* age rather than clamping to
+  zero, because clamping renders a forecast as "current"; a claim expiring **today** is not yet
+  expired; and an **unreadable** `valid_to` never expires anything, because guessing would silently
+  retire live facts. No new dependency — the calendar arithmetic is fifteen lines.
+
+- **A realizing link says whether anyone checked it.** `REALIZES` gains
+  `conformance: unchecked | reviewed | verified`, defaulting to `unchecked`, and `evidence_report`
+  counts the buckets and names up to ten unchecked links.
+
+  The evidence came from outside the project. A Requirement said the calendar day is the person's
+  **civil** date; the code used UTC; the Capability said `realized`; the checksum matched, so
+  `reconcile_artifacts` was silent. **Every signal in the graph was green and a user found the bug
+  in the product.** A checksum says the file has not *moved*; nothing said whether it still *does
+  what the target requires*, and a file checked against the rule was indistinguishable from a file
+  merely hashed.
+
+  reflow2 does not and cannot compute this — it reads a design, never a running system. The property
+  **records** what a person knows, and the count is the deliverable: *"223 of 223 realizing links
+  were never checked against their requirement"* is a sentence the design could not previously
+  produce.
+
+  Deliberately **not** in `loop_status`: every link starts `unchecked`, so a large figure that never
+  moves would be precisely the failure the first item in this release exists to end.
+
+### Fixed
+
+- **A swept file stops being called unobserved because its parent also claims it.** Reported by
+  music_graph. `coverage_report` matched each observed path against the *first* claim covering it, so
+  a design registering both `archive/` and `archive/reco.py` got the individual files back in
+  `unobserved_locations` — files the sweep had just handed over.
+
+  Graded "harmless" by the reporter, and the grading is the argument for fixing it: the field's only
+  job is answering *did you forget to sweep something*, so a false entry is an alarm on correct
+  modelling, and one is enough to make the field untrustworthy. The count stays one per observed
+  path; the cheapest wrong fix — emptying the field — is blocked by three cases, because silence
+  reads as "nothing was missed".
+
+
 ## [0.32.1] — 2026-08-16
 
 A patch cut, made so music_graph gets **F24** without waiting for the next increment: v0.32.0 fixed F23 and shipped an hour before F24's fix landed, which left a consumer able to restore successfully and then walk straight into the second half of the same failure.
