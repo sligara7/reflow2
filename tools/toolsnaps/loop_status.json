@@ -14,6 +14,11 @@
           "string",
           "null"
         ]
+      },
+      "since_export": {
+        "default": false,
+        "description": "Also report what is owed on ground the COMMITTED EXPORT does not hold —\nthe closest thing to \"what did this session introduce\" that a design\nwith no clock can answer.\n\nOFF BY DEFAULT AND THAT IS A COST DECISION: it reads and parses the\ncommitted export, which the ordinary orientation call has no reason to\npay for. Everything else in the reply stays design-wide either way.",
+        "type": "boolean"
       }
     },
     "type": "object"
