@@ -251,7 +251,15 @@ impl ReflowService {
     #[tool(
         description = "Create a ChangeEvent (seed for propagate_change). Pass `affected` to say \
                        in the same call what it changed — a CHANGED edge is drawn to each entry, \
-                       which is what makes the event propagatable.",
+                       which is what makes the event propagatable. TWO QUESTIONS, NOT ONE: \
+                       `change_type` says WHY, and `subject` says WHICH AXIS — `system` (the \
+                       thing changed) or `record` (the thing did not change and only the design's \
+                       knowledge of it did, e.g. a first baseline, a re-sync, a question settled). \
+                       Leaving `subject` out is a true answer and is never inferred from \
+                       `change_type`, because the mapping is not total. Use `defect_fix` when the \
+                       design was right and the code was wrong, and `test_failure_fix` only when a \
+                       check actually caught it — the difference is provenance, and it is the one \
+                       five sessions each guessed differently before these existed.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_change_event(
@@ -260,6 +268,11 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let change_type: ChangeType = parse_enum(&req.change_type, "change type")?;
         reject_reserved_change_type(change_type)?;
+        let subject = req
+            .subject
+            .as_deref()
+            .map(|s| parse_enum::<reflow2_core::ChangeSubject>(s, "change subject"))
+            .transpose()?;
         let affected = req.affected.unwrap_or_default();
         let mut g = self.write_lock().await;
         // Validate the whole list before writing anything: storage accepts
@@ -295,7 +308,7 @@ impl ReflowService {
             }
         }
         let event = g
-            .add_change_event(&req.id, &req.name, change_type)
+            .add_change_event(&req.id, &req.name, change_type, subject)
             .map_err(dyno_err)?;
         let mut changed = Vec::new();
         for a in &affected {

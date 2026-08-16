@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:f438a603a6a0f36e4af18f94a89fca1ec512661e0db21b737fe32d45d111b023",
+  "content_hash": "sha256:04c0d07850918b8c6f8c54ea144088cad5208046e66b0f1937ac8b314f3ce658",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -6865,6 +6865,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:change-type-splits-into-two-axes",
+      "properties": {
+        "acted_at": "2026-08-15",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:commitment-edges-survive-snapshots",
       "properties": {
         "acted_at": "2026-07-31",
@@ -10098,6 +10107,15 @@
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-3a37640195ff8a6f",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:changelog-test"
     },
     {
       "edge_type": "CHANGED",
@@ -13374,6 +13392,51 @@
         "action": "modified"
       },
       "to_id": "fact:defect-change-event-has-no-type-for-a-field-reported-defect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:change-type-splits-its-axis",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:change-type-splits-its-axis",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:change-type-splits-its-axis",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:change-type-splits-its-axis",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:change-type-splits-its-axis",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
     },
     {
       "edge_type": "CHANGED",
@@ -66165,7 +66228,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f0b084efabffd96cbbb64ee30fbd89e6d3c241b742b6e4fd031e76ef1b8d7ffa",
+        "checksum": "sha256:fa1941914915d0e312d0ac8691861163b50bd2135ba1c06ef8a33ae58fc04a70",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/artifact.rs",
         "name": "artifact.rs",
@@ -66282,7 +66345,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c2bea913c620128c1e602aed078713c7598f92e7cada4024c67777584b23b8be",
+        "checksum": "sha256:73b31ffd9cc27cbb7315a8023f47f3992b85e925b65605bb5f610aad3a088772",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/changelog.rs",
         "name": "tests/changelog.rs",
@@ -67553,7 +67616,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09",
+        "checksum": "sha256:d7334b25184278142393ad3cee84c4a0bff14c3a6640be744d739ecedb26e5b8",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/temporal.yaml",
@@ -67698,7 +67761,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8fb1db82fbd38c45d2323710b43f91f541f43d2732b72b3a997b768bdcd8ca90",
+        "checksum": "sha256:f0abf1d2bbde9ea3f8a8b355fe71c1dea97158a56057c9dab81f63db1c6beaa8",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -67919,7 +67982,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:829e4905cc5f40a8b24e6027b5522780c90e8c133742299549e80880b2f6abef",
+        "checksum": "sha256:2ea76100494505ddb23275e87de01360b10934de79446419b8af53062fc56886",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "temporal.rs",
@@ -68270,7 +68333,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f6a56f423d15e9e444f0a49e12879d8df34e1bb800244202ef1507fb109806f0",
+        "checksum": "sha256:6934d8e9197c727e76f9dda848ac57c48f0ec015109a4ab8f0eb76b9ef9eb7f2",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -70825,6 +70888,15 @@
       }
     },
     {
+      "node_id": "chg:accept-3a37640195ff8a6f",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-15",
+        "name": "A call-site update only: add_change_event gained a fourth argument and this test passes None. No design meaning — the test asserts exactly what it did before."
+      }
+    },
+    {
       "node_id": "chg:accept-3d017e3cb13d7350",
       "node_type": "ChangeEvent",
       "properties": {
@@ -72350,6 +72422,14 @@
       "properties": {
         "change_type": "resync",
         "name": "RECORDED UNDER `resync` BECAUSE THE ENUM STILL HAS NO VALUE FOR WHAT THIS IS — the design's knowledge of an unchanged defect improved, which is verbatim what `baseline_established` was created to express and is reserved away from this path. Nothing about the system changed; a second project independently hit the same enum gap. THIS NAME WAS WRITTEN TWICE: the first copy was silently overwritten by the `record_change` call that followed it (see fact:defect-record-change-overwrites-the-name-of-the-event-it-is-filed-under), which is how that defect was found."
+      }
+    },
+    {
+      "node_id": "chg:change-type-splits-its-axis",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "`change_type` stops answering two questions at once: `ChangeSubject {system, record}` added as an optional axis, and `ChangeType::DefectFix` fills the system-axis gap. NOTE: this event carries NO `subject` of its own, because the server that wrote it is the pre-change binary — the field exists in the built code and is unreachable until a full client restart. Five sessions across three projects each picked a different least-wrong value before this existed."
       }
     },
     {
@@ -75182,6 +75262,16 @@
         "decision": "Requirement certainty is a computed reading, never a stored third axis: status accepted/met → user-confirmed; status deferred/dropped → settled out (also the user's word); status proposed → asserted (provenance authored/planned/imported) or recovered (provenance inferred/reconciled/healed). The load-bearing doctrine: an agent captures requirements at proposed and ONLY the user's answer moves the status — accepted, met, deferred and dropped are all user-only verbs. Reports render the certainty breakdown directly so no session reconstructs it in prose.",
         "name": "A Requirement's certainty is derived from status × provenance; every move off proposed is the user's word",
         "rationale": "User decided all three axes 2026-07-22 (BL-75 vocabulary session, from their fleet trial: where-am-i had to caveat user-confirmed vs recovered in prose every session). Derived over stored for the BL-73 reason — a third stored property can contradict the two axes that already span the space, and the backlog's own warning was 'decide deliberately, not additively'. Every-move-off-proposed rather than accepted-only because an agent dropping a requirement on its own judgment is exactly the silent decision the loop exists to prevent — and this is BL-12 sketch idea 2's example made real ('a requirement moves to accepted only on the human's say-so'), enforced culturally in the skills and the tool description today; the mechanical half stays with BL-41. 'Recovered' over the trial's 'adopted' because it matches the graph's own vocabulary (cap:adopt: 'Recover a design from an existing system') and names the fact, not the workflow. No schema change: the whole defect was the read side — the second time this week (BL-73) the vocabulary was already sufficient and unread.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:change-type-splits-into-two-axes",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "SETTLED ON ANTHONY'S WORD, 2026-08-15: option (c), split the axis. He was shown four options and chose the one that addresses the pattern rather than the loudest instance.\n\nDISTINCT FROM its two neighbours by design: the FACT measures the problem and counts its occurrences; the IDEA held the four unmade options; THIS records the choice and what was built.\n\nWHAT WAS BUILT, the same day:\n· `ChangeSubject { System, Record }` — a new OPTIONAL property on ChangeEvent. Absent means nobody said and is NEVER inferred from `change_type`, because the mapping is not total: a `resync` can be either.\n· `ChangeType::DefectFix` — 'the design was right and the code was wrong', distinct from `TestFailureFix`, which is the same repair with different PROVENANCE (a check caught it). That difference is one this project already cares about everywhere else.\n· Both reachable from `add_change_event`, and the tool description now says the two questions are two questions.\n· The two internal call sites now STATE their axis: a `design_holds` accept is `system` (the file moved; the move carried no design meaning), and a first baseline is `record` — the case the axis was named for. `record_change` passes None on purpose: the generic path cannot know, and a guess would be a claim nobody made.\n\n⭐ THE SPLIT WAS ALREADY NAMED IN THE CODE AND LEFT UNUSABLE, which is the whole argument. `BaselineEstablished`'s own doc comment reads: 'the odd one out, and deliberately so. Every other variant answers why the THING changed; this one says the thing did not change and only the design's KNOWLEDGE of it did.' An axis with exactly one member, reserved so nobody could reach it — and five forced choices followed.\n\nTHE EVIDENCE, and the count is the argument: five sessions, four people, three projects, two independent tool surfaces. `chg:duplicate-merge-needs-a-human-20260808` and `chg:accept-acb06c45b63a7b6d` used `test_failure_fix` where no test existed; `chg:arrival-delta-decided` used `scope_change` to mean 'an open question was settled'; Alex tried `bugfix`, was refused, and wrote 'the enum forces a lie'; and the edit recording his report used `resync` to mean 'our knowledge moved and the thing did not'. THE SAME MISSING MEANING WAS ABSENT FROM `set_artifact_checksum`'s DISPOSITION TOO — one absence is a wording gap, two independent absences of one category is a category the vocabulary did not have.\n\nPROVEN: 5 tests, MUTATION-CHECKED TWICE, each killing exactly one counterweight. Defaulting an unstated axis to `system` kills only `an_unstated_axis_stays_unstated`. Deriving the axis from `change_type` kills only `one_change_type_appears_on_both_axes` — the test that pins `Resync` appearing on BOTH axes, which is why the mapping cannot be inferred. The reserved-value counterweight holds throughout: `baseline_established` is still `set_artifact_checksum`'s alone.\n\n📌 THE STAMP DOES NOT MOVE, verified rather than assumed: `GraphStamp` carries type NAMES and COUNTS only — no properties, no enum values — so both halves are invisible to it and NO UPGRADE DOC IS OWED. The flip side is worth knowing and is the stamp's blind spot again: a consumer cannot learn from the stamp that a property appeared.\n\nNOT SETTLED: whether anything should READ `subject` — it is expressible now and nothing computes from it, which is this project's own recurring 'declared and read by nothing' risk, taken knowingly. And 'an open question was settled' still has no `change_type` value; the axis now lets `resync`+`record` say it honestly, which may be enough or may not.",
+        "name": "`change_type` answers WHY; a new `subject` answers WHICH AXIS — the system changed, or only the design's knowledge of it did",
+        "rationale": "Recorded as his ruling with what was built attached, so a later reader sees the choice and its consequence in one place. He chose (c) over (a) after the evidence showed at least three missing meanings rather than one — adding a single value would have fixed the loudest case and left the mechanism that produced all five.",
         "status": "accepted"
       }
     },
@@ -91413,7 +91503,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:0013dafacb829b99380bfa72a302ce254e7e44b7977360c7d02861edb960640a",
+  "prev_content_hash": "sha256:f438a603a6a0f36e4af18f94a89fca1ec512661e0db21b737fe32d45d111b023",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

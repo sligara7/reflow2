@@ -29,8 +29,13 @@ fn seed(g: &mut DesignGraph) {
     g.add_capability("cap:one", "First capability", "Does the first thing.", None)
         .expect("capability");
     g.satisfies("cap:one", "req:one").expect("satisfies");
-    g.add_change_event("chg:seed", "Seeded the design", ChangeType::NewFeature)
-        .expect("change event");
+    g.add_change_event(
+        "chg:seed",
+        "Seeded the design",
+        ChangeType::NewFeature,
+        None,
+    )
+    .expect("change event");
 }
 
 fn export(g: &DesignGraph) -> GraphExport {

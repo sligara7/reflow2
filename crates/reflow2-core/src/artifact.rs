@@ -349,6 +349,9 @@ impl DesignGraph {
                             "Accepted a new baseline: the change carries no design meaning",
                         ),
                         change_type,
+                        // SYSTEM: the file moved. `design_holds` says the move
+                        // carried no design MEANING — not that nothing moved.
+                        Some(crate::temporal::ChangeSubject::System),
                     )?;
                     if let Some(at) = at {
                         // The claim is worth more dated. Read-modify-write so the
@@ -398,6 +401,11 @@ impl DesignGraph {
                              checksum and nothing was compared",
                         ),
                         ChangeType::BaselineEstablished,
+                        // RECORD, and this is the case the axis was named for:
+                        // BaselineEstablished's own doc says "the thing did not
+                        // change and only the design's knowledge of it did".
+                        // Now it can say so in a field instead of in prose.
+                        Some(crate::temporal::ChangeSubject::Record),
                     )?;
                     if let Some(at) = at {
                         let ev = self

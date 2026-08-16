@@ -245,6 +245,42 @@ impl EpochType {
     }
 }
 
+/// WHICH AXIS a [`ChangeEvent`](crate::nodes::node::CHANGE_EVENT) sits on: did
+/// the SYSTEM change, or did only the design's KNOWLEDGE of it change?
+///
+/// `change_type` was carrying both questions at once, and that is why five
+/// sessions across three projects each picked a DIFFERENT least-wrong value for
+/// the same kind of event. ⭐ THE SPLIT WAS ALREADY NAMED IN THIS FILE and left
+/// unusable: [`BaselineEstablished`](ChangeType::BaselineEstablished)'s own doc
+/// says "every other variant answers why the THING changed; this one says the
+/// thing did not change and only the design's KNOWLEDGE of it did" — an axis
+/// with exactly one member, reserved so nobody could reach it.
+///
+/// **Optional, and absent means nobody said.** It is never inferred from
+/// `change_type`: the mapping is not total (a `resync` can be either) and
+/// guessing would put a claim on the record that no one made
+/// (`req:defaults-do-not-assert`). Every ChangeEvent written before 2026-08-15
+/// therefore has no subject, which is true rather than missing.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum ChangeSubject {
+    /// The system moved — code, behaviour, scope, a component, a contract.
+    System,
+    /// The system did not move; the design's record of it did. A first
+    /// baseline, a re-sync, a question settled, a correction to what we knew.
+    Record,
+}
+
+impl ChangeSubject {
+    /// The exact schema enum string.
+    pub fn as_str(self) -> &'static str {
+        match self {
+            ChangeSubject::System => "system",
+            ChangeSubject::Record => "record",
+        }
+    }
+}
+
 /// Why the design changed — mirrors `temporal.yaml` `ChangeEvent.change_type`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "snake_case")]
@@ -255,6 +291,26 @@ pub enum ChangeType {
     NewFeature,
     /// A fix forced by a failed verification.
     TestFailureFix,
+    /// **The design was right and the code was wrong.** A defect against intent
+    /// that was already accepted — found in the field, by a user, by review, or
+    /// by anything other than a check that failed.
+    ///
+    /// Distinct from [`TestFailureFix`](Self::TestFailureFix), which is the same
+    /// repair with a different PROVENANCE: a check caught it. That difference is
+    /// one this project already cares about everywhere else — `set_provenance`
+    /// grades authored/inferred/reconciled, and `cap:independent-evidence`
+    /// refuses to let evidence a value was fitted to count as validating it.
+    ///
+    /// ADDED 2026-08-15 AFTER FIVE FORCED CHOICES, and the count is the argument:
+    /// two maintainer sessions, the dev_storyflow fleet, Alex's session, and the
+    /// very edit that recorded his report — four people across three projects,
+    /// each reaching for a different least-wrong value, none of them agreeing,
+    /// because there was nothing to agree on. The same missing meaning was
+    /// absent from a SECOND surface too: `set_artifact_checksum`'s disposition
+    /// had no answer for "the code was wrong and now matches intent that never
+    /// changed". One absence is a wording gap; two independent absences of the
+    /// same category is a category the vocabulary did not have.
+    DefectFix,
     /// A change made to improve performance.
     PerformanceOptimization,
     /// A structural change with no behavior change.
@@ -291,6 +347,7 @@ impl ChangeType {
             ChangeType::RequirementCreep => "requirement_creep",
             ChangeType::NewFeature => "new_feature",
             ChangeType::TestFailureFix => "test_failure_fix",
+            ChangeType::DefectFix => "defect_fix",
             ChangeType::PerformanceOptimization => "performance_optimization",
             ChangeType::Refactor => "refactor",
             ChangeType::ScopeChange => "scope_change",
@@ -1103,13 +1160,15 @@ impl DesignGraph {
         id: &str,
         name: &str,
         change_type: ChangeType,
+        subject: Option<ChangeSubject>,
     ) -> Result<StoredNode, DynoError> {
         self.upsert_node(
             node::CHANGE_EVENT,
             id,
             Props::new()
                 .set("name", name)
-                .set("change_type", change_type.as_str()),
+                .set("change_type", change_type.as_str())
+                .set_opt("subject", subject.map(ChangeSubject::as_str)),
         )
     }
 
@@ -1179,7 +1238,12 @@ impl DesignGraph {
             None
         };
 
-        let change_event = self.add_change_event(rec.change_event_id, rec.name, rec.change_type)?;
+        // UNSTATED on purpose. `record_change` is the generic path and cannot
+        // know which axis the caller is on — a resync can be either — so it
+        // passes None rather than inferring one. Absent means nobody said,
+        // which is true; a guess here would be a claim nobody made.
+        let change_event =
+            self.add_change_event(rec.change_event_id, rec.name, rec.change_type, None)?;
         self.pin_at_epoch(node::CHANGE_EVENT, rec.change_event_id, rec.epoch_id)?;
         self.changed(
             rec.change_event_id,
