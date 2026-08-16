@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e3f29f341e72c77923da461bbba5768f9483bdd7995b5ce451991a605501223b",
+  "content_hash": "sha256:76e4d8b74465dfa1a74ec36705af34ac4857a432e274abc61f9bccfbe8b6a33a",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -7672,6 +7672,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-how-do-triage-findings-become-plannable-work",
+      "properties": {
+        "acted_at": "2026-08-16",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-how-flo2-stays-subscribed-to-reflow2",
       "properties": {
         "acted_at": "2026-08-09",
@@ -9727,6 +9736,17 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "fact:alex-grok-0240-feedback-triaged-2026-08-16",
+      "properties": {
+        "basis": "observed",
+        "confidence": 1.0,
+        "evidence": "Alex asked for it twice across two files, dev_storyflow reached it independently, and it was reproduced first-hand across a whole session where the numbers never moved. Triple corroboration is why this one is stated as intent rather than left as a report.",
+        "validation_status": "validated"
+      },
+      "to_id": "req:the-loop-can-say-what-this-session-owes"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:defect-a-finding-has-no-bounds-so-grading-goes-in-the-name",
       "properties": {
         "basis": "observed",
@@ -9735,6 +9755,17 @@
         "validation_status": "validated"
       },
       "to_id": "dec:idea-a-finding-carries-its-bounds"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:defect-a-measured-contribution-carries-no-date-so-it-is-believed-forever",
+      "properties": {
+        "basis": "observed",
+        "confidence": 1.0,
+        "evidence": "music_graph F22; the CONSTRAINS edge was read in schema/core.yaml and confirmed to declare note, contribution and basis with no date before this requirement was stated.",
+        "validation_status": "validated"
+      },
+      "to_id": "req:evidence-carries-the-date-it-was-taken"
     },
     {
       "edge_type": "CAUSES",
@@ -9749,6 +9780,17 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "fact:defect-a-property-naming-a-node-is-unguarded-while-edges-are-not",
+      "properties": {
+        "basis": "observed",
+        "confidence": 1.0,
+        "evidence": "The second direction of the same theme — a declared property holding a dangling node reference, where the other is an undeclared property name. Two facts, one requirement, which is what the per-theme ruling asked for.",
+        "validation_status": "validated"
+      },
+      "to_id": "req:a-write-says-what-it-did-not-recognise"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:defect-a-realized-capability-can-be-dead-for-want-of-an-input-path",
       "properties": {
         "basis": "observed",
@@ -9757,6 +9799,17 @@
         "validation_status": "validated"
       },
       "to_id": "dec:idea-a-capability-declares-its-input-path"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:defect-an-undeclared-property-is-stored-without-complaint",
+      "properties": {
+        "basis": "observed",
+        "confidence": 1.0,
+        "evidence": "Found on my own write and confirmed against the schema; the 134 deny_unknown_fields occurrences are what turned it from a slip into an asymmetry worth stating as intent.",
+        "validation_status": "validated"
+      },
+      "to_id": "req:a-write-says-what-it-did-not-recognise"
     },
     {
       "edge_type": "CAUSES",
@@ -9801,6 +9854,28 @@
         "validation_status": "validated"
       },
       "to_id": "dec:idea-a-capability-can-be-marked-contested"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:defect-propose-heal-describes-neither-what-it-swept-nor-what-it-considered",
+      "properties": {
+        "basis": "observed",
+        "confidence": 1.0,
+        "evidence": "The field report is what brought this requirement into existence — `observed` rather than `causal` because a person reading it stated the intent; the fact did not produce it mechanically. Both halves were reproduced on reflow2's own graph before the requirement was written.",
+        "validation_status": "validated"
+      },
+      "to_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:defect-recording-a-refutation-correctly-adds-a-structural-defect",
+      "properties": {
+        "basis": "observed",
+        "confidence": 1.0,
+        "evidence": "dragon Boss found it by doing what a peer had just recommended; the mechanism was then confirmed at heal.rs:916-935 before this requirement was stated.",
+        "validation_status": "validated"
+      },
+      "to_id": "req:a-detector-reads-the-properties-that-qualify-its-own-finding"
     },
     {
       "edge_type": "CAUSES",
@@ -27710,6 +27785,14 @@
       "from_id": "fact:defect-rebuild-strands-the-shared-server",
       "properties": {},
       "to_id": "decision:ack:heal:4bd7c50f777fe56e"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "fact:feedback-triage-status-across-three-sources-2026-08-16",
+      "properties": {
+        "note": "The findings this fact records are the ones that decision is about making plannable — and it is the reason they cannot be scheduled today: every one is a TemporalFact, and schedule_for takes only a Requirement or Capability."
+      },
+      "to_id": "dec:idea-how-do-triage-findings-become-plannable-work"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -67242,6 +67325,15 @@
     },
     {
       "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:a-detector-reads-the-properties-that-qualify-its-own-finding",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-16"
+      },
+      "to_id": "epoch:triage-fixes"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
       "from_id": "req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue",
       "properties": {
         "modality": "expected",
@@ -67260,6 +67352,15 @@
     },
     {
       "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-16"
+      },
+      "to_id": "epoch:triage-fixes"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
       "from_id": "req:a-rule-knows-where-else-it-is-written-down",
       "properties": {
         "modality": "expected",
@@ -67275,6 +67376,24 @@
         "recorded_at": "2026-08-09"
       },
       "to_id": "epoch:governance-becomes-expressible"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:a-write-says-what-it-did-not-recognise",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-16"
+      },
+      "to_id": "epoch:triage-fixes"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:evidence-carries-the-date-it-was-taken",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-16"
+      },
+      "to_id": "epoch:triage-fixes"
     },
     {
       "edge_type": "SCHEDULED_FOR",
@@ -67302,6 +67421,15 @@
         "recorded_at": "2026-08-09"
       },
       "to_id": "epoch:governance-becomes-expressible"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:the-loop-can-say-what-this-session-owes",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-16"
+      },
+      "to_id": "epoch:triage-fixes"
     },
     {
       "edge_type": "VALID_FROM",
@@ -80294,6 +80422,16 @@
       }
     },
     {
+      "node_id": "dec:idea-how-do-triage-findings-become-plannable-work",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony's question, 2026-08-16: \"we used to have a planned capabilities increment / planned epochs within reflow2 — can we use these features within reflow2 to map out the triage fixes?\" The reconnaissance and the options are mine.\n\nTHE SHORT ANSWER IS YES, THE MACHINERY EXISTS AND WORKS. Measured today: `plan_epoch` (future) is distinct from `add_epoch` (happened); `schedule_for` carries `modality: expected | required` with real teeth; `arrival_delta` computes five outcomes and stores none; 11 planned epochs and 27 SCHEDULED_FOR edges already exist. `arrival_delta` on `epoch:governance-becomes-expressible` returned six outstanding requirements AND volunteered \"nothing is scheduled `required` … so there is no obligation to miss and it is NOT ready to cut. An increment that promises nothing has not been scoped.\" The tools are healthy and opinionated.\n\n⭐ BUT THERE IS A BLOCKER THE QUESTION DOES NOT ANTICIPATE, AND IT IS THE WHOLE DECISION: `schedule_for` accepts `Requirement` or `Capability` ONLY. EVERY triage finding is a TemporalFact. So not one of them can be scheduled as it stands. The plan-increments skill says why this is correct rather than a limitation — \"a plan is not intent … an item scheduled but never captured is a promise with no requirement behind it\" — so the missing step is CAPTURE, not scheduling.\n\n📌 AND THE SKILL ALREADY NAMED WHAT I WAS DOING: \"if you are maintaining a numbered list of upcoming work in the conversation … that is a delivery plan living outside the graph.\" My ranked what-next list was exactly that, twice today, and it would have died with the session.\n\n⚠️ EVIDENCE THAT THIS IS WORTH DOING PROPERLY RATHER THAN QUICKLY — reflow2's OWN plan has drifted, in precisely the shape the skill's §4 warns about. Of 27 SCHEDULED_FOR edges, ELEVEN still point at `rel:v0190`, `rel:v0200` and `rel:v0210`, all long shipped. Planned epochs sit at sequence 250–267 while arrived epochs reach 343. So the plan looks present and is answering nobody. Any new plan laid on top inherits that unless the stale half is dealt with.\n\nTHE OPTIONS FOR WHAT BECOMES PLANNABLE.\n\n(a) A CAPABILITY PER FIX, at `status: planned`. Faithful to how features are tracked. ⇒ AGAINST: most of these are repair, not new function — \"propose_heal stops mislabelling its scope\" is restoring intended behaviour, and filing it as a capability inflates the capability count with maintenance and makes `unrealized_capability` noisier for months.\n\n(b) A REQUIREMENT PER FIX, capabilities beneath where one is genuinely new. Faithful to the vocabulary: a fix is a statement about what must be true. ⇒ AGAINST: roughly a dozen findings would become a dozen requirements, which is a lot of intent minted in one act, and some are small enough that a requirement overstates them.\n\n(c) ⭐ A REQUIREMENT PER THEME, several findings beneath each — and today's findings cluster harder than they look. At least four are ONE statement: \"a report says whether a check was EXERCISED or had NOTHING TO EXAMINE.\" That covers propose_heal's vacuous zero, and it is not new doctrine — `chg:a-null-and-a-vacuous-zero-now-say-which-they-are` already did exactly this for scoped `detect_gaps`, and dev_storyflow named it a WIN. A second theme is \"a reply says what it did not recognise\", covering the undeclared property and the nearest-name suggestion. ⇒ AGAINST: theming is a judgement, and grouping wrongly buries a finding under a heading nobody searches.\n\n(d) SCHEDULE NOTHING; leave them as facts and let the loop surface them. ⇒ AGAINST, and this is measured rather than argued: across this entire session `loop_status` reported the same 80 gaps and 16 defects and NEVER ONCE surfaced a triage item, because a defect FACT is not a gap. Doing nothing means they stay invisible to the loop that exists to say what is owed.\n\n(e) EXTEND `schedule_for` TO ACCEPT A TemporalFact. Removes the blocker directly. ⇒ AGAINST: a fact is an observation, not work. Scheduling an observation is a category error, and it would let the design promise to deliver a measurement.\n\nAND THE SECOND QUESTION, WHICH IS SEPARABLE: HOW MANY EPOCHS? One \"triage fixes\" epoch is easy to reason about and hard to argue with; two or three themed epochs (the detectors that misdescribe themselves, the write surface that accepts what it should question, the loop that cannot scope itself) carry more meaning and cost more to keep honest. `arrival_delta`'s own note argues for at least one `required` item per epoch, or it is not scoped.\n\nNOT ESTABLISHED: whether the stale SCHEDULED_FOR edges to shipped releases should be cleaned first, retired deliberately, or left as the historical record they arguably are — that is its own decision and re-pointing them silently would erase the slip, which the tool explicitly warns against.",
+        "name": "OPEN — the triage findings are TemporalFacts and schedule_for takes only a Requirement or Capability, so nothing today can be planned. What becomes the plannable thing, and how many of them are there?",
+        "rationale": "Anthony's idea; the blocker, the drift measurement and the five options are mine. Recorded rather than acted on because the choice mints intent.\n\n⭐ SETTLED 2026-08-16 ON HIS WORD: \"one triage fixes epoch, requirement per theme.\" That is option (c) for the plannable unit and ONE epoch for the container.\n\nWHAT THAT RULES OUT, recorded because the roads not taken are the useful half: (a) a Capability per fix is declined — most of these are repair rather than new function and would inflate the capability count with maintenance; (b) a Requirement per fix is declined — roughly a dozen at once is too much intent minted in one act; (d) leaving them as facts is declined, and the measurement is why: `loop_status` reported the same 80 gaps and 16 defects all session and never once surfaced a triage item, because a defect FACT is not a gap; (e) extending `schedule_for` to accept a TemporalFact is declined as a category error — a fact is an observation, not work.\n\nAND HE CHOSE ONE EPOCH over two or three themed ones — easier to reason about and harder to argue with, at the cost of the increment carrying less meaning in its name.\n\n⚠️ WHAT THE RULING DOES NOT DECIDE, and was not asked: nothing is scheduled `required`. Every item goes in `expected`, because `required` is an obligation whose miss is a computed violation rather than a slip, and the plan-increments skill says to ask rather than assume. ⇒ `arrival_delta` will therefore report this epoch NOT ready to cut until somebody names at least one obligation. That is the tool being right, not a defect, and it is the next question for him.\n\nAND THE STALE HALF IS STILL OPEN: eleven SCHEDULED_FOR edges still point at releases shipped long ago. This ruling adds a new plan beside them and does not clean them, deliberately — re-pointing them silently would erase the slip.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:idea-how-flo2-stays-subscribed-to-reflow2",
       "node_type": "Decision",
       "properties": {
@@ -83882,6 +84020,16 @@
         "epoch_type": "milestone",
         "name": "Tiering and proportion — vertical linking, and whether a design's breadth and depth can be measured without inventing an ideal ratio",
         "sequence": 329,
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "epoch:triage-fixes",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "Triage fixes — what four projects' field reports asked for, grouped by what they have in common rather than by who reported them",
+        "sequence": 344,
         "status": "planned"
       }
     },
@@ -87906,6 +88054,18 @@
       }
     },
     {
+      "node_id": "req:a-detector-reads-the-properties-that-qualify-its-own-finding",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A detector reads the properties that qualify its own finding, so recording something correctly never manufactures a defect",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A structural detector must consult the properties that change whether its finding IS a finding — on the edge and on both endpoints — so that modelling something the way the design prescribes never adds a defect.\n\nTHE OBSERVATION IS `fact:defect-recording-a-refutation-correctly-adds-a-structural-defect`; this is the intent behind fixing it.\n\nTHE ARGUMENT IS THE PROJECT'S OWN, ALREADY WRITTEN DOWN. `heal.rs` was fixed once for exactly this shape: reading the CONTRADICTS edge TYPE and never its `alignment` property meant \"every correctly-modelled corroboration came back as a structural defect\", and the comment ends \"A PROPERTY THE DETECTOR IGNORES IS A PROPERTY THAT LIES.\" The same sentence applies one property across — the detector still never reads either endpoint's `status`, so a `rejected` Decision contradicting its successor is reported as a conflict when it is the healthy case.\n\n⚠️ WHY THIS IS AN INCENTIVE PROBLEM AND NOT A NUISANCE: recording a refutation correctly ADDS a warning-severity defect, and burying it in prose adds none. The tool mildly penalises the discipline `rejected` exists to support, at the moment a seat is least likely to push back. The cheap wrong response is to delete the rejected node or the edge — the erasure the record exists to prevent.\n\nMEASURED HERE: our four reported contradictions have no rejected or superseded endpoint today, so it does not fire — but the design holds 10 superseded and 1 rejected Decision and ZERO such edges, which is itself weak evidence that the relation is not being recorded.\n\nWHAT MUST NOT BREAK: `acknowledge_defect` already handles this well — it stores the REASON rather than the suppression, and the review expires if the defect's shape changes because the id hashes the category with the affected set. Any fix must leave that intact.\n\nNOT DECIDED: whether `superseded` and `rejected` are treated identically, and whether such pairs vanish or move to a separate band.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue",
       "node_type": "Requirement",
       "properties": {
@@ -88054,6 +88214,18 @@
         "provenance": "authored",
         "statement": "A HEAL suggestion must not propose creating a link that does not exist. Where a finding has no honest mechanical repair, the finding is reported WITHOUT a `suggested_fix_type` that would manufacture one, and says plainly that the repair is a judgement rather than an operation.\n\nTHE CONCRETE CASE. `disconnected_community` reports a cluster with `suggested_fix_type: generate_bridge` — create edges to connect it. Where the separation is CORRECT, acting on that suggestion fabricates relationships that do not exist, in order to silence a warning about a separation that is right. In dev_storyflow's words: \\\"acting on the suggestion would fabricate relationships that do not exist, to silence a warning about a separation that is correct. That is manufacturing connectivity, and it is the same act as formatting coverage into existence — WITH THE DIFFERENCE THAT HERE THE TOOL PROPOSES IT.\\\"\n\n⭐ WHY THIS SHIPS FIRST AND ALONE. Anthony, 2026-08-09, settling `dec:legitimate-islands-need-the-detector-fix`: \\\"C now, A next with the read-back, not B, not D.\\\" This half is a LIVE HAZARD and is true whether or not partitions ever become declarable — a tool that proposes corrupting the graph is wrong on its own terms. It needs no schema change, so it does not wait for the schema increment that `req:a-cluster-can-be-declared-deliberately-separate` belongs to.\n\nTHE GENERAL PRINCIPLE, which is what makes this a requirement rather than a one-line patch: reflow2 already refuses to let a check be attached in order to close a finding (the governance-proposal skill's standing warning against green-washing), and `dec:ask-not-repair` already holds that suspected duplicates are ASKED, never merged. THE SAME RULE HAS NOT BEEN APPLIED TO REPAIR SUGGESTIONS. A proposal to write a false edge is the mirror image of a passing check that tests nothing: both make a report go quiet without making anything true.\n\nWHAT IT DOES NOT SAY: it does not ask `disconnected_community` to stop firing, and it does not ask HEAL to stop proposing repairs generally. Mechanical repairs that restore a fact the design already holds remain correct. The line is narrow and it is about INVENTION: a suggestion may reorganise or restore, never assert a relationship nobody stated.\n\n⚠️ RELATED AND SEPARATE, so the two are not conflated: `fact:apply-heal-would-have-destroyed-the-wrong-contributor` records a different HEAL failure found the same day — a merge proposal that named the wrong survivor and DISCLOSED its own arbitrariness (\\\"THE ALPHABET CHOSE THE VICTIM\\\"). That one is about which node a correct operation destroys; this one is about an operation that should not be offered at all.\n\nSOURCE: storyflow gap D of the peer set — raised by storybug Boss (47accf78), characterised and filed by api-boss (05af57c1), 2026-08-09, v0.26.1. Reproduced in this design the same day at 5 nodes and again at 7.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A report says what it swept and whether its checks were exercised, so a zero cannot be mistaken for a pass",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A report that contributes no findings must say whether it was EXERCISED AND FOUND NOTHING or HAD NOTHING TO EXAMINE, and must describe the scope it actually covered rather than a narrower one it was never given.\n\nDISTINCT FROM THE FACT THE GUARD NAMED, and the distinction is the whole point of this increment: `fact:defect-propose-heal-describes-neither-what-it-swept-nor-what-it-considered` is the OBSERVATION — what was measured, on which day, by whom. This is the INTENT — what must be true. The plan-increments skill requires that separation before anything can be scheduled: \"an item scheduled but never captured is a promise with no requirement behind it.\" A TemporalFact cannot be scheduled; a Requirement can.\n\nTHE THEME IS ALREADY ACCEPTED DOCTRINE rather than a new idea: `chg:a-null-and-a-vacuous-zero-now-say-which-they-are` gave scoped `detect_gaps` exactly this treatment, and dev_storyflow's dragon Boss independently named it a WIN — \"flags its own vacuous zeros\". This generalises what that change did in one place.\n\nWHAT IT COVERS TODAY, both halves reproduced on reflow2's own graph: `propose_heal` returns `operations: []` with no way to tell a scorer that RAN from one with NO INPUT — measured here, where `detect_defects` reports 16 defects and duplicate-class ZERO, so our own zero is vacuous by the identical mechanism; and it returns a `target_id` naming one Project the caller never chose while sweeping the whole design.\n\n⚠️ THE STAKE IS NOT TIDINESS: a fleet runs `propose_heal` as the read-only evidence step of a standing stop on `apply_heal`, which DELETES NODES. A vacuous zero there is one skim away from lifting a gate on an irreversible operation. That is why this theme is first.\n\nNOT IN SCOPE: whether every reporting tool needs this or only those whose zero is read as permission. `propose_heal` is the measured case.",
+        "status": "proposed"
       }
     },
     {
@@ -88214,6 +88386,18 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Anthony, 2026-08-09: \\\"agree on taking forward dec:edge-orthogonality.\\\"\n\nWHAT IS BEING TAKEN FORWARD. dec:edge-orthogonality is ACCEPTED and states the principle: a vocabulary distinction earns its keep ONLY IF A COMPUTATION READS IT. It was applied ONCE, by hand, retiring the VALIDATES and ENABLES edges on exactly that reasoning. Nothing has computed it since, so the principle has been true and unenforced ever since.\n\nTHE MEASUREMENT THAT MADE THE CASE, run 2026-08-09 against reflow2's own 1,873-node design. An edge type counts as REACHED if it is instantiated in this design, OR named in structural_rule's propagation table, OR named anywhere in non-test Rust outside its own const declaration:\n  EIGHT OF SIXTY EDGE TYPES fail all three — COMPLIES_WITH, CONTAINS_EPOCH, EVOLVES_INTO, IMPOSES, MITIGATES, SUPERSEDES, SUPPLEMENTS, VIOLATES_RULE.\n  SEVEN OF TWENTY-NINE NODE TYPES have zero instances — Anchor, DimensionAssessment, DimensionObservation, EnvironmentRule, Flow, QualityGate, ReadinessAssessment.\n  FIVE MORE EDGE TYPES are instantiated but reached only generically: ABOUT_ENTITY (117 instances), CAUSES (9), INTERACTS_WITH (4), OPERATES_IN (3), VALID_TO (2).\n\n⭐ THREE HAD INDEPENDENT COMPLAINTS FILED BY dev_storyflow HOURS EARLIER, which is what makes this a class rather than tidiness: VIOLATES_RULE is not offered by describe_schema for the pair its name describes, so a session doing the documented thing cannot discover it and used VIOLATES instead; QualityGate drew \\\"I could not find an honest use, and I think that is informative\\\"; Anchor is already open as dec:anchor-retire-or-implement.\n\nWHY IT NEVER SURFACED, and it is the reason a computation is needed rather than more discipline: EVERY DETECTOR IS INSTANCE-LEVEL AND THIS IS A VOCABULARY-LEVEL FACT. unsatisfied_requirement needs a Requirement, disconnected_community needs a cluster of two or more, orphan_node needs a node. A declared type with ZERO instances produces nothing for any of them to anchor on. No detector asks a question about the SCHEMA rather than about the design, so the accumulation is invisible by construction.\n\nWHAT THIS REQUIRES: that the principle be answerable by calling something, not by remembering to look. Declared-but-unreached vocabulary must be nameable on demand — which types, and on which of the three tests they failed — so that the next accumulation is visible when it happens rather than eight items later.\n\n⚠️ WHAT IT MUST NOT BECOME, and this is load-bearing rather than a caveat. A demonstrator legitimately does not use Flow or ReadinessAssessment; a young design legitimately has empty node types. A finding that fires on a CONSUMER'S design for not using reflow2's whole vocabulary would nag correct work, which is the failure dec:read-hint-shape and the phase-nudge doctrine exist to prevent. The defensible subject is REFLOW2'S OWN SHIPPED VOCABULARY — a fixed 60 edges and 29 node types with code behind them or not — because that is a property of the build rather than of anybody's modelling.\n\nAND IT MUST NOT REPEAT THE DEFECT IT DESCRIBES: whatever is built here has to be READ by something, or it becomes a ninth unreached thing. That is not a joke about the requirement; it is the specific failure mode, and it has already happened to `enforced` (unread until v0.26.0) and to both retirement edges (unread today).\n\nMECHANISM DELIBERATELY LEFT OPEN — dec:idea-detect-vocabulary-that-nothing-reaches records four shapes with their counters: a census report, a low-severity gap, a tools/ maintenance instrument like toolsnap, or prune-and-accept. Anthony agreed the principle should be carried forward; he has not chosen the shape, and dec:certainty-derived forbids recording that on his behalf.\n\nBOUND, stated rather than glossed: the measurement covered ONE design. A type with zero instances here may be in daily use in dev_storyflow or flo2. The eight unreached-on-every-test EDGES are the stronger claim, because those have no code behind them anywhere and that is a fact about the shipped build.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:a-write-says-what-it-did-not-recognise",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A write says what it did not recognise, so a caller can tell an extension from a typo",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A write that stores something the schema does not describe must SAY SO in its reply — without refusing it — so that an invented field and a deliberate extension stop being indistinguishable.\n\nTHE OBSERVATIONS ARE `fact:defect-an-undeclared-property-is-stored-without-complaint` and `fact:defect-a-property-naming-a-node-is-unguarded-while-edges-are-not`; this is the intent behind fixing them. They are ONE theme in two directions: an unknown property NAME going in, and a declared property holding a DANGLING node reference coming out.\n\nTHE ASYMMETRY THAT MAKES IT A REQUIREMENT: reflow2 already refuses an unknown TOOL ARGUMENT — `#[serde(deny_unknown_fields)]` appears 134 times in the served surface — and refuses an EDGE to a missing node through all sixteen typed helpers, with atomicity and a size-floor test. The one hole is `props`, a free object, which is exactly where a property name lands. So the vocabulary is guarded at the type level and the edge level and open at the property level in both directions.\n\n⚠️ THE COUNTER-ARGUMENT IS PART OF THE REQUIREMENT, NOT AN OBJECTION TO IT: the store is deliberately a property BAG, and open-world properties are what let a project record what reflow2 did not anticipate. So this must NOT become strict validation. The ask is a REPORT, not a refusal — hence the wording.\n\nMEASURED: `enforcement: \"advisory\"` was accepted, stored and echoed back on a DesignRule whose schema declares no such property; the real field is `enforced`, a bool. The write succeeded and meant nothing, and only an unrelated gap firing exposed it.\n\nCHEAPEST FORM, and probably sufficient: echo which stored properties the schema does not declare. One comparison, no policy change. Naming the nearest declared property is a second step — `enforcement` vs `enforced` is one edit distance, and the near-duplicate guard already does this kind of suggestion for ids.",
         "status": "proposed"
       }
     },
@@ -88912,6 +89096,18 @@
         "provenance": "authored",
         "statement": "The temporal axis must run forward as well as back, in TWO PAIRED VIEWS of the same architecture (Anthony, 2026-07-28: 'in systems engineering, I think this would be 2 views of the same system'): increments in TIME — epochs, what the architecture is expected to be at epoch_1..n — and increments in CAPABILITY — what each small, frequent release adds, the release-fast-in-small-increments practice now common in industry (his brother's project ships ~2 minor releases a week). Both views must exist, each comparable as a delta: any two epochs, any two increments, or either against the present. With many moving parts — an ecosystem of coupled repos, each with its own graph — an epoch or increment must pin the set of per-repo design versions it means, or the question 'which epoch are we talking about?' has no answer, which is the failure this exists to prevent. Original idea 2026-07-28 ('epoch branches: project_x:epoch_1 captures what we expect the graph to look like at epoch_1'), amended the same day with the two-views framing. THE ATOM, Anthony's distillation 2026-07-28: the roadmap is a SATISFACTION SCHEDULE — a mapping of requirements to the epoch or increment where they are satisfied: 'in epoch 1, requirements A and B are satisfied; in increment 3, requirements C, D and E are expected to be satisfied; in epoch 27, KPP 1 is required to be satisfied.' His own verbs carry the three modalities the mapping must distinguish: ARE satisfied (recorded history — the backward direction the graph already does), EXPECTED to be satisfied (a plan, carrying confidence that decays with horizon per req:plans-move-honestly), and REQUIRED to be satisfied by (an obligation whose miss at arrival is a computed violation, the scheduling face of a KPP — content inviolability from req:inviolable-intent gains a deadline dimension).",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:evidence-carries-the-date-it-was-taken",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "Evidence carries the date it was taken, so a measurement can be aged rather than believed forever",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Where the design records that something was MEASURED, it must also record WHEN — so a report can say \"measured, but a long time ago\" instead of presenting a stale number as current.\n\nTHE OBSERVATION IS `fact:defect-a-measured-contribution-carries-no-date-so-it-is-believed-forever` (music_graph F22); this is the intent behind fixing it.\n\nTHE ASYMMETRY IS THE ARGUMENT, and it is reflow2's own doctrine applied unevenly. `ver:evidence-quality` has a whole TIME axis — an accept dated after the check reports STALE, a re-run after the accept is current, and an undated side is UNKNOWN and counted rather than silently passed. `Artifact.last_confirmed_at` exists for exactly this, and its description says a confirmation \"says nothing changed\" so it is stored as a dated property. ⇒ Dating evidence is settled practice for Verification and for Artifact, and absent from the one number a KPP verdict rests on: the CONSTRAINS edge declares `note`, `contribution` and `basis` and NO DATE.\n\nMEASURED THEIR SIDE: a contribution recorded as 6.9 fps with `basis: measured` against a 40 fps minimum, while the true measured value was 55.06. The number was right when taken and had been wrong for days. Their framing is the one to keep — \"an estimate stays an estimate, but a measurement is a statement about a system at a moment.\"\n\n⚠️ `basis: measured` IS THE STRONGEST EVIDENCE CLAIM THE SCHEMA OFFERS AND THE ONLY ONE THAT DECAYS. An estimate does not go stale; a measurement does.\n\nNOT DECIDED, and both are real: whether the date belongs on the edge or on a separate observation node — the same question `Artifact.last_confirmed_at` answered by choosing the property, on the grounds that confirmations are high-frequency non-events; and whether ageing against the contributors' artifact checksums is sound, since a contribution can go stale with no file changing.\n\nA SECOND, SMALLER ITEM IN THE SAME REPORT, kept because it cost them real time: a MINIMUM budget returns `within` while a contributor is `unstated`. That is defensible — a missing number can only improve a minimum — but the asymmetry is unexplained in the payload and read as a bug. The verdict is right and does not say why it is right.",
+        "status": "proposed"
       }
     },
     {
@@ -90038,6 +90234,18 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A ChangeEvent can record that THE DESIGN RECORD WAS INCORRECT, as distinct from reality having moved and the design catching up. Proposed value: `record_was_incorrect`.\n\nWHY THE NAME IS `record_was_incorrect` AND NOT `correction`: every existing `change_type` names WHY THE RECORD MOVED — `requirement_creep`, `new_feature`, `test_failure_fix`, `refactor`, `scope_change`, `deprecation`. \\\"Correction\\\" names the ACT rather than the cause and would read oddly beside its siblings. The eleventh value, `baseline_established`, already sets the precedent for a value that says the thing did not change and only the design's knowledge of it did.\n\nTHE GAP. None of the eleven legal values means this. `resync` is the least-wrong and CONNOTES SOMETHING FALSE: it reads as a re-sync back to coherence after reality moved. Where the record was simply wrong when written, `resync` puts a fiction into the ledger that exists to prevent fiction.\n\nWHY IT MATTERS BEYOND TIDINESS: `changelog_view` MAPS BUCKETS FROM `change_type`. A correction recorded as `resync` therefore lands in a bucket that misdescribes it, in the document consumers read. That is the test `dec:edge-orthogonality` sets — a vocabulary distinction earns its keep only if a computation reads it — and this one is read.\n\nEVIDENCE, three independent hits. Filed by dragon Boss (`cca98fbf`, dev_storyflow, 2026-08-09) while correcting an edge that asserted a runtime dependency the code never had: \\\"resync connotes reality moved and the design caught up — here the design was simply wrong from the start.\\\" Reproduced twice in this repo the same day: recording the detector-spec correction, and recording this merge, both of which used `resync` and had to say so in the event name to avoid implying something false.\n\n⚠️ COST, STATED BECAUSE IT DECIDES THE TIMING: adding an enum value MOVES THE SCHEMA STAMP, which pulls a version bump, an upgrade note, and locks older reflow2 out of designs written by the newer one. That cost is why this is scheduled into a SCHEMA-CLUSTERED increment rather than shipped alone (Anthony, 2026-08-09: \\\"go with your recommendation on bundle it with the governance primitives\\\").\n\n⚠️ AND THE SHARPER ALTERNATIVE IS NOT FORECLOSED: `dec:should-propagate-seed-from-a-drift-event` records dragon Boss's other suggestion, which may make this requirement unnecessary. Read that before building this.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:the-loop-can-say-what-this-session-owes",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "The loop can say what THIS session owes, so a mature design's standing debt does not drown the debt just created",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "`loop_status` must be able to answer \"what did THIS session introduce\" as well as \"what does the design owe\", so that on a mature graph the stop nudge stays actionable instead of reporting the same large numbers every time.\n\nTHE OBSERVATION IS carried on `fact:alex-grok-0240-feedback-triaged-2026-08-16`; this is the intent behind fixing it.\n\nTRIPLE-CORROBORATED, INDEPENDENTLY, WHICH IS RARE HERE. Alex asked for it twice — his §3.3 on 0.24.0 (\"always dirty on mature graphs — agents ignore or thrash\") and again in his 2026-08-14 Opportunities as a \"loop_status session mode\". dev_storyflow reached the same place from the other direction. And it was reproduced first-hand: across an entire working session on 2026-08-16, `loop_status` reported the IDENTICAL 80 unsurfaced gaps and 16 structural defects from the first call to the last, through four merged PRs and two releases. The only way to say anything useful was to compute the delta by hand and report \"unchanged from session start\" each time.\n\n⚠️ THE FAILURE IS BEHAVIOURAL, WHICH IS WHY IT MATTERS MORE THAN IT LOOKS: a number that never moves stops being read. That is the signal-trained-to-be-ignored failure this project has named elsewhere, arriving on the tool whose whole job is to say what is owed.\n\nDISTINCT FROM THE PER-CONTRIBUTOR SCOPING THAT ALREADY EXISTS: `loop_status(contributor_id)` answers \"what needs THIS PERSON\", which is a different axis and does not help a solo session on a mature graph. This is scoping by WHEN, not by WHO.\n\nNOT DECIDED: what defines a session boundary in a design that has no clock and no session identity — the honest candidates are \"since a named epoch\", \"since the last export\", or a caller-supplied baseline, and the first two are computable from what the graph already holds while the third is not. Alex's own phrasing was \"debt introduced this session\"; he did not say how the boundary is drawn either.",
         "status": "proposed"
       }
     },
@@ -95879,7 +96087,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:5897941100e30778eb81d291719e9c57525660fb6846041d6b77154896530069",
+  "prev_content_hash": "sha256:e3f29f341e72c77923da461bbba5768f9483bdd7995b5ce451991a605501223b",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
