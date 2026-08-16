@@ -1326,7 +1326,7 @@ dependencies = [
 
 [[package]]
 name = "reflow2-core"
-version = "0.32.0"
+version = "0.32.1"
 dependencies = [
  "dynograph-core",
  "dynograph-graph",
@@ -1340,7 +1340,7 @@ dependencies = [
 
 [[package]]
 name = "reflow2-mcp"
-version = "0.32.0"
+version = "0.32.1"
 dependencies = [
  "anyhow",
  "base64 0.22.1",
