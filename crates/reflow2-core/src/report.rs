@@ -496,7 +496,104 @@ pub struct LoopScope {
     pub not_attributable: Vec<String>,
 }
 
+/// Debt attached to design this graph holds and the committed record does not.
+///
+/// ⚠️ THE BASELINE IS THE EXPORT, NOT THE CLOCK, and that is forced rather than
+/// chosen: only 2 of this design's 2,367 nodes carry `created_at`, so "what did
+/// this session write" is not computable from timestamps and never was. What IS
+/// computable is what the durable record does not yet hold — which is also the
+/// more useful question, because the export is the only copy that survives
+/// losing the gitignored graph directory.
+///
+/// ⇒ SO THE BASELINE MOVES WHEN ANYONE EXPORTS, including this session
+/// mid-flight and another seat on a shared graph. `note` says so on every
+/// answer rather than leaving a reader to discover it.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct SessionDebt {
+    /// Nodes present here and absent from the committed record.
+    pub unexported_nodes: usize,
+    /// Up to [`NAMED_NEW_NODES`] of them, so the number can be recognised.
+    pub unexported_sample: Vec<String>,
+    /// Open unsurfaced gaps touching at least one unexported node.
+    pub gaps_on_new_ground: Vec<String>,
+    /// Structural defects touching at least one unexported node.
+    pub defects_on_new_ground: Vec<String>,
+    /// What this answer is and is not — always present.
+    pub note: String,
+}
+
+/// How many new node ids a [`SessionDebt`] names before it stops.
+pub const NAMED_NEW_NODES: usize = 10;
+
 impl DesignGraph {
+    /// What is owed on ground the committed record does not hold yet.
+    ///
+    /// `baseline` is the set of node ids the record already carries — read from
+    /// the committed export by the caller, because the core does no file IO.
+    ///
+    /// THE COUNTERPART OF `loop_status`, NOT A REPLACEMENT: every other debt
+    /// class stays design-wide, and this deliberately reports only the two that
+    /// carry `affected_ids` and can therefore be attributed to ground at all.
+    /// A scoped answer that quietly dropped the rest would be the
+    /// "nothing is owed" failure this project refuses everywhere else.
+    pub fn debt_since(
+        &self,
+        baseline: &std::collections::BTreeSet<String>,
+    ) -> Result<SessionDebt, DynoError> {
+        let mut types: Vec<String> = self.schema().node_types.keys().cloned().collect();
+        types.sort();
+        let mut new_ids: std::collections::BTreeSet<String> = std::collections::BTreeSet::new();
+        for t in &types {
+            for n in self.scan_nodes(t)? {
+                if !baseline.contains(&n.node_id) {
+                    new_ids.insert(n.node_id);
+                }
+            }
+        }
+
+        let touches_new = |ids: &[String]| ids.iter().any(|i| new_ids.contains(i));
+
+        let questions = self.open_questions()?;
+        let surfaced: std::collections::BTreeSet<&str> =
+            questions.iter().map(|q| q.gap_id.as_str()).collect();
+        let gaps_on_new_ground: Vec<String> = self
+            .detect_gaps()?
+            .into_iter()
+            .filter(|g| !g.affected_ids.is_empty() && !surfaced.contains(g.id.as_str()))
+            .filter(|g| touches_new(&g.affected_ids))
+            .map(|g| g.title)
+            .collect();
+
+        let defects_on_new_ground: Vec<String> = self
+            .detect_defects()?
+            .into_iter()
+            .filter(|d| touches_new(&d.affected_ids))
+            .map(|d| d.message)
+            .collect();
+
+        let note = if baseline.is_empty() {
+            "No committed record was readable, so EVERY node counts as new and this answer is \
+             about the whole design rather than a session. That is reported rather than hidden: \
+             an empty baseline and a genuinely new design look identical from here."
+                .to_string()
+        } else {
+            "Measured against the COMMITTED EXPORT, not against a clock. The design carries no \
+             creation time on nodes, so this is what the durable record does not hold yet. The \
+             baseline MOVES whenever anyone exports, including this session mid-flight and \
+             another seat on a shared graph. Every other debt class in loop_status stays \
+             design-wide."
+                .to_string()
+        };
+
+        Ok(SessionDebt {
+            unexported_nodes: new_ids.len(),
+            unexported_sample: new_ids.iter().take(NAMED_NEW_NODES).cloned().collect(),
+            gaps_on_new_ground,
+            defects_on_new_ground,
+            note,
+        })
+    }
+
     /// Derive a requirement's [`RequirementCertainty`] from its stored
     /// `status` and `provenance`. Pure derivation — see the enum for the
     /// mapping and the doctrine it rests on.

@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:49db8de098d41c6e971ac0a3cd59c5b4de2d96729a36d350d6a1e83f2730710f",
+  "content_hash": "sha256:01e1218f83aaca5f5c432b8ffdab8682a1dfa8b148216cbf2c153c60d67286f9",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -11973,6 +11973,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:baseline-d6f06ec271e51b49",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:session-debt-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:baseline-d99163203fbfee26",
       "properties": {
         "accepted_baseline": true,
@@ -19009,6 +19018,42 @@
         "action": "modified"
       },
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-can-be-asked-what-the-record-does-not-hold",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-can-be-asked-what-the-record-does-not-hold",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-can-be-asked-what-the-record-does-not-hold",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-loop-can-be-asked-what-the-record-does-not-hold",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:loop-status"
     },
     {
       "edge_type": "CHANGED",
@@ -65544,6 +65589,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:session-debt-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:the-loop-says-what-this-session-added"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:setup",
       "properties": {
         "completeness": "complete"
@@ -66734,6 +66787,12 @@
       "from_id": "cap:loop-status",
       "properties": {},
       "to_id": "req:nudge-covers-bypass"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:loop-status",
+      "properties": {},
+      "to_id": "req:the-loop-can-say-what-this-session-owes"
     },
     {
       "edge_type": "SATISFIES",
@@ -68969,6 +69028,12 @@
       "from_id": "ver:the-image-starts",
       "properties": {},
       "to_id": "req:reflow2-consumable-as-an-image"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:the-loop-says-what-this-session-added",
+      "properties": {},
+      "to_id": "cap:loop-status"
     },
     {
       "edge_type": "VERIFIES",
@@ -71828,7 +71893,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3f25a21dc5e57a90ac12d787ccc3895c95ea5d1da7b79f3b405a9605e0295b2d",
+        "checksum": "sha256:aff0450445d19d96937980b12010421ec4f4112b3406ec959a3223b99e555a8e",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
@@ -72138,12 +72203,23 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f783c860a0bfae5abf030ec3a1c226fda8dc0e22e08261319f92b1f3b1cd35c2",
+        "checksum": "sha256:61afcdda332fda68a073bf5a1e65fba2d95c5942b255abc69f55d9d9d9d1596a",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:session-debt-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:062c1682b832952af474200bd28a7e046146cc8a2eefaca17dd42bfcecfc288d",
+        "location": "crates/reflow2-core/tests/debt_since_the_record.rs",
+        "name": "debt_since_the_record.rs",
+        "status": "realized"
       }
     },
     {
@@ -72658,7 +72734,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:bc3b84bc82a293f157d0df7c10490b27b1d69683621b535cab823c8d0d2e4bf3",
+        "checksum": "sha256:1b718981bffa380d90cb4618203a00699661b815f84cd7f23969bbe714efc97d",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -76415,6 +76491,16 @@
       }
     },
     {
+      "node_id": "chg:baseline-d6f06ec271e51b49",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-16",
+        "name": "First baseline for the 5-case suite behind req:the-loop-can-say-what-this-session-owes. Nothing moved — the file is new.",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-d99163203fbfee26",
       "node_type": "ChangeEvent",
       "properties": {
@@ -78390,6 +78476,16 @@
       }
     },
     {
+      "node_id": "chg:the-loop-can-be-asked-what-the-record-does-not-hold",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "description": "Fifth and last theme of the triage-fixes increment, and the only one whose SHAPE was undecided when it started.\n\n⭐ THE RECONNAISSANCE DECIDED IT, AND IT RULED OUT THE OBVIOUS ANSWER FIRST: only 2 of this design's 2,367 nodes carry `created_at`. So \"what did this session write\" is NOT computable from timestamps and never was — the design has no clock, by design. Anthony chose the baseline that IS computable: the COMMITTED EXPORT. `loop_status(since_export: true)` reports the nodes the durable record does not hold yet, and the gaps and defects standing on them.\n\nWHY THAT BASELINE IS ARGUABLY BETTER THAN A CLOCK RATHER THAN MERELY AVAILABLE: the export is the only copy that survives losing the gitignored graph directory, so \"what is not in the record\" is the question with consequences. A session that ends with its work unexported has lost it whatever the timestamps say.\n\n⚠️ AND THE FLAW IS STATED ON EVERY ANSWER, in `note`, rather than left to be discovered: THE BASELINE MOVES whenever anyone exports — including this session mid-flight, and another seat on a shared graph. It is not a session boundary; it is a record boundary that usually coincides with one.\n\nOFF BY DEFAULT, on Anthony's second ruling: it reads and parses the committed export, and the ordinary orientation call has no reason to pay for that. The unscoped reply is byte-identical to before. That mirrors `sync_debt`, which already defers its expensive half until something has moved.\n\nSCOPED HONESTLY, AND ONLY WHERE IT CAN BE: only the two debt classes carrying `affected_ids` — gaps and structural defects — can be attributed to ground, so only they are scoped. EVERY OTHER COUNTER STAYS DESIGN-WIDE and the note says so, because a scoped answer that quietly dropped the rest would be the \"nothing is owed\" failure this project refuses everywhere else.\n\nTHE COUNTERWEIGHT THAT MATTERS MOST is the empty baseline: no readable record and a genuinely new design look IDENTICAL from here, so the answer says which it cannot tell rather than implying a clean session. Mutation-checked — removing that branch fails exactly that one test, and ignoring the baseline entirely fails exactly the fully-recorded case.\n\nMEASURED END TO END through a real server over stdio, on a scratch graph: create, export, create one more, ask — `unexported_nodes: 1`, sample `['req:new']`, and the unscoped call omits the block entirely.\n\n📌 AND F24 ARRIVED ON ME WHILE PROVING IT: the MCP client caches tool schemas for the session, so the newly added `since_export` was unusable from the session that added it — the server accepted the field and the client sent it as a string. That is the same class as the latent-surface dead end fixed this morning, and it is why the verification was done by driving the binary directly.",
+        "name": "loop_status gains since_export — debt on ground the committed record does not hold yet, which is the closest a clockless design can get to what this session owes",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:the-loop-can-say-what-it-does-not-know",
       "node_type": "ChangeEvent",
       "properties": {
@@ -80121,6 +80217,16 @@
         "decision": "RECORDED AS THE SHAPE QUESTION UNDER `req:a-session-chooses-its-design`. Anthony 2026-08-05 stated a preference — \"I like this approach of just pointing .mcp.json at the graph_id\" — which is a lean toward (a), not a settlement, because the trade-off below was not in front of him when he said it.\n\n(a) EDIT `.mcp.json` AND RECONNECT. WORKS TODAY WITH ZERO CODE: `--graph-path` is an ordinary argument and accepts an absolute path, so any project's server can be pointed at any store right now. The agent can make the edit — Anthony's own point, \"an agent within a session can usually change files\". Counter: it costs a `/mcp` reconnect, and reconnecting is a step this project has already recorded as the one an autonomous agent CANNOT take ([BL-123]). So the cheap option's cost falls exactly on the case reflow2 most wants to serve.\n\n(b) A GRAPH REFERENCE CARRIED PER CALL (the field report's 2a). No reconnect; a session could even read one design and write another. Counter, and it is the strong one: this project already faced the identical shape for seats and went the other way — `dec:stateless-seat-handle` REFUSES a claim without a seat rather than guessing one, because a handle that changes under you is worse than one you must supply. A defaulted graph reference is that hazard with worse consequences: getting a seat wrong misattributes a claim, getting a graph wrong WRITES TO THE WRONG DESIGN, which is the very accident this whole thread began with.\n\n⭐ THE RULE THAT SHOULD SURVIVE WHICHEVER IS CHOSEN, and it is the contribution rather than the choice: DEFAULT WHEN EXACTLY ONE DESIGN IS REACHABLE; REFUSE AND LIST THEM WHEN SEVERAL ARE. That is `dec:no-design-here-never-looked` option (a) and this node's option (b) doing one job at two moments — discovery before creating, refusal before writing. A design chosen by silence is how three graphs appeared on one repo.\n\nTHE DISCOVERY HALF, WHICH BOTH OPTIONS NEED AND NEITHER PROVIDES. Anthony asked for \"a reflow2 tool to simply return all graph_ids\". MEASURED: that returns ONE PER STORE today — reflow2 opens one graph per store by convention, and his three graphs are three stores. The foundation does support many graphs per store (`{graph_id}\\x00{type}\\x00{id}`, `keys::graph_prefix`), so the enumeration is real but answers a question nobody currently has. THE USEFUL SHAPE IS THE OTHER ONE: a tool that DESCRIBES THE DESIGN AT A GIVEN PATH — graph id, label, node counts, mint stamp — without binding to it, so an agent that has walked the tree can show the user a menu. Splits cleanly along `dec:agent-navigates-content`: the agent finds the directories, reflow2 says what is in them.\n\n⚠️ THE COMPLICATION NOBODY HAS SOLVED, and it bites (a) and the discovery tool equally: a RocksDB store held by a running server is EXCLUSIVELY LOCKED. Describing a design at a path while another session holds it needs a shared or read-only open. `--shared` exists and this repo's own `.mcp.json` does not pass it, which is separately why the stale-server export replay is needed at every release cut. Any answer here should say what happens when the store is busy rather than discovering it in the field.\n\nNOT CHECKED: whether `design_identity` could take an optional path and answer for a store it is not bound to, which would make the discovery half a parameter rather than a new tool.",
         "name": "OPEN — is a session pointed at a design by editing .mcp.json and reconnecting, or by a graph reference carried per call?",
         "rationale": "Kept as a question despite Anthony stating a preference, because the preference was expressed before the reconnect cost was named — and [BL-123] already records that the `/mcp` reconnect is the one step an autonomous agent cannot take, which is a direct argument against the option he leaned toward. Recording his lean AND the counter is what the brainstorm discipline is for; deciding it on the lean alone would be reading agreement into an answer given without the trade-off.\n\nThe default-when-one, refuse-when-several rule is written as the thing that should survive either choice, because it is the part that actually prevents the observed accident and it is independent of the mechanism.\n\nThe locking complication is stated because it is the kind of constraint that turns a small tool into a medium one, and it is already known to this project from a different direction.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:how-should-a-temporal-fact-carry-its-date-when-there-is-no-epoch",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "UNDECIDED — recorded as an open question. Three options below; Anthony's call.",
+        "name": "OPEN — how should a TemporalFact carry its date when there is no epoch to point at?",
+        "rationale": "RECORDED AS AN OPEN QUESTION FROM A MEASUREMENT, NOT AS A PROPOSAL. Nobody has chosen anything here; the measurement is in `fact:defect-half-the-temporal-facts-date-themselves-where-nothing-reads` and the choice is Anthony's.\n\nWHY THIS IS NOT THE THREE NODES THE NEAR-DUPLICATE GUARD OFFERED, having read them:\n- `fact:defect-half-the-temporal-facts-date-themselves-where-nothing-reads` is the MEASUREMENT. This is the CHOICE it forces. Keeping the count and the fork apart is the same split this project makes everywhere else — a finding never decides anything.\n- `dec:idea-when-we-learned-it` asks whether a fact should record WHEN IT WAS LEARNED as well as when it was true — transaction time versus valid time. This asks how VALID TIME is carried at all. It is a PREREQUISITE of that question: adding a second time axis to a first one that half the corpus records where nothing reads would build on sand.\n- `dec:idea-a-critical-path-through-the-undecided` is about ranking undecided decisions. Unrelated but for the word \"undecided\".\n\nWHAT FORCES THE QUESTION: 112 of 205 TemporalFacts carry a `valid_from` PROPERTY the schema does not declare and no code reads; 76 carry the declared `VALID_FROM` EDGE to a DesignEpoch; ZERO carry both. The clean split is the evidence that this is a missing word rather than sloppy writing — the edge requires an epoch, and a writer holding a plain date has nothing to point it at. Over half the design's time axis is currently inert.\n\nTHE OPTIONS, with what is cheap and what is wrong about each:\n\n(a) DECLARE `valid_from` / `valid_to` as date-string properties, and teach readers to prefer the edge and fall back to the property. Cheapest, legitimises what 112 nodes already do, no migration. Against it: two ways to say one thing is what `dec:edge-orthogonality` argues against — although that decision's test is whether a COMPUTATION reads the distinction, and here a computation would read both.\n\n(b) KEEP THE EDGE AS THE ONLY TRUTH and migrate the 112. Most coherent vocabulary. Against it: it needs 112 DesignEpochs that do not exist, one per date, flooding the time axis with points that mark nothing — epochs are meant to be named moments, not a calendar. It also cannot fully clean up, because a property once written cannot be removed (`fact:defect-a-property-once-written-cannot-be-removed`).\n\n(c) LET `VALID_FROM` POINT AT EITHER a DesignEpoch or a date. Keeps one word for one idea. Against it: nothing else in this schema has a polymorphic `to`, and the edge-endpoint guard would need to learn the exception.\n\nAGGRAVATOR WORTH FIXING UNDER ANY OPTION: TemporalFact's own extraction_hint reads \"a satisfaction fact whose VALID_FROM is a later epoch; a dropped requirement = a fact with VALID_TO set\" — phrasing that invites the property form the schema does not declare. The guidance and the schema disagree, and the guidance is what a writer reads.\n\nA RANKING, WHICH IS A FINDING AND NOT A DECISION: (a) is cheapest, and it makes the stated vocabulary follow actual usage rather than the reverse — a direction this project has been suspicious of before, which is why it is stated as a preference and left open.",
         "status": "proposed"
       }
     },
@@ -92995,6 +93101,19 @@
       }
     },
     {
+      "node_id": "fact:defect-a-property-once-written-cannot-be-removed",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "AN UNDECLARED PROPERTY, ONCE WRITTEN, CANNOT BE REMOVED — and I found out by writing 16,000 characters into one.\n\n⭐ CAUGHT BY THE FEATURE BUILT FOR IT, ON ITS FIRST LIVE USE, ON ITS AUTHOR. Hours after `create_node` gained `undeclared` (#213), the very next ChangeEvent I wrote came back carrying `\"undeclared\": [\"description\"]`. `ChangeEvent` declares `name`, `change_type`, `subject`, `summary` (fulltext) and `rationale` — there is NO `description`. I had been writing long accounts into an invented field all day.\n\nMEASURED: SIX ChangeEvents carry it, all mine from 2026-08-16, roughly 16,000 characters between them. And the cost is not cosmetic — THE CONTENT IS EFFECTIVELY UNFINDABLE. Searching a phrase that appears ONLY in one of those descriptions ranked its node THIRD, below nodes that merely matched on `name`; `summary` is declared `fulltext: true` and `description` is not indexed for this type at all. So the reasoning is stored, readable if you already know the id, and invisible to the search that exists to find it.\n\n⚠️ AND HERE IS THE DEFECT THAT MAKES IT WORTH A NODE RATHER THAN AN APOLOGY: THERE IS NO WAY TO DELETE A PROPERTY. `create_node` MERGES — what you pass overwrites, what you omit survives — which is correct and load-bearing (BL-46), and it means a property can be overwritten but never removed. The only route to a clean node is `delete_node` + recreate, which destroys every edge attached to it. ⇒ So the honest repair for a typo'd property is either to leave it, or to accept collateral damage that is worse than the typo. The near-duplicate guard, the edge-endpoint guard and now the undeclared-property report all catch mistakes at the WRITE; nothing can undo one.\n\nWHAT IS OWED, and deliberately not done in the change that found it: the six should have their content moved to `summary`, where it is indexed. That is ~16 KB re-passed through tool calls and it duplicates rather than moves, since `description` cannot be dropped — the least-bad form is to set `summary` to the text and overwrite `description` with a short pointer. It was left because it is cleanup, not the requirement being built, and doing it half-way is worse than doing it deliberately.\n\nNOT ESTABLISHED: whether other node types are being written with an undeclared `description` the same way (only ChangeEvent was checked), and whether a `delete_property` operation is wanted at all — it is a small hole in an otherwise deliberate merge contract, and adding a way to remove things has its own risks.",
+        "subject_id": "cmp:graph",
+        "valid_from": "2026-08-16",
+        "value": "{\"measured\":\"2026-08-16, reflow2's own graph\",\"caught_by\":\"the `undeclared` field added in #213, on its first live use, on its author's own write\",\"schema_truth\":\"ChangeEvent declares name, change_type, subject, summary (fulltext), rationale - NOT description\",\"scale\":\"6 ChangeEvents, all mine from today, ~16000 chars\",\"cost\":\"searching a description-only phrase ranked the node THIRD, below name matches - description is not indexed for this type\",\"the_real_defect\":\"no way to delete a property: create_node MERGES so it can be overwritten but never removed, and delete_node+recreate destroys every attached edge\",\"least_bad_repair\":\"set summary to the text and overwrite description with a short pointer - duplicates rather than moves\",\"owed\":\"migrate the six to summary, deliberately rather than half-way\",\"not_established\":[\"whether other node types carry an undeclared description\",\"whether a delete_property operation is wanted at all\"]}"
+      }
+    },
+    {
       "node_id": "fact:defect-a-question-not-created-by-gap-to-prompt-can-never-be-answered",
       "node_type": "TemporalFact",
       "properties": {
@@ -93427,6 +93546,18 @@
         "statement": "`graph_report` REFUSES ON A LARGE DESIGN, AND THE GROWTH IS LINEAR WITH A MEASURABLE COEFFICIENT RATHER THAN AN EDGE CASE. Two refusals in one session, ninety minutes apart, same harness: 88,932 chars at 1,469 nodes, then 91,330 chars at 1,513 nodes — +2,398 chars for +44 nodes, about 54 characters of report per node added. EVERY NODE ANYONE ADDS MAKES THE ORIENTATION CALL HARDER TO READ. Both refusals landed at the two moments the tool is most valuable: orienting at session start, and verifying a peer's reported numbers — and the second is routine rather than rare on a shared graph, which the reporter had not anticipated. `loop_status` was separately measured at 72,886 chars and unreadable in-session (BL-205). ⇒ the rollups that exist to answer 'what should I look at?' become unusable exactly as a design gets big enough to need them. || SOURCE: Observed by the dev_storyflow fleet on 2026-08-15, on reflow2 0.31.0 with served == installed verified through /proc/<pid>/exe. Three agent seats, one shared graph, one day.",
         "subject_id": "cmp:report",
         "value": "{\"call_1\":{\"chars\":88932,\"nodes\":1469},\"call_2\":{\"chars\":91330,\"nodes\":1513},\"chars_per_node\":54.5,\"loop_status_chars\":72886,\"sibling\":\"BL-205\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-half-the-temporal-facts-date-themselves-where-nothing-reads",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "112 OF 205 TEMPORAL FACTS CARRY A DATE NOTHING READS — AND THE OTHER 76 CARRY IT SOMEWHERE ELSE. ZERO CARRY BOTH.\n\nMEASURED on reflow2's own committed export, 2026-08-16:\n  205 TemporalFacts\n  112 with a `valid_from` PROPERTY\n   76 with a `VALID_FROM` EDGE\n    0 with both\n   17 with neither\n(`valid_to`: 6 properties, 2 edges.)\n\nTHE SCHEMA DECLARES ONLY THE EDGE. `VALID_FROM` is an edge type, TemporalFact → DesignEpoch (temporal.yaml:103). TemporalFact's declared properties are subject_id, fact_type, statement, value, basis, confidence — there is no `valid_from` among them. `readiness.rs:653` walks the EDGE (`self.outgoing(&fact.node_id, Some(edge::VALID_FROM))`), and grepping the whole workspace for the property name as a string finds NO READER AT ALL. ⇒ The dates on 112 facts — over half the design's time axis — are inert. They render, they export, they look like time bounds, and no computation has ever consulted one.\n\n⭐ THE CAUSE IS A VOCABULARY GAP, NOT CARELESSNESS, and the zero overlap is what proves it. Two populations with two conventions and no node caught between them is not sloppiness — sloppiness would be mixed. `VALID_FROM` demands a DesignEpoch. A writer who has a DATE has nothing to point the edge at, and creating an epoch per date would flood the time axis with points that mark nothing. So they write the date as a property, which the store accepts silently, and get a record that reads correctly to a human and is invisible to every machine. The 76 are facts written by code paths that already had an epoch in hand; the 112 are facts written by hand.\n\n⚠️ THE EXTRACTION HINT DOCUMENTS THE FIELDS THAT DO NOT EXIST. TemporalFact's own hint reads \"a requirement creep = a satisfaction fact whose VALID_FROM is a later epoch; a dropped requirement = a fact with VALID_TO set\" — phrasing that invites exactly the property form the schema does not declare. The guidance and the schema disagree, and the guidance is what a writer reads.\n\nHOW IT SURFACED: writing `fact:defect-a-property-once-written-cannot-be-removed` returned `\"undeclared\": [\"valid_from\"]`. The undeclared-property report (#213) fired on the very node recording an earlier instance of itself, and the second instance was two orders of magnitude larger than the first. See [[fact:defect-a-property-once-written-cannot-be-removed]] — and note that its \"NOT ESTABLISHED: whether other node types carry an undeclared property the same way\" was answered within one call of being written.\n\nWHAT IS NOT SETTLED, and is the user's to settle: whether the fix is to DECLARE `valid_from`/`valid_to` as date-string properties and teach the readers to prefer the edge and fall back to them; or to keep the edge as the only truth and migrate the 112 (which needs 112 epochs that do not exist); or to let VALID_FROM point at either a DesignEpoch or a date. The first is cheapest and legitimises what people already do; the third makes the edge's `to` polymorphic, which nothing else in the schema is. The 112 are not deletable either way — a property once written cannot be removed.",
+        "subject_id": "cmp:graph",
+        "value": "{\"measured_on\":\"docs/design/reflow2.json, 2026-08-16\",\"total_temporal_facts\":205,\"valid_from_property\":112,\"valid_from_edge\":76,\"both\":0,\"neither\":17,\"valid_to_property\":6,\"valid_to_edge\":2,\"schema_truth\":\"VALID_FROM is an EDGE, TemporalFact->DesignEpoch (temporal.yaml:103); TemporalFact declares subject_id, fact_type, statement, value, basis, confidence and no date property\",\"readers\":\"readiness.rs:653 walks the EDGE; grep for the property name as a string across crates/ finds NO reader\",\"consequence\":\"over half the design's time axis is inert - renders and exports, consulted by nothing\",\"cause\":\"vocabulary gap, evidenced by ZERO overlap: the edge needs a DesignEpoch and a writer holding a DATE has nothing to point it at\",\"aggravator\":\"TemporalFact's own extraction_hint describes VALID_FROM/VALID_TO as if they were fields\",\"surfaced_by\":\"the #213 undeclared-property report, firing on the node recording an earlier instance of itself\",\"open_and_the_users_call\":[\"declare valid_from/valid_to as date strings and have readers prefer the edge\",\"keep the edge as only truth and migrate 112 facts, needing 112 epochs that do not exist\",\"let VALID_FROM point at either an epoch or a date - polymorphic, unlike anything else in the schema\"]}"
       }
     },
     {
@@ -96218,6 +96349,18 @@
       }
     },
     {
+      "node_id": "ver:the-loop-says-what-this-session-added",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-16",
+        "level": "unit",
+        "method": "test",
+        "name": "The loop can be asked what the record does not yet hold, and says so when it cannot tell (crates/reflow2-core/tests/debt_since_the_record.rs) — 5 cases, all passing 2026-08-16. THE BASELINE IS THE LAST EXPORT, which is the only session boundary the graph can compute without a clock or a session identity: `debt_since(&baseline)` diffs the live node ids against the ids the committed export holds, and reports the difference plus only those gaps and defects whose `affected_ids` intersect it. THE CASES, by their real names: `a_node_the_record_lacks_is_reported_as_new`; `a_fully_recorded_design_reports_no_new_ground`; `debt_on_recorded_ground_is_not_called_new` — a gap standing entirely on old ground is NOT reported as this session's, which is the whole point; `an_empty_baseline_says_it_cannot_tell`, the difference between \"you added 205 things\" and \"I have no record to compare against\", which are opposite answers and would otherwise be the same one; and `the_note_always_states_the_baseline_and_that_it_moves`, which pins that the reply never leaves the reader to guess WHICH boundary was used — a scoped number whose scope is implicit is a worse number than none. COST WAS A DECIDED HALF, NOT AN OVERSIGHT: `since_export` is `#[serde(default)]` so the extra diff runs only when scoping is asked for and every existing caller is byte-identical; a failure to read the sync state inserts `since_export_unavailable` rather than failing the call, because a loop that refuses to answer is worse than one that answers narrowly. MUTATION-CHECKED, each killing exactly one test: ignoring the baseline entirely fails `a_fully_recorded_design_reports_no_new_ground`, and removing the empty-baseline branch fails `an_empty_baseline_says_it_cannot_tell`. VERIFIED END-TO-END over stdio on a scratch graph: `unexported_nodes: 1`, `sample: [\"req:new\"]`, and the unscoped call omits the block entirely. TRIPLE-CORROBORATED IN ORIGIN — Alex twice (§3.3 on 0.24.0 and his 2026-08-14 Opportunities), dev_storyflow independently, and reproduced first-hand across a whole session on 2026-08-16 where loop_status reported the identical 80 gaps and 16 defects from the first call to the last. NOT COVERED: nothing here tests the boundary against a REAL multi-session history — every case builds its baseline in-test, so the claim is about the computation and not about what a week of real use would put in front of it.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-nudge-absence-says-why",
       "node_type": "Verification",
       "properties": {
@@ -96371,7 +96514,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:c40dc56a70be91589b470ea59559ed76d73fe78f7b9f22d0f3ce708dba39fd47",
+  "prev_content_hash": "sha256:49db8de098d41c6e971ac0a3cd59c5b4de2d96729a36d350d6a1e83f2730710f",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
