@@ -280,6 +280,18 @@ pub struct SkippedOperation {
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct HealProposal {
     /// Project (or graph) being healed.
+    ///
+    /// ⚠️ READ [`Self::scope`] BESIDE THIS. `propose_heal` takes no target
+    /// argument and always sweeps the whole design, so this is a LABEL and
+    /// never a scope. It names the design's only Project when there is exactly
+    /// one, and the GRAPH when there is more than one — because naming one of
+    /// four Projects the caller never chose is what a fleet actually hit
+    /// (sb-boss, 2026-08-15): the receipt said `proj:dndwright` while
+    /// `issues_addressed` spanned a sibling library and a 121-node cluster.
+    ///
+    /// reflow2's own design holds exactly one Project, which is precisely why
+    /// the self-host could never see this: here the label is accidentally
+    /// correct.
     pub target_id: String,
     /// Strategy used.
     pub strategy: HealStrategy,
@@ -331,6 +343,39 @@ pub struct HealProposal {
     /// Generating a sentence has always demanded review; deleting a node did
     /// not.
     pub requires_human_review: bool,
+    /// What this sweep actually covered, in words.
+    ///
+    /// ALWAYS the whole design: `propose_heal` takes no target argument, and
+    /// `detect_defects()` under it is unscoped. This field exists because
+    /// [`Self::target_id`] was read as a scope and is not one — see there.
+    #[serde(default)]
+    pub scope: String,
+    /// How many Projects the swept design holds.
+    ///
+    /// The number that makes `target_id` readable: at 1 it names the only
+    /// candidate, and above 1 it cannot name a chooser because nobody chose.
+    #[serde(default)]
+    pub projects_in_scope: usize,
+    /// How many merge candidates the pair scorer was GIVEN.
+    ///
+    /// ⚠️ THIS IS THE FIELD THAT MAKES A ZERO READABLE, and it exists because
+    /// the absence of it nearly lifted a safety gate. A fleet ran
+    /// `propose_heal` as the read-only evidence step of a standing stop on
+    /// `apply_heal` — which DELETES NODES — with the lift condition "it pairs
+    /// none of the five control pairs". It returned `operations: []` and read
+    /// exactly like a pass. It was not: no duplicate-class defect existed, so
+    /// the scorer NEVER RAN, and "it paired none of them" was trivially true of
+    /// nothing (reported by dev_storyflow's sb-boss, 2026-08-15).
+    ///
+    /// So `operations: []` with this at 0 means HAD NOTHING TO EXAMINE, and
+    /// with this above 0 means EXERCISED AND PROPOSED NOTHING. Those are
+    /// different claims and rendered identically before this existed.
+    ///
+    /// The same distinction `chg:a-null-and-a-vacuous-zero-now-say-which-they-are`
+    /// gave scoped `detect_gaps`, which the same fleet named a win — generalised
+    /// here by `req:a-report-says-what-it-swept-and-whether-its-checks-ran`.
+    #[serde(default)]
+    pub merge_candidates_considered: usize,
     /// Human-readable summary.
     pub summary: String,
 }
@@ -1327,11 +1372,16 @@ impl DesignGraph {
     /// only — nothing is mutated (discipline 1).
     pub fn propose_heal(&self, options: HealOptions) -> Result<HealProposal, DynoError> {
         let index = self.node_type_index()?;
-        let target_id = self
-            .scan_nodes(node::PROJECT)?
-            .first()
-            .map(|p| p.node_id.clone())
-            .unwrap_or_else(|| self.graph_id().to_string());
+        // A LABEL, NOT A SCOPE. One Project can be named without ambiguity;
+        // more than one cannot, because this tool takes no target and the
+        // caller therefore chose none. Falling to the first alphabetically is
+        // what made the receipt describe a sibling library's design.
+        let projects = self.scan_nodes(node::PROJECT)?;
+        let projects_in_scope = projects.len();
+        let target_id = match projects.as_slice() {
+            [only] => only.node_id.clone(),
+            _ => self.graph_id().to_string(),
+        };
 
         let mut issues_addressed = Vec::new();
         let mut operations = Vec::new();
@@ -1343,6 +1393,10 @@ impl DesignGraph {
         // second link is deferred to the next propose/apply round instead.
         let mut merge_kept: BTreeSet<String> = BTreeSet::new();
         let mut merge_removed: BTreeSet<String> = BTreeSet::new();
+        // Counted where the scorer is actually REACHED, not where duplicates
+        // exist: a candidate the strategy filtered out was never examined, and
+        // saying otherwise would be a second vacuous number in the same reply.
+        let mut merge_candidates_considered = 0usize;
 
         for issue in self.detect_defects()? {
             if !options.strategy.addresses(issue.severity) {
@@ -1352,20 +1406,22 @@ impl DesignGraph {
 
             match issue.category {
                 // The one content-free structural repair.
-                HealCategory::Duplicate => match merge_op_for(&issue, &index) {
-                    Ok(op) => {
-                        let HealOp::Merge {
-                            keep_id, remove_id, ..
-                        } = &op
-                        else {
-                            unreachable!("merge_op_for only builds Merge ops")
-                        };
-                        let overlap = [keep_id, remove_id]
-                            .into_iter()
-                            .find(|id| merge_removed.contains(*id))
-                            .or_else(|| merge_kept.contains(remove_id).then_some(remove_id));
-                        if let Some(node_id) = overlap {
-                            skipped_operations.push(SkippedOperation {
+                HealCategory::Duplicate => {
+                    merge_candidates_considered += 1;
+                    match merge_op_for(&issue, &index) {
+                        Ok(op) => {
+                            let HealOp::Merge {
+                                keep_id, remove_id, ..
+                            } = &op
+                            else {
+                                unreachable!("merge_op_for only builds Merge ops")
+                            };
+                            let overlap = [keep_id, remove_id]
+                                .into_iter()
+                                .find(|id| merge_removed.contains(*id))
+                                .or_else(|| merge_kept.contains(remove_id).then_some(remove_id));
+                            if let Some(node_id) = overlap {
+                                skipped_operations.push(SkippedOperation {
                                 reference: issue.id.clone(),
                                 reason: format!(
                                     "chained duplicate: '{node_id}' is already part of another merge \
@@ -1373,20 +1429,21 @@ impl DesignGraph {
                                      for the rest of the chain"
                                 ),
                             });
-                        } else {
-                            merge_kept.insert(keep_id.clone());
-                            merge_removed.insert(remove_id.clone());
-                            operations.push(HealOperation {
-                                issue_id: issue.id.clone(),
-                                op,
-                            });
+                            } else {
+                                merge_kept.insert(keep_id.clone());
+                                merge_removed.insert(remove_id.clone());
+                                operations.push(HealOperation {
+                                    issue_id: issue.id.clone(),
+                                    op,
+                                });
+                            }
                         }
+                        Err(reason) => skipped_operations.push(SkippedOperation {
+                            reference: issue.id.clone(),
+                            reason,
+                        }),
                     }
-                    Err(reason) => skipped_operations.push(SkippedOperation {
-                        reference: issue.id.clone(),
-                        reason,
-                    }),
-                },
+                }
                 // Everything else needs generated content → human review.
                 HealCategory::OrphanNode => generated_content.push(GeneratedContentStub {
                     for_issue: issue.id.clone(),
@@ -1467,10 +1524,27 @@ impl DesignGraph {
 
         let requires_human_review = !generated_content.is_empty() || !would_destroy.is_empty();
         let confidence = if requires_human_review { 0.5 } else { 0.9 };
-        let summary = format!(
-            "{} issue(s) addressed: {} structural op(s), {} awaiting generation, {} skipped.",
-            issues_addressed.len(),
+        // The summary says WHICH KIND of zero, because the fields alone are
+        // read by a machine and this line is read by a person deciding whether
+        // to apply an irreversible merge.
+        let merges = format!(
+            "{} structural op(s) from {} merge candidate(s) considered{}",
             operations.len(),
+            merge_candidates_considered,
+            if merge_candidates_considered == 0 {
+                " (none to examine — this zero is not a pass)"
+            } else if operations.is_empty() {
+                " (examined, none proposed)"
+            } else {
+                ""
+            }
+        );
+        let summary = format!(
+            "{} issue(s) addressed across the whole design ({} Project(s)): {}, {} awaiting \
+             generation, {} skipped.",
+            issues_addressed.len(),
+            projects_in_scope,
+            merges,
             generated_content.len(),
             skipped_operations.len()
         );
@@ -1485,6 +1559,9 @@ impl DesignGraph {
             would_destroy,
             confidence,
             requires_human_review,
+            scope: "whole design".to_string(),
+            projects_in_scope,
+            merge_candidates_considered,
             summary,
         })
     }

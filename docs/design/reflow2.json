@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:76e4d8b74465dfa1a74ec36705af34ac4857a432e274abc61f9bccfbe8b6a33a",
+  "content_hash": "sha256:2d73b19dd91353db964ab23d2aad5d49aa7576d8a16c5ca3414f5b60e425d214",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -10008,6 +10008,24 @@
         "action": "modified"
       },
       "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-proposal-describes-its-own-sweep",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-proposal-describes-its-own-sweep",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:heal"
     },
     {
       "edge_type": "CHANGED",
@@ -66435,6 +66453,12 @@
     {
       "edge_type": "SATISFIES",
       "from_id": "cap:heal",
+      "properties": {},
+      "to_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:heal",
       "properties": {
         "coverage": "partial",
         "evidence": "COVERED as of 2026-08-08 (chg:duplicate-merge-needs-a-human-20260808): HEAL proposes a merge only for a DUPLICATES edge explicitly carrying basis=asserted, so a heuristic can no longer drive an irreversible deletion, and the check-health skill no longer describes node deletion as the safe mechanical half to apply unread. NOT COVERED, and deliberately not claimed: the requirement's second clause -- that on a shared graph the acting seat must acknowledge other sessions are attached -- is unbuilt, because nothing in any payload yet reports concurrency at all. That is req:a-session-can-tell-it-is-not-alone, which this clause is blocked on; building the acknowledgement first would mean asking a seat to confirm a fact reflow2 cannot currently tell it."
@@ -67910,6 +67934,12 @@
       "from_id": "ver:a-merge-says-what-it-destroys",
       "properties": {},
       "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-proposal-describes-its-own-sweep",
+      "properties": {},
+      "to_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran"
     },
     {
       "edge_type": "VERIFIES",
@@ -71162,7 +71192,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf",
+        "checksum": "sha256:9df3a3b371600c456385205e7bbed7b340f1051dff7a4561f8fda1bb6c48aeaf",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
@@ -74820,6 +74850,14 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "get_node refuses an unknown node_type instead of answering null, and a one-node scope says its answer is vacuous"
+      }
+    },
+    {
+      "node_id": "chg:a-proposal-describes-its-own-sweep",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "propose_heal says what it swept and whether its scorer ran — the first theme of the triage-fixes increment"
       }
     },
     {
@@ -94321,6 +94359,18 @@
       }
     },
     {
+      "node_id": "ver:a-proposal-describes-its-own-sweep",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-16",
+        "level": "unit",
+        "method": "test",
+        "name": "A heal proposal says what it swept and whether its scorer ran (crates/reflow2-core/tests/heal.rs) — 5 cases. THE CASE: with no duplicate in the design the reply reports `merge_candidates_considered: 0` and its summary says in words that the zero is NOT a pass — the state a fleet read as a clean bill while a standing stop on `apply_heal`, which deletes nodes, hung on it. THE COUNTERWEIGHT THAT KEEPS IT HONEST: a scorer that WAS given a candidate reports 1 and must NOT be labelled vacuous, because a fix that calls every zero vacuous is a different lie at the same address. THE THIRD STATE is pinned separately — a `suspected` duplicate never reaches the scorer, so it is not counted as considered, which stops the count quietly meaning `duplicates that exist`. SCOPE: one Project is named without ambiguity and `scope` still reads `whole design`; with TWO Projects the label must stop naming either, and THAT case is the one reflow2's own graph cannot produce, because it holds exactly one Project — which is why the self-host never saw the defect. MUTATION-CHECKED TWICE, each killing exactly one test: restoring first-project-wins fails only the two-project case, and forcing every zero to read vacuous fails only the exercised-scorer counterweight.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-refusal-names-its-own-fix",
       "node_type": "Verification",
       "properties": {
@@ -96087,7 +96137,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e3f29f341e72c77923da461bbba5768f9483bdd7995b5ce451991a605501223b",
+  "prev_content_hash": "sha256:76e4d8b74465dfa1a74ec36705af34ac4857a432e274abc61f9bccfbe8b6a33a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
