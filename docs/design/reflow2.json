@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:01e1218f83aaca5f5c432b8ffdab8682a1dfa8b148216cbf2c153c60d67286f9",
+  "content_hash": "sha256:8593d97f18bbb29711aa775cf9a08b0f2695275b41dbb8c8bc92c7ec3a950363",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -9930,6 +9930,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-fact-carries-its-date-and-the-date-is-read",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-fact-carries-its-date-and-the-date-is-read",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:search"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:a-measurement-says-when-it-was-taken",
       "properties": {
         "accepted_baseline": true,
@@ -11874,6 +11892,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:baseline-1693384befc5429a",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:claim-age-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:baseline-238b75c11ad92d98",
       "properties": {
         "accepted_baseline": true,
@@ -11934,6 +11961,15 @@
         "action": "modified"
       },
       "to_id": "art:doc-impact-propagation"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-6e18694e930b3491",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dates"
     },
     {
       "edge_type": "CHANGED",
@@ -64543,6 +64579,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:claim-age-test",
+      "properties": {
+        "completeness": "complete"
+      },
+      "to_id": "ver:a-claim-reads-back-with-its-age"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:claims",
       "properties": {
         "completeness": "complete"
@@ -64652,6 +64696,14 @@
         "completeness": "complete"
       },
       "to_id": "cap:cycle-names-its-basis"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:dates",
+      "properties": {
+        "completeness": "partial"
+      },
+      "to_id": "cap:claims-carry-their-age"
     },
     {
       "edge_type": "REALIZES",
@@ -68107,6 +68159,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-claim-reads-back-with-its-age",
+      "properties": {},
+      "to_id": "cap:claims-carry-their-age"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-finding-names-its-hub",
       "properties": {},
       "to_id": "cap:heal"
@@ -70848,6 +70906,17 @@
       }
     },
     {
+      "node_id": "art:claim-age-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:b8d4e975533b670e09be74d288144194ad388c69ed987738929f48cfc8b8d011",
+        "location": "crates/reflow2-core/tests/a_claim_carries_its_age.rs",
+        "name": "a_claim_carries_its_age.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:claims",
       "node_type": "Artifact",
       "properties": {
@@ -71014,6 +71083,17 @@
         "name": "Circular-dependency suite — detection, selectivity, and what the finding says it walked",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:dates",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:b125b0aa1c36046cefe30e62298b0ec03ff7e8ff0c107820d1c8fafde6c9f36c",
+        "location": "crates/reflow2-core/src/dates.rs",
+        "name": "dates.rs",
+        "status": "realized"
       }
     },
     {
@@ -72058,7 +72138,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:d7334b25184278142393ad3cee84c4a0bff14c3a6640be744d739ecedb26e5b8",
+        "checksum": "sha256:7be3062dbe9327ac959652734116c350d114d3ca4348ba0f8aa1050c5e91f2c0",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/temporal.yaml",
@@ -72151,7 +72231,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c421c3496192d22d",
+        "checksum": "sha256:a5f270c3646365f78d5c4b6004d1cf0f27285768017ccccce1983176318db40f",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/search.rs",
         "name": "search.rs",
@@ -75046,6 +75126,18 @@
       }
     },
     {
+      "node_id": "chg:a-fact-carries-its-date-and-the-date-is-read",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-16",
+        "name": "A fact may carry its date as a property, and search_design reads it back with its age",
+        "rationale": "Measured first: 112 of 205 TemporalFacts carried the property, 76 the edge, ZERO both. A clean split with no node caught between the two conventions is what a missing word looks like, not what carelessness looks like — the edge demands a DesignEpoch and a writer holding a date has nothing to point it at. Anthony chose (a) over migrating the 112 into invented epochs, and over making the edge polymorphic. The scope then grew on evidence: there was no reader to fall back, so one was built.",
+        "subject": "system",
+        "summary": "Implements `dec:how-should-a-temporal-fact-carry-its-date-when-there-is-no-epoch`, option (a), settled on Anthony's word 2026-08-16.\n\nWHAT CHANGED. `TemporalFact` declares `valid_from` and `valid_to` as date-string properties (`schema/temporal.yaml`). A new `reflow2-core::dates` module converts `YYYY-MM-DD` to a day number and subtracts. `SearchHit` gains a flattened `ClaimAge`, so `search_design` returns `as_of`, `age_days` and `expired` for any node carrying a date, and returns nothing extra for any node that does not.\n\n⭐ THE SCOPE GREW ON EVIDENCE, AND THAT IS THE POINT. The decision said \"declare the properties, and have readers prefer the edge and fall back to the property\". Checking what actually reads `VALID_FROM` found ONE reader — `readiness.rs:653` — which filters to `basis: forecast`, AND THERE ARE ZERO FORECAST FACTS IN THE DESIGN. All 189 dated facts are `measured`. So the 76 edge-bearing facts were just as unread in practice as the 112 property-bearing ones, and there was no reader to teach. Declaring the property alone would have changed the schema and left the corpus exactly as inert as before — which `dec:edge-orthogonality` forbids: a vocabulary distinction earns its keep only if a computation reads it. So the reader was built, and the property ships with it.\n\n⭐ THE READER WAS ALREADY DESIGNED AND UNBUILT. `cap:claims-carry-their-age` part 3 reads: \"where-am-i and search_design mark how old a node's factual half is, so a six-week-old observation is not narrated as current.\" A date string is exactly what that needs; an epoch reference is not, because an epoch carries a `sequence` for ordering and not a calendar position. This lands that part.\n\nTHE EXTRACTION HINT IS CORRECTED, and it was the cause rather than a detail. It read \"a satisfaction fact whose VALID_FROM is a later epoch; a dropped requirement = a fact with VALID_TO set\" — describing as fields two things that were edges. That is what taught 112 writers to invent the properties. It now states plainly that there are two ways to say when, that they are not interchangeable, and which to prefer.\n\nDELIBERATE SHAPE, each chosen against a cheaper alternative:\n- NO `chrono`. The core is dependency-light and the requirement is one subtraction; the civil-date conversion is a known closed form in fifteen lines.\n- `today` IS A PARAMETER on everything that decides. Only `today_utc()` reads the clock, at the edge. A function that reads the clock cannot be tested, only observed — and a module about staleness must not have tests that pass today and fail in a fortnight.\n- THE CLOCK IS READ ONCE PER RESULT LIST, not once per hit, so two hits can never disagree about what day it is.\n- `as_of` AND `age_days` ARE SEPARATE FIELDS so that \"dated, but the date will not parse\" is sayable. Collapsing them would make an unreadable date indistinguishable from no date.\n- AN UNREADABLE `valid_to` NEVER EXPIRES A CLAIM. Guessing would silently retire live facts.\n- A FUTURE DATE REPORTS A NEGATIVE AGE rather than clamping to zero, because clamping renders a forecast or a typo as \"current\" — the exact misreading the capability exists to prevent.\n\nVERIFIED. 15 cases in `a_claim_carries_its_age.rs`, all passing, including the Gregorian century exceptions (1900 not a leap year, 2000 one) that a naive `% 4` or `% 100` gets wrong. FOUR MUTATIONS, each killed by the right case: dropping the century exception fails the leap and anchor cases; clamping a future date fails the negative-age case; expiring on the last valid day fails the boundary case; treating an unreadable end date as expired fails the counterweight. END-TO-END on the real store through a restarted server: a fact dated today returned `age_days: 0`, one dated 2026-08-07 returned `age_days: 9`, and an undated fact returned no age fields at all — all three in one reply.\n\nNO SCHEMA STAMP MOVEMENT: properties are not counted by the version stamp, only node and edge types are, so no upgrade document is owed.\n\nNOT DONE, and named rather than left to be discovered: the 112 existing facts are not migrated or normalised — they are simply read now. Nothing writes `valid_from` automatically; it remains something an author states. And `where-am-i`, the other half of `cap:claims-carry-their-age` part 3, still does not mark age."
+      }
+    },
+    {
       "node_id": "chg:a-measurement-says-when-it-was-taken",
       "node_type": "ChangeEvent",
       "properties": {
@@ -76393,6 +76485,16 @@
       }
     },
     {
+      "node_id": "chg:baseline-1693384befc5429a",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-16",
+        "name": "First baseline. 15 cases, four of them mutation-checked.",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-238b75c11ad92d98",
       "node_type": "ChangeEvent",
       "properties": {
@@ -76452,6 +76554,16 @@
       "properties": {
         "change_type": "baseline_established",
         "name": "First baseline for the rendered doc. A future content change means the render was re-run — which is precisely the diff-churn caveat the page states about itself, so drift here will need reading as \"re-rendered\", not as \"the design moved\"."
+      }
+    },
+    {
+      "node_id": "chg:baseline-6e18694e930b3491",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-16",
+        "name": "First baseline. The whole of reflow2's calendar arithmetic: civil-date conversion in a closed form, no dependency, and `today` a parameter on everything that decides.",
+        "subject": "record"
       }
     },
     {
@@ -80224,10 +80336,10 @@
       "node_id": "dec:how-should-a-temporal-fact-carry-its-date-when-there-is-no-epoch",
       "node_type": "Decision",
       "properties": {
-        "decision": "UNDECIDED — recorded as an open question. Three options below; Anthony's call.",
-        "name": "OPEN — how should a TemporalFact carry its date when there is no epoch to point at?",
-        "rationale": "RECORDED AS AN OPEN QUESTION FROM A MEASUREMENT, NOT AS A PROPOSAL. Nobody has chosen anything here; the measurement is in `fact:defect-half-the-temporal-facts-date-themselves-where-nothing-reads` and the choice is Anthony's.\n\nWHY THIS IS NOT THE THREE NODES THE NEAR-DUPLICATE GUARD OFFERED, having read them:\n- `fact:defect-half-the-temporal-facts-date-themselves-where-nothing-reads` is the MEASUREMENT. This is the CHOICE it forces. Keeping the count and the fork apart is the same split this project makes everywhere else — a finding never decides anything.\n- `dec:idea-when-we-learned-it` asks whether a fact should record WHEN IT WAS LEARNED as well as when it was true — transaction time versus valid time. This asks how VALID TIME is carried at all. It is a PREREQUISITE of that question: adding a second time axis to a first one that half the corpus records where nothing reads would build on sand.\n- `dec:idea-a-critical-path-through-the-undecided` is about ranking undecided decisions. Unrelated but for the word \"undecided\".\n\nWHAT FORCES THE QUESTION: 112 of 205 TemporalFacts carry a `valid_from` PROPERTY the schema does not declare and no code reads; 76 carry the declared `VALID_FROM` EDGE to a DesignEpoch; ZERO carry both. The clean split is the evidence that this is a missing word rather than sloppy writing — the edge requires an epoch, and a writer holding a plain date has nothing to point it at. Over half the design's time axis is currently inert.\n\nTHE OPTIONS, with what is cheap and what is wrong about each:\n\n(a) DECLARE `valid_from` / `valid_to` as date-string properties, and teach readers to prefer the edge and fall back to the property. Cheapest, legitimises what 112 nodes already do, no migration. Against it: two ways to say one thing is what `dec:edge-orthogonality` argues against — although that decision's test is whether a COMPUTATION reads the distinction, and here a computation would read both.\n\n(b) KEEP THE EDGE AS THE ONLY TRUTH and migrate the 112. Most coherent vocabulary. Against it: it needs 112 DesignEpochs that do not exist, one per date, flooding the time axis with points that mark nothing — epochs are meant to be named moments, not a calendar. It also cannot fully clean up, because a property once written cannot be removed (`fact:defect-a-property-once-written-cannot-be-removed`).\n\n(c) LET `VALID_FROM` POINT AT EITHER a DesignEpoch or a date. Keeps one word for one idea. Against it: nothing else in this schema has a polymorphic `to`, and the edge-endpoint guard would need to learn the exception.\n\nAGGRAVATOR WORTH FIXING UNDER ANY OPTION: TemporalFact's own extraction_hint reads \"a satisfaction fact whose VALID_FROM is a later epoch; a dropped requirement = a fact with VALID_TO set\" — phrasing that invites the property form the schema does not declare. The guidance and the schema disagree, and the guidance is what a writer reads.\n\nA RANKING, WHICH IS A FINDING AND NOT A DECISION: (a) is cheapest, and it makes the stated vocabulary follow actual usage rather than the reverse — a direction this project has been suspicious of before, which is why it is stated as a preference and left open.",
-        "status": "proposed"
+        "decision": "SETTLED (a) ON ANTHONY'S WORD, 2026-08-16. `valid_from` and `valid_to` become DECLARED date-string properties on TemporalFact, and the readers prefer the `VALID_FROM` / `VALID_TO` EDGE where one exists and fall back to the property where one does not. The edge remains the richer statement; the property stops being a silent no-op.",
+        "name": "A fact may carry its date as a property — the edge stays the truth when there is an epoch, and the property is read when there is not",
+        "rationale": "MEASURED FIRST, DECIDED SECOND. 112 of 205 TemporalFacts carried a `valid_from` PROPERTY the schema did not declare and no code read; 76 carried the declared EDGE to a DesignEpoch; ZERO carried both; 17 carried neither. Full measurement in `fact:defect-half-the-temporal-facts-date-themselves-where-nothing-reads`.\n\n⭐ THE ZERO OVERLAP IS WHAT DECIDED IT. Two populations with two conventions and no node caught between them is not sloppiness — sloppiness would be mixed. It is a MISSING WORD: `VALID_FROM` demands a DesignEpoch, and a writer holding a plain date has nothing to point it at. Everyone who had an epoch used the edge; everyone who had a date invented a property. The corpus was telling the schema what the schema was missing.\n\nWHY (b) LOST — keep the edge as the only truth and migrate the 112. It needs 112 DesignEpochs that do not exist, one per calendar date, which floods the time axis with points that mark nothing. That damages the half of the system that WORKS: the roadmap computation reads epochs, and filling that axis with calendar noise makes it worse, not better. Epochs are meant to be named moments. It also cannot fully clean up, because a property once written cannot be removed (`fact:defect-a-property-once-written-cannot-be-removed`).\n\nWHY (c) LOST — let `VALID_FROM` point at either an epoch or a date. It keeps one word for one idea, which is attractive, but nothing else in this schema has a polymorphic `to`, and the edge-endpoint guard would carry a permanent special case. A lasting complexity cost for a cosmetic win.\n\nWHY (a) SURVIVED THE `dec:edge-orthogonality` OBJECTION, which is the one that mattered. \"Two ways to say one thing\" is exactly what that decision argues against — but its test is whether a COMPUTATION READS THE DISTINCTION, and here one would. \"True from this named milestone\" and \"true from this date\" are different claims: a roadmap wants the first, an audit trail wants the second. The distinction earns its keep.\n\nAND IT IS THE ONLY OPTION THAT DESTROYS NOTHING. 112 hand-written dates become readable immediately; nothing migrates; nothing is invented.\n\n⚠️ A CONFLICT OF INTEREST DISCLOSED BEFORE THE RULING AND RECORDED HERE: the agent proposing this had written a share of those 112 the same day, and therefore had a mild stake in the option that says they were fine. Anthony was told this when the options were put to him and chose (a) anyway.\n\nCARRIED FORWARD, NOT PART OF THE RULING: TemporalFact's extraction_hint reads \"a satisfaction fact whose VALID_FROM is a later epoch; a dropped requirement = a fact with VALID_TO set\" — phrasing that invited the property form the schema did not declare. The guidance and the schema disagreed and the guidance is what a writer reads, so it is corrected under this decision regardless of which option had won.",
+        "status": "accepted"
       }
     },
     {
@@ -81884,20 +81996,20 @@
       "node_id": "dec:should-a-design-be-able-to-say-it-describes-something-that-already-exists",
       "node_type": "Decision",
       "properties": {
-        "decision": "OPEN QUESTION FOR ANTHONY, raised by the US-government genesis session, 2026-08-15 (docs/feedback/2026-08-15-usgov-genesis-session.md, item 4), which graded it MEDIUM for descriptive models and cosmetic for greenfield software.\n\nTHE CASE. `Capability.status` is `planned / in_progress / realized / verified`. Modelling the three branches of the US federal government, `planned` is plainly false — the thing has operated since 1789. `realized` was chosen, but `realized` here means AN ARTIFACT REALIZES IT, and there are no artifacts and never will be for this phase: the implementation is not this project's to build. So both readings are wrong in different directions, and `build_without_verification` and `design_without_build` fire on a design that is complete and correct for its phase. Both were acknowledged with reasons, which worked cleanly — the reporter says so — but that is one acknowledgement at a time against a condition that is permanent.\n\nWHAT THE REPORTER ASKED FOR: 'a `descriptive` or `observed` status, or a project-level mode meaning this design describes something that exists rather than specifying something to build, which would suppress the build/deploy/verify phase detectors wholesale.'\n\n⚠️ THE PROJECT-LEVEL HALF IS NOT AS CLOSE AS IT SOUNDS, and this is the thing to weigh first. `set_project_mode` today accepts `flexible` / `rigid` and gates EXACTLY ONE THING: whether `apply_heal` applies structural repairs or proposes them. Its own description carries the warning that matters here — the older schema wording, 'design is the source of truth', 'promised a breadth the code does not implement' and had to be corrected in plain language. A `descriptive` mode would be a SECOND, ORTHOGONAL AXIS (what this design IS) bolted to a field that currently means how much a machine may change it (what a machine may DO). Overloading it would repeat exactly the over-promise that wording was corrected for.\n\nTHE OPTIONS:\n\n(a) A NEW STATUS VALUE — `observed` or `descriptive` on Capability. Cheapest, no new concept, and it says the true thing at the point where the false thing is currently said. COUNTER: status is per-capability, so a 38-capability descriptive model states it 38 times, and nothing stops half a design being marked one way and half the other — which may be a feature (a model that is partly as-built and partly proposed) or an inconsistency nobody can detect.\n\n(b) A SEPARATE PROJECT-LEVEL AXIS — not a mode value but its own field, e.g. `intent: prescriptive | descriptive`. Says it once, and the phase detectors can read it. COUNTER: it is a new schema property, and the honest version must answer what happens to a design that is BOTH — the ordinary brownfield case, which `adopt` already serves and which this project's real operating context is full of.\n\n(c) DO NOTHING NEW; LEAN ON ACKNOWLEDGEMENT — the escape hatch worked, and `acknowledge_gap` with a reason is the designed answer for 'this gap is fine here'. COUNTER: the reporter's point is that the condition is permanent, not situational, so this is an unbounded number of acknowledgements for one fact about the project. It also means the design cannot TELL a reader it is descriptive; only the acknowledgement reasons can, one at a time.\n\n(d) TREAT IT AS THE `adopt` PROBLEM, ALREADY HALF-OWNED — the `adopt` skill exists for systems that already exist and hits a softer version of this (there, at least, the artifacts are real). Answering it once for both would be one feature rather than two. COUNTER: `adopt` recovers a design from something you CAN point a checksum at; this model's subject is real but has no artifacts at all, which may be a genuinely different case rather than a harder instance of the same one.\n\nWHAT IS NOT ESTABLISHED: whether descriptive models are a niche worth schema surface, or whether this is the first of many — one observation, one domain. NOTE that the real operating context recorded for this project (brownfield, continual, several organisations with partially-built competing designs) argues it is not niche, but that is an argument, not a measurement.",
-        "name": "OPEN — the status ladder and the phase detectors assume this design is a plan for something to be built. For a model of an institution that has run since 1789, every rung is wrong in a different direction. Should a design be able to declare itself descriptive?",
-        "rationale": "Recorded as a question rather than a requirement because all four options are defensible and the choice decides how much schema surface a modelling posture earns — Anthony's call (dec:certainty-derived). Raised now because the evidence is unusually clean: a domain with no software in it at all, where the failure is not a bug and not a workaround but the vocabulary asserting something false about the subject, and where the reporter reached the right diagnosis without needing the fix.",
-        "status": "proposed"
+        "decision": "SETTLED ON ANTHONY'S WORD, 2026-08-16: HOLD — take option (c), acknowledgement, and build NOTHING yet. `acknowledge_gap` with a reason remains the answer for a design that describes something already running. No new status value, no new project-level field.\n\n⚠️ THIS IS A DEFERRAL WITH A NAMED TRIGGER, NOT A REJECTION. Reopen — as a new Decision superseding this one — when EITHER holds:\n  1. a SECOND design turns up that is descriptive end-to-end (one observation in one domain is what is on the table today), or\n  2. acknowledgement VOLUME becomes the complaint rather than the vocabulary — i.e. someone reports the count of acknowledgements, not the wrongness of the words.\n\nRecorded so a later session does not read a settled decision as a closed subject.",
+        "name": "A descriptive design stays on acknowledgement for now — the vocabulary waits for a second instance, and the trigger is named",
+        "rationale": "THE CASE IS REAL AND WAS NOT DISPUTED. Modelling the three branches of the US federal government, `Capability.status` is wrong on every rung: `planned` is false for a thing running since 1789, and `realized` means AN ARTIFACT REALIZES IT when there are no artifacts and never will be, because the implementation is not that project's to build. `build_without_verification` and `design_without_build` fire on a design that is complete and correct for its phase.\n\nWHY IT WAS STILL HELD — one reason, and it is the load-bearing one: MOST REAL DESIGNS ARE BOTH. This project's own recorded operating context is brownfield and continual — the ~10-year-old bluesky stack at Brookhaven NSLS-II is partly as-built and partly proposed, and several organisations carry competing partially-built designs. A project-level flag says ONE thing about a design with TWO halves. The honest shape is therefore a project-level default PLUS a per-capability override — which is options (a) and (b) TOGETHER, more schema surface than either alone, on the strength of a SINGLE observation in a SINGLE domain.\n\n⭐ AND THE PROJECT'S OWN METHOD ARGUES FOR WAITING. The decision text's own \"not established\" line reads: whether descriptive models are a niche worth schema surface, or the first of many. The operating context argues they are not niche — but that is an ARGUMENT, not a MEASUREMENT, and distrusting exactly that gap is this project's standing habit. The increment's repeated lesson is that defects are found by real users and by running two real projects at each other, never by reasoning forward from one report.\n\nWHAT (c) COSTS, stated plainly so the deferral is not mistaken for free: the condition is PERMANENT rather than situational, so this is an unbounded number of acknowledgements for one fact about the project — and the design cannot TELL a reader it is descriptive; only the acknowledgement reasons can, one at a time. That cost is real, it is tedium rather than falsehood, and tedium is a far cheaper problem than wrong schema.\n\nWHAT THE RULING PRESERVES FOR WHOEVER BUILDS IT LATER, because these were the sharp parts and would be expensive to rediscover:\n- IT MUST BE ITS OWN FIELD, NOT A `set_project_mode` VALUE. `set_project_mode` today means \"how much may a machine change this\" and gates exactly one thing — whether `apply_heal` applies or proposes. \"What this design IS\" is an ORTHOGONAL axis. That field's description was already corrected once in plain language for promising a breadth the code did not implement; overloading it would repeat precisely that over-promise.\n- (b) BEATS (a) ON ERGONOMICS where they compete: a project-level statement is said once, where a status value is restated per capability — 38 times for the model in question, with nothing detecting a half-and-half design.\n- (d) — folding it into the `adopt` skill — was judged a DIFFERENT case rather than a harder instance: `adopt` recovers a design from something you CAN point a checksum at, and this subject is real but has no artifacts at all.\n\nRAISED BY the US-government genesis session, 2026-08-15 (item 4), which graded it MEDIUM for descriptive models and cosmetic for greenfield software, and which reached the right diagnosis without needing the fix.",
+        "status": "accepted"
       }
     },
     {
       "node_id": "dec:should-a-realizes-edge-say-that-nobody-checked-the-file-still-obeys-the-rule",
       "node_type": "Decision",
       "properties": {
-        "decision": "OPEN QUESTION FOR ANTHONY, raised by Alex's Grok 4.6 session 2026-08-14 (docs/feedback/2026-08-14-alex-grok-session.md, item 5) and judged the deepest of its fourteen. NOT A BUG REPORT AND NOT BUILDABLE AS STATED — recorded as a question because the honest answer may be that this is a documented hole rather than a detector.\n\nWHAT HAPPENED. A Requirement in his project already said the calendar day is the person's CIVIL date, not UTC midnight. The realizing check-in used the ISO date of `createdAt`, which is UTC. The Capability's status said `realized`. The artifact's checksum matched its baseline, so `reconcile_artifacts` was silent. Every signal in the graph was green and the code did not do what the Requirement said. THE USER FOUND IT IN THE PRODUCT.\n\nTHE GENERAL SHAPE: REALIZES carries `completeness` (stub/partial/complete) and the Artifact carries a checksum. Between them they answer whether the file has moved since we looked — they do not answer, and cannot, whether the file still implements the property the Requirement states. Nothing in the graph distinguishes A FILE THAT WAS CHECKED AGAINST THE RULE from A FILE THAT WAS MERELY HASHED, and the two produce identical reports. His framing is the sharpest available: checksum honesty is not the same as this file still implementing the Requirement's date rule.\n\nWHY THIS IS NOT SIMPLY ADD A DETECTOR. reflow2 reads a DESIGN, never a running system; deciding whether code implements a civil-date rule is program analysis it has no business attempting, and `dec:agent-navigates-content` keeps it out of file IO entirely. So every candidate answer is about RECORDING what is known, not computing it:\n\n(a) DO NOTHING BUT SAY SO — document the hole where the claim is made (the link-artifacts skill, `set_artifact_checksum`'s description), so a reader stops mistaking a checksum accept for conformance. Cheapest, honest, no schema change. His own Expected asks for roughly this: not magic, but a documented hole.\n(b) A PROPERTY ON REALIZES — e.g. `conformance: unchecked | reviewed | verified`, defaulting to unchecked, so the absence is visible rather than implied. Makes nobody-ever-checked a first-class answer instead of a silence. Costs a schema property and a habit.\n(c) LEAN ON WHAT EXISTS — a Verification that names the PROPERTY rather than the file, verifying the Requirement, so the question becomes whether this Requirement is covered by a check that tests THIS rule. Adds no vocabulary and reuses `reconcile_verification`. The objection: his session HAD a passing unit Verification and still shipped the bug, so a Verification that does not name what it covers changes nothing.\n(d) SURFACE IT IN THE GAP LIST — a Requirement whose realizing artifacts carry no conformance evidence becomes a gap. Strongest, and the most likely to be noise on a large design.\n\nRELATED AND ALREADY SETTLED, so this does not reopen them: `req:completion-computed` (delivery is computed from the thread, never asserted) and `cap:independent-evidence`. The tension is that completion is computed from EDGES, and an edge asserting realization is exactly what nobody checked.\n\nWHAT THE SAME SESSION SHOWED ABOUT ITS OWN CASE, worth weighing: it also marked two Capabilities realized on unit tests before the user had clicked through, and named that as its own error. `realized` vs `verified` ALREADY EXISTS in the capability lifecycle — so part of this was not a missing concept but a missing prompt, which means (a) may cover more of the ground than it first looks.",
-        "name": "OPEN — a matching checksum says the file has not changed, never that it still does what the Requirement says. Should the design be able to record that difference, and if so where?",
-        "rationale": "Recorded as a question rather than a requirement because all four candidate answers are defensible and the choice is about how much ceremony the loop should carry — Anthony's call, not an agent's (dec:certainty-derived). Raised now because the evidence is fresh and specific: a real user found a real bug that every green signal in the design agreed was fine. That is the exact failure mode the served instructions warn about — a green gate is evidence about what it covers and silent about the rest — arriving from outside rather than from a detector.",
-        "status": "proposed"
+        "decision": "SETTLED (b) ON ANTHONY'S WORD, 2026-08-16. REALIZES gains `conformance: unchecked | reviewed | verified`, DEFAULTING TO `unchecked`. A matching checksum keeps meaning only \"the file has not moved\"; whether anyone confirmed the file still does what the Requirement says becomes a thing the graph states rather than a thing a reader must remember to doubt.\n\nTHE DELIVERABLE IS THE COUNT, not the ceremony. \"412 of 460 realizing edges were never checked against their requirement\" is a sentence this design cannot say today, and it is what the property is for. A computation must READ it (`dec:edge-orthogonality`), so the property ships with the report that reads it or it does not ship.\n\n(d) — raising it as a gap — is DEFERRED, not rejected, and becomes cheap once the data exists.",
+        "name": "A REALIZES edge says whether anyone checked the file against the rule — and `unchecked` is the default, so the silence becomes countable",
+        "rationale": "THE EVIDENCE CAME FROM OUTSIDE, WHICH IS WHY IT COUNTS. A Requirement said the calendar day is the person's CIVIL date, not UTC. The realizing check-in used the ISO date of `createdAt`, which is UTC. The Capability said `realized`. The artifact's checksum matched its baseline, so `reconcile_artifacts` was silent. EVERY SIGNAL IN THE GRAPH WAS GREEN AND THE CODE DID NOT DO WHAT THE REQUIREMENT SAID — and THE USER FOUND IT IN THE PRODUCT. Alex's Grok session, 2026-08-14, item 5, judged the deepest of its fourteen.\n\nTHE SHAPE: REALIZES carries `completeness` and the Artifact carries a checksum. Between them they answer whether the file has MOVED since we looked. They do not answer, and cannot, whether it still IMPLEMENTS the property the Requirement states. Nothing distinguishes A FILE THAT WAS CHECKED AGAINST THE RULE from A FILE THAT WAS MERELY HASHED, and the two produce identical reports.\n\nWHY THIS IS NOT A DETECTOR: reflow2 reads a DESIGN, never a running system, and judging whether code implements a civil-date rule is program analysis it deliberately stays out of (`dec:agent-navigates-content` keeps it out of file IO entirely). So every candidate was about RECORDING what is known, never computing it.\n\n⭐ WHY (b) BEAT (a) — document the hole — AND THIS IS THE GENERAL PRINCIPLE, not a preference: A DOCUMENTED HOLE IS SOMETHING A READER MUST REMEMBER; A DEFAULT OF `unchecked` IS SOMETHING THE GRAPH SAYS OUT LOUD, EVERY TIME, WITH NOBODY REMEMBERING ANYTHING. That is the same move made twice already this month and both times it was right: #200 stopped INJECTING a default nobody chose, and #213 started REPORTING the property nobody declared. Make the absence visible rather than implied.\n\nWHY (c) LOST — lean on a Verification that names the PROPERTY rather than the file. Killed by its own evidence: HIS SESSION HAD A PASSING UNIT VERIFICATION AND SHIPPED THE BUG ANYWAY. A check that does not say what it covers changes nothing.\n\nWHY (d) IS DEFERRED RATHER THAN REJECTED — surface it in the gap list. It is the strongest answer eventually and the wrong one FIRST: every REALIZES edge starts at `unchecked`, so a gap per edge is instant noise on a large design — and noise is exactly the failure just fixed in `loop_status` by `req:the-loop-can-say-what-this-session-owes`. Build (b) now; (d) costs almost nothing afterwards because the data will already be there.\n\n⚠️ THE HONEST LIMIT OF (b), recorded so nobody later mistakes it for a guarantee: its value depends on people actually moving edges OFF `unchecked`, and NOTHING FORCES THAT. It may simply relocate the silence. What it does do unconditionally is make the silence COUNTABLE, and a number is something the loop can report and a person can act on where a documented caveat is not.\n\nRELATED AND NOT REOPENED: `req:completion-computed` (delivery is computed from the thread, never asserted) and `cap:independent-evidence`. The tension this decision resolves is that completion is computed from EDGES, and an edge asserting realization was exactly the thing nobody checked.\n\nALSO WEIGHED: the same session marked two Capabilities `realized` on unit tests before a user had clicked through, and named that as its own error. `realized` vs `verified` ALREADY EXISTS in the capability lifecycle — so part of this was a missing PROMPT rather than a missing concept, which is why (a) was a genuine contender rather than a straw man.",
+        "status": "accepted"
       }
     },
     {
@@ -94664,6 +94776,18 @@
       }
     },
     {
+      "node_id": "ver:a-claim-reads-back-with-its-age",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-16",
+        "level": "unit",
+        "method": "test",
+        "name": "A dated claim reads back with its age, and an undated one says nothing (crates/reflow2-core/tests/a_claim_carries_its_age.rs) — 15 cases, all passing 2026-08-16. WHY THE FILE EXISTS AT ALL: 112 of 205 TemporalFacts carried a `valid_from` the schema did not declare and NOTHING read, so declaring it without a reader would have changed the schema and left the corpus exactly as inert. These cases are the evidence that the property now does something. THE ARITHMETIC IS TESTED WHERE IT FAILS SILENTLY — the epoch and the day either side of it (a sign error's first victim), and the Gregorian century exceptions: 1900 was NOT a leap year and 2000 WAS, which a naive `% 4` gets wrong one way and a naive `% 100` the other. Ten malformed inputs are checked to DECLINE rather than guess, including `16-08-2026`, which is a real date in the other convention and must never be silently accepted. WHAT A HIT SAYS: a dated fact reports `as_of` and `age_days`; an UNDATED node serialises to `{}` so the ordinary hit is byte-identical to what it was before ages existed; and a date that will not parse still reports `as_of` but no `age_days` — the two fields are separate precisely so \"dated, but I cannot read the date\" is sayable, and collapsing them would make it indistinguishable from undated. THREE COUNTERWEIGHTS DECIDE THE SHAPE, each guarding against a plausible wrong answer: a claim dated in the FUTURE reports a NEGATIVE age rather than clamping to zero, because clamping renders a forecast or a typo as \"current\"; a claim expiring TODAY is NOT yet expired, since `valid_to` is the last day it holds and an off-by-one here retires a live fact a day early; and an UNREADABLE `valid_to` never expires anything, because guessing would silently mark real facts dead. MUTATION-CHECKED FOUR WAYS, each killing exactly the right case: dropping the century exception fails the leap and anchor cases; clamping a future date fails the negative-age case; expiring on the last valid day fails the boundary case; treating an unreadable end date as expired fails the counterweight. `today` IS A PARAMETER IN EVERY CASE — a test that read the clock would pass today and fail in a fortnight, which is the one failure mode a module about staleness must not have. VERIFIED END-TO-END on the real store through a restarted server: `age_days: 0` on a fact dated today, `age_days: 9` on one dated 2026-08-07, and no age fields at all on an undated fact, in one reply. NOT COVERED: `where-am-i` still does not mark age, so only half of `cap:claims-carry-their-age` part 3 is checked here.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-finding-names-its-hub",
       "node_type": "Verification",
       "properties": {
@@ -96514,7 +96638,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:49db8de098d41c6e971ac0a3cd59c5b4de2d96729a36d350d6a1e83f2730710f",
+  "prev_content_hash": "sha256:01e1218f83aaca5f5c432b8ffdab8682a1dfa8b148216cbf2c153c60d67286f9",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

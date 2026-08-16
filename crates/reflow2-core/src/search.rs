@@ -29,6 +29,15 @@ pub struct SearchHit {
     pub score: f32,
     /// The node's `name` property at hit time (empty if it has none).
     pub name: String,
+    /// How old this node's claim is, when it carries a date.
+    ///
+    /// FLATTENED AND SILENT BY DEFAULT: a node with no `valid_from` /
+    /// `valid_to` serialises exactly as it did before ages existed, so the
+    /// ordinary hit is unchanged and only a dated claim says anything extra.
+    /// This is part 3 of `cap:claims-carry-their-age` — a six-week-old
+    /// observation must not be read back as though it were current.
+    #[serde(flatten)]
+    pub age: crate::dates::ClaimAge,
 }
 
 /// A search result that owns up to what it could not do: hits the index
@@ -63,6 +72,9 @@ impl DesignGraph {
             .search_fulltext(self.graph_id(), query, node_type, limit)?;
         let mut hits = Vec::with_capacity(raw.len());
         let mut stale = Vec::new();
+        // Read the clock ONCE for the whole result, not once per hit: two hits
+        // in one list must never disagree about what day it is.
+        let today = crate::dates::today_utc();
         for h in raw {
             match self.get_node(&h.node_type, &h.node_id)? {
                 Some(node) => hits.push(SearchHit {
@@ -72,6 +84,7 @@ impl DesignGraph {
                         .and_then(dynograph_core::Value::as_str)
                         .unwrap_or_default()
                         .to_string(),
+                    age: crate::dates::claim_age(&node.properties, &today),
                     node_id: h.node_id,
                     node_type: h.node_type,
                     score: h.score,
