@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a50f2c2192331ba2b7041000ac62ff4b9dcd532c6bf70ec7adedc055df24570a",
+  "content_hash": "sha256:698ed8ea4c8e8552046e8a13025e169aa057abfc40f274069abd1f1c2666679d",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3092,9 +3092,27 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-claim-is-not-hidden-by-its-parent",
+      "properties": {},
+      "to_id": "epoch:v0330"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:a-claim-may-be-a-query-20260808",
       "properties": {},
       "to_id": "epoch:a-claim-may-be-a-query"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-fact-carries-its-date-and-the-date-is-read",
+      "properties": {},
+      "to_id": "epoch:v0330"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-measurement-says-when-it-was-taken",
+      "properties": {},
+      "to_id": "epoch:v0330"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3119,6 +3137,12 @@
       "from_id": "chg:a-null-and-a-vacuous-zero-now-say-which-they-are",
       "properties": {},
       "to_id": "epoch:a-zero-that-is-not-an-absence"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-proposal-describes-its-own-sweep",
+      "properties": {},
+      "to_id": "epoch:v0330"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3167,6 +3191,18 @@
       "from_id": "chg:a-wish-routed-to-capability-is-not-silent",
       "properties": {},
       "to_id": "epoch:the-wish-question-gains-its-capability-half"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-withdrawn-decision-stops-reading-as-a-conflict",
+      "properties": {},
+      "to_id": "epoch:v0330"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-write-says-what-it-did-not-recognise",
+      "properties": {},
+      "to_id": "epoch:v0330"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3392,6 +3428,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-8a485159aeb4cc93",
+      "properties": {},
+      "to_id": "epoch:v0330"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-8ab68356b3e7a47f",
       "properties": {},
       "to_id": "epoch:v0240"
@@ -3578,6 +3620,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-fffbd2f24f1ad527",
+      "properties": {},
+      "to_id": "epoch:v0330"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-three-built-requirements",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
@@ -3605,6 +3653,12 @@
       "from_id": "chg:allocation-subquestions-narrowed-20260808",
       "properties": {},
       "to_id": "epoch:allocation-subquestions-narrowed"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:an-edge-says-whether-anyone-checked-it",
+      "properties": {},
+      "to_id": "epoch:v0330"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3692,6 +3746,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:baseline-1693384befc5429a",
+      "properties": {},
+      "to_id": "epoch:v0330"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:baseline-238b75c11ad92d98",
       "properties": {},
       "to_id": "epoch:v0320"
@@ -3722,6 +3782,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:baseline-51b4ae0c8b2eaa5e",
+      "properties": {},
+      "to_id": "epoch:v0330"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:baseline-62541d2bbec20b75",
       "properties": {},
       "to_id": "epoch:built-and-consumed-by-nothing"
@@ -3731,6 +3797,18 @@
       "from_id": "chg:baseline-689207db699d2712",
       "properties": {},
       "to_id": "epoch:first-rendered-doc"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:baseline-6e18694e930b3491",
+      "properties": {},
+      "to_id": "epoch:v0330"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:baseline-8097a796f7a6bbf9",
+      "properties": {},
+      "to_id": "epoch:v0330"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3755,6 +3833,12 @@
       "from_id": "chg:baseline-d06eb1ad9d4aec57",
       "properties": {},
       "to_id": "epoch:v0290"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:baseline-d6f06ec271e51b49",
+      "properties": {},
+      "to_id": "epoch:v0330"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5180,6 +5264,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-loop-can-be-asked-what-the-record-does-not-hold",
+      "properties": {},
+      "to_id": "epoch:v0330"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-loop-can-say-what-it-does-not-know",
       "properties": {},
       "to_id": "epoch:v0320"
@@ -5231,6 +5321,12 @@
       "from_id": "chg:the-shareable-record-is-findable",
       "properties": {},
       "to_id": "epoch:v0300"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-surface-gate-says-which-binary-it-read",
+      "properties": {},
+      "to_id": "epoch:v0330"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5765,6 +5861,12 @@
       "from_id": "rel:v0321",
       "properties": {},
       "to_id": "epoch:v0321"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "epoch:v0330"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -11430,6 +11532,15 @@
         "action": "modified"
       },
       "to_id": "art:setup"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-fffbd2f24f1ad527",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dependency-manifest"
     },
     {
       "edge_type": "CHANGED",
@@ -23214,6 +23325,22 @@
     {
       "edge_type": "DEPLOYED_TO",
       "from_id": "rel:v0321",
+      "properties": {
+        "status": "active"
+      },
+      "to_id": "env:dev"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v0330",
+      "properties": {
+        "status": "active"
+      },
+      "to_id": "env:container"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v0330",
       "properties": {
         "status": "active"
       },
@@ -61985,6 +62112,1838 @@
     },
     {
       "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:8f8a543ba59ec079"
+      },
+      "to_id": "art:acknowledgement-not-structure-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:14385c12b76516b9a8a8903216243912fcf602be1869d703c25af468a18a1e44"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:c33a33c15e2611b3"
+      },
+      "to_id": "art:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:0318c29079069fab4d59770f29f5b9ec9895208d658b9b829f8cb46f019bc387"
+      },
+      "to_id": "art:alex-grok-feedback-2026-08-14"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:d282035a162e3e56"
+      },
+      "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:c87a79726aeb111b"
+      },
+      "to_id": "art:alternatives"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:9c293b7111c7b029d49f9debb054d2f2660c43e70f2a6786fcd11d81ebe672bc"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:7befd2e936958a6b7d3ea06a1ec1d2edde451ca31354d7c8b49719cddd0d4b75"
+      },
+      "to_id": "art:artifact-intent-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:49f1f3095ea2707d"
+      },
+      "to_id": "art:bl124-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:6f101376a547fe6ef1f9a9d7d2d3da29b84505a96b352ed69d19b8514772c0ec"
+      },
+      "to_id": "art:brainstorm-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:28210925da9f9641d9ca5d5a670c3da2c62be0a1d3be722fe4123823019d9c23"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:8f5ffbc7c6e84b5e"
+      },
+      "to_id": "art:built-right-review"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:6e8e23fce35b21d6"
+      },
+      "to_id": "art:bulk"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:a596ed5e34cdf3ecec3cd5f2d94731bacb2f66dee86874147f3a34dec42039f5"
+      },
+      "to_id": "art:capture-intent-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:a9698e861f183c96a564e22ceab750a9a5d336831b2b63c0c65e233c9ce43fc3"
+      },
+      "to_id": "art:capture-session-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:73b31ffd9cc27cbb7315a8023f47f3992b85e925b65605bb5f610aad3a088772"
+      },
+      "to_id": "art:changelog-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:cf4e86690ccd846f37228812ef55352845f046d0a4903b63cd08e5a4a3764528"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:421fce94c82f958100d1ad9140ca53b5eff1e0ba30593c25dc79d37095d7a0e1"
+      },
+      "to_id": "art:check-health-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:b78fa9e7b867218d12b5f4e478f55228619203e15bebb578d54b0bd00ea0a97d"
+      },
+      "to_id": "art:check-kit-manifest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:68138446368f22bbde0b1fe44360b85edeb941b4503dbb491750506a99c1711f"
+      },
+      "to_id": "art:checksum-dialect-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:b8d4e975533b670e09be74d288144194ad388c69ed987738929f48cfc8b8d011"
+      },
+      "to_id": "art:claim-age-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:43b2258a9537a2cbb3e131acb781e11085a4b1e89fa599bd5325d46c1e42fe2f"
+      },
+      "to_id": "art:claim-not-hidden-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:5a933a36f2ff5606df032f929c969218e54fc9d142c8629a7743243d7e3fa241"
+      },
+      "to_id": "art:claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:2575d415a74a3266b208ddf798e5e6516186d6c345324efb6f9b66e46b7367a3"
+      },
+      "to_id": "art:collaborating"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:b73161a0fd04efee"
+      },
+      "to_id": "art:compare"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:b9f6ec2a69d7cfbc6041c2cf7d0bbb5a409a981cd3c44a36672f4b3a375a4558"
+      },
+      "to_id": "art:compose"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:6b58139a0fd5f095c64c4c465f03cfed8200015ef0e7af3a4e7cca064727de39"
+      },
+      "to_id": "art:compose-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:276c4e707db8d55a34f673a533dcaa15629d6bd59be4d3232df21bff1e6ce7c3"
+      },
+      "to_id": "art:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:d05e1b3fda9bfe39de9d621ed98b17d7c75cfec9fee2353549b836199fc11516"
+      },
+      "to_id": "art:confirmation-vocabulary-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:7776124d5c2f276520f036b0414c9e143f6b45ae56f02d61cd672a343beb3fe0"
+      },
+      "to_id": "art:conformance-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:e2efa0a05f6a46929a0f4634871281407af7b196061300cf9fdf63f9a06a6050"
+      },
+      "to_id": "art:consumption"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:2459979bcda2901dc08307b0211763a91245cdfd4727c9ab967039b2c154f2ed"
+      },
+      "to_id": "art:contradiction-alignment-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:9f9496cd532968cb39dc7461c83f488e856e97b00a4a438f2f25914ee044760d"
+      },
+      "to_id": "art:corpus"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:c3d8585b71d9bb6aa886b70998fa97a143ae2829a6ebb47a4803e18910ec176d"
+      },
+      "to_id": "art:coverage"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:da69705c4697580a151a6ee7355c388701d465220bf475c2ede5bac2b1469e25"
+      },
+      "to_id": "art:coverage-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:52392a822a3b2853d8e12478d9cb1ee2656fec33f414260b2cf6562b079ed603"
+      },
+      "to_id": "art:cycles-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:b125b0aa1c36046cefe30e62298b0ec03ff7e8ff0c107820d1c8fafde6c9f36c"
+      },
+      "to_id": "art:dates"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:eb126729e08e8d8d3ac45acec3a2e291e068dc1e9afed14a8647edf73300bdde"
+      },
+      "to_id": "art:degraded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:05831ab6013c1277e990980958bc0a05e4a2f5249549d3e60d2750c9815dcc37"
+      },
+      "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:45cd6ca68f900aa040d2c075a7dc08311afd8acf8e94bd266f101e4fe1ee8ae7"
+      },
+      "to_id": "art:depends"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:f2a9a6d42ce95561436f9ae64e64cef57bd11d90d2c5e6d5bb50825da3d2aee6"
+      },
+      "to_id": "art:depends-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:4d66960946a3eb630f0a05d615861a6e244a3cc3e046e2e77241cd2255ba729a"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:59ef210d5f8576a9f07b321dc546b653056ab4ecda17e0ec9269ed87a52c27dc"
+      },
+      "to_id": "art:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:b876b5fc65f8dfe8b3c514d0537a0445dfbb51df24fcf6179e8b30b762988eaf"
+      },
+      "to_id": "art:discover"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:9a774749820828b965aef9eadc6d12d2f07a5e9dc28f05d1ddedc73eb6370a24"
+      },
+      "to_id": "art:discover-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:43efb3dd59d17efa2aab4c25c5dc57495077f8d6fd31b1743e0bc8fa5df201fe"
+      },
+      "to_id": "art:doc-impact-propagation"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:9ad56c234dcffbca6f016d50b71c5ffab9e33a3380d18c5fafb445de5474e079"
+      },
+      "to_id": "art:docker-build-script"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:f2019afd72ee2dbf3e3806a54e397a638e6b1ab37cc181c8a9b1f86c1089b229"
+      },
+      "to_id": "art:docker-smoke-script"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:f014e913ac9e61dc2112f4383c0cc94cdf9e5d78fe307bcb2ad45ae316d6e719"
+      },
+      "to_id": "art:dockerfile"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:d03decfe05f40310f62a43ac0f6a81993dba777adb056040a1f0564b64d76f2c"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:7df4f44d215da1ed659c6bdf5fcc40df9d4f1bb00c8b7ecf982ab8e7732a3ba2"
+      },
+      "to_id": "art:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:d120c662cfdb98933337eefea8e9f5741f47fb7e8cb338a7a14836f748f4c156"
+      },
+      "to_id": "art:enforced-rule-detector-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:8956d2d0d4f31fe1"
+      },
+      "to_id": "art:evidence-quality-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:0f66b31cfaca4944"
+      },
+      "to_id": "art:evidence-quality-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:58443db75d9199e7addc3f4673d84e1249df60fc563237475636f8e0713f6896"
+      },
+      "to_id": "art:evidence-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:80709df69bd60b7a5d2a4de8e1ccb80ebac37baf705fd24c9d2e7b3195d89b90"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:0eec67e9d35aba549853dfdb058371975fcf5fd1aa1b062b8872415e2babbd43"
+      },
+      "to_id": "art:export-via-binary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:cfdf82f1a6497595"
+      },
+      "to_id": "art:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2"
+      },
+      "to_id": "art:fleet-lessons"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:f6abe031170cd8123c44b3f87248b9841f9b31117d78d8325769fea6a34a5d8e"
+      },
+      "to_id": "art:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:8196df94f5775161"
+      },
+      "to_id": "art:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:730e59e9cca3bdf7d6c19b02a4c21ce6e3fa1b4564adf6d202b72ba2fdc19b9f"
+      },
+      "to_id": "art:genesis-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:34701500af93dbcf"
+      },
+      "to_id": "art:github-mcp-study"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:fd8331443a248d4fbe0eb45a2888ff7deda5f059733753b7b43025ee0582147b"
+      },
+      "to_id": "art:governance-proposal-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:199301145284e0fb30cfec667a6adb26c3af9db724a2f3049474659ee07c7f15"
+      },
+      "to_id": "art:granularity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:d3b8b65c75b308b0554bd9135ba61f6e6878a6553c6bbd80a2fd689fefacdaec"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:8b5553c1a9b686a3a4760c51614d8e4c35e9dfb2f3c65c7f954ac84da9962ecc"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:30fc1a09862792a9"
+      },
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:b2040f682b99860815459e4b4c34150019ff02f40821f9dd9e75fadfda5bf29a"
+      },
+      "to_id": "art:identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:889393466bafe709429fc137dd4d2e1a372990c6486d7a85dec07c630a51cbb3"
+      },
+      "to_id": "art:ility"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:752fa1ea328b5bafe200ef45ea7c1e230648bb86f580bd0278886b8cdde5ee3e"
+      },
+      "to_id": "art:increment-plan"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:e36d3b386dcad3b33c12ed42a28685b2bcd3a9c8a2ccdd7d2704c230739407c0"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:ddfa7e13d3b56156a9b463f434cd691718e1af489f27aaba169395c226d14b9a"
+      },
+      "to_id": "art:ingest-handshake-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:2b0c9b500c5d5e1a45497d5deef3382a41a6374851d5ffbf4fa91ae6d5958059"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:07c82cd7671c1241"
+      },
+      "to_id": "art:interface-spec-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:13f19b14c25c9300"
+      },
+      "to_id": "art:kit-instructions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:4329e5563666ab6708edfe68c0d0188818571b39ea408c70ef71663bc2f98f36"
+      },
+      "to_id": "art:kit-pointer"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:65a01535f32f023e"
+      },
+      "to_id": "art:kpp-proposal-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:7280072322f2889e0a1e958c0d9293fb281e8938ff9dc368d1962d833434a421"
+      },
+      "to_id": "art:latent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:6869d93e97fc9393"
+      },
+      "to_id": "art:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:f7b21dc97aa8ee9f4a6b33f59ea944d3e900671479d79ee7a4c023877929f9b6"
+      },
+      "to_id": "art:machine-install"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:cd4dc46a42ac5da44ecf6f484eb33da8774333afc7fb13a13c554c0f395a766d"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:f83c09736230e7d7359f69e72f64c70140cf609babb1b18f4661528193d38599"
+      },
+      "to_id": "art:maturity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:075bab31f3c131b6"
+      },
+      "to_id": "art:merge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:cddbea4165e0e3b0"
+      },
+      "to_id": "art:merge-driver-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:4d0783bbb657970305906ae38eb8a51badd40b1229881929e81026149478dd80"
+      },
+      "to_id": "art:migrate-backlog"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:fa90553f10cfd1194c8ac6b5962e1c5c57dc269e5d662bc62869db823d923a44"
+      },
+      "to_id": "art:mint-seat-liveness-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:62f8fa3a5478b34ecef83d8e9ed054e35993522748a4a7ff80d9c7c5af308991"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:728650e901174321fd684df8aa431ccfd84bc3e806f2d725c416a9d7f2445814"
+      },
+      "to_id": "art:nudge-detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:e95e6f4c2658ebd1c7afa6e23385256e51272860a0cb56e2046d4c1b581881d0"
+      },
+      "to_id": "art:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:c181cfc2536fc5f0c6cb9786d7d13dc337e49e4081174fa165ad86b4c1acbd30"
+      },
+      "to_id": "art:orphan-attachment-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:b1bfbfb82d25035b41ac27f0617458acc54f70aec5791690e4682911f89d1538"
+      },
+      "to_id": "art:parallel-work-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:ce7feac76c8da9cd72c6188a2f0035565f37031c2632354820baaf7fc1ffcdcd"
+      },
+      "to_id": "art:plan-increments-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14"
+      },
+      "to_id": "art:planning-at-scale"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:59b6e751c18dfc67d4546b6d6d70e1305b64864d3890d8cf786320687c9b84d4"
+      },
+      "to_id": "art:preserve"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:26dde99a1df42e6f"
+      },
+      "to_id": "art:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:b3cd0321b5dcda802926f3247ab45b6c1bbfc7bbd60ed38d2d95da29a3d6caf0"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:7979028e8c95724dd5696d9b1fee3f307c718b7d9f4e086a968620b602eec420"
+      },
+      "to_id": "art:publishable-promise-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:f01d1b8a9f04a3efd4efe0fa05d12f9d1b330e4c4f16b9f1781ae6e645a38fa5"
+      },
+      "to_id": "art:readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:00ac00342910d276b036ffa093f2ed3ee8a7efb9abe9d3b2a5c21fcfa30939c8"
+      },
+      "to_id": "art:readme"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:d8d916c194760d36e108eb96fe403611fe7f9b2488301600e7c584840fe56d77"
+      },
+      "to_id": "art:registry"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:079bd2025a17eeadc09a98cdfdf658b2cc78180bd06b11bb59fff5a410d011cc"
+      },
+      "to_id": "art:release-workflow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:99fc5da421a04f5e"
+      },
+      "to_id": "art:render-views"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:aff0450445d19d96937980b12010421ec4f4112b3406ec959a3223b99e555a8e"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:dc88dfbc4e1aacbc"
+      },
+      "to_id": "art:sanitize"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:fff07736686cf6f57b72df0c050c1ab8fe590805891228dea6a08d7d3d3f3e58"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:4c6d9b4d2298db40893e54004d41009a45bfd6757adc7dbd4cc510f39712a083"
+      },
+      "to_id": "art:schema-build"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:3c14debf63e30806550295d9645fa4c3d47da88e722c020053f66c07b52f36bb"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:815273502db4fed6800182446fb496a08aace3a9b34757395892e6da37dbcdb9"
+      },
+      "to_id": "art:schema-dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:7201c53b7e2c794b871f3d48b7da761884f5bccd7d9f90b9b7d07210e79053cc"
+      },
+      "to_id": "art:schema-environment"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:a156dba66ba8b296e63fa7b1d3a1ec883e458e0ca3ae8573933cba189978767a"
+      },
+      "to_id": "art:schema-functional"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:07f5d9a9594cf5464bfeb426ce94e08f28769d90b154741144b6570a32d578ad"
+      },
+      "to_id": "art:schema-inference"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:a986d436e5575b86d26ab38c52bbb37ff91e1ead726ad6e04fe0d74889b71361"
+      },
+      "to_id": "art:schema-operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:daf8ea6b9399cb16edfd8849adcd1bcd37ac1a7f3ae3acea80ecca8e035fdc9a"
+      },
+      "to_id": "art:schema-readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:76772cfe6dc4f7625bcdad2871a0388cf00710cde694ad88b2400cfbcf2ba00d"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:7be3062dbe9327ac959652734116c350d114d3ca4348ba0f8aa1050c5e91f2c0"
+      },
+      "to_id": "art:schema-temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:9f5e06e9d9d3ad4da457aea1a582d56b2cf8a683b30beef2f2eb163415ebbee9"
+      },
+      "to_id": "art:schema-verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:7c255df861c27d6db0392f2ca0baf6740c333dcc890e9b13e37624abd8f08512"
+      },
+      "to_id": "art:scope"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:de0871a98e6007aa5ee9e202d5396f014b3799efd72600f2a1a94de6d58ff182"
+      },
+      "to_id": "art:scope-corpus-ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea"
+      },
+      "to_id": "art:scope-read-while-held"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:45aaec579dc701380a04d4f12b59a6b14ba5aeb619e823c021b0b21ed08e5caa"
+      },
+      "to_id": "art:seam"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:efb2faf35ec4cc6ed3df5a61f8fdf2af77aded2a6eb29ddabf2394dfc7ed195d"
+      },
+      "to_id": "art:seam-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:a5f270c3646365f78d5c4b6004d1cf0f27285768017ccccce1983176318db40f"
+      },
+      "to_id": "art:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:8e5af9fd122fc56d39472920dc28410b6a157ed889964b4c01eed80fb8cd52aa"
+      },
+      "to_id": "art:seat-liveness-shared-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:4d824c873120e938"
+      },
+      "to_id": "art:self-host-documents-guard"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:6ac21cd02a37fc6c6d51bbbc2d1adcac817d0a373e82c33e95ab954344496741"
+      },
+      "to_id": "art:server-currency-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:c5fe05b922857d22df4460966310fb497932e4125b473e8a4c227fce52a7d497"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:062c1682b832952af474200bd28a7e046146cc8a2eefaca17dd42bfcecfc288d"
+      },
+      "to_id": "art:session-debt-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:c5ae98896e2558c42d86c890f7348c6c3b4f5d8895e6aafb723516edc24c2e56"
+      },
+      "to_id": "art:setup"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:f8d14a991b90377fab5074ee51dbbcf165d2ab813b1b5e742688b19d534c700b"
+      },
+      "to_id": "art:sibling-merge-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:c221daad4dd73582e3abec93e7d0493e75f71f7809f138c1852271fa63f37ea4"
+      },
+      "to_id": "art:skill-ingest-corpus"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:e758f8098e95ab2784de46b3cd83fcec1ceb4bdec8aad8011651b2d40fd3d205"
+      },
+      "to_id": "art:skill-link-projects"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:1ee41e376d31e0f82c43993217ea4907b03161fe1fb0d351d85156d055425d6f"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:9352eb7ec610eb6187d482730ea021c18883d4548f4ba2ed3ab3b3fac0451bda"
+      },
+      "to_id": "art:skill-lint-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:ae92f6894ad0c1be076a3243da39ff336e2654554038b512211a654516f41e9b"
+      },
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:beaa4bd48ef2fae4b6cdb0604f5e0ff9ce644d9bb39f1a9c6a7f7f2a630aa797"
+      },
+      "to_id": "art:skills-build"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:24eb607efc9ebc2803533ca7aba6fcfc6aca8ca8b6bbf8b1cb49cb1c7e3cec4a"
+      },
+      "to_id": "art:skills-catalog"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:772b73a05ff491fe6dbca6adeb9697ad84e1ad9592e24b66793aae2716ae0783"
+      },
+      "to_id": "art:stateless-seat-probe"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:ce30365401d775a82585729349538efe1a0fa43625783b2a39a6dc30f7d9ce83"
+      },
+      "to_id": "art:storyflow-resolution-study"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:76f2dec276b09685"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:b3b2bac1387c9c53"
+      },
+      "to_id": "art:surface-usage-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:b1cec4ec107ef2b1"
+      },
+      "to_id": "art:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:c79d8c79905d00199a758e49e4ad91d27539c15223d89aeb675848a8cdfae464"
+      },
+      "to_id": "art:sync"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286"
+      },
+      "to_id": "art:sync-debt"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:2ea76100494505ddb23275e87de01360b10934de79446419b8af53062fc56886"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:35bd149e47e2a2669241c63df99a4c7b31d1120dd1bb857779376464f39b9bcc"
+      },
+      "to_id": "art:test-check-kit-manifest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:25db9bfb196de65609c48f3aec924f55bdcac7c8492066658f310832b17156ef"
+      },
+      "to_id": "art:test-degraded-server"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:cba77191420374d58d2360da9c1d2a73adcdd1d750d25dafc3991c1a525773af"
+      },
+      "to_id": "art:test-design-identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:02e7940e8095b74cc1d43e3f93741d217810fd947b3265e0db2c574b49405190"
+      },
+      "to_id": "art:test-discontinued-is-read"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:40e6f3bee8bf7de3ef29ab16b317ab38adbf1dab2185481c2e3325b068c02871"
+      },
+      "to_id": "art:test-edges-need-both-ends"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:80bb4b7b81a13ee0164d2e1c377ac326c95a2454b2a581cdfc9e86efc1dd8585"
+      },
+      "to_id": "art:test-init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:4d3313a3988968e436920662419a02f89fcc46d443d09ecd19d018bfe78dc688"
+      },
+      "to_id": "art:test-loop-nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:259d5952c7c46f429b9341e49c0aa91d7a9e65fe573c9acd1ca9ec5466af28d6"
+      },
+      "to_id": "art:test-mirror-refresh"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:4a6daa9a696479a7f84646fcfbf1da7b3f8ad7d31a13ea2441f714b9e50bfc7a"
+      },
+      "to_id": "art:test-no-per-design-globals"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:39bcf1f944d3ceed42a1c6e10922eb00362b50cf37e8fefbee4a94ec4a35b8c6"
+      },
+      "to_id": "art:test-nudge-path"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:f43ed9a42160d5031a44160b361a07be164ebbfb6910639a63ead22078150b29"
+      },
+      "to_id": "art:test-search-first"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:3a28c5d6f3bc91ce95ad0bc3da6bcc85c1bbb71e73e42fa670b14b101b78629c"
+      },
+      "to_id": "art:test-served-skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:3c302ebd5675b5bc9407d9318f6c164fcad4954354db4b7008f01b6cc0039e6d"
+      },
+      "to_id": "art:test-session-names-its-design"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:771424fd9bca485932d2b5e429b16f8940e982566102bef0fc2a905a0211adea"
+      },
+      "to_id": "art:test-sessions-cannot-cross-designs"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:21673699d9d326c9db310fcb24068fa38074634b1949d2708c56f9f77a6c2e5f"
+      },
+      "to_id": "art:test-shared-sessions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:78b994c3da2476c2560bcd53dd776eb2232a1c4856a8427c63e9a08235cc628d"
+      },
+      "to_id": "art:test-stale-seat"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:9a86b59dc94de982a97460fbaa8e22a85d4929f2bbc0db0d6a62338bf0fbdede"
+      },
+      "to_id": "art:test-surface-orphaned"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:de948f2045896274246a8d489c17f65f58595b1071d7ca897f8104b2ef52629b"
+      },
+      "to_id": "art:tools-ask"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:1db5576a75566d013436134d2bd3e4dd0916f78d200c294ddf40011f17215910"
+      },
+      "to_id": "art:tools-assure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:ba6f62e02f9872a33d62483cc0aeacaa3fd2ca93cbcb5616771165ccf02edb8d"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:7fafa7f11b420c3ab52b40856fdf8b6087cdcb722402c2d0bb576674710bcfd1"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:9349d575b229d76389271afb868beaacfd0aaa3be3d0723982a92cf3b119ebfb"
+      },
+      "to_id": "art:tools-claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:1b718981bffa380d90cb4618203a00699661b815f84cd7f23969bbe714efc97d"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:f6720b2e49607c8ae69b578db4ec19ce65e9ec9e2be8e13c3bc16ee0d795229e"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:25ab6353c7864b55aa042ac631ecc7ab16daef10aa8024927ecb840158aacbd5"
+      },
+      "to_id": "art:tools-operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:177768078baa670d86629fe3710cb4390f4701be2b1d8d0b0b981b76957a1561"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:6934d8e9197c727e76f9dda848ac57c48f0ec015109a4ab8f0eb76b9ef9eb7f2"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:1dab58f5049860d865ed9351a40393fd093212bb6ae82952e1f136d56cadc21f"
+      },
+      "to_id": "art:unreachable-decision-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:878315a480167a9296209d6b30a41f9f13318292db228829243a7acc24338c23"
+      },
+      "to_id": "art:updating-doc"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:ef7dbb708e027df2"
+      },
+      "to_id": "art:upgrade-v0110"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34"
+      },
+      "to_id": "art:upgrading-v0120"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995"
+      },
+      "to_id": "art:upgrading-v0130"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:b1e1cee221b0bc6ed7f9e4411cda9dcd50a2dc2647785e06eaa7b1ce7329da28"
+      },
+      "to_id": "art:upgrading-v0150"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:00eea80c2a79cc4eed4d1db9402a4e90e23231745a8fdd4117f44a9f22f58f24"
+      },
+      "to_id": "art:upgrading-v0160"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:d1c21f5330ad0ea05f4efe46c08a010d5fb22ece05523922bb6324c7ec8a2eda"
+      },
+      "to_id": "art:upgrading-v0180"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:3a36b9b6b248af09"
+      },
+      "to_id": "art:upgrading-v0190"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:d16abc28ea59e3f9"
+      },
+      "to_id": "art:upgrading-v0210"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:6b9d7e9a3106aeb93da6040f6804e618845417db6599b75a03b50415bd131b91"
+      },
+      "to_id": "art:upgrading-v0270"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:4f3ce1ca9ee00ff17079b8925e6dccaf8161b82857cb6746f2f756edd59772ac"
+      },
+      "to_id": "art:usgov-genesis-feedback-2026-08-15"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:29e0670ce9e7fbf86537304333279919ff06c207c755b4322d0ea2f517cbf6cd"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {
+        "as_checksum": "sha256:9952215fb5bfbffaff8f7af0625b2c56e918dff77e3fc3ea692cf02086b54faa"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:alternatives"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:compare"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:degraded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:docs"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:merge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:packaging"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:registry"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:sanitize"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:scope"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:sync"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "cmp:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "sys:agent-surface"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "sys:coherence-loop"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "sys:documentation"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "sys:human-channel"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "sys:intake"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "sys:store"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "sys:time-history"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0330",
+      "properties": {},
+      "to_id": "sys:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
       "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:1c729eee5b67e7dc"
@@ -64295,6 +66254,12 @@
       "from_id": "epoch:the-owners-identity-is-one-node-again",
       "properties": {},
       "to_id": "epoch:legitimate-islands-answered"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:triage-fixes",
+      "properties": {},
+      "to_id": "epoch:v0330"
     },
     {
       "edge_type": "PRECEDES",
@@ -71307,7 +73272,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "config",
-        "checksum": "sha256:ab537724ebea37dd90e07b84ea64451820cb3f56ce2243fc30c7c82a0c50eaea",
+        "checksum": "sha256:05831ab6013c1277e990980958bc0a05e4a2f5249549d3e60d2750c9815dcc37",
         "granularity": "atomic",
         "location": "reflow2.toml",
         "name": "reflow2.toml",
@@ -76531,6 +78496,16 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-08-12",
         "name": "SETUP.md aligned to the installer's corrected wording, 2026-08-12 (Alex's report). THE DESIGN HOLDS: \"registers reflow2 with your agent for every project on this machine\" became \"makes reflow2 globally available to your agent, in any project on this machine\", and the section heading with it. Documentation matching behaviour that did not change."
+      }
+    },
+    {
+      "node_id": "chg:accept-fffbd2f24f1ad527",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-16",
+        "name": "The v0.33.0 version bump. `reflow2.toml` is a registered artifact, so step 1 of a release cut always drifts it. THE DESIGN HOLDS: the design meaning of a cut lives in the Release node and its epoch, not in a version string, so nothing the design asserts has changed. Accepted BEFORE `release_includes_all` deliberately — the manifest freezes each artifact's CURRENT checksum, and accepting afterwards would record that the release shipped the pre-bump file.",
+        "subject": "system"
       }
     },
     {
@@ -84708,7 +86683,7 @@
         "epoch_type": "milestone",
         "name": "Triage fixes — what four projects' field reports asked for, grouped by what they have in common rather than by who reported them",
         "sequence": 344,
-        "status": "planned"
+        "status": "arrived"
       }
     },
     {
@@ -85064,6 +87039,16 @@
         "epoch_type": "release_cut",
         "name": "v0.32.1 cut — F24 reaches a consumer without waiting for the next increment, and the launch wrapper stops shielding schema and skill changes from cargo",
         "sequence": 343,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:v0330",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "v0.33.0 — three numbers that were being ignored, and one that cried wolf",
+        "sequence": 345,
         "status": "arrived"
       }
     },
@@ -88577,9 +90562,19 @@
       "node_type": "Release",
       "properties": {
         "name": "v0.32.1",
-        "status": "deployed",
+        "status": "retired",
         "unit_type": "binary",
         "version": "0.32.1"
+      }
+    },
+    {
+      "node_id": "rel:v0330",
+      "node_type": "Release",
+      "properties": {
+        "name": "v0.33.0",
+        "status": "deployed",
+        "unit_type": "binary",
+        "version": "0.33.0"
       }
     },
     {
@@ -96912,7 +98907,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:abbfb70e8ed50913e560378031b023a5391316139739c5aba9434106e309f06b",
+  "prev_content_hash": "sha256:a50f2c2192331ba2b7041000ac62ff4b9dcd532c6bf70ec7adedc055df24570a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -97010,7 +99005,7 @@
       "Verification"
     ],
     "node_types": 29,
-    "reflow2_version": "0.32.1",
+    "reflow2_version": "0.33.0",
     "schema_version": 1
   }
 }
