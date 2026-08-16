@@ -967,6 +967,46 @@ impl DesignGraph {
             {
                 continue;
             }
+            // AND THE SAME ARGUMENT ONE PROPERTY ACROSS. The comment above
+            // ends "a property the detector ignores is a property that lies",
+            // and this loop went on ignoring the ENDPOINTS' `status`.
+            //
+            // A `rejected` or `superseded` Decision contradicting its successor
+            // is the HEALTHY case — it is what "tried in thought, refuted, here
+            // is what we did instead" looks like in graph form, and there is
+            // nothing to resolve. Reporting it as a structural defect made
+            // recording a refutation CORRECTLY cost a warning while burying it
+            // in prose cost nothing, so the tool mildly penalised the discipline
+            // `rejected` exists to support — and did so at the moment a seat is
+            // least likely to push back, having just been told (rightly) that
+            // they should have been using `rejected` all along. The cheap wrong
+            // response is to delete the node or the edge, which is the erasure
+            // the record exists to prevent (dragon Boss, 2026-08-15).
+            //
+            // ⚠️ EXCLUDED, NOT REBANDED, AND THAT HALF IS DELIBERATELY LEFT
+            // OPEN. The report offered two remedies — drop these from the
+            // contradiction category, or move them to a "superseded-by" band —
+            // and `req:a-detector-reads-the-properties-that-qualify-its-own-finding`
+            // records the second as undecided. A new HealCategory widens the
+            // defect vocabulary every consumer parses, which is a choice to
+            // make deliberately rather than as a side effect of a bug fix. The
+            // relationship remains fully readable in the graph: the CONTRADICTS
+            // edge is untouched and both endpoints keep their status.
+            let withdrawn = |id: &String| -> bool {
+                index
+                    .get(id)
+                    .and_then(|t| self.get_node(t, id).ok().flatten())
+                    .and_then(|n| {
+                        n.properties
+                            .get("status")
+                            .and_then(Value::as_str)
+                            .map(|s| s == "rejected" || s == "superseded")
+                    })
+                    .unwrap_or(false)
+            };
+            if withdrawn(&e.from_id) || withdrawn(&e.to_id) {
+                continue;
+            }
             let affected = vec![e.from_id.clone(), e.to_id.clone()];
             issues.push(HealIssue {
                 id: issue_id(HealCategory::Contradiction, &affected),

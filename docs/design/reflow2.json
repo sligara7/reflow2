@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:2d73b19dd91353db964ab23d2aad5d49aa7576d8a16c5ca3414f5b60e425d214",
+  "content_hash": "sha256:3cbd36b84cc870b97730a7a6454c5e7cfd230ff5b059bd3d25a5e40d6b620181",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -10161,6 +10161,24 @@
         "action": "modified"
       },
       "to_id": "dec:exploratory-staging"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-withdrawn-decision-stops-reading-as-a-conflict",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-withdrawn-decision-stops-reading-as-a-conflict",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:heal"
     },
     {
       "edge_type": "CHANGED",
@@ -66454,6 +66472,12 @@
       "edge_type": "SATISFIES",
       "from_id": "cap:heal",
       "properties": {},
+      "to_id": "req:a-detector-reads-the-properties-that-qualify-its-own-finding"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:heal",
+      "properties": {},
       "to_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran"
     },
     {
@@ -67964,6 +67988,12 @@
       "from_id": "ver:a-tracked-graph-store-is-reported",
       "properties": {},
       "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-withdrawn-decision-is-not-a-conflict",
+      "properties": {},
+      "to_id": "req:a-detector-reads-the-properties-that-qualify-its-own-finding"
     },
     {
       "edge_type": "VERIFIES",
@@ -71192,7 +71222,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9df3a3b371600c456385205e7bbed7b340f1051dff7a4561f8fda1bb6c48aeaf",
+        "checksum": "sha256:8b5553c1a9b686a3a4760c51614d8e4c35e9dfb2f3c65c7f954ac84da9962ecc",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
@@ -74914,6 +74944,14 @@
       "properties": {
         "change_type": "scope_change",
         "name": "dec:exploratory-staging gains the measured Capability half. Its 2026-07-25 finding — that a brainstormed idea is SILENT BY CONSTRUCTION because detect_gaps raises undecided_decision_point only on two or more REGISTERED alternatives — holds for Decisions and NOT for Capabilities. Measured 2026-08-10: 34 of 73 open gaps are the [BL-nnn] rows dec:backlog-is-retired routed to Capability, each generating up to three gaps forever (unmotivated, unrealized, unverified). The two accepted decisions therefore collide, and neither knew it."
+      }
+    },
+    {
+      "node_id": "chg:a-withdrawn-decision-stops-reading-as-a-conflict",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "The contradiction detector reads endpoint status, so recording a refutation correctly stops costing a defect"
       }
     },
     {
@@ -94407,6 +94445,18 @@
       }
     },
     {
+      "node_id": "ver:a-withdrawn-decision-is-not-a-conflict",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-16",
+        "level": "unit",
+        "method": "test",
+        "name": "A withdrawn Decision contradicting its successor is not reported as a defect (crates/reflow2-core/tests/heal.rs) — 5 cases. THE CASE: a `rejected` Decision linked by CONTRADICTS to what replaced it is the HEALTHY shape — tried in thought, refuted, here is what we did instead — and reporting it as a warning made recording a refutation CORRECTLY cost a defect while burying it in prose cost nothing. `superseded` is pinned as the same shape by a different route. TWO COUNTERWEIGHTS, and they are what stop the fix becoming a hole: two ACCEPTED decisions that contradict each other are still reported, because a live disagreement is the whole reason the detector exists and trading a false positive for a false negative is strictly the worse bug; and `proposed` is NOT treated as withdrawn, because undecided is not abandoned and silencing it would hide exactly the disagreements a brainstorm exists to surface. The sibling `alignment: supporting` rule is pinned separately so the two skips cannot be collapsed into one. MUTATION-CHECKED TWICE: removing the status check fails only the two withdrawn cases; widening it to \"anything not accepted\" fails ONLY the proposed counterweight, which is the case proving it does not silence too much. MEASURED ON THE REAL DESIGN: 16 defects and 4 contradictions before and after — reflow2 holds 10 superseded and 1 rejected Decision and ZERO CONTRADICTS edges from any of them, so nothing here was silenced.",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:acknowledgement-not-structure",
       "node_type": "Verification",
       "properties": {
@@ -96137,7 +96187,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:76e4d8b74465dfa1a74ec36705af34ac4857a432e274abc61f9bccfbe8b6a33a",
+  "prev_content_hash": "sha256:2d73b19dd91353db964ab23d2aad5d49aa7576d8a16c5ca3414f5b60e425d214",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

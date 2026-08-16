@@ -1292,3 +1292,119 @@ fn more_than_one_project_is_never_labelled_with_one_of_them() {
         p.summary
     );
 }
+
+// ---- a withdrawn decision contradicting its successor is not a defect -------
+//
+// req:a-detector-reads-the-properties-that-qualify-its-own-finding.
+//
+// dragon Boss, 2026-08-15, found by doing what a peer had just recommended:
+// recording a refuted remedy as its own Decision at `status: rejected` and
+// linking it to the replacement with CONTRADICTS — the honest relation, and the
+// one describe_schema's hint points at. detect_defects then reported a warning.
+//
+// The incentive is why this is worth a fix rather than a shrug: recording a
+// refutation CORRECTLY added a defect, and burying it in prose added none.
+
+fn withdrawn_pair(status: &str) -> DesignGraph {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:x", "X").unwrap();
+    g.add_decision("dec:old", "The refuted remedy", "we tried this", None)
+        .unwrap();
+    g.add_decision("dec:new", "What replaced it", "we do this instead", None)
+        .unwrap();
+    g.set_decision_status("dec:old", status).unwrap();
+    g.set_decision_status("dec:new", "accepted").unwrap();
+    g.create_edge(
+        edge::CONTRADICTS,
+        node::DECISION,
+        "dec:old",
+        node::DECISION,
+        "dec:new",
+        Props::new().set("alignment", "opposing"),
+    )
+    .unwrap();
+    g
+}
+
+fn contradictions(g: &DesignGraph) -> Vec<String> {
+    g.detect_defects()
+        .unwrap()
+        .into_iter()
+        .filter(|i| i.category == HealCategory::Contradiction)
+        .map(|i| i.message)
+        .collect()
+}
+
+/// THE CASE. A rejected decision contradicting its successor is the healthy
+/// shape — "tried in thought, refuted, here is what we did instead".
+#[test]
+fn a_rejected_decision_contradicting_its_successor_is_not_a_defect() {
+    let g = withdrawn_pair("rejected");
+    assert!(
+        contradictions(&g).is_empty(),
+        "recording a refutation correctly must not cost a defect: {:?}",
+        contradictions(&g)
+    );
+}
+
+/// Superseded is the same shape by a different route.
+#[test]
+fn a_superseded_decision_contradicting_its_successor_is_not_a_defect() {
+    let g = withdrawn_pair("superseded");
+    assert!(contradictions(&g).is_empty(), "{:?}", contradictions(&g));
+}
+
+/// COUNTERWEIGHT, and the one that decides whether this is a fix or a hole:
+/// a LIVE disagreement must still be reported. Two accepted decisions that
+/// contradict each other is the case the detector exists for, and a status
+/// check that silenced it would trade a false positive for a false negative —
+/// strictly the worse bug.
+#[test]
+fn two_live_decisions_that_contradict_are_still_reported() {
+    let mut g = withdrawn_pair("rejected");
+    // Bring the withdrawn one back to life. Nothing else changes.
+    g.set_decision_status("dec:old", "accepted").unwrap();
+
+    assert_eq!(
+        contradictions(&g).len(),
+        1,
+        "an unresolved conflict between live decisions is the whole point"
+    );
+}
+
+/// COUNTERWEIGHT 2: `proposed` is NOT withdrawn. A parked idea that conflicts
+/// with an accepted decision is a real thing to settle, and treating "not yet
+/// accepted" as "no longer intended" would hide exactly the disagreements a
+/// brainstorm is supposed to surface.
+#[test]
+fn a_proposed_decision_is_not_treated_as_withdrawn() {
+    let mut g = withdrawn_pair("rejected");
+    g.set_decision_status("dec:old", "proposed").unwrap();
+
+    assert_eq!(
+        contradictions(&g).len(),
+        1,
+        "proposed means undecided, not abandoned"
+    );
+}
+
+/// The alignment rule it sits beside must be untouched: corroboration between
+/// two LIVE nodes is still silent, and for the original reason.
+#[test]
+fn supporting_alignment_is_still_skipped_independently() {
+    let mut g = withdrawn_pair("rejected");
+    g.set_decision_status("dec:old", "accepted").unwrap();
+    g.delete_edge(edge::CONTRADICTS, "dec:old", "dec:new")
+        .unwrap();
+    g.create_edge(
+        edge::CONTRADICTS,
+        node::DECISION,
+        "dec:old",
+        node::DECISION,
+        "dec:new",
+        Props::new().set("alignment", "supporting"),
+    )
+    .unwrap();
+
+    assert!(contradictions(&g).is_empty(), "{:?}", contradictions(&g));
+}
