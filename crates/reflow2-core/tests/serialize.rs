@@ -67,6 +67,9 @@ fn heal_proposal_round_trips_through_json() {
             reference: "heal:3".to_string(),
             reason: "capped".to_string(),
         }],
+        scope: "whole design".to_string(),
+        projects_in_scope: 1,
+        merge_candidates_considered: 1,
         confidence: 0.9,
         requires_human_review: true,
         summary: "one merge".to_string(),
@@ -77,5 +80,11 @@ fn heal_proposal_round_trips_through_json() {
     assert_eq!(back.strategy, HealStrategy::Balanced);
     assert_eq!(back.operations.len(), 1);
     assert_eq!(back.generated_content[0].kind, "Decision");
+    // The sweep-description fields must survive the round trip too: apply_heal
+    // takes a proposal back as JSON, so a field that serialises and does not
+    // deserialise would silently reset to its default on the way in.
+    assert_eq!(back.scope, "whole design");
+    assert_eq!(back.projects_in_scope, 1);
+    assert_eq!(back.merge_candidates_considered, 1);
     assert_eq!(serde_json::to_string(&back).unwrap(), json);
 }
