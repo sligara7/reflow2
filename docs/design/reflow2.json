@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:abbfb70e8ed50913e560378031b023a5391316139739c5aba9434106e309f06b",
+  "content_hash": "sha256:a50f2c2192331ba2b7041000ac62ff4b9dcd532c6bf70ec7adedc055df24570a",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -9912,6 +9912,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-claim-is-not-hidden-by-its-parent",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:coverage"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:a-claim-may-be-a-query-20260808",
       "properties": {
         "accepted_baseline": false,
@@ -12069,6 +12078,15 @@
         "action": "modified"
       },
       "to_id": "art:migrate-backlog"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-51b4ae0c8b2eaa5e",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:claim-not-hidden-test"
     },
     {
       "edge_type": "CHANGED",
@@ -64722,6 +64740,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:claim-not-hidden-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "ver:an-unobserved-location-means-the-sweep-missed-it"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:claims",
       "properties": {
         "completeness": "complete"
@@ -71061,6 +71088,17 @@
       }
     },
     {
+      "node_id": "art:claim-not-hidden-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:43b2258a9537a2cbb3e131acb781e11085a4b1e89fa599bd5325d46c1e42fe2f",
+        "location": "crates/reflow2-core/tests/a_claim_is_not_hidden_by_its_parent.rs",
+        "name": "a_claim_is_not_hidden_by_its_parent.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:claims",
       "node_type": "Artifact",
       "properties": {
@@ -71206,7 +71244,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:657397fc982bc94a7b0624d219503cab8ddf1a325aabf023474db1dfc110881f",
+        "checksum": "sha256:c3d8585b71d9bb6aa886b70998fa97a143ae2829a6ebb47a4803e18910ec176d",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/coverage.rs",
         "name": "coverage.rs",
@@ -75273,6 +75311,18 @@
       }
     },
     {
+      "node_id": "chg:a-claim-is-not-hidden-by-its-parent",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-16",
+        "name": "A swept file stops being reported as unobserved because a parent directory also claims it",
+        "rationale": "Reported by music_graph, verified by reproduction rather than taken as filed. The reporter graded it \"harmless\" for their own use, and the grading is what makes it worth fixing: the harm is not the wrong entry but the loss of trust in a field whose entire purpose is to be believed when it says something was missed.",
+        "subject": "system",
+        "summary": "music_graph F10, reproduced and fixed.\n\nTHE DEFECT. `coverage.rs` matched each observed path with `claims_list.iter().find(...)` — the FIRST claim covering the path absorbed the observation, and every other claim covering the same path was left out of `matched_claims`. A design that legitimately registers `archive/` as a whole AND `archive/reco.py` inside it therefore got the individual files back in `unobserved_locations`, in the reporter's words \"despite being right there in `observed`\".\n\nREPRODUCED BEFORE IT WAS FIXED, on their exact shape: one directory artifact plus two file artifacts beneath it, both files swept. Both came back as unobserved. The test was written first and failed with precisely the reported symptom.\n\n⭐ WHY IT MATTERS MORE THAN A WRONG NUMBER, and the reporter had the better framing so it is preserved in the code: `unobserved_locations` exists to answer \"did you forget to sweep something\". An entry meaning \"a parent also claims this\" is A FALSE ALARM ON CORRECT MODELLING, and one is enough for a reader to stop trusting the only thing the field was for. They said so themselves: \"harmless here, but it makes the field untrustworthy as a 'you forgot to sweep this' signal, which is what it is for.\"\n\nTHE FIX: mark EVERY claim covering the path, not just the first. The COUNT deliberately stays one per observed path — two claims covering one file is still one file, and incrementing per claim would trade this bug for an inflated `claimed`.\n\n⚠️ THE MUTATION THAT MATTERS MOST was the cheapest wrong fix: make the field silent. Emptying `unobserved_locations` also makes the false alarm disappear, and it is strictly worse than the bug, because silence reads as \"nothing was missed\". THREE cases catch it — a genuinely unswept claim is still named; a sibling that merely shares a path prefix (`src/foo` vs `src/foobar`) does not count as swept; and an EXCLUDED path does not mark its claim swept, since an exclusion rule must not be able to launder an unswept claim into a clean report.\n\nVERIFIED: 6 cases, all passing. Three mutations, each killed by the right tests — reverting to `find()` fails both defect cases; counting per claim fails the count case; reporting nothing fails three, including both counterweights.\n\nCONTEXT WORTH CARRYING: F10 is from §2 of the music_graph feedback file, which is FOUR sessions appended under one name. §1 (F1–F9, written against 0.20.0) was already triaged on 2026-08-01 — see `fact:the-music-graph-feedback-file-is-four-sessions-and-its-first-batch-was-fixed-long-ago`. F10 is the first genuinely open item in that file."
+      }
+    },
+    {
       "node_id": "chg:a-claim-may-be-a-query-20260808",
       "node_type": "ChangeEvent",
       "properties": {
@@ -76704,6 +76754,16 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-07",
         "name": "First checksum for a file that has never had one, so nothing moved and there is nothing to take a position on. The file is expected to be stable: it is a one-shot migration that has already run, kept for the CLASSIFY mapping rather than for re-execution — running it again against a deleted docs/backlog.md yields an empty document."
+      }
+    },
+    {
+      "node_id": "chg:baseline-51b4ae0c8b2eaa5e",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-16",
+        "name": "First baseline. 6 cases, three mutation-checked, three of them counterweights against the silent-field non-fix.",
+        "subject": "record"
       }
     },
     {
@@ -94849,6 +94909,19 @@
       }
     },
     {
+      "node_id": "fact:the-music-graph-feedback-file-is-four-sessions-and-its-first-batch-was-fixed-long-ago",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "correction",
+        "statement": "THE MUSIC_GRAPH FEEDBACK FILE IS FOUR SESSIONS APPENDED, AND ITS FIRST BATCH WAS FIXED TWO WEEKS AGO. A standing hand-off note has been sending sessions after solved problems.\n\nTHE FILE'S OWN HEADER SAYS SO and nobody had read it: \"reflow2 feedback — from an /adopt pass over music_graph / reflow2 0.20.0, 2026-08-01\". The current version is 0.32.1 — twelve minor versions later. The file is not one report; it is FOUR sessions appended under one name:\n  §1 F1–F9, W1–W7   — the 0.20.0 adopt pass, 2026-08-01\n  §2 F5-again, F10–F16, W8–W10\n  §3 F17–F22, W11–W15\n  §4 F23–F24, W16      — triaged 2026-08-16 (PR #200, PR #205)\n\n⭐ VERIFIED FIXED, EACH AGAINST THE RUNNING CODE RATHER THAN THE CHANGELOG:\n• F5 (\"Interface modelling silently manufactures circular dependencies\", the reporter's own DANGEROUS tag, and the item the hand-off named as the thing to do FIRST) — FIXED 2026-08-01 in PR #19, with F5(b) following in PR #23. Reproduced music_graph's exact case in a throwaway test (two components, two `medium: data` interfaces, each providing what the other consumes). The finding now reads: \"circular dependency: … every hop is a contract VIA ifc:midi-file, ifc:wav-audio, and EVERY ONE is a library/data medium — something read or linked against, not called across at run time … No DEPENDS_ON edge is involved\", at severity WARNING rather than CRITICAL. Both of the reporter's asks are met: (a) the shared interfaces are named, (b) the severity is downgraded.\n• F3 (\"`designation: required` does not suppress unprovided_interface\") — FIXED 2026-08-09, `detect.rs:1843`: a `required` boundary is skipped outright. Note it was fixed for a DIFFERENT trigger (`dec:linked-repos-poc` producing nine such gaps), not from this report — the report was never the reason, but the effect closes it.\n• F4 (\"orphan_node counts only REALIZES\") — FIXED, `heal.rs:830-872`: now REALIZES / DOCUMENTS / SPECIFIES / PRODUCES / SATISFIES, with a comment recording that it used to be REALIZES alone.\n\n⚠️ THE COST OF THE ERROR, stated plainly because it is the transferable part: the hand-off note carried \"music_graph F1–F24 UNTRIAGED\" for roughly two weeks and ranked F5 FIRST on the strength of the reporter's \"(dangerous)\" tag. A session acting on that would have spent itself re-fixing three solved defects. The tag was real and the priority reasoning was sound — the failure was never checking the report against the build, which is this project's own standing rule applied to feedback and not applied to the to-do list ABOUT feedback.\n\nWHAT IS ACTUALLY STILL OPEN, and this is now the honest list: §2 and §3 — F10 through F22, minus F21 and F22, which were closed 2026-08-16 (the stale-status detector and the measurement-date work). NOT YET VERIFIED one way or the other: F6, F7, F8, F9 from §1 — the same triage pass covered them, so they are more likely fixed than not, but nobody has checked.\n\nTHE RULE THIS YIELDS: a feedback file states the VERSION it was written against. Read that line before ranking anything in it, and re-verify every item against the current build before believing a to-do list about it — including one written by a previous session of yourself.",
+        "subject_id": "prj:reflow2",
+        "valid_from": "2026-08-16",
+        "value": "{\"measured\":\"2026-08-16, against the running build\",\"file\":\"/home/ajs7/project/music_graph/reflow2_feedback_NEWER_from_second_machine.txt\",\"file_header_version\":\"reflow2 0.20.0, 2026-08-01\",\"current_version\":\"0.32.1\",\"sections\":4,\"verified_fixed\":[\"F5 (PR #19 + #23, 2026-08-01) - reproduced live: names the shared interfaces, severity Warning not Critical\",\"F3 (detect.rs:1843, 2026-08-09) - required designation skipped\",\"F4 (heal.rs:872) - counts REALIZES/DOCUMENTS/SPECIFIES/PRODUCES/SATISFIES\"],\"handoff_error\":\"carried 'F1-F24 UNTRIAGED' for ~2 weeks and ranked F5 first on its (dangerous) tag\",\"still_open\":\"F10-F20 (F21, F22 closed 2026-08-16)\",\"unverified\":[\"F6\",\"F7\",\"F8\",\"F9\"],\"rule\":\"read the version line in a feedback file before ranking it; re-verify against the current build before believing any to-do list about it, including your own previous session's\"}"
+      }
+    },
+    {
       "node_id": "fact:the-owner-uses-reflow2-as-a-funnel-for-random-order-input",
       "node_type": "TemporalFact",
       "properties": {
@@ -95139,6 +95212,18 @@
         "level": "integration",
         "method": "test",
         "name": "AoA + decision-point suite (tests/alternatives.rs) — 8 cases",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:an-unobserved-location-means-the-sweep-missed-it",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-16",
+        "level": "unit",
+        "method": "test",
+        "name": "A swept file is not called unobserved because a parent also claims it (crates/reflow2-core/tests/a_claim_is_not_hidden_by_its_parent.rs) — 6 cases, all passing 2026-08-16. music_graph F10, REPRODUCED BEFORE IT WAS FIXED on their exact shape: one directory artifact plus two file artifacts beneath it, both files swept, both returned in `unobserved_locations`. The cause was `.find()` — the first claim covering a path absorbed the observation and every other claim covering it was left unmatched. WHY IT IS WORTH SIX CASES rather than one: the field answers \"did you forget to sweep something\", so a false entry is an alarm on CORRECT modelling, and the reporter's own grading is the argument — \"harmless here, but it makes the field untrustworthy as a 'you forgot to sweep this' signal, which is what it is for.\" THE COUNTERWEIGHTS ARE THE POINT, because the cheapest wrong fix is to make the field SILENT, which is strictly worse than the bug — silence reads as \"nothing was missed\". Three cases block it: a genuinely unswept claim is still named; a sibling that merely shares a prefix (`src/foo` vs `src/foobar`) does not count as swept; and an EXCLUDED path does not mark its claim swept, so an exclusion rule cannot launder an unswept claim into a clean report. A fourth pins that the COUNT stays one per observed path — two claims covering one file is one file, and counting per claim would trade this bug for an inflated `claimed`. MUTATION-CHECKED THREE WAYS, each killed by the right tests: reverting to `find()` fails both defect cases; counting per claim fails the count case; reporting nothing fails three, including both counterweights. NOT COVERED: nothing here exercises a real sweep of a real tree — every case supplies its observations directly, so this is about the matching rule, not about what a filesystem would hand it.",
         "status": "passing"
       }
     },
@@ -96827,7 +96912,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:8593d97f18bbb29711aa775cf9a08b0f2695275b41dbb8c8bc92c7ec3a950363",
+  "prev_content_hash": "sha256:abbfb70e8ed50913e560378031b023a5391316139739c5aba9434106e309f06b",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
