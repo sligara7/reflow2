@@ -27,10 +27,39 @@ bin="target/debug/reflow2-mcp"
 stamp="target/debug/.reflow2-mcp.srchash"
 
 # Content hash of everything that can change the compiled binary: every crate's
-# Rust sources plus the manifests and lockfile (dependency changes matter too).
+# Rust sources, the manifests and lockfile (dependency changes matter too), and
+# the two trees that are COMPILED IN from outside `src/`.
+#
+# ⚠️ THIS HASH IS A GATE IN FRONT OF CARGO'S OWN CHANGE DETECTION, so anything
+# it misses, cargo is never asked about. That is what made the omissions below
+# bite rather than merely being incomplete:
+#
+#   schema/*.yaml            — `include_str!`d by reflow2-core (schema.rs:19-38),
+#                              so a schema-only edit changed the served
+#                              VOCABULARY and left this hash identical. Measured
+#                              2026-08-16: the server answered `describe_schema`
+#                              with the pre-#199 `change_type` enum while main
+#                              already declared `defect_fix`, and the session
+#                              nearly recorded the exact fiction #199 was merged
+#                              to end. It was caught only by grepping the YAML
+#                              and comparing — nothing in the tool's own reply
+#                              says which build answered it.
+#
+#   getting-started/skills/  — embedded by crates/reflow2-mcp/build.rs, which
+#                              ALREADY declares `cargo:rerun-if-changed` on this
+#                              tree. Cargo would have rebuilt correctly; this
+#                              wrapper skipped calling cargo at all, so a
+#                              mechanism that was right was defeated by the gate
+#                              in front of it. Editing a SKILL.md served the old
+#                              text with no warning.
+#
+# Tests are deliberately OUT: they are separate targets and cannot change the
+# binary this serves.
 srchash() {
   {
     find crates -path '*/src/*.rs' -type f -print0 | sort -z | xargs -0 sha256sum
+    find schema -name '*.yaml' -type f -print0 | sort -z | xargs -0 sha256sum
+    find getting-started/skills -name 'SKILL.md' -type f -print0 | sort -z | xargs -0 sha256sum
     sha256sum Cargo.toml Cargo.lock crates/*/Cargo.toml 2>/dev/null
   } | sha256sum | cut -d' ' -f1
 }

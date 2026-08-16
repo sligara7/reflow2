@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:f80d72866cbada2ba92192bf3f0aa39fb991c370ae10bbc5be40b0d9bc3cac97",
+  "content_hash": "sha256:b4561bf7f0bbba5d7091e320910acc895733445d2d72fdc14180bc9b97078268",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -9771,6 +9771,17 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "fact:defect-the-launch-wrapper-cannot-see-a-schema-change",
+      "properties": {
+        "basis": "causal",
+        "confidence": 1.0,
+        "evidence": "The fact recorded the defect and named the one-line fix; acting on it found a second, wider instance (the skills tree) that the fact did not know about. Validated by measuring both formulas against four edits: schema and SKILL.md each move the new hash and not the old, while a test edit moves neither and a src edit moves both.",
+        "validation_status": "validated"
+      },
+      "to_id": "chg:the-launch-wrapper-sees-everything-compiled-in"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:defect-verification-evidence-is-prose-so-passing-can-contradict-itself",
       "properties": {
         "basis": "observed",
@@ -18735,6 +18746,24 @@
         "action": "modified"
       },
       "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-launch-wrapper-sees-everything-compiled-in",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-launch-wrapper-sees-everything-compiled-in",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:skills"
     },
     {
       "edge_type": "CHANGED",
@@ -76070,6 +76099,16 @@
       }
     },
     {
+      "node_id": "chg:the-launch-wrapper-sees-everything-compiled-in",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "description": "Fixes `fact:defect-the-launch-wrapper-cannot-see-a-schema-change`, and the investigation found the defect was WIDER than the fact recorded.\n\n⭐ THE FRAMING THAT MATTERS, and it is sharper than 'the hash was incomplete': THIS HASH IS A GATE IN FRONT OF CARGO'S OWN CHANGE DETECTION. When it decides nothing moved, cargo is never invoked, so cargo's `rerun-if-changed` logic never gets to run. Anything the wrapper misses is therefore not merely untracked — it is actively shielded from the mechanism that would have caught it.\n\nTWO OMISSIONS, and the second was not in the original report:\n\n① `schema/*.yaml`, `include_str!`d by reflow2-core (schema.rs:19-38). A schema-only edit left the hash identical, so the wrapper printed 'binary current, skipping build' and served the previous VOCABULARY. Measured 2026-08-16: `describe_schema` answered with the pre-#199 `change_type` enum while main already declared `defect_fix`, and this session nearly recorded the exact fiction #199 had been merged hours earlier to end.\n\n② `getting-started/skills/**/SKILL.md`, embedded by `crates/reflow2-mcp/build.rs`. THIS ONE IS WORSE AND WAS INVISIBLE UNTIL LOOKED FOR: build.rs ALREADY declares `cargo:rerun-if-changed` on the kit (build.rs:29,50), so cargo would have rebuilt correctly on its own. The wrapper defeated a mechanism that was already right. Editing a SKILL.md served the old text with no warning — and skills change far more often than the schema does.\n\nMEASURED, FOUR CASES, each against both the old and new formula:\n\n    schema edit   new MOVED   old NOT MOVED    <- ①\n    SKILL.md edit new MOVED   old NOT MOVED    <- ②\n    test edit     new NOT     old NOT          <- counterweight\n    src edit      new MOVED   old MOVED        <- counterweight\n\nTHE TWO COUNTERWEIGHTS ARE THE POINT. Tests stay OUT deliberately — they are separate cargo targets and cannot change the binary this serves, so including them would rebuild on every test edit and train people to distrust the wrapper. And a `src/*.rs` edit still moves both formulas, so nothing that already worked regressed.\n\n📌 ONE-TIME COST, stated so it does not read as a fault: the first launch after this change rebuilds once regardless, because the stored `.reflow2-mcp.srchash` stamp was computed under the old formula and cannot match the new one. Observed and expected; stable from the second launch.\n\nNOT A REGISTERED ARTIFACT and nothing tests it — which is why the four-case measurement is recorded here rather than as a Verification. CONSUMERS ARE UNAFFECTED throughout: they run an installed release binary, never this wrapper.\n\nNOT FIXED: the wrapper still cannot notice that a RUNNING server has gone stale — it only decides what to build at launch. A session whose server started before a schema change still needs `--stop-shared`, and nothing tells it so.",
+        "name": "The launch wrapper's hash covers the schema and the skills — the two trees compiled into the binary from outside src/, both of which it was silently blind to",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:the-loop-can-say-what-it-does-not-know",
       "node_type": "ChangeEvent",
       "properties": {
@@ -93793,7 +93832,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b69932aa06376ffb9a6f4ed2c5c6bdaca2ca395f12925420814a7687a86a77b8",
+  "prev_content_hash": "sha256:f80d72866cbada2ba92192bf3f0aa39fb991c370ae10bbc5be40b0d9bc3cac97",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
