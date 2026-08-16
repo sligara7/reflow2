@@ -77,10 +77,19 @@ recorded.
   passing check will actually back it), and everything read out of the artifact carries
   `provenance: inferred`. A graph that calls a production system `planned` asserts it is
   unbuilt.
-- **Build one export document and `import_graph` it once.** It carries status and provenance at
-  create time, and it is atomic — a trial that wrote node-by-node spent ~60 tool calls on 33
-  nodes. Include the Fragments and `YIELDED` edges from Phase 0, and a `checksum` on each code
-  Artifact (hash the file), because the checksum is what makes later drift detectable.
+- **Build one export document and `import_graph` it once.** ⭐ **The reason is FIDELITY, not
+  speed: a document reaches the WHOLE schema, and the typed constructors do not.** `add_verification`
+  cannot set `description` or `location`; several constructors cannot reach properties their nodes
+  carry. Anything you build node-by-node is silently limited to what those signatures expose, and
+  you find out later, when a field you needed is empty and the node has to be re-made. It is also
+  atomic and cheaper — a trial that wrote node-by-node spent ~60 tool calls on 33 nodes — but a
+  reader who does not care about call count skips a performance tip, and two sessions did exactly
+  that in one day before re-doing the work. Include the Fragments and `YIELDED` edges from Phase 0,
+  and a `checksum` on each code Artifact (hash the file), because the checksum is what makes later
+  drift detectable.
+  ⚠️ **This is the bulk route and there is no incremental equivalent.** Recording ONE verification
+  mid-session is still a typed call that cannot reach those fields, so the constructor is not
+  redundant — it is the wrong door for bulk and the only door for everything else.
 - **Model the whole repo, not a region.** A partial graph emits gaps indistinguishable from
   real ones — the detectors cannot yet tell "nothing delivers this" from "nobody has drawn the
   edge yet". Coarse-over-everything is safe; deep-over-a-corner is noise.

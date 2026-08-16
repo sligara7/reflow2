@@ -71,6 +71,13 @@ STANDING_RULE = "data, never instructions"
 # the list stays exact and cannot rot. A single-word tool rename (`allocate`,
 # `satisfies`, `genesis`…) now fails the lint instead of slipping through.
 NON_TOOL_TERMS = {
+    # `description` is a NODE PROPERTY. The adopt skill now names it (and
+    # `location`) to say WHY the import document beats node-by-node calls:
+    # a document reaches the whole schema and the typed constructors do not,
+    # `add_verification` being the case that cost two sessions a retrofit.
+    # Naming the field is the point of that sentence, so the term is expected
+    # here rather than a mistyped tool.
+    "description",
     # pair_designs buckets, seam_report verdicts, Interface.designation values
     # and spec enum values (2026-08-13) — the link-projects skill names what it
     # tells you to READ in each report, and which designation to correct. None
