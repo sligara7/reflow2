@@ -176,6 +176,50 @@ impl LatentService {
             .map(Path::to_path_buf)
             .unwrap_or_else(|| PathBuf::from(&self.graph_path));
 
+        // ⚠️ RE-PROBE FIRST. The surface was chosen when this process started,
+        // and a design can APPEAR under it afterwards — the documented restore
+        // path does exactly that: `reflow2-mcp --graph-path … --import …` builds
+        // a full store in a directory this server was told was empty ninety
+        // seconds earlier (music_graph F24, 2026-08-16). Everything the server
+        // said at handshake was true when printed and false by the time anyone
+        // acted on it, and the ONE tool on offer was the one that starts a
+        // design — over the top of the one that now exists.
+        //
+        // This reads only the sidecar files (`describe_at` opens no store and
+        // takes no lock), so it is safe against a design another session is
+        // holding, and it cannot mint an identity by looking.
+        let found = reflow2_core::describe_at(&self.graph_path);
+        if matches!(
+            found.state,
+            reflow2_core::DesignPathState::Design | reflow2_core::DesignPathState::Unnamed
+        ) {
+            let payload = json!({
+                "started": false,
+                "a_design_is_already_here": true,
+                "graph_path": self.graph_path,
+                "design": found,
+                "what_happened": "A design exists at this path NOW. This server was started when \
+                                  it did not, which is why it is serving the one-tool surface — \
+                                  the surface is chosen once at startup and does not re-probe.",
+                "next_step": "Ask the user to fully restart this client (a /mcp reconnect is not \
+                              always enough — the stdio server must be replaced). The new server \
+                              will see the design and serve the full surface.",
+                "nothing_was_created": "This call did NOT create or modify anything. Starting a \
+                                        design over one that already exists is the mistake this \
+                                        refusal exists to prevent.",
+                "if_you_just_restored_this": "This is the expected state after \
+                                              `reflow2-mcp --graph-path <path> --import <export>`. \
+                                              The restore worked; only this session's view of it \
+                                              is stale. Do NOT re-import, and do NOT report the \
+                                              restore as failed."
+            });
+            let text = serde_json::to_string_pretty(&payload)
+                .map_err(|e| McpError::internal_error(e.to_string(), None))?;
+            let mut result = CallToolResult::structured(payload);
+            result.content = vec![ContentBlock::text(text)];
+            return Ok(result);
+        }
+
         let already = dir.exists();
         if !already && let Err(e) = std::fs::create_dir_all(&dir) {
             // Say which directory and why, rather than a bare io error: the
@@ -242,8 +286,16 @@ impl ServerHandler for LatentService {
                  for every project. Do NOT report reflow2 as missing, broken or misconfigured, and \
                  do NOT set up a design unasked: most directories should stay this way.\n\nWhen \
                  the user asks to design, plan, capture requirements, or runs /genesis or /adopt: \
-                 call `reflow2_start_design`, then follow the single next step it returns.",
-                self.graph_path
+                 call `reflow2_start_design`, then follow the single next step it returns.\n\n\
+                 ⚠️ THIS SENTENCE HAS A SHELF LIFE. It was true when this server started and \
+                 nothing re-checks it. A design can appear underneath — restoring one with \
+                 `reflow2-mcp --graph-path {} --import <export>` builds a full store in seconds, \
+                 and this server goes on serving the one-tool surface and reporting no design. If \
+                 you have just restored, or anything else has written here since: the restore \
+                 worked, this view is stale, and a full client restart is what attaches the design \
+                 surface. Do not re-import and do not report the restore as failed. \
+                 `reflow2_start_design` re-probes and will tell you if this has happened.",
+                self.graph_path, self.graph_path
             ))
     }
 }

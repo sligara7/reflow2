@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b4561bf7f0bbba5d7091e320910acc895733445d2d72fdc14180bc9b97078268",
+  "content_hash": "sha256:0964cdbb76efa86fa692630fe9e4416ef80265bf62af0b7f01eeff5b9ca46112",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -9771,6 +9771,17 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "fact:defect-the-latent-surface-never-re-probes-after-a-cli-restore",
+      "properties": {
+        "basis": "causal",
+        "confidence": 1.0,
+        "evidence": "The reported mechanism is the one fixed: the surface is chosen once at startup and nothing re-probes, so a design built by `--import` after the handshake stays invisible. Validated by a test that builds a real store under a latent service and asserts `reflow2_start_design` refuses rather than starting a second design, plus two mutations that each kill exactly one case. Their ask (a), promoting the surface in place, is recorded as NOT buildable rather than silently substituted.",
+        "validation_status": "validated"
+      },
+      "to_id": "chg:the-latent-surface-notices-a-design-arrived"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:defect-the-launch-wrapper-cannot-see-a-schema-change",
       "properties": {
         "basis": "causal",
@@ -18746,6 +18757,15 @@
         "action": "modified"
       },
       "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-latent-surface-notices-a-design-arrived",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:latent"
     },
     {
       "edge_type": "CHANGED",
@@ -69270,7 +69290,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4e466f33a0f655d7fadc2ad2e7059b0d1062bbbcab337eda0050334a61e5192f",
+        "checksum": "sha256:7280072322f2889e0a1e958c0d9293fb281e8938ff9dc368d1962d833434a421",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/latent.rs",
         "name": "latent.rs",
@@ -76096,6 +76116,16 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "The installer stops skipping the one ignore entry most likely to be already tracked, and the remedy it prints works on a directory"
+      }
+    },
+    {
+      "node_id": "chg:the-latent-surface-notices-a-design-arrived",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "description": "music_graph F24, reported 2026-08-16 on the run-book's own §0b restore path — the SIBLING of F23, which v0.32.0 fixed an hour earlier. Both fire on the same walk, so a consumer restoring on 0.32.0 got past F23 cleanly and straight into this.\n\nWHAT HAPPENED: the MCP server started against an empty directory and said so truthfully — 'no design graph has ever been started at .reflow2/graph … exactly one tool is served'. Ninety seconds later `--import` built a full 327-node store underneath it. NOTHING RE-PROBES, so the surface is chosen once at startup and every design tool stayed absent for the rest of the session; the export could not be refreshed from the very session that had just done the restore. ⭐ AND THE SHARP EDGE IS THE COMBINATION: at that moment the graph exists, the pre-commit hook is blocking commits, and THE ONLY TOOL ON OFFER IS THE ONE THAT STARTS A DESIGN — against a directory that now has one. The latent surface's own warning that it is 'easy to accept by accident' is aimed at exactly this and cannot be acted on from inside it.\n\nTHEIR ASK (a) IS NOT BUILDABLE AND THAT IS WORTH RECORDING RATHER THAN QUIETLY SUBSTITUTING: 're-probe when a tool is called and promote latent → full surface in place'. The tool router is fixed per service and MCP clients cache the tool list, so a surface cannot grow tools mid-session without a list-changed notification and client support for it. What CAN be done is their (b) and (c), and both are here.\n\n(b) `reflow2_start_design` NOW RE-PROBES BEFORE IT CREATES ANYTHING, via `describe_at` — which reads only the sidecar files, opens no store, takes no lock, and therefore cannot mint an identity by looking. If a design is present it REFUSES: `started: false`, `a_design_is_already_here: true`, the design named, nothing created, and the instruction that actually attaches the surface (a FULL client restart, not merely a /mcp reconnect). It also says in words that a restore has NOT failed and must not be re-run — the wrong recovery was the expensive one available.\n\n(c) The handshake blurb now says its own claim HAS A SHELF LIFE, names `--import` as the way a design appears underneath it, and points at the restart. Previously the blurb was true when printed and false ninety seconds later with nothing to say so.\n\nMUTATION-CHECKED TWICE, each killing exactly one test and no other: removing the re-probe fails ONLY the arrived-design case; widening the guard from `describe_at`'s state to `design_present()` fails ONLY the opted-in counterweight. ⭐ THAT SECOND ONE IS THE POINT OF THE CHANGE'S SHAPE. `design_present` deliberately treats a bare `.reflow2/` directory as opted in — that is how the window between `reflow2 init` and the first write is covered — but OPTED IN IS NOT DESIGNED, and conflating them would make the tool refuse on exactly the projects that most need it: set up, never written to. The guard therefore keys on `Design | Unnamed`, never on directory existence.\n\nTHE ORDINARY PATH IS PINNED TOO, because a refusal that fired on an undesigned directory would stop a machine-wide install from ever starting a design at all.\n\nSERVED SURFACE UNCHANGED — 149 toolsnaps match. The tool DESCRIPTION did not move; only its behaviour when a design is already there, and the handshake instructions, which toolsnaps do not pin.\n\nNOT FIXED, and stated rather than left to be discovered: the surface still cannot change mid-session, so after the refusal the design tools remain absent until the client restarts. This makes the dead end SAY what it is; it does not remove it.",
+        "name": "The one tool a latent server offers stops offering to start a design over one that arrived after startup — music_graph F24",
+        "subject": "system"
       }
     },
     {
@@ -93832,7 +93862,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f80d72866cbada2ba92192bf3f0aa39fb991c370ae10bbc5be40b0d9bc3cac97",
+  "prev_content_hash": "sha256:b4561bf7f0bbba5d7091e320910acc895733445d2d72fdc14180bc9b97078268",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
