@@ -31,6 +31,31 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.32.1] — 2026-08-16
+
+A patch cut, made so music_graph gets **F24** without waiting for the next increment: v0.32.0 fixed F23 and shipped an hour before F24's fix landed, which left a consumer able to restore successfully and then walk straight into the second half of the same failure.
+
+### Why this is a patch and not a minor
+
+Stated rather than left implicit, because it is a judgement call. `reflow2_start_design` gains a refusal branch with new fields in its reply, and an output-shape change is normally minor. It is bucketed as a patch on this file's own wording — *"a behavior change is a **patch** when it only turns a swallowed failure into a loud one (a fix, not a new contract)"* — which is exactly what it does: starting a second design over an existing one used to succeed silently and now refuses. **The input surface did not move: all 149 toolsnaps match**, and every pre-existing reply shape is unchanged. Nothing here touches the schema, so the stamp is still 29 node types / 61 edge types / schema_version 1 and **no upgrade doc is owed**.
+
+### Fixed
+
+- **The latent surface notices a design arrived.** music_graph **F24**, the sibling of F23 — both fire on the run-book's own §0b restore walk. The server starts against an empty directory, says so truthfully, and then `--import` builds a full store underneath it seconds later. Nothing re-probes, so every design tool stays absent for the rest of the session and the export cannot be refreshed from the session that just did the restore. The sharp edge is the combination: the graph exists, the pre-commit hook is blocking commits, and **the only tool on offer is the one that starts a design** — against a directory that now has one.
+
+  `reflow2_start_design` now re-probes before creating anything, using a read that opens no store and takes no lock, so it cannot mint an identity by looking. If a design is present it **refuses**: nothing is created, the design is named, and the reply gives the step that actually attaches the surface — a full client restart, not merely a reconnect. It also says plainly that the restore did **not** fail and must not be re-run, because the wrong recovery was the expensive one on offer. The handshake blurb now admits its own claim has a shelf life and names `--import` as how a design appears beneath it.
+
+  **The reporter's preferred fix is not buildable and that is recorded rather than quietly substituted**: promoting the latent surface to the full one in place cannot work, because the tool router is fixed per service and clients cache the tool list. This makes the dead end *say what it is*; it does not remove it — after the refusal, the design tools remain absent until the client restarts.
+
+- **The launch wrapper sees everything compiled in.** Development tooling only — **this script is not shipped in the kit, so consumers are unaffected**. Its content hash covered `crates/**/src/*.rs` and the manifests, but not the two trees compiled in from outside `src/`: `schema/*.yaml` (via `include_str!`) and `getting-started/skills/**/SKILL.md` (via the build script). A schema-only or skill-only edit therefore left the hash identical, the wrapper reported *"binary current, skipping build"*, and the server went on serving the previous vocabulary or the previous skill text.
+
+  The framing that matters is sharper than "the hash was incomplete": **this hash is a gate in front of cargo's own change detection**, so what it misses, cargo is never asked about. The skills case is the clearest instance — `build.rs` already declared `cargo:rerun-if-changed` correctly, and the wrapper was defeating a mechanism that was right. Tests stay deliberately out: they are separate targets and cannot change the binary being served.
+
+### Added
+
+- Three findings and one open question recorded in the design graph: a PR export going stale behind a green, mergeable badge (measured on three of this repo's own PRs, each 56–63 nodes behind main); a property naming a node id being unguarded while edge endpoints are guarded across sixteen helpers; and an open question on how one finding should say it corroborates another, recorded as brainstorming rather than as a proposal.
+
+
 ## [0.32.0] — 2026-08-16
 
 Fifteen merged changes, and the shape of the increment is that **every defect in it was found by
