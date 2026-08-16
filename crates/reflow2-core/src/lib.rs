@@ -39,6 +39,7 @@ pub mod confirm;
 pub mod consumption;
 pub mod corpus;
 pub mod coverage;
+pub mod dates;
 pub mod depends;
 pub mod detect;
 pub mod dimensions;

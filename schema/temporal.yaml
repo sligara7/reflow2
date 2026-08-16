@@ -41,12 +41,27 @@ schema:
         # the same argument DesignEpoch.status made for `arrived`).
         basis: { type: enum, values: [measured, forecast], default: measured, indexed: true, description: "Whether this assertion RECORDS something that happened or PROJECTS something expected to. The distinction is the whole value of a derived roadmap: a reader must be able to tell which epochs rest on evidence and which on projection, and a chart that cannot is worse than no chart. `forecast` is why this property exists — a readiness projection ('TRL 7 valid from 2035') is a TemporalFact and NOT a DimensionObservation, because `observed_at` says OBSERVED and nobody observed anything in 2035. Recording a projection as an observation is [BL-157]'s fiction sitting inside the machinery the roadmap is computed FROM, where it would propagate rather than sit still." }
         confidence: { type: float, range: [0.0, 1.0], description: "How much weight the author puts behind this assertion — most meaningful on a `forecast`, where `req:plans-move-honestly` already commits to confidence that decays with horizon, and a ten-year TRL projection needs it more than any plan does. STATED BY THE AUTHOR, NEVER COMPUTED BY REFLOW2 (Anthony, 2026-08-02): a decay curve is a judgement about risk appetite, and deriving one from distance-in-epochs would assert a risk model nobody chose — the same defect as defaulting the gating threshold, one layer along. Absent means unstated, which reads as unstated and never as certain." }
+        # Added 2026-08-16 for `dec:how-should-a-temporal-fact-carry-its-date-when-there-is-no-epoch`.
+        # NOT A SECOND WAY TO SAY THE SAME THING — a second thing to say. The
+        # EDGES `VALID_FROM` / `VALID_TO` point at a DesignEpoch and answer "from
+        # which named milestone"; these answer "from which DATE". A roadmap wants
+        # the first, an audit trail the second, and only the edge can be ordered
+        # against other epochs by `sequence`.
+        valid_from: { type: string, indexed: true, description: "The DATE this assertion became true, when there is no epoch to point at. NOT a replacement for the `VALID_FROM` edge, which names a DesignEpoch and is what a roadmap orders by `sequence`; this is for the far commoner case where a writer has a calendar date and no milestone. DECLARED BECAUSE THE CORPUS ALREADY SAID IT: on 2026-08-16, 112 of 205 TemporalFacts carried exactly this property undeclared, 76 carried the edge, and ZERO carried both — a clean split, which is what a MISSING WORD looks like rather than what carelessness looks like (`fact:defect-half-the-temporal-facts-date-themselves-where-nothing-reads`). Minting one DesignEpoch per calendar date was the alternative and was rejected: it floods the time axis with points that mark nothing, damaging the roadmap computation that is the epoch's whole purpose. READ, not merely stored — `search_design` returns `as_of` and `age_days` for any fact carrying it, which is part 3 of `cap:claims-carry-their-age`: a six-week-old observation must not be narrated as current." }
+        valid_to: { type: string, indexed: true, description: "The DATE this assertion stopped being true; absent means still true. The date-shaped counterpart of the `VALID_TO` edge, exactly as `valid_from` is to `VALID_FROM`, and carried for the same reason: a writer who knows when a claim expired rarely has a milestone named for that moment. `search_design` reports a fact whose `valid_to` has passed as `expired`, so a superseded observation stops reading as current — the failure `req:a-dated-observation-does-not-read-as-standing-doctrine` names." }
       embedding_field: statement
       extraction_hint: >
-        A time-bounded assertion true only between two epochs. Requirement creep
-        = a satisfaction fact whose VALID_FROM is a later epoch; a dropped
-        requirement = a fact with VALID_TO set. The graph keeps both instead of
+        A time-bounded assertion, true only over a stretch of time. Requirement
+        creep = a satisfaction fact that becomes true LATER; a dropped
+        requirement = a fact whose validity ENDS. The graph keeps both instead of
         overwriting — so any past state is reconstructable.
+        TWO WAYS TO SAY WHEN, and they are not interchangeable: the `VALID_FROM`
+        / `VALID_TO` EDGES point at a DesignEpoch, which is what a roadmap orders
+        by `sequence`; the `valid_from` / `valid_to` PROPERTIES carry a plain
+        DATE, for the commoner case where there is no milestone to point at.
+        Prefer the edge when a real epoch exists; otherwise write the date.
+        (This hint previously described VALID_FROM and VALID_TO as though they
+        were fields — which is what taught 112 writers to invent them.)
 
     Snapshot:
       properties:
