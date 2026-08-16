@@ -155,6 +155,26 @@ impl ReflowService {
         // not a reflow2 export records no chain, and says so in the receipt.
         let mut chain_note = None;
         let mut sync_note = None;
+        // WHAT THIS WRITE ACTUALLY DID, because the receipt could not say.
+        //
+        // `content_hash` and `prev_content_hash` DO NOT ANSWER IT. Measured on
+        // 0.31.0 across a five-export chain: an export that changed the file and
+        // one that changed nothing return **byte-identical receipts** — same
+        // content hash, same prev hash — because `chain_after` gives an
+        // unchanged export the predecessor's own `prev`. In both cases
+        // `content_hash != prev_content_hash`, so that difference discriminates
+        // nothing.
+        //
+        // It matters because of who hits it. On a `--shared` server a peer's
+        // export publishes YOUR in-flight work (measured: 28 nodes once, 17 the
+        // next), and your own export afterwards is then a no-op — which read to
+        // the seat that hit it as a FAILED SAVE. Reported five times by three
+        // seats before this existed. `sync_status` answers the other direction
+        // and says out loud that it declines this one.
+        //
+        // Same principle as the `revision` block on the constructors and the
+        // who-edge refusals: two different facts must not share one reply.
+        let mut wrote = "created";
         if target.exists() {
             match std::fs::read_to_string(target)
                 .ok()
@@ -181,9 +201,17 @@ impl ReflowService {
                         ));
                     }
                     sync_note = verdict.message(&path);
+                    wrote = if predecessor.effective_content_hash()
+                        == export.effective_content_hash()
+                    {
+                        "unchanged"
+                    } else {
+                        "changed"
+                    };
                     export.chain_after(&predecessor);
                 }
                 None => {
+                    wrote = "changed";
                     chain_note = Some(
                         "the file being replaced was not a reflow2 export — no lineage recorded",
                     );
@@ -218,8 +246,21 @@ impl ReflowService {
             "edges": export.edges.len(),
             "content_hash": export.content_hash,
             "prev_content_hash": export.prev_content_hash,
+            "wrote": wrote,
             "stamp": serde_json::to_value(&export.stamp).map_err(ser_err)?,
         });
+        if wrote == "unchanged" {
+            // Only on the case that misleads. A note present on every successful
+            // export is the noise `search_first` and the `revision` block both
+            // refuse to become.
+            receipt["wrote_note"] = json!(
+                "NOTHING WAS WRITTEN — the file already held exactly this design, byte for byte. \
+                 That is not a failure and not a refusal, and it is worth reading twice on a \
+                 shared server: it means somebody else's export already carried your work, so \
+                 there was nothing left for yours to add. `content_hash` and `prev_content_hash` \
+                 look identical to a successful write and cannot tell you this."
+            );
+        }
         if let Some(note) = chain_note {
             receipt["chain_note"] = json!(note);
         }

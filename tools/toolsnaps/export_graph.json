@@ -25,7 +25,7 @@
       },
       "path": {
         "default": null,
-        "description": "Write the export to this file (deterministic sorted-key JSON, diffable\nunder git) and return only {path, bytes, nodes, edges, content_hash,\nprev_content_hash, stamp}. Replacing an existing export links the new\ndocument to the old one's content hash (lineage; chain advances only\nwhen content changed). Omit to get the whole document as the result\npayload.",
+        "description": "Write the export to this file (deterministic sorted-key JSON, diffable\nunder git) and return only {path, bytes, nodes, edges, content_hash,\nprev_content_hash, wrote, stamp}. Replacing an existing export links the\nnew document to the old one's content hash (lineage; chain advances only\nwhen content changed). Omit to get the whole document as the result\npayload.\n\n**READ `wrote`** — `created` / `changed` / `unchanged`. The hashes do NOT\nanswer it: an export that changed the file and one that changed nothing\nreturn the same `content_hash` AND the same `prev_content_hash`, so a\nno-op is indistinguishable from a save without this field. On a shared\nserver `unchanged` usually means a peer's export already carried your\nwork, which is worth knowing and reads like a failed save without it.",
         "type": [
           "string",
           "null"
