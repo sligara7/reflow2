@@ -138,6 +138,54 @@ impl ReflowService {
                 obj.insert("nudge_advisory".into(), json!(advisory));
             }
         }
+        // "What did I introduce?" — asked explicitly, because answering it means
+        // reading the committed export and the ordinary orientation call should
+        // not pay for that (dec: Anthony 2026-08-16, both halves).
+        //
+        // THE BASELINE IS THE RECORD, NOT A CLOCK. Only 2 of this design's
+        // 2,367 nodes carry `created_at`, so a time-based session boundary was
+        // never computable; what the durable record does not yet hold is, and
+        // is the more useful question anyway.
+        if req.since_export
+            && let Some(graph_path) = self.graph_path.as_deref()
+        {
+            let mut baseline: std::collections::BTreeSet<String> =
+                std::collections::BTreeSet::new();
+            let state = reflow2_core::provenance::read_sync_state(graph_path);
+            for path in state.last_synced.keys() {
+                let Ok(raw) = std::fs::read_to_string(path) else {
+                    continue;
+                };
+                let Ok(doc) = serde_json::from_str::<reflow2_core::GraphExport>(&raw) else {
+                    continue;
+                };
+                for n in &doc.nodes {
+                    baseline.insert(n.node_id.clone());
+                }
+            }
+            match g.debt_since(&baseline) {
+                Ok(session) => {
+                    if let Some(obj) = payload.as_object_mut() {
+                        obj.insert(
+                            "since_export".into(),
+                            serde_json::to_value(&session).map_err(ser_err)?,
+                        );
+                    }
+                }
+                // A scoping failure must not take the whole orientation call
+                // down: the design-wide answer above is still true and still
+                // what a session needs most.
+                Err(e) => {
+                    if let Some(obj) = payload.as_object_mut() {
+                        obj.insert(
+                            "since_export_unavailable".into(),
+                            json!(format!("could not scope to the committed record: {e}")),
+                        );
+                    }
+                }
+            }
+        }
+
         // Has the SHARED RECORD moved since this seat last looked? The signal
         // existed and was read only by `export_graph`, so the design knew at
         // the first moment of a session and spoke at the last

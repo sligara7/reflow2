@@ -1916,6 +1916,15 @@ pub struct LoopScopeReq {
     /// tool can give and the one least likely to be questioned.
     #[serde(default)]
     pub contributor_id: Option<String>,
+    /// Also report what is owed on ground the COMMITTED EXPORT does not hold —
+    /// the closest thing to "what did this session introduce" that a design
+    /// with no clock can answer.
+    ///
+    /// OFF BY DEFAULT AND THAT IS A COST DECISION: it reads and parses the
+    /// committed export, which the ordinary orientation call has no reason to
+    /// pay for. Everything else in the reply stays design-wide either way.
+    #[serde(default)]
+    pub since_export: bool,
 }
 
 #[derive(Debug, Default, Deserialize, JsonSchema)]
