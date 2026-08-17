@@ -776,7 +776,7 @@ impl DesignGraph {
             // benign error to swallow here — a failure is a real storage/schema
             // fault and must surface, not leave the Decision unlinked from what
             // it governs (BL-58).
-            self.governed_by(&node_type, target, node::DECISION, &decision_id)?;
+            self.governed_by(&node_type, target, node::DECISION, &decision_id, None)?;
         }
         Ok(decision_id)
     }
@@ -1333,6 +1333,22 @@ impl DesignGraph {
                 .and_then(dynograph_core::Value::as_str)
                 .unwrap_or("proposed");
             if status == "dropped" || status == "met" {
+                continue;
+            }
+            // A RULING may declare this requirement correctly unsatisfied, and
+            // this is the half `orphan_node` could never cover
+            // (`req:a-deliberate-state-is-not-a-defect`, case b). Reported by
+            // dev_storyflow: a requirement disconnected on purpose, recorded in
+            // an accepted Decision saying no SATISFIES may be drawn to it — and
+            // `disconnected_community` proposed `generate_bridge`, PRECISELY THE
+            // FORGERY THE RULING FORBIDS, which an agent working the list
+            // top-down would have performed.
+            //
+            // Unlike the artifact case, no edge silences this one incidentally:
+            // the detector looks for incoming SATISFIES, so governance is
+            // invisible to it unless it is read. That is why this must READ the
+            // ruling rather than inherit a side-effect.
+            if self.is_parked(&req.node_id)? {
                 continue;
             }
             // A DISCONTINUED capability is not a live satisfier, so a

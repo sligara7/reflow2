@@ -161,8 +161,14 @@ fn an_accepted_decision_over_what_a_kpp_binds_is_surfaced_for_review() {
     // lands `proposed` (req:decision-status-not-asserted), which correctly does
     // NOT fire: an open choice has traded nothing yet.
     g.set_decision_status("dec:steel", "accepted").unwrap();
-    g.governed_by(node::COMPONENT, "cmp:body", node::DECISION, "dec:steel")
-        .unwrap();
+    g.governed_by(
+        node::COMPONENT,
+        "cmp:body",
+        node::DECISION,
+        "dec:steel",
+        None,
+    )
+    .unwrap();
 
     let gaps = g.detect_gaps().unwrap();
     let flagged = gaps
@@ -189,8 +195,14 @@ fn a_proposed_decision_is_not_flagged() {
     g.add_decision("dec:maybe", "Maybe aluminium", "Undecided.", None)
         .unwrap();
     g.set_decision_status("dec:maybe", "proposed").unwrap();
-    g.governed_by(node::COMPONENT, "cmp:body", node::DECISION, "dec:maybe")
-        .unwrap();
+    g.governed_by(
+        node::COMPONENT,
+        "cmp:body",
+        node::DECISION,
+        "dec:maybe",
+        None,
+    )
+    .unwrap();
 
     assert!(!sources(&g).contains(&GapSource::KppContradicted));
 }

@@ -189,6 +189,23 @@ pub struct SweepScope {
     /// The rule categories evaluated on this graph, so "no findings" can be read
     /// as "these ran and found nothing" rather than taken on trust.
     pub rules: Vec<&'static str>,
+    /// Nodes whose unattached state a RULING declares correct — a `GOVERNED_BY`
+    /// edge carrying `ruling: parks` to a Decision that says why.
+    ///
+    /// COUNTED HERE RATHER THAN SILENCED, and the distinction is the whole
+    /// point of `req:a-deliberate-state-is-not-a-defect`. Silence was already
+    /// available: any `GOVERNED_BY` edge made an Artifact non-orphan, because
+    /// the detector saw an EDGE and not a RULING. So "deliberately parked" and
+    /// "never looked at" produced the same answer — a vacuous zero in different
+    /// clothes. A report can now say "34 defects, 8 parked" instead of "97", or
+    /// instead of nothing.
+    ///
+    /// dev_storyflow measured the failure it answers: defects 88 → 97 across
+    /// ten writes, EIGHT of them deliberate registrations a standing ruling
+    /// prescribed, with 31 more owed in the same genre. The correct action was
+    /// degrading the instrument, and a later seat watching the count climb has
+    /// an incentive to stop registering documents — the worse state.
+    pub parked: Vec<String>,
     /// Said in WORDS when the sweep could not have found anything — an empty
     /// graph. `None` when the sweep was real, so its presence is the signal.
     #[serde(skip_serializing_if = "Option::is_none", default)]
@@ -758,12 +775,72 @@ impl DesignGraph {
     }
 
     /// What the sweep looked at — computed, never asserted.
+    /// Nodes a RULING declares deliberately unattached or unsatisfied — sorted,
+    /// so the list is stable across runs.
+    ///
+    /// A node is parked when it carries an outgoing `GOVERNED_BY` with
+    /// `ruling: parks`. The edge is the claim AND the reason at once: it points
+    /// at the Decision that says why, so a deliberate state can never be
+    /// asserted without one (`req:a-deliberate-state-is-not-a-defect`).
+    ///
+    /// ⚠️ THE RULING MUST BE ACCEPTED. A `proposed` Decision is somebody
+    /// thinking out loud — the same discriminator `loop_status` uses to tell an
+    /// assigned decision from a brainstorm — so parking on an unsettled ruling
+    /// would let a musing suppress a finding. Refusing that keeps the two-sided
+    /// shape honest: the edge is the claim, and an ACCEPTED Decision is the
+    /// authority behind it.
+    /// Whether ONE node is parked — the single-node form of
+    /// [`parked_nodes`](Self::parked_nodes), for detectors that already have a
+    /// node in hand and should not walk the whole graph to ask about it.
+    pub(crate) fn is_parked(&self, node_id: &str) -> Result<bool, DynoError> {
+        for e in self.outgoing(node_id, Some(edge::GOVERNED_BY))? {
+            let parks = e
+                .properties
+                .get("ruling")
+                .and_then(|v| v.as_str())
+                .is_some_and(|r| r == "parks");
+            if !parks {
+                continue;
+            }
+            let accepted = self
+                .get_node(node::DECISION, &e.to_id)?
+                .and_then(|d| {
+                    d.properties
+                        .get("status")
+                        .and_then(|v| v.as_str())
+                        .map(|s| s == "accepted")
+                })
+                .unwrap_or(false);
+            if accepted {
+                return Ok(true);
+            }
+        }
+        Ok(false)
+    }
+
+    pub(crate) fn parked_nodes(&self) -> Result<Vec<String>, DynoError> {
+        let index = self.node_type_index()?;
+        let mut parked = Vec::new();
+        for id in index.keys() {
+            // Delegated so ONE rule decides what "parked" means. Two copies of
+            // this predicate would let the swept count and a per-node skip
+            // disagree, which is the two-implementations-of-one-number defect
+            // that `node_content_hash` was moved into the core to avoid.
+            if self.is_parked(id)? {
+                parked.push(id.clone());
+            }
+        }
+        parked.sort();
+        Ok(parked)
+    }
+
     fn sweep_scope(&self) -> Result<SweepScope, DynoError> {
         let nodes = self.node_type_index()?.len();
         let design_network_nodes = self.design_network()?.node_count();
         Ok(SweepScope {
             nodes,
             design_network_nodes,
+            parked: self.parked_nodes()?,
             rules: HealCategory::ALL.iter().map(|c| c.as_str()).collect(),
             note: (nodes == 0).then(|| {
                 "this graph holds no nodes, so an empty result is VACUOUS rather than clean — \
@@ -810,7 +887,13 @@ impl DesignGraph {
         let index = self.node_type_index()?;
         for target in affected_ids {
             if let Some(node_type) = index.get(target) {
-                self.governed_by(&node_type.clone(), target, node::DECISION, &decision_id)?;
+                self.governed_by(
+                    &node_type.clone(),
+                    target,
+                    node::DECISION,
+                    &decision_id,
+                    None,
+                )?;
             }
         }
         Ok(decision_id)
@@ -916,6 +999,12 @@ impl DesignGraph {
     fn all_defects(&self) -> Result<Vec<HealIssue>, DynoError> {
         let index = self.node_type_index()?;
         let mut issues = Vec::new();
+        // Nodes whose unattached state an ACCEPTED ruling declares correct.
+        // They are skipped by the attachment rules below and COUNTED in
+        // `SweepScope.parked` — never silently dropped, which would be the
+        // truncation this increment exists to end
+        // (`req:a-deliberate-state-is-not-a-defect`).
+        let parked: BTreeSet<String> = self.parked_nodes()?.into_iter().collect();
 
         // orphan_node — missing golden-thread links, scoped to the ones DETECT
         // does not already ask about.
@@ -973,11 +1062,35 @@ impl DesignGraph {
         // silence the detector everywhere — which is why this is not the
         // degree-zero rule the Decision arm below uses.
         for art in self.scan_nodes(node::ARTIFACT)? {
+            // A ruling that PARKS this artifact answers the question before it
+            // is asked. Note the ordering matters for honesty rather than for
+            // correctness: any GOVERNED_BY edge already made an artifact
+            // "attached" and so silenced this rule, which is how the deliberate
+            // ones went uncounted. Skipping explicitly is what lets them be
+            // reported as parked instead of vanishing.
+            if parked.contains(&art.node_id) {
+                continue;
+            }
             let attached = self
                 .outgoing(&art.node_id, None)?
                 .into_iter()
                 .chain(self.incoming(&art.node_id, None)?)
-                .any(|e| !ARTIFACT_BOOKKEEPING.contains(&e.edge_type.as_str()));
+                .any(|e| {
+                    // A `ruling: parks` edge is a claim that this node is
+                    // deliberately attached to NOTHING. Counting it as
+                    // attachment would be self-defeating — and worse, it would
+                    // let an UNSETTLED parking claim silence the finding, which
+                    // is the incidental silence this whole change exists to
+                    // replace. Caught by `parking_on_an_unsettled_ruling_does_
+                    // not_count`, which failed on its first run for exactly
+                    // this reason.
+                    let parks_claim = e.edge_type == edge::GOVERNED_BY
+                        && e.properties
+                            .get("ruling")
+                            .and_then(|v| v.as_str())
+                            .is_some_and(|r| r == "parks");
+                    !parks_claim && !ARTIFACT_BOOKKEEPING.contains(&e.edge_type.as_str())
+                });
             if !attached {
                 issues.push(orphan(
                     &art.node_id,
@@ -1082,6 +1195,14 @@ impl DesignGraph {
                 // `accepted` by construction, so including them would fire on
                 // all twelve of reflow2's own and be pure noise.
                 if n.node_id.starts_with("decision:ack:") {
+                    continue;
+                }
+                // Parked by an accepted ruling: reported in `SweepScope.parked`
+                // rather than here. In practice a parked node carries the
+                // GOVERNED_BY edge that parks it and is therefore never
+                // degree-zero — this skip is belt-and-braces so the two rules
+                // cannot disagree about one node if that ever stops being true.
+                if parked.contains(&n.node_id) {
                     continue;
                 }
                 if !self.outgoing(&n.node_id, None)?.is_empty()

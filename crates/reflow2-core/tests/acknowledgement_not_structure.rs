@@ -154,10 +154,22 @@ fn an_ordinary_decision_still_counts_as_structure() {
         Some("because"),
     )
     .unwrap();
-    g.governed_by(node::CAPABILITY, "cap:far-a", node::DECISION, "dec:real")
-        .unwrap();
-    g.governed_by(node::CAPABILITY, "cap:main", node::DECISION, "dec:real")
-        .unwrap();
+    g.governed_by(
+        node::CAPABILITY,
+        "cap:far-a",
+        node::DECISION,
+        "dec:real",
+        None,
+    )
+    .unwrap();
+    g.governed_by(
+        node::CAPABILITY,
+        "cap:main",
+        node::DECISION,
+        "dec:real",
+        None,
+    )
+    .unwrap();
 
     assert!(
         islands(&g).is_empty(),

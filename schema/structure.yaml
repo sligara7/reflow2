@@ -173,3 +173,35 @@ schema:
         the source stays open.
       properties:
         note: { type: string }
+        # Added 2026-08-17 for req:a-deliberate-state-is-not-a-defect.
+        #
+        # ⭐ WHY THE EDGE AND NOT THE NODE OR THE DECISION (Anthony's call).
+        # On the NODE it would need declaring on every type that can be parked
+        # and a bare flag would be an unevidenced claim. On the DECISION it
+        # would park everything that ruling governs — blunt, and a later
+        # GOVERNED_BY would silently inherit the parking. On the EDGE it is
+        # per-node and precise: one ruling parks the thirty-one documents it
+        # actually covers and nothing else, and it is TWO-SIDED BY
+        # CONSTRUCTION — you cannot claim a deliberate state without a real
+        # Decision to hang it on, because the claim IS the edge to the ruling.
+        #
+        # THE FAILURE IT ANSWERS, measured by dev_storyflow's fleet: defects
+        # moved 88 -> 97 across ten artifact writes, EIGHT OF THEM DELIBERATE
+        # no-claim registrations prescribed by a standing ruling, with 31 more
+        # documents owed in the same genre. The direction is the bad one — THE
+        # CORRECT ACTION DEGRADED THE INSTRUMENT — and it is self-reinforcing,
+        # because a later seat watching the count climb has an incentive to stop
+        # registering documents at all, which is the worse state.
+        #
+        # ⚠️ AND SILENCE WAS ALREADY AVAILABLE, WHICH IS WHY THIS IS NOT ABOUT
+        # SUPPRESSION. Reproduced live before this was designed: an Artifact
+        # carrying ANY GOVERNED_BY edge already escapes orphan_node, because the
+        # detector sees an edge rather than a ruling. So the deliberate ones
+        # could be hidden and could not be COUNTED — "deliberately parked" and
+        # "never looked at" gave the identical answer, a vacuous zero in
+        # different clothes. `ruling: parks` is what lets a report say
+        # "34 defects, 8 parked" instead of "97" or of nothing at all.
+        #
+        # UNSET IS THE ORDINARY CASE and means plain governance: this shapes
+        # that. No default asserts parking, per req:defaults-do-not-assert.
+        ruling: { type: enum, values: [parks], indexed: true, description: "What KIND of governance this edge records. Unset — the ordinary case — means the target simply shapes the source. `parks` means the ruling declares the source's UNATTACHED or UNSATISFIED state to be CORRECT AND DELIBERATE, so a structural detector reports it as parked rather than as a defect, and COUNTS it separately rather than going quiet. Two-sided by construction: the claim is the edge to the ruling, so a deliberate state can never be asserted without a Decision that says why. NOT A JUDGEMENT AND NOT A SILENCER (dec:report-dont-judge): reflow2 reads a ruling the design already made and reports the node accordingly; the parked nodes stay visible and counted, because a marker that made them disappear would be the silent truncation this increment exists to end." }

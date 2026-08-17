@@ -1691,6 +1691,16 @@ pub struct GovernedByReq {
     /// Usually `Decision` or `DesignRule`.
     pub to_type: String,
     pub to_id: String,
+    /// What KIND of governance this is. Omit — the ordinary case — and the
+    /// target simply shapes the source. Pass `parks` to record that the
+    /// ruling declares this node's UNATTACHED or UNSATISFIED state CORRECT AND
+    /// DELIBERATE: structural detectors then report it as parked and COUNT it
+    /// in `detect_defects`'s `swept.parked`, instead of filing it as a defect
+    /// or going quiet about it. The ruling must be an ACCEPTED Decision — a
+    /// `proposed` one is somebody thinking out loud, and a musing must not
+    /// suppress a finding.
+    #[serde(default)]
+    pub ruling: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
