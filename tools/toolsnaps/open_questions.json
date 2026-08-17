@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Questions already put to the user that still bear on something open, with the wording they saw. `status: asked` means they have not replied — follow it up, do not ask again. `status: answered` means they replied but the gap is still open, so their answer needs writing into the design or the gap needs acknowledging; their reply comes back with it. Read this at the start of a session, before detect_gaps.",
+  "description": "Questions already put to the user that still bear on something open, with the wording they saw. `status: asked` means they have not replied — follow it up, do not ask again. `status: answered` means they replied but the gap is still open, so their answer needs writing into the design or the gap needs acknowledging; their reply comes back with it. Read this at the start of a session, before detect_gaps. AN EMPTY ANSWER IS NEVER BARE: because this is the orientation call a session runs FIRST, a zero here was being read as an all-clear while the loop was owed dozens of other things, so `count: 0` always arrives with a `loop_hint` saying WHICH it is — the other non-zero debt named, or an explicit statement that nothing else is owed either. No questions open is not the same fact as nothing to do.",
   "inputSchema": {
     "properties": {},
     "type": "object"

@@ -206,10 +206,36 @@ source build.
 they changed before exec'ing it, so every new session and every `/mcp` reconnect serves a fresh
 binary automatically. It hashes content, not mtimes, on purpose: `cargo build` keys on mtimes, and
 `git pull --rebase`/checkout can leave sources *older* than the last-built binary — which silently
-served stale code for whole sessions until this was added. Consequence to know: editing reflow2
-source **mid-session** does not hot-swap the running server — rebuild lands on disk, but you must
-`/mcp` reconnect reflow2 (or restart the session) for the live tools to pick it up. All wrapper
-output goes to stderr; stdout is the JSON-RPC channel and must stay clean.
+served stale code for whole sessions until this was added. All wrapper output goes to stderr;
+stdout is the JSON-RPC channel and must stay clean.
+
+> ⚠️ **`/mcp` RECONNECT DOES NOT PICK UP YOUR REBUILD, AND THIS PARAGRAPH SAID IT DID UNTIL
+> 2026-08-17.** The old wording — *"you must `/mcp` reconnect reflow2 (or restart the session) for
+> the live tools to pick it up"* — is wrong wherever a **shared server** is running, which is the
+> normal case here. `--shared` re-attaches to the long-lived `--serve-shared` daemon, and the
+> daemon keeps executing the image it started from. Reconnecting spawns a fresh *client* against a
+> stale *server*, so it looks like it worked and changes nothing.
+>
+> **MEASURED THE DAY THIS WAS CORRECTED.** `heal.rs` was widened, the binary rebuilt at 22:13, and
+> a `/mcp` reconnect at 22:16 spawned a new `--shared` client — while the `--serve-shared` daemon
+> from 18:18 went on serving. `detect_defects` answered `total: 20` from code no longer on disk,
+> and said nothing about it. Anthony reconnected *specifically* to make the change live.
+>
+> **THE ACTUAL REFRESH** is to stop the daemon, then make any tool call (it respawns from whatever
+> is at the path):
+>
+> ```bash
+> ./target/debug/reflow2-mcp --graph-path ./.reflow2/graph --stop-shared
+> ```
+>
+> `crates/reflow2-mcp/src/service.rs`'s own `STALE_NOTE` has said this correctly since 2026-08-11
+> — *"A SESSION RESTART ALONE, WITHOUT `--stop-shared`, CHANGES NOTHING"* — and this file
+> contradicted it. **A running server is the authority on its own currency, not this document:**
+> `graph_report`'s `served_by.stale` is the check (`true` = every computed number came from a
+> replaced binary; `null` means it could not tell, which is never `false`). Note that
+> `loop_status` and `detect_defects` do NOT carry that block, so the debt and defect numbers a
+> session actually reads can be stale with nothing saying so — open under
+> `req:a-report-says-what-it-swept-and-whether-its-checks-ran`.
 
 ## Working on this repo
 

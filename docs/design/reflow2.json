@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:1ffddbd500cd0c55438825435e4927ad3123bbc7118327e5c0dc439c674715e4",
+  "content_hash": "sha256:bbf354027afd1dbc23e67035d149d73a56c4dd2a4c46b18e5d24a7e4e1667286",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -846,6 +846,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-finding-describes-the-walk-that-produced-it",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:heal"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -3115,6 +3123,12 @@
       "from_id": "chg:a-fact-carries-its-date-and-the-date-is-read",
       "properties": {},
       "to_id": "epoch:v0330"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-finding-describes-the-walk-that-produced-it",
+      "properties": {},
+      "to_id": "epoch:a-report-describes-the-walk-that-produced-it"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5956,6 +5970,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:a-report-describes-the-walk-that-produced-it:art:heal",
+      "properties": {},
+      "to_id": "epoch:a-report-describes-the-walk-that-produced-it"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:a-zero-that-is-not-an-absence:art:tools-query",
       "properties": {},
       "to_id": "epoch:a-zero-that-is-not-an-absence"
@@ -6993,6 +7013,15 @@
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:a-misnaming-is-fixed-in-the-message-not-the-key",
+      "properties": {
+        "acted_at": "2026-08-17",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -10130,6 +10159,42 @@
         "action": "modified"
       },
       "to_id": "art:search"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-finding-describes-the-walk-that-produced-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-finding-describes-the-walk-that-produced-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:scope"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-finding-describes-the-walk-that-produced-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-finding-describes-the-walk-that-produced-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-ask"
     },
     {
       "edge_type": "CHANGED",
@@ -23733,6 +23798,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:a-finding-describes-the-walk-that-produced-it",
+      "properties": {},
+      "to_id": "dec:a-misnaming-is-fixed-in-the-message-not-the-key"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:adopt",
       "properties": {},
       "to_id": "decision:ack:07bb37be6d5cd129"
@@ -29240,6 +29311,12 @@
       "from_id": "art:heal",
       "properties": {},
       "to_id": "snap:epoch:a-node-with-no-edges-is-not-clean:art:heal"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:heal",
+      "properties": {},
+      "to_id": "snap:epoch:a-report-describes-the-walk-that-produced-it:art:heal"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -66250,6 +66327,12 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:a-node-with-no-edges-is-not-clean",
+      "properties": {},
+      "to_id": "epoch:a-report-describes-the-walk-that-produced-it"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:a-project-is-set-up-right-on-the-first-run",
       "properties": {},
       "to_id": "epoch:tiering-and-proportion"
@@ -67280,6 +67363,14 @@
       "properties": {
         "conformance": "unchecked"
       },
+      "to_id": "cap:a-finding-describes-the-walk-that-produced-it"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:heal",
+      "properties": {
+        "conformance": "unchecked"
+      },
       "to_id": "cap:a-node-attached-to-nothing-is-reported-whatever-its-type"
     },
     {
@@ -67798,6 +67889,14 @@
       "edge_type": "REALIZES",
       "from_id": "art:scope",
       "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-finding-describes-the-walk-that-produced-it"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:scope",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cmp:scope"
@@ -67865,6 +67964,14 @@
         "completeness": "complete"
       },
       "to_id": "ver:the-server-says-when-it-is-stale"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:service",
+      "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-finding-describes-the-walk-that-produced-it"
     },
     {
       "edge_type": "REALIZES",
@@ -68246,6 +68353,14 @@
       "edge_type": "REALIZES",
       "from_id": "art:tools-ask",
       "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-finding-describes-the-walk-that-produced-it"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-ask",
+      "properties": {
         "completeness": "partial"
       },
       "to_id": "cap:bulk-forms"
@@ -68460,6 +68575,12 @@
         "evidence": "parse_enum in crates/reflow2-mcp/src/service.rs is the single helper every served enum argument passes through; the test a_rejected_enum_lists_the_legal_values fails against the prior map_err(|_| ...) implementation"
       },
       "to_id": "req:a-refusal-names-what-would-have-worked"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-finding-describes-the-walk-that-produced-it",
+      "properties": {},
+      "to_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran"
     },
     {
       "edge_type": "SATISFIES",
@@ -70464,6 +70585,12 @@
       "from_id": "ver:a-claim-reads-back-with-its-age",
       "properties": {},
       "to_id": "cap:claims-carry-their-age"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-finding-describes-the-walk-that-produced-it",
+      "properties": {},
+      "to_id": "cap:a-finding-describes-the-walk-that-produced-it"
     },
     {
       "edge_type": "VERIFIES",
@@ -73808,7 +73935,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:35d3493042a1ce7c4a61c458e2e9c412cd4e518ad8430d8bfe8ef2c748ec02fd",
+        "checksum": "sha256:dbfb116fc2a149a7a8327934438c56d0283a1a9e031a9766bb295b90544a2617",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
@@ -74496,7 +74623,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7c255df861c27d6db0392f2ca0baf6740c333dcc890e9b13e37624abd8f08512",
+        "checksum": "sha256:5a697a888ddc02311093bab62e138f4edf9e0f0e239b427f3e6e9648d713996d",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/scope.rs",
         "name": "scope.rs",
@@ -74613,7 +74740,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c5fe05b922857d22df4460966310fb497932e4125b473e8a4c227fce52a7d497",
+        "checksum": "sha256:c1c9aabea5364c1d9dbe62adc2baf867393db1aa1ccc9cc20a845723524db478",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -75079,7 +75206,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:de948f2045896274246a8d489c17f65f58595b1071d7ca897f8104b2ef52629b",
+        "checksum": "sha256:a61192bc3e08c0a0ae904c597228cc1aae1ba23bca5cf3d602b7bafd4f48d680",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/ask.rs",
         "name": "tools/ask.rs",
@@ -75397,6 +75524,16 @@
         "provenance": "authored",
         "status": "planned",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:a-finding-describes-the-walk-that-produced-it",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The remaining two parts of req:a-report-says-what-it-swept-and-whether-its-checks-ran, plus one instance the work itself created. (The guard matched that Requirement, which this SATISFIES rather than restates: the requirement says what must be true, this is the built thing that makes it true.)\n\n(b) `disconnected_community` SAID \"disconnected from the rest of the design\" AND WALKED SOMETHING NARROWER. dev_storyflow's report is exact and both halves are true at once: the nodes it named WERE reachable by an undirected walk of the graph. `design_network()` is not the graph — it drops nine node types and every review record, and CONTAINS is not a traceability edge, so a node reachable only through AUTHORED_BY, or only downward through containment, is an island there and connected here. MEASURED 2026-08-17: the walk covers 1133 of 2413 nodes. More than half the graph sits outside the thing whose absence the message called \"the rest of the design\". The message now states what it computed (no traceability edge to the main body), how much of the graph the walk held, which exclusions most often explain a false island, and how many singletons the rule does not report. THE CATEGORY KEY IS DELIBERATELY NOT RENAMED: consumers match on `disconnected_community` and it is an ility source, so renaming it to be accurate would break them to fix a sentence. The other half of their report — \"the genuinely unreachable node was never mentioned\" — is answered by the degree-zero rule of the previous epoch, since a node with no edges is unreachable in the full graph and is now reported whatever its type.\n\n(c) `open_questions` RETURNING 0 READ AS AN ALL-CLEAR while `loop_status` in the very next call reported 31 other owed items — and it is the orientation call a session runs FIRST. It now carries a `loop_hint` on an empty answer, un-throttled. THE THROTTLE IS THE INTERESTING PART: `dec:read-hint-shape` option C surfaces a hint once and then stays quiet so reads do not nag, which is right while the reader is being handed findings and INVERTS when the answer is empty — the throttle then removes the only sentence in the reply and leaves a zero to speak for itself. So empty answers are exempt and non-empty ones are not, and an empty answer always says which zero it is: the other non-zero debt named, or an explicit all-clear. \"Nothing to show you\" and \"nothing is owed\" stop sharing a reply.\n\n⚠️ AND THE CHANGE CREATED A THIRD INSTANCE, CAUGHT BY DRIVING THE BUILT BINARY RATHER THAN BY A TEST. The scoped detectors attach a note saying \"`in_scope: 0` is VACUOUS rather than clean — nothing could have been found here\", gated only on the region being one node. That was true while every structural rule needed an edge to fire. The degree-zero rule ended it: a node attached to nothing IS the finding and lives in exactly that one-node region. The first scoped call against the new binary returned `in_scope: 1`, a real finding, and that note beside it. The gate is now region-of-one AND found-nothing. Nothing was comparing the prose to the number it described.",
+        "name": "A finding describes the walk that produced it, and an empty orientation read says which zero it is",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -77487,6 +77624,14 @@
         "rationale": "Measured first: 112 of 205 TemporalFacts carried the property, 76 the edge, ZERO both. A clean split with no node caught between the two conventions is what a missing word looks like, not what carelessness looks like — the edge demands a DesignEpoch and a writer holding a date has nothing to point it at. Anthony chose (a) over migrating the 112 into invented epochs, and over making the edge polymorphic. The scope then grew on evidence: there was no reader to fall back, so one was built.",
         "subject": "system",
         "summary": "Implements `dec:how-should-a-temporal-fact-carry-its-date-when-there-is-no-epoch`, option (a), settled on Anthony's word 2026-08-16.\n\nWHAT CHANGED. `TemporalFact` declares `valid_from` and `valid_to` as date-string properties (`schema/temporal.yaml`). A new `reflow2-core::dates` module converts `YYYY-MM-DD` to a day number and subtracts. `SearchHit` gains a flattened `ClaimAge`, so `search_design` returns `as_of`, `age_days` and `expired` for any node carrying a date, and returns nothing extra for any node that does not.\n\n⭐ THE SCOPE GREW ON EVIDENCE, AND THAT IS THE POINT. The decision said \"declare the properties, and have readers prefer the edge and fall back to the property\". Checking what actually reads `VALID_FROM` found ONE reader — `readiness.rs:653` — which filters to `basis: forecast`, AND THERE ARE ZERO FORECAST FACTS IN THE DESIGN. All 189 dated facts are `measured`. So the 76 edge-bearing facts were just as unread in practice as the 112 property-bearing ones, and there was no reader to teach. Declaring the property alone would have changed the schema and left the corpus exactly as inert as before — which `dec:edge-orthogonality` forbids: a vocabulary distinction earns its keep only if a computation reads it. So the reader was built, and the property ships with it.\n\n⭐ THE READER WAS ALREADY DESIGNED AND UNBUILT. `cap:claims-carry-their-age` part 3 reads: \"where-am-i and search_design mark how old a node's factual half is, so a six-week-old observation is not narrated as current.\" A date string is exactly what that needs; an epoch reference is not, because an epoch carries a `sequence` for ordering and not a calendar position. This lands that part.\n\nTHE EXTRACTION HINT IS CORRECTED, and it was the cause rather than a detail. It read \"a satisfaction fact whose VALID_FROM is a later epoch; a dropped requirement = a fact with VALID_TO set\" — describing as fields two things that were edges. That is what taught 112 writers to invent the properties. It now states plainly that there are two ways to say when, that they are not interchangeable, and which to prefer.\n\nDELIBERATE SHAPE, each chosen against a cheaper alternative:\n- NO `chrono`. The core is dependency-light and the requirement is one subtraction; the civil-date conversion is a known closed form in fifteen lines.\n- `today` IS A PARAMETER on everything that decides. Only `today_utc()` reads the clock, at the edge. A function that reads the clock cannot be tested, only observed — and a module about staleness must not have tests that pass today and fail in a fortnight.\n- THE CLOCK IS READ ONCE PER RESULT LIST, not once per hit, so two hits can never disagree about what day it is.\n- `as_of` AND `age_days` ARE SEPARATE FIELDS so that \"dated, but the date will not parse\" is sayable. Collapsing them would make an unreadable date indistinguishable from no date.\n- AN UNREADABLE `valid_to` NEVER EXPIRES A CLAIM. Guessing would silently retire live facts.\n- A FUTURE DATE REPORTS A NEGATIVE AGE rather than clamping to zero, because clamping renders a forecast or a typo as \"current\" — the exact misreading the capability exists to prevent.\n\nVERIFIED. 15 cases in `a_claim_carries_its_age.rs`, all passing, including the Gregorian century exceptions (1900 not a leap year, 2000 one) that a naive `% 4` or `% 100` gets wrong. FOUR MUTATIONS, each killed by the right case: dropping the century exception fails the leap and anchor cases; clamping a future date fails the negative-age case; expiring on the last valid day fails the boundary case; treating an unreadable end date as expired fails the counterweight. END-TO-END on the real store through a restarted server: a fact dated today returned `age_days: 0`, one dated 2026-08-07 returned `age_days: 9`, and an undated fact returned no age fields at all — all three in one reply.\n\nNO SCHEMA STAMP MOVEMENT: properties are not counted by the version stamp, only node and edge types are, so no upgrade document is owed.\n\nNOT DONE, and named rather than left to be discovered: the 112 existing facts are not migrated or normalised — they are simply read now. Nothing writes `valid_from` automatically; it remains something an author states. And `where-am-i`, the other half of `cap:claims-carry-their-age` part 3, still does not mark age."
+      }
+    },
+    {
+      "node_id": "chg:a-finding-describes-the-walk-that-produced-it",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "A structural finding names the walk it made, an empty orientation read says which zero it is, and a scoped answer stops claiming nothing could be found when it found something"
       }
     },
     {
@@ -82090,6 +82235,16 @@
       }
     },
     {
+      "node_id": "dec:a-misnaming-is-fixed-in-the-message-not-the-key",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "`req:a-report-says-what-it-swept-and-whether-its-checks-ran` (b) offered exactly two ways out for `disconnected_community`: \"Either rename it to what it computes (\\\"tightly-coupled cluster\\\") or make it compute what it claims.\" NEITHER WAS TAKEN. The message was rewritten to describe the walk it actually made, and the category key `disconnected_community` was left alone.\n\nWHY RENAMING LOST. The key is a consumer contract in three places at once: it is a documented HEAL category, it is what `detect_defects` callers match on, and `ility.rs` uses it as a named ility source (`detect_defects.disconnected_community`). Renaming it would break every consumer in order to fix a sentence — the cost lands on people who did nothing wrong, to repair prose they never read. dev_storyflow's fleet matches on these keys.\n\nWHY RECOMPUTING LOST, and this is the one worth reading. \"Make it compute what it claims\" sounds like the honest option and is the wrong diagnosis: the detector's computation is not broken. It runs connected components over `design_network()`, correctly. THE REQUIREMENT'S OWN TEXT MISDESCRIBES IT AS COMPUTING MODULARITY, WHICH IT DOES NOT. What is narrow is the NETWORK, and the narrowing is deliberate and load-bearing — `NON_DESIGN_TYPES` and the exclusion of `CONTAINS` exist because provenance nodes and decomposition scaffolds distort the topology, each for a reason with its own record (BL-84, BL-124). Making it \"compute what it claims\" would mean walking the whole graph, which would undo those and report every Fragment as an island. The fix was never in the algorithm.\n\n⭐ SO THE GENERAL FORM, which is why this is a Decision and not a code comment: WHEN A CHECK'S NAME OVERSTATES ITS COMPUTATION, THE THIRD OPTION IS USUALLY RIGHT — leave the identifier, leave the algorithm, and make the OUTPUT state its own scope. A key is an interface; a message is addressed to a reader; only the second is free to change, and only the second was ever wrong.\n\n── A LARGER ROAD NOT TAKEN, recorded because it will be re-proposed ──\nThe requirement is titled \"A report says what it swept\", and the fullest reading of that is to change `detect_defects` itself to return `{swept: {...}, defects: [...]}` instead of a bare array — which is what the SCOPED variant already does (`Scoped` carries `total`, `in_scope`, `region_size`, `note`), so the two halves of one tool are inconsistent today and that asymmetry is real.\n\nNOT DONE HERE, on scope rather than on merit. It breaks every consumer that indexes the array, it is a minor version bump, and the requirement's own owed items are enumerated (a), (b), (c) and are all satisfiable without it. The requirement also states its own boundary: \"NOT IN SCOPE: whether every reporting tool needs this treatment or only those whose zero is read as permission.\" Doing the shape change under the cover of finishing (b) and (c) would have been the widening this project keeps warning about.\n\nWHAT WOULD SETTLE IT: whether the unscoped `detect_defects` should match the scoped one's envelope. That is a genuine open question about surface consistency, and it is Anthony's, not an implementer's.",
+        "name": "When a detector's NAME is wrong, fix what it SAYS — the key is a contract and the sentence is not",
+        "rationale": "The category key is an interface — matched by callers and used by name as an ility source — while the message is addressed to a reader. Only the message was ever wrong, so only the message changed. \"Make it compute what it claims\" was rejected on a sharper ground than cost: the computation is correct, and the narrowness people mistake for a bug is the deliberate exclusion of provenance nodes and CONTAINS, each with its own record. Widening the walk would undo BL-84 and BL-124 and report every Fragment as an island.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:a-projection-is-named-and-the-battery-runs-over-it",
       "node_type": "Decision",
       "properties": {
@@ -86040,6 +86195,16 @@
         "epoch_type": "revision",
         "name": "Enum rejections stop withholding the answer they already built",
         "sequence": 305,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:a-report-describes-the-walk-that-produced-it",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "A finding describes the walk that produced it, and an empty orientation read says which zero it is — requirement 1 completed",
+        "sequence": 348,
         "status": "arrived"
       }
     },
@@ -93539,6 +93704,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:a-report-describes-the-walk-that-produced-it:art:heal",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0100\",\"properties\":{\"as_checksum\":\"sha256:01606f8905e95775\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0101\",\"properties\":{\"as_checksum\":\"sha256:01606f8905e95775\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0110\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0120\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:30d3e7a27a3b198c46498bf1befd6511166bf8649c8837e6d78ac36cbb5d0852\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:30d3e7a27a3b198c46498bf1befd6511166bf8649c8837e6d78ac36cbb5d0852\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:a72ee9d0af723c8c9d345849969bc4af4d7d62e8210df0c336e89d6b20192ba2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:a4d8b8b8387e35f0236aae9e00a8d685235a77ff04b3425e05d72647c3ebe930\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:a4d8b8b8387e35f0236aae9e00a8d685235a77ff04b3425e05d72647c3ebe930\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:a4d8b8b8387e35f0236aae9e00a8d685235a77ff04b3425e05d72647c3ebe930\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:d3c6e9fe1cac1177\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:59747ef7945dd315f0ef154b20e5034b3c03506a27394e5ab19425383360758a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:59747ef7945dd315f0ef154b20e5034b3c03506a27394e5ab19425383360758a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:59747ef7945dd315f0ef154b20e5034b3c03506a27394e5ab19425383360758a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:59747ef7945dd315f0ef154b20e5034b3c03506a27394e5ab19425383360758a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:8b5553c1a9b686a3a4760c51614d8e4c35e9dfb2f3c65c7f954ac84da9962ecc\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v040\",\"properties\":{\"as_checksum\":\"sha256:7fd0af4d731e0f22\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v050\",\"properties\":{\"as_checksum\":\"sha256:2f778205ea735815\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v060\",\"properties\":{\"as_checksum\":\"sha256:b69c5f6682770736\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v061\",\"properties\":{\"as_checksum\":\"sha256:b48ea911ce1a3fe0\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v070\",\"properties\":{\"as_checksum\":\"sha256:2f75755ae2cd98d4\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v080\",\"properties\":{\"as_checksum\":\"sha256:2f75755ae2cd98d4\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v090\",\"properties\":{\"as_checksum\":\"sha256:2f75755ae2cd98d4\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-node-attached-to-nothing-is-reported-whatever-its-type\",\"properties\":{\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:supporting-is-not-conflict\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:heal\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:35d3493042a1ce7c4a61c458e2e9c412cd4e518ad8430d8bfe8ef2c748ec02fd\",\"granularity\":\"atomic\",\"location\":\"crates/reflow2-core/src/heal.rs\",\"name\":\"heal.rs\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:heal",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:a-zero-that-is-not-an-absence:art:tools-query",
       "node_type": "Snapshot",
       "properties": {
@@ -94839,6 +95014,18 @@
       }
     },
     {
+      "node_id": "fact:176-nodes-are-singletons-in-the-design-network-and-reported-by-nobody",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "property",
+        "statement": "MEASURED ON REFLOW2'S OWN GRAPH, 2026-08-17, while deciding how far to widen `disconnected_community`. Recorded because the NUMBER survives and the reasoning that stopped it becoming 176 defects would not.\n\nThe design network holds 1133 of 2413 nodes and breaks into 183 components:\n  1 main body        940 nodes\n  6 islands          5, 3, 3, 2, 2, 2 nodes   -> REPORTED (minus containment-attached ones)\n  176 SINGLETONS                              -> REPORTED BY NOBODY\n\nAnd 167 of those 176 HAVE EDGES IN THE FULL GRAPH. They fall through both detectors by construction: `orphan_node`'s degree-zero rule needs zero edges and they have some, while `disconnected_community` filters to clusters of >=2 and a singleton is never a cluster. Mostly Decisions whose only edge is AUTHORED_BY, plus Actors reachable only by INTERACTS_WITH and Contributors only by authorship — none of which are traceability edges.\n\n⛔ NOT TURNED INTO FINDINGS, AND THE REASON IS THE POINT. A Decision carrying only AUTHORED_BY is a recorded thought that governs nothing YET, which `heal.rs`'s own `repair_is_a_judgement` text already calls \"a parked thought that correctly governs nothing yet\", and which `req:a-deliberate-state-is-not-a-defect` exists to protect. Reporting 176 of them would have raised the defect count roughly sixfold in one release, and would have been the exact failure the epoch this work belongs to is named for. The temptation was real: the sweep was already being widened that day and these were sitting in the same measurement.\n\nSO IT IS A MEASUREMENT AND AN OPEN QUESTION, not a defect list. What it says is that \"attached to the design\" has THREE states, and reflow2 currently models two: joined to the thread, joined to nothing, and joined only by edges that are not traceability. The third is populous, ordinary, and invisible.\n\nRELATED AND UNANSWERED: `req:a-cluster-can-be-declared-deliberately-separate` asks for a way to declare separation deliberate so islands can be reported as undeclared rather than as a permanent warning. That answers the same shape one size up — a marker for PARKED would let the 176 be counted and named without being called defects. Whether the singleton count belongs in the `disconnected_community` message (where it now appears as scope) or as its own reported number is not settled.",
+        "subject_id": "req:a-cluster-can-be-declared-deliberately-separate",
+        "valid_from": "2026-08-17"
+      }
+    },
+    {
       "node_id": "fact:a-fresh-server-on-an-old-build-is-not-stale-and-stamps-confidently",
       "node_type": "TemporalFact",
       "properties": {
@@ -95942,6 +96129,18 @@
         "subject_id": "cap:reconcile-verified",
         "valid_from": "2026-08-07",
         "value": "{\"reported\":\"2026-08-07 w-ec25cf2c (kind) and w-fb7d30ab (last_run_at); 2026-08-08 w-4d05e937 (status + the shared-window consequence)\",\"defect_a\":\"no kind param, so a node answering an unvalidated_capability gap is born kind: verification\",\"defect_b\":\"no last_run_at param, so an updated node keeps the previous run's date and the write still reports success\",\"defect_c\":\"no status param, so the node is born planned - with kind, the exact two values that fail to answer the gap\",\"cost\":\"four calls to record one validation\",\"shared_graph_consequence\":\"between call 1 and call 4 the graph publishes a claim nobody meant, visible to every attached session\",\"no_workaround_found\":\"reconcile_verification takes test-run outcomes, a different act from re-running a measurement script\",\"fix_shape\":\"accept kind, status, last_run_at and a verifies target on add_verification; warn when the description moves and last_run_at does not\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-agents-md-said-an-mcp-reconnect-picks-up-a-rebuild-and-a-shared-server-makes-that-false",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "property",
+        "statement": "MEASURED 2026-08-17, AND IT COST THE OWNER A DELIBERATE ACTION THAT DID NOTHING. AGENTS.md said: \"every new session and every `/mcp` reconnect serves a fresh binary automatically\", and \"you must `/mcp` reconnect reflow2 (or restart the session) for the live tools to pick it up\". THAT IS FALSE WHENEVER A SHARED SERVER IS RUNNING, WHICH IS THE NORMAL CASE IN THIS REPO. `--shared` re-attaches to the long-lived `--serve-shared` daemon, and the daemon goes on executing the image it started from; the reconnect spawns a fresh CLIENT against a stale SERVER, so it looks like it worked and changes nothing.\n\nTHE NUMBERS. heal.rs was widened and the binary rebuilt at 22:13:23. Anthony ran `/mcp` at 22:16:28 SPECIFICALLY to make the change live, which spawned pid 2334559 (`--shared`). The `--serve-shared` daemon pid 2227071 had been up since 18:18:47 and kept serving. `detect_defects` answered `total: 20` — the pre-change number — from code no longer on disk. After `--stop-shared` and a respawn the same call answered `total: 34`.\n\n⭐ THE PART THAT MAKES THIS THIS REQUIREMENT'S BUSINESS RATHER THAN A DOC TYPO: THE SERVER KNEW. `req:the-server-is-the-authority-on-its-own-currency` is built, and `STALE_NOTE` in service.rs has said the right thing since 2026-08-11 — \"A SESSION RESTART ALONE, WITHOUT `--stop-shared`, CHANGES NOTHING\". But `served_by.stale` rides on `graph_report` ALONE. `loop_status` and `detect_defects` — the calls a session actually makes to read debt and defects — carry no such block, so every number they returned came from a replaced binary with nothing saying so. A report that cannot say whether its own code is current is the same failure as one that cannot say whether its checks ran.\n\nFIXED HERE: AGENTS.md now names `--stop-shared` and records that the old wording was wrong, and points at `served_by.stale` as the authority.\n\nSTILL OWED: carrying the staleness block on `loop_status` and `detect_defects`, or a reason it belongs only on the rollup. NOT DONE ON A GUESS — whether every read should pay for the `/proc/self/exe` check is a cost question nobody has answered.",
+        "subject_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran",
+        "valid_from": "2026-08-17"
       }
     },
     {
@@ -97425,6 +97624,18 @@
         "level": "unit",
         "method": "test",
         "name": "A dated claim reads back with its age, and an undated one says nothing (crates/reflow2-core/tests/a_claim_carries_its_age.rs) — 15 cases, all passing 2026-08-16. WHY THE FILE EXISTS AT ALL: 112 of 205 TemporalFacts carried a `valid_from` the schema did not declare and NOTHING read, so declaring it without a reader would have changed the schema and left the corpus exactly as inert. These cases are the evidence that the property now does something. THE ARITHMETIC IS TESTED WHERE IT FAILS SILENTLY — the epoch and the day either side of it (a sign error's first victim), and the Gregorian century exceptions: 1900 was NOT a leap year and 2000 WAS, which a naive `% 4` gets wrong one way and a naive `% 100` the other. Ten malformed inputs are checked to DECLINE rather than guess, including `16-08-2026`, which is a real date in the other convention and must never be silently accepted. WHAT A HIT SAYS: a dated fact reports `as_of` and `age_days`; an UNDATED node serialises to `{}` so the ordinary hit is byte-identical to what it was before ages existed; and a date that will not parse still reports `as_of` but no `age_days` — the two fields are separate precisely so \"dated, but I cannot read the date\" is sayable, and collapsing them would make it indistinguishable from undated. THREE COUNTERWEIGHTS DECIDE THE SHAPE, each guarding against a plausible wrong answer: a claim dated in the FUTURE reports a NEGATIVE age rather than clamping to zero, because clamping renders a forecast or a typo as \"current\"; a claim expiring TODAY is NOT yet expired, since `valid_to` is the last day it holds and an off-by-one here retires a live fact a day early; and an UNREADABLE `valid_to` never expires anything, because guessing would silently mark real facts dead. MUTATION-CHECKED FOUR WAYS, each killing exactly the right case: dropping the century exception fails the leap and anchor cases; clamping a future date fails the negative-age case; expiring on the last valid day fails the boundary case; treating an unreadable end date as expired fails the counterweight. `today` IS A PARAMETER IN EVERY CASE — a test that read the clock would pass today and fail in a fortnight, which is the one failure mode a module about staleness must not have. VERIFIED END-TO-END on the real store through a restarted server: `age_days: 0` on a fact dated today, `age_days: 9` on one dated 2026-08-07, and no age fields at all on an undated fact, in one reply. NOT COVERED: `where-am-i` still does not mark age, so only half of `cap:claims-carry-their-age` part 3 is checked here.",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-finding-describes-the-walk-that-produced-it",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-17",
+        "level": "integration",
+        "method": "test",
+        "name": "Five probes: the island finding names its walk and its scope, the scope figure tracks the graph, an empty orientation read names the debt, a clean one says all-clear, and a region that returned something never claims nothing could be found",
         "status": "passing"
       }
     },
@@ -99315,7 +99526,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:68dce194c476a0b0abe4e370178b744c719c765e210a0f33663809dd349ff667",
+  "prev_content_hash": "sha256:1ffddbd500cd0c55438825435e4927ad3123bbc7118327e5c0dc439c674715e4",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

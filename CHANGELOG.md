@@ -53,8 +53,44 @@ This file is the third view: *what changed, and when*.
   one, and an advisory DesignRule may bind the process rather than a node.
 
   First half of `req:a-report-says-what-it-swept-and-whether-its-checks-ran`. Reported by
-  dev_storyflow's fleet 2026-08-08 → 2026-08-15; `disconnected_community` naming what it does not
-  compute, and `open_questions` returning 0 reading as an all-clear, are still open.
+  dev_storyflow's fleet 2026-08-08 → 2026-08-15.
+
+- **A structural finding now describes the walk that produced it.** `disconnected_community` said
+  "disconnected from the rest of the design" while walking something much narrower — and both
+  halves of the field report were true at once, because `design_network()` is not the graph: it
+  drops nine node types and every review record, and `CONTAINS` is not a traceability edge, so a
+  node reachable only through `AUTHORED_BY` is an island there and connected here. **Measured: the
+  walk covers 1133 of 2413 nodes.** The message now says what it computed, how much of the graph
+  it held, which exclusions most often explain a false island, and how many singletons it does not
+  report. The category key is deliberately unchanged — consumers match on it.
+
+- **An empty `open_questions` says which zero it is.** It returned 0 while the loop was owed 31
+  other things, and it is the orientation call a session runs first. An empty answer now carries a
+  `loop_hint` naming the other non-zero debt, or stating an all-clear explicitly. The existing
+  hint throttle (`dec:read-hint-shape`) is right while a reader is being handed findings and
+  inverts when the answer is empty — it removes the only sentence in the reply — so empty answers
+  are exempt from it and non-empty ones are not.
+
+- **A scoped answer stopped claiming nothing could be found when it found something.** The scoped
+  detectors' vacuity note was gated on the region being one node, which was safe while every rule
+  needed an edge to fire. The degree-zero rule above ended that, and the first scoped call against
+  the new binary returned a real finding with "nothing could have been found here" beside it. Now
+  gated on region-of-one **and** found-nothing. Caught by driving the built binary; nothing was
+  comparing the prose to the number it described.
+
+  These three complete `req:a-report-says-what-it-swept-and-whether-its-checks-ran`.
+
+### Changed
+
+- **AGENTS.md was wrong about how to pick up a rebuild, and it cost a deliberate action that did
+  nothing.** It said a `/mcp` reconnect serves a fresh binary. Wherever a shared server is running
+  — the normal case here — `--shared` re-attaches to the long-lived `--serve-shared` daemon, which
+  keeps executing the image it started from, so the reconnect spawns a fresh *client* against a
+  stale *server*. Measured: binary rebuilt 22:13, reconnect 22:16, and `detect_defects` went on
+  answering the pre-change number from code no longer on disk; `--stop-shared` then produced the
+  new one. `service.rs`'s own `STALE_NOTE` has said this correctly since 2026-08-11 and the doc
+  contradicted it. Note `served_by.stale` rides on `graph_report` alone — `loop_status` and
+  `detect_defects` carry no staleness block, which is left open rather than guessed at.
 
 ## [0.33.0] — 2026-08-16
 
