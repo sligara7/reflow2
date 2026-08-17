@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:52d66a271dd69ab65fddcdfc58e22ab262af36fc1ac1c80b17d4a445d3e8fb6c",
+  "content_hash": "sha256:9050b0b3367a1d1fe7e2e5bb09eed985c085ee4429bf59b8764781ff7dca478b",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -5342,6 +5342,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-philosophy-is-separated-from-its-pre-1-0-corollary",
+      "properties": {},
+      "to_id": "epoch:doing-it-right-becomes-design-intent"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-retirement-covers-what-it-removed",
       "properties": {},
       "to_id": "epoch:v0300"
@@ -6245,6 +6251,12 @@
       "from_id": "snap:epoch:detector-spec-cannot-name-a-forked-identity:rule:design-intent-moves-only-on-the-owners-word",
       "properties": {},
       "to_id": "epoch:detector-spec-cannot-name-a-forked-identity"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:doing-it-right-becomes-design-intent:rule:fix-it-properly-while-it-is-still-cheap",
+      "properties": {},
+      "to_id": "epoch:doing-it-right-becomes-design-intent"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -7466,6 +7478,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-principle-has-a-universal-core-and-local-clothes",
+      "properties": {
+        "acted_at": "2026-08-17",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-satisfied-requirement-earns-a-stricter-mutability-class",
       "properties": {
         "acted_at": "2026-08-12",
@@ -7544,6 +7565,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-an-artifact-whose-checksum-returns-is-an-agent-going-in-circles",
+      "properties": {
+        "acted_at": "2026-08-17",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -7762,6 +7792,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-does-reflow2-ship-design-principles-to-every-project",
+      "properties": {
+        "acted_at": "2026-08-17",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-does-unmotivated-severity-key-on-built-not-provenance",
       "properties": {
         "acted_at": "2026-08-11",
@@ -7849,6 +7888,15 @@
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-how-does-a-shipped-principle-say-whether-it-is-enforced",
+      "properties": {
+        "acted_at": "2026-08-17",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -8381,6 +8429,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-which-agent-pitfalls-can-reflow2-actually-reach",
+      "properties": {
+        "acted_at": "2026-08-17",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-which-docs-can-never-be-a-projection",
       "properties": {
         "acted_at": "2026-08-11",
@@ -8539,6 +8596,78 @@
         "role": "author"
       },
       "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:non-goal-reflow2-does-not-judge-whether-a-check-is-meaningful",
+      "properties": {
+        "acted_at": "2026-08-17",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:non-goal-reflow2-does-not-judge-whether-a-check-is-meaningful",
+      "properties": {
+        "acted_at": "2026-08-17",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:non-goal-reflow2-does-not-know-what-is-deprecated",
+      "properties": {
+        "acted_at": "2026-08-17",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:non-goal-reflow2-does-not-know-what-is-deprecated",
+      "properties": {
+        "acted_at": "2026-08-17",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:non-goal-reflow2-does-not-resolve-dependencies",
+      "properties": {
+        "acted_at": "2026-08-17",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:non-goal-reflow2-does-not-resolve-dependencies",
+      "properties": {
+        "acted_at": "2026-08-17",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:non-goal-reflow2-does-not-validate-that-your-intent-is-sound",
+      "properties": {
+        "acted_at": "2026-08-17",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:non-goal-reflow2-does-not-validate-that-your-intent-is-sound",
+      "properties": {
+        "acted_at": "2026-08-17",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -8733,6 +8862,15 @@
       "properties": {
         "acted_at": "2026-08-13",
         "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-patch-record-binds-forward-not-backward",
+      "properties": {
+        "acted_at": "2026-08-17",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -9010,6 +9148,15 @@
       "from_id": "req:a-finding-has-somewhere-to-put-its-evidence",
       "properties": {
         "acted_at": "2026-08-16",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-fix-says-whether-it-corrected-the-cause",
+      "properties": {
+        "acted_at": "2026-08-17",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -19822,6 +19969,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-philosophy-is-separated-from-its-pre-1-0-corollary",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "rule:fix-it-properly-while-it-is-still-cheap"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-retirement-covers-what-it-removed",
       "properties": {
         "accepted_baseline": false,
@@ -28505,6 +28661,30 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "dec:non-goal-reflow2-does-not-judge-whether-a-check-is-meaningful",
+      "properties": {},
+      "to_id": "dec:idea-which-agent-pitfalls-can-reflow2-actually-reach"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:non-goal-reflow2-does-not-know-what-is-deprecated",
+      "properties": {},
+      "to_id": "dec:idea-which-agent-pitfalls-can-reflow2-actually-reach"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:non-goal-reflow2-does-not-resolve-dependencies",
+      "properties": {},
+      "to_id": "dec:idea-which-agent-pitfalls-can-reflow2-actually-reach"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:non-goal-reflow2-does-not-validate-that-your-intent-is-sound",
+      "properties": {},
+      "to_id": "dec:idea-which-agent-pitfalls-can-reflow2-actually-reach"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "dec:one-process-many-stores",
       "properties": {},
       "to_id": "dec:central-host"
@@ -28716,6 +28896,18 @@
         "note": "Captured under the decision that governance is integrated here rather than split out"
       },
       "to_id": "dec:governance-integrates-not-splits"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:a-fix-says-whether-it-corrected-the-cause",
+      "properties": {},
+      "to_id": "dec:the-patch-record-binds-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "req:a-fix-says-whether-it-corrected-the-cause",
+      "properties": {},
+      "to_id": "rule:fix-it-properly-while-it-is-still-cheap"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -30264,6 +30456,12 @@
       "from_id": "rule:design-intent-moves-only-on-the-owners-word",
       "properties": {},
       "to_id": "snap:epoch:detector-spec-cannot-name-a-forked-identity:rule:design-intent-moves-only-on-the-owners-word"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "rule:fix-it-properly-while-it-is-still-cheap",
+      "properties": {},
+      "to_id": "snap:epoch:doing-it-right-becomes-design-intent:rule:fix-it-properly-while-it-is-still-cheap"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -66662,6 +66860,12 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:the-key-is-renamed-and-the-sweep-says-what-it-swept",
+      "properties": {},
+      "to_id": "epoch:doing-it-right-becomes-design-intent"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:the-owners-identity-is-one-node-again",
       "properties": {},
       "to_id": "epoch:governance-becomes-expressible"
@@ -81606,6 +81810,14 @@
       }
     },
     {
+      "node_id": "chg:the-philosophy-is-separated-from-its-pre-1-0-corollary",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "The rule conflated an ENDURING philosophy with a corollary that expires at 1.0, and said the whole thing should be revisited then — Anthony corrected it: the philosophy endures"
+      }
+    },
+    {
       "node_id": "chg:the-retirement-covers-what-it-removed",
       "node_type": "ChangeEvent",
       "properties": {
@@ -83419,6 +83631,16 @@
       }
     },
     {
+      "node_id": "dec:idea-a-principle-has-a-universal-core-and-local-clothes",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. The sharpest technical problem inside `dec:idea-does-reflow2-ship-design-principles-to-every-project`, and the one that decides whether shipping is even possible.\n\nTHE PROBLEM, read straight off dev_storyflow's own text. Every one of the seven principles is a universal idea wearing storyflow's clothes:\n\n  #2 \"no silent fallbacks\" — the IDEA is universal (a failure must never report success). The STATEMENT names `try/except: pass`, `console.error`, toast UI. A beamline control system has the same failure and none of those words.\n  #4 \"verify your own claims\" — universal. The statement names `npm run check`, foreground cargo, Playwright on a real surface.\n  #5 \"real-path tests\" — universal. \"Unit-green ≠ live-green\" survives translation; \"the path the UI actually calls\" does not.\n  #7 \"modular, no monoliths\" — the modularity half travels; the Python DI / `typing.Protocol` / flat-hierarchy half is a language ruling and travels nowhere.\n  #3 \"done = end-to-end + lens-exposed\" — travels as \"built is not delivered\"; \"lens-exposed\" is storyflow vocabulary.\n  #1 and #6 travel almost verbatim, which is itself informative: they are the two most abstract.\n\n⇒ SHIPPING THE PROSE AS-IS WOULD PUT A JAVASCRIPT TOAST IN A BEAMLINE'S DESIGN GRAPH. And reflow2's operating context is explicitly not one domain — greenfield and brownfield, several orgs, currently a ~10-year-old bluesky stack at a synchrotron. A principle that arrives wearing the wrong clothes gets waived for the clothes, and the idea goes with them.\n\nTHE SHAPES, none chosen:\n(A) CORE ONLY. Ship the domain-free statement; each project writes its own instantiation if it wants one. Cheapest and most portable. COST: the abstract version is the forgettable version — \"fail loudly\" is a poster, whereas \"no `try/except: pass`\" is a thing you can be caught doing. The teeth are in the clothes.\n(B) CORE + WORKED EXAMPLES, marked as examples. The statement is domain-free; illustrations are labelled as one domain's instantiation, not as the rule. Keeps the teeth without asserting them elsewhere. COST: longer nodes, and `req:a-finding-has-somewhere-to-put-its-evidence` already says this design writes too much into single fields.\n(C) CORE + A PROJECT-LOCAL INSTANTIATION SLOT. The shipped rule is the core; the project fills in what it looks like HERE, and the filling-in is the act of adopting it. Turns adoption into something visible and checkable rather than a silent inheritance. COST: new vocabulary, and a slot nobody fills is the declared-field-nobody-writes-to trap `req:a-finding-has-somewhere-to-put-its-evidence` names explicitly.\n(D) DOMAIN PACKS. A software pack, an instrument-control pack, and so on. COST: reflow2 would be asserting what a domain is, and it has no basis for that.\n\n⭐ AN OBSERVATION WORTH CARRYING WHICHEVER WAY THIS GOES: the two that travel verbatim (#1 root-cause-first, #6 no silent caps) are the two reflow2 has ALREADY adopted for itself, independently. That is weak evidence that portability and abstraction are the same axis here — and that the right test for \"should this ship\" may simply be \"does it survive being stated without naming a language, a framework, or a tool?\"",
+        "name": "OPEN — a shipped principle has a universal CORE and local CLOTHES; does reflow2 ship only the core, and how does a project put its own clothes on it?",
+        "rationale": "Recorded as brainstorming. Every one of the seven is a universal idea in local clothes, and the clothes are where the teeth are — \"fail loudly\" is a poster, \"no try/except: pass\" is something you can be caught doing. Shipping the prose unchanged would put JavaScript toasts in a beamline's design graph; shipping only the abstraction may ship something too weak to bite. Not resolved.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-a-satisfied-requirement-earns-a-stricter-mutability-class",
       "node_type": "Decision",
       "properties": {
@@ -83505,6 +83727,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Nothing here is intent. Raised by an external agent-side field report, 2026-08-11 (fact:external-agent-side-report-2026-08-11, redacted).\n\nWHAT THEY OBSERVED. Several of their acknowledgements carried explicit retirement conditions written into the reason — of the shape \"revisit when the first implementation exists\", \"replace this when that work is scheduled\". One of those conditions had been true for weeks and nothing surfaced it. `reviewed_gaps` says an acknowledgement is \"worth re-reading when the design shifts\" and nothing detects the shift. Their line: acknowledgements are where gaps go to be forgotten SAFELY, and the safety decays silently.\n\n⚠️ NARROWER THAN THEY WROTE, AND THE NARROWING IS THE POINT. Expiry machinery EXISTS: a review expires when the set of nodes it judged changes, and `req:set-scoped-acknowledgement-keys-on-its-rule` (accepted) already fixed the case where a set-scoped acknowledgement expired merely because the design grew. So this is NOT \"acknowledgements never expire\". It is that the trigger is always the same trigger — the affected set moved — and a human-stated condition (\"when an artifact of this kind first appears\") is invisible to it. Recording the narrow version matters, because the wide version reads as a defect in something that works.\n\nIDEAS, unranked:\n(a) A typed re-review trigger on the acknowledgement: a node type appearing, a count crossing zero, an edge arriving. Expressive, and it is a small query language nobody asked for — every one of those is a new thing to specify, validate and explain.\n(b) No new vocabulary: have `loop_status` flag acknowledgements older than N design-changes as re-review candidates. Crude, cheap, and it needs no condition to be stated correctly at write time — which matters, because the person acknowledging a gap is the least likely to predict what would falsify it.\n(c) Let the acknowledgement name the NODE TYPE it is waiting on, and nothing more. Covers the reported case exactly (\"when the first artifact exists\") at a fraction of (a)'s cost.\n(d) Nothing. `req:review-expires-when-what-it-judged-changes` is already proposed and unbuilt; finish that before adding a second expiry axis beside it.\n\n⚠️ THE TRAP: a stated condition that is WRONG is worse than no condition, because it reads as watched. An acknowledgement saying \"revisit when X\" that nothing evaluates is the same false-assurance shape as a `planned` verification silencing a gap — which this project already refuses. Whatever is offered must actually be evaluated, or must not be offered.\n\n📌 SITS BESIDE `req:review-expires-when-what-it-judged-changes` (proposed): that one is about the trigger being too NARROW (only the set, not the content). This is about the trigger being SINGULAR. Same subsystem, different complaint, and they should be read together.",
         "name": "OPEN — should an acknowledged gap be able to declare a machine-checkable re-review trigger, rather than stating its retirement condition in prose?",
         "rationale": "A real acknowledgement carried a condition that came true and nothing noticed. But expiry machinery exists and works on a different trigger, so the honest finding is that the trigger is singular rather than absent — and a stated-but-unevaluated condition would be a worse failure than the current silence, because it would read as watched.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-an-artifact-whose-checksum-returns-is-an-agent-going-in-circles",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. The most concrete of the Class B candidates in `dec:idea-which-agent-pitfalls-can-reflow2-actually-reach`, separated because it is a specific buildable proposal rather than a triage, and because its measured bound is the interesting part.\n\nTHE PITFALL, in Anthony's words 2026-08-17: \"Infinite loops: Agents can get stuck repeatedly adding and removing the exact same line of code to fix a recurring error.\"\n\nTHE IDEA. reflow2 does not read code, but it records CONTENT HASHES. An oscillation has a signature that needs no semantic understanding at all: an artifact's checksum returning to a value it already held. A → B → A is a loop, and A → B → C → B is a smaller one. No language server, no diff parsing, no judgement — just a repeat in a sequence.\n\n⭐ THIS IS THE RIGHT SHAPE FOR REFLOW2 SPECIFICALLY, which is why it is worth separating out. Everything else in the pitfall list needs to understand code; this needs only to notice that the design has seen this exact content before. It is the same move `orphan_node`'s degree-zero rule makes — the finding that needs no judgement is the one worth computing.\n\n⚠️⚠️ AND THE MEASUREMENT SAYS IT CANNOT BE BUILT TODAY, which is the part that would have been missed by proposing it on plausibility. MEASURED ON REFLOW2'S OWN GRAPH, 2026-08-17:\n    Artifacts with ANY snapshotted checksum history:      23   (of 187 artifacts)\n    ...with more than one recorded prior value:             3\n    ...showing a checksum that returns to a prior value:    0\nThe three deepest histories (`art:heal`, `art:detect`, `art:service`) hold TWO prior checksums each. A detector run on that data would report zero oscillations and mean nothing by it — the vacuous zero this whole epoch exists to stamp out, shipped inside the fix for it.\n\n⇒ THE ROOT CAUSE IS ONE FIELD, NOT A SUBSYSTEM, and naming it is what makes this actionable. A Snapshot is taken by `record_change`, which the `design_updated` disposition calls and `design_holds` DOES NOT. So the commonest kind of code change — the refactor, the test fix, the churn where an oscillation would actually live — mints a ChangeEvent and records NO PRIOR CHECKSUM. The history is thin precisely where the signal would be.\n\nOPTIONS, none chosen:\n(A) HAVE `design_holds` SNAPSHOT THE PRIOR CHECKSUM TOO. Smallest change; the history starts accumulating immediately; the detector becomes possible later without further work. COST: a Snapshot per accept, on the commonest path.\n(B) KEEP A CHECKSUM LEDGER ON THE ARTIFACT rather than snapshotting the whole node — cheaper per write, but new vocabulary and a second place history lives.\n(C) DON'T BUILD IT. Oscillation may be better caught by the agent harness, which sees the edits as they happen, than by a design graph seeing them after the fact.\n(D) BUILD THE HISTORY NOW, THE DETECTOR LATER — deliberately, on the record, so the data exists by the time anyone wants the answer. This is the option the measurement argues for.\n\n📌 THE GENERAL LESSON, worth keeping whatever is decided: the detector was easy and the DATA was the constraint, and that was invisible until it was counted. Proposing it on plausibility would have produced a check that reports zero forever and is believed.",
+        "name": "OPEN — an artifact whose checksum RETURNS to a previous value is an agent going in circles; the detector is trivial and the history reflow2 keeps is too thin to run it on",
+        "rationale": "Recorded as brainstorming. The detector is trivial — a repeat in a sequence of content hashes, needing no semantic understanding — and reflow2 cannot run it: only 23 of 187 artifacts have any snapshotted checksum history and only 3 have more than one prior value, because `design_holds` accepts do not snapshot. The root cause is one missing write on the commonest path, not a missing subsystem. Proposing this on plausibility would have shipped a check that reports zero forever.",
         "status": "proposed"
       }
     },
@@ -83759,6 +83991,16 @@
       }
     },
     {
+      "node_id": "dec:idea-does-reflow2-ship-design-principles-to-every-project",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-17, thinking out loud: \"I feel like there are some other design principles that while they are my own philosophies, should apply to anybody building with reflow2 ... I think they should be advisory guidelines for any reflow2 project (of course the user can waive them if they want).\"\n\nTHE SOURCE: dev_storyflow's seven ENGINEERING PRINCIPLES, which he user-set over 2026-06-17 → 2026-07-04 and MIGRATED INTO A DESIGN GRAPH on 2026-08-09 as `rule:fleet_*` DesignRule nodes. Read from `origin/main` on 2026-08-17 (the local checkout was 289 commits behind; the pre-migration prose was recovered from the commit before `57f6bbb5`).\n\n  1. Right long-term fix — no patches or stopgaps. TWO ORDERED STEPS: determine the actual root cause FIRST (reproduce, trace, prove the mechanism), THEN fix at the root cause. \"A fix without an identified root cause is a guess.\"\n  2. No silent fallbacks — fail loudly or STOP AND REPORT. \"An INTEGRITY line, not a style preference.\"\n  3. Done = end-to-end + lens-exposed. Merged is not done.\n  4. Verify your OWN claims before posting; UI work must be observed live.\n  5. Real-path tests — unit-green is not live-green.\n  6. No silent caps or truncation — if you bounded coverage, SAY SO.\n  7. Modular, maintainable code — no monoliths (+ Python DI / typing.Protocol / flat hierarchies).\n\n⭐⭐ THE FINDING THAT REFRAMES THE WHOLE QUESTION, and it was not obvious until the seven were lined up: SIX OF THE SEVEN ARE ONE PRINCIPLE WEARING SEVEN COATS — the report must not overstate the work. A stopgap reports a fix that did not happen (1). A swallowed error reports success (2). \"Merged\" reported as \"done\" (3). An unverified claim posted as fact (4). Unit-green reported as live coverage (5). A truncated sweep reported as complete (6). Only #7 (modularity) is about structure rather than honesty.\n\n⇒ THAT IS `epoch:instruments-stop-overstating`, ARRIVED AT FROM THE OTHER DIRECTION. reflow2 spent this whole increment building the same principle for its own reports; his fleet derived it from agents writing code. Two independent derivations of one idea is the strongest evidence available that it is not a house style. It also changes what shipping them would MEAN: not \"reflow2 has opinions about your coding\", but reflow2 extending its own core doctrine — report don't judge, a zero must say which zero — outward to the project being designed.\n\n⇒ AND REFLOW2 ALREADY IMPLEMENTS THREE OF THEM ON ITSELF, which is either the best argument or a warning about scope: #6 IS `req:a-report-says-what-it-swept-and-whether-its-checks-ran`; #4 is `dec:three-party-checks` plus the standing \"claims must be evidence-backed\" rule; #1 is `rule:fix-it-properly-while-it-is-still-cheap` and `req:a-fix-says-whether-it-corrected-the-cause`, accepted hours before this conversation.\n\nTHE OPTIONS, none chosen:\n(A) SEEDED AS NODES. `genesis` / `reflow2_init` writes them into every new graph as advisory DesignRules. Durable, queryable, waivable per project by editing the node. COST: seven nodes nobody in that project authored, in a tool whose pitch is that the graph holds YOUR design.\n(B) SERVED AS A SKILL, like every other reflow2 skill — read on demand, nothing written. Zero footprint, always current with the server. COST: skills are advice to an agent; nothing records that a project adopted or waived one, so the waiver he wants has nowhere to live.\n(C) BOTH — served as guidance, and OFFERED at genesis as a starter pack the user accepts, edits or declines. The acceptance is the user's word, so nothing is asserted on their behalf.\n(D) NOT SHIPPED. Documented as a recommended starting set in the kit's prose, left for each project to adopt by hand.\n\n⚠️ THE OBJECTION, recorded beside the idea rather than argued down, and it is his own doctrine turned on this: he holds that a VIEW must be a pure projection and that renderer fill-ins are reflow2 DEFECTS — content appearing in an output that nobody put in the design. Seven pre-seeded rules are arguably that same shape one layer up: graph content no one in the project authored. Option (C) is the shape that answers it, because the user's acceptance is what puts them there; (A) is the shape most exposed to it.\n\n⚠️ AND THE UNIVERSALITY IS UNEVEN — see `dec:idea-a-principle-has-a-universal-core-and-local-clothes`.\n⚠️ AND \"ADVISORY\" IS NOT A FREE DEFAULT — see `dec:idea-how-does-a-shipped-principle-say-whether-it-is-enforced`.",
+        "name": "OPEN — should reflow2 ship a default set of advisory design principles to every project it is installed into?",
+        "rationale": "Recorded as brainstorming. The reframing is the contribution: six of the seven principles are the same principle — a report must not overstate the work — which is the epoch reflow2 has spent this increment building for its own instruments. That makes shipping them an extension of reflow2's existing doctrine rather than an importing of house style, and it is the strongest argument available for doing it at all.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-does-unmotivated-severity-key-on-built-not-provenance",
       "node_type": "Decision",
       "properties": {
@@ -83866,6 +84108,16 @@
         "name": "OPEN — the triage findings are TemporalFacts and schedule_for takes only a Requirement or Capability, so nothing today can be planned. What becomes the plannable thing, and how many of them are there?",
         "rationale": "Anthony's idea; the blocker, the drift measurement and the five options are mine. Recorded rather than acted on because the choice mints intent.\n\n⭐ SETTLED 2026-08-16 ON HIS WORD: \"one triage fixes epoch, requirement per theme.\" That is option (c) for the plannable unit and ONE epoch for the container.\n\nWHAT THAT RULES OUT, recorded because the roads not taken are the useful half: (a) a Capability per fix is declined — most of these are repair rather than new function and would inflate the capability count with maintenance; (b) a Requirement per fix is declined — roughly a dozen at once is too much intent minted in one act; (d) leaving them as facts is declined, and the measurement is why: `loop_status` reported the same 80 gaps and 16 defects all session and never once surfaced a triage item, because a defect FACT is not a gap; (e) extending `schedule_for` to accept a TemporalFact is declined as a category error — a fact is an observation, not work.\n\nAND HE CHOSE ONE EPOCH over two or three themed ones — easier to reason about and harder to argue with, at the cost of the increment carrying less meaning in its name.\n\n⚠️ WHAT THE RULING DOES NOT DECIDE, and was not asked: nothing is scheduled `required`. Every item goes in `expected`, because `required` is an obligation whose miss is a computed violation rather than a slip, and the plan-increments skill says to ask rather than assume. ⇒ `arrival_delta` will therefore report this epoch NOT ready to cut until somebody names at least one obligation. That is the tool being right, not a defect, and it is the next question for him.\n\nAND THE STALE HALF IS STILL OPEN: eleven SCHEDULED_FOR edges still point at releases shipped long ago. This ruling adds a new plan beside them and does not clean them, deliberately — re-pointing them silently would erase the slip.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:idea-how-does-a-shipped-principle-say-whether-it-is-enforced",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. A sub-question of `dec:idea-does-reflow2-ship-design-principles-to-every-project` — the guard matched it and it is deliberately separate, because that one asks WHETHER to ship and this asks a question that has to be answered even after \"yes\", and answers to it are what make the difference between options there.\n\nTHE COLLISION. Anthony's framing was \"advisory guidelines ... of course the user can waive them\". Reasonable, and it runs straight into `dec:does-enforced-default-to-gate-blocking` (2026-08-08, accepted): **`enforced` has THREE states and NO default** — `true`, `false`, and ABSENT meaning nobody has said. The default was REMOVED on purpose, because a convention recorded in passing used to assert it could fail somebody's build; that is how all four of reflow2's own enforced rules got that way, not one of them chosen.\n\nSo each way of shipping answers the enforcement question differently, and none is free:\n\n(A) SHIP THEM `enforced: false`. Matches his words. BUT it is reflow2 asserting a policy about consequence in a project it knows nothing about — and consequence (whose build stops, who is blocked at 2am) is exactly what that decision says is the USER'S to state. A team that would want \"no silent fallbacks\" to stop their build is told by an unchosen default that it does not.\n\n(B) SHIP THEM WITH `enforced` ABSENT. Honest by that decision's own lights. BUT `unstated_rule_enforcement` fires at 0.4 per rule, so a freshly-genesised project starts life owing SEVEN gaps it did nothing to earn — a gap list greeting you on day one, which is the \"list that gets skimmed\" failure the acknowledge tools exist to prevent, arriving at the worst possible moment.\n\n(C) ASK AT ADOPTION. The starter pack is offered, and adopting a principle IS answering its enforcement question, one at a time, in the user's own words. Nothing is asserted and no gap is manufactured. COST: seven questions at genesis, the moment a user has least context and most to do — and the governance-proposal skill's own warning applies, that asking about a fourth rule in one session turns the asking into noise people wave through.\n\n(D) SHIP ADVISORY, MAKE THE WAIVER THE RECORDED ACT. Default `false`; a project that wants one enforced says so. Inverts (A)'s problem rather than solving it: cheap for the common case, still an unchosen answer in the graph.\n\n⚠️ A FOURTH QUESTION HIDES UNDER ALL OF THEM: an ENFORCED rule owes a DETECTOR (`unverified_enforced_rule`, 0.6, until a PASSING check exists). Several of these principles are judgements no detector can compute — \"was this the root cause?\" is the one just met head-on in `rule:fix-it-properly-while-it-is-still-cheap`, which Anthony ruled ADVISORY on exactly that ground. So a shipped principle set would arrive carrying reflow2's own open question `req:a-rule-says-whether-it-can-be-checked-at-all`, which may make that requirement a PREREQUISITE for shipping principles rather than a neighbour of it.\n\n⭐ THE ONE THING THAT SEEMS SETTLED WHICHEVER WAY THIS GOES: whatever ships must record that a project ADOPTED or WAIVED a principle, because a waiver nobody wrote down is indistinguishable from never having heard of it — the same shape as the patch nobody wrote down in `req:a-fix-says-whether-it-corrected-the-cause`, one layer up.",
+        "name": "OPEN — \"advisory by default\" is itself a default asserting something, and `enforced` was deliberately given no default; how does a shipped principle answer that question honestly?",
+        "rationale": "Recorded as brainstorming. \"Advisory by default\" sounds free and is not: dec:does-enforced-default-to-gate-blocking deliberately removed the default, because whether breaking a rule stops a build is a claim about consequence only the user can make. Every option either asserts that answer, manufactures seven day-one gaps, or spends seven questions at the moment the user has least context.",
+        "status": "proposed"
       }
     },
     {
@@ -84498,6 +84750,16 @@
       }
     },
     {
+      "node_id": "dec:idea-which-agent-pitfalls-can-reflow2-actually-reach",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-17, supplying a taxonomy of AI-coding-agent pitfalls: \"here are some other pitfalls I've seen that we should really weave into the fabric of reflow2 to prevent.\"\n\n⭐ THE TRIAGE IS THE CONTRIBUTION, NOT THE LIST. reflow2 is a design graph and a coherence engine. It is not a linter, a package resolver, a type checker or a test runner. Recording \"reflow2 prevents hallucinated packages\" would be reflow2 claiming a capability it cannot have — which is `epoch:instruments-stop-overstating` committed by the very act of writing down the cure for it. So the list splits three ways and the split is what has to be decided before anything is built.\n\n═══ CLASS A — REFLOW2 ALREADY DOES THIS. The move is to SAY SO, not to build again.\n• \"Tunnel vision: fixing a bug in one file silently breaks a dependency in another\" — this is `propagate_change` and the impact-check skill, and it is reflow2's single most central competence. The blast radius exists for exactly this.\n• \"Context drift: as the conversation grows longer the agent forgets earlier architectural constraints\" — the graph IS the memory outside the context window; `req:skill-use-survives-a-long-session` is the same finding already accepted.\n• \"Design bloat: dozens of unnecessary patterns, interfaces and abstractions\" — an abstraction nothing asked for is `unmotivated_capability`, an existing gap; `granularity_report` reports the design/build mismatch in both directions.\n• \"Blind compliance: the agent implements your flawed logic instead of questioning it\" — PARTLY. `detect_gaps` putting questions to the human, `CONTRADICTS` with its `contradiction` detector, and `dec:three-party-checks` (\"the LLM speaks, the graph remembers and counts, the human decides\") are the answer to the fraction of this that is a NEW requirement conflicting with a SETTLED one. The rest of it — a flaw with nothing in the graph to contradict — is Class C.\n\n═══ CLASS B — REFLOW2 COULD REACH THIS AND CURRENTLY DOES NOT. The real candidate work.\n• OSCILLATION — \"agents get stuck repeatedly adding and removing the exact same line\". Computable from checksum history: a value returning to a previous one is a loop. MEASURED AND BOUNDED — see `dec:idea-an-artifact-whose-checksum-returns-is-an-agent-going-in-circles`; the history is far too thin today to support it.\n• MUTATION-PROOF ON A CHECK — \"hollow test suites\", \"tautological testing\", and his own best practice \"mutate code to test tests\". reflow2 CANNOT read an assertion and judge it tautological. It CAN record whether anybody PROVED the check can fail. Its own practice already does this informally and in prose: `ver:search-first-forces-a-choice` records \"MUTATION-CHECKED THREE WAYS, each verified applied before running rather than assumed\" and then, remarkably, \"A FOURTH MUTATION EXPOSED A VACUOUS TEST OF MY OWN\" — reflow2 caught its own hollow test by mutation, and had nowhere structured to put that fact. ⇒ This is a candidate SHARPENING of `req:a-finding-has-somewhere-to-put-its-evidence` (accepted, epoch:instruments-stop-overstating) rather than a new requirement: the evidence field that requirement asks for is exactly where \"this check was proven able to fail\" belongs.\n• A DEPENDENCY THE DESIGN NEVER DECLARED — the reachable half of \"ghost packages\". reflow2 cannot know whether `numpy.frobnicate()` exists, but `declare_dependency` / `reconcile_dependencies` can say that the build imports something the design never named. That catches the invented-dependency case at the design boundary while claiming nothing about the registry.\n\n═══ CLASS C — REFLOW2 CAN NEVER DO THIS, AND MUST SAY SO RATHER THAN IMPLY IT.\n• Whether a library method or package EXISTS (a resolver/language-server job).\n• Whether an API is DEPRECATED (a registry/changelog job).\n• Whether an assertion is TAUTOLOGICAL, or a mock has hollowed the path out (reading code semantically).\n• Whether YOUR LOGIC IS FLAWED when nothing in the design contradicts it.\n• Strict typing — a build-tool choice. It could be a DesignRule a project adopts; it is not something reflow2 can enforce or check.\n⇒ These belong in reflow2's design ONLY as stated non-goals. A tool that lets a user believe it is watching for hallucinated packages has done more harm than one that says plainly it is not.\n\n📌 AND THE ONE THAT CUTS ACROSS ALL THREE: \"review diffs, not files; never accept a full-file rewrite blindly.\" reflow2 has the design-graph analogue ALREADY and learned it the hard way TODAY — `create_node`'s `revision` block names the properties a write replaced and their prior values, which is what caught this session overwriting a Decision's history. The open question is whether that is enough, or whether the same discipline should reach the artifact layer.",
+        "name": "OPEN — of the known AI-agent failure modes, which can reflow2 actually reach? Three classes, and writing the third into its design would be the overstating failure itself",
+        "rationale": "Recorded as brainstorming. The triage is the contribution: reflow2 already answers four of these, could reach three more, and can never reach five. Writing the last five into its design as things it prevents would be the exact overstating failure this whole increment exists to end — a tool that lets a user believe it is watching for hallucinated packages has done more harm than one that says plainly it is not.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-which-docs-can-never-be-a-projection",
       "node_type": "Decision",
       "properties": {
@@ -84706,6 +84968,46 @@
         "name": "OPEN — \"this directory has no design yet\" is asserted without looking, and it minted a THIRD graph on a repo that already had two",
         "rationale": "Filed from a first-hand field report on Anthony's real work rather than from self-host, which is the second time in one day that pointing reflow2 at something it did not author produced a finding self-host could not. That pattern is now three-for-three ([BL-199], [BL-213], this) and is the strongest standing argument for keeping external use in rotation.\n\nRecorded as its own node rather than as one of six backlog rows because it is categorically different from the other five: those are friction, this one CAUSED a wrong artefact in a user's repository and invited an irreversible act on the strength of an unchecked claim. Filing it beside \"version skew is a papercut\" would flatten that.\n\nThe falsified advice is written into the node deliberately. It was given today, confidently, from doctrine rather than from the launcher — and an agent reading this later needs to see that the one-graph recommendation rested on a fact nobody had checked, not just that it was incomplete.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:non-goal-reflow2-does-not-judge-whether-a-check-is-meaningful",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "reflow2 will not tell you a test is hollow. It cannot read an assertion and see that it says `true === true`, cannot see that mocking has hollowed the execution path out, and cannot see an exception swallowed inside a test that then exits zero. A Verification marked `passing` is a CLAIM SOMEBODY MADE, and reflow2 records it, counts it toward coverage, and reports it as passing.\n\nWHOSE JOB IT IS: a mutation-testing tool, a coverage tool that measures real paths, and a reviewer who runs the check with the code deliberately broken.\n\n⚠️ WHY IT IS WRITTEN DOWN, and this one is the most load-bearing of the four. Verification coverage is one of reflow2's headline numbers — \"123 of 162 capabilities verified\" appears in its own report. THAT NUMBER COUNTS CHECKS, NOT CONFIDENCE. A design can reach 100% verified on tests that could not fail, and reflow2 would report full coverage and be correct about what it measured. Anthony named tautological testing, excessive mocking and swallowed exceptions as a pitfall class on 2026-08-17; none of the three is visible from here.\n\n⭐ AND REFLOW2 HAS ALREADY BEEN BITTEN BY IT, which is why this is evidenced rather than theoretical. `ver:search-first-forces-a-choice` records: \"A FOURTH MUTATION EXPOSED A VACUOUS TEST OF MY OWN ... the first revision test passed whether or not the guard was there, because a revision with no near neighbour has nothing to report either way.\" A hollow test inside reflow2's own suite, found by mutating the code — not by anything reflow2 computed. Its status said `passing` throughout, truthfully.\n\n⇒ WHAT REFLOW2 DOES DO NEARBY: it distinguishes a check that PASSES from one that merely EXISTS (a `planned` check does not silence `unverified_capability`), it reports when a check last ran and flags a stale-but-passing one, and it refuses to treat component-granularity coverage as capability coverage. So it polices the BOOKKEEPING around checks rigorously and the CONTENT of them not at all.\n\n📌 THE ADJACENT WORK, and it is the reachable half rather than a contradiction of this non-goal: reflow2 could record whether a check was PROVEN ABLE TO FAIL — mutation-checked — because that is a fact an author can state and a reader can rely on. It cannot judge the check; it can carry the claim. That is a candidate use of the evidence field `req:a-finding-has-somewhere-to-put-its-evidence` asks for. This non-goal covers the judging, not the recording.\n\nRECORDED AS A NON-GOAL, 2026-08-17. Retiring it is part of shipping anything that voids it.",
+        "name": "NON-GOAL — reflow2 does not judge whether a check is MEANINGFUL; a passing Verification is a claim it records, never one it validates",
+        "rationale": "Verification coverage is a headline reflow2 number and it counts checks, not confidence — a design can reach 100% verified on tests that could not fail. Evidenced rather than theoretical: reflow2's own suite carried a hollow test that reported passing truthfully throughout, found by mutating code rather than by anything reflow2 computed. It polices the bookkeeping around checks rigorously and their content not at all.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:non-goal-reflow2-does-not-know-what-is-deprecated",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "reflow2 has no notion of the outside world's calendar. It will not tell you that an endpoint was deprecated two years ago, that a framework version is unsupported, or that a pattern has fallen out of use. Everything it knows about currency is INTERNAL: whether the design and the build agree with each other, and when a claim was last checked.\n\nWHOSE JOB IT IS: the upstream project's changelog, a dependency auditor, a deprecation linter, or a person who follows the ecosystem.\n\n⚠️ WHY IT IS WRITTEN DOWN. Anthony named it on 2026-08-17: agents \"frequently mix legacy version code with modern framework configurations\", and \"the code looks structurally perfect but relies on an API endpoint deprecated years ago\". STRUCTURALLY PERFECT IS EXACTLY WHAT REFLOW2 CHECKS. A design whose thread is complete, whose artifacts match their checksums and whose verifications pass can be built entirely on dead APIs, and every reflow2 report will be green — correctly. The greenness is about internal coherence and says nothing about the world.\n\n⇒ WHAT REFLOW2 DOES DO NEARBY: it dates its own claims. `search_design` returns `as_of` and `age_days` on a fact that carries one, an expired `valid_to` reads as expired, and the confirmation ledger reports when a claim was last checked against reality. So reflow2 can tell you THAT NOBODY HAS LOOKED IN SIX WEEKS — which is the honest signal available to it — but never that what they would find has changed.\n\nRECORDED AS A NON-GOAL, 2026-08-17. Retiring it is part of shipping anything that voids it.",
+        "name": "NON-GOAL — reflow2 does not know whether an API, version or practice is current or deprecated",
+        "rationale": "reflow2's greenness is about internal coherence between design and build, and a design built entirely on dead APIs is internally coherent. It can report that nobody has checked in six weeks; it can never report that the world moved. Written down because \"structurally perfect\" is precisely what reflow2 measures, which makes this the easiest wrong inference on the list.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:non-goal-reflow2-does-not-resolve-dependencies",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "reflow2 will not check that a dependency named in your design or your code is real. It does not resolve package registries, read a language server, or import anything. A capability can name `numpy.frobnicate()` and reflow2 will record it, thread it, and report on it exactly as it would a real one.\n\nWHOSE JOB IT IS: a package manager (`pip check`, `npm ls`, `cargo tree`), a language server, or a type checker. Those resolve names against reality; reflow2 resolves names against the DESIGN.\n\n⚠️ WHY THIS IS WRITTEN DOWN RATHER THAN LEFT SILENT. Anthony named hallucinated dependencies as a top AI-agent pitfall on 2026-08-17, and reflow2's own description — a design brain that keeps a project coherent — invites the assumption that it is watching. It is not. A clean health report and a hallucinated import are entirely compatible, and the clean report would be TRUE while the inference drawn from it was false. That is the vacuous-zero failure `epoch:instruments-stop-overstating` exists to end, arriving through absence rather than through a bad number.\n\n⇒ WHAT REFLOW2 DOES DO NEARBY, so this is a boundary and not a shrug: `declare_dependency` records what the design says it depends on, and `reconcile_dependencies` compares that against what was OBSERVED in the build. So reflow2 can tell you the build imports something the design never declared — the design-boundary half of the problem — while claiming nothing about whether the thing exists in the world.\n\nRECORDED AS A NON-GOAL, 2026-08-17. A non-goal is a statement about the CURRENT build, not a promise about the future: if this is ever built, retiring this decision is part of shipping it. A stale non-goal is a false statement in the opposite direction, which is the failure AGENTS.md committed by telling a reader that a `/mcp` reconnect picks up a rebuild.",
+        "name": "NON-GOAL — reflow2 does not verify that a named package, library or method EXISTS",
+        "rationale": "reflow2 resolves names against the design, never against the world. Silence on that boundary reads as coverage, and a clean health report beside a hallucinated import would be true while the inference from it was false — absence producing the same harm as a vacuous zero. Written down so the assumption cannot be made quietly.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:non-goal-reflow2-does-not-validate-that-your-intent-is-sound",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "reflow2 will not evaluate whether what you asked for is a good idea, whether your logic holds, or whether your requirement will produce the outcome you want. It records intent faithfully and threads it rigorously. A design can be perfectly coherent and completely wrong, and reflow2 will report it as coherent — correctly.\n\nWHOSE JOB IT IS: a person who understands the domain. Reflow2's own doctrine already says so — `dec:three-party-checks`: \"the LLM speaks, the graph remembers and counts, the human decides.\"\n\n⚠️ WHY IT IS WRITTEN DOWN. Anthony named it as the deepest of the AI-agent pitfalls on 2026-08-17: \"if your initial prompt contains a logical flaw, the agent will perfectly implement your flawed logic instead of questioning it.\" A DESIGN GRAPH DOES NOT FIX THAT — it makes the flawed logic durable, traceable and consistently applied, which is arguably worse than leaving it in a chat log, because now it has authority. Recording intent well and recording intent CORRECTLY are different acts, and reflow2 only does the first.\n\n⇒ WHAT REFLOW2 DOES DO NEARBY, and it is a real fraction of the problem rather than a consolation: it catches DISAGREEMENT WITH YOURSELF. A `CONTRADICTS` edge and the `contradiction` detector surface a new claim that conflicts with a settled one; `kpp_contradicted` does it for inviolable intent; `detect_gaps` puts the questions it cannot answer back to you rather than guessing. So when a flawed instruction contradicts something you already decided, reflow2 will say so. When the flaw is consistent with everything else you have said, nothing in the graph can see it.\n\n📌 THE HONEST FRAMING FOR A USER: reflow2 raises the cost of being INCONSISTENT and does nothing to the cost of being WRONG. That asymmetry is worth knowing before relying on it.\n\nRECORDED AS A NON-GOAL, 2026-08-17. Retiring it is part of shipping anything that voids it — though of the four, this is the one least likely ever to be voided.",
+        "name": "NON-GOAL — reflow2 does not tell you your requirement is WRONG; it can only tell you it disagrees with something you already settled",
+        "rationale": "A design graph does not fix a flawed premise; it makes the flaw durable, traceable and consistently applied, which is arguably worse than a chat log because it now carries authority. What reflow2 can genuinely catch is disagreement with something already settled, via CONTRADICTS and the contradiction detector. It raises the cost of being inconsistent and does nothing to the cost of being wrong — an asymmetry worth stating before anyone relies on it.",
+        "status": "accepted"
       }
     },
     {
@@ -85134,6 +85436,16 @@
       "properties": {
         "decision": "ANTHONY, 2026-08-10, answering four gaps as one: req:vocabulary-covers-information, -materiel, -personnel and -states are DEFERRED as a class.\n\nWHY AS A CLASS. They are one question wearing four hats — does reflow2 model the other UAF domains, or is it deliberately scoped to function and structure? Answering them piecemeal would decide the scope by accident, four times, without anyone noticing they were the same decision. They came from Anthony UAF/DoDAF background (user-se-background-viewpoint-doctrine), so they are real vocabulary a systems engineer expects, not speculative additions.\n\nDEFERRED IS NOT DECLINED. Each is a coherent requirement and none was argued down. What is missing is a PROJECT THAT NEEDS THEM: reflow2 own design has no materiel, no personnel beyond Contributor, and no behavioural state machine, so building the vocabulary now would be declaring types nothing reads — which req:functional-vocabulary-computes forbids in as many words, and which dec:idea-detect-vocabulary-that-nothing-reaches exists to detect.\n\nTHE RE-ASK TRIGGER, NAMED SO DEFERRED CANNOT DEGRADE INTO NEVER ASKED AGAIN (the shape dec:the-telemetry-kpp-question-waits-for-flo2 set): re-open when a design reflow2 is actually pointed at needs one of them. Concretely — a project with physical parts to sustain (materiel), an organisation with roles performing activities (personnel), a protocol or device with modelled behavioural states (states), or a data contract whose entities and attributes must cross an interface (information). The bluesky/NSLS-II work is the likeliest source of the last two.\n\nWHAT WOULD MAKE THIS WRONG: if a consumer hits one of these and works around it in prose rather than asking, the deferral will look correct while costing exactly what it was meant to avoid. That is unobservable from inside this design, which is the honest limit of this decision.",
         "name": "DEFERRED — whether reflow2 models information, materiel, personnel and state is a SCOPE question, and the re-ask trigger is named rather than left to memory",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:the-patch-record-binds-forward-not-backward",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "FORWARD ONLY. `req:a-fix-says-whether-it-corrected-the-cause` applies to fixes recorded from 2026-08-17 on. The 472 ChangeEvents already in the graph are NOT classified as patches or corrections, and no backfill pass will be run over them.\n\nAnthony, 2026-08-17, answering the question directly. His own framing when he asked for the requirement was already this: \"I'm not sure how many fixes have been patches ... but I'd like to start now.\"\n\nWHY BACKFILLING LOSES, and it is the same reason as one rule over rather than a coincidence. Nobody remembers which of 472 changes reached its cause. A backfill would therefore be an AGENT INFERRING the answer from diffs and commit prose — producing edges that are queryable and unfounded, which dev_storyflow's finding ⑮ names as strictly worse than prose that is honestly informal. The count would look like evidence and be a reconstruction.\n\n⭐ THE PRECEDENT IS EXACT AND WAS SET BY THE SAME PERSON THREE WEEKS EARLIER. `dec:the-authority-check-guards-forward-not-backward` grandfathered 121 of 214 settled nodes for the identical reason: the unattributed ones were bookkeeping predating the rule, not violations, and backfilling would have recorded approval 121 times on evidence no agent held. Two rules, two backfill questions, the same answer both times — which is worth noting as a pattern in how this project handles a new discipline meeting an old corpus, rather than as two unrelated calls.\n\nWHAT THIS COSTS, stated so the trade is on the record: the useful number arrives slowly. \"What still rests on a patch?\" will read zero on the day the field ships and stay near zero for a while, and A LOW COUNT WILL MEAN \"few fixes recorded since we started\" RATHER THAN \"few patches\" — which is precisely the vacuous-zero this epoch exists to stamp out. So the reporting side owes a statement of its own coverage from the beginning: it must say how many fixes carry the disposition at all, not only how many were patches. That is `req:a-report-says-what-it-swept-and-whether-its-checks-ran` applied to the very first thing built under the new requirement.\n\nREJECTED ALSO, and worth naming because it was the tempting middle: flagging past changes that LOOK like repeated patching — one artifact accepted `design_holds` many times over, say. It is computable and it is a proxy, and offering a proxy beside a real measurement invites the two to be read as one thing. If it is ever built it should be a separate, separately-labelled signal, not a way of half-answering this question.",
+        "name": "Recording whether a fix reached the cause binds from here, and the 472 changes already on the record are not reclassified",
+        "rationale": "Nobody remembers which of 472 past changes reached its cause, so a backfill would be an agent's inference wearing the clothes of a record — queryable and unfounded, the failure mode this project has already named. Same answer and same reasoning as the authority check's grandfather ruling. The cost is that the useful number accrues slowly, which is why the reporting side must state its own coverage rather than let a low count read as good news.",
         "status": "accepted"
       }
     },
@@ -86931,6 +87243,16 @@
       }
     },
     {
+      "node_id": "epoch:doing-it-right-becomes-design-intent",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "Doing it right stops being a habit and becomes intent reflow2 carries — the philosophy is separated from its pre-1.0 corollary and put to the product",
+        "sequence": 350,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:embeddings-question-gets-its-findings",
       "node_type": "DesignEpoch",
       "properties": {
@@ -88091,8 +88413,8 @@
       "properties": {
         "category": "methodology",
         "enforced": false,
-        "name": "Before 1.0, a thing done wrong is CORRECTED, not patched around — compatibility is not a reason to keep a mistake",
-        "statement": "WHEN SOMETHING IN REFLOW2 IS WRONG, THE FIX IS THE FULL ONE. A workaround, a compatibility shim, or a repair that leaves the original mistake in place is not the answer while this project is still in development. \"It would break consumers\" is not, on its own, a reason to keep a defect — it is a reason to do it NOW rather than later.\n\nANTHONY, 2026-08-17, in his own words: \"as we are still in development; I'm more concerned with doing things right. If we did something wrong the first time, it is better to fully correct/fix it now than to do patch or workaround it. I'd rather pay for this change now than when we have hundreds/thousands of users and we can't make big changes out of fear that we may upset something that is working.\"\n\n⭐ THE COST ARGUMENT RUNS THE OPPOSITE WAY FROM THE USUAL INSTINCT, and that is the whole rule. The instinct is that a breaking change is expensive, so defer it. The instinct is right about the price and wrong about the direction of the trend: the price of a break RISES with every consumer, so deferring is buying the same change later at a higher cost, in a currency (user trust, migration effort, fear of touching working code) that is worse than the one it is cheap in now.\n\nWHAT IT IS NOT. Not licence to rewrite what merely displeases — the trigger is something WRONG, not something one would style differently. Not licence to widen a task: a correction still gets recorded, tested and reviewed like any change, and `dec:a-misnaming-is-fixed-in-the-message-not-the-key`'s own warning about doing a shape change \"under the cover of\" finishing something else still stands. The rule changes which OPTION is chosen when a defect is real; it does not change what counts as a defect, and it does not authorise an agent to settle intent (`rule:design-intent-moves-only-on-the-owners-word` is untouched by it).\n\nWHERE THE HORIZON IS. CHANGELOG.md already says Major/1.0 is \"deferred until a stability commitment — the design surface promising compatibility\". This rule is the other side of that sentence: until that commitment exists, the surface is explicitly not promising, and behaving as though it were is the mistake. The rule therefore has a natural end — it should be revisited at 1.0 rather than carried into it.\n\n⚠️ WHAT IT ALREADY OVERTURNS, recorded so the reversal is on the record rather than inferred: `dec:a-misnaming-is-fixed-in-the-message-not-the-key` (2026-08-17, hours earlier) declined to rename the `disconnected_community` defect category, on the ground that the key is a consumer contract and renaming it would \"break every consumer in order to fix a sentence\". Under this rule that ground no longer carries, and the same decision's deferred item — giving unscoped `detect_defects` the same envelope its scoped sibling already returns — moves from deferred to owed.\n\nENFORCEMENT NOT YET STATED, deliberately. Whether breaking this should stop a build is Anthony's to say, and it is a hard case besides: this rule is about a JUDGEMENT (was the full fix taken?) rather than about graph state, so it may be a genuine instance of a rule no detector can check — the first real customer for `req:a-rule-says-whether-it-can-be-checked-at-all` alongside `rule:bl-41`."
+        "name": "A thing done wrong is CORRECTED at its root, never patched around — and before 1.0, compatibility is not a reason to defer the correction",
+        "statement": "TWO CLAUSES, AND THEY HAVE DIFFERENT LIFESPANS. The first draft of this rule ran them together and said the whole thing should be revisited at 1.0; Anthony corrected that on 2026-08-17 — he wants the philosophy ENDURING. Separating them is what makes that possible, because only one of them is about version numbers.\n\n⭐ CLAUSE 1 — THE PHILOSOPHY. IT NEVER EXPIRES.\nWhen something is wrong, go back to the drawing board, work out how it should have been done, and re-implement it properly. A workaround, a shim, or a repair that leaves the original mistake in place is not a fix; it is a decision to carry the mistake and pay interest on it. This is a claim about how to build, not about when — it is as true at 1.0 and at 10.0 as it is today.\n\nANTHONY, 2026-08-17, asking for it to be made permanent: \"I'm not sure how many fixes have been patches versus going back to the drawing board, planning how it should have been done correctly, and then re-implementing proper fix, but I'd like to start now. this is my philosophy on how to build something - so ensuring that it is built into the design of reflow2.\"\n\nCLAUSE 2 — THE PRE-1.0 COROLLARY. THIS ONE DOES CHANGE AT 1.0.\n\"It would break consumers\" is not, on its own, a reason to keep a defect — it is a reason to correct it NOW rather than later. THE COST ARGUMENT RUNS OPPOSITE TO THE INSTINCT: the instinct is that a break is expensive so defer it; the instinct has the price right and the TREND backwards. The price of a break rises with every consumer, so deferring buys the same change later at a higher cost, in a worse currency — user trust, migration effort, and fear of touching code that works.\n\nHis words, 2026-08-17: \"I'd rather pay for this change now than when we have hundreds/thousands of users and we can't make big changes out of fear that we may upset something that is working.\"\n\nCHANGELOG.md already says 1.0 is \"deferred until a stability commitment — the design surface promising compatibility\". Clause 2 is the other side of that sentence: until the commitment exists the surface is explicitly not promising, and behaving as though it were is itself the mistake. WHEN THAT COMMITMENT IS MADE, CLAUSE 2 IS REPLACED BY A DEPRECATION DISCIPLINE — not dropped. Clause 1 is untouched by it: after 1.0 the correct fix still gets designed properly; it ships behind a deprecation window instead of immediately.\n\n⚠️ AND MEASURE THE COST BEFORE LETTING IT DECIDE. This is the lesson the rule was born from rather than an aside. `dec:a-misnaming-is-fixed-in-the-message-not-the-key` declined a rename because it would \"break every consumer\" — asserted, never measured. Measured afterwards: 14 code files, 6 live docs, and PERSISTED AS DATA NOWHERE, so the migration being protected against did not exist. An unmeasured cost is the easiest way to talk yourself out of the right fix, and it is invisible when it works, because nothing happens.\n\nWHAT IT IS NOT. Not licence to rewrite what merely displeases — the trigger is something WRONG, not something one would style differently. Not licence to widen a task under cover of another. And not licence for an agent to settle intent: `rule:design-intent-moves-only-on-the-owners-word` is untouched.\n\nENFORCEMENT: ADVISORY, on Anthony's word 2026-08-17, asked as \"if a session shipped a workaround instead of the full fix — tests green, change reviewed — should the build have stopped them?\" He said advice. That is also the honest answer mechanically: whether the full fix was taken is a JUDGEMENT about intent, not a fact about graph state, so an enforced flag here would owe a detector that cannot be written. WHAT CAN BE MECHANIZED IS THE ADJACENT THING — not judging the fix, but making the CLAIM recordable and countable, which is `req:a-fix-says-whether-it-corrected-the-cause`. The rule states the philosophy; the requirement gives it somewhere to live."
       }
     },
     {
@@ -91647,6 +91969,18 @@
       }
     },
     {
+      "node_id": "req:a-fix-says-whether-it-corrected-the-cause",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A fix says whether it corrected the cause or worked around it, so \"how much of this is standing on a patch?\" is a question the design can answer",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A change that repairs something must record WHICH KIND OF REPAIR IT WAS — the cause corrected, or the symptom worked around — and a workaround must name the correction it is standing in for. The design must then be able to answer, without asking a person: what is still resting on a patch?\n\nDELIBERATELY DISTINCT FROM `rule:fix-it-properly-while-it-is-still-cheap`, which the guard matched, and the split is the point rather than a technicality. The RULE is how the people building reflow2 work; it binds this project and can never bind anyone else's. This REQUIREMENT is the product carrying the same philosophy, so every project using reflow2 inherits the question. Anthony asked for exactly that on 2026-08-17: \"this is my philosophy on how to build something - so ensuring that it is built into the design of reflow2.\" A rule states it; a requirement makes it something reflow2 DOES.\n\n⭐ THE QUESTION HE ASKED IS CURRENTLY UNANSWERABLE, and that is the whole case. \"I'm not sure how many fixes have been patches versus going back to the drawing board, planning how it should have been done correctly, and then re-implementing proper fix.\" MEASURED ON REFLOW2'S OWN GRAPH, 2026-08-17: 472 ChangeEvents across eleven change types — new_feature 156, test_failure_fix 101, refactor 89, scope_change 59, baseline_established 25, resync 14, defect_fix 11, requirement_creep 6, deprecation 6, constraint_change 4, performance_optimization 1. EVERY ONE OF THOSE NAMES WHAT MOVED. NOT ONE SAYS WHETHER IT WAS THE RIGHT FIX. A `test_failure_fix` is equally the record of a root-cause rewrite and of a shim that made a red test green, and nothing downstream can tell them apart.\n\nCHECKED AND FOUND NOT TO BE THE PROBLEM, so the fix is not aimed at the wrong thing: `test_failure_fix` is the DEFAULT for a `design_holds` drift accept, so the obvious hypothesis was that the commonest fix type is an unchosen default. It is not — 55 of the 101 are auto-minted accepts and ALL 55 carry written reasons, with 46 more named deliberately. The discipline is there. THE VOCABULARY IS WHAT IS MISSING.\n\n⭐ THE SHAPE IS ALREADY PROVEN ONE LAYER OVER, which is why this is buildable rather than aspirational. `dec:two-sided-accept` made accepting drift a two-sided act: you say the content moved AND you take a position (`design_holds` / `design_updated`), because \"accept the file, leave the design alone, say nothing\" is the option that erodes a design into fiction. A FIX IS THE SAME SHAPE AND IS CURRENTLY ONE-SIDED. Silent patching should be as impossible as silent drift-accept, for the identical reason.\n\nWHAT IS OWED, in the order it is worth building:\n(a) A repair records its ROOT DISPOSITION — cause corrected, or symptom contained. Not defaulted, on `req:defaults-do-not-assert`: whether a fix reached the cause is a judgement, and inventing an answer records a claim nobody made.\n(b) A contained symptom NAMES WHAT THE PROPER FIX WOULD BE. This is what turns a patch from an invisible cost into a stated debt with somewhere to be read. A workaround nobody wrote down is indistinguishable from a design decision six weeks later.\n(c) The count is REPORTABLE — what still rests on a patch, and where. That is the question above, answered by the graph rather than by anyone's memory.\n\n⚠️ WHAT THIS MUST NOT BECOME, stated now because the failure mode is predictable and this project has met it twice this month. It must NOT judge. reflow2 records the claim and counts it; the human decides whether a patch was right (`dec:report-dont-judge`, `dec:three-party-checks`). A detector that tried to INFER \"this was a patch\" from graph shape would be exactly the confident answer to a nearby question that `req:a-report-says-what-it-swept-and-whether-its-checks-ran` was written about. And a workaround is often the CORRECT call under a deadline — the requirement is that it be VISIBLE, never that it be forbidden.\n\n⚠️ HONEST LIMIT, and it bounds what can ever be claimed here: this records what the author SAYS about their fix. It cannot detect a patch someone reports as a correction. That makes it the same class of instrument as `provenance` and the drift dispositions — worth having because the alternative is no signal at all, and worth never overselling.\n\nNOT YET DECIDED: whether the root disposition belongs on the ChangeEvent, on the artifact accept, or on both; and whether it is retro-fittable to the 472 events already recorded or, like `dec:the-authority-check-guards-forward-not-backward`, binds only forward. Anthony's own words — \"I'd like to start now\" — read as forward-only, but that is his call to make explicitly rather than mine to infer.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:a-hint-names-its-next-call",
       "node_type": "Requirement",
       "properties": {
@@ -94579,6 +94913,16 @@
         "edges": "[{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:certainty-derived\",\"properties\":{\"note\":\"Deriving certainty from status x provenance is this rule mechanized: every move off proposed records the owner's word\"}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:three-party-checks\",\"properties\":{\"note\":\"The LLM speaks, the graph counts, the human decides - the division this rule states as policy\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-09\",\"role\":\"author\"}}]",
         "state": "{\"category\":\"convention\",\"enforced\":true,\"name\":\"Design intent moves only on the owner's word — an agent may propose anything and settle nothing\",\"statement\":\"A NODE THAT ASSERTS INTENT REACHES A SETTLED STATE ONLY BECAUSE ANTHONY SAID SO. An agent may create, draft, measure, argue and recommend without limit; it may not move a Requirement off `proposed`, mark a Decision `accepted`, or record a rule's enforcement on his behalf. Alex is a genuine design contributor and second user (`who:alex`), and his input is ADVISORY — it informs and gates nothing.\\n\\nENFORCED — Anthony, 2026-08-09, answering the consequence question directly (\\\"if a session recorded a decision as accepted without you saying so, should that stop the build, or is it advice?\\\"): stop the build.\\n\\n⭐ THE ASYMMETRY IS THE FINDING, and it was not predicted. Asked the same question about the branch-then-PR process rule minutes earlier, he answered ADVICE. So in a one-developer project the PROCESS rule is self-discipline and the AUTHORITY rule is inviolable — the opposite of the naive expectation that a solo project needs no authority modelling because there is only one person. What one person needs protection from is not another person; it is an AGENT WRITING IN HIS VOICE. That is a data point for `req:a-node-can-say-who-may-change-it` from the simple end of the scale, where every other data point so far came from a multi-agent fleet.\\n\\nWHAT IT OWES, stated plainly rather than quietly closed: a DETECTOR. `unverified_enforced_rule` will fire at 0.6 and stay until a PASSING Verification is attached — a `planned` one does not silence it. NO CHECK IS ATTACHED TODAY, deliberately: the governance-proposal skill's standing warning is that attaching a check to close a finding is green-washing, and a passing check that tests nothing is a lie the graph cannot see.\\n\\nTHE CHECK THAT WOULD ACTUALLY DETECT IT, so the debt is specific rather than vague: every Decision at `accepted` carries an AUTHORED_BY edge to `who:ajs`, and every Requirement off `proposed` likewise. This is unusually checkable for a governance rule — the graph already holds the edge, and `loop_status` already computes the mirror image (a `proposed` Decision with an approver who has not answered). What is missing is the inverse: a SETTLED node with nobody's name on it.\\n\\nALREADY PARTLY MECHANIZED, which is why enforcement is not a bluff: `add_decision` lands at `proposed`; `add_requirement` lands at `proposed`; `dec:certainty-derived` derives a requirement's certainty from status × provenance because every move off `proposed` records the user's word; `set_requirement_status`'s own guardrail says promoting it yourself forges their signature; and `dec:three-party-checks` states the division — the LLM speaks, the graph remembers and counts, the human decides. The rule names the policy those mechanisms serve, which until now was implemented everywhere and stated nowhere.\\n\\nHONEST BOUND: the tooling resists the violation but cannot presently REPORT one, which is exactly the gap the enforcement flag now makes visible instead of leaving to good behaviour.\"}",
         "target_id": "rule:design-intent-moves-only-on-the-owners-word",
+        "target_type": "DesignRule"
+      }
+    },
+    {
+      "node_id": "snap:epoch:doing-it-right-becomes-design-intent:rule:fix-it-properly-while-it-is-still-cheap",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-sweep-names-its-own-scope-and-the-category-names-what-it-computes\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:a-misnaming-is-fixed-in-the-message-not-the-key\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-17\",\"role\":\"author\"}}]",
+        "state": "{\"category\":\"methodology\",\"enforced\":false,\"name\":\"Before 1.0, a thing done wrong is CORRECTED, not patched around — compatibility is not a reason to keep a mistake\",\"statement\":\"WHEN SOMETHING IN REFLOW2 IS WRONG, THE FIX IS THE FULL ONE. A workaround, a compatibility shim, or a repair that leaves the original mistake in place is not the answer while this project is still in development. \\\"It would break consumers\\\" is not, on its own, a reason to keep a defect — it is a reason to do it NOW rather than later.\\n\\nANTHONY, 2026-08-17, in his own words: \\\"as we are still in development; I'm more concerned with doing things right. If we did something wrong the first time, it is better to fully correct/fix it now than to do patch or workaround it. I'd rather pay for this change now than when we have hundreds/thousands of users and we can't make big changes out of fear that we may upset something that is working.\\\"\\n\\n⭐ THE COST ARGUMENT RUNS THE OPPOSITE WAY FROM THE USUAL INSTINCT, and that is the whole rule. The instinct is that a breaking change is expensive, so defer it. The instinct is right about the price and wrong about the direction of the trend: the price of a break RISES with every consumer, so deferring is buying the same change later at a higher cost, in a currency (user trust, migration effort, fear of touching working code) that is worse than the one it is cheap in now.\\n\\nWHAT IT IS NOT. Not licence to rewrite what merely displeases — the trigger is something WRONG, not something one would style differently. Not licence to widen a task: a correction still gets recorded, tested and reviewed like any change, and `dec:a-misnaming-is-fixed-in-the-message-not-the-key`'s own warning about doing a shape change \\\"under the cover of\\\" finishing something else still stands. The rule changes which OPTION is chosen when a defect is real; it does not change what counts as a defect, and it does not authorise an agent to settle intent (`rule:design-intent-moves-only-on-the-owners-word` is untouched by it).\\n\\nWHERE THE HORIZON IS. CHANGELOG.md already says Major/1.0 is \\\"deferred until a stability commitment — the design surface promising compatibility\\\". This rule is the other side of that sentence: until that commitment exists, the surface is explicitly not promising, and behaving as though it were is the mistake. The rule therefore has a natural end — it should be revisited at 1.0 rather than carried into it.\\n\\n⚠️ WHAT IT ALREADY OVERTURNS, recorded so the reversal is on the record rather than inferred: `dec:a-misnaming-is-fixed-in-the-message-not-the-key` (2026-08-17, hours earlier) declined to rename the `disconnected_community` defect category, on the ground that the key is a consumer contract and renaming it would \\\"break every consumer in order to fix a sentence\\\". Under this rule that ground no longer carries, and the same decision's deferred item — giving unscoped `detect_defects` the same envelope its scoped sibling already returns — moves from deferred to owed.\\n\\nENFORCEMENT NOT YET STATED, deliberately. Whether breaking this should stop a build is Anthony's to say, and it is a hard case besides: this rule is about a JUDGEMENT (was the full fix taken?) rather than about graph state, so it may be a genuine instance of a rule no detector can check — the first real customer for `req:a-rule-says-whether-it-can-be-checked-at-all` alongside `rule:bl-41`.\"}",
+        "target_id": "rule:fix-it-properly-while-it-is-still-cheap",
         "target_type": "DesignRule"
       }
     },
@@ -97846,6 +98190,18 @@
       }
     },
     {
+      "node_id": "fact:the-dominant-failure-mode-of-this-work-is-asserting-instead-of-measuring",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "property",
+        "statement": "OBSERVED ACROSS ONE FULL SESSION, 2026-08-17, and recorded because the instances are already in the graph separately and the PATTERN is not. FOUR TIMES IN ONE DAY, THE FAILURE WAS THE SAME: A FACT WAS ASSERTED WHERE IT COULD HAVE BEEN COUNTED. Measurement caught it every time, and in three of the four the assertion had already been acted on.\n\n(1) RELAYED A FALSE CLAIM FROM AN INSTRUMENT. `loop_status` said an answered question had never reached the design; it had been there, accepted and approver-signed, since 2026-08-11. Told to the user as fact before the graph was checked. Cost: a wrong opening summary. → `fact:defect-loop-status-asserts-an-answer-never-reached-the-design-from-a-fact-that-cannot-say-so`\n\n(2) DECIDED AGAINST A FIX ON AN UNMEASURED COST. Declined to rename `disconnected_community` because it would \"break every consumer\". Measured afterwards: 14 code files, 6 docs, PERSISTED AS DATA NOWHERE — no migration existed to protect against. Cost: shipped a half-fix that had to be reversed hours later. → `dec:a-misnaming-is-fixed-in-the-message-not-the-key`\n\n(3) WROTE AN UNCHECKED CLAIM ABOUT A CHECK. A doc comment said the compiler enforced that `HealCategory::ALL` lists every variant. It does not. Caught before commit by re-reading rather than by anything mechanical. Cost: none, and only because it was noticed. → `cap:a-sweep-names-its-own-scope-and-the-category-names-what-it-computes`\n\n(4) ALMOST PROPOSED A DETECTOR ON PLAUSIBILITY. Oscillation detection looked obviously buildable. Counting first showed only 23 of 187 artifacts carry any checksum history and 3 have more than one prior value, because `design_holds` accepts do not snapshot. The detector would have reported zero forever and been believed. Cost: none — the measurement happened before the proposal. → `dec:idea-an-artifact-whose-checksum-returns-is-an-agent-going-in-circles`\n\n⭐ THE ASYMMETRY IS THE FINDING, and it is why this is worth a node rather than an apology. An asserted cost that STOPS work is nearly invisible when it is wrong, because nothing happens and there is no failure to notice — instance (2) would have stood indefinitely if the user had not stated a rule that forced the question. An asserted claim that DRIVES work usually gets caught by the work failing. So the dangerous direction is the one that argues for inaction, and it is the direction with no natural feedback.\n\n⇒ WHY IT BELONGS BESIDE THIS RULE: `rule:fix-it-properly-while-it-is-still-cheap` already carries \"MEASURE THE COST BEFORE LETTING IT DECIDE\" as a clause, derived from instance (2) alone. Three further instances in the same day say that clause is the load-bearing half of the rule rather than an aside, and that it generalises past cost to any claim an agent uses to close a question.\n\n📌 AND IT IS DIRECTLY RELEVANT TO THE AGENT-PITFALL WORK opened the same day (`dec:idea-which-agent-pitfalls-can-reflow2-actually-reach`). None of the four is on the user's pitfall list, and they are not code-writing failures — they are DESIGN-REASONING failures, committed while using the design brain. That may be a class the list does not cover.\n\n⚠️ ONE LOOSE END FROM THE SAME SESSION THAT WAS NOT RESOLVED, recorded here because it is the one thing that could NOT be measured and therefore stayed open. `reflow2_check.py` printed \"FAILED — 1 finding\" once, immediately after an export that carried a `sync_note` about the file having moved, and then returned OK on four consecutive runs against the committed file with both CI jobs green. The failing finding was never captured — it was chained behind a `;` with a push and scrolled past. LOW CONFIDENCE, NOT REPRODUCED, and possibly a transient of the export's own sync bookkeeping rather than a real drift. Recorded so a later session meeting the same thing knows it has been seen once and never explained.",
+        "subject_id": "rule:fix-it-properly-while-it-is-still-cheap",
+        "valid_from": "2026-08-17"
+      }
+    },
+    {
       "node_id": "fact:the-five-project-census-2026-08-09",
       "node_type": "TemporalFact",
       "properties": {
@@ -99987,7 +100343,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:bbf354027afd1dbc23e67035d149d73a56c4dd2a4c46b18e5d24a7e4e1667286",
+  "prev_content_hash": "sha256:52d66a271dd69ab65fddcdfc58e22ab262af36fc1ac1c80b17d4a445d3e8fb6c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
