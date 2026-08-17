@@ -961,6 +961,10 @@ async fn a_rejected_node_names_the_known_types() {
             node_type: "Widget".into(),
             id: "w:1".into(),
             props: None,
+            // Unguarded on purpose: this fixture is not testing the
+            // lost-update precondition, and stating an expectation it
+            // never read would be a fake one.
+            expected_content_hash: None,
         }))
         .await
         .expect_err("Widget is not a schema node type");
@@ -1455,6 +1459,10 @@ async fn create_node_on_an_existing_id_merges_instead_of_resetting() {
         node_type: "Capability".into(),
         id: "cap:flight".into(),
         props: Some(props),
+        // Unguarded on purpose: this fixture is not testing the
+        // lost-update precondition, and stating an expectation it
+        // never read would be a fake one.
+        expected_content_hash: None,
     })));
 
     assert_eq!(

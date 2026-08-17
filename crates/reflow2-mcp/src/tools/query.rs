@@ -52,7 +52,7 @@ impl ReflowService {
     // ---- Generic CRUD (deterministic) ----
 
     #[tool(
-        description = "Create a node of any schema type with a property object. An existing id MERGES: the props you pass overwrite, every stored property you omit survives — so a partial props object edits, it does not reset the rest to defaults. READ `undeclared` IN THE REPLY: it names any property you sent that the schema does not declare for this type. The write still SUCCEEDS — the store is a property bag on purpose, so a design can record what reflow2 never anticipated — but a typo and a deliberate extension used to be indistinguishable, and this is how you tell them apart. Absent when there is nothing to say.",
+        description = "Create a node of any schema type with a property object. An existing id MERGES: the props you pass overwrite, every stored property you omit survives — so a partial props object edits, it does not reset the rest to defaults. READ `undeclared` IN THE REPLY: it names any property you sent that the schema does not declare for this type. The write still SUCCEEDS — the store is a property bag on purpose, so a design can record what reflow2 never anticipated — but a typo and a deliberate extension used to be indistinguishable, and this is how you tell them apart. Absent when there is nothing to say. ⚠️ EDITING SOMETHING YOU READ? PASS `expected_content_hash` — the `revision.prior_content_hash` from when you read it. The write then becomes a COMPARE-AND-SWAP and is REFUSED if the node moved in between, naming both hashes, instead of silently overwriting whoever wrote it meanwhile. Without it a shared graph loses updates by luck: measured from both sides of one real collision, the write returned a normal success and THE WINNER WAS NEVER TOLD. The `revision` block reports an overwrite AFTER the fact; this prevents it. Opt-in, because a caller who never read the node has no honest expectation to state.",
         annotations(read_only_hint = false)
     )]
     pub async fn create_node(
@@ -66,11 +66,40 @@ impl ReflowService {
         // report undeclared properties somebody else wrote earlier, and blame
         // this caller for them.
         let undeclared = g.undeclared_properties(&req.node_type, &props);
-        match g.upsert_node(&req.node_type, &req.id, props) {
+        // Read BEFORE the write so the `revision` block can report what moved —
+        // and, since 2026-08-17, so it can hand back the `prior_content_hash`
+        // that `expected_content_hash` needs.
+        //
+        // ⚠️ THIS TOOL CARRIED NO `revision` BLOCK AT ALL until the surface
+        // probe went looking for it: the block was attached by the TYPED
+        // constructors and never by generic `create_node`. So the
+        // compare-and-swap shipped, for one commit, with its precondition
+        // value unobtainable from the very tool that demanded it. The core
+        // tests all passed; only driving the real surface found it, which is
+        // AGENTS.md's "compiling is not the finish line" earning its place
+        // again.
+        let prior = g.get_node(&req.node_type, &req.id).ok().flatten();
+        // COMPARE-AND-SWAP when the caller stated what they read, plain upsert
+        // when they did not. The refusal is the point: `revision` already told
+        // the LOSER of a collision afterwards and told the winner nothing, and
+        // reporting a lost update is not the same as not losing it
+        // (req:a-write-cannot-silently-lose-someone-elses-work).
+        let written = match req.expected_content_hash.as_deref() {
+            Some(expected) => g.upsert_node_if_unchanged(&req.node_type, &req.id, props, expected),
+            None => g.upsert_node(&req.node_type, &req.id, props),
+        };
+        match written {
             Ok(n) => {
                 let mut dto = NodeDto::from(n);
                 dto.undeclared = undeclared;
-                ok_json(dto)
+                let revision = crate::tools::capture::revision_of(prior.as_ref(), &dto);
+                crate::tools::capture::with_capture_notes(
+                    dto,
+                    "loop: a generic write is still a design change — run detect_gaps \
+                     (detect-and-ask) when the batch lands",
+                    None,
+                    revision,
+                )
             }
             Err(e) => Err(node_error(&g, &req.node_type, e)),
         }

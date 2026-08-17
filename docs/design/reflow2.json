@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:9050b0b3367a1d1fe7e2e5bb09eed985c085ee4429bf59b8764781ff7dca478b",
+  "content_hash": "sha256:7235981dd91867853c8aa09ed21a78564ddf37889d7e8068a4950b4c38397e52",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -870,6 +870,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-write-can-be-conditional-on-what-was-read",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:graph"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -3233,6 +3241,12 @@
       "from_id": "chg:a-withdrawn-decision-stops-reading-as-a-conflict",
       "properties": {},
       "to_id": "epoch:v0330"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-write-can-be-conditional-on-what-was-read",
+      "properties": {},
+      "to_id": "epoch:a-write-can-be-conditional-on-what-was-read"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5996,6 +6010,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:a-write-can-be-conditional-on-what-was-read:art:graph",
+      "properties": {},
+      "to_id": "epoch:a-write-can-be-conditional-on-what-was-read"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:a-zero-that-is-not-an-absence:art:tools-query",
       "properties": {},
       "to_id": "epoch:a-zero-that-is-not-an-absence"
@@ -7613,6 +7633,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-can-a-design-hold-the-external-premise-it-rests-on",
+      "properties": {
+        "acted_at": "2026-08-17",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-can-the-graph-be-the-official-record-an-organisation-trusts",
       "properties": {
         "acted_at": "2026-08-15",
@@ -7984,6 +8013,15 @@
       "from_id": "dec:idea-is-session-context-already-in-the-graph",
       "properties": {
         "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-is-the-evolution-vocabulary-unused-because-nothing-asks-for-it",
+      "properties": {
+        "acted_at": "2026-08-17",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -10671,6 +10709,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-write-can-be-conditional-on-what-was-read",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-write-can-be-conditional-on-what-was-read",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-write-can-be-conditional-on-what-was-read",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:a-write-says-what-it-did-not-recognise",
       "properties": {
         "accepted_baseline": true,
@@ -11712,6 +11777,15 @@
         "action": "modified"
       },
       "to_id": "art:skills-catalog"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-d3e4d44093e988d2",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
     },
     {
       "edge_type": "CHANGED",
@@ -24175,6 +24249,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:a-write-can-be-conditional-on-what-was-read",
+      "properties": {},
+      "to_id": "rule:fix-it-properly-while-it-is-still-cheap"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:adopt",
       "properties": {},
       "to_id": "decision:ack:07bb37be6d5cd129"
@@ -29718,6 +29798,12 @@
       "from_id": "art:graph",
       "properties": {},
       "to_id": "snap:epoch:a-refusal-names-what-would-have-worked:art:graph"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:graph",
+      "properties": {},
+      "to_id": "snap:epoch:a-write-can-be-conditional-on-what-was-read:art:graph"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -66800,9 +66886,21 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:doing-it-right-becomes-design-intent",
+      "properties": {},
+      "to_id": "epoch:a-write-can-be-conditional-on-what-was-read"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:genesis",
       "properties": {},
       "to_id": "epoch:v040"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:instruments-stop-overstating",
+      "properties": {},
+      "to_id": "epoch:the-philosophy-is-in-the-product"
     },
     {
       "edge_type": "PRECEDES",
@@ -66875,6 +66973,12 @@
       "from_id": "epoch:the-owners-identity-is-one-node-again",
       "properties": {},
       "to_id": "epoch:legitimate-islands-answered"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:the-philosophy-is-in-the-product",
+      "properties": {},
+      "to_id": "epoch:a-designs-premises-can-move"
     },
     {
       "edge_type": "PRECEDES",
@@ -67761,6 +67865,14 @@
         "completeness": "complete"
       },
       "to_id": "cap:granularity-observation"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:graph",
+      "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-write-can-be-conditional-on-what-was-read"
     },
     {
       "edge_type": "REALIZES",
@@ -69046,6 +69158,12 @@
       "from_id": "cap:a-sweep-names-its-own-scope-and-the-category-names-what-it-computes",
       "properties": {},
       "to_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-write-can-be-conditional-on-what-was-read",
+      "properties": {},
+      "to_id": "req:a-write-cannot-silently-lose-someone-elses-work"
     },
     {
       "edge_type": "SATISFIES",
@@ -70456,6 +70574,15 @@
     },
     {
       "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:a-fix-says-whether-it-corrected-the-cause",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-17"
+      },
+      "to_id": "epoch:the-philosophy-is-in-the-product"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
       "from_id": "req:a-node-can-say-who-may-change-it",
       "properties": {
         "modality": "expected",
@@ -71098,6 +71225,12 @@
       "from_id": "ver:a-session-cannot-name-another-design",
       "properties": {},
       "to_id": "req:a-session-cannot-address-another-design"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-stale-write-is-refused",
+      "properties": {},
+      "to_id": "cap:a-write-can-be-conditional-on-what-was-read"
     },
     {
       "edge_type": "VERIFIES",
@@ -74387,7 +74520,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d3b8b65c75b308b0554bd9135ba61f6e6878a6553c6bbd80a2fd689fefacdaec",
+        "checksum": "sha256:16047bc37f415c84cb1ce6c396fa23989cdc665de96cd0eeb0c57bd37c25a766",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
@@ -75205,7 +75338,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c1c9aabea5364c1d9dbe62adc2baf867393db1aa1ccc9cc20a845723524db478",
+        "checksum": "sha256:22879bc87cb6bad9747015eb8d88dc067c9a43127c38f49363d7a9ef4b5adab3",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -75710,7 +75843,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7fafa7f11b420c3ab52b40856fdf8b6087cdcb722402c2d0bb576674710bcfd1",
+        "checksum": "sha256:d15f9c31dd366a4c9d40e13a60c8091bc674f321a63aa82e8d93e0fd78c08547",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "tools/capture.rs",
@@ -75775,7 +75908,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:177768078baa670d86629fe3710cb4390f4701be2b1d8d0b0b981b76957a1561",
+        "checksum": "sha256:31e8a59e3dd04bac9acd4d41d5d36f6b435bb1d4b60b9872f5b7865f8f67d37b",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
@@ -76017,6 +76150,16 @@
       "properties": {
         "description": "TWO BREAKING CHANGES TAKEN ON PURPOSE, both DECLINED hours earlier on the ground that they would break consumers. `rule:fix-it-properly-while-it-is-still-cheap` (Anthony, 2026-08-17) reversed that ground: before a stability commitment exists the price of a break is at its lowest and rises with every user, so \"it would break consumers\" argues for doing it NOW. (The guard matched `dec:a-misnaming-is-fixed-in-the-message-not-the-key`, which is the DECISION that first declined this and now records its own reversal; this is the built thing that carries it out. Also distinct from `cap:a-finding-describes-the-walk-that-produced-it`, which fixed the MESSAGE and left both of these standing.)\n\n(1) `disconnected_community` IS NOW `unthreaded_cluster`. The old key asserted unreachability while the detector computed something narrower — connected components over `design_network()`, which drops nine node types and every review record and does not count CONTAINS, covering 1133 of a 2413-node graph. `unthreaded` names what is actually missing, a traceability edge, and cannot be misread as \"unreachable in the graph\". The ility source string moves with it.\n\n⭐ THE COST THAT DECIDED AGAINST IT WAS NEVER MEASURED, and measuring it is what made the call obvious: the key appears in 14 source/test files, 6 live docs and 41 prose mentions in the export, and is PERSISTED AS DATA NOWHERE — no node property holds it as a value. No observation, acknowledgement or ility reading needed migrating. A rename feared as a migration was a sed and a doc pass.\n\n(2) UNSCOPED `detect_defects` RETURNS `{swept, defects}` INSTEAD OF A BARE LIST. `swept.nodes` is what it examined, `swept.rules` names the checks that ran, `swept.design_network_nodes` reports the narrower topology walk rather than hiding it, and `swept.note` appears ONLY when the sweep could not have found anything. An empty result now says which empty it is — exercised and found nothing, or nothing to examine — instead of leaving a zero to be read as permission before `apply_heal`, which deletes nodes. The scoped sibling has answered this way since 2026-08-09, so one tool was answering one question two ways and the honest half was the one fewer people call. `open_defects()` is the bare list for engine-internal callers.\n\nWHAT IT COST, recorded as evidence for the rule rather than for the change: five real consumers of the old shape broke and were FIXED rather than shimmed — `smoke_mcp.py` in three places, `model_the_loop.py`, `build_design_graph.py`, and `bl124_instrument.py`, which now reads both shapes deliberately because it is an instrument that may be pointed at an older server. 53 test call sites moved to `open_defects()`. One toolsnap golden moved.\n\n⚠️ AND A FALSE CLAIM WAS CAUGHT IN THE WRITING. The first draft of `HealCategory::ALL`'s doc comment said the compiler enforced that every variant is listed. It does not — `as_str`'s exhaustive match forces an author into the impl block, but nothing makes them extend the list, and a missing entry would make `swept.rules` UNDERSTATE the sweep. The comment now says it is hand-maintained and names the test that actually holds it. Shipping an unchecked claim about a check, inside the change whose subject is reports that overstate, would have been the joke writing itself.",
         "name": "A defect sweep returns what it examined, and the category names what it computes",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-write-can-be-conditional-on-what-was-read",
+      "node_type": "Capability",
+      "properties": {
+        "description": "COMPARE-AND-SWAP ON THE WRITE PATH. `create_node` accepts `expected_content_hash`; supply what you read and the write is REFUSED when the node has moved since, naming both hashes. Omit it and the old behaviour is unchanged. In the core: `upsert_node_if_unchanged`, with `node_content_hash` as the canonical hash.\n\nTHE FAILURE, measured from BOTH SIDES of one collision on a shared graph: a worker read a node, ninety seconds later another attached session wrote it, the write returned a normal success with the full node body, and THE WINNER WAS NEVER TOLD. The loser found out only because `record_change` happens to return the snapshot it took — a diagnostic side-effect of an unrelated tool, not a guard.\n\n⭐ WHY A REFUSAL RATHER THAN A FIFTH REPORT, and this is `rule:fix-it-properly-while-it-is-still-cheap` deciding the shape. The `revision` block already REPORTED what a write replaced — that is detection, it tells the loser afterwards and tells the winner nothing. The requirement's own words were that the block's hash \"is exactly the raw material a compare-and-swap needs; nothing consumes it yet\". This consumes it. Another report would have been the workaround.\n\nFOUR DESIGN CALLS, each with its reason:\n(1) IT GUARDS THE UPSERT, NOT THE RAW CREATE. The upsert is the merge path every surface writes through; a guard on a path nobody calls reports success and defends nothing.\n(2) ABSENT IS A MISMATCH, NOT A CREATE. If the node is gone, somebody DELETED it while the caller was deciding, and silently recreating it would undo their removal — the same silent loss pointed the other way. Refused with its own message.\n(3) THE HASH MOVED INTO THE CORE. The MCP surface computed it for the `revision` block; the moment it became a PRECONDITION, two implementations of one number became a way for a caller's correct expectation to be refused by an engine that agreed with them — and the divergence would appear only under contention, the one condition nobody tests by hand.\n(4) OPT-IN. A caller who never read the node has no honest expectation to state, and making it mandatory would break every existing writer — a worse defect than the one being fixed.\n\n⚠️⚠️ AND IT SHIPPED BROKEN FOR ONE COMMIT, CAUGHT ONLY BY DRIVING THE REAL SURFACE. Generic `create_node` carried NO `revision` block at all — the block was attached by the TYPED constructors and never by it. So the compare-and-swap existed with its precondition value UNOBTAINABLE FROM THE VERY TOOL THAT DEMANDED IT. Every core test passed. The MCP probe failed on its first run, at the line that reads `revision.prior_content_hash`. `create_node` now returns the block. This is AGENTS.md's \"compiling is not the finish line, and neither is a green unit test\" earning its place for the second time in two days.\n\nMUTATION-CHECKED RATHER THAN TRUSTED: discarding the guard's refusal makes exactly the two probes that should fail, fail (stale read, deleted node), while the counterweight and the hash-stability probe correctly survive — so the suite is not vacuous in the way `dec:non-goal-reflow2-does-not-judge-whether-a-check-is-meaningful` says reflow2 cannot detect for you.\n\n⚠️ HONEST BOUND, and it is the next question rather than a defect: the TYPED constructors (`add_decision`, `add_requirement`, `add_capability`, …) still merge with no expectation available. They are the commonest write path in practice, so the hole this closes is real but partial. Whether they should carry the parameter too is not settled — it is ~10 more surface changes, and the case for it is exactly the case made here.",
+        "name": "A write can be made conditional on what the caller read, so a lost update is refused rather than reported afterwards",
         "provenance": "authored",
         "status": "realized"
       }
@@ -78222,6 +78365,14 @@
       }
     },
     {
+      "node_id": "chg:a-write-can-be-conditional-on-what-was-read",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "create_node gains expected_content_hash — a stale write is refused rather than silently overwriting somebody else's work, and create_node gains the revision block it never had"
+      }
+    },
+    {
       "node_id": "chg:a-write-says-what-it-did-not-recognise",
       "node_type": "ChangeEvent",
       "properties": {
@@ -79240,6 +79391,16 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "capture-session added to the catalogue, 2026-08-12. The design HOLDS: SKILLS.md gained one row for a skill the design already carries as cap:capture-session-skill (realized, governed by dec:idea-a-capture-session-skill-the-user-types). The catalogue moved to match the design, not the other way round."
+      }
+    },
+    {
+      "node_id": "chg:accept-d3e4d44093e988d2",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "properties_hash now delegates to the core's node_content_hash; the value is unchanged, and one implementation replaces two.",
+        "subject": "system"
       }
     },
     {
@@ -83781,6 +83942,16 @@
       }
     },
     {
+      "node_id": "dec:idea-can-a-design-hold-the-external-premise-it-rests-on",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-17, from Space Force capability development: designing against an adversary's deny/degrade/disrupt/destroy, with new intelligence arriving constantly — \"we would start designing something and then we would find that the adversary was doing something else and we would have to adjust the design.\" His own framing of the general case: \"the design was always evolving based on some new factor that hadn't been there when we first designed it.\"\n\n⭐ THE ASYMMETRY THAT NAMES THE GAP. reflow2's `propagate_change` answers *what does this DESIGN change touch?* His domain needs *what does this WORLD change touch?* — and those are different questions, because the design graph is CLOSED UNDER ITSELF. Every node reflow2 can reason about is part of the design. External reality enters only as observations ABOUT the design — drift, verification, reconciliation — never as PREMISES the design rests on. So an assumption about an adversary, a competitor, a regulator or a supplier is invisible: it shaped the design and is not in it.\n\n⇒ THE QUESTION IN ONE LINE: **when the intel is revised, can you find everything you built on it?** Today, no. There is nothing to propagate from.\n\n⭐⭐ AND THE MECHANISM IS ONE STEP AWAY, WHICH IS THE INTERESTING PART. `set_requirement_lineage` already declares `derived` — \"technical necessity nobody asked for, created by a design decision — pair it with governed_by to that Decision\" — and its own description states the consequence that matters here: **\"a derived requirement may lose its reason to exist if the decision behind it is re-opened.\"** That is EXACTLY the semantics he needs, already built, and pointed at an INTERNAL cause. The gap is that reflow2 models \"derived from a decision we made\" and has no notion of \"derived from a fact about the world.\"\n\nMEASURED ON REFLOW2'S OWN GRAPH, 2026-08-17, and the numbers argue against reaching for new vocabulary first:\n    EVOLVES_INTO edges in use     0\n    SUPERSEDES                    0\n    SUPPLEMENTS                   0\n    MITIGATES                     0\n    TRIGGERS                      0\n    MASKS                         0\n    RISKS                         1\n    EnvironmentRule nodes         0\n    Requirement `lineage`         176 of 176 `original` — `derived` and `decomposed` NEVER USED\nSo the evolution vocabulary AND the threat vocabulary already exist and are almost entirely unexercised. Declared and never written to is the trap `req:a-finding-has-somewhere-to-put-its-evidence` names explicitly, and adding a node type here without understanding why the existing ones went unused would repeat it at a larger scale. ⇒ See `dec:idea-is-the-evolution-vocabulary-unused-because-nothing-asks-for-it`.\n\nTHE SHAPES, none chosen:\n(A) A TemporalFact IS ALREADY THIS, USED DIFFERENTLY. It is a time-bounded assertion with `subject_id`, `valid_from`/`valid_to`, and `basis: measured | forecast`. An intel assessment is a forecast about a subject with a validity window; when it expires or is superseded, everything pointing at it is the blast radius. COST: `subject_id` points INTO the design, so a fact about an adversary has no subject to name — the shape fits and the anchor does not.\n(B) THE PREMISE IS AN ASSUMPTION NODE, and design elements DEPEND_ON it. Cleanest propagation story: revising the assumption walks the existing machinery. COST: new node type, and reflow2 has been careful about that.\n(C) THE ADVERSARY IS AN ACTOR. An Actor is \"who the designed system serves\" — an adversary is the anti-Actor, and their capabilities could hang off them. COST: inverts the type's meaning; and reflow2 holds only 3 Actors, so the type is barely exercised either.\n(D) DON'T MODEL THE WORLD — model the DEPENDENCE. Do not try to hold what the adversary can do; hold only \"requirement D exists BECAUSE of external premise P\", where P is a named, dated, citable claim and nothing more. Cheapest, and it is the half that makes the blast radius computable. The design never pretends to model the threat.\n(E) NOT REFLOW2'S JOB. Intel and market analysis live in their own systems; reflow2 records the design. COST: then the \"why did we build this?\" answer permanently leaves the graph, which is the thing he says was hardest.\n\n⚠️ THE HONEST BOUND WHICHEVER WAY THIS GOES: reflow2 cannot tell you the adversary changed. It can only tell you what you built on the belief that they had not — which is the same class of limit as `dec:non-goal-reflow2-does-not-know-what-is-deprecated`, and worth stating in the same breath as the capability.\n\n📌 WHY THIS IS NOT NICHE. Every long-lived design has premises that move: a regulation, a supplier, a platform version, a competitor, a funding line, a user population. Space Force is the sharpest instance because the premise is adversarial and therefore moves ON PURPOSE. NSLS-II has the same shape with a decade-old stack underneath it.",
+        "name": "OPEN — reflow2 computes the blast radius of a DESIGN change; can it compute the blast radius of a WORLD change, when the premise a design rested on turns out to have moved?",
+        "rationale": "Recorded as brainstorming. reflow2's graph is closed under itself: external reality enters only as observations about the design, never as premises the design rests on — so when an assumption is revised there is nothing to propagate from. The mechanism is one step away rather than absent: `lineage: derived` already means \"may lose its reason to exist if the decision behind it is re-opened\", pointed at an internal cause. But the evolution and threat vocabulary already present is measured at 0/0/0/0/0/1 uses, so understanding why it went unused should precede adding more.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-can-the-graph-be-the-official-record-an-organisation-trusts",
       "node_type": "Decision",
       "properties": {
@@ -84226,6 +84397,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-09, on why he built the content store in the first place: \\\"one of the primary reasons I had also developed the blob was to capture actual agent session context. from my limited understanding, an agent is stateless because it can't recall previous session's context. by storing in the blob, I thought I could make a session 'stateful'. ... however, every decision that an agent makes and implements is already embedded in the graph because it is already using reflow2, therefore, ingesting session context is moot or not needed?\\\"\n\n⭐ THE QUESTION HAS A RECORDED ANSWER ALREADY, and it is sharper than either yes or no. cap:session-memory (PLANNED, framing settled by Anthony himself on 2026-07-25) states it directly: \\\"Decision.rationale and ChangeEvent already capture fragments of the why; WHAT LIVES ONLY IN THE SESSION IS THE CONNECTIVE TISSUE — what was tried, what was rejected and on what grounds, which findings turned up while doing something else.\\\"\n\nSo the split is:\n  MOOT — the design content. Decisions, their rationale, requirements, changes, snapshots, questions and answers all land in the graph as they happen. Storing a transcript to preserve those would be a second copy of something already held better.\n  NOT MOOT — the connective tissue. What was attempted and abandoned, what failed and why, what cost more than expected, what was noticed sideways. None of that is design intent, so none of it has a natural node, and it is precisely what a later session needs in order not to repeat the work.\n\n⭐⭐ THIS SESSION IS THE EVIDENCE, and it is self-implicating rather than hypothetical. 2026-08-09 produced a great deal of design content, all of it now in the graph. It also produced process knowledge that is in NONE of it: hashing an artifact before the last edit FIVE times (because every mandatory gate — fmt, a clippy fix, a skill_lint trim — mutates the file AFTER the work looks finished); piping a gate into `tail` so the pipe returned tail's exit code and a red gate was pushed past; merging a four-PR stack in one loop so three PRs landed in already-squashed base branches and were stranded while GitHub reported all four as MERGED. **Every one of those lives in a markdown memory file OUTSIDE reflow2 entirely.** That is the connective tissue cap:session-memory names, currently housed in exactly the kind of file dec:what-lives-where was written to retire.\n\n=== AND THE PART THAT BEARS ON THE BLOB ===\n\nTHE STORE WAS NEVER THE RIGHT MECHANISM FOR THIS, AND cap:session-memory ALREADY SAYS SO: \\\"a pointer to a 3 MB transcript is a RECEIPT, not documentation: leaning on it recreates the markdown problem one level down, since 'it is all in the transcript' is the same excuse as 'it is all in the backlog file'.\\\"\n\nIts actual design needs no content store at all: session takeaways as FIRST-CLASS GRAPH CONTENT, written when they happen, anchored to the session's epoch, queryable afterwards. The transcript is modelled as a Fragment carrying the session UUID as portable identity — A POINTER, NOT BYTES — with the absolute path explicitly demoted to a machine-scoped hint, because a path stored as identity resolves for one person and silently misses for everyone else.\n\n⇒ SO THE SESSION-CONTEXT JUSTIFICATION FOR THE BLOB DOES NOT SURVIVE, but not for the reason the question proposes. It is not that session context is worthless — it is that ITS VALUE IS IN DISTILLED NODES, WHICH NEED NO STORE. Storing the transcript would preserve the receipt and lose the documentation.\n\nTHE FRAMING THAT MAKES THIS MORE THAN CLEANUP, and it is Anthony's own from 2026-07-25: a session's context IS documentation — the how-and-why record of a design's evolution — and documentation is part of the product. That changes the standard rather than the mechanism: \\\"a convenience can be skipped under load, a deliverable cannot.\\\"\n\n=== WHAT IS ACTUALLY OPEN ===\n\n(1) IS THE STATELESSNESS PREMISE ALREADY ANSWERED? reflow2's whole pitch is that the graph is the memory (req:persistence). If so, a transcript store would be a SECOND, lossier memory competing with the first — and two sources of truth is the failure this project designs out everywhere else. That reading says the blob's session justification was solving a problem reflow2 already solves.\n\n(2) WHAT FORCES THE CONNECTIVE TISSUE TO BE WRITTEN? cap:session-memory names this as its load-bearing gap: \\\"the existing handoff enforcement watches the modification time of MARKDOWN files, so the only mechanism forcing a session to leave takeaways behind POINTS AWAY FROM THE GRAPH.\\\" That is still true today — it is why this session's process findings are in a memory file. Fixing it is a nudge/hook question, not a storage question.\n\n(3) DOES PROCESS KNOWLEDGE BELONG IN A DESIGN GRAPH AT ALL? Honest counter, recorded beside rather than argued down: \\\"I hashed before running fmt\\\" is not design intent. It may belong to the harness or to a project's own working notes, and forcing it into the design graph could make the graph a log — which is the failure mode dec:orientation-is-computed-not-written warns about from the other direction. cap:session-memory's answer is the documentation reframe; whether that reframe holds for PROCESS failures as well as DESIGN reasoning is genuinely unsettled.\n\nNOTHING IS PROMOTED. Anthony asked a question; cap:session-memory remains PLANNED and unchanged.",
         "name": "OPEN — if every decision an agent makes is already in the graph, is capturing session context moot? (No, but the part that isn't moot never needed a blob)",
         "rationale": "Recorded via the brainstorm skill: one Decision per open question, at `proposed`, counters beside the options, nothing promoted.\n\nDeliberately NOT folded into cap:session-memory, and not used to edit it. That capability already holds the answer to the moot question and its framing is Anthony's own; this node records that the question was asked again, what the existing answer is, and the one part that genuinely bears on the content-store decision — that the session-context justification for the blob does not survive, because the value is in distilled nodes rather than stored bytes.\n\nLinked to dec:idea-discontinue-the-content-store because it removes one of that decision's stated motivations, which is a material change to the argument rather than a footnote.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-is-the-evolution-vocabulary-unused-because-nothing-asks-for-it",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. The second half of Anthony's 2026-08-17 topic, separated from `dec:idea-can-a-design-hold-the-external-premise-it-rests-on` because that asks for something reflow2 CANNOT do and this asks why what it CAN do is never done.\n\nHIS SCENARIO, verbatim: \"increment 1 built to requirements A,B,C; but in increment 2, requirement A is no longer valid (it has been retired) and requirement D has been added.\" He suspected it might already fit inside epochs and increments. IT LARGELY DOES, and that is worth saying plainly before anything is designed:\n\nWHAT IS ALREADY BUILT AND WORKING —\n• `arrival_delta(epoch_or_release)` answers his question almost exactly. Its own description: \"what didn't we achieve that we were supposed to in increment 10?\" Five outcomes per item: `delivered`, `deferred` (still intended, date moved, and WHERE TO), `discontinued` (no longer intended at all), `outstanding` (still pointed here and NOBODY HAS SAID which — the question to put to the user, never to default). **Work scheduled AFTER the baseline is reported separately**, which is requirement D. So A-retired shows as `discontinued` and D-added shows as post-baseline work.\n• Retirement is recorded properly. MEASURED: 13 retired requirements (9 dropped, 4 deferred), and every one of the 9 carries GOVERNED_BY (a Decision saying why), CHANGED (a ChangeEvent) and HAS_SNAPSHOT (the prior state). The `retire-from-design` skill forces the one question that matters — \"was this ever true?\" — because history is retired on the record while a mistake is deleted.\n\n⚠️⚠️ WHAT IS BUILT AND NEVER TOUCHED. MEASURED 2026-08-17 across 176 requirements and 9,920 edges:\n    Requirement `lineage`   176 of 176 `original`. `derived` 0. `decomposed` 0.\n    EVOLVES_INTO            0 edges\n    SUPERSEDES              0 edges\n    SUPPLEMENTS             0 edges\n⇒ THE GRAPH CANNOT SAY THAT D REPLACED A, and not because it lacks the words. `EVOLVES_INTO` and `SUPERSEDES` are declared edge types; `lineage: derived` is a declared value with real semantics attached.\n\n⭐⭐ AND THE DECIDING MEASUREMENT WAS TAKEN RATHER THAN LEFT AS A SUGGESTION. An earlier draft of this node said the countable question — did the 9 dropped requirements actually HAVE successors? — was \"worth testing before any of it\" and that nobody had counted it. Counted, same day:\n\n    dropped requirements whose reason-text NAMES a replacement:  9 OF 9\n\nEvery one reads \"FOLDED INTO `req:defaults-do-not-assert`\" — a real, live requirement, named explicitly, in prose, with ZERO `SUPERSEDES` edges anywhere in the graph. (One bulk retirement act across nine requirements rather than nine independent judgements, which does not soften it: the successor was known at the moment of retirement in every case.)\n\n⇒ SO OPTION (D) IS DEAD. The zero is not an honest description of a design where nothing replaced anything; it is a design where the replacement was known, written down, and written down in the ONE FORM THE GRAPH CANNOT QUERY. Ask \"what replaced `req:blocking-is-partial`?\" and the answer requires a human to read a paragraph. That is the same failure as every other finding in this increment — the information exists and the structure does not, so it cannot be counted — and it is `req:a-finding-has-somewhere-to-put-its-evidence` arriving through a third door.\n\n⇒ AND IT IS A WORKFLOW GAP, NOT A VOCABULARY GAP, which the count now supports rather than merely suggesting. The words existed, the author knew the answer, and no moment in the loop asked for it: not `capture-intent`, not `retire-from-design`, not `plan-increments`. Adding vocabulary here would produce another unused field.\n\nTHE SHAPES, none chosen:\n(A) ASK AT RETIREMENT. `retire-from-design` already forces \"was this ever true?\"; add \"is something taking its place?\" — one question, at the moment the answer is demonstrably known, and the measurement says it would have been answered 9 times out of 9.\n(B) ASK AT CAPTURE. `capture-intent`'s search-before-you-add already surfaces near matches and forces a choice between sharpen and `distinct_from`; a third option — SUPERSEDES — catches the replacement where the duplicate guard is already looking.\n(C) COMPUTE AND OFFER. A retirement whose reason-text names another node id is a candidate supersession, reported as a question and never asserted (`dec:ask-not-repair`). On this corpus that alone would recover all nine.\n(D) ~~LEAVE IT~~ — RULED OUT by the measurement above.\n\n📌 THE CHEAPEST NEXT MOVE IS PROBABLY (A) PLUS (C): ask going forward, and offer the nine already sitting in prose as candidates for the user to confirm. Neither asserts anything.",
+        "name": "OPEN — \"requirements evolve across increments\" is mostly already BUILT; the genealogy vocabulary is 100% unused AND the successor was named in prose 9 times out of 9",
+        "rationale": "Recorded as brainstorming. His scenario is largely already built — arrival_delta reports discontinued-versus-delivered per increment and reports post-baseline additions separately. What is missing is genealogy, and the deciding measurement was taken rather than left as a suggestion: all 9 dropped requirements NAME their successor in prose (\"FOLDED INTO req:defaults-do-not-assert\") while zero SUPERSEDES edges exist. So the words existed, the author knew the answer, and no moment in the loop asked for it — a workflow gap, and the \"leave it\" option is ruled out.",
         "status": "proposed"
       }
     },
@@ -86890,6 +87071,16 @@
       }
     },
     {
+      "node_id": "epoch:a-designs-premises-can-move",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "A design's premises can move — genealogy across increments, and the blast radius of a WORLD change rather than only a design change (SCOPE NOT SETTLED: gated on open decisions)",
+        "sequence": 370,
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "epoch:a-discipline-arrives-when-it-applies",
       "node_type": "DesignEpoch",
       "properties": {
@@ -86936,6 +87127,16 @@
         "epoch_type": "revision",
         "name": "A finding describes the walk that produced it, and an empty orientation read says which zero it is — requirement 1 completed",
         "sequence": 348,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:a-write-can-be-conditional-on-what-was-read",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "A write can be made conditional on what the caller read — compare-and-swap, so a lost update is prevented rather than reported afterwards",
+        "sequence": 351,
         "status": "arrived"
       }
     },
@@ -87790,6 +87991,16 @@
         "name": "The owner's forked Contributor identity is merged — ctr:anthony folds into who:ajs",
         "sequence": 306,
         "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:the-philosophy-is-in-the-product",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "Doing it right is something reflow2 CARRIES, not just something this project practises — a fix says whether it reached the cause, and the tool says what it will not do",
+        "sequence": 360,
+        "status": "planned"
       }
     },
     {
@@ -94487,6 +94698,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:a-write-can-be-conditional-on-what-was-read:art:graph",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0100\",\"properties\":{\"as_checksum\":\"sha256:2fb1eb7c04dc16b3\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0101\",\"properties\":{\"as_checksum\":\"sha256:2fb1eb7c04dc16b3\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0110\",\"properties\":{\"as_checksum\":\"sha256:21ec45e48bd3bc7b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0120\",\"properties\":{\"as_checksum\":\"sha256:0c23ae8f781b3c60\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:c6f463b01a3b6179b199ced99515676db1ad26caaf26ea8738a18d094601cf42\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:1ed522ea05a4b6c4fb84ec6e7c5f1eb2a8f698e86ee61d515ee66c36053b7bf6\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:1ed522ea05a4b6c4fb84ec6e7c5f1eb2a8f698e86ee61d515ee66c36053b7bf6\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:1ed522ea05a4b6c4fb84ec6e7c5f1eb2a8f698e86ee61d515ee66c36053b7bf6\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:3e3a74509590ce61\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:1db59b3f290549cb\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:1db59b3f290549cb\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:1db59b3f290549cb\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:929f2c142c37f7655ea8dda152d813c69d6a7c9d7f3ba9b700ff4de970179844\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:0c572c75d71045854e65d16ca6827271d9319bc13f35e470976c425fda05033c\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:0c572c75d71045854e65d16ca6827271d9319bc13f35e470976c425fda05033c\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:15823284a28c35d3e70eee48cfcc6d4d3e05479d36724ec05833d5cb9ab105f5\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:15823284a28c35d3e70eee48cfcc6d4d3e05479d36724ec05833d5cb9ab105f5\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:15823284a28c35d3e70eee48cfcc6d4d3e05479d36724ec05833d5cb9ab105f5\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:b0aaf8f8a21fc5f7850298110bd13a9b1ae3aeca6d7463b79360371b7f3ce63a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:b0aaf8f8a21fc5f7850298110bd13a9b1ae3aeca6d7463b79360371b7f3ce63a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:b0aaf8f8a21fc5f7850298110bd13a9b1ae3aeca6d7463b79360371b7f3ce63a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:b0aaf8f8a21fc5f7850298110bd13a9b1ae3aeca6d7463b79360371b7f3ce63a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:b0aaf8f8a21fc5f7850298110bd13a9b1ae3aeca6d7463b79360371b7f3ce63a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:315568daf182e013ee9b07ea754ad5f8f35c15252712cf9963d63d09d97713d5\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:315568daf182e013ee9b07ea754ad5f8f35c15252712cf9963d63d09d97713d5\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:d3b8b65c75b308b0554bd9135ba61f6e6878a6553c6bbd80a2fd689fefacdaec\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v040\",\"properties\":{\"as_checksum\":\"sha256:328b25be480771fb\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v050\",\"properties\":{\"as_checksum\":\"sha256:328b25be480771fb\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v060\",\"properties\":{\"as_checksum\":\"sha256:2ca9a2279ca4edc5\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v061\",\"properties\":{\"as_checksum\":\"sha256:b2e290d8bb8a6f18\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v070\",\"properties\":{\"as_checksum\":\"sha256:b2e290d8bb8a6f18\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v080\",\"properties\":{\"as_checksum\":\"sha256:b2e290d8bb8a6f18\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v090\",\"properties\":{\"as_checksum\":\"sha256:b2e290d8bb8a6f18\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:interface-spec\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:plan-movement-recorded\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:requirement-lineage\",\"properties\":{\"completeness\":\"partial\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:graph\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:d3b8b65c75b308b0554bd9135ba61f6e6878a6553c6bbd80a2fd689fefacdaec\",\"granularity\":\"atomic\",\"location\":\"crates/reflow2-core/src/graph.rs\",\"name\":\"graph.rs\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:graph",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:a-zero-that-is-not-an-absence:art:tools-query",
       "node_type": "Snapshot",
       "properties": {
@@ -98001,6 +98222,18 @@
       }
     },
     {
+      "node_id": "fact:music-graph-f8-to-f20-verified-against-the-build-2026-08-17",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "THE MUSIC_GRAPH OUTSTANDING LIST, CHECKED AGAINST THE RUNNING BUILD RATHER THAN AGAINST THE PREVIOUS TRIAGE NOTE — which is the rule `fact:the-music-graph-feedback-file-is-four-sessions-and-its-first-batch-was-fixed-long-ago` yielded and this is its first application.\n\n⭐ TWO PRIOR RECORDS FROM 2026-08-16 DISAGREE WITH EACH OTHER, and noticing that is why this was re-checked. `fact:feedback-triage-status-across-three-sources-2026-08-16` lists F6 and F7 as \"confirmed already covered\"; `fact:the-music-graph-feedback-file-is-four-sessions...` lists F6 and F7 as \"NOT YET VERIFIED\". Same day, same corpus, opposite claims. Neither is obviously wrong and the conflict itself is the finding: a to-do list about feedback drifts exactly like any other uncomputed record.\n\nCLOSED SINCE THE LAST TRIAGE (verified today):\n• F10 (`coverage_report` calls a swept file unobserved when a parent directory also claims it) — FIXED by PR #218, `chg:a-claim-is-not-hidden-by-its-parent`. It was on the open list and closed four days after that list was written.\n\nREPRODUCED, STILL OPEN:\n• F8 (`export_graph` will not create its own parent directory) — REPRODUCED LIVE 2026-08-17. Exporting to a path with a missing parent fails with \"No such file or directory (os error 2)\". Partially improved since the report: the message now names the path. It still does not say the parent is missing, nor that one mkdir fixes it, and the reporter's point stands — AGENTS.md documents a restore path (`.reflow2/backups/`) that does not exist in a fresh design, so the instructions name the path the tool rejects.\n\nNOT TESTABLE FROM AN MCP CLIENT, honestly recorded as unverified rather than guessed:\n• F17 (`get_node`'s argument error takes two round trips; neither message names both required fields) — the harness validates arguments against the tool schema before they reach reflow2, so the wrong-argument path cannot be exercised from here. Needs a raw JSON-RPC probe (`tools/smoke_mcp.py` is the place). The reporter measured it at EIGHT TOOL CALLS, so it is worth the probe.\n\nLIKELY ADDRESSED, NOT YET CONFIRMED AGAINST THE REPORTER'S EXACT CASE:\n• F19 (`what_next` hides most of the open set with no way to page) — the tool NOW ACCEPTS `limit`, which is one of the two things the reporter asked for, and reports `not_shown` and `unranked_pool`. Whether that satisfies them is not established.\n• F18 (gap-acknowledgement Decisions swamp real Decisions) — `what_next` states \"Review records excluded throughout\" and `structure.rs` keeps `decision:ack:` ids out of the design network (BL-124). But the reporter's actual complaint was about `scan_nodes {node_type: Decision, brief: true}` returning 41 bookkeeping rows of 71, and that read path was not checked today.\n• F20 (\"Delivered: 10 of 21 (20 satisfied)\" reads as a contradiction) — the report now carries an explanatory clause (\"computed from the thread ... not from a status field\"), which is weaker than the reporter's ask to name both numbers plainly. Judgement, not a defect.\n\nOPEN AND UNCHECKED TODAY: F6, F7 (see the disagreement above), F9, F13, F14, F15.\n• F9 and F14 are the same shape and are the most interesting of the remainder: recording planned work MANUFACTURES gaps (unrealized/unverified per planned capability), so the gap list punishes writing a plan down, and one detector can bury every other finding. That is `req:a-deliberate-state-is-not-a-defect` (accepted) arriving from a third direction, and it may already be covered by that requirement rather than needing its own.\n• F15 (running `reconcile_artifacts` does not clear the loop_status item it tells you to run) — the count is now 1 rather than the reporter's 27, but whether the underlying non-clearing behaviour is fixed was not established.\n• F13 (`unmotivated_capability` misreports provenance in its evidence string) — a report stating something the node does not say, which is squarely this increment's theme and was not checked.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-17"
+      }
+    },
+    {
       "node_id": "fact:nine-of-twenty-skills-are-edited-without-a-drift-signal",
       "node_type": "TemporalFact",
       "properties": {
@@ -98537,6 +98770,18 @@
         "level": "integration",
         "method": "test",
         "name": "A design a session was not attached to cannot be reached by NAMING it: a graph_id it was not attached to is REFUSED rather than served, and a path is not an alternative route in. NOW COVERED, 2026-08-12, in crates/reflow2-mcp/tests/a_session_names_its_design.rs (8 cases) against the surface that finally exists — crates/reflow2-mcp/src/registry.rs. CLAUSE 1 is pinned twice, and the second case is the one that matters: an id this registry does not hold is refused (`an_id_the_registry_does_not_hold_is_refused`), AND a design that genuinely exists elsewhere on the machine is refused identically (`a_real_design_outside_the_root_is_refused_like_any_other`) — so knowing a real graph_id is not a way in, and the registry's ROOT is the boundary. CLAUSE 2 is pinned as a refusal rather than left to the type system (`a_filesystem_path_is_not_an_alternative_route_in`): a path handed to attach() comes back as an unknown ID, never resolved as a location. Belt and braces on both: a Binding exposes ONE design and offers no operation taking another id, so 'cannot name another' holds BY CONSTRUCTION and not by a check anyone must remember — `a_binding_carries_one_design_and_offers_no_way_to_ask_for_a_second`. MUTATION-CHECKED: serving an unknown id by falling back to any design fails 3 cases; accepting a path as a route in fails exactly the case that names it. THE TRIPWIRE THAT FORCED THIS IS RETIRED — the_registry_clauses_are_not_covered_here fired the moment registry.rs appeared, exactly as designed, and is now a pointer (the_registry_clauses_are_covered_now) that fails if this coverage is ever deleted. ⚠️ WHAT THIS DOES NOT COVER, stated so the green is not read wider than it is: no TRANSPORT is wired, so no session can yet select a design at runtime — cap:select-graph-by-id prefers an HTTP path prefix /g/<graph_id>/ and remains in_progress. And WHO MAY LIST WHICH DESIGNS is untouched: graph_ids() returns what the OPERATOR placed under the root, which is right for one owner's neighbourhood and is not a multi-tenant policy (dec:idea-a-session-holds-several-graphs, unanswered).",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-stale-write-is-refused",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-17",
+        "level": "integration",
+        "method": "test",
+        "name": "Seven probes across engine and tool: a stale write is refused and names both hashes, the other party's work survives, a deleted node is not resurrected, an unraced write goes through, a caller stating no expectation is unaffected, and the hash is stable across property ordering — MUTATION-CHECKED, discarding the refusal fails exactly the two that should",
         "status": "passing"
       }
     },
@@ -100343,7 +100588,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:52d66a271dd69ab65fddcdfc58e22ab262af36fc1ac1c80b17d4a445d3e8fb6c",
+  "prev_content_hash": "sha256:9050b0b3367a1d1fe7e2e5bb09eed985c085ee4429bf59b8764781ff7dca478b",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

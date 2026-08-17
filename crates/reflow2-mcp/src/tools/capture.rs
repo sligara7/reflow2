@@ -269,10 +269,14 @@ pub(crate) struct Revision {
 /// Canonical sha256 of a property map — keys sorted, compact separators, so the
 /// same properties always hash the same regardless of map ordering.
 fn properties_hash(props: &HashMap<String, Value>) -> String {
-    use sha2::{Digest, Sha256};
-    let ordered: std::collections::BTreeMap<&String, &Value> = props.iter().collect();
-    let text = serde_json::to_string(&ordered).unwrap_or_default();
-    format!("sha256:{:x}", Sha256::digest(text.as_bytes()))
+    // DELEGATED TO THE CORE since 2026-08-17, and the delegation is the point
+    // rather than tidiness. This value became a PRECONDITION when
+    // `create_node` gained `expected_content_hash`: the number reported here is
+    // the number the engine compares against. Two implementations of one hash
+    // would let a caller's correct expectation be refused by an engine that
+    // agreed with them — and the divergence would appear only under
+    // contention, which is the one condition nobody tests by hand.
+    reflow2_core::node_content_hash(props)
 }
 
 /// Compare what a node held before a constructor call against what it holds
