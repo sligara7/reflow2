@@ -296,8 +296,14 @@ fn a_decision_can_be_recorded_and_linked_to_what_it_governs() {
         Some("Scores must survive a restart; in-memory loses them."),
     )
     .expect("decision");
-    g.governed_by(node::COMPONENT, "cmp:engine", node::DECISION, "dec:store")
-        .expect("governed_by");
+    g.governed_by(
+        node::COMPONENT,
+        "cmp:engine",
+        node::DECISION,
+        "dec:store",
+        None,
+    )
+    .expect("governed_by");
 
     let edges = g
         .outgoing("cmp:engine", Some(edge::GOVERNED_BY))
@@ -325,8 +331,14 @@ fn a_decision_reaches_what_it_governs_when_it_changes() {
         None,
     )
     .expect("decision");
-    g.governed_by(node::COMPONENT, "cmp:engine", node::DECISION, "dec:store")
-        .expect("governed_by");
+    g.governed_by(
+        node::COMPONENT,
+        "cmp:engine",
+        node::DECISION,
+        "dec:store",
+        None,
+    )
+    .expect("governed_by");
 
     let radius = g
         .propagate_from(&["dec:store"], PropagateOptions::default())

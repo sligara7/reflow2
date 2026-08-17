@@ -1334,12 +1334,28 @@ impl DesignGraph {
     /// `node GOVERNED_BY Decision/DesignRule` — the node is shaped by a
     /// recorded decision. `from_type` and `to_type` are required: the schema
     /// allows any endpoints (`from: "*"`, `to: "*"`).
+    ///
+    /// `ruling` says what KIND of governance this is. `None` — the ordinary
+    /// case — means the target simply shapes the source. `Some("parks")` means
+    /// the ruling declares the source's unattached or unsatisfied state to be
+    /// CORRECT AND DELIBERATE (`req:a-deliberate-state-is-not-a-defect`).
+    ///
+    /// ⚠️ THE PARAMETER EXISTS BECAUSE THE PROPERTY WOULD OTHERWISE BE
+    /// UNREACHABLE FROM HERE, and that trap was measured hours earlier the same
+    /// day: `Verification.description` was declared, fulltext, the embedding
+    /// field — and used ONCE IN 164 NODES, because `add_verification` had no
+    /// parameter for it and the only route was raw `create_node`. Declaring
+    /// `ruling` without exposing it here would have been the fourth instance of
+    /// one pattern in a day (after `description`, `SUPERSEDES`, and the
+    /// `revision` block missing from `create_node`). A declared field nobody
+    /// can reach is a declared field nobody writes to.
     pub fn governed_by(
         &mut self,
         from_type: &str,
         from_id: &str,
         to_type: &str,
         to_id: &str,
+        ruling: Option<&str>,
     ) -> Result<StoredEdge, DynoError> {
         self.create_edge(
             edge::GOVERNED_BY,
@@ -1347,7 +1363,7 @@ impl DesignGraph {
             from_id,
             to_type,
             to_id,
-            Props::new(),
+            Props::new().set_opt("ruling", ruling),
         )
     }
 

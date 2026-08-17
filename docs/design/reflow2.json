@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:310336eb63ada2cfdbbc7d1e520771b252c974a59e5fe2f4269c19a2515b04ce",
+  "content_hash": "sha256:3a76c002c671c7dc9a02418e026f0ee213a9160bb1a559de984f5569957425ed",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -866,6 +866,14 @@
     {
       "edge_type": "ALLOCATED_TO",
       "from_id": "cap:a-node-attached-to-nothing-is-reported-whatever-its-type",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-ruling-parks-a-node-and-parked-nodes-are-counted",
       "properties": {
         "weight_basis": "estimated"
       },
@@ -3231,6 +3239,12 @@
       "from_id": "chg:a-rule-binding-a-component-is-modelled-20260808",
       "properties": {},
       "to_id": "epoch:v0260"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-ruling-parks-a-node",
+      "properties": {},
+      "to_id": "epoch:a-deliberate-state-is-counted-not-a-defect"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -6003,6 +6017,12 @@
       "from_id": "snap:epoch:a-default-is-not-a-difference:cap:defaults-are-not-serialized",
       "properties": {},
       "to_id": "epoch:a-default-is-not-a-difference"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:a-deliberate-state-is-counted-not-a-defect:art:heal",
+      "properties": {},
+      "to_id": "epoch:a-deliberate-state-is-counted-not-a-defect"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -10729,6 +10749,60 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-ruling-parks-a-node",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-ruling-parks-a-node",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-ruling-parks-a-node",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-ruling-parks-a-node",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-ruling-parks-a-node",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-ruling-parks-a-node",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:a-session-names-its-design",
       "properties": {
         "accepted_baseline": true,
@@ -11629,6 +11703,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-9d3a919d6550b6f3",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-edges-need-both-ends"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-9ed800f22aff9099",
       "properties": {
         "accepted_baseline": true,
@@ -11689,6 +11772,15 @@
         "action": "modified"
       },
       "to_id": "art:sync"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-aeb72873ff6c097c",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:acknowledgement-not-structure-test"
     },
     {
       "edge_type": "CHANGED",
@@ -11986,6 +12078,15 @@
         "action": "modified"
       },
       "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-e57e8c42f6f3e884",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:unreachable-decision-test"
     },
     {
       "edge_type": "CHANGED",
@@ -29929,6 +30030,12 @@
       "from_id": "art:graph",
       "properties": {},
       "to_id": "snap:epoch:a-write-can-be-conditional-on-what-was-read:art:graph"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:heal",
+      "properties": {},
+      "to_id": "snap:epoch:a-deliberate-state-is-counted-not-a-defect:art:heal"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -66969,6 +67076,12 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:a-finding-has-somewhere-to-put-its-evidence",
+      "properties": {},
+      "to_id": "epoch:a-deliberate-state-is-counted-not-a-defect"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:a-node-with-no-edges-is-not-clean",
       "properties": {},
       "to_id": "epoch:a-report-describes-the-walk-that-produced-it"
@@ -68058,6 +68171,14 @@
         "conformance": "unchecked"
       },
       "to_id": "cap:a-node-attached-to-nothing-is-reported-whatever-its-type"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:heal",
+      "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-ruling-parks-a-node-and-parked-nodes-are-counted"
     },
     {
       "edge_type": "REALIZES",
@@ -69303,6 +69424,12 @@
       "from_id": "cap:a-node-attached-to-nothing-is-reported-whatever-its-type",
       "properties": {},
       "to_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-ruling-parks-a-node-and-parked-nodes-are-counted",
+      "properties": {},
+      "to_id": "req:a-deliberate-state-is-not-a-defect"
     },
     {
       "edge_type": "SATISFIES",
@@ -71322,6 +71449,12 @@
       "from_id": "ver:a-claim-reads-back-with-its-age",
       "properties": {},
       "to_id": "cap:claims-carry-their-age"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-deliberate-state-is-counted",
+      "properties": {},
+      "to_id": "cap:a-ruling-parks-a-node-and-parked-nodes-are-counted"
     },
     {
       "edge_type": "VERIFIES",
@@ -73840,7 +73973,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:70445d24ad9cf25414935f3ef90944d209854e4cfa67f740e9e2c841c8f226ff",
+        "checksum": "sha256:3b4c4074ec7ecc66f9fc6b66d3efa9a77e91b4a8d5b529b1a231cd4da9753692",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/acknowledgement_not_structure.rs",
         "name": "acknowledgement_not_structure.rs",
@@ -74365,7 +74498,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4d66960946a3eb630f0a05d615861a6e244a3cc3e046e2e77241cd2255ba729a",
+        "checksum": "sha256:147f2c1b5405bf8eac0848109cf5d56e9a011aaacb58c5486a1b50a5d2cef3f0",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -74677,7 +74810,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:16047bc37f415c84cb1ce6c396fa23989cdc665de96cd0eeb0c57bd37c25a766",
+        "checksum": "sha256:bd8dadec8a4b53e1532150ec09a42bd34c5f796d0d544e3040abe9491cdba91e",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "graph.rs",
@@ -74690,7 +74823,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:90f06dc735b3a2c76d8cede863c273941d89b09aca01ff32dfaf72b7ae678546",
+        "checksum": "sha256:2c078196ea233296ffcf5a75c16767589a535b2e7bc24ab6b22f7ac578a90b81",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
@@ -75336,7 +75469,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:76772cfe6dc4f7625bcdad2871a0388cf00710cde694ad88b2400cfbcf2ba00d",
+        "checksum": "sha256:ee191ec5591c4a35fee2177dca3c113f17f84ad579d62052008104d28e1dc103",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/structure.yaml",
@@ -75495,7 +75628,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1cad450088c07427aeac0f9f6eb97fe35f60faf168e7d05803f72ba0a503e954",
+        "checksum": "sha256:8aa5d7aba32579dd56875a229b6867a63892d0c912e7b8156d15292d0c8023b0",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -75792,7 +75925,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a5c888311f517bd84f8a693aa2b839275cc05105ed3d4988bf8b531b6ef028d7",
+        "checksum": "sha256:10fcbe40f951649ca80e0bbac92e3399c45a1421e1484f580e95b97b12df7fb2",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/edges_need_both_ends.rs",
         "name": "edges_need_both_ends.rs",
@@ -76000,7 +76133,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d15f9c31dd366a4c9d40e13a60c8091bc674f321a63aa82e8d93e0fd78c08547",
+        "checksum": "sha256:324548e0440a19f55c6398292c79f5baae9254850bc9c3bb35160f0cad2a2f45",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "tools/capture.rs",
@@ -76091,7 +76224,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:277611ca96311b6e3406065dce7173aca3373cd8e9dfe3a667d7923a962787f9",
+        "checksum": "sha256:810c3100d3bc707836572fbe68fbf1649e42f28bb1a3d4e7bf1f1e34fc68e937",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/unreachable_decision.rs",
         "name": "unreachable_decision.rs",
@@ -76307,6 +76440,16 @@
       "properties": {
         "description": "The degree-zero rule inside `orphan_node` ran on `Decision` alone (heal.rs:879) and now runs on every node type nothing else asks about. That narrowness is why the pass whose job is structural soundness returned a false green: dev_storyflow's fleet got `clean` back over a DesignEpoch carrying NO EDGES AT ALL, in two packages, through every health call of a session.\n\nMEASURED ON REFLOW2'S OWN GRAPH, 2026-08-16: 75 of 2406 nodes are degree-zero. The old rule reported 7 of them; the new rule reports 21. The 14 newly visible are 3 DesignEpochs marking nothing, 3 Fragments with no source, `ver:the-export-survives-being-read-back` — a check counted among the 159 passing that says what it checks to nobody — and 7 TemporalFacts whose `subject_id` names a node THAT DOES NOT EXIST, including `prj:reflow2` (the Project is `proj:reflow2`) and `cap:thin-install` (the node is `req:thin-install`).\n\nTHREE BOUNDS, and two of them exist because the first cut was wrong:\n\n(1) NOT EVERY ATTACHMENT IS AN EDGE. `TemporalFact.subject_id`, `Snapshot.target_id` and `Question.gap_id` are required indexed PROPERTIES: those nodes name what they are about without ever drawing a link. The naive rule would have reported 48 of reflow2's own 212 TemporalFacts — 48 false findings shipped inside the change whose subject is instruments that overstate. A degree-zero node is now skipped when any property resolves to a live node id, which keeps the case that IS wrong: a pointer to a node the design no longer has. The unit test caught this, because `subject_id` is required and the fixture could not be built without one.\n\n(2) BL-42 STAYS CLOSED. Requirement, Capability and Interface are excluded — DETECT asks about those by name (`unsatisfied_requirement`, `unallocated_capability`, `unprovided_interface`), and reporting them here as well is the same finding in two vocabularies that became 20 of 31 defects on the storyflow trial.\n\n(3) A RESTING STATE IS NOT A DEFECT. Project and DesignRule are excluded. A Project alone means the design is EMPTY — what genesis produces on day one — and the phase rollups already say so. An advisory DesignRule can bind the PROCESS rather than a node, and demanding an edge would push authors to draw a relationship nobody meant. Widening a sweep without asking that question is how the correct action starts degrading the instrument (`req:a-deliberate-state-is-not-a-defect`).\n\nThree fixtures were genuinely incomplete and were fixed rather than silenced: a \"v1 baseline\" epoch that was the baseline of nothing, a \"v1.0\" release that shipped nothing, and a recency test whose Verification verified nothing.",
         "name": "A node attached to nothing is reported whatever its type, and a property that names a live node counts as attachment",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-ruling-parks-a-node-and-parked-nodes-are-counted",
+      "node_type": "Capability",
+      "properties": {
+        "description": "A `GOVERNED_BY` edge carrying `ruling: parks` records that a node's UNATTACHED or UNSATISFIED state is correct and deliberate. `orphan_node` and `unsatisfied_requirement` skip it; `detect_defects` reports it in `swept.parked`. `governed_by` gains a `ruling` parameter so the property is reachable from the tool people use. (The guard matched the two OBSERVATIONS that named this defect and the REQUIREMENT that answers it; this is the built thing that closes them.)\n\n⭐⭐ THE FINDING THAT REFRAMED THE WORK, reproduced live BEFORE anything was designed: an Artifact carrying ANY `GOVERNED_BY` edge ALREADY escaped `orphan_node`, because the detector saw an EDGE and never a RULING. So silence was already available and was never the problem. WHAT WAS MISSING WAS THE COUNT — \"deliberately parked\" and \"never looked at\" gave the identical answer, a vacuous zero in different clothes, in the very increment named for instruments that overstate. A reader can now see \"34 defects, 8 parked\" instead of \"97\" or instead of nothing.\n\nTHE MEASURED FAILURE (dev_storyflow): defects 88 → 97 across ten artifact writes, EIGHT of them deliberate no-claim registrations a standing ruling prescribed, with 31 more owed in the same genre. Their framing is the requirement: the disposition rule and the defect detector make each other unreadable, and THE CORRECT ACTION DEGRADES THE INSTRUMENT — self-reinforcing, because a later seat watching the count climb has an incentive to stop registering documents, which is the worse state.\n\nWHY THE EDGE (Anthony's call, 2026-08-17). On the NODE it needs declaring on every parkable type and a bare flag is an unevidenced claim. On the DECISION it parks everything that ruling governs, so a later GOVERNED_BY silently inherits parking. On the EDGE it is per-node and precise — one ruling parks the 31 documents it covers and nothing else — and TWO-SIDED BY CONSTRUCTION: the claim IS the edge to the ruling, so a deliberate state cannot be asserted without a Decision that says why.\n\n⚠️ THE RULING MUST BE ACCEPTED. A `proposed` Decision is somebody thinking out loud — the discriminator `loop_status` already uses — so parking on an unsettled ruling would let a musing suppress a finding.\n\n⚠️ AND A PROBE FAILED ON ITS FIRST RUN, WHICH FOUND THE REAL DEFECT. `parking_on_an_unsettled_ruling_does_not_count` proved the node was not COUNTED as parked, then failed on its second assertion: the finding did not come back either, because the `GOVERNED_BY` edge itself made the artifact \"attached\". So an UNSETTLED parking claim silenced a real defect. Fixed at the cause: a `ruling: parks` edge no longer counts as attachment — it is a claim that the node is deliberately attached to NOTHING, so counting it as attachment was self-defeating.\n\n⭐ AND THE REACHABILITY TRAP WAS CAUGHT BY APPLYING THE SAME DAY'S LESSON. `governed_by` had no way to set `ruling`, so the property would have been reachable only through raw `create_edge` — the FOURTH instance of one pattern in a day, after `Verification.description` (declared, unreachable, 1 use in 164), `SUPERSEDES` (declared, 0 edges, successor named in prose 9 of 9), and `create_node` shipping a compare-and-swap whose precondition value it did not return. The parameter exists because the property would otherwise have gone unused.\n\n📌 THE REPORTER'S OPEN BOUND IS CLOSED. They asked whether BL-176's DOCUMENTS/REALIZES guard was meant to cover this and misses it, or never contemplated it. NEVER CONTEMPLATED: BL-176 widened attachment for artifacts that DO carry a describing edge; this is an artifact that deliberately carries none.\n\n⚠️ NOT DONE, and it is the music_graph half: F9 and F14 report that recording PLANNED work manufactures gaps (each planned capability immediately raises unrealized/unverified), so the gap list punishes writing a plan down. That is the same shape from a third direction and is NOT addressed here — parking is per-node and deliberate, whereas that case wants a whole class of tautological gap understood as planning rather than debt.",
+        "name": "A ruling can declare a state deliberate, and parked nodes are counted rather than silenced",
         "provenance": "authored",
         "status": "realized"
       }
@@ -78516,6 +78659,14 @@
       }
     },
     {
+      "node_id": "chg:a-ruling-parks-a-node",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "GOVERNED_BY gains `ruling: parks`, detectors read the ruling rather than seeing an edge, and parked nodes are COUNTED in swept.parked instead of silently disappearing"
+      }
+    },
+    {
       "node_id": "chg:a-session-names-its-design",
       "node_type": "ChangeEvent",
       "properties": {
@@ -79360,6 +79511,16 @@
       }
     },
     {
+      "node_id": "chg:accept-9d3a919d6550b6f3",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "governed_by call sites updated for the new `ruling` parameter; assertions unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-9ed800f22aff9099",
       "node_type": "ChangeEvent",
       "properties": {
@@ -79421,6 +79582,16 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-08-11",
         "name": "A DEFECT FIX, recorded under test_failure_fix because the enum has no value meaning \"the code was wrong\" — the same gap noted for `correction` on add_change_event. assess_overwrite now COMPUTES the target's content hash instead of reading effective_content_hash, which trusts the content_hash a document states about itself. A record edited by anything but export_graph kept its old stamp, both fast paths returned Clear, and the stale-seat refusal went quiet in exactly the case req:stale-seat-knows exists to catch — silent data loss on the next export, deleting the other person's work. THE DESIGN ALREADY SAID THIS; only the code was wrong, hence design_holds. Mutation-checked: restoring effective_content_hash fails exactly the one test that names the case."
+      }
+    },
+    {
+      "node_id": "chg:accept-aeb72873ff6c097c",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "governed_by call sites updated for the new `ruling` parameter; assertions unchanged.",
+        "subject": "system"
       }
     },
     {
@@ -79717,6 +79888,16 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-07-29",
         "name": "Catch-up for da50ae8 (\"A dangling edge was accepted, stored, and reported by nothing\"), which changed graph.rs to REFUSE an edge naming an id nobody created — matching what snapshot_node and add_change_event already did. The design held: req:no-silent-fallback already said this and the code was brought to meet it, so there is no design meaning to record. Same class as chg:accept-a2a035876eefa13a.\n\nFOUND BY THE GATE BEING RED, not by anyone noticing: da50ae8 landed without the reconcile, so main's CI has failed on this one finding for three commits (runs of 2026-07-29 03:33, 03:47, 03:54, all \"workspace + real-binary instruments\"). The registered checksum was also the full 64-char digest where every sibling registers 16 — harmless, since reconcile truncates the observation to the registered dialect, but it is why the mismatch reads oddly."
+      }
+    },
+    {
+      "node_id": "chg:accept-e57e8c42f6f3e884",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "governed_by call sites updated for the new `ruling` parameter; assertions unchanged.",
+        "subject": "system"
       }
     },
     {
@@ -87302,6 +87483,16 @@
         "epoch_type": "milestone",
         "name": "A default is not a difference — stop serializing schema defaults, so absence means nobody said. SPLIT OUT of epoch:planned-one-write-surface, which keeps BL-202/197/204: Anthony ordered THIS half first (dec:fix-the-comparison-before-pointing-it-earlier step 1), and making the whole one-write-surface epoch a prerequisite would overstate what he agreed. Partly landed already in the exporter between 0.25.0 and 0.27.0, so part of this is reconciling the plan with what shipped.",
         "sequence": 311,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:a-deliberate-state-is-counted-not-a-defect",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "A ruling can declare a state deliberate, and the deliberate ones are COUNTED rather than silenced — silence was already available and was the problem",
+        "sequence": 353,
         "status": "arrived"
       }
     },
@@ -94913,6 +95104,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:a-deliberate-state-is-counted-not-a-defect:art:heal",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0100\",\"properties\":{\"as_checksum\":\"sha256:01606f8905e95775\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0101\",\"properties\":{\"as_checksum\":\"sha256:01606f8905e95775\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0110\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0120\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:30d3e7a27a3b198c46498bf1befd6511166bf8649c8837e6d78ac36cbb5d0852\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:30d3e7a27a3b198c46498bf1befd6511166bf8649c8837e6d78ac36cbb5d0852\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:a72ee9d0af723c8c9d345849969bc4af4d7d62e8210df0c336e89d6b20192ba2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:a4d8b8b8387e35f0236aae9e00a8d685235a77ff04b3425e05d72647c3ebe930\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:a4d8b8b8387e35f0236aae9e00a8d685235a77ff04b3425e05d72647c3ebe930\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:a4d8b8b8387e35f0236aae9e00a8d685235a77ff04b3425e05d72647c3ebe930\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:d3c6e9fe1cac1177\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:59747ef7945dd315f0ef154b20e5034b3c03506a27394e5ab19425383360758a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:59747ef7945dd315f0ef154b20e5034b3c03506a27394e5ab19425383360758a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:59747ef7945dd315f0ef154b20e5034b3c03506a27394e5ab19425383360758a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:59747ef7945dd315f0ef154b20e5034b3c03506a27394e5ab19425383360758a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:8b5553c1a9b686a3a4760c51614d8e4c35e9dfb2f3c65c7f954ac84da9962ecc\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v040\",\"properties\":{\"as_checksum\":\"sha256:7fd0af4d731e0f22\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v050\",\"properties\":{\"as_checksum\":\"sha256:2f778205ea735815\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v060\",\"properties\":{\"as_checksum\":\"sha256:b69c5f6682770736\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v061\",\"properties\":{\"as_checksum\":\"sha256:b48ea911ce1a3fe0\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v070\",\"properties\":{\"as_checksum\":\"sha256:2f75755ae2cd98d4\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v080\",\"properties\":{\"as_checksum\":\"sha256:2f75755ae2cd98d4\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v090\",\"properties\":{\"as_checksum\":\"sha256:2f75755ae2cd98d4\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-finding-describes-the-walk-that-produced-it\",\"properties\":{\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-node-attached-to-nothing-is-reported-whatever-its-type\",\"properties\":{\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-sweep-names-its-own-scope-and-the-category-names-what-it-computes\",\"properties\":{\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:supporting-is-not-conflict\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:heal\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:90f06dc735b3a2c76d8cede863c273941d89b09aca01ff32dfaf72b7ae678546\",\"granularity\":\"atomic\",\"location\":\"crates/reflow2-core/src/heal.rs\",\"name\":\"heal.rs\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:heal",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:a-finding-has-somewhere-to-put-its-evidence:art:verify",
       "node_type": "Snapshot",
       "properties": {
@@ -96327,6 +96528,18 @@
         "subject_id": "proj:reflow2",
         "valid_from": "2026-08-16",
         "value": "{\"measured\":\"2026-08-16, reflow2's own repo, three open PRs\",\"per_pr\":{\"#190\":{\"behind\":63,\"intended_add\":9,\"already_in_main\":9,\"outcome\":\"closed - held nothing but the export\"},\"#191\":{\"behind\":59,\"intended_add\":13,\"already_in_main\":13,\"outcome\":\"rebased, checksums re-accepted, re-exported, merged\"},\"#194\":{\"behind\":56,\"intended_add\":16,\"already_in_main\":16,\"outcome\":\"rebased, checksums re-accepted, re-exported, merged\"}},\"badges\":\"all three green on both CI jobs; #194 reported MERGEABLE\",\"mechanism\":\"shared store does not branch with git, so a later export carried every branch's writes into main\",\"check\":[\"branch nodes - main nodes == 0 means it can only subtract\",\"branch nodes - merge-base nodes, then test each against main\"],\"repair_trap\":\"restoring main's export makes the branch go RED on DRIFT, because the stale export was carrying its own checksums\"}"
+      }
+    },
+    {
+      "node_id": "fact:a-ruling-already-silences-orphan-node-but-cannot-be-counted",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "REPRODUCED LIVE 2026-08-17 on a throwaway graph, before designing anything, and it reframes the requirement.\n\nTWO ARTIFACTS, IDENTICAL EXCEPT FOR ONE EDGE. Both registered with no claim edges, exactly as the fleet's ruling prescribes. One also GOVERNED_BY an accepted Decision recording why no claims were extracted.\n    art:bare  (no ruling)      -> orphan_node REPORTED\n    art:ruled (GOVERNED_BY)    -> orphan_node NOT reported\n\n⇒ SO THE MECHANISM ALREADY EXISTS AND THE PATH TO IT IS NOT TAKEN. GOVERNED_BY is not in `ARTIFACT_BOOKKEEPING`, so it counts as attachment; a node governed by its ruling is not an orphan. The fleet's 88 -> 97 climb across ten writes happens because the reason is recorded somewhere that is not an EDGE. This is the third time in one day that reflow2's vocabulary was present and unreached — after `description` (declared, unreachable from the constructor, 1 use in 164) and SUPERSEDES (declared, 0 edges, successor named in prose 9 times of 9).\n\n⚠️⚠️ BUT SILENCE IS NOT WHAT THE REQUIREMENT ASKS FOR, AND THAT IS THE REAL GAP. Its words are: a marker \"with `orphan_node` SKIPPING IT AND REPORTING `parked: N` SEPARATELY\". Today the detector cannot COUNT a deliberate state — it can only fail to mention it. \"Deliberately parked\" and \"never looked at\" produce the identical answer, which is a vacuous zero wearing different clothes and exactly what `epoch:instruments-stop-overstating` exists to end. A boss reading \"97 defects\" cannot tell deliberate from real; a boss reading \"34 defects, 8 parked\" can.\n\nAND THE SILENCE IS INCIDENTAL RATHER THAN INTENDED. `orphan_node` is not READING the ruling; it is seeing AN EDGE. A node governed by a completely unrelated Decision is silenced identically. So the requirement's ask — \"a detector must be able to SEE that ruling and report the node accordingly\" — is not met by what happens to work.\n\n⭐ AND THE REPORTER'S OPEN BOUND IS NOW CLOSED. They wrote: \"they did not check whether the guard built for the DOCUMENTS/REALIZES asymmetry was meant to cover this case and misses it, or whether this case was never contemplated.\" IT WAS NEVER CONTEMPLATED. BL-176 widened attachment to count REALIZES/DOCUMENTS/SPECIFIES/PRODUCES/SATISFIES — it is about artifacts that DO carry a describing edge and were wrongly called orphans. The fleet's case is an artifact that deliberately carries NO describing edge. Different case; the guard neither covers nor misses it.\n\nCASE (b) IS GENUINELY UNSOLVED AND DIFFERENT. A Requirement deliberately left unsatisfied is reported by `unsatisfied_requirement`, a DETECT gap that looks for incoming SATISFIES — a GOVERNED_BY edge does not silence it and should not. That half needs the ruling to be readable, not merely present.",
+        "subject_id": "req:a-deliberate-state-is-not-a-defect",
+        "valid_from": "2026-08-17"
       }
     },
     {
@@ -98921,6 +99134,20 @@
       }
     },
     {
+      "node_id": "ver:a-deliberate-state-is-counted",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Five probes in tests/a_deliberate_state_is_not_a_defect.rs, built around the fleet's own case — a superseded scope proposal registered with no claim edges. (1) An unruled registration is still a defect, the counterweight that keeps the rest meaningful. (2) A parked node is skipped as a defect AND appears in swept.parked, which is the requirement's actual ask rather than silence. (3) Parking on a PROPOSED ruling neither counts nor suppresses — a musing must not silence a finding. (4) Case (b): a requirement an accepted ruling forbids satisfying stops being asked about by unsatisfied_requirement, the half no edge could silence incidentally because that detector looks for incoming SATISFIES. (5) Plain unmarked governance never parks, or every governed node in a mature design would quietly stop being checked.",
+        "findings": "5/5 passing; workspace 1292 tests, 0 failures. MUTATION-CHECKED TWO WAYS, each verified applied before running: dropping the accepted-ruling requirement fails `parking_on_an_unsettled_ruling_does_not_count` alone, and disabling the parked skip fails `a_parked_node_is_counted_rather_than_silenced` alone — so neither guard is vacuous and the two probes are not testing the same thing. Probe (3) FAILED ON ITS FIRST RUN and that failure found the real defect: an unsettled parking claim was silencing a genuine finding, because the GOVERNED_BY edge itself counted as attachment.",
+        "kind": "verification",
+        "last_run_at": "2026-08-17",
+        "level": "integration",
+        "method": "test",
+        "name": "A ruling parks a node, and parked nodes are counted",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-finding-describes-the-walk-that-produced-it",
       "node_type": "Verification",
       "properties": {
@@ -100857,7 +101084,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:7235981dd91867853c8aa09ed21a78564ddf37889d7e8068a4950b4c38397e52",
+  "prev_content_hash": "sha256:310336eb63ada2cfdbbc7d1e520771b252c974a59e5fe2f4269c19a2515b04ce",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

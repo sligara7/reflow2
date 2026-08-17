@@ -81,10 +81,22 @@ fn a_marked_decision_is_never_ranked_however_it_would_score() {
     // would land at the top of `ranked` rather than merely appearing there.
     g.add_requirement("req:a", "A", "a").unwrap();
     g.add_requirement("req:b", "B", "b").unwrap();
-    g.governed_by(node::REQUIREMENT, "req:a", node::DECISION, "dec:marked")
-        .unwrap();
-    g.governed_by(node::REQUIREMENT, "req:b", node::DECISION, "dec:marked")
-        .unwrap();
+    g.governed_by(
+        node::REQUIREMENT,
+        "req:a",
+        node::DECISION,
+        "dec:marked",
+        None,
+    )
+    .unwrap();
+    g.governed_by(
+        node::REQUIREMENT,
+        "req:b",
+        node::DECISION,
+        "dec:marked",
+        None,
+    )
+    .unwrap();
 
     let w = g.what_next(4).unwrap();
     assert_eq!(w.marked.len(), 1, "the marked decision belongs in `marked`");
@@ -114,6 +126,7 @@ fn the_score_is_additive_over_governed_scheduled_and_contradicted() {
         "req:plain",
         node::DECISION,
         "dec:governs-one",
+        None,
     )
     .unwrap();
 
@@ -124,6 +137,7 @@ fn the_score_is_additive_over_governed_scheduled_and_contradicted() {
         "req:sched",
         node::DECISION,
         "dec:blocks-plan",
+        None,
     )
     .unwrap();
     g.plan_epoch("epoch:next", "Next increment", EpochType::Milestone, 1)
@@ -250,6 +264,7 @@ fn review_records_are_excluded_as_decisions_and_as_governed_sources() {
         "decision:ack:gap1",
         node::DECISION,
         "dec:real",
+        None,
     )
     .unwrap();
 
@@ -343,7 +358,7 @@ fn a_decision_governing_only_retired_work_does_not_shape_anything() {
         let r = format!("req:dropped-{i}");
         g.add_requirement(&r, "Dropped", "no").unwrap();
         g.set_requirement_status(&r, "dropped").unwrap();
-        g.governed_by(node::REQUIREMENT, &r, node::DECISION, "dec:pruning")
+        g.governed_by(node::REQUIREMENT, &r, node::DECISION, "dec:pruning", None)
             .unwrap();
     }
     // A genuinely shaping decision with a SMALLER raw degree.
@@ -358,7 +373,7 @@ fn a_decision_governing_only_retired_work_does_not_shape_anything() {
     for i in 0..3 {
         let c = format!("cmp:part-{i}");
         g.add_component(&c, "Part", "a part", None).unwrap();
-        g.governed_by(node::COMPONENT, &c, node::DECISION, "dec:shapes")
+        g.governed_by(node::COMPONENT, &c, node::DECISION, "dec:shapes", None)
             .unwrap();
     }
 
@@ -388,7 +403,7 @@ fn retired_governed_nodes_are_reported_rather_than_hidden() {
     g.add_requirement("req:gone", "Gone", "no").unwrap();
     g.set_requirement_status("req:gone", "dropped").unwrap();
     for r in ["req:live", "req:gone"] {
-        g.governed_by(node::REQUIREMENT, r, node::DECISION, "dec:mixed")
+        g.governed_by(node::REQUIREMENT, r, node::DECISION, "dec:mixed", None)
             .unwrap();
     }
 
@@ -415,7 +430,7 @@ fn breadth_of_governed_types_is_reported_but_never_ranks() {
     for i in 0..4 {
         let c = format!("cmp:deep-{i}");
         g.add_component(&c, "C", "c", None).unwrap();
-        g.governed_by(node::COMPONENT, &c, node::DECISION, "dec:deep")
+        g.governed_by(node::COMPONENT, &c, node::DECISION, "dec:deep", None)
             .unwrap();
     }
     // Broad but shallow — two types, fewer nodes.
@@ -424,9 +439,15 @@ fn breadth_of_governed_types_is_reported_but_never_ranks() {
     g.set_decision_status("dec:broad", "accepted").unwrap();
     g.add_requirement("req:b", "B", "b").unwrap();
     g.add_capability("cap:b", "Cap B", "b", None).unwrap();
-    g.governed_by(node::REQUIREMENT, "req:b", node::DECISION, "dec:broad")
-        .unwrap();
-    g.governed_by(node::CAPABILITY, "cap:b", node::DECISION, "dec:broad")
+    g.governed_by(
+        node::REQUIREMENT,
+        "req:b",
+        node::DECISION,
+        "dec:broad",
+        None,
+    )
+    .unwrap();
+    g.governed_by(node::CAPABILITY, "cap:b", node::DECISION, "dec:broad", None)
         .unwrap();
 
     let w = g.what_next(4).unwrap();
@@ -451,8 +472,14 @@ fn the_shaping_band_holds_settled_decisions_not_open_ones() {
     let mut g = base();
     open_decision(&mut g, "dec:still-open", "not settled");
     g.add_requirement("req:x", "X", "x").unwrap();
-    g.governed_by(node::REQUIREMENT, "req:x", node::DECISION, "dec:still-open")
-        .unwrap();
+    g.governed_by(
+        node::REQUIREMENT,
+        "req:x",
+        node::DECISION,
+        "dec:still-open",
+        None,
+    )
+    .unwrap();
 
     let w = g.what_next(4).unwrap();
     assert!(

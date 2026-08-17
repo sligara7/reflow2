@@ -1147,7 +1147,17 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Link a node to the Decision or DesignRule that shapes it (GOVERNED_BY).",
+        description = "Link a node to the Decision or DesignRule that shapes it (GOVERNED_BY). \
+                       PASS `ruling: parks` WHEN THE RULING DECLARES THIS NODE'S UNATTACHED OR \
+                       UNSATISFIED STATE CORRECT — a registered document that deliberately draws \
+                       no claim edges, a requirement an accepted Decision forbids satisfying. \
+                       Detectors then report it as PARKED and count it in detect_defects's \
+                       `swept.parked`, instead of filing a deliberate state as a defect. \
+                       Measured cost of not having this: a fleet watched defects go 88 -> 97 \
+                       across ten CORRECT writes, so the right action degraded the instrument \
+                       and a later reader had an incentive to stop registering documents at all. \
+                       The ruling must be an ACCEPTED Decision — a `proposed` one is somebody \
+                       thinking out loud, and a musing must not suppress a finding.",
         annotations(read_only_hint = false)
     )]
     pub async fn governed_by(
@@ -1156,8 +1166,14 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await;
         ok_json(EdgeDto::from(
-            g.governed_by(&req.from_type, &req.from_id, &req.to_type, &req.to_id)
-                .map_err(dyno_err)?,
+            g.governed_by(
+                &req.from_type,
+                &req.from_id,
+                &req.to_type,
+                &req.to_id,
+                req.ruling.as_deref(),
+            )
+            .map_err(dyno_err)?,
         ))
     }
 

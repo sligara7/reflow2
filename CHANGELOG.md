@@ -33,6 +33,31 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **A ruling can declare a state deliberate, and the deliberate ones are COUNTED.** A `GOVERNED_BY`
+  edge carrying `ruling: parks` records that a node's unattached or unsatisfied state is correct on
+  purpose. `orphan_node` and `unsatisfied_requirement` skip it; `detect_defects` reports it in
+  `swept.parked`. `governed_by` gains a `ruling` parameter.
+
+  **The finding that reframed the work, reproduced before anything was designed:** an Artifact
+  carrying *any* `GOVERNED_BY` edge **already** escaped `orphan_node` — the detector saw an edge,
+  never a ruling. **Silence was already available and was never the problem.** What was missing was
+  the count: "deliberately parked" and "never looked at" gave the identical answer. A reader can now
+  see "34 defects, 8 parked" instead of "97", or instead of nothing.
+
+  The measured failure: defects **88 → 97 across ten writes**, eight of them deliberate
+  registrations a standing ruling prescribed, with 31 more owed. The correct action was degrading
+  the instrument — and self-reinforcingly, since a reader watching the count climb has an incentive
+  to stop registering documents at all.
+
+  ⚠️ **A probe failed on its first run and found the real defect:** an *unsettled* parking claim was
+  silencing a genuine finding, because the `GOVERNED_BY` edge itself counted as attachment. A
+  `ruling: parks` edge no longer counts as attachment — it is a claim that the node is deliberately
+  attached to *nothing*. The ruling must also be an **accepted** Decision; a `proposed` one is
+  somebody thinking out loud, and a musing must not suppress a finding.
+
+  **Not addressed:** music_graph F9/F14 — recording *planned* work manufactures gaps, so the list
+  punishes writing a plan down. Same shape from a third direction, and a different fix.
+
 - **A check has somewhere to put what it FOUND.** `Verification` gains `findings`;
   `add_verification` gains `description`; `set_verification_status` gains `findings`. Three fields
   for three things — `name` labels, `description` says what the check IS, `findings` says what a
