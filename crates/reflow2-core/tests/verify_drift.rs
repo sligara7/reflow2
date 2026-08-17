@@ -20,7 +20,7 @@ fn verified_world() -> DesignGraph {
     )
     .expect("cap");
     g.satisfies("cap:core", "req:works").expect("sat");
-    g.add_verification("ver:core", "core test", Some("test"), Some("unit"))
+    g.add_verification("ver:core", "core test", Some("test"), Some("unit"), None)
         .expect("ver");
     g.verifies("ver:core", "Capability", "cap:core")
         .expect("verifies");
@@ -37,7 +37,7 @@ fn obs(id: &str, outcome: &str) -> ObservedVerification {
 #[test]
 fn an_agreeing_outcome_is_not_drift() {
     let mut g = verified_world();
-    g.set_verification_status("ver:core", "passing", None)
+    g.set_verification_status("ver:core", "passing", None, None)
         .expect("status");
     let r = g
         .reconcile_verification(
@@ -52,7 +52,7 @@ fn an_agreeing_outcome_is_not_drift() {
 #[test]
 fn believed_proven_actually_broken_is_found_and_lands_on_the_capability() {
     let mut g = verified_world();
-    g.set_verification_status("ver:core", "passing", None)
+    g.set_verification_status("ver:core", "passing", None, None)
         .expect("status");
     let r = g
         .reconcile_verification(
@@ -69,11 +69,11 @@ fn believed_proven_actually_broken_is_found_and_lands_on_the_capability() {
 #[test]
 fn the_dangerous_direction_sorts_first() {
     let mut g = verified_world();
-    g.add_verification("ver:aux", "aux test", None, None)
+    g.add_verification("ver:aux", "aux test", None, None, None)
         .expect("ver");
-    g.set_verification_status("ver:core", "passing", None)
+    g.set_verification_status("ver:core", "passing", None, None)
         .expect("status");
-    g.set_verification_status("ver:aux", "failing", None)
+    g.set_verification_status("ver:aux", "failing", None, None)
         .expect("status");
     // aux improved (failing→passed), core regressed (passing→failed).
     let r = g
@@ -114,7 +114,7 @@ fn a_run_the_design_never_recorded_is_still_a_divergence() {
 #[test]
 fn nonsense_outcomes_are_rejected_by_name_and_the_batch_survives() {
     let mut g = verified_world();
-    g.set_verification_status("ver:core", "passing", None)
+    g.set_verification_status("ver:core", "passing", None, None)
         .expect("status");
     let r = g
         .reconcile_verification(
@@ -135,7 +135,7 @@ fn nonsense_outcomes_are_rejected_by_name_and_the_batch_survives() {
 #[test]
 fn a_partial_run_is_not_evidence_of_absence() {
     let mut g = verified_world();
-    g.set_verification_status("ver:core", "passing", None)
+    g.set_verification_status("ver:core", "passing", None, None)
         .expect("status");
     let r = g
         .reconcile_verification(&[], &VerifyReconcileOptions::default())
@@ -166,7 +166,7 @@ fn a_partial_run_is_not_evidence_of_absence() {
 #[test]
 fn the_divergence_nags_until_the_record_matches_a_real_run() {
     let mut g = verified_world();
-    g.set_verification_status("ver:core", "passing", None)
+    g.set_verification_status("ver:core", "passing", None, None)
         .expect("status");
     let r = g
         .reconcile_verification(
@@ -194,7 +194,7 @@ fn the_divergence_nags_until_the_record_matches_a_real_run() {
     );
 
     // The human writes down the truth; the check is genuinely failing now.
-    g.set_verification_status("ver:core", "failing", None)
+    g.set_verification_status("ver:core", "failing", None, None)
         .expect("status");
     let r2 = g
         .reconcile_verification(
@@ -220,7 +220,7 @@ fn the_divergence_nags_until_the_record_matches_a_real_run() {
 #[test]
 fn a_new_divergence_pair_is_a_new_event_not_an_overwrite() {
     let mut g = verified_world();
-    g.set_verification_status("ver:core", "passing", None)
+    g.set_verification_status("ver:core", "passing", None, None)
         .expect("status");
     let opts = VerifyReconcileOptions {
         record_events: true,
@@ -236,7 +236,7 @@ fn a_new_divergence_pair_is_a_new_event_not_an_overwrite() {
     assert_eq!(r1.recorded_events, r1b.recorded_events);
     // The status moves, then diverges the OTHER way: a different event, and
     // the first one resolves because its divergence is gone.
-    g.set_verification_status("ver:core", "failing", None)
+    g.set_verification_status("ver:core", "failing", None, None)
         .expect("status");
     let r2 = g
         .reconcile_verification(&[obs("ver:core", "passed")], &opts)

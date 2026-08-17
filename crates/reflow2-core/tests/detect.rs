@@ -868,10 +868,11 @@ fn checked_thread(status: &str) -> DesignGraph {
     g.satisfies("cap:a", "req:a").unwrap();
     g.add_component("cmp:a", "A", "part", None).unwrap();
     g.allocate("cap:a", "cmp:a").unwrap();
-    g.add_verification("ver:a", "charge tests", Some("test"), Some("unit"))
+    g.add_verification("ver:a", "charge tests", Some("test"), Some("unit"), None)
         .unwrap();
     g.verifies("ver:a", node::CAPABILITY, "cap:a").unwrap();
-    g.set_verification_status("ver:a", status, None).unwrap();
+    g.set_verification_status("ver:a", status, None, None)
+        .unwrap();
     g
 }
 
@@ -908,7 +909,7 @@ fn a_failing_gap_says_when_the_check_last_ran() {
     // `passing` while the service was 100% dead, and these gaps read `failing`
     // for 26 capabilities on a run three days older than the fixes.
     let mut g = checked_thread("failing");
-    g.set_verification_status("ver:a", "failing", Some("2026-07-25T18:49:11Z"))
+    g.set_verification_status("ver:a", "failing", Some("2026-07-25T18:49:11Z"), None)
         .unwrap();
     let gaps = g.detect_gaps().unwrap();
     let failing = gaps
@@ -1003,7 +1004,8 @@ fn fixing_the_build_clears_the_failing_gap() {
     // The loop the gap exists to drive: red -> fix -> green -> quiet.
     let mut g = checked_thread("failing");
     assert!(sources(&g.detect_gaps().unwrap()).contains(&GapSource::FailingVerification));
-    g.set_verification_status("ver:a", "passing", None).unwrap();
+    g.set_verification_status("ver:a", "passing", None, None)
+        .unwrap();
     assert!(!sources(&g.detect_gaps().unwrap()).contains(&GapSource::FailingVerification));
     assert_eq!(g.verification_coverage().unwrap().capabilities_verified, 1);
 }
@@ -1026,14 +1028,15 @@ fn a_verified_claim_with_no_passing_check_is_a_contradiction() {
     assert_eq!(hit.affected_ids, ["cap:a"]);
 
     // A planned check does not back the claim; a passing one does.
-    g.add_verification("ver:a", "checks", Some("test"), Some("unit"))
+    g.add_verification("ver:a", "checks", Some("test"), Some("unit"), None)
         .unwrap();
     g.verifies("ver:a", node::CAPABILITY, "cap:a").unwrap();
     assert!(
         sources(&g.detect_gaps().unwrap()).contains(&GapSource::StatusContradiction),
         "a check that has not passed proves nothing"
     );
-    g.set_verification_status("ver:a", "passing", None).unwrap();
+    g.set_verification_status("ver:a", "passing", None, None)
+        .unwrap();
     assert!(!sources(&g.detect_gaps().unwrap()).contains(&GapSource::StatusContradiction));
 }
 
@@ -1193,10 +1196,10 @@ fn a_verified_capability_with_no_validation_is_flagged_then_cleared() {
     g.satisfies("cap:a", "req:a").unwrap();
 
     // A passing verification-kind check: built to spec.
-    g.add_verification("ver:spec", "spec test", Some("test"), Some("unit"))
+    g.add_verification("ver:spec", "spec test", Some("test"), Some("unit"), None)
         .unwrap();
     g.verifies("ver:spec", "Capability", "cap:a").unwrap();
-    g.set_verification_status("ver:spec", "passing", None)
+    g.set_verification_status("ver:spec", "passing", None, None)
         .unwrap();
 
     // Verified against spec, nothing validates the intent → flagged.
@@ -1211,10 +1214,11 @@ fn a_verified_capability_with_no_validation_is_flagged_then_cleared() {
         "field validation",
         Some("review"),
         Some("acceptance"),
+        None,
     )
     .unwrap();
     g.verifies("ver:val", "Capability", "cap:a").unwrap();
-    g.set_verification_status("ver:val", "passing", None)
+    g.set_verification_status("ver:val", "passing", None, None)
         .unwrap();
     g.set_verification_kind("ver:val", "validation").unwrap();
 
@@ -1227,7 +1231,7 @@ fn a_verified_capability_with_no_validation_is_flagged_then_cleared() {
 #[test]
 fn a_bad_verification_kind_is_refused() {
     let mut g = DesignGraph::open_in_memory().unwrap();
-    g.add_verification("ver:x", "x", None, None).unwrap();
+    g.add_verification("ver:x", "x", None, None, None).unwrap();
     assert!(g.set_verification_kind("ver:x", "vindication").is_err());
 }
 
@@ -1865,10 +1869,11 @@ fn a_parent_already_reporting_delivered_outranks_one_still_open() {
             .unwrap();
         done.realizes(&art, node::CAPABILITY, &cap, None, None)
             .unwrap();
-        done.add_verification(&ver, tag, Some("test"), None)
+        done.add_verification(&ver, tag, Some("test"), None, None)
             .unwrap();
         done.verifies(&ver, node::CAPABILITY, &cap).unwrap();
-        done.set_verification_status(&ver, "passing", None).unwrap();
+        done.set_verification_status(&ver, "passing", None, None)
+            .unwrap();
     }
     assert!(
         done.requirement_is_delivered("req:checkout").unwrap(),

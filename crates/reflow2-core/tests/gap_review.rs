@@ -451,9 +451,9 @@ fn graph_with_n_verified_capabilities(n: usize) -> DesignGraph {
         g.add_capability(&cap, &format!("Cap {i}"), "does a thing", None)
             .expect("cap");
         let ver = format!("ver:v{i}");
-        g.add_verification(&ver, &format!("Check {i}"), None, None)
+        g.add_verification(&ver, &format!("Check {i}"), None, None, None)
             .expect("ver");
-        g.set_verification_status(&ver, "passing", None)
+        g.set_verification_status(&ver, "passing", None, None)
             .expect("passing");
         g.verifies(&ver, node::CAPABILITY, &cap).expect("verifies");
     }
@@ -475,9 +475,9 @@ fn an_aggregate_gaps_id_does_not_move_when_the_population_grows() {
 
     g.add_capability("cap:new", "A newcomer", "arrives later", None)
         .expect("cap");
-    g.add_verification("ver:new", "Check new", None, None)
+    g.add_verification("ver:new", "Check new", None, None, None)
         .expect("ver");
-    g.set_verification_status("ver:new", "passing", None)
+    g.set_verification_status("ver:new", "passing", None, None)
         .expect("passing");
     g.verifies("ver:new", node::CAPABILITY, "cap:new")
         .expect("verifies");
@@ -514,9 +514,9 @@ fn acknowledging_an_aggregate_survives_a_new_member() {
 
     g.add_capability("cap:new", "A newcomer", "arrives later", None)
         .expect("cap");
-    g.add_verification("ver:new", "Check new", None, None)
+    g.add_verification("ver:new", "Check new", None, None, None)
         .expect("ver");
-    g.set_verification_status("ver:new", "passing", None)
+    g.set_verification_status("ver:new", "passing", None, None)
         .expect("passing");
     g.verifies("ver:new", node::CAPABILITY, "cap:new")
         .expect("verifies");

@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:7235981dd91867853c8aa09ed21a78564ddf37889d7e8068a4950b4c38397e52",
+  "content_hash": "sha256:310336eb63ada2cfdbbc7d1e520771b252c974a59e5fe2f4269c19a2515b04ce",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -838,6 +838,14 @@
       "from_id": "fact:the-stale-server-defect-recurred-to-the-people-who-wrote-it-down",
       "properties": {},
       "to_id": "req:the-server-is-the-authority-on-its-own-currency"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-check-records-what-it-found-separately-from-what-it-is",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:verify"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -3121,6 +3129,12 @@
       "from_id": "question:ff976610480dab90",
       "properties": {},
       "to_id": "req:the-store-is-reachable-from-a-session"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-check-records-what-it-found-separately-from-what-it-is",
+      "properties": {},
+      "to_id": "epoch:a-finding-has-somewhere-to-put-its-evidence"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5989,6 +6003,12 @@
       "from_id": "snap:epoch:a-default-is-not-a-difference:cap:defaults-are-not-serialized",
       "properties": {},
       "to_id": "epoch:a-default-is-not-a-difference"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:a-finding-has-somewhere-to-put-its-evidence:art:verify",
+      "properties": {},
+      "to_id": "epoch:a-finding-has-somewhere-to-put-its-evidence"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -10331,6 +10351,51 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-check-records-what-it-found-separately-from-what-it-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-check-records-what-it-found-separately-from-what-it-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-check-records-what-it-found-separately-from-what-it-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-assure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-check-records-what-it-found-separately-from-what-it-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-check-records-what-it-found-separately-from-what-it-is",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:a-claim-is-not-hidden-by-its-parent",
       "properties": {
         "accepted_baseline": true,
@@ -10808,6 +10873,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-047452907ffdceb9",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:enforced-rule-detector-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-0809203dbd415e07",
       "properties": {
         "accepted_baseline": true,
@@ -10949,6 +11023,15 @@
         "action": "modified"
       },
       "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-28ee674052533218",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-discontinued-is-read"
     },
     {
       "edge_type": "CHANGED",
@@ -11510,6 +11593,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-96e9f11e62ac29fd",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:evidence-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-975fcb51ce6ec113",
       "properties": {
         "accepted_baseline": true,
@@ -11552,6 +11644,15 @@
         "action": "modified"
       },
       "to_id": "art:machine-install"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-a24b5b1cdec3618d",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-edges-need-both-ends"
     },
     {
       "edge_type": "CHANGED",
@@ -11690,6 +11791,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-c475a198aa801c33",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:evidence-quality-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-c52c1a33c142cbcc",
       "properties": {
         "accepted_baseline": true,
@@ -11759,6 +11869,15 @@
         "action": "modified"
       },
       "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-d181bd21edbf78e5",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:confirmation-vocabulary-test"
     },
     {
       "edge_type": "CHANGED",
@@ -24237,6 +24356,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:a-check-records-what-it-found-separately-from-what-it-is",
+      "properties": {},
+      "to_id": "rule:fix-it-properly-while-it-is-still-cheap"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:a-finding-describes-the-walk-that-produced-it",
       "properties": {},
       "to_id": "dec:a-misnaming-is-fixed-in-the-message-not-the-key"
@@ -29900,6 +30025,12 @@
       "from_id": "art:upgrading-v0210",
       "properties": {},
       "to_id": "snap:epoch:bl199-reattachment:art:upgrading-v0210"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:verify",
+      "properties": {},
+      "to_id": "snap:epoch:a-finding-has-somewhere-to-put-its-evidence:art:verify"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -66862,6 +66993,12 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:a-write-can-be-conditional-on-what-was-read",
+      "properties": {},
+      "to_id": "epoch:a-finding-has-somewhere-to-put-its-evidence"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:arrival-delta",
       "properties": {},
       "to_id": "epoch:v0190"
@@ -69094,6 +69231,14 @@
       "edge_type": "REALIZES",
       "from_id": "art:verify",
       "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-check-records-what-it-found-separately-from-what-it-is"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:verify",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cmp:verify"
@@ -69140,6 +69285,12 @@
         "evidence": "parse_enum in crates/reflow2-mcp/src/service.rs is the single helper every served enum argument passes through; the test a_rejected_enum_lists_the_legal_values fails against the prior map_err(|_| ...) implementation"
       },
       "to_id": "req:a-refusal-names-what-would-have-worked"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-check-records-what-it-found-separately-from-what-it-is",
+      "properties": {},
+      "to_id": "req:a-finding-has-somewhere-to-put-its-evidence"
     },
     {
       "edge_type": "SATISFIES",
@@ -71555,6 +71706,12 @@
       "from_id": "ver:evidence-fidelity",
       "properties": {},
       "to_id": "cap:evidence-fidelity"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:evidence-has-somewhere-to-go",
+      "properties": {},
+      "to_id": "cap:a-check-records-what-it-found-separately-from-what-it-is"
     },
     {
       "edge_type": "VERIFIES",
@@ -74043,7 +74200,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d05e1b3fda9bfe39de9d621ed98b17d7c75cfec9fee2353549b836199fc11516",
+        "checksum": "sha256:48b47fe9de1616a9e70f824e098108c45fafc22d35c92f1a005fafd3d1e83c14",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/confirmation_vocabulary.rs",
         "name": "confirmation_vocabulary.rs",
@@ -74338,7 +74495,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d120c662cfdb98933337eefea8e9f5741f47fb7e8cb338a7a14836f748f4c156",
+        "checksum": "sha256:7e94e450dbda74bbb0e6b367ea082d0efecc5d353472db92c57d02728051aec2",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/enforced_rule_needs_a_detector.rs",
         "name": "enforced_rule_needs_a_detector.rs",
@@ -74364,7 +74521,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:850a4de223b41c4e97c9a2c71628dc01358202f1aa091c73f62867288b2391a6",
+        "checksum": "sha256:edff3aa9e9469319c76f745c2e22d20a4e87b67ba2aff267cca10034d467f932",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/evidence_quality.rs",
         "name": "The evidence-quality family suite — all three axes with their counterweights",
@@ -74377,7 +74534,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:58443db75d9199e7addc3f4673d84e1249df60fc563237475636f8e0713f6896",
+        "checksum": "sha256:7f9fad8c07f55057160caa8cab59660a6bfb1fdea295b8eb26f48bcc96ebbb40",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/evidence.rs",
         "name": "tests/evidence.rs",
@@ -75207,7 +75364,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:9f5e06e9d9d3ad4da457aea1a582d56b2cf8a683b30beef2f2eb163415ebbee9",
+        "checksum": "sha256:25729faa169eb7a9c99b59afcd9f9e26b8d61c1dec903e1428a3cfec30a4f78b",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/verify.yaml",
@@ -75338,7 +75495,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:22879bc87cb6bad9747015eb8d88dc067c9a43127c38f49363d7a9ef4b5adab3",
+        "checksum": "sha256:1cad450088c07427aeac0f9f6eb97fe35f60faf168e7d05803f72ba0a503e954",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -75622,7 +75779,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:02e7940e8095b74cc1d43e3f93741d217810fd947b3265e0db2c574b49405190",
+        "checksum": "sha256:e06c721f5f95ad1e42a8e97c53ca55c985a4a961ef256ff57489025891adb93b",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/discontinued_is_read.rs",
         "name": "discontinued_is_read.rs — eight cases: the defect, the authority check, the cascade, the visible count, two counterweights, and the two that pin the VOCABULARY saying where abandonment lives",
@@ -75635,7 +75792,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:40e6f3bee8bf7de3ef29ab16b317ab38adbf1dab2185481c2e3325b068c02871",
+        "checksum": "sha256:a5c888311f517bd84f8a693aa2b839275cc05105ed3d4988bf8b531b6ef028d7",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/edges_need_both_ends.rs",
         "name": "edges_need_both_ends.rs",
@@ -75817,7 +75974,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1db5576a75566d013436134d2bd3e4dd0916f78d200c294ddf40011f17215910",
+        "checksum": "sha256:419c91a71f07405d762b0cc580f7954544625a0f2f765ae0debf58b48d982acf",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/assure.rs",
         "name": "tools/assure.rs",
@@ -75869,7 +76026,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:88d50ca759a72f608b358c012b9d083ea4d6cf11a364dcba329fca9abbf7e775",
+        "checksum": "sha256:9529245fee73f9369c8bddd036b36296b3e34a0a909d11c72f89e68479d40704",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -76090,7 +76247,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:29e0670ce9e7fbf86537304333279919ff06c207c755b4322d0ea2f517cbf6cd",
+        "checksum": "sha256:8e4dd328ecb7e57cd5f4796a6a3d1c49bbb6a2ccdf5eeca164cf1313afb7eb98",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/verify.rs",
         "name": "verify.rs",
@@ -76109,6 +76266,16 @@
         "name": "vocabulary.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "cap:a-check-records-what-it-found-separately-from-what-it-is",
+      "node_type": "Capability",
+      "properties": {
+        "description": "THREE THINGS, and the corpus had two of them while authors wrote all three into one. `name` is what a list renders; `description` is what the check IS; `findings` (new) is what a RUN found. `add_verification` gains `description`; `set_verification_status` gains `findings`; `loop_status`'s rollup shortens a long name AND says that it did. (The guard matched the OBSERVATION that named this defect and the REQUIREMENT that answers it; this is the built thing that closes both.)\n\n⭐⭐ THE REQUIREMENT NAMED ITS OWN PRECONDITION AND THE ANSWER WAS NO. It asked, in its own words: \"THE LOAD-BEARING UNCERTAINTY, to answer BEFORE building: WOULD A NEW FIELD ALONE CHANGE ANYTHING? A declared field nobody writes to leaves the corpus exactly as it is.\" Measured before writing any code:\n\n    Verifications                        164\n    median `name`                         76 words   (72 over 100, 17 over 300, longest 654)\n    `description` — DECLARED, fulltext,\n    and the node's EMBEDDING FIELD         1 use in 164\n\n⇒ SO A `findings` FIELD ALONE WOULD HAVE BECOME THE SECOND UNUSED FIELD. The uncertainty was real and the answer sat in the corpus for anyone who counted.\n\n⭐ AND THE ROOT CAUSE WAS REACHABILITY, NOT NEGLECT — found by reading the constructor rather than inferring from the number. `add_verification(id, name, method, level)` HAD NO PARAMETER FOR `description`. The only route was raw `create_node` and essentially nobody took it. Authors wrote reports into `name` because **`name` was the only string the constructor accepted**. The field was not ignored; it was unwritable. That is `dec:how-should-a-temporal-fact-carry-its-date-when-there-is-no-epoch` one door along — there, 112 nodes wrote an UNDECLARED property because the declared route did not fit; here, one node wrote a declared property because the route did not exist.\n\nWHERE EACH FIELD IS WRITTEN IS THE DESIGN, not a convenience:\n• `description` on the CONSTRUCTOR — what the check is, stated once.\n• `findings` on `set_verification_status` — what a RUN found, restated whenever an outcome changes. Evidence belongs to a run, so it is recorded when the run produces it, by the caller holding it.\n• Omitting `findings` LEAVES IT ALONE, exactly as `last_run_at` does since 2026-08-08 — re-marking a check passing without restating evidence must not erase it. Erasing is a deliberate act deserving an explicit one, the convention `set_interface_spec`, `set_decision_status` and `set_epoch_status` all state and which this function's own first line already promised.\n\nTHE ROLLUP, their second ask: `loop_status`'s `verifications.attention[]` shortens a `name` past 25 words — and carries `name_truncated`, `name_words`, and a top-level `names_truncated` note saying how many and where the full text is. ⭐ THE ANNOUNCEMENT IS THE POINT, not decoration: a silently shortened name reads as \"that is the whole name\", a vacuous zero one layer over, and it is the SIXTH of Anthony's own engineering principles — no silent caps or truncation. Truncating without fixing reachability would have been the stopgap `rule:fix-it-properly-while-it-is-still-cheap` forbids; cause and symptom were fixed together.\n\n⚠️ BOUNDS, stated rather than discovered later:\n• NOTHING IS MIGRATED. The 164 existing long names stay as they are. A property once written cannot be removed, so the best available repair would duplicate rather than move — and rewriting 164 authored names is not a mechanical act. New checks get the shape; old ones keep theirs. The median will fall slowly or not at all, and that is honest rather than disappointing.\n• `findings` IS NOT VALIDATED OR PARSED. reflow2 records what an author says a run found and never judges it (`dec:non-goal-reflow2-does-not-judge-whether-a-check-is-meaningful`). A `passing` status beside findings describing a failure is a contradiction only a reader can catch — dev_storyflow's 2026-08-07 report exactly, where a check recorded \"EXIT 0, verdict STALE\" and stayed passing forever. This gives that evidence a home; it does not make the contradiction computable.\n• The schema gains a PROPERTY, not a type, so the version stamp (counting node/edge types, 29/61) does not move and an older reflow2 can still read the graph.",
+        "name": "A check records what it FOUND separately from what it IS, and the rollup that made a cheap call expensive to read says when it shortened a name",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -78213,6 +78380,14 @@
       }
     },
     {
+      "node_id": "chg:a-check-records-what-it-found-separately-from-what-it-is",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Verification gains `findings`, `description` becomes reachable from the constructor after 164 nodes could not write it, and the loop_status rollup shortens a long name while saying that it did"
+      }
+    },
+    {
       "node_id": "chg:a-claim-is-not-hidden-by-its-parent",
       "node_type": "ChangeEvent",
       "properties": {
@@ -78427,6 +78602,16 @@
       }
     },
     {
+      "node_id": "chg:accept-047452907ffdceb9",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "Call sites updated for the new parameters; assertions unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-0809203dbd415e07",
       "node_type": "ChangeEvent",
       "properties": {
@@ -78569,6 +78754,16 @@
         "change_type": "refactor",
         "detected_at": "2026-07-21",
         "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-28ee674052533218",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "Call sites updated for the new parameters; assertions unchanged.",
+        "subject": "system"
       }
     },
     {
@@ -79128,6 +79323,16 @@
       }
     },
     {
+      "node_id": "chg:accept-96e9f11e62ac29fd",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "Call sites updated for the new parameters; assertions unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-975fcb51ce6ec113",
       "node_type": "ChangeEvent",
       "properties": {
@@ -79169,6 +79374,16 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-07-28",
         "name": "`claude mcp get` takes a NAME and no `--scope` (only `add` and `remove` do), so the registration check passed an unknown option, fell through its exception path and answered \"not registered\" regardless of truth. Found by running --check on a machine that had genuinely never been installed: the answer looked right for the wrong reason. The check now asks the question the CLI can actually answer — is a server of this name visible at ANY scope — and says so in its own output rather than guessing \"create\" vs \"update\". Behaviour of the install itself is unchanged: registration was always unconditional, because it is idempotent."
+      }
+    },
+    {
+      "node_id": "chg:accept-a24b5b1cdec3618d",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "Call sites updated for the new parameters; assertions unchanged.",
+        "subject": "system"
       }
     },
     {
@@ -79304,6 +79519,16 @@
       }
     },
     {
+      "node_id": "chg:accept-c475a198aa801c33",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "Call sites updated for the new parameters; assertions unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-c52c1a33c142cbcc",
       "node_type": "ChangeEvent",
       "properties": {
@@ -79374,6 +79599,16 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-08-10",
         "name": "`repair_is_a_judgement` declared in NON_TOOL_TERMS - a HealIssue field the skill now names, not a tool."
+      }
+    },
+    {
+      "node_id": "chg:accept-d181bd21edbf78e5",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "Call sites updated for the new add_verification/set_verification_status parameters; assertions unchanged.",
+        "subject": "system"
       }
     },
     {
@@ -87091,6 +87326,16 @@
       }
     },
     {
+      "node_id": "epoch:a-finding-has-somewhere-to-put-its-evidence",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "A check has somewhere to put what it FOUND — and the field that already existed turns out to have been unreachable, not ignored",
+        "sequence": 352,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:a-node-with-no-edges-is-not-clean",
       "node_type": "DesignEpoch",
       "properties": {
@@ -94668,6 +94913,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:a-finding-has-somewhere-to-put-its-evidence:art:verify",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0100\",\"properties\":{\"as_checksum\":\"sha256:d667d9a6a64a849e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0101\",\"properties\":{\"as_checksum\":\"sha256:d667d9a6a64a849e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0110\",\"properties\":{\"as_checksum\":\"sha256:d667d9a6a64a849e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0120\",\"properties\":{\"as_checksum\":\"sha256:d667d9a6a64a849e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:d667d9a6a64a849e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:d667d9a6a64a849e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:7c3bcd97918ee929\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:d391003bb5042e18\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:d391003bb5042e18\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:d391003bb5042e18\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:669e73b33ff4cbd1\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:669e73b33ff4cbd1\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:669e73b33ff4cbd1\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:24e29e84ffbee3300c82b86615819bf62086fb7afb9108fa22a6eb85bef4b455\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:3532d8866a760bb4b825dd11684e2b73d2c1751f1f9fd994e3a14ab9fb6ae224\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:3532d8866a760bb4b825dd11684e2b73d2c1751f1f9fd994e3a14ab9fb6ae224\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:3532d8866a760bb4b825dd11684e2b73d2c1751f1f9fd994e3a14ab9fb6ae224\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:3532d8866a760bb4b825dd11684e2b73d2c1751f1f9fd994e3a14ab9fb6ae224\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:3532d8866a760bb4b825dd11684e2b73d2c1751f1f9fd994e3a14ab9fb6ae224\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:3532d8866a760bb4b825dd11684e2b73d2c1751f1f9fd994e3a14ab9fb6ae224\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:3532d8866a760bb4b825dd11684e2b73d2c1751f1f9fd994e3a14ab9fb6ae224\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:29e0670ce9e7fbf86537304333279919ff06c207c755b4322d0ea2f517cbf6cd\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v040\",\"properties\":{\"as_checksum\":\"sha256:824287d5a22bd960\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v050\",\"properties\":{\"as_checksum\":\"sha256:824287d5a22bd960\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v060\",\"properties\":{\"as_checksum\":\"sha256:824287d5a22bd960\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v061\",\"properties\":{\"as_checksum\":\"sha256:824287d5a22bd960\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v070\",\"properties\":{\"as_checksum\":\"sha256:824287d5a22bd960\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v080\",\"properties\":{\"as_checksum\":\"sha256:824287d5a22bd960\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v090\",\"properties\":{\"as_checksum\":\"sha256:824287d5a22bd960\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:verify\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:29e0670ce9e7fbf86537304333279919ff06c207c755b4322d0ea2f517cbf6cd\",\"granularity\":\"atomic\",\"location\":\"crates/reflow2-core/src/verify.rs\",\"name\":\"verify.rs\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:verify",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:a-node-with-no-edges-is-not-clean:art:heal",
       "node_type": "Snapshot",
       "properties": {
@@ -99388,6 +99643,20 @@
       }
     },
     {
+      "node_id": "ver:evidence-has-somewhere-to-go",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Eight probes across engine and tool. ENGINE (tests/evidence_has_somewhere_to_go.rs): the constructor can reach `description` at all — the half that would otherwise have been missed, since the field was declared and unwritable; a run records `findings` beside its outcome; omitting `findings` LEAVES IT ALONE while a supplied `last_run_at` still moves; a later run can replace it, so \"leaves alone\" is distinguishable from \"cannot update\"; and name/description/findings survive independently, since conflating any two is the state the requirement exists to end. TOOL (tests/the_rollup_stays_cheap_to_read.rs): a 120-word name is shortened in loop_status AND carries name_truncated plus name_words plus a top-level note; a short name is untouched and claims no truncation — the counterweight without which the code could truncate everything and still pass; and description and findings are reachable through the MCP tools end to end.",
+        "findings": "8/8 passing. Workspace 1287 tests, 0 failures. Written the new way as its own first demonstration: this check's name is 9 words against a corpus median of 76, its account is in `description`, and this sentence is in `findings` — the three fields the requirement asked to be separable, used separately.",
+        "kind": "verification",
+        "last_run_at": "2026-08-17",
+        "level": "integration",
+        "method": "test",
+        "name": "A check records what it found separately from what it is",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:evidence-quality",
       "node_type": "Verification",
       "properties": {
@@ -100588,7 +100857,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:9050b0b3367a1d1fe7e2e5bb09eed985c085ee4429bf59b8764781ff7dca478b",
+  "prev_content_hash": "sha256:7235981dd91867853c8aa09ed21a78564ddf37889d7e8068a4950b4c38397e52",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

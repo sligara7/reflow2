@@ -1459,8 +1459,14 @@ fn an_epoch_with_no_edges_is_not_clean() {
 fn a_verification_that_verifies_nothing_is_reported() {
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.add_project("proj:p", "P").unwrap();
-    g.add_verification("ver:loose", "checks something", Some("test"), Some("unit"))
-        .unwrap();
+    g.add_verification(
+        "ver:loose",
+        "checks something",
+        Some("test"),
+        Some("unit"),
+        None,
+    )
+    .unwrap();
 
     assert_eq!(orphans(&g), ["ver:loose"]);
 
@@ -1504,8 +1510,14 @@ fn a_pointer_property_is_attachment_and_only_a_dangling_one_is_reported() {
         ),
     )
     .unwrap();
-    g.add_verification("ver:loose", "checks something", Some("test"), Some("unit"))
-        .unwrap();
+    g.add_verification(
+        "ver:loose",
+        "checks something",
+        Some("test"),
+        Some("unit"),
+        None,
+    )
+    .unwrap();
 
     let by_id: std::collections::HashMap<String, HealSeverity> = g
         .open_defects()

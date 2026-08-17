@@ -829,10 +829,11 @@ fn deliver(g: &mut DesignGraph, req: &str, suffix: &str) {
         .unwrap();
     g.realizes(&art, node::CAPABILITY, &cap, None, None)
         .unwrap();
-    g.add_verification(&ver, suffix, Some("test"), None)
+    g.add_verification(&ver, suffix, Some("test"), None, None)
         .unwrap();
     g.verifies(&ver, node::CAPABILITY, &cap).unwrap();
-    g.set_verification_status(&ver, "passing", None).unwrap();
+    g.set_verification_status(&ver, "passing", None, None)
+        .unwrap();
 }
 
 /// THE FIX AT THE BOTTOM OF ALL OF THIS. `snapshot_node` excluded every edge

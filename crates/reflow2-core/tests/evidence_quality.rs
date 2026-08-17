@@ -46,9 +46,10 @@ fn built_capability(g: &mut DesignGraph, cap: &str, art: &str) {
 }
 
 fn passing_check(g: &mut DesignGraph, id: &str, cap: &str, ran_at: Option<&str>) {
-    g.add_verification(id, id, Some("test"), Some("system"))
+    g.add_verification(id, id, Some("test"), Some("system"), None)
         .unwrap();
-    g.set_verification_status(id, "passing", ran_at).unwrap();
+    g.set_verification_status(id, "passing", ran_at, None)
+        .unwrap();
     g.verifies(id, node::CAPABILITY, cap).unwrap();
 }
 
@@ -163,9 +164,9 @@ fn a_failing_check_does_not_refresh_the_claim() {
     passing_check(&mut g, "ver:old", "cap:a", Some("2026-07-01"));
     accept(&mut g, "chg:a", "art:a", "2026-07-10");
     // A newer run that FAILED — recent, and no evidence at all.
-    g.add_verification("ver:new", "ver:new", Some("test"), Some("system"))
+    g.add_verification("ver:new", "ver:new", Some("test"), Some("system"), None)
         .unwrap();
-    g.set_verification_status("ver:new", "failing", Some("2026-07-20"))
+    g.set_verification_status("ver:new", "failing", Some("2026-07-20"), None)
         .unwrap();
     g.verifies("ver:new", node::CAPABILITY, "cap:a").unwrap();
 
@@ -311,9 +312,9 @@ fn one_suite_can_be_broad_about_one_claim_and_narrow_about_another() {
     let mut g = design();
     g.add_capability("cap:a", "A", "a", None).unwrap();
     g.add_capability("cap:b", "B", "b", None).unwrap();
-    g.add_verification("ver:suite", "suite", Some("test"), Some("system"))
+    g.add_verification("ver:suite", "suite", Some("test"), Some("system"), None)
         .unwrap();
-    g.set_verification_status("ver:suite", "passing", None)
+    g.set_verification_status("ver:suite", "passing", None, None)
         .unwrap();
     g.verifies("ver:suite", node::CAPABILITY, "cap:a").unwrap();
     g.verifies("ver:suite", node::CAPABILITY, "cap:b").unwrap();

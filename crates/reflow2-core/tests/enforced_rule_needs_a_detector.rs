@@ -140,8 +140,14 @@ fn an_advisory_rule_is_not_asked_about() {
 #[test]
 fn a_planned_check_does_not_silence_the_question() {
     let mut g = base_with_rule("rule:prs-only", Some(true));
-    g.add_verification("ver:someday", "We will grep for it one day", None, None)
-        .unwrap();
+    g.add_verification(
+        "ver:someday",
+        "We will grep for it one day",
+        None,
+        None,
+        None,
+    )
+    .unwrap();
     g.verifies("ver:someday", node::DESIGN_RULE, "rule:prs-only")
         .unwrap();
 
@@ -229,11 +235,17 @@ fn one_recorded_convention_answers_the_rollup() {
 #[test]
 fn a_passing_check_closes_it() {
     let mut g = base_with_rule("rule:prs-only", Some(true));
-    g.add_verification("ver:branch-guard", "CI refuses a push to main", None, None)
-        .unwrap();
+    g.add_verification(
+        "ver:branch-guard",
+        "CI refuses a push to main",
+        None,
+        None,
+        None,
+    )
+    .unwrap();
     g.verifies("ver:branch-guard", node::DESIGN_RULE, "rule:prs-only")
         .unwrap();
-    g.set_verification_status("ver:branch-guard", "passing", None)
+    g.set_verification_status("ver:branch-guard", "passing", None, None)
         .unwrap();
 
     assert!(

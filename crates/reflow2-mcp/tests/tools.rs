@@ -654,6 +654,7 @@ async fn the_write_side_can_answer_what_detect_asks_for() {
         name: "Ball flight tests".into(),
         method: Some("test".into()),
         level: Some("unit".into()),
+        description: None,
     })));
     j!(s.verifies(Parameters(VerifiesReq {
         verification_id: "ver:flight".into(),
@@ -698,6 +699,7 @@ async fn the_write_side_can_answer_what_detect_asks_for() {
         verification_id: "ver:flight".into(),
         status: "failing".into(),
         last_run_at: None,
+        findings: None,
     })));
     let radius = j!(s.propagate_from(Parameters(PropagateFromReq {
         seed_ids: vec!["ver:flight".into()],
@@ -1768,6 +1770,7 @@ async fn loop_status_digests_the_verification_roll_instead_of_rolling_it() {
             ),
             method: Some("test".into()),
             level: Some("unit".into()),
+            description: None,
         })));
         j!(s.set_verification_status(Parameters(VerificationStatusReq {
             verification_id: id,
@@ -1777,6 +1780,7 @@ async fn loop_status_digests_the_verification_roll_instead_of_rolling_it() {
             } else {
                 None
             },
+            findings: None,
         })));
     }
 

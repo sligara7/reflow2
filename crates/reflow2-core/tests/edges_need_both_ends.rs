@@ -72,7 +72,7 @@ fn populated() -> DesignGraph {
     g.add_interface("ifc:i", "A real interface").unwrap();
     g.add_artifact("art:a", "a.rs", Some("code"), Some("src/a.rs"))
         .unwrap();
-    g.add_verification("ver:v", "A real check", None, None)
+    g.add_verification("ver:v", "A real check", None, None, None)
         .unwrap();
     g.add_release("rel:r", "v1.0.0", Some("1.0.0"), None)
         .unwrap();

@@ -146,11 +146,11 @@ fn bands_ahead_of_the_frontier_are_reported_as_normal() {
     let mut g = graph();
     function_first(&mut g);
     // Assurance runs ahead of seams, exactly as in the real design.
-    g.add_verification("ver:one", "Checks cap 0", None, None)
+    g.add_verification("ver:one", "Checks cap 0", None, None, None)
         .expect("verification");
     g.verifies("ver:one", reflow2_core::nodes::node::CAPABILITY, "cap:0")
         .expect("verifies");
-    g.set_verification_status("ver:one", "passing", None)
+    g.set_verification_status("ver:one", "passing", None, None)
         .expect("passing");
 
     let p = report(&g);
@@ -237,14 +237,14 @@ fn a_one_sided_contract_does_not_count_as_a_declared_seam() {
 fn assurance_counts_passing_checks_not_existing_ones() {
     let mut g = graph();
     function_first(&mut g);
-    g.add_verification("ver:one", "Planned check", None, None)
+    g.add_verification("ver:one", "Planned check", None, None, None)
         .expect("verification");
     g.verifies("ver:one", reflow2_core::nodes::node::CAPABILITY, "cap:0")
         .expect("verifies");
 
     assert_eq!(band(&report(&g), "assurance").ratio, Some(0.0));
 
-    g.set_verification_status("ver:one", "passing", None)
+    g.set_verification_status("ver:one", "passing", None, None)
         .expect("passing");
     assert_eq!(band(&report(&g), "assurance").ratio, Some(0.25));
 }

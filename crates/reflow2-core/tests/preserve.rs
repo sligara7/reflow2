@@ -457,7 +457,7 @@ fn depends_on_is_read_from_its_endpoints_not_its_type() {
 fn a_dropped_verification_certifies_but_is_called_out() {
     let mut g = graph();
     seed(&mut g);
-    g.add_verification("ver:one", "Checks the first thing", None, None)
+    g.add_verification("ver:one", "Checks the first thing", None, None, None)
         .expect("verification");
     g.verifies("ver:one", node::CAPABILITY, "cap:one")
         .expect("verifies");

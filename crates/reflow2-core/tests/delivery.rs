@@ -42,7 +42,7 @@ fn threaded() -> DesignGraph {
     g.realizes("art:engine", node::CAPABILITY, "cap:ship", None, None)
         .unwrap();
 
-    g.add_verification("ver:ship", "ship test", Some("test"), None)
+    g.add_verification("ver:ship", "ship test", Some("test"), None, None)
         .unwrap();
     g.verifies("ver:ship", node::CAPABILITY, "cap:ship")
         .unwrap();
@@ -52,7 +52,7 @@ fn threaded() -> DesignGraph {
 #[test]
 fn a_complete_thread_reads_as_delivered_without_anyone_setting_met() {
     let mut g = threaded();
-    g.set_verification_status("ver:ship", "passing", None)
+    g.set_verification_status("ver:ship", "passing", None, None)
         .unwrap();
 
     let d = g.delivery_coverage().unwrap();
@@ -78,11 +78,11 @@ fn a_failing_check_un_delivers_it() {
     // assertion: if delivery only ever ratchets up, it is a stored claim with
     // extra steps, and it will keep reporting success through a regression.
     let mut g = threaded();
-    g.set_verification_status("ver:ship", "passing", None)
+    g.set_verification_status("ver:ship", "passing", None, None)
         .unwrap();
     assert_eq!(g.delivery_coverage().unwrap().delivered, 1);
 
-    g.set_verification_status("ver:ship", "failing", None)
+    g.set_verification_status("ver:ship", "failing", None, None)
         .unwrap();
     let d = g.delivery_coverage().unwrap();
     assert_eq!(
@@ -116,11 +116,11 @@ fn unbuilt_does_not_deliver_however_well_tested() {
     g.add_capability("cap:ship", "Ship it", "ships the thing", None)
         .unwrap();
     g.satisfies("cap:ship", "req:ship").unwrap();
-    g.add_verification("ver:ship", "ship test", Some("test"), None)
+    g.add_verification("ver:ship", "ship test", Some("test"), None, None)
         .unwrap();
     g.verifies("ver:ship", node::CAPABILITY, "cap:ship")
         .unwrap();
-    g.set_verification_status("ver:ship", "passing", None)
+    g.set_verification_status("ver:ship", "passing", None, None)
         .unwrap();
 
     let d = g.delivery_coverage().unwrap();
@@ -137,7 +137,7 @@ fn a_requirement_recovered_by_inference_never_counts_as_delivered() {
     // demonstrated nothing — and the number would look best exactly when the
     // design was most speculative.
     let mut g = threaded();
-    g.set_verification_status("ver:ship", "passing", None)
+    g.set_verification_status("ver:ship", "passing", None, None)
         .unwrap();
     let req = g.get_node(node::REQUIREMENT, "req:ship").unwrap().unwrap();
     let mut props = reflow2_core::nodes::Props::new().set("provenance", "inferred");
@@ -183,7 +183,7 @@ fn component_granularity_still_delivers() {
     g.delete_edge("VERIFIES", "ver:ship", "cap:ship").unwrap();
     g.verifies("ver:ship", node::COMPONENT, "cmp:engine")
         .unwrap();
-    g.set_verification_status("ver:ship", "passing", None)
+    g.set_verification_status("ver:ship", "passing", None, None)
         .unwrap();
 
     assert_eq!(g.delivery_coverage().unwrap().delivered, 1);
@@ -192,7 +192,7 @@ fn component_granularity_still_delivers() {
 #[test]
 fn the_report_carries_delivery_and_leaves_status_alone() {
     let mut g = threaded();
-    g.set_verification_status("ver:ship", "passing", None)
+    g.set_verification_status("ver:ship", "passing", None, None)
         .unwrap();
     let r = g.graph_report().unwrap();
     let d = r.delivery.as_ref().expect("requirements exist");
