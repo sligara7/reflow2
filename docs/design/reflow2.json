@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:68dce194c476a0b0abe4e370178b744c719c765e210a0f33663809dd349ff667",
+  "content_hash": "sha256:1ffddbd500cd0c55438825435e4927ad3123bbc7118327e5c0dc439c674715e4",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -846,6 +846,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-node-attached-to-nothing-is-reported-whatever-its-type",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:heal"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -3131,6 +3139,12 @@
       "from_id": "chg:a-mirror-can-be-refreshed",
       "properties": {},
       "to_id": "epoch:v0290"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-node-attached-to-nothing-is-reported-whatever-its-type",
+      "properties": {},
+      "to_id": "epoch:a-node-with-no-edges-is-not-clean"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5927,6 +5941,12 @@
       "from_id": "snap:epoch:a-default-is-not-a-difference:cap:defaults-are-not-serialized",
       "properties": {},
       "to_id": "epoch:a-default-is-not-a-difference"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:a-node-with-no-edges-is-not-clean:art:heal",
+      "properties": {},
+      "to_id": "epoch:a-node-with-no-edges-is-not-clean"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -8920,10 +8940,28 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-deliberate-state-is-not-a-defect",
+      "properties": {
+        "acted_at": "2026-08-16",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue",
       "properties": {
         "acted_at": "2026-08-09",
         "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-finding-has-somewhere-to-put-its-evidence",
+      "properties": {
+        "acted_at": "2026-08-16",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -8992,6 +9030,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran",
+      "properties": {
+        "acted_at": "2026-08-16",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-rule-is-recorded-with-its-consequence",
       "properties": {
         "acted_at": "2026-08-08",
@@ -9046,6 +9093,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-session-with-no-seed-can-still-orient",
+      "properties": {
+        "acted_at": "2026-08-16",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-user-can-see-that-the-process-was-followed",
       "properties": {
         "acted_at": "2026-08-16",
@@ -9059,6 +9115,15 @@
       "properties": {
         "acted_at": "2026-08-09",
         "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-write-cannot-silently-lose-someone-elses-work",
+      "properties": {
+        "acted_at": "2026-08-16",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -10155,6 +10220,15 @@
         "action": "modified"
       },
       "to_id": "cap:mirror-surface"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-node-attached-to-nothing-is-reported-whatever-its-type",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
     },
     {
       "edge_type": "CHANGED",
@@ -29160,6 +29234,12 @@
       "from_id": "art:graph",
       "properties": {},
       "to_id": "snap:epoch:a-refusal-names-what-would-have-worked:art:graph"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:heal",
+      "properties": {},
+      "to_id": "snap:epoch:a-node-with-no-edges-is-not-clean:art:heal"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -66440,6 +66520,12 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:v0330",
+      "properties": {},
+      "to_id": "epoch:a-node-with-no-edges-is-not-clean"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:v040",
       "properties": {},
       "to_id": "epoch:v050-cut"
@@ -67187,6 +67273,14 @@
         "completeness": "complete"
       },
       "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:heal",
+      "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-node-attached-to-nothing-is-reported-whatever-its-type"
     },
     {
       "edge_type": "REALIZES",
@@ -68366,6 +68460,12 @@
         "evidence": "parse_enum in crates/reflow2-mcp/src/service.rs is the single helper every served enum argument passes through; the test a_rejected_enum_lists_the_legal_values fails against the prior map_err(|_| ...) implementation"
       },
       "to_id": "req:a-refusal-names-what-would-have-worked"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-node-attached-to-nothing-is-reported-whatever-its-type",
+      "properties": {},
+      "to_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran"
     },
     {
       "edge_type": "SATISFIES",
@@ -70382,6 +70482,12 @@
       "from_id": "ver:a-merge-says-what-it-destroys",
       "properties": {},
       "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-node-attached-to-nothing-is-reported-whatever-its-type",
+      "properties": {},
+      "to_id": "cap:a-node-attached-to-nothing-is-reported-whatever-its-type"
     },
     {
       "edge_type": "VERIFIES",
@@ -73702,7 +73808,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8b5553c1a9b686a3a4760c51614d8e4c35e9dfb2f3c65c7f954ac84da9962ecc",
+        "checksum": "sha256:35d3493042a1ce7c4a61c458e2e9c412cd4e518ad8430d8bfe8ef2c748ec02fd",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
@@ -75291,6 +75397,16 @@
         "provenance": "authored",
         "status": "planned",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:a-node-attached-to-nothing-is-reported-whatever-its-type",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The degree-zero rule inside `orphan_node` ran on `Decision` alone (heal.rs:879) and now runs on every node type nothing else asks about. That narrowness is why the pass whose job is structural soundness returned a false green: dev_storyflow's fleet got `clean` back over a DesignEpoch carrying NO EDGES AT ALL, in two packages, through every health call of a session.\n\nMEASURED ON REFLOW2'S OWN GRAPH, 2026-08-16: 75 of 2406 nodes are degree-zero. The old rule reported 7 of them; the new rule reports 21. The 14 newly visible are 3 DesignEpochs marking nothing, 3 Fragments with no source, `ver:the-export-survives-being-read-back` — a check counted among the 159 passing that says what it checks to nobody — and 7 TemporalFacts whose `subject_id` names a node THAT DOES NOT EXIST, including `prj:reflow2` (the Project is `proj:reflow2`) and `cap:thin-install` (the node is `req:thin-install`).\n\nTHREE BOUNDS, and two of them exist because the first cut was wrong:\n\n(1) NOT EVERY ATTACHMENT IS AN EDGE. `TemporalFact.subject_id`, `Snapshot.target_id` and `Question.gap_id` are required indexed PROPERTIES: those nodes name what they are about without ever drawing a link. The naive rule would have reported 48 of reflow2's own 212 TemporalFacts — 48 false findings shipped inside the change whose subject is instruments that overstate. A degree-zero node is now skipped when any property resolves to a live node id, which keeps the case that IS wrong: a pointer to a node the design no longer has. The unit test caught this, because `subject_id` is required and the fixture could not be built without one.\n\n(2) BL-42 STAYS CLOSED. Requirement, Capability and Interface are excluded — DETECT asks about those by name (`unsatisfied_requirement`, `unallocated_capability`, `unprovided_interface`), and reporting them here as well is the same finding in two vocabularies that became 20 of 31 defects on the storyflow trial.\n\n(3) A RESTING STATE IS NOT A DEFECT. Project and DesignRule are excluded. A Project alone means the design is EMPTY — what genesis produces on day one — and the phase rollups already say so. An advisory DesignRule can bind the PROCESS rather than a node, and demanding an edge would push authors to draw a relationship nobody meant. Widening a sweep without asking that question is how the correct action starts degrading the instrument (`req:a-deliberate-state-is-not-a-defect`).\n\nThree fixtures were genuinely incomplete and were fixed rather than silenced: a \"v1 baseline\" epoch that was the baseline of nothing, a \"v1.0\" release that shipped nothing, and a recency test whose Verification verified nothing.",
+        "name": "A node attached to nothing is reported whatever its type, and a property that names a live node counts as attachment",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -77395,6 +77511,14 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "mirror_surface gains a REFRESH. FOUND BY RUNNING THE TOOL TWICE, 2026-08-12: a second mirror of the SAME design collided with its own first — 12 of 13 ids refused as collisions, mirrored_edges 0, mirror_content_hash null — leaving the stale node in place with the host edge still pointing at it while `mirrors` reported the OLD pin. So the staleness register read FRESH after a failed refresh, which is worse than never refreshing. Re-mirroring one mirror_of is a DIFFERENT OPERATION from mirroring a new design: replace-what-I-hold-at-a-new-pin versus add-a-stranger-and-refuse-clashes, and only the second existed. THE QUESTION SETTLED FIRST: what happens to a host edge whose foreign target is gone from the new surface? It REFUSES and names both the withdrawn boundary and the host edge pointing at it — reflow2 refuses dangling edges anyway, and a partner retiring a contract you consume is a conversation between two owners, not a cleanup this tool may do (dec:ask-not-repair). A refused refresh changes NOTHING and the pin does not advance, which is the lie the whole fix is about. MECHANISM: the mirrored Project now records `mirror_nodes`, the ids this mirror brought, because the set cannot be recovered afterwards — provenance:imported is also set by corpus ingest, and the project CONTAINS edges do not span the mirrored set (5 of 13, measured). One property on one node type that already carries three mirror properties, following the schema comma-list precedent (pinned/swept on VERIFIES). VERIFIED ON THE REAL PAIR: the exact flo2 scenario that produced the defect now gives 13 nodes, 19 edges, ZERO collisions, refreshed=true, withdrawn naming ifc:reflow2-design-api, the stale node gone and the renamed one present with its corrected medium. 7 tests written first, 4 mutations killed. NOTE FOR THE NEXT RELEASE: adding mirror_nodes moves no stamp count (29/61) but an older binary REFUSES an unknown property — the third instance today of the stamp being blind to a real compatibility event."
+      }
+    },
+    {
+      "node_id": "chg:a-node-attached-to-nothing-is-reported-whatever-its-type",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The degree-zero rule stops being a Decision rule — detect_defects can no longer answer clean over a node with no edges, and a property naming a live node counts as attachment"
       }
     },
     {
@@ -85890,6 +86014,16 @@
       }
     },
     {
+      "node_id": "epoch:a-node-with-no-edges-is-not-clean",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "A node attached to nothing is reported whatever its type — the degree-zero rule stops being a Decision rule, and a pointer property counts as attachment",
+        "sequence": 347,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:a-project-is-set-up-right-on-the-first-run",
       "node_type": "DesignEpoch",
       "properties": {
@@ -90851,7 +90985,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "When a design has RULED that a node is correctly attached to nothing, or correctly unsatisfied, a detector must be able to see that ruling and report the node accordingly — rather than counting a deliberate state as a structural defect. (Distinct from the FACT the guard named, which records one measured instance; this is the intent that answers it and a second instance besides.)\n\n⭐ THE SHAPE THAT MAKES THIS URGENT, in the reporter's words: THE DISPOSITION RULE AND THE DEFECT DETECTOR MAKE EACH OTHER UNREADABLE, AND THE DIRECTION IS THE BAD ONE — THE CORRECT ACTION DEGRADES THE INSTRUMENT. It is self-reinforcing: a later seat watching the count climb has an incentive to stop registering documents and leave them absent, which is the worse state.\n\nTWO MEASURED INSTANCES:\n\n(a) `orphan_node` FIRES ON THE STATE A STANDING RULING PRESCRIBES. A fleet has a ruling for dated per-increment scope proposals whose increment has shipped: register the Artifact, record WHY no claims were extracted, draw NO claim edges. A `DOCUMENTS` edge would be false — it would count a superseded document as coverage in their ingest ledger, which buckets on exactly that edge — and absence would be false too, a pretend backlog someone re-mines. \"Registered, no doctrine, on purpose\" is the correct end state. Measured: defects moved 88 → 97 across ten artifact writes, eight of them deliberate no-claim registrations, with 31 more documents owed in the same genre. A boss reading \"97 structural defects\" cannot tell the deliberate ones from the real ones.\n   ⭐ AND THE TOOL ALREADY CONTAINS THE SENTENCE THAT EXONERATES THE NODE: its own `repair_is_a_judgement` text reads \"a parked thought that correctly governs nothing yet\" — accurate, and it files the node as a problem anyway.\n\n(b) `disconnected_community` CANNOT SEE AN INTENDED-UNSATISFIED RULING. A requirement was disconnected on purpose, recorded in an accepted Decision saying no SATISFIES may be drawn to it. The detector's suggested fix is `generate_bridge` — PRECISELY THE FORGERY THE RULING FORBIDS — and an agent working the defect list top-down would do it.\n\nWHAT IS OWED, cheapest first as they filed it: a first-class marker for \"attached to nothing ON PURPOSE\" — their COORD.md already calls this PARKED in prose and the schema has no word for it — with `orphan_node` skipping it and reporting `parked: N` separately; and a way for a Decision that governs a requirement's unsatisfied-ness to be visible to the structural detector, so it can say \"unsatisfied BY RULING (see dec:…)\".\n\nWHY NOT JUST ACKNOWLEDGE: `acknowledge_defect` exists and stores a reason, but acknowledging 31 findings one at a time to record ONE ruling is the wrong shape, and the acknowledgement expires \"when the shape changes\" on nodes whose shape is deliberately fixed.\n\nRELATED AND SETTLED THE OTHER WAY, named so this does not reopen it: `dec:report-dont-judge` says reflow2 reports and never ranks. This is not a request to judge — it is a request to READ A RULING THE DESIGN ALREADY MADE, the same move `designation: required` made for `unprovided_interface` on 2026-08-09.\n\n⚠️ BOUND THE REPORTER STATED AND I HAVE NOT CLOSED: they did not check whether the guard built for the `DOCUMENTS`/`REALIZES` asymmetry was meant to cover this case and misses it, or whether this case was never contemplated. Those are different reports and only the second is evidenced.\n\nREPORTED BY dev_storyflow's fleet, 2026-08-04 and 2026-08-15.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -90890,7 +91024,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A Verification must have a durable place for what a check FOUND, separate from what the check IS — so evidence stops being written into the title, and so a result can be read by something other than a human eye.\n\n⭐ THREE INDEPENDENT RECORDS OF ONE ROOT, which is why this is a requirement and not a style note. The near-duplicate guard surfaced a THIRD: `fact:defect-a-finding-has-no-bounds-so-grading-goes-in-the-name` was already in this design before today, saying the same thing about grading. Both facts the guard named are OBSERVATIONS on different days; this is the INTENT that answers them.\n\nMEASURED on reflow2's own graph, 2026-08-16: 160 Verifications, MEDIAN `name` LENGTH 79.5 WORDS, 72 over 100, 17 over 300, longest 654. A `name` is what a list renders; these are reports.\n\nTHE TWO FLEET REPORTS:\n(a) 2026-08-07 — a Verification held a self-contradictory result and stayed `passing` forever, because THE RESULT IS FREE TEXT. It recorded \"EXIT 0, verdict 'STALE — 4 of 11'\"; the tool's true exit was 1 and its source is `return 1 if stale else 0`, so `EXIT 0` meant the exact opposite of the verdict beside it. `status` is structured; the evidence is prose, and nothing in the loop can notice the disagreement.\n(b) 2026-08-08 — `loop_status` is documented as \"one cheap call\" and is cheap to CALL and expensive to READ: `verifications.attention[0].name` came back as a single ~450-word paragraph holding a full graded walk report. Their diagnosis is the requirement: \"workers write the full report into the `name` because there is no other durable place for it on the node — A MISSING FIELD BEING PAID FOR IN EVERY FUTURE READ OF THAT NODE.\"\n\n⚠️ AND I AM THE LARGEST SINGLE CONTRIBUTOR. Four of the six Verifications written on 2026-08-16 exceed 300 words, and `ver:a-claim-reads-back-with-its-age` at 435 words is the FIFTH LONGEST IN THE DESIGN. I was not working around a limitation I had noticed; I had not noticed it.\n\nWHY IT IS MORE THAN STYLE: the cheapest call in the surface, the one every worker is told to make routinely including before finishing, returns a payload dominated by prose nobody asked for. A cheap call that is expensive to read is a call people stop making — the same signal-trained-to-be-ignored failure `req:the-loop-can-say-what-this-session-owes` was built to end, arriving through a different door.\n\nTHEIR TWO ASKS: give Verification a `findings` / `report` property; and truncate `name` in `loop_status`'s rollup, or return `name` + `detail` separately.\n\n⚠️ THE LOAD-BEARING UNCERTAINTY, to answer BEFORE building: WOULD A NEW FIELD ALONE CHANGE ANYTHING? A declared field nobody writes to leaves the corpus exactly as it is — precisely the trap `dec:how-should-a-temporal-fact-carry-its-date-when-there-is-no-epoch` documented, where 112 nodes wrote an undeclared property because the declared route did not fit. And the 160 existing names cannot be migrated cleanly, because a property once written cannot be removed — the best available repair writes evidence to the new field and SHORTENS the name, duplicating rather than moving. Truncating at the rollup is the cheaper half and asks nobody to change how they write; whether that is pragmatic or merely lets the hoard grow unchecked is unmeasured.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -91038,7 +91172,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A report that contributes no findings must say whether it was EXERCISED AND FOUND NOTHING or HAD NOTHING TO EXAMINE, and must describe the scope it actually covered rather than a narrower one it was never given.\n\nDISTINCT FROM THE FACT THE GUARD NAMED: `fact:defect-propose-heal-describes-neither-what-it-swept-nor-what-it-considered` is the OBSERVATION — what was measured, on which day, by whom. This is the INTENT — what must be true. A TemporalFact cannot be scheduled; a Requirement can.\n\nTHE THEME IS ALREADY ACCEPTED DOCTRINE rather than a new idea: `chg:a-null-and-a-vacuous-zero-now-say-which-they-are` gave scoped `detect_gaps` exactly this treatment, and dev_storyflow's dragon Boss independently named it a WIN — \"flags its own vacuous zeros\". This generalises what that change did in one place.\n\n⚠️ THE STAKE IS NOT TIDINESS: a fleet runs `propose_heal` as the read-only evidence step of a standing stop on `apply_heal`, which DELETES NODES. A vacuous zero there is one skim away from lifting a gate on an irreversible operation.\n\n── PARTLY DELIVERED 2026-08-16 (#210) ──\n`propose_heal` now carries `scope`, `projects_in_scope` and `merge_candidates_considered`, and no longer names a Project the caller never chose. `merge_candidates_considered` is dev_storyflow's own idea (1) and their field name.\n\n── STILL OWED, ADDED 2026-08-16 after the full fleet-log triage ──\nThree further instances the #210 fix did not touch, each measured in real use, and the second is the worst thing in the whole log:\n\n(a) ZERO-DEGREE NODES ARE NOT REPORTED. `detect_defects` answered `clean: true` with `structural_defects: 0` over a DesignEpoch carrying NO EDGES AT ALL — in two separate packages, through every health call of a session. A node with no edges is the most detectable structural defect there is, and it needs no judgement to identify, unlike the modularity cluster the tool did report. `heal.rs:879` does this for Decisions only. **Reflow2's own health check returned a false green on the pass whose job is structural soundness.**\n\n(b) `disconnected_community` COMPUTES MODULARITY AND SPEAKS THE WORDS OF UNREACHABILITY — \"disconnected from the rest of the design\". The four nodes it named were all reachable by an undirected walk; the genuinely unreachable node was never mentioned. Either rename it to what it computes (\"tightly-coupled cluster\") or make it compute what it claims. A confident answer to a NEARBY question occupies the attention the right question needed.\n\n(c) `open_questions` RETURNING 0 READS AS AN ALL-CLEAR while `loop_status` in the very next call reported 31 other owed items — and it is the orientation call a new session runs FIRST. Naming the other non-zero counts would be enough.\n\nNOT IN SCOPE, unchanged: whether every reporting tool needs this treatment or only those whose zero is read as permission.\n\nREPORTED BY dev_storyflow's fleet across 2026-08-08 to 2026-08-15, by three seats independently.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -91180,7 +91314,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A session that has not yet been given a lane, a scope or a seed node must still be able to ask what the design holds — because that is the moment it has the most time and the least to do. (Distinct from the FACT the guard named, which records the observation; this is the intent, and it gathers three adjacent costs the fact does not carry.)\n\n⭐ THE REPORTER'S SENTENCE IS THE REQUIREMENT: \"the moment with the most time available — sitting AVAILABLE, nothing to do — is the moment the design brain is LEAST USABLE, and the moment I am busiest (mid-lane) is when I am told to orient.\"\n\nTHE MEASURED SHAPE. Every piece of guidance says orient before you touch anything, and the orientation tools are built around a SEED: `detect_gaps` and `detect_defects` want a scope, `claim_region` wants a `seed_id`. A worker at pool check-in has no lane and therefore no seed. The only seedless calls are global rollups, which their own doctrine forbids attributing to the caller. So the honest options are (a) call nothing or (b) call an unscoped tool and hedge the number in a paragraph. THEY CHOSE (a) AND RECORDED WHY — a design brain that a willing, idle, correctly-behaving session cannot use.\n\nTHREE ADJACENT COSTS FROM THE SAME SESSIONS, all about the price of asking a first question:\n(a) `get_node` RETURNS PROPERTIES AND NO EDGES, so \"what does this capability connect to\" needs a second call and a guess about which edge type to ask for.\n(b) `describe_schema{node_type}` COSTS ~15 000 TOKENS to answer \"what properties does this type have\", because it inlines every wildcard edge in both directions; `required_only: true` is the compact escape and drops the edges entirely. Filed twice, on two dates.\n(c) `get_skill` CARRIES NO VERSION OR HASH, so a session that read a skill at minute 0 cannot tell it was revised by minute 90. Skills are SERVED precisely so they cannot go stale relative to the binary — this is the one hole left in that argument, and their words are \"it makes 'I read the skill' a checkable claim rather than a durable-sounding one.\"\n\nWHAT IS OWED: a seedless orientation answer — their suggestion is a `search_design`-backed \"what regions exist and how big are they\", or letting `detect_gaps` take a free-text topic instead of a node id, so a session can FIND its seed rather than needing one to start.\n\nWHY THIS RANKS LAST OF THE FIVE, stated so the ordering is not mistaken for a judgement about the report's quality: nothing here produces a FALSE statement. Every requirement above it does — a green that could not fail, a write that reported success while losing data, a defect that is not one, a name that is really a report. This one is friction on correct use, which is cheaper to carry and still worth removing.\n\nREPORTED BY dev_storyflow's fleet, 2026-08-08, with (b) also on 2026-08-09.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -91235,7 +91369,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "On a shared graph, a write must be able to say what it is about to overwrite, and refuse when the caller's assumption about the current value is stale. (Distinct from the triage FACT the guard named: that records what was reported and when; this is what must become true.)\n\nTHE MEASURED CASE, OBSERVED FROM BOTH SIDES OF ONE COLLISION, which is what makes it structural rather than unlucky. A worker read `frag:ownership_guard`; ninety seconds later another attached session wrote it; the write returned a normal success with the full node body and nothing unusual. THE WINNER WAS NEVER TOLD. The loser found out only because `record_change` happens to RETURN the snapshot it took — a diagnostic side-effect of an unrelated tool, not a guard. Had they used any other write path, both would have believed they made the change and one would have been wrong.\n\n⇒ `create_node` has NO expected-current-value parameter, so no write can be made conditional on what was read, and `claim_region` is advisory with nothing consulting it before a write. On a shared graph with several attached sessions, every property edit is a lost update waiting to happen and detection is left to luck.\n\nPARTLY MITIGATED SINCE, and it is detection rather than prevention: `create_node` now returns a `revision` block naming the properties it replaced, their prior values, and a `prior_content_hash`. That hash is exactly the raw material a compare-and-swap needs; nothing consumes it yet.\n\nTHREE RELATED FAILURES OF THE SAME SHAPE — a write that destroys without saying so:\n\n(a) RE-USING AN EXISTING NODE ID IN AN INGEST PASS IS A WRITE, NOT A REFERENCE, and there is no cite-only form. A worker silently reverted a USER-RULED restoration with their next batch — on the one node their fleet was already watching, which that same worker had personally restored thirty minutes earlier and written the report explaining why it mattered.\n\n(b) `set_artifact_checksum` ACCEPTS A MALFORMED DIGEST WITHOUT COMPLAINT. A 13-character value was stored and echoed back as correct, with a `change_event_id` and a `baseline_established` disposition. A truncated baseline can never match a real digest, so it reports `checksum_change` forever against a file that never changed — a permanent false drift alarm seeded by the act meant to establish truth.\n\n(c) THERE IS NO DISPOSITION MEANING \"THE BASELINE I RECORDED WAS WRONG\". `set_artifact_checksum` is correctly one-shot, so the only route back is `create_node` merging the field directly — which bypasses the ChangeEvent the one-shot design exists to force. The safe correction path leaves no record; the recorded path asserts something false about the content having moved.\n\n⚠️ AND THE HARDER HALF, which the reporter states plainly and which I can corroborate from the other direction: their second bad checksum was WELL-FORMED at 64 characters and simply WRONG — \"typed from memory rather than read from `sha256sum`\". No shape guard catches that. I made the identical error on 2026-08-16, retyping a digest I had displayed truncated, into `art:schema-build` — the drift baseline whose whole job is noticing when design and build disagree. A shape guard would have caught their first case and neither of ours. Whether anything can catch the second is the open part.\n\nREPORTED BY dev_storyflow's fleet, 2026-08-09 and 2026-08-15, corroborated across seats.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -93382,6 +93516,16 @@
         "state": "{\"description\":\"The export and every other design record omit a property whose value equals the schema default, so absence carries the meaning \\\"nobody said\\\" and presence carries \\\"somebody chose\\\". Partly realized already — the exporter stopped writing Artifact granularity/volatility defaults between 0.25.0 and 0.27.0 — and left at `planned` deliberately, because nothing has verified the behaviour across the whole property surface and `fact:bl-198` counts 28 single-valued properties, 22 of them the schema's own default. Status is a claim about the design, not about one observation.\",\"is_entry_point\":false,\"is_exit_point\":false,\"name\":\"A property equal to the schema default is omitted from the record\",\"provenance\":\"authored\",\"status\":\"planned\",\"tier\":\"operational\"}",
         "target_id": "cap:defaults-are-not-serialized",
         "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:a-node-with-no-edges-is-not-clean:art:heal",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0100\",\"properties\":{\"as_checksum\":\"sha256:01606f8905e95775\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0101\",\"properties\":{\"as_checksum\":\"sha256:01606f8905e95775\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0110\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0120\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:30d3e7a27a3b198c46498bf1befd6511166bf8649c8837e6d78ac36cbb5d0852\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:30d3e7a27a3b198c46498bf1befd6511166bf8649c8837e6d78ac36cbb5d0852\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:a72ee9d0af723c8c9d345849969bc4af4d7d62e8210df0c336e89d6b20192ba2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:a4d8b8b8387e35f0236aae9e00a8d685235a77ff04b3425e05d72647c3ebe930\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:a4d8b8b8387e35f0236aae9e00a8d685235a77ff04b3425e05d72647c3ebe930\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:a4d8b8b8387e35f0236aae9e00a8d685235a77ff04b3425e05d72647c3ebe930\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:d3c6e9fe1cac1177\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:59747ef7945dd315f0ef154b20e5034b3c03506a27394e5ab19425383360758a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:59747ef7945dd315f0ef154b20e5034b3c03506a27394e5ab19425383360758a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:59747ef7945dd315f0ef154b20e5034b3c03506a27394e5ab19425383360758a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:59747ef7945dd315f0ef154b20e5034b3c03506a27394e5ab19425383360758a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:8b5553c1a9b686a3a4760c51614d8e4c35e9dfb2f3c65c7f954ac84da9962ecc\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v040\",\"properties\":{\"as_checksum\":\"sha256:7fd0af4d731e0f22\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v050\",\"properties\":{\"as_checksum\":\"sha256:2f778205ea735815\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v060\",\"properties\":{\"as_checksum\":\"sha256:b69c5f6682770736\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v061\",\"properties\":{\"as_checksum\":\"sha256:b48ea911ce1a3fe0\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v070\",\"properties\":{\"as_checksum\":\"sha256:2f75755ae2cd98d4\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v080\",\"properties\":{\"as_checksum\":\"sha256:2f75755ae2cd98d4\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v090\",\"properties\":{\"as_checksum\":\"sha256:2f75755ae2cd98d4\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-node-attached-to-nothing-is-reported-whatever-its-type\",\"properties\":{\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:supporting-is-not-conflict\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:heal\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:8b5553c1a9b686a3a4760c51614d8e4c35e9dfb2f3c65c7f954ac84da9962ecc\",\"granularity\":\"atomic\",\"location\":\"crates/reflow2-core/src/heal.rs\",\"name\":\"heal.rs\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:heal",
+        "target_type": "Artifact"
       }
     },
     {
@@ -96197,6 +96341,18 @@
       }
     },
     {
+      "node_id": "fact:defect-loop-status-asserts-an-answer-never-reached-the-design-from-a-fact-that-cannot-say-so",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "property",
+        "statement": "MEASURED ON REFLOW2'S OWN ORIENTATION CALL, 2026-08-16, and it is this epoch's own theme firing on the instrument a new session reads FIRST. `loop_status` reported '1 answered question(s) never reached the design — write the answer in, or acknowledge the gap'. The answer HAD reached the design: `dec:the-authority-check-guards-forward-not-backward` is accepted, dated 2026-08-11, carries an AUTHORED_BY role=approver edge to who:ajs and a GOVERNED_BY edge from the rule it shapes, and records the ruling, both rejected options and the measurement behind them. The claim was false and I repeated it to the user as fact before checking.\n\nTHE CODE CANNOT SUPPORT WHAT THE MESSAGE ASSERTS. report.rs:755 is `questions.iter().filter(|q| q.status == \"answered\").count()`. That knows one thing — the question is answered and its gap is still open — and the message turns it into a claim about whether design nodes exist. Nothing looks for them.\n\nAND THE STATE IT FLAGS IS DELIBERATE, which is what makes this `req:a-deliberate-state-is-not-a-defect` rather than a wording bug. The decision says in its own text that it does NOT close the gap: the gap is `unverified_enforced_rule`, it needs a PASSING Verification, none exists, and closing it would record a judgement the owner did not make. So the correct action — rule, record it, leave the debt honestly open — is exactly what makes the instrument report false debt, and the only ways to silence it are to acknowledge a gap that is real or to stop recording rulings.\n\nTHE FIX IS NOT OBVIOUS AND IS NOT ASSERTED HERE: 'was this answer written into the design' has no general computation, since an answer may land as a Decision, a Requirement, a status move or an edge. The narrow honest repair is for the message to say what it actually knows.",
+        "subject_id": "req:a-deliberate-state-is-not-a-defect",
+        "valid_from": "2026-08-16"
+      }
+    },
+    {
       "node_id": "fact:defect-loop-status-next-routes-to-the-destructive-skill",
       "node_type": "TemporalFact",
       "properties": {
@@ -96507,6 +96663,18 @@
         "valid_from": "2026-08-08",
         "valid_to": "2026-08-09",
         "value": "{\"reported\":\"dev_storyflow 2026-08-08, re-filed after 0.26.1 retest 2026-08-09\",\"root_cause\":\"verify.rs copied all properties except status and last_run_at, so an omitted last_run_at was dropped\",\"fix\":\"last_run_at replaced only when supplied\",\"negative_control\":\"old condition restored -> new test fails on the data-loss assertion\",\"siblings_documenting_the_opposite\":\"set_interface_spec, set_decision_status, set_epoch_status\"}"
+      }
+    },
+    {
+      "node_id": "fact:defect-seven-temporal-facts-name-a-subject-id-that-does-not-exist",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "property",
+        "statement": "SURFACED 2026-08-16 BY THE WIDENED DEGREE-ZERO RULE, on its first run over reflow2's own graph — a finding nothing could previously report.\n\nSEVEN TemporalFacts carry a `subject_id` naming a node THAT DOES NOT EXIST, and two of the seven are plainly typos for a live node:\n  fact:dev-storyflow-fleet-log-triaged-2026-08-16          -> prj:reflow2      (the Project is proj:reflow2)\n  fact:defect-kit-manifest-drift-is-invisible-to-ci        -> cap:thin-install (the node is req:thin-install)\n  fact:defect-append-only-volatility-exempts-a-structural-rewrite\n  fact:defect-link-artifact-has-no-type-for-a-test-source\n  fact:dev-storyflow-fleet-log-full-triage-6203-lines-2026-08-16\n  fact:reflow2s-black-boxes-hold-no-functions-allocation-went-straight-to-the-modules\n  fact:the-music-graph-feedback-file-is-four-sessions-and-its-first-batch-was-fixed-long-ago\n\nWHY IT WAS INVISIBLE. `subject_id` is a required INDEXED property, so a fact names its subject without an edge — which means a fact is reachable by index lookup and never by a graph walk. Nothing validated that the id resolves. `orphan_node` ran on Decision only; `disconnected_community` reports clusters of >=2 and a node joined to nothing is never a cluster. So the pointer could be wrong for as long as it liked.\n\nWHAT IT COSTS: the observation is stranded. It cannot be found from the thing it is about, it never enters an impact analysis, and a reader searching the live node's history sees nothing.\n\nNOT REPAIRED HERE, and deliberately so: correcting a `subject_id` is a judgement about what the fact was about, not a mechanical fix, and the two obvious typos are the only two anybody could assert without reading each statement. RELATED, UNANSWERED: whether the schema should validate that a pointer property resolves at WRITE time — which would have stopped all seven at the door — or whether that couples the schema layer to graph contents in a way this design does not want.",
+        "subject_id": "cap:a-node-attached-to-nothing-is-reported-whatever-its-type",
+        "valid_from": "2026-08-16"
       }
     },
     {
@@ -97293,6 +97461,18 @@
         "level": "unit",
         "method": "test",
         "name": "A merge proposal discloses what it would destroy before it can be applied, and a proposal that deletes a node stops reporting itself as needing no review",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-node-attached-to-nothing-is-reported-whatever-its-type",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-16",
+        "level": "unit",
+        "method": "test",
+        "name": "Five probes: an edgeless epoch is reported, a Verification that verifies nothing is reported, a pointer property counts as attachment, DETECT keeps its own types, an empty design is not a defect",
         "status": "passing"
       }
     },
@@ -99135,7 +99315,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:698ed8ea4c8e8552046e8a13025e169aa057abfc40f274069abd1f1c2666679d",
+  "prev_content_hash": "sha256:68dce194c476a0b0abe4e370178b744c719c765e210a0f33663809dd349ff667",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

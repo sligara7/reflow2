@@ -31,6 +31,31 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed
+
+- **`detect_defects` no longer returns a clean bill over a node attached to nothing.** The
+  degree-zero rule inside `orphan_node` ran on `Decision` alone, so dev_storyflow's fleet got
+  `clean` back over a DesignEpoch carrying **no edges at all** — in two packages, through every
+  health call of a session — from the pass whose whole job is structural soundness. It now runs on
+  every node type nothing else asks about. On reflow2's own graph the rule goes from reporting 7
+  zero-degree nodes to 21; the newly visible ones are epochs marking nothing, fragments with no
+  source, a Verification counted among the passing that says what it checks to nobody, and seven
+  TemporalFacts whose `subject_id` names a node that does not exist.
+
+  Three bounds, because a wider sweep is only worth having if it is still true:
+  **a pointer property is attachment** — `TemporalFact.subject_id`, `Snapshot.target_id` and
+  `Question.gap_id` are required indexed properties, so those nodes name what they are about
+  without an edge, and only a pointer that resolves to *nothing* is reported (the naive rule would
+  have filed 48 of reflow2's own 212 facts); **DETECT keeps its own types** — Requirement,
+  Capability and Interface are excluded, because asking there as well is the two-vocabularies
+  duplicate that became 20 of 31 defects on the storyflow trial (BL-42); and **a resting state is
+  not a defect** — a lone Project means the design is empty, which is what genesis produces on day
+  one, and an advisory DesignRule may bind the process rather than a node.
+
+  First half of `req:a-report-says-what-it-swept-and-whether-its-checks-ran`. Reported by
+  dev_storyflow's fleet 2026-08-08 → 2026-08-15; `disconnected_community` naming what it does not
+  compute, and `open_questions` returning 0 reading as an all-clear, are still open.
+
 ## [0.33.0] — 2026-08-16
 
 Four merged changes, and the shape of the increment is that **three of the four exist because a

@@ -11,7 +11,8 @@
 
 use reflow2_core::nodes::{Props, edge, node};
 use reflow2_core::{
-    DesignGraph, HealCategory, HealOp, HealOperation, HealOptions, HealProposal, HealStrategy,
+    DesignGraph, HealCategory, HealOp, HealOperation, HealOptions, HealProposal, HealSeverity,
+    HealStrategy,
 };
 
 /// Two capabilities marked as duplicates; `cap:a` also satisfies a requirement,
@@ -1407,4 +1408,167 @@ fn supporting_alignment_is_still_skipped_independently() {
     .unwrap();
 
     assert!(contradictions(&g).is_empty(), "{:?}", contradictions(&g));
+}
+
+// ---- 2026-08-16 · the degree-zero rule stops being a Decision rule ---------
+//
+// `req:a-report-says-what-it-swept-and-whether-its-checks-ran`, the false-green
+// half. dev_storyflow's fleet ran `detect_defects` over a DesignEpoch carrying
+// NO EDGES AT ALL, in two separate packages, through every health call of a
+// session, and got clean back every time — from the pass whose whole job is
+// structural soundness. A node with no edges is the most detectable structural
+// defect there is and needs no judgement to identify; the rule simply only ran
+// on `Decision`.
+//
+// Measured on reflow2's own graph the day this landed: 75 of 2406 nodes were
+// degree-zero and SEVEN of them were visible to this detector.
+
+/// The reported ids for `orphan_node`, so each test below reads as a claim.
+fn orphans(g: &DesignGraph) -> Vec<String> {
+    g.detect_defects()
+        .unwrap()
+        .into_iter()
+        .filter(|d| d.category == HealCategory::OrphanNode)
+        .flat_map(|d| d.affected_ids)
+        .collect()
+}
+
+/// The field case, exactly: an epoch nothing is recorded against.
+#[test]
+fn an_epoch_with_no_edges_is_not_clean() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.create_node(
+        node::DESIGN_EPOCH,
+        "epoch:empty",
+        Props::new()
+            .set("name", "marks nothing")
+            .set("epoch_type", "milestone")
+            .set("sequence", 1_i64),
+    )
+    .unwrap();
+
+    assert_eq!(orphans(&g), ["epoch:empty"]);
+}
+
+/// A check counted among the passing that says what it checks to nobody.
+/// `ver:the-export-survives-being-read-back` is reflow2's own instance, and it
+/// is why this is not merely tidiness: an unattached Verification is credited
+/// to no capability and still raises the passing count.
+#[test]
+fn a_verification_that_verifies_nothing_is_reported() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_verification("ver:loose", "checks something", Some("test"), Some("unit"))
+        .unwrap();
+
+    assert_eq!(orphans(&g), ["ver:loose"]);
+
+    // …and one VERIFIES edge silences it. The rule is degree-zero, so it is
+    // self-limiting by construction: it cannot grow into a per-convention nag,
+    // whatever type it runs on.
+    g.add_capability("cap:c", "C", "does c", None).unwrap();
+    g.verifies("ver:loose", node::CAPABILITY, "cap:c").unwrap();
+    assert!(!orphans(&g).contains(&"ver:loose".to_string()));
+}
+
+/// NOT EVERY ATTACHMENT IS AN EDGE, and the first cut of this widening assumed
+/// one was. `TemporalFact.subject_id` is a required indexed property: a fact
+/// names the node it is about without ever drawing a link, and 48 of reflow2's
+/// own 212 facts are degree-zero for exactly that reason. Reporting them would
+/// have been 48 false findings shipped inside the change whose subject is
+/// instruments that overstate.
+///
+/// What survives is the case that is genuinely wrong — a pointer to a node the
+/// design no longer has — and it is graded below a Verification, because both
+/// are reported and severity says which to read first, never which one is real.
+#[test]
+fn a_pointer_property_is_attachment_and_only_a_dangling_one_is_reported() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_capability("cap:c", "C", "does c", None).unwrap();
+    g.create_node(
+        node::TEMPORAL_FACT,
+        "fact:about-something",
+        Props::new()
+            .set("subject_id", "cap:c")
+            .set("statement", "cap:c was realized"),
+    )
+    .unwrap();
+    g.create_node(
+        node::TEMPORAL_FACT,
+        "fact:about-a-ghost",
+        Props::new().set("subject_id", "cap:deleted-last-year").set(
+            "statement",
+            "something that is not here any more was realized",
+        ),
+    )
+    .unwrap();
+    g.add_verification("ver:loose", "checks something", Some("test"), Some("unit"))
+        .unwrap();
+
+    let by_id: std::collections::HashMap<String, HealSeverity> = g
+        .detect_defects()
+        .unwrap()
+        .into_iter()
+        .filter(|d| d.category == HealCategory::OrphanNode)
+        .map(|d| (d.affected_ids[0].clone(), d.severity))
+        .collect();
+
+    assert!(
+        !by_id.contains_key("fact:about-something"),
+        "a fact that names a live node is attached, edge or no edge: {by_id:?}"
+    );
+    assert_eq!(by_id.get("fact:about-a-ghost"), Some(&HealSeverity::Info));
+    assert_eq!(by_id.get("ver:loose"), Some(&HealSeverity::Warning));
+}
+
+/// BL-42, held open while the rest of the rule generalized. A Capability with
+/// no `ALLOCATED_TO` and a Requirement nothing `SATISFIES` were once reported
+/// here AS WELL AS by DETECT — the same finding twice, in two vocabularies, and
+/// on storyflow it became 20 of 31 defects. Widening the rule must not quietly
+/// undo that, and degree-zero is precisely the case where it would.
+#[test]
+fn detect_still_owns_the_types_it_asks_about_by_name() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:p", "P").unwrap();
+    g.add_requirement("req:loose", "R", "nothing satisfies it")
+        .unwrap();
+    g.add_capability("cap:loose", "C", "nothing allocates it", None)
+        .unwrap();
+    g.create_node(
+        node::INTERFACE,
+        "iface:loose",
+        Props::new().set("name", "nobody provides or consumes it"),
+    )
+    .unwrap();
+
+    assert!(
+        orphans(&g).is_empty(),
+        "asked once, by DETECT: {:?}",
+        orphans(&g)
+    );
+}
+
+/// The other half of not-flattening, and the one that keeps this change from
+/// becoming `req:a-deliberate-state-is-not-a-defect`'s own example. A Project
+/// alone means the design is EMPTY — what every design looks like on its first
+/// day, and what genesis produces by construction. An advisory DesignRule can
+/// bind the process rather than a node. Neither is a defect, and firing on them
+/// would report the normal state of correct work as a problem.
+#[test]
+fn an_empty_design_and_a_process_rule_are_resting_states_not_defects() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_project("proj:alone", "P").unwrap();
+    g.create_node(
+        node::DESIGN_RULE,
+        "rule:branch-first",
+        Props::new()
+            .set("name", "Branch, then PR")
+            .set("statement", "Nothing lands on main directly.")
+            .set("enforced", false),
+    )
+    .unwrap();
+
+    assert!(orphans(&g).is_empty(), "{:?}", orphans(&g));
 }

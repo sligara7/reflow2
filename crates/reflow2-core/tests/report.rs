@@ -715,8 +715,26 @@ fn setting_a_status_again_does_not_erase_when_the_check_last_ran() {
 fn surfacing_recency_does_not_make_the_loop_dirty() {
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.add_project("prj:p", "P").unwrap();
+    // Something for the check to BE a check of. Added 2026-08-16 when
+    // `orphan_node` grew past `Decision` and a Verification with no VERIFIES
+    // edge stopped being invisible: an unattached check is now its own finding
+    // (a passing result credited to nothing), and leaving one in this fixture
+    // would have made this test assert recency while measuring attachment.
+    // Advisory on purpose — an enforced rule owes a detector and would put real
+    // debt on the loop, which is the thing this test must hold still.
+    g.create_node(
+        node::DESIGN_RULE,
+        "rule:house-style",
+        Props::new()
+            .set("name", "Cache reads go through the cache port")
+            .set("statement", "No component talks to the store directly.")
+            .set("enforced", false),
+    )
+    .unwrap();
     let before = g.loop_status().unwrap();
     g.add_verification("ver:old", "old tests", Some("test"), Some("unit"))
+        .unwrap();
+    g.verifies("ver:old", node::DESIGN_RULE, "rule:house-style")
         .unwrap();
     g.set_verification_status("ver:old", "passing", Some("2020-01-01T00:00:00Z"))
         .unwrap();
