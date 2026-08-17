@@ -31,6 +31,55 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Design
+
+- **"Do it right" is now intent reflow2 carries, not just a habit this project has.**
+  `req:a-fix-says-whether-it-corrected-the-cause` — accepted 2026-08-17 — says a repair must
+  record *which kind* it was (cause corrected, or symptom worked around), that a workaround must
+  name the correction it stands in for, and that the design must then be able to answer **"what is
+  still resting on a patch?"** without asking a person.
+
+  **The question is unanswerable today, and that is the case for it.** Measured on reflow2's own
+  graph: 472 ChangeEvents across eleven change types, and *every one of them names what moved
+  while none says whether it was the right fix*. A `test_failure_fix` is equally a root-cause
+  rewrite and a shim that turned a red test green. (Checked and ruled out: the obvious hypothesis
+  was that `test_failure_fix` is a silently-defaulted value — it isn't, all 55 auto-minted ones
+  carry written reasons. The vocabulary is the gap, not the discipline.)
+
+  The shape is already proven one layer over: `dec:two-sided-accept` made accepting drift a
+  two-sided act because "accept the file, say nothing" is what erodes a design into fiction. **A
+  fix is the same shape and is currently one-sided.** It must not judge — reflow2 records the
+  claim and counts it, the human decides whether a patch was right — and it records what an author
+  *says*, so it can never detect a patch reported as a correction.
+
+  `dec:the-patch-record-binds-forward-not-backward` (accepted): the 472 existing events are not
+  reclassified, on the same reasoning as the authority check's grandfather ruling — nobody
+  remembers, so a backfill would be an agent's inference wearing the clothes of a record. The cost
+  is that the number accrues slowly, which is why the reporting side owes a statement of its own
+  coverage from day one: a low count must not read as "few patches" when it means "few fixes
+  recorded yet".
+
+- **reflow2 now says what it deliberately does NOT do.** Four non-goals, ACCEPTED on Anthony's word
+  2026-08-17, because silence on a boundary reads as coverage — the same harm as a vacuous zero,
+  arriving through absence. reflow2 **does not** verify that a named package or method exists;
+  **does not** know whether an API is current or deprecated; **does not** judge whether a check is
+  meaningful (a passing Verification is a claim it records, not one it validates — a design can
+  reach 100% verified on tests that could not fail); and **does not** tell you your requirement is
+  wrong, only that it disagrees with something you already settled.
+
+  Each names whose job it is, and what reflow2 *does* do nearby, so it is a boundary rather than a
+  shrug. Prompted by a taxonomy of AI-agent pitfalls: recording the cures while staying silent on
+  the five reflow2 cannot reach would have implied coverage of all ten. **A non-goal is a statement
+  about the current build** — retiring one is part of shipping whatever voids it, because a stale
+  non-goal is a false statement in the other direction.
+
+- **`rule:fix-it-properly-while-it-is-still-cheap` split into two clauses with different
+  lifespans.** The first draft ran them together and said the whole thing expires at 1.0; Anthony
+  corrected that — the philosophy is enduring. **Clause 1 never expires:** when something is
+  wrong, go back to the drawing board and re-implement it properly. **Clause 2 changes at 1.0:**
+  "it would break consumers" is not a reason to keep a defect — it is a reason to correct it now.
+  At a stability commitment, clause 2 is replaced by a deprecation discipline rather than dropped.
+
 > **This increment is a MINOR, not a patch, and both reasons are deliberate breaks.** The
 > `disconnected_community` defect category is renamed, and unscoped `detect_defects` returns an
 > object instead of an array. Both were declined earlier the same day *because* they break
