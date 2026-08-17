@@ -1167,6 +1167,41 @@ impl DesignGraph {
         // disconnected_community — islands of ≥2 nodes cut off from the main
         // body. Singletons are orphans/dead-ends, handled elsewhere; flag every
         // non-largest cluster of size ≥2.
+        //
+        // ⭐ IT SPOKE THE WORDS OF UNREACHABILITY AND WALKED SOMETHING NARROWER
+        // (req:a-report-says-what-it-swept-and-whether-its-checks-ran, part b).
+        // The message read "disconnected from the rest of the design", and
+        // dev_storyflow's report is exact: the nodes it named were all
+        // REACHABLE by an undirected walk of the graph. Both halves of that are
+        // true at once, because `design_network()` is not the graph — it drops
+        // nine node types and every review record, and CONTAINS is not a
+        // traceability edge. So a node reachable only through AUTHORED_BY, or
+        // only downward through containment, is an island HERE and connected
+        // THERE, and the sentence claimed the second while computing the first.
+        //
+        // MEASURED ON REFLOW2'S OWN GRAPH, 2026-08-17: the walk covers 1133 of
+        // 2413 nodes. More than half the graph is outside the thing whose
+        // absence the message called "the rest of the design".
+        //
+        // The fix is the message, not the computation, and deliberately not the
+        // category key — `disconnected_community` is what consumers match on
+        // (it is a documented HEAL category and an ility source), so renaming it
+        // to be accurate would break them to fix a sentence. What the finding
+        // SAYS now describes the walk that produced it, including how much of
+        // the graph that walk held, so a reader can tell "cut off in the design
+        // network" from "unreachable in the graph" without reading this file.
+        //
+        // The other half of their report — "the genuinely unreachable node was
+        // never mentioned" — is answered by the degree-zero rule above rather
+        // than here, since a node with no edges at all is unreachable in the
+        // full graph and is now reported whatever its type.
+        let total_nodes = self.node_type_index()?.len();
+        let swept = net.node_count();
+        let singletons = net
+            .component_groups()
+            .into_iter()
+            .filter(|g| g.len() == 1)
+            .count();
         let mut clusters: Vec<Vec<usize>> = net
             .component_groups()
             .into_iter()
@@ -1206,7 +1241,14 @@ impl DesignGraph {
                     category: HealCategory::DisconnectedCommunity,
                     severity: HealSeverity::Warning,
                     message: format!(
-                        "{} nodes form a cluster disconnected from the rest of the design",
+                        "{} nodes form a cluster with no traceability edge to the main body. \
+                         SCOPE OF THIS CHECK: it walked {swept} of {total_nodes} nodes — \
+                         Project, epochs, snapshots, change events, facts, fragments, drift \
+                         events, dimension records and review records are not in the walk, and \
+                         CONTAINS is not a traceability edge — so these nodes may still be \
+                         reachable through links it does not follow, and \"cut off here\" is not \
+                         \"unreachable in the graph\". {singletons} further node(s) sit alone in \
+                         this walk and are not reported by this rule",
                         affected.len()
                     ),
                     // NO SUGGESTION, DELIBERATELY. `generate_bridge` used to sit

@@ -204,12 +204,16 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Questions already put to the user that still bear on something open, with the wording they saw. `status: asked` means they have not replied \u{2014} follow it up, do not ask again. `status: answered` means they replied but the gap is still open, so their answer needs writing into the design or the gap needs acknowledging; their reply comes back with it. Read this at the start of a session, before detect_gaps.",
+        description = "Questions already put to the user that still bear on something open, with the wording they saw. `status: asked` means they have not replied \u{2014} follow it up, do not ask again. `status: answered` means they replied but the gap is still open, so their answer needs writing into the design or the gap needs acknowledging; their reply comes back with it. Read this at the start of a session, before detect_gaps. AN EMPTY ANSWER IS NEVER BARE: because this is the orientation call a session runs FIRST, a zero here was being read as an all-clear while the loop was owed dozens of other things, so `count: 0` always arrives with a `loop_hint` saying WHICH it is \u{2014} the other non-zero debt named, or an explicit statement that nothing else is owed either. No questions open is not the same fact as nothing to do.",
         annotations(read_only_hint = true)
     )]
     pub async fn open_questions(&self) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
-        ok_json(g.open_questions().map_err(dyno_err)?)
+        let records = g.open_questions().map_err(dyno_err)?;
+        // An empty answer here is the one that gets read as permission, so it
+        // is the one that must say what it is (BL-91's hint, un-throttled).
+        let empty = records.is_empty();
+        self.ok_read_empty_speaks(&g, records, empty)
     }
 
     #[tool(

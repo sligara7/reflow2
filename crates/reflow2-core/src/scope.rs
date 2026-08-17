@@ -186,7 +186,21 @@ impl DesignGraph {
             scope: seed_id.to_string(),
             depth,
             region_size: region.len(),
-            note: (region.len() == 1).then(|| {
+            // The vacuity note is gated on the region being the seed alone AND
+            // ON HAVING FOUND NOTHING — the second half added 2026-08-17, and
+            // its absence was this same requirement's bug one message over.
+            //
+            // The note asserts "nothing could have been found here", which was
+            // true of a one-node region while every rule needed at least an
+            // edge to fire. The degree-zero rule stopped needing one: a node
+            // attached to nothing is now a finding, and it lives in exactly the
+            // one-node region this note calls vacuous. So the first scoped call
+            // after that change returned `in_scope: 1`, a real finding, and a
+            // note beside it saying nothing could have been found.
+            //
+            // Caught by driving the built binary rather than by a test — the
+            // note is prose about a number, and nothing was comparing the two.
+            note: (region.len() == 1 && items.is_empty()).then(|| {
                 format!(
                     "`{seed_id}` has no edges, so this region is the seed alone and \
                      `in_scope: 0` is VACUOUS rather than clean — nothing could have been \
@@ -228,7 +242,21 @@ impl DesignGraph {
             scope: seed_id.to_string(),
             depth,
             region_size: region.len(),
-            note: (region.len() == 1).then(|| {
+            // The vacuity note is gated on the region being the seed alone AND
+            // ON HAVING FOUND NOTHING — the second half added 2026-08-17, and
+            // its absence was this same requirement's bug one message over.
+            //
+            // The note asserts "nothing could have been found here", which was
+            // true of a one-node region while every rule needed at least an
+            // edge to fire. The degree-zero rule stopped needing one: a node
+            // attached to nothing is now a finding, and it lives in exactly the
+            // one-node region this note calls vacuous. So the first scoped call
+            // after that change returned `in_scope: 1`, a real finding, and a
+            // note beside it saying nothing could have been found.
+            //
+            // Caught by driving the built binary rather than by a test — the
+            // note is prose about a number, and nothing was comparing the two.
+            note: (region.len() == 1 && items.is_empty()).then(|| {
                 format!(
                     "`{seed_id}` has no edges, so this region is the seed alone and \
                      `in_scope: 0` is VACUOUS rather than clean — nothing could have been \

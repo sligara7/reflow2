@@ -2748,6 +2748,56 @@ impl ReflowService {
         json_result(v)
     }
 
+    /// `ok_read`, except that an EMPTY answer is never allowed to come back
+    /// bare — the throttle that `ok_read` applies is exactly wrong here.
+    ///
+    /// `dec:read-hint-shape` option C throttles the hint on purpose: a
+    /// persisting debt appears once and then stays quiet, so reads do not nag.
+    /// That reasoning holds while the reader is being handed findings. It
+    /// inverts when the answer is EMPTY, because then the throttle removes the
+    /// only sentence in the reply and a zero is left to speak for itself.
+    ///
+    /// MEASURED IN THE FIELD (dev_storyflow, req:a-report-says-what-it-swept-
+    /// and-whether-its-checks-ran part c): `open_questions` returned 0 and read
+    /// as an all-clear, while `loop_status` IN THE VERY NEXT CALL reported 31
+    /// other owed items — and `open_questions` is the orientation call a new
+    /// session is told to run FIRST. Their own remedy is the one taken here:
+    /// naming the other non-zero counts is enough.
+    ///
+    /// So an empty answer always says which it is — debt named, or an explicit
+    /// all-clear. "Nothing to show you" and "nothing is owed" stop sharing a
+    /// reply, which is this whole requirement in one sentence.
+    pub(crate) fn ok_read_empty_speaks<T: serde::Serialize>(
+        &self,
+        g: &DesignGraph,
+        value: T,
+        empty: bool,
+    ) -> Result<CallToolResult, McpError> {
+        if !empty {
+            return self.ok_read(g, value);
+        }
+        let mut v = envelope(serde_json::to_value(value).map_err(ser_err)?);
+        // Computed fresh and deliberately NOT through `read_loop_hint`: that
+        // consults the fire-on-change cache, which is the thing being bypassed.
+        // The cache is left untouched, so this never suppresses a hint another
+        // read was going to make.
+        let status = g.loop_status().map_err(dyno_err)?;
+        let hint = if status.clean {
+            "nothing here, and the loop is owed nothing else either — this is an all-clear, \
+             not an empty list"
+                .to_string()
+        } else {
+            format!(
+                "nothing here, but that is not an all-clear — {}",
+                read_debt_summary(&status)
+            )
+        };
+        if let Some(obj) = v.as_object_mut() {
+            obj.insert("loop_hint".into(), JsonValue::String(hint));
+        }
+        json_result(v)
+    }
+
     /// Compute the read-side loop-debt pointer for the read now returning, or
     /// `None` to stay silent. Two gates, both from dec:read-hint-shape:
     ///

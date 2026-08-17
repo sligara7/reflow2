@@ -798,3 +798,92 @@ fn the_foundation_exemption_is_reachable_through_add_interface_and_set_spec() {
         "a REST boundary bridging two subsystems is still a single point of failure"
     );
 }
+
+// ---- 2026-08-17 · the finding describes the walk that produced it ----------
+//
+// req:a-report-says-what-it-swept-and-whether-its-checks-ran, part (b).
+// dev_storyflow's report: `disconnected_community` says "disconnected from the
+// rest of the design", and the nodes it named were all REACHABLE by an
+// undirected walk of the graph. Both are true at once, because the design
+// network is not the graph — it drops nine node types and every review record,
+// and CONTAINS is not a traceability edge. Measured on reflow2's own graph the
+// day this landed: the walk covers 1133 of 2413 nodes.
+//
+// The category key is deliberately NOT renamed. Consumers match on
+// `disconnected_community` (it is a documented HEAL category and an ility
+// source), so renaming it to be accurate would break them to fix a sentence.
+
+/// The message must say what it walked, so a reader can tell "cut off in the
+/// design network" from "unreachable in the graph" without reading the source.
+#[test]
+fn the_finding_says_what_it_swept_and_stops_claiming_unreachability() {
+    let mut g = linear_thread();
+    g.add_capability("cap:x", "X", "island cap", None).unwrap();
+    g.add_component("cmp:x", "X part", "island part", None)
+        .unwrap();
+    g.allocate("cap:x", "cmp:x").unwrap();
+
+    let msg = g
+        .detect_defects()
+        .unwrap()
+        .into_iter()
+        .find(|d| d.category == HealCategory::DisconnectedCommunity)
+        .expect("the island is still reported")
+        .message;
+
+    assert!(
+        !msg.contains("disconnected from the rest of the design"),
+        "it must stop asserting unreachability it did not compute: {msg}"
+    );
+    assert!(
+        msg.contains("no traceability edge to the main body"),
+        "it must say what it DID compute: {msg}"
+    );
+    assert!(
+        msg.contains("SCOPE OF THIS CHECK") && msg.contains(" of "),
+        "it must say how much of the graph the walk held: {msg}"
+    );
+    assert!(
+        msg.contains("CONTAINS is not a traceability edge"),
+        "and name the exclusion that most often explains a false island: {msg}"
+    );
+}
+
+/// The scope line is a MEASUREMENT, not a fixed sentence — it has to move when
+/// the graph does, or it is decoration that reads like evidence.
+#[test]
+fn the_swept_count_tracks_the_graph_rather_than_being_boilerplate() {
+    let mut g = linear_thread();
+    g.add_capability("cap:x", "X", "island cap", None).unwrap();
+    g.add_component("cmp:x", "X part", "island part", None)
+        .unwrap();
+    g.allocate("cap:x", "cmp:x").unwrap();
+
+    let scope_of = |g: &reflow2_core::DesignGraph| {
+        g.detect_defects()
+            .unwrap()
+            .into_iter()
+            .find(|d| d.category == HealCategory::DisconnectedCommunity)
+            .expect("island")
+            .message
+    };
+    let before = scope_of(&g);
+
+    // A TemporalFact is OUTSIDE the design network, so the graph grows and the
+    // swept count must NOT — that difference is exactly what the line exists to
+    // expose, and a boilerplate sentence would report the two the same way.
+    g.create_node(
+        node::TEMPORAL_FACT,
+        "fact:outside-the-walk",
+        Props::new()
+            .set("subject_id", "cap:x")
+            .set("statement", "recorded, and not part of the design network"),
+    )
+    .unwrap();
+    let after = scope_of(&g);
+
+    assert_ne!(
+        before, after,
+        "the graph grew, so the scope line must have moved"
+    );
+}

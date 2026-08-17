@@ -318,11 +318,54 @@ fn a_seed_with_no_edges_says_its_scoped_answer_is_vacuous() {
         real.note
     );
 
-    // The defect detector is scoped by the same machinery and gets the same say.
+    // The defect detector is scoped by the same machinery and gets the same
+    // say — but "vacuous" now has to be EARNED there, and this is where the
+    // note nearly became a lie.
+    //
+    // CHANGED 2026-08-17. This block asserted the note was present for
+    // `epoch:island` under the defect detector too. That was right while every
+    // structural rule needed at least one edge to fire, so a one-node region
+    // could never produce a finding. The degree-zero rule ended that: an epoch
+    // attached to nothing IS the finding, and it lives in exactly the region
+    // this note calls vacuous. The first scoped call after that change came
+    // back with `in_scope: 1`, a real finding, and a note beside it saying
+    // nothing could have been found — this requirement's own bug, one message
+    // over, shipped by the change meant to fix it.
+    //
+    // So the gate is now region-of-one AND found-nothing, and both halves are
+    // pinned below.
+    let found = g.detect_defects_in_scope("epoch:island", 2).unwrap();
+    assert_eq!(
+        found.in_scope, 1,
+        "precondition: the island epoch is now itself a structural finding"
+    );
     assert!(
-        g.detect_defects_in_scope("epoch:island", 2)
-            .unwrap()
+        found.note.is_none(),
+        "a region that RETURNED something must never say nothing could be found: {:?}",
+        found.note
+    );
+
+    // …and the vacuous case still speaks, on a seed the defect rules skip by
+    // design. An advisory DesignRule may bind the process rather than a node,
+    // so unattached is its resting state and no finding fires — which makes
+    // this region genuinely unanswerable rather than merely quiet.
+    g.create_node(
+        node::DESIGN_RULE,
+        "rule:process-only",
+        Props::new()
+            .set("name", "Branch, then PR")
+            .set("statement", "Nothing lands on main directly.")
+            .set("enforced", false),
+    )
+    .unwrap();
+    let vacuous_defects = g.detect_defects_in_scope("rule:process-only", 2).unwrap();
+    assert_eq!(vacuous_defects.in_scope, 0);
+    assert!(
+        vacuous_defects
             .note
-            .is_some()
+            .as_deref()
+            .is_some_and(|n| n.contains("VACUOUS")),
+        "a one-node region that found nothing must still say the zero is vacuous: {:?}",
+        vacuous_defects.note
     );
 }
