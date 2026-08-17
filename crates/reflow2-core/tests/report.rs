@@ -439,10 +439,11 @@ fn captured_intent_owes_a_surface_pass_until_the_question_is_asked() {
     );
 
     // Proving the capability clears the unproven count.
-    g.add_verification("ver:x", "x tests", Some("test"), None)
+    g.add_verification("ver:x", "x tests", Some("test"), None, None)
         .unwrap();
     g.verifies("ver:x", node::CAPABILITY, "cap:x").unwrap();
-    g.set_verification_status("ver:x", "passing", None).unwrap();
+    g.set_verification_status("ver:x", "passing", None, None)
+        .unwrap();
     assert_eq!(g.loop_status().unwrap().unproven_capabilities, 0);
 }
 
@@ -605,15 +606,15 @@ fn both_report_surfaces_carry_when_each_check_last_ran() {
     g.add_project("prj:p", "P").unwrap();
     g.add_capability("cap:a", "A", "does a", Some("realized"))
         .unwrap();
-    g.add_verification("ver:ran", "ran tests", Some("test"), Some("unit"))
+    g.add_verification("ver:ran", "ran tests", Some("test"), Some("unit"), None)
         .unwrap();
     g.verifies("ver:ran", node::CAPABILITY, "cap:a").unwrap();
-    g.set_verification_status("ver:ran", "passing", Some("2026-07-25T18:49:11Z"))
+    g.set_verification_status("ver:ran", "passing", Some("2026-07-25T18:49:11Z"), None)
         .unwrap();
     // The asserted-not-measured case: a verdict with no run behind it.
-    g.add_verification("ver:never", "never run", Some("test"), Some("unit"))
+    g.add_verification("ver:never", "never run", Some("test"), Some("unit"), None)
         .unwrap();
-    g.set_verification_status("ver:never", "passing", None)
+    g.set_verification_status("ver:never", "passing", None, None)
         .unwrap();
 
     for (surface, rows) in [
@@ -659,11 +660,11 @@ fn both_report_surfaces_carry_when_each_check_last_ran() {
 #[test]
 fn setting_a_status_again_does_not_erase_when_the_check_last_ran() {
     let mut g = DesignGraph::open_in_memory().unwrap();
-    g.add_verification("ver:v", "a check", Some("test"), Some("unit"))
+    g.add_verification("ver:v", "a check", Some("test"), Some("unit"), None)
         .unwrap();
 
     let ran = g
-        .set_verification_status("ver:v", "passing", Some("2026-08-09T10:00:00Z"))
+        .set_verification_status("ver:v", "passing", Some("2026-08-09T10:00:00Z"), None)
         .unwrap();
     assert_eq!(
         ran.properties.get("last_run_at").and_then(|v| v.as_str()),
@@ -672,7 +673,9 @@ fn setting_a_status_again_does_not_erase_when_the_check_last_ran() {
     );
 
     // THE REPRODUCTION, one variable: same node, omitted parameter.
-    let again = g.set_verification_status("ver:v", "failing", None).unwrap();
+    let again = g
+        .set_verification_status("ver:v", "failing", None, None)
+        .unwrap();
     assert_eq!(
         again.properties.get("last_run_at").and_then(|v| v.as_str()),
         Some("2026-08-09T10:00:00Z"),
@@ -687,7 +690,7 @@ fn setting_a_status_again_does_not_erase_when_the_check_last_ran() {
     // Supplying one still replaces it — the fix must not make the parameter
     // inert, which would be the same bug pointing the other way.
     let moved = g
-        .set_verification_status("ver:v", "passing", Some("2026-08-09T18:00:00Z"))
+        .set_verification_status("ver:v", "passing", Some("2026-08-09T18:00:00Z"), None)
         .unwrap();
     assert_eq!(
         moved.properties.get("last_run_at").and_then(|v| v.as_str()),
@@ -697,10 +700,10 @@ fn setting_a_status_again_does_not_erase_when_the_check_last_ran() {
 
     // And a check that never ran still reports absence rather than a fabricated
     // time — preserving nothing is not the same as inventing something.
-    g.add_verification("ver:fresh", "never run", Some("test"), Some("unit"))
+    g.add_verification("ver:fresh", "never run", Some("test"), Some("unit"), None)
         .unwrap();
     let fresh = g
-        .set_verification_status("ver:fresh", "planned", None)
+        .set_verification_status("ver:fresh", "planned", None, None)
         .unwrap();
     assert!(
         !fresh.properties.contains_key("last_run_at"),
@@ -732,11 +735,11 @@ fn surfacing_recency_does_not_make_the_loop_dirty() {
     )
     .unwrap();
     let before = g.loop_status().unwrap();
-    g.add_verification("ver:old", "old tests", Some("test"), Some("unit"))
+    g.add_verification("ver:old", "old tests", Some("test"), Some("unit"), None)
         .unwrap();
     g.verifies("ver:old", node::DESIGN_RULE, "rule:house-style")
         .unwrap();
-    g.set_verification_status("ver:old", "passing", Some("2020-01-01T00:00:00Z"))
+    g.set_verification_status("ver:old", "passing", Some("2020-01-01T00:00:00Z"), None)
         .unwrap();
     let after = g.loop_status().unwrap();
     assert_eq!(

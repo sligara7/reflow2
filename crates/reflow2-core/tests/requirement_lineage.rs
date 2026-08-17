@@ -49,9 +49,11 @@ fn deliver(g: &mut DesignGraph, req: &str, tag: &str) {
         .unwrap();
     g.realizes(&art, node::CAPABILITY, &cap, None, None)
         .unwrap();
-    g.add_verification(&ver, tag, Some("test"), None).unwrap();
+    g.add_verification(&ver, tag, Some("test"), None, None)
+        .unwrap();
     g.verifies(&ver, node::CAPABILITY, &cap).unwrap();
-    g.set_verification_status(&ver, "passing", None).unwrap();
+    g.set_verification_status(&ver, "passing", None, None)
+        .unwrap();
 }
 
 #[test]
@@ -154,7 +156,7 @@ fn a_failing_child_un_delivers_the_parent() {
     }
     assert!(g.requirement_is_delivered("req:checkout").unwrap());
 
-    g.set_verification_status("ver:discount", "failing", None)
+    g.set_verification_status("ver:discount", "failing", None, None)
         .unwrap();
     assert!(
         !g.requirement_is_delivered("req:checkout").unwrap(),

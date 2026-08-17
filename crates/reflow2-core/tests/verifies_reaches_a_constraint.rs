@@ -30,8 +30,14 @@ fn graph_with_a_limit() -> DesignGraph {
         None,
     )
     .expect("constraint");
-    g.add_verification("ver:latency-gate", "the p99 latency check", None, None)
-        .expect("verification");
+    g.add_verification(
+        "ver:latency-gate",
+        "the p99 latency check",
+        None,
+        None,
+        None,
+    )
+    .expect("verification");
     g
 }
 

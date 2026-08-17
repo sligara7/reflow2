@@ -210,11 +210,11 @@ fn a_project_level_rollup_reaches_the_team_and_is_counted_as_the_programs() {
     let mut g = program();
     // Give the laser capability a passing verification: that is what puts it in
     // the project-level unvalidated_capability rollup.
-    g.add_verification("ver:crosslink", "Optical link bench test", None, None)
+    g.add_verification("ver:crosslink", "Optical link bench test", None, None, None)
         .unwrap();
     g.verifies("ver:crosslink", node::CAPABILITY, "cap:crosslink")
         .unwrap();
-    g.set_verification_status("ver:crosslink", "passing", None)
+    g.set_verification_status("ver:crosslink", "passing", None, None)
         .unwrap();
 
     let scoped = g.detect_gaps_in_scope("cmp:laser", 3).unwrap();

@@ -57,7 +57,12 @@ impl ReflowService {
                        four canonical ones, plus measurement, observation (watching it run in the \
                        field, unchanged), review and simulation. Answers the \
                        `build_without_verification` and `unverified_capability` gaps. Pair it with \
-                       `verifies` to say what it checks.",
+                       `verifies` to say what it checks. ⚠️ KEEP `name` SHORT — it is what a list \
+                       renders. Put the account of what the check IS in `description`, and what a \
+                       RUN FOUND in `findings` on set_verification_status. Measured on reflow2's \
+                       own graph before those were reachable: median Verification name 76 words, \
+                       longest 654, because `description` was declared and this constructor had \
+                       no parameter for it, so everyone wrote reports into the name.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_verification(
@@ -71,6 +76,7 @@ impl ReflowService {
                 &req.name,
                 req.method.as_deref(),
                 req.level.as_deref(),
+                req.description.as_deref(),
             )
             .map_err(dyno_err)?,
         ))
@@ -83,7 +89,14 @@ impl ReflowService {
                        evidence that it ever ran. A failing check is a live signal: \
                        `propagate_from` it to see which capability and requirement it affects. \
                        CONVENTION: a check left at `planned` is not confirmation — verified means \
-                       a check that PASSES, not one that exists.",
+                       a check that PASSES, not one that exists. PASS `findings` TO RECORD WHAT \
+                       THIS RUN FOUND — the evidence, as distinct from what the check IS. It \
+                       lives here rather than on the constructor because a finding belongs to a \
+                       RUN, and omitting it LEAVES IT ALONE exactly like `last_run_at`. NOT \
+                       VALIDATED: reflow2 records what you say a run found and never judges it, \
+                       so `passing` beside findings describing a failure is a contradiction only \
+                       a reader can catch — which is a real 2026-08-07 field report, where a \
+                       check recorded \"EXIT 0, verdict STALE\" and stayed passing forever.",
         annotations(read_only_hint = false)
     )]
     pub async fn set_verification_status(
@@ -96,6 +109,7 @@ impl ReflowService {
                 &req.verification_id,
                 &req.status,
                 req.last_run_at.as_deref(),
+                req.findings.as_deref(),
             )
             .map_err(dyno_err)?,
         ))

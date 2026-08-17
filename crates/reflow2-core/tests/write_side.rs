@@ -62,12 +62,18 @@ fn recording_a_verification_closes_the_gap_that_asked_for_one() {
         "a built design with no checks must raise the gap first"
     );
 
-    g.add_verification("ver:score", "Score unit tests", Some("test"), Some("unit"))
-        .expect("verification");
+    g.add_verification(
+        "ver:score",
+        "Score unit tests",
+        Some("test"),
+        Some("unit"),
+        None,
+    )
+    .expect("verification");
     g.verifies("ver:score", node::CAPABILITY, "cap:score")
         .expect("verifies");
     // Coverage below counts a check that PASSES, not one that exists (BL-30).
-    g.set_verification_status("ver:score", "passing", None)
+    g.set_verification_status("ver:score", "passing", None, None)
         .expect("status");
 
     let after = g.detect_gaps().expect("detect");
@@ -118,11 +124,17 @@ fn recording_a_verification_closes_the_gap_that_asked_for_one() {
 #[test]
 fn a_failing_check_reaches_the_requirement_behind_it() {
     let mut g = built_thread();
-    g.add_verification("ver:score", "Score unit tests", Some("test"), Some("unit"))
-        .expect("verification");
+    g.add_verification(
+        "ver:score",
+        "Score unit tests",
+        Some("test"),
+        Some("unit"),
+        None,
+    )
+    .expect("verification");
     g.verifies("ver:score", node::CAPABILITY, "cap:score")
         .expect("verifies");
-    g.set_verification_status("ver:score", "failing", Some("2026-07-18T10:00:00Z"))
+    g.set_verification_status("ver:score", "failing", Some("2026-07-18T10:00:00Z"), None)
         .expect("status");
 
     // A failing check is a live signal: propagate from it to see what it means.
@@ -150,10 +162,11 @@ fn setting_status_preserves_the_rest_of_the_check() {
         "Score unit tests",
         Some("review"),
         Some("system"),
+        None,
     )
     .expect("verification");
     let updated = g
-        .set_verification_status("ver:score", "passing", None)
+        .set_verification_status("ver:score", "passing", None, None)
         .expect("status");
 
     assert_eq!(updated.properties["status"].as_str(), Some("passing"));
@@ -169,7 +182,7 @@ fn setting_status_preserves_the_rest_of_the_check() {
 fn status_on_a_missing_verification_fails_loud() {
     let mut g = built_thread();
     assert!(
-        g.set_verification_status("ver:ghost", "passing", None)
+        g.set_verification_status("ver:ghost", "passing", None, None)
             .is_err(),
         "no silent create-on-update"
     );
@@ -457,11 +470,12 @@ fn many_files_under_a_verified_capability_raise_no_gaps() {
         })
         .unwrap();
     }
-    g.add_verification("ver:c", "Scoring tests", Some("test"), Some("unit"))
+    g.add_verification("ver:c", "Scoring tests", Some("test"), Some("unit"), None)
         .unwrap();
     g.verifies("ver:c", node::CAPABILITY, "cap:c").unwrap();
     // "Verified" in coverage means the check PASSES, not that it exists (BL-30).
-    g.set_verification_status("ver:c", "passing", None).unwrap();
+    g.set_verification_status("ver:c", "passing", None, None)
+        .unwrap();
 
     let gaps = g.detect_gaps().unwrap();
     assert!(
@@ -1071,6 +1085,7 @@ fn every_verification_method_is_accepted() {
                 method,
                 Some(method),
                 Some("system"),
+                None,
             )
             .unwrap_or_else(|e| panic!("method `{method}` must be accepted: {e}"));
         assert_eq!(
@@ -1088,7 +1103,7 @@ fn every_verification_method_is_accepted() {
 #[test]
 fn an_unknown_verification_method_is_refused() {
     let mut g = DesignGraph::open_in_memory().expect("open");
-    let bad = g.add_verification("ver:bad", "nonsense", Some("vibes"), Some("unit"));
+    let bad = g.add_verification("ver:bad", "nonsense", Some("vibes"), Some("unit"), None);
     assert!(
         bad.is_err(),
         "an unknown method must be refused rather than defaulted"

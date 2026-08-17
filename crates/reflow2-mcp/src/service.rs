@@ -1128,6 +1128,14 @@ pub struct VerificationReq {
     /// `unit` (default) / `integration` / `system` / `acceptance`.
     #[serde(default)]
     pub level: Option<String>,
+    /// What the check IS, at length — the account a reader needs that does not
+    /// fit in `name`. PUT IT HERE RATHER THAN IN `name`: on reflow2's own graph
+    /// the median Verification name was 76 words and the longest 654, because
+    /// this field was declared and had no parameter to reach it. What a RUN
+    /// FOUND is a different thing and goes to `findings` on
+    /// set_verification_status.
+    #[serde(default)]
+    pub description: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -1138,6 +1146,16 @@ pub struct VerificationStatusReq {
     pub status: String,
     #[serde(default)]
     pub last_run_at: Option<String>,
+    /// What this run FOUND — the evidence, as distinct from what the check IS.
+    /// Written here rather than on the constructor because a finding belongs to
+    /// a RUN: it changes every time the outcome does. Omitting it LEAVES IT
+    /// ALONE, exactly like `last_run_at`, so re-marking a check `passing`
+    /// without restating the evidence keeps the last evidence rather than
+    /// erasing it. NOT VALIDATED: reflow2 records what you say a run found and
+    /// never judges it, so `passing` beside findings describing a failure is a
+    /// contradiction only a reader can catch.
+    #[serde(default)]
+    pub findings: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]

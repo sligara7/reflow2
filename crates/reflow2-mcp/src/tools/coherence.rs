@@ -792,12 +792,77 @@ fn verification_digest(
     let attention: Vec<_> = all.iter().filter(|v| v.status != "passing").collect();
     let never_run = all.iter().filter(|v| v.last_run_at.is_none()).count();
 
-    Ok(json!({
+    // TRUNCATE THE NAME, AND SAY SO. dev_storyflow, 2026-08-08: `loop_status`
+    // is documented as "one cheap call" and is cheap to CALL and expensive to
+    // READ — `verifications.attention[0].name` came back as a single ~450-word
+    // paragraph holding a full graded walk report. Measured on reflow2's own
+    // graph the same week: median Verification name 76 words, longest 654.
+    //
+    // ⭐ THE ANNOUNCEMENT IS NOT POLITENESS, it is the other half of this
+    // increment. Silent truncation reads as "that is the whole name", which is
+    // the same defect one layer over as a vacuous zero reading as a pass — and
+    // `req:a-report-says-what-it-swept-and-whether-its-checks-ran` would forbid
+    // it even if `names_truncated` were the only thing here saying so.
+    //
+    // The cause was fixed at the same time rather than only the symptom: names
+    // are long because `description` was declared, fulltext, the embedding
+    // field, and UNREACHABLE from `add_verification`, so authors had nowhere
+    // else to write. Truncating alone would have been the stopgap
+    // `rule:fix-it-properly-while-it-is-still-cheap` forbids.
+    let mut truncated_count = 0usize;
+    let attention: Vec<serde_json::Value> = attention
+        .iter()
+        .map(|v| {
+            let mut item = serde_json::to_value(v)?;
+            if let Some(obj) = item.as_object_mut() {
+                let shortened = obj.get("name").and_then(|n| n.as_str()).and_then(|name| {
+                    let words: Vec<&str> = name.split_whitespace().collect();
+                    (words.len() > NAME_WORDS_IN_ROLLUP).then(|| {
+                        (
+                            format!("{} …", words[..NAME_WORDS_IN_ROLLUP].join(" ")),
+                            words.len(),
+                        )
+                    })
+                });
+                if let Some((short, full_words)) = shortened {
+                    truncated_count += 1;
+                    obj.insert("name".into(), json!(short));
+                    obj.insert("name_truncated".into(), json!(true));
+                    obj.insert("name_words".into(), json!(full_words));
+                }
+            }
+            Ok(item)
+        })
+        .collect::<Result<_, serde_json::Error>>()?;
+
+    let mut out = json!({
         "total": all.len(),
         "by_status": by_status,
         "never_run": never_run,
-        "attention": serde_json::to_value(&attention)?,
+        "attention": attention,
         "omitted": all.len() - attention.len(),
         "full_list": "graph_report — every check with its status and last run",
-    }))
+    });
+    if truncated_count > 0
+        && let Some(obj) = out.as_object_mut()
+    {
+        obj.insert(
+            "names_truncated".into(),
+            json!(format!(
+                "{truncated_count} name(s) above are CUT SHORT at {NAME_WORDS_IN_ROLLUP} words \
+                 and carry `name_truncated: true` with their real `name_words`. Read the whole \
+                 one with get_node. A long name usually means a report was written into it \
+                 because there was nowhere else — `description` (what the check IS) and \
+                 `findings` (what a run FOUND) are where that belongs."
+            )),
+        );
+    }
+    Ok(out)
 }
+
+/// How much of a Verification's `name` the `loop_status` rollup shows.
+///
+/// Enough to identify the check in a list and not enough to hide the reply, on
+/// a corpus whose median name is 76 words. It is a display bound, never a
+/// storage one: nothing is lost, and `name_truncated` says when it applied.
+const NAME_WORDS_IN_ROLLUP: usize = 25;

@@ -44,10 +44,16 @@ fn a_delivered_capability(g: &mut DesignGraph) {
     )
     .unwrap();
     g.satisfies("cap:store", "req:store").unwrap();
-    g.add_verification("ver:store", "the store round-trips", Some("test"), None)
-        .unwrap();
+    g.add_verification(
+        "ver:store",
+        "the store round-trips",
+        Some("test"),
+        None,
+        None,
+    )
+    .unwrap();
     g.verifies("ver:store", "Capability", "cap:store").unwrap();
-    g.set_verification_status("ver:store", "passing", None)
+    g.set_verification_status("ver:store", "passing", None, None)
         .unwrap();
     g.add_artifact(
         "art:store",
@@ -110,7 +116,7 @@ fn a_discontinued_capability_stops_being_asked_about() {
     a_delivered_capability(&mut g);
     // Strip what made it look finished, so all three detectors would fire.
     g.delete_node("Artifact", "art:store").unwrap();
-    g.set_verification_status("ver:store", "planned", None)
+    g.set_verification_status("ver:store", "planned", None, None)
         .unwrap();
     let before = gap_sources(&g, "cap:store");
     assert!(
@@ -135,7 +141,7 @@ fn a_proposed_decision_discontinues_nothing() {
     let mut g = DesignGraph::open_in_memory().unwrap();
     a_delivered_capability(&mut g);
     g.delete_node("Artifact", "art:store").unwrap();
-    g.set_verification_status("ver:store", "planned", None)
+    g.set_verification_status("ver:store", "planned", None, None)
         .unwrap();
 
     discontinue(&mut g, false); // left `proposed`
@@ -231,7 +237,7 @@ fn obsoleted_by_something_other_than_a_decision_does_not_discontinue() {
     let mut g = DesignGraph::open_in_memory().unwrap();
     a_delivered_capability(&mut g);
     g.delete_node("Artifact", "art:store").unwrap();
-    g.set_verification_status("ver:store", "planned", None)
+    g.set_verification_status("ver:store", "planned", None, None)
         .unwrap();
     g.add_epoch("epoch:later", "a later epoch", EpochType::Revision, 2)
         .unwrap();

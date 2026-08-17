@@ -25,6 +25,41 @@ schema:
         location: { type: string, description: "Path to the test/inspection artifact." }
         status: { type: enum, values: [planned, passing, failing, skipped, blocked], default: planned, indexed: true }
         last_run_at: { type: string }
+        # Added 2026-08-17 for req:a-finding-has-somewhere-to-put-its-evidence.
+        #
+        # ⭐ THE THIRD THING. `name` is what a list renders, `description` is what
+        # the check IS, and this is what the check FOUND. The corpus had two of
+        # the three and authors put all three in `name`.
+        #
+        # MEASURED ON REFLOW2'S OWN GRAPH BEFORE ADDING IT, because the
+        # requirement itself asked whether a new field would change anything:
+        # 164 Verifications, MEDIAN `name` 76 WORDS, 72 over 100, 17 over 300,
+        # longest 654. A `name` is what a list renders; these are reports.
+        #
+        # ⚠️ AND THE ANSWER TO "WOULD A FIELD ALONE CHANGE ANYTHING?" WAS NO,
+        # WHICH IS WHY THIS ARRIVES WITH A CONSTRUCTOR CHANGE BESIDE IT.
+        # `description` above has been declared, fulltext and the embedding
+        # field since the beginning — and is used ONCE IN 164 NODES. Not
+        # ignored: UNREACHABLE. `add_verification(id, name, method, level)` had
+        # no parameter for it, so the only route was raw `create_node`, and
+        # essentially nobody took it. Everyone wrote into `name` because `name`
+        # was the only string the constructor accepted. Adding `findings`
+        # without making both writable would have produced a SECOND field
+        # nobody writes to — the exact trap
+        # dec:how-should-a-temporal-fact-carry-its-date-when-there-is-no-epoch
+        # documented, where 112 nodes wrote an UNDECLARED property because the
+        # declared route did not fit.
+        #
+        # WHERE IT IS WRITTEN IS THE DESIGN, not a convenience: `description`
+        # goes on the CONSTRUCTOR (what the check is, stated once) and
+        # `findings` on `set_verification_status` (what a RUN found, restated
+        # every time an outcome changes). Evidence belongs to a run, so it is
+        # recorded at the moment the run produces it.
+        #
+        # It also gives mutation evidence a home — "mutation-checked three ways,
+        # discarding the guard fails exactly two" is a FINDING, and reflow2 has
+        # been writing that into names too.
+        findings: { type: string, fulltext: true, description: "What this check FOUND when it last ran — the evidence, as distinct from `description`'s account of what the check IS and `name`'s label. Written by set_verification_status, because a finding belongs to a RUN rather than to the definition. Keep `name` short enough for a list: before this field existed the median Verification name on reflow2's own graph was 76 words and the longest 654, because there was nowhere else to put a report. NOT VALIDATED AND NOT PARSED — reflow2 records what the author says a run found and never judges it (dec:non-goal-reflow2-does-not-judge-whether-a-check-is-meaningful); a status of `passing` beside findings that describe a failure is a contradiction only a reader can catch." }
       embedding_field: description
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 85 }
       extraction_hint: >

@@ -19,9 +19,10 @@ fn env(g: &mut DesignGraph, id: &str, env_type: &str) {
 }
 
 fn check(g: &mut DesignGraph, id: &str, cap: &str, performed_in: Option<&str>) {
-    g.add_verification(id, id, Some("test"), Some("system"))
+    g.add_verification(id, id, Some("test"), Some("system"), None)
         .unwrap();
-    g.set_verification_status(id, "passing", None).unwrap();
+    g.set_verification_status(id, "passing", None, None)
+        .unwrap();
     g.verifies(id, node::CAPABILITY, cap).unwrap();
     if let Some(e) = performed_in {
         g.create_edge(
@@ -126,7 +127,7 @@ fn a_check_that_names_no_environment_is_unplaced_not_assumed_real() {
 #[test]
 fn a_capability_with_no_passing_check_is_not_in_the_report() {
     let mut g = design();
-    g.add_verification("ver:planned", "planned check", None, None)
+    g.add_verification("ver:planned", "planned check", None, None, None)
         .unwrap();
     g.verifies("ver:planned", node::CAPABILITY, "cap:gear")
         .unwrap();

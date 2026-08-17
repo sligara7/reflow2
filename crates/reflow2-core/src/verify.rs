@@ -94,12 +94,26 @@ impl DesignGraph {
     ///
     /// `status` is what makes a Verification more than an inventory entry: a
     /// `failing` check on a realized Capability is a live signal, not a record.
+    /// `description` says what the check IS, at length — and it is a parameter
+    /// here since 2026-08-17 because it was DECLARED, fulltext, the embedding
+    /// field, and **used once in 164 nodes**. Not ignored: unreachable. This
+    /// constructor took no parameter for it, so the only route was raw
+    /// `create_node`, and essentially nobody took it — everyone wrote into
+    /// `name` instead, because `name` was the only string on offer. That is the
+    /// measured cause of a corpus whose median Verification name is 76 words
+    /// and whose longest is 654 (`req:a-finding-has-somewhere-to-put-its-evidence`).
+    ///
+    /// What a run FOUND goes to `findings` on
+    /// [`set_verification_status`](Self::set_verification_status), not here: a
+    /// finding belongs to a run, and restating the definition on every re-run
+    /// is the thing that separation exists to avoid.
     pub fn add_verification(
         &mut self,
         id: &str,
         name: &str,
         method: Option<&str>,
         level: Option<&str>,
+        description: Option<&str>,
     ) -> Result<StoredNode, DynoError> {
         self.upsert_node(
             node::VERIFICATION,
@@ -107,7 +121,8 @@ impl DesignGraph {
             Props::new()
                 .set("name", name)
                 .set_opt("method", method)
-                .set_opt("level", level),
+                .set_opt("level", level)
+                .set_opt("description", description),
         )
     }
 
@@ -145,11 +160,33 @@ impl DesignGraph {
     /// Clearing a run time is therefore not expressible by omission, and should
     /// not be: erasing evidence is a deliberate act and deserves an explicit
     /// one.
+    /// # `findings` — what this run FOUND
+    ///
+    /// It belongs here rather than on the constructor, and that placement is the
+    /// design. A finding is produced by a RUN: it changes every time an outcome
+    /// changes, while the definition of the check does not. Recording it beside
+    /// the status means the evidence is written at the moment it exists, by the
+    /// caller who has it in hand.
+    ///
+    /// Omitting it LEAVES IT ALONE, exactly as `last_run_at` does — so marking a
+    /// check `passing` again without restating the evidence keeps the last
+    /// evidence rather than erasing it. Erasing is a deliberate act and deserves
+    /// an explicit one, which is the same reasoning that governs `last_run_at`
+    /// one field over, and the same bug if it were got wrong.
+    ///
+    /// ⚠️ NOT VALIDATED AND NOT PARSED. reflow2 records what an author says a
+    /// run found and never judges it
+    /// (`dec:non-goal-reflow2-does-not-judge-whether-a-check-is-meaningful`).
+    /// A `passing` status beside findings that describe a failure is a
+    /// contradiction only a reader can catch — and it is exactly the case
+    /// dev_storyflow reported on 2026-08-07, where a check recorded "EXIT 0,
+    /// verdict STALE" and stayed `passing` forever.
     pub fn set_verification_status(
         &mut self,
         verification_id: &str,
         status: &str,
         last_run_at: Option<&str>,
+        findings: Option<&str>,
     ) -> Result<StoredNode, DynoError> {
         let Some(existing) = self.get_node(node::VERIFICATION, verification_id)? else {
             return Err(DynoError::NodeNotFound {
@@ -159,12 +196,16 @@ impl DesignGraph {
         };
         let mut props = Props::new()
             .set("status", status)
-            .set_opt("last_run_at", last_run_at);
+            .set_opt("last_run_at", last_run_at)
+            .set_opt("findings", findings);
         for (k, v) in &existing.properties {
-            // `status` is always replaced. `last_run_at` is replaced ONLY when
-            // the caller supplied one — otherwise the stored value is carried
-            // over, which is what "preserving its other properties" means.
-            let replaced = k == "status" || (k == "last_run_at" && last_run_at.is_some());
+            // `status` is always replaced. `last_run_at` and `findings` are
+            // replaced ONLY when the caller supplied one — otherwise the stored
+            // value is carried over, which is what "preserving its other
+            // properties" means.
+            let replaced = k == "status"
+                || (k == "last_run_at" && last_run_at.is_some())
+                || (k == "findings" && findings.is_some());
             if !replaced {
                 props = props.set(k, v.clone());
             }

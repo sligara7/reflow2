@@ -33,6 +33,37 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **A check has somewhere to put what it FOUND.** `Verification` gains `findings`;
+  `add_verification` gains `description`; `set_verification_status` gains `findings`. Three fields
+  for three things — `name` labels, `description` says what the check IS, `findings` says what a
+  RUN found.
+
+  **The requirement named its own precondition — *"would a new field alone change anything?"* — and
+  the corpus answered no.** Measured before writing code: 164 Verifications, **median name 76
+  words**, 72 over 100, longest 654 — and `description` was *already* declared, fulltext, and the
+  node's embedding field, **used once in 164 nodes**.
+
+  **The root cause was reachability, not neglect.** `add_verification(id, name, method, level)` had
+  no parameter for `description`. The only route was raw `create_node`, and essentially nobody took
+  it — authors wrote reports into `name` because **`name` was the only string the constructor
+  accepted.** A `findings` field alone would have become the second unused field.
+
+  Where each is written is the design: `description` on the constructor (stated once), `findings`
+  on the status call (a finding belongs to a *run*). Omitting `findings` **leaves it alone**,
+  exactly as `last_run_at` does, so re-marking a check passing without restating evidence does not
+  erase it.
+
+- **`loop_status` shortens a long check name — and says that it did.** Names past 25 words are cut
+  in the rollup and carry `name_truncated`, `name_words`, and a top-level `names_truncated` note.
+  The announcement is the point: silent truncation reads as "that is the whole name". The cause was
+  fixed alongside the symptom rather than instead of it.
+
+  **Bounds:** nothing is migrated — the 164 existing long names stay as they are, because a
+  property once written cannot be removed and rewriting authored names is not a mechanical act. And
+  `findings` is **not validated or parsed**: a `passing` status beside findings describing a failure
+  is a contradiction only a reader can catch. Schema gains a *property*, not a type, so the version
+  stamp does not move.
+
 - **A write can be made conditional on what you read.** `create_node` accepts
   `expected_content_hash`: supply the `revision.prior_content_hash` from when you read the node and
   the write becomes a **compare-and-swap**, refused if the node moved in between, naming both

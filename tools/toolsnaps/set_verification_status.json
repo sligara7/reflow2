@@ -2,11 +2,19 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Set a Verification's outcome (planned/passing/failing/skipped/blocked), preserving what the check is. OMITTING `last_run_at` LEAVES IT ALONE — it is not cleared, so marking a check `failing` after a regression keeps the evidence that it ever ran. A failing check is a live signal: `propagate_from` it to see which capability and requirement it affects. CONVENTION: a check left at `planned` is not confirmation — verified means a check that PASSES, not one that exists.",
+  "description": "Set a Verification's outcome (planned/passing/failing/skipped/blocked), preserving what the check is. OMITTING `last_run_at` LEAVES IT ALONE — it is not cleared, so marking a check `failing` after a regression keeps the evidence that it ever ran. A failing check is a live signal: `propagate_from` it to see which capability and requirement it affects. CONVENTION: a check left at `planned` is not confirmation — verified means a check that PASSES, not one that exists. PASS `findings` TO RECORD WHAT THIS RUN FOUND — the evidence, as distinct from what the check IS. It lives here rather than on the constructor because a finding belongs to a RUN, and omitting it LEAVES IT ALONE exactly like `last_run_at`. NOT VALIDATED: reflow2 records what you say a run found and never judges it, so `passing` beside findings describing a failure is a contradiction only a reader can catch — which is a real 2026-08-07 field report, where a check recorded \"EXIT 0, verdict STALE\" and stayed passing forever.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
+      "findings": {
+        "default": null,
+        "description": "What this run FOUND — the evidence, as distinct from what the check IS.\nWritten here rather than on the constructor because a finding belongs to\na RUN: it changes every time the outcome does. Omitting it LEAVES IT\nALONE, exactly like `last_run_at`, so re-marking a check `passing`\nwithout restating the evidence keeps the last evidence rather than\nerasing it. NOT VALIDATED: reflow2 records what you say a run found and\nnever judges it, so `passing` beside findings describing a failure is a\ncontradiction only a reader can catch.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "last_run_at": {
         "default": null,
         "type": [

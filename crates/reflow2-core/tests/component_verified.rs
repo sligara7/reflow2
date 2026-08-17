@@ -43,19 +43,25 @@ fn fleet_shaped() -> DesignGraph {
     g.allocate("cap:naked", "cmp:bare").unwrap();
 
     // The real per-service suite, registered where it actually lives.
-    g.add_verification("ver:auth-suite", "auth service suite", Some("test"), None)
-        .unwrap();
+    g.add_verification(
+        "ver:auth-suite",
+        "auth service suite",
+        Some("test"),
+        None,
+        None,
+    )
+    .unwrap();
     g.verifies("ver:auth-suite", node::COMPONENT, "cmp:auth")
         .unwrap();
-    g.set_verification_status("ver:auth-suite", "passing", None)
+    g.set_verification_status("ver:auth-suite", "passing", None, None)
         .unwrap();
 
     // One capability with a direct check of its own.
-    g.add_verification("ver:direct", "direct test", Some("test"), None)
+    g.add_verification("ver:direct", "direct test", Some("test"), None, None)
         .unwrap();
     g.verifies("ver:direct", node::CAPABILITY, "cap:direct")
         .unwrap();
-    g.set_verification_status("ver:direct", "passing", None)
+    g.set_verification_status("ver:direct", "passing", None, None)
         .unwrap();
     g
 }
@@ -80,7 +86,7 @@ fn the_three_states_are_distinguished() {
 #[test]
 fn a_failing_component_suite_carries_nothing() {
     let mut g = fleet_shaped();
-    g.set_verification_status("ver:auth-suite", "failing", None)
+    g.set_verification_status("ver:auth-suite", "failing", None, None)
         .unwrap();
     assert_eq!(
         g.capability_verification("cap:login").unwrap(),

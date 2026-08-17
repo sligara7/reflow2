@@ -261,11 +261,11 @@ fn the_ledger_counts_a_first_baseline_apart_from_an_accept() {
 #[test]
 fn a_first_baseline_does_not_age_a_passing_check() {
     let mut g = unbaselined();
-    g.add_verification("ver:score", "Score suite", None, None)
+    g.add_verification("ver:score", "Score suite", None, None, None)
         .unwrap();
     g.verifies("ver:score", node::CAPABILITY, "cap:score")
         .unwrap();
-    g.set_verification_status("ver:score", "passing", Some("2026-07-01"))
+    g.set_verification_status("ver:score", "passing", Some("2026-07-01"), None)
         .unwrap();
 
     // Established LONG after the check ran. Nothing about the code moved.
