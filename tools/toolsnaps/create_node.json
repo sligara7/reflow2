@@ -2,11 +2,19 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Create a node of any schema type with a property object. An existing id MERGES: the props you pass overwrite, every stored property you omit survives — so a partial props object edits, it does not reset the rest to defaults. READ `undeclared` IN THE REPLY: it names any property you sent that the schema does not declare for this type. The write still SUCCEEDS — the store is a property bag on purpose, so a design can record what reflow2 never anticipated — but a typo and a deliberate extension used to be indistinguishable, and this is how you tell them apart. Absent when there is nothing to say.",
+  "description": "Create a node of any schema type with a property object. An existing id MERGES: the props you pass overwrite, every stored property you omit survives — so a partial props object edits, it does not reset the rest to defaults. READ `undeclared` IN THE REPLY: it names any property you sent that the schema does not declare for this type. The write still SUCCEEDS — the store is a property bag on purpose, so a design can record what reflow2 never anticipated — but a typo and a deliberate extension used to be indistinguishable, and this is how you tell them apart. Absent when there is nothing to say. ⚠️ EDITING SOMETHING YOU READ? PASS `expected_content_hash` — the `revision.prior_content_hash` from when you read it. The write then becomes a COMPARE-AND-SWAP and is REFUSED if the node moved in between, naming both hashes, instead of silently overwriting whoever wrote it meanwhile. Without it a shared graph loses updates by luck: measured from both sides of one real collision, the write returned a normal success and THE WINNER WAS NEVER TOLD. The `revision` block reports an overwrite AFTER the fact; this prevents it. Opt-in, because a caller who never read the node has no honest expectation to state.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
+      "expected_content_hash": {
+        "default": null,
+        "description": "The node's `prior_content_hash` as you last READ it. Supply it and this\nwrite becomes a COMPARE-AND-SWAP: if the node has moved since, the write\nis REFUSED and names both hashes, instead of silently overwriting\nsomebody else's work.\n\nWhere to get it: any earlier `create_node` on this id returned it in\n`revision.prior_content_hash`. It is the hash of the properties as they\nstood BEFORE that call, so re-read the node first if you have been\nholding it a while.\n\nOPT-IN ON PURPOSE. Omit it and you get the old behaviour, because a\ncaller who never read the node has no honest expectation to state — and\nmaking it mandatory would break every existing writer. Pass it whenever\nyou are EDITING something you read rather than creating something new,\nwhich is exactly when a lost update can happen.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "id": {
         "type": "string"
       },

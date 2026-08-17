@@ -114,7 +114,7 @@ pub use fielded::{
 pub use flow::{FlowCycle, FlowReport, FlowStep, FlowTransition};
 pub use genesis::{GENESIS_EPOCH_ID, GenesisOptions, GenesisReport};
 pub use granularity::{GranularityObservation, GranularityReport};
-pub use graph::{DEFAULT_GRAPH_ID, DesignGraph};
+pub use graph::{DEFAULT_GRAPH_ID, DesignGraph, node_content_hash};
 pub use heal::{
     DefectSweep, GeneratedContentStub, HealCategory, HealIssue, HealOp, HealOperation, HealOptions,
     HealProposal, HealReport, HealSeverity, HealStrategy, ReviewedDefect, SkippedOperation,

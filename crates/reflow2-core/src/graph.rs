@@ -15,6 +15,23 @@ use dynograph_storage::{StorageEngine, StoredEdge, StoredNode};
 
 use crate::nodes::{Props, edge, node};
 
+/// The canonical content hash of a node's properties — keys sorted, compact
+/// separators, so the same properties hash identically regardless of map order.
+///
+/// IT LIVES IN THE CORE SO THERE IS ONLY ONE OF IT. The MCP surface computed
+/// this itself for the `revision` block's `prior_content_hash`, and the moment
+/// `upsert_node_if_unchanged` started COMPARING against that value, two
+/// independent implementations of one hash became a way for a caller's
+/// expectation to be rejected by an engine that agreed with them. Two
+/// implementations of one number is the shape of defect this project keeps
+/// finding in other people's code; there is no reason to seed one here.
+pub fn node_content_hash(props: &std::collections::HashMap<String, Value>) -> String {
+    use sha2::{Digest, Sha256};
+    let ordered: std::collections::BTreeMap<&String, &Value> = props.iter().collect();
+    let text = serde_json::to_string(&ordered).unwrap_or_default();
+    format!("sha256:{:x}", Sha256::digest(text.as_bytes()))
+}
+
 /// Widen integer literals to floats for properties the schema declares
 /// `float`, in place. JSON has one number type, so every client writes
 /// `confidence: 1` — and the store validates [`Value`] variants strictly, so
@@ -279,6 +296,101 @@ impl DesignGraph {
         }
         self.engine
             .create_node(&self.graph_id, node_type, id, props)
+    }
+
+    /// [`create_node`](Self::create_node), REFUSED when the node has moved since
+    /// the caller read it — a compare-and-swap, and the prevention half of
+    /// `req:a-write-cannot-silently-lose-someone-elses-work`.
+    ///
+    /// # The failure this exists to stop
+    ///
+    /// Measured from BOTH SIDES of one collision on a shared graph: a worker
+    /// read a node, ninety seconds later another attached session wrote it, and
+    /// the write returned a normal success with the full node body and nothing
+    /// unusual. **THE WINNER WAS NEVER TOLD.** The loser found out only because
+    /// `record_change` happens to return the snapshot it took — a diagnostic
+    /// side-effect of an unrelated tool, not a guard. On any other write path
+    /// both would have believed they made the change and one would have been
+    /// wrong.
+    ///
+    /// # Why this rather than more reporting
+    ///
+    /// The `revision` block already REPORTS what a write replaced, and that is
+    /// detection: it tells the loser afterwards and tells the winner nothing.
+    /// `rule:fix-it-properly-while-it-is-still-cheap` is why this is a refusal
+    /// instead of a fifth report — the requirement's own words are that the
+    /// revision block's hash "is exactly the raw material a compare-and-swap
+    /// needs; nothing consumes it yet". This consumes it.
+    ///
+    /// # What it does NOT do
+    ///
+    /// It does not lock, it does not retry, and it does not merge for you. A
+    /// refusal means *your copy is stale* — re-read, decide what to keep, and
+    /// write again. Deciding that is a judgement (`dec:ask-not-repair`), and an
+    /// automatic merge here would be the silent overwrite wearing a seatbelt.
+    ///
+    /// It is also OPT-IN, and that bound is worth stating plainly: a caller who
+    /// passes no expectation gets the old behaviour. Making it mandatory would
+    /// break every existing writer, and — more to the point — a caller who
+    /// never read the node has no honest expectation to state.
+    /// It guards the UPSERT rather than the raw create, because the upsert is
+    /// the merge path every surface actually writes through — a guard on a path
+    /// nobody calls is a guard that reports success and defends nothing, which
+    /// is the failure this whole increment is about.
+    pub fn upsert_node_if_unchanged(
+        &mut self,
+        node_type: &str,
+        id: &str,
+        props: impl Into<std::collections::HashMap<String, Value>>,
+        expected_content_hash: &str,
+    ) -> Result<StoredNode, DynoError> {
+        self.refuse_if_moved(node_type, id, expected_content_hash)?;
+        self.upsert_node(node_type, id, props)
+    }
+
+    /// The precondition on its own: `Ok(())` when the node still holds what the
+    /// caller read, an error naming both hashes when it does not.
+    fn refuse_if_moved(
+        &self,
+        node_type: &str,
+        id: &str,
+        expected_content_hash: &str,
+    ) -> Result<(), DynoError> {
+        let found = self.get_node(node_type, id)?;
+        let actual = match &found {
+            Some(node) => node_content_hash(&node.properties),
+            // ABSENT IS A MISMATCH, NOT A CREATE. A caller stating an
+            // expectation has read something; if it is gone, somebody deleted
+            // it while they were deciding, and silently creating it back would
+            // resurrect a node whose removal was somebody's decision.
+            None => {
+                return Err(DynoError::Validation {
+                    node_type: node_type.to_string(),
+                    property: "expected_content_hash".into(),
+                    message: format!(
+                        "refusing the write: '{id}' does not exist, and you passed an \
+                         expected content hash, which means you read it and it has since \
+                         been DELETED. Creating it again would undo somebody's removal. \
+                         Re-read, decide whether it should come back, and write without an \
+                         expectation if it should."
+                    ),
+                });
+            }
+        };
+        if actual != expected_content_hash {
+            return Err(DynoError::Validation {
+                node_type: node_type.to_string(),
+                property: "expected_content_hash".into(),
+                message: format!(
+                    "refusing the write: '{id}' has changed since you read it. You expected \
+                     {expected_content_hash} and it now holds {actual}. Somebody else's work \
+                     is in there. Re-read the node, merge your change on top of what it says \
+                     NOW, and write again — this refusal is the only thing standing between \
+                     that work and a silent overwrite."
+                ),
+            });
+        }
+        Ok(())
     }
 
     /// Merge `props` onto `id` if it exists, or create it. The supplied

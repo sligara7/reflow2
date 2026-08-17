@@ -960,6 +960,23 @@ pub struct CreateNodeReq {
     /// Property object; validated against the schema.
     #[serde(default)]
     pub props: Option<JsonObject>,
+    /// The node's `prior_content_hash` as you last READ it. Supply it and this
+    /// write becomes a COMPARE-AND-SWAP: if the node has moved since, the write
+    /// is REFUSED and names both hashes, instead of silently overwriting
+    /// somebody else's work.
+    ///
+    /// Where to get it: any earlier `create_node` on this id returned it in
+    /// `revision.prior_content_hash`. It is the hash of the properties as they
+    /// stood BEFORE that call, so re-read the node first if you have been
+    /// holding it a while.
+    ///
+    /// OPT-IN ON PURPOSE. Omit it and you get the old behaviour, because a
+    /// caller who never read the node has no honest expectation to state — and
+    /// making it mandatory would break every existing writer. Pass it whenever
+    /// you are EDITING something you read rather than creating something new,
+    /// which is exactly when a lost update can happen.
+    #[serde(default)]
+    pub expected_content_hash: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]

@@ -31,6 +31,37 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **A write can be made conditional on what you read.** `create_node` accepts
+  `expected_content_hash`: supply the `revision.prior_content_hash` from when you read the node and
+  the write becomes a **compare-and-swap**, refused if the node moved in between, naming both
+  hashes. Omit it and nothing changes.
+
+  **The failure, measured from both sides of one collision:** a worker read a node, ninety seconds
+  later another attached session wrote it, the write returned a normal success with the full node
+  body — and **the winner was never told**. The loser found out only because `record_change`
+  happens to return the snapshot it took: a diagnostic side-effect of an unrelated tool, not a
+  guard.
+
+  The `revision` block already *reported* an overwrite; that tells the loser afterwards and the
+  winner nothing. `rule:fix-it-properly-while-it-is-still-cheap` is why this is a refusal rather
+  than a fifth report. Four calls behind it: it guards the **upsert** (the path every surface
+  writes through, not the raw create); **absent is a mismatch** rather than a create, because
+  silently recreating a deleted node undoes somebody's removal; the hash **moved into the core**,
+  since two implementations of one number would diverge only under contention; and it is
+  **opt-in**, because a caller who never read the node has no honest expectation to state.
+
+  ⚠️ **`create_node` also gained the `revision` block it never had.** The block was attached by the
+  typed constructors and never by generic `create_node` — so for one commit the compare-and-swap
+  existed with its precondition value unobtainable from the very tool demanding it. Every core test
+  passed; the MCP probe failed on its first run. Mutation-checked: discarding the refusal fails
+  exactly the two probes that should fail.
+
+  Closes the `required` obligation of `epoch:instruments-stop-overstating`. **Honest bound:** the
+  typed constructors still merge with no expectation available, which is the commonest write path,
+  so the hole this closes is real but partial.
+
 ### Design
 
 - **"Do it right" is now intent reflow2 carries, not just a habit this project has.**
