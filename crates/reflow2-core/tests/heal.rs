@@ -45,7 +45,7 @@ fn dup_graph() -> DesignGraph {
 #[test]
 fn detect_finds_duplicate_and_orphans() {
     let g = dup_graph();
-    let issues = g.detect_defects().unwrap();
+    let issues = g.open_defects().unwrap();
     let cats: Vec<HealCategory> = issues.iter().map(|i| i.category).collect();
     assert!(cats.contains(&HealCategory::Duplicate));
     // No orphans here: req satisfied, caps allocated, no lone artifacts.
@@ -121,7 +121,7 @@ fn apply_merge_repoints_edges_and_verifies() {
 
     // The DUPLICATES edge is gone, so re-detection finds no duplicate.
     let cats: Vec<HealCategory> = g
-        .detect_defects()
+        .open_defects()
         .unwrap()
         .iter()
         .map(|i| i.category)
@@ -327,7 +327,7 @@ fn a_merge_no_detector_asked_for_is_refused() {
     g.satisfies("cap:doomed", "req:a").unwrap();
 
     assert!(
-        !g.detect_defects()
+        !g.open_defects()
             .unwrap()
             .iter()
             .any(|d| d.category == HealCategory::Duplicate),
@@ -359,7 +359,7 @@ fn a_real_issue_id_with_a_fabricated_operation_is_still_refused() {
     g.add_capability("cap:bystander", "Bystander", "uninvolved", None)
         .unwrap();
     let real_id = g
-        .detect_defects()
+        .open_defects()
         .unwrap()
         .into_iter()
         .find(|d| d.category == HealCategory::Duplicate)
@@ -562,7 +562,7 @@ fn chained_graph() -> DesignGraph {
 /// could hand-build it.
 fn merge_op(g: &DesignGraph, keep: &str, remove: &str) -> HealOperation {
     let issue = g
-        .detect_defects()
+        .open_defects()
         .unwrap()
         .into_iter()
         .filter(|i| i.category == HealCategory::Duplicate)
@@ -650,7 +650,7 @@ fn a_chained_duplicate_is_split_across_rounds_and_converges() {
     assert_eq!(allocs.len(), 1);
     assert_eq!(allocs[0].from_id, "cap:a");
     assert!(
-        !g.detect_defects()
+        !g.open_defects()
             .unwrap()
             .iter()
             .any(|i| i.category == HealCategory::Duplicate),
@@ -716,7 +716,7 @@ fn merging_the_middle_of_a_chain_repoints_the_duplicate_claim() {
 
     // And the next round finds and can resolve it.
     assert!(
-        g.detect_defects()
+        g.open_defects()
             .unwrap()
             .iter()
             .any(|i| i.category == HealCategory::Duplicate
@@ -1136,7 +1136,7 @@ fn a_node_in_several_duplicate_findings_is_named_as_a_hub() {
         .unwrap();
     }
 
-    let issues = g.detect_defects().unwrap();
+    let issues = g.open_defects().unwrap();
     let dups: Vec<_> = issues
         .iter()
         .filter(|i| i.category == HealCategory::Duplicate)
@@ -1170,7 +1170,7 @@ fn an_ordinary_duplicate_pair_reports_no_hub() {
     // The counterweight. If `hubs` were populated for every finding it would be
     // noise, and a warning that fires always is a warning nobody reads (BL-42).
     let g = dup_graph();
-    let issues = g.detect_defects().unwrap();
+    let issues = g.open_defects().unwrap();
     let dup = issues
         .iter()
         .find(|i| i.category == HealCategory::Duplicate)
@@ -1328,7 +1328,7 @@ fn withdrawn_pair(status: &str) -> DesignGraph {
 }
 
 fn contradictions(g: &DesignGraph) -> Vec<String> {
-    g.detect_defects()
+    g.open_defects()
         .unwrap()
         .into_iter()
         .filter(|i| i.category == HealCategory::Contradiction)
@@ -1425,7 +1425,7 @@ fn supporting_alignment_is_still_skipped_independently() {
 
 /// The reported ids for `orphan_node`, so each test below reads as a claim.
 fn orphans(g: &DesignGraph) -> Vec<String> {
-    g.detect_defects()
+    g.open_defects()
         .unwrap()
         .into_iter()
         .filter(|d| d.category == HealCategory::OrphanNode)
@@ -1508,7 +1508,7 @@ fn a_pointer_property_is_attachment_and_only_a_dangling_one_is_reported() {
         .unwrap();
 
     let by_id: std::collections::HashMap<String, HealSeverity> = g
-        .detect_defects()
+        .open_defects()
         .unwrap()
         .into_iter()
         .filter(|d| d.category == HealCategory::OrphanNode)
@@ -1571,4 +1571,94 @@ fn an_empty_design_and_a_process_rule_are_resting_states_not_defects() {
     .unwrap();
 
     assert!(orphans(&g).is_empty(), "{:?}", orphans(&g));
+}
+
+// ---- 2026-08-17 · the sweep says what it looked at ------------------------
+//
+// `req:a-report-says-what-it-swept-and-whether-its-checks-ran`, taken to the
+// return type rather than to the message. `detect_defects` returned a naked
+// `Vec` while `detect_defects_in_scope` returned `Scoped<HealIssue>` carrying
+// `total`, `in_scope`, `region_size` and a vacuity note — one tool answering
+// the same question two ways, and the honest half was the half fewer people
+// call. The first pass at this deferred the change as a consumer break;
+// `rule:fix-it-properly-while-it-is-still-cheap` (Anthony, 2026-08-17) is why
+// it was done instead: before 1.0 a break is cheapest now and dearer with
+// every consumer.
+
+/// An empty answer must say WHICH empty it is, and a real sweep must not
+/// pretend to be vacuous.
+#[test]
+fn an_empty_graph_says_its_zero_is_vacuous_and_a_real_one_does_not() {
+    let empty = DesignGraph::open_in_memory().unwrap();
+    let sweep = empty.detect_defects().unwrap();
+    assert!(sweep.defects.is_empty());
+    assert_eq!(sweep.swept.nodes, 0);
+    assert!(
+        sweep
+            .swept
+            .note
+            .as_deref()
+            .is_some_and(|n| n.contains("VACUOUS")),
+        "nothing to examine and nothing found must not read the same: {:?}",
+        sweep.swept.note
+    );
+
+    // A design with real content and no defects is the OTHER zero, and the
+    // absence of the note is what distinguishes them.
+    let clean = dup_graph();
+    let swept = clean.detect_defects().unwrap();
+    assert!(swept.swept.nodes > 0);
+    assert!(
+        swept.swept.note.is_none(),
+        "a graph that was actually examined must not claim vacuity: {:?}",
+        swept.swept.note
+    );
+}
+
+/// The sweep must report the NARROWER topology walk separately, because the
+/// gap between the two counts is exactly what made the old
+/// `disconnected_community` name a lie: the walk drops nine node types and
+/// every review record, so "not in it" was never "not in the design".
+#[test]
+fn the_sweep_reports_the_topology_walk_as_narrower_than_the_graph() {
+    let mut g = dup_graph();
+    g.create_node(
+        node::TEMPORAL_FACT,
+        "fact:outside",
+        Props::new()
+            .set("subject_id", "cap:a")
+            .set("statement", "a record, not a design node"),
+    )
+    .unwrap();
+
+    let sweep = g.detect_defects().unwrap();
+    assert!(
+        sweep.swept.design_network_nodes < sweep.swept.nodes,
+        "the fact is in the graph and not in the walk: {} vs {}",
+        sweep.swept.design_network_nodes,
+        sweep.swept.nodes
+    );
+}
+
+/// "No findings" has to mean "these ran and found nothing", so the rules that
+/// ran are named rather than assumed.
+#[test]
+fn the_sweep_names_the_rules_that_ran() {
+    let g = dup_graph();
+    let sweep = g.detect_defects().unwrap();
+    assert!(
+        sweep.swept.rules.contains(&"unthreaded_cluster"),
+        "{:?}",
+        sweep.swept.rules
+    );
+    assert!(
+        sweep.swept.rules.contains(&"orphan_node"),
+        "{:?}",
+        sweep.swept.rules
+    );
+    assert_eq!(
+        sweep.swept.rules.len(),
+        HealCategory::ALL.len(),
+        "every category the engine has must be named as having run"
+    );
 }

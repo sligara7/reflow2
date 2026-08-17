@@ -337,7 +337,7 @@ pub(crate) fn structural_rule(edge_type: &str) -> Option<EdgeRule> {
         // THIS IS THE INCLUDES BUG ABOVE, RECURRED. Absent from this table, a
         // Release wired only by its schedule is a disconnected island again —
         // found 2026-07-31 the first time a release was modelled from the
-        // schedule rather than from a manifest, by `disconnected_community`
+        // schedule rather than from a manifest, by `unthreaded_cluster`
         // firing on `rel:v0190` and the decision governing it. Twice now a new
         // edge type has reached a Release without anyone asking whether the
         // impact table should know about it, and nothing checks that question
@@ -354,7 +354,7 @@ pub(crate) fn structural_rule(edge_type: &str) -> Option<EdgeRule> {
         // THE QUESTION THE TWO COMMENTS ABOVE SAY NOBODY ASKS, ASKED BEFORE THE
         // CODE WAS WRITTEN rather than after a detector complained
         // (`dec:calibration-propagates`). INCLUDES and SCHEDULED_FOR each
-        // reached this table only once `disconnected_community` fired on an
+        // reached this table only once `unthreaded_cluster` fired on an
         // island the new edge had failed to join; this is the third such edge.
         // Being here is also the payoff BL-136 asks for: when the outside source
         // finally arrives, propagate_change is what says which fitted values
@@ -372,7 +372,7 @@ pub(crate) fn structural_rule(edge_type: &str) -> Option<EdgeRule> {
         //
         // THE FOURTH EDGE TO REACH THIS TABLE, AND THE SECOND TO DO IT BEFORE A
         // DETECTOR COMPLAINED. INCLUDES and SCHEDULED_FOR both arrived only
-        // after `disconnected_community` fired on an island the new edge had
+        // after `unthreaded_cluster` fired on an island the new edge had
         // failed to join, and the SCHEDULED_FOR comment above says outright that
         // nothing checks the question is ever asked. It is asked here because
         // the failure would be worse than an island: BL-68's whole thesis is

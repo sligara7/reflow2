@@ -620,7 +620,7 @@ fn a_duplicate_the_user_already_recorded_is_left_to_heal() {
     // HEAL still has it, so the fact is not lost — just owned by the half that
     // can repair it.
     assert!(
-        g.detect_defects()
+        g.open_defects()
             .unwrap()
             .iter()
             .any(|d| d.category == reflow2_core::heal::HealCategory::Duplicate)

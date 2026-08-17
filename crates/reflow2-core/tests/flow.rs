@@ -112,7 +112,7 @@ fn process_cycles_are_reported_never_judged() {
     assert_eq!(rep.cycles[0].members, ["cap:build", "cap:verify"]);
     assert_eq!(rep.cycles[0].path, ["cap:build", "cap:verify"]);
 
-    let defects = g.detect_defects().expect("defects");
+    let defects = g.open_defects().expect("defects");
     assert!(
         !defects
             .iter()
@@ -221,7 +221,7 @@ fn a_flow_member_has_a_home_and_a_loose_capability_is_asked_about_once() {
     );
 
     let orphans: Vec<String> = g
-        .detect_defects()
+        .open_defects()
         .expect("defects")
         .into_iter()
         .filter(|d| d.category == HealCategory::OrphanNode)

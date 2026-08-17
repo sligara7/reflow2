@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:bbf354027afd1dbc23e67035d149d73a56c4dd2a4c46b18e5d24a7e4e1667286",
+  "content_hash": "sha256:52d66a271dd69ab65fddcdfc58e22ab262af36fc1ac1c80b17d4a445d3e8fb6c",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -858,6 +858,14 @@
     {
       "edge_type": "ALLOCATED_TO",
       "from_id": "cap:a-node-attached-to-nothing-is-reported-whatever-its-type",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-sweep-names-its-own-scope-and-the-category-names-what-it-computes",
       "properties": {
         "weight_basis": "estimated"
       },
@@ -5280,6 +5288,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-key-is-renamed-and-the-sweep-says-what-it-swept",
+      "properties": {},
+      "to_id": "epoch:the-key-is-renamed-and-the-sweep-says-what-it-swept"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-latent-surface-notices-a-design-arrived",
       "properties": {},
       "to_id": "epoch:v0321"
@@ -6651,6 +6665,12 @@
       "from_id": "snap:epoch:the-image-must-start:art:release-workflow",
       "properties": {},
       "to_id": "epoch:the-image-must-start"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-key-is-renamed-and-the-sweep-says-what-it-swept:dec:a-misnaming-is-fixed-in-the-message-not-the-key",
+      "properties": {},
+      "to_id": "epoch:the-key-is-renamed-and-the-sweep-says-what-it-swept"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -9786,6 +9806,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "rule:fix-it-properly-while-it-is-still-cheap",
+      "properties": {
+        "acted_at": "2026-08-17",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "rule:fixes-are-judged-by-the-third-party",
       "properties": {
         "acted_at": "2026-08-06T12:10:00Z",
@@ -10522,6 +10551,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-0017ff064f290927",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:seam"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-020a057ec12710f0",
       "properties": {
         "accepted_baseline": true,
@@ -10648,6 +10686,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-1d44e44cafb8f327",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:acknowledgement-not-structure-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-1e7665d6348d37ad",
       "properties": {
         "accepted_baseline": true,
@@ -10663,6 +10710,15 @@
         "action": "modified"
       },
       "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-1f6e12e8ae6095ef",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nodes"
     },
     {
       "edge_type": "CHANGED",
@@ -10783,12 +10839,30 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-402643b1b7044f89",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:evidence-quality-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-41cb200c8b595eb3",
       "properties": {
         "accepted_baseline": true,
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-43679b50044a18d6",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:cycles-test"
     },
     {
       "edge_type": "CHANGED",
@@ -10834,6 +10908,15 @@
         "action": "modified"
       },
       "to_id": "art:depends"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-4c0f9ed4478fbbb6",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:compose"
     },
     {
       "edge_type": "CHANGED",
@@ -11044,6 +11127,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-794a2d509715394a",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:unreachable-decision-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-7a8e70b448098faa",
       "properties": {
         "accepted_baseline": true,
@@ -11125,6 +11217,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-86a3b2a0f17787e8",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-870d9c0cae791b62",
       "properties": {
         "accepted_baseline": true,
@@ -11188,6 +11289,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-928cf018a5ad578b",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-975fcb51ce6ec113",
       "properties": {
         "accepted_baseline": true,
@@ -11248,6 +11358,15 @@
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-a8663d9d81bf09b2",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:contradiction-alignment-test"
     },
     {
       "edge_type": "CHANGED",
@@ -11323,6 +11442,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-bf1b6d229146b167",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:orphan-attachment-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-bf7dcd75fd6be477",
       "properties": {
         "accepted_baseline": true,
@@ -11377,12 +11505,30 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-cd1ba6fa2303deac",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:bl124-instrument"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-cd270db9c9c20396",
       "properties": {
         "accepted_baseline": true,
         "action": "modified"
       },
       "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-d008b352f18b7446",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
     },
     {
       "edge_type": "CHANGED",
@@ -11464,6 +11610,15 @@
         "action": "modified"
       },
       "to_id": "art:cycles-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-dba8c8f410f62517",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:increment-plan"
     },
     {
       "edge_type": "CHANGED",
@@ -19442,6 +19597,60 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-key-is-renamed-and-the-sweep-says-what-it-swept",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check-health-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-key-is-renamed-and-the-sweep-says-what-it-swept",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-key-is-renamed-and-the-sweep-says-what-it-swept",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ility"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-key-is-renamed-and-the-sweep-says-what-it-swept",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:scope"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-key-is-renamed-and-the-sweep-says-what-it-swept",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-key-is-renamed-and-the-sweep-says-what-it-swept",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:a-misnaming-is-fixed-in-the-message-not-the-key"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-latent-surface-notices-a-design-arrived",
       "properties": {
         "accepted_baseline": true,
@@ -23804,6 +24013,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:a-sweep-names-its-own-scope-and-the-category-names-what-it-computes",
+      "properties": {},
+      "to_id": "rule:fix-it-properly-while-it-is-still-cheap"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:adopt",
       "properties": {},
       "to_id": "decision:ack:07bb37be6d5cd129"
@@ -28108,6 +28323,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "dec:a-misnaming-is-fixed-in-the-message-not-the-key",
+      "properties": {},
+      "to_id": "rule:fix-it-properly-while-it-is-still-cheap"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "dec:a-projection-is-named-and-the-battery-runs-over-it",
       "properties": {},
       "to_id": "dec:views-are-projections"
@@ -29623,6 +29844,12 @@
       "from_id": "dec:a-claim-may-need-a-list-rather-than-a-radius",
       "properties": {},
       "to_id": "snap:epoch:a-claim-may-be-a-query:dec:a-claim-may-need-a-list-rather-than-a-radius"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:a-misnaming-is-fixed-in-the-message-not-the-key",
+      "properties": {},
+      "to_id": "snap:epoch:the-key-is-renamed-and-the-sweep-says-what-it-swept:dec:a-misnaming-is-fixed-in-the-message-not-the-key"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -66345,6 +66572,12 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:a-report-describes-the-walk-that-produced-it",
+      "properties": {},
+      "to_id": "epoch:the-key-is-renamed-and-the-sweep-says-what-it-swept"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:arrival-delta",
       "properties": {},
       "to_id": "epoch:v0190"
@@ -67377,6 +67610,14 @@
       "edge_type": "REALIZES",
       "from_id": "art:heal",
       "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-sweep-names-its-own-scope-and-the-category-names-what-it-computes"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:heal",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cap:supporting-is-not-conflict"
@@ -67412,6 +67653,14 @@
         "completeness": "complete"
       },
       "to_id": "cmp:identity"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:ility",
+      "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-sweep-names-its-own-scope-and-the-category-names-what-it-computes"
     },
     {
       "edge_type": "REALIZES",
@@ -68585,6 +68834,12 @@
     {
       "edge_type": "SATISFIES",
       "from_id": "cap:a-node-attached-to-nothing-is-reported-whatever-its-type",
+      "properties": {},
+      "to_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-sweep-names-its-own-scope-and-the-category-names-what-it-computes",
       "properties": {},
       "to_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran"
     },
@@ -70639,6 +70894,12 @@
       "from_id": "ver:a-session-cannot-name-another-design",
       "properties": {},
       "to_id": "req:a-session-cannot-address-another-design"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-sweep-names-its-own-scope",
+      "properties": {},
+      "to_id": "cap:a-sweep-names-its-own-scope-and-the-category-names-what-it-computes"
     },
     {
       "edge_type": "VERIFIES",
@@ -73085,7 +73346,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8f8a543ba59ec079",
+        "checksum": "sha256:70445d24ad9cf25414935f3ef90944d209854e4cfa67f740e9e2c841c8f226ff",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/acknowledgement_not_structure.rs",
         "name": "acknowledgement_not_structure.rs",
@@ -73189,7 +73450,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:49f1f3095ea2707d",
+        "checksum": "sha256:06b64e606511407badac652aaf530cc2f9d012bb1bc53f95124cc32152c2e979",
         "granularity": "atomic",
         "location": "tools/bl124_instrument.py",
         "name": "bl124_instrument.py",
@@ -73306,7 +73567,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:421fce94c82f958100d1ad9140ca53b5eff1e0ba30593c25dc79d37095d7a0e1",
+        "checksum": "sha256:0599e56015b53dd5a57b9562bc0d9a82a065003ea1ea91fa9af0881c168ec80a",
         "granularity": "atomic",
         "location": "getting-started/skills/check-health/SKILL.md",
         "name": "check-health/SKILL.md",
@@ -73406,7 +73667,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b9f6ec2a69d7cfbc6041c2cf7d0bbb5a409a981cd3c44a36672f4b3a375a4558",
+        "checksum": "sha256:21f0cb3c189f4e8f4295e1d67788061e2ec7f91f018010ff992ef51bd0a1c377",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/compose.rs",
         "name": "compose.rs",
@@ -73482,7 +73743,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2459979bcda2901dc08307b0211763a91245cdfd4727c9ab967039b2c154f2ed",
+        "checksum": "sha256:5c4c6e7a717189396689405566ed54b8e67f10821b593d22b99ea37053450f1b",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/contradiction_alignment.rs",
         "name": "tests/contradiction_alignment.rs",
@@ -73534,7 +73795,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:52392a822a3b2853d8e12478d9cb1ee2656fec33f414260b2cf6562b079ed603",
+        "checksum": "sha256:a62c88bd9814737dd97b620eda586cd5c28420031c057f7f196da584a79e1f72",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/cycles.rs",
         "name": "Circular-dependency suite — detection, selectivity, and what the finding says it walked",
@@ -73766,7 +74027,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0f66b31cfaca4944",
+        "checksum": "sha256:850a4de223b41c4e97c9a2c71628dc01358202f1aa091c73f62867288b2391a6",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/evidence_quality.rs",
         "name": "The evidence-quality family suite — all three axes with their counterweights",
@@ -73935,7 +74196,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:dbfb116fc2a149a7a8327934438c56d0283a1a9e031a9766bb295b90544a2617",
+        "checksum": "sha256:90f06dc735b3a2c76d8cede863c273941d89b09aca01ff32dfaf72b7ae678546",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
@@ -73974,7 +74235,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:889393466bafe709429fc137dd4d2e1a372990c6486d7a85dec07c630a51cbb3",
+        "checksum": "sha256:08788e160c65f66ffbcea91b3919205a035b32930dfc578e36acfd2045ee3298",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/ility.rs",
         "name": "ility.rs",
@@ -73987,7 +74248,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:752fa1ea328b5bafe200ef45ea7c1e230648bb86f580bd0278886b8cdde5ee3e",
+        "checksum": "sha256:d6a3a8bce014e75f1a2a524d0c76612ab8a1dc99ad32f7fbdeca286b51950652",
         "granularity": "atomic",
         "location": "docs/increment-plan.md",
         "name": "increment-plan.md",
@@ -74221,7 +74482,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:62f8fa3a5478b34ecef83d8e9ed054e35993522748a4a7ff80d9c7c5af308991",
+        "checksum": "sha256:ae5a182c709321a1e0753361a6a8b9ed6836a6a8cd518979d83896d7b4511aa6",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
@@ -74260,7 +74521,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c181cfc2536fc5f0c6cb9786d7d13dc337e49e4081174fa165ad86b4c1acbd30",
+        "checksum": "sha256:377d332d152038615d31984d530989b283d8ef1a9f7651f706f7f9f12a627f68",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/orphan_attachment.rs",
         "name": "orphan_attachment.rs",
@@ -74430,7 +74691,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:aff0450445d19d96937980b12010421ec4f4112b3406ec959a3223b99e555a8e",
+        "checksum": "sha256:6bd028cccbc577b2833621d955bca4f879dd7e0806b67f608404668411b5c054",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
@@ -74623,7 +74884,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5a697a888ddc02311093bab62e138f4edf9e0f0e239b427f3e6e9648d713996d",
+        "checksum": "sha256:a6b68c076bfcd16547ec850c06b7b4951a73fecf072dd84b2d660d9c0e50cbca",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/scope.rs",
         "name": "scope.rs",
@@ -74662,7 +74923,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:45aaec579dc701380a04d4f12b59a6b14ba5aeb619e823c021b0b21ed08e5caa",
+        "checksum": "sha256:e96c9c4c07a384fc845aa360edc7f505d90ecbecc8e38b08dd65e65b56cf1470",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/seam.rs",
         "name": "seam.rs",
@@ -74816,7 +75077,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1ee41e376d31e0f82c43993217ea4907b03161fe1fb0d351d85156d055425d6f",
+        "checksum": "sha256:ee0793d718c6a3e8c89d5d9de60e68f97a448b4b6eb22bfa6ab9b93b08fd0011",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -74907,7 +75168,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:76f2dec276b09685",
+        "checksum": "sha256:4a412efc7f3ba82b37e375c9e7c4ad228c2b46844b4b319a36a65237c88c2e49",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/structure.rs",
         "name": "structure.rs",
@@ -75271,7 +75532,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1b718981bffa380d90cb4618203a00699661b815f84cd7f23969bbe714efc97d",
+        "checksum": "sha256:88d50ca759a72f608b358c012b9d083ea4d6cf11a364dcba329fca9abbf7e775",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -75336,7 +75597,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1dab58f5049860d865ed9351a40393fd093212bb6ae82952e1f136d56cadc21f",
+        "checksum": "sha256:277611ca96311b6e3406065dce7173aca3373cd8e9dfe3a667d7923a962787f9",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/unreachable_decision.rs",
         "name": "unreachable_decision.rs",
@@ -75542,6 +75803,16 @@
       "properties": {
         "description": "The degree-zero rule inside `orphan_node` ran on `Decision` alone (heal.rs:879) and now runs on every node type nothing else asks about. That narrowness is why the pass whose job is structural soundness returned a false green: dev_storyflow's fleet got `clean` back over a DesignEpoch carrying NO EDGES AT ALL, in two packages, through every health call of a session.\n\nMEASURED ON REFLOW2'S OWN GRAPH, 2026-08-16: 75 of 2406 nodes are degree-zero. The old rule reported 7 of them; the new rule reports 21. The 14 newly visible are 3 DesignEpochs marking nothing, 3 Fragments with no source, `ver:the-export-survives-being-read-back` — a check counted among the 159 passing that says what it checks to nobody — and 7 TemporalFacts whose `subject_id` names a node THAT DOES NOT EXIST, including `prj:reflow2` (the Project is `proj:reflow2`) and `cap:thin-install` (the node is `req:thin-install`).\n\nTHREE BOUNDS, and two of them exist because the first cut was wrong:\n\n(1) NOT EVERY ATTACHMENT IS AN EDGE. `TemporalFact.subject_id`, `Snapshot.target_id` and `Question.gap_id` are required indexed PROPERTIES: those nodes name what they are about without ever drawing a link. The naive rule would have reported 48 of reflow2's own 212 TemporalFacts — 48 false findings shipped inside the change whose subject is instruments that overstate. A degree-zero node is now skipped when any property resolves to a live node id, which keeps the case that IS wrong: a pointer to a node the design no longer has. The unit test caught this, because `subject_id` is required and the fixture could not be built without one.\n\n(2) BL-42 STAYS CLOSED. Requirement, Capability and Interface are excluded — DETECT asks about those by name (`unsatisfied_requirement`, `unallocated_capability`, `unprovided_interface`), and reporting them here as well is the same finding in two vocabularies that became 20 of 31 defects on the storyflow trial.\n\n(3) A RESTING STATE IS NOT A DEFECT. Project and DesignRule are excluded. A Project alone means the design is EMPTY — what genesis produces on day one — and the phase rollups already say so. An advisory DesignRule can bind the PROCESS rather than a node, and demanding an edge would push authors to draw a relationship nobody meant. Widening a sweep without asking that question is how the correct action starts degrading the instrument (`req:a-deliberate-state-is-not-a-defect`).\n\nThree fixtures were genuinely incomplete and were fixed rather than silenced: a \"v1 baseline\" epoch that was the baseline of nothing, a \"v1.0\" release that shipped nothing, and a recency test whose Verification verified nothing.",
         "name": "A node attached to nothing is reported whatever its type, and a property that names a live node counts as attachment",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-sweep-names-its-own-scope-and-the-category-names-what-it-computes",
+      "node_type": "Capability",
+      "properties": {
+        "description": "TWO BREAKING CHANGES TAKEN ON PURPOSE, both DECLINED hours earlier on the ground that they would break consumers. `rule:fix-it-properly-while-it-is-still-cheap` (Anthony, 2026-08-17) reversed that ground: before a stability commitment exists the price of a break is at its lowest and rises with every user, so \"it would break consumers\" argues for doing it NOW. (The guard matched `dec:a-misnaming-is-fixed-in-the-message-not-the-key`, which is the DECISION that first declined this and now records its own reversal; this is the built thing that carries it out. Also distinct from `cap:a-finding-describes-the-walk-that-produced-it`, which fixed the MESSAGE and left both of these standing.)\n\n(1) `disconnected_community` IS NOW `unthreaded_cluster`. The old key asserted unreachability while the detector computed something narrower — connected components over `design_network()`, which drops nine node types and every review record and does not count CONTAINS, covering 1133 of a 2413-node graph. `unthreaded` names what is actually missing, a traceability edge, and cannot be misread as \"unreachable in the graph\". The ility source string moves with it.\n\n⭐ THE COST THAT DECIDED AGAINST IT WAS NEVER MEASURED, and measuring it is what made the call obvious: the key appears in 14 source/test files, 6 live docs and 41 prose mentions in the export, and is PERSISTED AS DATA NOWHERE — no node property holds it as a value. No observation, acknowledgement or ility reading needed migrating. A rename feared as a migration was a sed and a doc pass.\n\n(2) UNSCOPED `detect_defects` RETURNS `{swept, defects}` INSTEAD OF A BARE LIST. `swept.nodes` is what it examined, `swept.rules` names the checks that ran, `swept.design_network_nodes` reports the narrower topology walk rather than hiding it, and `swept.note` appears ONLY when the sweep could not have found anything. An empty result now says which empty it is — exercised and found nothing, or nothing to examine — instead of leaving a zero to be read as permission before `apply_heal`, which deletes nodes. The scoped sibling has answered this way since 2026-08-09, so one tool was answering one question two ways and the honest half was the one fewer people call. `open_defects()` is the bare list for engine-internal callers.\n\nWHAT IT COST, recorded as evidence for the rule rather than for the change: five real consumers of the old shape broke and were FIXED rather than shimmed — `smoke_mcp.py` in three places, `model_the_loop.py`, `build_design_graph.py`, and `bl124_instrument.py`, which now reads both shapes deliberately because it is an instrument that may be pointed at an older server. 53 test call sites moved to `open_defects()`. One toolsnap golden moved.\n\n⚠️ AND A FALSE CLAIM WAS CAUGHT IN THE WRITING. The first draft of `HealCategory::ALL`'s doc comment said the compiler enforced that every variant is listed. It does not — `as_str`'s exhaustive match forces an author into the impl block, but nothing makes them extend the list, and a missing entry would make `swept.rules` UNDERSTATE the sweep. The comment now says it is hand-maintained and names the test that actually holds it. Shipping an unchecked claim about a check, inside the change whose subject is reports that overstate, would have been the joke writing itself.",
+        "name": "A defect sweep returns what it examined, and the category names what it computes",
         "provenance": "authored",
         "status": "realized"
       }
@@ -77755,6 +78026,16 @@
       }
     },
     {
+      "node_id": "chg:accept-0017ff064f290927",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "Comment reference to the renamed category; behaviour unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-020a057ec12710f0",
       "node_type": "ChangeEvent",
       "properties": {
@@ -77880,6 +78161,16 @@
       }
     },
     {
+      "node_id": "chg:accept-1d44e44cafb8f327",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "Renamed category and detect_defects -> open_defects; the assertions are unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-1e7665d6348d37ad",
       "node_type": "ChangeEvent",
       "properties": {
@@ -77895,6 +78186,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-08",
         "name": "ContributorReq.id gains a serde alias for contributor_id. The surface still teaches one name and deny_unknown_fields is unchanged; no design meaning moved."
+      }
+    },
+    {
+      "node_id": "chg:accept-1f6e12e8ae6095ef",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "Comment references to the renamed unthreaded_cluster category; behaviour unchanged.",
+        "subject": "system"
       }
     },
     {
@@ -78015,12 +78316,32 @@
       }
     },
     {
+      "node_id": "chg:accept-402643b1b7044f89",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "Renamed category and detect_defects -> open_defects; the assertions are unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-41cb200c8b595eb3",
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "refactor",
         "detected_at": "2026-08-02",
         "name": "Version bump 0.21.0 -> 0.22.0 only. The schema change is what moved the design and it is recorded on chg:bl68-readiness-gating; this file records WHICH version, and no design claim in it changed."
+      }
+    },
+    {
+      "node_id": "chg:accept-43679b50044a18d6",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "detect_defects -> open_defects; the assertions are unchanged.",
+        "subject": "system"
       }
     },
     {
@@ -78064,6 +78385,16 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "Accepted a new baseline: the change carries no design meaning"
+      }
+    },
+    {
+      "node_id": "chg:accept-4c0f9ed4478fbbb6",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "Caller moved to open_defects() when detect_defects gained its sweep envelope; behaviour unchanged.",
+        "subject": "system"
       }
     },
     {
@@ -78272,6 +78603,16 @@
       }
     },
     {
+      "node_id": "chg:accept-794a2d509715394a",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "Renamed category and detect_defects -> open_defects; the assertions are unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-7a8e70b448098faa",
       "node_type": "ChangeEvent",
       "properties": {
@@ -78350,6 +78691,16 @@
       }
     },
     {
+      "node_id": "chg:accept-86a3b2a0f17787e8",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "Renamed category reference; behaviour unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-870d9c0cae791b62",
       "node_type": "ChangeEvent",
       "properties": {
@@ -78412,6 +78763,16 @@
       }
     },
     {
+      "node_id": "chg:accept-928cf018a5ad578b",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "Comment references to the renamed category; behaviour unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-975fcb51ce6ec113",
       "node_type": "ChangeEvent",
       "properties": {
@@ -78471,6 +78832,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-02",
         "name": "v0.22.1 cut: the version string in reflow2.toml moved 0.22.0 -> 0.22.1. The design meaning of a cut lives in the Release node and its epoch, not in a version string, so the design holds unchanged. Accepted BEFORE release_includes_all so the manifest freezes the post-bump value — the ordering the v0.20.0 cut got wrong and paid for with a retry."
+      }
+    },
+    {
+      "node_id": "chg:accept-a8663d9d81bf09b2",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "detect_defects -> open_defects; the assertions are unchanged.",
+        "subject": "system"
       }
     },
     {
@@ -78543,6 +78914,16 @@
       }
     },
     {
+      "node_id": "chg:accept-bf1b6d229146b167",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "detect_defects -> open_defects; the assertions are unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-bf7dcd75fd6be477",
       "node_type": "ChangeEvent",
       "properties": {
@@ -78595,11 +78976,31 @@
       }
     },
     {
+      "node_id": "chg:accept-cd1ba6fa2303deac",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "Reads both the new {swept, defects} shape and the old {count, items}, deliberately: it is an instrument that may be pointed at an older server.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-cd270db9c9c20396",
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "test_failure_fix",
         "name": "Same bytes — re-registered in the sha256: dialect the gate compares in."
+      }
+    },
+    {
+      "node_id": "chg:accept-d008b352f18b7446",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "Callers moved to open_defects(); behaviour unchanged.",
+        "subject": "system"
       }
     },
     {
@@ -78680,6 +79081,16 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-08-01",
         "name": "BL-141(b): four new cases of 19 — the file-format round trip is a Warning, the same shape over REST stays Critical, one real DEPENDS_ON edge keeps it Critical, and an unspecified medium never earns the downgrade."
+      }
+    },
+    {
+      "node_id": "chg:accept-dba8c8f410f62517",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-17",
+        "name": "A backlog row's reference to the renamed category; the plan itself is unchanged.",
+        "subject": "system"
       }
     },
     {
@@ -81115,6 +81526,14 @@
       }
     },
     {
+      "node_id": "chg:the-key-is-renamed-and-the-sweep-says-what-it-swept",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "The misnamed defect category is renamed and the unscoped sweep returns what it examined — both breaks taken now under rule:fix-it-properly-while-it-is-still-cheap, reversing dec:a-misnaming-is-fixed-in-the-message-not-the-key"
+      }
+    },
+    {
       "node_id": "chg:the-latent-surface-notices-a-design-arrived",
       "node_type": "ChangeEvent",
       "properties": {
@@ -82238,9 +82657,9 @@
       "node_id": "dec:a-misnaming-is-fixed-in-the-message-not-the-key",
       "node_type": "Decision",
       "properties": {
-        "decision": "`req:a-report-says-what-it-swept-and-whether-its-checks-ran` (b) offered exactly two ways out for `disconnected_community`: \"Either rename it to what it computes (\\\"tightly-coupled cluster\\\") or make it compute what it claims.\" NEITHER WAS TAKEN. The message was rewritten to describe the walk it actually made, and the category key `disconnected_community` was left alone.\n\nWHY RENAMING LOST. The key is a consumer contract in three places at once: it is a documented HEAL category, it is what `detect_defects` callers match on, and `ility.rs` uses it as a named ility source (`detect_defects.disconnected_community`). Renaming it would break every consumer in order to fix a sentence — the cost lands on people who did nothing wrong, to repair prose they never read. dev_storyflow's fleet matches on these keys.\n\nWHY RECOMPUTING LOST, and this is the one worth reading. \"Make it compute what it claims\" sounds like the honest option and is the wrong diagnosis: the detector's computation is not broken. It runs connected components over `design_network()`, correctly. THE REQUIREMENT'S OWN TEXT MISDESCRIBES IT AS COMPUTING MODULARITY, WHICH IT DOES NOT. What is narrow is the NETWORK, and the narrowing is deliberate and load-bearing — `NON_DESIGN_TYPES` and the exclusion of `CONTAINS` exist because provenance nodes and decomposition scaffolds distort the topology, each for a reason with its own record (BL-84, BL-124). Making it \"compute what it claims\" would mean walking the whole graph, which would undo those and report every Fragment as an island. The fix was never in the algorithm.\n\n⭐ SO THE GENERAL FORM, which is why this is a Decision and not a code comment: WHEN A CHECK'S NAME OVERSTATES ITS COMPUTATION, THE THIRD OPTION IS USUALLY RIGHT — leave the identifier, leave the algorithm, and make the OUTPUT state its own scope. A key is an interface; a message is addressed to a reader; only the second is free to change, and only the second was ever wrong.\n\n── A LARGER ROAD NOT TAKEN, recorded because it will be re-proposed ──\nThe requirement is titled \"A report says what it swept\", and the fullest reading of that is to change `detect_defects` itself to return `{swept: {...}, defects: [...]}` instead of a bare array — which is what the SCOPED variant already does (`Scoped` carries `total`, `in_scope`, `region_size`, `note`), so the two halves of one tool are inconsistent today and that asymmetry is real.\n\nNOT DONE HERE, on scope rather than on merit. It breaks every consumer that indexes the array, it is a minor version bump, and the requirement's own owed items are enumerated (a), (b), (c) and are all satisfiable without it. The requirement also states its own boundary: \"NOT IN SCOPE: whether every reporting tool needs this treatment or only those whose zero is read as permission.\" Doing the shape change under the cover of finishing (b) and (c) would have been the widening this project keeps warning about.\n\nWHAT WOULD SETTLE IT: whether the unscoped `detect_defects` should match the scoped one's envelope. That is a genuine open question about surface consistency, and it is Anthony's, not an implementer's.",
-        "name": "When a detector's NAME is wrong, fix what it SAYS — the key is a contract and the sentence is not",
-        "rationale": "The category key is an interface — matched by callers and used by name as an ility source — while the message is addressed to a reader. Only the message was ever wrong, so only the message changed. \"Make it compute what it claims\" was rejected on a sharper ground than cost: the computation is correct, and the narrowness people mistake for a bug is the deliberate exclusion of provenance nodes and CONTAINS, each with its own record. Widening the walk would undo BL-84 and BL-124 and report every Fragment as an island.",
+        "decision": "⛔ SUPERSEDED 2026-08-17, HOURS AFTER IT WAS WRITTEN, by `rule:fix-it-properly-while-it-is-still-cheap`. The original text is in `snap:epoch:the-key-is-renamed-and-the-sweep-says-what-it-swept:dec:a-misnaming-is-fixed-in-the-message-not-the-key`, and its reasoning is still the right shape for a project that HAS made a stability commitment — this one has not.\n\nWHAT IT DECIDED, AND WHAT CHANGED. It declined to rename the `disconnected_community` defect category, on the ground that the key is a consumer contract in three places (a documented HEAL category, what `detect_defects` callers match on, and a named ility source) and renaming it would break every consumer to fix a sentence. Anthony's rule reversed exactly that ground: before 1.0 the price of a break is at its lowest and rises with every user, so \"it would break consumers\" argues for doing it NOW. THE CATEGORY IS NOW `unthreaded_cluster`, which names what is actually missing — a traceability edge, the golden thread — and cannot be misread as \"unreachable in the graph\".\n\n⭐ AND THE COST ESTIMATE THIS DECISION RESTED ON WAS NEVER CHECKED, which is the part worth carrying forward. It said renaming would \"break every consumer\" without measuring what that meant. Measured before the rename: the key appears in 14 source and test files and 6 live docs, and 41 times in the committed export — ALL OF THEM PROSE. It was NEVER PERSISTED AS DATA: no node property anywhere holds it as a value, so no observation, no acknowledgement and no ility reading needed migrating. The rename was a sed and a doc pass. A cost asserted rather than measured decided the original call, in a project whose own standing rule is that claims in the records must be evidence-backed.\n\nTHE SECOND HALF WAS TAKEN TOO. This decision deferred giving unscoped `detect_defects` the envelope its scoped sibling already returns, as a consumer break out of scope for finishing (b) and (c). Also done: it now returns `{swept, defects}`, so an empty answer says whether it was exercised and found nothing or had nothing to examine.\n\nWHAT SURVIVES UNCHANGED, and it is the load-bearing half. \"Make it compute what it claims\" is still the wrong fix, for a reason that has nothing to do with cost: the computation is not broken. It runs connected components over `design_network()` correctly, and the narrowness is the deliberate exclusion of provenance types and CONTAINS — each with its own record (BL-84, BL-124). Widening the walk would undo those and report every Fragment as an island. The requirement's own text misdescribes the detector as computing modularity, which it does not. So the third option was right about the ALGORITHM and wrong about the NAME.\n\n📌 THE GENERAL LESSON, sharpened by being wrong: when a name overstates a computation, ask which of the three is actually wrong — the algorithm, the name, or the message — and do not let the cost of fixing one decide the answer before that cost has been measured.\n\n📝 HOW THIS NODE'S OWN HISTORY WAS NEARLY LOST, recorded because it is `req:a-write-cannot-silently-lose-someone-elses-work` happening to the agent writing about it. The supersession was first written by calling `add_decision` on the existing id, which REPLACED three properties. The reply's `revision` block said so and warned that the prior values existed nowhere else — the mitigation that requirement describes as \"detection rather than prevention\", working exactly as documented. The fix was to restore the original text, `record_change` to snapshot it, and only then apply this one. The lesson is the ordering: record_change BEFORE the merge, never after, or the snapshot captures the replacement and the history is confidently wrong.",
+        "name": "SUPERSEDED — the message was fixed and the key was not; the key has since been renamed too",
+        "rationale": "Superseded by rule:fix-it-properly-while-it-is-still-cheap. Its cost argument — that renaming would break every consumer — was asserted and never measured; the key turned out never to have been persisted as data, so the rename needed no migration at all. The algorithm half of its reasoning stands unchanged: the computation is correct and the narrow walk is deliberate, so \"make it compute what it claims\" remains the wrong fix.",
         "status": "proposed"
       }
     },
@@ -87022,6 +87441,16 @@
       }
     },
     {
+      "node_id": "epoch:the-key-is-renamed-and-the-sweep-says-what-it-swept",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "Fixed properly rather than patched — the misnamed category is renamed and the unscoped sweep returns what it examined",
+        "sequence": 349,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:the-loop-says-what-distribution-is-owed",
       "node_type": "DesignEpoch",
       "properties": {
@@ -87654,6 +88083,16 @@
         "enforced": false,
         "name": "Feedback sources are triaged in a stated order: dev_storyflow first, Alex level with it, music_graph after",
         "statement": "ANTHONY'S WORD, 2026-08-16, stated in passing while asking for a triage sweep: \"dev_storyflow is a higher priority\" and \"any un-addressed feedback from my brother should be addressed — it is right up there in importance next to dev_storyflow\". Recorded because it is a STANDING ordering, not a one-off instruction for that sweep, and because a future session with three logs and finite attention will otherwise re-derive it wrongly or read them in whatever order they were handed over.\n\nTHE ORDER: dev_storyflow first — Alex level with it — music_graph after.\n\nWHY IT IS NOT ARBITRARY, inferred and marked as inference rather than as his stated reasoning: dev_storyflow is the fleet Anthony runs himself, so its log is his own usage at scale and arrives fastest; Alex is the SECOND HUMAN USER, and a second user's friction is the only evidence reflow2 has about anyone who did not build it; music_graph is a single consumer project whose reports, while excellent, have so far concentrated on one surface (restore and setup). ⚠️ HE DID NOT SAY THIS — he stated the order and not the grounds, and a later session should not quote the reasoning back to him as his.\n\nWHAT IT DOES NOT MEAN, since a priority order is easy to over-read: it is not a quality ranking. music_graph's F23 was the most consumer-blocking defect of the whole increment and was fixed first, before this ordering was stated. Priority here is about which log to READ when there is not time for all of them, not about whose findings matter.\n\n📌 `enforced: false` DELIBERATELY, and the reason is that no check is possible: nothing in the graph knows which log a session read, or in what order. So this is guidance for a reader and must not be raised as an unverified enforced rule.\n\n⚠️ THIS NODE WAS CREATED WRONG THE FIRST TIME AND THE ERROR IS RECORDED RATHER THAN QUIETLY FIXED: it was written with `enforcement: \"advisory\"`, a property the schema does not declare. It was ACCEPTED AND STORED, echoed back, and the enforcement gap fired anyway — which is what exposed it. See `fact:defect-an-undeclared-property-is-stored-without-complaint`.\n\nAN INPUT TO AN OPEN QUESTION: `dec:idea-is-there-a-feedback-intake-skill-and-is-it-a-router` asks whether reflow2 should have a feedback skill that routes external input. If that is ever built, THIS is a thing it would need to know and has nowhere to read."
+      }
+    },
+    {
+      "node_id": "rule:fix-it-properly-while-it-is-still-cheap",
+      "node_type": "DesignRule",
+      "properties": {
+        "category": "methodology",
+        "enforced": false,
+        "name": "Before 1.0, a thing done wrong is CORRECTED, not patched around — compatibility is not a reason to keep a mistake",
+        "statement": "WHEN SOMETHING IN REFLOW2 IS WRONG, THE FIX IS THE FULL ONE. A workaround, a compatibility shim, or a repair that leaves the original mistake in place is not the answer while this project is still in development. \"It would break consumers\" is not, on its own, a reason to keep a defect — it is a reason to do it NOW rather than later.\n\nANTHONY, 2026-08-17, in his own words: \"as we are still in development; I'm more concerned with doing things right. If we did something wrong the first time, it is better to fully correct/fix it now than to do patch or workaround it. I'd rather pay for this change now than when we have hundreds/thousands of users and we can't make big changes out of fear that we may upset something that is working.\"\n\n⭐ THE COST ARGUMENT RUNS THE OPPOSITE WAY FROM THE USUAL INSTINCT, and that is the whole rule. The instinct is that a breaking change is expensive, so defer it. The instinct is right about the price and wrong about the direction of the trend: the price of a break RISES with every consumer, so deferring is buying the same change later at a higher cost, in a currency (user trust, migration effort, fear of touching working code) that is worse than the one it is cheap in now.\n\nWHAT IT IS NOT. Not licence to rewrite what merely displeases — the trigger is something WRONG, not something one would style differently. Not licence to widen a task: a correction still gets recorded, tested and reviewed like any change, and `dec:a-misnaming-is-fixed-in-the-message-not-the-key`'s own warning about doing a shape change \"under the cover of\" finishing something else still stands. The rule changes which OPTION is chosen when a defect is real; it does not change what counts as a defect, and it does not authorise an agent to settle intent (`rule:design-intent-moves-only-on-the-owners-word` is untouched by it).\n\nWHERE THE HORIZON IS. CHANGELOG.md already says Major/1.0 is \"deferred until a stability commitment — the design surface promising compatibility\". This rule is the other side of that sentence: until that commitment exists, the surface is explicitly not promising, and behaving as though it were is the mistake. The rule therefore has a natural end — it should be revisited at 1.0 rather than carried into it.\n\n⚠️ WHAT IT ALREADY OVERTURNS, recorded so the reversal is on the record rather than inferred: `dec:a-misnaming-is-fixed-in-the-message-not-the-key` (2026-08-17, hours earlier) declined to rename the `disconnected_community` defect category, on the ground that the key is a consumer contract and renaming it would \"break every consumer in order to fix a sentence\". Under this rule that ground no longer carries, and the same decision's deferred item — giving unscoped `detect_defects` the same envelope its scoped sibling already returns — moves from deferred to owed.\n\nENFORCEMENT NOT YET STATED, deliberately. Whether breaking this should stop a build is Anthony's to say, and it is a hard case besides: this rule is about a JUDGEMENT (was the full fix taken?) rather than about graph state, so it may be a genuine instance of a rule no detector can check — the first real customer for `req:a-rule-says-whether-it-can-be-checked-at-all` alongside `rule:bl-41`."
       }
     },
     {
@@ -94844,6 +95283,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:the-key-is-renamed-and-the-sweep-says-what-it-swept:dec:a-misnaming-is-fixed-in-the-message-not-the-key",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-finding-describes-the-walk-that-produced-it\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:claude-code\",\"properties\":{\"acted_at\":\"2026-08-17\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"DesignRule\",\"other_id\":\"rule:fix-it-properly-while-it-is-still-cheap\",\"properties\":{}}]",
+        "state": "{\"decision\":\"`req:a-report-says-what-it-swept-and-whether-its-checks-ran` (b) offered exactly two ways out for `disconnected_community`: \\\"Either rename it to what it computes (\\\\\\\"tightly-coupled cluster\\\\\\\") or make it compute what it claims.\\\" NEITHER WAS TAKEN. The message was rewritten to describe the walk it actually made, and the category key `disconnected_community` was left alone.\\n\\nWHY RENAMING LOST. The key is a consumer contract in three places at once: it is a documented HEAL category, it is what `detect_defects` callers match on, and `ility.rs` uses it as a named ility source (`detect_defects.disconnected_community`). Renaming it would break every consumer in order to fix a sentence — the cost lands on people who did nothing wrong, to repair prose they never read. dev_storyflow's fleet matches on these keys.\\n\\nWHY RECOMPUTING LOST, and this is the one worth reading. \\\"Make it compute what it claims\\\" sounds like the honest option and is the wrong diagnosis: the detector's computation is not broken. It runs connected components over `design_network()`, correctly. THE REQUIREMENT'S OWN TEXT MISDESCRIBES IT AS COMPUTING MODULARITY, WHICH IT DOES NOT. What is narrow is the NETWORK, and the narrowing is deliberate and load-bearing — `NON_DESIGN_TYPES` and the exclusion of `CONTAINS` exist because provenance nodes and decomposition scaffolds distort the topology, each for a reason with its own record (BL-84, BL-124). Making it \\\"compute what it claims\\\" would mean walking the whole graph, which would undo those and report every Fragment as an island. The fix was never in the algorithm.\\n\\n⭐ SO THE GENERAL FORM, which is why this is a Decision and not a code comment: WHEN A CHECK'S NAME OVERSTATES ITS COMPUTATION, THE THIRD OPTION IS USUALLY RIGHT — leave the identifier, leave the algorithm, and make the OUTPUT state its own scope. A key is an interface; a message is addressed to a reader; only the second is free to change, and only the second was ever wrong.\\n\\n── A LARGER ROAD NOT TAKEN, recorded because it will be re-proposed ──\\nThe requirement is titled \\\"A report says what it swept\\\", and the fullest reading of that is to change `detect_defects` itself to return `{swept: {...}, defects: [...]}` instead of a bare array — which is what the SCOPED variant already does (`Scoped` carries `total`, `in_scope`, `region_size`, `note`), so the two halves of one tool are inconsistent today and that asymmetry is real.\\n\\nNOT DONE HERE, on scope rather than on merit. It breaks every consumer that indexes the array, it is a minor version bump, and the requirement's own owed items are enumerated (a), (b), (c) and are all satisfiable without it. The requirement also states its own boundary: \\\"NOT IN SCOPE: whether every reporting tool needs this treatment or only those whose zero is read as permission.\\\" Doing the shape change under the cover of finishing (b) and (c) would have been the widening this project keeps warning about.\\n\\nWHAT WOULD SETTLE IT: whether the unscoped `detect_defects` should match the scoped one's envelope. That is a genuine open question about surface consistency, and it is Anthony's, not an implementer's.\",\"name\":\"When a detector's NAME is wrong, fix what it SAYS — the key is a contract and the sentence is not\",\"rationale\":\"The category key is an interface — matched by callers and used by name as an ility source — while the message is addressed to a reader. Only the message was ever wrong, so only the message changed. \\\"Make it compute what it claims\\\" was rejected on a sharper ground than cost: the computation is correct, and the narrowness people mistake for a bug is the deliberate exclusion of provenance nodes and CONTAINS, each with its own record. Widening the walk would undo BL-84 and BL-124 and report every Fragment as an island.\",\"status\":\"proposed\"}",
+        "target_id": "dec:a-misnaming-is-fixed-in-the-message-not-the-key",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:the-owners-identity-is-one-node-again:ctr:anthony",
       "node_type": "Snapshot",
       "properties": {
@@ -97736,6 +98185,18 @@
       }
     },
     {
+      "node_id": "ver:a-sweep-names-its-own-scope",
+      "node_type": "Verification",
+      "properties": {
+        "kind": "verification",
+        "last_run_at": "2026-08-17",
+        "level": "unit",
+        "method": "test",
+        "name": "Four probes: an empty graph's zero is marked vacuous and a real sweep's is not, the topology walk is reported as narrower than the graph, the rules that ran are named, and every category is listed in ALL",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-tracked-graph-store-is-reported",
       "node_type": "Verification",
       "properties": {
@@ -99526,7 +99987,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:1ffddbd500cd0c55438825435e4927ad3123bbc7118327e5c0dc439c674715e4",
+  "prev_content_hash": "sha256:bbf354027afd1dbc23e67035d149d73a56c4dd2a4c46b18e5d24a7e4e1667286",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

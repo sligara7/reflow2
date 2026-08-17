@@ -173,7 +173,7 @@ impl DesignGraph {
                     affected_ids: gap.affected_ids,
                 });
         }
-        for defect in combined.detect_defects()? {
+        for defect in combined.open_defects()? {
             let ids = defect_ids(&defect);
             let side = classify(&ids);
             buckets

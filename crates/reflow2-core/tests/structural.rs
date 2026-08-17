@@ -9,10 +9,7 @@ use reflow2_core::nodes::{Props, edge, node};
 use reflow2_core::{DesignGraph, HealCategory};
 
 fn has(g: &DesignGraph, cat: HealCategory) -> bool {
-    g.detect_defects()
-        .unwrap()
-        .iter()
-        .any(|d| d.category == cat)
+    g.open_defects().unwrap().iter().any(|d| d.category == cat)
 }
 
 /// A linear golden thread: req—cap—cmp plus an artifact/verification. Tree-shaped.
@@ -82,7 +79,7 @@ fn an_interface_bridging_two_subsystems_is_a_single_point_of_failure() {
     // subsystems, severed by the failure of a thing that actually runs.
     let g = bridged_subsystems(true);
     let spof: Vec<String> = g
-        .detect_defects()
+        .open_defects()
         .unwrap()
         .into_iter()
         .filter(|d| d.category == HealCategory::SinglePointOfFailure)
@@ -109,7 +106,7 @@ fn a_capability_bridging_two_subsystems_is_not_a_single_point_of_failure() {
 }
 
 #[test]
-fn a_separate_cluster_is_a_disconnected_community() {
+fn a_separate_cluster_is_a_unthreaded_cluster() {
     // Main thread + a detached 2-node island (cap:x—cmp:x) linked to nothing else.
     let mut g = linear_thread();
     g.add_capability("cap:x", "X", "island cap", None).unwrap();
@@ -117,12 +114,12 @@ fn a_separate_cluster_is_a_disconnected_community() {
         .unwrap();
     g.allocate("cap:x", "cmp:x").unwrap(); // island internally connected, externally not
 
-    assert!(has(&g, HealCategory::DisconnectedCommunity));
+    assert!(has(&g, HealCategory::UnthreadedCluster));
     let island: Vec<String> = g
-        .detect_defects()
+        .open_defects()
         .unwrap()
         .into_iter()
-        .find(|d| d.category == HealCategory::DisconnectedCommunity)
+        .find(|d| d.category == HealCategory::UnthreadedCluster)
         .unwrap()
         .affected_ids;
     assert_eq!(island, ["cap:x", "cmp:x"]);
@@ -131,7 +128,7 @@ fn a_separate_cluster_is_a_disconnected_community() {
 #[test]
 fn a_fully_connected_thread_has_no_structural_defects() {
     let g = linear_thread();
-    assert!(!has(&g, HealCategory::DisconnectedCommunity));
+    assert!(!has(&g, HealCategory::UnthreadedCluster));
     assert!(!has(&g, HealCategory::SinglePointOfFailure));
     assert!(!has(&g, HealCategory::DeadEnd));
 }
@@ -143,7 +140,7 @@ fn an_isolated_component_is_a_dead_end() {
         .unwrap();
     assert!(has(&g, HealCategory::DeadEnd));
     let dead: Vec<String> = g
-        .detect_defects()
+        .open_defects()
         .unwrap()
         .into_iter()
         .filter(|d| d.category == HealCategory::DeadEnd)
@@ -215,7 +212,7 @@ fn an_unrelated_island_does_not_make_everything_a_single_point_of_failure() {
         .unwrap();
     }
     let spofs = |g: &DesignGraph| -> Vec<String> {
-        g.detect_defects()
+        g.open_defects()
             .unwrap()
             .iter()
             .filter(|d| d.category == HealCategory::SinglePointOfFailure)
@@ -303,7 +300,7 @@ fn an_intent_cluster_hanging_off_one_component_is_not_a_single_point_of_failure(
     .unwrap();
 
     let spofs: Vec<String> = g
-        .detect_defects()
+        .open_defects()
         .unwrap()
         .into_iter()
         .filter(|d| d.category == HealCategory::SinglePointOfFailure)
@@ -385,7 +382,7 @@ fn a_cut_vertex_hidden_by_intent_edges_is_still_a_single_point_of_failure() {
     }
 
     let spofs: Vec<String> = g
-        .detect_defects()
+        .open_defects()
         .unwrap()
         .into_iter()
         .filter(|d| d.category == HealCategory::SinglePointOfFailure)
@@ -421,7 +418,7 @@ fn an_assembly_whose_only_edges_are_containment_is_not_a_dead_end() {
     g.contain_component("cmp:parent", "cmp:leaf").unwrap();
     g.allocate("cap:a", "cmp:leaf").unwrap();
 
-    let defects = g.detect_defects().unwrap();
+    let defects = g.open_defects().unwrap();
     let dead: Vec<&str> = defects
         .iter()
         .filter(|d| d.category == reflow2_core::HealCategory::DeadEnd)
@@ -456,7 +453,7 @@ fn a_leaf_with_no_traceability_is_still_a_dead_end_even_inside_a_hierarchy() {
     g.contain_component("cmp:parent", "cmp:idle").unwrap();
     g.allocate("cap:a", "cmp:busy").unwrap();
 
-    let defects = g.detect_defects().unwrap();
+    let defects = g.open_defects().unwrap();
     let dead: Vec<&str> = defects
         .iter()
         .filter(|d| d.category == reflow2_core::HealCategory::DeadEnd)
@@ -507,7 +504,7 @@ fn a_library_hub_is_not_a_runtime_single_point_of_failure() {
         g
     };
     let flagged = |g: &DesignGraph| -> Vec<String> {
-        g.detect_defects()
+        g.open_defects()
             .unwrap()
             .into_iter()
             .filter(|d| d.category == HealCategory::SinglePointOfFailure)
@@ -577,7 +574,7 @@ fn a_release_and_its_environment_are_not_an_island() {
     .unwrap();
 
     assert!(
-        !has(&g, HealCategory::DisconnectedCommunity),
+        !has(&g, HealCategory::UnthreadedCluster),
         "a release shipping a design artifact is part of the design network"
     );
 }
@@ -585,7 +582,7 @@ fn a_release_and_its_environment_are_not_an_island() {
 // ---- BL-84 · decomposition scaffolds and foundation hubs are not defects ----
 
 #[test]
-fn a_subsystem_grouping_is_not_a_disconnected_community() {
+fn a_subsystem_grouping_is_not_a_unthreaded_cluster() {
     // reflow2's own self-model (BL-83a): functional subsystems connect down to
     // their modules only by CONTAINS (excluded from the design network) and to
     // each other through the Decision that governs them — so the whole grouping
@@ -620,7 +617,7 @@ fn a_subsystem_grouping_is_not_a_disconnected_community() {
         .unwrap();
     }
     assert!(
-        !has(&g, HealCategory::DisconnectedCommunity),
+        !has(&g, HealCategory::UnthreadedCluster),
         "a subsystem grouping attached through the hierarchy is not an orphan"
     );
 }
@@ -640,7 +637,7 @@ fn an_island_with_only_internal_containment_still_fires() {
         .unwrap();
     g.contain_component("cmp:x", "cmp:x2").unwrap(); // containment, but to an orphan
     assert!(
-        has(&g, HealCategory::DisconnectedCommunity),
+        has(&g, HealCategory::UnthreadedCluster),
         "containment that never reaches the body does not grant the exemption"
     );
 }
@@ -684,7 +681,7 @@ fn bridged_by_interface(medium: &str) -> DesignGraph {
 #[test]
 fn a_foundation_interface_is_not_a_runtime_single_point_of_failure() {
     let flagged = |g: &DesignGraph| -> Vec<String> {
-        g.detect_defects()
+        g.open_defects()
             .unwrap()
             .into_iter()
             .filter(|d| d.category == HealCategory::SinglePointOfFailure)
@@ -765,7 +762,7 @@ fn bridged_by_interface_via_tools(medium: Option<&str>) -> DesignGraph {
 #[test]
 fn the_foundation_exemption_is_reachable_through_add_interface_and_set_spec() {
     let flagged = |g: &DesignGraph| -> Vec<String> {
-        g.detect_defects()
+        g.open_defects()
             .unwrap()
             .into_iter()
             .filter(|d| d.category == HealCategory::SinglePointOfFailure)
@@ -802,7 +799,7 @@ fn the_foundation_exemption_is_reachable_through_add_interface_and_set_spec() {
 // ---- 2026-08-17 · the finding describes the walk that produced it ----------
 //
 // req:a-report-says-what-it-swept-and-whether-its-checks-ran, part (b).
-// dev_storyflow's report: `disconnected_community` says "disconnected from the
+// dev_storyflow's report: `unthreaded_cluster` says "disconnected from the
 // rest of the design", and the nodes it named were all REACHABLE by an
 // undirected walk of the graph. Both are true at once, because the design
 // network is not the graph — it drops nine node types and every review record,
@@ -810,7 +807,7 @@ fn the_foundation_exemption_is_reachable_through_add_interface_and_set_spec() {
 // day this landed: the walk covers 1133 of 2413 nodes.
 //
 // The category key is deliberately NOT renamed. Consumers match on
-// `disconnected_community` (it is a documented HEAL category and an ility
+// `unthreaded_cluster` (it is a documented HEAL category and an ility
 // source), so renaming it to be accurate would break them to fix a sentence.
 
 /// The message must say what it walked, so a reader can tell "cut off in the
@@ -824,10 +821,10 @@ fn the_finding_says_what_it_swept_and_stops_claiming_unreachability() {
     g.allocate("cap:x", "cmp:x").unwrap();
 
     let msg = g
-        .detect_defects()
+        .open_defects()
         .unwrap()
         .into_iter()
-        .find(|d| d.category == HealCategory::DisconnectedCommunity)
+        .find(|d| d.category == HealCategory::UnthreadedCluster)
         .expect("the island is still reported")
         .message;
 
@@ -860,10 +857,10 @@ fn the_swept_count_tracks_the_graph_rather_than_being_boilerplate() {
     g.allocate("cap:x", "cmp:x").unwrap();
 
     let scope_of = |g: &reflow2_core::DesignGraph| {
-        g.detect_defects()
+        g.open_defects()
             .unwrap()
             .into_iter()
-            .find(|d| d.category == HealCategory::DisconnectedCommunity)
+            .find(|d| d.category == HealCategory::UnthreadedCluster)
             .expect("island")
             .message
     };

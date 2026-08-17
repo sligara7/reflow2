@@ -49,7 +49,7 @@ a human message, and a `suggested_fix_type`.
 | `orphan_node` | a Capability not `ALLOCATED_TO` any Component; an Artifact that `REALIZES` nothing; a Requirement with no `SATISFIES` | critical for Fragment, else warning | create edge / generate owner |
 | `dead_end` | a Flow step with no downstream; a Component nothing depends on and that provides nothing | warning | create edge |
 | `unreachable` | a Capability unreachable from any Flow entry point | warning | create edge |
-| `disconnected_community` | a cluster of nodes with no link to the rest of the design | warning | create bridging edge |
+| `unthreaded_cluster` | a cluster of ≥2 nodes the golden thread does not connect to the main body. **Not "unreachable in the graph"** — the walk is over the design network, which drops provenance types and review records and does not count `CONTAINS`, so these nodes are often reachable by other links. The finding reports how much of the graph it walked | warning | **none — no mechanical repair.** Bridging edges would assert relationships nobody stated, and whether a separation is an accident or deliberate is a judgement only a person holds |
 | `weak_connection` | a subsystem hanging by a single edge | warning | create edge |
 | `single_point_of_failure` | a Component every path routes through | warning | add redundancy / note |
 | `circular_dependency` | parts that depend on each other in a loop — directly via `DEPENDS_ON`, or through the contracts they `PROVIDES`/`CONSUMES`. Reported per mutually-dependent cluster (an SCC), not per elementary cycle | critical | break the cycle (invert a dependency, introduce an interface, go event-driven) |

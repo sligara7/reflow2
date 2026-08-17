@@ -807,7 +807,7 @@ def build(s: Server, fresh: bool = True) -> None:
     # to cmp:graph, making ifc:core-api the sole operational bridge between the
     # Design Store and the Agent Surface — a true SPOF, accepted like the graph
     # handle and the MCP service (dec:graph-spof-accepted, dec:service-spof-
-    # accepted). The separate 8-node "subsystem island" a disconnected_community
+    # accepted). The separate 8-node "subsystem island" a unthreaded_cluster
     # defect reports is a detector false positive — subsystems are pure
     # decomposition nodes with no operational edges by design, and the
     # operational-network community check should skip them (BL-84, BL-69 family).
@@ -948,8 +948,11 @@ def analyse(s: Server) -> None:
         print(f"  {g['severity']:.2f}  {g['gap_source']:26} {who}")
         print(f"        {g['title']}")
 
-    defects = s.call("detect_defects")
-    print(f"\n-- detect_defects: {len(defects)} --")
+    sweep = s.call("detect_defects")
+    defects = sweep["defects"]
+    print(f"\n-- detect_defects: {len(defects)} "
+          f"(swept {sweep['swept']['nodes']} nodes, "
+          f"{len(sweep['swept']['rules'])} rules) --")
     for d in defects:
         print(f"  {d['severity']:8} {d['category']:24} {d['message'][:70]}")
 

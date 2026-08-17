@@ -163,7 +163,7 @@ fn full_coherence_loop() {
         g.detect_gaps().unwrap().is_empty(),
         "baseline should have no gaps"
     );
-    let baseline_defects = g.detect_defects().unwrap();
+    let baseline_defects = g.open_defects().unwrap();
     assert!(
         baseline_defects.is_empty(),
         "baseline should have no structural defects, found: {:?}",
@@ -270,7 +270,7 @@ fn full_coherence_loop() {
     );
 
     // ---- HEAL: the redundant capability is a structural defect HEAL fixes. ----
-    let defects = g.detect_defects().unwrap();
+    let defects = g.open_defects().unwrap();
     assert!(
         defects
             .iter()
@@ -338,7 +338,7 @@ fn full_coherence_loop() {
     );
     assert!(g.get_node(node::CAPABILITY, "cap:fast").unwrap().is_some());
     assert!(
-        !g.detect_defects()
+        !g.open_defects()
             .unwrap()
             .iter()
             .any(|d| d.category == HealCategory::Duplicate),

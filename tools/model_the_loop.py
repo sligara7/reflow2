@@ -176,7 +176,7 @@ def main() -> int:
             if missed:
                 print(f"     (the walk omits {', '.join(missed)} — "
                       f"which is why members is the honest answer)")
-        defects = s.call("detect_defects")
+        defects = s.call("detect_defects")["defects"]
         if any(d["category"] == "circular_dependency" for d in defects):
             friction.append(
                 "a TRIGGERS cycle leaked into detect_defects — the process's design is being "

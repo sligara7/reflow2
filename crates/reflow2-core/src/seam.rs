@@ -6,7 +6,7 @@
 //! Measured, not argued (trial against dynograph-foundation, 2026-07-28).
 //! `compose_and_analyse` put both designs in one graph and ran the whole
 //! detector suite over it. Before the seam was drawn: one loud
-//! `disconnected_community`, correctly reporting two designs side by side with
+//! `unthreaded_cluster`, correctly reporting two designs side by side with
 //! nothing joining them. After seven `CONSUMES` edges were drawn by hand: the
 //! disconnection vanished and the seam produced **zero findings of any kind**.
 //!

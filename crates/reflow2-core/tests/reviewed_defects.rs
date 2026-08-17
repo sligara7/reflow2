@@ -45,7 +45,7 @@ fn depends(g: &mut DesignGraph, from: &str, to: &str) {
 }
 
 fn first_defect(g: &DesignGraph) -> reflow2_core::HealIssue {
-    g.detect_defects()
+    g.open_defects()
         .unwrap()
         .into_iter()
         .next()
@@ -56,7 +56,7 @@ fn first_defect(g: &DesignGraph) -> reflow2_core::HealIssue {
 fn an_accepted_defect_leaves_the_open_list_and_keeps_its_reason() {
     let mut g = cycle();
     let defect = first_defect(&g);
-    let before = g.detect_defects().unwrap().len();
+    let before = g.open_defects().unwrap().len();
 
     let decision_id = g
         .acknowledge_defect(
@@ -67,7 +67,7 @@ fn an_accepted_defect_leaves_the_open_list_and_keeps_its_reason() {
         )
         .unwrap();
 
-    let after = g.detect_defects().unwrap();
+    let after = g.open_defects().unwrap();
     assert_eq!(
         after.len(),
         before - 1,
@@ -127,10 +127,7 @@ fn acceptance_expires_when_the_shape_changes() {
     g.acknowledge_defect(&defect.id, &defect.affected_ids, "Fine for now.")
         .unwrap();
     assert!(
-        g.detect_defects()
-            .unwrap()
-            .iter()
-            .all(|d| d.id != defect.id),
+        g.open_defects().unwrap().iter().all(|d| d.id != defect.id),
         "accepted, so quiet"
     );
 
@@ -147,7 +144,7 @@ fn acceptance_expires_when_the_shape_changes() {
     depends(&mut g, "cap:b", "cap:c");
     depends(&mut g, "cap:c", "cap:a");
 
-    let open = g.detect_defects().unwrap();
+    let open = g.open_defects().unwrap();
     assert!(
         open.iter().any(|d| d.id != defect.id),
         "the new shape is a new defect nobody has accepted: {open:?}"
@@ -176,10 +173,7 @@ fn withdrawing_returns_it_to_the_open_list_and_keeps_the_record() {
     assert!(g.withdraw_defect_acknowledgement(&defect.id).unwrap());
 
     assert!(
-        g.detect_defects()
-            .unwrap()
-            .iter()
-            .any(|d| d.id == defect.id),
+        g.open_defects().unwrap().iter().any(|d| d.id == defect.id),
         "withdrawn, so open again"
     );
     let decision = g

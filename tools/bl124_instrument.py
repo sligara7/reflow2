@@ -3,7 +3,7 @@
 
 An acknowledgement Decision is a statement *about* the design, wired into the
 design with `GOVERNED_BY` edges to everything it acknowledges. `design_network()`
-has three consumers — `disconnected_community`, betweenness centrality, and
+has three consumers — `unthreaded_cluster`, betweenness centrality, and
 `surprising_connections` — and until BL-124 all three counted those records as
 design structure.
 
@@ -60,8 +60,11 @@ def main() -> None:
 
     # 1. Structural defects — islands, SPOFs, and whether an ack sits inside one.
     d = call(s, "detect_defects", {})
-    items = d.get("items", [])
-    print(f"\n[defects] total {d.get('count')}")
+    # {swept, defects} unscoped since 2026-08-17; the old shape was the array
+    # envelope {count, items}. Both are read so this instrument keeps working
+    # against an older server as well as a current one.
+    items = d.get("defects", d.get("items", []))
+    print(f"\n[defects] total {len(items)}  swept {d.get('swept', {}).get('nodes', '?')} node(s)")
     for it in items:
         aff = it.get("affected_ids", [])
         inside = [a for a in aff if a in acks]
