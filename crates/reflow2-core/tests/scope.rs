@@ -240,7 +240,7 @@ fn structural_defects_scope_the_same_way() {
     // "what am I owed" — same contract: filter, count, never imply the rest is
     // clean.
     let g = program();
-    let all = g.detect_defects().unwrap();
+    let all = g.open_defects().unwrap();
     let scoped = g.detect_defects_in_scope("cmp:laser", 3).unwrap();
     assert_eq!(scoped.total, all.len());
     assert_eq!(scoped.in_scope + scoped.out_of_scope, scoped.total);

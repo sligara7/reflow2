@@ -40,7 +40,7 @@ fn two_decisions() -> DesignGraph {
 }
 
 fn contradictions(g: &DesignGraph) -> Vec<String> {
-    g.detect_defects()
+    g.open_defects()
         .expect("defects")
         .into_iter()
         .filter(|d| format!("{:?}", d.category) == "Contradiction")

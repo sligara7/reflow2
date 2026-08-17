@@ -2,7 +2,7 @@
 //!
 //! `acknowledge_defect` writes a Decision and wires `GOVERNED_BY` from every
 //! affected node to it, deliberately, so the review is reachable from the
-//! design. `disconnected_community` computes its id by hashing the category with
+//! design. `unthreaded_cluster` computes its id by hashing the category with
 //! the affected set. For most categories those two behaviours are independent.
 //! For this one the acknowledgement modifies exactly what the detector measures
 //! — cluster membership — so the review joins the island it acknowledges,
@@ -16,7 +16,7 @@
 //!
 //! The fix excludes acknowledgement records from the **design network** rather
 //! than from the defect id, because `design_network()` has three consumers —
-//! `disconnected_community`, betweenness centrality and
+//! `unthreaded_cluster`, betweenness centrality and
 //! `surprising_connections` — and keying the id differently would fix the
 //! visible symptom while leaving the other two counting review bookkeeping as
 //! design structure. Measured on reflow2's own graph before the change: **four
@@ -31,7 +31,7 @@ use reflow2_core::DesignGraph;
 use reflow2_core::nodes::{Props, node};
 
 /// Two capabilities wired to each other and to nothing else, beside a larger
-/// connected body. The pair islands, so `disconnected_community` fires on it.
+/// connected body. The pair islands, so `unthreaded_cluster` fires on it.
 fn island_beside_a_body() -> DesignGraph {
     let mut g = DesignGraph::open_in_memory().unwrap();
     g.add_project("proj:x", "X").unwrap();
@@ -71,10 +71,10 @@ fn depends(g: &mut DesignGraph, from: &str, to: &str) {
 }
 
 fn islands(g: &DesignGraph) -> Vec<reflow2_core::HealIssue> {
-    g.detect_defects()
+    g.open_defects()
         .unwrap()
         .into_iter()
-        .filter(|i| i.category.as_str() == "disconnected_community")
+        .filter(|i| i.category.as_str() == "unthreaded_cluster")
         .collect()
 }
 

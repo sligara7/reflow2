@@ -565,7 +565,7 @@ impl DesignGraph {
             .collect();
 
         let defects_on_new_ground: Vec<String> = self
-            .detect_defects()?
+            .open_defects()?
             .into_iter()
             .filter(|d| touches_new(&d.affected_ids))
             .map(|d| d.message)
@@ -796,7 +796,7 @@ impl DesignGraph {
         }
         let unsettled_assigned_decisions = assigned_decisions.len();
 
-        let structural_defects = self.detect_defects()?.len();
+        let structural_defects = self.open_defects()?.len();
 
         // A component-granularity check clears this debt (BL-73): the claim
         // HAS a passing check, one hop away — the coverage line says at which
@@ -1281,7 +1281,7 @@ impl DesignGraph {
         let gaps_truncated = gap_count.saturating_sub(TOP_N);
         gaps.truncate(TOP_N);
 
-        let defect_count = self.detect_defects()?.len();
+        let defect_count = self.open_defects()?.len();
 
         let allocation = if self.count_nodes(node::COMPONENT)? > 0 {
             let a: AllocationReport = self.evaluate_allocation()?;

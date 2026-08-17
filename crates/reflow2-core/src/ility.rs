@@ -77,7 +77,7 @@ pub mod ility_source {
     /// `detect_defects` — an articulation point that really separates.
     pub const SINGLE_POINT_OF_FAILURE: &str = "detect_defects.single_point_of_failure";
     /// `detect_defects` — a cluster joined to nothing.
-    pub const DISCONNECTED_COMMUNITY: &str = "detect_defects.disconnected_community";
+    pub const DISCONNECTED_COMMUNITY: &str = "detect_defects.unthreaded_cluster";
     /// `detect_defects` — two nodes that conflict with no resolving Decision.
     pub const CONTRADICTION: &str = "detect_defects.contradiction";
     /// `evaluate_allocation` — cohesion vs coupling across boundaries.
@@ -223,7 +223,7 @@ fn axes_for(category: HealCategory) -> &'static [&'static str] {
         // alone — which is maintainability and testability at once.
         HealCategory::CircularDependency => &["maintainability", "testability", "coupling"],
         HealCategory::SinglePointOfFailure => &["reliability"],
-        HealCategory::DisconnectedCommunity => &["maintainability"],
+        HealCategory::UnthreadedCluster => &["maintainability"],
         HealCategory::Contradiction => &["maintainability"],
         HealCategory::OrphanNode
         | HealCategory::Duplicate
@@ -237,7 +237,7 @@ fn source_for(category: HealCategory) -> Option<&'static str> {
     match category {
         HealCategory::CircularDependency => Some(ility_source::CIRCULAR_DEPENDENCY),
         HealCategory::SinglePointOfFailure => Some(ility_source::SINGLE_POINT_OF_FAILURE),
-        HealCategory::DisconnectedCommunity => Some(ility_source::DISCONNECTED_COMMUNITY),
+        HealCategory::UnthreadedCluster => Some(ility_source::DISCONNECTED_COMMUNITY),
         HealCategory::Contradiction => Some(ility_source::CONTRADICTION),
         _ => None,
     }
@@ -257,7 +257,7 @@ impl DesignGraph {
         };
 
         // ---- defects: adverse, because their own module calls them defects --
-        for issue in self.detect_defects()? {
+        for issue in self.open_defects()? {
             let Some(source) = source_for(issue.category) else {
                 continue;
             };

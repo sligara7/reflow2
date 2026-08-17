@@ -596,7 +596,7 @@ fn a_near_match_becomes_a_standing_question_detect_can_collect() {
     // suspicion must NOT reach HEAL, because HEAL's only fix for a duplicate is
     // an irreversible merge.
     assert!(
-        g.detect_defects()
+        g.open_defects()
             .unwrap()
             .iter()
             .all(|i| i.category.as_str() != "duplicate"),
@@ -643,7 +643,7 @@ fn an_auto_merge_leaves_no_question_behind() {
         "a merge answers the question; it must not also ask it"
     );
     assert!(
-        !g.detect_defects()
+        !g.open_defects()
             .unwrap()
             .iter()
             .any(|i| i.category.as_str() == "duplicate"),

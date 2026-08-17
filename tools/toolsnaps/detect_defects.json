@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "Detect structural defects the machine can repair (HEAL). Pass `scope` (a node id, `depth` default 3) to ask it of one part of the design: not \"what is my team owed\" but \"is my part of the architecture sound\" — a cycle wholly inside one subsystem is that subsystem's to fix. Reports `total` against `in_scope` so a quiet corner never implies a quiet design.",
+  "description": "Detect structural defects the machine can repair (HEAL). Pass `scope` (a node id, `depth` default 3) to ask it of one part of the design: not \"what is my team owed\" but \"is my part of the architecture sound\" — a cycle wholly inside one subsystem is that subsystem's to fix. Reports `total` against `in_scope` so a quiet corner never implies a quiet design. UNSCOPED, IT RETURNS `{swept, defects}` RATHER THAN A BARE LIST, since 2026-08-17: `swept.nodes` is what it examined, `swept.rules` names the checks that ran, and `swept.note` appears only when the sweep COULD NOT have found anything. So an empty `defects` says which empty it is — exercised and found nothing, or nothing to examine — instead of leaving a zero to be read as permission before `apply_heal`, which deletes nodes. `swept.design_network_nodes` is deliberately SMALLER than `swept.nodes`: the topology rules walk a narrower graph that drops provenance types, review records and CONTAINS, and that gap is reported rather than hidden.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,

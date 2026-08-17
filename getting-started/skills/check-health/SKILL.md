@@ -36,7 +36,7 @@ What the categories mean, and what to do about each:
 |---|---|---|
 | `circular_dependency` | parts that depend on each other in a loop — directly, or through the contracts they provide and consume. The `message` shows the loop as `a → b → c → a` | **user** — see step 4 |
 | `single_point_of_failure` | every path between subsystems routes through one part | user |
-| `disconnected_community` | a cluster with no link to the rest of the design | user |
+| `unthreaded_cluster` | a cluster the golden thread does not connect to the main body. NOT "unreachable" — the walk skips provenance nodes and `CONTAINS`, so they are often reachable another way; the finding says how much of the graph it walked | user |
 | `dead_end` | a component connected to nothing at all | user |
 | `orphan_node` | a Capability allocated nowhere, an Artifact realizing nothing, a Requirement satisfied by nothing | user |
 | `contradiction` | two nodes joined by `CONTRADICTS` with no resolving Decision | user |

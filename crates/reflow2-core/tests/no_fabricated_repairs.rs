@@ -5,7 +5,7 @@
 //! D, 2026-08-09, and reproduced in reflow2's own design the same day at five
 //! nodes and again at seven.
 //!
-//! THE CONCRETE CASE. `disconnected_community` used to report a cluster with
+//! THE CONCRETE CASE. `unthreaded_cluster` used to report a cluster with
 //! `suggested_fix_type: generate_bridge` — create edges until it is connected.
 //! Where the separation is CORRECT, following that advice fabricates
 //! relationships nobody stated in order to silence a warning about a separation
@@ -34,7 +34,7 @@ use reflow2_core::nodes::{Props, edge, node};
 use reflow2_core::{DesignGraph, HealCategory};
 
 fn issue_of(g: &DesignGraph, cat: HealCategory) -> reflow2_core::HealIssue {
-    g.detect_defects()
+    g.open_defects()
         .unwrap()
         .into_iter()
         .find(|i| i.category == cat)
@@ -58,7 +58,7 @@ fn a_disconnected_cluster_is_not_offered_a_bridge_to_fabricate() {
     g.add_capability("cap:far", "Far cap", "f", None).unwrap();
     g.satisfies("cap:far", "req:far").unwrap();
 
-    let i = issue_of(&g, HealCategory::DisconnectedCommunity);
+    let i = issue_of(&g, HealCategory::UnthreadedCluster);
     assert_eq!(
         i.suggested_fix_type, None,
         "no operation may be offered: connecting the cluster would assert \

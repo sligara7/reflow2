@@ -399,7 +399,7 @@ fn a_dropped_requirement_is_ignored_by_detect_and_heal_alike() {
         .unwrap();
 
     let nags_heal = |g: &DesignGraph| {
-        g.detect_defects()
+        g.open_defects()
             .unwrap()
             .iter()
             .any(|i| i.affected_ids.iter().any(|a| a == "req:r"))

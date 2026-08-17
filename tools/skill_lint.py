@@ -219,7 +219,7 @@ NON_TOOL_TERMS = {
     "diagram",
     "direct_ring",
     "discarded",
-    "disconnected_community",
+    "unthreaded_cluster",
     "disposition",
     "doc_kind",
     "document",

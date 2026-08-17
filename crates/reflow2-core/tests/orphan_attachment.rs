@@ -36,7 +36,7 @@ fn base() -> DesignGraph {
 
 /// Every `orphan_node` finding in the graph, by the id it names.
 fn orphans(g: &DesignGraph) -> Vec<String> {
-    g.detect_defects()
+    g.open_defects()
         .unwrap()
         .into_iter()
         .filter(|i| i.category == HealCategory::OrphanNode)

@@ -230,7 +230,7 @@ impl DesignGraph {
         depth: usize,
     ) -> Result<Scoped<HealIssue>, DynoError> {
         let region = self.require_scope(seed_id, depth)?;
-        let all = self.detect_defects()?;
+        let all = self.open_defects()?;
         let total = all.len();
         let unanchored = all.iter().filter(|d| d.affected_ids.is_empty()).count();
         let items: Vec<HealIssue> = all

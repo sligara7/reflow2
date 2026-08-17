@@ -93,7 +93,7 @@ and the increment most likely to be felt on day one.**
 | **BL-205** | `loop_status` returns 72,886 chars and cannot be read — 99.6% is `verifications` | S |
 | **BL-194** | `open_questions` returning 0 reads as an all-clear; name the other counts | S |
 | **BL-192** | enum rejections list the legal values; field errors name the spelling for that position | S |
-| **BL-195** | `disconnected_community` proposes the bridge a ruling forbids | S |
+| **BL-195** | `unthreaded_cluster` proposes the bridge a ruling forbids | S |
 | **BL-201** | `Requirement.concern` — wire the ility axis in, or retire it | S |
 | **BL-203** | make an unexercised type visible instead of silently reading an empty set | M |
 

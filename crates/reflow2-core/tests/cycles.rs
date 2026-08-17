@@ -33,7 +33,7 @@ fn depends(g: &mut DesignGraph, from: &str, to: &str) {
 }
 
 fn cycles(g: &DesignGraph) -> Vec<Vec<String>> {
-    g.detect_defects()
+    g.open_defects()
         .expect("detect")
         .into_iter()
         .filter(|i| i.category == HealCategory::CircularDependency)
@@ -163,7 +163,7 @@ fn a_cycle_is_critical_and_never_auto_applied() {
     depends(&mut g, "cmp:b", "cmp:a");
 
     let issue = g
-        .detect_defects()
+        .open_defects()
         .expect("detect")
         .into_iter()
         .find(|i| i.category == HealCategory::CircularDependency)
@@ -209,7 +209,7 @@ fn cycle_detection_is_deterministic() {
     let second = build();
 
     let ids_of = |g: &DesignGraph| -> Vec<String> {
-        g.detect_defects()
+        g.open_defects()
             .expect("detect")
             .into_iter()
             .filter(|i| i.category == HealCategory::CircularDependency)
@@ -234,7 +234,7 @@ fn cycle_detection_is_deterministic() {
 // so a coarse model and a tangled call graph were indistinguishable.
 
 fn cycle_message(g: &DesignGraph) -> String {
-    g.detect_defects()
+    g.open_defects()
         .expect("detect")
         .into_iter()
         .find(|i| i.category == HealCategory::CircularDependency)
@@ -432,7 +432,7 @@ fn the_same_shape_over_a_runtime_medium_makes_no_foundation_claim() {
 // the claim that it is an emergency.
 
 fn cycle_issue(g: &DesignGraph) -> reflow2_core::heal::HealIssue {
-    g.detect_defects()
+    g.open_defects()
         .expect("detect")
         .into_iter()
         .find(|i| i.category == HealCategory::CircularDependency)

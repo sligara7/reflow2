@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:af96336105ccc1f60347c9b054496c334a85e8d4078d52dd83c6113c1dc7d7c7",
+  "content_hash": "sha256:dd5bcfd92d591ccd0486f86dc62cf3fe2f3d1efbb7d6771d34d6514a26f1fbfd",
   "edges": [
     {
       "edge_type": "PART_OF_FLOW",
@@ -228,19 +228,16 @@
       "to_id": "cap:z-change"
     }
   ],
-  "graph_id": "fff616ba36c49e69",
+  "graph_id": "0c09c1ed86f17392",
   "nodes": [
     {
       "node_id": "cap:p0-intent",
       "node_type": "Capability",
       "properties": {
         "description": "Turn what the user wants into Requirements.",
-        "is_entry_point": false,
-        "is_exit_point": false,
         "name": "P0 \u00b7 Capture intent",
         "provenance": "authored",
-        "status": "realized",
-        "tier": "operational"
+        "status": "realized"
       }
     },
     {
@@ -248,12 +245,9 @@
       "node_type": "Capability",
       "properties": {
         "description": "Turn intent into Capabilities \u2014 the WHAT.",
-        "is_entry_point": false,
-        "is_exit_point": false,
         "name": "P1 \u00b7 Decompose function",
         "provenance": "authored",
-        "status": "realized",
-        "tier": "operational"
+        "status": "realized"
       }
     },
     {
@@ -261,12 +255,9 @@
       "node_type": "Capability",
       "properties": {
         "description": "Assign Capabilities to Components \u2014 the WHERE.",
-        "is_entry_point": false,
-        "is_exit_point": false,
         "name": "P2 \u00b7 Allocate to structure",
         "provenance": "authored",
-        "status": "realized",
-        "tier": "operational"
+        "status": "realized"
       }
     },
     {
@@ -274,12 +265,9 @@
       "node_type": "Capability",
       "properties": {
         "description": "Build Artifacts that deliver the Capabilities.",
-        "is_entry_point": false,
-        "is_exit_point": false,
         "name": "P3 \u00b7 Realize",
         "provenance": "authored",
-        "status": "realized",
-        "tier": "operational"
+        "status": "realized"
       }
     },
     {
@@ -287,12 +275,9 @@
       "node_type": "Capability",
       "properties": {
         "description": "Prove the Capabilities actually work.",
-        "is_entry_point": false,
-        "is_exit_point": false,
         "name": "P4 \u00b7 Verify",
         "provenance": "authored",
-        "status": "realized",
-        "tier": "operational"
+        "status": "realized"
       }
     },
     {
@@ -300,12 +285,9 @@
       "node_type": "Capability",
       "properties": {
         "description": "Ship it, run it, learn from it.",
-        "is_entry_point": false,
-        "is_exit_point": false,
         "name": "P5 \u00b7 Release and operate",
         "provenance": "authored",
-        "status": "realized",
-        "tier": "operational"
+        "status": "realized"
       }
     },
     {
@@ -313,12 +295,9 @@
       "node_type": "Capability",
       "properties": {
         "description": "Compare what the design claims against what is actually built, tested and deployed.",
-        "is_entry_point": false,
-        "is_exit_point": false,
         "name": "Reconcile against reality",
         "provenance": "authored",
-        "status": "planned",
-        "tier": "operational"
+        "status": "planned"
       }
     },
     {
@@ -326,12 +305,9 @@
       "node_type": "Capability",
       "properties": {
         "description": "Snapshot the prior state at an epoch, then edit. The past is kept, so the design may follow the build without losing intent.",
-        "is_entry_point": false,
-        "is_exit_point": false,
         "name": "Z \u00b7 Record the change",
         "provenance": "authored",
-        "status": "realized",
-        "tier": "operational"
+        "status": "realized"
       }
     },
     {
@@ -371,9 +347,6 @@
       "node_id": "req:coherence-is-measurable",
       "node_type": "Requirement",
       "properties": {
-        "concern": "core",
-        "designation": "internal",
-        "kind": "functional",
         "lineage": "original",
         "name": "Coherence is measurable",
         "priority": "medium",
@@ -386,9 +359,6 @@
       "node_id": "req:intent-preserved",
       "node_type": "Requirement",
       "properties": {
-        "concern": "core",
-        "designation": "internal",
-        "kind": "functional",
         "lineage": "original",
         "name": "Original intent is never lost",
         "priority": "medium",
@@ -401,9 +371,6 @@
       "node_id": "req:released-eq-designed",
       "node_type": "Requirement",
       "properties": {
-        "concern": "core",
-        "designation": "internal",
-        "kind": "functional",
         "lineage": "original",
         "name": "Released equals designed",
         "priority": "medium",
@@ -510,7 +477,7 @@
       "Verification"
     ],
     "node_types": 29,
-    "reflow2_version": "0.26.1",
+    "reflow2_version": "0.33.0",
     "schema_version": 1
   }
 }

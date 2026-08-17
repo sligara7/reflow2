@@ -34,6 +34,31 @@ macro_rules! jl {
     }};
 }
 
+/// `detect_defects` unscoped, unwrapped to its findings.
+///
+/// It stopped being a "list tool" on 2026-08-17: it returns `{swept, defects}`
+/// so an empty answer can say whether it was EXERCISED AND FOUND NOTHING or HAD
+/// NOTHING TO EXAMINE, which a bare `{count, items}` envelope cannot express.
+/// `jl!` correctly refused it — that refusal is the contract check working, not
+/// a test to loosen — so the sweep gets its own accessor, and the sweep block
+/// is asserted present here rather than quietly skipped.
+macro_rules! jd {
+    ($call:expr) => {{
+        let env = j!($call);
+        assert!(
+            env.get("swept").is_some() && env.get("defects").is_some(),
+            "detect_defects must return a {{swept, defects}} sweep, got {env}"
+        );
+        assert!(
+            env["swept"]["rules"]
+                .as_array()
+                .is_some_and(|r| !r.is_empty()),
+            "and the sweep must name the rules that ran, or 'no findings' is taken on trust: {env}"
+        );
+        env["defects"].clone()
+    }};
+}
+
 /// A tool result as the JSON *object* a struct-carrying parameter now takes.
 ///
 /// These tests call the handlers as Rust fns, so they never cross the JSON
@@ -1084,7 +1109,7 @@ async fn marking_a_requirement_dropped_stops_the_nagging() {
         "an unsatisfied requirement is asked about — once, by DETECT"
     );
     assert!(
-        !flagged(&jl!(s.detect_defects(Parameters(ScopeReq::default())))),
+        !flagged(&jd!(s.detect_defects(Parameters(ScopeReq::default())))),
         "and never doubled as a HEAL defect"
     );
 
@@ -1103,7 +1128,7 @@ async fn marking_a_requirement_dropped_stops_the_nagging() {
         "DETECT goes quiet"
     );
     assert!(
-        !flagged(&jl!(s.detect_defects(Parameters(ScopeReq::default())))),
+        !flagged(&jd!(s.detect_defects(Parameters(ScopeReq::default())))),
         "and so must HEAL"
     );
 }

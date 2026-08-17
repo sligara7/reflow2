@@ -227,7 +227,7 @@ impl DesignNetwork {
 ///
 /// **Why it matters that these were counted (BL-124).** The acknowledgement is
 /// wired `GOVERNED_BY` from every node it acknowledges, deliberately, so the
-/// review stays reachable from the design. `disconnected_community` hashes its
+/// review stays reachable from the design. `unthreaded_cluster` hashes its
 /// id from the affected set — so the review joined the island it acknowledged,
 /// enlarged it by one, minted an id nobody had accepted, and the defect
 /// returned one node larger every time. An entire category was unclosable,
@@ -236,7 +236,7 @@ impl DesignNetwork {
 /// across four sessions of a real project, growing 8 → 9 → 10 nodes.
 ///
 /// The fix belongs here rather than in the defect-id hash because
-/// `design_network()` has **three** consumers — `disconnected_community`,
+/// `design_network()` has **three** consumers — `unthreaded_cluster`,
 /// betweenness centrality (`propagate`) and `surprising_connections` — and the
 /// other two were distorted silently. Measured on reflow2's own graph before
 /// this change: 125 review records carrying 610 edges, and **four of the eight

@@ -7,7 +7,7 @@
 //! one of the five accepted SPOF dispositions not linked to what it disposes,
 //! and nothing in reflow2 could see it.
 //!
-//! `disconnected_community` cannot: it only reports clusters of **≥2**, so a
+//! `unthreaded_cluster` cannot: it only reports clusters of **≥2**, so a
 //! node connected to nothing is never a cluster. `orphan_node` cannot: since
 //! [BL-42] it holds exactly one rule, an Artifact realizing nothing.
 //!
@@ -51,7 +51,7 @@ fn base() -> DesignGraph {
 }
 
 fn orphan_ids(g: &DesignGraph) -> Vec<String> {
-    g.detect_defects()
+    g.open_defects()
         .unwrap()
         .into_iter()
         .filter(|i| i.category == HealCategory::OrphanNode)
@@ -60,7 +60,7 @@ fn orphan_ids(g: &DesignGraph) -> Vec<String> {
 }
 
 fn severity_of(g: &DesignGraph, id: &str) -> Option<HealSeverity> {
-    g.detect_defects()
+    g.open_defects()
         .unwrap()
         .into_iter()
         .find(|i| i.category == HealCategory::OrphanNode && i.affected_ids.iter().any(|a| a == id))

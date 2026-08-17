@@ -116,8 +116,9 @@ pub use genesis::{GENESIS_EPOCH_ID, GenesisOptions, GenesisReport};
 pub use granularity::{GranularityObservation, GranularityReport};
 pub use graph::{DEFAULT_GRAPH_ID, DesignGraph};
 pub use heal::{
-    GeneratedContentStub, HealCategory, HealIssue, HealOp, HealOperation, HealOptions,
+    DefectSweep, GeneratedContentStub, HealCategory, HealIssue, HealOp, HealOperation, HealOptions,
     HealProposal, HealReport, HealSeverity, HealStrategy, ReviewedDefect, SkippedOperation,
+    SweepScope,
 };
 pub use hierarchy::{HierarchyIssue, HierarchyIssueKind, Level};
 pub use ility::{AssertedScore, IlityEvidence, IlityReport, IlitySignal};

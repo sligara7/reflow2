@@ -371,9 +371,19 @@ def run(binary: str, graph_path: str) -> int:
          upd["properties"]["status"] == "dropped", upd["properties"].get("status"))
     c.ok("and its statement survives the change",
          upd["properties"]["statement"] == "We might not do this.")
+    # detect_defects returns {swept, defects} unscoped since 2026-08-17, so an
+    # empty answer says which empty it is. This call reads the findings; the
+    # sweep itself is asserted below.
+    sweep = s.call("detect_defects")
     nagged = any("req:maybe" in d.get("affected_ids", [])
-                 for d in s.call("detect_defects"))
+                 for d in sweep["defects"])
     c.ok("a dropped requirement stops being nagged by HEAL too", not nagged)
+    c.ok("and the sweep says what it examined, so a zero is never bare",
+         sweep["swept"]["nodes"] > 0 and "orphan_node" in sweep["swept"]["rules"],
+         sweep.get("swept"))
+    c.ok("with the narrower topology walk reported separately",
+         sweep["swept"]["design_network_nodes"] <= sweep["swept"]["nodes"],
+         sweep.get("swept"))
 
     print("\n== 0. GENESIS ==")
     g = s.call("genesis", {
@@ -939,7 +949,7 @@ def run(binary: str, graph_path: str) -> int:
     c.ok("the process's cycle is reported, never judged",
          [c["members"] for c in fr["cycles"]] == [["cap:display", "cap:flight"]]
          and not any(set(d["affected_ids"]) == {"cap:flight", "cap:display"}
-                     for d in s.call("detect_defects")
+                     for d in s.call("detect_defects")["defects"]
                      if d["category"] == "circular_dependency"),
          fr["cycles"])
     c.ok("a fully-stated flow confesses nothing", fr["confessions"] == [],
@@ -997,7 +1007,7 @@ def run(binary: str, graph_path: str) -> int:
     s.call("add_interface", {"id": "ifc:score", "name": "Score input"})
     s.call("provides", {"from_id": "cmp:ui", "to_id": "ifc:score"})
     s.call("consumes", {"from_id": "cmp:physics", "to_id": "ifc:score"})
-    defects = s.call("detect_defects")
+    defects = s.call("detect_defects")["defects"]
     cyc = next((d for d in defects if d["category"] == "circular_dependency"), None)
     c.ok("circular dependency found through the contracts", cyc is not None,
          [d["category"] for d in defects])

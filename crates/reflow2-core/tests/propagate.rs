@@ -376,7 +376,7 @@ fn a_changed_capability_reaches_the_increment_it_was_promised_to() {
     // without anyone asking whether the impact table should know about it, so
     // a release wired only by its schedule — rather than by a manifest of what
     // it already ships — was invisible to impact and read as a disconnected
-    // island. Found 2026-07-31 by `disconnected_community` firing the first
+    // island. Found 2026-07-31 by `unthreaded_cluster` firing the first
     // time a release was modelled forward, from the plan, instead of backward
     // from a cut.
     //

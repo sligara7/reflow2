@@ -31,6 +31,42 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+> **This increment is a MINOR, not a patch, and both reasons are deliberate breaks.** The
+> `disconnected_community` defect category is renamed, and unscoped `detect_defects` returns an
+> object instead of an array. Both were declined earlier the same day *because* they break
+> consumers; `rule:fix-it-properly-while-it-is-still-cheap` (Anthony, 2026-08-17) reversed that:
+> before a stability commitment exists, "it would break consumers" is a reason to do it **now**,
+> since the price of a break only rises with every user. Migration is two lines and is below.
+
+### Changed — breaking
+
+- **`disconnected_community` is now `unthreaded_cluster`.** The old name asserted unreachability
+  and the detector computed something narrower — the nodes it named genuinely *were* reachable by
+  an undirected walk, because the topology walk drops nine node types and every review record and
+  does not count `CONTAINS` (measured: it covers 1133 of a 2413-node graph). Fixing the message
+  alone left an identifier that still said the wrong thing. `unthreaded` names what is actually
+  missing — a traceability edge, the golden thread — and cannot be misread as "unreachable in the
+  graph".
+
+  **Migration:** match on `unthreaded_cluster` instead of `disconnected_community`. The ility
+  source string moves the same way (`detect_defects.unthreaded_cluster`). **No data migration** —
+  the key was never persisted in any graph, only in code and prose, which is what made the rename
+  cheap enough to be obviously right.
+
+- **Unscoped `detect_defects` returns `{swept, defects}` instead of a bare list.** `swept.nodes`
+  is what it examined, `swept.rules` names the checks that ran, `swept.design_network_nodes`
+  reports the narrower topology walk rather than hiding it, and `swept.note` appears **only** when
+  the sweep could not have found anything. So an empty result now says which empty it is —
+  exercised and found nothing, or nothing to examine — instead of leaving a zero to be read as
+  permission before `apply_heal`, which deletes nodes.
+
+  The scoped call has answered this way since 2026-08-09 (`Scoped` carries `total`, `in_scope`,
+  `region_size` and a vacuity note); one tool was answering the same question two ways and the
+  honest half was the half fewer people call.
+
+  **Migration:** `detect_defects` → `detect_defects.defects`. In Rust, `detect_defects()` returns
+  `DefectSweep`; `open_defects()` is the bare list for callers that only want findings.
+
 ### Fixed
 
 - **`detect_defects` no longer returns a clean bill over a node attached to nothing.** The

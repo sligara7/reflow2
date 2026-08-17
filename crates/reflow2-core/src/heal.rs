@@ -25,7 +25,7 @@
 //!   one content-free structural repair, so it is what `apply_heal` executes.
 //!
 //! Deferred (need `dynograph-graph` or the LLM): dead_end / unreachable /
-//! disconnected_community / weak_connection / single_point_of_failure /
+//! unthreaded_cluster / weak_connection / single_point_of_failure /
 //! missing_link (graph algorithms), missing_embedding, and every generative
 //! healer's actual content.
 
@@ -50,8 +50,31 @@ pub enum HealCategory {
     Duplicate,
     /// An `ANTICIPATES` with no follow-through — a planned need never built.
     UnresolvedSetup,
-    /// A cluster of ≥2 design nodes with no link to the rest of the design.
-    DisconnectedCommunity,
+    /// A cluster of ≥2 design nodes that the golden thread does not connect to
+    /// the main body.
+    ///
+    /// RENAMED FROM `disconnected_community` ON 2026-08-17, and the old name is
+    /// the reason: it claimed UNREACHABILITY and computed something narrower.
+    /// dev_storyflow's report was exact — the nodes it named were all reachable
+    /// by an undirected walk of the graph. Both were true at once, because the
+    /// walk is over `design_network()`, which drops nine node types and every
+    /// review record and does not count `CONTAINS`; measured the day it was
+    /// renamed, that walk covers 1133 of a 2413-node graph. A node reachable
+    /// only through `AUTHORED_BY`, or only downward through containment, is an
+    /// island here and connected there.
+    ///
+    /// `unthreaded` names what is actually missing — a traceability edge, the
+    /// golden thread — and cannot be misread as "unreachable in the graph",
+    /// which is the misreading that cost a real reader real time. The message
+    /// still states the walk's scope; the name no longer contradicts it.
+    ///
+    /// THE FIRST FIX FOR THIS WAS THE MESSAGE ALONE
+    /// (`dec:a-misnaming-is-fixed-in-the-message-not-the-key`), on the ground
+    /// that the key is a consumer contract. `rule:fix-it-properly-while-it-is-
+    /// still-cheap` overruled that: before 1.0 a break is cheapest now and gets
+    /// dearer with every consumer. The rename cost no data migration — the key
+    /// was never persisted in any graph, only in code and in prose.
+    UnthreadedCluster,
     /// A node whose removal splits the design into ≥2 non-trivial subsystems.
     SinglePointOfFailure,
     /// An isolated Component — nothing depends on it and it provides nothing.
@@ -62,6 +85,28 @@ pub enum HealCategory {
 }
 
 impl HealCategory {
+    /// Every category, so a sweep can say which rules it ran.
+    ///
+    /// HAND-MAINTAINED, AND SAYING SO IS THE POINT — an earlier draft of this
+    /// comment claimed the compiler enforced it, which would have been a false
+    /// claim about a check, inside the change whose whole subject is reports
+    /// that overstate. It is not enforced: `as_str`'s match below is exhaustive,
+    /// so adding a variant forces an author into this impl block, but nothing
+    /// makes them extend this list. A missing entry UNDERSTATES the sweep — it
+    /// would report fewer rules than actually ran, which is the safe direction
+    /// of the two and still wrong. `every_category_is_listed_in_all` in the
+    /// tests below is what actually holds it.
+    pub const ALL: &'static [HealCategory] = &[
+        HealCategory::OrphanNode,
+        HealCategory::Contradiction,
+        HealCategory::Duplicate,
+        HealCategory::UnresolvedSetup,
+        HealCategory::UnthreadedCluster,
+        HealCategory::SinglePointOfFailure,
+        HealCategory::DeadEnd,
+        HealCategory::CircularDependency,
+    ];
+
     /// Stable snake_case key.
     pub fn as_str(self) -> &'static str {
         match self {
@@ -69,7 +114,7 @@ impl HealCategory {
             HealCategory::Contradiction => "contradiction",
             HealCategory::Duplicate => "duplicate",
             HealCategory::UnresolvedSetup => "unresolved_setup",
-            HealCategory::DisconnectedCommunity => "disconnected_community",
+            HealCategory::UnthreadedCluster => "unthreaded_cluster",
             HealCategory::SinglePointOfFailure => "single_point_of_failure",
             HealCategory::DeadEnd => "dead_end",
             HealCategory::CircularDependency => "circular_dependency",
@@ -116,6 +161,45 @@ pub struct ReviewedDefect {
 /// can never collide with a gap acknowledgement, whose ids are bare hashes.
 fn defect_ack_decision_id(defect_id: &str) -> String {
     format!("decision:ack:{defect_id}")
+}
+
+/// What a defect sweep actually looked at.
+///
+/// `req:a-report-says-what-it-swept-and-whether-its-checks-ran`. A bare list of
+/// findings cannot distinguish EXERCISED AND FOUND NOTHING from HAD NOTHING TO
+/// EXAMINE, and an empty one reads as the first while often being the second —
+/// which is the reading a fleet took before running `apply_heal`, the operation
+/// that deletes nodes.
+///
+/// THE SCOPED CALL HAS SAID THIS SINCE 2026-08-09 AND THE UNSCOPED ONE DID NOT.
+/// `detect_defects_in_scope` returns `Scoped<HealIssue>` carrying `total`,
+/// `in_scope`, `region_size` and a vacuity note, while `detect_defects`
+/// returned a naked `Vec`. One tool answered the same question two ways, and
+/// the half that was honest was the half fewer people call.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct SweepScope {
+    /// Every node in the graph — what the type-by-type rules considered.
+    pub nodes: usize,
+    /// Nodes inside the topology walk, which is deliberately NARROWER: it drops
+    /// nine node types and every review record, and `CONTAINS` is not a
+    /// traceability edge. Reported rather than explained away, because the gap
+    /// between this and `nodes` is exactly what made `unthreaded_cluster`'s old
+    /// name a lie.
+    pub design_network_nodes: usize,
+    /// The rule categories evaluated on this graph, so "no findings" can be read
+    /// as "these ran and found nothing" rather than taken on trust.
+    pub rules: Vec<&'static str>,
+    /// Said in WORDS when the sweep could not have found anything — an empty
+    /// graph. `None` when the sweep was real, so its presence is the signal.
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    pub note: Option<String>,
+}
+
+/// A defect sweep: what was examined, and what it found.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct DefectSweep {
+    pub swept: SweepScope,
+    pub defects: Vec<HealIssue>,
 }
 
 /// A detected structural defect.
@@ -649,7 +733,21 @@ impl DesignGraph {
     /// its affected set, a review **expires by construction** when the shape it
     /// was made about changes — the new shape gets a new id, which nothing has
     /// accepted yet.
-    pub fn detect_defects(&self) -> Result<Vec<HealIssue>, DynoError> {
+    /// It returns a [`DefectSweep`] rather than a bare `Vec` since 2026-08-17,
+    /// so an empty answer says which empty it is. Callers that only want the
+    /// findings take `.defects`; the scoped sibling has always answered this
+    /// way, and the two now agree.
+    pub fn detect_defects(&self) -> Result<DefectSweep, DynoError> {
+        Ok(DefectSweep {
+            swept: self.sweep_scope()?,
+            defects: self.open_defects()?,
+        })
+    }
+
+    /// The open defects alone — every detector finding not reviewed and
+    /// accepted. The engine's own consumers (`propose_heal`, the rollups, the
+    /// scoped view) want the list without the sweep description around it.
+    pub fn open_defects(&self) -> Result<Vec<HealIssue>, DynoError> {
         let mut open = Vec::new();
         for issue in self.all_defects()? {
             if self.defect_acknowledgement(&issue.id)?.is_none() {
@@ -657,6 +755,22 @@ impl DesignGraph {
             }
         }
         Ok(open)
+    }
+
+    /// What the sweep looked at — computed, never asserted.
+    fn sweep_scope(&self) -> Result<SweepScope, DynoError> {
+        let nodes = self.node_type_index()?.len();
+        let design_network_nodes = self.design_network()?.node_count();
+        Ok(SweepScope {
+            nodes,
+            design_network_nodes,
+            rules: HealCategory::ALL.iter().map(|c| c.as_str()).collect(),
+            note: (nodes == 0).then(|| {
+                "this graph holds no nodes, so an empty result is VACUOUS rather than clean — \
+                 nothing could have been found here"
+                    .to_string()
+            }),
+        })
     }
 
     /// Accept a structural defect the user has judged fine, recording WHY.
@@ -884,7 +998,7 @@ impl DesignGraph {
         // then counting zero-degree nodes by hand: `dec:sanitize-spof-accepted`
         // was an ACCEPTED single-point-of-failure disposition with no edges,
         // the only one of five such dispositions not linked to what it
-        // disposes. `disconnected_community` cannot see it — that reports
+        // disposes. `unthreaded_cluster` cannot see it — that reports
         // clusters of >=2, and a node joined to nothing is never a cluster.
         //
         // It is worse than untidy. A node with no edges cannot be reached by
@@ -1164,7 +1278,7 @@ impl DesignGraph {
     fn detect_structural_defects(&self, issues: &mut Vec<HealIssue>) -> Result<(), DynoError> {
         let net = self.design_network()?;
 
-        // disconnected_community — islands of ≥2 nodes cut off from the main
+        // unthreaded_cluster — islands of ≥2 nodes cut off from the main
         // body. Singletons are orphans/dead-ends, handled elsewhere; flag every
         // non-largest cluster of size ≥2.
         //
@@ -1184,7 +1298,7 @@ impl DesignGraph {
         // absence the message called "the rest of the design".
         //
         // The fix is the message, not the computation, and deliberately not the
-        // category key — `disconnected_community` is what consumers match on
+        // category key — `unthreaded_cluster` is what consumers match on
         // (it is a documented HEAL category and an ility source), so renaming it
         // to be accurate would break them to fix a sentence. What the finding
         // SAYS now describes the walk that produced it, including how much of
@@ -1237,8 +1351,8 @@ impl DesignGraph {
                     island.iter().map(|&i| net.id_of(i).to_string()).collect();
                 affected.sort();
                 issues.push(HealIssue {
-                    id: issue_id(HealCategory::DisconnectedCommunity, &affected),
-                    category: HealCategory::DisconnectedCommunity,
+                    id: issue_id(HealCategory::UnthreadedCluster, &affected),
+                    category: HealCategory::UnthreadedCluster,
                     severity: HealSeverity::Warning,
                     message: format!(
                         "{} nodes form a cluster with no traceability edge to the main body. \
@@ -1549,7 +1663,7 @@ impl DesignGraph {
         // saying otherwise would be a second vacuous number in the same reply.
         let mut merge_candidates_considered = 0usize;
 
-        for issue in self.detect_defects()? {
+        for issue in self.open_defects()? {
             if !options.strategy.addresses(issue.severity) {
                 continue;
             }
@@ -1614,12 +1728,13 @@ impl DesignGraph {
                     kind: "entity".to_string(),
                     description: format!("Propose the follow-through entity for {}", issue.message),
                 }),
-                HealCategory::DisconnectedCommunity | HealCategory::DeadEnd => generated_content
-                    .push(GeneratedContentStub {
+                HealCategory::UnthreadedCluster | HealCategory::DeadEnd => {
+                    generated_content.push(GeneratedContentStub {
                         for_issue: issue.id.clone(),
                         kind: "bridge".to_string(),
                         description: format!("Propose a bridging link for {}", issue.message),
-                    }),
+                    })
+                }
                 HealCategory::SinglePointOfFailure => {
                     generated_content.push(GeneratedContentStub {
                         for_issue: issue.id.clone(),
@@ -1809,7 +1924,7 @@ impl DesignGraph {
     fn sanctioned_operations(&self) -> Result<Vec<HealOperation>, DynoError> {
         let index = self.node_type_index()?;
         let mut ops = Vec::new();
-        for issue in self.detect_defects()? {
+        for issue in self.open_defects()? {
             if issue.category == HealCategory::Duplicate
                 && let Ok(op) = merge_op_for(&issue, &index)
             {
@@ -1962,7 +2077,7 @@ impl DesignGraph {
             .map(|o| o.issue_id.as_str())
             .collect();
         let remaining: std::collections::HashSet<String> =
-            self.detect_defects()?.into_iter().map(|i| i.id).collect();
+            self.open_defects()?.into_iter().map(|i| i.id).collect();
         let unresolved: Vec<String> = op_issue_ids
             .iter()
             .filter(|id| remaining.contains(**id))
@@ -2453,7 +2568,43 @@ fn orphan_at(
 
 #[cfg(test)]
 mod tests {
+    use super::HealCategory;
     use super::provenance_rank;
+
+    /// `SweepScope.rules` claims to name the rules that ran. A category missing
+    /// from `ALL` would make that claim quietly short — a report understating
+    /// its own coverage, which is the exact failure the sweep exists to end.
+    ///
+    /// The match is what does the work: it is exhaustive, so a new variant will
+    /// not compile until it is handled here, and the only sensible thing to
+    /// write in its arm is the assertion that it is also in `ALL`.
+    #[test]
+    fn every_category_is_listed_in_all() {
+        fn is_listed(c: HealCategory) -> bool {
+            // Exhaustive on purpose — do NOT add a wildcard arm. A `_` here
+            // would let a new category slip past both the compiler and this
+            // test, which is the whole thing being guarded against.
+            match c {
+                HealCategory::OrphanNode
+                | HealCategory::Contradiction
+                | HealCategory::Duplicate
+                | HealCategory::UnresolvedSetup
+                | HealCategory::UnthreadedCluster
+                | HealCategory::SinglePointOfFailure
+                | HealCategory::DeadEnd
+                | HealCategory::CircularDependency => HealCategory::ALL.contains(&c),
+            }
+        }
+        for c in HealCategory::ALL {
+            assert!(is_listed(*c), "{} is not in ALL", c.as_str());
+        }
+        assert_eq!(
+            HealCategory::ALL.len(),
+            8,
+            "a category was added or removed — extend `ALL`, the match above, and this count \
+             together, or the sweep will understate which rules it ran"
+        );
+    }
 
     /// BL-47. A node without the property cannot be built through today's
     /// public API — schema defaults materialize on create — so the vintage

@@ -607,7 +607,7 @@ fn a_calibration_on_the_realizing_artifact_counts() {
 /// `dec:calibration-propagates`, asked before the code was written rather than
 /// after a detector complained: correcting the anchor must put every value
 /// fitted to it in the blast radius. INCLUDES and SCHEDULED_FOR each reached the
-/// impact table only once `disconnected_community` fired on an island they had
+/// impact table only once `unthreaded_cluster` fired on an island they had
 /// failed to join; this pins the third such edge.
 #[test]
 fn correcting_the_anchor_reaches_what_was_fitted_to_it() {
