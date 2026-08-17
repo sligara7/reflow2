@@ -876,7 +876,7 @@ impl DesignGraph {
             }
         }
 
-        // A Decision reachable from NOTHING — no edges at all, in either
+        // A node reachable from NOTHING — no edges at all, in either
         // direction.
         //
         // Found 2026-08-01 by running check-health and detect-and-ask on
@@ -887,11 +887,43 @@ impl DesignGraph {
         // disposes. `disconnected_community` cannot see it — that reports
         // clusters of >=2, and a node joined to nothing is never a cluster.
         //
-        // It is worse than untidy. A Decision with no edges cannot be reached
-        // by propagation, so it never enters an impact analysis; and for a
+        // It is worse than untidy. A node with no edges cannot be reached by
+        // propagation, so it never enters an impact analysis; and for a
         // disposition specifically it can never EXPIRE, because expiry is
         // computed from the affected set (`ver:reviewed-defects`). A
         // conditional judgement silently becomes permanent.
+        //
+        // ⭐ IT RAN ON `Decision` ALONE UNTIL 2026-08-16, AND THAT NARROWNESS
+        // IS WHY THE PASS WHOSE JOB IS STRUCTURAL SOUNDNESS RETURNED A FALSE
+        // GREEN (req:a-report-says-what-it-swept-and-whether-its-checks-ran).
+        // dev_storyflow's fleet hit it from the outside: `detect_defects`
+        // answered clean over a DesignEpoch carrying NO EDGES AT ALL, in two
+        // separate packages, through every health call of a session. A node
+        // with no edges is the most detectable structural defect there is and
+        // needs no judgement to identify — unlike the modularity cluster the
+        // same call did report.
+        //
+        // MEASURED ON REFLOW2'S OWN GRAPH THE DAY THIS WAS GENERALIZED, which
+        // is what settles that the narrowness was the bug and not a scoping
+        // choice: 75 of 2406 nodes are degree-zero. Only 19 were Decisions,
+        // and 12 of those are `decision:ack:` review records excluded below —
+        // so SEVEN were visible to this detector. Of the rest, the ones no
+        // detector anywhere could see were 48 TemporalFacts naming nothing
+        // they are about, 3 DesignEpochs, 3 Fragments, and
+        // `ver:the-export-survives-being-read-back` — a Verification counted
+        // among the 159 passing that says what it checks to nobody.
+        //
+        // GENERALIZING IS THE SAFE DIRECTION HERE FOR THE SAME REASON THE
+        // ARTIFACT RULE ABOVE INVERTS ITS LIST. Degree-zero is self-limiting —
+        // any edge at all silences it — so it cannot grow into a
+        // per-convention nag whatever type it runs on, and a new node type
+        // gets the check the day it is added rather than the day someone
+        // remembers. Two things bound it, and both are enumerated rather than
+        // inferred: `DETECT_ASKS_INSTEAD` keeps it off the types gap-surfacing
+        // already asks about by name (BL-42), and `zero_degree_finding` grades
+        // what the finding MEANS by type instead of flattening it. Grading is
+        // not softening — every one of them is reported, and none of them can
+        // be mistaken for clean.
         //
         // THE RULE IS DEGREE-ZERO, AND THAT WAS SETTLED BY MEASUREMENT, not by
         // taste. The tempting "narrow" form — an accepted Decision with no
@@ -910,37 +942,74 @@ impl DesignGraph {
         // than how it is structured (`ver:acknowledgement-not-structure`).
         // Every one of them is `accepted` by construction, so including them
         // would fire on all twelve of reflow2's own and be pure noise.
-        for dec in self.scan_nodes(node::DECISION)? {
-            if dec.node_id.starts_with("decision:ack:") {
-                continue;
-            }
-            if !self.outgoing(&dec.node_id, None)?.is_empty()
-                || !self.incoming(&dec.node_id, None)?.is_empty()
+        // Scanned type by type in sorted order, rather than by walking the
+        // id→type index, so the issue order is the same in every process. The
+        // index is a HashMap and its iteration order is not (BL-58).
+        let mut zero_degree_types: Vec<String> = self.schema().node_types.keys().cloned().collect();
+        zero_degree_types.sort_unstable();
+        for node_type in &zero_degree_types {
+            // The Artifact arm above is the SAME rule with an exclusion list
+            // rather than a bare degree count, because bookkeeping edges land
+            // on nearly every artifact in a mature graph and counting them as
+            // attachment would silence it everywhere (BL-176). Running both
+            // would report the genuinely-unattached ones twice.
+            if node_type == node::ARTIFACT
+                || DETECT_ASKS_INSTEAD.contains(&node_type.as_str())
+                || UNATTACHED_IS_A_RESTING_STATE.contains(&node_type.as_str())
             {
                 continue;
             }
-            let accepted = dec
-                .properties
-                .get("status")
-                .and_then(|v| v.as_str())
-                .is_some_and(|s| s == "accepted");
-            issues.push(orphan_at(
-                &dec.node_id,
-                "Decision",
-                if accepted {
-                    "is accepted but governs nothing — nothing links to it, so it shapes no part \
-                     of the design, cannot appear in any impact analysis, and if it is a \
-                     disposition it can never expire"
-                } else {
-                    "has no links yet — a parked decision point, recorded but governing nothing"
-                },
-                None,
-                if accepted {
-                    HealSeverity::Warning
-                } else {
-                    HealSeverity::Info
-                },
-            ));
+            for n in self.scan_nodes(node_type)? {
+                // Review records are excluded deliberately, not for
+                // convenience: `structure.rs` already keeps `decision:ack:`
+                // ids out of the design network because they describe a
+                // judgement ABOUT the design rather than how it is structured
+                // (`ver:acknowledgement-not-structure`). Every one of them is
+                // `accepted` by construction, so including them would fire on
+                // all twelve of reflow2's own and be pure noise.
+                if n.node_id.starts_with("decision:ack:") {
+                    continue;
+                }
+                if !self.outgoing(&n.node_id, None)?.is_empty()
+                    || !self.incoming(&n.node_id, None)?.is_empty()
+                {
+                    continue;
+                }
+                // NOT EVERY ATTACHMENT IS AN EDGE, and assuming it was is the
+                // first thing this widening got wrong. Three types carry the
+                // node they are about as a REQUIRED, INDEXED PROPERTY rather
+                // than a link: `TemporalFact.subject_id`, `Snapshot.target_id`,
+                // `Question.gap_id`. A fact naming its subject that way is
+                // found by index every time it is needed and is not lost in any
+                // sense — it simply never needed an edge.
+                //
+                // Measured before the correction: 48 of reflow2's own 212
+                // TemporalFacts are degree-zero, and reporting them would have
+                // been 48 false findings shipped inside the change whose whole
+                // subject is instruments that overstate. The unit test caught
+                // it, because `subject_id` is required and the fixture could
+                // not be built without one.
+                //
+                // Resolving the id rather than naming the properties is the
+                // same inverted-list choice as ARTIFACT_BOOKKEEPING: a type
+                // that gains a pointer property is handled the day it does. It
+                // also keeps the finding that MATTERS — a pointer to a node
+                // that no longer exists resolves to nothing and is still
+                // reported, which is the dangling case, not the ordinary one.
+                if n.properties.values().any(|v| {
+                    v.as_str()
+                        .is_some_and(|s| s != n.node_id && index.contains_key(s))
+                }) {
+                    continue;
+                }
+                let accepted = n
+                    .properties
+                    .get("status")
+                    .and_then(|v| v.as_str())
+                    .is_some_and(|s| s == "accepted");
+                let (what, severity) = zero_degree_finding(node_type, accepted);
+                issues.push(orphan_at(&n.node_id, node_type, what, None, severity));
+            }
         }
 
         // contradiction — a CONTRADICTS edge (unresolved in this increment).
@@ -2180,6 +2249,128 @@ impl DesignGraph {
 /// bookkeeping edge does.
 const ARTIFACT_BOOKKEEPING: &[&str] =
     &[edge::INCLUDES, edge::CHANGED, edge::YIELDED, edge::AT_EPOCH];
+
+/// Types the degree-zero rule stays off because DETECT already asks about them
+/// — BY NAME, in the golden-thread vocabulary, and in the degree-zero case too.
+///
+/// This is BL-42 held open on purpose while the rest of the rule generalizes.
+/// A Capability with no `ALLOCATED_TO` and a Requirement nothing `SATISFIES`
+/// were once reported here AS WELL AS by `unallocated_capability` and
+/// `unsatisfied_requirement` — the same finding twice, in two lists, in two
+/// vocabularies. Four independent trials complained, and on storyflow it became
+/// **20 of 31 defects**, the dominant noise source in the output. An Interface
+/// joins them because `unprovided_interface` / `unconsumed_interface` cover it
+/// the same way.
+///
+/// So the generalization is deliberately not "every type": it is every type
+/// whose unattachment NOBODY ELSE ASKS ABOUT. That is where the false green
+/// actually lived — a DesignEpoch, a TemporalFact, a Verification that says
+/// what it checks to nobody are covered by no gap detector at all, and came
+/// back clean because this rule ran on `Decision` alone.
+///
+/// The division is the docs' own: *HEAL fills structure; gap-surfacing elicits
+/// meaning.* "Who should own this?" is meaning and belongs to DETECT. "This
+/// node is joined to nothing" is structure, needs no judgement, and belongs
+/// here — for everything DETECT has no question for.
+const DETECT_ASKS_INSTEAD: &[&str] = &[node::REQUIREMENT, node::CAPABILITY, node::INTERFACE];
+
+/// Types whose unattached state is a legitimate resting place, not a defect.
+///
+/// Both of these are here because firing on them would report the NORMAL state
+/// of a correct design as a problem — the exact failure
+/// `req:a-deliberate-state-is-not-a-defect` is about, arriving through the
+/// detector this change is widening. Widening a sweep without asking that
+/// question is how the correct action starts degrading the instrument.
+///
+/// **Project** is the design's root. A Project alone means the design is EMPTY,
+/// which is what every design looks like on its first day and what genesis
+/// produces by construction — and the phase rollups (`concept_without_design`)
+/// already say so, in the vocabulary of a design that has not started rather
+/// than of one that is broken.
+///
+/// **DesignRule** can bind the PROCESS instead of a node — "we always branch
+/// before pushing" governs nobody's Component and is not less of a rule for it.
+/// Demanding an edge would push authors to draw a relationship nobody meant,
+/// which is the forgery `repair_is_a_judgement` refuses to propose. The
+/// questions a rule genuinely owes are asked by DETECT already:
+/// `unstated_rule_enforcement` and `unverified_enforced_rule`.
+const UNATTACHED_IS_A_RESTING_STATE: &[&str] = &[node::PROJECT, node::DESIGN_RULE];
+
+/// What a degree-zero node of this type means, and how much it matters.
+///
+/// The RULE is uniform — no edges in either direction — because that is what
+/// makes it self-limiting and impossible to argue with. What varies is the
+/// CONSEQUENCE, and flattening that would be its own small lie: a Verification
+/// that says what it checks to nobody is counted among the passing and someone
+/// should look; a TemporalFact naming nothing it is about is a note that will
+/// only ever be found by someone already searching for it. Both are reported.
+/// The severity says which one to read first, not which one is real.
+///
+/// `accepted` is the node's status, and only the Decision arm reads it: an
+/// accepted Decision that governs nothing CLAIMS to shape the design, where a
+/// proposed one is a parked thought that correctly shapes nothing yet.
+fn zero_degree_finding(node_type: &str, accepted: bool) -> (&'static str, HealSeverity) {
+    match node_type {
+        node::DECISION if accepted => (
+            "is accepted but governs nothing — nothing links to it, so it shapes no part of the \
+             design, cannot appear in any impact analysis, and if it is a disposition it can \
+             never expire",
+            HealSeverity::Warning,
+        ),
+        node::DECISION => (
+            "has no links yet — a parked decision point, recorded but governing nothing",
+            HealSeverity::Info,
+        ),
+        node::COMPONENT => (
+            "is attached to nothing — it holds no capability, provides and consumes no \
+             interface, and sits in no containment, so it is a part of nothing",
+            HealSeverity::Warning,
+        ),
+        node::VERIFICATION => (
+            "checks nothing — no VERIFIES edge says what it is a check OF, so whatever it \
+             reports is counted among the passing and credited to no capability",
+            HealSeverity::Warning,
+        ),
+        node::DESIGN_EPOCH => (
+            "is attached to nothing — no snapshot, change or node is recorded against it, so it \
+             marks a moment in which, as far as the graph can tell, nothing happened",
+            HealSeverity::Info,
+        ),
+        node::TEMPORAL_FACT | node::SNAPSHOT => (
+            "points at nothing that exists — its subject/target id resolves to no node and it \
+             carries no edge either, so the record is about something the design no longer has",
+            HealSeverity::Info,
+        ),
+        node::FRAGMENT => (
+            "is attached to nothing — nothing says which artifact or corpus it came from, so it \
+             cannot be traced back to its source",
+            HealSeverity::Info,
+        ),
+        node::QUESTION | node::CHANGE_EVENT | node::DRIFT_EVENT => (
+            "is attached to nothing — this is a provenance record with nothing to be provenance \
+             FOR, so it documents no part of the design",
+            HealSeverity::Info,
+        ),
+        node::CONTRIBUTOR => (
+            "is attached to nothing — nobody owns, authors or approves anything through them, \
+             so the design cannot say what this person is here for",
+            HealSeverity::Info,
+        ),
+        // Everything else — Project, Constraint, Flow, Actor, Environment,
+        // Resource, Release, and whatever the schema gains next. A design node
+        // joined to nothing is a claim about a design it is not part of,
+        // whatever its type, so the DEFAULT is the loud one and the quiet arms
+        // above are the enumerated exceptions. That direction is the same
+        // choice ARTIFACT_BOOKKEEPING makes one rule over, for the same
+        // reason: an inclusion list goes quiet on a type nobody remembered to
+        // add, and going quiet is the failure this whole requirement is about.
+        _ => (
+            "is attached to nothing — no edge connects it to any other part of the design, so \
+             it cannot be reached by propagation or appear in any impact analysis",
+            HealSeverity::Warning,
+        ),
+    }
+}
 
 /// Build an `orphan_node` issue.
 fn orphan(id: &str, type_label: &str, what: &str, fix: Option<&'static str>) -> HealIssue {

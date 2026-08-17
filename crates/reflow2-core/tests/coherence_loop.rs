@@ -78,6 +78,11 @@ fn baseline() -> DesignGraph {
     .unwrap();
     g.create_node(node::RELEASE, "rel:v1", Props::new().set("name", "v1.0"))
         .unwrap();
+    // …and it ships something. Same 2026-08-16 widening as the epoch below: a
+    // Release with no INCLUDES is now reported, and "v1.0 ships nothing" was
+    // true of this fixture rather than unfair to it.
+    g.release_includes("rel:v1", node::COMPONENT, "cmp:cache", None)
+        .unwrap();
 
     g.satisfies("cap:fast", "req:latency").unwrap();
     g.allocate("cap:fast", "cmp:cache").unwrap();
@@ -137,6 +142,15 @@ fn baseline() -> DesignGraph {
 
     g.add_epoch("epoch:v1", "v1 baseline", EpochType::Baseline, 1)
         .unwrap();
+    // …and the baseline is pinned AT it. Added 2026-08-16 for the same reason
+    // as `rule:house-style` above, one detector along: `orphan_node` grew past
+    // `Decision` to every type nothing else asks about, and an epoch with no
+    // edges now reports as marking a moment in which nothing happened. That is
+    // the finding dev_storyflow's fleet filed from the outside, and it is true
+    // of this fixture as it stood — a "v1 baseline" that was the baseline of
+    // nothing. Pinning the requirement is what makes the word mean something.
+    g.pin_at_epoch(node::REQUIREMENT, "req:latency", "epoch:v1")
+        .unwrap();
     g
 }
 
@@ -149,9 +163,14 @@ fn full_coherence_loop() {
         g.detect_gaps().unwrap().is_empty(),
         "baseline should have no gaps"
     );
+    let baseline_defects = g.detect_defects().unwrap();
     assert!(
-        g.detect_defects().unwrap().is_empty(),
-        "baseline should have no structural defects"
+        baseline_defects.is_empty(),
+        "baseline should have no structural defects, found: {:?}",
+        baseline_defects
+            .iter()
+            .map(|d| d.message.as_str())
+            .collect::<Vec<_>>()
     );
 
     // ---- CHANGE: tighten the latency requirement at a new epoch. ----
