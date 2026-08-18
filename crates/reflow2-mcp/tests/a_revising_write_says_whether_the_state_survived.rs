@@ -42,10 +42,6 @@ async fn svc() -> ReflowService {
     ReflowService::in_memory().expect("in-memory service")
 }
 
-fn req(v: serde_json::Value) -> impl serde::de::DeserializeOwned {
-    serde_json::from_value::<serde_json::Value>(v).unwrap()
-}
-
 /// A decision worth revising, in a graph that can hold snapshots.
 async fn with_a_decision(s: &ReflowService) {
     let _ = j!(s.add_project(Parameters(
