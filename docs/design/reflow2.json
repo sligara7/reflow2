@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a1796bb2d2a674ed0a4d54dac1f9202359716115c31de4091ae8a8d057e5db59",
+  "content_hash": "sha256:a3d58c9ebda889029aeb25089d3f9b33fa72f9b7b0677027ce91af2103a42f7c",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -878,6 +878,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-scoped-answer-says-whether-it-narrowed",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:scope"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -3253,6 +3261,12 @@
       "from_id": "chg:a-ruling-parks-a-node",
       "properties": {},
       "to_id": "epoch:a-deliberate-state-is-counted-not-a-defect"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-scope-actually-narrows",
+      "properties": {},
+      "to_id": "epoch:a-scope-actually-narrows"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -11061,6 +11075,51 @@
         "action": "modified"
       },
       "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-scope-actually-narrows",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:scope"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-scope-actually-narrows",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-scope-actually-narrows",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-scope-actually-narrows",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-scoped-answer-says-whether-it-narrowed"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-scope-actually-narrows",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:a-scoped-answer-actually-narrows"
     },
     {
       "edge_type": "CHANGED",
@@ -71060,6 +71119,15 @@
       "edge_type": "REALIZES",
       "from_id": "art:scope",
       "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-scoped-answer-says-whether-it-narrowed"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:scope",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cmp:scope"
@@ -71788,6 +71856,12 @@
       "from_id": "cap:a-ruling-parks-a-node-and-parked-nodes-are-counted",
       "properties": {},
       "to_id": "req:a-deliberate-state-is-not-a-defect"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-scoped-answer-says-whether-it-narrowed",
+      "properties": {},
+      "to_id": "req:a-scoped-answer-actually-narrows"
     },
     {
       "edge_type": "SATISFIES",
@@ -73879,6 +73953,12 @@
       "from_id": "ver:a-refusal-names-its-own-fix",
       "properties": {},
       "to_id": "cap:cluster-claims"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-scoped-answer-actually-narrows",
+      "properties": {},
+      "to_id": "cap:a-scoped-answer-says-whether-it-narrowed"
     },
     {
       "edge_type": "VERIFIES",
@@ -77934,10 +78014,10 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a6b68c076bfcd16547ec850c06b7b4951a73fecf072dd84b2d660d9c0e50cbca",
+        "checksum": "sha256:d1b8a0c41bfec50ffc0a1eafd06636e811afa0f37596d34ca5dd76c2a791ba4b",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/scope.rs",
-        "name": "scope.rs",
+        "name": "crates/reflow2-core/src/scope.rs",
         "status": "realized",
         "volatility": "stable"
       }
@@ -78051,7 +78131,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:74490fdd329c65fc8c14df6185cd30b6422f32b1a3ea9d12a2029616895faa79",
+        "checksum": "sha256:60394c086a1a9c03bda68cea899ccdf59e5421e9215912de9a159b5537801235",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -78604,7 +78684,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:12f3f7c8ece85c82fdaf417e3c9ebef05e964c3a747e3592545191944d011689",
+        "checksum": "sha256:de0ae87b71f35d640bafca7b8d9671d519c8eaf7555870ded65d31e831df4d35",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -78897,6 +78977,16 @@
         "name": "A ruling can declare a state deliberate, and parked nodes are counted rather than silenced",
         "provenance": "authored",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-scoped-answer-says-whether-it-narrowed",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`Scoped` carries `share_of_anchored` — the fraction of the design's ANCHORED findings this 'narrowed' answer holds — plus a `narrowing_note` that appears in words when that exceeds SCOPE_IS_BARELY_NARROWER_AT (0.5).\n\nTHE DENOMINATOR IS THE DESIGN. It is `in_scope + out_of_scope`, deliberately not `total`: unanchored findings are statements about the design as a whole and could never fall inside ANY region, so dividing by `total` would flatter every scoped answer by a constant and make regions look narrower than they are.\n\nTHE THRESHOLD IS A JUDGEMENT AND IS ADMISSIBLE ANYWAY. `dec:report-dont-judge` normally forbids one. It is allowed here because the finding is about THIS TOOL'S OWN ANSWER rather than about the design: saying 'the narrowing you asked for did not narrow' is the instrument reporting on itself, which is the one place a judgement is owed rather than withheld. The threshold is named in the message so a reader can disagree with it rather than having to discover it.\n\nMEASURED AGAINST THE OLD DEFAULT AS A CONTROL: over all 56 Components of reflow2's own design the note fires 56 of 56 at depth 3, and 0 of 56 at the new default of 2.\n\nBOTH DETECTORS GET IT. Gaps and defects both return `Scoped`, and a self-check only one of them performed would be exactly the half-applied rule that made the vacuity note need repairing twice.",
+        "name": "A scoped read reports how much of the design it still holds, and says in words when that is most of it",
+        "provenance": "authored",
+        "status": "verified"
       }
     },
     {
@@ -81119,6 +81209,15 @@
       "properties": {
         "change_type": "new_feature",
         "name": "GOVERNED_BY gains `ruling: parks`, detectors read the ruling rather than seeing an edge, and parked nodes are COUNTED in swept.parked instead of silently disappearing"
+      }
+    },
+    {
+      "node_id": "chg:a-scope-actually-narrows",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "The default scope depth drops 3->2 and a scoped answer reports whether it narrowed at all",
+        "subject": "system"
       }
     },
     {
@@ -90129,7 +90228,7 @@
         "epoch_type": "revision",
         "name": "A scope actually narrows — the region computation stops returning two thirds of the design and calling it your part",
         "sequence": 356,
-        "status": "planned"
+        "status": "arrived"
       }
     },
     {
@@ -93278,7 +93377,7 @@
         "fragment_type": "implementation",
         "provenance": "authored",
         "status": "ingested",
-        "title": "Registered scope.rs"
+        "title": "Registered crates/reflow2-core/src/scope.rs"
       }
     },
     {
@@ -102010,6 +102109,20 @@
       }
     },
     {
+      "node_id": "ver:a-scoped-answer-actually-narrows",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/a_scoped_answer_actually_narrows.rs.\n\nWHAT IS DELIBERATELY NOT CHECKED HERE: a unit test cannot reproduce a 56-component sweep, and a fixture tuned until it shows a 50..60 spread would be a test written to match the answer rather than to the requirement. The probes hold the PROPERTIES that make the sweep's result impossible to hide; the sweep itself was run against the BUILT BINARY and its numbers live in the capability and the decision.\n\nTHE FIXTURE WAS PROBED BEFORE IT WAS ASSERTED ON. The first version produced only the three lifecycle-phase gaps, all unanchored, so every share was 0.0 and three probes failed for a reason that had nothing to do with the code under test. The shape was then checked against the real detectors and rebuilt around gaps they actually emit.\n\nFIVE MUTATIONS, each failing at least its own probe: default back to 3; share divided by `total`; the narrowing note never firing; one note field carrying both meanings; and the defect path skipping the self-check.",
+        "findings": "1078 core tests pass. The real-design sweep over all 56 Components: at the new default in_scope 2-27 (median 4), share 0.02-0.32, narrowing_note fired 0 of 56. Same sweep at depth 3 as a control: in_scope 50-60, narrowing_note fired 56 of 56 — the instrument catches the exact defect that motivated it.",
+        "kind": "verification",
+        "last_run_at": "2026-08-18T03:40:00Z",
+        "level": "integration",
+        "method": "test",
+        "name": "Five probes: the default is the measured one, the share uses the only honest denominator, a scope that swallows the design says so, the two notes stay separate, and defects get the same check",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-session-cannot-name-another-design",
       "node_type": "Verification",
       "properties": {
@@ -103863,7 +103976,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:2f538fba8ded395eb7cff88e59539e8940e2dde31a6c11e8e1e9dc93596756f3",
+  "prev_content_hash": "sha256:a1796bb2d2a674ed0a4d54dac1f9202359716115c31de4091ae8a8d057e5db59",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

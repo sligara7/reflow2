@@ -31,6 +31,42 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed — breaking
+
+- **The default scope depth drops from 3 to 2, because 3 did not narrow.** Measured by driving the
+  built binary over all 56 Components of reflow2's own design: at depth 3 **every one returned
+  50–60 of the design's 84 gaps** (median 55) over regions of 595–903 nodes. The spread across all
+  56 was 50..60 — indistinguishable — so `in_scope: 55, out_of_scope: 28` told every team the same
+  thing about its own part. At the new default the same sweep returns **2–27 (median 4)**.
+
+  **The old default had a stated reason and the reason was wrong.** `scope.rs` argued 3 was needed
+  to reach "a contained child component's capabilities". It is not: `scope_region` puts the entire
+  containment closure into the seed set *before* taking the radius, so a child three levels down is
+  already a seed and its capabilities are one hop from one. Depth 1 was rejected separately — it
+  stops short of the requirements a component's capabilities satisfy.
+
+  Anyone passing an explicit `depth` is unaffected. `dec:the-default-scope-depth-should-be-two`.
+
+### Added
+
+- **A scoped answer now says whether it narrowed anything.** `Scoped` gains `share_of_anchored` —
+  how much of everything the design has to say is in this answer — and a `narrowing_note` that
+  appears in words when that exceeds half. The denominator is `in_scope + out_of_scope` and
+  deliberately not `total`: unanchored findings could never fall in any region, so counting them
+  would flatter every scoped answer by a constant.
+
+  Run against the old default as a control, the note fires on **56 of 56** Components; at the new
+  default, on **0 of 56**. `req:a-scoped-answer-actually-narrows`.
+
+### Fixed
+
+- **`detect_gaps` stopped claiming its region is "the same computation claim_region uses".** It was
+  not, on two counts: the defaults differed (3 vs 2) and `scope_region` adds a containment closure
+  that `claimed_region` omits. The sentence is gone. Reconciling the two computations for real is
+  NOT bundled here — that changes what two people believe they each hold, and it needs its own
+  decision.
+
+
 ## [0.34.0] — 2026-08-17
 
 ### Added

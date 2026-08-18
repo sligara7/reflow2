@@ -154,7 +154,7 @@ pub use report::{
 };
 pub use sanitize::{SanitizeReport, sanitize_text};
 pub use schema::load_schema;
-pub use scope::{DEFAULT_SCOPE_DEPTH, Scoped};
+pub use scope::{DEFAULT_SCOPE_DEPTH, SCOPE_IS_BARELY_NARROWER_AT, Scoped};
 pub use seam::{Axis, SeamFinding, SeamReport, Verdict};
 pub use search::{SearchHit, SearchResult};
 pub use surprises::SurprisingConnection;

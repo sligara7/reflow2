@@ -55,12 +55,17 @@ impl ReflowService {
     #[tool(
         description = "Find gaps in the design to ask the human about (DETECT). Pass `scope` (a \
                        node id) to answer for ONE PART of the design instead of all of it — the \
-                       question a team that owns a subsystem asks day to day. The region is the \
-                       propagation radius around that seed (`depth`, default 3), the same \
-                       computation claim_region uses for \"the part I hold\", so \"my area\" means \
-                       one thing everywhere. A scoped answer always reports what it left out: \
-                       `total` across the whole design against `in_scope`, plus `out_of_scope` \
-                       and `region_size`. Project-level rollups still appear when they touch \
+                       question a team that owns a subsystem asks day to day. The region is that \
+                       seed's containment closure plus the propagation radius around it (`depth`, \
+                       default 2). NOT the same computation as claim_region, which takes the \
+                       radius alone and defaults differently — the two were described as one \
+                       until 2026-08-17 and are not. A scoped answer always reports what it left \
+                       out: `total` across the whole design against `in_scope`, plus \
+                       `out_of_scope` and `region_size`. IT ALSO REPORTS WHETHER IT NARROWED AT \
+                       ALL: `share_of_anchored` is how much of everything the design has to say \
+                       is in this answer, and a `narrowing_note` appears in words when that is \
+                       over half — at the old default of 3, all 56 Components of reflow2's own \
+                       design returned 50-60 of its 83 gaps and nothing said so. Project-level rollups still appear when they touch \
                        your part, counted as `project_level` and carrying `scope: project` \
                        themselves — filtering is not the tool deciding what you may worry about.",
         annotations(read_only_hint = true)
@@ -390,7 +395,7 @@ impl ReflowService {
 
     #[tool(
         description = "Detect structural defects the machine can repair (HEAL). Pass `scope` (a \
-                       node id, `depth` default 3) to ask it of one part of the design: not \
+                       node id, `depth` default 2) to ask it of one part of the design: not \
                        \"what is my team owed\" but \"is my part of the architecture sound\" — a \
                        cycle wholly inside one subsystem is that subsystem's to fix. Reports \
                        `total` against `in_scope` so a quiet corner never implies a quiet design. \

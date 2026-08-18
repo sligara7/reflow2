@@ -73,12 +73,55 @@ use crate::propagate::PropagateOptions;
 
 /// Default radius for a scope, in hops from the seed.
 ///
-/// Three is the smallest number that reaches a Component's whole thread: its
-/// capabilities are one hop away (ALLOCATED_TO), the requirements they satisfy
-/// and the artifacts and checks that realize and verify them are two, and a
-/// contained child component's capabilities are three. Deeper pulls in the
-/// neighbours' neighbours, which is the program again.
-pub const DEFAULT_SCOPE_DEPTH: usize = 3;
+/// **Two, and it was three until 2026-08-17.** Both halves of that change are
+/// worth keeping, because the old default had a stated reason and the reason
+/// was wrong.
+///
+/// Two reaches a Component's whole thread and stops: its capabilities are one
+/// hop away (ALLOCATED_TO), and the requirements they satisfy and the artifacts
+/// and checks that realize and verify them are two. The third hop reaches the
+/// *neighbours'* threads, which is the program again.
+///
+/// ## The old reason did not survive reading [`DesignGraph::scope_region`]
+///
+/// It argued that three was needed because "a contained child component's
+/// capabilities are three" hops out. They are not. `scope_region` puts the
+/// **entire containment closure into the seed set before taking the radius**,
+/// unboundedly — so a child three levels down is already a seed, and its
+/// capabilities are one hop from one. The third hop bought nothing the
+/// docstring claimed and everything it warned against.
+///
+/// ## What the measurement said (`dec:the-default-scope-depth-should-be-two`)
+///
+/// Driving the built binary over all 56 Components of reflow2's own design
+/// (2487 nodes, 83 gaps):
+///
+/// | depth | region_size | gaps in scope |
+/// |-------|-------------|---------------|
+/// | 1     | 17..139     | 0..19  (med 1)|
+/// | **2** | 267..601    | 2..27  (med 4)|
+/// | 3     | 595..903    | 50..60 (med 55)|
+///
+/// At three, **every one of the 56 returned 50-60 of the 83 gaps** — a spread
+/// so narrow the answers are indistinguishable, so `in_scope: 55` told every
+/// team the same thing about its own part. That is the failure this constant
+/// now exists to have fixed rather than to have caused.
+///
+/// Depth 1 was rejected: it stops short of the requirements, so a team would
+/// stop being told when its own capability satisfies nothing.
+pub const DEFAULT_SCOPE_DEPTH: usize = 2;
+
+/// The share of the design's anchored findings above which a scoped answer is
+/// reported as **not meaningfully narrower** than the unscoped one.
+///
+/// Half, stated here and repeated in the message so a reader can disagree with
+/// it rather than having to discover it. This is a threshold and therefore a
+/// judgement, which `dec:report-dont-judge` normally forbids — it is admissible
+/// only because the finding it produces is about **this tool's own answer**
+/// rather than about the design. Saying "the narrowing you asked for did not
+/// narrow" is the instrument reporting on itself, which is the one place a
+/// judgement is owed rather than withheld.
+pub const SCOPE_IS_BARELY_NARROWER_AT: f64 = 0.5;
 
 /// A detector's answer for one part of the design, with what it left out.
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
@@ -119,7 +162,114 @@ pub struct Scoped<T> {
     /// How many of the in-scope findings are project-level rollups rather than
     /// findings about this part specifically.
     pub project_level: usize,
+    /// The share of the design's ANCHORED findings this answer holds, 0.0..=1.0
+    /// — the comparison done FOR the reader instead of left to them.
+    ///
+    /// The denominator is `in_scope + out_of_scope`, deliberately not `total`:
+    /// unanchored findings could never have been in any scope, so counting them
+    /// against a region would flatter every scoped answer by a constant.
+    ///
+    /// Always present, including when it is 0.0 and when there is nothing to
+    /// divide — a field that appeared only on bad news would make its absence
+    /// read as good news, which is the whole family of defect this module's
+    /// epoch was named after.
+    pub share_of_anchored: f64,
+    /// Said in WORDS when the narrowing did not narrow — when this "part of the
+    /// design" holds more than [`SCOPE_IS_BARELY_NARROWER_AT`] of everything
+    /// the design has to say.
+    ///
+    /// `req:a-scoped-answer-actually-narrows`: *"if scoping to any seed returns
+    /// most of what the unscoped call returns, the tool should be able to SAY
+    /// SO rather than leaving the reader to compare two numbers they were never
+    /// shown together."* Measured at the old default of 3, every one of 56
+    /// Components returned 50-60 of 83 gaps and nothing said a word about it.
+    ///
+    /// Deliberately a SECOND field rather than more prose in `note`: the two
+    /// say opposite things — one that the region was too small to mean
+    /// anything, the other that it was too large — and a single field carrying
+    /// either would have to be read before it could be understood.
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    pub narrowing_note: Option<String>,
     pub items: Vec<T>,
+}
+
+impl<T> Scoped<T> {
+    /// Assemble a scoped answer, computing both of its self-descriptions.
+    ///
+    /// Exists because the vacuity note was written out TWICE, verbatim,
+    /// comments and all, in the two constructors below — and the second copy
+    /// was already once repaired separately from the first. A rule stated in
+    /// two places is a rule that will be half-changed.
+    fn new(
+        scope: &str,
+        depth: usize,
+        region_size: usize,
+        total: usize,
+        unanchored: usize,
+        project_level: usize,
+        items: Vec<T>,
+    ) -> Self {
+        let in_scope = items.len();
+        let out_of_scope = total.saturating_sub(unanchored).saturating_sub(in_scope);
+        let anchored = in_scope + out_of_scope;
+        let share_of_anchored = if anchored == 0 {
+            0.0
+        } else {
+            in_scope as f64 / anchored as f64
+        };
+        Self {
+            scope: scope.to_string(),
+            depth,
+            region_size,
+            // The vacuity note is gated on the region being the seed alone AND
+            // ON HAVING FOUND NOTHING — the second half added 2026-08-17, and
+            // its absence was `req:a-session-with-no-seed-can-still-orient`'s
+            // bug one message over.
+            //
+            // The note asserts "nothing could have been found here", which was
+            // true of a one-node region while every rule needed at least an
+            // edge to fire. The degree-zero rule stopped needing one: a node
+            // attached to nothing is now a finding, and it lives in exactly the
+            // one-node region this note calls vacuous. So the first scoped call
+            // after that change returned `in_scope: 1`, a real finding, and a
+            // note beside it saying nothing could have been found.
+            //
+            // Caught by driving the built binary rather than by a test — the
+            // note is prose about a number, and nothing was comparing the two.
+            note: (region_size == 1 && in_scope == 0).then(|| {
+                format!(
+                    "`{scope}` has no edges, so this region is the seed alone and \
+                     `in_scope: 0` is VACUOUS rather than clean — nothing could have been \
+                     found here. Bookkeeping nodes (DesignEpoch, Fragment, Snapshot) are \
+                     islands in the propagation walk; scope a Component, Capability or \
+                     Project to ask a question that can have an answer."
+                )
+            }),
+            narrowing_note: (anchored > 0 && share_of_anchored > SCOPE_IS_BARELY_NARROWER_AT).then(
+                || {
+                    let pct = (share_of_anchored * 100.0).round() as u64;
+                    format!(
+                        "THIS ANSWER IS BARELY NARROWER THAN THE UNSCOPED ONE: {in_scope} of \
+                         the {anchored} findings that could have been in any scope are in \
+                         this one ({pct}%, over the {threshold}% at which this is reported). \
+                         A region at depth {depth} that holds most of the design is not \
+                         \"your part\" — every other seed will return a similar number, so \
+                         the figure cannot be read as a fact about THIS part. Try a smaller \
+                         `depth`, or read the unscoped answer and stop treating this as a \
+                         narrowing.",
+                        threshold = (SCOPE_IS_BARELY_NARROWER_AT * 100.0).round() as u64,
+                    )
+                },
+            ),
+            total,
+            in_scope,
+            out_of_scope,
+            unanchored,
+            project_level,
+            share_of_anchored,
+            items,
+        }
+    }
 }
 
 impl DesignGraph {
@@ -182,40 +332,15 @@ impl DesignGraph {
             .iter()
             .filter(|g| g.scope == GapScope::Project)
             .count();
-        Ok(Scoped {
-            scope: seed_id.to_string(),
+        Ok(Scoped::new(
+            seed_id,
             depth,
-            region_size: region.len(),
-            // The vacuity note is gated on the region being the seed alone AND
-            // ON HAVING FOUND NOTHING — the second half added 2026-08-17, and
-            // its absence was this same requirement's bug one message over.
-            //
-            // The note asserts "nothing could have been found here", which was
-            // true of a one-node region while every rule needed at least an
-            // edge to fire. The degree-zero rule stopped needing one: a node
-            // attached to nothing is now a finding, and it lives in exactly the
-            // one-node region this note calls vacuous. So the first scoped call
-            // after that change returned `in_scope: 1`, a real finding, and a
-            // note beside it saying nothing could have been found.
-            //
-            // Caught by driving the built binary rather than by a test — the
-            // note is prose about a number, and nothing was comparing the two.
-            note: (region.len() == 1 && items.is_empty()).then(|| {
-                format!(
-                    "`{seed_id}` has no edges, so this region is the seed alone and \
-                     `in_scope: 0` is VACUOUS rather than clean — nothing could have been \
-                     found here. Bookkeeping nodes (DesignEpoch, Fragment, Snapshot) are \
-                     islands in the propagation walk; scope a Component, Capability or \
-                     Project to ask a question that can have an answer."
-                )
-            }),
+            region.len(),
             total,
-            in_scope: items.len(),
-            out_of_scope: total - unanchored - items.len(),
             unanchored,
             project_level,
             items,
-        })
+        ))
     }
 
     /// `detect_defects`, narrowed the same way.
@@ -238,42 +363,17 @@ impl DesignGraph {
             .filter(|d| !d.affected_ids.is_empty())
             .filter(|d| d.affected_ids.iter().any(|id| region.contains(id)))
             .collect();
-        Ok(Scoped {
-            scope: seed_id.to_string(),
+        Ok(Scoped::new(
+            seed_id,
             depth,
-            region_size: region.len(),
-            // The vacuity note is gated on the region being the seed alone AND
-            // ON HAVING FOUND NOTHING — the second half added 2026-08-17, and
-            // its absence was this same requirement's bug one message over.
-            //
-            // The note asserts "nothing could have been found here", which was
-            // true of a one-node region while every rule needed at least an
-            // edge to fire. The degree-zero rule stopped needing one: a node
-            // attached to nothing is now a finding, and it lives in exactly the
-            // one-node region this note calls vacuous. So the first scoped call
-            // after that change returned `in_scope: 1`, a real finding, and a
-            // note beside it saying nothing could have been found.
-            //
-            // Caught by driving the built binary rather than by a test — the
-            // note is prose about a number, and nothing was comparing the two.
-            note: (region.len() == 1 && items.is_empty()).then(|| {
-                format!(
-                    "`{seed_id}` has no edges, so this region is the seed alone and \
-                     `in_scope: 0` is VACUOUS rather than clean — nothing could have been \
-                     found here. Bookkeeping nodes (DesignEpoch, Fragment, Snapshot) are \
-                     islands in the propagation walk; scope a Component, Capability or \
-                     Project to ask a question that can have an answer."
-                )
-            }),
+            region.len(),
             total,
-            in_scope: items.len(),
-            out_of_scope: total - unanchored - items.len(),
             unanchored,
             // HealIssues carry no zoom level; the distinction is meaningless
             // here rather than zero, and reporting 0 would be a small lie.
-            project_level: 0,
+            0,
             items,
-        })
+        ))
     }
 
     /// Resolve a scope seed, refusing one that does not exist.
