@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:85578aad6bfd49de2074b6ce3007000d4e044a776b41edb0c0d1d43c466961a7",
+  "content_hash": "sha256:b681284a33a7e3bde9d795c441651afdb14567c94fd0fcb2ed7011dbed1c243f",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -101629,6 +101629,17 @@
       }
     },
     {
+      "node_id": "fact:the-se-deferrals-stated-precondition-has-been-met",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "milestone",
+        "statement": "THE CONDITION ANTHONY ATTACHED TO THE SE DEFERRAL HAS CLEARED, and nothing in reflow2 computes that.\n\nHis ruling of 2026-08-16 was 'DO IT, BUT NOT YET' — 'this is not immediate (priority is resolving bugs)' — and the sequencing was stated as part of the ruling rather than as a note beside it: '`epoch:instruments-stop-overstating` and its five requirements come before this.'\n\nAS OF 2026-08-17 THAT EPOCH IS CLOSED. `arrival_delta` reports 5 of 5 delivered, `missed_obligations: []`, `movement: []`, and it shipped as v0.34.0 (`rel:v0340`, deployed; tag pushed; release verified to have published 5 assets). So the named blocker is gone.\n\nWHAT THIS FACT IS FOR: it is not a request to start the SE work — that is the owner's call and 'the bug work is done' is not the same statement as 'do this next'. It exists because a DEFERRAL WITH A STATED PRECONDITION HAS NO WAY TO NOTICE THE PRECONDITION CLEARING. The decision is `accepted`, so it raises no gap; `loop_status` counts open decisions and this one is settled; `arrival_delta` reads schedules and this carries none. A deferral therefore goes quiet at exactly the moment it should speak. `cap:revise-trigger` (planned) is the general answer — trace new evidence back through GOVERNED_BY to the Decisions it bears on — and this is a concrete instance of what it would catch.\n\nRELATED MEASUREMENTS ALREADY ON THE RECORD, unchanged by the deferral: 73 coupled module pairs with ZERO sharing a declared Interface, 51 of them crossing a subsystem boundary; all 15 Interfaces sit at the SYSTEM edge and none describes an internal boundary; and `fact:the-eight-subsystems-are-groupings-not-black-boxes` (2026-08-17) adds that 0 of 8 subsystems PROVIDE anything.",
+        "subject_id": "dec:idea-should-reflow2s-own-design-be-re-derived-through-a-principled-se-process",
+        "valid_from": "2026-08-17"
+      }
+    },
+    {
       "node_id": "fact:the-seam-pairs-and-seam-report-has-now-run",
       "node_type": "TemporalFact",
       "properties": {
@@ -103707,7 +103718,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f765716b35e388e4cd0440e4045333c25aa5557571a6fcdebd7f1061e451bbe1",
+  "prev_content_hash": "sha256:85578aad6bfd49de2074b6ce3007000d4e044a776b41edb0c0d1d43c466961a7",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
