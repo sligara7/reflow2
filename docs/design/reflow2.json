@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:1a251a2d186e67b396f3c428b337741305ff23ad44477e2161bfc19a0e63beb1",
+  "content_hash": "sha256:32fa4e923753a4c440e61fd016602613462182b2018ee04178f80fc7bf906083",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -8014,6 +8014,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-can-a-design-graph-be-reduced-to-its-essential-core",
+      "properties": {
+        "acted_at": "2026-08-18T21:00:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -89852,6 +89861,16 @@
       }
     },
     {
+      "node_id": "dec:idea-can-a-design-graph-be-reduced-to-its-essential-core",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-18, proposing four techniques in his own words:\\n\\n(a) TRANSITIVE REDUCTION \\u2014 'Remove shortcut links that carry duplicate logic. If the graph contains [A->B], [B->C], and [A->C], the link [A->C] is redundant and safely deleted.'\\n(b) ENTITY RESOLUTION \\u2014 'Merge nodes that represent identical concepts. If the graph treats AI and Artificial Intelligence as separate nodes, combine them to drastically reduce node count.'\\n(c) ONTOLOGICAL GENERALIZATION \\u2014 'Replace highly specific leaf nodes with their broader parent concepts. Map Apple, Banana, Orange up to a single parent Fruit.'\\n(d) DOMINATING PATH EXTRACTION \\u2014 'Calculate centrality metrics like PageRank or Betweenness Centrality. Keep only the top-scoring backbone nodes that connect the vast majority of knowledge.'\\n\\n\\u2b50\\u2b50 THE OBJECTION THAT APPLIES TO ALL FOUR AT ONCE, and it is not an argument against the ideas but against one word in them: EVERY TECHNIQUE AS STATED DELETES OR MERGES, and reflow2's most load-bearing rule is that it does not. `req:intent-preserved` \\u2014 the past is never overwritten. `dec:ask-not-repair` \\u2014 findings are put to the human, never repaired automatically. `apply_heal` merges only on a HUMAN-ASSERTED `DUPLICATES` edge. A design graph is not a knowledge graph: a knowledge graph optimises for RETRIEVAL, where a redundant edge is waste; a design graph is a record of INTENT AND ITS HISTORY, where 'redundant' and 'said twice, deliberately, by two people' are indistinguishable from the topology alone.\\n\\n\\u2b50 SO THE INTERESTING FORM OF THE WHOLE IDEA IS: REDUCTION AS A PURE PROJECTION, NEVER AS A WRITE. That is Anthony's own doctrine from a different direction \\u2014 views must be pure projections and a renderer filling anything in is a defect. A 'reduced core' VIEW answers 'what would someone new have to read?' without the graph losing a thing, and it can be recomputed as the design changes rather than going stale the moment somebody adds a node.\\n\\nWHAT THE GRAPH ALREADY HOLDS, measured 2026-08-18 so none of this is built twice:\\n  (a) TRANSITIVE REDUCTION is the only one with NO prior art here \\u2014 no node and no code mentions it. Genuinely new.\\n  (b) ENTITY RESOLUTION is half built and its trap is ALREADY ON THE RECORD: `dynograph-resolution` is a dependency, `token_sort_ratio` is used in seam.rs and ingest.rs, `possible_duplicate` fires at Jaccard >= 0.8 and ASKS rather than merges, and `dec:auto-merge-at-90-destroys-sibling-names` is an ACCEPTED decision recording that a similarity threshold destroyed sibling names \\u2014 'a merge needs a discriminator, not a threshold'. The DUPLICATES edge exists and has ZERO instances, deliberately: it is the human's assertion, not the machine's guess.\\n  (c) ONTOLOGICAL GENERALIZATION already has its spine \\u2014 122 CONTAINS edges \\u2014 and its OTHER spine is empty: DECOMPOSES has ZERO edges while `req:decomposition-covers-its-parent` is accepted. So the rolling-up axis exists and is unused rather than missing.\\n  (d) DOMINATING PATH is partly built and partly proposed: `betweenness_centrality` IS used (structure.rs) and powers PROPAGATE's ranking; `pagerank` and `personalized_pagerank` are exported by dynograph-graph and UNUSED; `dec:idea-relevance-ranking` already proposes personalized PageRank for blast radius, and `dec:idea-other-centralities` asks whether betweenness is the right one. Both open since 2026-08-01.\\n\\n\\u26a0\\ufe0f AND A SPECIFIC TRAP IN (a), which is why 'safely deleted' is the word to argue with. In a design graph A->B->C and A->C are often DIFFERENT CLAIMS, not one claim stated twice: a Requirement satisfied by a Capability allocated to a Component is not the same statement as that Requirement being directly traced to that Component, and `dec:foundation-cycle-is-a-warning` already turns on exactly this kind of distinction between a structural shortcut and a real relationship. Transitive reduction over a TYPED edge set would have to know which edge types compose \\u2014 SATISFIES then ALLOCATED_TO does not compose into anything reflow2 declares \\u2014 so the technique needs a composition table before it needs an algorithm.",
+        "name": "OPEN — can a design graph be reduced to an essential core, and must that reduction be a VIEW rather than a write?",
+        "rationale": "Recorded via the brainstorm skill: the ideas enter as ideas, nothing is promoted, and the objection sits beside each rather than replacing it.\\n\\nAN AGENT'S READING, offered as a finding rather than an answer. The reduction FAMILY is worth having and the word 'delete' is the part to drop. Three of the four already exist in some form, which suggests the useful move is not four new features but ONE view that composes what is already there \\u2014 and (a) transitive reduction is the only genuinely new member, and the one needing the most design (a composition table over 61 typed edge types) before any algorithm.\\n\\nWHAT WOULD MAKE THIS DECIDABLE: who the reduced core is FOR. A newcomer reading a design for the first time wants the backbone; a merge tool wants duplicate resolution; an export wants size. Those three want different reductions, and answering 'reduce to the essential core' without naming the reader would produce a view that serves none of them. `cap:onboarding` and `req:onboard-newcomer` are the nearest stated audience.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-can-a-design-hold-the-external-premise-it-rests-on",
       "node_type": "Decision",
       "properties": {
@@ -107026,7 +107045,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:28d9ef7abeb284d4d2a2cdee0b2c89ee524ee7a709597809d7f881ee77882b71",
+  "prev_content_hash": "sha256:1a251a2d186e67b396f3c428b337741305ff23ad44477e2161bfc19a0e63beb1",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
