@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:f765716b35e388e4cd0440e4045333c25aa5557571a6fcdebd7f1061e451bbe1",
+  "content_hash": "sha256:85578aad6bfd49de2074b6ce3007000d4e044a776b41edb0c0d1d43c466961a7",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -8258,6 +8258,15 @@
       "from_id": "dec:idea-is-the-evolution-vocabulary-unused-because-nothing-asks-for-it",
       "properties": {
         "acted_at": "2026-08-17",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-is-the-foundation-a-subsystem-or-a-supplier",
+      "properties": {
+        "acted_at": "2026-08-18T00:30:00Z",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -87241,6 +87250,16 @@
       }
     },
     {
+      "node_id": "dec:idea-is-the-foundation-a-subsystem-or-a-supplier",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-17, thinking out loud while looking at the eight subsystems: \"curious if another subsystem needs to be included? we have many vector math and graph theory operations and text and even game theory within dynograph-foundation crates. maybe a subsystem already includes them or maybe as dynograph-foundation is its own package, they are not included, but I wanted graph theory to undergird everything (that's why I designed reflow2 to use dynograph-foundation). graph theory was important to my concept of reflow2.\"\n\nOPTION A — LEAVE IT AS A SUPPLIER, WHICH IS WHAT THE DESIGN ALREADY SAYS. Five Interfaces already exist at `designation: required` — `ifc:req-dyno-core-api`, `ifc:req-dyno-graph-api`, `ifc:req-dyno-resolution-api`, `ifc:req-dyno-storage-api`, `ifc:req-dyno-vector-api` — and each is CONSUMED by a reflow2 component. In systems-engineering terms that is the correct treatment of a separately-released package: a supplier reached across a specified boundary, not a part of this system. It is also its own repo with its own release cycle, which is the practical test. Cheap: nothing to do.\n\nOPTION B — ADD IT AS A NINTH BLACK BOX. Makes 'graph theory undergirds everything' visible in the decomposition rather than implied by five interface nodes a reader has to go find. Objection, and it is the strong one: a subsystem you do not build, cannot change, and release separately is not a subsystem — modelling it as one asserts ownership reflow2 does not have and puts somebody else's roadmap inside this design's boundary.\n\nOPTION C — KEEP THE SUPPLIER TREATMENT AND COMPLETE IT. The five interfaces cover five crates; the foundation ships TEN (client, cluster, core, game, graph, resolution, service, storage, text, vector). `dynograph-text` is used TRANSITIVELY through the storage boundary and has no interface node of its own; `dynograph-game` and `dynograph-cluster` are not dependencies at all. So the design's picture of its own supplier is partial, and 'what does the foundation offer that we do not take?' is NOT answerable from the graph — only by reading the supplier's source, which is what had to be done to answer this question. That unanswerability is the real cost of the gap.\n\nTHE SEPARATE WORRY IN THE SAME BREATH, which is NOT this decision: \"if we're not using these features of dynograph-foundation, that's a bigger issue (wasted capabilities)\". Already reviewed at his request on 2026-08-01; it lives in `cap:bl-150` and ten `dec:idea-*` Decisions, every one still open. This node deliberately does not restate them.",
+        "name": "OPEN — is dynograph-foundation a ninth subsystem of reflow2, or a supplier reached across required interfaces?",
+        "rationale": "Recorded via the brainstorm skill: ideas enter the graph as ideas, nothing is promoted, and the roads not taken keep their reasoning.\n\nAN AGENT'S READING, offered as a finding rather than an answer: option A is what the design already does and looks right on SE grounds, with option C as its honest completion. The instinct behind option B — that graph theory undergirding everything ought to be VISIBLE — is not wrong, but the visibility problem it names is probably better solved by option C plus actually consuming more of the foundation than by moving the system boundary.\n\nWHAT WOULD MAKE THIS DECIDABLE, and no measurement can supply it: whether reflow2 ever expects to influence dynograph-foundation's roadmap. A supplier you can commission is still a supplier; a supplier you co-design with sits closer to a subsystem. That is a question about how Anthony intends to run the two repos.\n\nDISTINCT FROM `fact:the-diamond-meets-at-dynographs-internals-not-its-interface`, which measures that reflow2 and storyflow consume the foundation through DIFFERENT surfaces (Rust library vs REST). That is about two consumers; this is about where one consumer's system boundary lies.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-is-there-a-feedback-intake-skill-and-is-it-a-router",
       "node_type": "Decision",
       "properties": {
@@ -101657,6 +101676,17 @@
       }
     },
     {
+      "node_id": "fact:three-of-five-foundation-consumes-edges-name-the-wrong-component",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "measurement",
+        "statement": "MEASURED 2026-08-17 by comparing the design's CONSUMES edges against what the code actually imports. THREE OF THE FIVE `ifc:req-dyno-*` interfaces are consumed, in the graph, by a component that does not use them in the build.\n\n  interface                     design says CONSUMED BY   code actually imports it in\n  ifc:req-dyno-graph-api        cmp:propagate             structure.rs, allocate.rs, flow.rs  (cmp:structure / cmp:allocate / cmp:flow)\n  ifc:req-dyno-vector-api       cmp:search                dimensions.rs                       (cmp:dimensions)\n  ifc:req-dyno-resolution-api   cmp:heal                  seam.rs, ingest.rs                  (cmp:seam / cmp:ingest)\n  ifc:req-dyno-core-api         cmp:graph                 graph.rs and throughout             CORRECT\n  ifc:req-dyno-storage-api      sys:store                 the store                           CORRECT\n\nVERIFIED BOTH WAYS: `propagate.rs` contains no `use dynograph_graph`, `search.rs` no `use dynograph_vector`, `heal.rs` no `use dynograph_resolution`; while `structure.rs`, `dimensions.rs` and `seam.rs` each do. And `art:structure` REALIZES `cmp:structure`, which is a different node from `cmp:propagate`, so this is misattribution rather than a naming synonym.\n\nWHY IT IS WORTH MORE THAN ITS SIZE. A CONSUMES edge is a black-box boundary claim: it says WHICH PART of this system depends on that supplier. Three of five point at the wrong part, so the design's answer to 'what breaks if the graph API changes?' names `cmp:propagate` and misses the three components that would actually break. That matters directly for `dec:a-black-box-needs-three-edges-not-one` and any future SE work on the subsystem tier, because those are the same edges the black-box decomposition will rest on.\n\nPLAUSIBLE CAUSE, not verified: the edges look like they were drawn from what each interface is FOR (propagation is the graph-algorithm-shaped feature, search is the vector-shaped feature, heal is the fuzzy-matching-shaped feature) rather than from what imports what. That is a reasonable-sounding guess written down once and never checked against the build — which is the class of error `reconcile_artifacts` catches for FILES and nothing catches for EDGES.\n\nNOT REPAIRED. Redrawing them is cheap, but 'which component consumes this supplier' is a design statement and the wrong fix would replace one guess with another; the components above are evidence from imports, which is a good start and not the same as a decision about ownership.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-17"
+      }
+    },
+    {
       "node_id": "fact:todays-gate-lessons-have-a-served-home-and-it-is-empty",
       "node_type": "TemporalFact",
       "properties": {
@@ -103677,7 +103707,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:973a31ae9d102c4fdfe12def0bf460c6f50fdb9e81b49cefdc54b068930ac03b",
+  "prev_content_hash": "sha256:f765716b35e388e4cd0440e4045333c25aa5557571a6fcdebd7f1061e451bbe1",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
