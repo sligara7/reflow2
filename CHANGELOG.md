@@ -31,6 +31,8 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.34.0] — 2026-08-17
+
 ### Added
 
 - **A session that holds nothing can ask where to stand.** New seedless read `design_regions`:
