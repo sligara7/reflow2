@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:bb30b2a80eff42614d3b38330007587b742a87de85be66a780b13c115b33c657",
+  "content_hash": "sha256:28d9ef7abeb284d4d2a2cdee0b2c89ee524ee7a709597809d7f881ee77882b71",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -886,6 +886,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-revising-write-says-whether-the-state-survived",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:temporal"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -3285,6 +3293,12 @@
       "from_id": "chg:a-retired-artifact-may-be-absent",
       "properties": {},
       "to_id": "epoch:v0320"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-revising-write-says-whether-the-state-survived",
+      "properties": {},
+      "to_id": "epoch:the-discipline-arrives-at-the-tool"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -11153,6 +11167,51 @@
         "action": "modified"
       },
       "to_id": "fact:defect-a-retired-artifact-still-reports-missing-forever"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-revising-write-says-whether-the-state-survived",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-revising-write-says-whether-the-state-survived",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-revising-write-says-whether-the-state-survived",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-revising-write-says-whether-the-state-survived",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-revising-write-says-whether-the-state-survived"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-revising-write-says-whether-the-state-survived",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue"
     },
     {
       "edge_type": "CHANGED",
@@ -71662,6 +71721,15 @@
       "edge_type": "REALIZES",
       "from_id": "art:temporal",
       "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-revising-write-says-whether-the-state-survived"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:temporal",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cap:arrival-delta"
@@ -71920,6 +71988,15 @@
       "edge_type": "REALIZES",
       "from_id": "art:tools-capture",
       "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-revising-write-says-whether-the-state-survived"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-capture",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cap:governance-mode"
@@ -72150,6 +72227,12 @@
       "from_id": "cap:a-node-attached-to-nothing-is-reported-whatever-its-type",
       "properties": {},
       "to_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-revising-write-says-whether-the-state-survived",
+      "properties": {},
+      "to_id": "req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue"
     },
     {
       "edge_type": "SATISFIES",
@@ -74626,6 +74709,12 @@
       "from_id": "ver:a-refusal-names-its-own-fix",
       "properties": {},
       "to_id": "cap:cluster-claims"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-revising-write-says-whether-the-state-survived",
+      "properties": {},
+      "to_id": "cap:a-revising-write-says-whether-the-state-survived"
     },
     {
       "edge_type": "VERIFIES",
@@ -79056,10 +79145,10 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2ea76100494505ddb23275e87de01360b10934de79446419b8af53062fc56886",
+        "checksum": "sha256:0ab1bfbab67cd83114ee788d9fd2ac849756c14321573f694f97cd87dfd270d6",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/temporal.rs",
-        "name": "temporal.rs",
+        "name": "crates/reflow2-core/src/temporal.rs",
         "status": "realized",
         "volatility": "stable"
       }
@@ -79351,10 +79440,10 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:01c223147071e2967df9430b8321fc982dfc644bfaa7df1fdb9f55f814a5f84d",
+        "checksum": "sha256:2fb8a22c01bb9abe0a83994f4f7ccd8d467d610945359dcfb15b5330a8abffa7",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
-        "name": "tools/capture.rs",
+        "name": "crates/reflow2-mcp/src/tools/capture.rs",
         "status": "realized",
         "volatility": "stable"
       }
@@ -79416,7 +79505,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:526130bac2a6f74e5e30cec806d4f0b14e3823706467edc8321f01193ab5a2ae",
+        "checksum": "sha256:15be9fa5a75ad48868af8ce3e4385a3cbce6c28ef79b9711f628f5934936f8f5",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
@@ -79694,6 +79783,16 @@
         "name": "A node attached to nothing is reported whatever its type, and a property that names a live node counts as attachment",
         "provenance": "authored",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-revising-write-says-whether-the-state-survived",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The `revision` block a write returns now carries `prior_state_preserved_in` \\u2014 the Snapshot holding the replaced state \\u2014 and says one of two DIFFERENT things depending on what the graph actually holds.\\n\\nTHE DEFECT IT CLOSES. That block already said '`record_change` BEFORE the merge is what puts the old state in the design's own timeline' \\u2014 UNCONDITIONALLY, in identical words, to a caller who had just done exactly that and to one who had destroyed something. Advice that never varies is advice a reader learns to skim, and the one time it mattered looked like all the times it did not. That is the catalogue problem in miniature, inside the very mechanism `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue` names as the one that works.\\n\\nCOMPUTE THE OUTCOME, DO NOT TRACK THE INVOCATION \\u2014 the requirement's stronger form, and the reason this survives an agent that ignores every hint: it reads graph state, not run history. dev_storyflow's dragon Boss proposed the identical shape independently ('report whether the target has a snapshot \\u2014 NOT BLOCK, JUST SAY'), which is two consumers arriving at one design from opposite ends.\\n\\nMATCHED BY CONTENT HASH, NOT BY EPOCH. 'At the current epoch' needs a notion of CURRENT that reflow2 does not have, and it answers a weaker question. The hash answers the one a caller actually has \\u2014 is what I just replaced recoverable? \\u2014 and it makes a stale snapshot of a DIFFERENT state correctly NOT count as preservation. Verified 2026-08-18 that a Snapshot's stored `state` hashes to exactly the `prior_content_hash` a revision reports.\\n\\nNOTHING BLOCKS. A tool that blocks becomes a tool people route around, and then the graph stops matching reality \\u2014 the one failure it cannot survive. Every probe asserts the write landed.\\n\\nHONEST COST: `snapshot_preserving` scans every Snapshot, so it is O(snapshots) per revising write. At 144 that is nothing; at a hundred thousand it would need an index on `target_id`.",
+        "name": "A revising write computes whether the state it replaced is preserved, instead of restating the rule at everyone",
+        "provenance": "authored",
+        "status": "verified"
       }
     },
     {
@@ -81954,6 +82053,15 @@
       "properties": {
         "change_type": "new_feature",
         "name": "A retirement carried out stops being reported as drift: `DriftKind::ExpectedAbsence` is added, and `reconcile_artifacts` reads `is_discontinued` on the missing-file path so an accepted OBSOLETES decision turns a `high` failure into a `low` note. A distinct kind rather than silence, following ExpectedChange's precedent — a file deleted by accident after an unrelated retirement must still be visible."
+      }
+    },
+    {
+      "node_id": "chg:a-revising-write-says-whether-the-state-survived",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "A revising write computes whether the replaced state survived, instead of restating the rule unconditionally",
+        "subject": "system"
       }
     },
     {
@@ -91878,7 +91986,7 @@
         "epoch_type": "revision",
         "name": "The instruction leg — a design is asked for what it has not said, at the moment it would know the answer",
         "sequence": 359,
-        "status": "planned"
+        "status": "arrived"
       }
     },
     {
@@ -94404,7 +94512,7 @@
         "fragment_type": "implementation",
         "provenance": "authored",
         "status": "ingested",
-        "title": "Registered temporal.rs"
+        "title": "Registered crates/reflow2-core/src/temporal.rs"
       }
     },
     {
@@ -94594,7 +94702,7 @@
         "fragment_type": "implementation",
         "provenance": "authored",
         "status": "ingested",
-        "title": "Registered tools/capture.rs"
+        "title": "Registered crates/reflow2-mcp/src/tools/capture.rs"
       }
     },
     {
@@ -103015,6 +103123,20 @@
       }
     },
     {
+      "node_id": "ver:a-revising-write-says-whether-the-state-survived",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/a_revising_write_says_whether_the_state_survived.rs.\\n\\n\\u2b50 THE SIXTH PROBE EXISTS BECAUSE A MUTATION FOUND ITS ABSENCE. Making the hash comparison always succeed left all five original probes GREEN \\u2014 so 'some snapshot exists for this node' would have passed for 'the state you just replaced is safe', which is the worst possible answer: a reassurance that a destroyed thing is recoverable. The added probe snapshots, revises, then revises AGAIN, and requires the second reply to say NOT preserved because the snapshot holds the original rather than the intermediate.\\n\\nTHREE MUTATIONS, all caught after that: preservation never detected (the old unconditional behaviour); the hash comparison always matching; the two notes made identical again.\\n\\n\\u26a0\\ufe0f ONE PROBE'S PREMISE WAS WRONG AND THE CODE WAS RIGHT. The enrichment probe first used `status`, which `add_decision` already sets to `proposed` \\u2014 so writing `accepted` genuinely IS a replacement and the warning was correct. It now uses `alternatives`, the one Decision property no constructor writes, and asserts `replaced` is empty so the fixture cannot silently stop being an enrichment.",
+        "findings": "6 probes pass; 1322 workspace tests, 0 failures; clippy clean; all 152 toolsnaps match (the surface is unchanged \\u2014 this is a richer REPLY, not a new tool).",
+        "kind": "verification",
+        "last_run_at": "2026-08-18T15:40:00Z",
+        "level": "integration",
+        "method": "test",
+        "name": "Six probes: destroyed is named as destroyed, preserved is told there is nothing to do, the two replies actually differ, a stale snapshot does not count, an enrichment is not warned about, and nothing is blocked",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-scoped-answer-actually-narrows",
       "node_type": "Verification",
       "properties": {
@@ -104910,7 +105032,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:4e00aa6fd8b5b121bebb18d0b67f51bb2b68c65e1805faacd7015da96b43213d",
+  "prev_content_hash": "sha256:bb30b2a80eff42614d3b38330007587b742a87de85be66a780b13c115b33c657",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
