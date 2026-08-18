@@ -263,6 +263,16 @@ pub(crate) struct Revision {
     /// sha256 over the node's properties as they stood BEFORE this call,
     /// canonically serialised. Lets a caller prove a restore landed.
     prior_content_hash: String,
+    /// The Snapshot holding the state this call replaced, when one exists.
+    ///
+    /// **Computed, not assumed.** The note below used to state the
+    /// snapshot-first rule unconditionally, whether or not the caller had
+    /// followed it — advice that never varies is advice a reader learns to
+    /// skim. `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue`
+    /// asks for the outcome to be computed instead, because that survives an
+    /// agent which ignores every hint.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    prior_state_preserved_in: Option<String>,
     note: String,
 }
 
@@ -283,7 +293,11 @@ fn properties_hash(props: &HashMap<String, Value>) -> String {
 /// now. `None` when there was no prior node — a create has nothing to report,
 /// and a block present and empty on every create is the noise `search_first`
 /// already refuses to become.
-pub(crate) fn revision_of(prior: Option<&StoredNode>, now: &NodeDto) -> Option<Revision> {
+pub(crate) fn revision_of(
+    g: &DesignGraph,
+    prior: Option<&StoredNode>,
+    now: &NodeDto,
+) -> Option<Revision> {
     let prior = prior?;
     let mut replaced = Vec::new();
     let mut added: Vec<String> = Vec::new();
@@ -302,22 +316,41 @@ pub(crate) fn revision_of(prior: Option<&StoredNode>, now: &NodeDto) -> Option<R
     added.sort();
 
     let changed = !replaced.is_empty() || !added.is_empty();
+    let prior_content_hash = properties_hash(&prior.properties);
+    // THE COMPUTED HALF. Ask the graph whether the state being replaced is
+    // preserved, instead of restating the snapshot-first rule at a caller who
+    // may already have followed it.
+    let preserved = g
+        .snapshot_preserving(&prior.node_id, &prior_content_hash)
+        .ok()
+        .flatten();
+
     let note = if replaced.is_empty() && changed {
         "This call added properties to an existing node and overwrote nothing.".to_string()
     } else if !changed {
         "This node already held exactly what this call passed; nothing moved.".to_string()
+    } else if let Some(snapshot) = &preserved {
+        format!(
+            "This call REPLACED {} propert{} on a node that already existed — and the state \
+             it replaced IS PRESERVED, in `{snapshot}`. Nothing is lost and the history is \
+             right, so there is nothing to do about it.",
+            replaced.len(),
+            if replaced.len() == 1 { "y" } else { "ies" },
+        )
     } else {
         format!(
-            "This call REPLACED {} propert{} on a node that already existed. The prior \
-             value{} above {} the only copy this reply carries — reflow2 has not stored {} \
-             anywhere else. If the replacement was intended, `record_change` BEFORE the \
-             merge is what puts the old state in the design's own timeline; called after, \
-             it snapshots the replacement and the history is wrong.",
+            "This call REPLACED {} propert{} on a node that already existed, AND NO SNAPSHOT \
+             HOLDS THE STATE IT REPLACED — checked, not assumed. The prior value{} above {} \
+             now the only copy in existence, and this reply is the only place {} appears. \
+             `record_change` BEFORE the merge is what puts the old state in the design's own \
+             timeline; called now it would snapshot the REPLACEMENT and the history would be \
+             wrong. To undo: write the prior value{} back, then record_change, then re-apply.",
             replaced.len(),
             if replaced.len() == 1 { "y" } else { "ies" },
             if replaced.len() == 1 { "" } else { "s" },
             if replaced.len() == 1 { "is" } else { "are" },
-            if replaced.len() == 1 { "it" } else { "them" },
+            if replaced.len() == 1 { "it" } else { "they" },
+            if replaced.len() == 1 { "" } else { "s" },
         )
     };
 
@@ -325,7 +358,8 @@ pub(crate) fn revision_of(prior: Option<&StoredNode>, now: &NodeDto) -> Option<R
         replaced,
         added,
         changed,
-        prior_content_hash: properties_hash(&prior.properties),
+        prior_content_hash,
+        prior_state_preserved_in: preserved,
         note,
     })
 }
@@ -529,7 +563,7 @@ impl ReflowService {
             }
             return Err(e);
         }
-        let revision = revision_of(prior.as_ref(), &node);
+        let revision = revision_of(&g, prior.as_ref(), &node);
         with_capture_notes(
             node,
             "loop: when this capture batch lands, run detect_gaps (detect-and-ask) — \
@@ -609,7 +643,7 @@ impl ReflowService {
             }
             return Err(e);
         }
-        let revision = revision_of(prior.as_ref(), &node);
+        let revision = revision_of(&g, prior.as_ref(), &node);
         with_capture_notes(
             node,
             "loop: wire satisfies to the requirement this serves, then run detect_gaps when \
@@ -739,7 +773,7 @@ impl ReflowService {
             }
             return Err(e);
         }
-        let revision = revision_of(prior.as_ref(), &node);
+        let revision = revision_of(&g, prior.as_ref(), &node);
         with_capture_notes(
             node,
             "loop: structural change — run detect_defects (check-health) when the batch lands",
@@ -859,7 +893,7 @@ impl ReflowService {
         let existed = prior.is_some();
         let node = NodeDto::from(g.add_interface(&req.id, &req.name).map_err(dyno_err)?);
         let found = search_first(&g, &req.id, existed, &req.name);
-        let revision = revision_of(prior.as_ref(), &node);
+        let revision = revision_of(&g, prior.as_ref(), &node);
         with_capture_notes(
             node,
             "loop: structural change — wire provides/consumes, then run detect_defects \
@@ -1021,7 +1055,7 @@ impl ReflowService {
             existed,
             &format!("{} {}", req.name, req.statement),
         );
-        let revision = revision_of(prior.as_ref(), &node);
+        let revision = revision_of(&g, prior.as_ref(), &node);
         with_capture_notes(
             node,
             "loop: a Constraint binds what it CONSTRAINS — wire it, then run detect_gaps",
@@ -1168,7 +1202,7 @@ impl ReflowService {
             }
             return Err(e);
         }
-        let revision = revision_of(prior.as_ref(), &node);
+        let revision = revision_of(&g, prior.as_ref(), &node);
         with_capture_notes(
             node,
             "loop: a Decision lands `proposed` — only the owner's word moves it \

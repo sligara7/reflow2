@@ -92,7 +92,7 @@ impl ReflowService {
             Ok(n) => {
                 let mut dto = NodeDto::from(n);
                 dto.undeclared = undeclared;
-                let revision = crate::tools::capture::revision_of(prior.as_ref(), &dto);
+                let revision = crate::tools::capture::revision_of(&g, prior.as_ref(), &dto);
                 crate::tools::capture::with_capture_notes(
                     dto,
                     "loop: a generic write is still a design change — run detect_gaps \

@@ -1256,6 +1256,66 @@ impl DesignGraph {
     }
 }
 
+impl DesignGraph {
+    /// Is a node's PRIOR state actually preserved anywhere, or is this
+    /// replacement unrecoverable?
+    ///
+    /// Returns the id of a Snapshot holding exactly `content_hash`, or `None`.
+    ///
+    /// # Why compute it rather than restate the rule
+    ///
+    /// `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue`. The
+    /// revision block a write already returns says *"`record_change` BEFORE
+    /// the merge is what puts the old state in the design's own timeline"* —
+    /// **unconditionally**, whether the caller snapshotted or not. That is the
+    /// catalogue problem in miniature: advice delivered regardless of state,
+    /// which a reader learns to skim precisely because it never varies.
+    ///
+    /// The requirement's stronger form is to compute the OUTCOME rather than
+    /// track the invocation — *"do not track whether a skill was INVOKED,
+    /// compute whether its OUTCOME IS PRESENT"* — because that survives an
+    /// agent which ignores every hint. dev_storyflow's dragon Boss proposed the
+    /// identical shape independently: *"have delete_edge / a revising
+    /// create_node report whether the target has a snapshot at the current
+    /// epoch — NOT BLOCK, JUST SAY."*
+    ///
+    /// # Why by content hash and not by epoch
+    ///
+    /// "At the current epoch" needs a notion of *current* that reflow2 does not
+    /// have, and it answers a weaker question. Matching the hash answers the
+    /// one a caller actually has: **is the state I just replaced recoverable?**
+    /// Verified 2026-08-18 that a Snapshot's stored `state` hashes to exactly
+    /// the `prior_content_hash` a revision reports, so the comparison is exact
+    /// rather than approximate.
+    ///
+    /// # Honest cost
+    ///
+    /// Scans every Snapshot, so it is O(snapshots) per revising write. At 144
+    /// snapshots that is nothing; on a design with a hundred thousand it would
+    /// need an index on `target_id`. Stated rather than discovered later.
+    pub fn snapshot_preserving(
+        &self,
+        target_id: &str,
+        content_hash: &str,
+    ) -> Result<Option<String>, DynoError> {
+        for snapshot in self.scan_nodes(node::SNAPSHOT)? {
+            if snapshot.properties.get("target_id").and_then(Value::as_str) != Some(target_id) {
+                continue;
+            }
+            // A snapshot that will not parse is not evidence of preservation,
+            // and it is also not this function's business to complain about —
+            // `detect_defects` owns malformed nodes.
+            let Ok(state) = parse_snapshot_state(&snapshot) else {
+                continue;
+            };
+            if crate::graph::node_content_hash(&state) == content_hash {
+                return Ok(Some(snapshot.node_id));
+            }
+        }
+        Ok(None)
+    }
+}
+
 /// Read the `state` JSON a [`snapshot_node`](DesignGraph::snapshot_node) stored
 /// back into a property bag. A convenience for callers diffing across epochs.
 pub fn parse_snapshot_state(

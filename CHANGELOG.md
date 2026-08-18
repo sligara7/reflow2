@@ -31,6 +31,35 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed
+
+- **A revising write now says whether the state it replaced actually survived — computed, not
+  assumed.** The `revision` block already told every caller *"`record_change` BEFORE the merge is
+  what puts the old state in the design's own timeline"* — **unconditionally**, in identical words,
+  to someone who had just done exactly that and to someone who had destroyed something. Advice that
+  never varies is advice a reader learns to skim, and the one time it mattered looked like all the
+  times it did not.
+
+  It now reports `prior_state_preserved_in` — the Snapshot holding the replaced state — and says one
+  of two different things:
+
+  - preserved: *"the state it replaced IS PRESERVED, in `snap:…`. Nothing is lost… there is nothing
+    to do about it."*
+  - not: *"AND NO SNAPSHOT HOLDS THE STATE IT REPLACED — checked, not assumed… To undo: write the
+    prior value back, then record_change, then re-apply."*
+
+  **Matched by content hash, not by epoch.** "At the current epoch" needs a notion of *current* that
+  reflow2 does not have, and answers a weaker question. The hash answers the one a caller actually
+  has — *is what I just replaced recoverable?* — so a stale snapshot of a **different** state is
+  correctly **not** counted as preservation.
+
+  `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue`, whose stronger form is to compute
+  the *outcome* rather than track the *invocation*, because that survives an agent which ignores
+  every hint. dev_storyflow's dragon Boss proposed the identical shape independently: *"report
+  whether the target has a snapshot — NOT BLOCK, JUST SAY."* Nothing blocks: a tool that blocks
+  becomes a tool people route around, and then the graph stops matching reality.
+
+
 ### Added
 
 - **`set_capability_signature` — a capability can finally say what it takes in and puts out.**
