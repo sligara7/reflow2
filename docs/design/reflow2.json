@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:13a7b36d25830e16142d28f83ca874bafb224dd3fbd6e9b7946db4f041f6f783",
+  "content_hash": "sha256:bd4bce1861359118659d3b3b5cc27ff357691e8c96d3e2ede860288275fb3780",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2246,6 +2246,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:init"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-design-says-what-its-own-tools-cannot-write",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:vocabulary"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -5619,6 +5627,12 @@
       "from_id": "chg:the-shareable-record-is-findable",
       "properties": {},
       "to_id": "epoch:v0300"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-specifies-edges-are-drawn-and-the-vocabulary-is-measured",
+      "properties": {},
+      "to_id": "epoch:vocabulary-the-tools-cannot-reach"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -9985,8 +9999,8 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "req:recursive-black-box-decomposition",
       "properties": {
-        "acted_at": "2026-08-07",
-        "role": "author"
+        "acted_at": "2026-08-18T04:00:00Z",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -20859,6 +20873,33 @@
         "action": "modified"
       },
       "to_id": "art:test-init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-specifies-edges-are-drawn-and-the-vocabulary-is-measured",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:vocabulary-reach"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-specifies-edges-are-drawn-and-the-vocabulary-is-measured",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:the-design-says-what-its-own-tools-cannot-write"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-specifies-edges-are-drawn-and-the-vocabulary-is-measured",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:declared-vocabulary-is-reachable-from-the-surface"
     },
     {
       "edge_type": "CHANGED",
@@ -71799,6 +71840,15 @@
       "to_id": "cmp:vocabulary"
     },
     {
+      "edge_type": "REALIZES",
+      "from_id": "art:vocabulary-reach",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-design-says-what-its-own-tools-cannot-write"
+    },
+    {
       "edge_type": "REQUIRES_RESOURCE",
       "from_id": "proj:reflow2",
       "properties": {
@@ -73002,6 +73052,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:the-design-says-what-its-own-tools-cannot-write",
+      "properties": {},
+      "to_id": "req:declared-vocabulary-is-reachable-from-the-surface"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:the-record-moved-is-surfaced",
       "properties": {},
       "to_id": "req:a-seat-learns-the-record-moved-before-it-writes"
@@ -73431,6 +73487,358 @@
         "recorded_at": "2026-08-16"
       },
       "to_id": "epoch:triage-fixes"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-build",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:core-api"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-build",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:graph-export"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-build",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:mcp-tools"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-build",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:mcp-tools-http"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-core",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:core-api"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-core",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:graph-export"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-core",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:mcp-tools"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-core",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:mcp-tools-http"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-dimensions",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:core-api"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-dimensions",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:graph-export"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-dimensions",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:mcp-tools"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-dimensions",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:mcp-tools-http"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-environment",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:core-api"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-environment",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:graph-export"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-environment",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:mcp-tools"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-environment",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:mcp-tools-http"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-functional",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:core-api"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-functional",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:graph-export"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-functional",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:mcp-tools"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-functional",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:mcp-tools-http"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-inference",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:core-api"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-inference",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:graph-export"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-inference",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:mcp-tools"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-inference",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:mcp-tools-http"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-operate",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:core-api"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-operate",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:graph-export"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-operate",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:mcp-tools"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-operate",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:mcp-tools-http"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-readiness",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:core-api"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-readiness",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:graph-export"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-readiness",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:mcp-tools"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-readiness",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:mcp-tools-http"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-structure",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:core-api"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-structure",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:graph-export"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-structure",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:mcp-tools"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-structure",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:mcp-tools-http"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-temporal",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:core-api"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-temporal",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:graph-export"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-temporal",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:mcp-tools"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-temporal",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:mcp-tools-http"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-verify",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:core-api"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-verify",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:graph-export"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-verify",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:mcp-tools"
+    },
+    {
+      "edge_type": "SPECIFIES",
+      "from_id": "art:schema-verify",
+      "properties": {
+        "format": "json_schema"
+      },
+      "to_id": "ifc:mcp-tools-http"
     },
     {
       "edge_type": "VALID_FROM",
@@ -74958,6 +75366,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:vocabulary-reach-is-validated-against-known-cases",
+      "properties": {},
+      "to_id": "cap:the-design-says-what-its-own-tools-cannot-write"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:what-next-bands",
       "properties": {},
       "to_id": "cap:what-next"
@@ -76373,6 +76787,14 @@
         "action": "created"
       },
       "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:vocabulary-reach",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:vocabulary-reach"
     },
     {
       "edge_type": "YIELDED",
@@ -78927,6 +79349,17 @@
       }
     },
     {
+      "node_id": "art:vocabulary-reach",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:36120fad4c21c100d55a4ab1f2ba728eccc78c5586c3c1b4003a56a3639fe496",
+        "location": "tools/vocabulary_reach.py",
+        "name": "tools/vocabulary_reach.py",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "cap:a-check-records-what-it-found-separately-from-what-it-is",
       "node_type": "Capability",
       "properties": {
@@ -80945,6 +81378,16 @@
       "properties": {
         "description": "Option B, and it needs BOTH halves because git splits them deliberately.\n\n  · `ensure_gitattributes` writes the repo-side rule naming `docs/design/<project>.json merge=reflow2`. This TRAVELS, so every collaborator's clone agrees on which file needs the driver.\n  · `ensure_merge_driver` sets `merge.reflow2.name` and `.driver` with `git config --local`. This CANNOT travel: git refuses to let a repository configure an executable, which is why the rule alone was never enough.\n\n🛑 THE GAP IT CLOSES WAS SILENT AND OLD. reflow2's own `.gitattributes` has carried `merge=reflow2` for months, and nothing ever set the driver — so a fresh clone fell back to git's LINE merge on a multi-megabyte JSON graph, where two people who edited entirely different parts of the design still collide. `.gitattributes`' own comment calls that *\"safe — it just means you resolve the JSON by hand\"*, which is true and is not a thing anyone will do.\n\n📌 IT LEAVES ALONE A DRIVER SOMEBODY ELSE SET, and reports that it did — the same rule `write_mcp_config` and `ensure_hooks` follow, because a merge driver is exactly the kind of thing a person customises and an installer that silently repoints one is not trusted near a config again. Silent when the repo does not ask for the driver, and silent outside a git checkout: configuring one there would answer a question nobody asked.",
         "name": "The installer registers reflow2's merge driver, so a collaborator's clone merges the design per node rather than by lines",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:the-design-says-what-its-own-tools-cannot-write",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`tools/vocabulary_reach.py` reports declared vocabulary that NOTHING in a real design has ever carried, split three ways so no bucket can be over-quoted:\n\n  CANDIDATES        the type IS used, the property NEVER is, and no typed tool accepts the name — 18 on reflow2's own design\n  UNUSED BUT OFFERED  zero uses but a tool does accept it: probably unused, not unreachable — 10\n  SAYS NOTHING      the node type has no instances at all, so a zero on its properties is VACUOUS — 46\n\nTHE PRIMARY SIGNAL IS CORPUS USAGE, NOT A NAME MATCH, and that choice is the whole design. The obvious instrument compares declared names against served tool parameters; it was tried first and reported 70 of 215 (32%), including `TemporalFact.valid_from`, which is perfectly writable. A name match cannot see a tool that sets a property under another parameter name, nor one written indirectly by `record_change` or `link_artifact`. Usage in a mature graph is evidence rather than inference — and it is how three of the four known instances were spotted.\n\nTHE GENERIC ESCAPE HATCHES ARE EXCLUDED. `create_node` / `create_edge` accept an arbitrary property bag, which is precisely why they hid all four instances; a check computed against them answers clean forever. `req:declared-vocabulary-is-reachable-from-the-surface` states this as a thing the computation MUST NOT do.\n\n⭐ THE THIRD BUCKET EXISTS BECAUSE THE FIRST RUN DID NOT HAVE IT. Six node types have no instances at all, and every property on them landed in the candidate list looking like evidence — a design that has never created an EnvironmentRule says nothing about whether EnvironmentRule.authority is writable. Reporting them together would have been this instrument committing the exact defect its own epoch is named after, and it took reading its own output to notice.",
+        "name": "The design measures which of its declared vocabulary nothing can write, from the corpus rather than from a name match",
         "provenance": "authored",
         "status": "realized"
       }
@@ -85039,6 +85482,15 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "A fresh install now names the shareable design record, and the settings merge stops reformatting somebody else's file — both from Alex's first run on a real work project"
+      }
+    },
+    {
+      "node_id": "chg:the-specifies-edges-are-drawn-and-the-vocabulary-is-measured",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The first SPECIFIES edges are drawn, and an instrument measures what the vocabulary cannot write",
+        "subject": "system"
       }
     },
     {
@@ -93961,6 +94413,16 @@
       }
     },
     {
+      "node_id": "frag:art:vocabulary-reach",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered tools/vocabulary_reach.py"
+      }
+    },
+    {
       "node_id": "frag:genesis-skill-registered",
       "node_type": "Fragment",
       "properties": {
@@ -97114,7 +97576,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Anthony, 2026-08-07, in his words: treat everything in design as a systems-engineering BLACK BOX that has some inner functionality and an interface with other black boxes. Inside a black box may be a series of other black boxes making up the parent black box, and this continues down further and further as the design needs — system-of-systems level, then systems level, then component level, and so on. This should apply to just about any design project, from code projects to biology projects. Secondly, graph theory is then applied over which functions are allocated to which systems.\n\nHE ADDED, AND IT IS THE POINT OF RECORDING THIS: \"I'm a little surprised that reflow2 does not have this as it was one of the primary things I designed it for.\" So this requirement is not new intent — it is ORIGINAL intent that had no node, which is the failure mode this project has hit before (dec:idea-backlog-belongs-in-the-graph: accepted, invisible, violated, re-announced as new). Two prior answers in that conversation told him the recursive model was largely absent, and that was WRONG; the measurement below is the correction.\n\nWHAT ALREADY EXISTS, measured 2026-08-07 rather than recalled: the vocabulary is complete and the backbone is real. Component carries a `level` (48 at `component`, 8 at `subsystem`), CONTAINS nests Component inside Component (42 edges), ALLOCATED_TO puts capabilities on components (138 edges), and the graph-theory half is built and running — evaluate_allocation computes modularity, god-components and misplaced capabilities; cap:hierarchy checks decomposition levels; req:analyse-at-any-level already requires that any level be analysable on its own; req:decomposition-covers-its-parent already requires a decomposition to be checkable against what the parent held. DECOMPOSES exists as an edge type and is UNUSED (0 instances) because CONTAINS carries it.\n\nWHERE IT FALLS SHORT OF THE STATEMENT, and all three are measured:\n1. DEPTH IS TWO, not \"as deep as the design needs\". Project -> 8 subsystems -> 42 components, max depth 2, nothing above system-of-systems and nothing below component. The schema does not bound this; the population does. And 14 components are roots — 6 ordinary components sit outside every subsystem, so the tree is not even complete at the depth it has.\n2. THE INTERFACE HALF IS ~9% POPULATED. 5 Interface nodes and 5 PROVIDES / 5 CONSUMES edges for 56 components. \"An interface with other black boxes\" is the half that makes a black box a black box, and it is almost entirely unmodelled — the same fact the trajectory reports as `seams 0% (0/73)`.\n3. THE DOMAIN CLAIM IS UNTESTED OUTSIDE SOFTWARE. Every calibration number behind the granularity guidance comes from code (110k LOC -> ~78 nodes; reflow2's own 34k LOC -> ~100 nodes). The adopt skill does explicitly claim non-code subjects and carries a table for them, but nothing has exercised \"code projects to biology projects\".\n\nTHE ASYMMETRY THIS EXPOSES, offered as reasoning rather than as settled: the standing guidance is one Interface per contract and one Artifact per meaningful unit, never per endpoint, file or function. For software that is defensible because the fine grain is REDUNDANTLY AVAILABLE — a compiler, an LSP and a type checker each hold element-level truth exactly and continuously, so a graph copy would be worse and staler. For a building, a satellite or an organism there is no compiler: nothing else holds \"this penetration weakens this member\", so the fine grain is not redundant, it is the only copy. The same rule may therefore be right for code and wrong for physical design, and reflow2 applies it uniformly.\n\nWHAT WOULD SATISFY THIS, so it is not read as satisfied by the vocabulary alone: an arbitrary-depth nesting that is exercised beyond two levels, both sides of every contract modelled at each level so a change at one level propagates across siblings at that level (the electrical-drawing-affects-structural case he gave), and the allocation analysis reading something other than a perfect score over an empty structure.\n\n═══════════════════════════════════════════════════════════════════\nSHARPENED 2026-08-12 — THE CROSS-GRAPH READING, WHICH NOBODY HAD DRAWN OUT\n═══════════════════════════════════════════════════════════════════\n\nAnthony, working the linking trial: \"kind of getting to a place where we can do a bottoms-up approach of systems engineering where your system or system-of-systems is the composition of a bunch of independently developed and linked, but are federated, reflow2 projects that are the components or systems of the higher level project.\"\n\n⭐ THIS REQUIREMENT HAS TWO READINGS AND ONLY ONE HAS EVER BEEN CONSIDERED.\n\n  WITHIN A GRAPH — Component CONTAINS Component, `level`, matryoshka. This is what the statement above is about, and reflow2 already models itself as 8 `sys:*` components over 45 components.\n\n  ACROSS GRAPHS — a WHOLE DESIGN, separately owned and independently developed, is a black box in a larger system. Same recursion, one level up, at an OWNERSHIP boundary rather than a containment one. Nothing in this requirement or its measurement addressed this, and it is what his framing adds.\n\n⭐⭐ AND THE CROSS-GRAPH BLACK BOX ALREADY EXISTS — MEASURED, NOT ASSUMED. A mirror of flo2's published surface into a scratch reflow2 graph (2026-08-12, first time `mirror_surface` was run on a real pair) brought in 13 nodes: 1 Project, 6 Components, 5 Interfaces, 1 Artifact — with **5 CONTAINS edges from `proj:flo2`** plus PROVIDES/CONSUMES/SPECIFIES. So a mirrored design lands as A PROJECT NODE CONTAINING ITS PARTS, with its published interfaces as the ports: structurally a black box with an interface, sitting alongside the host design's own. The SHAPE this requirement asks for is therefore present across graphs as well as within one. What is absent is that NOTHING ASKS whether the thing just mirrored is a system in a larger one, and NO ANALYSIS RECURSES across that boundary.\n\n⚠️ TOP-DOWN AND BOTTOM-UP ARE DIFFERENT PROBLEMS, and only the first was ever designed for. `req:one-design-or-several-is-asked` records reflow's S-04-decision — the System-of-Systems question asked BEFORE anything is built, which decomposes a concept into N designs, one directory each. That is TOP-DOWN: one owner, coordinated ids, boundaries designed together, released together. Anthony is describing BOTTOM-UP: N designs that already exist independently, from which the SoS emerges by linking.\n\nEVERY GAP THE 2026-08-12 LINKING TRIAL FOUND IS A BOTTOM-UP GAP, and top-down composition would have had none of them:\n  - ids are uncoordinated, so correspondence falls back on fuzzy names that re-guess every run;\n  - boundaries were never agreed, so flo2 models reflow2 as a component it CONTAINS and pairing has no boundary to pair across;\n  - release cadences differ by construction, so every comparison carries a version skew nothing discloses;\n  - labelling is a bilateral precondition neither party gets value from until both have paid — which is why the whole linking layer has ZERO INSTANCES in either graph.\n\n🛑 TWO THINGS BLOCK THE BOTTOM-UP READING, both concrete:\n  (1) NO REFRESH. Found 2026-08-12 by running `mirror_surface` TWICE. The second mirror of the SAME design collided with itself — 12 of 13 ids refused as collisions, `mirrored_edges: 0`, `mirror_content_hash: null` — leaving the STALE node in place with the host's own CONSUMES edge still pointing at it, while `mirrors` continued to report the FIRST hash. So the staleness register reads FRESH after a failed refresh, which is worse than never refreshing. Re-mirroring one `mirror_of` is a DIFFERENT OPERATION from mirroring a new design (\"replace what I hold of theirs at a new pin\" versus \"add a stranger and refuse clashes\"), and only the second is implemented. A federation of independently-moving projects is MADE OF refreshes.\n  (2) THE SoS-LEVEL INSTRUMENTS REPORT GREEN OVER EMPTINESS. `graph_report` says \"Modularity 1.00 across 45 components; 0 misplaced\", and `fact:defect-allocation-health-is-green-over-an-empty-structure` already records that this is computed over almost no dependencies. At system-of-systems level that is the `unmet_needs: 0` failure again — a confident number over an unpopulated structure — and this requirement's own closing line already demands \"the allocation analysis reading something other than a perfect score over an empty structure\".\n\n📌 WHAT THIS DOES NOT CHANGE: `dec:nested-graphs` already settled that separately-owned designs are SEPARATE GRAPHS linked by mirroring, so the architecture for the cross-graph reading is decided and this is not a proposal to revisit it. What is added here is that the recursion this requirement asks for and that decision's composition mechanism ARE THE SAME THING at different scales, which neither node says.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -101439,6 +101901,17 @@
       }
     },
     {
+      "node_id": "fact:eighteen-declared-properties-nothing-has-ever-written",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "measurement",
+        "statement": "MEASURED 2026-08-18 by `tools/vocabulary_reach.py` over the committed export (2527 nodes, 10353 edges) and the committed toolsnaps. 215 declared node properties across 29 types; 176 parameter names across the served tools, with `create_node`/`create_edge` excluded.\n\n  18  CANDIDATES        the type IS used, the property NEVER is, and no typed tool accepts the name\n  10  UNUSED BUT OFFERED  zero uses but a tool does accept it — probably unused rather than unreachable\n  46  SAYS NOTHING      the node type has NO instances, so a zero on its properties is vacuous\n  42  EDGE VOCABULARY   edge types with no edges, or properties never set on edges that do exist\n\n⭐ THE STANDOUT, AND IT LANDS ON A REQUIREMENT ACCEPTED THE SAME DAY: `Capability.inputs`, `Capability.outputs` and `Capability.capability_type` are 0 OF 170. Spot-checked in the source rather than inferred — `add_capability` sets only name, description and status, and NOTHING anywhere in either crate writes those three. A capability's functional signature, what goes in and what comes out, is declared vocabulary that has never once been recorded. `req:recursive-black-box-decomposition` (accepted 2026-08-18) says every element is a black box with INNER FUNCTION AND INTERFACES; at the capability tier those two properties ARE that interface, and they are empty.\n\nOTHER CANDIDATES: `Fragment.{created_at,created_by,intent,phase,summary}` (0 of 168), `Project.mirror_*` (4, 0 of 1), `Artifact.{created_at,signature}` (0 of 190), `Snapshot.captured_at` (0 of 144), `Release.created_at` (0 of 36), `Question.prompt_id` (0 of 46). The timestamp cluster is its own theme: five separate `created_at`/`captured_at` fields, all declared, none ever set.\n\n⭐ `DECOMPOSES` HAS ZERO EDGES, and `req:decomposition-covers-its-parent` is ACCEPTED. That is the same shape as SPECIFIES: an accepted requirement whose edge type exists and has never been drawn. Not repaired here.\n\nTHE INSTRUMENT WAS VALIDATED AGAINST WHAT WAS ALREADY KNOWN before its new findings were believed: it catches `SUPERSEDES` (zero edges, known), `GOVERNED_BY.ruling` (added 2026-08-17, 0 of 912, correctly reported as not yet used), and it stopped reporting `SPECIFIES` the moment the 44 edges were exported — dead-to-live in one run.\n\n⚠️ WHAT THE NUMBER IS NOT. 18 is not a defect count and not a delete list. Three of the four known instances were WANTED and got a parameter; deletion would have been the wrong repair every time. Zero usage is evidence, not proof — a property can be writable and simply never needed, which is what the second bucket is for.",
+        "subject_id": "req:declared-vocabulary-is-reachable-from-the-surface",
+        "valid_from": "2026-08-18"
+      }
+    },
+    {
       "node_id": "fact:external-agent-side-report-2026-08-11",
       "node_type": "TemporalFact",
       "properties": {
@@ -103975,6 +104448,20 @@
       }
     },
     {
+      "node_id": "ver:vocabulary-reach-is-validated-against-known-cases",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Not a unit test — an instrument checked against ground truth. Run `python3 tools/vocabulary_reach.py`.\n\nIT MUST REPORT, because all three are independently known: `SUPERSEDES` as an edge type with zero edges; `GOVERNED_BY.ruling` as a property never set (added 2026-08-17, 0 of 912 edges); and `DECOMPOSES` as an edge type with zero edges despite `req:decomposition-covers-its-parent` being accepted.\n\nIT MUST STOP REPORTING `SPECIFIES` once the 44 schema-to-interface edges are in the export — verified dead-to-live across one export on 2026-08-18.\n\nIT MUST NOT REPORT `Verification.description`, which was unreachable until 2026-08-17 and now has both a constructor parameter and real uses — the instrument has to notice a repair, not just a defect.",
+        "findings": "All four checks hold. Reports SUPERSEDES, GOVERNED_BY.ruling and DECOMPOSES; stopped reporting SPECIFIES after the export; does not report Verification.description. Buckets on reflow2's own design: 18 candidates / 10 unused-but-offered / 46 says-nothing / 42 edge-vocabulary.",
+        "kind": "verification",
+        "last_run_at": "2026-08-18T04:30:00Z",
+        "level": "system",
+        "method": "analysis",
+        "name": "The reachability instrument is validated against vocabulary already known to be dead before its new findings are believed",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:what-next-bands",
       "node_type": "Verification",
       "properties": {
@@ -103987,7 +104474,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:a3d58c9ebda889029aeb25089d3f9b33fa72f9b7b0677027ce91af2103a42f7c",
+  "prev_content_hash": "sha256:13a7b36d25830e16142d28f83ca874bafb224dd3fbd6e9b7946db4f041f6f783",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
