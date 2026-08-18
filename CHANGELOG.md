@@ -31,6 +31,42 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added
+
+- **The first `SPECIFIES` edges in the graph's history — 44 of them.** The edge type was declared in
+  `schema/build.yaml` for exactly this (*"an OpenAPI / protobuf / JSON-schema / IDL file SPECIFIES
+  an Interface (its authoritative contract)"*), carries a `format` property listing `json_schema`,
+  and had **zero instances**. It was written for INGEST — its `extraction_hint` is a prompt for
+  pulling structure out of a user's documents — so it was built for other people's projects and
+  never turned on this one. The 11 schema YAMLs now specify the four interfaces that carry the
+  design vocabulary: `ifc:mcp-tools`, `ifc:mcp-tools-http`, `ifc:core-api`, `ifc:graph-export`.
+
+- **`tools/vocabulary_reach.py` — what of the declared vocabulary can nothing write?** Reports in
+  three buckets so no number can be over-quoted: **18 candidates** (the type is used, the property
+  never is, and no typed tool accepts the name), **10 unused-but-offered**, and **46 that say
+  nothing** because the node type has no instances at all. Plus 42 edge-vocabulary items with no
+  instances.
+
+  **The primary signal is corpus usage, not a name match**, and that is the design. The obvious
+  instrument compares declared names against tool parameters; it was tried first and reported 70 of
+  215 (32%), including `TemporalFact.valid_from`, which is perfectly writable. `create_node` and
+  `create_edge` are excluded — they accept an arbitrary property bag, which is exactly why they hid
+  all four known instances.
+
+  **Validated against ground truth before its new findings were believed:** it reports `SUPERSEDES`
+  (zero edges, known), `GOVERNED_BY.ruling` (added yesterday, 0 of 912), and `DECOMPOSES` (zero
+  edges, while `req:decomposition-covers-its-parent` is accepted); it stopped reporting `SPECIFIES`
+  the moment the 44 edges were exported; and it does **not** report `Verification.description`,
+  which was unreachable until yesterday and now has a parameter and real uses.
+
+  ⭐ **The standout finding:** `Capability.inputs`, `Capability.outputs` and
+  `Capability.capability_type` are **0 of 170**, and spot-checking the source confirms nothing
+  anywhere writes them. A capability's functional signature — what goes in and what comes out — is
+  declared vocabulary that has never once been recorded. `req:recursive-black-box-decomposition`,
+  accepted the same day, says every element is a black box with inner function *and interfaces*; at
+  the capability tier those two properties **are** that interface.
+
+
 ### Changed — breaking
 
 - **The default scope depth drops from 3 to 2, because 3 did not narrow.** Measured by driving the
