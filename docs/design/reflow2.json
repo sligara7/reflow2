@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:bd4bce1861359118659d3b3b5cc27ff357691e8c96d3e2ede860288275fb3780",
+  "content_hash": "sha256:e033c0ef32c8e695c9497cf5f777585e2c8bcdcbb3fa7385a2032e69b96be842",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -8220,6 +8220,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses",
+      "properties": {
+        "acted_at": "2026-08-18T05:00:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -87785,6 +87794,16 @@
       }
     },
     {
+      "node_id": "dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-18, correcting the framing of a day's work: 'most of why I do any of this isn't for the sake of reflow2. it is for users who are developing a project using reflow2... we are just applying reflow2 back on itself here, but that is not the main concern. it is that reflow2 does SE for the projects that it is used on.'\n\nDISTINCT FROM THE TWO FACTS IT RESTS ON: they MEASURE (three legs; 18 candidates). This asks WHAT TO DO, and the options below conflict with each other and with settled decisions, which is why it needs a decision rather than another measurement.\n\nTHE MEASURED SHAPE is in `fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it`: vocabulary reaches a user's design only when a TYPED TOOL writes it, an INSTRUCTION says when, and a DETECTOR notices its absence. Capability.inputs/outputs has none of the three; SPECIFIES is instructed but has no tool; DECOMPOSES has all three and still cannot fire, because the detector keys on the edge being PRESENT.\n\nOPTIONS, unranked, each with its objection:\n\n(a) ADD THE MISSING LEGS CASE BY CASE — a parameter on add_capability, a `specifies` tool, an absence-detector per edge type. Concrete and shippable. OBJECTION: it is whack-a-mole, and it scales with the SCHEMA rather than with the design — three cases were found by hand this week with 18 candidates and 42 edge items behind them.\n\n(b) A DETECTOR FOR UNUSED VOCABULARY ITSELF — 'this design has never used X, and here is the tool that writes it.' One rule covering every case, present and future. OBJECTION: on a young design EVERYTHING is unused, so it fires on the whole schema at genesis and is skimmed by week two — the failure `v0.2.0-what-we-dont-know.md` names as sharpest ('a gap list you skim is worse than no gap list'). It needs a maturity threshold, and a threshold is a judgement.\n\n(c) ASK AT THE RIGHT MOMENT rather than standing as a finding. When an agent adds a Capability, ask what goes in and what comes out — the black-box question, at the one moment the user is thinking about that capability. OBJECTION: this IS `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue`, proposed and unbuilt, and it is the same trigger problem this project has confirmed three times.\n\n(d) DERIVE RATHER THAN ASK. A capability's inputs and outputs are partly computable — what it CONSUMES and PROVIDES is already edge vocabulary. OBJECTION: `dec:report-dont-judge`. Deriving a functional signature and storing it asserts something nobody said, and the point of the property is the designer's statement of intent.\n\n(e) LET THE SCHEMA SHRINK. If nothing writes it and nobody misses it, the vocabulary is speculative. OBJECTION, decisive against doing this blindly: three of the four known unreachable fields were WANTED and got a parameter, and `req:declared-vocabulary-is-reachable-from-the-surface` explicitly forbids reading unreachable as deletable.",
+        "name": "OPEN — how does an arbitrary project using reflow2 ever acquire the vocabulary nobody thought to ask it for?",
+        "rationale": "Recorded via the brainstorm skill: ideas enter as ideas, nothing is promoted, objections sit beside the options.\n\nWHY THIS IS NOT THE REACHABILITY REQUIREMENT AGAIN. That asks whether a declared field CAN be written. This asks whether a user's project ever WILL — a question about skills, tool descriptions and detectors rather than about parameters, and the one Anthony says actually matters. A field with a parameter that nothing ever prompts for is reachable and still empty in every design.\n\nAN AGENT'S READING, as a finding and not an answer: (c) looks strongest because it puts the question where the user is already thinking, and (b) looks most dangerous because a list nobody reads is worse than none. But (c) depends on a requirement proposed and unbuilt since before this, so the honest first move may be to accept THAT rather than design around it.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-how-flo2-stays-subscribed-to-reflow2",
       "node_type": "Decision",
       "properties": {
@@ -102471,6 +102490,17 @@
       }
     },
     {
+      "node_id": "fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "measurement",
+        "statement": "MEASURED 2026-08-18, and the question is Anthony's: not why REFLOW2's own graph lacks this vocabulary, but WHETHER AN ARBITRARY PROJECT USING REFLOW2 WOULD EVER GET IT. 'we are just applying reflow2 back on itself here, but that is not the main concern. it is that reflow2 does SE for the projects that it is used on.'\n\nFOR VOCABULARY TO APPEAR IN A USER'S DESIGN, THREE LEGS MUST ALL BE PRESENT:\n  (1) a TYPED TOOL that writes it — raw create_node/create_edge does not count, since an agent must first know the field exists;\n  (2) an INSTRUCTION, in a served skill or a tool description, saying WHEN to write it;\n  (3) a DETECTOR that notices its ABSENCE, so the loop asks rather than waiting to be told.\nMissing any one leaves the vocabulary empty in EVERY project, not just this one. The three cases measured here each fail differently, which is why they are worth separating:\n\n  Capability.inputs / outputs / capability_type\n    typed tool   NO  — add_capability takes id, name, description, status. Nothing else.\n    instruction  NO  — 0 of 20 served skills mention inputs or outputs.\n    detector     NO  — detect.rs contains no reference to either.\n    => ALL THREE LEGS MISSING. No user project can acquire a capability's functional signature by any route reflow2 offers. This is the vocabulary for what a black box IS, and `req:recursive-black-box-decomposition` (accepted the same day) is the intent it serves.\n\n  SPECIFIES\n    typed tool   NO  — there is no `specifies` tool; the toolsnaps hold `documents` and nothing else in that family.\n    instruction  YES — link-artifacts says, of a machine-readable contract: 'that is SPECIFIES, on the interface it defines.'\n    detector     NO.\n    => THE SKILL INSTRUCTS AN AGENT TO DRAW AN EDGE NO TOOL DRAWS. The only route is hand-rolled create_edge, which is the escape hatch the reachability requirement says must not count as reachability.\n\n  DECOMPOSES\n    typed tool   YES — `decomposes(from_id, to_id)`.\n    instruction  YES — two skills discuss decomposition.\n    detector     PARTIAL, and this is the subtle one.\n    => `DecompositionCoverage` fires on a Requirement CARRYING AN INCOMING DECOMPOSES EDGE. It checks whether an existing decomposition is covered; it cannot ask why none exists. So a project that never decomposes anything gets ZERO decomposition findings and reads as coherent. All three legs look present and the vocabulary still stays empty — which is how reflow2's own graph reached 0 DECOMPOSES edges while shipping the detector for them.\n\n⭐ THE GENERAL FINDING, and it is about the PRODUCT rather than the self-host: reflow2's detectors largely check the CONSISTENCY OF WHAT EXISTS. Some do check absence — `unsatisfied_requirement`, `unallocated_capability` — but those are absences of REQUIRED structure. Nothing asks 'you have never used this vocabulary at all', so optional vocabulary is invisible to the loop that exists to surface gaps, in every project, forever. `rule:the-self-host-always-trails-what-it-teaches` is the right frame: this is now catchable for everyone.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-18"
+      }
+    },
+    {
       "node_id": "ver:a-claim-reads-back-with-its-age",
       "node_type": "Verification",
       "properties": {
@@ -104474,7 +104504,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:13a7b36d25830e16142d28f83ca874bafb224dd3fbd6e9b7946db4f041f6f783",
+  "prev_content_hash": "sha256:bd4bce1861359118659d3b3b5cc27ff357691e8c96d3e2ede860288275fb3780",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
