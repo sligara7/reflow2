@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:03dc44cc642295bb9d098ed7c40c0f7dfded86105a354b4ddec8111a9bf3de84",
+  "content_hash": "sha256:973a31ae9d102c4fdfe12def0bf460c6f50fdb9e81b49cefdc54b068930ac03b",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3292,6 +3292,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-0017ff064f290927",
+      "properties": {},
+      "to_id": "epoch:v0340"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-020a057ec12710f0",
       "properties": {},
       "to_id": "epoch:v0230"
@@ -3301,6 +3307,12 @@
       "from_id": "chg:accept-042ef55b26adc527",
       "properties": {},
       "to_id": "epoch:v0290"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-047452907ffdceb9",
+      "properties": {},
+      "to_id": "epoch:v0340"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3334,6 +3346,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-1d44e44cafb8f327",
+      "properties": {},
+      "to_id": "epoch:v0340"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-1e7665d6348d37ad",
       "properties": {},
       "to_id": "epoch:v0320"
@@ -3343,6 +3361,18 @@
       "from_id": "chg:accept-1ea01d3ea7e8701a",
       "properties": {},
       "to_id": "epoch:v0250"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-1f6e12e8ae6095ef",
+      "properties": {},
+      "to_id": "epoch:v0340"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-28ee674052533218",
+      "properties": {},
+      "to_id": "epoch:v0340"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3394,15 +3424,33 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-402643b1b7044f89",
+      "properties": {},
+      "to_id": "epoch:v0340"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-41cb200c8b595eb3",
       "properties": {},
       "to_id": "epoch:v0220"
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-43679b50044a18d6",
+      "properties": {},
+      "to_id": "epoch:v0340"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-43ae772560f9ccca",
       "properties": {},
       "to_id": "epoch:v0210"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-4c0f9ed4478fbbb6",
+      "properties": {},
+      "to_id": "epoch:v0340"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3490,6 +3538,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-794a2d509715394a",
+      "properties": {},
+      "to_id": "epoch:v0340"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-7a8e70b448098faa",
       "properties": {},
       "to_id": "epoch:v0250"
@@ -3511,6 +3565,12 @@
       "from_id": "chg:accept-80d1f87f330f26e8",
       "properties": {},
       "to_id": "epoch:v0210"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-86a3b2a0f17787e8",
+      "properties": {},
+      "to_id": "epoch:v0340"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3544,9 +3604,39 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-928cf018a5ad578b",
+      "properties": {},
+      "to_id": "epoch:v0340"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-943f9c508e56ba0c",
+      "properties": {},
+      "to_id": "epoch:v0340"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-96e9f11e62ac29fd",
+      "properties": {},
+      "to_id": "epoch:v0340"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-980140987a1dab8d",
       "properties": {},
       "to_id": "epoch:v0210"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-9d3a919d6550b6f3",
+      "properties": {},
+      "to_id": "epoch:v0340"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-a24b5b1cdec3618d",
+      "properties": {},
+      "to_id": "epoch:v0340"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3556,9 +3646,21 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-a8663d9d81bf09b2",
+      "properties": {},
+      "to_id": "epoch:v0340"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-acb06c45b63a7b6d",
       "properties": {},
       "to_id": "epoch:the-record-moved-is-noticed"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-aeb72873ff6c097c",
+      "properties": {},
+      "to_id": "epoch:v0340"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3586,9 +3688,21 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-bf1b6d229146b167",
+      "properties": {},
+      "to_id": "epoch:v0340"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-bf7dcd75fd6be477",
       "properties": {},
       "to_id": "epoch:v0320"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-c475a198aa801c33",
+      "properties": {},
+      "to_id": "epoch:v0340"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3610,9 +3724,27 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-cd1ba6fa2303deac",
+      "properties": {},
+      "to_id": "epoch:v0340"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-d008b352f18b7446",
+      "properties": {},
+      "to_id": "epoch:v0340"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-d17a2d99810f2ba6",
       "properties": {},
       "to_id": "epoch:no-fabricated-repairs"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-d181bd21edbf78e5",
+      "properties": {},
+      "to_id": "epoch:v0340"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3625,6 +3757,12 @@
       "from_id": "chg:accept-d3cbeecdecc8d059",
       "properties": {},
       "to_id": "epoch:v0290"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-d3e4d44093e988d2",
+      "properties": {},
+      "to_id": "epoch:v0340"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -3649,6 +3787,18 @@
       "from_id": "chg:accept-d98d4bdc9939d8fb",
       "properties": {},
       "to_id": "epoch:v0220"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-dba8c8f410f62517",
+      "properties": {},
+      "to_id": "epoch:v0340"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-e57e8c42f6f3e884",
+      "properties": {},
+      "to_id": "epoch:v0340"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5971,6 +6121,12 @@
       "from_id": "rel:v0330",
       "properties": {},
       "to_id": "epoch:v0330"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "epoch:v0340"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -11686,6 +11842,15 @@
         "action": "modified"
       },
       "to_id": "art:structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-943f9c508e56ba0c",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dependency-manifest"
     },
     {
       "edge_type": "CHANGED",
@@ -21013,17 +21178,6 @@
       "to_id": "req:version-combination-is-an-object"
     },
     {
-      "edge_type": "CLAIMS",
-      "from_id": "who:claude-code",
-      "properties": {
-        "claimed_at": "2026-08-17T23:10:00Z",
-        "depth": 2,
-        "note": "Requirement 5 of epoch:instruments-stop-overstating — seedless orientation. Touching the scoped-read surface and adding region discovery.",
-        "seat": "asligar-bitecool:2821478:6000e009"
-      },
-      "to_id": "req:a-session-with-no-seed-can-still-orient"
-    },
-    {
       "edge_type": "CONSTRAINS",
       "from_id": "con:pairing-stops-at-the-boundary",
       "properties": {
@@ -24244,6 +24398,22 @@
     {
       "edge_type": "DEPLOYED_TO",
       "from_id": "rel:v0330",
+      "properties": {
+        "status": "active"
+      },
+      "to_id": "env:dev"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v0340",
+      "properties": {
+        "status": "active"
+      },
+      "to_id": "env:container"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v0340",
       "properties": {
         "status": "active"
       },
@@ -64967,6 +65137,1862 @@
     },
     {
       "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:3b4c4074ec7ecc66f9fc6b66d3efa9a77e91b4a8d5b529b1a231cd4da9753692"
+      },
+      "to_id": "art:acknowledgement-not-structure-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:14385c12b76516b9a8a8903216243912fcf602be1869d703c25af468a18a1e44"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:c33a33c15e2611b3"
+      },
+      "to_id": "art:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:0318c29079069fab4d59770f29f5b9ec9895208d658b9b829f8cb46f019bc387"
+      },
+      "to_id": "art:alex-grok-feedback-2026-08-14"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:d282035a162e3e56"
+      },
+      "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:c87a79726aeb111b"
+      },
+      "to_id": "art:alternatives"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:9c293b7111c7b029d49f9debb054d2f2660c43e70f2a6786fcd11d81ebe672bc"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:7befd2e936958a6b7d3ea06a1ec1d2edde451ca31354d7c8b49719cddd0d4b75"
+      },
+      "to_id": "art:artifact-intent-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:06b64e606511407badac652aaf530cc2f9d012bb1bc53f95124cc32152c2e979"
+      },
+      "to_id": "art:bl124-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:6f101376a547fe6ef1f9a9d7d2d3da29b84505a96b352ed69d19b8514772c0ec"
+      },
+      "to_id": "art:brainstorm-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:28210925da9f9641d9ca5d5a670c3da2c62be0a1d3be722fe4123823019d9c23"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:8f5ffbc7c6e84b5e"
+      },
+      "to_id": "art:built-right-review"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:6e8e23fce35b21d6"
+      },
+      "to_id": "art:bulk"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:a596ed5e34cdf3ecec3cd5f2d94731bacb2f66dee86874147f3a34dec42039f5"
+      },
+      "to_id": "art:capture-intent-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:a9698e861f183c96a564e22ceab750a9a5d336831b2b63c0c65e233c9ce43fc3"
+      },
+      "to_id": "art:capture-session-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:73b31ffd9cc27cbb7315a8023f47f3992b85e925b65605bb5f610aad3a088772"
+      },
+      "to_id": "art:changelog-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:cf4e86690ccd846f37228812ef55352845f046d0a4903b63cd08e5a4a3764528"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:0599e56015b53dd5a57b9562bc0d9a82a065003ea1ea91fa9af0881c168ec80a"
+      },
+      "to_id": "art:check-health-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:b78fa9e7b867218d12b5f4e478f55228619203e15bebb578d54b0bd00ea0a97d"
+      },
+      "to_id": "art:check-kit-manifest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:68138446368f22bbde0b1fe44360b85edeb941b4503dbb491750506a99c1711f"
+      },
+      "to_id": "art:checksum-dialect-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:b8d4e975533b670e09be74d288144194ad388c69ed987738929f48cfc8b8d011"
+      },
+      "to_id": "art:claim-age-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:43b2258a9537a2cbb3e131acb781e11085a4b1e89fa599bd5325d46c1e42fe2f"
+      },
+      "to_id": "art:claim-not-hidden-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:5a933a36f2ff5606df032f929c969218e54fc9d142c8629a7743243d7e3fa241"
+      },
+      "to_id": "art:claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:2575d415a74a3266b208ddf798e5e6516186d6c345324efb6f9b66e46b7367a3"
+      },
+      "to_id": "art:collaborating"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:b73161a0fd04efee"
+      },
+      "to_id": "art:compare"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:21f0cb3c189f4e8f4295e1d67788061e2ec7f91f018010ff992ef51bd0a1c377"
+      },
+      "to_id": "art:compose"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:6b58139a0fd5f095c64c4c465f03cfed8200015ef0e7af3a4e7cca064727de39"
+      },
+      "to_id": "art:compose-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:276c4e707db8d55a34f673a533dcaa15629d6bd59be4d3232df21bff1e6ce7c3"
+      },
+      "to_id": "art:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:48b47fe9de1616a9e70f824e098108c45fafc22d35c92f1a005fafd3d1e83c14"
+      },
+      "to_id": "art:confirmation-vocabulary-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:7776124d5c2f276520f036b0414c9e143f6b45ae56f02d61cd672a343beb3fe0"
+      },
+      "to_id": "art:conformance-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:e2efa0a05f6a46929a0f4634871281407af7b196061300cf9fdf63f9a06a6050"
+      },
+      "to_id": "art:consumption"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:5c4c6e7a717189396689405566ed54b8e67f10821b593d22b99ea37053450f1b"
+      },
+      "to_id": "art:contradiction-alignment-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:9f9496cd532968cb39dc7461c83f488e856e97b00a4a438f2f25914ee044760d"
+      },
+      "to_id": "art:corpus"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:c3d8585b71d9bb6aa886b70998fa97a143ae2829a6ebb47a4803e18910ec176d"
+      },
+      "to_id": "art:coverage"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:da69705c4697580a151a6ee7355c388701d465220bf475c2ede5bac2b1469e25"
+      },
+      "to_id": "art:coverage-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:a62c88bd9814737dd97b620eda586cd5c28420031c057f7f196da584a79e1f72"
+      },
+      "to_id": "art:cycles-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:b125b0aa1c36046cefe30e62298b0ec03ff7e8ff0c107820d1c8fafde6c9f36c"
+      },
+      "to_id": "art:dates"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:eb126729e08e8d8d3ac45acec3a2e291e068dc1e9afed14a8647edf73300bdde"
+      },
+      "to_id": "art:degraded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:0b1b723ee67ab0fcdfc943f5055175c68aa55cf01951fa6d33b337b3ee9d45df"
+      },
+      "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:45cd6ca68f900aa040d2c075a7dc08311afd8acf8e94bd266f101e4fe1ee8ae7"
+      },
+      "to_id": "art:depends"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:f2a9a6d42ce95561436f9ae64e64cef57bd11d90d2c5e6d5bb50825da3d2aee6"
+      },
+      "to_id": "art:depends-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:147f2c1b5405bf8eac0848109cf5d56e9a011aaacb58c5486a1b50a5d2cef3f0"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:59ef210d5f8576a9f07b321dc546b653056ab4ecda17e0ec9269ed87a52c27dc"
+      },
+      "to_id": "art:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:b876b5fc65f8dfe8b3c514d0537a0445dfbb51df24fcf6179e8b30b762988eaf"
+      },
+      "to_id": "art:discover"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:9a774749820828b965aef9eadc6d12d2f07a5e9dc28f05d1ddedc73eb6370a24"
+      },
+      "to_id": "art:discover-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:43efb3dd59d17efa2aab4c25c5dc57495077f8d6fd31b1743e0bc8fa5df201fe"
+      },
+      "to_id": "art:doc-impact-propagation"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:9ad56c234dcffbca6f016d50b71c5ffab9e33a3380d18c5fafb445de5474e079"
+      },
+      "to_id": "art:docker-build-script"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:f2019afd72ee2dbf3e3806a54e397a638e6b1ab37cc181c8a9b1f86c1089b229"
+      },
+      "to_id": "art:docker-smoke-script"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:f014e913ac9e61dc2112f4383c0cc94cdf9e5d78fe307bcb2ad45ae316d6e719"
+      },
+      "to_id": "art:dockerfile"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:d03decfe05f40310f62a43ac0f6a81993dba777adb056040a1f0564b64d76f2c"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:7df4f44d215da1ed659c6bdf5fcc40df9d4f1bb00c8b7ecf982ab8e7732a3ba2"
+      },
+      "to_id": "art:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:7e94e450dbda74bbb0e6b367ea082d0efecc5d353472db92c57d02728051aec2"
+      },
+      "to_id": "art:enforced-rule-detector-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:8956d2d0d4f31fe1"
+      },
+      "to_id": "art:evidence-quality-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:edff3aa9e9469319c76f745c2e22d20a4e87b67ba2aff267cca10034d467f932"
+      },
+      "to_id": "art:evidence-quality-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:7f9fad8c07f55057160caa8cab59660a6bfb1fdea295b8eb26f48bcc96ebbb40"
+      },
+      "to_id": "art:evidence-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:80709df69bd60b7a5d2a4de8e1ccb80ebac37baf705fd24c9d2e7b3195d89b90"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:0eec67e9d35aba549853dfdb058371975fcf5fd1aa1b062b8872415e2babbd43"
+      },
+      "to_id": "art:export-via-binary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:cfdf82f1a6497595"
+      },
+      "to_id": "art:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2"
+      },
+      "to_id": "art:fleet-lessons"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:f6abe031170cd8123c44b3f87248b9841f9b31117d78d8325769fea6a34a5d8e"
+      },
+      "to_id": "art:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:8196df94f5775161"
+      },
+      "to_id": "art:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:730e59e9cca3bdf7d6c19b02a4c21ce6e3fa1b4564adf6d202b72ba2fdc19b9f"
+      },
+      "to_id": "art:genesis-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:34701500af93dbcf"
+      },
+      "to_id": "art:github-mcp-study"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:fd8331443a248d4fbe0eb45a2888ff7deda5f059733753b7b43025ee0582147b"
+      },
+      "to_id": "art:governance-proposal-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:199301145284e0fb30cfec667a6adb26c3af9db724a2f3049474659ee07c7f15"
+      },
+      "to_id": "art:granularity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:bd8dadec8a4b53e1532150ec09a42bd34c5f796d0d544e3040abe9491cdba91e"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:2c078196ea233296ffcf5a75c16767589a535b2e7bc24ab6b22f7ac578a90b81"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:30fc1a09862792a9"
+      },
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:b2040f682b99860815459e4b4c34150019ff02f40821f9dd9e75fadfda5bf29a"
+      },
+      "to_id": "art:identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:08788e160c65f66ffbcea91b3919205a035b32930dfc578e36acfd2045ee3298"
+      },
+      "to_id": "art:ility"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:d6a3a8bce014e75f1a2a524d0c76612ab8a1dc99ad32f7fbdeca286b51950652"
+      },
+      "to_id": "art:increment-plan"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:e36d3b386dcad3b33c12ed42a28685b2bcd3a9c8a2ccdd7d2704c230739407c0"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:ddfa7e13d3b56156a9b463f434cd691718e1af489f27aaba169395c226d14b9a"
+      },
+      "to_id": "art:ingest-handshake-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:2b0c9b500c5d5e1a45497d5deef3382a41a6374851d5ffbf4fa91ae6d5958059"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:07c82cd7671c1241"
+      },
+      "to_id": "art:interface-spec-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:13f19b14c25c9300"
+      },
+      "to_id": "art:kit-instructions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:4329e5563666ab6708edfe68c0d0188818571b39ea408c70ef71663bc2f98f36"
+      },
+      "to_id": "art:kit-pointer"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:65a01535f32f023e"
+      },
+      "to_id": "art:kpp-proposal-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:7280072322f2889e0a1e958c0d9293fb281e8938ff9dc368d1962d833434a421"
+      },
+      "to_id": "art:latent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:6869d93e97fc9393"
+      },
+      "to_id": "art:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:f7b21dc97aa8ee9f4a6b33f59ea944d3e900671479d79ee7a4c023877929f9b6"
+      },
+      "to_id": "art:machine-install"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:cd4dc46a42ac5da44ecf6f484eb33da8774333afc7fb13a13c554c0f395a766d"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:f83c09736230e7d7359f69e72f64c70140cf609babb1b18f4661528193d38599"
+      },
+      "to_id": "art:maturity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:075bab31f3c131b6"
+      },
+      "to_id": "art:merge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:cddbea4165e0e3b0"
+      },
+      "to_id": "art:merge-driver-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:4d0783bbb657970305906ae38eb8a51badd40b1229881929e81026149478dd80"
+      },
+      "to_id": "art:migrate-backlog"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:fa90553f10cfd1194c8ac6b5962e1c5c57dc269e5d662bc62869db823d923a44"
+      },
+      "to_id": "art:mint-seat-liveness-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:ae5a182c709321a1e0753361a6a8b9ed6836a6a8cd518979d83896d7b4511aa6"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:728650e901174321fd684df8aa431ccfd84bc3e806f2d725c416a9d7f2445814"
+      },
+      "to_id": "art:nudge-detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:e95e6f4c2658ebd1c7afa6e23385256e51272860a0cb56e2046d4c1b581881d0"
+      },
+      "to_id": "art:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:377d332d152038615d31984d530989b283d8ef1a9f7651f706f7f9f12a627f68"
+      },
+      "to_id": "art:orphan-attachment-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:a174eaa7a6781e8a3e5b3df9ce8629efabae2ae8e336dbe16c1ae26a2b33daf7"
+      },
+      "to_id": "art:parallel-work-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:ce7feac76c8da9cd72c6188a2f0035565f37031c2632354820baaf7fc1ffcdcd"
+      },
+      "to_id": "art:plan-increments-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14"
+      },
+      "to_id": "art:planning-at-scale"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:59b6e751c18dfc67d4546b6d6d70e1305b64864d3890d8cf786320687c9b84d4"
+      },
+      "to_id": "art:preserve"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:26dde99a1df42e6f"
+      },
+      "to_id": "art:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:b3cd0321b5dcda802926f3247ab45b6c1bbfc7bbd60ed38d2d95da29a3d6caf0"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:7979028e8c95724dd5696d9b1fee3f307c718b7d9f4e086a968620b602eec420"
+      },
+      "to_id": "art:publishable-promise-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:f01d1b8a9f04a3efd4efe0fa05d12f9d1b330e4c4f16b9f1781ae6e645a38fa5"
+      },
+      "to_id": "art:readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:00ac00342910d276b036ffa093f2ed3ee8a7efb9abe9d3b2a5c21fcfa30939c8"
+      },
+      "to_id": "art:readme"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:c44aeed44068400f04ccba69c3fd47d2a4b4999a036ed08494bf13f166fa2194"
+      },
+      "to_id": "art:regions-rs"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:d8d916c194760d36e108eb96fe403611fe7f9b2488301600e7c584840fe56d77"
+      },
+      "to_id": "art:registry"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:079bd2025a17eeadc09a98cdfdf658b2cc78180bd06b11bb59fff5a410d011cc"
+      },
+      "to_id": "art:release-workflow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:99fc5da421a04f5e"
+      },
+      "to_id": "art:render-views"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:6bd028cccbc577b2833621d955bca4f879dd7e0806b67f608404668411b5c054"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:dc88dfbc4e1aacbc"
+      },
+      "to_id": "art:sanitize"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:fff07736686cf6f57b72df0c050c1ab8fe590805891228dea6a08d7d3d3f3e58"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:4c6d9b4d2298db40893e54004d41009a45bfd6757adc7dbd4cc510f39712a083"
+      },
+      "to_id": "art:schema-build"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:3c14debf63e30806550295d9645fa4c3d47da88e722c020053f66c07b52f36bb"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:815273502db4fed6800182446fb496a08aace3a9b34757395892e6da37dbcdb9"
+      },
+      "to_id": "art:schema-dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:7201c53b7e2c794b871f3d48b7da761884f5bccd7d9f90b9b7d07210e79053cc"
+      },
+      "to_id": "art:schema-environment"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:a156dba66ba8b296e63fa7b1d3a1ec883e458e0ca3ae8573933cba189978767a"
+      },
+      "to_id": "art:schema-functional"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:07f5d9a9594cf5464bfeb426ce94e08f28769d90b154741144b6570a32d578ad"
+      },
+      "to_id": "art:schema-inference"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:a986d436e5575b86d26ab38c52bbb37ff91e1ead726ad6e04fe0d74889b71361"
+      },
+      "to_id": "art:schema-operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:daf8ea6b9399cb16edfd8849adcd1bcd37ac1a7f3ae3acea80ecca8e035fdc9a"
+      },
+      "to_id": "art:schema-readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:ee191ec5591c4a35fee2177dca3c113f17f84ad579d62052008104d28e1dc103"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:7be3062dbe9327ac959652734116c350d114d3ca4348ba0f8aa1050c5e91f2c0"
+      },
+      "to_id": "art:schema-temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:25729faa169eb7a9c99b59afcd9f9e26b8d61c1dec903e1428a3cfec30a4f78b"
+      },
+      "to_id": "art:schema-verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:a6b68c076bfcd16547ec850c06b7b4951a73fecf072dd84b2d660d9c0e50cbca"
+      },
+      "to_id": "art:scope"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:de0871a98e6007aa5ee9e202d5396f014b3799efd72600f2a1a94de6d58ff182"
+      },
+      "to_id": "art:scope-corpus-ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea"
+      },
+      "to_id": "art:scope-read-while-held"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:e96c9c4c07a384fc845aa360edc7f505d90ecbecc8e38b08dd65e65b56cf1470"
+      },
+      "to_id": "art:seam"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:efb2faf35ec4cc6ed3df5a61f8fdf2af77aded2a6eb29ddabf2394dfc7ed195d"
+      },
+      "to_id": "art:seam-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:a5f270c3646365f78d5c4b6004d1cf0f27285768017ccccce1983176318db40f"
+      },
+      "to_id": "art:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:8e5af9fd122fc56d39472920dc28410b6a157ed889964b4c01eed80fb8cd52aa"
+      },
+      "to_id": "art:seat-liveness-shared-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:4d824c873120e938"
+      },
+      "to_id": "art:self-host-documents-guard"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:6ac21cd02a37fc6c6d51bbbc2d1adcac817d0a373e82c33e95ab954344496741"
+      },
+      "to_id": "art:server-currency-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:74490fdd329c65fc8c14df6185cd30b6422f32b1a3ea9d12a2029616895faa79"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:062c1682b832952af474200bd28a7e046146cc8a2eefaca17dd42bfcecfc288d"
+      },
+      "to_id": "art:session-debt-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:c5ae98896e2558c42d86c890f7348c6c3b4f5d8895e6aafb723516edc24c2e56"
+      },
+      "to_id": "art:setup"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:f8d14a991b90377fab5074ee51dbbcf165d2ab813b1b5e742688b19d534c700b"
+      },
+      "to_id": "art:sibling-merge-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:c221daad4dd73582e3abec93e7d0493e75f71f7809f138c1852271fa63f37ea4"
+      },
+      "to_id": "art:skill-ingest-corpus"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:e758f8098e95ab2784de46b3cd83fcec1ceb4bdec8aad8011651b2d40fd3d205"
+      },
+      "to_id": "art:skill-link-projects"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:961c6ba1dd768d33f9a0de639ee2487c9d72273cc779109440506f6e12b5d7d1"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:9352eb7ec610eb6187d482730ea021c18883d4548f4ba2ed3ab3b3fac0451bda"
+      },
+      "to_id": "art:skill-lint-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:ae92f6894ad0c1be076a3243da39ff336e2654554038b512211a654516f41e9b"
+      },
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:beaa4bd48ef2fae4b6cdb0604f5e0ff9ce644d9bb39f1a9c6a7f7f2a630aa797"
+      },
+      "to_id": "art:skills-build"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:24eb607efc9ebc2803533ca7aba6fcfc6aca8ca8b6bbf8b1cb49cb1c7e3cec4a"
+      },
+      "to_id": "art:skills-catalog"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:772b73a05ff491fe6dbca6adeb9697ad84e1ad9592e24b66793aae2716ae0783"
+      },
+      "to_id": "art:stateless-seat-probe"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:ce30365401d775a82585729349538efe1a0fa43625783b2a39a6dc30f7d9ce83"
+      },
+      "to_id": "art:storyflow-resolution-study"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:4a412efc7f3ba82b37e375c9e7c4ad228c2b46844b4b319a36a65237c88c2e49"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:b3b2bac1387c9c53"
+      },
+      "to_id": "art:surface-usage-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:b1cec4ec107ef2b1"
+      },
+      "to_id": "art:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:c79d8c79905d00199a758e49e4ad91d27539c15223d89aeb675848a8cdfae464"
+      },
+      "to_id": "art:sync"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286"
+      },
+      "to_id": "art:sync-debt"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:2ea76100494505ddb23275e87de01360b10934de79446419b8af53062fc56886"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:d7ad0005715563e4089ca5a4f2ff2a4a2cb2b07c8feafd611610cb278c9cf468"
+      },
+      "to_id": "art:test-a-session-with-no-seed-can-find-one"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:35bd149e47e2a2669241c63df99a4c7b31d1120dd1bb857779376464f39b9bcc"
+      },
+      "to_id": "art:test-check-kit-manifest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:25db9bfb196de65609c48f3aec924f55bdcac7c8492066658f310832b17156ef"
+      },
+      "to_id": "art:test-degraded-server"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:cba77191420374d58d2360da9c1d2a73adcdd1d750d25dafc3991c1a525773af"
+      },
+      "to_id": "art:test-design-identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:e06c721f5f95ad1e42a8e97c53ca55c985a4a961ef256ff57489025891adb93b"
+      },
+      "to_id": "art:test-discontinued-is-read"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:10fcbe40f951649ca80e0bbac92e3399c45a1421e1484f580e95b97b12df7fb2"
+      },
+      "to_id": "art:test-edges-need-both-ends"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:80bb4b7b81a13ee0164d2e1c377ac326c95a2454b2a581cdfc9e86efc1dd8585"
+      },
+      "to_id": "art:test-init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:4d3313a3988968e436920662419a02f89fcc46d443d09ecd19d018bfe78dc688"
+      },
+      "to_id": "art:test-loop-nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:259d5952c7c46f429b9341e49c0aa91d7a9e65fe573c9acd1ca9ec5466af28d6"
+      },
+      "to_id": "art:test-mirror-refresh"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:4a6daa9a696479a7f84646fcfbf1da7b3f8ad7d31a13ea2441f714b9e50bfc7a"
+      },
+      "to_id": "art:test-no-per-design-globals"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:39bcf1f944d3ceed42a1c6e10922eb00362b50cf37e8fefbee4a94ec4a35b8c6"
+      },
+      "to_id": "art:test-nudge-path"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:be6196c6181454d6249970f6273f7ba13272e5c4b025a73be5267009855e9db2"
+      },
+      "to_id": "art:test-orientation-needs-nothing-to-start"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:f43ed9a42160d5031a44160b361a07be164ebbfb6910639a63ead22078150b29"
+      },
+      "to_id": "art:test-search-first"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:3a28c5d6f3bc91ce95ad0bc3da6bcc85c1bbb71e73e42fa670b14b101b78629c"
+      },
+      "to_id": "art:test-served-skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:3c302ebd5675b5bc9407d9318f6c164fcad4954354db4b7008f01b6cc0039e6d"
+      },
+      "to_id": "art:test-session-names-its-design"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:771424fd9bca485932d2b5e429b16f8940e982566102bef0fc2a905a0211adea"
+      },
+      "to_id": "art:test-sessions-cannot-cross-designs"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:21673699d9d326c9db310fcb24068fa38074634b1949d2708c56f9f77a6c2e5f"
+      },
+      "to_id": "art:test-shared-sessions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:78b994c3da2476c2560bcd53dd776eb2232a1c4856a8427c63e9a08235cc628d"
+      },
+      "to_id": "art:test-stale-seat"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:9a86b59dc94de982a97460fbaa8e22a85d4929f2bbc0db0d6a62338bf0fbdede"
+      },
+      "to_id": "art:test-surface-orphaned"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:a61192bc3e08c0a0ae904c597228cc1aae1ba23bca5cf3d602b7bafd4f48d680"
+      },
+      "to_id": "art:tools-ask"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:419c91a71f07405d762b0cc580f7954544625a0f2f765ae0debf58b48d982acf"
+      },
+      "to_id": "art:tools-assure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:ba6f62e02f9872a33d62483cc0aeacaa3fd2ca93cbcb5616771165ccf02edb8d"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:324548e0440a19f55c6398292c79f5baae9254850bc9c3bb35160f0cad2a2f45"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:9349d575b229d76389271afb868beaacfd0aaa3be3d0723982a92cf3b119ebfb"
+      },
+      "to_id": "art:tools-claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:12f3f7c8ece85c82fdaf417e3c9ebef05e964c3a747e3592545191944d011689"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:f6720b2e49607c8ae69b578db4ec19ce65e9ec9e2be8e13c3bc16ee0d795229e"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:25ab6353c7864b55aa042ac631ecc7ab16daef10aa8024927ecb840158aacbd5"
+      },
+      "to_id": "art:tools-operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:31e8a59e3dd04bac9acd4d41d5d36f6b435bb1d4b60b9872f5b7865f8f67d37b"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:6934d8e9197c727e76f9dda848ac57c48f0ec015109a4ab8f0eb76b9ef9eb7f2"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:810c3100d3bc707836572fbe68fbf1649e42f28bb1a3d4e7bf1f1e34fc68e937"
+      },
+      "to_id": "art:unreachable-decision-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:878315a480167a9296209d6b30a41f9f13318292db228829243a7acc24338c23"
+      },
+      "to_id": "art:updating-doc"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:ef7dbb708e027df2"
+      },
+      "to_id": "art:upgrade-v0110"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34"
+      },
+      "to_id": "art:upgrading-v0120"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995"
+      },
+      "to_id": "art:upgrading-v0130"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:b1e1cee221b0bc6ed7f9e4411cda9dcd50a2dc2647785e06eaa7b1ce7329da28"
+      },
+      "to_id": "art:upgrading-v0150"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:00eea80c2a79cc4eed4d1db9402a4e90e23231745a8fdd4117f44a9f22f58f24"
+      },
+      "to_id": "art:upgrading-v0160"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:d1c21f5330ad0ea05f4efe46c08a010d5fb22ece05523922bb6324c7ec8a2eda"
+      },
+      "to_id": "art:upgrading-v0180"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:3a36b9b6b248af09"
+      },
+      "to_id": "art:upgrading-v0190"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:d16abc28ea59e3f9"
+      },
+      "to_id": "art:upgrading-v0210"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:6b9d7e9a3106aeb93da6040f6804e618845417db6599b75a03b50415bd131b91"
+      },
+      "to_id": "art:upgrading-v0270"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:4f3ce1ca9ee00ff17079b8925e6dccaf8161b82857cb6746f2f756edd59772ac"
+      },
+      "to_id": "art:usgov-genesis-feedback-2026-08-15"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:8e4dd328ecb7e57cd5f4796a6a3d1c49bbb6a2ccdf5eeca164cf1313afb7eb98"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {
+        "as_checksum": "sha256:9952215fb5bfbffaff8f7af0625b2c56e918dff77e3fc3ea692cf02086b54faa"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:alternatives"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:compare"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:degraded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:docs"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:merge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:packaging"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:registry"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:sanitize"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:scope"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:sync"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "cmp:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "sys:agent-surface"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "sys:coherence-loop"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "sys:documentation"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "sys:human-channel"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "sys:intake"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "sys:store"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "sys:time-history"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0340",
+      "properties": {},
+      "to_id": "sys:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
       "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:1c729eee5b67e7dc"
@@ -67202,6 +69228,18 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:a-scope-actually-narrows",
+      "properties": {},
+      "to_id": "epoch:vocabulary-the-tools-cannot-reach"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:a-session-with-no-seed-can-find-one",
+      "properties": {},
+      "to_id": "epoch:v0340"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:a-write-can-be-conditional-on-what-was-read",
       "properties": {},
       "to_id": "epoch:a-finding-has-somewhere-to-put-its-evidence"
@@ -67493,6 +69531,12 @@
       "from_id": "epoch:v0330",
       "properties": {},
       "to_id": "epoch:a-node-with-no-edges-is-not-clean"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v0340",
+      "properties": {},
+      "to_id": "epoch:a-scope-actually-narrows"
     },
     {
       "edge_type": "PRECEDES",
@@ -71035,6 +73079,15 @@
     },
     {
       "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:a-scoped-answer-actually-narrows",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-18T00:20:00Z"
+      },
+      "to_id": "epoch:a-scope-actually-narrows"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
       "from_id": "req:a-session-with-no-seed-can-still-orient",
       "properties": {
         "modality": "expected",
@@ -71059,6 +73112,15 @@
         "recorded_at": "2026-08-16"
       },
       "to_id": "epoch:triage-fixes"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:declared-vocabulary-is-reachable-from-the-surface",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-18T00:20:00Z"
+      },
+      "to_id": "epoch:vocabulary-the-tools-cannot-reach"
     },
     {
       "edge_type": "SCHEDULED_FOR",
@@ -74618,7 +76680,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "config",
-        "checksum": "sha256:05831ab6013c1277e990980958bc0a05e4a2f5249549d3e60d2750c9815dcc37",
+        "checksum": "sha256:0b1b723ee67ab0fcdfc943f5055175c68aa55cf01951fa6d33b337b3ee9d45df",
         "granularity": "atomic",
         "location": "reflow2.toml",
         "name": "reflow2.toml",
@@ -79672,6 +81734,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-17",
         "name": "Comment references to the renamed category; behaviour unchanged.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-943f9c508e56ba0c",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-18T00:35:00Z",
+        "name": "The v0.34.0 version bump. The design meaning of a cut lives in the Release and its release_cut epoch, not in a version string — so the manifest moved and the design holds. Accepted BEFORE release_includes_all so the frozen manifest records the post-bump file, which is what actually ships.",
         "subject": "system"
       }
     },
@@ -87788,6 +89860,16 @@
       }
     },
     {
+      "node_id": "epoch:a-scope-actually-narrows",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "A scope actually narrows — the region computation stops returning two thirds of the design and calling it your part",
+        "sequence": 356,
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "epoch:a-session-with-no-seed-can-find-one",
       "node_type": "DesignEpoch",
       "properties": {
@@ -88247,7 +90329,7 @@
         "epoch_type": "milestone",
         "name": "The instruments stop overstating — every item here is reflow2 telling a user something that is not true: a green that could not fail, a write that reports success while losing data, a defect that is not one, and a name that is really a report",
         "sequence": 346,
-        "status": "planned"
+        "status": "arrived"
       }
     },
     {
@@ -89097,6 +91179,16 @@
       }
     },
     {
+      "node_id": "epoch:v0340",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "v0.34.0 — the instruments stop overstating: five requirements, two breaking changes, and a seedless way in",
+        "sequence": 355,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:v040",
       "node_type": "DesignEpoch",
       "properties": {
@@ -89177,6 +91269,16 @@
         "name": "v0.9.0 release cut (2026-07-22)",
         "sequence": 70,
         "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:vocabulary-the-tools-cannot-reach",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The design finds its own unreachable vocabulary — a field nothing can write stops being something a human has to notice four times",
+        "sequence": 357,
+        "status": "planned"
       }
     },
     {
@@ -92656,9 +94758,19 @@
       "node_type": "Release",
       "properties": {
         "name": "v0.33.0",
-        "status": "deployed",
+        "status": "retired",
         "unit_type": "binary",
         "version": "0.33.0"
+      }
+    },
+    {
+      "node_id": "rel:v0340",
+      "node_type": "Release",
+      "properties": {
+        "name": "v0.34.0 — the instruments stop overstating",
+        "status": "deployed",
+        "unit_type": "package",
+        "version": "0.34.0"
       }
     },
     {
@@ -93075,6 +95187,18 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A rule states the SCOPE it applies in, so a reader can tell whether it binds them; and where two rules cannot both be satisfied, that conflict is surfaced by the design rather than discovered by whoever loses work to it.\n\n⭐ THE GENERAL FINDING, and it is not about export: WHEN TWO SAFETY RULES CONFLICT, THE PARTICIPANT WHO REASONS MOST CAREFULLY ABOUT THE CONFLICT IS THE ONE WHO DOES NOTHING — and doing nothing is often the destructive option. A conflict between two safety rules is not neutral; IT SELECTS AGAINST THE CAREFUL. That is the mechanism this requirement exists to break, and it generalises far past the case that exposed it.\n\nTHE CASE. Two rules, both correct in isolation: any session that changed the design EXPORTS BEFORE STANDING DOWN (durability), versus the export is produced ONCE PER PULL REQUEST, LAST OF ALL, because two exporting commits on one branch break the lineage chain silently (integrity — dec:export-once-per-pr here). On a shared branch with several writers, BOTH CANNOT BE SATISFIED. A storyflow boss wrote two Requirements, one Contributor and two edges, then reported: \"I am NOT exporting, because I will not risk the lineage chain on a guess — and the cost of that correct-looking caution is that my writes exist in one untracked RocksDB directory on this host and nowhere else,\" which is precisely what the durability rule exists to prevent. Another session exported four times the same day. NEITHER BEHAVIOUR IS WRONG UNDER THE RULES AS WRITTEN.\n\nREPRODUCED HERE THE SAME DAY, and by the careful route: this session declined to export after recording dec:governance-integrates-not-splits and four requirements, because PR #132 was open and dec:export-once-per-pr applied. The design's own answer to the tension was to leave a session's work unexported — the identical outcome, arrived at by the identical reasoning, in the project that authors the rule.\n\nWHAT IS MISSING, in two parts. FIRST, SCOPE: the lineage warning does not say whether it is branch-local or any-branch, so a reader cannot tell whether it applies to them. This is the same missing field as req:a-decision-states-what-it-binds, one node type over — and where a single-writer discipline is required on shared state, reflow2 should be able to SAY so rather than leaving each project to find out by having someone lose work. SECOND, DETECTION: reflow2 surfaces a contradiction only where a human has already drawn a CONTRADICTS edge — two of this design's five current structural defects are exactly that. Nothing DISCOVERS a conflict between two rules nobody suspected, which is the only case that matters, because a suspected conflict is one somebody is already handling.\n\nFILED AS A REFLOW2 SEMANTICS GAP, NOT A PROJECT ONE, in the reporter's words: a project may rule its own cadence, but it should not have to discover the conflict first.\n\nSOURCE: storyflow gap C of the peer set — storybug Boss (47accf78), filed 2026-08-09, v0.26.1.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:a-scoped-answer-actually-narrows",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A scoped answer actually narrows, so \"my part\" is a different answer from \"the program\"",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Scoping a detector to a part of the design must return an answer materially different from the unscoped one, or the narrowing is decoration and the number beside it is misleading.\n\n(Distinct from the FACT, which records the measurement, and from the DECISION, which proposes one specific default. This is the intent both of those serve: the fact is evidence, the decision is one answer, and this says what must be true whatever answer is chosen.)\n\nTHE MEASUREMENT THAT MAKES THIS A REQUIREMENT RATHER THAN A PREFERENCE. Driving the built binary over all 56 Components of reflow2's own design (2487 nodes, 83 gaps), at the DEFAULT depth of 3: every single component returns 50-60 of the 83 gaps, median 55, over a region of 595-903 nodes. The spread across all 56 is 50..60 — indistinguishable. `in_scope: 55, out_of_scope: 28` reads as \"your part has 55 gaps\" and says the same thing to every team about every part. Shallower depths discriminate sharply: depth 1 gives 0-19 gaps over 17-139 nodes, depth 2 gives 2-27 over 267-601. Evidence: `fact:defect-a-scoped-detector-at-its-default-depth-returns-two-thirds-of-the-design`.\n\nWHAT IS OWED. Not a number — a property. A scoped read should be checkable against the claim it makes: if scoping to any seed returns most of what the unscoped call returns, the tool should be able to SAY SO rather than leaving the reader to compare two numbers they were never shown together. The specific default is `dec:the-default-scope-depth-should-be-two`, which is separately open and is the owner's to settle.\n\nTHREE THINGS THE SAME MEASUREMENT TURNED UP, worth carrying together because they are one confusion about what a region is:\n(a) `scope.rs` justifies the default of 3 by saying the third hop is needed to reach a contained child component's capabilities. `scope_region` puts the whole containment closure into the seed set BEFORE taking the radius, so those capabilities are ONE hop from an owned node. The stated reason is not a reason the code needs.\n(b) `detect_gaps`' description claims its region is \"the same computation claim_region uses for 'the part I hold', so 'my area' means one thing everywhere\". It is not: the MCP defaults differ (3 vs 2) AND `scope_region` adds the containment closure that `claimed_region` omits.\n(c) That second divergence is already recorded in `scope.rs` as possibly a defect in the claims layer, deliberately left unfixed because changing what a claim covers changes what two people believe they hold. Reconciling the two is a bigger question than a default and is NOT assumed here.\n\nSCOPE OF THIS REQUIREMENT, so the increment can be argued with: it is about the scoped DETECTORS and the words they use about themselves. It does not decide (c), and it does not touch `design_regions`, which already reports its own depth and coverage.",
         "status": "proposed"
       }
     },
@@ -93715,6 +95839,18 @@
         "provenance": "authored",
         "statement": "A Decision's status must not be set on the user's behalf. Recording a choice someone is still facing — an open question, a brainstormed option, a decision point held for later — must land as `proposed`, and reaching `accepted` must be a separate, deliberate act. Found as friction 2026-07-25: add_decision defaults to `accepted`, so six open questions recorded in one session each landed as settled and needed correcting immediately afterwards. This generalises dec:certainty-derived from requirements to decisions, and the reason is the same: an accepted Decision is what where-am-i reads back to the user as \"what you decided\", what the fork layer treats as binding, and what the KPP contradiction check reads as a trade already made. A musing recorded as a reasoned choice is therefore worse than a missing record — it is a false one, attributed to them. Evidence it was systemic rather than one slip: the correction had become a standing note carried across sessions, and the brainstorm skill had to instruct it in prose (\"this call is not optional\"), which is a defect with a bandage on it.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:declared-vocabulary-is-reachable-from-the-surface",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "Vocabulary the schema declares can actually be written from the surface, and what cannot is reported rather than discovered one field at a time",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A property or edge type the schema declares must be writable through the tools a client actually has. Where it is not, the design should be able to SAY so — because the alternative is what happened four times in two days: a field that exists, is documented, is indexed for search, and that nothing can set.\n\nTHE FOUR INSTANCES, all found by hand, all inside one increment, and all the same shape:\n1. `Verification.description` — declared, fulltext, the embedding field. Used ONCE in 164 Verifications, because `add_verification` had no parameter for it and `name` was the only string on offer. Read as \"the team does not want descriptions\"; it was unreachable, not unwanted.\n2. `SUPERSEDES` — declared as an edge type with ZERO edges in the graph, while nine nodes named their successor in prose because no tool drew the edge.\n3. `create_node`'s compare-and-swap — shipped with `expected_content_hash` as a required precondition and no `revision` block in the reply, so the value the tool demanded was unobtainable from the tool that demanded it. Every core test passed; the first MCP probe failed on line 1.\n4. `GOVERNED_BY.ruling` — added to the schema and would have been reachable only through raw `create_edge`, caught before shipping only because instance 1 had happened hours earlier.\n\nWHY THIS IS ONE FINDING AND NOT FOUR BUGS. Each was repaired at its own site, which is correct and is also how a pattern stays invisible. The common cause is structural: reflow2's schema and its typed constructors are written separately, nothing compares them, and the gap between \"declared\" and \"writable\" is exactly where a field goes to die. A corpus reading like \"used once in 164\" is then misread as a judgement about the team when it is a fact about the tools.\n\nWHAT IS OWED. A computation over the schema and the served surface that answers: which declared properties and edge types can no tool set? `dec:idea-detect-vocabulary-that-nothing-reaches` already proposes something in this family and should be read before designing.\n\nTWO THINGS IT MUST NOT DO, both of which would make it worse than nothing:\n(a) It must not conclude that an unreachable field should be deleted. Three of the four above were WANTED and got a parameter; deletion would have been the wrong repair every time.\n(b) It must not report raw `create_node` / `create_edge` as reachability. Those can write anything, which is precisely why they hid all four — a property is reachable when a TYPED tool can set it, and a finding computed against the generic escape hatch would answer clean forever.\n\nRELATED AND DELIBERATELY DISTINCT: `req:a-vocabulary-distinction-proves-it-is-read` asks whether a distinction the schema draws is ever READ by a computation. This asks whether it can be WRITTEN at all. A field can fail either test independently.",
+        "status": "proposed"
       }
     },
     {
@@ -101369,7 +103505,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:3a76c002c671c7dc9a02418e026f0ee213a9160bb1a559de984f5569957425ed",
+  "prev_content_hash": "sha256:03dc44cc642295bb9d098ed7c40c0f7dfded86105a354b4ddec8111a9bf3de84",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -101467,7 +103603,7 @@
       "Verification"
     ],
     "node_types": 29,
-    "reflow2_version": "0.33.0",
+    "reflow2_version": "0.34.0",
     "schema_version": 1
   }
 }
