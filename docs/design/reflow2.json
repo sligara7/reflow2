@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:4e00aa6fd8b5b121bebb18d0b67f51bb2b68c65e1805faacd7015da96b43213d",
+  "content_hash": "sha256:bb30b2a80eff42614d3b38330007587b742a87de85be66a780b13c115b33c657",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -838,6 +838,14 @@
       "from_id": "fact:the-stale-server-defect-recurred-to-the-people-who-wrote-it-down",
       "properties": {},
       "to_id": "req:the-server-is-the-authority-on-its-own-currency"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-capability-states-what-it-takes-and-gives",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:graph"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -3169,6 +3177,12 @@
       "from_id": "question:ff976610480dab90",
       "properties": {},
       "to_id": "req:the-store-is-reachable-from-a-session"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-capability-states-what-it-takes-and-gives",
+      "properties": {},
+      "to_id": "epoch:vocabulary-the-tools-cannot-reach"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5656,6 +5670,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-tool-catalogue-weights-rare-words",
+      "properties": {},
+      "to_id": "epoch:vocabulary-the-tools-cannot-reach"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-vocabulary-question-is-dispositioned",
+      "properties": {},
+      "to_id": "epoch:the-owner-rules-on-scope-and-reachability"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-vocabulary-says-where-abandonment-lives",
       "properties": {},
       "to_id": "epoch:the-vocabulary-says-where-abandonment-lives"
@@ -6989,6 +7015,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:the-owner-rules-on-scope-and-reachability:dec:a-black-box-needs-three-edges-not-one",
+      "properties": {},
+      "to_id": "epoch:the-owner-rules-on-scope-and-reachability"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-owner-rules-on-scope-and-reachability:dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses",
       "properties": {},
       "to_id": "epoch:the-owner-rules-on-scope-and-reachability"
     },
@@ -10683,6 +10715,51 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-capability-states-what-it-takes-and-gives",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-capability-states-what-it-takes-and-gives",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-capability-states-what-it-takes-and-gives",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-capability-states-what-it-takes-and-gives",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-capability-states-what-it-takes-and-gives"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-capability-states-what-it-takes-and-gives",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:recursive-black-box-decomposition"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:a-check-records-what-it-found-separately-from-what-it-is",
       "properties": {
         "accepted_baseline": true,
@@ -12417,6 +12494,15 @@
         "action": "modified"
       },
       "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-d42fc55c8dee5380",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
     },
     {
       "edge_type": "CHANGED",
@@ -20986,6 +21072,42 @@
         "action": "modified"
       },
       "to_id": "cmp:packaging"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-tool-catalogue-weights-rare-words",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-tool-catalogue-weights-rare-words",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-tool-catalogue-weights-rare-words",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-vocabulary-question-is-dispositioned",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses"
     },
     {
       "edge_type": "CHANGED",
@@ -31084,6 +31206,12 @@
       "from_id": "dec:idea-embeddings-adoption",
       "properties": {},
       "to_id": "snap:epoch:embeddings-question-gets-its-findings:dec:idea-embeddings-adoption"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses",
+      "properties": {},
+      "to_id": "snap:epoch:the-owner-rules-on-scope-and-reachability:dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -69955,6 +70083,12 @@
       "to_id": "epoch:v0100"
     },
     {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:vocabulary-the-tools-cannot-reach",
+      "properties": {},
+      "to_id": "epoch:the-discipline-arrives-at-the-tool"
+    },
+    {
       "edge_type": "PROVIDES",
       "from_id": "cmp:export",
       "properties": {
@@ -70623,6 +70757,15 @@
         "completeness": "complete"
       },
       "to_id": "cap:granularity-observation"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:graph",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-capability-states-what-it-takes-and-gives"
     },
     {
       "edge_type": "REALIZES",
@@ -71977,6 +72120,12 @@
         "evidence": "parse_enum in crates/reflow2-mcp/src/service.rs is the single helper every served enum argument passes through; the test a_rejected_enum_lists_the_legal_values fails against the prior map_err(|_| ...) implementation"
       },
       "to_id": "req:a-refusal-names-what-would-have-worked"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-capability-states-what-it-takes-and-gives",
+      "properties": {},
+      "to_id": "req:recursive-black-box-decomposition"
     },
     {
       "edge_type": "SATISFIES",
@@ -73438,6 +73587,15 @@
     },
     {
       "edge_type": "SCHEDULED_FOR",
+      "from_id": "req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-18T07:30:00Z"
+      },
+      "to_id": "epoch:the-discipline-arrives-at-the-tool"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
       "from_id": "req:a-finding-has-somewhere-to-put-its-evidence",
       "properties": {
         "modality": "expected",
@@ -74408,6 +74566,12 @@
       "from_id": "fact:defect-lineage-message-omits-its-own-decision",
       "properties": {},
       "to_id": "epoch:defects-closed-2026-08-07"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-capability-states-what-it-takes-and-gives",
+      "properties": {},
+      "to_id": "cap:a-capability-states-what-it-takes-and-gives"
     },
     {
       "edge_type": "VERIFIES",
@@ -77831,10 +77995,10 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:bd8dadec8a4b53e1532150ec09a42bd34c5f796d0d544e3040abe9491cdba91e",
+        "checksum": "sha256:746a4ad87bdc63607013c821b708338b1bc8fc7047fb4f431e986695accc2a94",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
-        "name": "graph.rs",
+        "name": "crates/reflow2-core/src/graph.rs",
         "status": "realized",
         "volatility": "stable"
       }
@@ -78660,7 +78824,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cdeeefc7183342069041402a8d0ed1fa2110d7065ef0da5482ea3f293c6a5f97",
+        "checksum": "sha256:fd65be03a690e1819ea995565906e050db5e055badad33665ee808a001987e26",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -79187,7 +79351,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:324548e0440a19f55c6398292c79f5baae9254850bc9c3bb35160f0cad2a2f45",
+        "checksum": "sha256:01c223147071e2967df9430b8321fc982dfc644bfaa7df1fdb9f55f814a5f84d",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "tools/capture.rs",
@@ -79252,7 +79416,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:31e8a59e3dd04bac9acd4d41d5d36f6b435bb1d4b60b9872f5b7865f8f67d37b",
+        "checksum": "sha256:526130bac2a6f74e5e30cec806d4f0b14e3823706467edc8321f01193ab5a2ae",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
@@ -79467,6 +79631,16 @@
       }
     },
     {
+      "node_id": "cap:a-capability-states-what-it-takes-and-gives",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`set_capability_signature` writes `capability_type`, `inputs` and `outputs`, which were declared in schema/functional.yaml, indexed, documented \\u2014 and set on 0 OF 170 CAPABILITIES. Not unwanted: UNWRITABLE. `add_capability` writes name, description and status, and nothing anywhere else in either crate touched them, so no project using reflow2 could record a capability's functional signature by any route the product offered.\\n\\n`req:recursive-black-box-decomposition` says every element of a design is a black box with inner function AND INTERFACES. At the capability tier these two lists ARE that interface.\\n\\nA SETTER, NOT THREE MORE CONSTRUCTOR PARAMETERS, for the reason `set_interface_spec` is one: a contract is enriched onto a node that already exists, usually long after it was created. `add_capability` also has 276 CALL SITES, so widening it would churn the codebase to reach three optional fields \\u2014 and backfilling far outnumbers declaring at birth.\\n\\nOMITTING A FIELD LEAVES IT ALONE, so two people describing the same capability from opposite ends cannot overwrite each other. AN EMPTY LIST IS A STATEMENT: 'this takes nothing in' is a real design claim about a source or a generator, and it is distinguishable from nobody having said. AN UNKNOWN CAPABILITY IS REFUSED rather than created \\u2014 a typo must not mint a capability whose only content is a signature.\\n\\n\\u26a0\\ufe0f NO DETECTOR FIRES WHEN A SIGNATURE IS MISSING, deliberately. 170 capabilities lack one today, so a gap apiece would put 170 findings in front of a reader overnight \\u2014 the wall-of-red failure the vocabulary-coverage trial was run to avoid. This is the TOOL leg; the INSTRUCTION leg is `epoch:the-discipline-arrives-at-the-tool`.",
+        "name": "A capability can state what it takes in and puts out — the black-box interface at the capability tier",
+        "provenance": "authored",
+        "status": "verified"
+      }
+    },
+    {
       "node_id": "cap:a-check-records-what-it-found-separately-from-what-it-is",
       "node_type": "Capability",
       "properties": {
@@ -79493,8 +79667,11 @@
       "node_id": "cap:a-design-says-which-vocabulary-it-has-never-used",
       "node_type": "Capability",
       "properties": {
+        "capability_type": "query",
         "description": "`vocabulary_coverage` answers a question nothing else in reflow2 asks. The detectors check the CONSISTENCY OF WHAT EXISTS; the absence-checkers it has (unsatisfied_requirement, unallocated_capability) check absences of REQUIRED structure. So vocabulary a design has never touched is invisible to every other computation, in every project, forever.\\n\\n(The FACT records the trial; this is the built thing the trial chose the shape of. `cap:the-design-says-what-its-own-tools-cannot-write` is the repo-side INSTRUMENT that reads reflow2's own files; this is the PRODUCT capability that works on any graph.)\\n\\nPORTABLE BY CONSTRUCTION: the schema is embedded in the binary and the corpus comes from the caller's own graph, so the answer needs nothing about any project's file layout. That was the deciding property \\u2014 the earlier prototype read reflow2's schema directory and toolsnaps and would have generalised to nobody.\\n\\nFOUR DECISIONS, ALL TAKEN FROM A TWO-ARM TRIAL RUN ON REFLOW2 ITSELF rather than from argument:\\n  SHIP THE FIGURES \\u2014 they passed both arms. '0 of 61 edge types' on a day-one design is a true and useful statement, not noise.\\n  GROUP THE LIST \\u2014 by the SCHEMA'S OWN eleven domains, never a grouping this code invented. The trial found unused vocabulary clustering into whole subsystems and the clusters turned out to BE the domains, so a mature design reads about four findings instead of thirty-one.\\n  MAKE IT PARKABLE \\u2014 an ACCEPTED Decision at `decision:vocab:<domain>` declares a domain deliberately unused. Needed because OWNED_BY's absence is already ruled deliberate; without it the report would name a settled decision as a hole forever (`req:a-deliberate-state-is-not-a-defect`). No new tool: add_decision + set_decision_status, and the id is stated on every finding so the remedy rides on the output rather than on a skill nobody loads.\\n  KEEP THE FLAT LIST BEHIND A REQUEST \\u2014 measured through the shipped tool, a day-one design produces 88 items and a mature one 31. The list is LONGEST for the user least able to act on it, so pushing it would have made the feature worst for exactly the people it is for.\\n\\nAND A FIFTH THE TRIAL FORCED: a design under ten nodes gets a `note` saying the figures mean it has BARELY STARTED. Straight out of genesis every figure is near zero, and reporting that as coverage would hand a new user a wall of red on their first read.",
+        "inputs": "[\"include_unused\"]",
         "name": "A design reports which of the vocabulary it has never used, grouped by domain, parkable, with the list on request",
+        "outputs": "[\"node_types\",\"edge_types\",\"properties_on_used_types\",\"domains\",\"parked_domains\",\"unused\",\"note\"]",
         "provenance": "authored",
         "status": "verified"
       }
@@ -79533,8 +79710,11 @@
       "node_id": "cap:a-scoped-answer-says-whether-it-narrowed",
       "node_type": "Capability",
       "properties": {
+        "capability_type": "query",
         "description": "`Scoped` carries `share_of_anchored` — the fraction of the design's ANCHORED findings this 'narrowed' answer holds — plus a `narrowing_note` that appears in words when that exceeds SCOPE_IS_BARELY_NARROWER_AT (0.5).\n\nTHE DENOMINATOR IS THE DESIGN. It is `in_scope + out_of_scope`, deliberately not `total`: unanchored findings are statements about the design as a whole and could never fall inside ANY region, so dividing by `total` would flatter every scoped answer by a constant and make regions look narrower than they are.\n\nTHE THRESHOLD IS A JUDGEMENT AND IS ADMISSIBLE ANYWAY. `dec:report-dont-judge` normally forbids one. It is allowed here because the finding is about THIS TOOL'S OWN ANSWER rather than about the design: saying 'the narrowing you asked for did not narrow' is the instrument reporting on itself, which is the one place a judgement is owed rather than withheld. The threshold is named in the message so a reader can disagree with it rather than having to discover it.\n\nMEASURED AGAINST THE OLD DEFAULT AS A CONTROL: over all 56 Components of reflow2's own design the note fires 56 of 56 at depth 3, and 0 of 56 at the new default of 2.\n\nBOTH DETECTORS GET IT. Gaps and defects both return `Scoped`, and a self-check only one of them performed would be exactly the half-applied rule that made the vacuity note need repairing twice.",
+        "inputs": "[\"scope\",\"depth\"]",
         "name": "A scoped read reports how much of the design it still holds, and says in words when that is most of it",
+        "outputs": "[\"share_of_anchored\",\"narrowing_note\",\"in_scope\",\"out_of_scope\",\"total\"]",
         "provenance": "authored",
         "status": "verified"
       }
@@ -79543,8 +79723,11 @@
       "node_id": "cap:a-session-with-no-seed-can-find-one",
       "node_type": "Capability",
       "properties": {
+        "capability_type": "query",
         "description": "`design_regions` — a SEEDLESS read that answers 'what parts does this design have, how big is each, and what is owed in each', so a session with no lane, no scope and no topic can find a seed rather than needing one to start.\n\nTHE BASIS IS THE DESIGN'S OWN CARVE-UP, NEVER AN INFERRED ONE. Regions are the nodes the design already declares as parts — its Project and its Components/systems — not clusters a community-detection pass invented. A clustering answer would be reflow2 telling a reader 'these are the parts of your design' on the strength of a heuristic, which is the exact failure the epoch it belongs to exists to remove.\n\nWHAT EACH REGION CARRIES: its seed id and name, `region_size` at the stated depth, how many open gaps and structural defects fall inside it, and who (if anyone) currently claims it. So the reply is directly actionable: pick a row, then scope to that seed.\n\nIT REPORTS WHAT IT DOES NOT COVER. Named parts do not reach the whole graph — most of a mature design is bookkeeping (ChangeEvent, Snapshot, TemporalFact, Fragment) that no component contains. The reply states how many nodes lie in NO region, broken down by type, and how many lie in MORE THAN ONE, because a list of overlapping regions read as a partition would be a false map. This is `cap:a-finding-describes-the-walk-that-produced-it` applied to a region list.\n\nDEPTH IS A PARAMETER AND ITS EFFECT IS VISIBLE. The caller sets it; the reply echoes it and the sizes move with it, so the cost of a wide radius is something a reader sees rather than something they must be told.",
+        "inputs": "[\"depth\"]",
         "name": "A design says what parts it has, so a session holding nothing can pick where to stand",
+        "outputs": "[\"regions\",\"coverage\",\"order\"]",
         "provenance": "authored",
         "status": "verified"
       }
@@ -81628,6 +81811,15 @@
       }
     },
     {
+      "node_id": "chg:a-capability-states-what-it-takes-and-gives",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "set_capability_signature: the black-box interface at the capability tier becomes writable",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:a-check-records-what-it-found-separately-from-what-it-is",
       "node_type": "ChangeEvent",
       "properties": {
@@ -82939,6 +83131,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-17",
         "name": "properties_hash now delegates to the core's node_content_hash; the value is unchanged, and one implementation replaces two.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-d42fc55c8dee5380",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-18T10:45:00Z",
+        "name": "Re-attaching #[allow(clippy::too_many_arguments)] to set_interface_spec, which lost it when set_capability_signature was inserted between the attribute and the function. The allow silently transferred to the new 5-argument function and clippy flagged the old 11-argument one. No design meaning: the same code, with the lint suppression back on the function it was written for.",
         "subject": "system"
       }
     },
@@ -85627,6 +85829,23 @@
         "description": "FOLDED INTO `req:a-report-says-what-it-swept-and-whether-its-checks-ran` on Anthony's word, because it is the same theme arriving from a different direction: `propose_heal` could not say whether its scorer RAN, and the toolsnap gate could not say WHAT IT READ.\n\nTHE DEFECT (`fact:defect-the-toolsnap-gate-defaults-to-a-binary-nobody-rebuilt`): `tools/toolsnap.py` defaulted `--bin` to `target/debug/reflow2-mcp` and printed 'ALL 149 TOOLSNAPS MATCH' against whatever build happened to be there. Found by accident — a tool description was changed, RELEASE was rebuilt, and the gate reported the surface unchanged while the committed snapshot still held the old text.\n\nTHE FIX IS OUTPUT, NOT POLICY: every verdict — match, drift AND regenerate — now ends with the binary it read and that binary's build time, and adds a loud STALE warning naming the offending file when any `crates/**/src/*.rs` is newer.\n\n⚠️ THE DEFAULT DELIBERATELY STAYS `target/debug`, which is the opposite of the obvious fix and the reason is measured: `ci.yml:93` runs `cargo build -p reflow2-mcp` — a debug build — in the same job before the toolsnap step at `:142`. Pointing the default at release would aim CI at a binary it never builds, converting a local-only defect into a CI one. This also CORRECTS the first version of the fact, which left CI's exposure unestablished: CI was never exposed.\n\nMTIME IS A WEAK SIGNAL AND IS USED ACCORDINGLY. Git operations can leave sources older than a build — which is exactly why the launch wrapper hashes CONTENT instead — so mtime here only ever ADDS a warning and never suppresses one. A false negative therefore costs nothing that was not already lost, and a false positive costs one rebuild.\n\nDEMONSTRATED LIVE, BOTH DIRECTIONS, on the working tree that produced it: against the stale binary the gate printed the STALE warning naming `crates/reflow2-mcp/src/tools/query.rs`; after `cargo build -p reflow2-mcp` the same command printed the verdict and the binary line with no warning. So the case fires and the counterweight is silent, measured rather than asserted.\n\nNOT DONE: `tools/toolsnap.py` is not a registered Artifact, so this change moved no checksum and the design records it against `cmp:packaging` instead. Several gate scripts are in that position and nobody has decided whether they should be registered.",
         "name": "The toolsnap gate names the binary it compared against and warns when source is newer — folded into the same theme as propose_heal's vacuous zero",
         "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:the-tool-catalogue-weights-rare-words",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "find_tools weights a term by how rare it is, so the catalogue stops being unstable under its own growth",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:the-vocabulary-question-is-dispositioned",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "The five options are dispositioned: (b) delivered, (a) next scoped to the capability signature, (c) queued, (d) and (e) rejected"
       }
     },
     {
@@ -91653,6 +91872,16 @@
       }
     },
     {
+      "node_id": "epoch:the-discipline-arrives-at-the-tool",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The instruction leg — a design is asked for what it has not said, at the moment it would know the answer",
+        "sequence": 359,
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "epoch:the-image-must-start",
       "node_type": "DesignEpoch",
       "properties": {
@@ -93525,7 +93754,7 @@
         "fragment_type": "implementation",
         "provenance": "authored",
         "status": "ingested",
-        "title": "Registered graph.rs"
+        "title": "Registered crates/reflow2-core/src/graph.rs"
       }
     },
     {
@@ -99691,6 +99920,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:the-owner-rules-on-scope-and-reachability:dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-18T05:00:00Z\",\"role\":\"author\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-18, correcting the framing of a day's work: 'most of why I do any of this isn't for the sake of reflow2. it is for users who are developing a project using reflow2... we are just applying reflow2 back on itself here, but that is not the main concern. it is that reflow2 does SE for the projects that it is used on.'\\n\\nDISTINCT FROM THE TWO FACTS IT RESTS ON: they MEASURE (three legs; 18 candidates). This asks WHAT TO DO, and the options below conflict with each other and with settled decisions, which is why it needs a decision rather than another measurement.\\n\\nTHE MEASURED SHAPE is in `fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it`: vocabulary reaches a user's design only when a TYPED TOOL writes it, an INSTRUCTION says when, and a DETECTOR notices its absence. Capability.inputs/outputs has none of the three; SPECIFIES is instructed but has no tool; DECOMPOSES has all three and still cannot fire, because the detector keys on the edge being PRESENT.\\n\\nOPTIONS, unranked, each with its objection:\\n\\n(a) ADD THE MISSING LEGS CASE BY CASE — a parameter on add_capability, a `specifies` tool, an absence-detector per edge type. Concrete and shippable. OBJECTION: it is whack-a-mole, and it scales with the SCHEMA rather than with the design — three cases were found by hand this week with 18 candidates and 42 edge items behind them.\\n\\n(b) A DETECTOR FOR UNUSED VOCABULARY ITSELF — 'this design has never used X, and here is the tool that writes it.' One rule covering every case, present and future. OBJECTION: on a young design EVERYTHING is unused, so it fires on the whole schema at genesis and is skimmed by week two — the failure `v0.2.0-what-we-dont-know.md` names as sharpest ('a gap list you skim is worse than no gap list'). It needs a maturity threshold, and a threshold is a judgement.\\n\\n(c) ASK AT THE RIGHT MOMENT rather than standing as a finding. When an agent adds a Capability, ask what goes in and what comes out — the black-box question, at the one moment the user is thinking about that capability. OBJECTION: this IS `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue`, proposed and unbuilt, and it is the same trigger problem this project has confirmed three times.\\n\\n(d) DERIVE RATHER THAN ASK. A capability's inputs and outputs are partly computable — what it CONSUMES and PROVIDES is already edge vocabulary. OBJECTION: `dec:report-dont-judge`. Deriving a functional signature and storing it asserts something nobody said, and the point of the property is the designer's statement of intent.\\n\\n(e) LET THE SCHEMA SHRINK. If nothing writes it and nobody misses it, the vocabulary is speculative. OBJECTION, decisive against doing this blindly: three of the four known unreachable fields were WANTED and got a parameter, and `req:declared-vocabulary-is-reachable-from-the-surface` explicitly forbids reading unreachable as deletable.\",\"name\":\"OPEN — how does an arbitrary project using reflow2 ever acquire the vocabulary nobody thought to ask it for?\",\"rationale\":\"Recorded via the brainstorm skill: ideas enter as ideas, nothing is promoted, objections sit beside the options.\\n\\nWHY THIS IS NOT THE REACHABILITY REQUIREMENT AGAIN. That asks whether a declared field CAN be written. This asks whether a user's project ever WILL — a question about skills, tool descriptions and detectors rather than about parameters, and the one Anthony says actually matters. A field with a parameter that nothing ever prompts for is reachable and still empty in every design.\\n\\nAN AGENT'S READING, as a finding and not an answer: (c) looks strongest because it puts the question where the user is already thinking, and (b) looks most dangerous because a list nobody reads is worse than none. But (c) depends on a requirement proposed and unbuilt since before this, so the honest first move may be to accept THAT rather than design around it.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:the-owner-rules-on-scope-and-reachability:dec:idea-search-first-fires-without-being-remembered",
       "node_type": "Snapshot",
       "properties": {
@@ -102540,6 +102779,17 @@
       }
     },
     {
+      "node_id": "fact:the-tool-catalogue-was-unstable-under-its-own-growth",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "measurement",
+        "statement": "FOUND BY BREAKING IT, 2026-08-18. Adding one tool (`set_capability_signature`) turned a green workspace red: `find_tools` stopped returning `link_artifact` for the query 'register a file that realizes a capability'.\\n\\nTHE MEASUREMENT. The top six scored 28, 27, 26, 26, 25, 24 \\u2014 a one-point near-tie across the whole visible band, with the default limit of 5. So the fifth and sixth places were separated by noise, and any new tool mentioning a common word displaced whatever was fifth.\\n\\nTHE CAUSE was in `score_tool`: every query term contributed the same weight regardless of how many tools mentioned it. 'capability' appears in dozens of descriptions; 'file' in a handful. Treating them equally is what compressed the band. There was no inverse document frequency anywhere in the catalogue, while `search_design` next door has used BM25 over Tantivy for months.\\n\\nWHY IT MATTERS BEYOND ONE TEST: THE CATALOGUE WAS UNSTABLE UNDER ITS OWN GROWTH. With 152 tools and rising, any addition could silently evict the right answer for a query nobody was thinking about \\u2014 and `req:agent-native` promises every capability is reachable over one surface, which is only true if an agent can FIND the tool. The failure mode is silent by construction: nothing tells you the answer you needed was sixth.\\n\\nFIXED AT THE ROOT rather than by widening the assertion or trimming the new tool's description, both of which were available and both of which would have hidden it. Term weights are now ln(1 + N/df). Measured after: 49.5, 38.3, 32.1, 29.1, 29.1, 28.8 \\u2014 the band spread out, and `link_artifact` moved from 6th to 3rd.\\n\\n\\u26a0\\ufe0f AND THE EVIDENCE WAS NEARLY LOST. The first workspace run was piped through `awk` to total the results, which discarded every failure line and left only 'workspace: 1314 passed, 1 failed' \\u2014 no test name, no assertion. Same class as the remembered `cargo test | grep | head` trap in a new costume: A SUMMARISING PIPELINE IS A TRUNCATING PIPELINE. Re-run with full output to a file, the name and the assertion were both there.",
+        "subject_id": "req:agent-native",
+        "valid_from": "2026-08-18"
+      }
+    },
+    {
       "node_id": "fact:the-vocabulary-coverage-trial-two-arms-and-what-each-arm-killed",
       "node_type": "TemporalFact",
       "properties": {
@@ -102626,6 +102876,20 @@
         "statement": "MEASURED 2026-08-18, and the question is Anthony's: not why REFLOW2's own graph lacks this vocabulary, but WHETHER AN ARBITRARY PROJECT USING REFLOW2 WOULD EVER GET IT. 'we are just applying reflow2 back on itself here, but that is not the main concern. it is that reflow2 does SE for the projects that it is used on.'\n\nFOR VOCABULARY TO APPEAR IN A USER'S DESIGN, THREE LEGS MUST ALL BE PRESENT:\n  (1) a TYPED TOOL that writes it — raw create_node/create_edge does not count, since an agent must first know the field exists;\n  (2) an INSTRUCTION, in a served skill or a tool description, saying WHEN to write it;\n  (3) a DETECTOR that notices its ABSENCE, so the loop asks rather than waiting to be told.\nMissing any one leaves the vocabulary empty in EVERY project, not just this one. The three cases measured here each fail differently, which is why they are worth separating:\n\n  Capability.inputs / outputs / capability_type\n    typed tool   NO  — add_capability takes id, name, description, status. Nothing else.\n    instruction  NO  — 0 of 20 served skills mention inputs or outputs.\n    detector     NO  — detect.rs contains no reference to either.\n    => ALL THREE LEGS MISSING. No user project can acquire a capability's functional signature by any route reflow2 offers. This is the vocabulary for what a black box IS, and `req:recursive-black-box-decomposition` (accepted the same day) is the intent it serves.\n\n  SPECIFIES\n    typed tool   NO  — there is no `specifies` tool; the toolsnaps hold `documents` and nothing else in that family.\n    instruction  YES — link-artifacts says, of a machine-readable contract: 'that is SPECIFIES, on the interface it defines.'\n    detector     NO.\n    => THE SKILL INSTRUCTS AN AGENT TO DRAW AN EDGE NO TOOL DRAWS. The only route is hand-rolled create_edge, which is the escape hatch the reachability requirement says must not count as reachability.\n\n  DECOMPOSES\n    typed tool   YES — `decomposes(from_id, to_id)`.\n    instruction  YES — two skills discuss decomposition.\n    detector     PARTIAL, and this is the subtle one.\n    => `DecompositionCoverage` fires on a Requirement CARRYING AN INCOMING DECOMPOSES EDGE. It checks whether an existing decomposition is covered; it cannot ask why none exists. So a project that never decomposes anything gets ZERO decomposition findings and reads as coherent. All three legs look present and the vocabulary still stays empty — which is how reflow2's own graph reached 0 DECOMPOSES edges while shipping the detector for them.\n\n⭐ THE GENERAL FINDING, and it is about the PRODUCT rather than the self-host: reflow2's detectors largely check the CONSISTENCY OF WHAT EXISTS. Some do check absence — `unsatisfied_requirement`, `unallocated_capability` — but those are absences of REQUIRED structure. Nothing asks 'you have never used this vocabulary at all', so optional vocabulary is invisible to the loop that exists to surface gaps, in every project, forever. `rule:the-self-host-always-trails-what-it-teaches` is the right frame: this is now catchable for everyone.",
         "subject_id": "proj:reflow2",
         "valid_from": "2026-08-18"
+      }
+    },
+    {
+      "node_id": "ver:a-capability-states-what-it-takes-and-gives",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/a_capability_can_state_what_it_takes_and_gives.rs.\\n\\nThe first probe restates the DEFECT as a test before testing the fix: it asserts `add_capability` writes no signature, so the 0-of-170 measurement is pinned rather than remembered.\\n\\nFour mutations, each caught: outputs never written; replace-instead-of-merge; an unknown capability created rather than refused; an empty list treated as 'nobody said'. The fourth was run twice \\u2014 the first attempt was a `sed` whose delimiter collided with a `|` in the pattern, so it silently changed nothing and the green result meant nothing. Redone in python, it failed exactly the empty-list probe.\\n\\nEXERCISED ON THE LIVE SURFACE TOO: three capabilities built this session were given real signatures through the MCP tool, and a deliberate typo was refused by the running binary.",
+        "findings": "5 probes pass, 4 mutations each caught. Used on the live surface: three capabilities now carry signatures, taking Capability.inputs from 0 of 170 to 3.",
+        "kind": "verification",
+        "last_run_at": "2026-08-18T07:40:00Z",
+        "level": "integration",
+        "method": "test",
+        "name": "Five probes: the signature is writable at all, one half never erases the other, what the capability already said survives, a typo is refused, and an empty list is a statement rather than a silence",
+        "status": "passing"
       }
     },
     {
@@ -104646,7 +104910,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:78f4e7bc7b213ab0fbe38fab2dab28a72bb58ff41aa1bcfcdbc2259b409a6f0c",
+  "prev_content_hash": "sha256:4e00aa6fd8b5b121bebb18d0b67f51bb2b68c65e1805faacd7015da96b43213d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

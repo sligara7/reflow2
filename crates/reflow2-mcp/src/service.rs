@@ -419,23 +419,76 @@ pub(crate) fn brief_node(node: &StoredNode) -> JsonValue {
 /// `pkg/tooldiscovery` (docs/github-mcp-nuggets.md): a name match beats
 /// a description match beats a parameter match, because a tool whose *name*
 /// contains your word is usually the one you meant.
-pub(crate) fn score_tool(name: &str, description: &str, params: &[String], terms: &[&str]) -> f64 {
+/// How discriminating each query term is across the SERVED SURFACE.
+///
+/// # Why the catalogue needs this at all
+///
+/// Without it every term is worth the same, and a term is not: `capability`
+/// appears in dozens of tool descriptions while `file` appears in a handful.
+/// Scoring them equally is what made the top of the list a near-tie — measured
+/// 2026-08-18 on the query *"register a file that realizes a capability"*, the
+/// top six scored 28, 27, 26, 26, 25, 24, so a one-point difference decided
+/// which five a caller saw.
+///
+/// **That made the catalogue unstable under its own growth.** Adding one
+/// unrelated tool whose description mentioned `capability` evicted
+/// `link_artifact` — the actual answer — from a five-item list. With 152 tools
+/// and rising, any addition could silently displace the right answer for a
+/// query nobody was thinking about, and `req:agent-native` promises every
+/// capability is reachable over one surface, which is only true if the agent
+/// can find the tool.
+///
+/// Classic inverse document frequency: `ln(1 + N/df)`, so a term in one tool
+/// outweighs a term in forty. A term nothing mentions gets the maximum weight
+/// and contributes nothing anyway, since no tool matches it.
+pub(crate) fn term_weights<'a>(
+    terms: &[&'a str],
+    corpus: &[(String, String)],
+) -> Vec<(&'a str, f64)> {
+    let n = corpus.len().max(1) as f64;
+    terms
+        .iter()
+        .map(|term| {
+            let df = corpus
+                .iter()
+                .filter(|(name, desc)| name.contains(term) || desc.contains(term))
+                .count()
+                .max(1) as f64;
+            (*term, (1.0 + n / df).ln())
+        })
+        .collect()
+}
+
+/// Score one tool against a weighted query.
+///
+/// The shape of the bonuses is unchanged — an exact name beats a name
+/// fragment beats a description mention beats a parameter name — and each is
+/// now multiplied by how discriminating the matched term is. Ranking is what
+/// matters here, not the absolute number, so the scale moving is not a
+/// behaviour change anyone can depend on.
+pub(crate) fn score_tool(
+    name: &str,
+    description: &str,
+    params: &[String],
+    terms: &[(&str, f64)],
+) -> f64 {
     let name_lc = name.to_lowercase();
     let desc_lc = description.to_lowercase();
     let mut score = 0.0;
-    for term in terms {
-        if name_lc == *term {
-            score += 8.0; // an exact name is not a guess
+    for (term, weight) in terms {
+        let term = *term;
+        if name_lc == term {
+            score += 8.0 * weight; // an exact name is not a guess
         } else if name_lc.contains(term) {
-            score += 5.0;
+            score += 5.0 * weight;
         } else if name_lc.split('_').any(|part| part.starts_with(term)) {
-            score += 1.5;
+            score += 1.5 * weight;
         }
         if desc_lc.contains(term) {
-            score += 2.0;
+            score += 2.0 * weight;
         }
         if params.iter().any(|p| p.to_lowercase().contains(term)) {
-            score += 1.0;
+            score += 1.0 * weight;
         }
     }
     score
@@ -2033,6 +2086,30 @@ pub struct RegionsReq {
     /// it to see which parts differ.
     #[serde(default)]
     pub depth: Option<usize>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct CapabilitySignatureReq {
+    /// The Capability whose signature this is. Refused if it does not exist —
+    /// a typo must not mint a capability whose only content is a signature.
+    pub capability_id: String,
+    /// What KIND of capability this is: validation / transform / query /
+    /// persistence / decision / actuation / io / compute. Free text and
+    /// domain-neutral, so a biology or hardware design is not forced into
+    /// software words.
+    #[serde(default)]
+    pub capability_type: Option<String>,
+    /// What the capability CONSUMES, as a list of names or types.
+    ///
+    /// Pass a list; the JSON-array encoding the schema stores is done for you.
+    /// Omit to leave whatever is already recorded alone — supplying only
+    /// `outputs` cannot erase inputs somebody else declared.
+    #[serde(default)]
+    pub inputs: Option<Vec<String>>,
+    /// What the capability PRODUCES. Same rules as `inputs`.
+    #[serde(default)]
+    pub outputs: Option<Vec<String>>,
 }
 
 #[derive(Debug, Default, Deserialize, JsonSchema)]

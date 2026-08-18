@@ -33,6 +33,49 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **`set_capability_signature` — a capability can finally say what it takes in and puts out.**
+  `capability_type`, `inputs` and `outputs` were declared in `schema/functional.yaml`, indexed and
+  documented, and set on **0 of 170 capabilities**. Not unwanted — **unwritable**: `add_capability`
+  writes name, description and status, and nothing anywhere else in either crate touched them. No
+  project using reflow2 could record a capability's functional signature by any route the product
+  offered.
+
+  `req:recursive-black-box-decomposition` says every element of a design is a black box with inner
+  function **and interfaces**. At the capability tier, these two lists *are* that interface.
+
+  A **setter** rather than three more constructor parameters, for the reason `set_interface_spec` is
+  one: a contract is enriched onto a node that already exists, usually long after it was created.
+  `add_capability` also has **276 call sites**. Omitting a field leaves it alone, so two people
+  describing a capability from opposite ends cannot overwrite each other; an **empty list is a
+  statement** ("this takes nothing in" is a real claim about a source or generator) distinguishable
+  from nobody having said; and an unknown capability is **refused**, not created.
+
+  **No detector fires when a signature is missing, deliberately.** 170 capabilities lack one today,
+  so a gap apiece would put 170 findings in front of a reader overnight — the wall-of-red failure
+  the vocabulary-coverage trial was run to avoid. This is the *tool* leg; the *instruction* leg is
+  planned as `epoch:the-discipline-arrives-at-the-tool`.
+
+### Fixed
+
+- **The tool catalogue was unstable under its own growth, and adding one tool exposed it.**
+  `find_tools` weighted every query term equally regardless of how many tools mentioned it —
+  `capability` appears in dozens of descriptions, `file` in a handful. Measured on *"register a file
+  that realizes a capability"*, the top six scored **28, 27, 26, 26, 25, 24**: a one-point near-tie
+  across the whole visible band, with a default limit of 5. So **any new tool mentioning a common
+  word silently evicted whatever was fifth** — here, `link_artifact`, the actual answer.
+
+  With 152 tools and rising, that meant any addition could displace the right answer for a query
+  nobody was thinking about, and the failure is silent by construction: nothing tells you what you
+  needed was sixth. `req:agent-native` promises every capability is reachable over one surface,
+  which only holds if the agent can find the tool.
+
+  Term weights are now `ln(1 + N/df)` — classic inverse document frequency, which `search_design`
+  next door has had via BM25 for months. After: **49.5, 38.3, 32.1, 29.1, 29.1, 28.8**, and
+  `link_artifact` moved from 6th to 3rd. Fixed at the root rather than by widening the assertion or
+  trimming the new tool's description, both of which were available and both of which would have
+  hidden it.
+
+
 - **`vocabulary_coverage` — which of the design vocabulary has this design never used?** A question
   nothing else in reflow2 asks: the detectors check the *consistency of what exists*, and the
   absence-checkers there are (`unsatisfied_requirement`, `unallocated_capability`) check absences of

@@ -1,0 +1,52 @@
+{
+  "annotations": {
+    "idempotentHint": true,
+    "readOnlyHint": false
+  },
+  "description": "Record what a Capability TAKES IN and PUTS OUT — its functional signature, which is the black-box interface at that tier (`req:recursive-black-box-decomposition`: every element of a design is a black box with inner function AND INTERFACES). Pass `inputs` / `outputs` as lists; the JSON encoding the schema stores is done for you. `capability_type` is free text — validation / transform / query / persistence / decision / actuation / io / compute — deliberately domain-neutral so a biology or hardware design is not forced into software words. OMITTING A FIELD LEAVES IT ALONE, so two people describing the same thing from opposite ends cannot overwrite each other; AN EMPTY LIST IS A STATEMENT (\"takes nothing in\" is a real claim about a source or a generator) and is distinct from nobody having said; and an unknown id is REFUSED rather than created.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "capability_id": {
+        "description": "The Capability whose signature this is. Refused if it does not exist —\na typo must not mint a capability whose only content is a signature.",
+        "type": "string"
+      },
+      "capability_type": {
+        "default": null,
+        "description": "What KIND of capability this is: validation / transform / query /\npersistence / decision / actuation / io / compute. Free text and\ndomain-neutral, so a biology or hardware design is not forced into\nsoftware words.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "inputs": {
+        "default": null,
+        "description": "What the capability CONSUMES, as a list of names or types.\n\nPass a list; the JSON-array encoding the schema stores is done for you.\nOmit to leave whatever is already recorded alone — supplying only\n`outputs` cannot erase inputs somebody else declared.",
+        "items": {
+          "type": "string"
+        },
+        "type": [
+          "array",
+          "null"
+        ]
+      },
+      "outputs": {
+        "default": null,
+        "description": "What the capability PRODUCES. Same rules as `inputs`.",
+        "items": {
+          "type": "string"
+        },
+        "type": [
+          "array",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "capability_id"
+    ],
+    "type": "object"
+  },
+  "name": "set_capability_signature"
+}
