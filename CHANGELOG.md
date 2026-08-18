@@ -33,6 +33,41 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **A session that holds nothing can ask where to stand.** New seedless read `design_regions`:
+  no seed, no scope, no topic. It answers with the parts the design itself names — its Project
+  and Components — each with its size, the gaps and defects open inside it, and who already
+  claims it. A row's `seed_id` is then what every scoped call wants, which is the requirement in
+  one line: *a session can FIND its seed rather than needing one to start.* Reported by
+  dev_storyflow's fleet, 2026-08-08: *"the moment with the most time available — sitting
+  AVAILABLE, nothing to do — is the moment the design brain is LEAST USABLE."*
+
+  **It is not a partition and says so.** `coverage` reports how many nodes lie in NO region and
+  how many lie in MORE THAN ONE, broken down by type. On reflow2's own design that is 1877 of
+  2487 uncovered (mostly ChangeEvents and Snapshots no Component contains) and 376 of the 610
+  covered sitting in several regions at once — rows that overlap that heavily are not the
+  separate areas they look like. A design that names no parts yet gets `regions: []` **with a
+  note saying that is why**, because an empty list is otherwise indistinguishable from a clean
+  one.
+
+  **The carve-up is the design's own, never one reflow2 inferred.** Leiden community detection
+  was already in the crate and was refused: "here are your design's twelve clusters" is a claim
+  from a heuristic with a resolution knob that the reader cannot check, which is the failure
+  `epoch:instruments-stop-overstating` exists to remove.
+
+- **A measured defect in the scoped detectors, reported and NOT fixed.** Driving the built binary
+  over all 56 Components of reflow2's own design: at the default depth of 3, every one of them
+  returns **50–60 of the design's 83 gaps** (median 55) over a region of 595–903 nodes. The
+  answers are indistinguishable, so `in_scope: 55, out_of_scope: 28` tells every team the same
+  thing about its own part. At depth 1 the same parts hold 0–19 gaps over 17–139 nodes; at depth
+  2, 2–27 over 267–601. `scope.rs`' own justification for 3 does not survive reading
+  `scope_region`, which puts the whole containment closure into the seed set *before* taking the
+  radius — so a contained child's capabilities are one hop from an owned node, not the three the
+  comment claims. Recorded as
+  `fact:defect-a-scoped-detector-at-its-default-depth-returns-two-thirds-of-the-design` and put
+  to the owner as `dec:the-default-scope-depth-should-be-two`; `design_regions` defaults to 1
+  rather than inheriting a number the measurement says is wrong, and says where a reader will
+  meet it that the two differ.
+
 - **A ruling can declare a state deliberate, and the deliberate ones are COUNTED.** A `GOVERNED_BY`
   edge carrying `ruling: parks` records that a node's unattached or unsatisfied state is correct on
   purpose. `orphan_node` and `unsatisfied_requirement` skip it; `detect_defects` reports it in

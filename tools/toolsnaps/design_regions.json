@@ -1,0 +1,24 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "What parts this design has, so a session that holds NOTHING can pick where to stand. The one orientation read that asks for no seed, no scope and no topic — call it at check-in, before you have a lane. Each row is a part the design itself names (its Project and Components, never a cluster reflow2 inferred) with its size, how many gaps and defects are open inside it, and who already claims it; the `seed_id` is then what you pass as `scope` to detect_gaps, detect_defects or claim_region. IT IS NOT A PARTITION AND SAYS SO: `coverage` reports how many nodes lie in NO region (on a mature design most of the graph is bookkeeping no Component contains) and how many lie in MORE THAN ONE, because rows that overlap heavily are not the distinct areas they look like. Rows are ordered by how much is open there now, which is stated in `order` and is NOT a ranking of importance. A design that names no parts yet gets an empty list WITH a note saying that is why.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "depth": {
+        "default": null,
+        "description": "Hops from each named part, when sizing it (default 1).\n\nDELIBERATELY NOT the scoped detectors' default of 3, and the difference\nis measured rather than stylistic: at 3, on reflow2's own design, all 56\nComponents cover 595–903 nodes and hold 50–60 of the 83 gaps, so the\nrows stop telling a chooser anything apart. At 1 the same parts cover\n17–139 nodes and hold 0–19. Raise it to see a part's whole thread; leave\nit to see which parts differ.",
+        "format": "uint",
+        "minimum": 0,
+        "type": [
+          "integer",
+          "null"
+        ]
+      }
+    },
+    "type": "object"
+  },
+  "name": "design_regions"
+}

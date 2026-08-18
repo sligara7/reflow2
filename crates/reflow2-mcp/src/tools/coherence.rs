@@ -37,11 +37,12 @@ use reflow2_core::bulk::{
 };
 use reflow2_core::temporal::ChangeRecord;
 use reflow2_core::{
-    AgentAnswer, AgentBackend, AskedQuestion, ChangeType, DEFAULT_SCOPE_DEPTH, DesignGraph,
-    Dimension, DriftDisposition, DynoError, EpochType, GapCandidate, GenesisOptions, HealOptions,
-    HealProposal, HealStrategy, IngestOptions, LinkArtifactOptions, LoopStatus, ObservedArtifact,
-    ObservedPath, PromptCollector, PropagateOptions, ReadinessForecast, ReadinessGate,
-    ReadinessKind, ReadinessObservation, ReconcileOptions, StoredNode, Value,
+    AgentAnswer, AgentBackend, AskedQuestion, ChangeType, DEFAULT_REGION_DEPTH,
+    DEFAULT_SCOPE_DEPTH, DesignGraph, Dimension, DriftDisposition, DynoError, EpochType,
+    GapCandidate, GenesisOptions, HealOptions, HealProposal, HealStrategy, IngestOptions,
+    LinkArtifactOptions, LoopStatus, ObservedArtifact, ObservedPath, PromptCollector,
+    PropagateOptions, ReadinessForecast, ReadinessGate, ReadinessKind, ReadinessObservation,
+    ReconcileOptions, StoredNode, Value,
 };
 
 use crate::dto::{EdgeDto, NodeDto};
@@ -76,6 +77,33 @@ impl ReflowService {
                     .map_err(dyno_err)?,
             ),
         }
+    }
+
+    #[tool(
+        description = "What parts this design has, so a session that holds NOTHING can pick where \
+                       to stand. The one orientation read that asks for no seed, no scope and no \
+                       topic — call it at check-in, before you have a lane. Each row is a part the \
+                       design itself names (its Project and Components, never a cluster reflow2 \
+                       inferred) with its size, how many gaps and defects are open inside it, and \
+                       who already claims it; the `seed_id` is then what you pass as `scope` to \
+                       detect_gaps, detect_defects or claim_region. IT IS NOT A PARTITION AND SAYS \
+                       SO: `coverage` reports how many nodes lie in NO region (on a mature design \
+                       most of the graph is bookkeeping no Component contains) and how many lie in \
+                       MORE THAN ONE, because rows that overlap heavily are not the distinct areas \
+                       they look like. Rows are ordered by how much is open there now, which is \
+                       stated in `order` and is NOT a ranking of importance. A design that names \
+                       no parts yet gets an empty list WITH a note saying that is why.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn design_regions(
+        &self,
+        Parameters(req): Parameters<RegionsReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        ok_json(
+            g.design_regions(req.depth.unwrap_or(DEFAULT_REGION_DEPTH))
+                .map_err(dyno_err)?,
+        )
     }
 
     #[tool(

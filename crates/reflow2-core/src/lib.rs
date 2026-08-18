@@ -65,6 +65,7 @@ pub mod preserve;
 pub mod propagate;
 pub mod provenance;
 pub mod readiness;
+pub mod regions;
 pub mod report;
 pub mod sanitize;
 pub mod schema;
@@ -143,6 +144,9 @@ pub use provenance::{GraphStamp, Provenance};
 pub use readiness::{
     GateFinding, GateStatus, READINESS_FACT, ReadinessForecast, ReadinessGate, ReadinessKind,
     ReadinessObservation, ReadinessReport, ReadinessVerdict,
+};
+pub use regions::{
+    DEFAULT_REGION_DEPTH, DesignRegion, DesignRegions, REGION_SEED_TYPES, RegionCoverage,
 };
 pub use report::{
     AllocationSummary, CertaintyBreakdown, GraphReport, LoopStatus, RankedDecision,
