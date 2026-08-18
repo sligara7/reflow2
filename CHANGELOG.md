@@ -31,6 +31,8 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.35.0] — 2026-08-18
+
 ### Changed
 
 - **A revising write now says whether the state it replaced actually survived — computed, not
