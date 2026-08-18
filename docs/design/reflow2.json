@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:32fa4e923753a4c440e61fd016602613462182b2018ee04178f80fc7bf906083",
+  "content_hash": "sha256:82409a5aa7e70be72a548dc4374c87fa047377958b24eca2e223d76fac91a598",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -104527,6 +104527,17 @@
       }
     },
     {
+      "node_id": "fact:reflow2-against-the-eight-anti-over-engineering-strategies",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "measurement",
+        "statement": "MEASURED 2026-08-18 against eight anti-over-engineering strategies Anthony brought from military acquisitions \\u2014 his framing: 'designs get so overcomplicated when often a simple solution will do... engineers often over design something, it is kind of their nature.'\\n\\nSEVEN OF THE EIGHT ARE BUILT TO SOME DEGREE. One is genuinely absent, and one is built-but-unused.\\n\\n(1) DEFINE CLEAR REQUIREMENTS AND JUDGE EVERY CHOICE AGAINST THEM \\u2014 BUILT, and it is the golden thread itself. `unmotivated_capability` fires on a Capability satisfying no Requirement, which is 'a part nobody asked for' exactly. MEASURED ON REFLOW2'S OWN DESIGN: 18 of them.\\n(2) MVP, ADD ONLY IF ASKED \\u2014 PARTIAL. `Requirement.provenance` and the 'Requirement certainty' line separate user-confirmed intent from asserted, so the graph can say which requirements somebody actually asked for. Nothing computes an MVP boundary.\\n(3) SET HARD LIMITS \\u2014 BUILT AND BARELY USED. `Constraint` is a node type, CONSTRAINS is an edge, `req:inviolable-intent` models KPPs, `budget_report` exists. Reflow2's own design holds ONE Constraint node and SEVEN CONSTRAINS edges. The declared-but-unused pattern again, on the strategy he rates most highly.\\n(4) USE STANDARD PARTS \\u2014 THE ONE GENUINE GAP, and the most acquisitions-shaped of the eight. `Interface.designation: required` models a dependency on something outside the design, but NOTHING DISTINGUISHES A COMPONENT THAT WAS BOUGHT FROM ONE THAT WAS BUILT. There is no make-versus-buy property, so 'how much of this design is custom?' is unanswerable, and a custom part where an off-the-shelf one existed is invisible.\\n(5) REVIEW DESIGNS OFTEN \\u2014 BUILT: the check-health skill, acknowledge_gap/reviewed_gaps, and the whole ask-don't-repair posture.\\n(6) VALUE SIMPLICITY \\u2014 BUILT: granularity_report, hierarchy_issues, evaluate_allocation, modularity computed rather than asserted.\\n(7) TRACK FEATURE CREEP \\u2014 BUILT, and it is the brainstorm skill: an idea enters as a `proposed` Decision and is NOT built, which is 'write down new ideas for later, do not put them into the current build' as a mechanism rather than a habit. `requirement_creep` is also a declared change_type, used 6 times.\\n(8) TEST EARLY \\u2014 BUILT: Verification, and `req:evidence-says-what-it-covered` for what a passing check actually covered.\\n\\n\\u2b50\\u2b50 THE ANTI-OVER-ENGINEERING HALF IS ALREADY BUILT AND DELIBERATELY RESTRAINED, which is the part worth knowing. `cap:built-and-consumed-by-nothing` (verified) asks what is SURPLUS rather than what is missing. Run on reflow2's own design, `consumption_report` REFUSED TO NAME the 122 capabilities with no recorded consumer: only 10 of 132 have one (8%), below the 50% at which absence carries a signal, so it reported the RATIO and said naming them 'would report the modelling style rather than what was built'. It also lists three things it cannot see, including 'whether being unconsumed is a problem \\u2014 a capability built ahead of its consumer, a deliberate extension point, and genuine surplus all produce this same shape. That judgement is not reflow2's.'\\n\\nThat restraint IS the anti-over-engineering discipline applied to the tool itself: it does not hand anyone 122 delete-candidates it cannot honestly justify.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-18"
+      }
+    },
+    {
       "node_id": "fact:reflow2-flo2-seam-measured-2026-08-13",
       "node_type": "TemporalFact",
       "properties": {
@@ -107045,7 +107056,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:1a251a2d186e67b396f3c428b337741305ff23ad44477e2161bfc19a0e63beb1",
+  "prev_content_hash": "sha256:32fa4e923753a4c440e61fd016602613462182b2018ee04178f80fc7bf906083",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
