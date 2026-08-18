@@ -168,8 +168,9 @@ pub use verify::{
     VerifyReconcileOptions,
 };
 pub use vocabulary::{
-    EdgeQuery, EdgeTypeMatch, EdgeTypeSpec, EndpointMatch, NodeTypeDetail, NodeTypeSpec,
-    PropertySpec, Vocabulary,
+    Coverage, DomainCoverage, EdgeQuery, EdgeTypeMatch, EdgeTypeSpec, EndpointMatch,
+    NodeTypeDetail, NodeTypeSpec, PropertySpec, Vocabulary, VocabularyCoverage,
+    vocabulary_park_decision_id,
 };
 
 // Re-export the foundation types that appear in this crate's public API, so

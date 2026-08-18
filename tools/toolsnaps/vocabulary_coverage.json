@@ -1,0 +1,22 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Which of the design VOCABULARY this design has ever actually used — node types, edge types, and properties on the types that have instances. Answers a question nothing else asks: reflow2's detectors check the CONSISTENCY OF WHAT EXISTS, so vocabulary a design has never touched is invisible to every other computation. GROUPED BY THE SCHEMA'S OWN ELEVEN DOMAINS, not by a grouping this tool invented, because unused vocabulary clusters into whole subsystems — a mature design reads about four findings instead of thirty-one. Each domain carries `park_with`: the id of a Decision whose ACCEPTANCE declares that domain deliberately unused here, so a settled choice stops being reported as a hole (`add_decision` with that id, then `set_decision_status accepted` — no new tool). THE FLAT LIST IS WITHHELD BY DEFAULT and returned only with `include_unused`: measured, a day-one design produces 97 items and a mature one 59, so the list is longest for the user least able to act on it. A design with under ten nodes gets a `note` saying the figures mean it has barely STARTED rather than that anything is going unused.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "include_unused": {
+        "default": null,
+        "description": "Also return the FLAT LIST of every unused node type and edge type.\n\nOff by default, and the default is measured rather than chosen: a\ndesign straight out of `genesis` produces 97 individual items and a\nmature one 59, so the list is LONGEST for the user least able to act on\nit. The figures and the per-domain rollup survived both arms of that\ntrial; the flat list did not, so it is available on request and never\npushed.",
+        "type": [
+          "boolean",
+          "null"
+        ]
+      }
+    },
+    "type": "object"
+  },
+  "name": "vocabulary_coverage"
+}

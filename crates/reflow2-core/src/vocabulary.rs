@@ -28,6 +28,9 @@
 //! are byte-identical (the schema's backing `HashMap`s have no stable order).
 
 use dynograph_core::{DynoError, EdgeEndpoint, EdgeTypeDef, NodeTypeDef, PropertyDef};
+use dynograph_storage::Value;
+
+use crate::nodes::node;
 use serde::Serialize;
 
 use crate::graph::DesignGraph;
@@ -618,5 +621,221 @@ mod tests {
                 .any(|p| p.name == "statement" && p.required),
             "Requirement.statement is required"
         );
+    }
+}
+
+// ---------------------------------------------------------------------------
+// COVERAGE — which of that vocabulary has this design ever actually used?
+// ---------------------------------------------------------------------------
+
+/// One count against its total, with the share precomputed.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct Coverage {
+    pub used: usize,
+    pub total: usize,
+    /// 0.0..=1.0, so a reader is not left dividing two numbers themselves.
+    pub share: f64,
+}
+
+impl Coverage {
+    fn new(used: usize, total: usize) -> Self {
+        Self {
+            used,
+            total,
+            share: if total == 0 {
+                0.0
+            } else {
+                used as f64 / total as f64
+            },
+        }
+    }
+}
+
+/// One schema domain's coverage — the unit a reader actually acts on.
+///
+/// **Grouped by the schema's OWN domains, never by a grouping this code
+/// invented.** The trial that produced this feature found the unused
+/// vocabulary clustering into whole subsystems — flow, dimensions and
+/// readiness, quality gates, governance and risk — and those clusters turned
+/// out to BE the schema's eleven domains. So a mature design reads about four
+/// findings instead of thirty-one, which is the difference between a report
+/// read every time and one skimmed by week two.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct DomainCoverage {
+    pub domain: String,
+    pub node_types: Coverage,
+    pub edge_types: Coverage,
+    /// Whether a ruling says this domain is deliberately unused here.
+    pub parked: bool,
+    /// The ruling's reason, when there is one.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub parked_because: Option<String>,
+    /// The Decision id that would park it — stated whether or not it exists,
+    /// so the remedy rides on the finding rather than on a skill somebody may
+    /// never load (`req:conventions-ride-the-tool-not-only-the-skill`).
+    pub park_with: String,
+}
+
+/// What of the design vocabulary this design has never used.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct VocabularyCoverage {
+    pub node_types: Coverage,
+    pub edge_types: Coverage,
+    /// Properties, counted ONLY on node types that have instances.
+    ///
+    /// A zero on a type with no nodes is a vacuous zero: a design that has
+    /// never created an `EnvironmentRule` says nothing about whether
+    /// `EnvironmentRule.authority` is writable. An earlier instrument counted
+    /// them together and six empty types made 46 properties look like evidence.
+    pub properties_on_used_types: Coverage,
+    /// Every domain, worst-covered first, so the shape of the gap is visible
+    /// without reading a list of names.
+    pub domains: Vec<DomainCoverage>,
+    /// How many domains a ruling declares deliberately unused.
+    pub parked_domains: usize,
+    /// The flat list of unused vocabulary — **only when asked for**.
+    ///
+    /// Withheld by default because the trial measured what it costs: a
+    /// day-one design produces 97 items and a mature one 59, so the list is at
+    /// its longest for the user least able to act on it. The figures above
+    /// survived both arms; this did not.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub unused: Option<Vec<String>>,
+    /// Said in WORDS when the figures cannot mean anything yet.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub note: Option<String>,
+}
+
+/// The Decision id whose acceptance parks a domain's vocabulary.
+///
+/// Deterministic and stated in every reply, so parking needs no new tool: it
+/// is `add_decision` with this id plus `set_decision_status accepted`, both of
+/// which already exist. Adding a bespoke tool for it would have been this
+/// feature committing the defect it exists to report.
+pub fn vocabulary_park_decision_id(domain: &str) -> String {
+    format!("decision:vocab:{domain}")
+}
+
+impl DesignGraph {
+    /// Which of the design vocabulary this design has ever used.
+    ///
+    /// Portable by construction: the schema is embedded in the binary and the
+    /// corpus comes from this graph, so the answer needs nothing about any
+    /// project's file layout and is identical in kind for every user.
+    pub fn vocabulary_coverage(
+        &self,
+        include_unused: bool,
+    ) -> Result<VocabularyCoverage, DynoError> {
+        use std::collections::{BTreeMap, BTreeSet};
+
+        let schema = self.schema();
+        let mut used_props: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
+        let mut node_counts: BTreeMap<String, usize> = BTreeMap::new();
+        for node_type in schema.node_types.keys() {
+            let nodes = self.scan_nodes(node_type)?;
+            node_counts.insert(node_type.clone(), nodes.len());
+            let seen = used_props.entry(node_type.clone()).or_default();
+            for n in nodes {
+                seen.extend(n.properties.keys().cloned());
+            }
+        }
+        // Every edge type that has at least one edge. Walked per type through
+        // the same index the detectors use, so "used" means the same thing here
+        // as it does to HEAL rather than being a second opinion.
+        let index = self.node_type_index()?;
+        let mut edge_used: BTreeSet<String> = BTreeSet::new();
+        for edge_type in schema.edge_types.keys() {
+            if !self.all_edges_of_type(edge_type, &index)?.is_empty() {
+                edge_used.insert(edge_type.clone());
+            }
+        }
+
+        let domains = crate::schema::domain_membership()?;
+        let mut per_domain = Vec::new();
+        let mut parked_domains = 0;
+        let mut unused: Vec<String> = Vec::new();
+
+        for (domain, (dn, de)) in &domains {
+            let n_used = dn
+                .iter()
+                .filter(|t| node_counts.get(*t).copied().unwrap_or(0) > 0)
+                .count();
+            let e_used = de.iter().filter(|t| edge_used.contains(*t)).count();
+            let park_id = vocabulary_park_decision_id(domain);
+            let ruling = self
+                .get_node(node::DECISION, &park_id)?
+                .filter(|d| d.properties.get("status").and_then(Value::as_str) == Some("accepted"));
+            if ruling.is_some() {
+                parked_domains += 1;
+            }
+            for t in dn {
+                if node_counts.get(t).copied().unwrap_or(0) == 0 {
+                    unused.push(format!("{domain}: node type {t}"));
+                }
+            }
+            for t in de {
+                if !edge_used.contains(t) {
+                    unused.push(format!("{domain}: edge type {t}"));
+                }
+            }
+            per_domain.push(DomainCoverage {
+                domain: domain.clone(),
+                node_types: Coverage::new(n_used, dn.len()),
+                edge_types: Coverage::new(e_used, de.len()),
+                parked: ruling.is_some(),
+                parked_because: ruling.and_then(|d| {
+                    d.properties
+                        .get("rationale")
+                        .and_then(Value::as_str)
+                        .map(str::to_string)
+                }),
+                park_with: park_id,
+            });
+        }
+        per_domain.sort_by(|a, b| {
+            (a.node_types.share + a.edge_types.share)
+                .partial_cmp(&(b.node_types.share + b.edge_types.share))
+                .unwrap_or(std::cmp::Ordering::Equal)
+                .then_with(|| a.domain.cmp(&b.domain))
+        });
+
+        let live: Vec<&String> = node_counts
+            .iter()
+            .filter(|(_, c)| **c > 0)
+            .map(|(t, _)| t)
+            .collect();
+        let mut prop_total = 0;
+        let mut prop_used = 0;
+        for t in &live {
+            if let Some(def) = schema.node_types.get(*t) {
+                prop_total += def.properties.len();
+                let seen = used_props.get(*t).cloned().unwrap_or_default();
+                prop_used += def.properties.keys().filter(|p| seen.contains(*p)).count();
+            }
+        }
+
+        let total_nodes: usize = node_counts.values().sum();
+        Ok(VocabularyCoverage {
+            node_types: Coverage::new(live.len(), schema.node_types.len()),
+            edge_types: Coverage::new(edge_used.len(), schema.edge_types.len()),
+            properties_on_used_types: Coverage::new(prop_used, prop_total),
+            domains: per_domain,
+            parked_domains,
+            unused: include_unused.then_some(unused),
+            // A design with almost nothing in it has not "failed to use" the
+            // vocabulary — it has not started. Measured on a graph straight out
+            // of `genesis`: 2 nodes, and every figure near zero. Reporting that
+            // as coverage without saying so would hand a new user a wall of
+            // red on their first read.
+            note: (total_nodes < 10).then(|| {
+                format!(
+                    "This design holds {total_nodes} nodes, so these figures say it has BARELY \
+                     STARTED rather than that vocabulary is going unused — a new design uses \
+                     almost none of it and that is correct. Read them again once the design has \
+                     something in it; until then the only useful reading is which domains you \
+                     have begun to touch."
+                )
+            }),
+        })
     }
 }

@@ -155,6 +155,108 @@ pub fn schema_default(node_type: &str, property: &str) -> Option<String> {
         .map(|d| d.value)
 }
 
+/// Which node and edge types each schema DOMAIN declares.
+///
+/// The eleven domains are the schema's own carve-up, and grouping by them is
+/// deliberate: `vocabulary_coverage` needs an axis it did not invent. The
+/// two-arm trial that produced that feature found the unused vocabulary
+/// clustering into whole subsystems — flow, dimensions and readiness, quality
+/// gates, governance and risk — and the clusters turned out to BE these
+/// domains, so the grouping is a finding rather than a convenience.
+///
+/// Parses each domain separately rather than reading the merged schema, which
+/// is the only way to tell which domain a type came from: the merge is
+/// deliberately flat.
+/// The node and edge type names one schema domain declares.
+pub type DomainTypes = (Vec<String>, Vec<String>);
+
+pub fn domain_membership() -> Result<std::collections::BTreeMap<String, DomainTypes>, DynoError> {
+    use std::collections::BTreeMap;
+
+    // A DOMAIN CANNOT BE VALIDATED ALONE, which is why this reads names rather
+    // than calling the loader per file: `core.yaml` declares CONTAINS, whose
+    // endpoint references `Component` from `structure.yaml`, so
+    // `Schema::from_multiple_yamls(&[one])` fails on every cross-domain
+    // reference. The schema is deliberately merged flat and attribution is not
+    // recoverable from the merged form.
+    //
+    // So this is a SHALLOW parse of two-space-indented keys — and it is
+    // CROSS-CHECKED against the authoritative loader below, which is what
+    // stops a hand-rolled reader drifting from the real one. A restructure of
+    // the YAML that broke this returns an error instead of a quietly partial
+    // answer.
+    fn names_under(yaml: &str, section: &str) -> Vec<String> {
+        let mut out = Vec::new();
+        let mut inside = false;
+        for line in yaml.lines() {
+            let trimmed = line.trim_end();
+            if trimmed.trim().is_empty() || trimmed.trim_start().starts_with('#') {
+                continue;
+            }
+            let indent = trimmed.len() - trimmed.trim_start().len();
+            if indent == 2 {
+                inside = trimmed.trim() == format!("{section}:");
+                continue;
+            }
+            if inside
+                && indent == 4
+                && let Some(name) = trimmed.trim().strip_suffix(':')
+                && name.chars().next().is_some_and(char::is_alphabetic)
+            {
+                out.push(name.to_string());
+            }
+        }
+        out.sort();
+        out
+    }
+
+    let mut out: BTreeMap<String, DomainTypes> = BTreeMap::new();
+    for (name, yaml) in SCHEMA_DOMAINS {
+        out.insert(
+            (*name).to_string(),
+            (
+                names_under(yaml, "node_types"),
+                names_under(yaml, "edge_types"),
+            ),
+        );
+    }
+
+    // THE CROSS-CHECK. Every name found must exist in the merged schema, and
+    // between them the domains must account for ALL of it. Either half failing
+    // means this parser and the real one disagree, and a coverage report built
+    // on the disagreement would under-report vocabulary as "used" simply
+    // because it was never seen.
+    let schema = load_schema()?;
+    let mut seen_nodes: Vec<&String> = out.values().flat_map(|(n, _)| n).collect();
+    let mut seen_edges: Vec<&String> = out.values().flat_map(|(_, e)| e).collect();
+    seen_nodes.sort();
+    seen_edges.sort();
+    for n in &seen_nodes {
+        if !schema.node_types.contains_key(n.as_str()) {
+            return Err(DynoError::Query(format!(
+                "domain_membership read node type '{n}' that the merged schema does not declare —                  the domain parser and the schema loader disagree"
+            )));
+        }
+    }
+    for e in &seen_edges {
+        if !schema.edge_types.contains_key(e.as_str()) {
+            return Err(DynoError::Query(format!(
+                "domain_membership read edge type '{e}' that the merged schema does not declare —                  the domain parser and the schema loader disagree"
+            )));
+        }
+    }
+    if seen_nodes.len() != schema.node_types.len() || seen_edges.len() != schema.edge_types.len() {
+        return Err(DynoError::Query(format!(
+            "domain_membership found {} node types and {} edge types; the merged schema has {}              and {}. Every type must belong to exactly one domain or a coverage report silently              omits vocabulary.",
+            seen_nodes.len(),
+            seen_edges.len(),
+            schema.node_types.len(),
+            schema.edge_types.len(),
+        )));
+    }
+    Ok(out)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

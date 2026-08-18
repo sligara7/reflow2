@@ -112,6 +112,36 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Which of the design VOCABULARY this design has ever actually used \
+                       \u{2014} node types, edge types, and properties on the types that have \
+                       instances. Answers a question nothing else asks: reflow2's detectors check \
+                       the CONSISTENCY OF WHAT EXISTS, so vocabulary a design has never touched is \
+                       invisible to every other computation. GROUPED BY THE SCHEMA'S OWN ELEVEN \
+                       DOMAINS, not by a grouping this tool invented, because unused vocabulary \
+                       clusters into whole subsystems \u{2014} a mature design reads about four \
+                       findings instead of thirty-one. Each domain carries `park_with`: the id of \
+                       a Decision whose ACCEPTANCE declares that domain deliberately unused here, \
+                       so a settled choice stops being reported as a hole (`add_decision` with \
+                       that id, then `set_decision_status accepted` \u{2014} no new tool). THE \
+                       FLAT LIST IS WITHHELD BY DEFAULT and returned only with \
+                       `include_unused`: measured, a day-one design produces 97 items and a \
+                       mature one 59, so the list is longest for the user least able to act on \
+                       it. A design with under ten nodes gets a `note` saying the figures mean it \
+                       has barely STARTED rather than that anything is going unused.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn vocabulary_coverage(
+        &self,
+        Parameters(req): Parameters<VocabularyCoverageReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        ok_json(
+            g.vocabulary_coverage(req.include_unused.unwrap_or(false))
+                .map_err(dyno_err)?,
+        )
+    }
+
+    #[tool(
         description = "The coherence loop's outstanding debt, cheaply: what \
                        capture→detect→ask→decide steps are owed now, computed from graph state, \
                        never run history. Anchored gaps never put to the user, questions waiting \
