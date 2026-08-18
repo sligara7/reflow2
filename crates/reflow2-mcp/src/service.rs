@@ -2008,9 +2008,14 @@ pub struct ScopeReq {
     /// which is the historical behaviour and stays byte-identical.
     #[serde(default)]
     pub scope: Option<String>,
-    /// Hops from the seed (default 3 — enough to reach a Component's own
-    /// capabilities, the requirements they satisfy, and what realizes them).
-    /// Meaningless without `scope`.
+    /// Hops from the seed (default 2 — enough to reach a Component's own
+    /// capabilities, the requirements they satisfy, and what realizes them, and
+    /// no further). Meaningless without `scope`.
+    ///
+    /// It was 3 until 2026-08-17, and 3 did not narrow: measured over all 56
+    /// Components of reflow2's own design, every one returned 50-60 of the 83
+    /// gaps. Raising it back is allowed and the reply will say what it cost —
+    /// see `share_of_anchored` and `narrowing_note`.
     #[serde(default)]
     pub depth: Option<usize>,
 }
