@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:973a31ae9d102c4fdfe12def0bf460c6f50fdb9e81b49cefdc54b068930ac03b",
+  "content_hash": "sha256:f765716b35e388e4cd0440e4045333c25aa5557571a6fcdebd7f1061e451bbe1",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -5536,6 +5536,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-owner-rules-on-scope-and-reachability",
+      "properties": {},
+      "to_id": "epoch:the-owner-rules-on-scope-and-reachability"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-owner-rules-on-the-depth-defect",
+      "properties": {},
+      "to_id": "epoch:the-owner-rules-on-scope-and-reachability"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-owners-identity-is-one-node-again",
       "properties": {},
       "to_id": "epoch:the-owners-identity-is-one-node-again"
@@ -6916,6 +6928,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-owner-rules-on-scope-and-reachability:dec:the-default-scope-depth-should-be-two",
+      "properties": {},
+      "to_id": "epoch:the-owner-rules-on-scope-and-reachability"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:the-owners-identity-is-one-node-again:ctr:anthony",
       "properties": {},
       "to_id": "epoch:the-owners-identity-is-one-node-again"
@@ -7247,6 +7265,14 @@
       "properties": {
         "acted_at": "2026-08-05T23:10:00Z",
         "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:a-black-box-needs-three-edges-not-one",
+      "properties": {
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -9527,6 +9553,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-scoped-answer-actually-narrows",
+      "properties": {
+        "acted_at": "2026-08-17T23:59:00Z",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-session-cannot-reach-another-designs-graph",
       "properties": {
         "acted_at": "2026-08-05T23:10:00Z",
@@ -9711,6 +9746,15 @@
       "properties": {
         "acted_at": "2026-07-24",
         "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:declared-vocabulary-is-reachable-from-the-surface",
+      "properties": {
+        "acted_at": "2026-08-17T23:59:00Z",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -20504,6 +20548,60 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-owner-rules-on-scope-and-reachability",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:a-black-box-needs-three-edges-not-one"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-owner-rules-on-scope-and-reachability",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:should-specifies-propagate-impact"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-owner-rules-on-scope-and-reachability",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:the-default-scope-depth-should-be-two"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-owner-rules-on-scope-and-reachability",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:a-scoped-answer-actually-narrows"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-owner-rules-on-scope-and-reachability",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:declared-vocabulary-is-reachable-from-the-surface"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-owner-rules-on-the-depth-defect",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:the-default-scope-depth-should-be-two"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-partition-marker-must-be-read-back",
       "properties": {
         "accepted_baseline": false,
@@ -30764,6 +30862,12 @@
       "from_id": "dec:stateless-seat-handle",
       "properties": {},
       "to_id": "snap:epoch:rmcp-v3:dec:stateless-seat-handle"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:the-default-scope-depth-should-be-two",
+      "properties": {},
+      "to_id": "snap:epoch:the-owner-rules-on-scope-and-reachability:dec:the-default-scope-depth-should-be-two"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -84654,6 +84758,23 @@
       }
     },
     {
+      "node_id": "chg:the-owner-rules-on-scope-and-reachability",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Anthony accepts the depth ruling and both increment requirements, and names what the future black-box work will need",
+        "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:the-owner-rules-on-the-depth-defect",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "The depth decision moves from proposed to accepted, and part 3 is settled as delete-the-sentence rather than reconcile-the-computations"
+      }
+    },
+    {
       "node_id": "chg:the-owners-identity-is-one-node-again",
       "node_type": "ChangeEvent",
       "properties": {
@@ -85693,6 +85814,16 @@
         "handle": "storybug-boss",
         "kind": "automated_agent",
         "name": "storybug Boss (storyflow fleet)"
+      }
+    },
+    {
+      "node_id": "dec:a-black-box-needs-three-edges-not-one",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Anthony, 2026-08-17, looking ahead to a future increment doing proper SE on reflow2 itself: 'we talked about 8 subsystems of reflow2, but currently there were not really any black-boxes... when we do this SE task, this SPECIFIES edge will be needed between each black-box.'\n\nTHE DIRECTION IS RIGHT AND THE MECHANISM NEEDS ONE CORRECTION, recorded so the future increment does not start by drawing the wrong edges. SPECIFIES does not run BETWEEN two black boxes. It runs from a machine-readable contract ARTIFACT to the INTERFACE that sits between them. Three distinct edges are needed and they answer three different questions:\n\n  PROVIDES / CONSUMES   Component -> Interface   WHO offers this boundary, and who needs it. This is the edge between black boxes, and it is what is missing today (`fact:the-eight-subsystems-are-groupings-not-black-boxes`: 0 of 8 subsystems provide anything).\n  SPECIFIES             Artifact  -> Interface   WHICH FILE is the authoritative contract. This is what makes the boundary CHECKABLE instead of prose, and it is the edge that has never been drawn anywhere in the graph.\n  REALIZES              Artifact  -> Component   which code implements the box. Already drawn everywhere.\n\nSo the SE increment owes, per boundary: an Interface node, a PROVIDES and one or more CONSUMES, and a SPECIFIES to whatever file actually defines the contract. Drawing SPECIFIES alone between subsystems that provide nothing would attach contracts to boundaries that do not exist.\n\nWHY IT MATTERS BEYOND TIDINESS. `req:interface-spec-complete` says a published interface must carry enough to check compatibility rather than prose; `seam_report` and `granularity_report` read the interface tier. With 0 of 8 subsystems providing anything, those computations have nothing to read above the leaves — the decomposition is invisible to every tool that reasons about seams.",
+        "name": "A black box is defined by PROVIDES/CONSUMES; SPECIFIES is what makes its contract checkable rather than prose",
+        "rationale": "HIS STANDING GROUND, stated in the same breath and applying to the whole of this: 'I'm more interested in doing things right. If that requires redoing work, so be it - I prefer quality. So if adding SPECIFIES is right, then we have our answer regardless of the amount of work that it includes.' That closes the cost objection in advance for the SE increment, which will be a large one — the boundaries have to be designed, not merely recorded.\n\nA COUPLING THE SEQUENCING MUST RESPECT, found while answering this. Adding subsystem interfaces adds PROVIDES/CONSUMES edges, which ARE traversed by propagation (Lateral, both directions). Making SPECIFIES propagate would add more. Both ENLARGE every blast radius and therefore every scoped region — at exactly the moment `dec:the-default-scope-depth-should-be-two` is shrinking depth to make regions mean something. The two pull against each other, so the depth change should land and be re-measured BEFORE the SE work adds edges, and re-measured again after. Otherwise a region that got usable will quietly stop being so and nothing will say which change did it.\n\nWHY THE SE INCREMENT IS NOT CREATED HERE: he said 'in some future increment', which is a statement of intent rather than a schedule. Capturing it without scheduling it is the honest half.",
+        "status": "proposed"
       }
     },
     {
@@ -88231,6 +88362,16 @@
       }
     },
     {
+      "node_id": "dec:should-specifies-propagate-impact",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "OPEN. `SPECIFIES` is currently NOT traversed by propagation. `nodes.rs` says so explicitly: \"Structural edges not listed (e.g. SPECIFIES, DOCUMENTS, temporal bookkeeping) are intentionally not traversed.\"\n\nTHE ARGUMENT FOR TRAVERSING IT. It is grouped with DOCUMENTS, and the two are not alike. DOCUMENTS is human explanation — prose changing does not implicate the code. SPECIFIES is a MACHINE-READABLE CONTRACT: an OpenAPI file, a JSON schema, an IDL. When that changes, the implementation behind the interface may now be wrong, which is the definition of blast radius. Had SPECIFIES propagated and the edges been drawn, adding `Verification.description` to `schema/verify.yaml` would have lit up `ifc:mcp-tools` at the moment of the edit, which is exactly the miss that `req:declared-vocabulary-is-reachable-from-the-surface` exists for.\n\nDirection would follow REALIZES, which has the same Artifact->target shape: forward Upstream, backward Downstream.\n\nWHY IT IS NOT DECIDED NOW, and this is the substantive part rather than caution. It changes every blast radius in the graph, and it lands in the same window as two other changes that push the same dial the OTHER way:\n  - `dec:the-default-scope-depth-should-be-two` SHRINKS regions (accepted, not yet built).\n  - the future SE work adds subsystem interfaces, whose PROVIDES/CONSUMES edges ARE traversed and therefore GROW regions.\nTurning all three at once means nobody can attribute the result. The sequence that stays measurable: land depth 2 and re-measure the 56-component sweep; then draw the SPECIFIES edges (which changes nothing while the edge is untraversed); then decide THIS with a before-and-after in hand.\n\nWHAT WOULD SETTLE IT: rerun the same instrument that produced `fact:defect-a-scoped-detector-at-its-default-depth-returns-two-thirds-of-the-design` with SPECIFIES traversable, and read what happens to the 50..60 spread. If regions stay discriminating, traverse it. If they do not, the contract relationship stays recorded-but-not-propagated, which is still strictly better than today's nothing.",
+        "name": "Whether a change to a contract artifact should reach the interface it specifies — measure after the depth change, do not decide ahead of it",
+        "rationale": "RAISED BY ANTHONY'S QUESTION, 2026-08-17, which is what surfaced the whole thread: \"in a system that builds a graph to represent relationships between two things, why is there no edge between these? it also sounds like some type of API contract.\"\n\nThe answer was that the edge exists, is defined for exactly this (\"an OpenAPI / protobuf / JSON-schema / IDL file SPECIFIES an Interface (its authoritative contract)\"), carries a `format` property listing `json_schema`, and has ZERO instances in the entire graph. It was written for INGEST — its `extraction_hint` is a prompt for pulling structure out of a user's documents — so it was built for other people's projects and never turned on this one. `rule:the-self-host-always-trails-what-it-teaches` is the right frame: the accurate reading is not \"reflow2 failed to model itself\" but \"this is now catchable, for everyone\".\n\nAn agent proposed and recommended nothing on this one at first pass and explicitly put it to the owner; the recommendation above (measure, do not decide) replaces that after the coupling was found.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:sidecar-loss-guarded-by-store-evidence",
       "node_type": "Decision",
       "properties": {
@@ -88304,10 +88445,10 @@
       "node_id": "dec:the-default-scope-depth-should-be-two",
       "node_type": "Decision",
       "properties": {
-        "decision": "PROPOSED, NOT TAKEN — this changes what every existing scoped caller sees, so it waits on the owner's word.\n\nTHREE PARTS, and they can be answered separately:\n\n(1) `DEFAULT_SCOPE_DEPTH` becomes 2. At 3 the scoped detectors do not narrow: measured over all 56 Components of reflow2's own design, each returns 50-60 of the 83 gaps (median 55) and a region of 595-903 nodes. At 2 the same sweep returns 2-27 (median 4) over regions of 267-601. See `fact:defect-a-scoped-detector-at-its-default-depth-returns-two-thirds-of-the-design`.\n\n(2) The docstring that justifies 3 is corrected whatever is decided about the number. It argues the third hop is needed to reach 'a contained child component's capabilities' — but `scope_region` puts the whole containment closure into the seed set BEFORE taking the radius, so those capabilities are one hop from an owned node, not three. The reason given for the default is not a reason the code needs.\n\n(3) `detect_gaps`' description stops claiming its region is 'the same computation claim_region uses ... so \"my area\" means one thing everywhere'. It is not: the depths differ (3 vs 2) and `scope_region` adds the containment closure that `claimed_region` omits. Either the sentence goes or the two computations are actually reconciled — and reconciling them changes what two people believe they hold, which is a bigger question than a default.",
+        "decision": "ACCEPTED by Anthony, 2026-08-17. All three parts, with part (3) settled narrowly.\n\n(1) `DEFAULT_SCOPE_DEPTH` becomes 2. At 3 the scoped detectors do not narrow: measured over all 56 Components of reflow2's own design, each returns 50-60 of the 83 gaps (median 55) and a region of 595-903 nodes. At 2 the same sweep returns 2-27 (median 4) over regions of 267-601. See `fact:defect-a-scoped-detector-at-its-default-depth-returns-two-thirds-of-the-design`.\n\nWHY 2 AND NOT 1, which is the part the measurement alone does not settle. The golden thread runs Requirement -> Capability -> Component -> Artifact -> Verification. From a Component its capabilities are one hop; the requirements they satisfy and the checks that verify them are two. So depth 2 is exactly one component's own thread. Depth 1 stops short of the requirements, so a team would stop being told when its own capability satisfies nothing. Depth 3 reaches the neighbours' threads, which is the program again.\n\n(2) The docstring that justifies 3 is corrected. It argues the third hop is needed to reach 'a contained child component's capabilities' — but `scope_region` puts the whole containment closure into the seed set BEFORE taking the radius, so those capabilities are one hop from an owned node, not three. The reason given for the default is not a reason the code needs. This part needed nobody's permission and was always going to be done.\n\n(3) `detect_gaps`' description stops claiming its region is 'the same computation claim_region uses ... so \"my area\" means one thing everywhere'. SETTLED AS: DELETE THE SENTENCE. The alternative — actually reconciling `scope_region` and `claimed_region` — is NOT taken here and is NOT to be bundled in: it changes what a claim covers, which is what two people believe they have each taken responsibility for. That deserves its own decision, and `scope.rs` already records it as possibly a defect in the claims layer.",
         "name": "The default scope depth drops from 3 to 2, and the two definitions of \"a region\" stop being described as one",
-        "rationale": "WHY IT IS PUT RATHER THAN TAKEN, given the standing rule to fix things properly while they are still cheap: the rule is about not patching around a mistake, and none of this is a patch. But a default that every scoped caller already reads is design intent about what 'my part' means, and `rule:design-intent-moves-only-on-the-owners-word` is the reason an agent does not settle that alone. Part (2) is a plain factual correction to a comment and needs nobody's permission; parts (1) and (3) do.\n\nWHAT WAS REJECTED. Leaving the default at 3 and telling callers to pass a depth: the measurement says the default is what almost everyone gets, and a tool whose out-of-the-box answer is 'two thirds of the design, called your part' fails the epoch this sits in. Also rejected: making `design_regions` quietly use a different depth from the scoped detectors, which would have hidden the defect behind a second opinion instead of naming it.\n\nCOST OF DECIDING LATER RATHER THAN NOW, stated because the standing rule asks for it: every session that scopes between now and then is told its part holds two thirds of the design's gaps, and any judgement made on that number — 'my area is the messy one' — is made on a figure that is the same for every area.",
-        "status": "proposed"
+        "rationale": "ACCEPTED ON ANTHONY'S WORD after a plain-English walkthrough of all three parts with a recommendation on each.\n\nWHAT WAS REJECTED. Leaving the default at 3 and telling callers to pass a depth: the measurement says the default is what almost everyone gets, and a tool whose out-of-the-box answer is 'two thirds of the design, called your part' fails the epoch this sits in. Also rejected: making `design_regions` quietly use a different depth from the scoped detectors, which would have hidden the defect behind a second opinion instead of naming it. Also rejected, and this is part (3): reconciling the two region computations as a rider on a default change.\n\nHIS STANDING GROUND, restated the same day and applying directly here: 'I'm more interested in doing things right. If that requires redoing work, so be it - I prefer quality. So if adding SPECIFIES is right, then we have our answer regardless of the amount of work that it includes.' The cost of a correct change is not an argument against it before 1.0. See `rule:fix-it-properly-while-it-is-still-cheap`.\n\nCOST OF HAVING DECIDED LATER, kept on the record because the standing rule asks for it: every session that scoped between the measurement and this ruling was told its part held two thirds of the design's gaps, and any judgement made on that number — 'my area is the messy one' — was made on a figure that was the same for every area.",
+        "status": "accepted"
       }
     },
     {
@@ -90730,6 +90871,16 @@
         "name": "The loop says what distribution is owed — flo2's F5, carried by the read-side hint. LAST ON PURPOSE: its value is downstream of the comparison deserving belief (dec:fix-the-comparison-before-pointing-it-earlier step 3)",
         "sequence": 313,
         "status": "planned"
+      }
+    },
+    {
+      "node_id": "epoch:the-owner-rules-on-scope-and-reachability",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "Anthony rules on the depth defect and on unreachable vocabulary, and names SPECIFIES as what the future black-box work will need",
+        "sequence": 358,
+        "status": "arrived"
       }
     },
     {
@@ -95199,7 +95350,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Scoping a detector to a part of the design must return an answer materially different from the unscoped one, or the narrowing is decoration and the number beside it is misleading.\n\n(Distinct from the FACT, which records the measurement, and from the DECISION, which proposes one specific default. This is the intent both of those serve: the fact is evidence, the decision is one answer, and this says what must be true whatever answer is chosen.)\n\nTHE MEASUREMENT THAT MAKES THIS A REQUIREMENT RATHER THAN A PREFERENCE. Driving the built binary over all 56 Components of reflow2's own design (2487 nodes, 83 gaps), at the DEFAULT depth of 3: every single component returns 50-60 of the 83 gaps, median 55, over a region of 595-903 nodes. The spread across all 56 is 50..60 — indistinguishable. `in_scope: 55, out_of_scope: 28` reads as \"your part has 55 gaps\" and says the same thing to every team about every part. Shallower depths discriminate sharply: depth 1 gives 0-19 gaps over 17-139 nodes, depth 2 gives 2-27 over 267-601. Evidence: `fact:defect-a-scoped-detector-at-its-default-depth-returns-two-thirds-of-the-design`.\n\nWHAT IS OWED. Not a number — a property. A scoped read should be checkable against the claim it makes: if scoping to any seed returns most of what the unscoped call returns, the tool should be able to SAY SO rather than leaving the reader to compare two numbers they were never shown together. The specific default is `dec:the-default-scope-depth-should-be-two`, which is separately open and is the owner's to settle.\n\nTHREE THINGS THE SAME MEASUREMENT TURNED UP, worth carrying together because they are one confusion about what a region is:\n(a) `scope.rs` justifies the default of 3 by saying the third hop is needed to reach a contained child component's capabilities. `scope_region` puts the whole containment closure into the seed set BEFORE taking the radius, so those capabilities are ONE hop from an owned node. The stated reason is not a reason the code needs.\n(b) `detect_gaps`' description claims its region is \"the same computation claim_region uses for 'the part I hold', so 'my area' means one thing everywhere\". It is not: the MCP defaults differ (3 vs 2) AND `scope_region` adds the containment closure that `claimed_region` omits.\n(c) That second divergence is already recorded in `scope.rs` as possibly a defect in the claims layer, deliberately left unfixed because changing what a claim covers changes what two people believe they hold. Reconciling the two is a bigger question than a default and is NOT assumed here.\n\nSCOPE OF THIS REQUIREMENT, so the increment can be argued with: it is about the scoped DETECTORS and the words they use about themselves. It does not decide (c), and it does not touch `design_regions`, which already reports its own depth and coverage.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -95850,7 +96001,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A property or edge type the schema declares must be writable through the tools a client actually has. Where it is not, the design should be able to SAY so — because the alternative is what happened four times in two days: a field that exists, is documented, is indexed for search, and that nothing can set.\n\nTHE FOUR INSTANCES, all found by hand, all inside one increment, and all the same shape:\n1. `Verification.description` — declared, fulltext, the embedding field. Used ONCE in 164 Verifications, because `add_verification` had no parameter for it and `name` was the only string on offer. Read as \"the team does not want descriptions\"; it was unreachable, not unwanted.\n2. `SUPERSEDES` — declared as an edge type with ZERO edges in the graph, while nine nodes named their successor in prose because no tool drew the edge.\n3. `create_node`'s compare-and-swap — shipped with `expected_content_hash` as a required precondition and no `revision` block in the reply, so the value the tool demanded was unobtainable from the tool that demanded it. Every core test passed; the first MCP probe failed on line 1.\n4. `GOVERNED_BY.ruling` — added to the schema and would have been reachable only through raw `create_edge`, caught before shipping only because instance 1 had happened hours earlier.\n\nWHY THIS IS ONE FINDING AND NOT FOUR BUGS. Each was repaired at its own site, which is correct and is also how a pattern stays invisible. The common cause is structural: reflow2's schema and its typed constructors are written separately, nothing compares them, and the gap between \"declared\" and \"writable\" is exactly where a field goes to die. A corpus reading like \"used once in 164\" is then misread as a judgement about the team when it is a fact about the tools.\n\nWHAT IS OWED. A computation over the schema and the served surface that answers: which declared properties and edge types can no tool set? `dec:idea-detect-vocabulary-that-nothing-reaches` already proposes something in this family and should be read before designing.\n\nTWO THINGS IT MUST NOT DO, both of which would make it worse than nothing:\n(a) It must not conclude that an unreachable field should be deleted. Three of the four above were WANTED and got a parameter; deletion would have been the wrong repair every time.\n(b) It must not report raw `create_node` / `create_edge` as reachability. Those can write anything, which is precisely why they hid all four — a property is reachable when a TYPED tool can set it, and a finding computed against the generic escape hatch would answer clean forever.\n\nRELATED AND DELIBERATELY DISTINCT: `req:a-vocabulary-distinction-proves-it-is-read` asks whether a distinction the schema draws is ever READ by a computation. This asks whether it can be WRITTEN at all. A field can fail either test independently.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -98711,6 +98862,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:the-owner-rules-on-scope-and-reachability:dec:the-default-scope-depth-should-be-two",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"role\":\"approver\"}}]",
+        "state": "{\"decision\":\"PROPOSED, NOT TAKEN — this changes what every existing scoped caller sees, so it waits on the owner's word.\\n\\nTHREE PARTS, and they can be answered separately:\\n\\n(1) `DEFAULT_SCOPE_DEPTH` becomes 2. At 3 the scoped detectors do not narrow: measured over all 56 Components of reflow2's own design, each returns 50-60 of the 83 gaps (median 55) and a region of 595-903 nodes. At 2 the same sweep returns 2-27 (median 4) over regions of 267-601. See `fact:defect-a-scoped-detector-at-its-default-depth-returns-two-thirds-of-the-design`.\\n\\n(2) The docstring that justifies 3 is corrected whatever is decided about the number. It argues the third hop is needed to reach 'a contained child component's capabilities' — but `scope_region` puts the whole containment closure into the seed set BEFORE taking the radius, so those capabilities are one hop from an owned node, not three. The reason given for the default is not a reason the code needs.\\n\\n(3) `detect_gaps`' description stops claiming its region is 'the same computation claim_region uses ... so \\\"my area\\\" means one thing everywhere'. It is not: the depths differ (3 vs 2) and `scope_region` adds the containment closure that `claimed_region` omits. Either the sentence goes or the two computations are actually reconciled — and reconciling them changes what two people believe they hold, which is a bigger question than a default.\",\"name\":\"The default scope depth drops from 3 to 2, and the two definitions of \\\"a region\\\" stop being described as one\",\"rationale\":\"WHY IT IS PUT RATHER THAN TAKEN, given the standing rule to fix things properly while they are still cheap: the rule is about not patching around a mistake, and none of this is a patch. But a default that every scoped caller already reads is design intent about what 'my part' means, and `rule:design-intent-moves-only-on-the-owners-word` is the reason an agent does not settle that alone. Part (2) is a plain factual correction to a comment and needs nobody's permission; parts (1) and (3) do.\\n\\nWHAT WAS REJECTED. Leaving the default at 3 and telling callers to pass a depth: the measurement says the default is what almost everyone gets, and a tool whose out-of-the-box answer is 'two thirds of the design, called your part' fails the epoch this sits in. Also rejected: making `design_regions` quietly use a different depth from the scoped detectors, which would have hidden the defect behind a second opinion instead of naming it.\\n\\nCOST OF DECIDING LATER RATHER THAN NOW, stated because the standing rule asks for it: every session that scopes between now and then is told its part holds two thirds of the design's gaps, and any judgement made on that number — 'my area is the messy one' — is made on a figure that is the same for every area.\",\"status\":\"proposed\"}",
+        "target_id": "dec:the-default-scope-depth-should-be-two",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:the-owners-identity-is-one-node-again:ctr:anthony",
       "node_type": "Snapshot",
       "properties": {
@@ -101311,6 +101472,17 @@
       }
     },
     {
+      "node_id": "fact:the-eight-subsystems-are-groupings-not-black-boxes",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "measurement",
+        "statement": "MEASURED from the committed export: reflow2 declares EIGHT subsystems (`sys:agent-surface`, `sys:coherence-loop`, `sys:documentation`, `sys:human-channel`, `sys:intake`, `sys:store`, `sys:time-history`, `sys:vocabulary`) and NOT ONE OF THEM PROVIDES AN INTERFACE.\n\n  subsystem            contains  PROVIDES  CONSUMES\n  sys:agent-surface       5         -         -\n  sys:coherence-loop     18         -         -\n  sys:documentation       1         -         -\n  sys:human-channel       2         -         -\n  sys:intake              3         -         -\n  sys:store               4         -         2\n  sys:time-history        5         -         -\n  sys:vocabulary          4         -         -\n\nZERO of eight provide; ONE of eight consumes anything, and both of its consumed interfaces are external (`ifc:exclusive-local-store`, `ifc:req-dyno-storage-api`) rather than a seam with a sibling subsystem. EVERY interface in the design is provided by a LEAF component one level down — `cmp:service` (ifc:mcp-tools, ifc:mcp-tools-http), `cmp:graph` (ifc:core-api), `cmp:export` (ifc:graph-export), `cmp:main` (ifc:rendezvous-sidecar), `cmp:registry` (ifc:session-graph-selector).\n\nWHAT THAT MEANS, in the systems-engineering sense Anthony raised: the eight are GROUPINGS, not black boxes. A black box is defined by its boundary — you can say what it offers and what it needs without opening it. Here you cannot say either for seven of the eight, so the decomposition carries no interface contract at any level above the leaves. `granularity_report` and `seam_report` have nothing to read at the subsystem tier.\n\nRECORDED BECAUSE IT IS THE BASELINE for a future increment doing proper SE on reflow2 itself, and because the number is the argument: 0/8 is not 'some interfaces are missing', it is 'the tier has no contracts at all'.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-17"
+      }
+    },
+    {
       "node_id": "fact:the-five-project-census-2026-08-09",
       "node_type": "TemporalFact",
       "properties": {
@@ -103505,7 +103677,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:03dc44cc642295bb9d098ed7c40c0f7dfded86105a354b4ddec8111a9bf3de84",
+  "prev_content_hash": "sha256:973a31ae9d102c4fdfe12def0bf460c6f50fdb9e81b49cefdc54b068930ac03b",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
