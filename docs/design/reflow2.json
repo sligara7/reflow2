@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:2f538fba8ded395eb7cff88e59539e8940e2dde31a6c11e8e1e9dc93596756f3",
+  "content_hash": "sha256:a1796bb2d2a674ed0a4d54dac1f9202359716115c31de4091ae8a8d057e5db59",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -5458,6 +5458,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-black-box-mechanism-is-settled",
+      "properties": {},
+      "to_id": "epoch:the-owner-rules-on-scope-and-reachability"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-design-interview-precedes-the-capture",
       "properties": {},
       "to_id": "epoch:v0310"
@@ -6937,6 +6943,12 @@
       "from_id": "snap:epoch:the-key-is-renamed-and-the-sweep-says-what-it-swept:dec:a-misnaming-is-fixed-in-the-message-not-the-key",
       "properties": {},
       "to_id": "epoch:the-key-is-renamed-and-the-sweep-says-what-it-swept"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-owner-rules-on-scope-and-reachability:dec:a-black-box-needs-three-edges-not-one",
+      "properties": {},
+      "to_id": "epoch:the-owner-rules-on-scope-and-reachability"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -20242,6 +20254,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-black-box-mechanism-is-settled",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:a-black-box-needs-three-edges-not-one"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-design-interview-precedes-the-capture",
       "properties": {
         "accepted_baseline": true,
@@ -30772,6 +30793,12 @@
       "from_id": "cap:what-next",
       "properties": {},
       "to_id": "snap:epoch:what-next-built:cap:what-next"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:a-black-box-needs-three-edges-not-one",
+      "properties": {},
+      "to_id": "snap:epoch:the-owner-rules-on-scope-and-reachability:dec:a-black-box-needs-three-edges-not-one"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -84715,6 +84742,14 @@
       }
     },
     {
+      "node_id": "chg:the-black-box-mechanism-is-settled",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "The three-edge black-box mechanism moves from proposed to accepted on Anthony's word"
+      }
+    },
+    {
       "node_id": "chg:the-design-interview-precedes-the-capture",
       "node_type": "ChangeEvent",
       "properties": {
@@ -85897,10 +85932,10 @@
       "node_id": "dec:a-black-box-needs-three-edges-not-one",
       "node_type": "Decision",
       "properties": {
-        "decision": "Anthony, 2026-08-17, looking ahead to a future increment doing proper SE on reflow2 itself: 'we talked about 8 subsystems of reflow2, but currently there were not really any black-boxes... when we do this SE task, this SPECIFIES edge will be needed between each black-box.'\n\nTHE DIRECTION IS RIGHT AND THE MECHANISM NEEDS ONE CORRECTION, recorded so the future increment does not start by drawing the wrong edges. SPECIFIES does not run BETWEEN two black boxes. It runs from a machine-readable contract ARTIFACT to the INTERFACE that sits between them. Three distinct edges are needed and they answer three different questions:\n\n  PROVIDES / CONSUMES   Component -> Interface   WHO offers this boundary, and who needs it. This is the edge between black boxes, and it is what is missing today (`fact:the-eight-subsystems-are-groupings-not-black-boxes`: 0 of 8 subsystems provide anything).\n  SPECIFIES             Artifact  -> Interface   WHICH FILE is the authoritative contract. This is what makes the boundary CHECKABLE instead of prose, and it is the edge that has never been drawn anywhere in the graph.\n  REALIZES              Artifact  -> Component   which code implements the box. Already drawn everywhere.\n\nSo the SE increment owes, per boundary: an Interface node, a PROVIDES and one or more CONSUMES, and a SPECIFIES to whatever file actually defines the contract. Drawing SPECIFIES alone between subsystems that provide nothing would attach contracts to boundaries that do not exist.\n\nWHY IT MATTERS BEYOND TIDINESS. `req:interface-spec-complete` says a published interface must carry enough to check compatibility rather than prose; `seam_report` and `granularity_report` read the interface tier. With 0 of 8 subsystems providing anything, those computations have nothing to read above the leaves — the decomposition is invisible to every tool that reasons about seams.",
+        "decision": "ACCEPTED by Anthony, 2026-08-17 (\"accept the black box decision\"). This is now the settled mechanism the SE increment will use when it runs.\n\nHIS DIRECTION, looking ahead to a future increment doing proper SE on reflow2 itself: 'we talked about 8 subsystems of reflow2, but currently there were not really any black-boxes... when we do this SE task, this SPECIFIES edge will be needed between each black-box.'\n\nTHE DIRECTION IS RIGHT AND THE MECHANISM NEEDED ONE CORRECTION, settled here so the increment does not start by drawing the wrong edges. SPECIFIES does not run BETWEEN two black boxes. It runs from a machine-readable contract ARTIFACT to the INTERFACE that sits between them. Three distinct edges are needed and they answer three different questions:\n\n  PROVIDES / CONSUMES   Component -> Interface   WHO offers this boundary, and who needs it. This is the edge between black boxes, and it is what is missing today (`fact:the-eight-subsystems-are-groupings-not-black-boxes`: 0 of 8 subsystems provide anything).\n  SPECIFIES             Artifact  -> Interface   WHICH FILE is the authoritative contract. This is what makes the boundary CHECKABLE instead of prose, and it is the edge that has never been drawn anywhere in the graph.\n  REALIZES              Artifact  -> Component   which code implements the box. Already drawn everywhere.\n\nSO THE SE INCREMENT OWES, PER BOUNDARY: an Interface node, a PROVIDES and one or more CONSUMES, and a SPECIFIES to whatever file actually defines the contract. Drawing SPECIFIES alone between subsystems that provide nothing would attach contracts to boundaries that do not exist.\n\nWHY IT MATTERS BEYOND TIDINESS. `req:interface-spec-complete` says a published interface must carry enough to check compatibility rather than prose; `seam_report` and `granularity_report` read the interface tier. With 0 of 8 subsystems providing anything, those computations have nothing to read above the leaves — the decomposition is invisible to every tool that reasons about seams.\n\n⚠️ A CORRECTION THE INCREMENT MUST MAKE BEFORE IT ADDS ANYTHING. `fact:three-of-five-foundation-consumes-edges-name-the-wrong-component` — the CONSUMES edges to the foundation already in the graph are wrong three times in five (`cmp:propagate`, `cmp:search` and `cmp:heal` are credited with crates they do not import). Those are the same edge type this decision rests on. Building new boundary edges on top of a tier that already misattributes three of five would bake the error in.",
         "name": "A black box is defined by PROVIDES/CONSUMES; SPECIFIES is what makes its contract checkable rather than prose",
-        "rationale": "HIS STANDING GROUND, stated in the same breath and applying to the whole of this: 'I'm more interested in doing things right. If that requires redoing work, so be it - I prefer quality. So if adding SPECIFIES is right, then we have our answer regardless of the amount of work that it includes.' That closes the cost objection in advance for the SE increment, which will be a large one — the boundaries have to be designed, not merely recorded.\n\nA COUPLING THE SEQUENCING MUST RESPECT, found while answering this. Adding subsystem interfaces adds PROVIDES/CONSUMES edges, which ARE traversed by propagation (Lateral, both directions). Making SPECIFIES propagate would add more. Both ENLARGE every blast radius and therefore every scoped region — at exactly the moment `dec:the-default-scope-depth-should-be-two` is shrinking depth to make regions mean something. The two pull against each other, so the depth change should land and be re-measured BEFORE the SE work adds edges, and re-measured again after. Otherwise a region that got usable will quietly stop being so and nothing will say which change did it.\n\nWHY THE SE INCREMENT IS NOT CREATED HERE: he said 'in some future increment', which is a statement of intent rather than a schedule. Capturing it without scheduling it is the honest half.",
-        "status": "proposed"
+        "rationale": "ACCEPTED ON ANTHONY'S WORD after the mechanism was put to him with the correction stated plainly. What he agreed to is the THREE-EDGE SHAPE, not a schedule: the SE increment itself remains governed by `dec:idea-should-reflow2s-own-design-be-re-derived-through-a-principled-se-process`, which is separately accepted as 'DO IT, BUT NOT YET'.\n\nWHAT WAS REJECTED: drawing SPECIFIES directly between subsystems, which is the form his own words took. It was rejected on the mechanism rather than the intent — SPECIFIES is declared `Artifact -> Interface|Capability|Component` and has no meaning as a component-to-component edge, so the version he described would not have expressed what he wanted even if drawn.\n\nHIS STANDING GROUND, stated in the same breath and closing the cost objection in advance for what will be a large increment: 'I'm more interested in doing things right. If that requires redoing work, so be it - I prefer quality. So if adding SPECIFIES is right, then we have our answer regardless of the amount of work that it includes.'\n\nA COUPLING THE SEQUENCING MUST RESPECT, found while answering this and unchanged by the acceptance. Adding subsystem interfaces adds PROVIDES/CONSUMES edges, which ARE traversed by propagation (Lateral, both directions). Making SPECIFIES propagate would add more. Both ENLARGE every blast radius and therefore every scoped region — at exactly the moment `dec:the-default-scope-depth-should-be-two` is shrinking depth to make regions mean something. The two pull against each other, so the depth change should land and be re-measured BEFORE the SE work adds edges, and re-measured again after. Otherwise a region that got usable will quietly stop being so and nothing will say which change did it. `dec:should-specifies-propagate-impact` holds that question and stays open deliberately.",
+        "status": "accepted"
       }
     },
     {
@@ -98949,6 +98984,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:the-owner-rules-on-scope-and-reachability:dec:a-black-box-needs-three-edges-not-one",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"role\":\"approver\"}}]",
+        "state": "{\"decision\":\"Anthony, 2026-08-17, looking ahead to a future increment doing proper SE on reflow2 itself: 'we talked about 8 subsystems of reflow2, but currently there were not really any black-boxes... when we do this SE task, this SPECIFIES edge will be needed between each black-box.'\\n\\nTHE DIRECTION IS RIGHT AND THE MECHANISM NEEDS ONE CORRECTION, recorded so the future increment does not start by drawing the wrong edges. SPECIFIES does not run BETWEEN two black boxes. It runs from a machine-readable contract ARTIFACT to the INTERFACE that sits between them. Three distinct edges are needed and they answer three different questions:\\n\\n  PROVIDES / CONSUMES   Component -> Interface   WHO offers this boundary, and who needs it. This is the edge between black boxes, and it is what is missing today (`fact:the-eight-subsystems-are-groupings-not-black-boxes`: 0 of 8 subsystems provide anything).\\n  SPECIFIES             Artifact  -> Interface   WHICH FILE is the authoritative contract. This is what makes the boundary CHECKABLE instead of prose, and it is the edge that has never been drawn anywhere in the graph.\\n  REALIZES              Artifact  -> Component   which code implements the box. Already drawn everywhere.\\n\\nSo the SE increment owes, per boundary: an Interface node, a PROVIDES and one or more CONSUMES, and a SPECIFIES to whatever file actually defines the contract. Drawing SPECIFIES alone between subsystems that provide nothing would attach contracts to boundaries that do not exist.\\n\\nWHY IT MATTERS BEYOND TIDINESS. `req:interface-spec-complete` says a published interface must carry enough to check compatibility rather than prose; `seam_report` and `granularity_report` read the interface tier. With 0 of 8 subsystems providing anything, those computations have nothing to read above the leaves — the decomposition is invisible to every tool that reasons about seams.\",\"name\":\"A black box is defined by PROVIDES/CONSUMES; SPECIFIES is what makes its contract checkable rather than prose\",\"rationale\":\"HIS STANDING GROUND, stated in the same breath and applying to the whole of this: 'I'm more interested in doing things right. If that requires redoing work, so be it - I prefer quality. So if adding SPECIFIES is right, then we have our answer regardless of the amount of work that it includes.' That closes the cost objection in advance for the SE increment, which will be a large one — the boundaries have to be designed, not merely recorded.\\n\\nA COUPLING THE SEQUENCING MUST RESPECT, found while answering this. Adding subsystem interfaces adds PROVIDES/CONSUMES edges, which ARE traversed by propagation (Lateral, both directions). Making SPECIFIES propagate would add more. Both ENLARGE every blast radius and therefore every scoped region — at exactly the moment `dec:the-default-scope-depth-should-be-two` is shrinking depth to make regions mean something. The two pull against each other, so the depth change should land and be re-measured BEFORE the SE work adds edges, and re-measured again after. Otherwise a region that got usable will quietly stop being so and nothing will say which change did it.\\n\\nWHY THE SE INCREMENT IS NOT CREATED HERE: he said 'in some future increment', which is a statement of intent rather than a schedule. Capturing it without scheduling it is the honest half.\",\"status\":\"proposed\"}",
+        "target_id": "dec:a-black-box-needs-three-edges-not-one",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:the-owner-rules-on-scope-and-reachability:dec:idea-search-first-fires-without-being-remembered",
       "node_type": "Snapshot",
       "properties": {
@@ -103818,7 +103863,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b681284a33a7e3bde9d795c441651afdb14567c94fd0fcb2ed7011dbed1c243f",
+  "prev_content_hash": "sha256:2f538fba8ded395eb7cff88e59539e8940e2dde31a6c11e8e1e9dc93596756f3",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
