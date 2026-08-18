@@ -540,6 +540,38 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Record what a Capability TAKES IN and PUTS OUT \u{2014} its functional \
+                       signature, which is the black-box interface at that tier \
+                       (`req:recursive-black-box-decomposition`: every element of a design is a \
+                       black box with inner function AND INTERFACES). Pass `inputs` / `outputs` as \
+                       lists; the JSON encoding the schema stores is done for you. \
+                       `capability_type` is free text \u{2014} validation / transform / query / \
+                       persistence / decision / actuation / io / compute \u{2014} deliberately \
+                       domain-neutral so a biology or hardware design is not forced into software \
+                       words. OMITTING A FIELD LEAVES IT ALONE, so two people describing the same \
+                       thing from opposite ends cannot overwrite each other; AN EMPTY LIST IS A \
+                       STATEMENT (\"takes nothing in\" is a real claim about a source or a \
+                       generator) and is distinct from nobody having said; and an unknown id is \
+                       REFUSED rather than created.",
+        annotations(read_only_hint = false, idempotent_hint = true)
+    )]
+    pub async fn set_capability_signature(
+        &self,
+        Parameters(req): Parameters<CapabilitySignatureReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        ok_json(NodeDto::from(
+            g.set_capability_signature(
+                &req.capability_id,
+                req.capability_type.as_deref(),
+                req.inputs.as_deref(),
+                req.outputs.as_deref(),
+            )
+            .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
         description = "Create a Capability node. `status` defaults to `planned`; set it when \
                        recording something that already exists, so adopting a running system \
                        does not describe it as entirely unbuilt. CALLING THIS AGAIN WITH AN \

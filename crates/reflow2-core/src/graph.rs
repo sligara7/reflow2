@@ -927,6 +927,90 @@ impl DesignGraph {
     /// are numeric limits with a unit and a direction, which is what
     /// `Constraint` already carries and what `budget_report` already rolls up.
     /// `CONSTRAINS` accepts an Interface as its target today.
+    /// Record what a Capability takes in and puts out — its functional
+    /// signature, which is the black-box interface at the capability tier.
+    ///
+    /// # Why this is a setter and not three more parameters on `add_capability`
+    ///
+    /// `set_interface_spec` is the precedent and the reasoning is the same: a
+    /// contract is enriched onto a node that already exists, often long after
+    /// it was created. `add_capability` also has **276 call sites**, so
+    /// widening it would churn the whole codebase to reach three optional
+    /// fields — and the fields need backfilling onto capabilities that already
+    /// exist far more often than declaring at birth.
+    ///
+    /// # The measurement this exists because of
+    ///
+    /// `Capability.capability_type`, `inputs` and `outputs` were declared in
+    /// `schema/functional.yaml`, indexed, documented — and set on **0 of 170
+    /// capabilities**, because `add_capability` writes only name, description
+    /// and status and nothing anywhere else in either crate touched them. A
+    /// capability's functional signature, what goes in and what comes out, had
+    /// never once been recorded in a design that has been running for months
+    /// (`fact:eighteen-declared-properties-nothing-has-ever-written`).
+    ///
+    /// That matters beyond tidiness: `req:recursive-black-box-decomposition`
+    /// says every element of a design is a black box with inner function AND
+    /// INTERFACES, nested as deep as the design needs. At the capability tier
+    /// these two properties ARE that interface, and they were unwritable.
+    ///
+    /// # What this deliberately does NOT do
+    ///
+    /// **No detector fires when a capability lacks a signature.** 170 of them
+    /// lack one today, so a gap per capability would put 170 findings in front
+    /// of a reader overnight — the wall-of-red failure the vocabulary-coverage
+    /// trial was run to avoid. Prompting for it at the right moment is the
+    /// instruction leg and belongs to its own increment
+    /// (`dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses`,
+    /// option (c)), not to this one.
+    ///
+    /// Refuses an unknown capability rather than creating one: a typo must not
+    /// silently mint a capability whose only content is a signature.
+    pub fn set_capability_signature(
+        &mut self,
+        capability_id: &str,
+        capability_type: Option<&str>,
+        inputs: Option<&[String]>,
+        outputs: Option<&[String]>,
+    ) -> Result<StoredNode, DynoError> {
+        let Some(existing) = self.get_node(node::CAPABILITY, capability_id)? else {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::CAPABILITY.to_string(),
+                node_id: capability_id.to_string(),
+            });
+        };
+        // The schema stores both as "JSON array of names/types", so the list
+        // shape belongs to the caller and the serialisation belongs here —
+        // otherwise every caller hand-writes JSON and one of them gets it wrong.
+        let as_json = |v: Option<&[String]>| -> Option<String> {
+            v.map(|items| serde_json::to_string(items).unwrap_or_else(|_| "[]".to_string()))
+        };
+        let inputs_json = as_json(inputs);
+        let outputs_json = as_json(outputs);
+        let incoming: [(&str, Option<&str>); 3] = [
+            ("capability_type", capability_type),
+            ("inputs", inputs_json.as_deref()),
+            ("outputs", outputs_json.as_deref()),
+        ];
+        let mut props = Props::new();
+        // Carry everything already stored, then overlay only what was supplied,
+        // so recording the outputs cannot erase inputs somebody else declared.
+        for (k, v) in &existing.properties {
+            if !incoming
+                .iter()
+                .any(|(name, given)| name == k && given.is_some())
+            {
+                props = props.set(k, v.clone());
+            }
+        }
+        for (name, given) in incoming {
+            if let Some(value) = given {
+                props = props.set(name, value);
+            }
+        }
+        self.create_node(node::CAPABILITY, capability_id, props)
+    }
+
     #[allow(clippy::too_many_arguments)]
     pub fn set_interface_spec(
         &mut self,

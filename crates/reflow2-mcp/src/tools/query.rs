@@ -400,6 +400,20 @@ impl ReflowService {
             .collect();
         let all = self.tool_router.list_all();
         let searched = all.len();
+        // Document frequency over the whole served surface, computed per call
+        // rather than cached: the surface is fixed at startup but small enough
+        // that recomputing is cheaper than a cache that could go stale against
+        // a router somebody composed differently.
+        let corpus: Vec<(String, String)> = all
+            .iter()
+            .map(|t| {
+                (
+                    t.name.to_lowercase(),
+                    t.description.as_deref().unwrap_or("").to_lowercase(),
+                )
+            })
+            .collect();
+        let weighted = term_weights(&terms, &corpus);
 
         let mut scored: Vec<(f64, JsonValue)> = all
             .iter()
@@ -412,7 +426,7 @@ impl ReflowService {
                     .and_then(JsonValue::as_object)
                     .map(|p| p.keys().cloned().collect::<Vec<_>>())
                     .unwrap_or_default();
-                let score = score_tool(name, description, &params, &terms);
+                let score = score_tool(name, description, &params, &weighted);
                 (score > 0.0).then(|| {
                     (
                         score,

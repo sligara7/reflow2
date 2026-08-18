@@ -2449,6 +2449,48 @@ async fn an_explicit_limit_is_reported_as_the_reason_it_stopped() {
 }
 
 #[tokio::test]
+async fn a_common_word_does_not_outrank_a_rare_one_in_the_catalogue() {
+    // Found by BREAKING IT: adding `set_capability_signature` on 2026-08-18
+    // evicted `link_artifact` from the five results for "register a file that
+    // realizes a capability". The scores were 28/27/26/26/25/24 — a one-point
+    // near-tie — because every term was worth the same regardless of how many
+    // tools mentioned it. `capability` appears in dozens of descriptions;
+    // `file` in a handful.
+    //
+    // So the catalogue was UNSTABLE UNDER ITS OWN GROWTH: any new tool
+    // mentioning a common word could displace the right answer for an
+    // unrelated query, silently, and `req:agent-native`'s promise that every
+    // capability is reachable over one surface only holds if the agent can
+    // find the tool.
+    let s = ReflowService::in_memory().expect("in-memory service");
+    let found = j!(s.find_tools(Parameters(FindToolsReq {
+        query: "register a file that realizes a capability".into(),
+        limit: Some(8),
+    })));
+    let names: Vec<String> = found["items"]
+        .as_array()
+        .expect("items")
+        .iter()
+        .map(|i| i["tool"].as_str().unwrap_or_default().to_string())
+        .collect();
+
+    let rank = |n: &str| names.iter().position(|x| x == n);
+    let link = rank("link_artifact").expect("link_artifact is found at all");
+    // A tool that merely shares the COMMON word must not outrank the one that
+    // matches the rare words too. This is the property, not the position.
+    for merely_capability in ["set_capability_status", "add_capability"] {
+        if let Some(other) = rank(merely_capability) {
+            assert!(
+                link < other,
+                "`link_artifact` matches register/file/realizes/capability; \
+                 `{merely_capability}` matches only the commonest of those, and must not \
+                 outrank it: {names:?}"
+            );
+        }
+    }
+}
+
+#[tokio::test]
 async fn the_tool_catalogue_finds_a_tool_by_the_job_it_does() {
     // req:agent-native promises every capability is reachable over one surface.
     // With a surface this large that is only true if the agent can find the
