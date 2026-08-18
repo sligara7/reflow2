@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e033c0ef32c8e695c9497cf5f777585e2c8bcdcbb3fa7385a2032e69b96be842",
+  "content_hash": "sha256:78f4e7bc7b213ab0fbe38fab2dab28a72bb58ff41aa1bcfcdbc2259b409a6f0c",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -102423,6 +102423,17 @@
       }
     },
     {
+      "node_id": "fact:the-vocabulary-coverage-trial-two-arms-and-what-each-arm-killed",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "measurement",
+        "statement": "A TWO-ARM TRIAL RUN ON REFLOW2 ITSELF, at Anthony's direction and in his framing: 'reflow2 is like a doctor who develops a new medicine, but tries it on himself first before the public.' The candidate was option (b) of `dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses` — report vocabulary a design has never used — reshaped as a COVERAGE STATEMENT rather than a gap list. Computed portably: schema read from the SERVER via `describe_schema`, corpus from the graph's own export, nothing about reflow2's file layout involved, so this is what any project would get.\n\n  ARM 1 — MATURE (reflow2's own, 2535 nodes / 10362 edges)\n    node types 22/29 (75%)   edge types 37/61 (60%)   properties 141/169 (83%)\n    flat list would be 59 items\n  ARM 2 — DAY ONE (immediately after `genesis`, 2 nodes / 0 edges)\n    node types 2/29 (6%)     edge types 0/61 (0%)     properties 9/18 (50%)\n    flat list would be 97 items\n\n⭐ THE TRIAL CONFIRMED THE OBJECTION AND SPLIT THE FEATURE IN TWO. The FIGURES pass both arms: '0 of 61 edge types' on a day-one design is not noise, it is a true and useful statement that nothing has yet been said about how anything relates. The FLAT LIST fails arm 2 outright — 97 items handed to a user thirty seconds into their project, MORE than the 59 a mature design produces. So the list ships as drill-down on request, never as standing output. Had this been shipped on the argument alone it would have been at its worst for exactly the users it was meant to help.\n\n⭐⭐ TWO THINGS THE TRIAL PRODUCED THAT NO AMOUNT OF ARGUING HAD:\n\n(1) THE UNUSED VOCABULARY CLUSTERS INTO WHOLE SUBSYSTEMS, and reads as about four findings rather than 31. Flow: `Flow` node type plus PART_OF_FLOW / PERFORMED_IN / PRODUCES / TRIGGERS. Dimensions and readiness: `DimensionObservation`, `DimensionAssessment`, `ReadinessAssessment` plus HAS_OBSERVATION / HAS_READINESS / OBSERVED_IN / CALIBRATED_AGAINST. Quality gates: `QualityGate` plus GATED_ON. Governance and risk: COMPLIES_WITH / IMPOSES / MITIGATES / VIOLATES_RULE. So the output should GROUP, and a grouped answer on a mature design is short enough to read every time.\n\n(2) THE REPORT MUST BE PARKABLE OR IT WILL NAG ABOUT A SETTLED DECISION. `OWNED_BY` is in the unused list, and its absence is DELIBERATE — `dec:ownership-reads-claims-before-adding-an-edge` says OWNED_BY is added only if claims prove insufficient. A coverage report that cannot be told 'this one is on purpose' would report a correct decision as a hole forever, which is `req:a-deliberate-state-is-not-a-defect` exactly. The `ruling: parks` mechanism shipped 2026-08-17 is what it needs, and neither piece was designed with the other in mind.\n\nNOT BUILT. The trial was run to decide the SHAPE before building, which was the agreement. What it decided: ship the figures, group the list, make it parkable, and keep the flat list behind a request.",
+        "subject_id": "dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses",
+        "valid_from": "2026-08-18"
+      }
+    },
+    {
       "node_id": "fact:three-of-five-foundation-consumes-edges-name-the-wrong-component",
       "node_type": "TemporalFact",
       "properties": {
@@ -104504,7 +104515,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:bd4bce1861359118659d3b3b5cc27ff357691e8c96d3e2ede860288275fb3780",
+  "prev_content_hash": "sha256:e033c0ef32c8e695c9497cf5f777585e2c8bcdcbb3fa7385a2032e69b96be842",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
