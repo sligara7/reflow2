@@ -2015,6 +2015,21 @@ pub struct ScopeReq {
     pub depth: Option<usize>,
 }
 
+#[derive(Debug, Default, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct RegionsReq {
+    /// Hops from each named part, when sizing it (default 1).
+    ///
+    /// DELIBERATELY NOT the scoped detectors' default of 3, and the difference
+    /// is measured rather than stylistic: at 3, on reflow2's own design, all 56
+    /// Components cover 595–903 nodes and hold 50–60 of the 83 gaps, so the
+    /// rows stop telling a chooser anything apart. At 1 the same parts cover
+    /// 17–139 nodes and hold 0–19. Raise it to see a part's whole thread; leave
+    /// it to see which parts differ.
+    #[serde(default)]
+    pub depth: Option<usize>,
+}
+
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct FindToolsReq {

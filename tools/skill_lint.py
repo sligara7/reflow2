@@ -78,6 +78,12 @@ NON_TOOL_TERMS = {
     # Naming the field is the point of that sentence, so the term is expected
     # here rather than a mistyped tool.
     "description",
+    # `seed_id` is a FIELD of a `design_regions` row, and naming it is the whole
+    # point of the sentence it appears in: the parallel-work skill tells a
+    # session with no lane to pick a row and pass THAT field as the scope. A
+    # step that said "pick a region" without saying which field carries the
+    # seed would leave the reader back where the requirement found them.
+    "seed_id",
     # pair_designs buckets, seam_report verdicts, Interface.designation values
     # and spec enum values (2026-08-13) — the link-projects skill names what it
     # tells you to READ in each report, and which designation to correct. None

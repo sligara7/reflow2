@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:3a76c002c671c7dc9a02418e026f0ee213a9160bb1a559de984f5569957425ed",
+  "content_hash": "sha256:03dc44cc642295bb9d098ed7c40c0f7dfded86105a354b4ddec8111a9bf3de84",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -878,6 +878,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-session-with-no-seed-can-find-one",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:scope"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -5144,6 +5152,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:seedless-orientation-ships",
+      "properties": {},
+      "to_id": "epoch:a-session-with-no-seed-can-find-one"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:session-chooses-design-accepted",
       "properties": {},
       "to_id": "epoch:hxm-field-report"
@@ -8931,6 +8945,14 @@
       "properties": {
         "acted_at": "2026-08-09",
         "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-default-scope-depth-should-be-two",
+      "properties": {
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -19165,6 +19187,69 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:seedless-orientation-ships",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:parallel-work-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seedless-orientation-ships",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:regions-rs"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seedless-orientation-ships",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seedless-orientation-ships",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seedless-orientation-ships",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seedless-orientation-ships",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-session-with-no-seed-can-find-one"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:seedless-orientation-ships",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:a-session-with-no-seed-can-still-orient"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:session-chooses-design-accepted",
       "properties": {
         "accepted_baseline": false,
@@ -20926,6 +21011,17 @@
         "action": "modified"
       },
       "to_id": "req:version-combination-is-an-object"
+    },
+    {
+      "edge_type": "CLAIMS",
+      "from_id": "who:claude-code",
+      "properties": {
+        "claimed_at": "2026-08-17T23:10:00Z",
+        "depth": 2,
+        "note": "Requirement 5 of epoch:instruments-stop-overstating — seedless orientation. Touching the scoped-read surface and adding region discovery.",
+        "seat": "asligar-bitecool:2821478:6000e009"
+      },
+      "to_id": "req:a-session-with-no-seed-can-still-orient"
     },
     {
       "edge_type": "CONSTRAINS",
@@ -68558,6 +68654,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:regions-rs",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-session-with-no-seed-can-find-one"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:registry",
       "properties": {
         "completeness": "partial"
@@ -69022,6 +69127,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-a-session-with-no-seed-can-find-one",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "ver:a-session-with-no-seed-can-find-one"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-check-kit-manifest",
       "properties": {
         "completeness": "complete"
@@ -69107,6 +69221,15 @@
         "completeness": "complete"
       },
       "to_id": "ver:nudge-path"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-orientation-needs-nothing-to-start",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "ver:a-session-with-no-seed-can-find-one"
     },
     {
       "edge_type": "REALIZES",
@@ -69430,6 +69553,12 @@
       "from_id": "cap:a-ruling-parks-a-node-and-parked-nodes-are-counted",
       "properties": {},
       "to_id": "req:a-deliberate-state-is-not-a-defect"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-session-with-no-seed-can-find-one",
+      "properties": {},
+      "to_id": "req:a-session-with-no-seed-can-still-orient"
     },
     {
       "edge_type": "SATISFIES",
@@ -71512,6 +71641,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-session-with-no-seed-can-find-one",
+      "properties": {},
+      "to_id": "cap:a-session-with-no-seed-can-find-one"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-stale-write-is-refused",
       "properties": {},
       "to_id": "cap:a-write-can-be-conditional-on-what-was-read"
@@ -73308,6 +73443,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:regions-rs",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:regions-rs"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:release-workflow",
       "properties": {
         "action": "created"
@@ -73612,6 +73755,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-a-session-with-no-seed-can-find-one",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-a-session-with-no-seed-can-find-one"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-check-kit-manifest",
       "properties": {
         "action": "created"
@@ -73673,6 +73824,14 @@
         "action": "created"
       },
       "to_id": "art:test-nudge-path"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:test-orientation-needs-nothing-to-start",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-orientation-needs-nothing-to-start"
     },
     {
       "edge_type": "YIELDED",
@@ -75161,7 +75320,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:b1bfbfb82d25035b41ac27f0617458acc54f70aec5791690e4682911f89d1538",
+        "checksum": "sha256:a174eaa7a6781e8a3e5b3df9ce8629efabae2ae8e336dbe16c1ae26a2b33daf7",
         "granularity": "atomic",
         "location": "getting-started/skills/parallel-work/SKILL.md",
         "name": "parallel-work/SKILL.md",
@@ -75272,6 +75431,17 @@
         "name": "README.md",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:regions-rs",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:c44aeed44068400f04ccba69c3fd47d2a4b4999a036ed08494bf13f166fa2194",
+        "location": "crates/reflow2-core/src/regions.rs",
+        "name": "crates/reflow2-core/src/regions.rs",
+        "status": "realized"
       }
     },
     {
@@ -75628,7 +75798,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8aa5d7aba32579dd56875a229b6867a63892d0c912e7b8156d15292d0c8023b0",
+        "checksum": "sha256:74490fdd329c65fc8c14df6185cd30b6422f32b1a3ea9d12a2029616895faa79",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -75704,7 +75874,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ee0793d718c6a3e8c89d5d9de60e68f97a448b4b6eb22bfa6ab9b93b08fd0011",
+        "checksum": "sha256:961c6ba1dd768d33f9a0de639ee2487c9d72273cc779109440506f6e12b5d7d1",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -75869,6 +76039,17 @@
       }
     },
     {
+      "node_id": "art:test-a-session-with-no-seed-can-find-one",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:d7ad0005715563e4089ca5a4f2ff2a4a2cb2b07c8feafd611610cb278c9cf468",
+        "location": "crates/reflow2-core/tests/a_session_with_no_seed_can_find_one.rs",
+        "name": "crates/reflow2-core/tests/a_session_with_no_seed_can_find_one.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:test-check-kit-manifest",
       "node_type": "Artifact",
       "properties": {
@@ -75996,6 +76177,17 @@
         "name": "test_nudge_path.py",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:test-orientation-needs-nothing-to-start",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:be6196c6181454d6249970f6273f7ba13272e5c4b025a73be5267009855e9db2",
+        "location": "crates/reflow2-mcp/tests/orientation_needs_nothing_to_start.rs",
+        "name": "crates/reflow2-mcp/tests/orientation_needs_nothing_to_start.rs",
+        "status": "realized"
       }
     },
     {
@@ -76159,7 +76351,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9529245fee73f9369c8bddd036b36296b3e34a0a909d11c72f89e68479d40704",
+        "checksum": "sha256:12f3f7c8ece85c82fdaf417e3c9ebef05e964c3a747e3592545191944d011689",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -76452,6 +76644,16 @@
         "name": "A ruling can declare a state deliberate, and parked nodes are counted rather than silenced",
         "provenance": "authored",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-session-with-no-seed-can-find-one",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`design_regions` — a SEEDLESS read that answers 'what parts does this design have, how big is each, and what is owed in each', so a session with no lane, no scope and no topic can find a seed rather than needing one to start.\n\nTHE BASIS IS THE DESIGN'S OWN CARVE-UP, NEVER AN INFERRED ONE. Regions are the nodes the design already declares as parts — its Project and its Components/systems — not clusters a community-detection pass invented. A clustering answer would be reflow2 telling a reader 'these are the parts of your design' on the strength of a heuristic, which is the exact failure the epoch it belongs to exists to remove.\n\nWHAT EACH REGION CARRIES: its seed id and name, `region_size` at the stated depth, how many open gaps and structural defects fall inside it, and who (if anyone) currently claims it. So the reply is directly actionable: pick a row, then scope to that seed.\n\nIT REPORTS WHAT IT DOES NOT COVER. Named parts do not reach the whole graph — most of a mature design is bookkeeping (ChangeEvent, Snapshot, TemporalFact, Fragment) that no component contains. The reply states how many nodes lie in NO region, broken down by type, and how many lie in MORE THAN ONE, because a list of overlapping regions read as a partition would be a false map. This is `cap:a-finding-describes-the-walk-that-produced-it` applied to a region list.\n\nDEPTH IS A PARAMETER AND ITS EFFECT IS VISIBLE. The caller sets it; the reply echoes it and the sizes move with it, so the cost of a wide radius is something a reader sees rather than something they must be told.",
+        "name": "A design says what parts it has, so a session holding nothing can pick where to stand",
+        "provenance": "authored",
+        "status": "verified"
       }
     },
     {
@@ -82091,6 +82293,15 @@
       }
     },
     {
+      "node_id": "chg:seedless-orientation-ships",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "design_regions ships: the parts a design names, sized and costed, for a session that arrived with nothing",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:session-chooses-design-accepted",
       "node_type": "ChangeEvent",
       "properties": {
@@ -86018,6 +86229,16 @@
       }
     },
     {
+      "node_id": "dec:the-default-scope-depth-should-be-two",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "PROPOSED, NOT TAKEN — this changes what every existing scoped caller sees, so it waits on the owner's word.\n\nTHREE PARTS, and they can be answered separately:\n\n(1) `DEFAULT_SCOPE_DEPTH` becomes 2. At 3 the scoped detectors do not narrow: measured over all 56 Components of reflow2's own design, each returns 50-60 of the 83 gaps (median 55) and a region of 595-903 nodes. At 2 the same sweep returns 2-27 (median 4) over regions of 267-601. See `fact:defect-a-scoped-detector-at-its-default-depth-returns-two-thirds-of-the-design`.\n\n(2) The docstring that justifies 3 is corrected whatever is decided about the number. It argues the third hop is needed to reach 'a contained child component's capabilities' — but `scope_region` puts the whole containment closure into the seed set BEFORE taking the radius, so those capabilities are one hop from an owned node, not three. The reason given for the default is not a reason the code needs.\n\n(3) `detect_gaps`' description stops claiming its region is 'the same computation claim_region uses ... so \"my area\" means one thing everywhere'. It is not: the depths differ (3 vs 2) and `scope_region` adds the containment closure that `claimed_region` omits. Either the sentence goes or the two computations are actually reconciled — and reconciling them changes what two people believe they hold, which is a bigger question than a default.",
+        "name": "The default scope depth drops from 3 to 2, and the two definitions of \"a region\" stop being described as one",
+        "rationale": "WHY IT IS PUT RATHER THAN TAKEN, given the standing rule to fix things properly while they are still cheap: the rule is about not patching around a mistake, and none of this is a patch. But a default that every scoped caller already reads is design intent about what 'my part' means, and `rule:design-intent-moves-only-on-the-owners-word` is the reason an agent does not settle that alone. Part (2) is a plain factual correction to a comment and needs nobody's permission; parts (1) and (3) do.\n\nWHAT WAS REJECTED. Leaving the default at 3 and telling callers to pass a depth: the measurement says the default is what almost everyone gets, and a tool whose out-of-the-box answer is 'two thirds of the design, called your part' fails the epoch this sits in. Also rejected: making `design_regions` quietly use a different depth from the scoped detectors, which would have hidden the defect behind a second opinion instead of naming it.\n\nCOST OF DECIDING LATER RATHER THAN NOW, stated because the standing rule asks for it: every session that scopes between now and then is told its part holds two thirds of the design's gaps, and any judgement made on that number — 'my area is the messy one' — is made on a figure that is the same for every area.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:the-mcp-surface-is-two-boundaries-not-one-medium",
       "node_type": "Decision",
       "properties": {
@@ -87563,6 +87784,16 @@
         "epoch_type": "revision",
         "name": "A finding describes the walk that produced it, and an empty orientation read says which zero it is — requirement 1 completed",
         "sequence": 348,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:a-session-with-no-seed-can-find-one",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The seedless orientation read ships, and the measurement of it finds that a SEEDED read at its default depth returns two thirds of the design",
+        "sequence": 354,
         "status": "arrived"
       }
     },
@@ -90496,6 +90727,16 @@
       }
     },
     {
+      "node_id": "frag:art:regions-rs",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered crates/reflow2-core/src/regions.rs"
+      }
+    },
+    {
       "node_id": "frag:art:release-workflow",
       "node_type": "Fragment",
       "properties": {
@@ -90876,6 +91117,16 @@
       }
     },
     {
+      "node_id": "frag:art:test-a-session-with-no-seed-can-find-one",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered crates/reflow2-core/tests/a_session_with_no_seed_can_find_one.rs"
+      }
+    },
+    {
       "node_id": "frag:art:test-check-kit-manifest",
       "node_type": "Fragment",
       "properties": {
@@ -90953,6 +91204,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered test_nudge_path.py"
+      }
+    },
+    {
+      "node_id": "frag:art:test-orientation-needs-nothing-to-start",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered crates/reflow2-mcp/tests/orientation_needs_nothing_to_start.rs"
       }
     },
     {
@@ -97538,6 +97799,17 @@
       }
     },
     {
+      "node_id": "fact:defect-a-scoped-detector-at-its-default-depth-returns-two-thirds-of-the-design",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "measurement",
+        "statement": "MEASURED on reflow2's own design (2487 nodes, 9975 edges, 83 gaps) by driving the BUILT binary against a temp store imported from docs/design/reflow2.json, scoping detect_gaps to each of the 56 Components in turn.\n\nAT THE DEFAULT DEPTH OF 3, SCOPE DOES NOT NARROW. Every one of the 56 Components returns between 50 and 60 of the design's 83 gaps — median 55, i.e. two thirds of every gap in the design, whichever component you pick. region_size runs 595-903 nodes (24-36% of the design). The spread across all 56 is 50..60: the answers are indistinguishable, so a team reading `in_scope: 55, out_of_scope: 28` is being told 'your part has 55 gaps' when every other team is told the same thing about theirs.\n\nSHALLOWER DEPTHS DISCRIMINATE, SHARPLY:\n  depth 1: region_size 17..139 (median 28), in_scope 0..19 (median 1)\n  depth 2: region_size 267..601 (median 330), in_scope 2..27 (median 4)\n  depth 3: region_size 595..903 (median 686), in_scope 50..60 (median 55)\n\nTHE MODULE'S OWN ARGUMENT FOR 3 DOES NOT SURVIVE READING scope_region. scope.rs:76-80 justifies 3 as 'the smallest number that reaches a Component's whole thread: its capabilities are one hop away, the requirements they satisfy and the artifacts and checks that realize and verify them are two, and A CONTAINED CHILD COMPONENT'S CAPABILITIES ARE THREE'. But scope_region is containment_closure(seed) THEN propagate_from(owned, depth) — contained children are already IN `owned`, unboundedly, so their capabilities are ONE hop from an owned node, not three. The third hop buys only what the same doc calls 'the neighbours' neighbours, which is the program again'. By its own reasoning the default should be 2.\n\nTWO DEFAULTS FOR ONE STATED COMPUTATION. detect_gaps' tool description says the region is 'the same computation claim_region uses for \"the part I hold\", so \"my area\" means one thing everywhere'. It is not the same on two counts: the MCP default depth is 3 for scope and 2 for claim_region, and scope_region adds the containment closure while claimed_region takes the radius alone — a divergence scope.rs:38-42 already records as possibly a defect in the claims layer and deliberately left unfixed.\n\nNOT FIXED HERE. Changing DEFAULT_SCOPE_DEPTH changes what every existing scoped caller sees, and reconciling claim_region with scope_region changes what two people believe they hold. Both are put to the owner rather than taken.",
+        "subject_id": "req:a-session-with-no-seed-can-still-orient",
+        "valid_from": "2026-08-17"
+      }
+    },
+    {
       "node_id": "fact:defect-a-stale-kit-receipt-silently-decides-whether-the-loop-nudge-is-owed",
       "node_type": "TemporalFact",
       "properties": {
@@ -99252,6 +99524,19 @@
         "level": "integration",
         "method": "test",
         "name": "A design a session was not attached to cannot be reached by NAMING it: a graph_id it was not attached to is REFUSED rather than served, and a path is not an alternative route in. NOW COVERED, 2026-08-12, in crates/reflow2-mcp/tests/a_session_names_its_design.rs (8 cases) against the surface that finally exists — crates/reflow2-mcp/src/registry.rs. CLAUSE 1 is pinned twice, and the second case is the one that matters: an id this registry does not hold is refused (`an_id_the_registry_does_not_hold_is_refused`), AND a design that genuinely exists elsewhere on the machine is refused identically (`a_real_design_outside_the_root_is_refused_like_any_other`) — so knowing a real graph_id is not a way in, and the registry's ROOT is the boundary. CLAUSE 2 is pinned as a refusal rather than left to the type system (`a_filesystem_path_is_not_an_alternative_route_in`): a path handed to attach() comes back as an unknown ID, never resolved as a location. Belt and braces on both: a Binding exposes ONE design and offers no operation taking another id, so 'cannot name another' holds BY CONSTRUCTION and not by a check anyone must remember — `a_binding_carries_one_design_and_offers_no_way_to_ask_for_a_second`. MUTATION-CHECKED: serving an unknown id by falling back to any design fails 3 cases; accepting a path as a route in fails exactly the case that names it. THE TRIPWIRE THAT FORCED THIS IS RETIRED — the_registry_clauses_are_not_covered_here fired the moment registry.rs appeared, exactly as designed, and is now a pointer (the_registry_clauses_are_covered_now) that fails if this coverage is ever deleted. ⚠️ WHAT THIS DOES NOT COVER, stated so the green is not read wider than it is: no TRANSPORT is wired, so no session can yet select a design at runtime — cap:select-graph-by-id prefers an HTTP path prefix /g/<graph_id>/ and remains in_progress. And WHO MAY LIST WHICH DESIGNS is untouched: graph_ids() returns what the OPERATOR placed under the root, which is right for one owner's neighbourhood and is not a multi-tenant policy (dec:idea-a-session-holds-several-graphs, unanswered).",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-session-with-no-seed-can-find-one",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Five core probes in crates/reflow2-core/tests/a_session_with_no_seed_can_find_one.rs and three surface probes in crates/reflow2-mcp/tests/orientation_needs_nothing_to_start.rs.\n\nTHE CENTRAL PROBE CHECKS A ROUND TRIP, NOT A SHAPE. `the_seed_a_region_hands_back_is_one_the_scoped_reads_accept` takes every row the listing returns, scopes `detect_gaps` to it, and asserts the region it lands in is the region the row measured — size and gap count both. A directory of addresses nobody can walk to is the failure mode a shape assertion would miss entirely.\n\nTHE OTHER FOUR CORE PROBES ARE THE HONESTY PROPERTIES, one per way this reply could overstate: an empty listing that reads as a clean map, a coverage figure that ignores what it never reached, overlapping rows presented as a partition, and a \"nobody is here\" that is really \"nobody told me\".\n\nTHE THREE SURFACE PROBES EXIST BECAUSE OF THIS EPOCH'S RECURRING DEFECT — four times in two days a capability was reachable in the engine and not from a client (Verification.description, SUPERSEDES, create_node's CAS precondition, governed_by's ruling). A tool that takes no arguments is where that family hides, because there is nothing in the signature for a typed test to catch. So one probe does nothing but call it with `{}`.",
+        "kind": "verification",
+        "last_run_at": "2026-08-17T23:55:00Z",
+        "level": "integration",
+        "method": "test",
+        "name": "Eight probes: a listed seed works as a scope, an empty design says which empty, uncovered nodes are named by type, overlap is counted, a claim reaches the chooser, and the surface takes an empty argument object",
         "status": "passing"
       }
     },
@@ -101084,7 +101369,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:310336eb63ada2cfdbbc7d1e520771b252c974a59e5fe2f4269c19a2515b04ce",
+  "prev_content_hash": "sha256:3a76c002c671c7dc9a02418e026f0ee213a9160bb1a559de984f5569957425ed",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
