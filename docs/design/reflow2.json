@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a3d58c9ebda889029aeb25089d3f9b33fa72f9b7b0677027ce91af2103a42f7c",
+  "content_hash": "sha256:13a7b36d25830e16142d28f83ca874bafb224dd3fbd6e9b7946db4f041f6f783",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -101644,6 +101644,17 @@
       }
     },
     {
+      "node_id": "fact:the-black-box-tier-has-two-answers-that-disagree",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "measurement",
+        "statement": "MEASURED 2026-08-18 from the committed export, answering three questions Anthony asked about black-box tiering. All three have answers, and two of them are wrong in a way nobody would notice.\n\n1. DOES EACH NODE KNOW WHICH BOX IT IS IN? Almost none do. 121 of 2526 nodes (4%) carry a CONTAINS parent. Without one: 494 ChangeEvents, 405 Decisions, 225 TemporalFacts, 190 Artifacts, 168 Fragments, 168 Verifications, 156 DesignEpochs and — the one that matters for decomposition — 151 CAPABILITIES. A capability's box is reachable only through ALLOCATED_TO, which is a different spine from CONTAINS, so 'what is in this box?' and 'what is allocated to it?' are two questions with two answers and no computation reconciles them.\n\n2. IS NESTING TRACEABLE TO PARENTS? The spine exists and is walked (containment_closure, unbounded, downward). Components sit at three depths: 2 at depth 0, 12 at depth 1, 42 at depth 2 — Project -> subsystem -> component. But `proj:reflow2 CONTAINS 80 THINGS`, of which only 8 are subsystems; the rest are Requirements, Capabilities, Decisions and even a Release. CONTAINS is doing double duty as 'belongs to this project', so walking the spine from the root does NOT enumerate the decomposition. One node (`cmp:skills`) has TWO parents (`proj:reflow2` and `sys:agent-surface`) — a box in two boxes, unflagged.\n\n3. CAN YOU ASK FOR ALL TIER-1 BOXES QUICKLY? The vocabulary is there and better than expected: `Component.level` is an INDEXED enum with the full ladder — component / subsystem / system / system_of_systems / enterprise — and it is populated: 8 `subsystem`, 48 `component`. There is also a separate indexed `tier` (strategic/operational/tactical), a different axis. So the data supports the query.\n\n⭐ BUT THE TWO WAYS TO ASK DISAGREE, AND THE STRUCTURAL ONE IS WRONG. By declared level, tier 1 is the 8 subsystems. By spine position — Components with no CONTAINS parent — tier 1 is TWO nodes, `cmp:packaging` and `cmp:registry`, and BOTH are level `component`: leaves that were simply never wired to a parent, not top-level boxes. A reader who asks the structural question gets a confident, fast, wrong answer.\n\nWHAT IS MISSING IS A TOOL, NOT A SCHEMA. No served tool filters by `level`; `scan_nodes` returns all 56 Components and the caller filters client-side. Nothing checks that declared level agrees with spine depth, and nothing reports a node contained by two boxes. `req:recursive-black-box-decomposition` (PROPOSED since 2026-08-07, his words, and his note that this was 'one of the primary things I designed it for') is where this belongs.",
+        "subject_id": "req:recursive-black-box-decomposition",
+        "valid_from": "2026-08-18"
+      }
+    },
+    {
       "node_id": "fact:the-build-list-is-suppressed-by-realized-via-component",
       "node_type": "TemporalFact",
       "properties": {
@@ -103976,7 +103987,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:a1796bb2d2a674ed0a4d54dac1f9202359716115c31de4091ae8a8d057e5db59",
+  "prev_content_hash": "sha256:a3d58c9ebda889029aeb25089d3f9b33fa72f9b7b0677027ce91af2103a42f7c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
