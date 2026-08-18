@@ -33,6 +33,43 @@ This file is the third view: *what changed, and when*.
 
 ### Added
 
+- **`vocabulary_coverage` — which of the design vocabulary has this design never used?** A question
+  nothing else in reflow2 asks: the detectors check the *consistency of what exists*, and the
+  absence-checkers there are (`unsatisfied_requirement`, `unallocated_capability`) check absences of
+  **required** structure. Vocabulary a design has never touched was invisible to every computation,
+  in every project.
+
+  **Portable by construction** — the schema is embedded in the binary and the corpus comes from the
+  caller's graph, so the answer needs nothing about any project's file layout.
+
+  **Every decision about its shape came from a two-arm trial run on reflow2 itself**, not from
+  argument:
+
+  | | node types | edge types | properties | flat list |
+  |---|---|---|---|---|
+  | mature (2535 nodes) | 22/29 | 37/61 | 141/169 | 31 items |
+  | day one (post-`genesis`) | 2/29 | 0/61 | 8/18 | **88 items** |
+
+  - **The figures ship** — they passed both arms. *"0 of 61 edge types"* on a new design is a true
+    and useful statement, not noise.
+  - **The list is grouped** by the schema's own eleven domains, never a grouping the code invented.
+    The trial found unused vocabulary clustering into whole subsystems, and the clusters turned out
+    to *be* the domains — so a mature design reads about four findings instead of thirty-one.
+  - **A domain is parkable**: an accepted Decision at `decision:vocab:<domain>` declares it
+    deliberately unused. Needed because `OWNED_BY`'s absence is *already* ruled deliberate, so
+    without this the report would name a settled decision as a hole forever. No new tool —
+    `add_decision` + `set_decision_status`, and the id is stated on every finding.
+  - **The flat list is withheld unless asked for.** It is *longest for the user least able to act on
+    it* — 88 items on day one against 31 on a mature design — so pushing it would have made the
+    feature worst for exactly the people it is for.
+  - **A design under ten nodes is told it has barely started**, rather than shown a wall of red on
+    its first read.
+
+  Five probes, one per decision, and five mutations each killing exactly its own probe.
+
+
+### Added
+
 - **The first `SPECIFIES` edges in the graph's history — 44 of them.** The edge type was declared in
   `schema/build.yaml` for exactly this (*"an OpenAPI / protobuf / JSON-schema / IDL file SPECIFIES
   an Interface (its authoritative contract)"*), carries a `format` property listing `json_schema`,

@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:78f4e7bc7b213ab0fbe38fab2dab28a72bb58ff41aa1bcfcdbc2259b409a6f0c",
+  "content_hash": "sha256:4e00aa6fd8b5b121bebb18d0b67f51bb2b68c65e1805faacd7015da96b43213d",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -854,6 +854,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-design-says-which-vocabulary-it-has-never-used",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:vocabulary"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -3179,6 +3187,12 @@
       "from_id": "chg:a-claim-may-be-a-query-20260808",
       "properties": {},
       "to_id": "epoch:a-claim-may-be-a-query"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-design-says-which-vocabulary-it-has-never-used",
+      "properties": {},
+      "to_id": "epoch:vocabulary-the-tools-cannot-reach"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -10738,6 +10752,60 @@
         "action": "modified"
       },
       "to_id": "dec:a-claim-may-need-a-list-rather-than-a-radius"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-says-which-vocabulary-it-has-never-used",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-says-which-vocabulary-it-has-never-used",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-says-which-vocabulary-it-has-never-used",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-says-which-vocabulary-it-has-never-used",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-says-which-vocabulary-it-has-never-used",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-design-says-which-vocabulary-it-has-never-used"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-design-says-which-vocabulary-it-has-never-used",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:declared-vocabulary-is-reachable-from-the-surface"
     },
     {
       "edge_type": "CHANGED",
@@ -71057,6 +71125,15 @@
       "edge_type": "REALIZES",
       "from_id": "art:schema",
       "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-design-says-which-vocabulary-it-has-never-used"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:schema",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cmp:schema"
@@ -71844,6 +71921,15 @@
       "edge_type": "REALIZES",
       "from_id": "art:vocabulary",
       "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-design-says-which-vocabulary-it-has-never-used"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:vocabulary",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cmp:vocabulary"
@@ -71897,6 +71983,12 @@
       "from_id": "cap:a-check-records-what-it-found-separately-from-what-it-is",
       "properties": {},
       "to_id": "req:a-finding-has-somewhere-to-put-its-evidence"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-design-says-which-vocabulary-it-has-never-used",
+      "properties": {},
+      "to_id": "req:declared-vocabulary-is-reachable-from-the-surface"
     },
     {
       "edge_type": "SATISFIES",
@@ -75375,6 +75467,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:vocabulary-coverage-keeps-the-four-trial-decisions",
+      "properties": {},
+      "to_id": "cap:a-design-says-which-vocabulary-it-has-never-used"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:vocabulary-reach-is-validated-against-known-cases",
       "properties": {},
       "to_id": "cap:the-design-says-what-its-own-tools-cannot-write"
@@ -78278,10 +78376,10 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fff07736686cf6f57b72df0c050c1ab8fe590805891228dea6a08d7d3d3f3e58",
+        "checksum": "sha256:fb7598e079f2dba81017a6229a0b67d07e44677f4f6eb6a8c0372e9c0386eeb2",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/schema.rs",
-        "name": "schema.rs",
+        "name": "crates/reflow2-core/src/schema.rs",
         "status": "realized",
         "volatility": "stable"
       }
@@ -78562,7 +78660,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:60394c086a1a9c03bda68cea899ccdf59e5421e9215912de9a159b5537801235",
+        "checksum": "sha256:cdeeefc7183342069041402a8d0ed1fa2110d7065ef0da5482ea3f293c6a5f97",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -79115,7 +79213,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:de0ae87b71f35d640bafca7b8d9671d519c8eaf7555870ded65d31e831df4d35",
+        "checksum": "sha256:6968ac79340556684e15312ff6a6bb7d5cb004905216c686af46dd5a3afa31c7",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -79349,10 +79447,10 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9952215fb5bfbffaff8f7af0625b2c56e918dff77e3fc3ea692cf02086b54faa",
+        "checksum": "sha256:47f07fc9b7effe9ebf321b360531ea10281864028731bf38acb8da67dfe29220",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/vocabulary.rs",
-        "name": "vocabulary.rs",
+        "name": "crates/reflow2-core/src/vocabulary.rs",
         "status": "realized",
         "volatility": "stable"
       }
@@ -79389,6 +79487,16 @@
         "provenance": "authored",
         "status": "planned",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:a-design-says-which-vocabulary-it-has-never-used",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`vocabulary_coverage` answers a question nothing else in reflow2 asks. The detectors check the CONSISTENCY OF WHAT EXISTS; the absence-checkers it has (unsatisfied_requirement, unallocated_capability) check absences of REQUIRED structure. So vocabulary a design has never touched is invisible to every other computation, in every project, forever.\\n\\n(The FACT records the trial; this is the built thing the trial chose the shape of. `cap:the-design-says-what-its-own-tools-cannot-write` is the repo-side INSTRUMENT that reads reflow2's own files; this is the PRODUCT capability that works on any graph.)\\n\\nPORTABLE BY CONSTRUCTION: the schema is embedded in the binary and the corpus comes from the caller's own graph, so the answer needs nothing about any project's file layout. That was the deciding property \\u2014 the earlier prototype read reflow2's schema directory and toolsnaps and would have generalised to nobody.\\n\\nFOUR DECISIONS, ALL TAKEN FROM A TWO-ARM TRIAL RUN ON REFLOW2 ITSELF rather than from argument:\\n  SHIP THE FIGURES \\u2014 they passed both arms. '0 of 61 edge types' on a day-one design is a true and useful statement, not noise.\\n  GROUP THE LIST \\u2014 by the SCHEMA'S OWN eleven domains, never a grouping this code invented. The trial found unused vocabulary clustering into whole subsystems and the clusters turned out to BE the domains, so a mature design reads about four findings instead of thirty-one.\\n  MAKE IT PARKABLE \\u2014 an ACCEPTED Decision at `decision:vocab:<domain>` declares a domain deliberately unused. Needed because OWNED_BY's absence is already ruled deliberate; without it the report would name a settled decision as a hole forever (`req:a-deliberate-state-is-not-a-defect`). No new tool: add_decision + set_decision_status, and the id is stated on every finding so the remedy rides on the output rather than on a skill nobody loads.\\n  KEEP THE FLAT LIST BEHIND A REQUEST \\u2014 measured through the shipped tool, a day-one design produces 88 items and a mature one 31. The list is LONGEST for the user least able to act on it, so pushing it would have made the feature worst for exactly the people it is for.\\n\\nAND A FIFTH THE TRIAL FORCED: a design under ten nodes gets a `note` saying the figures mean it has BARELY STARTED. Straight out of genesis every figure is near zero, and reporting that as coverage would hand a new user a wall of red on their first read.",
+        "name": "A design reports which of the vocabulary it has never used, grouped by domain, parkable, with the list on request",
+        "provenance": "authored",
+        "status": "verified"
       }
     },
     {
@@ -81545,6 +81653,15 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Snapshot of the decision while it still reads OPEN / NOT YET DECIDED, before Anthony's ruling is written into it"
+      }
+    },
+    {
+      "node_id": "chg:a-design-says-which-vocabulary-it-has-never-used",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "vocabulary_coverage ships in the shape a two-arm trial chose",
+        "subject": "system"
       }
     },
     {
@@ -92121,7 +92238,7 @@
         "epoch_type": "revision",
         "name": "The design finds its own unreachable vocabulary — a field nothing can write stops being something a human has to notice four times",
         "sequence": 357,
-        "status": "planned"
+        "status": "arrived"
       }
     },
     {
@@ -93728,7 +93845,7 @@
         "fragment_type": "implementation",
         "provenance": "authored",
         "status": "ingested",
-        "title": "Registered schema.rs"
+        "title": "Registered crates/reflow2-core/src/schema.rs"
       }
     },
     {
@@ -94428,7 +94545,7 @@
         "fragment_type": "implementation",
         "provenance": "authored",
         "status": "ingested",
-        "title": "Registered vocabulary.rs"
+        "title": "Registered crates/reflow2-core/src/vocabulary.rs"
       }
     },
     {
@@ -104489,6 +104606,20 @@
       }
     },
     {
+      "node_id": "ver:vocabulary-coverage-keeps-the-four-trial-decisions",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/vocabulary_coverage_reports_what_was_never_used.rs.\\n\\nEach probe pins ONE decision rather than testing the feature generally: figures always / list only on request; the share computed so the reader is not left dividing; grouped by the schema's own domains, ordered worst-covered first, with ALL eleven reported so a missing domain cannot read as fully used; a domain parkable ONLY by an ACCEPTED ruling, with the remedy stated on the finding; and the barely-started note firing under ten nodes and standing down above.\\n\\nFive mutations, each killing exactly its own probe: flat list always returned; share divided by total+1; only unused domains reported; a PROPOSED ruling parking a domain; the note never firing.\\n\\nALSO EXERCISED THROUGH THE BUILT BINARY on both trial arms, because a core test cannot see the surface: mature 22/29 + 37/61 + 141/169 with 31 items on request; day-one 2/29 + 0/61 + 8/18 with 88 on request and the note present. Default reply ~2.4 KB either way.",
+        "findings": "1083 core tests pass, clippy clean, both trial arms reproduced through the shipped binary. The domain cross-check confirms all 29 node types and 61 edge types belong to exactly one domain \\u2014 domain_membership errors rather than answering partially if its shallow parse and the real schema loader ever disagree.",
+        "kind": "verification",
+        "last_run_at": "2026-08-18T06:30:00Z",
+        "level": "integration",
+        "method": "test",
+        "name": "Five probes, one per decision the two-arm trial made, so a later session cannot quietly undo one without a red test",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:vocabulary-reach-is-validated-against-known-cases",
       "node_type": "Verification",
       "properties": {
@@ -104515,7 +104646,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e033c0ef32c8e695c9497cf5f777585e2c8bcdcbb3fa7385a2032e69b96be842",
+  "prev_content_hash": "sha256:78f4e7bc7b213ab0fbe38fab2dab28a72bb58ff41aa1bcfcdbc2259b409a6f0c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

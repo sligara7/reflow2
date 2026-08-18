@@ -2035,6 +2035,21 @@ pub struct RegionsReq {
     pub depth: Option<usize>,
 }
 
+#[derive(Debug, Default, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct VocabularyCoverageReq {
+    /// Also return the FLAT LIST of every unused node type and edge type.
+    ///
+    /// Off by default, and the default is measured rather than chosen: a
+    /// design straight out of `genesis` produces 97 individual items and a
+    /// mature one 59, so the list is LONGEST for the user least able to act on
+    /// it. The figures and the per-domain rollup survived both arms of that
+    /// trial; the flat list did not, so it is available on request and never
+    /// pushed.
+    #[serde(default)]
+    pub include_unused: Option<bool>,
+}
+
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct FindToolsReq {
