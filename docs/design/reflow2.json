@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b681284a33a7e3bde9d795c441651afdb14567c94fd0fcb2ed7011dbed1c243f",
+  "content_hash": "sha256:2f538fba8ded395eb7cff88e59539e8940e2dde31a6c11e8e1e9dc93596756f3",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -5278,6 +5278,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:search-first-guards-writes-not-assertions",
+      "properties": {},
+      "to_id": "epoch:the-owner-rules-on-scope-and-reachability"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:search-nl-defect",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
@@ -5305,6 +5311,12 @@
       "from_id": "chg:seedless-orientation-ships",
       "properties": {},
       "to_id": "epoch:a-session-with-no-seed-can-find-one"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:session-capture-2026-08-17",
+      "properties": {},
+      "to_id": "epoch:the-owner-rules-on-scope-and-reachability"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -6925,6 +6937,12 @@
       "from_id": "snap:epoch:the-key-is-renamed-and-the-sweep-says-what-it-swept:dec:a-misnaming-is-fixed-in-the-message-not-the-key",
       "properties": {},
       "to_id": "epoch:the-key-is-renamed-and-the-sweep-says-what-it-swept"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-owner-rules-on-scope-and-reachability:dec:idea-search-first-fires-without-being-remembered",
+      "properties": {},
+      "to_id": "epoch:the-owner-rules-on-scope-and-reachability"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -19252,6 +19270,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:search-first-guards-writes-not-assertions",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-search-first-fires-without-being-remembered"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:search-nl-defect",
       "properties": {
         "accepted_baseline": false,
@@ -19465,6 +19492,24 @@
         "action": "modified"
       },
       "to_id": "req:a-session-with-no-seed-can-still-orient"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:session-capture-2026-08-17",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "fact:a-third-of-declared-properties-name-nothing-any-tool-accepts"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:session-capture-2026-08-17",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "fact:three-searches-that-did-not-happen-and-what-each-one-cost"
     },
     {
       "edge_type": "CHANGED",
@@ -30841,6 +30886,12 @@
       "from_id": "dec:idea-intent-crosses-designs",
       "properties": {},
       "to_id": "snap:epoch:many-projects-one-mind-brainstorm:dec:idea-intent-crosses-designs"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-search-first-fires-without-being-remembered",
+      "properties": {},
+      "to_id": "snap:epoch:the-owner-rules-on-scope-and-reachability:dec:idea-search-first-fires-without-being-remembered"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -84446,6 +84497,14 @@
       }
     },
     {
+      "node_id": "chg:search-first-guards-writes-not-assertions",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "The search-first idea gains the side of the ledger it says is missing: three recorded instances of the search that did NOT happen"
+      }
+    },
+    {
       "node_id": "chg:search-nl-defect",
       "node_type": "ChangeEvent",
       "properties": {
@@ -84484,6 +84543,15 @@
         "change_type": "new_feature",
         "name": "design_regions ships: the parts a design names, sized and costed, for a session that arrived with nothing",
         "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:session-capture-2026-08-17",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Session capture: the reachability sizing that set a build order, and the three searches that did not happen",
+        "subject": "record"
       }
     },
     {
@@ -98881,6 +98949,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:the-owner-rules-on-scope-and-reachability:dec:idea-search-first-fires-without-being-remembered",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Capability\",\"other_id\":\"cap:search-first-at-the-tool\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-11\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Requirement\",\"other_id\":\"req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue\",\"properties\":{}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL, per Anthony's own standing rule that a genuinely new thing becomes a proposal one day accepted rather than a requirement written on his behalf. Nothing here is intent.\\n\\nHIS WORDS, 2026-08-11: \\\"we need to make the search the graph first a requirement that is automatic. something like anytime a user has an idea, requirement, feedback, etc - first go search the graph to see what's already there (this should prevent near duplicate nodes in the graph appearing).\\\"\\n\\n⭐⭐ THE RULE ALREADY EXISTS, IN FIVE SERVED SKILLS. Measured 2026-08-11: `capture-intent`, `revise-design`, `brainstorm`, `kpp-proposal` and `retire-from-design` all instruct it, and capture-intent's wording is almost exactly his: \\\"Search before you add. For each candidate, `search_design` with its key words first — the design may already say this. A hit that covers the same need means you update or link the existing node, NOT create a near-duplicate that HEAL will later flag and someone must merge. No hits is also information.\\\"\\n\\nSo the ask is not for the rule. IT IS FOR THE TRIGGER. And the trigger is the thing this project has now confirmed three times is missing: `req:skill-use-survives-a-long-session` (ACCEPTED) says skill use \\\"must be triggered by the SITUATION, not remembered — and THE USER MUST NEVER BE THE TRIGGER\\\", measured on this repo 2026-07-31, and confirmed from the field on 2026-08-11 by the second user, who named exactly the two skills he types and neither of the two that would have fired on situations he was already in.\\n\\n⭐⭐ AND THE MECHANISM IS ALREADY A REQUIREMENT, PROPOSED AND UNBUILT: `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue` — \\\"a discipline that applies mid-task is delivered at the TOOL that triggers it, not from a catalogue read once at handshake.\\\" That is precisely what he is asking for, one layer more general. This idea may not need a requirement of its own at all; it may be the first concrete instance of one that already exists and has never been accepted.\\n\\n📌 THIS NODE IS ITSELF THE NINTH COLLISION recorded in fact:the-owner-uses-reflow2-as-a-funnel-for-random-order-input, and it was found BY DOING THE THING HE ASKED FOR: searching before adding. Had the search not run, this would have become a near-duplicate of a proposed requirement and a fifth restatement of an instruction already in five skills — which is the exact failure he is trying to prevent, reproduced in the act of trying to prevent it.\\n\\nWHAT EXISTS ON THE DETECTION SIDE, so this is not built twice. `possible_duplicate` fires on shared allocation sets with Jaccard ≥ 0.8 and asks rather than merges (`dec:ask-not-repair`); HEAL merges only on a human-asserted DUPLICATES edge. Both are AFTER-THE-FACT and STRUCTURAL — they catch two nodes that ended up allocated the same way. Neither can see \\\"the same idea in different words, newly written, allocated to nothing yet\\\", which is the case he is describing. Prevention and detection are different problems here.\\n\\nIDEAS, unranked:\\n(a) Put it on the TOOL, not the skill: `add_requirement` / `add_capability` / `add_decision` return near-matches alongside the write, or refuse-and-name when a match is close enough. Reaches every session including ones that load no skill. Cost — a write tool that sometimes refuses is a new failure mode on the hottest path, and BM25 near-matches are not reliable enough to refuse on (`dec:` on BM25 scores not being comparable across queries).\\n(b) SEARCH ON THE WAY IN, NEVER REFUSE: the write succeeds and the response carries \\\"3 existing nodes look close: ...\\\". No new failure mode, no judgement, and it puts the finding where the agent is already looking. Smallest honest version.\\n(c) A pre-write hook or a served instruction at handshake. Cheapest to state and it is what already exists — five skills say it — so this is the option that has already been tried and is the reason he is asking.\\n(d) Nothing new: ACCEPT `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue` and build it, since this is an instance of it rather than a separate need.\\n\\n⚠️ THE TRAP: a near-match list that is usually wrong trains the agent to ignore it, which is worse than silence — the same failure `unexpected_coupling` was retired for, and the one `v0.2.0-what-we-dont-know.md` names as the sharpest thing to watch (\\\"a gap list you skim is worse than no gap list\\\"). Whatever surfaces matches must be precise enough to be read every time, and BM25 alone has already been shown here to score the same topic 4.48 and 35.75 across two queries.\\n\\n⚠️ SECOND TRAP, AND IT CUTS AGAINST THE WHOLE IDEA: a near-duplicate is sometimes CORRECT. `req:accreted-intent-becomes-a-design` exists precisely because a body of intent that contradicts itself is still a design. Suppressing a second statement of the same idea can erase that the user said it twice, in different words, at different times — which is signal about what they keep coming back to, and is what `dec:idea-what-gets-searched-repeatedly-is-becoming-important` asks about from the other direction.\\n\\n═══════════════════════════════════════════════════════════════════\\nSHARPENED 2026-08-12 — THE WRITE HALF SHIPPED; THE READ HALF IS WHERE IT EARNED ITS KEEP\\n═══════════════════════════════════════════════════════════════════\\n\\n⭐ THIS SECTION WAS ADDED BY THE GUARD ITSELF. An agent tried to create a NEW node about exactly this and `add_decision` REFUSED it, naming this node and both routes on. The write half works, in the field, against its own author. That is the strongest evidence this node will ever get, and it arrived by accident.\\n\\nANTHONY NAMED THE BEHAVIOUR AS SOMETHING HE VALUES, 2026-08-12: \\\"every time I ask a question or propose an idea, you do a search/research what has already happened. then we either sharpen the previous or add new content or all sorts of things that continually improves the design - i think this is awesome!\\\"\\n\\n⭐ MEASURED IN ONE SESSION — six saves, each with what it prevented:\\n  - \\\"a requirement that anything developed has something that uses it\\\" -> already captured 2026-08-09 IN HIS OWN WORDS. A duplicate node.\\n  - \\\"accept the 26 delivered requirements\\\" -> ELEVEN were satisfied only by `planned`/`in_progress` capabilities. Asserting delivery that had not happened, eleven times.\\n  - \\\"should we have a purge skill\\\" -> `dec:proposed-requirements-pruned` had already settled DROPPED-NOT-DELETED. Re-deciding a settled question destructively.\\n  - \\\"a tool that does the import step\\\" -> `import_graph` already took a `path`. Building a tool that existed.\\n  - \\\"treat the union of 2+ graphs as one graph\\\" -> `dec:idea-a-session-holds-several-graphs`, his own federation model from six days earlier. Re-deriving his own thinking.\\n  - \\\"treat one side as immutable\\\" -> `mirror_surface`, BUILT and stamping `mirror_of` / `mirror_content_hash` / `mirrored_at`. Specifying something already shipped.\\n  Plus a doc review that caught a section marked OUTSTANDING three days after the thing shipped.\\n\\n🛑 AND THE ASYMMETRY THAT MATTERS: **ALL SIX HAPPENED ON THE READ PATH, WHERE NOTHING ENFORCES ANYTHING.** The refusal fires on add_requirement / add_capability / add_component / add_decision / add_constraint. It cannot fire when a user asks a question and an agent answers in prose. Those six happened because the agent chose to look.\\n\\nThat is `req:skill-use-survives-a-long-session`'s failure with the trigger moved one step — not the user reminding the agent, but the agent remembering — and it degrades silently in a long session precisely when the graph is large enough to make searching most valuable.\\n\\n⭐⭐ THE OBSERVATION THAT CHANGES THE VALUE CALCULATION: the write guard catches a near-duplicate NODE. It cannot catch a near-duplicate DECISION TO BUILD. **Four of the six saves prevented WORK, not nodes** — and work is the more expensive thing. So the unguarded half is plausibly worth more than the guarded half, which inverts the obvious reading that the write path is where the value is.\\n\\n⚠️ SURVIVORSHIP BIAS, NAMED SO SIX IS NOT READ AS A RATE. Only the times it worked are visible; NOTHING RECORDS A SEARCH THAT DID NOT HAPPEN. `dec:loop-status-cannot-say-it-never-looked` is the same shape already on the record — \\\"clean\\\" and \\\"never scanned\\\" are one answer.\\n\\nOPTIONS FOR THE READ HALF, none taken:\\n  A — A READ-SIDE HINT on orientation reads. Rides the existing `loop_hint` carrier. EXPENSIVE: it needs to know what the user asked, which the tool layer never sees — so the agent must volunteer the query, which is the same trigger problem one layer down.\\n  B — MAKE THE ABSENCE COMPUTABLE. Do not fire at the right moment; record whether a search preceded a capture and report captures with none — `dec:loop-status-state-not-history` applied here. EXPENSIVE, and the asymmetry is already recorded above: a node created without a prior search is not distinguishable from one created after a search that found nothing.\\n  C — INSTRUMENT ONLY, so the habit's decay is visible. Cheapest; answers nothing.\\n  D — DO NOTHING; the write path guards where duplicates actually enter. Weakened by the four-of-six finding above.\",\"name\":\"OPEN — how does \\\"search the graph before you add\\\" become AUTOMATIC, when it is already written into five skills and still depends on somebody loading one?\",\"rationale\":\"The rule Anthony asked for is already written into five served skills, and the delivery mechanism he described is already a proposed requirement. What is missing is not the instruction but the trigger — the same gap confirmed three times this week. Recording it as an instance rather than a new need, and noting that the search which found this is the very discipline in question.\\n\\nSHARPENED 2026-08-12, and by the guard itself: an agent tried to open a new node on this and add_decision refused it, naming this one. Six measured saves in a single session, all on the READ path where nothing enforces the discipline — and four of them prevented WORK rather than nodes, which is the more expensive thing and inverts the assumption that the write path is where the value lies.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-search-first-fires-without-being-remembered",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:the-owner-rules-on-scope-and-reachability:dec:the-default-scope-depth-should-be-two",
       "node_type": "Snapshot",
       "properties": {
@@ -99130,6 +99208,17 @@
         "subject_id": "cap:what-next",
         "valid_from": "2026-08-14",
         "value": "{\"reported\":\"2026-08-14, Alex's Grok 4.6 session, Opportunities\",\"corroborates\":\"dec:idea-remaining-work-has-no-answer-in-the-graph - which lacked evidence from outside this project\",\"their_workaround\":\"an accepted Decision's PROSE as the MVP plan, plus Capability.status as the checklist\",\"identical_to\":\"the workaround this project reached for, independently\",\"the_finding\":\"when the graph cannot answer a daily question, people answer it from prose and the prose silently becomes load-bearing\",\"what_next_does_instead\":\"ranks open Decisions - what needs a HUMAN, a different question from what is left to BUILD\",\"root_already_recorded\":\"artifact layer is at COMPONENT granularity; see fact:the-build-list-is-suppressed-by-realized-via-component\"}"
+      }
+    },
+    {
+      "node_id": "fact:a-third-of-declared-properties-name-nothing-any-tool-accepts",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "measurement",
+        "statement": "ROUGH SIZING, and it is the number that set the build order for the requirement it hangs off.\n\nMEASURED 2026-08-17 by comparing every property declared across `schema/*.yaml` against every parameter name any served tool accepts, read from the committed toolsnaps: 215 declared properties across 29 node types, 180 distinct tool parameter names, and 70 OF THE 215 (32%) HAVE A NAME NO SERVED TOOL ACCEPTS. Worst by count: Fragment 9/11, EnvironmentRule 7/9, Capability 6/10, Project 5/11, TemporalFact 4/8, DriftEvent 4/6, Question 4/8.\n\nA SECOND READING FROM THE SAME SWEEP, sharper because it is exact rather than heuristic: `embedding_field` is declared 26 TIMES across 11 schema files, and NO CODE IN REFLOW2 TOUCHES EMBEDDINGS AT ALL. `dynograph-vector` is a direct dependency of reflow2-core and contributes exactly two functions, both statistics (`linear_regression_slope`, `mean`, in dimensions.rs); the entire HNSW index is unused and `search_design` is BM25 through `dynograph-text`. That is the reachability pattern one level up: not a field no tool can write, but a whole declared CAPABILITY nothing computes. Bears directly on `dec:idea-embeddings-adoption`, which is open.\n\n⚠️ THE 32% IS AN OVERCOUNT AND MUST NOT BE QUOTED AS A DEFECT COUNT. It matches on NAME only, so it misses properties a tool sets under a different parameter name and properties written indirectly by tools like `record_change`, `reconcile_artifacts` and `link_artifact`. A live example from this same session: `TemporalFact.valid_from` appears in the unreachable list, and it IS writable — through `create_node`'s generic props, which the requirement explicitly says must NOT count as reachability.\n\nWHY IT WAS RECORDED ANYWAY, and what it changed: the requirement as first written asked for a detector. This number says a detector run against a heuristic like this one would report dozens of findings on its first pass, most of them noise, which is how a new instrument loses its reader in one release. So the accepted build order became: draw the SPECIFIES edges, MEASURE PROPERLY AND SHOW ANTHONY, then build the detector. The rough number is the argument for not skipping the middle step, not a finding in its own right.",
+        "subject_id": "req:declared-vocabulary-is-reachable-from-the-surface",
+        "valid_from": "2026-08-17"
       }
     },
     {
@@ -101698,6 +101787,17 @@
       }
     },
     {
+      "node_id": "fact:three-searches-that-did-not-happen-and-what-each-one-cost",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "measurement",
+        "statement": "THE OTHER SIDE OF A LEDGER THAT NODE SAYS IS MISSING. `dec:idea-search-first-fires-without-being-remembered` records SIX measured saves from one session on 2026-08-12, and names its own limit in the same breath: '⚠️ SURVIVORSHIP BIAS, NAMED SO SIX IS NOT READ AS A RATE. Only the times it worked are visible; NOTHING RECORDS A SEARCH THAT DID NOT HAPPEN.' This records three that did not happen, in one session, 2026-08-17. All three were failures on the READ path, which is the unguarded one that node identifies.\n\n1. `loop_status` reported '1 answered question never reached the design'. RELAYED TO ANTHONY AS FACT WITHOUT LOOKING. The answer had been in the graph since 2026-08-11 as `dec:the-authority-check-guards-forward-not-backward`, accepted and approver-signed. COST: a false statement to the owner about his own design, plus a wasted line of enquiry. (Separately a real defect in loop_status: `fact:defect-loop-status-asserts-an-answer-never-reached-the-design-from-a-fact-that-cannot-say-so`.)\n\n2. TOLD ANTHONY dynograph-game had 'no obvious fit today, and forcing one would be over-engineering'. `dec:idea-interop-as-a-game` had existed since the 2026-08-01 review, calling itself 'the most interesting idea in the batch', with a fit to HIS OWN stated multi-organisation context and `nash_is_pareto_suboptimal` named as the interoperability tragedy. COST: an idea he had already had, argued against by an agent that had not read it.\n\n3. DESCRIBED the SE-on-reflow2 work as 'intent, not a schedule' and declined to create the increment on that basis. `dec:idea-should-reflow2s-own-design-be-re-derived-through-a-principled-se-process` was ACCEPTED on his word 2026-08-16, with sequencing part of the ruling. COST: the declining was right for a different reason than the one given, and the reason given misdescribed his own settled decision back to him.\n\n⭐ WHAT THE THREE HAVE IN COMMON, and it sharpens that node's option list rather than restating it: none involved a tool call at all. Each was an ASSERTION IN PROSE about what the graph does or does not hold. The write guard cannot fire because nothing was being written; option (A)'s difficulty ('it needs to know what the user asked, which the tool layer never sees') is exactly the shape of all three.\n\n⭐⭐ AND THE SHARPER READING: the six saves were an agent CHOOSING to look and being rewarded. These three were an agent not looking and being WRONG IN FRONT OF THE OWNER. Those are different costs. A missed save is work redone; a missed check is the design brain telling its owner something false about his own design, which is the failure `epoch:instruments-stop-overstating` spent five requirements on — arriving here through the agent rather than through a tool.\n\n⚠️ STILL NOT A RATE. Three failures are visible because they were caught, two of them by later searches in the same session. Nothing counts the ones never caught, and this fact inherits that limit whole.",
+        "subject_id": "dec:idea-search-first-fires-without-being-remembered",
+        "valid_from": "2026-08-17"
+      }
+    },
+    {
       "node_id": "fact:todays-gate-lessons-have-a-served-home-and-it-is-empty",
       "node_type": "TemporalFact",
       "properties": {
@@ -103718,7 +103818,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:85578aad6bfd49de2074b6ce3007000d4e044a776b41edb0c0d1d43c466961a7",
+  "prev_content_hash": "sha256:b681284a33a7e3bde9d795c441651afdb14567c94fd0fcb2ed7011dbed1c243f",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
