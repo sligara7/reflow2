@@ -154,12 +154,18 @@ loads it and it takes precedence over the served one of the same name.
      without a role the graph cannot tell them from forward ones. `flow_report` reads it back —
      its cycles are the process's design, not defects, and anything it confesses (an unmatched
      entry point, unordered steps, unroled transitions) is a gap in the model to fix.
-   - When the user states a **numeric limit** — a mass budget, an end-to-end latency, a cost
-     cap — record it as a Constraint: `add_constraint` with `quantity` (unit-bearing:
-     `mass_kg`, `latency_ms`), `limit` and `direction`, then attach each spender with
-     `constrains` (+ its `contribution` and `basis`). `budget_report` answers whether it fits —
-     honestly: an unstated contribution makes the verdict `incomplete`, never a quietly
-     partial sum.
+   - When the user states a **limit or a rule the design must respect**, record it as a
+     Constraint. **It need not be numeric** — only `name` and `statement` are required. A
+     prohibition ("no PII leaves the device", "no ex post facto law") and a closed set of
+     permitted values ("status is one of draft, submitted, paid") are Constraints just as much
+     as a budget is. *Reading this type as budgets-only is a measured failure, not a
+     hypothetical: one design left eleven constitutional prohibitions as Requirements that will
+     report unsatisfied forever.*
+   - When that limit **is** a **numeric budget** — a mass budget, an end-to-end latency, a cost
+     cap — add `quantity` (unit-bearing: `mass_kg`, `latency_ms`), `limit` and `direction`, then
+     attach each spender with `constrains` (+ its `contribution` and `basis`). `budget_report`
+     answers whether it fits — honestly: an unstated contribution makes the verdict
+     `incomplete`, never a quietly partial sum.
 2. **DETECT gaps and ask.** Run `detect_gaps`. For each gap, call `gap_to_prompt` to turn it
    into a plain question (see the handshake below), ask the **user**, then write their answer
    back as a Requirement or a node property. Do this **before** building. If the user judges a

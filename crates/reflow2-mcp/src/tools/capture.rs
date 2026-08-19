@@ -1015,8 +1015,13 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Create a Constraint — a limit the design must respect, vs a Requirement \
-                       which is a goal to achieve. For a numeric budget (BL-11) set `quantity` \
+        description = "Create a Constraint — a limit or rule the design must respect, vs a \
+                       Requirement which is a goal to achieve. IT NEED NOT BE NUMERIC: only \
+                       `name` and `statement` are required, so a prohibition (\"no PII leaves \
+                       the device\") or a closed set of permitted values (\"status is one of \
+                       draft/submitted/paid\") belongs here too. Reading this type as \
+                       budgets-only once cost a design 11 prohibitions left as Requirements \
+                       that report unsatisfied forever. For a numeric budget (BL-11) set `quantity` \
                        (unit-bearing name like mass_kg / latency_ms / cost_usd), `limit`, and \
                        `direction` (maximum = stay at or under, the default). Then attach the \
                        spenders with `constrains` and read the rollup with `budget_report`. \

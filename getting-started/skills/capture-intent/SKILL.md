@@ -47,10 +47,23 @@ silently.)*
 | "the X part", "the bit that does the…" | **Component** → `add_component` |
 | "where X meets Y", "what we hand over", "the format between us" | **Interface** → `add_interface`, plus `provides` / `consumes` on BOTH sides |
 | "first this, then that" — an ordered process | **Flow** → `add_flow`, then `part_of_flow` per step |
-| a number with a unit — "under 200ms", "no more than 40kg", "£3k" | **Constraint** → `add_constraint`, then `constrains` each spender |
+| "it may only be A, B or C" — a closed set of permitted values, an enum, a status list | **Constraint** → `add_constraint` (`statement` carries the value set), then `constrains` what it binds |
+| "we must never…", "it is not allowed to…" — a prohibition with no number in it | **Constraint** → `add_constraint`. **Not a Requirement.** Only `name` and `statement` are required |
+| a number with a unit — "under 200ms", "no more than 40kg", "£3k" | **Constraint** → `add_constraint` with `quantity`/`limit`/`direction`, then `constrains` each spender |
+| "here is our schema / data model / API contract" — a JSON-schema, OpenAPI, protobuf, GraphQL or IDL file | **Artifact** → `add_artifact`, then a `SPECIFIES` edge via `create_edge` to the Interface, Capability **or Component** it defines (set `format`: `json_schema`, `openapi`, `protobuf`…). The enums, field types and value sets live IN the file — you read it, the graph records where it is. ⚠️ `SPECIFIES` has **no typed tool**, so `create_edge` is the only way to draw it today |
 | "we always…", "we never…" — how the team works, not what the thing does | **DesignRule** — stop and use **governance-proposal**, which asks whether breaking it should fail a build |
 | "here's the drawing / the spec / the doc" | **Artifact** → `add_artifact`, then `documents` to what you read out of it |
 | "this is how we do X here" — operational know-how attached to a part | ⚠️ **Nothing fits cleanly.** Say so rather than forcing it into a requirement's prose. Recorded as an open gap in reflow2's own design, not a row to guess at |
+
+**Two of those rows exist because the table was once narrower than the schema, and that is worse
+than being incomplete.** `Constraint` requires only `name` and `statement` — every other field
+defaults — but three separate surfaces described it as a numeric budget, and a careful reader
+concluded the type was unusable and left eleven constitutional prohibitions as Requirements that
+report unsatisfied forever. It never produced an error; it produced a confident wrong conclusion.
+**And a data model is not homeless either**: enums, field types and value sets live in a schema
+file, so register the file and draw a `SPECIFIES` edge at what it defines — you navigate the content,
+the graph records where it is. **Never hand a modelling question back to the user because no row
+matched.** Say what the vocabulary does and does not reach, and if nothing fits, say that instead.
 
 The last row is the important one. **A routing table that pretends to be complete teaches you to
 mis-file things**; this one names where it runs out, and that boundary is where you tell the user
