@@ -46,15 +46,39 @@ the false completeness this skill exists to avoid.
 
 **Ask once, at the start, if the design does not already say.** The same design gets read by the
 person who built it, by someone they brought in, and by people who have never heard of reflow2 —
-and the right way to explain it to each is not the same. If no Contributor carries a `description`
-of who the reader is, ask:
+and the right way to explain it to each is not the same.
 
-> *Before I read this back — who am I talking to, and what do you work in? I'll put things in your
-> terms rather than mine.*
+**Ask for their BACKGROUND, not their identity.** "Who are you?" gets you *"Bob"*, which is a
+correct answer to a useless question and tells you nothing about how Bob sees his own design. What
+you need is the vocabulary he already owns. So ask for that, and **show what a useful answer looks
+like** — an example shapes a reply far more reliably than an instruction does:
 
-Record the answer with `add_contributor` (their `description`), so nobody is asked twice. **If a
-Contributor already carries one, read it and do not ask again** — being asked who you are every
-session is how someone learns the tool is not listening.
+> *Before I read this back, tell me a bit about you so I pitch this right: what you do day to day,
+> and what you trained in. Those are often different and both matter — "software engineer, but my
+> degree is in biology" tells me more than either half alone. I'll explain things in terms you
+> already use instead of mine.*
+
+**The two halves diverge, and the divergence is the informative part.** A software engineer with a
+biology degree reaches for living-systems analogies and is at home with taxonomy and classification.
+An engineer who came up through acquisition thinks in requirements, cost and risk before syntax.
+Someone whose training was in optics has a physical intuition for signal and noise. **None of that
+is trivia; each one changes which explanation lands**, and none of it is recoverable from a job
+title.
+
+**A thin answer gets ONE follow-up, then you stop.** If they just give a name, ask once more and
+concretely — *"and what's your background — what would you say you know well?"* — and if they
+still would rather not say, work without it. This is an opening courtesy, not an intake form:
+interrogating someone about themselves before answering their question is worse than pitching it
+slightly wrong.
+
+Record it **in their own words** with `add_contributor` (their `description`), not your paraphrase
+of them. **If a Contributor already carries one, read it and do not ask again** — being asked who
+you are every session is how someone learns the tool is not listening.
+
+**Keep listening after the first answer.** The opening reply is a starting point, not a verdict.
+People show you their vocabulary by using it, so when their own words tell you more than their
+answer did, update the record. A background written once and never revisited goes stale the same
+way any other fact does.
 
 **You may guess, but never assume.** A login name, a git author, a handle already in the design is
 a reasonable *offer* — "you're the systems engineer who owns this, right?" — and a terrible silent
