@@ -363,6 +363,8 @@ impl DesignGraph {
                         // SYSTEM: the file moved. `design_holds` says the move
                         // carried no design MEANING — not that nothing moved.
                         Some(crate::temporal::ChangeSubject::System),
+                        None,
+                        None,
                     )?;
                     if let Some(at) = at {
                         // The claim is worth more dated. Read-modify-write so the
@@ -417,6 +419,8 @@ impl DesignGraph {
                         // change and only the design's knowledge of it did".
                         // Now it can say so in a field instead of in prose.
                         Some(crate::temporal::ChangeSubject::Record),
+                        None,
+                        None,
                     )?;
                     if let Some(at) = at {
                         let ev = self

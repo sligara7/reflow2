@@ -2513,6 +2513,21 @@ pub struct AddChangeEventReq {
     /// either.
     #[serde(default)]
     pub subject: Option<String>,
+    /// WHAT CHANGED, in a sentence or two — indexed for full text and used as
+    /// the embedding field, so this is what `search_design` finds the event by.
+    /// Keep `name` short and put the prose here.
+    #[serde(default)]
+    pub summary: Option<String>,
+    /// WHY the change was made: the reasoning, the lesson, what guards against
+    /// it happening again. The field the skills tell you to write.
+    ///
+    /// THERE IS NO `description` FIELD ON A ChangeEvent, and reaching for one
+    /// is the commonest mistake here — reported independently by two projects
+    /// on 2026-08-19, both of which fell back to a second `create_node` call
+    /// that hung `description` on the event as an undeclared property. Use
+    /// `summary` for what changed and `rationale` for why.
+    #[serde(default)]
+    pub rationale: Option<String>,
     /// What the change touched: a CHANGED edge is drawn from the event to each
     /// entry. Every entry must name an existing node — the whole call is
     /// refused before anything is written if one does not.

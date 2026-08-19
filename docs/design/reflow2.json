@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:15f65507f1e02383599ae61fa8d880db85d51962a54a538def732257e5e259db",
+  "content_hash": "sha256:265b96eaf5cc71407485ad11fed9ec7915e641385c3db8dfc05aa54e9aed4242",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -9192,6 +9192,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-what-is-reflow2s-part-in-an-automated-translation",
+      "properties": {
+        "acted_at": "2026-08-19",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-what-to-do-about-two-designs-answering-to-one-id",
       "properties": {
         "acted_at": "2026-08-13",
@@ -11865,6 +11874,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-02f735709d987075",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-03a23acf45b3fec0",
       "properties": {
         "accepted_baseline": true,
@@ -11898,6 +11916,15 @@
         "action": "modified"
       },
       "to_id": "art:enforced-rule-detector-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-05d3ffb1055f53a2",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:artifact"
     },
     {
       "edge_type": "CHANGED",
@@ -11979,6 +12006,15 @@
         "action": "modified"
       },
       "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-1cc581fcc536b948",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
     },
     {
       "edge_type": "CHANGED",
@@ -12369,6 +12405,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-68d61743ee449f31",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:changelog-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-6b775d9494833102",
       "properties": {
         "accepted_baseline": true,
@@ -12465,6 +12510,15 @@
         "action": "modified"
       },
       "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-7b156be2cc1f45cc",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
     },
     {
       "edge_type": "CHANGED",
@@ -12753,6 +12807,15 @@
         "action": "modified"
       },
       "to_id": "art:confirmation-vocabulary-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-afe37467a8fd00fb",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
     },
     {
       "edge_type": "CHANGED",
@@ -13071,6 +13134,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-e5fb205599c26447",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-e688cb8f664f5e7f",
       "properties": {
         "accepted_baseline": true,
@@ -13176,6 +13248,15 @@
         "action": "modified"
       },
       "to_id": "req:what-next"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-f1e7e0f7b6d69373",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:self-host-documents-guard"
     },
     {
       "edge_type": "CHANGED",
@@ -81815,7 +81896,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9c293b7111c7b029d49f9debb054d2f2660c43e70f2a6786fcd11d81ebe672bc",
+        "checksum": "sha256:ccdb4802d93e190fd79fc4d72cbdd89022c0470805f3150ecf2ba9a131169244",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/artifact.rs",
         "name": "artifact.rs",
@@ -81932,7 +82013,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:73b31ffd9cc27cbb7315a8023f47f3992b85e925b65605bb5f610aad3a088772",
+        "checksum": "sha256:b19ba3353fcca3ca70c9a1b9326e500d7d411a4ee6aa9a25962102acef2f988f",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/changelog.rs",
         "name": "tests/changelog.rs",
@@ -82598,7 +82679,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2c078196ea233296ffcf5a75c16767589a535b2e7bc24ab6b22f7ac578a90b81",
+        "checksum": "sha256:1277503b8eb3f733e720adc091fdc658c2b3c63bb4fb5e814b95bbfeed461c3f",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
@@ -83408,7 +83489,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4d824c873120e938",
+        "checksum": "sha256:a8ea60ec60130ff3e563724bf43a50491849b18ece1d24fd4dfe6b1fe09f06c4",
         "granularity": "atomic",
         "location": "tools/self_host_uses_documents.py",
         "name": "self_host_uses_documents.py",
@@ -83434,7 +83515,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fd65be03a690e1819ea995565906e050db5e055badad33665ee808a001987e26",
+        "checksum": "sha256:a6b8f47cd7d480e5e0d913ca6e0cf8b14bfcd17091da68be1f8e78bdeb53ca19",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -83536,7 +83617,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ae92f6894ad0c1be076a3243da39ff336e2654554038b512211a654516f41e9b",
+        "checksum": "sha256:e292efffe10503350edc63c447e430a3d42d5170fd61db2de4458c07b6545424",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/skills.rs",
         "name": "skills.rs",
@@ -83666,7 +83747,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0ab1bfbab67cd83114ee788d9fd2ac849756c14321573f694f97cd87dfd270d6",
+        "checksum": "sha256:4805d2e4f59a41fe994f98ec2f47ef1cea7fdbf4377748e15be75ca46bc990ec",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "crates/reflow2-core/src/temporal.rs",
@@ -84039,7 +84120,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6934d8e9197c727e76f9dda848ac57c48f0ec015109a4ab8f0eb76b9ef9eb7f2",
+        "checksum": "sha256:977a312998facd8cab770b565e9a838af5de167a3f02c6bbbc354c5a307ef4b6",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -86721,6 +86802,16 @@
       }
     },
     {
+      "node_id": "chg:accept-02f735709d987075",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-19",
+        "name": "add_change_event now takes summary and rationale. THE DESIGN WAS RIGHT AND THE CODE WAS WRONG, which is defect_fix's own definition: ChangeEvent has declared summary (indexed, embedding field) and rationale since the schema was written, and the constructor took neither — so the only way to record why a change happened was a second write. Two projects reported the same workaround on 2026-08-19.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-03a23acf45b3fec0",
       "node_type": "ChangeEvent",
       "properties": {
@@ -86754,6 +86845,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-17",
         "name": "Call sites updated for the new parameters; assertions unchanged.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-05d3ffb1055f53a2",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-19",
+        "name": "Call-site only: two add_change_event calls gained `None, None` for the new optional text parameters. No behaviour change of any kind — the two baseline-drift events it records are byte-identical to before.",
         "subject": "system"
       }
     },
@@ -86835,6 +86936,16 @@
         "change_type": "refactor",
         "detected_at": "2026-07-21",
         "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-1cc581fcc536b948",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-19",
+        "name": "The add_change_event tool passes summary and rationale through, and its served prose now says there is no `description` field. Surface change is captured in tools/toolsnaps/add_change_event.json — 1 of 152 goldens moved.",
+        "subject": "system"
       }
     },
     {
@@ -87227,6 +87338,16 @@
       }
     },
     {
+      "node_id": "chg:accept-68d61743ee449f31",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-19",
+        "name": "Call-site only: one add_change_event call gained `None, None`. The test asserts the same thing it did before.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-6b775d9494833102",
       "node_type": "ChangeEvent",
       "properties": {
@@ -87325,6 +87446,16 @@
         "change_type": "resync",
         "detected_at": "2026-08-08",
         "name": "NON_TOOL_TERMS gains would_destroy, priority, status, false. The lint's own contract is unchanged — it still fails when a skill names a tool that is not served; these are the field terms the amended check-health skill now tells a reader to look at, and the lint's failure message asks for them in the same diff. No design meaning moved, so design_holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-7b156be2cc1f45cc",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-19",
+        "name": "AddChangeEventReq gains summary and rationale. The struct is deny_unknown_fields, so `description` was actively REFUSED rather than stored — which is why both reporting projects fell back to a second create_node call. The field docs now say there is no `description` and name the two that exist.",
+        "subject": "system"
       }
     },
     {
@@ -87616,6 +87747,16 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-08-01",
         "name": "Five assertions had been inverted while satisfying a clippy lint — get(X).is_none() became contains_key(X) without the negation. The full suite caught it; the design is unchanged."
+      }
+    },
+    {
+      "node_id": "chg:accept-afe37467a8fd00fb",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-19",
+        "name": "orphan_node's repair note now names `ruling: parks` as the honest second way on, says deleting is the repair that looks clean and loses the most, and states the limit — parking is read by this rule and the unsatisfied-requirement gap and by nothing else. Message text only; no rule behaviour changed. Written because an agent with the mechanism available deleted two registered documents instead, and ophyd-service asked the same question and backed off.",
+        "subject": "system"
       }
     },
     {
@@ -87935,6 +88076,16 @@
       }
     },
     {
+      "node_id": "chg:accept-e5fb205599c26447",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-19",
+        "name": "get_skill's refusal maps the slash-command aliases. Eight advertised commands had no skill of that name and the refusal listed twenty names, none of them the one asked for. TWO of the eight resolve to no skill at all — /decisions is scan_nodes(Decision), /debt is loop_status — so the table carries Ok(skill) | Err(call this instead) rather than inventing a mapping. Four tests added, including that every alias claiming a skill names one that exists.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-e688cb8f664f5e7f",
       "node_type": "ChangeEvent",
       "properties": {
@@ -87976,6 +88127,16 @@
       "properties": {
         "change_type": "requirement_creep",
         "name": "Anthony accepted the eight proposed requirements captured this session"
+      }
+    },
+    {
+      "node_id": "chg:accept-f1e7e0f7b6d69373",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-19",
+        "name": "The BL-199 gate's FAIL text now spells out both ways on and why DOCUMENTS is NOT the answer for a dated observation — it claims the file should stay in step with the design, and a frozen field report is correct precisely by not tracking it. Failure text only; the three assertions are unchanged.",
+        "subject": "system"
       }
     },
     {
@@ -92476,6 +92637,16 @@
       }
     },
     {
+      "node_id": "dec:idea-a-prose-field-silently-absorbed-tool-call-markup",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS A FINDING, 2026-08-19, split out of `fact:changing-one-sentence-in-a-long-decision-cost-a-full-6242-character-resend` because it had been filed under the wrong fix. Nothing built, nothing asked for.\n\n**WHAT HAPPENED, twice in one session.** A `Decision` was written with a closing tag and the `rationale` ARGUMENT emitted inside the `decision` parameter. Both calls **succeeded**. What landed was a decision body ending in tool-call markup, and no `rationale` property at all:\n\n  1. `dec:idea-parks-shipped-...` — body ended `</decision>` then `<parameter name=\"rationale\">…`\n  2. `dec:idea-what-is-reflow2s-part-in-an-automated-translation` — body ended `</decision>` then `<rationale>…</rationale></invoke>`\n\n**NO LAYER NOTICED.** Not the schema (a string is a string), not `undeclared` (the property is declared and was simply absent), not the revision block (it faithfully reported replacing one property — it just cannot know the replacement is corrupt), not the dedup guard, not `detect_defects`. Both were caught only because the reply was read. **A design brain silently carrying `</invoke>` inside a Decision's prose is a worse outcome than any awkward edit**, because everything downstream — `search_design`'s index, the embedding field, a `where-am-i` narration, an export a person reads — treats it as content.\n\n🛑 **AND IT IS NOT THE `resolve_decision` CASE.** Both were FIRST writes of NEW nodes. A resolution-append tool would not have been reachable and would have prevented neither. Filing these with the resend measurement was an error, corrected the same day when Anthony asked for the evidence to be walked through.\n\n✅ **MEASURED, AND IT IS THE REASSURING ANSWER: THIS IS NEW, NOT LONG-STANDING.** The committed export was scanned — all 2,607 nodes, every string property, for closing tool-call tags and `<parameter name=` — and found **0**. So no earlier session left absorbed markup in this graph, and the two instances above (both since corrected) are the only ones. The scan is ~10 lines of Python and is the cheap form of the check any guard would institutionalise.\n\n═══════════════════════════════════════════════\nIDEAS, and none is as cheap as it first looks\n\n**A. Reject a text property whose value contains tool-call markup.**\n   ⚠️ COUNTER, AND IT IS FATAL TO THE NAIVE FORM: this very node, and the fact it was split from, both quote `</decision>` and `</invoke>` ON PURPOSE — and the scan above found exactly those two as its only hits once they existed. A rule matching those strings anywhere would refuse the only two nodes in the design that document the bug. Any guard has to key on SHAPE — markup at the TAIL of a value, immediately followed by what parses as another parameter name — not on the strings appearing at all.\n\n**B. Warn rather than refuse.** Surface it the way `undeclared` surfaces an unknown property: the write lands, the reply says \"this value ends in what looks like a tool-call boundary\". Cheaper, no false-refusal risk, and it fails in the safe direction. ⚠️ But it inherits `undeclared`'s own disease if it ever fires on correct writes — which is the exact complaint hxm_program filed about `ChangeEvent.description`.\n\n**C. A periodic scan rather than a write-time check.** The 10-line scan above, run in CI over the committed export. Catches the class with no false-refusal risk and no per-write cost, at the price of finding it later rather than at the moment of the write. ⚠️ Later may be fine here: the failure is silent but not destructive — nothing else breaks while it sits.\n\n**D. Do nothing, and treat it as a caller defect.** Defensible: the caller emitted a malformed call and the transport accepted it. ⚠️ Counter: reflow2's whole posture is that a silent wrong write is worse than a loud refusal, and this is a silent wrong write. `dec:two-sided-accept` and the dedup guard both exist because the design does not trust a write to be right just because it parsed.\n\n**E. The generalisation worth naming.** `cap:a-revising-write-says-whether-the-state-survived` computes whether the REPLACED state survived. Nothing computes whether the REPLACEMENT is plausible. Those are different questions and only the first is built.\n\n═══════════════════════════════════════════════\n⚠️ HONEST BOUNDS, stated so this is not over-read\n\n· n = 2, one session, one caller, one model. Not a rate.\n· Both were on parameters over 4,000 characters, and none of roughly thirty short writes the same day malformed — suggestive that long free-text arguments are where boundaries get mis-emitted, but observational and confounded, since the long writes also carry the most retyped text.\n· NO USER REPORTED THIS. It is a self-host observation, and by `dec:idea-field-evidence-is-a-prioritisation-input` it ranks below anything two projects filed this week. What makes it worth recording at all is that the failure is SILENT and lands in the durable record.\n· STILL NOT ESTABLISHED: whether any USER's graph carries such markup. Only this design was scanned, and it is the one graph whose caller is known.",
+        "name": "OPEN — a prose field swallowed tool-call markup and the write SUCCEEDED: nothing refuses, flags or notices a node whose body ends in `</decision><rationale>…</invoke>`",
+        "rationale": "Split into its own node rather than left inside the resend fact because the two were filed together only by coincidence of timing, and that coincidence led to a wrong recommendation — that `resolve_decision` would fix both. It fixes one. Recorded as an open question rather than a proposal because the obvious guard is not obvious: the naive string match would refuse the very nodes that document the defect, which is a good reason to think before building. Kept explicitly below the field-reported items in priority, per the design's own rule that field evidence outranks self-host observation, so that recording it does not smuggle it up the queue. The dedup guard named the fact it was split from, which is correct behaviour and was read before declaring them distinct — the split is deliberate, not an accident of wording.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-a-satisfied-requirement-earns-a-stricter-mutability-class",
       "node_type": "Decision",
       "properties": {
@@ -93652,6 +93823,16 @@
         "name": "DECIDED — the public page carries ONLY renderings the agent generates from reflow2's own graph; the page is the evidence for its own claim",
         "rationale": "Captured under capture-intent rather than built, because he sequenced it explicitly (\"post release\") and because the one thing that decides the size of the work — what is on the page — is the one thing he did not say.\n\nThe mechanism he described is recorded as a SKETCH rather than a specification, on his own framing of \"something like this\". Transcribing `index.html` at the root into a requirement would have converted an illustration into a commitment, in a repository whose root is a cargo workspace.\n\nRecorded as its own node rather than folded into the requirement because it reaches two decisions that were already open before he asked — outward docs as projections, and which docs can never be one — and a question connecting three threads deserves to be findable from all of them. The near-duplicate guard fired on the requirement and was right to: they are the same subject, and saying so on the record is cheaper than a reader later wondering whether one supersedes the other.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:idea-what-is-reflow2s-part-in-an-automated-translation",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Nothing is claimed as intent, nothing is planned, and nobody has asked for this. Anthony, 2026-08-19, revisiting a use case he says he had in mind when he created the **adopt** skill: *\"taking some code base, running adopt skill on it, then we translate into another language… is there anything we can take from this?\"*, prompted by The New Stack on Canonical + University of Bristol translating AppArmor and snap-confine from C to Rust.\n\n═══════════════════════════════════════════════\nWHAT THE ARTICLE ACTUALLY SAYS, because it reframes the use case\n\n· *\"Generating code at scale is no longer the hard part — the hard part is proving that code actually does what the original did.\"*\n· *\"Trust, not code, is the bottleneck.\"*\n· Canonical's stated goal is not a rewrite. It is to find out **what evidence maintainers would need before trusting an automated translation of production code.** They are explicitly *\"not rushing to rewrite either one\"*.\n· Their method: an LLM generates Rust, then fuzzing plus formal program analysis compares the two implementations, and **symbolic repair** diagnoses and fixes each behavioural mismatch.\n· *\"A Rust port that interprets a policy differently from the existing implementation might compile perfectly and still be wrong.\"*\n· `unsafe` is the trap: a translator can carry hard C constructs across by leaning on it, *\"but relying on unsafe too heavily would bring many of the original memory-safety risks into the new code.\"* Idiomatic Rust needs *\"changes to data structures and lifetimes across several functions or entire modules\"* — so a faithful port is not line-by-line.\n· Target scale: *\"entire repositories containing hundreds of thousands of lines of C.\"*\n\n⭐ THE REFRAME. The naive version of this use case is \"adopt the C, generate the Rust from the graph.\" The article says that half is **solved and is not the bottleneck**. So if reflow2 has a part here at all, it is on the trust side, not the generation side.\n\n═══════════════════════════════════════════════\nIDEAS, unranked, each with what is cheap or expensive about it\n\n**A. reflow2 holds the ORACLE, not the translation.** adopt(C) recovers what the system is FOR; that recovered intent is the specification the Rust must satisfy, and the graph is where evidence that it does accumulates per capability, dated and attributed. Cheap, in that it needs no new mechanism.\n   ⚠️ COUNTER, and it is serious: adopt's intent is AGENT-RECOVERED FROM THE ARTIFACT BEING REPLACED. Using it as the oracle for a security-critical port risks a graph that is complete, confident and wrong in exactly the way the article warns a port can be. `req:adopt-says-how-much-it-got` exists precisely so recovery reports its own coverage — that number is the honest precondition, and a low one should stop this cold.\n\n**B. A PORT IS TWO AS-DESIGNED RECORDS, AND reflow2 ALREADY COMPARES THOSE.** `cap:certify-restructuring` (status `verified`) classifies every divergence between two design records as function-bearing, structural, or unclassified, and returns preserved / not_preserved / **indeterminate** — with *\"unclassified never passes.\"* A translation is the largest restructuring there is: function must be identical, structure is expected to differ. `compare_designs` / `pair_designs` are the same family.\n   ⭐ WHY THIS IS INTERESTING: it is a DESIGN-level differential, far coarser than symbolic execution, and it catches a class those tools cannot — a capability present in one implementation and absent in the other. Nobody is looking there.\n   ⚠️ COUNTER: coarse means coarse. It would never have caught AppArmor parsing a policy differently, which is the failure the article is actually about.\n\n**C. `unsafe` is a DESIGN-level debt signal, not a test outcome.** \"No capability counts as ported while its realizing artifact exceeds N unsafe blocks\" is expressible today — a DesignRule with stop-the-build power, or a Constraint, or a `GATED_ON` threshold. The article treats unsafe-overuse as the thing that quietly defeats the whole exercise, which is exactly the kind of claim that should be visible in a design rather than discovered in review.\n   ⭐ Also the most under-used part of reflow2 by Anthony's own measure — hard limits are built and barely used (1 Constraint node).\n\n**D. THE BOTTLENECK THEY NAME IS THE THING reflow2 ALREADY COMPUTES.** *\"What evidence would a maintainer need\"* is a coverage-of-claims-by-checks question: `evidence_report`, `confirmation_ledger`, `coverage_report`, `readiness_report`. The right answer to a maintainer is not \"it is equivalent\" but \"these capabilities have evidence, these do not, and here is what nobody checked\" — and reflow2's habit of REFUSING to summarise thin evidence is the feature, not a limitation.\n\n**E. THE CHEAP EXPERIMENT, and the only one with an answer key.** Run adopt on a real C project AND on its existing hand-written Rust port, then `compare_designs`. **`sudo-rs` vs `sudo`** is the strongest candidate: security-critical, deliberately behaviour-compatible, both public, both modest. `uutils` vs GNU coreutils is a second. The question it answers is falsifiable — *does the comparison surface anything a maintainer would care about, or only noise?*\n   📌 SAME SHAPE as `dec:idea-run-adopt-on-reflow2-itself-as-a-ground-truth-test`, already in this graph: pick a case where the answer is independently known, then see whether the tool finds it.\n\n═══════════════════════════════════════════════\n🛑 WHERE THIS MUST NOT GO, recorded now while it is cheap to say\n\nreflow2 does not do differential testing, symbolic execution, or repair, and should not start. `dec:non-goal-reflow2-does-not-judge-whether-a-check-is-meaningful` already settles the general form. The fuzzing-plus-formal-analysis half is Bristol's actual research and is where the difficulty lives; a pitch that drifts into \"reflow2 verifies the port\" would be claiming their result.\n\n⚠️ SCALE IS UNPROVEN. The article's target is 100k+ LOC repositories. adopt has never been run near that, and `cap:bl-211` — genesis assumes an opening BRIEF and has no shape for an opening FOLDER — is open. Any claim about repository-scale ingest is currently unevidenced.\n\n⚠️ AND NOBODY ASKED. This is a use case its author envisioned, not one a user brought. `dec:idea-field-evidence-is-a-prioritisation-input` would rank it below anything two projects reported this week.",
+        "name": "OPEN — in an automated C→Rust style translation, is reflow2's part the ORACLE and the EVIDENCE LEDGER rather than the translation, and does the port become a two-design comparison?",
+        "rationale": "Recorded as an open question rather than a proposal because Anthony was explicitly revisiting an old idea and asking what could be taken from someone else's work, not stating intent. The article's own framing is what makes it worth recording at all: it separates code generation, which it calls solved, from evidence of behavioural equivalence, which it calls the bottleneck — and that split lands on machinery reflow2 already has (`cap:certify-restructuring`, verified, whose verdict refuses to pass an unclassified divergence) rather than on machinery it would have to build. The counter-arguments are recorded beside each idea rather than argued in conversation, per the brainstorm rule, because the strongest objection here — that adopt's recovered intent is inferred from the very artifact being replaced, so it cannot be a trustworthy oracle for a security-critical port — is the kind of thing that gets lost and then re-proposed. NOTE ON THE RECORD: the first write of this node was malformed in the same way two earlier writes this session were, sending the rationale inside the decision body; corrected in place, and the recurrence is itself evidence on fact:changing-one-sentence-in-a-long-decision-cost-a-full-6242-character-resend.",
+        "status": "proposed"
       }
     },
     {
@@ -106094,10 +106275,10 @@
         "basis": "measured",
         "confidence": 1.0,
         "fact_type": "measurement",
-        "statement": "MEASURED FIRST-HAND IN reflow2's OWN REPO, 2026-08-19 — a FOURTH data point on ophyd's friction #2 (\"evolving a long decision means resending all of it\"), and the first with a number attached.\n\nTHE TASK WAS ONE SENTENCE. Two deleted Artifact ids had to become two file paths in this Decision's body. The pointer was 1 line of a 6,006-character `decision` property.\n\nTHE COST: the whole property had to be reproduced and resent — 6,242 characters — because no tool patches part of a node. `add_decision` merges at PROPERTY granularity, so the smallest possible edit to one sentence is a full retype of everything around it. The reply's own revision block states the exposure exactly: \"NO SNAPSHOT HOLDS THE STATE IT REPLACED… the prior value above is now the only copy in existence, and this reply is the only place it appears.\"\n\nVERIFIED RATHER THAN ASSUMED, which is the part worth keeping: the intended text was written to a file BEFORE the write and diffed against the stored value after. Byte-identical. Without that check a single dropped character anywhere in 6,242 would have been unrecoverable and silent — and the risk scales with the length of the node, so the nodes most worth editing are the ones most dangerous to edit.\n\n⚠️ THE SAME SESSION THEN DID IT AGAIN AND WORSE. A second long Decision (`dec:idea-parks-shipped-...`) was written with a closing tag and the `rationale` argument embedded INSIDE the decision body — a malformed call that SUCCEEDED, storing trailing markup and no rationale property. It was caught by reading the reply, not by any check. Two long-body writes in one session, one silent-failure class each: transcription loss, and argument-boundary loss.\n\n📌 THIS IS EVIDENCE FOR A FIX ALREADY PROPOSED BY THE REPORTER, NOT A NEW IDEA: ophyd's `resolve_decision(id, resolution_text, status)`, or any field-level patch, removes both failure modes at once. Recorded as its own fact rather than folded into the Decision it is about, because folding it in would have required a THIRD full-body resend of the very node whose editing cost is the finding.",
+        "statement": "MEASURED FIRST-HAND IN reflow2's OWN REPO, 2026-08-19 — corroborating ophyd's friction #2 (\"evolving a long decision means resending all of it\"), and the first report of it with numbers attached.\n\n⚠️ CORRECTED 2026-08-19, SAME DAY, AND THE CORRECTION IS THE USEFUL PART. The first version of this fact claimed `resolve_decision` \"removes both failure modes at once\". IT DOES NOT, and the error was the ordinary one of filing two things together because they happened in the same session. Anthony asked the claim to be walked through, which is what caught it.\n\n═════════════════════════════════════════════\nFAILURE 1 — THE RESEND. This is what `resolve_decision` fixes.\n\nTWO full-property resends of ONE node (`dec:idea-two-more-projects-...`), each to change ONE SENTENCE:\n  · 6,242 characters — two Artifact ids became two file paths, after the artifacts were deleted\n  · 6,455 characters — the same sentence back again, after the artifacts were restored and parked\n≈ 12,700 characters retyped for two one-sentence edits. No tool patches part of a node: `add_decision` merges at PROPERTY granularity, so the smallest possible edit to one sentence is a full retype of everything around it.\n\nTHE EXPOSURE IS STATED BY THE TOOL ITSELF, on every one of them: *\"NO SNAPSHOT HOLDS THE STATE IT REPLACED — checked, not assumed. The prior value above is now the only copy in existence, and this reply is the only place it appears.\"*\n\nVERIFIED RATHER THAN ASSUMED, and this is the part worth keeping: for both resends the intended text was written to a file BEFORE the write and diffed against the stored value after. Byte-identical both times. Without that check a single dropped character anywhere in 6,000+ would have been unrecoverable and silent — and the risk scales with the length of the node, so THE NODES MOST WORTH EDITING ARE THE ONES MOST DANGEROUS TO EDIT.\n\n📌 EVIDENCE FOR A FIX ALREADY PROPOSED BY THE REPORTER, NOT A NEW IDEA: ophyd's `resolve_decision(id, resolution_text, status)`, or any field-level patch, removes this failure. Four projects have now reported the pattern; this is the instance with measurements.\n\n═════════════════════════════════════════════\nFAILURE 2 — THE MALFORMED WRITE. `resolve_decision` WOULD NOT HAVE PREVENTED IT.\n\nTWICE in the same session, a Decision was written with a closing tag and the `rationale` ARGUMENT embedded inside the `decision` body. Both calls SUCCEEDED, storing trailing tool-call markup in a prose field and no `rationale` property at all. Caught by reading the reply; nothing else noticed.\n\n🛑 WHY THIS IS NOT EVIDENCE FOR `resolve_decision`: BOTH were FIRST WRITES OF NEW NODES. `resolve_decision` appends a resolution to an EXISTING decision — it was not reachable in either case and would have changed nothing. Filing them together was the mistake.\n\nWHAT THEY ARE EVIDENCE FOR is its own item: `dec:idea-a-prose-field-silently-absorbed-tool-call-markup`.\n\nHONEST BOUND ON THE CORRELATION: both malformations were on parameters over 4,000 characters, and none of roughly thirty short writes the same session malformed. That is suggestive that long free-text arguments are where boundaries get mis-emitted, and it is n=2, observational, and confounded — the long writes are also the ones carrying the most retyped text. It does not support more than \"worth watching\".",
         "subject_id": "dec:idea-two-more-projects-report-write-ergonomics-and-a-program-shaped-use",
         "valid_from": "2026-08-19",
-        "value": "{\"node_edited\":\"dec:idea-two-more-projects-report-write-ergonomics-and-a-program-shaped-use\",\"semantic_change\":\"two artifact ids -> two file paths, one sentence\",\"chars_before\":6006,\"chars_resent\":6242,\"granularity\":\"property, not field\",\"verification\":\"intended text written to file pre-write, diffed post-write, byte-identical\",\"second_failure_same_session\":\"malformed call embedded closing tag and rationale inside the decision body; write succeeded; caught by reading the reply\",\"corroborates\":\"ophyd friction #2, now four projects\",\"proposed_fix_not_mine\":\"resolve_decision(id, resolution_text, status) or any field-level patch\"}"
+        "value": "{\"failure_1_resend\":{\"node\":\"dec:idea-two-more-projects-report-write-ergonomics-and-a-program-shaped-use\",\"resends\":2,\"chars\":[6242,6455],\"semantic_change_each_time\":\"one sentence\",\"granularity\":\"property, not field\",\"verification\":\"intended text written to file pre-write, diffed post-write, byte-identical both times\",\"fix\":\"resolve_decision or any field-level patch\",\"projects_reporting\":4},\"failure_2_malformed_write\":{\"occurrences\":2,\"both_were\":\"FIRST writes of NEW nodes\",\"stored\":\"tool-call markup at the tail of a prose field; rationale property absent\",\"detected_by\":\"reading the reply; no layer refused or flagged it\",\"resolve_decision_would_have_prevented\":false,\"own_item\":\"dec:idea-a-prose-field-silently-absorbed-tool-call-markup\"},\"correction\":{\"date\":\"2026-08-19\",\"was\":\"resolve_decision removes both failure modes at once\",\"now\":\"resolve_decision removes failure 1 only; failure 2 is a separate finding\",\"caught_by\":\"Anthony asking for the evidence to be walked through\"},\"correlation_bound\":\"2 of 2 malformations on >4000-char params; 0 of ~30 short writes; n=2, observational, confounded\"}"
       }
     },
     {
@@ -110119,7 +110300,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:db2edab4c7e2a18a3382a847751999314b7fa9df6f05be58437d4597f4ab5e59",
+  "prev_content_hash": "sha256:15f65507f1e02383599ae61fa8d880db85d51962a54a538def732257e5e259db",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

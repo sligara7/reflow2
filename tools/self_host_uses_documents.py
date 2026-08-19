@@ -124,7 +124,20 @@ def main(argv: list[str]) -> int:
             f"{orphans}\n"
             "  Every edge they carry is bookkeeping (INCLUDES/CHANGED/YIELDED/"
             "AT_EPOCH),\n"
-            "  so nothing in the graph says what the file is FOR.",
+            "  so nothing in the graph says what the file is FOR.\n"
+            "\n"
+            "  TWO WAYS ON, and DELETING THE ARTIFACT IS NEITHER — that is the repair\n"
+            "  that looks clean and loses the evidence:\n"
+            "    1. It describes or implements something -> draw the true edge\n"
+            "       (DOCUMENTS / SPECIFIES / REALIZES / SATISFIES).\n"
+            "    2. It correctly describes and implements NOTHING -- a dated field\n"
+            "       report, an incident write-up, a customer complaint, a vendor's test\n"
+            "       certificate -> say so with governed_by(..., ruling='parks') pointing\n"
+            "       at an ACCEPTED Decision. The artifact is then counted in\n"
+            "       swept.parked instead of reported here, and DOCUMENTS is NOT the\n"
+            "       answer for it: DOCUMENTS claims the file should stay in step with\n"
+            "       the design, and a dated observation is correct precisely by not\n"
+            "       tracking it.",
             file=sys.stderr,
         )
         failed = True

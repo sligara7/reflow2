@@ -630,6 +630,8 @@ fn gated_on_is_a_traceability_edge_so_slipping_readiness_reaches_the_roadmap() {
         "The converter slipped",
         ChangeType::ScopeChange,
         None,
+        None,
+        None,
     )
     .unwrap();
     g.changed(

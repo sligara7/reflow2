@@ -34,6 +34,8 @@ fn seed(g: &mut DesignGraph) {
         "Seeded the design",
         ChangeType::NewFeature,
         None,
+        None,
+        None,
     )
     .expect("change event");
 }

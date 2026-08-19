@@ -259,7 +259,11 @@ impl ReflowService {
                        `change_type`, because the mapping is not total. Use `defect_fix` when the \
                        design was right and the code was wrong, and `test_failure_fix` only when a \
                        check actually caught it — the difference is provenance, and it is the one \
-                       five sessions each guessed differently before these existed.",
+                       five sessions each guessed differently before these existed. \
+                       TEXT GOES IN `summary` (what changed — indexed and searchable) and \
+                       `rationale` (why, and the lesson). THERE IS NO `description` FIELD: \
+                       reaching for one is the commonest mistake here, and it is refused \
+                       rather than stored, so write the two that exist.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_change_event(
@@ -308,7 +312,14 @@ impl ReflowService {
             }
         }
         let event = g
-            .add_change_event(&req.id, &req.name, change_type, subject)
+            .add_change_event(
+                &req.id,
+                &req.name,
+                change_type,
+                subject,
+                req.summary.as_deref(),
+                req.rationale.as_deref(),
+            )
             .map_err(dyno_err)?;
         let mut changed = Vec::new();
         for a in &affected {

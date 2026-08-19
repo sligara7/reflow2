@@ -2678,7 +2678,16 @@ fn orphan_at(
         repair_is_a_judgement: fix.is_none().then_some(
             "No mechanical repair. Linking this node to something would assert a \
              relationship nobody drew — whether it belongs somewhere, or is a parked \
-             thought that correctly governs nothing yet, is a judgement.",
+             thought that correctly governs nothing yet, is a judgement. IF IT IS THE \
+             SECOND, THE DESIGN CAN SAY SO INSTEAD OF LEAVING IT TO BE INFERRED: \
+             `governed_by(..., ruling: \"parks\")` pointing at an ACCEPTED Decision \
+             records that this node is deliberately attached to nothing, and it is then \
+             reported in `swept.parked` and counted rather than listed here — visible, \
+             not silenced. Deleting the node to clear this finding is the one repair \
+             that looks clean and loses the most. ⚠️ PARKING IS READ BY THIS RULE AND BY \
+             THE UNSATISFIED-REQUIREMENT GAP, AND BY NOTHING ELSE: it does not quiet \
+             `unthreaded_cluster`, and it does not cover the unproven-capability loop \
+             debt.",
         ),
         affected_ids: affected,
         // Filled by annotate_hubs once every issue is collected — a single

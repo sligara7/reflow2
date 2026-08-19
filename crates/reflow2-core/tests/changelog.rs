@@ -169,8 +169,15 @@ fn a_change_no_rule_covers_is_reported_unfiled_rather_than_dropped() {
     a_requirement(&mut g, "req:odd", "An odd one");
     // A CHANGED edge with no `action` at all — the shape a future writer could
     // introduce. It must not vanish, and must not be guessed into a bucket.
-    g.add_change_event("chg:odd", "no action recorded", ChangeType::Resync, None)
-        .unwrap();
+    g.add_change_event(
+        "chg:odd",
+        "no action recorded",
+        ChangeType::Resync,
+        None,
+        None,
+        None,
+    )
+    .unwrap();
     g.pin_at_epoch(node::CHANGE_EVENT, "chg:odd", "epoch:two")
         .unwrap();
     g.create_edge(
