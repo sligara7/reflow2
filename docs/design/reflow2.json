@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:207098f55f074426cccadd346cabc05a6ad2b822880f87e3241853991f02e71d",
+  "content_hash": "sha256:cd68d5011d0fba7ccd3f4f835fbe999f03be969c69574147e878fa8c06fa5f27",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2353,6 +2353,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-skill-response-carries-the-lens",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:tool-carries-convention",
       "properties": {
         "weight_basis": "estimated"
@@ -3542,6 +3550,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:accept-41a5792831853d0b",
+      "properties": {},
+      "to_id": "epoch:v0360"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:accept-41cb200c8b595eb3",
       "properties": {},
       "to_id": "epoch:v0220"
@@ -4058,6 +4072,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:ask-elicits-a-lens",
+      "properties": {},
+      "to_id": "epoch:v0360"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:atomic-requirement",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
@@ -4136,6 +4156,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:baseline-41ace574b886cd90",
+      "properties": {},
+      "to_id": "epoch:v0360"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:baseline-44ec4db31d00f517",
       "properties": {},
       "to_id": "epoch:v0250"
@@ -4175,6 +4201,12 @@
       "from_id": "chg:baseline-8cfc9ddea5ba1ab8",
       "properties": {},
       "to_id": "epoch:v0290"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:baseline-9325dcf17144c0a8",
+      "properties": {},
+      "to_id": "epoch:v0360"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -4532,9 +4564,21 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:constraint-is-not-only-numeric",
+      "properties": {},
+      "to_id": "epoch:v0360"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:constraint-not-numeric-add-constraint-desc",
       "properties": {},
       "to_id": "epoch:constraint-is-not-only-numeric"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:constraint-not-numeric-add-constraint-desc",
+      "properties": {},
+      "to_id": "epoch:v0360"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -4544,9 +4588,21 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:constraint-not-numeric-kit-instructions",
+      "properties": {},
+      "to_id": "epoch:v0360"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:constraint-not-numeric-skill-lint-allowlist",
       "properties": {},
       "to_id": "epoch:constraint-is-not-only-numeric"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:constraint-not-numeric-skill-lint-allowlist",
+      "properties": {},
+      "to_id": "epoch:v0360"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -4880,9 +4936,21 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:holds-the-invitation-capture-intent",
+      "properties": {},
+      "to_id": "epoch:v0360"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:holds-the-invitation-kit-instructions",
       "properties": {},
       "to_id": "epoch:the-loop-holds-the-invitation"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:holds-the-invitation-kit-instructions",
+      "properties": {},
+      "to_id": "epoch:v0360"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5324,9 +5392,21 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:register-gap-to-prompt-description",
+      "properties": {},
+      "to_id": "epoch:v0360"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:register-obligation-becomes-lint-checked",
       "properties": {},
       "to_id": "epoch:the-register-rule-reaches-the-words"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:register-obligation-becomes-lint-checked",
+      "properties": {},
+      "to_id": "epoch:v0360"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5336,9 +5416,21 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:register-seventh-obligation-detect-and-ask",
+      "properties": {},
+      "to_id": "epoch:v0360"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:register-standing-rule-kit-instructions",
       "properties": {},
       "to_id": "epoch:the-register-rule-reaches-the-words"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:register-standing-rule-kit-instructions",
+      "properties": {},
+      "to_id": "epoch:v0360"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -6377,6 +6469,12 @@
       "from_id": "rel:v0350",
       "properties": {},
       "to_id": "epoch:v0350"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "epoch:v0360"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -10528,6 +10626,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:the-reminder-rides-the-response",
+      "properties": {
+        "acted_at": "2026-08-19",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:the-store-is-reachable-from-a-session",
       "properties": {
         "acted_at": "2026-07-31",
@@ -12052,6 +12159,15 @@
         "action": "modified"
       },
       "to_id": "art:evidence-quality-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-41a5792831853d0b",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dependency-manifest"
     },
     {
       "edge_type": "CHANGED",
@@ -25387,6 +25503,22 @@
     {
       "edge_type": "DEPLOYED_TO",
       "from_id": "rel:v0350",
+      "properties": {
+        "status": "active"
+      },
+      "to_id": "env:dev"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v0360",
+      "properties": {
+        "status": "active"
+      },
+      "to_id": "env:container"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v0360",
       "properties": {
         "status": "active"
       },
@@ -69938,6 +70070,1886 @@
     },
     {
       "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:3b4c4074ec7ecc66f9fc6b66d3efa9a77e91b4a8d5b529b1a231cd4da9753692"
+      },
+      "to_id": "art:acknowledgement-not-structure-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:14385c12b76516b9a8a8903216243912fcf602be1869d703c25af468a18a1e44"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:c33a33c15e2611b3"
+      },
+      "to_id": "art:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:0318c29079069fab4d59770f29f5b9ec9895208d658b9b829f8cb46f019bc387"
+      },
+      "to_id": "art:alex-grok-feedback-2026-08-14"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:d282035a162e3e56"
+      },
+      "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:c87a79726aeb111b"
+      },
+      "to_id": "art:alternatives"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:9c293b7111c7b029d49f9debb054d2f2660c43e70f2a6786fcd11d81ebe672bc"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:7befd2e936958a6b7d3ea06a1ec1d2edde451ca31354d7c8b49719cddd0d4b75"
+      },
+      "to_id": "art:artifact-intent-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:06b64e606511407badac652aaf530cc2f9d012bb1bc53f95124cc32152c2e979"
+      },
+      "to_id": "art:bl124-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:6f101376a547fe6ef1f9a9d7d2d3da29b84505a96b352ed69d19b8514772c0ec"
+      },
+      "to_id": "art:brainstorm-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:28210925da9f9641d9ca5d5a670c3da2c62be0a1d3be722fe4123823019d9c23"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:8f5ffbc7c6e84b5e"
+      },
+      "to_id": "art:built-right-review"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:6e8e23fce35b21d6"
+      },
+      "to_id": "art:bulk"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:e1051f00038030c69fd7208108d56b55e11169a2e4145461b677c11a779c39c3"
+      },
+      "to_id": "art:capture-intent-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:a9698e861f183c96a564e22ceab750a9a5d336831b2b63c0c65e233c9ce43fc3"
+      },
+      "to_id": "art:capture-session-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:73b31ffd9cc27cbb7315a8023f47f3992b85e925b65605bb5f610aad3a088772"
+      },
+      "to_id": "art:changelog-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:cf4e86690ccd846f37228812ef55352845f046d0a4903b63cd08e5a4a3764528"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:0599e56015b53dd5a57b9562bc0d9a82a065003ea1ea91fa9af0881c168ec80a"
+      },
+      "to_id": "art:check-health-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:b78fa9e7b867218d12b5f4e478f55228619203e15bebb578d54b0bd00ea0a97d"
+      },
+      "to_id": "art:check-kit-manifest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:68138446368f22bbde0b1fe44360b85edeb941b4503dbb491750506a99c1711f"
+      },
+      "to_id": "art:checksum-dialect-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:b8d4e975533b670e09be74d288144194ad388c69ed987738929f48cfc8b8d011"
+      },
+      "to_id": "art:claim-age-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:43b2258a9537a2cbb3e131acb781e11085a4b1e89fa599bd5325d46c1e42fe2f"
+      },
+      "to_id": "art:claim-not-hidden-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:5a933a36f2ff5606df032f929c969218e54fc9d142c8629a7743243d7e3fa241"
+      },
+      "to_id": "art:claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:2575d415a74a3266b208ddf798e5e6516186d6c345324efb6f9b66e46b7367a3"
+      },
+      "to_id": "art:collaborating"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:b73161a0fd04efee"
+      },
+      "to_id": "art:compare"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:21f0cb3c189f4e8f4295e1d67788061e2ec7f91f018010ff992ef51bd0a1c377"
+      },
+      "to_id": "art:compose"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:6b58139a0fd5f095c64c4c465f03cfed8200015ef0e7af3a4e7cca064727de39"
+      },
+      "to_id": "art:compose-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:276c4e707db8d55a34f673a533dcaa15629d6bd59be4d3232df21bff1e6ce7c3"
+      },
+      "to_id": "art:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:48b47fe9de1616a9e70f824e098108c45fafc22d35c92f1a005fafd3d1e83c14"
+      },
+      "to_id": "art:confirmation-vocabulary-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:7776124d5c2f276520f036b0414c9e143f6b45ae56f02d61cd672a343beb3fe0"
+      },
+      "to_id": "art:conformance-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:e2efa0a05f6a46929a0f4634871281407af7b196061300cf9fdf63f9a06a6050"
+      },
+      "to_id": "art:consumption"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:5c4c6e7a717189396689405566ed54b8e67f10821b593d22b99ea37053450f1b"
+      },
+      "to_id": "art:contradiction-alignment-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:9f9496cd532968cb39dc7461c83f488e856e97b00a4a438f2f25914ee044760d"
+      },
+      "to_id": "art:corpus"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:c3d8585b71d9bb6aa886b70998fa97a143ae2829a6ebb47a4803e18910ec176d"
+      },
+      "to_id": "art:coverage"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:da69705c4697580a151a6ee7355c388701d465220bf475c2ede5bac2b1469e25"
+      },
+      "to_id": "art:coverage-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:a62c88bd9814737dd97b620eda586cd5c28420031c057f7f196da584a79e1f72"
+      },
+      "to_id": "art:cycles-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:b125b0aa1c36046cefe30e62298b0ec03ff7e8ff0c107820d1c8fafde6c9f36c"
+      },
+      "to_id": "art:dates"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:eb126729e08e8d8d3ac45acec3a2e291e068dc1e9afed14a8647edf73300bdde"
+      },
+      "to_id": "art:degraded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:adb5ee7528a51c40b87e15733e4bf73f021b8fa7a602725afa3bef8ab015890e"
+      },
+      "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:45cd6ca68f900aa040d2c075a7dc08311afd8acf8e94bd266f101e4fe1ee8ae7"
+      },
+      "to_id": "art:depends"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:f2a9a6d42ce95561436f9ae64e64cef57bd11d90d2c5e6d5bb50825da3d2aee6"
+      },
+      "to_id": "art:depends-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:147f2c1b5405bf8eac0848109cf5d56e9a011aaacb58c5486a1b50a5d2cef3f0"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:4707652eaaccd0ec29233662cdcd87957f21f7e37bc0cb9724fad3b2758fc392"
+      },
+      "to_id": "art:detect-and-ask-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:59ef210d5f8576a9f07b321dc546b653056ab4ecda17e0ec9269ed87a52c27dc"
+      },
+      "to_id": "art:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:b876b5fc65f8dfe8b3c514d0537a0445dfbb51df24fcf6179e8b30b762988eaf"
+      },
+      "to_id": "art:discover"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:9a774749820828b965aef9eadc6d12d2f07a5e9dc28f05d1ddedc73eb6370a24"
+      },
+      "to_id": "art:discover-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:43efb3dd59d17efa2aab4c25c5dc57495077f8d6fd31b1743e0bc8fa5df201fe"
+      },
+      "to_id": "art:doc-impact-propagation"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:9ad56c234dcffbca6f016d50b71c5ffab9e33a3380d18c5fafb445de5474e079"
+      },
+      "to_id": "art:docker-build-script"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:f2019afd72ee2dbf3e3806a54e397a638e6b1ab37cc181c8a9b1f86c1089b229"
+      },
+      "to_id": "art:docker-smoke-script"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:f014e913ac9e61dc2112f4383c0cc94cdf9e5d78fe307bcb2ad45ae316d6e719"
+      },
+      "to_id": "art:dockerfile"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:d03decfe05f40310f62a43ac0f6a81993dba777adb056040a1f0564b64d76f2c"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:7df4f44d215da1ed659c6bdf5fcc40df9d4f1bb00c8b7ecf982ab8e7732a3ba2"
+      },
+      "to_id": "art:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:7e94e450dbda74bbb0e6b367ea082d0efecc5d353472db92c57d02728051aec2"
+      },
+      "to_id": "art:enforced-rule-detector-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:8956d2d0d4f31fe1"
+      },
+      "to_id": "art:evidence-quality-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:edff3aa9e9469319c76f745c2e22d20a4e87b67ba2aff267cca10034d467f932"
+      },
+      "to_id": "art:evidence-quality-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:7f9fad8c07f55057160caa8cab59660a6bfb1fdea295b8eb26f48bcc96ebbb40"
+      },
+      "to_id": "art:evidence-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:80709df69bd60b7a5d2a4de8e1ccb80ebac37baf705fd24c9d2e7b3195d89b90"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:0eec67e9d35aba549853dfdb058371975fcf5fd1aa1b062b8872415e2babbd43"
+      },
+      "to_id": "art:export-via-binary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:cfdf82f1a6497595"
+      },
+      "to_id": "art:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2"
+      },
+      "to_id": "art:fleet-lessons"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:f6abe031170cd8123c44b3f87248b9841f9b31117d78d8325769fea6a34a5d8e"
+      },
+      "to_id": "art:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:8196df94f5775161"
+      },
+      "to_id": "art:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:730e59e9cca3bdf7d6c19b02a4c21ce6e3fa1b4564adf6d202b72ba2fdc19b9f"
+      },
+      "to_id": "art:genesis-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:34701500af93dbcf"
+      },
+      "to_id": "art:github-mcp-study"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:fd8331443a248d4fbe0eb45a2888ff7deda5f059733753b7b43025ee0582147b"
+      },
+      "to_id": "art:governance-proposal-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:199301145284e0fb30cfec667a6adb26c3af9db724a2f3049474659ee07c7f15"
+      },
+      "to_id": "art:granularity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:746a4ad87bdc63607013c821b708338b1bc8fc7047fb4f431e986695accc2a94"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:2c078196ea233296ffcf5a75c16767589a535b2e7bc24ab6b22f7ac578a90b81"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:30fc1a09862792a9"
+      },
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:b2040f682b99860815459e4b4c34150019ff02f40821f9dd9e75fadfda5bf29a"
+      },
+      "to_id": "art:identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:08788e160c65f66ffbcea91b3919205a035b32930dfc578e36acfd2045ee3298"
+      },
+      "to_id": "art:ility"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:d6a3a8bce014e75f1a2a524d0c76612ab8a1dc99ad32f7fbdeca286b51950652"
+      },
+      "to_id": "art:increment-plan"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:e36d3b386dcad3b33c12ed42a28685b2bcd3a9c8a2ccdd7d2704c230739407c0"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:ddfa7e13d3b56156a9b463f434cd691718e1af489f27aaba169395c226d14b9a"
+      },
+      "to_id": "art:ingest-handshake-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:2b0c9b500c5d5e1a45497d5deef3382a41a6374851d5ffbf4fa91ae6d5958059"
+      },
+      "to_id": "art:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:07c82cd7671c1241"
+      },
+      "to_id": "art:interface-spec-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:c5c52b1a6a96bd8d6ffae28b2250920c02731cacada309e9f9e453d07f52fb74"
+      },
+      "to_id": "art:kit-instructions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:4329e5563666ab6708edfe68c0d0188818571b39ea408c70ef71663bc2f98f36"
+      },
+      "to_id": "art:kit-pointer"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:65a01535f32f023e"
+      },
+      "to_id": "art:kpp-proposal-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:7280072322f2889e0a1e958c0d9293fb281e8938ff9dc368d1962d833434a421"
+      },
+      "to_id": "art:latent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:6869d93e97fc9393"
+      },
+      "to_id": "art:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:f7b21dc97aa8ee9f4a6b33f59ea944d3e900671479d79ee7a4c023877929f9b6"
+      },
+      "to_id": "art:machine-install"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:cd4dc46a42ac5da44ecf6f484eb33da8774333afc7fb13a13c554c0f395a766d"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:f83c09736230e7d7359f69e72f64c70140cf609babb1b18f4661528193d38599"
+      },
+      "to_id": "art:maturity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:075bab31f3c131b6"
+      },
+      "to_id": "art:merge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:cddbea4165e0e3b0"
+      },
+      "to_id": "art:merge-driver-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:4d0783bbb657970305906ae38eb8a51badd40b1229881929e81026149478dd80"
+      },
+      "to_id": "art:migrate-backlog"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:fa90553f10cfd1194c8ac6b5962e1c5c57dc269e5d662bc62869db823d923a44"
+      },
+      "to_id": "art:mint-seat-liveness-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:ae5a182c709321a1e0753361a6a8b9ed6836a6a8cd518979d83896d7b4511aa6"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:728650e901174321fd684df8aa431ccfd84bc3e806f2d725c416a9d7f2445814"
+      },
+      "to_id": "art:nudge-detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:e95e6f4c2658ebd1c7afa6e23385256e51272860a0cb56e2046d4c1b581881d0"
+      },
+      "to_id": "art:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:377d332d152038615d31984d530989b283d8ef1a9f7651f706f7f9f12a627f68"
+      },
+      "to_id": "art:orphan-attachment-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:a174eaa7a6781e8a3e5b3df9ce8629efabae2ae8e336dbe16c1ae26a2b33daf7"
+      },
+      "to_id": "art:parallel-work-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:ce7feac76c8da9cd72c6188a2f0035565f37031c2632354820baaf7fc1ffcdcd"
+      },
+      "to_id": "art:plan-increments-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14"
+      },
+      "to_id": "art:planning-at-scale"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:59b6e751c18dfc67d4546b6d6d70e1305b64864d3890d8cf786320687c9b84d4"
+      },
+      "to_id": "art:preserve"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:26dde99a1df42e6f"
+      },
+      "to_id": "art:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:b3cd0321b5dcda802926f3247ab45b6c1bbfc7bbd60ed38d2d95da29a3d6caf0"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:7979028e8c95724dd5696d9b1fee3f307c718b7d9f4e086a968620b602eec420"
+      },
+      "to_id": "art:publishable-promise-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:f01d1b8a9f04a3efd4efe0fa05d12f9d1b330e4c4f16b9f1781ae6e645a38fa5"
+      },
+      "to_id": "art:readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:00ac00342910d276b036ffa093f2ed3ee8a7efb9abe9d3b2a5c21fcfa30939c8"
+      },
+      "to_id": "art:readme"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:c44aeed44068400f04ccba69c3fd47d2a4b4999a036ed08494bf13f166fa2194"
+      },
+      "to_id": "art:regions-rs"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:d8d916c194760d36e108eb96fe403611fe7f9b2488301600e7c584840fe56d77"
+      },
+      "to_id": "art:registry"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:079bd2025a17eeadc09a98cdfdf658b2cc78180bd06b11bb59fff5a410d011cc"
+      },
+      "to_id": "art:release-workflow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:99fc5da421a04f5e"
+      },
+      "to_id": "art:render-views"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:6bd028cccbc577b2833621d955bca4f879dd7e0806b67f608404668411b5c054"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:dc88dfbc4e1aacbc"
+      },
+      "to_id": "art:sanitize"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:fb7598e079f2dba81017a6229a0b67d07e44677f4f6eb6a8c0372e9c0386eeb2"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:4c6d9b4d2298db40893e54004d41009a45bfd6757adc7dbd4cc510f39712a083"
+      },
+      "to_id": "art:schema-build"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:3c14debf63e30806550295d9645fa4c3d47da88e722c020053f66c07b52f36bb"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:815273502db4fed6800182446fb496a08aace3a9b34757395892e6da37dbcdb9"
+      },
+      "to_id": "art:schema-dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:7201c53b7e2c794b871f3d48b7da761884f5bccd7d9f90b9b7d07210e79053cc"
+      },
+      "to_id": "art:schema-environment"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:a156dba66ba8b296e63fa7b1d3a1ec883e458e0ca3ae8573933cba189978767a"
+      },
+      "to_id": "art:schema-functional"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:07f5d9a9594cf5464bfeb426ce94e08f28769d90b154741144b6570a32d578ad"
+      },
+      "to_id": "art:schema-inference"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:a986d436e5575b86d26ab38c52bbb37ff91e1ead726ad6e04fe0d74889b71361"
+      },
+      "to_id": "art:schema-operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:daf8ea6b9399cb16edfd8849adcd1bcd37ac1a7f3ae3acea80ecca8e035fdc9a"
+      },
+      "to_id": "art:schema-readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:ee191ec5591c4a35fee2177dca3c113f17f84ad579d62052008104d28e1dc103"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:7be3062dbe9327ac959652734116c350d114d3ca4348ba0f8aa1050c5e91f2c0"
+      },
+      "to_id": "art:schema-temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:25729faa169eb7a9c99b59afcd9f9e26b8d61c1dec903e1428a3cfec30a4f78b"
+      },
+      "to_id": "art:schema-verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:d1b8a0c41bfec50ffc0a1eafd06636e811afa0f37596d34ca5dd76c2a791ba4b"
+      },
+      "to_id": "art:scope"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:de0871a98e6007aa5ee9e202d5396f014b3799efd72600f2a1a94de6d58ff182"
+      },
+      "to_id": "art:scope-corpus-ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea"
+      },
+      "to_id": "art:scope-read-while-held"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:e96c9c4c07a384fc845aa360edc7f505d90ecbecc8e38b08dd65e65b56cf1470"
+      },
+      "to_id": "art:seam"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:efb2faf35ec4cc6ed3df5a61f8fdf2af77aded2a6eb29ddabf2394dfc7ed195d"
+      },
+      "to_id": "art:seam-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:a5f270c3646365f78d5c4b6004d1cf0f27285768017ccccce1983176318db40f"
+      },
+      "to_id": "art:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:8e5af9fd122fc56d39472920dc28410b6a157ed889964b4c01eed80fb8cd52aa"
+      },
+      "to_id": "art:seat-liveness-shared-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:4d824c873120e938"
+      },
+      "to_id": "art:self-host-documents-guard"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:6ac21cd02a37fc6c6d51bbbc2d1adcac817d0a373e82c33e95ab954344496741"
+      },
+      "to_id": "art:server-currency-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:fd65be03a690e1819ea995565906e050db5e055badad33665ee808a001987e26"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:062c1682b832952af474200bd28a7e046146cc8a2eefaca17dd42bfcecfc288d"
+      },
+      "to_id": "art:session-debt-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:c5ae98896e2558c42d86c890f7348c6c3b4f5d8895e6aafb723516edc24c2e56"
+      },
+      "to_id": "art:setup"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:f8d14a991b90377fab5074ee51dbbcf165d2ab813b1b5e742688b19d534c700b"
+      },
+      "to_id": "art:sibling-merge-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:c221daad4dd73582e3abec93e7d0493e75f71f7809f138c1852271fa63f37ea4"
+      },
+      "to_id": "art:skill-ingest-corpus"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:e758f8098e95ab2784de46b3cd83fcec1ceb4bdec8aad8011651b2d40fd3d205"
+      },
+      "to_id": "art:skill-link-projects"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:1c9f08c30b33df405f7c3fedf8605d544975f4320086b36de26809821039a6e4"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:9352eb7ec610eb6187d482730ea021c18883d4548f4ba2ed3ab3b3fac0451bda"
+      },
+      "to_id": "art:skill-lint-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:ae92f6894ad0c1be076a3243da39ff336e2654554038b512211a654516f41e9b"
+      },
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:beaa4bd48ef2fae4b6cdb0604f5e0ff9ce644d9bb39f1a9c6a7f7f2a630aa797"
+      },
+      "to_id": "art:skills-build"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:24eb607efc9ebc2803533ca7aba6fcfc6aca8ca8b6bbf8b1cb49cb1c7e3cec4a"
+      },
+      "to_id": "art:skills-catalog"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:772b73a05ff491fe6dbca6adeb9697ad84e1ad9592e24b66793aae2716ae0783"
+      },
+      "to_id": "art:stateless-seat-probe"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:ce30365401d775a82585729349538efe1a0fa43625783b2a39a6dc30f7d9ce83"
+      },
+      "to_id": "art:storyflow-resolution-study"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:4a412efc7f3ba82b37e375c9e7c4ad228c2b46844b4b319a36a65237c88c2e49"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:b3b2bac1387c9c53"
+      },
+      "to_id": "art:surface-usage-instrument"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:b1cec4ec107ef2b1"
+      },
+      "to_id": "art:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:c79d8c79905d00199a758e49e4ad91d27539c15223d89aeb675848a8cdfae464"
+      },
+      "to_id": "art:sync"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286"
+      },
+      "to_id": "art:sync-debt"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:0ab1bfbab67cd83114ee788d9fd2ac849756c14321573f694f97cd87dfd270d6"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:d7ad0005715563e4089ca5a4f2ff2a4a2cb2b07c8feafd611610cb278c9cf468"
+      },
+      "to_id": "art:test-a-session-with-no-seed-can-find-one"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:35bd149e47e2a2669241c63df99a4c7b31d1120dd1bb857779376464f39b9bcc"
+      },
+      "to_id": "art:test-check-kit-manifest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:25db9bfb196de65609c48f3aec924f55bdcac7c8492066658f310832b17156ef"
+      },
+      "to_id": "art:test-degraded-server"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:cba77191420374d58d2360da9c1d2a73adcdd1d750d25dafc3991c1a525773af"
+      },
+      "to_id": "art:test-design-identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:e06c721f5f95ad1e42a8e97c53ca55c985a4a961ef256ff57489025891adb93b"
+      },
+      "to_id": "art:test-discontinued-is-read"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:10fcbe40f951649ca80e0bbac92e3399c45a1421e1484f580e95b97b12df7fb2"
+      },
+      "to_id": "art:test-edges-need-both-ends"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:80bb4b7b81a13ee0164d2e1c377ac326c95a2454b2a581cdfc9e86efc1dd8585"
+      },
+      "to_id": "art:test-init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:4d3313a3988968e436920662419a02f89fcc46d443d09ecd19d018bfe78dc688"
+      },
+      "to_id": "art:test-loop-nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:259d5952c7c46f429b9341e49c0aa91d7a9e65fe573c9acd1ca9ec5466af28d6"
+      },
+      "to_id": "art:test-mirror-refresh"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:4a6daa9a696479a7f84646fcfbf1da7b3f8ad7d31a13ea2441f714b9e50bfc7a"
+      },
+      "to_id": "art:test-no-per-design-globals"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:39bcf1f944d3ceed42a1c6e10922eb00362b50cf37e8fefbee4a94ec4a35b8c6"
+      },
+      "to_id": "art:test-nudge-path"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:be6196c6181454d6249970f6273f7ba13272e5c4b025a73be5267009855e9db2"
+      },
+      "to_id": "art:test-orientation-needs-nothing-to-start"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:f43ed9a42160d5031a44160b361a07be164ebbfb6910639a63ead22078150b29"
+      },
+      "to_id": "art:test-search-first"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:3a28c5d6f3bc91ce95ad0bc3da6bcc85c1bbb71e73e42fa670b14b101b78629c"
+      },
+      "to_id": "art:test-served-skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:3c302ebd5675b5bc9407d9318f6c164fcad4954354db4b7008f01b6cc0039e6d"
+      },
+      "to_id": "art:test-session-names-its-design"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:771424fd9bca485932d2b5e429b16f8940e982566102bef0fc2a905a0211adea"
+      },
+      "to_id": "art:test-sessions-cannot-cross-designs"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:21673699d9d326c9db310fcb24068fa38074634b1949d2708c56f9f77a6c2e5f"
+      },
+      "to_id": "art:test-shared-sessions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:78b994c3da2476c2560bcd53dd776eb2232a1c4856a8427c63e9a08235cc628d"
+      },
+      "to_id": "art:test-stale-seat"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:9a86b59dc94de982a97460fbaa8e22a85d4929f2bbc0db0d6a62338bf0fbdede"
+      },
+      "to_id": "art:test-surface-orphaned"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:1af50b2ca62b269db03167480eb448d545af280251cbd80f42ddca9dfdbb861c"
+      },
+      "to_id": "art:tools-ask"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:419c91a71f07405d762b0cc580f7954544625a0f2f765ae0debf58b48d982acf"
+      },
+      "to_id": "art:tools-assure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:ba6f62e02f9872a33d62483cc0aeacaa3fd2ca93cbcb5616771165ccf02edb8d"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:ea63dab87774d3a0ac022b987cf8594f446c5033ddb8ad8f405916dd1514bf05"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:9349d575b229d76389271afb868beaacfd0aaa3be3d0723982a92cf3b119ebfb"
+      },
+      "to_id": "art:tools-claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:6968ac79340556684e15312ff6a6bb7d5cb004905216c686af46dd5a3afa31c7"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:f6720b2e49607c8ae69b578db4ec19ce65e9ec9e2be8e13c3bc16ee0d795229e"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:25ab6353c7864b55aa042ac631ecc7ab16daef10aa8024927ecb840158aacbd5"
+      },
+      "to_id": "art:tools-operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:15be9fa5a75ad48868af8ce3e4385a3cbce6c28ef79b9711f628f5934936f8f5"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:6934d8e9197c727e76f9dda848ac57c48f0ec015109a4ab8f0eb76b9ef9eb7f2"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:810c3100d3bc707836572fbe68fbf1649e42f28bb1a3d4e7bf1f1e34fc68e937"
+      },
+      "to_id": "art:unreachable-decision-test"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:878315a480167a9296209d6b30a41f9f13318292db228829243a7acc24338c23"
+      },
+      "to_id": "art:updating-doc"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:ef7dbb708e027df2"
+      },
+      "to_id": "art:upgrade-v0110"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34"
+      },
+      "to_id": "art:upgrading-v0120"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995"
+      },
+      "to_id": "art:upgrading-v0130"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:b1e1cee221b0bc6ed7f9e4411cda9dcd50a2dc2647785e06eaa7b1ce7329da28"
+      },
+      "to_id": "art:upgrading-v0150"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:00eea80c2a79cc4eed4d1db9402a4e90e23231745a8fdd4117f44a9f22f58f24"
+      },
+      "to_id": "art:upgrading-v0160"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:d1c21f5330ad0ea05f4efe46c08a010d5fb22ece05523922bb6324c7ec8a2eda"
+      },
+      "to_id": "art:upgrading-v0180"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:3a36b9b6b248af09"
+      },
+      "to_id": "art:upgrading-v0190"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:d16abc28ea59e3f9"
+      },
+      "to_id": "art:upgrading-v0210"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:6b9d7e9a3106aeb93da6040f6804e618845417db6599b75a03b50415bd131b91"
+      },
+      "to_id": "art:upgrading-v0270"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:4f3ce1ca9ee00ff17079b8925e6dccaf8161b82857cb6746f2f756edd59772ac"
+      },
+      "to_id": "art:usgov-genesis-feedback-2026-08-15"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:8e4dd328ecb7e57cd5f4796a6a3d1c49bbb6a2ccdf5eeca164cf1313afb7eb98"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:47f07fc9b7effe9ebf321b360531ea10281864028731bf38acb8da67dfe29220"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:36120fad4c21c100d55a4ab1f2ba728eccc78c5586c3c1b4003a56a3639fe496"
+      },
+      "to_id": "art:vocabulary-reach"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {
+        "as_checksum": "sha256:74adb819732277a637afc95b3563543eeb8f309dc7bf5c36985b5b1a1baa6e04"
+      },
+      "to_id": "art:where-am-i-skill"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:agent"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:alternatives"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:artifact"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:budget"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:claims"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:compare"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:confirm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:degraded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:dimensions"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:docs"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:drift"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:dto"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:fielded"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:flow"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:genesis"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:hierarchy"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:identity"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:init"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:llm"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:merge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:nudge"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:operate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:packaging"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:propagate"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:provenance"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:readiness"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:registry"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:sanitize"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:scope"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:search"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:structure"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:surprises"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:sync"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:verify"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "cmp:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "sys:agent-surface"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "sys:coherence-loop"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "sys:documentation"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "sys:human-channel"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "sys:intake"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "sys:store"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "sys:time-history"
+    },
+    {
+      "edge_type": "INCLUDES",
+      "from_id": "rel:v0360",
+      "properties": {},
+      "to_id": "sys:vocabulary"
+    },
+    {
+      "edge_type": "INCLUDES",
       "from_id": "rel:v040",
       "properties": {
         "as_checksum": "sha256:1c729eee5b67e7dc"
@@ -72494,6 +74506,12 @@
       "from_id": "epoch:v0350",
       "properties": {},
       "to_id": "epoch:the-philosophy-is-in-the-product"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:v0350",
+      "properties": {},
+      "to_id": "epoch:v0360"
     },
     {
       "edge_type": "PRECEDES",
@@ -75844,6 +77862,12 @@
       "from_id": "cap:the-server-knows-its-own-currency",
       "properties": {},
       "to_id": "req:the-server-is-the-authority-on-its-own-currency"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:the-skill-response-carries-the-lens",
+      "properties": {},
+      "to_id": "req:the-reminder-rides-the-response"
     },
     {
       "edge_type": "SATISFIES",
@@ -80171,7 +82195,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "config",
-        "checksum": "sha256:ea42815d92c3082995cd9b1464389d0717fa6d45d653444fb324f5c49f513d83",
+        "checksum": "sha256:adb5ee7528a51c40b87e15733e4bf73f021b8fa7a602725afa3bef8ab015890e",
         "granularity": "atomic",
         "location": "reflow2.toml",
         "name": "reflow2.toml",
@@ -84315,6 +86339,16 @@
       }
     },
     {
+      "node_id": "cap:the-skill-response-carries-the-lens",
+      "node_type": "Capability",
+      "properties": {
+        "description": "BUILT 2026-08-19 on Anthony's idea, ON A BRANCH — **`get_skill` and `list_skills` carry a `lens` field**, so the reminder rides the response the agent reads immediately before doing the work.\n\n🛑 **STATUS IS `in_progress`, NOT `realized`, AND THAT IS DELIBERATE.** The code and its tests exist on `lens-hint-rides-the-loop-rail`; they are NOT merged and do NOT ship in v0.36.0. Set down explicitly during the v0.36.0 cut, because the design graph does not branch with git — the live store already held these nodes, and exporting `realized` would have made the release claim it shipped code that is not in it. Move to `realized` when the branch merges.\n\n**Distinct from the two neighbouring capabilities, and the split is the point:** `cap:the-agent-asks-who-it-is-talking-to` ASKS at orientation; `cap:the-register-rule-reaches-the-words` puts the RULE in served prose everywhere; **this one makes the reminder arrive on the wire, so it survives the context distance that prose does not.**\n\nWHAT WAS BUILT\n· **`DesignGraph::reader_lens()`** in core (`claims.rs`), returning `ReaderLens { with_background, without_background }`, re-exported at the crate root beside its siblings. Six tests PASSING in `the_design_says_whose_words_to_use.rs`; a workspace run with them included was 127 suites, 0 failed.\n· **`lens_line()`** in the MCP layer turns it into the sentence an agent reads.\n· **Attached best-effort to both skill tools**; 5 handler-level tests written and NOT YET RUN.\n\n⭐ THE FOUR PROPERTIES PINNED BY TESTS, because each is where this could have gone wrong:\n1. **IT REPORTS ABSENCE.** A design where nobody carries a background says so and NAMES who could be asked. This is the half reflow2 has never had — every detector reasons over what EXISTS and none asks whether a thing was never used at all.\n2. **IT NEVER CLAIMS TO KNOW WHO IS AT THE KEYBOARD.** reflow2 cannot: a `seat` names a session, never a person. It reports what the DESIGN holds and leaves matching the reader to the agent. **Confidently addressing the wrong person would be worse than silence.**\n3. **AN `automated_agent` IS NEVER COUNTED.** A bot's `description` is provenance about a tool; counting it would let a design claim it knows its AUDIENCE when it only knows its AUTHORS.\n4. **WHITESPACE IS NOT A BACKGROUND**, and `kind` unset reads as a person. The first is the same rule that made the served ask stop accepting *\"Bob\"*; the second because `kind` is optional and predates much of the graph.\n\n📌 **BEST-EFFORT BY CONSTRUCTION.** `lens_for_response` swallows a graph error and returns `None`, so a skill is still served when the graph is busy, missing or unreadable. **A reminder that could withhold a skill would trade a nudge for an outage.**\n\n📌 **HIS IDEA WAS AN INPUT PARAMETER; THIS IS AN OUTPUT.** `session_user` as an argument has a chicken-and-egg — the agent must already know who it is speaking to. As an output, **absence becomes the signal** and the caller passes nothing.\n\n🛑 **AND THE REAL LIMIT IS UNCHANGED BY ANY OF IT.** The tests prove the lens computes correctly and that the field is attached. **They do not prove an agent acts on it, and nothing proves the translation is any good.** This fixes \"the agent forgot\"; it does not touch \"the agent translated badly\". The trial — a real gap list narrated to a reader with a stated non-software background — is still the missing instrument.\n\n⚠️ OPEN, DELIBERATELY NOT DECIDED HERE: whether the lens needs `loop_hint`'s fire-on-change throttle.",
+        "name": "A skill response says who the design knows how to speak to — or says plainly that it knows nobody",
+        "provenance": "authored",
+        "status": "in_progress"
+      }
+    },
+    {
       "node_id": "cap:tool-carries-convention",
       "node_type": "Capability",
       "properties": {
@@ -84936,6 +86970,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-17",
         "name": "Renamed category and detect_defects -> open_defects; the assertions are unchanged.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-41a5792831853d0b",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-19",
+        "name": "v0.36.0 cut, step 1: the version string in reflow2.toml moved 0.35.0 -> 0.36.0. No design meaning moved with it — the meaning of a cut lives in the Release node and its epoch, never in a version string. Accepted BEFORE release_includes_all so the manifest freezes the post-bump file; accepting afterwards records that the release shipped the pre-bump one. The dynograph-foundation pin is deliberately unchanged at v0.12.0.",
         "subject": "system"
       }
     },
@@ -95192,6 +97236,16 @@
       }
     },
     {
+      "node_id": "epoch:v0360",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "v0.36.0 — the agent learns whose words to use: orientation asks what lens the reader brings, a Constraint stops reading as numeric-only, and the loop stops inviting closure after every capture",
+        "sequence": 364,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:v040",
       "node_type": "DesignEpoch",
       "properties": {
@@ -98791,9 +100845,19 @@
       "node_type": "Release",
       "properties": {
         "name": "v0.35.0 — the three legs",
-        "status": "deployed",
+        "status": "retired",
         "unit_type": "package",
         "version": "0.35.0"
+      }
+    },
+    {
+      "node_id": "rel:v0360",
+      "node_type": "Release",
+      "properties": {
+        "name": "v0.36.0 — the agent learns whose words to use",
+        "status": "deployed",
+        "unit_type": "package",
+        "version": "0.36.0"
       }
     },
     {
@@ -101288,6 +103352,18 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "Raised by @ajs from flo2, 2026-08-05. It began as friction — a proposed Decision that nothing reported — and became the largest open question in flo2's design when it was put as a product question instead: \"Shawn proposes an idea in flo2. How does that ever surface to Alex or me?\" Today it does not. Not reliably, and not at all without someone independently deciding to go and look.\n\nTRACE IT THROUGH, because three links are missing and the chain needs all three. (1) IS IT VISIBLE TO THE LOOP? Sometimes. A proposed Requirement with nothing satisfying it does fire unsatisfied_requirement, so that case works. A proposed Decision fires nothing. So whether a contribution is visible depends on which node type it happened to be captured as — an implementation detail the contributor cannot see and should not have to care about. (2) DOES ANYTHING SAY WHOSE IT IS? No. The gap says a requirement is unsatisfied; nothing says Shawn raised this, or that @ajs should judge it. AUTHORED_BY with role=approver already exists and is exactly the right shape, but NOTHING COMPUTES ON IT. (3) IS ANYONE TOLD? No — and this one is structural rather than missing: proxy.rs states that the reflow2 server NEVER INITIATES A MESSAGE (no notifications, no sampling requests, no progress pushes, \"verified against the service, not assumed\"). Every byte belongs to a request the client started.\n\nTHE MISMATCH UNDERNEATH. reflow2's coherence loop assumes ONE PERSON AT A KEYBOARD, with an agent asking them questions in a conversation. That assumption is sound and it is why the loop works so well in a coding harness. flo2 puts people in different places at different times, so the same loop has to become asynchronous — an inbox rather than a conversation. Nothing about the graph prevents that; the loop simply has no notion of a person to owe something to.\n\nTHE CHEAP PRIMITIVE, and the reason this is a sibling rather than a new idea: loop_status today answers \"what does this design owe?\" and TAKES NO ARGUMENTS AT ALL, while detect_gaps already accepts a scope for \"one part of the design\". A contributor scope on loop_status follows an established pattern. With that, the rest is flo2's own work and is ordinary: poll per user, render the inbox, email when it grows.\n\nNOTIFICATION IS DELIBERATELY OUT OF SCOPE. The server never initiating a message is a property worth keeping, and flo2 can poll. What has to live in reflow2 is the ANSWER to \"what is owed to this person\", because only the graph knows.\n\nTHE REAL DESIGN QUESTION INSIDE THIS, not to be papered over: what \"owed to\" MEANS per item type. A gap on a requirement Shawn raised is arguably owed to whoever must judge it, not to him. That is a genuine question and not a small one.\n\nWHY IT MATTERS HERE AND NOT ONLY TO flo2: this is the axis on which the accepted req:no-idea-goes-quiet currently fails. That requirement promises an idea \"stays connected to whether it was built... the user never has to remember it exists\" — and it holds for one person at one keyboard while failing completely for a contributor who is somewhere else.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "req:the-reminder-rides-the-response",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A discipline the agent must hold across a long session rides the tool response it already reads, not prose it read once",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "**Anthony, 2026-08-19**, in his own words: *\"how come we can't attach a parameter to each skill request that returns something to the user. like 'lens' or 'session_user' that reminds the agent on every skill request?\"*\n\n**WHAT IS REQUIRED: a rule the agent must hold for a whole session is DELIVERED ON THE RESPONSE, not left in prose it read once.**\n\n1. **THE REMINDER IS COMPUTED AND ATTACHED**, on a response the agent fetches immediately before doing work. Served prose is read at one moment and grows more distant every turn; a field on a response is re-read every call. **Same content, a carrier that does not decay.**\n\n2. **IT REPORTS ABSENCE, NOT ONLY PRESENCE.** When the design cannot answer — nobody has recorded a background — the reminder SAYS SO and names who could be asked. ⭐ This is the half reflow2 has never had: **every detector reasons over the consistency of what EXISTS, and nothing asks whether something was never used at all.**\n\n3. **IT NEVER ASSERTS WHAT IT CANNOT KNOW.** reflow2 has no notion of who is at the keyboard — a `seat` names a SESSION, never a person, and nothing binds one to a `Contributor`. So the reminder reports what the DESIGN holds and leaves matching the reader to the agent, the only party in the room that can. **Confidently addressing the wrong person would be worse than saying nothing.**\n\n4. **IT IS BEST-EFFORT AND NEVER BLOCKS.** A skill must still be served when the graph is busy, missing or unreadable. **A reminder that could withhold a skill trades a nudge for an outage.**\n\n═══════════════════════════════════════════════\n⭐ WHY THIS, RATHER THAN MORE PROSE — MEASURED TWICE IN ONE WEEK\n\nThe rule being carried (*speak the reader's domain, never reflow2's*) shipped as served prose across four PRs. **The failure mode of served prose is not hypothetical here:**\n  · `dec:idea-the-enum-question-came-back-four-days-after-it-was-fixed` — an instruction shipped, and the behaviour it forbade **recurred within four days**, because nothing observed whether it held.\n  · `req:skill-use-survives-a-long-session` — the same finding, already recorded.\n  · And during the very session that built the register rule, the Stop hook fired at the agent **mid-brainstorm**, the one workflow whose skill forbids it.\n\n**The mechanism already exists and is proven: `loop_hint`.** `with_loop_hint` (service.rs) attaches a computed reminder to any response, and already rides every write result and orientation read. This requirement generalises the pattern it won: **a discipline that must survive context distance belongs on the wire, not in a file.**\n\n📌 **HIS PROPOSAL WAS AN INPUT PARAMETER; WHAT IS OWED IS AN OUTPUT.** `session_user` as a caller-supplied argument has a chicken-and-egg — the agent must already know who it is speaking to, which is precisely what is being established. **As an output, absence becomes the signal** and the caller supplies nothing. Recorded because the change is a real narrowing of his idea, and the reason for it should outlive the memory of the conversation.\n\n⚠️ **WHAT THIS STILL DOES NOT DO, and it is the same limit as the prose it strengthens:** it makes the reminder unavoidable, not the translation good. **It fixes \"the agent forgot\", never \"the agent translated badly.\"** The trial that would tell those apart — a real gap list narrated to a reader with a stated non-software background — remains unbuilt, and remains the highest-value instrument missing.\n\n⚠️ AND A COST, STATED SO IT IS WEIGHED RATHER THAN DISCOVERED: every response carrying a reminder is a response that got bigger, and a reminder that never changes becomes one the reader learns to skip. `loop_hint` answered this with a fire-on-change throttle. **Whether a lens needs the same throttle — or whether \"every time\" is exactly the point on a call made a handful of times per session — is a real question this requirement deliberately leaves to the delivery.**",
         "status": "proposed"
       }
     },
@@ -107903,7 +109979,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:28a181a942d110f388e80e5be8109bb8b7d65b6c8f5129a20b2b29c70d608985",
+  "prev_content_hash": "sha256:207098f55f074426cccadd346cabc05a6ad2b822880f87e3241853991f02e71d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -108001,7 +110077,7 @@
       "Verification"
     ],
     "node_types": 29,
-    "reflow2_version": "0.35.0",
+    "reflow2_version": "0.36.0",
     "schema_version": 1
   }
 }
