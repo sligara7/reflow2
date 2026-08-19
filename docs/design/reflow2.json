@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:d23f5ddf70c0f7fd096e0703e8fb8db6589b1bccb30bb74ff2e515145264513f",
+  "content_hash": "sha256:e9f0d1b0ba25e91f35a567968f92cda0724eb98f980ade5b31d2cafaa67b15b3",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2294,6 +2294,22 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:vocabulary"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-loop-holds-the-invitation",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:agent"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-loop-holds-the-invitation",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -4842,6 +4858,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:holds-the-invitation-capture-intent",
+      "properties": {},
+      "to_id": "epoch:the-loop-holds-the-invitation"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:holds-the-invitation-kit-instructions",
+      "properties": {},
+      "to_id": "epoch:the-loop-holds-the-invitation"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:hxm-field-report",
       "properties": {},
       "to_id": "epoch:hxm-field-report"
@@ -7134,6 +7162,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-loop-holds-the-invitation:art:capture-intent-skill",
+      "properties": {},
+      "to_id": "epoch:the-loop-holds-the-invitation"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-loop-holds-the-invitation:art:kit-instructions",
+      "properties": {},
+      "to_id": "epoch:the-loop-holds-the-invitation"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:the-owner-rules-on-scope-and-reachability:dec:a-black-box-needs-three-edges-not-one",
       "properties": {},
       "to_id": "epoch:the-owner-rules-on-scope-and-reachability"
@@ -7969,8 +8009,8 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-project-says-what-it-is-doing-now-so-the-loop-stops-pushing",
       "properties": {
-        "acted_at": "2026-08-18",
-        "role": "author"
+        "acted_at": "2026-08-19",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -10068,6 +10108,15 @@
       "from_id": "req:design-composes",
       "properties": {
         "acted_at": "2026-07-25",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:detecting-is-not-asking",
+      "properties": {
+        "acted_at": "2026-08-19",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -13760,6 +13809,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:baseline-9325dcf17144c0a8",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect-and-ask-skill"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:baseline-abebf1584ca8593b",
       "properties": {
         "accepted_baseline": true,
@@ -17421,6 +17479,24 @@
         "action": "modified"
       },
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:holds-the-invitation-capture-intent",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:capture-intent-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:holds-the-invitation-kit-instructions",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:kit-instructions"
     },
     {
       "edge_type": "CHANGED",
@@ -30548,6 +30624,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:detecting-is-not-asking",
+      "properties": {},
+      "to_id": "dec:idea-a-project-says-what-it-is-doing-now-so-the-loop-stops-pushing"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:drift-rolls-up-to-a-score",
       "properties": {},
       "to_id": "dec:proposed-requirements-pruned"
@@ -31066,6 +31148,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:capture-intent-skill",
+      "properties": {},
+      "to_id": "snap:epoch:the-loop-holds-the-invitation:art:capture-intent-skill"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "art:collaborating",
       "properties": {},
       "to_id": "snap:epoch:bl199-reattachment:art:collaborating"
@@ -31129,6 +31217,12 @@
       "from_id": "art:kit-instructions",
       "properties": {},
       "to_id": "snap:epoch:constraint-is-not-only-numeric:art:kit-instructions"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:kit-instructions",
+      "properties": {},
+      "to_id": "snap:epoch:the-loop-holds-the-invitation:art:kit-instructions"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -72797,6 +72891,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:detect-and-ask-skill",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:the-loop-holds-the-invitation"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:dimensions",
       "properties": {
         "completeness": "complete"
@@ -75587,6 +75690,12 @@
       "from_id": "cap:the-design-says-what-its-own-tools-cannot-write",
       "properties": {},
       "to_id": "req:declared-vocabulary-is-reachable-from-the-surface"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:the-loop-holds-the-invitation",
+      "properties": {},
+      "to_id": "req:detecting-is-not-asking"
     },
     {
       "edge_type": "SATISFIES",
@@ -79615,7 +79724,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:b24723fefbff0306f0303030e511536240eb7b48251307b42117bd03d6cfeffa",
+        "checksum": "sha256:e1051f00038030c69fd7208108d56b55e11169a2e4145461b677c11a779c39c3",
         "granularity": "atomic",
         "location": "getting-started/skills/capture-intent/SKILL.md",
         "name": "capture-intent SKILL.md — the conversational capture path, now registering the document it captured from",
@@ -79977,6 +80086,17 @@
         "name": "detect.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:detect-and-ask-skill",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:fb1997d89bc468e1882eaae13b340476f37b478954845b7a54bd423f55f3e93b",
+        "location": "getting-started/skills/detect-and-ask/SKILL.md",
+        "name": "detect-and-ask/SKILL.md — the ask half of the loop, and now the rule for when NOT to ask",
+        "status": "realized"
       }
     },
     {
@@ -80413,7 +80533,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:b12ce4c1f534324c5de29eea93655b6e2abf53a98d87df16ce6076472f438f3b",
+        "checksum": "sha256:aefce00dae7ef95b094a2340b0b736e1f3537d12b03828301f67a13817f4b1fc",
         "granularity": "atomic",
         "location": "getting-started/AGENTS.md",
         "name": "getting-started/AGENTS.md",
@@ -84012,6 +84132,16 @@
       }
     },
     {
+      "node_id": "cap:the-loop-holds-the-invitation",
+      "node_type": "Capability",
+      "properties": {
+        "description": "DELIVERED 2026-08-19, `epoch:the-loop-holds-the-invitation`. **This is the DELIVERY; `req:detecting-is-not-asking` states what is owed.**\n\nA timing rule added to all THREE served surfaces that instructed the post-capture push, because each was individually correct and only their combination was the defect:\n1. **served `AGENTS.md` step 2** — the canonical loop statement.\n2. **`capture-intent` step 7** — where the post-capture push originates.\n3. **`detect-and-ask`** — where the asking actually happens; its own trigger is *\"after capturing new intent\"*, so fixing the other two while leaving this one would let an agent reading this skill alone still interrupt.\n\nEach carries Alex's report inline as its reason — including *\"three gaps, not three hundred; the volume was never the problem\"* — so a later session cannot revert it as fussiness without meeting the evidence. Each also states the counterweight in its own words: **this defers the INVITATION, never the RECORD.** Written three times deliberately, because the failure mode of a \"be quieter\" rule is that someone implements it as silence.\n\nAlso registers `art:detect-and-ask-skill`, which **had never existed** — the second such hole found this week, after `art:where-am-i-skill`.\n\n🛑 **STATUS IS `realized`, NOT `verified`, AND THE GAP IS THE SAME ONE AS EVERY OTHER SERVED-PROSE FIX.** `skill_lint` proves the text is present in all three surfaces and byte-identical across the mirrors. **It cannot prove an agent honoured it.** That is precisely the shape of the instruction which lapsed within four days in `dec:idea-the-enum-question-came-back-four-days-after-it-was-fixed`, and it is stated here rather than discovered later.\n\n⚠️ AND ONE JUDGEMENT REMAINS THE AGENT'S: *\"plainly still pouring things in\"* is not computable from the graph — the signals are conversational and live where reflow2 cannot see them. The explicit boundaries (they type the skill, ask what is open, or turn to building) are named in the text so the rule can never be read as \"never ask\".",
+        "name": "The loop detects on every capture and waits for a boundary before offering to close",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "cap:the-record-moved-is-surfaced",
       "node_type": "Capability",
       "properties": {
@@ -86006,6 +86136,16 @@
       }
     },
     {
+      "node_id": "chg:baseline-9325dcf17144c0a8",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-19",
+        "name": "First baseline. detect-and-ask had NO Artifact node until 2026-08-19 — the second such hole found this week after art:where-am-i-skill, in a repo where every other skill has carried one since the kit was modelled. A hole in the self-model, not a change to accept.",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-abebf1584ca8593b",
       "node_type": "ChangeEvent",
       "properties": {
@@ -87067,6 +87207,22 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The capture half of governance ships: a rule's consequence is asked in plain language and written explicitly, so `enforced` stops being inherited from a default nobody chose"
+      }
+    },
+    {
+      "node_id": "chg:holds-the-invitation-capture-intent",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "capture-intent step 7 keeps the loop check and stops turning it into a question mid-capture"
+      }
+    },
+    {
+      "node_id": "chg:holds-the-invitation-kit-instructions",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "The served loop statement separates detecting from asking and names the boundary that releases the question"
       }
     },
     {
@@ -90039,10 +90195,10 @@
       "node_id": "dec:idea-a-project-says-what-it-is-doing-now-so-the-loop-stops-pushing",
       "node_type": "Decision",
       "properties": {
-        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Alex (`who:alex`), relayed by Anthony 2026-08-18, who added the framing and the caveat.\n\nALEX'S SITUATION: he is building the knowledge base for a **large real project at work** and estimates he has entered **roughly 20% of the inputs**. His complaint, in Anthony's relay: *\"reflow2 often wants to start closing all the gaps and issues and he's like, slow down — let me finish inputting the 'knowledge' into this, then we can discuss how to close gaps and issues.\"*\n\n⭐ **HE IS 20% IN AND THE LOOP IS ALREADY PUSHING HIM TO CLOSE.** That is the whole finding stated as a number. The loop's debt is computed correctly — gaps genuinely exist, requirements genuinely have nothing satisfying them — and it is **the right answer to a question he is not yet asking.** Capture and closure are different modes of work, and reflow2 currently runs one loop that assumes the second.\n\nANTHONY'S PROPOSAL: user-defined phases — *\"design conception, initial systems engineering, design implementation, testing, fielding, etc.\"*\n\n⚠️ **AND ANTHONY IMMEDIATELY QUALIFIED IT HIMSELF, WHICH IS THE MOST IMPORTANT LINE IN THIS NODE:** *\"though projects like reflow2 often will be continually developed and I will probably always have ideas, so the phases would probably need to be more advisory and fluid than hard phases.\"* He named the objection to his own idea in the same breath as the idea. **A hard phase gate would break his own working model** — which is already measured, see below.\n\n═══════════════════════════════════════════════\nWHY THIS IS DISTINCT FROM THE THREE NODES REFLOW2 OFFERED\n\n· `dec:gap-reporting-when-most-intent-is-unbuilt` asks **how gap REPORTING should behave** — the volume and severity of what comes out of one detector. This asks **whether the project should be able to state its own posture at all**, governing what the loop VOLUNTEERS across `loop_status`, the Stop hook and an agent's own initiative, not just `detect_gaps` output. Real and deep overlap — that node's option (b) is this node's option (b), preserved below with its counter-argument intact — but one node holding both could only ever be half-answered.\n· `dec:idea-scoping-exists-and-did-not-narrow-what-a-builder-sees` asks whether scope should filter by RELEVANCE rather than reachability. Its session-mode question is the nearest existing seam and is cited below as such; it is about WHICH nodes a builder sees, not about WHETHER the loop should be pressing at this moment.\n· `fact:the-owner-uses-reflow2-as-a-funnel-for-random-order-input` is EVIDENCE FOR this question, not the question. It is cited below as the strongest argument that hard phases would fail.\n\n═══════════════════════════════════════════════\nWHAT THE DESIGN ALREADY HOLDS\n\n📌📌 `dec:gap-reporting-when-most-intent-is-unbuilt` (accepted 2026-08-04 as a FINDING plus an OPEN QUESTION — nothing settled) **IS THIS PROBLEM SEEN FROM THE MACHINE'S SIDE, TWO WEEKS EARLY.** Its finding, verified in source: `unsatisfied_requirement` is NOT an aggregate gap, so ingesting 300 unbuilt ideas produces 300 gaps saying the same thing. Its key paragraph is Alex's experience predicted: *\"Every existing detector was designed against a design that is MOSTLY BUILT, where an unsatisfied requirement is an exception worth naming one at a time. A captured corpus inverts the base rate: unbuilt is the NORMAL state, unbuilt is CORRECT… **the defect is not that the detector is chatty. It is that the detector's severity model encodes an assumption about the design's PHASE that the corpus case falsifies.**\"*\n  🛑 **AND ITS OPTION (b) IS ANTHONY'S PHASE IDEA, ALREADY WRITTEN DOWN WITH ITS COUNTER-ARGUMENT:** *\"(b) BAND BY PHASE — read the project's mode or the design's position on the maturity trajectory, and let a design with nothing built report this as a reading rather than as gaps. Counter: it makes gap severity depend on a computed phase, and reflow2 has been careful that 'where this design SHOULD be is deliberately not stated'.\"* **The fork was mapped, nobody chose, and the second user then walked into it on a real project.**\n\n📌 `req:accreted-intent-becomes-a-design` (**`proposed`, never accepted**) already states the mode Alex is in: *\"a body of intent accreted over years, contradicting itself and never built, can still become a design… every capability is `planned`, every requirement `proposed`, and the as-built half of the loop has no subject — which is honest and must not read as catastrophic.\"* ⚠️ **THE WAY BOTH REAL USERS ACTUALLY WORK IS CAPTURED IN THE DESIGN AND HAS NEVER BEEN CONFIRMED.**\n\n📌 `fact:the-owner-uses-reflow2-as-a-funnel-for-random-order-input` (measured, 2026-08-11) is Anthony describing the identical working model: *\"I've been treating reflow2 as a 'funnel' for my instructions, ideas, feedback, requirements and brainstorming. it often comes in random order… **both my brother and I kind of work like this** of organically developing our projects as we go.\"* **He said it about both of them a week before Alex independently hit the friction.** Nine inputs in one day arriving in random order is the strongest evidence for \"advisory and fluid\" over hard phases — no ordered phase list would have predicted any of them.\n\n📌 `maturity_report` ALREADY COMPUTES SOMETHING VERY CLOSE and deliberately stops one step short. Seven bands (intent, function, allocation, seams, realization, assurance, operation), naming the lowest as the FRONTIER — **and it refuses to emit a stage name**, because *\"a label no computation reads would be a distinction that does not earn its keep\"* and *\"reflow2 states where a design IS and REFUSES to say where it SHOULD be.\"* ⭐ **So reflow2 can already SEE that Alex is at the intent band. It simply does not let that reading change what the loop asks him. The gap is not perception — it is that perception and pacing are not connected.**\n\n📌 `set_project_mode` EXISTS AND IS NOT THIS. `flexible`/`rigid` gates exactly one thing — whether `apply_heal` applies structural repairs or stops. Its own tool doc says so, correcting older wording that *\"promised a breadth the code does not implement.\"* **Do not reach for it as the phase field; that would be the same over-promise a second time.**\n\n📌 `dec:anchored-first` already establishes that ranking may consider phase: *\"a gap that names nodes outranks a phase nudge.\"* Something phase-shaped is already in the ranking vocabulary.\n\n═══════════════════════════════════════════════\nOPTIONS, NONE CHOSEN\n\n(a) **A STATED, USER-SET POSTURE ON THE PROJECT** — one value the user sets and changes at will, roughly *\"still taking things in\"* vs *\"closing things out\"*. The loop reads it and changes what it VOLUNTEERS. FOR: it is the user's word, not a computed judgement, so it never tells anyone where they should be. AGAINST: another field to maintain, and a stale posture is worse than none — a project left on \"capturing\" for six months silences the loop exactly when it matters most.\n\n(b) **DERIVE IT FROM `maturity_report`'s FRONTIER** and never ask. FOR: no new state, no staleness, computation already exists and is already trusted. AGAINST: this is the older node's option (b) with its counter intact — it makes what the loop asks depend on a computed phase. **A frontier is a reading; making it govern behaviour quietly converts it into a judgement.**\n\n(c) **CHANGE NOTHING ABOUT PACING; FIX THE VOLUME** — the real injury may be 300 gaps saying one thing, not the loop asking at all. FOR: cheapest, and `is_aggregate` is the existing seam. AGAINST: the code's own comment records that aggregate keying means a standing judgement does not expire when the set changes. AND it may not be enough: Alex's words are *\"slow down\"*, not *\"too many\"*.\n\n(d) **A `capture` SESSION MODE RATHER THAN A PROJECT PHASE** — the user says \"I am dumping knowledge in for the next hour\" and the loop goes quiet for that session only, expiring by itself. FOR: no staleness by construction, fits the funnel model, and `dec:idea-scoping-exists-and-did-not-narrow-what-a-builder-sees` already raises a session mode for `loop_status` — **the seam may already be under consideration.** AGAINST: reflow2 has no clock and no session identity of its own; \"for this session\" is a concept the harness holds, not the graph.\n\n(e) **FULL LIFECYCLE PHASES AS ANTHONY FIRST NAMED THEM** (conception → initial SE → implementation → testing → fielding). FOR: it is the language a systems engineer already thinks in, and Anthony is one. AGAINST: **he retracted this himself in the same message.** Continual development means a project is in several at once — reflow2 is in \"fielding\" and \"conception\" simultaneously today. Recorded because it was proposed, not because it survives its own author's objection.\n\n⭐ THE QUESTION UNDERNEATH ALL FIVE, and the one worth answering first: **does the user need to TELL reflow2 to slow down, or should the loop simply not push when the evidence that it is unwelcome is already in the graph?** Alex is 20% in and every capability is `planned` — the design already contains the reason to be quiet. (a) and (e) make him say it; (b) and (c) make the design notice. **That is the real fork, and it is not the phase-vs-fluid question Anthony posed.**\n\n⚠️ WHAT MUST NOT HAPPEN, whichever way this goes: **the gaps must not become invisible.** `req:no-idea-goes-quiet` says an unbuilt idea must stay LOUD, and the older node draws the line precisely — *\"Loud and unreadable are not the same state.\"* A posture that SUPPRESSES rather than DEFERS would trade one failure for a worse one, because the user who asked for quiet is the one least likely to notice it never came back.\n\n🛑 UNVERIFIED, AND IT BEARS ON WHICH OPTION IS RIGHT: nobody has checked what Alex's session actually showed him. Whether the push came from `loop_status`, `detect_gaps`, the Stop hook, or an agent volunteering — these want different fixes, and (c) only works if volume was the injury. **One question to him is cheaper than any option here.**",
-        "name": "OPEN — should a project be able to say \"I am still taking knowledge in, stop asking me to close things\", and is that a PHASE or something more fluid?",
-        "rationale": "Raised under the brainstorm skill from Alex's field report, relayed with Anthony's phase proposal and his own same-breath retraction of it, 2026-08-18. Filed as distinct from the three nodes the near-duplicate check named: the closest, dec:gap-reporting-when-most-intent-is-unbuilt, asks how gap REPORTING should behave and this asks whether a project may state its own posture at all — and that node's option (b) is preserved here verbatim with its counter-argument rather than being restated, because it is the same fork reached from the other side and a future session must see that it was mapped in 2026-08 and not chosen. The funnel fact and req:accreted-intent-becomes-a-design are cited as the evidence that hard phases would break the two people who actually use this.",
-        "status": "proposed"
+        "decision": "**DECIDED 2026-08-19 BY ANTHONY — option (f), on his instruction \"yes, build it as you recommend\".** Delivered the same day, `epoch:the-loop-holds-the-invitation`; what is owed is stated in `req:detecting-is-not-asking`.\n\n**THE RULING: REPORTING A GAP AND INVITING ITS CLOSURE ARE DIFFERENT ACTS, AND ONLY ONE OF THEM IS URGENT.** Detection stays unconditional and cheap. The *invitation* waits for a boundary — the user asks, pauses, says they are done, or turns to building. **The gaps stay LOUD throughout: this defers the invitation, never the record.**\n\nHe chose it over a user-set posture, a computed phase, and full lifecycle phases — all of which ask the user to declare something, when the measured complaint was simply being interrupted.\n\n═══════════════════════════════════════════════\n⭐⭐⭐ ALEX'S ANSWER IS WHY THIS WAS ANSWERABLE, AND IT KILLED THE FAVOURITE HYPOTHESIS\n\nAsked what was actually pushing him to close: *\"I would enter some information about the application. Like this data model does this and this does this and then it basically would respond with, **'I have those all recorded. There are open gaps with X, Y, and Z. Do you want to fix them?'**\"*\n\n**IT WAS NOT VOLUME.** Three gaps — \"X, Y, and Z\" — not three hundred. The leading hypothesis was the chatty `unsatisfied_requirement` detector burying a corpus, and **that fix would not have touched his problem.** `dec:gap-reporting-when-most-intent-is-unbuilt` is a real defect and a genuinely different one; the two only looked alike.\n\n**AND HE REQUESTED NONE OF IT.** No `loop_status`, no `detect_gaps`, no status readout. Every prompt was volunteered and ended in a question he had to answer in order to keep doing what he came to do.\n\n**HIS ASK WAS A DEFERRAL, NOT A SILENCING:** *\"let me finish inputting the knowledge into this, **then we can discuss how to close gaps and issues**.\"*\n\n📌 THE QUESTION WAS PUT TO HIM PRECISELY BECAUSE THE ANSWER WOULD PICK THE OPTION, and it did. Recorded because it is the cheapest move in this whole node: one question to the affected user eliminated one option outright, demoted two others, and produced a fix nobody had proposed.\n\n═══════════════════════════════════════════════\n🛑 IT WAS NOT A BUG — THREE SERVED SOURCES INSTRUCTED IT, EACH CORRECT ALONE\n\n  1. `capture-intent` step 7 — *\"when it names debt, run detect-and-ask before the next operational task, not after.\"*\n  2. served `AGENTS.md` step 2 — *\"DETECT gaps and ask… ask the user… Do this before building.\"*\n  3. `detect-and-ask`'s own trigger — *\"after capturing new intent.\"*\n\n**Each was written for a real failure** — the agent that only ever adds nodes and surfaces nothing, which `capture-intent` step 7 names in as many words. **Together, on a user doing nothing but capture for days, they produce a prompt to close after every message.** That is why the fix is a timing rule added to all three rather than the deletion of any one, and why none of them was wrong to exist.\n\n⭐⭐ **CORROBORATED FROM THE INSIDE, SAME WEEK.** During the session that recorded this node, the Stop hook fired at the agent — *\"6 graph write(s) this session and no loop check… intent was captured this session and detect_gaps was never run\"* — **in the middle of a BRAINSTORM**, the one workflow whose own skill says *\"do not run detect-and-ask over brainstormed nodes… it would ask the user to firm up exactly what they deliberately left soft.\"* The loop pushed toward closure at the moment its own doctrine forbids it. Alex's report and that observation are the same defect at two distances, and the ruling covers both.\n\n═══════════════════════════════════════════════\nANTHONY'S ORIGINAL FRAMING, AND WHY IT IS NOT WHAT SHIPPED\n\nHis proposal was user-defined phases — *\"design conception, initial systems engineering, design implementation, testing, fielding.\"* ⚠️ **He qualified it in the same breath:** *\"projects like reflow2 often will be continually developed and I will probably always have ideas, so the phases would probably need to be more advisory and fluid than hard phases.\"* The evidence backs the caveat: `fact:the-owner-uses-reflow2-as-a-funnel-for-random-order-input` measured nine inputs in one day arriving in random order, with *\"both my brother and I kind of work like this.\"* **No ordered phase list predicts that — and in the end no phase concept was needed at all**, because the complaint was about interruption, not about stage.\n\n📌 `maturity_report` already sees where a design sits and deliberately refuses to say where it SHOULD be. 📌 `set_project_mode` gates only `apply_heal`; it was never this. 📌 `req:accreted-intent-becomes-a-design` (**`proposed`, still unaccepted**) already states Alex's mode — *\"every capability is `planned`, every requirement `proposed`… which is honest and must not read as catastrophic.\"*\n\n═══════════════════════════════════════════════\nOPTIONS AS THEY STOOD\n\n(f) ⭐ **CHOSEN** — separate reporting from prompting in the served text. Changes no computation, no schema, no detector; keeps every gap loud; fixes the brainstorm collision too.\n(a) **NOT CHOSEN** — a stated, user-set posture. Heavier than the evidence demanded: Alex never asked for a mode, he asked not to be interrupted. A stale posture would also silence the loop exactly when it matters.\n(b) **NOT CHOSEN** — derive from `maturity_report`'s frontier. Would make what the loop asks depend on a computed phase, converting a reading into a judgement.\n(c) 🛑 **ELIMINATED BY THE ANSWER** — aggregate the chatty detector. Three gaps, not three hundred. Still a live defect elsewhere.\n(d) **NOT CHOSEN** — a session capture mode. reflow2 has no clock and no session identity; \"for this session\" is the harness's concept.\n(e) **NOT CHOSEN** — full lifecycle phases; retracted by their own author.\n\n⚠️ **THE HONEST WEAKNESS OF WHAT SHIPPED**, stated rather than discovered later: served prose with nothing able to observe whether it holds. `skill_lint` asserts the text is present and mirrored; it cannot assert an agent honoured it. **Same shape as the instruction that lapsed within four days in `dec:idea-the-enum-question-came-back-four-days-after-it-was-fixed`.**\n\n⚠️ AND ONE JUDGEMENT STAYS THE AGENT'S: *\"plainly still pouring things in\"* is not computable from the graph — the signals are conversational and live where reflow2 cannot see them. The explicit boundaries are named in the served text so the rule can never be read as \"never ask\".",
+        "name": "DECIDED — detecting is not asking: the loop keeps finding gaps and holds the invitation to close until the person stops pouring things in",
+        "rationale": "Raised 2026-08-18 from Alex's report, answered by him 2026-08-19, and settled the same day on Anthony's instruction to build the recommendation. The answer is preserved verbatim because it eliminated the volume hypothesis — which was the favourite and would have sent the fix at a different defect entirely — and because the whole episode is the cheapest thing in the node: one question to the affected user killed one option, demoted two, and produced a fix nobody had proposed. The three served sources are named with file and step so a future session does not simply delete one; each was written for a real failure and only their combination was the defect. The Stop-hook self-observation is kept because self-measurement of the defect under discussion, during a brainstorm the skill explicitly protects, is stronger than a relayed report alone. Anthony's own phase proposal and his same-breath retraction are both retained so the record shows the idea was taken seriously and then rendered unnecessary rather than rejected.",
+        "status": "accepted"
       }
     },
     {
@@ -94354,6 +94510,16 @@
         "epoch_type": "revision",
         "name": "Fixed properly rather than patched — the misnamed category is renamed and the unscoped sweep returns what it examined",
         "sequence": 349,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:the-loop-holds-the-invitation",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "Detecting is not asking — the loop keeps finding gaps and stops interrupting a person who is still loading their project",
+        "sequence": 362,
         "status": "arrived"
       }
     },
@@ -99649,6 +99815,18 @@
       }
     },
     {
+      "node_id": "req:detecting-is-not-asking",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "The loop runs its detection whenever intent lands, and holds the invitation to close until the person stops pouring things in",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-08-19, on Alex's answer to a question put to him precisely because the answer would decide the fix. **Promoted from `dec:idea-a-project-says-what-it-is-doing-now-so-the-loop-stops-pushing` — that Decision asks WHETHER a project should be able to state a posture and weighs six options; this states WHAT IS OWED under the one he chose.**\n\n**THE REQUIREMENT, IN ONE LINE: DETECTING A GAP AND INVITING ITS CLOSURE ARE DIFFERENT ACTS, AND ONLY ONE OF THEM IS URGENT.**\n\n1. **DETECTION STAYS UNCONDITIONAL.** Whenever intent lands, the detection runs. It is cheap, it keeps the record honest, and the agent that only ever adds nodes without surfacing anything is the real failure `capture-intent` step 7 was written against. **Nothing here weakens that.**\n\n2. **THE INVITATION WAITS FOR A BOUNDARY.** When someone is plainly still pouring things in — several captures in a row, nothing asked of the agent, a brief that keeps going — the agent records what it found, says in ONE LINE that gaps exist and are captured, and does **not** ask *\"shall we fix them?\"* The boundary is: they ask, they pause, they say they are done, or they turn to building.\n\n3. **AND THE GAPS STAY LOUD.** `req:no-idea-goes-quiet` is not relaxed by this and must not be read as relaxed. **Deferring the invitation never defers the record**: the gaps stay counted, stay reported, stay in `loop_status`. **A gap nobody mentions again is the WORSE failure**, because the person who asked for quiet is the least likely to notice it never came back.\n\n═══════════════════════════════════════════════\n⭐ MEASURED, NOT SUPPOSED — AND THE MEASUREMENT KILLED THE FAVOURITE HYPOTHESIS\n\nAlex (`who:alex`), asked what was actually pushing him to close: *\"I would enter some information about the application. Like this data model does this and this does this and then it basically would respond with, **'I have those all recorded. There are open gaps with X, Y, and Z. Do you want to fix them?'**\"*\n\n**IT WAS NOT VOLUME.** Three gaps — \"X, Y, and Z\" — not three hundred. The leading hypothesis was the chatty `unsatisfied_requirement` detector burying a corpus, and **that fix would not have touched his problem.** `dec:gap-reporting-when-most-intent-is-unbuilt` is a real defect and a DIFFERENT one.\n\n**AND HE ASKED FOR NONE OF IT.** No `loop_status`, no `detect_gaps`, no status request. Every prompt to close was volunteered, and each ended in a question he had to answer in order to keep doing the thing he came to do.\n\n**HIS ASK WAS EXPLICITLY A DEFERRAL, NOT A SILENCING:** *\"let me finish inputting the knowledge into this, **then we can discuss how to close gaps and issues**.\"*\n\n═══════════════════════════════════════════════\n🛑 IT IS NOT A BUG — THREE SERVED SOURCES INSTRUCTED IT, EACH CORRECT ALONE\n\n  1. `capture-intent` step 7 — *\"when it names debt, run detect-and-ask before the next operational task, not after.\"*\n  2. served `AGENTS.md` step 2 — *\"DETECT gaps and ask… ask the user… Do this before building.\"*\n  3. `detect-and-ask`'s own trigger — *\"after capturing new intent.\"*\n\n**Each was written for a real failure. Together, on a user who is doing nothing but capture for days, they produce a prompt to close after every message.** That is why the fix is a timing rule added to all three rather than the deletion of any one of them.\n\n⭐⭐ **CORROBORATED FROM THE INSIDE, SAME WEEK.** During the session that recorded this, the Stop hook fired at the agent — *\"6 graph write(s) this session and no loop check… intent was captured this session and detect_gaps was never run\"* — **in the middle of a BRAINSTORM**, the one workflow whose own skill says *\"do not run detect-and-ask over brainstormed nodes… it would ask the user to firm up exactly what they deliberately left soft.\"* The loop pushed toward closure at the moment its own doctrine forbids it. Alex's report and that observation are the same defect at two distances, and clause 2 covers both.\n\n═══════════════════════════════════════════════\n⚠️ THE HONEST WEAKNESS, STATED SO IT IS NOT DISCOVERED LATER: this is served prose with nothing able to observe whether it holds. `skill_lint` can assert the text is present in all three surfaces and mirrored; it cannot assert an agent honoured it. **That is the same shape as the instruction which lapsed within four days in `dec:idea-the-enum-question-came-back-four-days-after-it-was-fixed`**, and it is the standing argument for the detector this design does not have.\n\n⚠️ AND THE JUDGEMENT THE AGENT MUST STILL MAKE: *\"plainly still pouring things in\"* is not computable from the graph. The signals named are conversational — several captures in a row, no question asked — and they live where reflow2 cannot see them. **A user who types the skill's name, asks what is open, or turns to building has given the boundary explicitly, and those cases are stated so the rule cannot be read as \"never ask\".**",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:deterministic-core",
       "node_type": "Requirement",
       "properties": {
@@ -102455,6 +102633,26 @@
         "state": "{\"decision\":\"`req:a-report-says-what-it-swept-and-whether-its-checks-ran` (b) offered exactly two ways out for `disconnected_community`: \\\"Either rename it to what it computes (\\\\\\\"tightly-coupled cluster\\\\\\\") or make it compute what it claims.\\\" NEITHER WAS TAKEN. The message was rewritten to describe the walk it actually made, and the category key `disconnected_community` was left alone.\\n\\nWHY RENAMING LOST. The key is a consumer contract in three places at once: it is a documented HEAL category, it is what `detect_defects` callers match on, and `ility.rs` uses it as a named ility source (`detect_defects.disconnected_community`). Renaming it would break every consumer in order to fix a sentence — the cost lands on people who did nothing wrong, to repair prose they never read. dev_storyflow's fleet matches on these keys.\\n\\nWHY RECOMPUTING LOST, and this is the one worth reading. \\\"Make it compute what it claims\\\" sounds like the honest option and is the wrong diagnosis: the detector's computation is not broken. It runs connected components over `design_network()`, correctly. THE REQUIREMENT'S OWN TEXT MISDESCRIBES IT AS COMPUTING MODULARITY, WHICH IT DOES NOT. What is narrow is the NETWORK, and the narrowing is deliberate and load-bearing — `NON_DESIGN_TYPES` and the exclusion of `CONTAINS` exist because provenance nodes and decomposition scaffolds distort the topology, each for a reason with its own record (BL-84, BL-124). Making it \\\"compute what it claims\\\" would mean walking the whole graph, which would undo those and report every Fragment as an island. The fix was never in the algorithm.\\n\\n⭐ SO THE GENERAL FORM, which is why this is a Decision and not a code comment: WHEN A CHECK'S NAME OVERSTATES ITS COMPUTATION, THE THIRD OPTION IS USUALLY RIGHT — leave the identifier, leave the algorithm, and make the OUTPUT state its own scope. A key is an interface; a message is addressed to a reader; only the second is free to change, and only the second was ever wrong.\\n\\n── A LARGER ROAD NOT TAKEN, recorded because it will be re-proposed ──\\nThe requirement is titled \\\"A report says what it swept\\\", and the fullest reading of that is to change `detect_defects` itself to return `{swept: {...}, defects: [...]}` instead of a bare array — which is what the SCOPED variant already does (`Scoped` carries `total`, `in_scope`, `region_size`, `note`), so the two halves of one tool are inconsistent today and that asymmetry is real.\\n\\nNOT DONE HERE, on scope rather than on merit. It breaks every consumer that indexes the array, it is a minor version bump, and the requirement's own owed items are enumerated (a), (b), (c) and are all satisfiable without it. The requirement also states its own boundary: \\\"NOT IN SCOPE: whether every reporting tool needs this treatment or only those whose zero is read as permission.\\\" Doing the shape change under the cover of finishing (b) and (c) would have been the widening this project keeps warning about.\\n\\nWHAT WOULD SETTLE IT: whether the unscoped `detect_defects` should match the scoped one's envelope. That is a genuine open question about surface consistency, and it is Anthony's, not an implementer's.\",\"name\":\"When a detector's NAME is wrong, fix what it SAYS — the key is a contract and the sentence is not\",\"rationale\":\"The category key is an interface — matched by callers and used by name as an ility source — while the message is addressed to a reader. Only the message was ever wrong, so only the message changed. \\\"Make it compute what it claims\\\" was rejected on a sharper ground than cost: the computation is correct, and the narrowness people mistake for a bug is the deliberate exclusion of provenance nodes and CONTAINS, each with its own record. Widening the walk would undo BL-84 and BL-124 and report every Fragment as an island.\",\"status\":\"proposed\"}",
         "target_id": "dec:a-misnaming-is-fixed-in-the-message-not-the-key",
         "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:the-loop-holds-the-invitation:art:capture-intent-skill",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:d4c7461b15caac67aac0655982b09974948a4753948a45d11e941ffb2f50e4b3\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:d4c7461b15caac67aac0655982b09974948a4753948a45d11e941ffb2f50e4b3\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:d4c7461b15caac67aac0655982b09974948a4753948a45d11e941ffb2f50e4b3\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:a596ed5e34cdf3ecec3cd5f2d94731bacb2f66dee86874147f3a34dec42039f5\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:a596ed5e34cdf3ecec3cd5f2d94731bacb2f66dee86874147f3a34dec42039f5\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:a596ed5e34cdf3ecec3cd5f2d94731bacb2f66dee86874147f3a34dec42039f5\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:a596ed5e34cdf3ecec3cd5f2d94731bacb2f66dee86874147f3a34dec42039f5\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{\"as_checksum\":\"sha256:a596ed5e34cdf3ecec3cd5f2d94731bacb2f66dee86874147f3a34dec42039f5\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{\"as_checksum\":\"sha256:a596ed5e34cdf3ecec3cd5f2d94731bacb2f66dee86874147f3a34dec42039f5\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:capture-registers-its-source\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:the-design-interview-precedes-the-capture\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"document\",\"checksum\":\"sha256:b24723fefbff0306f0303030e511536240eb7b48251307b42117bd03d6cfeffa\",\"granularity\":\"atomic\",\"location\":\"getting-started/skills/capture-intent/SKILL.md\",\"name\":\"capture-intent SKILL.md — the conversational capture path, now registering the document it captured from\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:capture-intent-skill",
+        "target_type": "Artifact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:the-loop-holds-the-invitation:art:kit-instructions",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"out\",\"edge_type\":\"DOCUMENTS\",\"other_type\":\"Capability\",\"other_id\":\"cap:skills-served\",\"properties\":{\"doc_kind\":\"agent_instructions\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:skills-served\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"document\",\"checksum\":\"sha256:b12ce4c1f534324c5de29eea93655b6e2abf53a98d87df16ce6076472f438f3b\",\"granularity\":\"atomic\",\"location\":\"getting-started/AGENTS.md\",\"name\":\"getting-started/AGENTS.md\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:kit-instructions",
+        "target_type": "Artifact"
       }
     },
     {
@@ -107483,7 +107681,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e63d748addd6b0f02b87f0579f1c6220c110552539bd7ea9c8eb9833ea773450",
+  "prev_content_hash": "sha256:d23f5ddf70c0f7fd096e0703e8fb8db6589b1bccb30bb74ff2e515145264513f",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
