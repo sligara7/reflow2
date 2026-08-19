@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:db2edab4c7e2a18a3382a847751999314b7fa9df6f05be58437d4597f4ab5e59",
+  "content_hash": "sha256:15f65507f1e02383599ae61fa8d880db85d51962a54a538def732257e5e259db",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -25814,6 +25814,14 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "art:hxm-program-feedback-2026-08-19",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:a-dated-field-report-is-registered-and-parked"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "art:main",
       "properties": {},
       "to_id": "dec:rmcp-v3-upgrade"
@@ -25825,6 +25833,14 @@
         "note": "GOVERNED_BY and deliberately NOT REALIZES. This script delivers no product capability — it ran once, on 2026-08-07, to execute dec:backlog-is-retired, and asserting that it realizes something would be the false claim this project treats as a defect. It is committed rather than discarded because its CLASSIFY table is the judgement half of the migration: which of the four types each retired row became, and which node it was attached to. That mapping exists nowhere else, and without it 'why is BL-140 a defect against cmp:detect' is unanswerable. The prose it moved came from the row verbatim; only the routing was decided, and this file is where that decision is legible."
       },
       "to_id": "dec:backlog-is-retired"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "art:ophyd-service-feedback-2026-08-19",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:a-dated-field-report-is-registered-and-parked"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -30141,6 +30157,12 @@
       "from_id": "cmp:verify",
       "properties": {},
       "to_id": "dec:bl-185"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "dec:a-dated-field-report-is-registered-and-parked",
+      "properties": {},
+      "to_id": "req:a-deliberate-state-is-not-a-defect"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -82598,6 +82620,16 @@
       }
     },
     {
+      "node_id": "art:hxm-program-feedback-2026-08-19",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "location": "docs/feedback/2026-08-19-hxm-program-agent-feedback.md",
+        "name": "hxm_program agent feedback, 2026-08-19 — reflow2 as a PROGRAM brain: five repos, two people, one graph",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:identity",
       "node_type": "Artifact",
       "properties": {
@@ -82894,6 +82926,16 @@
         "name": "operate.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:ophyd-service-feedback-2026-08-19",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "location": "docs/feedback/2026-08-19-ophyd-service-agent-feedback.md",
+        "name": "ophyd-service agent feedback, 2026-08-19 — two days of heavy use: brainstorm→promotion→build, a drift catch, zero defects",
+        "status": "realized"
       }
     },
     {
@@ -91619,6 +91661,16 @@
       }
     },
     {
+      "node_id": "dec:a-dated-field-report-is-registered-and-parked",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "THE RULING, for a genre rather than for two files. Anthony, 2026-08-19: *\"restore and park two field reports.\"*\n\n**THE GENRE:** a dated report ABOUT this system's behaviour, written from outside its development — an agent-authored field report from a project that uses reflow2, a bug report, an incident write-up, a user complaint, a beamline observation, a vendor's test certificate. Its defining property is that it is a FROZEN OBSERVATION: true of a moment, and it must not be revised as the design moves.\n\n**WHAT TO DO WITH ONE:** REGISTER the Artifact so the design knows the evidence exists and where it lives, draw NO claim edge, and GOVERN it by this ruling with `ruling: parks`. Detectors then report it as parked and COUNT it in `swept.parked`, rather than filing a deliberate state as a structural defect.\n\n**BOTH ALTERNATIVES ARE FALSE, and this is why the ruling is needed rather than a convention:**\n· **A `DOCUMENTS` edge would lie about the direction of obligation.** DOCUMENTS means \"this file describes the design and would be WRONG if it drifted out of step with it\". A field report is the opposite: it is correct precisely by NOT tracking the design. Under DOCUMENTS, every future design change would read as staling a report that is simply history.\n· **Leaving it unregistered loses the evidence.** The file exists, it is cited, and a design that cannot say where its field evidence lives has to rediscover it. This is the state the graph was in between `fbc8e55` and this ruling.\n· **Deleting it is the worst of the three**, because it is the one that LOOKS clean: the defect count falls, the gate goes green, and the design quietly stops knowing what it was told.\n\n**THE ONE EDGE THAT IS TRUE:** none of REALIZES / DOCUMENTS / SPECIFIES / PRODUCES / SATISFIES applies, and that is not a gap in the report — it is the accurate description of a document that implements nothing, specifies nothing and describes nothing. `parks` is how the design says so out loud instead of leaving it to be inferred from an absence.\n\n**WHAT IT IS NOT.** Parking is not acknowledgement and not suppression. `acknowledge_defect` is per-instance and expires when the shape changes; this is a standing ruling over a genre whose shape is deliberately fixed. The parked nodes stay visible and counted — `dec:report-dont-judge` is respected, because reflow2 is reading a ruling the design already made rather than deciding anything on its own.\n\n**WHAT IT DOES NOT SETTLE, named so it is not read as settling it:** whether `artifact_type` should gain a value for human evidence. It has `test_result` for the machine kind. \"Attaches to nothing on purpose\" is not the same claim as \"this is dated evidence and it ages\" — cf. `req:evidence-carries-the-date-it-was-taken`. That question stays open under `dec:idea-parks-shipped-and-was-still-not-reached-the-instruction-is-missing-where-the-person-is-stuck`.\n\nGOVERNS, as of 2026-08-19: `art:ophyd-service-feedback-2026-08-19`, `art:hxm-program-feedback-2026-08-19`. The genre is expected to grow; new members are parked under this same ruling rather than under a new one each time.",
+        "name": "A dated field report is REGISTERED and PARKED — its unattached state is correct and deliberate, and neither deleting it nor giving it a DOCUMENTS edge is honest",
+        "rationale": "Written as a ruling over a GENRE rather than a note on two files because that is the shape the case actually has, and because per-instance acknowledgement was already judged the wrong tool for it in req:a-deliberate-state-is-not-a-defect: acknowledging findings one at a time to record one standing rule does not scale and expires on nodes whose shape is fixed on purpose. Accepted on Anthony's explicit instruction of 2026-08-19 — `parks` refuses a `proposed` ruling by design, so that a musing cannot suppress a finding, which means this decision could not have been made by the agent alone. It exists at all because the same design's own accepted requirement predicted that an agent watching the defect count would delete such documents instead, and then one did.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:a-failing-check-says-against-what",
       "node_type": "Decision",
       "properties": {
@@ -93546,7 +93598,7 @@
       "node_id": "dec:idea-two-more-projects-report-write-ergonomics-and-a-program-shaped-use",
       "node_type": "Decision",
       "properties": {
-        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL, AND DELIBERATELY NOT ACTED ON. Anthony, 2026-08-19: *\"let's capture the feedback, but hold off on tackling anything from it — your context is getting high, so let's tackle them in the next session.\"* **Nothing here has been built.** Full text: `docs/feedback/2026-08-19-ophyd-service-agent-feedback.md`, `docs/feedback/2026-08-19-hxm-program-agent-feedback.md` — files, not graph Artifacts: a dated field report is evidence, and the schema has no honest edge for it (`DOCUMENTS` would claim the report should stay in step with the design, which is backwards).\n\nTwo agents, two of his work projects, filed independently on the same day. **Neither complains about the MODEL.** ophyd's own summary: *\"The friction list is almost entirely about write ergonomics on long-lived nodes, not about the model.\"*\n\n═══════════════════════════════════════════════\n✅ VERIFIED BEFORE RECORDING — three checks run this session\n\n**1. THE ITEM GRADED \"worst one\" DOES NOT REPRODUCE.** ophyd reports `add_decision` upsert silently resetting an accepted Decision to `proposed`. Tested on 0.36.0 at BOTH layers, checking BOTH the reply and the stored value: status survives. `upsert_node` reads existing properties, extends with supplied, writes — the merge is correct. A second hypothesis (that a REFUSED call still mutates) was also tested and is wrong: the dedup guard correctly does not fire on your own existing node, so the call simply succeeds. 🛑 **Either it is already fixed, or that session ran a stale binary — and MERGED-≠-SERVED bit this very session twice. ASK WHAT VERSION THEIR SERVER REPORTED before anything is built.**\n\n**2. THE SKILL-NAME DRIFT IS REAL, confirmed by inspection.** EIGHT advertised commands have no skill of that name: `rules`, `req`, `gaps`, `decisions`, `where`, `kpp`, `health`, `debt`. `get_skill('rules')` correctly refuses and lists 20 names, none of them `rules`. ⭐ **reflow2 already owns the doctrine that fixes it** — `req:a-refusal-names-what-would-have-worked` — the refusal simply does not map aliases. *\"'rules' is served as 'governance-proposal'\"* is the whole change.\n\n**3. `description` UNDECLARED ON `ChangeEvent` IS REPORTED BY BOTH PROJECTS INDEPENDENTLY.** hxm's framing is the sharper one: the flag fires on **every legitimate write**, which **trains the caller to ignore `undeclared`** and defeats its typo-catching purpose. One schema line.\n\n═══════════════════════════════════════════════\n⭐ THREE ITEMS THIS SESSION CORROBORATES FIRST-HAND, from a third project (reflow2 itself)\n\n· **PROMOTION ALWAYS TRIPS THE DEDUP GUARD** (ophyd #5). Hit on EVERY promotion today — decision→requirement→capability, `distinct_from` boilerplate each time. Their fix — a `promotes: <decision-id>` parameter that draws a real edge, skips the guard, and gives the Decision its road-taken link for free — **turns friction into structure**. Three projects now.\n· **EVOLVING A LONG DECISION MEANS RESENDING ALL OF IT** (ophyd #2). Multi-thousand-word bodies resent repeatedly today, each with the revision block warning the prior text exists only in the reply. **The riskiest write pattern in the tool.** Their `resolve_decision(id, resolution_text, status)` would remove friction #1 and #2 together.\n· **APPEND-ONLY EDITS GET THE MAXIMUM-ALARM REVISION NOTE** (hxm #3). Same experience. Their fix is right: a diff-aware *\"new value strictly extends the prior\"* **preserves the alarm's signal for the genuinely destructive case.**\n\n═══════════════════════════════════════════════\n⭐⭐ THE BIGGEST ITEM IS NOT A BUG — \"reflow2 AS A PROGRAM BRAIN, NOT A PROJECT BRAIN\"\n\nAnthony's own framing, quoted by the agent: *\"kind of a strange way to be using reflow2… managing this scattered 'project' that has multiple facets, but that are all inter-related.\"* Five repos, two people, a simulated beamline, a PR pipeline, one graph, three days of heavy load.\n\n**Its central claim: the ontology ALREADY FITS.** Capabilities outliving any repo, Contributors with authorship and ownership, Verifications naming a beamline session rather than a CI job, epochs, releases, TRL/MRL gates — *\"that vocabulary is program-shaped. The single-system framing lives mostly in adopt/genesis's front door, not in the schema.\"*\n\nTWO NAMED STRAINS:\n· **People-readiness has no node type.** The program's real gate includes *\"AJ can independently build and maintain this stack\"*, and readiness modelling stops at technologies. The learning ladder got smuggled into a TemporalFact's context sentence.\n· **Facet-blind interrogation.** Writing 12 advisory craft rules moved unsurfaced gaps 7 → 19: the gap engine prices a craft-of-practice rule identically to a system requirement. 📌 This is the SAME SHAPE as `dec:idea-a-project-says-what-it-is-doing-now-so-the-loop-stops-pushing`, settled today — the loop asking the right question at the wrong moment — arriving from a different direction.\n\n📌 THEIR SUGGESTION: name the use case in the docs, and have genesis/adopt **ask \"system or program?\" up front instead of assuming system.**\n\n═══════════════════════════════════════════════\nTHE REST, UNRANKED AND UNJUDGED (see the artifacts for full text)\n\nophyd: review/ack records swamp `scan_nodes(Decision)` (~40 of 61); loop-debt classes have no acknowledge path, so a deliberate state keeps the loop from ever reading clean and it is unclear whether `ruling: parks` covers it; three tools needed to see all debt; token weight of `get_skill` and `propagate_change`; the `create_node`-vs-`add_*` scar tissue.\nophyd ideas: `resolve_decision`; promotion edges as first-class; a one-call `demonstration` record for *\"X was seen working live on DATE in ENV\"* (the commonest evidence at a beamline, currently 3 loads + 3 calls); a session-scoped write journal.\nhxm: ChangeEvent `name` has no length steer; **a \"sighting\" mechanism for DesignRules** — ⭐ which `fact:the-gh-merge-failure-is-snap-confinement-and-nobody-was-counting` shows arriving independently from a second direction the same day; `get_skill` batch or ETag.\n\n⚠️ NOTHING HERE IS PRIORITISED YET, and the ordering above is exposition, not a plan. The two cheapest CONFIRMED items are the `ChangeEvent.description` declaration and the alias-mapping refusal.",
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL, AND DELIBERATELY NOT ACTED ON. Anthony, 2026-08-19: *\"let's capture the feedback, but hold off on tackling anything from it — your context is getting high, so let's tackle them in the next session.\"* **Nothing here has been built.** Full text: `art:ophyd-service-feedback-2026-08-19`, `art:hxm-program-feedback-2026-08-19` — REGISTERED Artifacts, PARKED under the accepted `dec:a-dated-field-report-is-registered-and-parked`, files at `docs/feedback/2026-08-19-*-agent-feedback.md`. They correctly attach to nothing and `parks` is how the design says so; an earlier pass in this session deleted them instead, on the mistaken argument that no honest edge existed — see `dec:idea-parks-shipped-and-was-still-not-reached-the-instruction-is-missing-where-the-person-is-stuck`.\n\nTwo agents, two of his work projects, filed independently on the same day. **Neither complains about the MODEL.** ophyd's own summary: *\"The friction list is almost entirely about write ergonomics on long-lived nodes, not about the model.\"*\n\n═══════════════════════════════════════════════\n✅ VERIFIED BEFORE RECORDING — three checks run this session\n\n**1. THE ITEM GRADED \"worst one\" DOES NOT REPRODUCE.** ophyd reports `add_decision` upsert silently resetting an accepted Decision to `proposed`. Tested on 0.36.0 at BOTH layers, checking BOTH the reply and the stored value: status survives. `upsert_node` reads existing properties, extends with supplied, writes — the merge is correct. A second hypothesis (that a REFUSED call still mutates) was also tested and is wrong: the dedup guard correctly does not fire on your own existing node, so the call simply succeeds. 🛑 **Either it is already fixed, or that session ran a stale binary — and MERGED-≠-SERVED bit this very session twice. ASK WHAT VERSION THEIR SERVER REPORTED before anything is built.**\n\n**2. THE SKILL-NAME DRIFT IS REAL, confirmed by inspection.** EIGHT advertised commands have no skill of that name: `rules`, `req`, `gaps`, `decisions`, `where`, `kpp`, `health`, `debt`. `get_skill('rules')` correctly refuses and lists 20 names, none of them `rules`. ⭐ **reflow2 already owns the doctrine that fixes it** — `req:a-refusal-names-what-would-have-worked` — the refusal simply does not map aliases. *\"'rules' is served as 'governance-proposal'\"* is the whole change.\n\n**3. `description` UNDECLARED ON `ChangeEvent` IS REPORTED BY BOTH PROJECTS INDEPENDENTLY.** hxm's framing is the sharper one: the flag fires on **every legitimate write**, which **trains the caller to ignore `undeclared`** and defeats its typo-catching purpose. One schema line.\n\n═══════════════════════════════════════════════\n⭐ THREE ITEMS THIS SESSION CORROBORATES FIRST-HAND, from a third project (reflow2 itself)\n\n· **PROMOTION ALWAYS TRIPS THE DEDUP GUARD** (ophyd #5). Hit on EVERY promotion today — decision→requirement→capability, `distinct_from` boilerplate each time. Their fix — a `promotes: <decision-id>` parameter that draws a real edge, skips the guard, and gives the Decision its road-taken link for free — **turns friction into structure**. Three projects now.\n· **EVOLVING A LONG DECISION MEANS RESENDING ALL OF IT** (ophyd #2). Multi-thousand-word bodies resent repeatedly today, each with the revision block warning the prior text exists only in the reply. **The riskiest write pattern in the tool.** Their `resolve_decision(id, resolution_text, status)` would remove friction #1 and #2 together.\n· **APPEND-ONLY EDITS GET THE MAXIMUM-ALARM REVISION NOTE** (hxm #3). Same experience. Their fix is right: a diff-aware *\"new value strictly extends the prior\"* **preserves the alarm's signal for the genuinely destructive case.**\n\n═══════════════════════════════════════════════\n⭐⭐ THE BIGGEST ITEM IS NOT A BUG — \"reflow2 AS A PROGRAM BRAIN, NOT A PROJECT BRAIN\"\n\nAnthony's own framing, quoted by the agent: *\"kind of a strange way to be using reflow2… managing this scattered 'project' that has multiple facets, but that are all inter-related.\"* Five repos, two people, a simulated beamline, a PR pipeline, one graph, three days of heavy load.\n\n**Its central claim: the ontology ALREADY FITS.** Capabilities outliving any repo, Contributors with authorship and ownership, Verifications naming a beamline session rather than a CI job, epochs, releases, TRL/MRL gates — *\"that vocabulary is program-shaped. The single-system framing lives mostly in adopt/genesis's front door, not in the schema.\"*\n\nTWO NAMED STRAINS:\n· **People-readiness has no node type.** The program's real gate includes *\"AJ can independently build and maintain this stack\"*, and readiness modelling stops at technologies. The learning ladder got smuggled into a TemporalFact's context sentence.\n· **Facet-blind interrogation.** Writing 12 advisory craft rules moved unsurfaced gaps 7 → 19: the gap engine prices a craft-of-practice rule identically to a system requirement. 📌 This is the SAME SHAPE as `dec:idea-a-project-says-what-it-is-doing-now-so-the-loop-stops-pushing`, settled today — the loop asking the right question at the wrong moment — arriving from a different direction.\n\n📌 THEIR SUGGESTION: name the use case in the docs, and have genesis/adopt **ask \"system or program?\" up front instead of assuming system.**\n\n═══════════════════════════════════════════════\nTHE REST, UNRANKED AND UNJUDGED (see the artifacts for full text)\n\nophyd: review/ack records swamp `scan_nodes(Decision)` (~40 of 61); loop-debt classes have no acknowledge path, so a deliberate state keeps the loop from ever reading clean and it is unclear whether `ruling: parks` covers it; three tools needed to see all debt; token weight of `get_skill` and `propagate_change`; the `create_node`-vs-`add_*` scar tissue.\nophyd ideas: `resolve_decision`; promotion edges as first-class; a one-call `demonstration` record for *\"X was seen working live on DATE in ENV\"* (the commonest evidence at a beamline, currently 3 loads + 3 calls); a session-scoped write journal.\nhxm: ChangeEvent `name` has no length steer; **a \"sighting\" mechanism for DesignRules** — ⭐ which `fact:the-gh-merge-failure-is-snap-confinement-and-nobody-was-counting` shows arriving independently from a second direction the same day; `get_skill` batch or ETag.\n\n⚠️ NOTHING HERE IS PRIORITISED YET, and the ordering above is exposition, not a plan. The two cheapest CONFIRMED items are the `ChangeEvent.description` declaration and the alias-mapping refusal.",
         "name": "OPEN — two more projects filed field reports the same day: the friction is almost entirely WRITE ERGONOMICS ON LONG-LIVED NODES, and one of them says reflow2 is being used as a PROGRAM brain, not a project brain",
         "rationale": "Captured on Anthony's instruction to record the feedback and defer the work to a fresh session, so nothing is lost to context pressure and nothing is half-built. The three verification results are recorded ahead of the reports themselves because they change what should be built: the item its own author graded worst does not reproduce and may be a stale-binary artefact, which would misdirect a whole increment if taken at face value; and two other items are confirmed rather than merely reported. This session's own first-hand corroboration of three friction items is included because reflow2 is effectively a third reporting project, and three independent hits on the promotion guard is a different weight of evidence from one. The program-brain observation is given its own section rather than filed among the friction because it is a claim about what reflow2 IS, and its author argues the schema already supports it while the front-door skills do not.",
         "status": "proposed"
@@ -107490,6 +107542,19 @@
       }
     },
     {
+      "node_id": "fact:parks-clears-orphan-node-but-a-parked-genre-then-reads-as-an-unthreaded-cluster",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "MEASURED ON reflow2's OWN GRAPH, 2026-08-19, while parking two field reports under `dec:a-dated-field-report-is-registered-and-parked` — NEW EVIDENCE FOR INSTANCE (b) OF THIS REQUIREMENT, which said `disconnected_community` cannot see a ruling.\n\n**`parks` DID ITS JOB EXACTLY.** Both Artifacts left the `orphan_node` list and appeared in `detect_defects`'s `swept.parked` — visible and counted, not silenced. That half works as advertised.\n\n⚠️ **AND THE DEFECT COUNT WENT UP ANYWAY, 36 → 37.** The two parked Artifacts plus the ruling Decision that parks them immediately formed a 3-node `unthreaded_cluster` (`heal:ad4ec5186566ff68`, warning): *\"3 nodes form a cluster with no traceability edge to the main body.\"* Parking a genre CREATES an island by construction — the ruling and the things it parks are joined only to each other, which is precisely what a ruling over an unattached genre looks like.\n\n**SO ONE DETECTOR READS THE RULING AND THE OTHER DOES NOT.** `orphan_node` honours `ruling: parks`; `unthreaded_cluster` never sees it. Doing the right thing still degraded the instrument, just through a different rule — the same direction this requirement exists to reverse.\n\n**WHAT MADE IT GO AWAY HERE, and why a user may not have it:** a second, ORDINARY `GOVERNED_BY` edge from the ruling Decision to this Requirement, drawn because it is true — the ruling exists because of this requirement and `parks` is its answer. Defects returned to 36, so the final cost of registering two documents was ZERO. But that edge existed to be drawn only because the ruling happened to have a parent already in the main body. A user whose standing ruling has no such parent — the ordinary case for a house rule about incident reports or customer complaints — gets a permanent `unthreaded_cluster` warning for doing exactly what the design told them to do, and the only ways out are to draw an edge nobody means or to stop parking.\n\n📌 SCOPE OF THE CLAIM: measured once, on one graph, with one ruling over two artifacts. Whether `unthreaded_cluster` SHOULD honour a `parks` ruling, or whether a parked island is genuinely worth reporting, is a judgement nobody has been asked for — and this fact does not settle it. Not established: whether `disconnected_community` (the sibling rule named in instance (b)) behaves the same way, which was not exercised.",
+        "subject_id": "req:a-deliberate-state-is-not-a-defect",
+        "valid_from": "2026-08-19",
+        "value": "{\"ruling\":\"dec:a-dated-field-report-is-registered-and-parked\",\"parked\":[\"art:ophyd-service-feedback-2026-08-19\",\"art:hxm-program-feedback-2026-08-19\"],\"orphan_node\":\"honours parks - both artifacts moved to swept.parked\",\"unthreaded_cluster\":\"does NOT honour parks - new 3-node island heal:ad4ec5186566ff68\",\"defects_before_park\":36,\"defects_after_park\":37,\"defects_after_governed_by_edge\":36,\"net_cost_of_registering_two_documents\":0,\"what_fixed_it\":\"ordinary GOVERNED_BY from the ruling to req:a-deliberate-state-is-not-a-defect, true independently of the detector\",\"generalisation_risk\":\"a ruling with no parent in the main body keeps the cluster warning permanently\",\"not_established\":\"whether disconnected_community behaves the same; not exercised\"}"
+      }
+    },
+    {
       "node_id": "fact:precedes-is-unused-in-storyflow-and-flowless-here",
       "node_type": "TemporalFact",
       "properties": {
@@ -110054,7 +110119,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:cd68d5011d0fba7ccd3f4f835fbe999f03be969c69574147e878fa8c06fa5f27",
+  "prev_content_hash": "sha256:db2edab4c7e2a18a3382a847751999314b7fa9df6f05be58437d4597f4ab5e59",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
