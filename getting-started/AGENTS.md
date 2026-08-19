@@ -171,6 +171,23 @@ loads it and it takes precedence over the served one of the same name.
    back as a Requirement or a node property. Do this **before** building. If the user judges a
    gap acceptable, record that with `acknowledge_gap` (+ their reason) so it moves to
    `reviewed_gaps` — the open list must keep meaning "still needs attention".
+
+   ⏸️ **DETECTING IS NOT ASKING, AND THE DIFFERENCE IS A TIMING RULE.** Run the detection
+   whenever intent lands — it is cheap and it keeps the record honest. **Offering to close
+   the gaps is a separate act, and it interrupts.** When someone is plainly still pouring
+   things in — several captures in a row, no question put to you, a brief that keeps going —
+   record what you found, tell them in one line that gaps exist and are captured, and **do not
+   ask "shall we fix them?" yet.** Wait for a boundary: they ask, they pause, they say they are
+   done, or they turn to building.
+   *Measured, not supposed (2026-08-19): a user loading a large project reported entering a
+   piece of his data model and being answered with "I have those all recorded. There are open
+   gaps with X, Y, and Z. Do you want to fix them?" — every time. Three gaps, not three hundred;
+   the volume was never the problem. He had to decline repeatedly in order to keep doing the
+   thing he came to do, and asked only that we "discuss how to close gaps and issues" later.*
+   **The gaps stay LOUD either way** (`req:no-idea-goes-quiet`): this defers the invitation,
+   never the record. Deferring is not silence — a gap you never mention again is the worse
+   failure, because the person who asked for quiet is the least likely to notice it never
+   came back.
 3. **Build only what the graph specifies, and link the files back.** Implement the
    capabilities/components the graph holds — nothing it doesn't. After creating each real file,
    register it with `link_artifact` (Artifact + provenance + `REALIZES` the capability it

@@ -125,6 +125,18 @@ mis-file things**; this one names where it runs out, and that boundary is where 
    what the loop is owed (its `next` list); when it names debt, run **detect-and-ask** before
    the next operational task, not after.
 
+   ⏸️ **BUT DO NOT TURN THAT INTO A QUESTION WHILE THEY ARE STILL POURING THINGS IN.** Running
+   the detection and *inviting the user to close things* are different acts. If this capture is
+   one of several in a row and they have asked you nothing, say in a line that you recorded it
+   and that gaps exist — then **keep taking input.** Save "shall we work through these?" for
+   when they ask, pause, or turn to building.
+   *This is the field report that put the rule here (2026-08-19): a user loading a large project
+   at work said every message he sent came back as "I have those all recorded. There are open
+   gaps with X, Y, and Z. Do you want to fix them?" It was three gaps, not a wall — the volume
+   was never the problem. Being asked to switch tasks after every sentence was.*
+   **Never let this quiet the gaps themselves.** The record stays complete and the count stays
+   honest; only the invitation waits.
+
 Extraction happens in your context (you read the brief and decide the nodes) — reflow2 stores
 and validates them against its schema. Unknown types or missing required fields fail loud; fix
 the node rather than working around the error.
