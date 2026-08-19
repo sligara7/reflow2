@@ -1155,12 +1155,24 @@ impl DesignGraph {
     /// Create a [`ChangeEvent`](crate::nodes::node::CHANGE_EVENT) — a
     /// first-class record of *why* the design changed. `name` and
     /// `change_type` are required.
+    ///
+    /// `summary` and `rationale` are the schema's own text fields — `summary`
+    /// is indexed for full text and is the embedding field, `rationale` is
+    /// "why the change was made". THEY ARE PARAMETERS RATHER THAN A FOLLOW-UP
+    /// WRITE BECAUSE THEIR ABSENCE HERE WAS MEASURED: two projects reported
+    /// the same workaround on the same day (2026-08-19), each making a second
+    /// `create_node` call to hang an UNDECLARED `description` on the event,
+    /// because the constructor took none of the text the skills tell you to
+    /// write. A flag that fires on every legitimate write teaches callers to
+    /// ignore it, which is the opposite of what `undeclared` is for.
     pub fn add_change_event(
         &mut self,
         id: &str,
         name: &str,
         change_type: ChangeType,
         subject: Option<ChangeSubject>,
+        summary: Option<&str>,
+        rationale: Option<&str>,
     ) -> Result<StoredNode, DynoError> {
         self.upsert_node(
             node::CHANGE_EVENT,
@@ -1168,7 +1180,9 @@ impl DesignGraph {
             Props::new()
                 .set("name", name)
                 .set("change_type", change_type.as_str())
-                .set_opt("subject", subject.map(ChangeSubject::as_str)),
+                .set_opt("subject", subject.map(ChangeSubject::as_str))
+                .set_opt("summary", summary)
+                .set_opt("rationale", rationale),
         )
     }
 
@@ -1243,7 +1257,7 @@ impl DesignGraph {
         // passes None rather than inferring one. Absent means nobody said,
         // which is true; a guess here would be a claim nobody made.
         let change_event =
-            self.add_change_event(rec.change_event_id, rec.name, rec.change_type, None)?;
+            self.add_change_event(rec.change_event_id, rec.name, rec.change_type, None, None, None)?;
         self.pin_at_epoch(node::CHANGE_EVENT, rec.change_event_id, rec.epoch_id)?;
         self.changed(
             rec.change_event_id,

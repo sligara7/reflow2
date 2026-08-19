@@ -253,6 +253,8 @@ fn each_accepted_checksum_keeps_its_own_disposition() {
         "A real design change",
         ChangeType::NewFeature,
         None,
+        None,
+        None,
     )
     .unwrap();
 

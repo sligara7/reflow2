@@ -36,6 +36,8 @@ fn a_defect_fix_is_expressible_without_inventing_a_failed_test() {
         "the requirement said civil date; the code used UTC",
         ChangeType::DefectFix,
         Some(ChangeSubject::System),
+        None,
+        None,
     )
     .expect("a defect against accepted intent must be recordable as itself");
 
@@ -52,6 +54,8 @@ fn the_record_axis_can_say_the_thing_did_not_change() {
         "corroboration merged into an existing defect; nothing about the system moved",
         ChangeType::Resync,
         Some(ChangeSubject::Record),
+        None,
+        None,
     )
     .expect("event");
 
@@ -76,6 +80,8 @@ fn an_unstated_axis_stays_unstated() {
         "somebody did not say",
         ChangeType::Refactor,
         None,
+        None,
+        None,
     )
     .expect("event");
 
@@ -99,6 +105,8 @@ fn one_change_type_appears_on_both_axes() {
         "record side",
         ChangeType::Resync,
         Some(ChangeSubject::Record),
+        None,
+        None,
     )
     .expect("event");
     g.add_change_event(
@@ -106,6 +114,8 @@ fn one_change_type_appears_on_both_axes() {
         "system side",
         ChangeType::Resync,
         Some(ChangeSubject::System),
+        None,
+        None,
     )
     .expect("event");
 

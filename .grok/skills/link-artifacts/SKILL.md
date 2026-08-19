@@ -116,3 +116,25 @@ command is exactly the coherence failure this exists to catch — and generated 
 and build output should stay out, because a graph that captures everything is a list that gets
 skimmed. A machine-readable contract (OpenAPI, protobuf, JSON-schema) is neither: that is
 `SPECIFIES`, on the interface it defines.
+
+
+There is a **third case**, and it is the one that gets deleted by mistake. Some documents
+describe nothing and implement nothing, *correctly*: a dated field report, an incident
+write-up, a customer complaint, a beamline observation, a vendor's test certificate. They are
+frozen observations — true of a moment, and correct precisely by **not** tracking the design as
+it moves. `DOCUMENTS` is the wrong edge for them, because it claims the opposite: that the file
+should stay in step, so every later design change would read as staling a record that is simply
+history.
+
+Register them anyway — the evidence is worth knowing about — and then say the quiet part out
+loud: `governed_by(artifact, <decision>, ruling: "parks")`, where the Decision is **accepted**
+and says why the genre correctly attaches to nothing. `orphan_node` then reports the artifact in
+`swept.parked` and counts it, instead of filing a deliberate state as a defect. Write the ruling
+over the **genre**, not the file, so the next report of the same kind is covered by it.
+
+⚠️ **What parking does and does not reach.** It is read by `orphan_node` and by the
+unsatisfied-requirement gap, and by nothing else — it does not quiet `unthreaded_cluster`, and it
+does not cover the "capability claims realized with no passing check" loop debt. A ruling and the
+things it parks are joined only to each other, so they can read as an island; if the ruling
+genuinely follows from something already in the design, draw that edge too — because it is true,
+not to quiet the detector.

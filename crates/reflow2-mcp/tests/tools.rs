@@ -598,6 +598,8 @@ async fn the_surface_can_say_that_nothing_moved() {
     // or the ledger's count of first baselines would measure nothing.
     assert!(
         s.add_change_event(Parameters(AddChangeEventReq {
+            summary: None,
+            rationale: None,
             id: "chg:fake".into(),
             name: "not really a baseline".into(),
             change_type: "baseline_established".into(),
@@ -1905,6 +1907,8 @@ async fn change_event_declares_what_it_changed_atomically() {
     // written — no event, no partial edge set.
     let refused = s
         .add_change_event(Parameters(AddChangeEventReq {
+            summary: None,
+            rationale: None,
             id: "chg:wind".into(),
             name: "Add wind".into(),
             change_type: "new_feature".into(),
@@ -1929,6 +1933,8 @@ async fn change_event_declares_what_it_changed_atomically() {
     // A bogus action is refused the same way.
     let bad_action = s
         .add_change_event(Parameters(AddChangeEventReq {
+            summary: None,
+            rationale: None,
             id: "chg:wind".into(),
             name: "Add wind".into(),
             change_type: "new_feature".into(),
@@ -1944,6 +1950,8 @@ async fn change_event_declares_what_it_changed_atomically() {
 
     // The valid call draws the CHANGED edges in the same write.
     let res = j!(s.add_change_event(Parameters(AddChangeEventReq {
+            summary: None,
+            rationale: None,
         id: "chg:wind".into(),
         name: "Add wind".into(),
         change_type: "new_feature".into(),
@@ -2021,6 +2029,8 @@ async fn temporal_resource_and_realization_tools_round_trip() {
     );
 
     j!(s.add_change_event(Parameters(AddChangeEventReq {
+            summary: None,
+            rationale: None,
         id: "chg:tune".into(),
         name: "Tune the model".into(),
         change_type: "refactor".into(),
