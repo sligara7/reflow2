@@ -343,6 +343,16 @@ NON_TOOL_TERMS = {
     # prose-only decision point, and the kind the graph does not have yet.
     "undecided_decision_point",
     "brainstorm",
+    # The SPECIFIES edge's `format` property and three of its values (2026-08-19).
+    # capture-intent now routes "here is our schema / data model" to an Artifact
+    # plus a SPECIFIES edge, which is where enums and field types actually live
+    # (dec:agent-navigates-content: the agent reads the file, the graph records
+    # where it is). These are edge-property terms, not tools — and SPECIFIES
+    # notably has NO typed tool, which is why the row says create_edge.
+    "format",
+    "json_schema",
+    "openapi",
+    "protobuf",
     # Scoped detection (cap:scoped-analysis): a team asks about its own part, and
     # the answer names what it left out.
     "scope",

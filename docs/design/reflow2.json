@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e63d748addd6b0f02b87f0579f1c6220c110552539bd7ea9c8eb9833ea773450",
+  "content_hash": "sha256:d23f5ddf70c0f7fd096e0703e8fb8db6589b1bccb30bb74ff2e515145264513f",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -4494,6 +4494,30 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:constraint-is-not-only-numeric",
+      "properties": {},
+      "to_id": "epoch:constraint-is-not-only-numeric"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:constraint-not-numeric-add-constraint-desc",
+      "properties": {},
+      "to_id": "epoch:constraint-is-not-only-numeric"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:constraint-not-numeric-kit-instructions",
+      "properties": {},
+      "to_id": "epoch:constraint-is-not-only-numeric"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:constraint-not-numeric-skill-lint-allowlist",
+      "properties": {},
+      "to_id": "epoch:constraint-is-not-only-numeric"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:consumption-detector-built",
       "properties": {},
       "to_id": "epoch:built-and-consumed-by-nothing"
@@ -6573,6 +6597,30 @@
       "from_id": "snap:epoch:capture-registers-its-source:cap:governance-proposal",
       "properties": {},
       "to_id": "epoch:capture-registers-its-source"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:constraint-is-not-only-numeric:art:capture-intent-skill",
+      "properties": {},
+      "to_id": "epoch:constraint-is-not-only-numeric"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:constraint-is-not-only-numeric:art:kit-instructions",
+      "properties": {},
+      "to_id": "epoch:constraint-is-not-only-numeric"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:constraint-is-not-only-numeric:art:skill-lint",
+      "properties": {},
+      "to_id": "epoch:constraint-is-not-only-numeric"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:constraint-is-not-only-numeric:art:tools-capture",
+      "properties": {},
+      "to_id": "epoch:constraint-is-not-only-numeric"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -8809,8 +8857,8 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-the-enum-question-came-back-four-days-after-it-was-fixed",
       "properties": {
-        "acted_at": "2026-08-18",
-        "role": "author"
+        "acted_at": "2026-08-19",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -16004,6 +16052,42 @@
         "action": "modified"
       },
       "to_id": "cap:reconcile-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:constraint-is-not-only-numeric",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:capture-intent-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:constraint-not-numeric-add-constraint-desc",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:constraint-not-numeric-kit-instructions",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:kit-instructions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:constraint-not-numeric-skill-lint-allowlist",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
     },
     {
       "edge_type": "CHANGED",
@@ -30976,6 +31060,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:capture-intent-skill",
+      "properties": {},
+      "to_id": "snap:epoch:constraint-is-not-only-numeric:art:capture-intent-skill"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "art:collaborating",
       "properties": {},
       "to_id": "snap:epoch:bl199-reattachment:art:collaborating"
@@ -31036,6 +31126,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:kit-instructions",
+      "properties": {},
+      "to_id": "snap:epoch:constraint-is-not-only-numeric:art:kit-instructions"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "art:main",
       "properties": {},
       "to_id": "snap:epoch:rmcp-v3:art:main"
@@ -31081,6 +31177,18 @@
       "from_id": "art:service",
       "properties": {},
       "to_id": "snap:epoch:stateless-seat:art:service"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:skill-lint",
+      "properties": {},
+      "to_id": "snap:epoch:constraint-is-not-only-numeric:art:skill-lint"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:tools-capture",
+      "properties": {},
+      "to_id": "snap:epoch:constraint-is-not-only-numeric:art:tools-capture"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -79507,7 +79615,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:a596ed5e34cdf3ecec3cd5f2d94731bacb2f66dee86874147f3a34dec42039f5",
+        "checksum": "sha256:b24723fefbff0306f0303030e511536240eb7b48251307b42117bd03d6cfeffa",
         "granularity": "atomic",
         "location": "getting-started/skills/capture-intent/SKILL.md",
         "name": "capture-intent SKILL.md — the conversational capture path, now registering the document it captured from",
@@ -80305,7 +80413,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:13f19b14c25c9300",
+        "checksum": "sha256:b12ce4c1f534324c5de29eea93655b6e2abf53a98d87df16ce6076472f438f3b",
         "granularity": "atomic",
         "location": "getting-started/AGENTS.md",
         "name": "getting-started/AGENTS.md",
@@ -81080,7 +81188,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:961c6ba1dd768d33f9a0de639ee2487c9d72273cc779109440506f6e12b5d7d1",
+        "checksum": "sha256:b04c4739a44f77da463c89a4cff174d4d7140c6fa35e1e507f061fb546fa7396",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -81531,7 +81639,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2fb8a22c01bb9abe0a83994f4f7ccd8d467d610945359dcfb15b5330a8abffa7",
+        "checksum": "sha256:ea63dab87774d3a0ac022b987cf8594f446c5033ddb8ad8f405916dd1514bf05",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -86490,6 +86598,38 @@
       }
     },
     {
+      "node_id": "chg:constraint-is-not-only-numeric",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "Constraint's non-numeric scope stated on all three surfaces, and the routing table gains rows for a value set, a prohibition and a schema file"
+      }
+    },
+    {
+      "node_id": "chg:constraint-not-numeric-add-constraint-desc",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "add_constraint's served description leads with the non-numeric case and names the cost of the budgets-only reading"
+      }
+    },
+    {
+      "node_id": "chg:constraint-not-numeric-kit-instructions",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "Served instructions stop describing Constraint as a numeric limit and name prohibitions and value sets first"
+      }
+    },
+    {
+      "node_id": "chg:constraint-not-numeric-skill-lint-allowlist",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "skill_lint allowlists the SPECIFIES format terms the new routing row names"
+      }
+    },
+    {
       "node_id": "chg:consumption-detector-built",
       "node_type": "ChangeEvent",
       "properties": {
@@ -90928,10 +91068,10 @@
       "node_id": "dec:idea-the-enum-question-came-back-four-days-after-it-was-fixed",
       "node_type": "Decision",
       "properties": {
-        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Alex (`who:alex`), relayed by Anthony 2026-08-18, who states his agreement outright.\n\nWHAT HAPPENED: the agent asked Alex **how to model \"enums\"**. His reply, in full: *\"I don't know, you figure out how to model enums.\"*\n\nANTHONY'S RULING, stated as agreement rather than as a question: *\"he considers that reflow2 + agent's responsibility (and I agree), not his job to define how to model something.\"*\n\n═══════════════════════════════════════════════\n🛑🛑 **THIS IS THE SECOND OCCURRENCE, AND THE FIX FOR THE FIRST ONE SHIPPED FOUR DAYS AGO**\n\n  · **2026-08-14** — Alex, first run: *\"It asked me what node types it should store [my data models] as. I didn't really know for sure so I told it to figure it out.\"*\n  · **2026-08-14** — `dec:idea-the-graph-vocabulary-never-reaches-the-user` DECIDED by Anthony the same day: both a served interview step AND a served routing table. Option (c), leave it to agent judgement, explicitly **CLOSED — \"observed failing\"**.\n  · **BUILT AND MERGED** — commit `c863a4b`, *\"The agent asks about the thing, not about the schema\"* (#180). `capture-intent` now carries, in served text: *\"**Never ask the user which node type to use.** Mapping their words onto the vocabulary is your job.\"* It carries the interview questions in domain language and a nine-row routing table, and it cites Alex's own 2026-08-14 report inline as the reason.\n  · **2026-08-18** — the same user is asked to design a modelling decision again.\n\n⭐ **THE FIX IS PRESENT IN THE SERVED TEXT AND THE BEHAVIOUR RECURRED ANYWAY.** That is not a reason to rewrite the instruction louder. It is the strongest evidence yet for a finding the design already holds in three places: **`req:skill-use-survives-a-long-session`, `dec:idea-the-loop-only-sees-what-an-agent-hand-carries`, and this decision's own closing paragraph — *\"a discipline that exists only as an instruction, with nothing able to observe whether it held.\"*** It held for four days, or it never fired at all, and **nothing in reflow2 can tell which**: a leaked question leaves no node, so `loop_status` reads clean through both exchanges.\n\n═══════════════════════════════════════════════\n⭐⭐ AND THE SECOND DIAGNOSIS IS PROBABLY THE REAL ONE — THERE MAY BE NOWHERE TO PUT AN ENUM\n\nThis is what makes the recurrence different in kind from the first occurrence rather than a repeat of it, and it was found by reading rather than assumed:\n\n  · **AN ENUM IS NOT A PHRASING. IT IS A CONSTRUCT INSIDE THE THING BEING DESIGNED.** The shipped routing table maps **what the user SAID** to a node type — *\"it has to…\"* → Requirement, *\"the X part\"* → Component. Every row is keyed on a speech act. **\"How do I model an enum\" is not a speech act; it is a question about the graph's expressive power**, and no row can answer it. The table is not incomplete — it is answering a different question.\n  · 📌 **`req:vocabulary-covers-information` IS THE NODE THAT WOULD GIVE AN ENUM A HOME, AND IT IS `deferred`.** Its own words: *\"there is no data-entity or information-element type… the graph can say a contract exists, what medium it uses and how it authenticates, but not WHAT TRAVELS OVER IT in any form a computation can read.\"* An enum is a closed set of permitted values for an attribute — squarely inside what that requirement says cannot be expressed, and it names the consequence: *\"interoperability failures are overwhelmingly SEMANTIC — the same concept under two names, two units, two precisions — and none of that is expressible.\"*\n  · 🛑 **SO THE AGENT MAY HAVE BEEN STANDING AT A REAL HOLE AND HANDED IT TO THE USER.** The routing table's last row exists for exactly this and says what to do instead: *\"⚠️ Nothing fits cleanly. Say so rather than forcing it… that boundary is where you tell the user 'reflow2 has no good home for this yet' instead of inventing one.\"* **The correct move was available in the served text and the wrong one was taken.** Saying \"reflow2 cannot express this yet\" is an answer. \"How should I model it?\" is the labour returned to the one person with no reason to know.\n\n═══════════════════════════════════════════════\nWHY THIS IS DISTINCT FROM THE NODES IT SITS BESIDE, all read first\n\n· `dec:idea-the-graph-vocabulary-never-reaches-the-user` is **ACCEPTED and settled**, and its fix is BUILT. This node is the evidence that the settlement did not hold, plus a second diagnosis it did not contemplate. Appending to a settled decision would blur what was decided; this must be its own question so the settlement stays readable.\n· `req:the-kind-of-system-is-established-before-its-parts-are-captured` (**still `proposed`, never accepted** — worth noting, since its own Decision is accepted) governs establishing WHAT KIND of thing is being designed, before the parts. The enum question arises well after that step and would recur even if it were performed perfectly.\n· `req:vocabulary-covers-information` (`deferred`) states the EXPRESSIVE hole. This asks what the agent should DO when it stands at that hole with a user waiting — a behaviour question, not a vocabulary one, and answerable while the requirement stays deferred.\n· `dec:idea-a-user-carries-a-persona-that-shapes-every-reply` (raised the same day, from the same relay) is about the REGISTER the agent speaks in. This is about a question the agent should never have ASKED. Shared vocabulary, opposite direction: one shapes what goes out, the other forbids a particular thing coming back.\n\n═══════════════════════════════════════════════\nOPTIONS, NONE CHOSEN\n\n(a) **A STANDING RULE THAT THE AGENT NEVER ASKS A MODELLING QUESTION AT ALL** — widen the existing \"never ask which node type\" to \"never ask HOW to model anything\", covering data models, enums, state machines, taxonomies, units. FOR: it is what both Alex and Anthony actually said, in as many words. AGAINST: it is a third instruction on top of two that already exist, with still nothing able to observe it. **Louder is not the same as enforceable**, and this option's own evidence is that the last instruction lasted four days.\n\n(b) **THE HONEST-REFUSAL BEHAVIOUR, MADE EXPLICIT AND SERVED** — when the vocabulary has no home for something, the agent SAYS SO and records it, rather than either asking the user or forcing a fit. FOR: the boundary row already exists in the table and would only need generalising from one row to a rule; it converts an unanswerable question into a recorded finding, which is the shape reflow2 is good at. AGAINST: it needs somewhere for the refusal to LAND, or the evidence evaporates exactly as it did here — see (d).\n\n(c) **ANSWER THE ENUM QUESTION ONCE, IN THE PRODUCT** — decide how reflow2 represents a closed value set, write it down, and stop re-deriving it per session. FOR: it is what Alex literally asked for, *\"you figure out how to model enums\"*, and enums are not exotic — they will recur in every software project reflow2 ever touches. AGAINST: it is `req:vocabulary-covers-information`, currently `deferred`, and answering it for enums alone risks a point fix where `dec:agent-navigates-content` argues for something much thinner (the graph records a locator; the agent navigates the content). **Anthony's standing rule — fix it PROPERLY at the root, never patch around it — points at un-deferring the requirement rather than special-casing enums.**\n\n(d) **MAKE THE LEAK OBSERVABLE** — when the agent hits a modelling question it cannot route, it writes a node (a friction report, a fact, a gap) so the event stops being invisible. FOR: this is the ONLY option that addresses why the first fix's failure went unnoticed for four days and was found by a user rather than by the system. It is the same move as `report-friction`, fired automatically instead of by hand. AGAINST: the original decision already rejected detection for a stated reason — *\"the evidence never enters the graph, so any check would have to live in the harness and read the conversation.\"* **But this is not detection; it is the AGENT filing what it already knows at the moment it knows it**, which is a different mechanism and may survive that objection.\n\n(e) **DO NOTHING AND TREAT IT AS AGENT VARIANCE** — one session followed the skill, one did not. AGAINST: **option (c) of the original decision — leave it to agent judgement — is already CLOSED as observed-failing, and this is its second observation.** Recorded only so the null option is on the record and cannot be quietly adopted by default.\n\n⚠️ THE HONEST TENSION, unchanged from the first occurrence and worth restating because it is easy to overshoot: **some vocabulary reaching the user is CORRECT.** The rule is *never make the user choose the internal category* — not *never say a word from the schema*. And there is a legitimate case where the agent SHOULD ask: when the answer depends on the user's DOMAIN rather than on reflow2's schema. *\"Is this enum's value set fixed by a standard, or does it change per deployment?\"* is a real question only the user can answer, and it is not the question that was asked here. **Drawn too widely, (a) forbids it.**\n\n🛑 UNVERIFIED, AND CHEAP TO CHECK BEFORE ANYTHING IS BUILT: whether the session that asked Alex about enums had `capture-intent` loaded at all. If it did not, the finding is about skill INVOCATION (`req:skill-use-survives-a-long-session`) rather than about skill CONTENT, and (a)/(b) both aim at the wrong target. **Nobody has asked, and the answer changes which option is right.**",
-        "name": "OPEN — the same user was asked to design a modelling decision AGAIN, four days after the fix for that shipped. Did the instruction fail, or is there no home in the vocabulary for a thing like an enum?",
-        "rationale": "Raised under the brainstorm skill from Alex's report, relayed by Anthony 2026-08-18 with his explicit agreement that modelling is reflow2's job and not the user's. Filed as a new question rather than appended to dec:idea-the-graph-vocabulary-never-reaches-the-user because that decision is ACCEPTED and its fix is MERGED (c863a4b, #180) — writing a recurrence into a settled node would blur what was settled, and the recurrence is the finding. The four-day interval and the shipped served text are recorded precisely because the natural next move is to rewrite the instruction more forcefully, and the evidence says an instruction is what already failed. The second diagnosis — that an enum has no home in the vocabulary at all, req:vocabulary-covers-information being deferred — was found by reading the served table and that requirement rather than assumed, and it is what makes this different in kind from the first occurrence rather than a repeat of it.",
-        "status": "proposed"
+        "decision": "**DECIDED 2026-08-19 BY ANTHONY**, on a two-part question put to him with recommendations:\n\n**(1) `Constraint` IS the right home for a closed value set with no schema file — and its framing gets fixed.** He took the recommended option over an honest refusal and over a split rule. **(2) The fix reaches ALL THREE SURFACES** that describe Constraint as numeric — the `capture-intent` routing table, the served `AGENTS.md`, and `add_constraint`'s own tool description — rather than skills-only or additive-only.\n\nHis reasoning is carried by the options he declined: an honest refusal would have been conceptually cleaner but leaves a fileless user with nothing actionable AND still requires fixing Constraint for the prohibition case anyway; the split rule (\"Constraint for prohibitions, refusal for enums\") asks the agent to draw a line subtle enough to erode.\n\n⇒ DELIVERED the same day, `epoch:constraint-is-not-only-numeric`.\n\n═══════════════════════════════════════════════\n⭐⭐⭐ THE FINDING THAT RESHAPED THE QUESTION — **THE FORK DISSOLVED WHEN SOMETHING OUTSIDE THE DESIGN WAS CHECKED**\n\nThe node originally asked whether the vocabulary has a home for an enum. **It has two, both already in the schema, and the served surface instructed NEITHER.** The method is `dec:agent-navigates-content`'s own rationale: *\"before choosing between branches of a fork, ask what already exists that would make the fork unnecessary. Design inward only after looking outward.\"* That decision records two prior forks dissolving this way; **this is the third.**\n\n**HOME 1 — THE SCHEMA FILE, and it is the one that scales.** `SPECIFIES` is `Artifact → [Interface, Capability, Component]` with `format: openapi / protobuf / json_schema / graphql / asyncapi / idl` (schema/build.yaml:72-81). **An enum is defined IN a schema file.** Register the file, point the edge at what it defines; the agent reads it, the graph records where it is. No schema change, no new node type, and a project with fifty enums does not get fifty nodes.\n  🛑 MEASURED: `SPECIFIES` appeared in exactly ONE served skill (`link-artifacts`, \"on the interface it defines\"). Its Capability and Component targets were documented **nowhere**, and `capture-intent` never mentioned it.\n  🛑🛑 **AND `SPECIFIES` HAS NO TYPED TOOL.** Nine typed edge tools exist (`realizes`, `documents`, `satisfies`, `provides`, `consumes`, `constrains`, `allocate`, `decomposes`, `verifies`); SPECIFIES is not among them, so `create_edge` is the only way to draw it. **`skill_lint` caught this during the fix** — the new row named a `specifies` tool that does not exist and the build went red. That is the \"three legs\" gap in the open: instruction now present, tool still absent.\n\n**HOME 2 — `Constraint`, for a value rule stated as intent with no file yet.** Requires ONLY `name` and `statement` (schema/core.yaml:77-99); `quantity`/`limit`/`direction` all default null. Its own hint reads *\"A limit or rule the design MUST respect… 'no PII leaves the device'\"* — the same sentence shape as *\"status is one of draft, submitted, paid.\"*\n  🛑 **A KNOWN, MEASURED, UNFIXED DEFECT UNTIL NOW.** `fact:defect-the-constraint-vocabulary-is-documented-as-numeric-so-the-right-node-is-ruled-out` (2026-08-15, `basis: measured`, graded HIGH by its own author): a genesis session modelling the US federal government read the prose, concluded *\"numeric budgets only\"*, and **left eleven constitutional prohibitions as Requirements that would report unsatisfied forever.** Its stated cost: *\"it never produced an error — it produced a confident wrong conclusion.\"*\n\n🛑🛑 **AND THE ROUTING TABLE BUILT FOR ALEX'S FIRST REPORT HAD INHERITED THAT EXACT DEFECT.** `capture-intent`:50 read **\"a number with a unit\"** as the only Constraint row. So the fix shipped in `c863a4b` (#180) to stop the agent handing modelling questions back to the user **carried the numeric-only framing measured as HIGH four days earlier**, with no row for a prohibition, a value set, or a schema file. Not wrong sentence-by-sentence — **narrower than the schema, in exactly the way that had already produced a confident wrong conclusion once.**\n\n⭐ SO THE TWO DIAGNOSES COLLAPSED INTO ONE. The node asked \"did the instruction fail, or is there no home?\" **Neither. The homes existed and the instruction never named them** — so the agent, correctly finding no matching row, did the one thing the table's last row forbids and asked the user, rather than saying \"no good home for this yet\". Which was not even true.\n\n📌 WHAT IS **NOT** SETTLED BY THIS, so it is not read as closing more than it does: `req:vocabulary-covers-information` (`deferred`) asks for something genuinely different and genuinely absent — entities two components exchange **in a form a computation can read**, so the graph can tell two interfaces carry the SAME entity and map one organisation's field to another's under a different name and unit. **That is the semantic-interoperability layer and NOTHING here delivers it.** A pointer an agent reads is not a type a detector can reason over. Kept apart deliberately.\n\n═══════════════════════════════════════════════\n🛑 THE RECURRENCE, WHICH STANDS AND IS THE REASON THIS WAS INVESTIGATED\n\n  · **2026-08-14** — Alex asked what node types to store his data models as.\n  · **2026-08-14** — settled as `dec:idea-the-graph-vocabulary-never-reaches-the-user`; option (c), agent judgement, CLOSED as \"observed failing\".\n  · **`c863a4b` (#180)** — *\"Never ask the user which node type to use.\"* Merged.\n  · **2026-08-18** — same user, asked how to model \"enums\". His reply: *\"I don't know, you figure out how to model enums.\"* ANTHONY: *\"he considers that reflow2 + agent's responsibility (and I agree), not his job to define how to model something.\"*\n\n⭐ **THE FIX WAS PRESENT IN THE SERVED TEXT AND THE BEHAVIOUR RECURRED** — and the finding above says why, which is more useful than \"agents drift\": the instruction shipped **with a table that could not answer the question**. That is fixable without making the instruction louder.\n\n🛑 STILL TRUE: a leaked question leaves no node, so `loop_status` read clean through both exchanges. Nothing in reflow2 can see this happen. `skill_lint` cannot check a table for COMPLETENESS — only that the tools it names exist.\n\n═══════════════════════════════════════════════\nOPTIONS AS THEY STOOD\n\n(a) ⭐ **CHOSEN** — fix the table at the root: rows for a value set, a prohibition and a schema file, and correct the numeric framing on all three surfaces. Fixes Alex's case AND the measured US-government case in one act.\n(b) **NOT SEPARATELY ADOPTED** — generalise the honest refusal into a rule. The table's last row already carries it and the new note strengthens it; not made its own mechanism.\n(c) **NOT CHOSEN** — un-defer `req:vocabulary-covers-information`. It is not what Alex needed, it is large, and `dec:agent-navigates-content` argues for the thin answer wherever a pointer will do. **Explicitly still open as its own requirement.**\n(d) **NOT CHOSEN, STILL LIVE** — make the leak observable so the agent files a node when it cannot route a modelling question. The only option addressing why this went unnoticed for four days and was found by a user.\n(e) **CLOSED** — agent variance; already closed once as observed-failing, and this was its second observation.\n\n⚠️ THE JUDGEMENT ANTHONY MADE, recorded because it was genuinely contestable: an enum is arguably a TYPE DEFINITION rather than a LIMIT, and reflow2's own design carried ~1 Constraint node, so there was almost no worked precedent either way. He ruled that Constraint takes it. **If that proves wrong in use, the fallback named at decision time was the honest refusal, not a new node type.**\n\n⚠️ UNCHANGED TENSION: some vocabulary reaching the user is CORRECT, and *\"is this value set fixed by a standard, or does it vary per deployment?\"* is a real question only the user can answer. It is not the question that was asked here.",
+        "name": "DECIDED — a Constraint need not be numeric, and a data model lives in its schema file: both homes existed, neither was instructed, and the routing table had inherited a measured defect",
+        "rationale": "Raised under the brainstorm skill from Alex's report 2026-08-18; investigated and settled 2026-08-19 on Anthony's instruction to take it on. The node was rewritten rather than merely answered because the investigation changed the question: \"is there a home for an enum\" turned out to be \"there are two, and neither is instructed\", which is a far cheaper problem than the one first recorded. The Constraint half is tied to fact:defect-the-constraint-vocabulary-is-documented-as-numeric rather than restated, because that defect was measured four days BEFORE the routing table shipped carrying the same framing — a future session must see that the table inherited a known defect rather than invented one, since that is the argument for checking served prose against the schema generally rather than fixing this one row. req:vocabulary-covers-information is held explicitly outside the ruling so the semantic-interop need is not read as closed. The missing SPECIFIES tool is recorded because skill_lint surfaced it during the fix and it is the \"three legs\" gap caught in the act.",
+        "status": "accepted"
       }
     },
     {
@@ -93532,6 +93672,16 @@
         "epoch_type": "revision",
         "name": "The subscribe side becomes declarable and the seam is computed",
         "sequence": 236,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:constraint-is-not-only-numeric",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "A Constraint need not be numeric, and a data model has a home — the routing table stops being narrower than the schema",
+        "sequence": 361,
         "status": "arrived"
       }
     },
@@ -101418,6 +101568,46 @@
       }
     },
     {
+      "node_id": "snap:epoch:constraint-is-not-only-numeric:art:capture-intent-skill",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:d4c7461b15caac67aac0655982b09974948a4753948a45d11e941ffb2f50e4b3\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:d4c7461b15caac67aac0655982b09974948a4753948a45d11e941ffb2f50e4b3\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:d4c7461b15caac67aac0655982b09974948a4753948a45d11e941ffb2f50e4b3\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:a596ed5e34cdf3ecec3cd5f2d94731bacb2f66dee86874147f3a34dec42039f5\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:a596ed5e34cdf3ecec3cd5f2d94731bacb2f66dee86874147f3a34dec42039f5\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:a596ed5e34cdf3ecec3cd5f2d94731bacb2f66dee86874147f3a34dec42039f5\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:a596ed5e34cdf3ecec3cd5f2d94731bacb2f66dee86874147f3a34dec42039f5\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{\"as_checksum\":\"sha256:a596ed5e34cdf3ecec3cd5f2d94731bacb2f66dee86874147f3a34dec42039f5\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{\"as_checksum\":\"sha256:a596ed5e34cdf3ecec3cd5f2d94731bacb2f66dee86874147f3a34dec42039f5\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:capture-registers-its-source\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:the-design-interview-precedes-the-capture\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"document\",\"checksum\":\"sha256:a596ed5e34cdf3ecec3cd5f2d94731bacb2f66dee86874147f3a34dec42039f5\",\"granularity\":\"atomic\",\"location\":\"getting-started/skills/capture-intent/SKILL.md\",\"name\":\"capture-intent SKILL.md — the conversational capture path, now registering the document it captured from\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:capture-intent-skill",
+        "target_type": "Artifact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:constraint-is-not-only-numeric:art:kit-instructions",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"out\",\"edge_type\":\"DOCUMENTS\",\"other_type\":\"Capability\",\"other_id\":\"cap:skills-served\",\"properties\":{\"doc_kind\":\"agent_instructions\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:skills-served\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"document\",\"checksum\":\"sha256:13f19b14c25c9300\",\"granularity\":\"atomic\",\"location\":\"getting-started/AGENTS.md\",\"name\":\"getting-started/AGENTS.md\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:kit-instructions",
+        "target_type": "Artifact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:constraint-is-not-only-numeric:art:skill-lint",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:6be9968ad96945043b818352a49e6e2df1b2c9ec55eedd0964db78ffe2db7844\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:6be9968ad96945043b818352a49e6e2df1b2c9ec55eedd0964db78ffe2db7844\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:6be9968ad96945043b818352a49e6e2df1b2c9ec55eedd0964db78ffe2db7844\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:1aaccabea7180ed00913dbdadd3c92dcdf6f2e0e18f5fd8fea4294e1ac07e052\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:1aaccabea7180ed00913dbdadd3c92dcdf6f2e0e18f5fd8fea4294e1ac07e052\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:cd966c8316e0e6d8ebd9b02dc9e45fb2413ce1025e7d820f5b5ddc043457fa7c\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:c814d9d9f016f473fc89a222865c26d7278fbdfc6adb79706e649afa224787e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:2a0d95cf199f0a46d893e098279061a1be5959278021113570f759bfabab46f4\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:dd2287e53cd4edba0b6c983925310b6538930c20dd93e061dbb3b1dfa85792d9\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:dd2287e53cd4edba0b6c983925310b6538930c20dd93e061dbb3b1dfa85792d9\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:dd2287e53cd4edba0b6c983925310b6538930c20dd93e061dbb3b1dfa85792d9\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:705b57afbd3e0c6a2dc0095a66ce5681523b2eb1b2c19a4111c9ff153ce9b2ae\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:705b57afbd3e0c6a2dc0095a66ce5681523b2eb1b2c19a4111c9ff153ce9b2ae\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:356a72ee5afe62a39604eda0c1f95af00ac0c784955f636a33c321dcec0a23d7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:5557ad37ea0f4492f9ba6e67e8d2734900a65764bdb1487b05c5008aff3cd197\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:1ee41e376d31e0f82c43993217ea4907b03161fe1fb0d351d85156d055425d6f\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:1ee41e376d31e0f82c43993217ea4907b03161fe1fb0d351d85156d055425d6f\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:1ee41e376d31e0f82c43993217ea4907b03161fe1fb0d351d85156d055425d6f\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{\"as_checksum\":\"sha256:961c6ba1dd768d33f9a0de639ee2487c9d72273cc779109440506f6e12b5d7d1\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{\"as_checksum\":\"sha256:961c6ba1dd768d33f9a0de639ee2487c9d72273cc779109440506f6e12b5d7d1\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Verification\",\"other_id\":\"ver:install-reaches-the-agent\",\"properties\":{\"completeness\":\"partial\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:961c6ba1dd768d33f9a0de639ee2487c9d72273cc779109440506f6e12b5d7d1\",\"granularity\":\"atomic\",\"location\":\"tools/skill_lint.py\",\"name\":\"skill_lint.py\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:skill-lint",
+        "target_type": "Artifact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:constraint-is-not-only-numeric:art:tools-capture",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:e7724d05c7d0e386ebb9a85f531244fae78746c127aee3855d2dcd312563569b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:e7724d05c7d0e386ebb9a85f531244fae78746c127aee3855d2dcd312563569b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:e7724d05c7d0e386ebb9a85f531244fae78746c127aee3855d2dcd312563569b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:e7724d05c7d0e386ebb9a85f531244fae78746c127aee3855d2dcd312563569b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:e7724d05c7d0e386ebb9a85f531244fae78746c127aee3855d2dcd312563569b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:4e81fcdb498f093fa95c964482a04079d16a6fbb7638609b560b580ed7b67eb7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:12bc49d9445b3825ffa1bb1ea43893854345d00c366df497a6cd4615b7e358bc\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:12bc49d9445b3825ffa1bb1ea43893854345d00c366df497a6cd4615b7e358bc\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:12bc49d9445b3825ffa1bb1ea43893854345d00c366df497a6cd4615b7e358bc\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:12bc49d9445b3825ffa1bb1ea43893854345d00c366df497a6cd4615b7e358bc\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:1346752cf43f8682062468133186c2ac3e5b00888b13908a48e1c9bec2b11801\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:1346752cf43f8682062468133186c2ac3e5b00888b13908a48e1c9bec2b11801\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:7fafa7f11b420c3ab52b40856fdf8b6087cdcb722402c2d0bb576674710bcfd1\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{\"as_checksum\":\"sha256:324548e0440a19f55c6398292c79f5baae9254850bc9c3bb35160f0cad2a2f45\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{\"as_checksum\":\"sha256:2fb8a22c01bb9abe0a83994f4f7ccd8d467d610945359dcfb15b5330a8abffa7\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-revising-write-says-whether-the-state-survived\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:governance-mode\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:2fb8a22c01bb9abe0a83994f4f7ccd8d467d610945359dcfb15b5330a8abffa7\",\"granularity\":\"atomic\",\"location\":\"crates/reflow2-mcp/src/tools/capture.rs\",\"name\":\"crates/reflow2-mcp/src/tools/capture.rs\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:tools-capture",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:constructors-say-what-they-replaced:art:tools-capture",
       "node_type": "Snapshot",
       "properties": {
@@ -107293,7 +107483,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:30aa17bf1e43d804b5d53e8a3e02236f8fd2abe58e5135681bd98b5968844f5c",
+  "prev_content_hash": "sha256:e63d748addd6b0f02b87f0579f1c6220c110552539bd7ea9c8eb9833ea773450",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
