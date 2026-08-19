@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:28a181a942d110f388e80e5be8109bb8b7d65b6c8f5129a20b2b29c70d608985",
+  "content_hash": "sha256:207098f55f074426cccadd346cabc05a6ad2b822880f87e3241853991f02e71d",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2326,6 +2326,22 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:sync"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-register-rule-reaches-the-words",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:agent"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-register-rule-reaches-the-words",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -5302,6 +5318,30 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:register-gap-to-prompt-description",
+      "properties": {},
+      "to_id": "epoch:the-register-rule-reaches-the-words"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:register-obligation-becomes-lint-checked",
+      "properties": {},
+      "to_id": "epoch:the-register-rule-reaches-the-words"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:register-seventh-obligation-detect-and-ask",
+      "properties": {},
+      "to_id": "epoch:the-register-rule-reaches-the-words"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:register-standing-rule-kit-instructions",
+      "properties": {},
+      "to_id": "epoch:the-register-rule-reaches-the-words"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:reinjection-trigger-answered",
       "properties": {},
       "to_id": "epoch:reflow-workflow-review"
@@ -7201,6 +7241,30 @@
       "from_id": "snap:epoch:the-owners-identity-is-one-node-again:ctr:anthony",
       "properties": {},
       "to_id": "epoch:the-owners-identity-is-one-node-again"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-register-rule-reaches-the-words:art:detect-and-ask-skill",
+      "properties": {},
+      "to_id": "epoch:the-register-rule-reaches-the-words"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-register-rule-reaches-the-words:art:kit-instructions",
+      "properties": {},
+      "to_id": "epoch:the-register-rule-reaches-the-words"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-register-rule-reaches-the-words:art:skill-lint",
+      "properties": {},
+      "to_id": "epoch:the-register-rule-reaches-the-words"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-register-rule-reaches-the-words:art:tools-ask",
+      "properties": {},
+      "to_id": "epoch:the-register-rule-reaches-the-words"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -19264,6 +19328,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:register-gap-to-prompt-description",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-ask"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:register-obligation-becomes-lint-checked",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:register-seventh-obligation-detect-and-ask",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect-and-ask-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:register-standing-rule-kit-instructions",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:kit-instructions"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:reinjection-trigger-answered",
       "properties": {
         "accepted_baseline": false,
@@ -31172,6 +31272,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:detect-and-ask-skill",
+      "properties": {},
+      "to_id": "snap:epoch:the-register-rule-reaches-the-words:art:detect-and-ask-skill"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "art:export-via-binary",
       "properties": {},
       "to_id": "snap:epoch:v0280:art:export-via-binary"
@@ -31226,6 +31332,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:kit-instructions",
+      "properties": {},
+      "to_id": "snap:epoch:the-register-rule-reaches-the-words:art:kit-instructions"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "art:main",
       "properties": {},
       "to_id": "snap:epoch:rmcp-v3:art:main"
@@ -31277,6 +31389,18 @@
       "from_id": "art:skill-lint",
       "properties": {},
       "to_id": "snap:epoch:constraint-is-not-only-numeric:art:skill-lint"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:skill-lint",
+      "properties": {},
+      "to_id": "snap:epoch:the-register-rule-reaches-the-words:art:skill-lint"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:tools-ask",
+      "properties": {},
+      "to_id": "snap:epoch:the-register-rule-reaches-the-words:art:tools-ask"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -75711,6 +75835,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:the-register-rule-reaches-the-words",
+      "properties": {},
+      "to_id": "req:the-agent-learns-who-it-is-talking-to"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:the-server-knows-its-own-currency",
       "properties": {},
       "to_id": "req:the-server-is-the-authority-on-its-own-currency"
@@ -80093,7 +80223,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:fb1997d89bc468e1882eaae13b340476f37b478954845b7a54bd423f55f3e93b",
+        "checksum": "sha256:4707652eaaccd0ec29233662cdcd87957f21f7e37bc0cb9724fad3b2758fc392",
         "location": "getting-started/skills/detect-and-ask/SKILL.md",
         "name": "detect-and-ask/SKILL.md — the ask half of the loop, and now the rule for when NOT to ask",
         "status": "realized"
@@ -80533,7 +80663,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:aefce00dae7ef95b094a2340b0b736e1f3537d12b03828301f67a13817f4b1fc",
+        "checksum": "sha256:c5c52b1a6a96bd8d6ffae28b2250920c02731cacada309e9f9e453d07f52fb74",
         "granularity": "atomic",
         "location": "getting-started/AGENTS.md",
         "name": "getting-started/AGENTS.md",
@@ -81308,7 +81438,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b04c4739a44f77da463c89a4cff174d4d7140c6fa35e1e507f061fb546fa7396",
+        "checksum": "sha256:1c9f08c30b33df405f7c3fedf8605d544975f4320086b36de26809821039a6e4",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -81720,7 +81850,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a61192bc3e08c0a0ae904c597228cc1aae1ba23bca5cf3d602b7bafd4f48d680",
+        "checksum": "sha256:1af50b2ca62b269db03167480eb448d545af280251cbd80f42ddca9dfdbb861c",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/ask.rs",
         "name": "tools/ask.rs",
@@ -84157,6 +84287,16 @@
       "properties": {
         "description": "Option D. `read_loop_hint` now computes the sync debt alongside `loop_status` and attaches the record-moved finding to the `loop_hint` that already rides on orientation reads.\n\n⭐ THE FINDING ALREADY EXISTED AND WAS UNREACHABLE. `loop_status` computed `record_moved` correctly and had done since `dec:idea-the-graph-notices-the-record-moved-without-being-asked`; the read hint built itself from the CORE `LoopStatus`, which has no sync knowledge at all. So the pull half of \"he pushes, I pull\" — the only one of four steps that is loud — was loud only inside a call nobody makes on the way past. Same shape as everything else in this increment: the information existed where the person was not.\n\n📌 EITHER DEBT ALONE FIRES. A design whose loop is otherwise CLEAN can still have a record that moved under it, and gating on `clean` would have made that the one case nothing says.\n\n🛑 IT SAYS, IT DOES NOT ACT. The hint names `import_graph` and stops there; import is an upsert and an unasked one would silently overwrite live session work (`dec:ask-not-repair`). That is why option C — import-on-first-use — was NOT taken alongside this one.\n\nThe existing fire-on-change cache carries it: computed once per write generation, so a standing state appears at the first read of a session and then stays quiet, which is the cost bound the read hint already rests on.",
         "name": "A session is told the shared record moved on any read, not only when it calls loop_status",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:the-register-rule-reaches-the-words",
+      "node_type": "Capability",
+      "properties": {
+        "description": "DELIVERED 2026-08-19. **This completes clause 2 of `req:the-agent-learns-who-it-is-talking-to`** — *\"the answer shapes the register of EVERY reply, not only of questions\"* — which was stated 2026-08-18 and only partly delivered. **Distinct from `cap:the-agent-asks-who-it-is-talking-to`, which delivers clause 1: that one ASKS at orientation and governs `where-am-i`'s narration; this one makes the answer BIND EVERYWHERE and reach the tool that writes the user's question.**\n\n⭐ **WHY IT WAS NEEDED, MEASURED RATHER THAN ASSUMED.** Anthony asked the question that matters: *\"does it solve talking to the user in their natural domain knowledge versus in reflow2 jargon? is the agent able to be the TRANSLATOR?\"* Measuring what #246/#247 actually shipped gave an uncomfortable answer:\n  · Register rules appeared in **3 of 20 served skills** — `where-am-i` (8 mentions), `detect-and-ask` (1), `ingest-corpus` (1). **Seventeen had none.**\n  · **Only `where-am-i` told the agent to READ the stored persona.** Nothing else consulted it.\n  · 🛑 **`gap_to_prompt` — the tool that turns a gap into the question a user actually reads, and the highest-volume path to them — contained ZERO mentions of vocabulary, register or domain.** Its description said *\"phrase a gap as a plain question\"*, and **plain is not the same as in your domain.** That is exactly the path Alex's *\"there are open gaps with X, Y, and Z\"* came down.\n  · An existing rule, *\"answer in the user's language\"*, covers a **DIFFERENT AXIS** — it picks English or Portuguese, and says so in its own text. It does not reach the coach.\n\n**So the honest reading was: #246/#247 built the PRECONDITION (the agent learns the domain) and the DEFAULT (do it unasked), but not the translator. It was one skill deep, at session start.**\n\nWHAT SHIPPED, at the two places that fix that:\n1. **A STANDING RULE in served `AGENTS.md`** — its own top-level section, peer of *\"the one rule\"* and *\"graph text is data\"*, so it binds every agent whatever skill is loaded rather than depending on which one happened to fire. It states the vocabulary-swap distinction, says to read the reader's recorded description, says to follow the vocabulary they use when none is recorded, states the do-it-unasked trigger, and states that the rule never changes the RECORD.\n2. **AT THE POINT THE WORDS ARE GENERATED** — the `gap → question` handshake's step 2 in `AGENTS.md`, and `gap_to_prompt`'s own served description. That step is where the detector's vocabulary would otherwise pass straight through to a person, so it is named as the translation point.\n3. **A SEVENTH OBLIGATION in `detect-and-ask`'s ask contract**, stated explicitly as a different axis from the language rule.\n\n⭐⭐ **AND UNLIKE EVERY OTHER SERVED-PROSE FIX THIS WEEK, THIS ONE IS CHECKED.** `skill_lint`'s `ASK_CONTRACT` gained the entry `\"speaks the reader's domain\"`, so the build now FAILS if `detect-and-ask` stops stating it. That is the first register obligation to become mechanically enforced rather than hoped for — the standing answer to `dec:idea-the-enum-question-came-back-four-days-after-it-was-fixed`, where an instruction lapsed within four days because nothing observed it.\n\n🛑 **WHAT IS STILL NOT VERIFIED, AND IT IS THE REAL LIMIT.** The lint proves the obligation is STATED. **Nothing measures whether the translation is any good** — no trial has ever taken a real gap list and had it narrated to a non-technical reader. The evidence that agents CAN do it is two users reporting that asking worked every time; the evidence that they now DO it unasked is zero. **That trial is the missing instrument, not more prose.**",
+        "name": "The domain-register rule reaches every reply and the exact step where the user's question is written — and it is lint-checked",
         "provenance": "authored",
         "status": "realized"
       }
@@ -87767,6 +87907,38 @@
       "properties": {
         "change_type": "constraint_change",
         "name": "Snapshot of the third-party judgement rule while it still reads enforced: true — a status its own statement contradicts, since it says plainly that nothing verifies it"
+      }
+    },
+    {
+      "node_id": "chg:register-gap-to-prompt-description",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "gap_to_prompt's served description names itself as the translation point, where the detector's vocabulary would otherwise reach a person"
+      }
+    },
+    {
+      "node_id": "chg:register-obligation-becomes-lint-checked",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "skill_lint's ASK_CONTRACT gains the domain obligation — the first register rule the build fails without"
+      }
+    },
+    {
+      "node_id": "chg:register-seventh-obligation-detect-and-ask",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The ask contract gains a seventh obligation — say what it means in the reader's own domain, a different axis from the language rule"
+      }
+    },
+    {
+      "node_id": "chg:register-standing-rule-kit-instructions",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Served instructions gain a standing \"speak the reader's domain\" rule and name the gap-to-question step as the translation point"
       }
     },
     {
@@ -94570,6 +94742,16 @@
         "epoch_type": "revision",
         "name": "A seat is told the shared record moved when it ORIENTS rather than when it writes — Anthony's option A. The signal existed and was read in exactly one place; this reads it at the first moment instead of the last. Carries a real defect fix found while building it: the stale-seat guard trusted the content hash a file states about ITSELF, so a merged or hand-edited record read as untouched and its work could be silently overwritten on the next export.",
         "sequence": 323,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:the-register-rule-reaches-the-words",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The translator rule stops being one skill deep — a standing rule, the gap-to-question step, and the first register obligation the build actually checks",
+        "sequence": 363,
         "status": "arrived"
       }
     },
@@ -102706,6 +102888,46 @@
       }
     },
     {
+      "node_id": "snap:epoch:the-register-rule-reaches-the-words:art:detect-and-ask-skill",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:the-loop-holds-the-invitation\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}}]",
+        "state": "{\"artifact_type\":\"document\",\"checksum\":\"sha256:fb1997d89bc468e1882eaae13b340476f37b478954845b7a54bd423f55f3e93b\",\"location\":\"getting-started/skills/detect-and-ask/SKILL.md\",\"name\":\"detect-and-ask/SKILL.md — the ask half of the loop, and now the rule for when NOT to ask\",\"status\":\"realized\"}",
+        "target_id": "art:detect-and-ask-skill",
+        "target_type": "Artifact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:the-register-rule-reaches-the-words:art:kit-instructions",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{\"as_checksum\":\"sha256:13f19b14c25c9300\"}},{\"direction\":\"out\",\"edge_type\":\"DOCUMENTS\",\"other_type\":\"Capability\",\"other_id\":\"cap:skills-served\",\"properties\":{\"doc_kind\":\"agent_instructions\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:skills-served\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"document\",\"checksum\":\"sha256:aefce00dae7ef95b094a2340b0b736e1f3537d12b03828301f67a13817f4b1fc\",\"granularity\":\"atomic\",\"location\":\"getting-started/AGENTS.md\",\"name\":\"getting-started/AGENTS.md\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:kit-instructions",
+        "target_type": "Artifact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:the-register-rule-reaches-the-words:art:skill-lint",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:6be9968ad96945043b818352a49e6e2df1b2c9ec55eedd0964db78ffe2db7844\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:6be9968ad96945043b818352a49e6e2df1b2c9ec55eedd0964db78ffe2db7844\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:6be9968ad96945043b818352a49e6e2df1b2c9ec55eedd0964db78ffe2db7844\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:1aaccabea7180ed00913dbdadd3c92dcdf6f2e0e18f5fd8fea4294e1ac07e052\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:1aaccabea7180ed00913dbdadd3c92dcdf6f2e0e18f5fd8fea4294e1ac07e052\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:cd966c8316e0e6d8ebd9b02dc9e45fb2413ce1025e7d820f5b5ddc043457fa7c\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:c814d9d9f016f473fc89a222865c26d7278fbdfc6adb79706e649afa224787e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:2a0d95cf199f0a46d893e098279061a1be5959278021113570f759bfabab46f4\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:dd2287e53cd4edba0b6c983925310b6538930c20dd93e061dbb3b1dfa85792d9\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:dd2287e53cd4edba0b6c983925310b6538930c20dd93e061dbb3b1dfa85792d9\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:dd2287e53cd4edba0b6c983925310b6538930c20dd93e061dbb3b1dfa85792d9\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:705b57afbd3e0c6a2dc0095a66ce5681523b2eb1b2c19a4111c9ff153ce9b2ae\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:705b57afbd3e0c6a2dc0095a66ce5681523b2eb1b2c19a4111c9ff153ce9b2ae\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:356a72ee5afe62a39604eda0c1f95af00ac0c784955f636a33c321dcec0a23d7\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:5557ad37ea0f4492f9ba6e67e8d2734900a65764bdb1487b05c5008aff3cd197\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:1ee41e376d31e0f82c43993217ea4907b03161fe1fb0d351d85156d055425d6f\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:1ee41e376d31e0f82c43993217ea4907b03161fe1fb0d351d85156d055425d6f\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:1ee41e376d31e0f82c43993217ea4907b03161fe1fb0d351d85156d055425d6f\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{\"as_checksum\":\"sha256:961c6ba1dd768d33f9a0de639ee2487c9d72273cc779109440506f6e12b5d7d1\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{\"as_checksum\":\"sha256:961c6ba1dd768d33f9a0de639ee2487c9d72273cc779109440506f6e12b5d7d1\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Verification\",\"other_id\":\"ver:install-reaches-the-agent\",\"properties\":{\"completeness\":\"partial\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:b04c4739a44f77da463c89a4cff174d4d7140c6fa35e1e507f061fb546fa7396\",\"granularity\":\"atomic\",\"location\":\"tools/skill_lint.py\",\"name\":\"skill_lint.py\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:skill-lint",
+        "target_type": "Artifact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:the-register-rule-reaches-the-words:art:tools-ask",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:288dce9896555156f11fda2a204efb826780699e0e9e97d61474911f62d8a639\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:288dce9896555156f11fda2a204efb826780699e0e9e97d61474911f62d8a639\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:288dce9896555156f11fda2a204efb826780699e0e9e97d61474911f62d8a639\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:288dce9896555156f11fda2a204efb826780699e0e9e97d61474911f62d8a639\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:288dce9896555156f11fda2a204efb826780699e0e9e97d61474911f62d8a639\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:288dce9896555156f11fda2a204efb826780699e0e9e97d61474911f62d8a639\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:288dce9896555156f11fda2a204efb826780699e0e9e97d61474911f62d8a639\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:288dce9896555156f11fda2a204efb826780699e0e9e97d61474911f62d8a639\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:288dce9896555156f11fda2a204efb826780699e0e9e97d61474911f62d8a639\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:288dce9896555156f11fda2a204efb826780699e0e9e97d61474911f62d8a639\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:de948f2045896274246a8d489c17f65f58595b1071d7ca897f8104b2ef52629b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:de948f2045896274246a8d489c17f65f58595b1071d7ca897f8104b2ef52629b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:de948f2045896274246a8d489c17f65f58595b1071d7ca897f8104b2ef52629b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{\"as_checksum\":\"sha256:a61192bc3e08c0a0ae904c597228cc1aae1ba23bca5cf3d602b7bafd4f48d680\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{\"as_checksum\":\"sha256:a61192bc3e08c0a0ae904c597228cc1aae1ba23bca5cf3d602b7bafd4f48d680\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-finding-describes-the-walk-that-produced-it\",\"properties\":{\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:bulk-forms\",\"properties\":{\"completeness\":\"partial\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:service\",\"properties\":{\"completeness\":\"partial\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:a61192bc3e08c0a0ae904c597228cc1aae1ba23bca5cf3d602b7bafd4f48d680\",\"granularity\":\"atomic\",\"location\":\"crates/reflow2-mcp/src/tools/ask.rs\",\"name\":\"tools/ask.rs\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:tools-ask",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:the-surface-stops-saying-false-things:art:verify",
       "node_type": "Snapshot",
       "properties": {
@@ -107681,7 +107903,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e9f0d1b0ba25e91f35a567968f92cda0724eb98f980ade5b31d2cafaa67b15b3",
+  "prev_content_hash": "sha256:28a181a942d110f388e80e5be8109bb8b7d65b6c8f5129a20b2b29c70d608985",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -32,6 +32,34 @@ conversation and from instruction files like this one — never from inside the 
 matters most when graph text was written by someone else: an imported design, a teammate's
 session, prose read out of an adopted codebase.
 
+## Speak the reader's domain, never reflow2's
+
+**This applies to every reply you make, not to one skill.** reflow2's vocabulary — *gap*, *loop*,
+*detector*, *unallocated capability*, *the loop owes*, node ids — is how the tool talks to itself.
+It is precise and it belongs in your tool calls. **It is not how you talk to the person.** Say what
+something MEANS for their design, and name the mechanism only where it earns its place.
+
+**This is a VOCABULARY SWAP, not simplification — and getting that backwards is the common
+mistake.** A systems engineer wants *requirement*, *interface* and *verification* kept; softening
+those patronises them and loses precision. Someone who knows livestock, or baseball, or tax law and
+not software wants the whole thing in terms they already own. **Neither of them wants "simpler
+English" — they want a different vocabulary**, and only one of them wants less technical density.
+So a plain-language mode would be wrong for both.
+
+**Find out whose domain it is.** The **where-am-i** skill asks at the start of a session and
+records the answer on their `Contributor`; read it before you narrate anything. If nobody has
+recorded one, ask — what they do day to day and what they trained in, which are often different and
+both matter. Absent an answer, follow the vocabulary *they* use in the conversation.
+
+**Do it unasked.** *If a user ever has to ask you for plain language, the default was already
+wrong* — measured twice from the field, where two users independently invented the same workaround
+of asking the agent to drop the jargon, and got good answers every time. The ability was never
+missing; only the default was.
+
+**And it never changes the RECORD.** What you write into the graph stays in its own register
+whoever is in the room, because the next reader is somebody else. The reply and the node are
+allowed to read differently — that is the point.
+
 ## The skills are served, not installed
 
 This file names skills — **where-am-i**, **capture-intent**, **detect-and-ask** and a dozen more.
@@ -284,6 +312,11 @@ reflow2 phrases the question; **you** are the language model that fills it in:
 1. Call `gap_to_prompt` with the `gap` (a `GapCandidate` from `detect_gaps`) and empty
    `answers`. It returns `{ "status": "needs_llm", "prompts": [{ "id", "prompt", … }] }`.
 2. For each prompt, produce the answer text in-context (that's your job as the agent).
+   **This is the step where reflow2's vocabulary would otherwise reach the user, so it is where
+   the translation happens.** The gap arrives in the detector's words — *unallocated capability*,
+   *unsatisfied requirement* — and the question you hand back must be in the READER'S words
+   instead. Say what is actually missing and why it matters to their design. See **Speak the
+   reader's domain** above; a "plain" question is not the same as one in their domain.
 3. Call `gap_to_prompt` again with the **same** `gap` and `answers: [{ "id", "text" }]`. It
    returns `{ "status": "ok", "prompt": { "question", … } }` — the polished question to ask
    the user. If `rephrase_degraded` is true, the raw wording is used; ask it anyway.
