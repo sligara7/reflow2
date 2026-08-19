@@ -31,6 +31,83 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.36.0] — 2026-08-19
+
+**The whole increment came from one user's field reports.** reflow2's second user — running it on
+a large project at work, and about to show it to coworkers — reported three frictions, and each
+turned out to be a defect in what reflow2 SERVES rather than in what it computes. No schema change
+(stamp unchanged at 29/61/1), so no upgrade doc; but the served skills changed behaviour, which is
+what a consumer feels.
+
+### Changed
+
+- **Orientation now asks what LENS the reader brings, and stops assuming who they are.**
+  `where-am-i` carried a hardcoded audience — *"write it as prose for the person who described this
+  project to you"* — which assumes the reader briefed the agent. That is false for exactly the
+  newcomer it matters for. It now asks about their background once, records it on their
+  `Contributor`, and does not ask again.
+
+  ⭐ **The ask asks for a BACKGROUND, not a name, and carries an example of a good answer.** The
+  first version asked *"who am I talking to?"* and was shipped for one day before the owner caught
+  the hole: **"Bob" answers that correctly and tells the agent nothing.** A question a useless
+  answer satisfies has not asked for what it wants. It now asks what you do day to day AND what you
+  trained in, showing the shape wanted — *"software engineer, but my degree is in biology"* —
+  because the two often diverge and **the divergence is the informative part.** A thin answer gets
+  one follow-up and then it stops; this is an opening courtesy, not an intake form.
+
+  ⚠️ **And the rule is a VOCABULARY SWAP, not simplification.** A systems engineer wants
+  *requirement*, *interface* and *verification* KEPT — softening them is condescension. What gets
+  dropped is reflow2's OWN vocabulary: gap, loop, detector, node id. Someone who knows another field
+  entirely wants that field's terms. **None of them wants "simpler English"**, so a plain-language
+  mode would have been wrong for every user observed. (#246, #247)
+
+- **The register rule reaches every reply and the step where the user's question is written — and
+  the build now checks it.** Measuring the above found it was one skill deep: register rules
+  appeared in 3 of 20 served skills, only `where-am-i` read the stored background, and
+  **`gap_to_prompt` — the tool that turns a gap into the question a person actually reads —
+  mentioned vocabulary nowhere.** It said *"phrase a gap as a plain question"*, and plain is not the
+  same as in your domain. There is now a standing rule in the served instructions (a peer of *"the
+  one rule"*, so it binds whatever skill is loaded), the rule at the gap→question step itself and in
+  `gap_to_prompt`'s description, and a seventh obligation in `detect-and-ask`'s ask contract —
+  **which `skill_lint` now fails the build without.** The existing *"answer in the user's language"*
+  rule is a different axis and says so: it picks English or Portuguese, not systems engineering or
+  baseball. (#252)
+
+- **Detecting a gap and inviting its closure are now separate acts.** Entering information about a
+  project came back, every time, as *"I have those all recorded. There are open gaps with X, Y and
+  Z. Do you want to fix them?"* — so the user had to decline repeatedly in order to keep doing what
+  they came to do. **Not a bug: three served sources instructed it** (`capture-intent` step 7, the
+  loop's step 2, `detect-and-ask`'s own trigger), each written for a real failure — the agent that
+  only ever adds nodes and surfaces nothing. Together, on someone doing nothing but capture for
+  days, they produce a prompt to close after every message. **Detection still runs on every
+  capture; the invitation now waits for a boundary** — the user asks, pauses, says they are done, or
+  turns to building. ⚠️ **This defers the invitation, never the record**: gaps stay counted and stay
+  loud. (#250)
+
+- **A `Constraint` need not be numeric, and a data model has a home.** Asked how to model "enums", an
+  agent handed the question back to the user. **Both homes already existed and neither was
+  instructed.** `SPECIFIES` is `Artifact → [Interface, Capability, Component]` with
+  `format: json_schema` — an enum lives IN a schema file, so register the file and point the edge at
+  what it defines. And `Constraint` requires only `name` and `statement`; every numeric field
+  defaults. Three surfaces described it as a numeric budget — the routing table, the served
+  instructions, and `add_constraint`'s own description — and a reader had already concluded the type
+  was unusable and left eleven constitutional prohibitions as Requirements that would report
+  unsatisfied forever. All three corrected; the routing table gains rows for a value set, a
+  prohibition and a schema file. 🛑 **`SPECIFIES` still has no typed tool** — nine typed edge tools
+  exist and it is not among them — so the row says `create_edge` and says why. (#248)
+
+### Notes
+
+- The design record also carries two brainstorms and one measurement pass with no shipped behaviour
+  (#244, #245), and one redaction: an illustrative example in the persona decision named a real
+  third party by full name and employer in a public repository, and now describes them generically.
+  The design point never needed the name. (#251)
+
+- **Not verified, and stated rather than left to be discovered:** every rule above is served prose.
+  `skill_lint` proves the text is present and mirrored, and now fails without the domain obligation
+  — but **nothing measures whether the translation is any good.** No trial has taken a real gap list
+  and had it narrated to a non-technical reader. That trial is the missing instrument.
+
 ## [0.35.0] — 2026-08-18
 
 ### Changed
