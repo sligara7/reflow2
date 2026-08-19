@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "List nodes of a type. Answers with as many as fit in one reply and says what it left out — `total` is how many exist, `omitted` how many did not come back, `next_offset` where to resume, and `capped_by` why it stopped (`size` when the payload was full, `limit` when you asked for fewer). A cap is never silent, but it is also never a surprise: pass `brief: true` for id/name/status only when you want the shape of a large type, or `limit`/`offset` to page deliberately. On a mature design the full properties of one type can be tens of thousands of characters — read brief first, then fetch the few nodes you actually need with get_node. Every node carries `discontinued` (brief included): true when an ACCEPTED Decision has withdrawn it. The stored `status` records what was BUILT and does not move on withdrawal, so filtering a list on `status` alone will count things that no longer exist.",
+  "description": "List nodes of a type. Answers with as many as fit in one reply and says what it left out — `total` is how many exist, `omitted` how many did not come back, `next_offset` where to resume, and `capped_by` why it stopped (`size` when the payload was full, `limit` when you asked for fewer). A cap is never silent, but it is also never a surprise: pass `brief: true` for id/name/status only when you want the shape of a large type, or `limit`/`offset` to page deliberately. On a mature design the full properties of one type can be tens of thousands of characters — read brief first, then fetch the few nodes you actually need with get_node. Every node carries `discontinued` (brief included): true when an ACCEPTED Decision has withdrawn it. The stored `status` records what was BUILT and does not move on withdrawal, so filtering a list on `status` alone will count things that no longer exist. PASS `level` TO ASK FOR ONE RUNG OF THE DECOMPOSITION LADDER — `component` / `subsystem` / `system` / `system_of_systems` / `enterprise`. That is how you ask for \"the top-level boxes\": deriving them from the CONTAINS spine instead returns leaves nobody wired to a parent, which is a different set and a confidently wrong one.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
@@ -12,6 +12,14 @@
         "description": "Return only `node_id` / `node_type` / `name` / `status` per node instead\nof every property. Use it to see the shape of a large type before\ndeciding what to read in full.",
         "type": [
           "boolean",
+          "null"
+        ]
+      },
+      "level": {
+        "default": null,
+        "description": "Keep only Components at this rung of the decomposition ladder —\n`component` / `subsystem` / `system` / `system_of_systems` /\n`enterprise`. THIS IS HOW YOU ASK FOR \"the top-level boxes\".\n\nIt exists because the obvious alternative is wrong. `Component.level`\nhas always been indexed and populated, and with no way to ASK by it\nevery caller wrote their own filter — usually by walking `CONTAINS` and\ntaking the parentless nodes, which returns leaves that were never wired\nto a parent rather than top-level boxes. Measured on reflow2's own\ndesign 2026-08-18: by level, the top tier is 8 subsystems; by spine\nposition it is 2 leaves. Both queries look reasonable and they disagree.\n\nOnly `Component` carries a level; asking for one on any other type is\nrefused rather than silently returning nothing.",
+        "type": [
+          "string",
           "null"
         ]
       },

@@ -1867,6 +1867,22 @@ pub struct ScanReq {
     /// deciding what to read in full.
     #[serde(default)]
     pub brief: Option<bool>,
+    /// Keep only Components at this rung of the decomposition ladder —
+    /// `component` / `subsystem` / `system` / `system_of_systems` /
+    /// `enterprise`. THIS IS HOW YOU ASK FOR "the top-level boxes".
+    ///
+    /// It exists because the obvious alternative is wrong. `Component.level`
+    /// has always been indexed and populated, and with no way to ASK by it
+    /// every caller wrote their own filter — usually by walking `CONTAINS` and
+    /// taking the parentless nodes, which returns leaves that were never wired
+    /// to a parent rather than top-level boxes. Measured on reflow2's own
+    /// design 2026-08-18: by level, the top tier is 8 subsystems; by spine
+    /// position it is 2 leaves. Both queries look reasonable and they disagree.
+    ///
+    /// Only `Component` carries a level; asking for one on any other type is
+    /// refused rather than silently returning nothing.
+    #[serde(default)]
+    pub level: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
