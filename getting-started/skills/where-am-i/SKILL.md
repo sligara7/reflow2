@@ -30,6 +30,8 @@ you. The standing rule is in AGENTS.md.
   questions this is the part that turns a list into a starting point; on a small one it is cheap
   and says so.
 - `scan_nodes` for `Requirement` / `Component` / `Interface` — the shape of the design.
+- `scan_nodes` for `Contributor` — who is in this design, and whether the person you are
+  talking to has a recorded `description` of who they are. See **Who you are talking to**.
 
 **On a mature design, read the shape before the prose.** `scan_nodes` answers with as many nodes
 as fit in one reply and then tells you what it withheld — `total` against `returned`, plus
@@ -40,10 +42,37 @@ the whole set**: if `omitted` is not zero, either page on with `next_offset` or 
 you summarised part of it. A confident summary of the first twenty of seventy decisions is exactly
 the false completeness this skill exists to avoid.
 
+## Who you are talking to
+
+**Ask once, at the start, if the design does not already say.** The same design gets read by the
+person who built it, by someone they brought in, and by people who have never heard of reflow2 —
+and the right way to explain it to each is not the same. If no Contributor carries a `description`
+of who the reader is, ask:
+
+> *Before I read this back — who am I talking to, and what do you work in? I'll put things in your
+> terms rather than mine.*
+
+Record the answer with `add_contributor` (their `description`), so nobody is asked twice. **If a
+Contributor already carries one, read it and do not ask again** — being asked who you are every
+session is how someone learns the tool is not listening.
+
+**You may guess, but never assume.** A login name, a git author, a handle already in the design is
+a reasonable *offer* — "you're the systems engineer who owns this, right?" — and a terrible silent
+default. Offer it and let them correct it: a description somebody did not choose is a stereotype
+the design will then repeat back at them forever.
+
+**What it shapes, and the one thing it must not.** It shapes how you SPEAK — which vocabulary,
+which examples, how much you unpack. It never shapes what you WRITE INTO the design: the record
+stays in its own register whoever is in the room, because the next reader is someone else.
+
+⚠️ **This is a question about the PERSON, not about the graph.** Asking someone which node type to
+use hands them work that is yours (see **capture-intent**); asking who they are gets the one fact
+you cannot look up. Do not let the first rule silence the second.
+
 ## Tell them
 
-Write it as prose for the person who described this project to you, not as a data dump. Aim for
-something they could read in under a minute:
+Write it as prose **in the reader's own language** — theirs, not reflow2's — and not as a data
+dump. Aim for something they could read in under a minute:
 
 1. **What they're building** — one line, from the Project and its objective.
 2. **What's settled** — the Decisions, in plain language, with the *reasoning*, not the ids.
@@ -91,6 +120,13 @@ something they could read in under a minute:
 
 ## Keep it honest
 
+- **Speak their vocabulary, not reflow2's — and do it unasked.** "Gap", "loop", "detector",
+  "the loop owes": that is how reflow2 talks to itself. Say what it MEANS for their design, and
+  name the mechanism only when it earns its place. **This is not the same as simplifying.** A
+  systems engineer wants *requirement*, *interface* and *verification* kept, and softening them is
+  condescension; someone who knows baseball and not software wants the whole thing in terms they
+  already own. Match the reader's recorded `description`. **If a user ever has to ask you for
+  plain language, the default was wrong** — this is that default.
 - **Never paste raw ids at the user.** `cmp:reading-store` means nothing to them; "the reading
   store" does. Ids belong in your tool calls, not your prose.
 - **Don't imply more certainty than the graph holds.** A Requirement recorded from an assumption
