@@ -64,8 +64,14 @@ const COMMAND_ALIASES: &[(&str, Result<&str, &str>)] = &[
     ("where", Ok("where-am-i")),
     ("kpp", Ok("kpp-proposal")),
     ("health", Ok("check-health")),
-    ("decisions", Err("no skill — it calls `scan_nodes` for the `Decision` type directly")),
-    ("debt", Err("no skill — it calls the `loop_status` tool directly")),
+    (
+        "decisions",
+        Err("no skill — it calls `scan_nodes` for the `Decision` type directly"),
+    ),
+    (
+        "debt",
+        Err("no skill — it calls the `loop_status` tool directly"),
+    ),
 ];
 
 /// The sentence that turns a refusal into an instruction, when the name asked

@@ -1256,8 +1256,14 @@ impl DesignGraph {
         // know which axis the caller is on — a resync can be either — so it
         // passes None rather than inferring one. Absent means nobody said,
         // which is true; a guess here would be a claim nobody made.
-        let change_event =
-            self.add_change_event(rec.change_event_id, rec.name, rec.change_type, None, None, None)?;
+        let change_event = self.add_change_event(
+            rec.change_event_id,
+            rec.name,
+            rec.change_type,
+            None,
+            None,
+            None,
+        )?;
         self.pin_at_epoch(node::CHANGE_EVENT, rec.change_event_id, rec.epoch_id)?;
         self.changed(
             rec.change_event_id,

@@ -38,8 +38,10 @@ fn the_constructor_records_why_without_a_second_write() {
         ChangeType::DefectFix,
         Some(ChangeSubject::System),
         Some("The 0.21 bump changed close-frame timing and the reconnect test went flaky."),
-        Some("Pinned to 0.20 and added a close-frame assertion so the timing is checked \
-              rather than tolerated."),
+        Some(
+            "Pinned to 0.20 and added a close-frame assertion so the timing is checked \
+              rather than tolerated.",
+        ),
     )
     .expect("one call must be enough");
 
@@ -61,8 +63,15 @@ fn the_constructor_records_why_without_a_second_write() {
 #[test]
 fn text_is_optional_and_absence_writes_nothing() {
     let mut g = DesignGraph::open_in_memory().expect("open");
-    g.add_change_event("chg:bare", "bare event", ChangeType::Resync, None, None, None)
-        .expect("no text is a true answer");
+    g.add_change_event(
+        "chg:bare",
+        "bare event",
+        ChangeType::Resync,
+        None,
+        None,
+        None,
+    )
+    .expect("no text is a true answer");
 
     assert!(prop(&g, "chg:bare", "summary").is_none());
     assert!(prop(&g, "chg:bare", "rationale").is_none());
@@ -85,8 +94,15 @@ fn a_later_call_that_omits_the_text_does_not_erase_it() {
     )
     .expect("first write");
 
-    g.add_change_event("chg:keep", "renamed", ChangeType::Refactor, None, None, None)
-        .expect("second write");
+    g.add_change_event(
+        "chg:keep",
+        "renamed",
+        ChangeType::Refactor,
+        None,
+        None,
+        None,
+    )
+    .expect("second write");
 
     assert_eq!(prop(&g, "chg:keep", "name").as_deref(), Some("renamed"));
     assert_eq!(
