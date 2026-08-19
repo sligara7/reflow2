@@ -152,7 +152,15 @@ impl ReflowService {
     #[tool(
         description = "Phrase a gap as a plain question via the ambient agent. \
                        Call with empty `answers` to get {status:needs_llm, prompts}; \
-                       fill them and call again with `answers` to get {status:ok, prompt}.",
+                       fill them and call again with `answers` to get {status:ok, prompt}. \
+                       THE ANSWERS YOU FILL IN ARE WHERE THE TRANSLATION HAPPENS: the gap \
+                       arrives in the detector's vocabulary (`unallocated_capability`, \
+                       `unsatisfied_requirement`) and the question a person reads must be in \
+                       THEIRS — what is actually missing and why it matters to their design. \
+                       Read who you are talking to (their `Contributor` description) and match \
+                       that domain; a `plain` question is not automatically one in their \
+                       vocabulary, and swapping vocabulary is not simplifying — a systems \
+                       engineer wants `interface` and `verification` kept.",
         annotations(read_only_hint = false)
     )]
     pub async fn gap_to_prompt(

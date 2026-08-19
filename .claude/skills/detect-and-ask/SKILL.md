@@ -66,6 +66,14 @@ the record**: the gaps stay counted and stay loud (`req:no-idea-goes-quiet`).
      an option leads to, you are not ready to offer it.
    - **Answer in the user's language.** Match the language they wrote to you in, whatever it is.
      This rule is about matching, never about any particular language.
+   - **Say what it MEANS in the reader's own domain — not in reflow2's.** The gap reaches you in
+     the detector's words (*unallocated capability*, *unsatisfied requirement*); the question the
+     user reads must be in theirs. **This is a different axis from the language rule above**: that
+     one picks English or Portuguese, this one picks whether you speak systems engineering,
+     livestock, or baseball. Read the reader's recorded `description` on their `Contributor` and
+     match it; absent one, follow the vocabulary they use with you. **A "plain" question is not
+     automatically one in their domain**, and a vocabulary swap is not simplification — an SE
+     wants *interface* and *verification* KEPT.
 
    **The decision stays with the user.** A recommendation is not an answer: do not move a
    requirement status, settle a decision, or acknowledge a gap in the same act as recommending

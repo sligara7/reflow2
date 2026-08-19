@@ -593,6 +593,14 @@ ASK_CONTRACT: dict[str, str] = {
     "recommendation first, and marked": "Put the recommendation first, and mark it",
     "every option carries its consequence": "including the ones you do not recommend",
     "answers in the user's language": "Match the language they wrote to you in",
+    # Added 2026-08-19. A DIFFERENT AXIS from the language rule above: that one
+    # picks English or Portuguese, this one picks whether the agent speaks
+    # systems engineering, livestock or baseball. Measured from the field twice
+    # — two users independently invented the same workaround of asking the agent
+    # to drop reflow2's jargon — so the obligation is checked rather than hoped
+    # for. reflow2's own vocabulary reaching a user is the leak; a "plain"
+    # question is not automatically one in their domain.
+    "speaks the reader's domain": "Say what it MEANS in the reader's own domain",
 }
 
 # NEGATIVE CHECK 1, and the load-bearing half of the language rule: the
