@@ -297,12 +297,23 @@ impl DesignGraph {
             "coupling",
             IlityEvidence {
                 source: ility_source::MODULARITY,
-                finding: format!(
-                    "modularity {:.2} across {} component(s) — the share of coupling weight that \
-                     stays inside a component. A ratio, reported as context: no bar is set here.",
-                    alloc.modularity,
-                    alloc.components.len()
-                ),
+                finding: match alloc.modularity {
+                    Some(v) => format!(
+                        "modularity {:.2} across {} component(s), measured over {} of them — the \
+                         share of coupling weight that stays inside a component. A ratio, \
+                         reported as context: no bar is set here.",
+                        v,
+                        alloc.components.len(),
+                        alloc.components_with_coupling
+                    ),
+                    None => format!(
+                        "modularity NOT MEASURABLE: {} of {} component(s) carry any coupling, so \
+                         there is no partition to score. Reported as an absence of evidence \
+                         rather than as a value — this axis is uninformed here.",
+                        alloc.components_with_coupling,
+                        alloc.components.len()
+                    ),
+                },
                 adverse: false,
                 subjects: Vec::new(),
             },

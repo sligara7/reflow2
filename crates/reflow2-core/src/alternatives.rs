@@ -83,7 +83,7 @@ pub fn analyze_alternatives(
             total_nodes: report.total_nodes,
             open_gaps: report.gap_count,
             structural_defects: report.defect_count,
-            modularity: report.allocation.as_ref().map(|a| a.modularity),
+            modularity: report.allocation.as_ref().and_then(|a| a.modularity),
             capabilities: report.verification.capabilities,
             capabilities_verified: report.verification.capabilities_verified,
             divergence_from_baseline,

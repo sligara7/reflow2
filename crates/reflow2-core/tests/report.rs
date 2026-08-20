@@ -79,7 +79,7 @@ fn report_aggregates_every_analysis_and_renders_markdown() {
     assert!(r.gap_count > 0 && !r.top_gaps.is_empty());
     let alloc = r.allocation.as_ref().expect("components exist");
     assert_eq!(alloc.component_count, 2);
-    assert!(alloc.modularity > 0.9);
+    assert!(alloc.modularity.expect("a partition exists here") > 0.9);
     assert_eq!(r.surprising.len(), 1);
     assert_eq!(r.surprising[0].from_id, "cap:a1");
     assert_eq!(r.surprising[0].to_id, "cap:b1");

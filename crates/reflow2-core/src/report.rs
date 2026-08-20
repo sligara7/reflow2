@@ -246,8 +246,14 @@ pub struct ConfirmationSummary {
 pub struct AllocationSummary {
     /// Components with at least one capability.
     pub component_count: usize,
-    /// Cohesion/coupling modularity (1.0 = perfectly cohesive).
-    pub modularity: f64,
+    /// Cohesion/coupling modularity — `None` when there was no partition to
+    /// score. See `AllocationReport::modularity`: a 1.0 over one dependency is
+    /// arithmetic, not health, and this readout saying otherwise is why an
+    /// unmodelled decomposition looked perfect for months.
+    pub modularity: Option<f64>,
+    /// Components carrying any coupling at all — the denominator, shown so
+    /// 1-of-44 cannot be mistaken for a clean bill.
+    pub components_with_coupling: usize,
     /// Capabilities coupled more strongly across a boundary than within.
     pub misplaced_count: usize,
     /// Routing-hub components (selective SPOF).
@@ -1288,6 +1294,7 @@ impl DesignGraph {
             Some(AllocationSummary {
                 component_count: a.components.len(),
                 modularity: a.modularity,
+                components_with_coupling: a.components_with_coupling,
                 misplaced_count: a.misplaced.len(),
                 god_components: a.god_components,
             })
@@ -1452,11 +1459,29 @@ impl GraphReport {
         // Allocation health.
         if let Some(a) = &self.allocation {
             let _ = writeln!(m, "## Allocation health\n");
-            let _ = writeln!(
-                m,
-                "Modularity **{:.2}** across {} component(s); {} misplaced capability(ies).",
-                a.modularity, a.component_count, a.misplaced_count
-            );
+            match a.modularity {
+                Some(v) => {
+                    let _ = writeln!(
+                        m,
+                        "Modularity **{:.2}** across {} component(s), measured over {} of them; \
+                         {} misplaced capability(ies).",
+                        v, a.component_count, a.components_with_coupling, a.misplaced_count
+                    );
+                }
+                // NOT "modularity 0.00", and not silence: both would be read as
+                // an answer. The reader is told the question could not be put.
+                None => {
+                    let _ = writeln!(
+                        m,
+                        "Modularity **not measurable**: {} of {} component(s) carry any coupling, \
+                         so there is no partition to score. This is a fact about how much of the \
+                         decomposition is modelled, NOT a poor result — and the 1.00 this used to \
+                         print in the same situation is what let an almost-unmodelled \
+                         decomposition read as perfect. {} misplaced capability(ies).",
+                        a.components_with_coupling, a.component_count, a.misplaced_count
+                    );
+                }
+            }
             if a.god_components.is_empty() {
                 let _ = writeln!(m, "No god-components.\n");
             } else {
