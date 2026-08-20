@@ -142,7 +142,9 @@ pub fn remove_rendezvous(graph_path: &str) {
 /// tools fail in ways that look like reflow2 bugs. So the probe completes an MCP
 /// `initialize` and checks the server identifies as `reflow2-mcp`.
 pub async fn probe(url: &str) -> bool {
-    crate::proxy::probe_server_async(url).await.unwrap_or(false)
+    crate::mcp_http::probe_server_async(url)
+        .await
+        .unwrap_or(false)
 }
 
 /// The same store, however the two paths are spelled?

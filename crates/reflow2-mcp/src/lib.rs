@@ -7,6 +7,7 @@
 pub mod degraded;
 pub mod dto;
 pub mod latent;
+pub mod mcp_http;
 pub mod nudge;
 pub mod proxy;
 pub mod registry;

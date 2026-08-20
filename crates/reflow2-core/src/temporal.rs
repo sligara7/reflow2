@@ -952,11 +952,10 @@ impl DesignGraph {
     fn item_is_delivered(&self, item_type: &str, item_id: &str) -> Result<bool, DynoError> {
         match item_type {
             node::REQUIREMENT => self.requirement_is_delivered(item_id),
-            node::CAPABILITY => Ok(self.capability_is_realized(item_id)?
-                && !matches!(
-                    self.capability_verification(item_id)?,
-                    crate::verify::CapabilityVerification::Unchecked
-                )),
+            node::CAPABILITY => {
+                Ok(self.capability_is_realized(item_id)?
+                    && self.capability_has_evidence(item_id)?)
+            }
             _ => Ok(false),
         }
     }

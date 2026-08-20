@@ -74,6 +74,27 @@ impl DesignGraph {
 
     /// Compute a capability's [`CapabilityVerification`] state. See the enum
     /// for why this is three-valued.
+    /// Whether a capability has passing evidence ANYWHERE — its own check or
+    /// its component's suite.
+    ///
+    /// A predicate rather than a comparison against the enum, because the
+    /// caller that wanted this was `temporal::item_is_delivered`, and naming
+    /// `CapabilityVerification::Unchecked` there was the third hop of a
+    /// module cycle: artifact → temporal → verify → artifact. Which VARIANT a
+    /// capability is in is this module's business; whether it has evidence is
+    /// the question everyone else is actually asking, and answering it here
+    /// costs nothing and breaks the loop.
+    ///
+    /// Found 2026-08-20 by an adopt pass over reflow2's own source, which is
+    /// the only reason anyone looked: a module cycle inside one crate is legal
+    /// Rust and compiles silently forever.
+    pub fn capability_has_evidence(&self, capability_id: &str) -> Result<bool, DynoError> {
+        Ok(!matches!(
+            self.capability_verification(capability_id)?,
+            CapabilityVerification::Unchecked
+        ))
+    }
+
     pub fn capability_verification(
         &self,
         capability_id: &str,

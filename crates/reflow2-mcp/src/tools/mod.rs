@@ -19,4 +19,5 @@ pub mod exchange;
 pub mod ingest_tools;
 pub mod operate_tools;
 pub mod query;
+pub mod skills_tools;
 pub mod temporal_tools;
