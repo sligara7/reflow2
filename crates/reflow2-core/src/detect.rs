@@ -623,7 +623,8 @@ pub struct GapCandidate {
 pub struct GapPrompt {
     /// 1–2 sentences placing the user back in their own design.
     pub context_setter: String,
-    /// The specific thing to answer, in plain language (no graph jargon).
+    /// The specific thing to answer, in the READER's vocabulary — their
+    /// field's words kept, reflow2's own internal vocabulary dropped.
     pub question: String,
     /// Optional scaffolding / examples.
     pub hints: Vec<String>,
@@ -643,15 +644,36 @@ impl GapCandidate {
     /// the gap or pretending the fallback is polished (docs/gap-surfacing.md
     /// discipline: graceful-degrade-with-an-explicit-flag).
     pub fn to_prompt(&self, backend: &dyn LlmBackend) -> GapPrompt {
+        // ⭐ THE INSTRUCTION USED TO SAY "for a non-engineer. No
+        // graph/systems-engineering jargon" — and it contradicted this tool's
+        // OWN description, which says a systems engineer wants `interface` and
+        // `verification` kept. The description had learned the lesson; the
+        // instruction it handed out had not, and the instruction is the half an
+        // agent obeys. Corrected 2026-08-20 on Anthony's word
+        // (`fact:gap-to-prompt-tells-the-agent-to-strip-the-vocabulary-its-own-description-says-to-keep`).
+        //
+        // WHY IT MATTERED MORE THAN ITS SIZE: this is the single point where a
+        // detector's vocabulary becomes a human's. "No jargon" flattens a
+        // beamline scientist, a flight-test engineer and an acquisitions officer
+        // toward one generic default, producing a question that is easy to read
+        // and impossible to answer precisely — put to the one person who could
+        // have answered it precisely. A persona is a VOCABULARY SWAP, not a
+        // difficulty dial.
         let request = LlmRequest::new(format!(
-            "Rewrite this design gap as one plain-language question for a non-engineer. \
-             No graph/systems-engineering jargon. Return only the question.\n\n\
+            "Rewrite this design gap as one question the reader can answer, in THEIR \
+             vocabulary. Match their domain: keep the words their field uses — a systems \
+             engineer wants `interface` and `verification` kept, a clinician wants theirs. \
+             Drop only reflow2's own internal vocabulary (gap-source names, node and edge \
+             types), because that is jargon nobody outside this tool shares. Swapping \
+             vocabulary is not simplifying, and simplifying is not what is wanted here. \
+             Return only the question.\n\n\
              Gap: {}\nWhy it matters: {}",
             self.title, self.description
         ))
         .with_system(
             "You help a designer fill gaps in their design by asking clear, \
-             constructive questions grounded in their own work.",
+             constructive questions grounded in their own work, in the register they \
+             work in.",
         );
 
         match backend.complete(&request) {

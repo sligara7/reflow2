@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:045f0cff9a1c6c934559bf4954f14bc882a24496cf41b7165c007a69cef1eaf9",
+  "content_hash": "sha256:8c5d311aa786a9c94f78bc2a928a80ae57027f4c389a956207a8fae47c5f3e0d",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -5856,6 +5856,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-floating-parts-get-a-home",
+      "properties": {},
+      "to_id": "epoch:the-floating-parts-get-a-home"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-gate-checks-the-export-can-be-read-back",
       "properties": {},
       "to_id": "epoch:v0320"
@@ -7389,6 +7395,24 @@
       "from_id": "snap:epoch:the-discipline-arrives-at-the-tool:epoch:the-philosophy-is-in-the-product",
       "properties": {},
       "to_id": "epoch:the-discipline-arrives-at-the-tool"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-floating-parts-get-a-home:cmp:packaging",
+      "properties": {},
+      "to_id": "epoch:the-floating-parts-get-a-home"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-floating-parts-get-a-home:cmp:registry",
+      "properties": {},
+      "to_id": "epoch:the-floating-parts-get-a-home"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-floating-parts-get-a-home:dec:bl83a-functional-decomposition",
+      "properties": {},
+      "to_id": "epoch:the-floating-parts-get-a-home"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -11513,6 +11537,15 @@
         "action": "modified"
       },
       "to_id": "art:tools-ask"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-gap-question-keeps-the-readers-vocabulary",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
     },
     {
       "edge_type": "CHANGED",
@@ -21705,6 +21738,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-floating-parts-get-a-home",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:packaging"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-floating-parts-get-a-home",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:registry"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-floating-parts-get-a-home",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:bl83a-functional-decomposition"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-gate-checks-the-export-can-be-read-back",
       "properties": {
         "accepted_baseline": true,
@@ -23235,6 +23295,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "cmp:packaging"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "cmp:sync"
     },
     {
@@ -23596,6 +23662,12 @@
       "from_id": "sys:agent-surface",
       "properties": {},
       "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "cmp:registry"
     },
     {
       "edge_type": "CONTAINS",
@@ -30734,6 +30806,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:packaging",
+      "properties": {},
+      "to_id": "dec:bl83a-functional-decomposition"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:registry",
       "properties": {},
       "to_id": "dec:one-process-many-stores"
@@ -32516,6 +32594,18 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cmp:packaging",
+      "properties": {},
+      "to_id": "snap:epoch:the-floating-parts-get-a-home:cmp:packaging"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cmp:registry",
+      "properties": {},
+      "to_id": "snap:epoch:the-floating-parts-get-a-home:cmp:registry"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cmp:skills",
       "properties": {},
       "to_id": "snap:epoch:cmp-skills-gets-one-parent:cmp:skills"
@@ -32561,6 +32651,12 @@
       "from_id": "dec:bl83a-functional-decomposition",
       "properties": {},
       "to_id": "snap:epoch:decomposition-count-corrected:dec:bl83a-functional-decomposition"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:bl83a-functional-decomposition",
+      "properties": {},
+      "to_id": "snap:epoch:the-floating-parts-get-a-home:dec:bl83a-functional-decomposition"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -83338,7 +83434,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c85e9be6c930aeed82bdc13a3db0d47747466c89a1bcd6cdd5b3b2dd4d7899e7",
+        "checksum": "sha256:bba1bd09988d27a5a06985f0db77fbca23955362cdd2e122a554d3ad8a8b9537",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -87763,6 +87859,15 @@
       }
     },
     {
+      "node_id": "chg:a-gap-question-keeps-the-readers-vocabulary",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "A gap question keeps the reader's vocabulary — the prompt template stops contradicting its own tool description",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:a-measurement-says-when-it-was-taken",
       "node_type": "ChangeEvent",
       "properties": {
@@ -91953,6 +92058,15 @@
       }
     },
     {
+      "node_id": "chg:the-floating-parts-get-a-home",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "dec:bl83a-functional-decomposition, snapshotted while it still enumerates nine systems",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:the-gate-checks-the-export-can-be-read-back",
       "node_type": "ChangeEvent",
       "properties": {
@@ -92765,7 +92879,7 @@
       "node_type": "Component",
       "properties": {
         "kind": "module",
-        "level": "component",
+        "level": "subsystem",
         "name": "packaging",
         "provenance": "authored",
         "purpose": "How reflow2 SHIPS — the part of the system that turns a build into something a consumer can install, pin and run.\n\nOwns what already exists and was never modelled: release.yml's per-platform binary matrix (linux-x86_64, macos-arm64, macos-x86_64), the consumer kit and its manifest, and the install/update path. Adds the container image: a Dockerfile, a linux/amd64 (and possibly linux/arm64) build, version tagging from [workspace.package] so consumers pin rather than chase latest, publication to a pullable registry, and a non-root runtime uid that matches the mounted volume's ownership.\n\nRECORDED BECAUSE THE BLIND SPOT WAS PRE-EXISTING, not because the container created it. The design's 54 other components mirror Rust modules, so nothing owned the shipping path even though the release workflow, the kit and the installer are real, load-bearing artifacts and req:frictionless-update is accepted intent. Capturing flo2's container requirement is what walked into it.\n\nAlso carries the documentation obligation that comes with a server image: reflow2 has NO authentication, --http-allow-host is DNS-rebinding protection only, and the image must be stated to require a private network behind a gateway that does authorize.",
@@ -93452,7 +93566,7 @@
       "node_id": "dec:bl83a-functional-decomposition",
       "node_type": "Decision",
       "properties": {
-        "decision": "reflow2's own decomposition is the functional systems a design-graph tool IS — foundation, vocabulary, store, coherence-loop, human-channel, time-history, intake, agent-surface, documentation — with the Rust modules re-parented under them as implementation. The as-built crate grouping (reflow2-core / -mcp / kit) is retired from the as-designed view.\n\nCORRECTED 2026-08-02: this said \"the seven functional systems\" and named seven. There were EIGHT — `sys:documentation` joined later under `dec:documentation-has-no-operational-coupling`, which accepts that documentation is part of the product while having no operational coupling, so it forms an island the detectors are told to expect. The choice this decision records was unchanged; only its enumeration had gone stale, which is why that was a correction on the record rather than a superseding decision (`dec:reopen-supersedes` governs reversals, not arithmetic). Found by re-measuring a claim rather than re-reading it: the decision's prose said seven while `scan_nodes` said eight.\n\nAMENDED 2026-08-20, and THIS ONE IS NOT ARITHMETIC. There are now NINE. `sys:foundation` was CREATED under `dec:the-kernel-is-its-own-system` (accepted, Anthony's word) and holds cmp:nodes, cmp:schema, cmp:graph, cmp:provenance and cmp:identity — five modules that had been split across `sys:vocabulary` and `sys:store`, with identity in no system at all. Unlike the 2026-08-02 correction, the carving itself moved: a system exists now that did not exist before. It does not overturn this decision, it follows from it — a design-graph tool fundamentally IS a typed store of identified nodes, and that is one function, not two halves of two. The bisection was measured, not argued: it was the entire cause of a `sys:store` <-> `sys:vocabulary` cycle, while the modules themselves are acyclic (`fact:the-modules-are-acyclic-but-the-declared-subsystems-are-not`).\n\nTHE COUNT THAT WAS NOT WRONG, recorded so nobody \"fixes\" it twice: the 14 distinct cross-system pairs cited in `dec:maturity-restructuring-delta` are DIRECTED pairs; counted undirected the same 51 edges span 12. Both are right, they answer different questions, and the recorded figure means directed.",
+        "decision": "reflow2's own decomposition is the functional systems a design-graph tool IS — foundation, vocabulary, store, coherence-loop, human-channel, time-history, intake, agent-surface, documentation, packaging — with the Rust modules re-parented under them as implementation. The as-built crate grouping (reflow2-core / -mcp / kit) is retired from the as-designed view.\n\nCORRECTED 2026-08-02: this said \"the seven functional systems\" and named seven. There were EIGHT — `sys:documentation` joined later under `dec:documentation-has-no-operational-coupling`, which accepts that documentation is part of the product while having no operational coupling, so it forms an island the detectors are told to expect. The choice this decision records was unchanged; only its enumeration had gone stale, which is why that was a correction on the record rather than a superseding decision (`dec:reopen-supersedes` governs reversals, not arithmetic). Found by re-measuring a claim rather than re-reading it: the decision's prose said seven while `scan_nodes` said eight.\n\nAMENDED 2026-08-20, and THIS ONE IS NOT ARITHMETIC. There are now NINE. `sys:foundation` was CREATED under `dec:the-kernel-is-its-own-system` (accepted, Anthony's word) and holds cmp:nodes, cmp:schema, cmp:graph, cmp:provenance and cmp:identity — five modules that had been split across `sys:vocabulary` and `sys:store`, with identity in no system at all. Unlike the 2026-08-02 correction, the carving itself moved: a system exists now that did not exist before. It does not overturn this decision, it follows from it — a design-graph tool fundamentally IS a typed store of identified nodes, and that is one function, not two halves of two. The bisection was measured, not argued: it was the entire cause of a `sys:store` <-> `sys:vocabulary` cycle, while the modules themselves are acyclic (`fact:the-modules-are-acyclic-but-the-declared-subsystems-are-not`).\n\nTHE COUNT THAT WAS NOT WRONG, recorded so nobody \"fixes\" it twice: the 14 distinct cross-system pairs cited in `dec:maturity-restructuring-delta` are DIRECTED pairs; counted undirected the same 51 edges span 12. Both are right, they answer different questions, and the recorded figure means directed.\n\nAMENDED AGAIN 2026-08-20, same day, on Anthony's word: there are now TEN. `cmp:packaging` — how reflow2 SHIPS: the per-platform binary matrix, the consumer kit and its manifest, the install and update path, the container image — is PROMOTED from a leaf component to a subsystem. It had been floating at the root of the spine declaring itself a leaf, which is why \"what are the top-level parts?\" answered differently by declared level than by position. Promotion rather than placement-under-something because the graph says it is real and finished: four capabilities, three of them realized, with `art:release-workflow` behind them, serving accepted intent in `req:frictionless-update`. Something that shipped is not scaffolding.\n\nITS ID KEEPS THE `cmp:` PREFIX AND THAT IS COSMETIC, recorded so nobody reads meaning into it. The other nine carry `sys:`. reflow2 has no rename operation, and fabricating a migration to a new id would destroy the node's snapshot history for a prefix. The `level` property is what the hierarchy computation reads; the prefix is a naming habit that predates the promotion.\n\nALSO IN THIS EPOCH, and it is a PLACEMENT rather than a change to the carving: `cmp:registry` was moved inside `sys:agent-surface`. It had no parent at all. Its three capabilities are unbuilt and nothing realizes it, and its own description says the per-graph state it will own \"today rides on ReflowService as per-process state\" — so the agent surface is where that function actually lives. Modelling it as a peer of the ten would claim a separation that has not happened yet. When the hosted tier is real it can be promoted, and `move_component` makes that one call.",
         "name": "reflow2's systems are functional, not its file tree",
         "rationale": "The self-model had been recovered backwards from the file tree, so its 38 Components were the Rust module list and the domain primitives a design-graph product fundamentally is — node and edge types — appeared nowhere (BL-83). A functional carving comes from the product's purpose (a genesis input), not the code, and cuts across crate boundaries, so adopt on the code can only re-derive the module view. Derived with the user, 2026-07-23. The retired crate view is recovered by adopt-on-a-copy (BL-83b) and the divergence measured by compare_designs (BL-83c). A SECOND GAP FELL OUT OF THE CORRECTION AND IS WORTH MORE THAN IT: the snapshot taken before the edit showed only SEVEN `GOVERNED_BY` edges into this decision, so `sys:documentation` was carrying no link to the decomposition that defines it — the eighth system existed in the graph while being invisible to anything traversing from this decision. Now linked, matching its seven siblings. Per sharpening §2 that edge is completing the model rather than silencing a complaint: the system genuinely is part of this decomposition, and nothing was reporting its absence.",
         "status": "accepted"
@@ -98427,6 +98541,16 @@
       }
     },
     {
+      "node_id": "epoch:the-floating-parts-get-a-home",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The two components floating at the root of the spine are placed on Anthony's word — packaging is promoted to a subsystem, the registry is put where its code actually lives (2026-08-20)",
+        "sequence": 369,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:the-image-must-start",
       "node_type": "DesignEpoch",
       "properties": {
@@ -101856,11 +101980,12 @@
       "node_id": "question:4e24a202aa6f1737",
       "node_type": "Question",
       "properties": {
+        "answer": "Anthony, 2026-08-20: make it a subsystem. Agreed with the recommendation that packaging is not scaffolding — the graph shows four capabilities, three of them realized, with the release workflow behind them, serving req:frictionless-update, which is accepted intent. Something that shipped and works is a subsystem that was never promoted, not a build concern living outside the product. Its level is now `subsystem` and the project contains it directly, like the other nine. The `cmp:` id prefix is left alone and is cosmetic: reflow2 has no rename operation, and fabricating a migration to a new id would destroy the node's snapshot history for the sake of a prefix.",
         "context_setter": "Declared level disagrees with spine position",
         "gap_id": "gap:4e24a202aa6f1737",
         "question": "Packaging is declared a leaf component, but nothing contains it — it sits at the top of the decomposition alongside the nine subsystems. So \"what are the top-level parts of reflow2?\" gives two different answers depending on whether you ask by declared level or by position in the spine. Which is right: does packaging belong inside a subsystem (the agent surface, or documentation), should it be raised to a subsystem in its own right, or is it correctly outside the product decomposition altogether — a build concern rather than a part of the delivered system?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -101917,11 +102042,12 @@
       "node_id": "question:64551316de63fabb",
       "node_type": "Question",
       "properties": {
+        "answer": "Anthony, 2026-08-20: put it inside the agent surface. Agreed with the recommendation, and the reasoning matters more than the placement — this is where the code IS today, not where the registry will eventually belong. All three of its capabilities are unbuilt, nothing realizes it, and its own description says the per-graph state it will own \"today rides on ReflowService as per-process state\". Modelling it as a peer of the ten subsystems would claim a separation that has not happened. When the hosted tier is real and the split actually occurs, promoting it is one move_component call — which is exactly the situation that operation was built for.",
         "context_setter": "Declared level disagrees with spine position",
         "gap_id": "gap:64551316de63fabb",
         "question": "The registry — the part that holds many designs in one process, opening them on demand and evicting them when idle — is declared a leaf component but nothing contains it, so it sits at the top of the decomposition alongside the nine subsystems. It is also the only component in that position whose capabilities are entirely unbuilt and unverified, which suggests the placement may be a symptom rather than the defect. Where does it belong: inside the agent surface, inside the foundation with the store it multiplexes, or as a subsystem of its own once the hosted tier is real?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -106684,6 +106810,36 @@
         "state": "{\"epoch_type\":\"milestone\",\"name\":\"Doing it right is something reflow2 CARRIES, not just something this project practises — a fix says whether it reached the cause, and the tool says what it will not do\",\"sequence\":360,\"status\":\"planned\"}",
         "target_id": "epoch:the-philosophy-is-in-the-product",
         "target_type": "DesignEpoch"
+      }
+    },
+    {
+      "node_id": "snap:epoch:the-floating-parts-get-a-home:cmp:packaging",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:hosted-state-on-a-volume\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:init-asks-which-harness\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:nudge-absence-says-why\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:release-publishes-a-container\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0360\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:release-workflow\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-05T23:30:00Z\",\"role\":\"author\"}}]",
+        "state": "{\"kind\":\"module\",\"level\":\"component\",\"name\":\"packaging\",\"provenance\":\"authored\",\"purpose\":\"How reflow2 SHIPS — the part of the system that turns a build into something a consumer can install, pin and run.\\n\\nOwns what already exists and was never modelled: release.yml's per-platform binary matrix (linux-x86_64, macos-arm64, macos-x86_64), the consumer kit and its manifest, and the install/update path. Adds the container image: a Dockerfile, a linux/amd64 (and possibly linux/arm64) build, version tagging from [workspace.package] so consumers pin rather than chase latest, publication to a pullable registry, and a non-root runtime uid that matches the mounted volume's ownership.\\n\\nRECORDED BECAUSE THE BLIND SPOT WAS PRE-EXISTING, not because the container created it. The design's 54 other components mirror Rust modules, so nothing owned the shipping path even though the release workflow, the kit and the installer are real, load-bearing artifacts and req:frictionless-update is accepted intent. Capturing flo2's container requirement is what walked into it.\\n\\nAlso carries the documentation obligation that comes with a server image: reflow2 has NO authentication, --http-allow-host is DNS-rebinding protection only, and the image must be stated to require a private network behind a gateway that does authorize.\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cmp:packaging",
+        "target_type": "Component"
+      }
+    },
+    {
+      "node_id": "snap:epoch:the-floating-parts-get-a-home:cmp:registry",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:bl-8\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:graph-registry\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:select-graph-by-id\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0360\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-05T23:10:00Z\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:one-process-many-stores\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"PROVIDES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:session-graph-selector\",\"properties\":{\"weight_basis\":\"estimated\"}}]",
+        "state": "{\"kind\":\"module\",\"level\":\"component\",\"name\":\"registry\",\"provenance\":\"authored\",\"purpose\":\"The graph registry: a process-level map from graph_id to an open design, owning the per-graph metadata that today rides on ReflowService as per-process state — graph_path, content_path, identity, and the write_gen counter the loop nudge reads (service.rs:94-99).\\n\\nNew module, does not exist today. What binds the process to one graph is the CLI contract and the startup path in main.rs, not the core: DesignGraph::open_rocksdb (graph.rs:113) is already a plain function call with no process-global state, and ReflowService.graph is already Arc<RwLock<DesignGraph>> (service.rs:74) because several sessions already share one server. So this component is a map of things already shaped to be shared, plus a lifecycle — on-demand bounded opening, single-flight so concurrent first requests for one graph collapse into one open, an idle timeout per graph, and a cap on simultaneously open graphs with a stated error at the cap.\\n\\nHolds N single-writer stores with one RocksDB lock each. It does not make any store multi-writer.\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cmp:registry",
+        "target_type": "Component"
+      }
+    },
+    {
+      "node_id": "snap:epoch:the-floating-parts-get-a-home:dec:bl83a-functional-decomposition",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"cmp:packaging\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:agent-surface\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:coherence-loop\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:documentation\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:foundation\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:human-channel\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:intake\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:store\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:time-history\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:vocabulary\",\"properties\":{}}]",
+        "state": "{\"decision\":\"reflow2's own decomposition is the functional systems a design-graph tool IS — foundation, vocabulary, store, coherence-loop, human-channel, time-history, intake, agent-surface, documentation — with the Rust modules re-parented under them as implementation. The as-built crate grouping (reflow2-core / -mcp / kit) is retired from the as-designed view.\\n\\nCORRECTED 2026-08-02: this said \\\"the seven functional systems\\\" and named seven. There were EIGHT — `sys:documentation` joined later under `dec:documentation-has-no-operational-coupling`, which accepts that documentation is part of the product while having no operational coupling, so it forms an island the detectors are told to expect. The choice this decision records was unchanged; only its enumeration had gone stale, which is why that was a correction on the record rather than a superseding decision (`dec:reopen-supersedes` governs reversals, not arithmetic). Found by re-measuring a claim rather than re-reading it: the decision's prose said seven while `scan_nodes` said eight.\\n\\nAMENDED 2026-08-20, and THIS ONE IS NOT ARITHMETIC. There are now NINE. `sys:foundation` was CREATED under `dec:the-kernel-is-its-own-system` (accepted, Anthony's word) and holds cmp:nodes, cmp:schema, cmp:graph, cmp:provenance and cmp:identity — five modules that had been split across `sys:vocabulary` and `sys:store`, with identity in no system at all. Unlike the 2026-08-02 correction, the carving itself moved: a system exists now that did not exist before. It does not overturn this decision, it follows from it — a design-graph tool fundamentally IS a typed store of identified nodes, and that is one function, not two halves of two. The bisection was measured, not argued: it was the entire cause of a `sys:store` <-> `sys:vocabulary` cycle, while the modules themselves are acyclic (`fact:the-modules-are-acyclic-but-the-declared-subsystems-are-not`).\\n\\nTHE COUNT THAT WAS NOT WRONG, recorded so nobody \\\"fixes\\\" it twice: the 14 distinct cross-system pairs cited in `dec:maturity-restructuring-delta` are DIRECTED pairs; counted undirected the same 51 edges span 12. Both are right, they answer different questions, and the recorded figure means directed.\",\"name\":\"reflow2's systems are functional, not its file tree\",\"rationale\":\"The self-model had been recovered backwards from the file tree, so its 38 Components were the Rust module list and the domain primitives a design-graph product fundamentally is — node and edge types — appeared nowhere (BL-83). A functional carving comes from the product's purpose (a genesis input), not the code, and cuts across crate boundaries, so adopt on the code can only re-derive the module view. Derived with the user, 2026-07-23. The retired crate view is recovered by adopt-on-a-copy (BL-83b) and the divergence measured by compare_designs (BL-83c). A SECOND GAP FELL OUT OF THE CORRECTION AND IS WORTH MORE THAN IT: the snapshot taken before the edit showed only SEVEN `GOVERNED_BY` edges into this decision, so `sys:documentation` was carrying no link to the decomposition that defines it — the eighth system existed in the graph while being invisible to anything traversing from this decision. Now linked, matching its seven siblings. Per sharpening §2 that edge is completing the model rather than silencing a complaint: the system genuinely is part of this decomposition, and nothing was reporting its absence.\",\"status\":\"accepted\"}",
+        "target_id": "dec:bl83a-functional-decomposition",
+        "target_type": "Decision"
       }
     },
     {
@@ -112046,7 +112202,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:c7a254d1e86da1b7dd2785ef62f65dd4495342105245c984421b2798dae11bfc",
+  "prev_content_hash": "sha256:045f0cff9a1c6c934559bf4954f14bc882a24496cf41b7165c007a69cef1eaf9",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
