@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a24ff506db03c99064aef01cd4b9c2412cac47df131998383e93307c72b908c2",
+  "content_hash": "sha256:a99eaf76a336582658abbd5f5e0fd432329859b38f90980ba0f669ddd068079a",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -797,6 +797,12 @@
     },
     {
       "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:ten-components-report-a-zero-blast-radius-the-source-contradicts",
+      "properties": {},
+      "to_id": "req:modularity-computed"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
       "from_id": "fact:the-diamond-meets-at-dynographs-internals-not-its-interface",
       "properties": {},
       "to_id": "dec:idea-a-change-upstream-reaches-the-sibling-that-never-asked"
@@ -818,6 +824,12 @@
       "from_id": "fact:the-levied-requirement-blocker-cleared-and-the-workaround-recurred",
       "properties": {},
       "to_id": "dec:idea-gap-flows-to-the-dependency"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:the-modules-are-acyclic-but-the-declared-subsystems-are-not",
+      "properties": {},
+      "to_id": "req:modularity-computed"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -77205,6 +77217,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:wall-check",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-declared-wall-is-checked-against-the-coupling-it-contains"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:where-am-i-skill",
       "properties": {
         "completeness": "complete",
@@ -77267,6 +77288,15 @@
       "from_id": "cap:a-check-records-what-it-found-separately-from-what-it-is",
       "properties": {},
       "to_id": "req:a-finding-has-somewhere-to-put-its-evidence"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-declared-wall-is-checked-against-the-coupling-it-contains",
+      "properties": {
+        "coverage": "partial",
+        "rationale": "It computes whether a declared wall holds, which is one of the requirement's claims. It does NOT compute encapsulation or cohesion, and it reads coupling rather than contracts, so the requirement is not fully met by it."
+      },
+      "to_id": "req:modularity-computed"
     },
     {
       "edge_type": "SATISFIES",
@@ -82350,6 +82380,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:wall-check",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:wall-check"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:genesis-skill-registered",
       "properties": {
         "action": "created"
@@ -84967,6 +85005,17 @@
       }
     },
     {
+      "node_id": "art:wall-check",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:007f328f17e2da4812258e9fd399d70ef51cfb52799094b1814432affacef3b8",
+        "location": "tools/wall_check.py",
+        "name": "wall_check.py",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:where-am-i-skill",
       "node_type": "Artifact",
       "properties": {
@@ -85019,6 +85068,16 @@
         "provenance": "authored",
         "status": "planned",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:a-declared-wall-is-checked-against-the-coupling-it-contains",
+      "node_type": "Capability",
+      "properties": {
+        "description": "BUILT 2026-08-20 as tools/wall_check.py, against req:modularity-computed. A decomposition is declared once, early, when it is cheapest to get wrong, and every later answer about severability and blast radius is computed through it. Nothing checked it.\n\nWhat it computes: the real Rust import graph (comments and string literals stripped), lifted to the declared subsystems through each Component's CONTAINS placement. It reports (1) module-level cycles, (2) SUBSYSTEM-level cycles - the walls that cannot be severed because traffic crosses them both ways, (3) Components whose design says nothing depends on them while their same-named module is coupled in the source, and (4) Components placed in no subsystem at all.\n\nWhy it reads the SOURCE and not the graph: every detector reflow2 ships checks the consistency of edges that EXIST. A missing coupling edge is a defect of ABSENCE, and the design cannot notice its own silence - measured here as a cycle detector correctly reporting zero over a subsystem layer that holds zero edges.\n\nSTATED LIMIT: an import graph is coupling, not a contract. These numbers answer 'does the wall I declared hold' and must never be imported as CONSUMES - see fact:adopt-ran-on-reflow2-and-the-mechanical-contract-recovery-collapsed.\n\nIT IS AN INSTRUMENT, NOT A GATE, and exits 0 always. Whether a subsystem cycle should stop the build is a governance question with an owner and has not been put to him.",
+        "name": "A declared wall is checked against the coupling it is supposed to contain",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -100881,6 +100940,16 @@
       }
     },
     {
+      "node_id": "frag:art:wall-check",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered wall_check.py"
+      }
+    },
+    {
       "node_id": "frag:genesis-skill-registered",
       "node_type": "Fragment",
       "properties": {
@@ -108860,6 +108929,18 @@
       }
     },
     {
+      "node_id": "fact:ten-components-report-a-zero-blast-radius-the-source-contradicts",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "MEASURED 2026-08-20 on the folded #262 tree, comparing reflow2's design-graph coupling against reflow2's ACTUAL Rust import graph (comments and string literals stripped first, because 2026-08-19 measured that 15% of a naive model is prose).\n\n=== WHAT AGREES, AND IT IS MOST OF IT ===\n\nThe two models have THE SAME SHAPE and name THE SAME KERNEL. Blast radius = how many things transitively depend on you.\n\n  design Components (56): median 0, mean 2.9, bimodal - 35 at zero, then nodes 30, provenance 29, schema 29, graph 28\n  reflow2-core modules (53): median 1, mean 6.2, bimodal - 26 at zero, then nodes 46, provenance 44, identity 44, schema 43, graph 42\n\nFour of the five kernel names are identical. The hand-authored DEPENDS_ON set is a FAITHFUL coupling model, sparser than the truth but not a different story. This is the same verdict the adopt run reached from the other direction: the sparse hand-authored edges were right.\n\n=== WHAT DOES NOT AGREE, AND IT IS THE DANGEROUS HALF ===\n\n18 Components carry NO PROVIDES, CONSUMES or DEPENDS_ON edge of any kind. Ten of those 18 map to a real source module by name. ALL TEN OF THOSE MODULES ARE COUPLED IN THE CODE - ten of ten, no exceptions:\n\n  cmp:dto            design degree 0, code degree 11\n  cmp:identity       design degree 0, code degree 5, and 44 of 52 modules transitively depend on it - a KERNEL module the design models as an island\n  cmp:claims         0 / 4      cmp:alternatives  0 / 4\n  sys:vocabulary     0 / 3      cmp:merge         0 / 3\n  cmp:nudge          0 / 2      cmp:readiness     0 / 2\n  cmp:degraded       0 / 1      cmp:sync          0 / 1\n\nThe remaining eight are the subsystems and cmp:docs / cmp:main / cmp:packaging, which have no single module to compare against.\n\n=== WHY IT MATTERS FOR AN ARBITRARY USER'S PROJECT, NOT JUST THIS ONE ===\n\nAsk reflow2 what breaks if you change cmp:identity and it answers NOTHING. The source says 44 of 52 modules. A false ZERO is the worst answer a coupling model can give: it is the most reassuring reply available and therefore the one least likely to be questioned - the exact doctrine reflow2 already applies to loop_status(contributor_id), where an unknown id is REFUSED rather than answered 'nothing is owed to you'.\n\nAnd NOTHING IN REFLOW2 NOTICES. Every detector checks the CONSISTENCY OF EDGES THAT EXIST. A missing coupling edge is a defect of ABSENCE, and absence is the one thing the detector set does not ask about. The design is not wrong where it speaks; it is silent where it should speak, and silence reads as safety.\n\n=== HOW IT WAS COMPUTED, SO IT CAN BE RE-RUN ===\n\nModule graph: every crate::, super::, self:: and crate-name path in crates/*/src/**.rs after stripping comments and both string-literal forms, resolved to the longest known module prefix; grouped `use crate::{...}` forms confirmed absent (0 occurrences). Design graph: Component-to-Component DEPENDS_ON, plus CONSUMES-to-PROVIDES resolved through the Interface. Reverse-reachability closure on both. Cycle check re-run on the same model: reflow2-core 53 modules / 137 edges and reflow2-mcp 25 / 34, ZERO cycles at both top-module and file granularity - #262's claim independently confirmed.\n\nSTATED LIMIT, because the same trap is one day old: an import graph is COUPLING, not a contract. These numbers are the right input for 'where could a wall go' and the WRONG input for CONSUMES - importing them as contracts is exactly the mistake fact:adopt-ran-on-reflow2-and-the-mechanical-contract-recovery-collapsed records.",
+        "subject_id": "req:modularity-computed",
+        "valid_from": "2026-08-20"
+      }
+    },
+    {
       "node_id": "fact:the-black-box-tier-has-two-answers-that-disagree",
       "node_type": "TemporalFact",
       "properties": {
@@ -109073,6 +109154,18 @@
         "subject_id": "cap:interface-spec",
         "valid_from": "2026-08-15",
         "value": "{\"observed\":\"2026-08-15, US federal government genesis session\",\"refused\":\"medium: 'process'\",\"enum\":\"REST|gRPC|event|graphql|cli|library|data|mechanical|electrical|human|unspecified\",\"workaround\":\"human, used for all 17 check-and-balance interfaces, judged defensible by the reporter\",\"why_it_matters_beyond_labelling\":\"medium is READ - library/data earn the single_point_of_failure foundation exemption (ver:interface-spec), and seam_report compares it across paired designs\",\"second_push_in_three_weeks\":\"dec:the-mcp-surface-is-two-boundaries-not-one-medium settled the first by SPLITTING rather than adding json_rpc; that reasoning does not transfer - 17 procedures are not one node describing two boundaries\",\"opposite_directions\":\"the first push wanted a PROTOCOL the enum lacked; this wants a NON-TECHNICAL KIND\",\"credit\":\"the refusal listing every valid value made the fix one retry - req:a-refusal-names-what-would-have-worked, observed in the field\",\"not_established\":\"whether procedural/contractual are the right words; one value or several; enum growth vs controlled open string\",\"no_schema_break\":\"enum values are not counted by the version stamp\"}"
+      }
+    },
+    {
+      "node_id": "fact:the-modules-are-acyclic-but-the-declared-subsystems-are-not",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "MEASURED 2026-08-20, immediately after #262 made reflow2's module graph acyclic. Lift the SAME acyclic import edges up to the 8 declared subsystems, using each Component's CONTAINS placement, and TWO CYCLES APPEAR.\n\n=== THE RESULT ===\n\n  MODULES: 53 + 25, zero cycles at top-module and file granularity. Confirmed.\n  SUBSYSTEMS: 8 declared, and the graph over them has TWO cycles.\n\n  1) sys:store <-> sys:vocabulary\n       store -> vocabulary via graph->nodes, graph->schema, export->nodes\n       vocabulary -> store via flow->graph, vocabulary->graph\n\n  2) sys:coherence-loop <-> sys:time-history\n       coherence-loop -> time-history via artifact->temporal, confirm->temporal\n       time-history -> coherence-loop via compare->report        <- ONE back-edge\n\n=== WHY THIS IS THE POINT, NOT A CURIOSITY ===\n\nA wall you can hand a change to is a wall traffic crosses in ONE direction. At a mutually coupled boundary there is nothing for a blast radius to stop at, so severability at sys:store and sys:vocabulary is not merely unmeasured - it is FALSE. dec:idea-stated-module-function-is-what-makes-failure-mode-testing-derivable and the flo2 change-propagation chain both assume walls exist to follow; at two of the eight, they do not.\n\nThe insight already recorded - MODULARIZATION IS ABOUT ADDING WALLS, NOT EDGES - now has its first concrete instance, and the walls in question are already declared. They just do not hold.\n\n=== THE ROOT CAUSE IS PLACEMENT, NOT CODE ===\n\nCycle 1 is not a defect in the source. The kernel is four modules that everything sits on - nodes (46 of 52 modules transitively depend on it), provenance (44), schema (43), graph (42) - and the declared decomposition CUTS IT IN HALF:\n\n  cmp:nodes  -> sys:vocabulary        cmp:graph      -> sys:store\n  cmp:schema -> sys:vocabulary        cmp:provenance -> sys:store\n\ngraph reads nodes and schema; vocabulary and flow read graph. Any bisection of a mutually-dependent kernel produces a cycle at the level above it, whatever the code does. PUT ALL FOUR ON ONE SIDE AND CYCLE 1 CEASES TO EXIST WITHOUT TOUCHING A LINE OF RUST. cmp:identity - code degree 5, 44 of 52 modules downstream - is placed in NO subsystem at all, which is the same mistake in its most complete form.\n\nCycle 2 has the shape all three of #262's cycles had: one back-edge, compare->report. It is one honest question - does comparing two designs need the REPORT layer, or a narrower thing report also uses - not a restructuring.\n\n=== AND REFLOW2 CANNOT SEE ANY OF IT ===\n\nreflow2 HAS a circular-dependency detector and it is right to report none, because the design holds exactly TWO coupling edges touching any of the 8 subsystems, and both are sys:store CONSUMES an external interface. Zero subsystem-to-subsystem edges exist, so the detector has nothing to run on. The green reads as 'your subsystems are acyclic'; it means 'your subsystems have no modelled coupling'. Those are opposite facts wearing the same answer, and this is the third instance in three days of the same pattern: THE MECHANISM EXISTS, IS TESTED, AND IS UNREACHABLE FROM WHERE THE PERSON IS STUCK.\n\nFOR AN ARBITRARY USER'S PROJECT that is the whole risk: a decomposition is declared once, early, when it is cheapest to get wrong, and every later answer about severability and blast radius is computed through it. Nothing today checks a declared decomposition against the coupling it is supposed to contain.\n\n=== METHOD ===\n\nImport edges from crates/*/src/**.rs, comments and string literals stripped, mapped module-leaf-name to Component id to CONTAINS parent; Tarjan over the induced subsystem graph. 42 of 56 Components are placed in a subsystem; 39 of those name a module present in the code graph. Of the code edges with both ends placed, 27 stay inside a subsystem and 67 cross - but crossing is not itself a fault, since a foundation layer is SUPPOSED to be depended on. Only the two-way crossings are, and there are two.",
+        "subject_id": "req:modularity-computed",
+        "valid_from": "2026-08-20"
       }
     },
     {
@@ -111366,7 +111459,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:63cd1b6fb52fcd8f75762a3a79055f4c007ff17c7de7933bae4ac15b11ec0356",
+  "prev_content_hash": "sha256:a24ff506db03c99064aef01cd4b9c2412cac47df131998383e93307c72b908c2",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
