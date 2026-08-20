@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:63cd1b6fb52fcd8f75762a3a79055f4c007ff17c7de7933bae4ac15b11ec0356",
+  "content_hash": "sha256:a24ff506db03c99064aef01cd4b9c2412cac47df131998383e93307c72b908c2",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -8162,6 +8162,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-black-box-owes-an-interface-the-way-a-capability-owes-a-requirement",
+      "properties": {
+        "acted_at": "2026-08-20",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-capture-session-skill-the-user-types",
       "properties": {
         "acted_at": "2026-08-12",
@@ -8354,6 +8363,15 @@
       "from_id": "dec:idea-an-unplanned-cut-takes-an-in-between-number",
       "properties": {
         "acted_at": "2026-08-08",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-audit-the-claim-that-reflow2-does-systems-engineering",
+      "properties": {
+        "acted_at": "2026-08-20",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -12434,6 +12452,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-56b15513502fb8cb",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-56ea769be9fb3c84",
       "properties": {
         "accepted_baseline": true,
@@ -12818,6 +12845,15 @@
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-9689223190bead99",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:verify"
     },
     {
       "edge_type": "CHANGED",
@@ -13448,6 +13484,15 @@
         "action": "modified"
       },
       "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-f61b0d48c2426ddf",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
     },
     {
       "edge_type": "CHANGED",
@@ -22008,6 +22053,24 @@
         "action": "modified"
       },
       "to_id": "art:test-init"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-skill-tools-move-out-of-the-skill-data",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-skill-tools-move-out-of-the-skill-data",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:tools-skills"
     },
     {
       "edge_type": "CHANGED",
@@ -77009,6 +77072,24 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:tools-skills",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-refusal-maps-a-command-alias-to-what-is-served"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-skills",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:skills-served"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:tools-temporal",
       "properties": {
         "completeness": "complete",
@@ -82157,6 +82238,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:tools-skills",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:tools-skills"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:tools-temporal",
       "properties": {
         "action": "created"
@@ -84162,7 +84251,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e292efffe10503350edc63c447e430a3d42d5170fd61db2de4458c07b6545424",
+        "checksum": "sha256:bf81f8f819dc1daf2011ddd11b2b938c00f1ad9ff5b5d059c97c89565e4ca795",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/skills.rs",
         "name": "skills.rs",
@@ -84292,7 +84381,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4805d2e4f59a41fe994f98ec2f47ef1cea7fdbf4377748e15be75ca46bc990ec",
+        "checksum": "sha256:dfc4596eff0f00b82f2381a04755aff8d9c73ac88efddc6d1ab269cb06277e17",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "crates/reflow2-core/src/temporal.rs",
@@ -84661,6 +84750,17 @@
       }
     },
     {
+      "node_id": "art:tools-skills",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:f67433db8262fb925c5dcd13fb8fd04d779e5cf90401854b5e4614108166ecb3",
+        "location": "crates/reflow2-mcp/src/tools/skills_tools.rs",
+        "name": "skills_tools.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:tools-temporal",
       "node_type": "Artifact",
       "properties": {
@@ -84834,7 +84934,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8e4dd328ecb7e57cd5f4796a6a3d1c49bbb6a2ccdf5eeca164cf1313afb7eb98",
+        "checksum": "sha256:8f923178f4246edf7385fa125ee4e92e59c48ae5e0ffa7a45ecb04e569541f34",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/verify.rs",
         "name": "verify.rs",
@@ -87920,6 +88020,16 @@
       }
     },
     {
+      "node_id": "chg:accept-56b15513502fb8cb",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-20",
+        "name": "The tool half moved to tools/skills_tools.rs, where every other tool module already lives; skills.rs keeps the compiled-in skill DATA and no longer imports ReflowService. That import was the cycle edge — service called skills::catalogue() for its own instructions while skills implemented tools on the service. `Self::skills_router()` was ALREADY summed in ReflowService::new alongside the rest, so only the file placement disagreed with the intended shape. All 152 toolsnaps match: the served surface is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-56ea769be9fb3c84",
       "node_type": "ChangeEvent",
       "properties": {
@@ -88307,6 +88417,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-18T00:35:00Z",
         "name": "The v0.34.0 version bump. The design meaning of a cut lives in the Release and its release_cut epoch, not in a version string — so the manifest moved and the design holds. Accepted BEFORE release_includes_all so the frozen manifest records the post-bump file, which is what actually ships.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-9689223190bead99",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-20",
+        "name": "Adds `capability_has_evidence()` — a predicate, so callers stop naming `CapabilityVerification::Unchecked` to compare against a variant. That naming was the third hop of the module cycle artifact → temporal → verify → artifact. Which VARIANT a capability is in is this module's business; whether it has evidence is the question everyone else asks. No behaviour changed and no types moved.",
         "subject": "system"
       }
     },
@@ -88887,6 +89007,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-06T13:10:00Z",
         "name": "NON_TOOL_TERMS gains the SCHEDULED_FOR / DesignEpoch / GATED_ON vocabulary the new plan-increments skill names — modality, expected, required, achieved, sequence, kind, min_level, deployed, unreleased_component. The lint's own failure message asks for exactly this, in the same diff. No design meaning: the allowlist is how the lint distinguishes a field name from a mistyped tool, and adding the terms a new skill legitimately uses carries no claim about the design."
+      }
+    },
+    {
+      "node_id": "chg:accept-f61b0d48c2426ddf",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-20",
+        "name": "`item_is_delivered` calls the new predicate instead of matching on verify's enum, so temporal no longer references crate::verify at all. The delivered/not-delivered answer is byte-identical; only the coupling is gone.",
+        "subject": "system"
       }
     },
     {
@@ -91550,6 +91680,15 @@
       }
     },
     {
+      "node_id": "chg:the-skill-tools-move-out-of-the-skill-data",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "The served-skill TOOLS move out of the skill DATA, breaking a module cycle adopt found in reflow2's own source",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:the-specifies-edges-are-drawn-and-the-vocabulary-is-measured",
       "node_type": "ChangeEvent",
       "properties": {
@@ -93298,6 +93437,15 @@
       }
     },
     {
+      "node_id": "dec:idea-a-black-box-owes-an-interface-the-way-a-capability-owes-a-requirement",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-20: *\"just as reflow2 checks that a capability had a requirement, I feel like that a defined black box should have an interface... reflow2 should define black boxes (part of the functional allocation to a system) and define/enforce interface contracts (MOSA I don't think would be possible without contracts).\"* He named the exceptions himself: designs with no black boxes at all, boundaries where a contract is deliberately not enforced, and a single black box with nothing to interface with.\n\nSEARCHED FIRST, at his instruction. Read: `dec:mosa-conformance`, `req:key-interfaces` (accepted), `req:modularity-computed` (accepted), `cap:key-interfaces`, `ver:key-interfaces`, `req:interface-spec-complete`, `fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it`, `dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses`, and the three interface detectors in detect.rs. **MUCH OF THIS IS ALREADY SETTLED AND BUILT** — what follows is only what is not.\n\n═══════════════════════════════════════════════\n✅ WHAT MOSA ALREADY PRODUCED HERE, so it is not re-litigated\n\n`dec:mosa-conformance` (2026-07-25) found exactly two things missing and BOTH WERE PROMOTED THE SAME DAY on his word and are now ACCEPTED: `req:key-interfaces` — the design says which boundaries are published — and `req:modularity-computed` — severability is computed, not asserted by the diagram. `Interface.designation` (internal / published / required / both) IS the key-interface marker MOSA needed, and it is built and tested (`cap:key-interfaces`, `ver:key-interfaces`, 8 cases).\n\nSo the vocabulary half of his instinct is DONE. What is missing is checks.\n\n═══════════════════════════════════════════════\n📐 THE ANALOGY IS EXACT, AND MEASURED 2026-08-20 ON THIS DESIGN\n\n  a Capability with no Requirement   → `unmotivated_capability` FIRES\n  a Component with no Interface      → NOTHING FIRES\n\n  56 Components\n    14  carry any PROVIDES or CONSUMES\n    42  carry none\n      · 24 of those are in a DEPENDS_ON pair, so `undeclared_seam` sees them —\n        but AGGREGATED into ONE project-scoped gap at severity 0.45\n      · 18 are NEITHER coupled NOR interfaced: **nothing in reflow2 sees them at all**\n\nThose 18 are the finding. They are black boxes in name only — no boundary, no coupling, nothing to sever along — and every instrument reports clean over them.\n\n═══════════════════════════════════════════════\n🛑 AND THE SECOND HOLE IS WORSE, BECAUSE IT IS ON THE PUBLISHED BOUNDARIES\n\n`req:interface-spec-complete` is ACCEPTED intent — a published contract must carry what two systems have to AGREE on, in terms a computation can compare. **NOTHING CHECKS IT.** Measured on this design:\n\n  4 interfaces designated `published`\n  3 of the 4 have unset contract fields:\n     ifc:core-api        7 of 9 unset\n     ifc:graph-export    6 of 9 unset\n     ifc:mcp-tools-http  1 of 9 unset\n\nreflow2 publishes a boundary whose medium, paradigm, payload format, auth and error model are all `unspecified`, and calls the design green. That is MOSA step 4 — DEFINE INTERFACES — unenforced on the tool's own published surface.\n\n═══════════════════════════════════════════════\n📋 MOSA'S FIVE STEPS, AGAINST WHAT REFLOW2 HAS — vocabulary vs check\n\n  1 PLAN                    Flow/process modelling exists          check: n/a\n  2 MODULARIZE              modularity computed                    check: FIXED 2026-08-20\n                                                                   (it read 1.00 over nothing;\n                                                                    now NOT MEASURABLE, honestly)\n  3 IDENTIFY INTERFACES     `designation` built and tested         check: NONE — nothing says\n                                                                   you never identified any\n  4 DEFINE INTERFACES       10 structured fields, `set_interface_spec`  check: NONE — 3 of 4\n                                                                   published are incomplete\n  5 STANDARDIZE INTERFACES  DesignRule with `enforced` (17 rules,  check: NONE binding a rule\n                            6 enforced)                            to an interface as a standard\n\nFOUR OF FIVE HAVE THE VOCABULARY AND NO CHECK. That is the three-legs pattern (`fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it`) landing on the interface layer specifically: typed tool yes, instruction yes, DETECTOR THAT NOTICES ABSENCE no.\n\n═══════════════════════════════════════════════\nIDEAS\n\n**A. `uninterfaced_component` — a black box with no boundary at all.** The exact sibling of `unmotivated_capability`. Catches the 18 nothing currently sees.\n   ⚠️ Noise: 42 of 56 on this design. Aggregate like `undeclared_seam` does, or per-component? Aggregation is what made the 73 uncontracted pairs read as one 0.45 note nobody acted on for months — so the aggregation that controls noise is also what buried the last finding of this shape.\n\n**B. `incomplete_published_contract` — a boundary designated `published` with the agreement axes unset.** Directly satisfies `req:interface-spec-complete`, which is accepted and unimplemented. Narrow by construction: it fires only on what the design has already CHOSEN to publish, so it cannot nag a design that has not started.\n   ⭐ Cheapest of these, most defensible, and it is the MOSA step that makes severability mean anything.\n\n**C. Let a ruling declare the exceptions.** His three cases — no black boxes yet, contract deliberately unenforced, a single box — are DELIBERATE STATES, and `governed_by(..., ruling: \"parks\")` already exists for exactly that. It would need extending to these detectors, which is the same reachability problem `parks` already has.\n\n**D. Self-limit rather than enumerate exceptions.** Precedent from 2026-08-20: `level_spine_disagreement` compares against the highest level PRESENT, so a flat design reports nothing and no ladder depth is prescribed. The same move here — fire only where the design has ALREADY used interfaces somewhere — handles \"no black boxes yet\" and \"single box\" without anyone declaring an exception.\n   ⚠️ But it also means a design that never draws a single interface is never asked about it, which is `dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses` — open, and the harder half.\n\n═══════════════════════════════════════════════\n⭐⭐ ONE PUSHBACK ON HIS OWN EXCEPTION, offered because it may sharpen the rule\n\nHe asks whether a design could have no black boxes, and treats \"a single black box with nothing to interface with\" as an exception. IN SE TERMS IT MAY NOT BE ONE. A system is defined by its boundary — that is what makes it a system rather than a region of the universe. A single black box still has an interface: to its ENVIRONMENT. reflow2 already supports this (an Interface may sit between a Component and an ACTOR, not only between two Components), so the vocabulary is there.\n\nIf that holds, the rule is stronger and simpler than he proposed: **every black box has at least one interface — to a sibling or to the environment — and a box with none has not been bounded yet.** The genuine exceptions then are not about EXISTENCE but about ENFORCEMENT: how complete the contract must be, and whether both sides are held to it.\n\n⚠️ COUNTER, recorded beside it: that is an SE-domain claim, and `req:design-anything` keeps the vocabulary neutral. Whether \"every element has a boundary\" is a universal truth or a systems-engineering convention is exactly the kind of thing this project refuses to assume on a user's behalf.\n\n═══════════════════════════════════════════════\n⚠️ HONEST BOUNDS\n\n· Every number here is from reflow2's own graph. Whether 42-of-56 is typical of a user's project is unknown — and by the standing rule, what this means for an arbitrary project is the question that matters, not what it means here.\n· Nothing is costed. B looks small; A's noise question is unresolved and is the one that decides whether it helps or joins the 80 unsurfaced gaps.\n· `dec:mosa-conformance` stays OPEN on its own narrower question — whether to ship a MOSA-BRANDED report — and nothing here decides that. Its own answer leans: a view over computations that exist, never schema, because adopting one domain's language is what reflow2 has refused since the beginning.",
+        "name": "OPEN — should a Component with no interface be a finding, the way a Capability with no Requirement already is? And should a PUBLISHED contract have to be complete?",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-a-capability-can-be-marked-contested",
       "node_type": "Decision",
       "properties": {
@@ -93385,6 +93533,15 @@
         "name": "A planned increment is identified by what it DELIVERS; the version number is assigned at the cut, from what actually shipped",
         "rationale": "Raised immediately after applying the slip, because the cost was concrete rather than theoretical: four planned epochs needed renaming and none could have its id corrected, so the graph now holds ids whose numbers are one behind their content. Recorded rather than fixed — changing how the plan is ADDRESSED is a bigger act than the slip Anthony asked for, and picking (a) would re-point every future reference.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:idea-a-planned-target-epoch-is-the-morph-path-instead-of-building-reflow3",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-20, thinking past both hypotheticals: *\"I feel like we could do this and set a far off target epoch for reflow2, then the question becomes how to change/morph reflow2 to that future state.\"*\n\nDISTINCT FROM BOTH SIBLINGS, which were read before writing this. `dec:idea-genesis-reflow3-from-the-requirements-alone` asks what a fresh pass on the requirements would PRODUCE — a sufficiency test. `dec:idea-run-adopt-on-reflow2-itself-as-a-ground-truth-test` asks what reading the CODE would RECOVER. Both are EXPERIMENTS that end in a measurement. This is a MECHANISM that ends in a roadmap, and it needs neither experiment to be run.\n\n⭐ THE MACHINERY IS ALREADY BUILT, which is what makes this cheap where reflow3 is expensive:\n  `plan_epoch`      an Epoch that has NOT happened yet — the forward half of the time axis\n                    (`req:epochs-can-be-planned`). A planned epoch REFUSES record_change,\n                    because a snapshot captures the present.\n  `schedule_for`    points a Requirement or Capability at the epoch it is due in\n  `arrival_delta`   planned versus delivered, per item, with FIVE outcomes — delivered,\n                    deferred, discontinued, and `outstanding`, which means nobody has yet\n                    said which of the previous two it is. It refuses to default that, and\n                    names it as the question to put to the user.\n  `set_epoch_status` marks arrival when the moment comes\n\n⇒ SO \"HOW DO WE MORPH REFLOW2 TO ITS FUTURE STATE\" IS ALREADY A COMPUTABLE QUESTION. Record the end state as a planned epoch, schedule the intent that belongs to it, and the delta between now and then IS the roadmap — recomputed on demand rather than maintained as a document that drifts.\n\n⭐⭐ AND IT DISSOLVES THE EXPENSIVE HALF OF THE REFLOW3 QUESTION. reflow3 was proposed to discover whether the recorded intent determines the product. But the reason a fresh pass would diverge is already measured and is not in doubt: 18 capabilities no requirement asks for, 43 requirements nothing delivers, and a design governed more than twice as heavily by Decisions (877 of 901 GOVERNED_BY edges) as by Requirements — and genesis does not take Decisions as input. A target epoch does not need to answer that question. It needs the target STATED, which is a thing Anthony can say directly.\n\n═══════════════════════════════════════════════\n⚠️ WHAT IS GENUINELY HARD ABOUT IT, and it is not the tooling\n\nA planned epoch is only as good as the target written into it, and NOBODY HAS WRITTEN ONE. Today's audit gives candidate content — every 15288 process with vocabulary and no check, the interface half of the black-box requirement, a risk register, validation that has never once been used on 175 checks. But turning that into a stated end-state is a design act, not a scheduling one.\n\n🛑 AND ONE TRAP THIS SHARES WITH EVERYTHING ELSE TODAY: `arrival_delta` computes against the epoch's FIRST snapshot as baseline. A target epoch with nothing scheduled at it returns a clean delta — the same green-over-emptiness shape as `modularity 1.00` over one dependency, `hierarchy_issues: 0` over an incomplete spine, and `0 gaps` over ten unused schema domains. A far-off epoch nobody has scheduled anything into would report no shortfall at all.\n\n═══════════════════════════════════════════════\nOPTIONS\n\n**A. STATE THE TARGET, SCHEDULE NOTHING YET.** One planned epoch, named, with the end-state written in its own text. Cheapest possible move and it makes the direction a fact rather than a conversation. ⚠️ On its own it changes no computation.\n\n**B. STATE IT AND SCHEDULE THE KNOWN GAPS INTO IT** — the accepted-but-unbuilt requirements, starting with `req:recursive-black-box-decomposition` and `req:interface-spec-complete`. `arrival_delta` then answers \"how far is reflow2 from what it says it should be\" as a computation. ⭐ This is the one that makes the morph measurable.\n\n**C. INTERMEDIATE EPOCHS BETWEEN NOW AND THE TARGET** — the increments. `plan-increments` already exists for this. ⚠️ Premature until the target has content; sequencing toward an unstated end is how a roadmap becomes a wish list.\n\n**D. DO IT AFTER ADOPT.** Anthony's own leaning is adopt-on-a-copy first. Its predicted prize is a RECOVERED CONTRACT SET, which is precisely the largest item any target epoch would contain — so running it first would populate the target rather than guess at it.\n\n⚠️ NOT ESTABLISHED: whether a planned epoch far enough out to hold a whole end-state is a shape reflow2 has ever exercised. Every epoch in this graph is a release cut or a revision that has already happened.",
+        "name": "OPEN — record reflow2's target end-state as a PLANNED EPOCH and let arrival_delta drive the morph, instead of building reflow3 to find out what the target is",
+        "status": "proposed"
       }
     },
     {
@@ -93534,6 +93691,15 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony thinking out loud 2026-08-08, immediately after `dec:an-unplanned-cut-slips-every-later-increment-by-one` was accepted and applied, and in direct response to the id-churn cost that applying it exposed. HIS WORDS: \"if we can't slip a version, just add the in-between version like v0.25.1 for the planned change, then preplanned versions can stay in place (their id stays the same) and we can add unplanned versions as v0.25.1 or v0.26.4 or whatever makes sense - I'm sure this has a drawback also as it probably doesn't fit when you should do a minor bump versus whatever the third decimal place is called.\" (The third decimal is the PATCH number, semver's MAJOR.MINOR.PATCH.) THE IDEA: an unplanned cut is numbered BETWEEN the planned ones rather than consuming one of them, so `epoch:v0260-planned` stays v0.26.0 forever, its id keeps matching its content, and nothing renumbers. WHAT IT SOLVES, and it is the real prize: the id churn is not merely reduced, it is ELIMINATED — no renaming, no risk to the snapshot history `dec:arrival-delta` reads plan movement from, and no ids that lie about their content. It also removes the cascade entirely: today's slip touched four epochs, and a scheme where planned numbers are stable touches none. THE DRAWBACK HE NAMED HIMSELF, AND IT IS REAL AND MEASURABLE ON TODAY'S CUT: patch is not a free slot. This project's CHANGELOG defines its own buckets — patch is \"bug fixes, doc fixes, tests, refactors, perf, and behavior changes that make a silent failure LOUD\", minor is \"a change to the SHAPE of the tool surface (new/changed params, changed result shapes)\". v0.25.0 was MINOR by that table for exactly two reasons: `HealProposal.would_destroy` and `HealIssue.hubs`, both new result fields. Everything else in it was fixes. So v0.25.1 would have been WRONG for what actually shipped — by a hair, and the hair matters. THE HARM IS CONCRETE RATHER THAN PURIST, and the same table states it: patch means the consumer \"updates blindly; skills and calls unchanged\"; minor means they \"may need to notice\". Numbering a shape change as a patch tells Alex he can update without looking when a result shape moved. That is a signal saying SAFE without having checked — the failure family this whole session kept finding. OTHER SHAPES, none chosen: (a) HYBRID — insert as a patch when the unplanned work genuinely IS a patch (the common case), slip only when it is genuinely minor (rarer). Keeps ids stable most of the time and keeps semver honest; costs two rules instead of one and a judgement at each cut, though that judgement is one the CHANGELOG table already forces. (b) DISSOLVE IT — name planned increments by CONTENT and assign the number at cut time from what actually shipped (`dec:idea-a-planned-increment-is-named-by-content-not-by-number`). Then neither slipping nor inserting is a problem, because no plan ever holds a number it can lose. This is the only option where the question stops existing rather than being answered. (c) REDEFINE THE BUCKETS — pre-1.0 semver gives latitude and the project has not made a stability commitment (\"Major 1.0 — Deferred\"), so it could declare that 0.x.y patch admits additive-but-non-breaking changes. Cheapest to write and the most expensive to be wrong about, since it weakens the one signal consumers act on blindly. (d) KEEP THE ACCEPTED RULE and pay the id cost, treating ids as birth numbers rather than delivery numbers. WORTH NOTING: (a) and (b) COMPOSE — content-named plans plus semver-honest numbering at cut time is arguably the same answer reached from two directions.",
         "name": "OPEN — should unplanned work take an IN-BETWEEN version (v0.25.1) so planned increments never renumber, instead of slipping them all up one?",
         "rationale": "Recorded as an idea rather than as a change because Anthony was explicitly thinking out loud, offered the counter-argument himself in the same breath, and the accepted rule it revisits was settled minutes earlier. Nothing is superseded: `dec:an-unplanned-cut-slips-every-later-increment-by-one` stands and the slip has been applied. What makes this worth a node rather than a passing remark is that it is a genuine alternative to a rule with a known cost, and the cost is what prompted it — so a later session choosing between them needs both on the record, with the semver objection attached to the idea rather than lost in conversation.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-audit-the-claim-that-reflow2-does-systems-engineering",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-20: *\"we probably need to pause slightly and do some honest research into what is 'systems engineering and how is reflow2 helping a user do SE?'. I feel like one of the core things we talk about is that reflow2 does SE - so we need to properly back that statement up.\"* Plus the standard he wants avoided: *\"do what I say (those using reflow2), not what I do.\"*\n\nSEARCHED FIRST. `dec:idea-does-reflow2-enforce-an-se-process-or-only-supply-the-vocabulary` and `req:a-user-can-see-that-the-process-was-followed` already hold his 2026-08-16 version of this and settle two things that are NOT re-litigated here: reflow2 is not a bare vocabulary (genesis and adopt both sequence function before structure and adopt forbids inferring a requirement from its implementation), and THE GAP IS EVIDENCE, NOT GUIDANCE.\n\n⭐ WHAT IS NEW HERE: every prior node reasons from reflow2 OUTWARD. Nobody had taken a recognised definition of systems engineering and audited reflow2 AGAINST it. This is that audit, first pass.\n\n⚠️ METHOD AND ITS BOUND, stated so the audit is not over-trusted: the yardstick is ISO/IEC/IEEE 15288's process framework as published in secondary sources (SEBoK, IEEE/ISO abstracts) — 14 technical processes and 8 technical-management processes. THE STANDARD ITSELF IS PAYWALLED AND WAS NOT READ. Process NAMES and groupings are reliable; any claim about what a specific clause REQUIRES is not made here.\n\n═══════════════════════════════════════════════\n📊 THE AUDIT — vocabulary / tool / CHECK, which is the three-legs test applied to SE itself\n\nTECHNICAL PROCESSES\n  Business or Mission Analysis      Project, project mode, genesis brief          check: partial\n  Stakeholder Needs & Requirements  Actor, Contributor, Requirement provenance    check: YES\n  System Requirements Definition    Requirement, Constraint, KPP, designation     check: YES\n  Architecture Definition           Component, level, CONTAINS, Interface,        check: THIN — the\n                                    PROVIDES/CONSUMES, ALLOCATED_TO, Flow         hole found 2026-08-20\n  Design Definition                 Artifact, REALIZES, SPECIFIES                 check: YES\n  System Analysis                   allocation, propagation, budget, ility,       check: YES — STRONGEST\n                                    readiness TRL/MRL, alternatives, granularity\n  Implementation                    out of scope by design; artifacts + checksums check: n/a\n  Integration                       seam_report, compose, mirror, pair_designs    check: YES\n  Verification                      Verification, VERIFIES, 8 methods, coverage   check: YES\n  Transition                        Release, INCLUDES, deploy_to, Environment     check: partial\n  Validation                        Verification.kind = validation                check: YES (unvalidated_capability)\n  Operation                         fielded, Environment, performed_in            check: partial\n  Maintenance                       ChangeEvent, DriftEvent, dispositions         check: YES\n  Disposal                          OBSOLETES, discontinued, retire-from-design   check: YES\n\nTECHNICAL MANAGEMENT PROCESSES\n  Project Planning                  plan_epoch, schedule_for, budget, increments  check: partial\n  Assessment and Control            loop_status, graph_report, readiness          check: YES\n  Decision Management               Decision, alternatives, collapse_decision     check: YES — exceptional\n  Risk Management                   🛑 NO NODE TYPE. RISKS/MITIGATES edges only    check: NONE\n  Configuration Management          Snapshot, Anchor, Epoch, checksums, lineage   check: YES — exceptional\n  Information Management            the graph itself                              check: n/a\n  Measurement                       DimensionObservation/Assessment               check: YES\n  Quality Assurance                 QualityGate, gate_on, DesignRule enforced     check: partial\n\n═══════════════════════════════════════════════\n⭐ WHAT THE AUDIT SAYS IN REFLOW2'S FAVOUR, and it is more than expected\n\nThe VERIFICATION/VALIDATION SPLIT is modelled correctly and most tools blur it: `Verification.kind` is an enum of exactly {verification, validation} — *\"built right (meets the spec)\"* versus *\"right thing (meets the operational intent/need)\"* — on a separate axis from `method`, which carries the four canonical DoD/INCOSE methods (test, analysis, inspection, demonstration) plus `observation` for as-fielded. There is a detector reading it (`unvalidated_capability`). That is real SE fidelity, not vocabulary cosplay.\n\nCONFIGURATION MANAGEMENT and DECISION MANAGEMENT are genuinely strong — snapshots, epochs, content-hash lineage, an export chain that refuses to sever itself, and decisions that land `proposed` until a named person's word.\n\n═══════════════════════════════════════════════\n🛑 THE SELF-HOST ANSWER, MEASURED 2026-08-20 — THIS IS THE \"WHAT I DO\" HALF\n\n  175 Verifications in reflow2's own graph\n  175 are kind = verification\n    0 are kind = validation\n  168 of 175 use method = test\n\nreflow2 SHIPS the built-right/right-thing distinction, ships a detector for it, and HAS NEVER ONCE USED IT ON ITSELF. Every check it holds asks whether the code matches the spec. Not one asks whether a capability meets an operational need.\n\nAnd the rest of the vocabulary is used about as thinly:\n   1 Constraint          (hard limits: built, essentially unused)\n   1 RISKS/MITIGATES edge (risk: no node type, and the edges are unused too)\n   3 Actors              (stakeholders)\n  42 of 56 Components carry no Interface\n   0 of 8 subsystems provide anything\n   1 capability-to-capability dependency across 182 allocated capabilities\n\n⚠️ THE FAIR READING, because the prior node already established it: reflow2 has NO genesis epoch and was NEVER taken through adopt. Its graph records organic growth with good bookkeeping, not a guided design. So this is not evidence that the guided path fails — it is evidence that THE TOOL'S OWN DESIGN WAS NOT BUILT BY THE PROCESS THE TOOL SELLS, which is precisely the exposure Anthony named.\n\n═══════════════════════════════════════════════\n✅ THE HONEST SENTENCE, offered to replace \"reflow2 does SE\"\n\n**reflow2 supplies a broad and unusually faithful SE vocabulary, enforces a real function-before-structure process on its guided paths, computes system analyses that few tools compute — and enforces very little of it. Its detectors check the CONSISTENCY OF WHAT EXISTS; almost nothing notices what was never done.**\n\nThat sentence is defensible, and \"reflow2 does SE\" unqualified is not.\n\n═══════════════════════════════════════════════\nIDEAS\n\n**A. A RISK NODE TYPE.** The one named 15288 process with no vocabulary at all. SE practice runs on a risk register — likelihood, consequence, owner, mitigation, burn-down — and reflow2 has an edge with a severity property and nowhere to put any of it. ⚠️ Counter: `dec:the-other-uaf-domains-wait-for-a-project-that-needs-them` set the precedent that a domain waits for a project that needs it, and no user has asked for risk.\n\n**B. RUN ADOPT ON REFLOW2 ITSELF.** Already recorded as `dec:idea-run-adopt-on-reflow2-itself-as-a-ground-truth-test`. It is the only way to answer \"does the guided path work\" with evidence rather than testimony, and it would close the do-as-I-do gap directly.\n\n**C. VALIDATE SOMETHING.** Zero of 175. Even a handful of `kind: validation` checks against operational intent would move reflow2 from self-consistent to self-validated — and would exercise a detector nobody has ever seen fire.\n\n**D. A PROCESS-CONFORMANCE REPORT** — option (c) of the prior decision, now with a yardstick: report which 15288 processes this design has evidence for. ⚠️ Counter, and it is `dec:mosa-conformance`'s: a standard's vocabulary belongs in a VIEW, never in the schema, or a design-anything tool takes on one discipline's language.\n\n⚠️ NOT ESTABLISHED: whether any user's project uses the vocabulary more completely than reflow2's own does. That comparison would say whether this is a self-host problem or a product one, and nobody has run it.",
+        "name": "OPEN — the claim \"reflow2 does SE\" audited against ISO/IEC/IEEE 15288 for the first time: broad vocabulary, real process on the guided paths, thin enforcement, and a self-host that uses about a third of what it offers",
         "status": "proposed"
       }
     },
@@ -94433,6 +94599,15 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL, from a first-pass review of openmbee.org — website, repository listing and one truncated architecture page. THE OBSERVATION: Flexo's stated guiding principle is 'to adopt open, web-compatible standards for data exchange at every interface, including for both data format and exchange protocols', realised as a layered stack of micro-services where each layer is independently developed, tested and replaced, and where the seams speak SPARQL, GraphQL, OSLC and SysML v2. WHY THIS ONE IS UNCOMFORTABLE RATHER THAN MERELY INTERESTING: reflow2 measured its own seam band at 0.0% on 2026-08-03 — 73 component-to-component couplings, none of them running through a declared contract that one side provides and another consumes. BL-179 establishes that this is a NORMAL POSITION for a design that correctly did function first, and that finding stands. But OpenMBEE is a design of comparable ambition that made seam declaration a FOUNDING principle rather than a later phase, and holding the two side by side is the fairest available test of whether function-first is a trajectory or an excuse. THE HONEST COUNTER-ARGUMENT, and it is not weak: standards at every interface is a rule with a price — it is why Flexo is a multi-service deployment where reflow2 is a single binary and a file in a repository, and `dec:install-once-per-machine` plus `req:thin-install` are commitments in the opposite direction. An internal seam between two modules of one binary does not need SPARQL; it needs to exist and be named. THE NARROWER VERSION WORTH TAKING SERIOUSLY: not 'every interface speaks a web standard' but 'every seam is DECLARED', which is reflow2's own `req:key-interfaces` already, unmet at 0%. WHAT WOULD CHANGE THE ANSWER: whether declaring reflow2's internal seams changes any computation — `dec:edge-orthogonality` says a distinction earns its keep only when something reads it, and today the seams band reads it, which is one reader more than there was a week ago.",
         "name": "OPEN — should reflow2 adopt OpenMBEE's rule that every interface speaks an open, published protocol?",
         "rationale": "Recorded through the brainstorm skill at Anthony's request. The claim of strength here is about the PRINCIPLE as stated, not about its execution: the architecture page was truncated on fetch, no source was read, and whether Flexo's interfaces actually hold that line is unknown and is exactly what the deep review should test. Recorded beside the counter-argument per the skill's rule that an idea killed in conversation loses its reasoning while an idea recorded with its objection keeps both — and the objection here is real, since reflow2's single-binary posture is a deliberate decision rather than an oversight.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-stated-module-function-is-what-makes-failure-mode-testing-derivable",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING. Anthony, 2026-08-20, extending the flo2 chain-effect argument: *\"if we can modularize reflow2 and know which functions that each module is supposed to perform, we can then do more encompassing testing (what are the edge cases, what are the failure modes, etc) that we might not be able to perform now.\"*\n\nTHE THIRD LEG OF ONE ARGUMENT. Modularization has now been argued for three distinct returns, and they are not the same return restated:\n  1. SUBSTITUTABILITY — swap a module for another that meets the contract\n  2. CHANGE PROPAGATION — follow a flo2-levied requirement along a chain (`fact:every-boundary-reaches-the-same-36-components-so-severability-is-not-computable`)\n  3. DERIVABLE TESTING — this node\n\n⭐ WHAT IS ALREADY THERE: function IS allocated. 138 ALLOCATED_TO edges put capabilities on components, so \"which module performs which function\" is largely answerable today.\n\n🛑 WHAT IS NOT: the SHAPE of the function. `Capability.inputs` / `Capability.outputs` are declared in the schema and have NO typed tool to write them, NO instruction telling anyone to, and NO detector that notices their absence — the exact three-legged failure recorded in `fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it`. Edge cases are derived from the boundaries of an input domain and failure modes from what an output promises; with neither stated, both can only be imagined.\n\n📌 AND IT MEETS THE VERIFICATION FINDING FROM THE SAME DAY: reflow2 holds 175 Verifications, 175 of kind `verification` and 0 of kind `validation`, 168 of method `test`. Every check asks whether the code matches the spec. Failure-mode work is the other question, and `Verification.method` already carries `analysis` and `inspection` — the FMEA-shaped methods — unused.\n\nIDEAS: (a) make inputs/outputs writable and instructed, then ask for them where a Capability is allocated to a Component; (b) a detector for an allocated capability with no stated interface shape; (c) nothing — derive edge cases from the code as today, and accept that they are imagined rather than derived.\n\n⚠️ COUNTER, and it is the standing one: `req:design-anything` keeps the vocabulary neutral, and \"inputs and outputs\" is comfortable for software and awkward for a building. Whether the shape generalises is unexamined.\n\n⚠️ NOT COSTED, and nobody has asked for it. Recorded as the third return on a modularization nobody has scheduled.",
+        "name": "OPEN — the third thing modularization buys: if a module's function, inputs and outputs are stated, edge cases and failure modes become derivable rather than imagined",
         "status": "proposed"
       }
     },
@@ -100566,6 +100741,16 @@
       }
     },
     {
+      "node_id": "frag:art:tools-skills",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered skills_tools.rs"
+      }
+    },
+    {
       "node_id": "frag:art:tools-temporal",
       "node_type": "Fragment",
       "properties": {
@@ -106311,6 +106496,19 @@
       }
     },
     {
+      "node_id": "fact:adopt-ran-on-reflow2-and-the-mechanical-contract-recovery-collapsed",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "THE EXPERIMENT PLANNED IN JULY 2026 (BL-83b) WAS FINALLY RUN, 2026-08-20, on Anthony's word. Option (b): on a copy, contracts harvested, NO requirements recovered.\n\nSETUP, with every precondition the decision named honoured: a scratch store outside the project tree that MINTED ITS OWN `graph_id` (818eb25bd9c0f823) rather than being told one; all access through `tools/reflow2_cli.py --graph <probe>` so no MCP write tool could touch the live graph; scope DERIVED from `git ls-files` minus two named rules rather than hand-picked — which is how `schema/` (11 files) came into scope, the exact directory a hand-picked sweep missed for eleven releases.\n\nRECOVERED: 153 nodes, 411 edges — 69 components, 14 interfaces, 91 CONSUMES.\n\n═══════════════════════════════════════════════\n🛑 THE HEADLINE IS THE OPPOSITE OF THE PREDICTION, AND IT IS THE USEFUL RESULT\n\nThe decision predicted \"a RECOVERED CONTRACT SET reflow2's own graph does not have\" and called it THE PRIZE. On raw counts it looked won — 91 CONSUMES against the real graph's 17, and 60 of 69 components on a boundary against 14 of 56.\n\n**IT COLLAPSED ON INSPECTION.** Of 33 modules the scan said CONSUME `req-dyno-core-api`, the references are: `Value` ×76, `DynoError` ×18, `PropertySpec` ×1. **95 of 95 are TYPES. Not one call.** Separating behaviour from type-vocabulary across all five suppliers:\n\n  dynograph_core        behaviour 0    types 47 modules\n  dynograph_storage     behaviour 1 (graph — StorageEngine)   types 16\n  dynograph_graph       behaviour 3 (allocate, flow, structure)\n  dynograph_vector      behaviour 1 (dimensions)\n  dynograph_resolution  behaviour 2 (ingest, seam)\n\n⭐⭐ THOSE ARE EXACTLY THE EDGES REFLOW2'S GRAPH ALREADY HAD, redrawn by hand the day before from the same imports. **THE HAND-AUTHORED SPARSE SET WAS RIGHT AND THE MECHANICAL DENSE SET WAS WRONG.** Importing the 57 proposed edges would have added 33 to a supplier whose every reference is a type, made \"what breaks if dyno-core changes?\" answer \"everything\", and buried the five real dependencies in noise.\n\n⇒ THE FINDING ABOUT ADOPT, which is what the decision said the run would MEASURE: **A MECHANICAL SCAN CANNOT DISTINGUISH IMPORTING A TYPE FROM CALLING BEHAVIOUR, AND THAT DISTINCTION IS THE WHOLE CONTENT OF A CONTRACT.** Adopt's Phase 1 says \"both sides of every contract — this is where the structural findings come from\", and it is right that the findings are there; it is wrong that reading imports gets you contracts. It gets you coupling, which is a different thing.\n\n═══════════════════════════════════════════════\n✅ WHAT IT DID FIND, AND IT WAS WORTH THE RUN: THREE CIRCULAR DEPENDENCIES\n\n  mcp-service ↔ mcp-skills\n  mcp-proxy ↔ mcp-shared\n  core-artifact → core-temporal → core-verify → core-artifact\n\nAll three verified line by line and ALL THREE FIXED THE SAME DAY. **None was a bug.** A module cycle inside one crate is legal Rust and compiles silently forever — nothing in the build was ever going to mention them, and nothing had, for as long as shared mode has existed.\n\n⚠️ AND THE FIRST PASS REPORTED A FOURTH THAT WAS NOT REAL. `core-graph ↔ core-hierarchy` came from a rustdoc link in a COMMENT — the exact trap the adopt skill warns about in as many words (\"structure from imports and calls, never from prose\"). Stripping comments removed 26 of 175 coupling edges, **15% of the model was prose**, and the correction did not merely delete a false finding: it REVEALED the real three-hop cycle the noise had masked.\n\n═══════════════════════════════════════════════\n📌 THREE FURTHER FACTS THE RUN ESTABLISHED\n\n(1) **21 of 66 modules have NO Component in the live design**, including `cmp:seam`, which the CONSUMES repair had hit from the other direction the day before.\n(2) **reflow2's source cannot be a BLIND adopt subject.** 207 files name design ids in their comments (`dec:ask-not-repair` alone appears 29 times). A code-only copy was made at /home/ajs7/project/reflow2-code-only with docs, skills and every top-level markdown stripped — and it is still not blind, because the intent is IN THE CODE. Deleting files cannot undo that.\n(3) The predicted \"NEAR-ZERO functional agreement\" was not testable as stated: no capabilities were recovered, so `evaluate_allocation` returned `modularity: None` — which is the fix shipped the same day working correctly on an independent graph rather than manufacturing 1.00 over nothing.",
+        "subject_id": "dec:idea-run-adopt-on-reflow2-itself-as-a-ground-truth-test",
+        "valid_from": "2026-08-20",
+        "value": "{\"run\":\"2026-08-20\",\"option\":\"b - contracts only, no requirements recovered\",\"probe_graph_id\":\"818eb25bd9c0f823\",\"recovered\":{\"nodes\":153,\"edges\":411,\"components\":69,\"interfaces\":14,\"consumes\":91},\"real_graph\":{\"components\":56,\"interfaces\":15,\"consumes\":17},\"proposal_collapsed\":true,\"why\":\"95 of 95 dynograph_core references are types (Value 76, DynoError 18, PropertySpec 1); zero behavioural calls\",\"behavioural_consumers\":{\"dynograph_core\":0,\"dynograph_storage\":1,\"dynograph_graph\":3,\"dynograph_vector\":1,\"dynograph_resolution\":2},\"hand_authored_set_was_right\":true,\"cycles_found\":3,\"cycles_fixed\":3,\"false_positive_cycles\":1,\"comment_edges_removed\":26,\"comment_share_of_model\":0.15,\"modules_without_a_component\":21,\"files_naming_design_ids\":207,\"blind_subject_possible\":false}"
+      }
+    },
+    {
       "node_id": "fact:agent-feedback-corroborated-2026-08-14",
       "node_type": "TemporalFact",
       "properties": {
@@ -108417,6 +108615,19 @@
         "statement": "MEASURED 2026-08-18 by `tools/vocabulary_reach.py` over the committed export (2527 nodes, 10353 edges) and the committed toolsnaps. 215 declared node properties across 29 types; 176 parameter names across the served tools, with `create_node`/`create_edge` excluded.\n\n  18  CANDIDATES        the type IS used, the property NEVER is, and no typed tool accepts the name\n  10  UNUSED BUT OFFERED  zero uses but a tool does accept it — probably unused rather than unreachable\n  46  SAYS NOTHING      the node type has NO instances, so a zero on its properties is vacuous\n  42  EDGE VOCABULARY   edge types with no edges, or properties never set on edges that do exist\n\n⭐ THE STANDOUT, AND IT LANDS ON A REQUIREMENT ACCEPTED THE SAME DAY: `Capability.inputs`, `Capability.outputs` and `Capability.capability_type` are 0 OF 170. Spot-checked in the source rather than inferred — `add_capability` sets only name, description and status, and NOTHING anywhere in either crate writes those three. A capability's functional signature, what goes in and what comes out, is declared vocabulary that has never once been recorded. `req:recursive-black-box-decomposition` (accepted 2026-08-18) says every element is a black box with INNER FUNCTION AND INTERFACES; at the capability tier those two properties ARE that interface, and they are empty.\n\nOTHER CANDIDATES: `Fragment.{created_at,created_by,intent,phase,summary}` (0 of 168), `Project.mirror_*` (4, 0 of 1), `Artifact.{created_at,signature}` (0 of 190), `Snapshot.captured_at` (0 of 144), `Release.created_at` (0 of 36), `Question.prompt_id` (0 of 46). The timestamp cluster is its own theme: five separate `created_at`/`captured_at` fields, all declared, none ever set.\n\n⭐ `DECOMPOSES` HAS ZERO EDGES, and `req:decomposition-covers-its-parent` is ACCEPTED. That is the same shape as SPECIFIES: an accepted requirement whose edge type exists and has never been drawn. Not repaired here.\n\nTHE INSTRUMENT WAS VALIDATED AGAINST WHAT WAS ALREADY KNOWN before its new findings were believed: it catches `SUPERSEDES` (zero edges, known), `GOVERNED_BY.ruling` (added 2026-08-17, 0 of 912, correctly reported as not yet used), and it stopped reporting `SPECIFIES` the moment the 44 edges were exported — dead-to-live in one run.\n\n⚠️ WHAT THE NUMBER IS NOT. 18 is not a defect count and not a delete list. Three of the four known instances were WANTED and got a parameter; deletion would have been the wrong repair every time. Zero usage is evidence, not proof — a property can be writable and simply never needed, which is what the second bucket is for.",
         "subject_id": "req:declared-vocabulary-is-reachable-from-the-surface",
         "valid_from": "2026-08-18"
+      }
+    },
+    {
+      "node_id": "fact:every-boundary-reaches-the-same-36-components-so-severability-is-not-computable",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "MEASURED 2026-08-20, answering Anthony's question about why modularization matters for the flo2 relationship: *\"if we modularize, we can start following interfaces between where module-X of reflow2 interfaces with module-A from flo2. Then say flo2 requires some new feature, that requires module-X to change. This in turn could cause module-X to impose changes on module-Y... in some chain like effect.\"*\n\n═══════════════════════════════════════════════\n🛑 THE CHAIN CANNOT BE FOLLOWED, AND THE REASON IS NOT MISSING EDGES\n\nWalking ONLY the coupling edges a change would actually travel — PROVIDES, CONSUMES, DEPENDS_ON, with CONTAINS deliberately excluded because containment is \"part of\" and not \"affected by\":\n\n  ifc:core-api             reaches 36 of 56 components\n  ifc:mcp-tools            reaches 36 of 56 components\n  ifc:graph-export         reaches 36 of 56 components\n  ifc:req-dyno-graph-api   reaches 36 of 56 components\n\n**EVERY BOUNDARY REACHES THE SAME 36.** Component clusters: [36, 1, 1], plus **18 components with NO coupling edge of any kind**.\n\n⇒ So \"which modules must change?\" has exactly two possible answers today: **36, or 0.** Never a chain. Anthony's worry that it \"would be somewhat challenging to say where something may need to change\" is confirmed, and it is not challenging — it is not answerable.\n\n═══════════════════════════════════════════════\n⭐⭐ THE INSIGHT THAT REFRAMES THE WORK: MODULARIZATION IS NOT ABOUT ADDING EDGES. IT IS ABOUT ADDING WALLS.\n\nThe 36 are one connected blob because the coupling that exists is undifferentiated DEPENDS_ON with **nothing for propagation to stop at**. Adding more edges makes the blob bigger. What makes a chain followable is BOUNDARIES that a blast radius terminates on — which is exactly what `cap:key-interfaces` was built for: *\"designate a published boundary, and compute whether a change stays behind it.\"*\n\nSeverability IS \"the blast radius stops at the boundary\" (`req:modularity-computed`). With 42 of 56 components carrying no interface at all and 73 uncontracted dependency pairs, there are no walls, so the whole design is one room and severability is not a computation anyone can run.\n\n📌 CORROBORATED FROM THE OTHER DIRECTION, same measurement: `propagate_from(ifc:core-api)` over ALL edge types returns **1,145 impacted nodes — 43% of the design**. The direct ring is 3. So the two available answers are \"3 nodes\" or \"half the graph\", because past the first hop the walk leaves the structural chain entirely and travels the GOVERNANCE web (877 of 901 GOVERNED_BY edges land on Decisions). Structural chain and reasoning web are conflated, and only the first one answers \"what else must change?\".\n\n═══════════════════════════════════════════════\n✅ WHAT THIS MAKES CONCRETE ABOUT THE FLO2 CASE\n\n`dec:idea-gap-flows-to-the-dependency` already settled the TRANSPORT half — a customer levying a requirement on a supplier is ordinary SE, the schema expresses it today (`source`, `provenance: imported`, `status: proposed`, AUTHORED_BY), and plain git carries it. That node closes with the prerequisite: *\"reflow2 declares NO `required` interface at all, so nothing pairs across any seam — the channel this node is about has no labelled boundary to run along.\"*\n\n⚠️ THAT LINE IS NOW PARTLY STALE and should not be quoted as current: reflow2 has **9 `required` and 4 `published`** interfaces as of 2026-08-20. The boundary a flo2 requirement would LAND on now exists. What still does not exist is anything for the consequence to TRAVEL along once it has landed.\n\n⇒ SO THE FOUR STEPS OF ANTHONY'S SCENARIO SPLIT CLEANLY:\n  1. flo2 levies a requirement            — transport solved, zero new code\n  2. it lands on a reflow2 boundary       — possible now (13 designated interfaces)\n  3. trace it to the module that must change — possible (138 ALLOCATED_TO edges)\n  4. **what that change imposes on the next module** — **NOT POSSIBLE.** Step 4 is the chain effect, and it is the whole of what modularization would buy.\n\n⚠️ NOT ESTABLISHED: whether flo2's own graph has boundaries on its side. The seam is two-ended and only reflow2's end was measured here.",
+        "subject_id": "req:modularity-computed",
+        "valid_from": "2026-08-20",
+        "value": "{\"method\":\"BFS over PROVIDES/CONSUMES/DEPENDS_ON only; CONTAINS excluded as part-of rather than affected-by\",\"reach_from_each_boundary\":36,\"components_total\":56,\"component_clusters\":[36,1,1],\"components_with_no_coupling_edge\":18,\"boundaries_tested\":[\"ifc:core-api\",\"ifc:mcp-tools\",\"ifc:graph-export\",\"ifc:req-dyno-graph-api\"],\"all_reach_identical_set\":true,\"propagate_from_all_edge_types\":{\"seed\":\"ifc:core-api\",\"direct_ring\":3,\"total_impacted\":1145,\"share_of_design\":0.43},\"governed_by_edges_landing_on_decisions\":\"877 of 901\",\"designated_interfaces_now\":{\"required\":9,\"published\":4,\"internal\":2},\"stale_claim_corrected\":\"dec:idea-gap-flows-to-the-dependency says reflow2 declares NO required interface (2026-08-06); it now declares 9\",\"scenario_step_that_fails\":4}"
       }
     },
     {
@@ -111155,7 +111366,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b1d92e67e269269e54b73383bd6187dfadd5a1525f0e27fcafd99bad2cd41258",
+  "prev_content_hash": "sha256:63cd1b6fb52fcd8f75762a3a79055f4c007ff17c7de7933bae4ac15b11ec0356",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

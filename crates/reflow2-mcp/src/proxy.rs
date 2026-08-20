@@ -19,294 +19,11 @@
 //! someone adds a push. If that ever changes, this file is where it breaks, and
 //! it breaks loudly (a message with no request to answer).
 
+use crate::mcp_http::{CALL_TIMEOUT, PROBE_TIMEOUT, post};
 use anyhow::{Context, bail};
-use bytes::Bytes;
-use http_body_util::{BodyExt, Full};
-use hyper::Request;
 use std::sync::Arc;
-use std::time::Duration;
 use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
 use tokio::sync::Mutex;
-
-/// A parsed `http://host:port/path` — enough of a URL for loopback.
-struct Endpoint {
-    authority: String,
-    path: String,
-}
-
-fn parse_endpoint(url: &str) -> anyhow::Result<Endpoint> {
-    let rest = url
-        .strip_prefix("http://")
-        .context("the shared server URL must start with http://")?;
-    let (authority, path) = match rest.find('/') {
-        Some(i) => (&rest[..i], &rest[i..]),
-        None => (rest, "/"),
-    };
-    if authority.is_empty() {
-        bail!("the shared server URL has no host");
-    }
-    Ok(Endpoint {
-        authority: authority.to_string(),
-        path: path.to_string(),
-    })
-}
-
-/// How long a probe waits before calling a server unreachable.
-///
-/// Short: the question is only "is somebody answering here", and a wedged server
-/// must not be able to hold up the election. This bound is what makes
-/// `READY_TIMEOUT` real — a deadline consulted between iterations of a loop
-/// cannot fire while an iteration never returns.
-pub const PROBE_TIMEOUT: Duration = Duration::from_secs(5);
-
-/// How long a forwarded tool call may take before the session is told it failed.
-///
-/// Generous on purpose: real work happens behind these calls (a detector sweep
-/// over a large design, a full export), and a bound that fires on legitimate
-/// work would be worse than no bound. What it rules out is the *unbounded* case.
-pub const CALL_TIMEOUT: Duration = Duration::from_secs(300);
-
-/// One request, with a deadline.
-///
-/// **Every network step here is bounded, and that is a fix rather than a
-/// flourish.** The first version had no timeout anywhere: `connect`,
-/// `send_request` and `collect` could each block forever, so a server that
-/// accepted the connection and then never answered (wedged mid-index-build,
-/// stuck in RocksDB, SIGSTOPed) hung the session instead of degrading — and a
-/// hang is strictly worse than the outage it replaces, because
-/// `reflow2_unavailable` at least says something. Found by review before it
-/// could happen to anyone (`w-74c2989e`, 2026-07-27), and it is the same class
-/// this project already ruled binding elsewhere: never propagate the hang class
-/// into the surfaces built to detect hangs.
-async fn post(
-    url: &str,
-    session: Option<&str>,
-    body: String,
-    limit: Duration,
-) -> anyhow::Result<(Vec<String>, Option<String>)> {
-    tokio::time::timeout(limit, post_inner(url, session, body))
-        .await
-        .map_err(|_| {
-            anyhow::anyhow!(
-                "the shared reflow2 server at {url} accepted the request but did not answer within \
-                 {}s. It may be wedged; `reflow2-mcp --graph-path <graph> --stop-shared` clears it.",
-                limit.as_secs()
-            )
-        })?
-}
-
-/// One request, one connection. Deliberate: this is loopback traffic at
-/// human-interaction rates, so a connection pool would be complexity bought
-/// against a cost nobody can measure — and a pooled connection that has gone
-/// stale is a failure mode that shows up as an unexplained tool error much later.
-async fn post_inner(
-    url: &str,
-    session: Option<&str>,
-    body: String,
-) -> anyhow::Result<(Vec<String>, Option<String>)> {
-    let ep = parse_endpoint(url)?;
-    let stream = tokio::net::TcpStream::connect(&ep.authority)
-        .await
-        .with_context(|| {
-            format!(
-                "could not reach the shared reflow2 server at {}",
-                ep.authority
-            )
-        })?;
-    let io = hyper_util::rt::TokioIo::new(stream);
-    let (mut sender, conn) = hyper::client::conn::http1::handshake(io)
-        .await
-        .context("HTTP handshake with the shared reflow2 server failed")?;
-    tokio::spawn(async move {
-        // The connection task ends when the response is done; a debug line is
-        // right here because a closed keep-alive is normal, not an incident.
-        if let Err(e) = conn.await {
-            tracing::debug!("connection to the shared server ended: {e}");
-        }
-    });
-
-    let mut req = Request::builder()
-        .method("POST")
-        .uri(&ep.path)
-        .header("host", &ep.authority)
-        .header("content-type", "application/json")
-        // Both, because the transport chooses: a single JSON body or an SSE
-        // frame carrying the same message. Advertising only one would make the
-        // server's choice a failure.
-        .header("accept", "application/json, text/event-stream");
-    if let Some(s) = session {
-        req = req.header("mcp-session-id", s);
-    }
-    let req = req
-        .body(Full::new(Bytes::from(body)))
-        .context("could not build the request to the shared server")?;
-
-    let res = sender
-        .send_request(req)
-        .await
-        .context("the shared reflow2 server did not answer")?;
-    let session_id = res
-        .headers()
-        .get("mcp-session-id")
-        .and_then(|v| v.to_str().ok())
-        .map(|s| s.to_string());
-    let status = res.status();
-    let collected = res
-        .into_body()
-        .collect()
-        .await
-        .context("could not read the shared server's reply")?
-        .to_bytes();
-    let text = String::from_utf8_lossy(&collected).to_string();
-    if !status.is_success() {
-        bail!("the shared reflow2 server answered {status}: {text}");
-    }
-    Ok((extract_messages(&text), session_id))
-}
-
-/// Pull JSON-RPC messages out of a reply that may be plain JSON or SSE frames.
-///
-/// Kept as a pure function so it can be tested without a server — the SSE shape
-/// (`data:` lines, interleaved with `id:`/`retry:` and blank keep-alives) is
-/// exactly the kind of thing that is easy to get subtly wrong and hard to notice,
-/// because a dropped frame looks like a hung tool call rather than a parse bug.
-pub fn extract_messages(body: &str) -> Vec<String> {
-    let looks_like_sse = body
-        .lines()
-        .any(|l| l.starts_with("data:") || l.starts_with("event:"));
-    if !looks_like_sse {
-        let t = body.trim();
-        return if t.is_empty() {
-            Vec::new()
-        } else {
-            vec![t.to_string()]
-        };
-    }
-    body.lines()
-        .filter_map(|l| l.strip_prefix("data:"))
-        .map(str::trim)
-        // The transport opens a stream with an empty `data:` line; it is a
-        // keep-alive, not a message, and forwarding it would put a blank line
-        // into the client's JSON-RPC channel.
-        .filter(|s| !s.is_empty())
-        .map(str::to_string)
-        .collect()
-}
-
-/// Is a reflow2 server answering here?
-///
-/// Completes a real MCP `initialize` rather than settling for a TCP connect. The
-/// distinction is load-bearing: the shared server's port is OS-assigned, so a
-/// rendezvous record that has gone stale can name a port the kernel has since
-/// handed to something unrelated. Attaching to *that* would produce a session
-/// whose every tool call fails in a way that reads as a reflow2 bug.
-pub async fn probe_server_async(url: &str) -> anyhow::Result<bool> {
-    let hello = serde_json::json!({
-        "jsonrpc": "2.0", "id": 0, "method": "initialize",
-        "params": {
-            "protocolVersion": "2025-06-18",
-            "capabilities": {},
-            "clientInfo": {"name": "reflow2-attach-probe", "version": env!("CARGO_PKG_VERSION")}
-        }
-    })
-    .to_string();
-    let (messages, _) = post(url, None, hello, PROBE_TIMEOUT).await?;
-    Ok(messages.iter().any(|m| {
-        serde_json::from_str::<serde_json::Value>(m)
-            .ok()
-            .and_then(|v| {
-                v.get("result")?
-                    .get("serverInfo")?
-                    .get("name")?
-                    .as_str()
-                    .map(|n| n.contains("reflow2"))
-            })
-            .unwrap_or(false)
-    }))
-}
-
-/// Everything a session needs to keep talking to its design, including after the
-/// server it was talking to goes away.
-struct Upstream {
-    graph_path: String,
-    url: Mutex<String>,
-    session: Mutex<Option<String>>,
-    /// The client's own `initialize`, kept verbatim so a replacement server can
-    /// be brought up to the same state. Replaying the client's message rather
-    /// than a synthesised one matters: the handshake carries the client's
-    /// protocol version and capabilities, and inventing those would make the new
-    /// server answer a different client than the one actually connected.
-    hello: Mutex<Option<String>>,
-}
-
-impl Upstream {
-    /// Send one message, and if the server has vanished, get a new one and try
-    /// once more.
-    ///
-    /// This is what makes a shared server safe to let expire. Without it, an
-    /// idle-exited daemon would strand every attached session with tool calls
-    /// that fail forever, and the only remedy would be restarting the sessions —
-    /// so the daemon would have to be immortal, and an immortal daemon holds the
-    /// store's write lock against every CLI use of the graph. One retry buys the
-    /// server a lifetime.
-    async fn send(&self, body: String) -> anyhow::Result<Vec<String>> {
-        let url = self.url.lock().await.clone();
-        let sid = self.session.lock().await.clone();
-        match post(&url, sid.as_deref(), body.clone(), CALL_TIMEOUT).await {
-            Ok((messages, _)) => Ok(messages),
-            Err(first) => {
-                tracing::warn!(
-                    "the shared reflow2 server stopped answering ({first:#}); starting a \
-                     replacement and retrying once"
-                );
-                let fresh = crate::shared::ensure_server_async(&self.graph_path, None)
-                    .await
-                    .context("could not restart a shared reflow2 server for this design")?;
-                *self.url.lock().await = fresh.clone();
-                // A new server has never seen the old session id, so re-do the
-                // handshake before replaying the request. Skipping this would
-                // send a stale id and get a fresh, unrelated seat back.
-                *self.session.lock().await = None;
-                if let Some(hello) = self.hello.lock().await.clone()
-                    && let Ok((_, sid)) = post(&fresh, None, hello, PROBE_TIMEOUT).await
-                {
-                    *self.session.lock().await = sid;
-                }
-                let sid = self.session.lock().await.clone();
-                post(&fresh, sid.as_deref(), body, CALL_TIMEOUT)
-                    .await
-                    .map(|(m, _)| m)
-                    .context("the replacement shared reflow2 server did not answer either")
-            }
-        }
-    }
-}
-
-/// A JSON-RPC error for a request that could not be forwarded.
-///
-/// The alternative is to log and say nothing, which leaves the client waiting on
-/// an id that will never be answered — a hung tool call, the least diagnosable
-/// outcome there is, and precisely the silent failure this project refuses. The
-/// agent gets a real error it can read and act on.
-fn forwarding_error(request: &str, why: &str) -> Option<String> {
-    let v: serde_json::Value = serde_json::from_str(request).ok()?;
-    let id = v.get("id")?.clone();
-    Some(
-        serde_json::json!({
-            "jsonrpc": "2.0",
-            "id": id,
-            "error": {
-                "code": -32000,
-                "message": format!(
-                    "reflow2 could not reach the shared design server: {why}. The design is not \
-                     lost — this session cannot currently talk to it. Check the server log beside \
-                     the graph directory."
-                )
-            }
-        })
-        .to_string(),
-    )
-}
 
 /// Forward this session's stdio JSON-RPC to the shared server until stdin ends.
 ///
@@ -460,54 +177,85 @@ pub async fn call_tool(url: &str, name: &str, args: serde_json::Value) -> anyhow
     bail!("the shared reflow2 server returned no result for `{name}`")
 }
 
-#[cfg(test)]
-mod tests {
-    use super::{extract_messages, parse_endpoint};
+/// Everything a session needs to keep talking to its design, including after the
+/// server it was talking to goes away.
+struct Upstream {
+    graph_path: String,
+    url: Mutex<String>,
+    session: Mutex<Option<String>>,
+    /// The client's own `initialize`, kept verbatim so a replacement server can
+    /// be brought up to the same state. Replaying the client's message rather
+    /// than a synthesised one matters: the handshake carries the client's
+    /// protocol version and capabilities, and inventing those would make the new
+    /// server answer a different client than the one actually connected.
+    hello: Mutex<Option<String>>,
+}
 
-    #[test]
-    fn parses_a_loopback_url() {
-        let e = parse_endpoint("http://127.0.0.1:41653/").unwrap();
-        assert_eq!(e.authority, "127.0.0.1:41653");
-        assert_eq!(e.path, "/");
+impl Upstream {
+    /// Send one message, and if the server has vanished, get a new one and try
+    /// once more.
+    ///
+    /// This is what makes a shared server safe to let expire. Without it, an
+    /// idle-exited daemon would strand every attached session with tool calls
+    /// that fail forever, and the only remedy would be restarting the sessions —
+    /// so the daemon would have to be immortal, and an immortal daemon holds the
+    /// store's write lock against every CLI use of the graph. One retry buys the
+    /// server a lifetime.
+    async fn send(&self, body: String) -> anyhow::Result<Vec<String>> {
+        let url = self.url.lock().await.clone();
+        let sid = self.session.lock().await.clone();
+        match post(&url, sid.as_deref(), body.clone(), CALL_TIMEOUT).await {
+            Ok((messages, _)) => Ok(messages),
+            Err(first) => {
+                tracing::warn!(
+                    "the shared reflow2 server stopped answering ({first:#}); starting a \
+                     replacement and retrying once"
+                );
+                let fresh = crate::shared::ensure_server_async(&self.graph_path, None)
+                    .await
+                    .context("could not restart a shared reflow2 server for this design")?;
+                *self.url.lock().await = fresh.clone();
+                // A new server has never seen the old session id, so re-do the
+                // handshake before replaying the request. Skipping this would
+                // send a stale id and get a fresh, unrelated seat back.
+                *self.session.lock().await = None;
+                if let Some(hello) = self.hello.lock().await.clone()
+                    && let Ok((_, sid)) = post(&fresh, None, hello, PROBE_TIMEOUT).await
+                {
+                    *self.session.lock().await = sid;
+                }
+                let sid = self.session.lock().await.clone();
+                post(&fresh, sid.as_deref(), body, CALL_TIMEOUT)
+                    .await
+                    .map(|(m, _)| m)
+                    .context("the replacement shared reflow2 server did not answer either")
+            }
+        }
     }
+}
 
-    #[test]
-    fn a_url_without_a_path_still_targets_root() {
-        let e = parse_endpoint("http://127.0.0.1:41653").unwrap();
-        assert_eq!(e.path, "/");
-    }
-
-    #[test]
-    fn plain_json_body_is_one_message() {
-        let got = extract_messages(r#"{"jsonrpc":"2.0","id":1,"result":{}}"#);
-        assert_eq!(got.len(), 1);
-        assert!(got[0].contains("\"id\":1"));
-    }
-
-    #[test]
-    fn sse_frames_yield_their_data_payloads() {
-        // The real shape the transport answered with when this was measured:
-        // an opening keep-alive with an EMPTY data line, then the message.
-        let body = "data: \nid: 0\nretry: 3000\n\ndata: {\"jsonrpc\":\"2.0\",\"id\":1,\"result\":{\"ok\":true}}\n\n";
-        let got = extract_messages(body);
-        assert_eq!(
-            got.len(),
-            1,
-            "the empty keep-alive frame must not be forwarded as a message — a blank line in the \
-             client's JSON-RPC channel is corruption, not a no-op"
-        );
-        assert!(got[0].contains("\"ok\":true"));
-    }
-
-    #[test]
-    fn several_sse_frames_all_come_through() {
-        let body = "data: {\"a\":1}\n\ndata: {\"b\":2}\n\n";
-        assert_eq!(extract_messages(body), vec!["{\"a\":1}", "{\"b\":2}"]);
-    }
-
-    #[test]
-    fn an_empty_body_is_no_messages_not_an_empty_line() {
-        assert!(extract_messages("").is_empty());
-        assert!(extract_messages("   \n").is_empty());
-    }
+/// A JSON-RPC error for a request that could not be forwarded.
+///
+/// The alternative is to log and say nothing, which leaves the client waiting on
+/// an id that will never be answered — a hung tool call, the least diagnosable
+/// outcome there is, and precisely the silent failure this project refuses. The
+/// agent gets a real error it can read and act on.
+fn forwarding_error(request: &str, why: &str) -> Option<String> {
+    let v: serde_json::Value = serde_json::from_str(request).ok()?;
+    let id = v.get("id")?.clone();
+    Some(
+        serde_json::json!({
+            "jsonrpc": "2.0",
+            "id": id,
+            "error": {
+                "code": -32000,
+                "message": format!(
+                    "reflow2 could not reach the shared design server: {why}. The design is not \
+                     lost — this session cannot currently talk to it. Check the server log beside \
+                     the graph directory."
+                )
+            }
+        })
+        .to_string(),
+    )
 }
