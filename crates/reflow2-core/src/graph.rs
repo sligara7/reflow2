@@ -1112,6 +1112,56 @@ impl DesignGraph {
         self.create_node(node::INTERFACE, interface_id, props)
     }
 
+    /// Declare WHAT KIND of thing delivers a capability — a file, or a change
+    /// to the design itself.
+    ///
+    /// ⭐ THIS DECLARES THE KIND, NEVER THE SUCCESS, and that distinction is
+    /// what makes it safe to let an author state it. Delivery stays COMPUTED
+    /// from the golden thread (`req:completion-computed`): both kinds still
+    /// demand a passing check, and there is still no way to mark anything done.
+    ///
+    /// - `artifact` (the default): a file realizes it AND a check passes.
+    /// - `model`: the deliverable IS the design change — a re-decomposition, a
+    ///   retirement, a governance ruling, a correction to a model that was
+    ///   wrong about the world. There is no file to point at, so the check is
+    ///   the whole of the evidence.
+    ///
+    /// The same shape as [`set_interface_designation`](Self::set_interface_designation)
+    /// and `set_artifact_intent`: the author says the one thing only they can
+    /// know, and the computation earns the rest.
+    pub fn set_capability_delivery(
+        &mut self,
+        capability_id: &str,
+        delivery: &str,
+    ) -> Result<StoredNode, DynoError> {
+        if !matches!(delivery, "artifact" | "model") {
+            return Err(DynoError::Validation {
+                node_type: node::CAPABILITY.into(),
+                property: "delivery".into(),
+                message: format!(
+                    "'{delivery}' is not a delivery kind (one of artifact, model). `artifact` \
+                     means a file realizes it and delivery needs both the file and a passing \
+                     check; `model` means the deliverable IS the design change, so the check is \
+                     the whole of the evidence. It says what KIND delivers this, never whether \
+                     it was delivered — that stays computed."
+                ),
+            });
+        }
+        let Some(existing) = self.get_node(node::CAPABILITY, capability_id)? else {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::CAPABILITY.into(),
+                node_id: capability_id.into(),
+            });
+        };
+        let mut props = Props::new().set("delivery", delivery);
+        for (k, v) in &existing.properties {
+            if k != "delivery" {
+                props = props.set(k, v.clone());
+            }
+        }
+        self.create_node(node::CAPABILITY, capability_id, props)
+    }
+
     /// Mark a requirement as a promise this design publishes, or take that back
     /// (`req:publishable-promise`).
     ///

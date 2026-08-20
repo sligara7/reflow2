@@ -1961,6 +1961,17 @@ pub struct DefectIdReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct CapabilityDeliveryReq {
+    pub capability_id: String,
+    /// `artifact` (the default) — a file realizes it, and delivery needs both
+    /// the file and a passing check. `model` — the deliverable IS the design
+    /// change, so the check is the whole of the evidence. It says what KIND
+    /// delivers this, NEVER whether it was delivered.
+    pub delivery: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct InterfaceDesignationReq {
     pub interface_id: String,
     /// `internal` (the default state), `published` (a boundary others are
