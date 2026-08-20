@@ -188,6 +188,55 @@ impl ReflowService {
                 verification_digest(&status.verifications).map_err(ser_err)?,
             );
         }
+        // ⚠️ DELIBERATELY NOT IN THE SERVED DESCRIPTION, and this is not an
+        // oversight: `skill_lint` caps a description at 1500 chars and this one
+        // was already at 1494. Documenting the field there would have cost 380
+        // chars of EVERY session's context to announce something that announces
+        // itself — the payload weight ophyd-service filed as friction #8. When
+        // it matters it is in `next`, which is the part a reader acts on.
+        //
+        // IS THE SERVER ANSWERING THIS THE CODE ON DISK? `served_by.stale` has
+        // answered that since 2026-08-08 and rode on `graph_report` alone —
+        // which is not the call anything points a session at. The session-start
+        // hook says "loop_status is the one cheap call", the stop hook nudges
+        // here, and this is where a session looks. So the currency of the
+        // ANSWERER belongs beside the currency of the DESIGN.
+        //
+        // FOURTH MEASURED INSTANCE, and the first three are in
+        // tests/the_server_says_when_it_is_stale.rs: 2026-08-08 cost five
+        // merged PRs that never ran live, and 2026-08-19 repeated it exactly —
+        // five PRs, a deliberate session restart, and a surface that did not
+        // move, because `--shared` re-attaches to the same daemon. The bit
+        // existed both times. Nobody was looking at the one tool carrying it.
+        //
+        // CHEAP WHEN CURRENT, LOUD WHEN NOT. `stale_note` is ~1 KB of remedy
+        // and is dropped when the answer is `false`, so the ordinary call pays
+        // three fields for it. When the answer is anything else the note stays
+        // AND `next` gains an entry, because `next` is the list an agent
+        // actually acts on and a field beside it is not the same as being in
+        // it — which is the whole lesson being applied here rather than
+        // restated.
+        {
+            let served = crate::service::served_by();
+            let stale = served.get("stale").and_then(serde_json::Value::as_bool);
+            let mut block = served.clone();
+            if stale == Some(false) {
+                if let Some(o) = block.as_object_mut() {
+                    o.remove("stale_note");
+                }
+            } else if let Some(arr) = payload.get_mut("next").and_then(|v| v.as_array_mut()) {
+                arr.insert(
+                    0,
+                    json!(match stale {
+                        Some(true) => crate::service::STALE_NEXT,
+                        _ => crate::service::UNKNOWN_NEXT,
+                    }),
+                );
+            }
+            if let Some(obj) = payload.as_object_mut() {
+                obj.insert("served_by".into(), block);
+            }
+        }
         // Whether the loop's own safety net exists (req:nudge-path-proven).
         // Machine-readable here, and in the handshake for the sessions that
         // never call this — which are precisely the ones a nudge is for.

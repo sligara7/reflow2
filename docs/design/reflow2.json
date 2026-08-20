@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:90e1949d8e4dfd1b5dea508464be398fbb0c538daf28b4dd8f16f33ccaf19973",
+  "content_hash": "sha256:1a0eaffdc67fe12812ef97c9707af259351e5176a8cf4997c548c8a79eb245c0",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2342,6 +2342,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-orientation-call-says-whether-its-own-answers-are-current",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -12048,6 +12056,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-16e876f2b2eee105",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-17017303d729e5ee",
       "properties": {
         "accepted_baseline": true,
@@ -12063,6 +12080,15 @@
         "action": "modified"
       },
       "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-17c262e9eb1e7afb",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
     },
     {
       "edge_type": "CHANGED",
@@ -12657,6 +12683,15 @@
         "action": "modified"
       },
       "to_id": "art:test-degraded-server"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-8309a2b33a57aac7",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:server-currency-test"
     },
     {
       "edge_type": "CHANGED",
@@ -13395,6 +13430,15 @@
         "action": "modified"
       },
       "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-fb54ede1d916c3e2",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
     },
     {
       "edge_type": "CHANGED",
@@ -76360,6 +76404,15 @@
       "edge_type": "REALIZES",
       "from_id": "art:service",
       "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-orientation-call-says-whether-its-own-answers-are-current"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:service",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cmp:service"
@@ -76849,6 +76902,15 @@
         "completeness": "partial"
       },
       "to_id": "cap:bulk-forms"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-coherence",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-orientation-call-says-whether-its-own-answers-are-current"
     },
     {
       "edge_type": "REALIZES",
@@ -78288,6 +78350,24 @@
       "from_id": "cap:the-loop-holds-the-invitation",
       "properties": {},
       "to_id": "req:detecting-is-not-asking"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:the-orientation-call-says-whether-its-own-answers-are-current",
+      "properties": {
+        "coverage": "partial",
+        "evidence": "Same shape one level up: a signal that exists but is delivered where nobody is looking is not delivered."
+      },
+      "to_id": "req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:the-orientation-call-says-whether-its-own-answers-are-current",
+      "properties": {
+        "coverage": "partial",
+        "evidence": "The bit already satisfied the requirement; this makes the answer reachable from the call sessions actually make. Partial because only loop_status and graph_report were examined."
+      },
+      "to_id": "req:the-server-is-the-authority-on-its-own-currency"
     },
     {
       "edge_type": "SATISFIES",
@@ -80620,6 +80700,12 @@
       "from_id": "ver:the-record-moved-is-surfaced",
       "properties": {},
       "to_id": "cap:the-record-moved-is-surfaced"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:the-server-says-when-it-is-stale",
+      "properties": {},
+      "to_id": "cap:the-orientation-call-says-whether-its-own-answers-are-current"
     },
     {
       "edge_type": "VERIFIES",
@@ -83907,7 +83993,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6ac21cd02a37fc6c6d51bbbc2d1adcac817d0a373e82c33e95ab954344496741",
+        "checksum": "sha256:88c9a74d46a1db42323c172030fec5203761fc7f6931ef692814c85fad22f553",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/the_server_says_when_it_is_stale.rs",
         "name": "the_server_says_when_it_is_stale.rs",
@@ -83920,7 +84006,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:582e338973a562b9f2a0829d6ee61b5129635a1b4dac45bac728d5a217a7bc97",
+        "checksum": "sha256:9494b6f9fba63592b9557dbff76f3fe96f46150b9d9e858f6e30280121fc533d",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -84473,7 +84559,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6968ac79340556684e15312ff6a6bb7d5cb004905216c686af46dd5a3afa31c7",
+        "checksum": "sha256:f17a273366433a9afb237cb72264bb9678684e45010c293e4fac2859e2c3b739",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -86874,6 +86960,17 @@
       }
     },
     {
+      "node_id": "cap:the-orientation-call-says-whether-its-own-answers-are-current",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`loop_status` carries `served_by` with an explicit `stale` bit, and when that bit is not `false` the remedy LEADS `next` — the list an agent acts on — naming `--stop-shared` and killing the assumption that a session restart is enough.\n\nCHEAP WHEN CURRENT, LOUD WHEN NOT. The ~1 KB remedy note is dropped when the answer is `false`, so the ordinary call pays three fields; `cap:loop-status`'s \"one cheap call\" is not eroded the way the per-check roll eroded it once.\n\nWHAT WAS ALREADY BUILT, so this is reachability and not detection: the bit itself has existed since 2026-08-08 under `req:the-server-is-the-authority-on-its-own-currency` — derived from `/proc/self/exe` rather than a version string, precisely because four sessions once read one true version and drew opposite conclusions. It rode on `graph_report` alone, which nothing points a session at.",
+        "name": "The orientation call says whether the server answering it is the code on disk",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:the-record-moved-is-surfaced",
       "node_type": "Capability",
       "properties": {
@@ -87391,6 +87488,16 @@
       }
     },
     {
+      "node_id": "chg:accept-16e876f2b2eee105",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-19",
+        "name": "The served description reverted to its prior wording after `skill_lint` refused it: the cap is 1500 chars and loop_status was already at 1494, so documenting `served_by` there would have cost 380 chars of every session's context for a field that announces itself in `next` when it matters — the payload weight ophyd-service filed as friction #8. The BEHAVIOUR is unchanged; only the prose came out, and the code now says why so nobody adds it back.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-17017303d729e5ee",
       "node_type": "ChangeEvent",
       "properties": {
@@ -87406,6 +87513,16 @@
         "change_type": "refactor",
         "detected_at": "2026-07-21",
         "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-17c262e9eb1e7afb",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-19",
+        "name": "STALE_NEXT and UNKNOWN_NEXT added as public constants beside STALE_NOTE, for the reason that one is public: the branch cannot run in a test process, so wording that could only be checked by hand would be no check at all.",
+        "subject": "system"
       }
     },
     {
@@ -88008,6 +88125,16 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "Same bytes — re-registered in the sha256: dialect the gate compares in."
+      }
+    },
+    {
+      "node_id": "chg:accept-8309a2b33a57aac7",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-19",
+        "name": "Three cases added for the fourth instance: loop_status states its own currency; a CURRENT server costs three fields and does not touch `next`; and the next-entries name both the remedy (`--stop-shared`) and the trap that produced all four instances (a session restart re-attaches to the same daemon).",
+        "subject": "system"
       }
     },
     {
@@ -88693,6 +88820,16 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-07-23",
         "name": "Live-store catch-up: the 2026-07-23 session (f4109cb stamp-ordering, dc9bf96 refusal message) reconciled these checksums in the committed export via the build script while the live server was down; this accepts the same on-disk content in the live graph. Fixes restore intended behaviour — no design meaning."
+      }
+    },
+    {
+      "node_id": "chg:accept-fb54ede1d916c3e2",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-19",
+        "name": "loop_status now carries `served_by` with the explicit `stale` bit, and leads `next` with the remedy when the answer is not `false`. THE DESIGN WAS RIGHT AND THE CODE WAS WRONG: req:the-server-is-the-authority-on-its-own-currency was already satisfied, and the answer rode on graph_report alone — which is not the call anything points a session at. Cheap when current (the ~1 KB note is dropped), loud when not.",
+        "subject": "system"
       }
     },
     {
@@ -108672,6 +108809,19 @@
       }
     },
     {
+      "node_id": "fact:the-stale-daemon-cost-five-merged-prs-twice",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "FOURTH MEASURED INSTANCE OF THE STALE SHARED DAEMON, AND THE SECOND THAT COST FIVE MERGED PRs — with the remedy already shipped both times.\n\n2026-08-08 (instance three, recorded in tests/the_server_says_when_it_is_stale.rs): \"Anthony restarted the session specifically to pick up a new binary, and the served surface did not move — `--shared` is a CLIENT that re-attaches to the detached daemon. Five merged PRs had been built, gated and shipped without one of them ever running live.\"\n\n2026-08-19, MOVE FOR MOVE THE SAME: PRs #254 #255 #256 #257 #258 merged, all green. Anthony restarted the session deliberately to pick up the new binary. NOTHING MOVED. Measured at the process table: pid 3861122 `--serve-shared`, started 17:22:52, up 4h49m; the session's own client pid started 22:11 and re-attached to it. The binary ON DISK was current — stamp matched the source hash and contained `level_spine_disagreement` five times — while the process answering every call was four hours older than the code.\n\n⭐ WHAT MAKES THIS WORTH RECORDING RATHER THAN JUST FIXING: the detection existed. `served_by.stale` was built after instance three, is tested, and says in its own note \"A SESSION RESTART ALONE, WITHOUT `--stop-shared`, CHANGES NOTHING\". It rides on `graph_report`. Over roughly two hundred tool calls that day the session called `loop_status` eight times and `graph_report` ZERO — while the session-start hook says \"loop_status is the one cheap call\" and the stop hook nudges to the same place. The remedy was one call away and in the wrong room.\n\n📌 SAME SHAPE AS TWO OTHER FINDINGS THE SAME DAY, which is why it is filed as a pattern and not an incident: `ruling: parks` (documented on the tool, absent from the defect the reader is looking at) and `Component.level` (indexed and populated, with no way to ask by it). Typed mechanism present, instruction absent from the place of use, every time.\n\n⚠️ NOT ESTABLISHED: whether any other computed surface silently depends on binary currency the same way. Only `graph_report` and `loop_status` were examined.",
+        "subject_id": "req:the-server-is-the-authority-on-its-own-currency",
+        "valid_from": "2026-08-19",
+        "value": "{\"instances\":4,\"instances_costing_five_merged_prs\":2,\"dates\":[\"2026-08-08\",\"2026-08-19\"],\"daemon_pid\":3861122,\"daemon_started\":\"17:22:52\",\"daemon_uptime_at_detection\":\"4h49m\",\"client_started\":\"22:11\",\"binary_on_disk\":\"current - stamp matched source hash\",\"calls_that_day\":{\"loop_status\":8,\"graph_report\":0},\"detection_existed_since\":\"2026-08-08\",\"detection_carried_by\":\"graph_report only\",\"fix\":\"loop_status carries served_by; remedy leads next when not current\",\"same_shape_as\":[\"ruling: parks\",\"Component.level\"],\"not_established\":\"whether other computed surfaces depend on binary currency the same way\"}"
+      }
+    },
+    {
       "node_id": "fact:the-stale-server-defect-recurred-to-the-people-who-wrote-it-down",
       "node_type": "TemporalFact",
       "properties": {
@@ -110890,7 +111040,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ca101ddd5b9f8fb3b21d8b4c35aebf0f9ba9b75b310a3ed453621851f8225302",
+  "prev_content_hash": "sha256:90e1949d8e4dfd1b5dea508464be398fbb0c538daf28b4dd8f16f33ccaf19973",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
