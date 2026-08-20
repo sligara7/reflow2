@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:1a0eaffdc67fe12812ef97c9707af259351e5176a8cf4997c548c8a79eb245c0",
+  "content_hash": "sha256:b1d92e67e269269e54b73383bd6187dfadd5a1525f0e27fcafd99bad2cd41258",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -21990,6 +21990,15 @@
         "action": "modified"
       },
       "to_id": "req:declared-vocabulary-is-reachable-from-the-surface"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-stale-daemon-was-stopped-and-the-work-is-now-served-2026-08-20",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:the-orientation-call-says-whether-its-own-answers-are-current"
     },
     {
       "edge_type": "CHANGED",
@@ -91465,6 +91474,17 @@
       }
     },
     {
+      "node_id": "chg:the-stale-daemon-was-stopped-and-the-work-is-now-served-2026-08-20",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "resync",
+        "name": "The stale shared daemon was stopped and six merged PRs are finally serving",
+        "rationale": "THIS CALL IS ITSELF THE VERIFICATION. `summary` and `rationale` are the fields #256 added to this constructor, and a stale server would have REFUSED them — the request struct is deny_unknown_fields — so the fact that this event exists with both populated proves the new binary is answering. The other four checks passed the same way: hierarchy_issues returned the three predicted findings, scan_nodes(level:\"subsystem\") returned exactly 8, get_skill(\"rules\") named governance-proposal. The lesson worth keeping is the ORDER of what failed: a session restart did nothing, a /mcp reconnect did nothing, and only `--stop-shared` moved it — which is what STALE_NOTE has said since 2026-08-08 and what nothing surfaced until #259 put it on loop_status.",
+        "subject": "system",
+        "summary": "pid 3861122 (`--serve-shared`, up 5h41m) was stopped with `--stop-shared` and respawned from the current binary. PRs #254-#259 are now actually being served, having been merged and green for hours without ever running live."
+      }
+    },
+    {
       "node_id": "chg:the-surface-gate-says-which-binary-it-read",
       "node_type": "ChangeEvent",
       "properties": {
@@ -111040,7 +111060,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:90e1949d8e4dfd1b5dea508464be398fbb0c538daf28b4dd8f16f33ccaf19973",
+  "prev_content_hash": "sha256:1a0eaffdc67fe12812ef97c9707af259351e5176a8cf4997c548c8a79eb245c0",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
