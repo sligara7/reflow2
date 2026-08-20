@@ -24,25 +24,6 @@ use crate::surprises::SurprisingConnection;
 /// How many items each highlight list caps at (the rest are counted, not shown).
 const TOP_N: usize = 5;
 
-/// Design node types included in the snapshot, in lifecycle order.
-const SNAPSHOT_TYPES: &[&str] = &[
-    node::PROJECT,
-    node::REQUIREMENT,
-    node::CONSTRAINT,
-    node::DESIGN_RULE,
-    node::CAPABILITY,
-    node::FLOW,
-    node::ACTOR,
-    node::COMPONENT,
-    node::INTERFACE,
-    node::DECISION,
-    node::ARTIFACT,
-    node::VERIFICATION,
-    node::RELEASE,
-    node::ENVIRONMENT,
-    node::RESOURCE,
-];
-
 /// The `status` × `provenance` → certainty mapping, on a node already in
 /// hand. Absent properties take their schema defaults (`proposed`,
 /// `authored`), so a bare requirement reads as asserted, never as confirmed.
@@ -76,14 +57,6 @@ fn certainty_of(req: &dynograph_storage::StoredNode) -> RequirementCertainty {
             }
         }
     }
-}
-
-/// Whether a node type is design content, as opposed to the supporting layer
-/// (provenance, questions, history). The same split the graph report's
-/// snapshot draws — `compare` reuses it so "design vs supporting" means one
-/// thing everywhere.
-pub(crate) fn is_design_type(node_type: &str) -> bool {
-    SNAPSHOT_TYPES.contains(&node_type)
 }
 
 /// How firmly a Requirement stands — derived from `status` × `provenance`,
@@ -1224,7 +1197,7 @@ impl DesignGraph {
     pub fn graph_report(&self) -> Result<GraphReport, DynoError> {
         let mut node_counts = Vec::new();
         let mut design_nodes = 0;
-        for &t in SNAPSHOT_TYPES {
+        for &t in node::DESIGN_TYPES {
             let n = self.count_nodes(t)?;
             if n > 0 {
                 node_counts.push((t, n));
@@ -1249,7 +1222,7 @@ impl DesignGraph {
         let mut schema_types: Vec<String> = self.schema().node_types.keys().cloned().collect();
         schema_types.sort();
         for t in schema_types {
-            if SNAPSHOT_TYPES.contains(&t.as_str()) {
+            if node::DESIGN_TYPES.contains(&t.as_str()) {
                 continue;
             }
             let n = self.count_nodes(&t)?;
