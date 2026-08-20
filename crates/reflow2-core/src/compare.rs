@@ -41,8 +41,8 @@ use serde::Serialize;
 
 use crate::export::GraphExport;
 use crate::graph::DesignGraph;
+use crate::nodes::node::is_design_type;
 use crate::nodes::{edge, node};
-use crate::report::is_design_type;
 
 /// The label `compare_with_base` reports for the live side.
 pub const LIVE_GRAPH_LABEL: &str = "live graph";

@@ -45,6 +45,47 @@ pub mod node {
     pub const CHANGE_EVENT: &str = "ChangeEvent";
     // Readiness · technology maturity as a GATING fact (readiness.yaml, BL-68)
     pub const READINESS_ASSESSMENT: &str = "ReadinessAssessment";
+
+    /// The node types that are DESIGN CONTENT, in lifecycle order, as opposed
+    /// to the supporting layer around it — provenance, questions, history,
+    /// axis-Z machinery, dimension readings.
+    ///
+    /// It lives here, with the type names it is made of, because that is what
+    /// it is a statement about. It used to live in `report` as
+    /// `SNAPSHOT_TYPES`, named for the one consumer that rendered it, and
+    /// `compare` reached across into the reporting layer to borrow it — a
+    /// 974-line module importing from a 2000-line one for a list lookup, and
+    /// the single back-edge behind a `time-history` ↔ `coherence-loop`
+    /// subsystem cycle (`cap:comparing-two-designs-does-not-reach-into-the-reporting-layer`).
+    ///
+    /// ONE definition, deliberately, and that has always been the point: the
+    /// split between design and supporting must mean the same thing in the
+    /// snapshot and in a comparison, or two reports of the same graph disagree
+    /// about how big it is. Duplicating the list would have removed the edge
+    /// and broken that, which is why the fix was to move it down rather than
+    /// to copy it.
+    pub const DESIGN_TYPES: &[&str] = &[
+        PROJECT,
+        REQUIREMENT,
+        CONSTRAINT,
+        DESIGN_RULE,
+        CAPABILITY,
+        FLOW,
+        ACTOR,
+        COMPONENT,
+        INTERFACE,
+        DECISION,
+        ARTIFACT,
+        VERIFICATION,
+        RELEASE,
+        ENVIRONMENT,
+        RESOURCE,
+    ];
+
+    /// Whether a node type is design content rather than the supporting layer.
+    pub fn is_design_type(node_type: &str) -> bool {
+        DESIGN_TYPES.contains(&node_type)
+    }
 }
 
 /// Edge type names, matching `schema/*.yaml`.

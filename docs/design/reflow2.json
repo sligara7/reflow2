@@ -1,6 +1,12 @@
 {
-  "content_hash": "sha256:bddc5e7148ef36d0a9183a5710a9ab43bfb21289483311252720a796250f3161",
+  "content_hash": "sha256:c7a254d1e86da1b7dd2785ef62f65dd4495342105245c984421b2798dae11bfc",
   "edges": [
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:a-capability-delivered-as-a-model-change-can-never-be-reported-delivered",
+      "properties": {},
+      "to_id": "epoch:the-declared-walls-hold"
+    },
     {
       "edge_type": "ABOUT_ENTITY",
       "from_id": "fact:apply-heal-would-have-destroyed-the-wrong-contributor",
@@ -21573,6 +21579,33 @@
         "action": "modified"
       },
       "to_id": "cap:the-design-interview-precedes-the-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-design-type-list-moves-down-to-the-vocabulary",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:compare"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-design-type-list-moves-down-to-the-vocabulary",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-design-type-list-moves-down-to-the-vocabulary",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
     },
     {
       "edge_type": "CHANGED",
@@ -80979,6 +81012,18 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-declared-subsystems-are-acyclic",
+      "properties": {},
+      "to_id": "cap:comparing-two-designs-does-not-reach-into-the-reporting-layer"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:the-declared-subsystems-are-acyclic",
+      "properties": {},
+      "to_id": "cap:the-foundation-is-one-subsystem-not-two-halves"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-export-chain-is-unbroken",
       "properties": {},
       "to_id": "rule:the-export-is-written-once-per-branch"
@@ -82957,7 +83002,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b73161a0fd04efee",
+        "checksum": "sha256:cdc3f210cff2c471ba525017ae919335102c2df44a13f1c59e48a8ca1e2ad7ee",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/compare.rs",
         "name": "compare.rs",
@@ -83806,7 +83851,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ae5a182c709321a1e0753361a6a8b9ed6836a6a8cd518979d83896d7b4511aa6",
+        "checksum": "sha256:838056539d013c95b2c0cd4d2895bb614fcba20d17375cd9a36d3b221176c143",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
@@ -84036,7 +84081,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7b0d73e0255a47017c9a56b51683216f1529451d31022d6c1574b5a07749b33d",
+        "checksum": "sha256:217e69f28fe29e31e3cd88f37513fcacb5e8882a242d2e17877c6bb814c06bf0",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
@@ -85892,7 +85937,7 @@
         "description": "CHANGE 2 of epoch:the-declared-walls-hold. Anthony's word, 2026-08-20. DISTINCT FROM change 1: that one moves nothing in the code and this one moves ~15 lines; they share an epoch and neither blocks the other.\n\nTHE WHOLE DEPENDENCY, read rather than assumed: `compare.rs` line 45 is `use crate::report::is_design_type;` and that is ALL of it. The function is two lines — `SNAPSHOT_TYPES.contains(&node_type)` — answering \"is this design content, or supporting material like provenance and history?\". So a 974-line module reaches into a 2025-line reporting module to borrow a lookup in a constant list, and that single edge is the whole `sys:time-history -> sys:coherence-loop` back-edge behind the second subsystem cycle.\n\nWHAT IT DOES NOT DO: duplicate the list. The sharing is CORRECT and report.rs says why in as many words — compare reuses it so \"design vs supporting\" means one thing everywhere. Two copies would drift.\n\nWHAT IT DOES: move SNAPSHOT_TYPES and is_design_type down into `nodes`. Three reasons, and the third is why this is a better home rather than a cycle-driven contortion:\n  1. the list is built ENTIRELY out of `node::` constants — it is a statement about node types, so it belongs with the node types;\n  2. `report` and `compare` BOTH already depend on `nodes`, so this adds no coupling at all — it only stops compare reaching sideways;\n  3. one shared definition survives, which is the property worth protecting.\n\nSIMULATED: with change 1 also applied, dropping this edge makes all eight subsystems a DAG — no cycles at any level.\n\nSHAPE WORTH NAMING: this is the same shape all three of PR #262's cycles had — ONE back-edge, and the fix is to ask what the borrowing module actually needed rather than to restructure anything.",
         "name": "Comparing two designs stops reaching into the reporting layer for a two-line lookup",
         "provenance": "authored",
-        "status": "planned"
+        "status": "realized"
       }
     },
     {
@@ -87338,7 +87383,7 @@
         "description": "CHANGE 1 of epoch:the-declared-walls-hold. Anthony's word, 2026-08-20. DISTINCT FROM the fact that measured the problem: that node is the MEASUREMENT, this is the REMEDY, and conflating them would leave the design unable to say whether the fix happened.\n\nWHAT IT DOES: moves cmp:nodes and cmp:schema so they sit with cmp:graph and cmp:provenance, and places cmp:identity, which today is in NO subsystem at all. PURE MODEL BOOKKEEPING — not one line of Rust changes.\n\nWHY: the code has a kernel of five modules everything sits on — nodes (46 of 52 modules transitively depend on it), provenance (44), identity (44), schema (43), graph (42). The declared decomposition CUTS IT IN HALF: nodes/schema in sys:vocabulary, graph/provenance in sys:store. graph reads nodes and schema; vocabulary and flow read graph. Traffic therefore crosses that boundary BOTH WAYS, and that is the entire sys:store <-> sys:vocabulary cycle. Any bisection of a mutually-dependent kernel produces a cycle one level up whatever the code does.\n\nA boundary only earns its keep if a change can be handed TO it and stop there. Two-way traffic leaves nothing for a blast radius to stop at, so \"a change inside the store stays in the store\" is false today.\n\nSIMULATED BEFORE PROPOSING, against the real import graph: the cycle disappears, NO new cycle appears anywhere, and the eight subsystems come one step closer to a DAG.\n\nOPEN SUB-QUESTION FOR ANTHONY: sys:store currently means \"where the data lives\". After this it means \"the foundation everything is built on\", which is a bigger idea and may want a different name. A naming call, not a technical constraint — the move is correct either way.\n\nIT IS A CORRECTION, NOT ONLY A FIX: those five modules ARE one layer, and the model currently says they are two.",
         "name": "The foundation is one subsystem, not two halves — the kernel stops being bisected by the decomposition",
         "provenance": "authored",
-        "status": "planned"
+        "status": "realized"
       }
     },
     {
@@ -91722,6 +91767,15 @@
       "properties": {
         "change_type": "new_feature",
         "name": "capture-intent and genesis establish what KIND of thing is being designed before naming its parts, and never ask the user to pick a node type — with a routing table that names where it runs out"
+      }
+    },
+    {
+      "node_id": "chg:the-design-type-list-moves-down-to-the-vocabulary",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "The design-content type list moves down to the vocabulary it is made of — compare stops reaching into report, and the last subsystem cycle closes",
+        "subject": "system"
       }
     },
     {
@@ -98191,7 +98245,7 @@
         "epoch_type": "milestone",
         "name": "The declared walls hold — the eight subsystems become a severable hierarchy, in two moves that were simulated before either was proposed",
         "sequence": 366,
-        "status": "planned"
+        "status": "arrived"
       }
     },
     {
@@ -106765,6 +106819,18 @@
       }
     },
     {
+      "node_id": "fact:a-capability-delivered-as-a-model-change-can-never-be-reported-delivered",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "FOUND 2026-08-20 by running the loop honestly rather than by looking for it: epoch:the-declared-walls-hold was set arrived with BOTH its capabilities delivered, and arrival_delta reported BOTH as `outstanding`.\n\n=== THE MECHANISM, read from the source and not inferred ===\n\ncrates/reflow2-core/src/temporal.rs, item_is_delivered:\n\n    node::CAPABILITY => Ok(self.capability_is_realized(item_id)?\n                        && self.capability_has_evidence(item_id)?)\n\nand capability_is_realized (detect.rs) is: an Artifact REALIZES the capability, OR an Artifact realizes a Component the capability is ALLOCATED_TO.\n\nSo delivery requires A FILE ON DISK. `Capability.status` is never consulted. Verification evidence alone is not enough - measured directly: a capability at status `realized` WITH a passing system-level Verification attached still came back `outstanding`, because the AND requires both halves and the artifact half cannot be satisfied by a check.\n\n=== WHY THIS IS NOT 'JUST SET THE STATUS' ===\n\nThe governing doctrine is right and should not be weakened: delivery is COMPUTED from the golden thread, never asserted, and there is deliberately no `achieved` modality, because a plan that records its own success is a plan lying about itself. The defect is not that delivery is computed. It is that the computation admits exactly ONE kind of evidence - an artifact - while reflow2 itself models several.\n\n=== WHAT IT COSTS AN ARBITRARY USER'S PROJECT ===\n\nA large share of real increment content produces NO NEW FILE:\n  · a re-decomposition, or any boundary change\n  · a retirement - something correctly leaving the design\n  · a governance decision, an accepted rule, a settled question\n  · a correction to a model that was wrong about the world\n\nEvery one of those sits `outstanding` forever. And `outstanding` is DEFINED as 'still pointed here, not delivered, and nobody has said which of deferred or discontinued it is - that is the question to put to the user'. So the tool asks the user a question about work that is finished, and keeps asking. A plan that cannot mark model work delivered will, increment after increment, accumulate a backlog of phantom incompletions - and the natural response is to stop scheduling model work, which is precisely the work systems engineering is FOR.\n\nIt bites hardest on exactly the modularization and black-box work reflow2 is meant to support, because almost all of that is model change.\n\n=== A SECOND TENSION, IN THE SAME REPLY ===\n\narrival_delta also said: 'nothing is scheduled `required` ... so there is no obligation to miss and it is NOT ready to cut. An increment that promises nothing has not been scoped.' That is a fair criticism. But the plan-increments skill instructs the opposite - `required` is the scheduling face of a KPP, so 'ask, never assume' - and this plan used `expected` BECAUSE THE SKILL SAID TO. A user following reflow2's own guidance therefore builds an increment reflow2 then reports as unscoped and never ready to cut. Two pieces of correct guidance, in tension, with no way for the follower to satisfy both.\n\n=== STATED HONESTLY: NOT ACTED ON ===\n\nThe epoch is being LEFT reporting `outstanding`. Editing the plan to match what happened is what the skill forbids, and the false reading is itself the evidence. This is recorded for Anthony's decision, not fixed.",
+        "subject_id": "epoch:the-declared-walls-hold",
+        "valid_from": "2026-08-20"
+      }
+    },
+    {
       "node_id": "fact:a-fresh-server-on-an-old-build-is-not-stale-and-stamps-confidently",
       "node_type": "TemporalFact",
       "properties": {
@@ -111475,6 +111541,20 @@
       }
     },
     {
+      "node_id": "ver:the-declared-subsystems-are-acyclic",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Runs tools/wall_check.py, which builds the module import graph from crates/*/src/**.rs with comments and string literals stripped, lifts those edges to the declared subsystems through each Component's CONTAINS placement, and runs Tarjan over the induced subsystem graph.\n\nPASSES when that graph has no cycle: every declared wall is crossed one way only, so a change can be handed to a boundary and stop there.\n\nWHY THE CHECK IS NEEDED AT ALL, and this is the part worth keeping: reflow2's own circular-dependency detector cannot answer this and is not broken. It reasons over DEPENDS_ON edges in the design, and the subsystem layer held exactly two coupling edges, both CONSUMES to an external interface. Zero subsystem-to-subsystem edges means the detector has nothing to run on, and its green reads as 'your subsystems are acyclic' while meaning 'your subsystems have no modelled coupling'. This check reads the SOURCE instead, so it cannot be fooled by an unmodelled edge.\n\nSTATED LIMIT: an import graph is coupling, not a contract. This says a boundary is severable in principle; it does not say the dependency across it is contracted, which maturity_report reports separately and which stood at 0 of 73 when this check was written.",
+        "findings": "RUN 2026-08-20 on the compare-stops-reaching-into-report branch, after both changes of epoch:the-declared-walls-hold: \"NO SUBSYSTEM CYCLES — every declared wall is crossed one way only.\" 9 subsystems, 43 components placed, 25 code edges inside a subsystem and 72 crossing one, all one-directional.\n\nTHE TRAIL, because the number moved twice and both moves were earned:\n  before either change   2 cycles — sys:store <-> sys:vocabulary, sys:coherence-loop <-> sys:time-history\n  after change 1 (#264)  1 cycle  — the kernel was reunited as sys:foundation, no Rust touched\n  after change 2         0 cycles — the design-type list moved down to `nodes`, one import removed\n\nWHAT THIS RUN DOES NOT SAY: 10 Components still report no coupling in the design while their same-named module is coupled in the source (cmp:dto at code degree 11 the worst), and 0 of 73 dependency pairs are mediated by a contract. A boundary being severable in principle is not the same as the dependency across it being declared, and neither of those numbers moved.",
+        "kind": "verification",
+        "last_run_at": "2026-08-20",
+        "level": "system",
+        "method": "analysis",
+        "name": "Every declared subsystem boundary is crossed in one direction only",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-export-chain-is-unbroken",
       "node_type": "Verification",
       "properties": {
@@ -111730,7 +111810,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:a99eaf76a336582658abbd5f5e0fd432329859b38f90980ba0f669ddd068079a",
+  "prev_content_hash": "sha256:bddc5e7148ef36d0a9183a5710a9ab43bfb21289483311252720a796250f3161",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
