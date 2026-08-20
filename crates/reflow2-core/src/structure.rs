@@ -81,9 +81,9 @@ pub(crate) fn is_foundation_medium(medium: &str) -> bool {
 
 /// Dependency pairs plus **how each one was derived** — a direct `DEPENDS_ON`
 /// edge, or collapsed out of a shared contract, or both.
-struct DependencyEdges {
+pub(crate) struct DependencyEdges {
     /// Every `(u, v)` meaning "u depends on v", deduplicated and sorted.
-    pairs: Vec<(String, String)>,
+    pub(crate) pairs: Vec<(String, String)>,
     /// Pairs backed by a real `DEPENDS_ON` edge.
     direct: HashSet<(String, String)>,
     /// Pairs produced by a shared Interface, and which Interface(s) produced
@@ -351,7 +351,7 @@ impl DesignGraph {
     /// file format looked like mutual dependency. So the medium is kept beside
     /// the pair rather than thrown away, and the finding can say which edge
     /// kinds it actually walked.
-    fn dependency_pairs(&self) -> Result<DependencyEdges, DynoError> {
+    pub(crate) fn dependency_pairs(&self) -> Result<DependencyEdges, DynoError> {
         let index = self.node_type_index()?;
         let mut ids: Vec<&str> = index.keys().map(String::as_str).collect();
         ids.sort_unstable();

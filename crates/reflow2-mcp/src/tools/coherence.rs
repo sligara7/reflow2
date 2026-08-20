@@ -481,12 +481,19 @@ impl ReflowService {
                        UNSCOPED, IT RETURNS `{swept, defects}` RATHER THAN A BARE LIST, since \
                        2026-08-17: `swept.nodes` is what it examined, `swept.rules` names the \
                        checks that ran, and `swept.note` appears only when the sweep COULD NOT \
-                       have found anything. So an empty `defects` says which empty it is — \
-                       exercised and found nothing, or nothing to examine — instead of leaving a \
-                       zero to be read as permission before `apply_heal`, which deletes nodes. \
+                       have found anything — so a zero is never read as permission before \
+                       `apply_heal`, which deletes nodes. \
                        `swept.design_network_nodes` is deliberately SMALLER than `swept.nodes`: \
                        the topology rules walk a narrower graph that drops provenance types, \
-                       review records and CONTAINS, and that gap is reported rather than hidden.",
+                       review records and CONTAINS, and that gap is reported rather than hidden. \
+                       ⭐ READ `swept.coverage_note` FIRST WHEN PRESENT — one line naming what \
+                       this sweep could NOT have found. `rule_populations` says what each rule \
+                       walked (a rule that walked NOTHING reports clean for the same reason an \
+                       empty graph does); `coupling_by_level` says how much coupling exists AT \
+                       each declared level, and that is the one that bites — measured here, the \
+                       cycle rule walked 182 pairs and found none while ZERO joined two \
+                       subsystems, so a clean result was SILENT about the subsystems rather \
+                       than clean about them.",
         annotations(read_only_hint = true)
     )]
     pub async fn detect_defects(

@@ -29,7 +29,7 @@
 //! missing_link (graph algorithms), missing_embedding, and every generative
 //! healer's actual content.
 
-use std::collections::{BTreeSet, HashMap};
+use std::collections::{BTreeMap, BTreeSet, HashMap};
 
 use dynograph_core::{DynoError, Value};
 use dynograph_storage::StoredEdge;
@@ -210,6 +210,71 @@ pub struct SweepScope {
     /// graph. `None` when the sweep was real, so its presence is the signal.
     #[serde(skip_serializing_if = "Option::is_none", default)]
     pub note: Option<String>,
+    /// What each rule actually walked. `rules` says a rule RAN; this says what
+    /// it ran OVER, which is the difference between "checked and clean" and
+    /// "had nothing to check".
+    pub rule_populations: Vec<RulePopulation>,
+    /// Coupling visible at each declared decomposition level — see
+    /// [`LevelCoupling`], and read its docs before trusting a clean topology
+    /// result about a level.
+    pub coupling_by_level: Vec<LevelCoupling>,
+    /// ONE LINE naming what this sweep could not have found, when there is
+    /// anything to name: rules that walked nothing, and levels that have
+    /// components but no coupling between them. `None` when every rule had a
+    /// population and every level with components had pairs — so its presence
+    /// is the signal, exactly like `note`.
+    ///
+    /// Deliberately a summary rather than a per-rule annotation: the detail is
+    /// already in `rule_populations` and `coupling_by_level` for anyone who
+    /// wants it, and adding a sentence to every finding would crowd the
+    /// findings themselves. Anthony's call, 2026-08-20.
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    pub coverage_note: Option<String>,
+}
+
+/// What ONE rule actually walked, so "no findings" can be read against the size
+/// of the thing it looked at.
+///
+/// `rules` alone says a rule RAN. It cannot say a rule ran over NOTHING, and a
+/// rule with an empty population reports clean for the same reason an empty
+/// graph does — which is the vacuity `SweepScope.note` already refuses to let
+/// stand for the sweep as a whole.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct RulePopulation {
+    /// The rule, by its stable snake_case key.
+    pub rule: &'static str,
+    /// How many things it walked.
+    pub examined: usize,
+    /// What those things ARE, because 2143 edges and 2143 nodes are different
+    /// facts and a bare number cannot tell them apart.
+    pub unit: &'static str,
+}
+
+/// How much coupling the topology rules could see AT one decomposition level.
+///
+/// ⭐ THE FAILURE THIS ANSWERS, measured on reflow2's own design 2026-08-20 and
+/// the reason this exists at all. `circular_dependency` walked 2143 traceability
+/// edges and found nothing — a large, healthy-looking population. Of those,
+/// **ZERO joined two subsystem-level components.** So "no circular
+/// dependencies" was true of the flattened network and said nothing whatever
+/// about the subsystems, while reading exactly like a clean bill of health for
+/// them. The real cycles were found with a hand-written script, not with
+/// reflow2.
+///
+/// A per-rule population would NOT have caught it: the population was fine.
+/// What was empty was the SUB-POPULATION the reader cared about. That is the
+/// general shape for any project that declares a hierarchy — the answer is
+/// computed over a flattened graph, and the reader assumes it holds at the
+/// level they asked about.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct LevelCoupling {
+    /// The declared `Component.level`.
+    pub level: String,
+    /// Components declaring it.
+    pub components: usize,
+    /// Dependency pairs joining TWO components at this level — the population
+    /// the cycle and severability rules actually have to work with here.
+    pub coupled_pairs: usize,
 }
 
 /// A defect sweep: what was examined, and what it found.
@@ -835,8 +900,50 @@ impl DesignGraph {
     }
 
     fn sweep_scope(&self) -> Result<SweepScope, DynoError> {
-        let nodes = self.node_type_index()?.len();
+        let index = self.node_type_index()?;
+        let nodes = index.len();
         let design_network_nodes = self.design_network()?.node_count();
+        let rule_populations = self.rule_populations(&index, design_network_nodes)?;
+        let coupling_by_level = self.coupling_by_level()?;
+
+        // ONE line, and only when there is something to say. The detail lives
+        // in the two lists; this is what a reader actually sees first.
+        let starved: Vec<&str> = rule_populations
+            .iter()
+            .filter(|r| r.examined == 0)
+            .map(|r| r.rule)
+            .collect();
+        let blind_levels: Vec<&LevelCoupling> = coupling_by_level
+            .iter()
+            // TWO or more, not one. A level holding a single component CANNOT
+            // have a pair joining two components at it — that is arithmetic,
+            // not a modelling gap, and naming it would be the false positive
+            // that teaches a reader to skip this line.
+            .filter(|l| l.components > 1 && l.coupled_pairs == 0)
+            .collect();
+        let mut parts: Vec<String> = Vec::new();
+        if !starved.is_empty() {
+            parts.push(format!(
+                "{} rule(s) had NOTHING TO EXAMINE and their silence means only that: {}",
+                starved.len(),
+                starved.join(", ")
+            ));
+        }
+        for l in &blind_levels {
+            parts.push(format!(
+                "the {} level has {} component(s) and ZERO dependency pairs between them, so every \
+                 topology result here — cycles, severability, single points of failure — is \
+                 silent about that level rather than clean about it",
+                l.level, l.components
+            ));
+        }
+        let coverage_note = (!parts.is_empty()).then(|| {
+            format!(
+                "{}. Read `rule_populations` and `coupling_by_level` for what was actually walked.",
+                parts.join("; ")
+            )
+        });
+
         Ok(SweepScope {
             nodes,
             design_network_nodes,
@@ -847,7 +954,103 @@ impl DesignGraph {
                  nothing could have been found here"
                     .to_string()
             }),
+            rule_populations,
+            coupling_by_level,
+            coverage_note,
         })
+    }
+
+    /// What each rule walked, computed with THE SAME EXPRESSION THE RULE USES.
+    ///
+    /// Deriving these independently would create a second implementation of one
+    /// number, able to disagree with the first — the defect `node_content_hash`
+    /// was moved into the core to avoid, and the reason `parked_nodes` delegates
+    /// to `is_parked` rather than re-deciding what parked means.
+    fn rule_populations(
+        &self,
+        index: &HashMap<String, String>,
+        design_network_nodes: usize,
+    ) -> Result<Vec<RulePopulation>, DynoError> {
+        let pop = |rule: &'static str, examined: usize, unit: &'static str| RulePopulation {
+            rule,
+            examined,
+            unit,
+        };
+        Ok(vec![
+            pop(
+                HealCategory::OrphanNode.as_str(),
+                index.len(),
+                "nodes in the graph",
+            ),
+            pop(
+                HealCategory::Contradiction.as_str(),
+                self.all_edges_of_type(edge::CONTRADICTS, index)?.len(),
+                "CONTRADICTS edges",
+            ),
+            pop(
+                HealCategory::Duplicate.as_str(),
+                self.all_edges_of_type(edge::DUPLICATES, index)?.len(),
+                "DUPLICATES edges",
+            ),
+            pop(
+                HealCategory::UnresolvedSetup.as_str(),
+                self.all_edges_of_type(edge::ANTICIPATES, index)?.len(),
+                "ANTICIPATES edges",
+            ),
+            pop(
+                HealCategory::UnthreadedCluster.as_str(),
+                design_network_nodes,
+                "nodes in the design network",
+            ),
+            pop(
+                HealCategory::SinglePointOfFailure.as_str(),
+                design_network_nodes,
+                "nodes in the design network",
+            ),
+            pop(
+                HealCategory::DeadEnd.as_str(),
+                design_network_nodes,
+                "nodes in the design network",
+            ),
+            pop(
+                HealCategory::CircularDependency.as_str(),
+                self.dependency_pairs()?.pairs.len(),
+                "dependency pairs",
+            ),
+        ])
+    }
+
+    /// Coupling visible at each declared decomposition level. See
+    /// [`LevelCoupling`] for the measured failure this answers.
+    fn coupling_by_level(&self) -> Result<Vec<LevelCoupling>, DynoError> {
+        let mut level_of: BTreeMap<String, String> = BTreeMap::new();
+        let mut counts: BTreeMap<String, usize> = BTreeMap::new();
+        for n in self.scan_nodes(node::COMPONENT)? {
+            let level = n
+                .properties
+                .get("level")
+                .and_then(|v| v.as_str())
+                .unwrap_or("component")
+                .to_string();
+            *counts.entry(level.clone()).or_insert(0) += 1;
+            level_of.insert(n.node_id.clone(), level);
+        }
+        let mut pairs_at: BTreeMap<String, usize> = BTreeMap::new();
+        for (from, to) in &self.dependency_pairs()?.pairs {
+            if let (Some(a), Some(b)) = (level_of.get(from), level_of.get(to))
+                && a == b
+            {
+                *pairs_at.entry(a.clone()).or_insert(0) += 1;
+            }
+        }
+        Ok(counts
+            .into_iter()
+            .map(|(level, components)| LevelCoupling {
+                coupled_pairs: pairs_at.get(&level).copied().unwrap_or(0),
+                level,
+                components,
+            })
+            .collect())
     }
 
     /// Accept a structural defect the user has judged fine, recording WHY.

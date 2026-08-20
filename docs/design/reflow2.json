@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a925b5d9a6736d81b22ae588ca16c0910a184ee57fcae6cf08956c1f5ace5183",
+  "content_hash": "sha256:92ea5c6ba3f7154edbd2b508f9e76aa93c575cfaca1b6046c03c586e3ce17bb7",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -11987,6 +11987,51 @@
         "action": "modified"
       },
       "to_id": "cap:select-graph-by-id"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-sweep-says-what-it-could-not-have-found",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-sweep-says-what-it-could-not-have-found",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-sweep-says-what-it-could-not-have-found",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:sweep-coverage-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-sweep-says-what-it-could-not-have-found",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-sweep-says-what-it-could-not-have-found",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-sweep-says-what-it-could-not-have-found"
     },
     {
       "edge_type": "CHANGED",
@@ -76302,6 +76347,15 @@
       "edge_type": "REALIZES",
       "from_id": "art:heal",
       "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-sweep-says-what-it-could-not-have-found"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:heal",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cap:supporting-is-not-conflict"
@@ -77145,6 +77199,15 @@
       "edge_type": "REALIZES",
       "from_id": "art:structure",
       "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-sweep-says-what-it-could-not-have-found"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:structure",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cmp:structure"
@@ -77164,6 +77227,15 @@
         "completeness": "complete"
       },
       "to_id": "cmp:surprises"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:sweep-coverage-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-sweep-says-what-it-could-not-have-found"
     },
     {
       "edge_type": "REALIZES",
@@ -77524,6 +77596,15 @@
         "completeness": "partial"
       },
       "to_id": "cap:stale-seat-refusal"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-coherence",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-sweep-says-what-it-could-not-have-found"
     },
     {
       "edge_type": "REALIZES",
@@ -80487,6 +80568,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-sweep-names-what-it-could-not-have-found",
+      "properties": {},
+      "to_id": "cap:a-sweep-says-what-it-could-not-have-found"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-tracked-graph-store-is-reported",
       "properties": {},
       "to_id": "cap:kit"
@@ -82637,6 +82724,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:sweep-coverage-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:sweep-coverage-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:sync",
       "properties": {
         "action": "created"
@@ -83939,7 +84034,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1277503b8eb3f733e720adc091fdc658c2b3c63bb4fb5e814b95bbfeed461c3f",
+        "checksum": "sha256:bd7df630caf299ba832eb39d624b62b24707438ec22690199eb595618836606a",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
@@ -84953,7 +85048,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4a412efc7f3ba82b37e375c9e7c4ad228c2b46844b4b319a36a65237c88c2e49",
+        "checksum": "sha256:ccfda8a24e43e6787b7d9640c66f340fc5295a9d8ec2e7b4549479355ce54b36",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/structure.rs",
         "name": "structure.rs",
@@ -84985,6 +85080,17 @@
         "name": "surprises.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:sweep-coverage-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:c47acbd5315df006de2e7209e7eb3c7d18f62e4d4630314be684512785d6659a",
+        "location": "crates/reflow2-core/tests/sweep_coverage.rs",
+        "name": "sweep_coverage.rs",
+        "status": "realized"
       }
     },
     {
@@ -85339,7 +85445,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f17a273366433a9afb237cb72264bb9678684e45010c293e4fac2859e2c3b739",
+        "checksum": "sha256:f92e38756534fdbcd43156a002d805ee4eaa845fa6faabd480bafae48277abde",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -85807,6 +85913,16 @@
       "properties": {
         "description": "TWO BREAKING CHANGES TAKEN ON PURPOSE, both DECLINED hours earlier on the ground that they would break consumers. `rule:fix-it-properly-while-it-is-still-cheap` (Anthony, 2026-08-17) reversed that ground: before a stability commitment exists the price of a break is at its lowest and rises with every user, so \"it would break consumers\" argues for doing it NOW. (The guard matched `dec:a-misnaming-is-fixed-in-the-message-not-the-key`, which is the DECISION that first declined this and now records its own reversal; this is the built thing that carries it out. Also distinct from `cap:a-finding-describes-the-walk-that-produced-it`, which fixed the MESSAGE and left both of these standing.)\n\n(1) `disconnected_community` IS NOW `unthreaded_cluster`. The old key asserted unreachability while the detector computed something narrower — connected components over `design_network()`, which drops nine node types and every review record and does not count CONTAINS, covering 1133 of a 2413-node graph. `unthreaded` names what is actually missing, a traceability edge, and cannot be misread as \"unreachable in the graph\". The ility source string moves with it.\n\n⭐ THE COST THAT DECIDED AGAINST IT WAS NEVER MEASURED, and measuring it is what made the call obvious: the key appears in 14 source/test files, 6 live docs and 41 prose mentions in the export, and is PERSISTED AS DATA NOWHERE — no node property holds it as a value. No observation, acknowledgement or ility reading needed migrating. A rename feared as a migration was a sed and a doc pass.\n\n(2) UNSCOPED `detect_defects` RETURNS `{swept, defects}` INSTEAD OF A BARE LIST. `swept.nodes` is what it examined, `swept.rules` names the checks that ran, `swept.design_network_nodes` reports the narrower topology walk rather than hiding it, and `swept.note` appears ONLY when the sweep could not have found anything. An empty result now says which empty it is — exercised and found nothing, or nothing to examine — instead of leaving a zero to be read as permission before `apply_heal`, which deletes nodes. The scoped sibling has answered this way since 2026-08-09, so one tool was answering one question two ways and the honest half was the one fewer people call. `open_defects()` is the bare list for engine-internal callers.\n\nWHAT IT COST, recorded as evidence for the rule rather than for the change: five real consumers of the old shape broke and were FIXED rather than shimmed — `smoke_mcp.py` in three places, `model_the_loop.py`, `build_design_graph.py`, and `bl124_instrument.py`, which now reads both shapes deliberately because it is an instrument that may be pointed at an older server. 53 test call sites moved to `open_defects()`. One toolsnap golden moved.\n\n⚠️ AND A FALSE CLAIM WAS CAUGHT IN THE WRITING. The first draft of `HealCategory::ALL`'s doc comment said the compiler enforced that every variant is listed. It does not — `as_str`'s exhaustive match forces an author into the impl block, but nothing makes them extend the list, and a missing entry would make `swept.rules` UNDERSTATE the sweep. The comment now says it is hand-maintained and names the test that actually holds it. Shipping an unchecked claim about a check, inside the change whose subject is reports that overstate, would have been the joke writing itself.",
         "name": "A defect sweep returns what it examined, and the category names what it computes",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-sweep-says-what-it-could-not-have-found",
+      "node_type": "Capability",
+      "properties": {
+        "description": "DECISION 5, built 2026-08-20 on Anthony's word. DISTINCT FROM the wall-check instrument, which reads the SOURCE from outside; this is reflow2 telling you, from inside detect_defects, what its own answer does not cover.\n\nTHE MEASURED FAILURE: circular_dependency walked 182 dependency pairs on reflow2's own graph and found nothing - a large, healthy-looking population. ZERO of those pairs joined two subsystem-level components. So \"no circular dependencies\" was true of the flattened network and said nothing whatever about the subsystems, while reading exactly like a clean bill of health for them. The two real subsystem cycles were found with a hand-written Python script, not with reflow2.\n\n⭐ THE FIRST DESIGN WOULD NOT HAVE CAUGHT IT, and that is worth keeping. The approved shape was \"name the checks that had nothing to examine\". Measuring first showed it would print NOTHING on this graph - no rule has an empty population - and would have missed the motivating case entirely. Anthony was told before it was built rather than after. The failure is not a starved rule; it is that A RULE'S POPULATION CAN BE HEALTHY WHILE THE SUB-POPULATION THE READER CARES ABOUT IS EMPTY.\n\nWHAT SHIPPED, two mechanisms because one was not enough:\n  · rule_populations - what each of the 8 rules actually walked, and in what unit. Computed with THE SAME EXPRESSION THE RULE USES, never re-derived, because two implementations of one number can disagree. A rule that walked nothing reports clean for the same reason an empty graph does.\n  · coupling_by_level - components and dependency pairs AT each declared Component.level. This is the one that bites, and it generalises to any project that declares a hierarchy: the answer is computed over a flattened graph and the reader assumes it holds at the level they asked about.\n  · coverage_note - ONE line naming both, present only when there is something to name, so its presence is the signal. A summary rather than a per-finding annotation, because the detail is already in the two lists and a sentence on every finding would crowd the findings.\n\nON REFLOW2'S OWN GRAPH it now says: \"the subsystem level has 10 component(s) and ZERO dependency pairs between them, so every topology result here - cycles, severability, single points of failure - is SILENT about that level rather than clean about it.\" That is the sentence that would have saved two days.\n\nA FALSE POSITIVE CAUGHT BY TESTING AGAINST REALITY: a level holding ONE component can never have a pair joining two components at it. That is arithmetic, not a modelling gap, and naming it would be the false positive that teaches a reader to skip the line - which is how a signal dies. Fixed before shipping, pinned by a_level_holding_one_component_is_never_called_blind.\n\nTHE TOOL DESCRIPTION MOVED WITH IT. detect_defects told readers that swept.rules and swept.note were the whole story, which went stale the moment these fields existed. Updating it pushed past skill_lint's 1500-char cap at 1728; the trim came from a sentence coverage_note now states better. A mechanism is not finished until the message a reader actually sees points at it.",
+        "name": "A defect sweep says what it could NOT have found — per-rule populations, and coupling at each declared level",
         "provenance": "authored",
         "status": "realized"
       }
@@ -88169,6 +88285,15 @@
       "properties": {
         "change_type": "new_feature",
         "name": "crates/reflow2-mcp/src/registry.rs — a session names a design by graph_id and the server maps id to path (cap:select-graph-by-id, second half of the accepted req:a-session-chooses-its-design). RESOLUTION HALF ONLY: no transport is wired, so cap:select-graph-by-id is in_progress and NOT realized — the spec prefers an HTTP path prefix /g/<graph_id>/ and warns an attaching tool call is worst because a reconnect silently loses it. THE TRIPWIRE DID ITS JOB: the_registry_clauses_are_not_covered_here fired the moment registry.rs appeared, exactly as designed, forcing the two clauses of ver:a-session-cannot-name-another-design to be written rather than assumed met — that verification is now passing and the tripwire is retired into a pointer that fails if the coverage is deleted. ISOLATION HOLDS BY CONSTRUCTION rather than by check: attach() always treats its argument as an ID so a path is refused as an unknown id (no path_for, no attach_path — absent rather than documented), the registry ROOT is the boundary so a real design elsewhere on the machine is refused identically, and a Binding exposes one design with no operation taking another id. 8 tests written before the module; 3 of 4 mutations killed. THE SURVIVOR IS DOCUMENTED, NOT HIDDEN: the state==Design guard provably does no work because describe_at sets graph_id Some on exactly that path — clippy flagged the same redundancy independently — so it is kept as defence and labelled as belt to the Some(id) braces. UNANSWERED AND NOW LIVE: graph_ids() lists what the OPERATOR put under the root, which is right for one owner and is NOT a multi-tenant policy (dec:idea-a-session-holds-several-graphs). The root is a parameter, so neither answer is foreclosed."
+      }
+    },
+    {
+      "node_id": "chg:a-sweep-says-what-it-could-not-have-found",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "A defect sweep says what it could not have found — per-rule populations and coupling at each declared level",
+        "subject": "system"
       }
     },
     {
@@ -101345,6 +101470,16 @@
       }
     },
     {
+      "node_id": "frag:art:sweep-coverage-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered sweep_coverage.rs"
+      }
+    },
+    {
       "node_id": "frag:art:sync",
       "node_type": "Fragment",
       "properties": {
@@ -110573,6 +110708,20 @@
       }
     },
     {
+      "node_id": "ver:a-sweep-names-what-it-could-not-have-found",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/sweep_coverage.rs, 6 cases.\n\nWHAT IT PINS: that a level with components and no coupling between them is named as SILENT rather than clean; that a level which IS coupled is not named; that a rule which walked nothing is named while a rule with a population is not; that a reported population is the same number the rule actually walks, verified by adding a real edge and watching it move; and that every rule in `swept.rules` has a reported population, so no rule can go silently uncounted.\n\nTHE ONE THAT MATTERS MOST is a_level_with_components_but_no_coupling_is_named_as_silent_not_clean. It reproduces the measured failure in miniature: components that ARE coupled, so the topology rules have a real population and report cleanly, sitting under subsystems that have no coupling at all. Before this, that graph produced a clean result a reader would take as covering the subsystems.\n\nAND ONE THAT GUARDS THE SIGNAL RATHER THAN THE FINDING: a_level_holding_one_component_is_never_called_blind. A level with a single component cannot have a pair joining two components at it — arithmetic, not a modelling gap. Naming it would be the false positive that teaches a reader to skip the line, and a signal that cries wolf once is a signal nobody reads again. Found by running the check against a real graph rather than by reasoning about it.\n\nNOT COVERED, stated rather than left to be found: nothing verifies that the levels a project declares are the RIGHT levels, or that a coupled level is coupled CORRECTLY. This says what the sweep could not have spoken about; it does not judge the decomposition. And the populations are per-rule, not per-finding — a rule that walked a large population can still have skipped a corner of it that no level boundary describes.",
+        "findings": "RUN 2026-08-20: 6 passed, 0 failed. Whole crate 1127 passed / 0 failed across 108 binaries — exactly +6 tests and +1 binary against the 1121/107 baseline.\n\nEXERCISED ON THE LIVE GRAPH, not only fixtures. detect_defects over reflow2's own design now reports: duplicate 0 DUPLICATES edges (nothing to examine); circular_dependency 182 dependency pairs; and subsystem 10 components with 0 pairs between them. The coverage note reads 'the subsystem level has 10 component(s) and ZERO dependency pairs between them, so every topology result here — cycles, severability, single points of failure — is silent about that level rather than clean about it.' Both halves fire on real data, which is what says they are not theoretical.\n\nTHE NUMBER THAT PROVES THE SECOND MECHANISM WAS NEEDED: 182. The cycle rule walked a large, healthy population and reported cleanly. The approved first design — naming rules that had nothing to examine — would have printed NOTHING about it.\n\nCAUGHT BY CLIPPY, RUN LOCALLY RATHER THAN BY CI: a collapsible if in the level-coupling loop failed -D warnings. That is the gate this project's own notes flag as the one forgotten twice; two minutes locally against a 20-minute cold-cache CI round trip.",
+        "kind": "verification",
+        "last_run_at": "2026-08-20",
+        "level": "unit",
+        "method": "test",
+        "name": "A sweep names the rules and levels it could not have spoken about",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-tracked-graph-store-is-reported",
       "node_type": "Verification",
       "properties": {
@@ -112445,7 +112594,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:8c5d311aa786a9c94f78bc2a928a80ae57027f4c389a956207a8fae47c5f3e0d",
+  "prev_content_hash": "sha256:a925b5d9a6736d81b22ae588ca16c0910a184ee57fcae6cf08956c1f5ace5183",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
