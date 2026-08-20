@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a99eaf76a336582658abbd5f5e0fd432329859b38f90980ba0f669ddd068079a",
+  "content_hash": "sha256:bddc5e7148ef36d0a9183a5710a9ab43bfb21289483311252720a796250f3161",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -5856,6 +5856,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-kernel-stops-being-bisected",
+      "properties": {},
+      "to_id": "epoch:the-kernel-becomes-one-subsystem"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-key-is-renamed-and-the-sweep-says-what-it-swept",
       "properties": {},
       "to_id": "epoch:the-key-is-renamed-and-the-sweep-says-what-it-swept"
@@ -7359,6 +7365,30 @@
       "from_id": "snap:epoch:the-image-must-start:art:release-workflow",
       "properties": {},
       "to_id": "epoch:the-image-must-start"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-kernel-becomes-one-subsystem:cmp:identity",
+      "properties": {},
+      "to_id": "epoch:the-kernel-becomes-one-subsystem"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-kernel-becomes-one-subsystem:dec:bl83a-functional-decomposition",
+      "properties": {},
+      "to_id": "epoch:the-kernel-becomes-one-subsystem"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-kernel-becomes-one-subsystem:sys:store",
+      "properties": {},
+      "to_id": "epoch:the-kernel-becomes-one-subsystem"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-kernel-becomes-one-subsystem:sys:vocabulary",
+      "properties": {},
+      "to_id": "epoch:the-kernel-becomes-one-subsystem"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -21663,6 +21693,51 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-kernel-stops-being-bisected",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:identity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-kernel-stops-being-bisected",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:bl83a-functional-decomposition"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-kernel-stops-being-bisected",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "sys:foundation"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-kernel-stops-being-bisected",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "sys:store"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-kernel-stops-being-bisected",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "sys:vocabulary"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-key-is-renamed-and-the-sweep-says-what-it-swept",
       "properties": {
         "accepted_baseline": true,
@@ -23043,12 +23118,6 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
-      "to_id": "cmp:identity"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "proj:reflow2",
-      "properties": {},
       "to_id": "cmp:nudge"
     },
     {
@@ -23373,6 +23442,12 @@
       "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
+      "to_id": "sys:foundation"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "proj:reflow2",
+      "properties": {},
       "to_id": "sys:human-channel"
     },
     {
@@ -23545,6 +23620,36 @@
     },
     {
       "edge_type": "CONTAINS",
+      "from_id": "sys:foundation",
+      "properties": {},
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:foundation",
+      "properties": {},
+      "to_id": "cmp:identity"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:foundation",
+      "properties": {},
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:foundation",
+      "properties": {},
+      "to_id": "cmp:provenance"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:foundation",
+      "properties": {},
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "CONTAINS",
       "from_id": "sys:human-channel",
       "properties": {},
       "to_id": "cmp:agent"
@@ -23578,18 +23683,6 @@
       "from_id": "sys:store",
       "properties": {},
       "to_id": "cmp:export"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:store",
-      "properties": {},
-      "to_id": "cmp:graph"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:store",
-      "properties": {},
-      "to_id": "cmp:provenance"
     },
     {
       "edge_type": "CONTAINS",
@@ -23632,18 +23725,6 @@
       "from_id": "sys:vocabulary",
       "properties": {},
       "to_id": "cmp:flow"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:vocabulary",
-      "properties": {},
-      "to_id": "cmp:nodes"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:vocabulary",
-      "properties": {},
-      "to_id": "cmp:schema"
     },
     {
       "edge_type": "CONTAINS",
@@ -31812,6 +31893,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "sys:foundation",
+      "properties": {},
+      "to_id": "dec:bl83a-functional-decomposition"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "sys:foundation",
+      "properties": {},
+      "to_id": "dec:the-kernel-is-its-own-system"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "sys:human-channel",
       "properties": {},
       "to_id": "dec:bl83a-functional-decomposition"
@@ -32312,6 +32405,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cmp:identity",
+      "properties": {},
+      "to_id": "snap:epoch:the-kernel-becomes-one-subsystem:cmp:identity"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "dec:a-black-box-needs-three-edges-not-one",
       "properties": {},
       "to_id": "snap:epoch:the-owner-rules-on-scope-and-reachability:dec:a-black-box-needs-three-edges-not-one"
@@ -32351,6 +32450,12 @@
       "from_id": "dec:bl83a-functional-decomposition",
       "properties": {},
       "to_id": "snap:epoch:decomposition-count-corrected:dec:bl83a-functional-decomposition"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:bl83a-functional-decomposition",
+      "properties": {},
+      "to_id": "snap:epoch:the-kernel-becomes-one-subsystem:dec:bl83a-functional-decomposition"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -32783,6 +32888,18 @@
       "from_id": "rule:per-design-state-is-never-a-process-global",
       "properties": {},
       "to_id": "snap:epoch:rule-enforcement-split:rule:per-design-state-is-never-a-process-global"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "sys:store",
+      "properties": {},
+      "to_id": "snap:epoch:the-kernel-becomes-one-subsystem:sys:store"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "sys:vocabulary",
+      "properties": {},
+      "to_id": "snap:epoch:the-kernel-becomes-one-subsystem:sys:vocabulary"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -74795,6 +74912,12 @@
       "edge_type": "PRECEDES",
       "from_id": "epoch:service-split",
       "properties": {},
+      "to_id": "epoch:the-declared-walls-hold"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:service-split",
+      "properties": {},
       "to_id": "epoch:v0230"
     },
     {
@@ -77561,6 +77684,15 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:comparing-two-designs-does-not-reach-into-the-reporting-layer",
+      "properties": {
+        "coverage": "partial",
+        "rationale": "Makes the second of the two declared boundaries severable. With change 1 it completes the DAG; alone it removes one cycle of two."
+      },
+      "to_id": "req:modularity-computed"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:comparison-discloses-build-skew",
       "properties": {},
       "to_id": "req:a-comparison-discloses-build-skew"
@@ -78512,6 +78644,15 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:the-foundation-is-one-subsystem-not-two-halves",
+      "properties": {
+        "coverage": "partial",
+        "rationale": "Makes one of the two declared boundaries actually severable. The requirement also asks for encapsulation and cohesion, which this does not touch."
+      },
+      "to_id": "req:modularity-computed"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:the-loop-holds-the-invitation",
       "properties": {},
       "to_id": "req:detecting-is-not-asking"
@@ -78647,6 +78788,15 @@
     },
     {
       "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:comparing-two-designs-does-not-reach-into-the-reporting-layer",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-20"
+      },
+      "to_id": "epoch:the-declared-walls-hold"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
       "from_id": "cap:comparison-discloses-build-skew",
       "properties": {
         "modality": "expected",
@@ -78779,6 +78929,15 @@
         "recorded_at": "2026-08-14"
       },
       "to_id": "epoch:a-project-is-set-up-right-on-the-first-run"
+    },
+    {
+      "edge_type": "SCHEDULED_FOR",
+      "from_id": "cap:the-foundation-is-one-subsystem-not-two-halves",
+      "properties": {
+        "modality": "expected",
+        "recorded_at": "2026-08-20"
+      },
+      "to_id": "epoch:the-declared-walls-hold"
     },
     {
       "edge_type": "SCHEDULED_FOR",
@@ -85727,6 +85886,16 @@
       }
     },
     {
+      "node_id": "cap:comparing-two-designs-does-not-reach-into-the-reporting-layer",
+      "node_type": "Capability",
+      "properties": {
+        "description": "CHANGE 2 of epoch:the-declared-walls-hold. Anthony's word, 2026-08-20. DISTINCT FROM change 1: that one moves nothing in the code and this one moves ~15 lines; they share an epoch and neither blocks the other.\n\nTHE WHOLE DEPENDENCY, read rather than assumed: `compare.rs` line 45 is `use crate::report::is_design_type;` and that is ALL of it. The function is two lines — `SNAPSHOT_TYPES.contains(&node_type)` — answering \"is this design content, or supporting material like provenance and history?\". So a 974-line module reaches into a 2025-line reporting module to borrow a lookup in a constant list, and that single edge is the whole `sys:time-history -> sys:coherence-loop` back-edge behind the second subsystem cycle.\n\nWHAT IT DOES NOT DO: duplicate the list. The sharing is CORRECT and report.rs says why in as many words — compare reuses it so \"design vs supporting\" means one thing everywhere. Two copies would drift.\n\nWHAT IT DOES: move SNAPSHOT_TYPES and is_design_type down into `nodes`. Three reasons, and the third is why this is a better home rather than a cycle-driven contortion:\n  1. the list is built ENTIRELY out of `node::` constants — it is a statement about node types, so it belongs with the node types;\n  2. `report` and `compare` BOTH already depend on `nodes`, so this adds no coupling at all — it only stops compare reaching sideways;\n  3. one shared definition survives, which is the property worth protecting.\n\nSIMULATED: with change 1 also applied, dropping this edge makes all eight subsystems a DAG — no cycles at any level.\n\nSHAPE WORTH NAMING: this is the same shape all three of PR #262's cycles had — ONE back-edge, and the fix is to ask what the borrowing module actually needed rather than to restructure anything.",
+        "name": "Comparing two designs stops reaching into the reporting layer for a two-line lookup",
+        "provenance": "authored",
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "cap:comparison-discloses-build-skew",
       "node_type": "Capability",
       "properties": {
@@ -87160,6 +87329,16 @@
         "name": "The design measures which of its declared vocabulary nothing can write, from the corpus rather than from a name match",
         "provenance": "authored",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:the-foundation-is-one-subsystem-not-two-halves",
+      "node_type": "Capability",
+      "properties": {
+        "description": "CHANGE 1 of epoch:the-declared-walls-hold. Anthony's word, 2026-08-20. DISTINCT FROM the fact that measured the problem: that node is the MEASUREMENT, this is the REMEDY, and conflating them would leave the design unable to say whether the fix happened.\n\nWHAT IT DOES: moves cmp:nodes and cmp:schema so they sit with cmp:graph and cmp:provenance, and places cmp:identity, which today is in NO subsystem at all. PURE MODEL BOOKKEEPING — not one line of Rust changes.\n\nWHY: the code has a kernel of five modules everything sits on — nodes (46 of 52 modules transitively depend on it), provenance (44), identity (44), schema (43), graph (42). The declared decomposition CUTS IT IN HALF: nodes/schema in sys:vocabulary, graph/provenance in sys:store. graph reads nodes and schema; vocabulary and flow read graph. Traffic therefore crosses that boundary BOTH WAYS, and that is the entire sys:store <-> sys:vocabulary cycle. Any bisection of a mutually-dependent kernel produces a cycle one level up whatever the code does.\n\nA boundary only earns its keep if a change can be handed TO it and stop there. Two-way traffic leaves nothing for a blast radius to stop at, so \"a change inside the store stays in the store\" is false today.\n\nSIMULATED BEFORE PROPOSING, against the real import graph: the cycle disappears, NO new cycle appears anywhere, and the eight subsystems come one step closer to a DAG.\n\nOPEN SUB-QUESTION FOR ANTHONY: sys:store currently means \"where the data lives\". After this it means \"the foundation everything is built on\", which is a bigger idea and may want a different name. A naming call, not a technical constraint — the move is correct either way.\n\nIT IS A CORRECTION, NOT ONLY A FIX: those five modules ARE one layer, and the model currently says they are two.",
+        "name": "The foundation is one subsystem, not two halves — the kernel stops being bisected by the decomposition",
+        "provenance": "authored",
+        "status": "planned"
       }
     },
     {
@@ -91594,6 +91773,15 @@
       }
     },
     {
+      "node_id": "chg:the-kernel-stops-being-bisected",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "The five-module kernel stops being split across sys:store and sys:vocabulary and becomes sys:foundation — the placement fix that removes a subsystem cycle without touching a line of Rust",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:the-key-is-renamed-and-the-sweep-says-what-it-swept",
       "node_type": "ChangeEvent",
       "properties": {
@@ -92635,6 +92823,19 @@
       }
     },
     {
+      "node_id": "sys:foundation",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "subsystem",
+        "name": "Foundation",
+        "provenance": "authored",
+        "purpose": "The layer everything else stands on: the typed node and edge vocabulary, the schema that validates it, the graph the store is reached through, the provenance stamped on every write, and the identity that says which design this is. Five modules that cannot be separated from one another — graph reads nodes and schema, and the vocabulary reads graph — which is exactly why they are one system and not two halves of two.\n\nDISTINCT FROM the three nodes that surround it, and the distinction is the point: the FACT measured the bisection, the DECISION chose this remedy over two others, the CAPABILITY is the work of moving the boxes. This is the box itself — the part of the system that exists once the work is done.\n\nCREATED 2026-08-20 under dec:the-kernel-is-its-own-system. Before that, nodes and schema sat in sys:vocabulary while graph and provenance sat in sys:store, and identity sat in no system at all. That bisection was the whole cause of the sys:store to sys:vocabulary cycle: traffic crossed the boundary both ways, so neither box was a wall a change could be handed to and stop at.\n\nMEASURED WEIGHT: 46 of the 52 other core modules transitively depend on nodes, 44 on provenance, 44 on identity, 43 on schema, 42 on graph. Nothing else in reflow2 carries anything like this reach, and a change here is the one change that genuinely does go everywhere.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "sys:human-channel",
       "node_type": "Component",
       "properties": {
@@ -93039,7 +93240,7 @@
       "node_id": "dec:bl83a-functional-decomposition",
       "node_type": "Decision",
       "properties": {
-        "decision": "reflow2's own decomposition is the functional systems a design-graph tool IS — vocabulary, store, coherence-loop, human-channel, time-history, intake, agent-surface — with the 38 Rust modules re-parented under them as implementation. The as-built crate grouping (reflow2-core / -mcp / kit) is retired from the as-designed view. CORRECTED 2026-08-02: this said \"the seven functional systems\" and named seven. There are EIGHT — `sys:documentation` joined later under `dec:documentation-has-no-operational-coupling`, which accepts that documentation is part of the product while having no operational coupling, so it forms an island the detectors are told to expect. The choice this decision records is unchanged; only its enumeration had gone stale, which is why this is a correction on the record rather than a superseding decision (`dec:reopen-supersedes` governs reversals, not arithmetic). Found by re-measuring a claim rather than re-reading it: the decision's prose said seven while `scan_nodes` said eight. THE COUNT THAT WAS NOT WRONG, recorded so nobody \"fixes\" it twice: the 14 distinct cross-system pairs cited in `dec:maturity-restructuring-delta` are DIRECTED pairs; counted undirected the same 51 edges span 12. Both are right, they answer different questions, and the recorded figure means directed.",
+        "decision": "reflow2's own decomposition is the functional systems a design-graph tool IS — foundation, vocabulary, store, coherence-loop, human-channel, time-history, intake, agent-surface, documentation — with the Rust modules re-parented under them as implementation. The as-built crate grouping (reflow2-core / -mcp / kit) is retired from the as-designed view.\n\nCORRECTED 2026-08-02: this said \"the seven functional systems\" and named seven. There were EIGHT — `sys:documentation` joined later under `dec:documentation-has-no-operational-coupling`, which accepts that documentation is part of the product while having no operational coupling, so it forms an island the detectors are told to expect. The choice this decision records was unchanged; only its enumeration had gone stale, which is why that was a correction on the record rather than a superseding decision (`dec:reopen-supersedes` governs reversals, not arithmetic). Found by re-measuring a claim rather than re-reading it: the decision's prose said seven while `scan_nodes` said eight.\n\nAMENDED 2026-08-20, and THIS ONE IS NOT ARITHMETIC. There are now NINE. `sys:foundation` was CREATED under `dec:the-kernel-is-its-own-system` (accepted, Anthony's word) and holds cmp:nodes, cmp:schema, cmp:graph, cmp:provenance and cmp:identity — five modules that had been split across `sys:vocabulary` and `sys:store`, with identity in no system at all. Unlike the 2026-08-02 correction, the carving itself moved: a system exists now that did not exist before. It does not overturn this decision, it follows from it — a design-graph tool fundamentally IS a typed store of identified nodes, and that is one function, not two halves of two. The bisection was measured, not argued: it was the entire cause of a `sys:store` <-> `sys:vocabulary` cycle, while the modules themselves are acyclic (`fact:the-modules-are-acyclic-but-the-declared-subsystems-are-not`).\n\nTHE COUNT THAT WAS NOT WRONG, recorded so nobody \"fixes\" it twice: the 14 distinct cross-system pairs cited in `dec:maturity-restructuring-delta` are DIRECTED pairs; counted undirected the same 51 edges span 12. Both are right, they answer different questions, and the recorded figure means directed.",
         "name": "reflow2's systems are functional, not its file tree",
         "rationale": "The self-model had been recovered backwards from the file tree, so its 38 Components were the Rust module list and the domain primitives a design-graph product fundamentally is — node and edge types — appeared nowhere (BL-83). A functional carving comes from the product's purpose (a genesis input), not the code, and cuts across crate boundaries, so adopt on the code can only re-derive the module view. Derived with the user, 2026-07-23. The retired crate view is recovered by adopt-on-a-copy (BL-83b) and the divergence measured by compare_designs (BL-83c). A SECOND GAP FELL OUT OF THE CORRECTION AND IS WORTH MORE THAN IT: the snapshot taken before the edit showed only SEVEN `GOVERNED_BY` edges into this decision, so `sys:documentation` was carrying no link to the decomposition that defines it — the eighth system existed in the graph while being invisible to anything traversing from this decision. Now linked, matching its seven siblings. Per sharpening §2 that edge is completing the model rather than silencing a complaint: the system genuinely is part of this decomposition, and nothing was reporting its absence.",
         "status": "accepted"
@@ -95562,6 +95763,16 @@
       }
     },
     {
+      "node_id": "dec:the-kernel-is-its-own-system",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "ANTHONY'S WORD, 2026-08-20, choosing between three placements that were each simulated against reflow2's real import graph before any was proposed. All three removed the cycle equally, so the choice was about what the boxes MEAN, not about correctness.\n\nTHE CHOICE: a NINTH system, sys:foundation, holding cmp:nodes, cmp:schema, cmp:graph, cmp:provenance and cmp:identity. sys:store keeps cmp:export and cmp:search. sys:vocabulary keeps cmp:flow and cmp:vocabulary.\n\nTHE TWO REJECTED OPTIONS, recorded so the reasoning is not re-run:\n  · fold the kernel into sys:store - fewest moving parts, stays at eight systems, but nodes and schema ARE the vocabulary, so a system called Vocabulary would hold neither of them. A name that no longer describes its contents is the same class of defect being fixed.\n  · fold the kernel into sys:vocabulary - the mirror image. The graph and store-access layer ends up under a name that describes it no better.\n\nWHY A NEW SYSTEM IS THE HONEST ANSWER: the five modules are mutually dependent, so they ARE one layer - that is the whole finding. Neither existing name covers all five, and forcing one to is how the model became misleading in the first place. Naming the layer says the true thing; folding it into a neighbour hides a layer inside a box named for something else.\n\nACCEPTED COST: two systems end up with two components each. Small boxes are not a defect.",
+        "name": "The kernel is its own system — sys:foundation, because neither 'store' nor 'vocabulary' describes all five of the modules everything sits on",
+        "rationale": "This is a change to the CARVING, not to the arithmetic, and that distinction is why it is a decision of its own rather than another correction on dec:bl83a-functional-decomposition. When that decision went from seven systems to eight it was catching up with a system that already existed; here a system is being created because the coupling says the layer exists and the model never named it.\n\nIt does not overturn dec:bl83a. That decision's principle - reflow2's own decomposition is the functional systems a design-graph tool IS, not its file tree - is what makes this move correct: a design-graph tool fundamentally IS a typed store of identified nodes, and that is one function, not two.\n\nTHE EVIDENCE, measured rather than argued: nodes is transitively depended on by 46 of 52 core modules, provenance by 44, identity by 44, schema by 43, graph by 42. See fact:the-modules-are-acyclic-but-the-declared-subsystems-are-not for the cycle this bisection produced and fact:ten-components-report-a-zero-blast-radius-the-source-contradicts for cmp:identity, which was in no system at all while 44 modules stood on it.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:the-mcp-surface-is-two-boundaries-not-one-medium",
       "node_type": "Decision",
       "properties": {
@@ -97974,6 +98185,16 @@
       }
     },
     {
+      "node_id": "epoch:the-declared-walls-hold",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "The declared walls hold — the eight subsystems become a severable hierarchy, in two moves that were simulated before either was proposed",
+        "sequence": 366,
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "epoch:the-discipline-arrives-at-the-tool",
       "node_type": "DesignEpoch",
       "properties": {
@@ -97990,6 +98211,16 @@
         "epoch_type": "revision",
         "name": "The release proves the image starts before it publishes it",
         "sequence": 336,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:the-kernel-becomes-one-subsystem",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The kernel becomes one subsystem — nodes, schema, graph, provenance and identity leave the two boxes that split them and become sys:foundation, on Anthony's word (2026-08-20)",
+        "sequence": 367,
         "status": "arrived"
       }
     },
@@ -106202,6 +106433,46 @@
       }
     },
     {
+      "node_id": "snap:epoch:the-kernel-becomes-one-subsystem:cmp:identity",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:describe-design-at-path\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:design-identity\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:hosted-state-on-a-volume\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Project\",\"other_id\":\"proj:reflow2\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0360\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:identity\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:35dde67d212688fb\",\"properties\":{}}]",
+        "state": "{\"kind\":\"module\",\"level\":\"component\",\"name\":\"identity\",\"provenance\":\"authored\",\"purpose\":\"Which design this store holds: minting, adoption, refusal, and the label on top.\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cmp:identity",
+        "target_type": "Component"
+      }
+    },
+    {
+      "node_id": "snap:epoch:the-kernel-becomes-one-subsystem:dec:bl83a-functional-decomposition",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:agent-surface\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:coherence-loop\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:documentation\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:human-channel\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:intake\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:store\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:time-history\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Component\",\"other_id\":\"sys:vocabulary\",\"properties\":{}}]",
+        "state": "{\"decision\":\"reflow2's own decomposition is the functional systems a design-graph tool IS — vocabulary, store, coherence-loop, human-channel, time-history, intake, agent-surface — with the 38 Rust modules re-parented under them as implementation. The as-built crate grouping (reflow2-core / -mcp / kit) is retired from the as-designed view. CORRECTED 2026-08-02: this said \\\"the seven functional systems\\\" and named seven. There are EIGHT — `sys:documentation` joined later under `dec:documentation-has-no-operational-coupling`, which accepts that documentation is part of the product while having no operational coupling, so it forms an island the detectors are told to expect. The choice this decision records is unchanged; only its enumeration had gone stale, which is why this is a correction on the record rather than a superseding decision (`dec:reopen-supersedes` governs reversals, not arithmetic). Found by re-measuring a claim rather than re-reading it: the decision's prose said seven while `scan_nodes` said eight. THE COUNT THAT WAS NOT WRONG, recorded so nobody \\\"fixes\\\" it twice: the 14 distinct cross-system pairs cited in `dec:maturity-restructuring-delta` are DIRECTED pairs; counted undirected the same 51 edges span 12. Both are right, they answer different questions, and the recorded figure means directed.\",\"name\":\"reflow2's systems are functional, not its file tree\",\"rationale\":\"The self-model had been recovered backwards from the file tree, so its 38 Components were the Rust module list and the domain primitives a design-graph product fundamentally is — node and edge types — appeared nowhere (BL-83). A functional carving comes from the product's purpose (a genesis input), not the code, and cuts across crate boundaries, so adopt on the code can only re-derive the module view. Derived with the user, 2026-07-23. The retired crate view is recovered by adopt-on-a-copy (BL-83b) and the divergence measured by compare_designs (BL-83c). A SECOND GAP FELL OUT OF THE CORRECTION AND IS WORTH MORE THAN IT: the snapshot taken before the edit showed only SEVEN `GOVERNED_BY` edges into this decision, so `sys:documentation` was carrying no link to the decomposition that defines it — the eighth system existed in the graph while being invisible to anything traversing from this decision. Now linked, matching its seven siblings. Per sharpening §2 that edge is completing the model rather than silencing a complaint: the system genuinely is part of this decomposition, and nothing was reporting its absence.\",\"status\":\"accepted\"}",
+        "target_id": "dec:bl83a-functional-decomposition",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:the-kernel-becomes-one-subsystem:sys:store",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Project\",\"other_id\":\"proj:reflow2\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0360\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"CONSUMES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:exclusive-local-store\",\"properties\":{\"weight\":0.9,\"weight_basis\":\"evidence\"}},{\"direction\":\"out\",\"edge_type\":\"CONSUMES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:req-dyno-storage-api\",\"properties\":{\"weight\":0.9,\"weight_basis\":\"evidence\"}},{\"direction\":\"out\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Component\",\"other_id\":\"cmp:export\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Component\",\"other_id\":\"cmp:graph\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Component\",\"other_id\":\"cmp:provenance\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Component\",\"other_id\":\"cmp:search\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:bl83a-functional-decomposition\",\"properties\":{}}]",
+        "state": "{\"kind\":\"module\",\"level\":\"subsystem\",\"name\":\"Design Store\",\"provenance\":\"authored\",\"purpose\":\"Durable, deterministic memory: the schema-validated graph that persists in the project, exports and imports byte-identically, is searchable, and stamps which reflow2 wrote it.\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "sys:store",
+        "target_type": "Component"
+      }
+    },
+    {
+      "node_id": "snap:epoch:the-kernel-becomes-one-subsystem:sys:vocabulary",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Project\",\"other_id\":\"proj:reflow2\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0360\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Component\",\"other_id\":\"cmp:flow\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Component\",\"other_id\":\"cmp:nodes\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Component\",\"other_id\":\"cmp:schema\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Component\",\"other_id\":\"cmp:vocabulary\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:bl83a-functional-decomposition\",\"properties\":{}}]",
+        "state": "{\"kind\":\"module\",\"level\":\"subsystem\",\"name\":\"Vocabulary\",\"provenance\":\"authored\",\"purpose\":\"The neutral type system — the node and edge types that ARE a design. What any design is made of, before any of it is stored or checked.\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "sys:vocabulary",
+        "target_type": "Component"
+      }
+    },
+    {
       "node_id": "snap:epoch:the-key-is-renamed-and-the-sweep-says-what-it-swept:dec:a-misnaming-is-fixed-in-the-message-not-the-key",
       "node_type": "Snapshot",
       "properties": {
@@ -111459,7 +111730,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:a24ff506db03c99064aef01cd4b9c2412cac47df131998383e93307c72b908c2",
+  "prev_content_hash": "sha256:a99eaf76a336582658abbd5f5e0fd432329859b38f90980ba0f669ddd068079a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
