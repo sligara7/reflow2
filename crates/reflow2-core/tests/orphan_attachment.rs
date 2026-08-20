@@ -193,3 +193,61 @@ fn a_code_artifact_that_realizes_is_not_an_orphan() {
         "REALIZES must keep working exactly as before"
     );
 }
+
+/// The finding NAMES the remedy, and names its LIMITS.
+///
+/// `req:a-finding-names-the-remedy-not-only-the-problem`. The repair note used
+/// to end at "linking this node to something would assert a relationship nobody
+/// drew" — true, and it reads as THERE IS NOTHING YOU CAN HONESTLY DO. There
+/// was: `ruling: parks`. Two projects met that gap on one day in 2026 from
+/// opposite directions — one asked whether parking applied, could not tell, and
+/// backed off; the other never found it and DELETED two registered documents to
+/// clear the finding.
+///
+/// Pinned as a test because message text regresses silently: nothing else in
+/// this suite would notice the sentence going away, and its absence is what
+/// cost the data.
+#[test]
+fn the_orphan_finding_names_parking_and_its_boundary() {
+    let mut g = base();
+    g.create_node(
+        node::ARTIFACT,
+        "art:unattached",
+        Props::new()
+            .set("name", "a.md")
+            .set("artifact_type", "document"),
+    )
+    .unwrap();
+
+    let sweep = g.detect_defects().unwrap();
+    let orphan = sweep
+        .defects
+        .iter()
+        .find(|i| {
+            i.category == HealCategory::OrphanNode
+                && i.affected_ids.contains(&"art:unattached".to_string())
+        })
+        .expect("an artifact attached to nothing is still a finding");
+    let note = orphan
+        .repair_is_a_judgement
+        .expect("an orphan with no mechanical repair carries the judgement note");
+
+    // The remedy, by name — not a hint, the actual call.
+    assert!(note.contains("parks"), "{note}");
+    assert!(
+        note.contains("ACCEPTED"),
+        "the ruling must be accepted: {note}"
+    );
+    // The trap that was actually sprung, said out loud.
+    assert!(
+        note.contains("Deleting") || note.contains("deleting"),
+        "the note must warn against the repair that looks clean: {note}"
+    );
+    // THE LIMIT IS PART OF THE REMEDY. A mechanism named without its boundary
+    // produced the OTHER failure — a reporter who found it, could not confirm
+    // it covered their case, and did nothing.
+    assert!(
+        note.contains("unthreaded_cluster"),
+        "the note must say what parking does NOT reach: {note}"
+    );
+}
