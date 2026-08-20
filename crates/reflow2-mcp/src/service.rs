@@ -1029,6 +1029,16 @@ pub struct EdgePairReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct MoveComponentReq {
+    /// The Component to move.
+    pub child_id: String,
+    /// The Component it should be contained by afterwards. Every OTHER parent
+    /// it currently has is detached, and the reply names them.
+    pub new_parent_id: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct CreateNodeReq {
     pub node_type: String,
     pub id: String,
