@@ -71,7 +71,35 @@ pub struct AllocationReport {
     /// `internal / (internal + external)` — 1.0 = perfectly cohesive (no
     /// coupling crosses a boundary), 0.0 = all coupling crosses boundaries.
     /// 1.0 when there is no coupling to evaluate.
-    pub modularity: f64,
+    /// Cohesion/coupling modularity — **`None` when there is no partition to
+    /// score**, which is a fact about the evidence and not a bad result.
+    ///
+    /// ⚠️ THIS USED TO RETURN `1.0` OVER NOTHING. Measured on reflow2's own
+    /// design 2026-08-07: `modularity 1.0`, `total_internal 1`,
+    /// `total_external 0` — a PERFECT score computed over exactly ONE
+    /// dependency, with 43 of 44 components contributing nothing, rendered as
+    /// "Allocation health: Modularity 1.00 across 44 component(s)". The
+    /// decomposition it was describing was almost entirely unmodelled, and
+    /// `req:recursive-black-box-decomposition` went unnoticed for months
+    /// BECAUSE the design's own health readout said it was perfect.
+    ///
+    /// THE RULE IS MATHEMATICAL, NOT A THRESHOLD SOMEBODY PICKED: modularity
+    /// scores how well a partition SEPARATES groups. With fewer than two
+    /// components carrying any coupling there is no separation to measure, and
+    /// the 1.0 that falls out is an artefact of the arithmetic — a single group
+    /// is trivially cohesive by construction, not by design quality. So it is
+    /// reported as unmeasured rather than as excellent.
+    ///
+    /// NOT A CHANGE TO THE FORMULA, and not a judgement (`dec:report-dont-judge`):
+    /// where a partition exists the value is exactly what it always was. What
+    /// changed is that "I have too little to measure" and "this is perfect" have
+    /// stopped being the same answer — the distinction
+    /// `dec:loop-status-cannot-say-it-never-looked` already drew for gaps.
+    pub modularity: Option<f64>,
+    /// How many components carried ANY coupling weight — the denominator behind
+    /// `modularity`, surfaced so a reader can see 1-of-44 for what it is rather
+    /// than inferring it from a ratio that looks healthy.
+    pub components_with_coupling: usize,
     /// Capabilities coupled more strongly across a boundary than within.
     pub misplaced: Vec<MisplacedCapability>,
     /// Components whose removal would split the architecture into ≥2 non-trivial
@@ -222,10 +250,18 @@ impl DesignGraph {
         components.sort_by(|a, b| a.component_id.cmp(&b.component_id));
 
         let total = total_internal + total_external;
-        let modularity = if total == 0.0 {
-            1.0
+        // A component "participates" when any coupling weight touches it. Fewer
+        // than two of those and there is no partition to score — see the field
+        // docs on `modularity` for why 1.0 here was an artefact, not a result.
+        let mut participating: HashSet<&str> = HashSet::new();
+        for c in internal.keys().chain(external.keys()) {
+            participating.insert(c.as_str());
+        }
+        let components_with_coupling = participating.len();
+        let modularity = if total == 0.0 || components_with_coupling < 2 {
+            None
         } else {
-            total_internal / total
+            Some(total_internal / total)
         };
 
         // 5. misplaced capabilities — pull to each component from a cap's edges.
@@ -240,6 +276,7 @@ impl DesignGraph {
             total_internal,
             total_external,
             modularity,
+            components_with_coupling,
             misplaced,
             god_components,
             unweighted_dependencies,

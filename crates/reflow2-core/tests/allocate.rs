@@ -36,7 +36,12 @@ fn a_cohesive_allocation_scores_high_with_no_misplacements() {
     depends(&mut g, "cap:b1", "cap:b2", 0.9); // internal to B
 
     let r = g.evaluate_allocation().unwrap();
-    assert_eq!(r.modularity, 1.0, "no coupling crosses a boundary");
+    assert_eq!(
+        r.modularity,
+        Some(1.0),
+        "no coupling crosses a boundary — and TWO components participate, so this 1.0 is a \
+         real result and must survive the starved-metric fix"
+    );
     assert_eq!(r.total_external, 0.0);
     assert!(r.misplaced.is_empty());
     assert!(r.god_components.is_empty());
@@ -67,7 +72,8 @@ fn a_capability_coupled_across_the_boundary_is_flagged_misplaced() {
     assert!(m.suggested_pull > m.current_pull);
 
     // Coupling crosses a boundary, so modularity is below 1.
-    assert!(r.modularity < 1.0 && r.modularity > 0.0);
+    let mod_ = r.modularity.expect("two components participate");
+    assert!(mod_ < 1.0 && mod_ > 0.0);
 }
 
 #[test]
@@ -196,5 +202,84 @@ fn proposal_beats_a_miscohesive_current_allocation() {
         "proposed {} should beat current {}",
         p.proposed_modularity,
         p.current_modularity
+    );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// THE STARVED METRIC — `fact:defect-allocation-health-is-green-over-an-empty-
+// structure`, measured on reflow2's own design 2026-08-07.
+//
+// evaluate_allocation returned modularity 1.0 with total_internal 1 and
+// total_external 0: a PERFECT score over exactly ONE dependency, with 43 of 44
+// components contributing nothing, rendered as "Allocation health: Modularity
+// 1.00 across 44 component(s). No god-components."
+//
+// The cost was not the number. `req:recursive-black-box-decomposition` — original
+// intent, "one of the primary things I designed it for" — went unnoticed for
+// months BECAUSE the design's own health readout said the decomposition was
+// perfect. A green gate is the weakest evidence in the building, and here it was
+// green over an absence.
+//
+// NOT a formula change and NOT a judgement (dec:report-dont-judge): where a
+// partition exists the value is untouched. What changed is that "too little to
+// measure" and "perfect" stopped being the same answer.
+
+#[test]
+fn a_score_over_nothing_is_not_reported_as_perfect() {
+    // Two components, capabilities allocated, and NOT ONE dependency between
+    // them. The old arithmetic returned 1.0 from `total == 0.0`.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    cap(&mut g, "cap:a1", "cmp:a");
+    cap(&mut g, "cap:b1", "cmp:b");
+
+    let r = g.evaluate_allocation().unwrap();
+    assert_eq!(
+        r.modularity, None,
+        "no coupling at all cannot be a perfect separation — it is nothing to separate"
+    );
+    assert_eq!(r.components_with_coupling, 0);
+    // The components are still listed: the fix withholds a VERDICT, not the data.
+    assert_eq!(r.components.len(), 2);
+}
+
+#[test]
+fn one_participating_component_is_not_a_partition() {
+    // THE MEASURED CASE, in miniature: one dependency, inside one component,
+    // while every other component contributes nothing. 1/1 = 1.0 is arithmetic.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    cap(&mut g, "cap:a1", "cmp:a");
+    cap(&mut g, "cap:a2", "cmp:a");
+    cap(&mut g, "cap:b1", "cmp:b");
+    cap(&mut g, "cap:c1", "cmp:c");
+    depends(&mut g, "cap:a1", "cap:a2", 0.9); // the ONLY dependency
+
+    let r = g.evaluate_allocation().unwrap();
+    assert_eq!(
+        r.modularity, None,
+        "one component carrying all the coupling is trivially cohesive by construction; \
+         reporting 1.00 here is what made an unmodelled decomposition look perfect"
+    );
+    assert_eq!(r.components_with_coupling, 1);
+    assert_eq!(r.components.len(), 3, "the data is still there to read");
+}
+
+#[test]
+fn two_participating_components_restore_a_real_score() {
+    // The boundary of the rule, so it cannot silently swallow real results:
+    // as soon as a second component carries coupling there IS a partition.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    cap(&mut g, "cap:a1", "cmp:a");
+    cap(&mut g, "cap:a2", "cmp:a");
+    cap(&mut g, "cap:b1", "cmp:b");
+    cap(&mut g, "cap:b2", "cmp:b");
+    depends(&mut g, "cap:a1", "cap:a2", 0.9);
+    depends(&mut g, "cap:b1", "cap:b2", 0.9);
+
+    let r = g.evaluate_allocation().unwrap();
+    assert_eq!(r.components_with_coupling, 2);
+    assert_eq!(
+        r.modularity,
+        Some(1.0),
+        "genuinely cohesive, genuinely measured — the fix must not eat this"
     );
 }

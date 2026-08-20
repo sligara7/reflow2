@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b1d92e67e269269e54b73383bd6187dfadd5a1525f0e27fcafd99bad2cd41258",
+  "content_hash": "sha256:63cd1b6fb52fcd8f75762a3a79055f4c007ff17c7de7933bae4ac15b11ec0356",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -9104,6 +9104,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-swap-dynograph-foundation-as-the-substitutability-demo",
+      "properties": {
+        "acted_at": "2026-08-20",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-sysml-v2-boundary",
       "properties": {
         "acted_at": "2026-08-03",
@@ -12353,6 +12362,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-46f20004007565f3",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ility"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-489316048746f57d",
       "properties": {
         "accepted_baseline": true,
@@ -12875,6 +12893,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-a25fca9e064e8172",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-a2a035876eefa13a",
       "properties": {
         "accepted_baseline": true,
@@ -12908,6 +12935,15 @@
         "action": "modified"
       },
       "to_id": "art:sync"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-adbd03750da9c38d",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
     },
     {
       "edge_type": "CHANGED",
@@ -13394,6 +13430,15 @@
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-f499d8ed8cbf3d1e",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:alternatives"
     },
     {
       "edge_type": "CHANGED",
@@ -82357,7 +82402,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d282035a162e3e56",
+        "checksum": "sha256:21a8d661174e77cdc24d1335e769b59e1b4c6c3c7cb4fecc5dd54c8981f0e4a7",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/allocate.rs",
         "name": "allocate.rs",
@@ -82370,7 +82415,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c87a79726aeb111b",
+        "checksum": "sha256:6b8cc9bacb9c7ae2091a70c89d6371d5ade0e1370c5c863e16f33f99f8a0039d",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/alternatives.rs",
         "name": "alternatives.rs",
@@ -83228,7 +83273,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:08788e160c65f66ffbcea91b3919205a035b32930dfc578e36acfd2045ee3298",
+        "checksum": "sha256:c9470d7c1a4175e93eebdd6ebfca422a28d87b566af445c610102cbbee03dca5",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/ility.rs",
         "name": "ility.rs",
@@ -83705,7 +83750,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6bd028cccbc577b2833621d955bca4f879dd7e0806b67f608404668411b5c054",
+        "checksum": "sha256:7b0d73e0255a47017c9a56b51683216f1529451d31022d6c1574b5a07749b33d",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
@@ -87805,6 +87850,16 @@
       }
     },
     {
+      "node_id": "chg:accept-46f20004007565f3",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-20",
+        "name": "The coupling axis reports NOT MEASURABLE rather than a value when there is no partition — consistent with ility's existing doctrine that an uninformed axis says so instead of reading clean. An absence of evidence is not evidence of modularity.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-489316048746f57d",
       "node_type": "ChangeEvent",
       "properties": {
@@ -88330,6 +88385,16 @@
       }
     },
     {
+      "node_id": "chg:accept-a25fca9e064e8172",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-20",
+        "name": "modularity becomes Option<f64> and is None when fewer than two components carry any coupling — there is no partition to score, so the 1.0 that used to fall out of `total == 0.0` was arithmetic rather than health. THE DESIGN WAS RIGHT AND THE CODE WAS WRONG: `fact:defect-allocation-health-is-green-over-an-empty-structure` recorded this on 2026-08-07 and asked for exactly this and nothing more — not a formula change, not a judgement. Adds `components_with_coupling` so a reader sees the denominator.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-a2a035876eefa13a",
       "node_type": "ChangeEvent",
       "properties": {
@@ -88364,6 +88429,16 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-08-11",
         "name": "A DEFECT FIX, recorded under test_failure_fix because the enum has no value meaning \"the code was wrong\" — the same gap noted for `correction` on add_change_event. assess_overwrite now COMPUTES the target's content hash instead of reading effective_content_hash, which trusts the content_hash a document states about itself. A record edited by anything but export_graph kept its old stamp, both fast paths returned Clear, and the stale-seat refusal went quiet in exactly the case req:stale-seat-knows exists to catch — silent data loss on the next export, deleting the other person's work. THE DESIGN ALREADY SAID THIS; only the code was wrong, hence design_holds. Mutation-checked: restoring effective_content_hash fails exactly the one test that names the case."
+      }
+    },
+    {
+      "node_id": "chg:accept-adbd03750da9c38d",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-20",
+        "name": "The markdown readout no longer prints \"Modularity 1.00 across 44 component(s)\" over an unmodelled decomposition. When there is no partition it says NOT MEASURABLE, gives the ratio of components carrying any coupling, and states plainly that this is a fact about how much is modelled rather than a poor result. Measured on reflow2's own design: 182 allocated capabilities, 47 components, ONE capability-to-capability dependency — old readout 1.00, new readout not measurable.",
+        "subject": "system"
       }
     },
     {
@@ -88792,6 +88867,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-18T20:30:00Z",
         "name": "The v0.35.0 version bump. The design meaning of a cut lives in the Release and its release_cut epoch, not in a version string. Accepted BEFORE release_includes_all so the frozen manifest records the post-bump file that actually ships.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-f499d8ed8cbf3d1e",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-20",
+        "name": "One call site: `.map(|a| a.modularity)` becomes `.and_then(...)` now that the inner value is optional. The field was ALREADY Option<f64> here, so the comparison surface is unchanged — it now correctly reports None where it would previously have carried a manufactured 1.0.",
         "subject": "system"
       }
     },
@@ -94349,6 +94434,16 @@
         "name": "OPEN — should reflow2 adopt OpenMBEE's rule that every interface speaks an open, published protocol?",
         "rationale": "Recorded through the brainstorm skill at Anthony's request. The claim of strength here is about the PRINCIPLE as stated, not about its execution: the architecture page was truncated on fetch, no source was read, and whether Flexo's interfaces actually hold that line is unknown and is exactly what the deep review should test. Recorded beside the counter-argument per the skill's rule that an idea killed in conversation loses its reasoning while an idea recorded with its objection keeps both — and the objection here is real, since reflow2's single-binary posture is a deliberate decision rather than an oversight.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-swap-dynograph-foundation-as-the-substitutability-demo",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Nothing is planned and nothing is claimed as intent. Anthony, 2026-08-20, thinking out loud off the black-box thread: *\"if we clearly define an interface between all the black boxes, we should have the ability to change any module for another (provided it still meets the contract). One I was thinking about (mostly just as a demo/hypothetical), but maybe we change out dynograph-foundation for something easier that is actually part of reflow2?\"*\n\nDEDUP DONE BY HAND before writing (the guard was not used because long-body writes were malforming this session): `search_design` surfaced and I read `dec:idea-is-the-foundation-a-subsystem-or-a-supplier` and `fact:the-diamond-meets-at-dynographs-internals-not-its-interface`. This is distinct from the first — that asks what the foundation IS, this asks whether to REPLACE it and whether replacing it is the right demo — and it uses the second as evidence rather than restating it.\n\n═══════════════════════════════════════════════\n🛑 THE ANSWER TO \"CAN WE?\" IS NO, TODAY, AND THAT IS THE MOST USEFUL THING HERE\n\nreflow2's own substitutability test says a box is swappable when it PROVIDES an interface carrying a machine-readable contract (`SPECIFIES`). Measured 2026-08-19: 4 of 15 Interfaces carry one, and they are `ifc:core-api`, `ifc:graph-export`, `ifc:mcp-tools`, `ifc:mcp-tools-http` — all reflow2's OWN. **NOT ONE of the five `ifc:req-dyno-*` interfaces has a contract.** So the thing being proposed for swapping is, by this design's own criterion, not swappable: we would be replacing it against an unwritten specification.\n\n⭐ WHICH IS WHY THE HYPOTHETICAL IS WORTH MORE THAN THE SWAP. It is a forcing function. Writing those five contracts is work `req:recursive-black-box-decomposition` demands anyway (\"both sides of every contract modelled at each level\"), and until they exist \"can we swap X?\" is not answerable, only arguable. The demo cannot start until the design does the thing it has been putting off.\n\n═══════════════════════════════════════════════\n📐 IT IS NOT ONE SWAP. IT IS FIVE, AND THEY DIFFER BY 48x\n\nMeasured at HEAD 2026-08-19 by what actually imports what:\n\n  interface                     crate                  files importing it\n  ifc:req-dyno-core-api         dynograph_core         48\n  ifc:req-dyno-storage-api      dynograph_storage      21\n  ifc:req-dyno-graph-api        dynograph_graph         3   (allocate, flow, structure)\n  ifc:req-dyno-resolution-api   dynograph_resolution    2   (ingest, seam)\n  ifc:req-dyno-vector-api       dynograph_vector        1   (dimensions)\n\n🛑 `dynograph_core` AT 48 FILES IS NOT A MODULE, IT IS THE TYPE VOCABULARY. A black-box swap presumes the contract is NARROWER than the implementation behind it; when the supplier's types are the language 48 files are written in, replacing it is not substitution, it is a rewrite with a substitution's name on it. The same is largely true of storage at 21.\n\n✅ THE OTHER THREE ARE GENUINELY SMALL — 3, 2 and 1 files — and they are the real candidates.\n\n═══════════════════════════════════════════════\n✅ ONE RISK THAT LOOKS REAL AND IS NOT\n\nstoryflow also depends on dynograph, so \"does removing it break the sibling?\" is the obvious worry. `fact:the-diamond-meets-at-dynographs-internals-not-its-interface` already answers it: storyflow consumes dynograph as a **REST API over HTTP** while reflow2 consumes it as a **Rust library API** — disjoint surfaces over one shared implementation. reflow2 dropping the Rust surface cannot touch storyflow's endpoints. The diamond does not meet where a swap would cut.\n\n═══════════════════════════════════════════════\nIDEAS, unranked, each with what it costs\n\n**A. WRITE THE FIVE CONTRACTS FIRST, DECIDE SECOND.** Cheapest, and required regardless. Turns the question from arguable to answerable, and may well end with \"we only ever wanted to swap one of them\".\n   ⚠️ It is not free: a contract for a Rust library API means writing down what is actually depended on, which for `core` at 48 files is a real excavation.\n\n**B. SWAP THE SMALLEST ONE AS THE DEMO — `dynograph_vector`, ONE FILE (`dimensions.rs`).** A genuine substitution, end to end, behind a written contract. If the mechanism works there it works, and a failed attempt costs one file.\n   ⭐ This is the strongest evidence-per-unit-cost of anything here, and it makes the claim CONCRETE rather than architectural.\n   ⚠️ Vector search and HNSW are not trivial to reimplement well; \"easier\" may mean \"worse\" in ways only load reveals.\n\n**C. SWAP THE THREE SMALL ONES (graph algorithms, resolution, vector — 6 files total) AND KEEP core+storage.** Removes three external surfaces, leaves the substrate alone.\n   ⚠️ Honest counter: keeping core and storage means the dependency stays, so the upgrade treadmill stays. The saving is partial and should not be sold as removal.\n\n**D. REPLACE THE WHOLE FOUNDATION.** What the question literally asks.\n   ⚠️ 69 files touch core+storage. This is a rewrite of the substrate, and the anti-over-engineering objection is at its strongest: dynograph WORKS, is maintained, and v0.13.0 was measured clean on a real build 2026-08-19 with the pin bump parked awaiting Anthony's call. Rewriting a working, maintained dependency to prove a modelling point is the textbook version of the thing he warns about — unless the demo value or the independence is judged worth it, which is his call and not the agent's.\n\n**E. DO NOTHING AND SETTLE THE PRIOR QUESTION INSTEAD.** `dec:idea-is-the-foundation-a-subsystem-or-a-supplier` is open: is dynograph a NINTH SUBSYSTEM of reflow2, or a supplier reached across required interfaces? The swap question PRESUPPOSES \"supplier\". Answering the prior question may dissolve this one.\n\n═══════════════════════════════════════════════\n📌 WHY THIS IS A GOOD DEMO IF IT HAPPENS, stated once so the value is not overclaimed\n\nreflow2 tells users their design will let them change one part for another. Demonstrating that on its OWN foundation is the strongest available evidence for the claim, and it is self-host used the way the standing rule permits: as evidence ABOUT the product, not as the point. The five `ifc:req-dyno-*` interfaces are also the ONLY ownership-boundary seam reflow2 has modelled at all — so this is the one place the black-box claim can currently be tested.\n\n⚠️ AND THE HONEST BOUND: none of the above has been costed. No estimate of what replacing even `dynograph_vector` takes has been made, and \"1 file imports it\" is a measure of BLAST RADIUS, not of difficulty.",
+        "name": "OPEN — should reflow2 replace dynograph-foundation with its own implementation, and is that the right first proof that a black box can actually be swapped?",
+        "rationale": "DECLINED BY ANTHONY, 2026-08-20, in the same session it was raised: \"I don't want to really swap out dynograph-foundation (it works and putting a lot of effort into this is probably not worth it if we aren't going to really swap it out).\"\n\nTHE REASONING IS THE PART WORTH KEEPING, because it is a general rule and not a fact about dynograph: a demo that costs as much as the real thing is not a demo. The value of proving substitutability was never in doubt — what he refused is paying full replacement cost for evidence, on a dependency that works and is maintained. That is his standing anti-over-engineering position applied to reflow2 itself rather than to a user's design.\n\nWHAT THIS DOES NOT DECIDE, stated so the rejection is not read wider than it is:\n· It does not settle `dec:idea-is-the-foundation-a-subsystem-or-a-supplier`, which stays open.\n· It does not say the five `ifc:req-dyno-*` interfaces should stay without contracts. `req:recursive-black-box-decomposition` (ACCEPTED) still demands both sides of every contract modelled, and those five are the only ownership-boundary seam reflow2 has. What is declined is writing them IN ORDER TO SWAP.\n· It does not reject option E; the prior question is untouched.\n\n⭐ AND THE FINDING SURVIVES THE REJECTION, which is why this node is kept rather than deleted: the measurement that the swap is IMPOSSIBLE TODAY — not one of the five required interfaces carries a machine-readable contract, so reflow2 cannot swap the one boundary it has actually modelled — is a fact about the design's maturity, independent of whether anyone ever wanted to swap. It is the sharpest available statement of how far the black-box claim is from being demonstrable, and it was found by asking a question whose answer turned out to be no.",
+        "status": "rejected"
       }
     },
     {
@@ -111060,7 +111155,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:1a0eaffdc67fe12812ef97c9707af259351e5176a8cf4997c548c8a79eb245c0",
+  "prev_content_hash": "sha256:b1d92e67e269269e54b73383bd6187dfadd5a1525f0e27fcafd99bad2cd41258",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
