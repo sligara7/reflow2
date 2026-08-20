@@ -3061,3 +3061,110 @@ async fn an_unknown_node_type_is_refused_rather_than_answered_null() {
         "an absent node under a real type is still null: {absent}"
     );
 }
+
+/// `scan_nodes(level:)` is how you ask for one rung of the decomposition.
+///
+/// THE DEFECT IT CLOSES: `Component.level` was indexed and populated and
+/// nothing served it, so callers derived the top tier by walking CONTAINS and
+/// taking the parentless nodes — which returns leaves nobody wired to a parent.
+/// Measured on reflow2's own design 2026-08-18: 8 subsystems by declared level,
+/// 2 leaves by spine position. Two reasonable queries, two answers.
+#[tokio::test]
+async fn scan_nodes_filters_by_decomposition_level() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    for (id, level) in [
+        ("cmp:sub-a", Some("subsystem")),
+        ("cmp:sub-b", Some("subsystem")),
+        ("cmp:leaf", Some("component")),
+        // No level at all: the schema defaults it to `component`, so it must
+        // still answer to that filter rather than vanishing from both answers.
+        ("cmp:unset", None),
+    ] {
+        j!(s.add_component(Parameters(ComponentReq {
+            id: id.into(),
+            name: id.into(),
+            description: "x".into(),
+            level: level.map(str::to_string),
+            distinct_from: None,
+        })));
+    }
+
+    let subs = j!(s.scan_nodes(Parameters(ScanReq {
+        node_type: "Component".into(),
+        level: Some("subsystem".into()),
+        limit: None,
+        offset: None,
+        brief: Some(true),
+    })));
+    assert_eq!(subs["total"], 2, "{subs}");
+
+    let comps = j!(s.scan_nodes(Parameters(ScanReq {
+        node_type: "Component".into(),
+        level: Some("component".into()),
+        limit: None,
+        offset: None,
+        brief: Some(true),
+    })));
+    assert_eq!(
+        comps["total"], 2,
+        "an unset level must answer to `component`: {comps}"
+    );
+
+    // Unfiltered still returns everything — the filter adds a question, it
+    // does not change the default answer.
+    let all = j!(s.scan_nodes(Parameters(ScanReq {
+        node_type: "Component".into(),
+        level: None,
+        limit: None,
+        offset: None,
+        brief: Some(true),
+    })));
+    assert_eq!(all["total"], 4, "{all}");
+}
+
+/// An unknown rung and a wrong node type are REFUSED, not answered empty.
+///
+/// "No Components at that rung" and "that is not a rung" are different facts,
+/// and an empty list says the first while meaning the second — which is the
+/// silent-wrong-answer this whole filter exists to end.
+#[tokio::test]
+async fn a_bad_level_is_refused_rather_than_answered_empty() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    j!(s.add_component(Parameters(ComponentReq {
+        id: "cmp:x".into(),
+        name: "x".into(),
+        description: "x".into(),
+        level: Some("subsystem".into()),
+        distinct_from: None,
+    })));
+
+    let bad_level = s
+        .scan_nodes(Parameters(ScanReq {
+            node_type: "Component".into(),
+            level: Some("susbystem".into()), // typo
+            limit: None,
+            offset: None,
+            brief: Some(true),
+        }))
+        .await;
+    let err = bad_level
+        .expect_err("a typo'd rung must be refused")
+        .to_string();
+    assert!(err.contains("not a decomposition level"), "{err}");
+    // Rule 4: the refusal names what WOULD have worked.
+    assert!(err.contains("subsystem"), "{err}");
+
+    let wrong_type = s
+        .scan_nodes(Parameters(ScanReq {
+            node_type: "Requirement".into(),
+            level: Some("subsystem".into()),
+            limit: None,
+            offset: None,
+            brief: Some(true),
+        }))
+        .await;
+    let err = wrong_type
+        .expect_err("only Component carries a level")
+        .to_string();
+    assert!(err.contains("Component"), "{err}");
+}

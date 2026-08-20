@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ca101ddd5b9f8fb3b21d8b4c35aebf0f9ba9b75b310a3ed453621851f8225302",
+  "content_hash": "sha256:90e1949d8e4dfd1b5dea508464be398fbb0c538daf28b4dd8f16f33ccaf19973",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -849,6 +849,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-change-event-is-written-complete-in-one-call",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:a-check-records-what-it-found-separately-from-what-it-is",
       "properties": {
         "weight_basis": "estimated"
@@ -881,11 +889,27 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-finding-names-the-mechanism-that-parks-a-deliberate-state",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:a-node-attached-to-nothing-is-reported-whatever-its-type",
       "properties": {
         "weight_basis": "estimated"
       },
       "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-refusal-maps-a-command-alias-to-what-is-served",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -982,6 +1006,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:ask-for-one-rung-of-the-decomposition",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:hierarchy"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -2358,6 +2390,22 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-spine-is-checked-for-two-parents-and-for-level-disagreement",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-spine-is-checked-for-two-parents-and-for-level-disagreement",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:hierarchy"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -12144,6 +12192,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-34dc0297ded3c478",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:orphan-attachment-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-3697d785d60e5b5c",
       "properties": {
         "accepted_baseline": true,
@@ -14112,6 +14169,15 @@
         "action": "modified"
       },
       "to_id": "art:detect-and-ask-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-a7cbaa42349b3d83",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:change-event-text-test"
     },
     {
       "edge_type": "CHANGED",
@@ -75020,6 +75086,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:change-event-text-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "ver:a-change-event-carries-its-own-text"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:changelog-test",
       "properties": {
         "completeness": "complete"
@@ -75281,6 +75356,15 @@
         "completeness": "complete"
       },
       "to_id": "cap:release-pinned-to-time"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:detect",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-spine-is-checked-for-two-parents-and-for-level-disagreement"
     },
     {
       "edge_type": "REALIZES",
@@ -75574,6 +75658,15 @@
       "edge_type": "REALIZES",
       "from_id": "art:heal",
       "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-finding-names-the-mechanism-that-parks-a-deliberate-state"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:heal",
+      "properties": {
         "conformance": "unchecked"
       },
       "to_id": "cap:a-node-attached-to-nothing-is-reported-whatever-its-type"
@@ -75609,6 +75702,15 @@
         "completeness": "complete"
       },
       "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:hierarchy",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-spine-is-checked-for-two-parents-and-for-level-disagreement"
     },
     {
       "edge_type": "REALIZES",
@@ -76209,6 +76311,15 @@
       "edge_type": "REALIZES",
       "from_id": "art:self-host-documents-guard",
       "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-finding-names-the-mechanism-that-parks-a-deliberate-state"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:self-host-documents-guard",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cap:heal"
@@ -76313,6 +76424,15 @@
       "edge_type": "REALIZES",
       "from_id": "art:skills",
       "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-refusal-maps-a-command-alias-to-what-is-served"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:skills",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cap:skills-served"
@@ -76412,6 +76532,15 @@
         "completeness": "complete"
       },
       "to_id": "cap:the-record-moved-is-surfaced"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:temporal",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-change-event-is-written-complete-in-one-call"
     },
     {
       "edge_type": "REALIZES",
@@ -76749,9 +76878,27 @@
       "edge_type": "REALIZES",
       "from_id": "art:tools-query",
       "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:ask-for-one-rung-of-the-decomposition"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-query",
+      "properties": {
         "completeness": "partial"
       },
       "to_id": "cap:bulk-forms"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-temporal",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-change-event-is-written-complete-in-one-call"
     },
     {
       "edge_type": "REALIZES",
@@ -76911,6 +77058,15 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:a-change-event-is-written-complete-in-one-call",
+      "properties": {
+        "coverage": "full",
+        "evidence": "Both declared text fields reachable from the constructor; 3 cases pin it."
+      },
+      "to_id": "req:a-change-record-carries-why-in-the-same-act"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:a-check-records-what-it-found-separately-from-what-it-is",
       "properties": {},
       "to_id": "req:a-finding-has-somewhere-to-put-its-evidence"
@@ -76929,9 +77085,27 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:a-finding-names-the-mechanism-that-parks-a-deliberate-state",
+      "properties": {
+        "coverage": "partial",
+        "evidence": "Covers orphan_node, the BL-199 gate and link-artifacts. PARTIAL on purpose: the requirement is about findings generally, and only the one family that caused a data loss has been done."
+      },
+      "to_id": "req:a-finding-names-the-remedy-not-only-the-problem"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:a-node-attached-to-nothing-is-reported-whatever-its-type",
       "properties": {},
       "to_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-refusal-maps-a-command-alias-to-what-is-served",
+      "properties": {
+        "coverage": "partial",
+        "evidence": "One instance of an accepted requirement — get_skill's refusal. No new requirement was written for it, deliberately."
+      },
+      "to_id": "req:a-refusal-names-what-would-have-worked"
     },
     {
       "edge_type": "SATISFIES",
@@ -77004,6 +77178,15 @@
       "from_id": "cap:as-of-epoch",
       "properties": {},
       "to_id": "req:graph-indexes-snapshots"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:ask-for-one-rung-of-the-decomposition",
+      "properties": {
+        "coverage": "partial",
+        "evidence": "Makes the ladder ASKABLE. Says nothing about whether the boxes have contracts, which is the larger half of that requirement and remains open."
+      },
+      "to_id": "req:recursive-black-box-decomposition"
     },
     {
       "edge_type": "SATISFIES",
@@ -78135,6 +78318,15 @@
       "from_id": "cap:the-skill-response-carries-the-lens",
       "properties": {},
       "to_id": "req:the-reminder-rides-the-response"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:the-spine-is-checked-for-two-parents-and-for-level-disagreement",
+      "properties": {
+        "coverage": "partial",
+        "evidence": "Checks the spine is a tree and agrees with declared level. Does not check that a box has a boundary."
+      },
+      "to_id": "req:recursive-black-box-decomposition"
     },
     {
       "edge_type": "SATISFIES",
@@ -79387,6 +79579,18 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-change-event-carries-its-own-text",
+      "properties": {},
+      "to_id": "cap:a-change-event-is-written-complete-in-one-call"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-change-event-carries-its-own-text",
+      "properties": {},
+      "to_id": "req:a-change-record-carries-why-in-the-same-act"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-claim-reads-back-with-its-age",
       "properties": {},
       "to_id": "cap:claims-carry-their-age"
@@ -79408,6 +79612,18 @@
       "from_id": "ver:a-finding-names-its-hub",
       "properties": {},
       "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-finding-names-parking-and-its-boundary",
+      "properties": {},
+      "to_id": "cap:a-finding-names-the-mechanism-that-parks-a-deliberate-state"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-finding-names-parking-and-its-boundary",
+      "properties": {},
+      "to_id": "req:a-finding-names-the-remedy-not-only-the-problem"
     },
     {
       "edge_type": "VERIFIES",
@@ -79879,6 +80095,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:hierarchy",
+      "properties": {},
+      "to_id": "cap:the-spine-is-checked-for-two-parents-and-for-level-disagreement"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:ility",
       "properties": {},
       "to_id": "cap:ility-signals"
@@ -80194,6 +80416,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:scan-nodes-filters-by-level",
+      "properties": {},
+      "to_id": "cap:ask-for-one-rung-of-the-decomposition"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:scoped-analysis",
       "properties": {},
       "to_id": "cap:scoped-analysis"
@@ -80227,6 +80455,12 @@
       "from_id": "ver:self-host-uses-documents",
       "properties": {},
       "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:served-skills",
+      "properties": {},
+      "to_id": "cap:a-refusal-maps-a-command-alias-to-what-is-served"
     },
     {
       "edge_type": "VERIFIES",
@@ -82167,6 +82401,19 @@
       }
     },
     {
+      "node_id": "art:change-event-text-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:53aaabc0fddd3caa0924cb0ae6bee1cd8e77fd1e2eafe243b376dcc2562adf2a",
+        "granularity": "atomic",
+        "location": "crates/reflow2-core/tests/change_event_carries_its_own_text.rs",
+        "name": "tests/change_event_carries_its_own_text.rs",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
       "node_id": "art:changelog-test",
       "node_type": "Artifact",
       "properties": {
@@ -83182,7 +83429,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:377d332d152038615d31984d530989b283d8ef1a9f7651f706f7f9f12a627f68",
+        "checksum": "sha256:9b9f0e13f76c8280676ec63aa2cd2637f83c64610545b11b01a8081422ec596f",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/orphan_attachment.rs",
         "name": "orphan_attachment.rs",
@@ -84501,6 +84748,17 @@
       }
     },
     {
+      "node_id": "cap:a-change-event-is-written-complete-in-one-call",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`add_change_event` takes `summary` (what changed — indexed for full text and used as the embedding field) and `rationale` (why, and the lesson), alongside the id, name, change type, subject axis and the affected list. The reasoning therefore lands in the same act as the record, and no second write is needed to make the event complete.\n\nSATISFIED BY MAKING DECLARED FIELDS REACHABLE, not by adding vocabulary: both fields were already on the schema and only the constructor omitted them. The tool prose also states that there is no `description` field and names the two that exist, because reaching for one is the mistake both reporting projects made.",
+        "name": "A change event is written complete in one call — what changed, why, and what it touched",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:a-check-records-what-it-found-separately-from-what-it-is",
       "node_type": "Capability",
       "properties": {
@@ -84547,6 +84805,17 @@
       }
     },
     {
+      "node_id": "cap:a-finding-names-the-mechanism-that-parks-a-deliberate-state",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`orphan_node`'s repair note and the BL-199 self-host gate's failure text both name `governed_by(..., ruling: \"parks\")` as the second honest way on when a node's unattached state is deliberate, say plainly that deleting the node is the repair that looks clean and loses the most, and state the boundary: parking is read by `orphan_node` and the unsatisfied-requirement gap and by nothing else — it does not quiet `unthreaded_cluster` and does not cover the unproven-capability loop debt. The `link-artifacts` skill carries the same case for documents that correctly describe and implement nothing.\n\nTHE LIMIT IS PART OF THE CAPABILITY, not a caveat on it: a mechanism named without its scope produced the failure where a reporter found it, could not confirm it applied, and backed off.",
+        "name": "A structural finding names parking as the honest alternative, and names its limits",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:a-node-attached-to-nothing-is-reported-whatever-its-type",
       "node_type": "Capability",
       "properties": {
@@ -84554,6 +84823,17 @@
         "name": "A node attached to nothing is reported whatever its type, and a property that names a live node counts as attachment",
         "provenance": "authored",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-refusal-maps-a-command-alias-to-what-is-served",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`get_skill` refusing an unknown name first says what the name IS, when it is one of the slash commands: \"'rules' is the slash command; it is served as 'governance-proposal'\". Six of the eight advertised commands map to a skill.\n\nTWO OF THE EIGHT MAP TO NO SKILL AT ALL and the table says so rather than inventing one — `/decisions` calls `scan_nodes` for the Decision type and `/debt` calls `loop_status`. Answering those with a plausible skill name would send the caller somewhere that cannot help them, which is the failure the refusal exists to prevent.",
+        "name": "A refusal maps a user-facing command name to the skill actually served — or to the tool, when there is no skill",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
       }
     },
     {
@@ -84697,6 +84977,17 @@
         "name": "The graph answers as-of-epoch-n itself, without a git lookup",
         "provenance": "authored",
         "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:ask-for-one-rung-of-the-decomposition",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`scan_nodes` takes `level` — component / subsystem / system / system_of_systems / enterprise — so \"what are the top-level boxes?\" is one call with one answer. It refuses an unknown rung, and refuses `level` on any type other than Component rather than returning an empty list, because \"no Components at that rung\" and \"that is not a rung\" are different facts and the second silently reads as the first. A node with no level answers to `component`, matching the schema default, so older nodes are not lost by the filter.\n\nWHY IT IS A CAPABILITY AND NOT A CONVENIENCE: the field was indexed and populated all along, and with no way to ask by it every caller derived the top tier from the containment spine — which returns leaves nobody wired to a parent. Measured on this design: 8 subsystems by declared level, 2 leaves by spine position.",
+        "name": "Ask for one rung of the decomposition ladder directly, instead of deriving it from the containment spine",
+        "provenance": "authored",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -86636,6 +86927,17 @@
       }
     },
     {
+      "node_id": "cap:the-spine-is-checked-for-two-parents-and-for-level-disagreement",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Two decomposition detectors, surfaced as gaps: `multiple_parents` — a Component contained by more than one parent, so \"which box is this in?\" has no single answer and every containment walk silently picks whichever it reached first; and `level_spine_disagreement` — a Component sitting at the root of the spine while declaring a level something else claims to be above, which is what makes the two ways of asking for the top tier return different sets.\n\nSELF-LIMITING BY CONSTRUCTION: the second compares against the highest level actually PRESENT, so a design where every part is a `component` has no ladder to disagree with and reports nothing. Nothing here prescribes a ladder depth.",
+        "name": "The containment spine is checked for a box in two boxes, and for a declared level that disagrees with spine position",
+        "provenance": "authored",
+        "status": "realized",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cap:tool-carries-convention",
       "node_type": "Capability",
       "properties": {
@@ -87234,6 +87536,16 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-08-12",
         "name": "Wording change on Alex's report, 2026-08-12. THE DESIGN HOLDS: the installer announced \"Installing reflow2 for every project on this machine\", which reads as though it is about to reach into every project directory and change it. It never did — nothing outside ~/.local and ~/.claude is written, and a project only gains reflow2 when someone points it there. It now says \"Making reflow2 globally available to projects on this machine\". The text was made to match what the code already does; no behaviour changed and no design claim moved. Worth noting who found it: a first-time reader of the output. The wording had been there since the machine-wide install shipped, and nobody who already knew what it did had reason to notice."
+      }
+    },
+    {
+      "node_id": "chg:accept-34dc0297ded3c478",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-19",
+        "name": "One case added: the orphan repair note must name `parks`, say the ruling has to be ACCEPTED, warn against deleting, and name what parking does NOT reach. Pinned because message text regresses silently — nothing else in the suite would notice the sentence going away, and its absence is what cost two registered documents on 2026-08-19.",
+        "subject": "system"
       }
     },
     {
@@ -88733,6 +89045,16 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-19",
         "name": "First baseline. detect-and-ask had NO Artifact node until 2026-08-19 — the second such hole found this week after art:where-am-i-skill, in a repo where every other skill has carried one since the kit was modelled. A hole in the self-model, not a change to accept.",
+        "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:baseline-a7cbaa42349b3d83",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-19",
+        "name": "First baseline. New test file for the ChangeEvent text fields — 3 cases, pinning the front door rather than the storage, because upsert_node could always hold summary and rationale and that is precisely why nothing noticed the constructor took neither.",
         "subject": "record"
       }
     },
@@ -101404,6 +101726,18 @@
       }
     },
     {
+      "node_id": "req:a-change-record-carries-why-in-the-same-act",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A change record carries WHY it happened, written in the same act that records it",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "When the design records that something changed, the reasoning — what changed, why, and what guards against it recurring — is writable in the SAME call. It must not require a second write against the same node.\n\nWHY THIS IS A REQUIREMENT AND NOT AN ERGONOMIC PREFERENCE. A second write is not merely inconvenient; it is optional, and optional reasoning does not get written. Worse, when the natural field is unavailable the caller reaches for one that is not declared, and the resulting \"undeclared property\" flag then fires on EVERY legitimate write — which trains the caller to ignore the flag that exists to catch typos. A signal that fires on correct behaviour is worse than no signal.\n\nEVIDENCE, and it is field evidence rather than self-observation: reported independently by two projects on the same day, 2026-08-19 — `art:ophyd-service-feedback-2026-08-19` (friction #3) and `art:hxm-program-feedback-2026-08-19`. Both had reached for a `description` that does not exist, both had fallen back to a second write, and hxm's framing named the consequence above.\n\nSCOPE. This is about the WRITE PATH, not the schema. `ChangeEvent` has declared `summary` (indexed, full-text, the embedding field) and `rationale` (\"why the change was made\") since the schema was written; the constructor took neither. So the requirement is satisfied by making the declared fields reachable, not by adding vocabulary.\n\nNOT ESTABLISHED, and deliberately not claimed here: whether the same hole exists on other record types. Only ChangeEvent was reported and only ChangeEvent was checked.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:a-cluster-can-be-declared-deliberately-separate",
       "node_type": "Requirement",
       "properties": {
@@ -101524,6 +101858,18 @@
         "provenance": "authored",
         "statement": "A Verification must have a durable place for what a check FOUND, separate from what the check IS — so evidence stops being written into the title, and so a result can be read by something other than a human eye.\n\n⭐ THREE INDEPENDENT RECORDS OF ONE ROOT, which is why this is a requirement and not a style note. The near-duplicate guard surfaced a THIRD: `fact:defect-a-finding-has-no-bounds-so-grading-goes-in-the-name` was already in this design before today, saying the same thing about grading. Both facts the guard named are OBSERVATIONS on different days; this is the INTENT that answers them.\n\nMEASURED on reflow2's own graph, 2026-08-16: 160 Verifications, MEDIAN `name` LENGTH 79.5 WORDS, 72 over 100, 17 over 300, longest 654. A `name` is what a list renders; these are reports.\n\nTHE TWO FLEET REPORTS:\n(a) 2026-08-07 — a Verification held a self-contradictory result and stayed `passing` forever, because THE RESULT IS FREE TEXT. It recorded \"EXIT 0, verdict 'STALE — 4 of 11'\"; the tool's true exit was 1 and its source is `return 1 if stale else 0`, so `EXIT 0` meant the exact opposite of the verdict beside it. `status` is structured; the evidence is prose, and nothing in the loop can notice the disagreement.\n(b) 2026-08-08 — `loop_status` is documented as \"one cheap call\" and is cheap to CALL and expensive to READ: `verifications.attention[0].name` came back as a single ~450-word paragraph holding a full graded walk report. Their diagnosis is the requirement: \"workers write the full report into the `name` because there is no other durable place for it on the node — A MISSING FIELD BEING PAID FOR IN EVERY FUTURE READ OF THAT NODE.\"\n\n⚠️ AND I AM THE LARGEST SINGLE CONTRIBUTOR. Four of the six Verifications written on 2026-08-16 exceed 300 words, and `ver:a-claim-reads-back-with-its-age` at 435 words is the FIFTH LONGEST IN THE DESIGN. I was not working around a limitation I had noticed; I had not noticed it.\n\nWHY IT IS MORE THAN STYLE: the cheapest call in the surface, the one every worker is told to make routinely including before finishing, returns a payload dominated by prose nobody asked for. A cheap call that is expensive to read is a call people stop making — the same signal-trained-to-be-ignored failure `req:the-loop-can-say-what-this-session-owes` was built to end, arriving through a different door.\n\nTHEIR TWO ASKS: give Verification a `findings` / `report` property; and truncate `name` in `loop_status`'s rollup, or return `name` + `detail` separately.\n\n⚠️ THE LOAD-BEARING UNCERTAINTY, to answer BEFORE building: WOULD A NEW FIELD ALONE CHANGE ANYTHING? A declared field nobody writes to leaves the corpus exactly as it is — precisely the trap `dec:how-should-a-temporal-fact-carry-its-date-when-there-is-no-epoch` documented, where 112 nodes wrote an undeclared property because the declared route did not fit. And the 160 existing names cannot be migrated cleanly, because a property once written cannot be removed — the best available repair writes evidence to the new field and SHORTENS the name, duplicating rather than moving. Truncating at the rollup is the cheaper half and asks nobody to change how they write; whether that is pragmatic or merely lets the hoard grow unchecked is unmeasured.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:a-finding-names-the-remedy-not-only-the-problem",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A finding names the remedy, not only the problem — including when the honest remedy is to declare the state deliberate",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "When reflow2 reports that something is wrong, the report names what the reader can honestly DO about it. A finding that describes a problem and stops leaves the reader to invent a repair, and the repair they invent is often worse than the state being reported.\n\nTHE CASE THAT FORCED IT, measured 2026-08-19. `orphan_node` reported two registered documents as attached to nothing, and its repair note said \"No mechanical repair. Linking this node to something would assert a relationship nobody drew.\" True — and it reads as THERE IS NOTHING YOU CAN HONESTLY DO. There was: `governed_by(..., ruling: \"parks\")` declares the unattached state deliberate and is purpose-built for exactly that genre. It is documented on the TOOL. The reader is looking at the FINDING. The documents were deleted instead.\n\nTWO PROJECTS, SAME DAY, OPPOSITE DIRECTIONS. ophyd-service asked in writing whether `parks` covered their case and said \"neither the tool docs nor the skills say... I wasn't confident enough to try\", and backed off. Hours later an agent in this repo did not find it at all and deleted the evidence. One under-used the mechanism; one destroyed data for want of it.\n\nWHAT THIS DEMANDS, AND ITS LIMIT. The finding names the remedy AND the remedy's SCOPE — \"read by these detectors and not those\" — because a mechanism named without its boundary produces the first failure above rather than the second. It does NOT demand that reflow2 apply the remedy: `dec:ask-not-repair` and `repair_is_a_judgement` stand, and naming an option is not taking it.\n\nDISTINCT FROM `req:a-refusal-names-what-would-have-worked`, which is accepted and covers REFUSALS — a rejected argument returning its legal values. `orphan_node` refused nothing: it succeeded, reported accurately, and described a dead end that was not one. A report is not a refusal, and the gap between them is where this sits.\n\nPROMOTED FROM `dec:idea-parks-shipped-and-was-still-not-reached-the-instruction-is-missing-where-the-person-is-stuck`, which records the observation and stays open as the finding. The dedup guard named that Decision twice and was answered twice — the node was read (this session wrote it) and judged different in kind: the Decision says what happened, this says what must be true.",
+        "status": "proposed"
       }
     },
     {
@@ -108477,6 +108823,18 @@
       }
     },
     {
+      "node_id": "ver:a-change-event-carries-its-own-text",
+      "node_type": "Verification",
+      "properties": {
+        "description": "3 cases in crates/reflow2-core/tests/change_event_carries_its_own_text.rs. Pins the FRONT DOOR rather than the storage, which is the whole point: `upsert_node` could always hold `summary` and `rationale`, and that is exactly why nothing noticed the constructor took neither for as long as it did.\n\nThe cases are the constructor recording both fields in one call; both staying OPTIONAL, so an event with nothing to add is not forced to invent prose; and a later call that omits them NOT erasing what an earlier one wrote — the BL-183 merge promise, which is the property the two reporting projects leaned on when they worked around the gap and which therefore had to survive the gap being closed.",
+        "kind": "verification",
+        "level": "unit",
+        "method": "test",
+        "name": "A change event records why in one call",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-claim-reads-back-with-its-age",
       "node_type": "Verification",
       "properties": {
@@ -108523,6 +108881,18 @@
         "level": "unit",
         "method": "test",
         "name": "A node appearing in several findings of one category is named as a hub with its count, and an ordinary pair reports none",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-finding-names-parking-and-its-boundary",
+      "node_type": "Verification",
+      "properties": {
+        "description": "1 case in crates/reflow2-core/tests/orphan_attachment.rs. Asserts the `orphan_node` repair note names `parks`, says the ruling must be ACCEPTED, warns against deleting the node, AND names what parking does not reach (`unthreaded_cluster`).\n\nPINNED AS A TEST BECAUSE MESSAGE TEXT REGRESSES SILENTLY — nothing else in the suite would notice the sentence going away, and its absence is what cost two registered documents. The boundary assertion is not padding: a mechanism named WITHOUT its scope produced the other half of the same day's failure, where a reporter found `parks`, could not confirm it covered their case, and did nothing.",
+        "kind": "verification",
+        "level": "unit",
+        "method": "test",
+        "name": "The orphan finding names parking and its limits",
         "status": "passing"
       }
     },
@@ -109994,6 +110364,18 @@
       }
     },
     {
+      "node_id": "ver:scan-nodes-filters-by-level",
+      "node_type": "Verification",
+      "properties": {
+        "description": "2 cases in crates/reflow2-mcp/tests/tools.rs. The filter returns the 2 subsystems and the 2 components, an unset level answers to `component` so older nodes are not lost, and an unfiltered scan still returns all four — the filter adds a question rather than changing the default answer.\n\nTHE SECOND CASE IS THE LOAD-BEARING ONE: a typo'd rung and a non-Component type are REFUSED, not answered with an empty list, and the refusal names what would have worked. An empty list says \"none at that rung\" while meaning \"that is not a rung\", which is the silent wrong answer the whole filter exists to end.",
+        "kind": "verification",
+        "level": "integration",
+        "method": "test",
+        "name": "scan_nodes filters by decomposition level, and refuses what is not one",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:scoped-analysis",
       "node_type": "Verification",
       "properties": {
@@ -110508,7 +110890,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:265b96eaf5cc71407485ad11fed9ec7915e641385c3db8dfc05aa54e9aed4242",
+  "prev_content_hash": "sha256:ca101ddd5b9f8fb3b21d8b4c35aebf0f9ba9b75b310a3ed453621851f8225302",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
