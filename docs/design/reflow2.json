@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:265b96eaf5cc71407485ad11fed9ec7915e641385c3db8dfc05aa54e9aed4242",
+  "content_hash": "sha256:ca101ddd5b9f8fb3b21d8b4c35aebf0f9ba9b75b310a3ed453621851f8225302",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -11955,6 +11955,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-09bee61653a4e59a",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-0bbd99a16b805b80",
       "properties": {
         "accepted_baseline": true,
@@ -12249,6 +12258,15 @@
         "action": "modified"
       },
       "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-460e245dc042e273",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
     },
     {
       "edge_type": "CHANGED",
@@ -12555,6 +12573,15 @@
         "action": "modified"
       },
       "to_id": "art:ility"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-80b623321612c0d0",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
     },
     {
       "edge_type": "CHANGED",
@@ -13086,6 +13113,15 @@
         "action": "modified"
       },
       "to_id": "art:increment-plan"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-ddfe8314125ace84",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-query"
     },
     {
       "edge_type": "CHANGED",
@@ -17623,6 +17659,105 @@
         "action": "modified"
       },
       "to_id": "req:no-idea-goes-quiet"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:foundation-consumes-redrawn-from-imports-2026-08-19",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:foundation-consumes-redrawn-from-imports-2026-08-19",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:dimensions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:foundation-consumes-redrawn-from-imports-2026-08-19",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:flow"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:foundation-consumes-redrawn-from-imports-2026-08-19",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:foundation-consumes-redrawn-from-imports-2026-08-19",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:foundation-consumes-redrawn-from-imports-2026-08-19",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:propagate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:foundation-consumes-redrawn-from-imports-2026-08-19",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:search"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:foundation-consumes-redrawn-from-imports-2026-08-19",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:foundation-consumes-redrawn-from-imports-2026-08-19",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ifc:req-dyno-graph-api"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:foundation-consumes-redrawn-from-imports-2026-08-19",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ifc:req-dyno-resolution-api"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:foundation-consumes-redrawn-from-imports-2026-08-19",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ifc:req-dyno-vector-api"
     },
     {
       "edge_type": "CHANGED",
@@ -22402,6 +22537,37 @@
     },
     {
       "edge_type": "CONSUMES",
+      "from_id": "cmp:allocate",
+      "properties": {
+        "dependency_type": "function_call",
+        "weight": 0.8,
+        "weight_basis": "evidence"
+      },
+      "to_id": "ifc:req-dyno-graph-api"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:dimensions",
+      "properties": {
+        "dependency_type": "function_call",
+        "optional": true,
+        "weight": 0.4,
+        "weight_basis": "evidence"
+      },
+      "to_id": "ifc:req-dyno-vector-api"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:flow",
+      "properties": {
+        "dependency_type": "function_call",
+        "weight": 0.8,
+        "weight_basis": "evidence"
+      },
+      "to_id": "ifc:req-dyno-graph-api"
+    },
+    {
+      "edge_type": "CONSUMES",
       "from_id": "cmp:graph",
       "properties": {
         "weight": 0.9,
@@ -22411,21 +22577,22 @@
     },
     {
       "edge_type": "CONSUMES",
-      "from_id": "cmp:heal",
-      "properties": {
-        "weight": 0.7,
-        "weight_basis": "evidence"
-      },
-      "to_id": "ifc:req-dyno-resolution-api"
-    },
-    {
-      "edge_type": "CONSUMES",
       "from_id": "cmp:ingest",
       "properties": {
         "weight": 0.8,
         "weight_basis": "evidence"
       },
       "to_id": "ifc:ambient-agent"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:ingest",
+      "properties": {
+        "dependency_type": "function_call",
+        "weight": 0.7,
+        "weight_basis": "evidence"
+      },
+      "to_id": "ifc:req-dyno-resolution-api"
     },
     {
       "edge_type": "CONSUMES",
@@ -22442,25 +22609,6 @@
         "weight_basis": "estimated"
       },
       "to_id": "ifc:rendezvous-sidecar"
-    },
-    {
-      "edge_type": "CONSUMES",
-      "from_id": "cmp:propagate",
-      "properties": {
-        "weight": 0.8,
-        "weight_basis": "evidence"
-      },
-      "to_id": "ifc:req-dyno-graph-api"
-    },
-    {
-      "edge_type": "CONSUMES",
-      "from_id": "cmp:search",
-      "properties": {
-        "optional": true,
-        "weight": 0.4,
-        "weight_basis": "evidence"
-      },
-      "to_id": "ifc:req-dyno-vector-api"
     },
     {
       "edge_type": "CONSUMES",
@@ -22503,6 +22651,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "ifc:mcp-tools"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:structure",
+      "properties": {
+        "dependency_type": "function_call",
+        "weight": 0.8,
+        "weight_basis": "evidence"
+      },
+      "to_id": "ifc:req-dyno-graph-api"
     },
     {
       "edge_type": "CONSUMES",
@@ -82343,7 +82501,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:147f2c1b5405bf8eac0848109cf5d56e9a011aaacb58c5486a1b50a5d2cef3f0",
+        "checksum": "sha256:c85e9be6c930aeed82bdc13a3db0d47747466c89a1bcd6cdd5b3b2dd4d7899e7",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -82692,7 +82850,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:30fc1a09862792a9",
+        "checksum": "sha256:c4329e5e0fce69e92694e267402be1c882fc20f50ad0a7ce77a66d6912130b56",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/hierarchy.rs",
         "name": "hierarchy.rs",
@@ -83515,7 +83673,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a6b8f47cd7d480e5e0d913ca6e0cf8b14bfcd17091da68be1f8e78bdeb53ca19",
+        "checksum": "sha256:582e338973a562b9f2a0829d6ee61b5129635a1b4dac45bac728d5a217a7bc97",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -84107,7 +84265,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:15be9fa5a75ad48868af8ce3e4385a3cbce6c28ef79b9711f628f5934936f8f5",
+        "checksum": "sha256:27a4ebeac2974cd8f834beee2605fff7718893524b9c5099b31128ad23d43cf9",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
@@ -86886,6 +87044,16 @@
       }
     },
     {
+      "node_id": "chg:accept-09bee61653a4e59a",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-19",
+        "name": "Two detectors added: multiple_parents (a Component contained by more than one parent — the spine is a tree) and level_spine_disagreement (a Component at the root of the spine declaring a level something else claims to be above). Both were invisible before, and both fire on this design: cmp:skills has two parents, cmp:packaging and cmp:registry are the spurious 'tier 1'. The second check is self-limiting — it compares against the highest level PRESENT, so a flat design reports nothing and no ladder depth is prescribed.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-0bbd99a16b805b80",
       "node_type": "ChangeEvent",
       "properties": {
@@ -87186,6 +87354,16 @@
         "change_type": "refactor",
         "detected_at": "2026-07-21",
         "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-460e245dc042e273",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-19",
+        "name": "ScanReq gains `level`. Its doc records WHY the filter exists rather than just what it does: Component.level has always been indexed and populated, and with no way to ask by it every caller derived the top tier from the CONTAINS spine instead — which returns leaves nobody wired to a parent. Measured 2026-08-18: 8 subsystems by level, 2 leaves by spine.",
+        "subject": "system"
       }
     },
     {
@@ -87491,6 +87669,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-03",
         "name": "Registered before the clippy pass; the only edit since is manual_contains (iter().any() -> contains()) plus rustfmt. No behaviour and no design meaning moved — the 11 tests are unchanged and still passing."
+      }
+    },
+    {
+      "node_id": "chg:accept-80b623321612c0d0",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-19",
+        "name": "The two new hierarchy kinds wired through to detect_gaps as GapSource::MultipleParents (severity 0.65 — an ambiguous containment walk outranks a floating level) and GapSource::LevelSpineDisagreement (0.5). The exhaustive matches here are what forced the wiring: adding a kind without surfacing it does not compile.",
+        "subject": "system"
       }
     },
     {
@@ -88027,6 +88215,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-17",
         "name": "A backlog row's reference to the renamed category; the plan itself is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-ddfe8314125ace84",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-19",
+        "name": "scan_nodes filters by `level`, refusing an unknown rung AND refusing `level` on any non-Component type rather than returning an empty list — 'no Components at that rung' and 'that is not a rung' are different facts and the second silently reads as the first. An unset level answers to `component`, matching the schema default, so older nodes are not lost by the filter.",
         "subject": "system"
       }
     },
@@ -89544,6 +89742,15 @@
       "properties": {
         "change_type": "scope_change",
         "name": "flo2's proposal arrives: the hosting question req:many-designs-one-service left open is answered as one-process-many-stores, dec:multi-writer-architecture is re-opened on Anthony's word, and two requirements flo2 depends on (a container image, and the loop being able to say what is owed to a named person) enter the design"
+      }
+    },
+    {
+      "node_id": "chg:foundation-consumes-redrawn-from-imports-2026-08-19",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "resync",
+        "name": "Three ifc:req-dyno-* CONSUMES edges redrawn from what the code actually imports — the design was wrong, the code was right, so this is a resync of the record and not a fix to the system",
+        "subject": "record"
       }
     },
     {
@@ -108170,9 +108377,10 @@
       "properties": {
         "basis": "measured",
         "fact_type": "measurement",
-        "statement": "MEASURED 2026-08-17 by comparing the design's CONSUMES edges against what the code actually imports. THREE OF THE FIVE `ifc:req-dyno-*` interfaces are consumed, in the graph, by a component that does not use them in the build.\n\n  interface                     design says CONSUMED BY   code actually imports it in\n  ifc:req-dyno-graph-api        cmp:propagate             structure.rs, allocate.rs, flow.rs  (cmp:structure / cmp:allocate / cmp:flow)\n  ifc:req-dyno-vector-api       cmp:search                dimensions.rs                       (cmp:dimensions)\n  ifc:req-dyno-resolution-api   cmp:heal                  seam.rs, ingest.rs                  (cmp:seam / cmp:ingest)\n  ifc:req-dyno-core-api         cmp:graph                 graph.rs and throughout             CORRECT\n  ifc:req-dyno-storage-api      sys:store                 the store                           CORRECT\n\nVERIFIED BOTH WAYS: `propagate.rs` contains no `use dynograph_graph`, `search.rs` no `use dynograph_vector`, `heal.rs` no `use dynograph_resolution`; while `structure.rs`, `dimensions.rs` and `seam.rs` each do. And `art:structure` REALIZES `cmp:structure`, which is a different node from `cmp:propagate`, so this is misattribution rather than a naming synonym.\n\nWHY IT IS WORTH MORE THAN ITS SIZE. A CONSUMES edge is a black-box boundary claim: it says WHICH PART of this system depends on that supplier. Three of five point at the wrong part, so the design's answer to 'what breaks if the graph API changes?' names `cmp:propagate` and misses the three components that would actually break. That matters directly for `dec:a-black-box-needs-three-edges-not-one` and any future SE work on the subsystem tier, because those are the same edges the black-box decomposition will rest on.\n\nPLAUSIBLE CAUSE, not verified: the edges look like they were drawn from what each interface is FOR (propagation is the graph-algorithm-shaped feature, search is the vector-shaped feature, heal is the fuzzy-matching-shaped feature) rather than from what imports what. That is a reasonable-sounding guess written down once and never checked against the build — which is the class of error `reconcile_artifacts` catches for FILES and nothing catches for EDGES.\n\nNOT REPAIRED. Redrawing them is cheap, but 'which component consumes this supplier' is a design statement and the wrong fix would replace one guess with another; the components above are evidence from imports, which is a good start and not the same as a decision about ownership.",
+        "statement": "MEASURED 2026-08-17 by comparing the design's CONSUMES edges against what the code actually imports. THREE OF THE FIVE `ifc:req-dyno-*` interfaces are consumed, in the graph, by a component that does not use them in the build.\n\n  interface                     design says CONSUMED BY   code actually imports it in\n  ifc:req-dyno-graph-api        cmp:propagate             structure.rs, allocate.rs, flow.rs  (cmp:structure / cmp:allocate / cmp:flow)\n  ifc:req-dyno-vector-api       cmp:search                dimensions.rs                       (cmp:dimensions)\n  ifc:req-dyno-resolution-api   cmp:heal                  seam.rs, ingest.rs                  (cmp:seam / cmp:ingest)\n  ifc:req-dyno-core-api         cmp:graph                 graph.rs and throughout             CORRECT\n  ifc:req-dyno-storage-api      sys:store                 the store                           CORRECT\n\nVERIFIED BOTH WAYS: `propagate.rs` contains no `use dynograph_graph`, `search.rs` no `use dynograph_vector`, `heal.rs` no `use dynograph_resolution`; while `structure.rs`, `dimensions.rs` and `seam.rs` each do. And `art:structure` REALIZES `cmp:structure`, which is a different node from `cmp:propagate`, so this is misattribution rather than a naming synonym.\n\nWHY IT IS WORTH MORE THAN ITS SIZE. A CONSUMES edge is a black-box boundary claim: it says WHICH PART of this system depends on that supplier. Three of five point at the wrong part, so the design's answer to 'what breaks if the graph API changes?' names `cmp:propagate` and misses the three components that would actually break. That matters directly for `dec:a-black-box-needs-three-edges-not-one` and any future SE work on the subsystem tier, because those are the same edges the black-box decomposition will rest on.\n\nPLAUSIBLE CAUSE, not verified: the edges look like they were drawn from what each interface is FOR (propagation is the graph-algorithm-shaped feature, search is the vector-shaped feature, heal is the fuzzy-matching-shaped feature) rather than from what imports what. That is a reasonable-sounding guess written down once and never checked against the build — which is the class of error `reconcile_artifacts` catches for FILES and nothing catches for EDGES.\n\n═══════════════════════════════════════════════\n✅ REPAIRED 2026-08-19 on Anthony's word (\"do both 1 & 2\"), and it is a resync of the RECORD, not a fix to the system — the code was right throughout. `chg:foundation-consumes-redrawn-from-imports-2026-08-19`, change_type `resync`, subject `record`.\n\nTHE IMPORTS WERE RE-VERIFIED AGAINST CURRENT HEAD before anything was redrawn, rather than trusting this two-day-old measurement, and they were unchanged:\n  dynograph_graph      -> allocate.rs, flow.rs, structure.rs\n  dynograph_vector     -> dimensions.rs\n  dynograph_resolution -> ingest.rs, seam.rs\n\nRETRACTED (3): cmp:propagate -> graph-api, cmp:search -> vector-api, cmp:heal -> resolution-api.\nDRAWN (5), each `weight_basis: evidence` because they come from imports rather than from a guess:\n  ifc:req-dyno-graph-api      <- cmp:structure, cmp:allocate, cmp:flow\n  ifc:req-dyno-vector-api     <- cmp:dimensions  (optional, weight 0.4)\n  ifc:req-dyno-resolution-api <- cmp:ingest\n\nNote the shape change: one interface now has THREE consumers where the design claimed one. The old edges were not merely mis-pointed, they were under-counted — 'what breaks if the graph API changes?' had one answer and now has three.\n\n⚠️ DID THE REPAIR REACH THE CAUSE? PARTLY, AND THE HONEST ANSWER IS NO.\n· The three wrong edges are corrected — that is the symptom.\n· THE CAUSE IS UNADDRESSED: nothing checks a CONSUMES edge against what the build actually imports. `reconcile_artifacts` does exactly this job for FILES and there is no equivalent for EDGES, which is what let a plausible guess sit unchallenged from whenever it was drawn until 2026-08-17. Until something computes it, the next such edge will be as wrong and as unnoticed.\n\n🛑 AND ONE ENDPOINT COULD NOT BE DRAWN, so the repair is incomplete on its own terms. `seam.rs` imports `dynograph_resolution` and there is NO `cmp:seam` — the original measurement named one, and it does not exist. `art:seam` and `art:seam-test` are registered and REALIZE no Component at all. Rather than invent a component to complete a tidy picture, the edge was left undrawn and the gap recorded here: ifc:req-dyno-resolution-api has ONE consumer in the graph and TWO in the build.",
         "subject_id": "proj:reflow2",
-        "valid_from": "2026-08-17"
+        "valid_from": "2026-08-17",
+        "value": "{\"repaired\":\"2026-08-19\",\"change_event\":\"chg:foundation-consumes-redrawn-from-imports-2026-08-19\",\"change_type\":\"resync\",\"subject\":\"record\",\"retracted\":[[\"cmp:propagate\",\"ifc:req-dyno-graph-api\"],[\"cmp:search\",\"ifc:req-dyno-vector-api\"],[\"cmp:heal\",\"ifc:req-dyno-resolution-api\"]],\"drawn\":[[\"cmp:structure\",\"ifc:req-dyno-graph-api\"],[\"cmp:allocate\",\"ifc:req-dyno-graph-api\"],[\"cmp:flow\",\"ifc:req-dyno-graph-api\"],[\"cmp:dimensions\",\"ifc:req-dyno-vector-api\"],[\"cmp:ingest\",\"ifc:req-dyno-resolution-api\"]],\"weight_basis\":\"evidence\",\"imports_reverified_at_head\":true,\"reached_the_cause\":false,\"cause_still_open\":\"nothing checks a CONSUMES edge against what the build imports; reconcile_artifacts does this for files and has no edge equivalent\",\"incomplete\":\"seam.rs imports dynograph_resolution but no cmp:seam exists; art:seam REALIZES no Component. Edge left undrawn rather than inventing a node.\"}"
       }
     },
     {
@@ -110300,7 +110508,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:15f65507f1e02383599ae61fa8d880db85d51962a54a538def732257e5e259db",
+  "prev_content_hash": "sha256:265b96eaf5cc71407485ad11fed9ec7915e641385c3db8dfc05aa54e9aed4242",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -280,6 +280,11 @@ pub enum GapSource {
     LevelMismatch,
     /// A subsystem-or-higher component with no parent above and no child below.
     OrphanLevel,
+    /// A Component contained by more than one parent — the spine is a tree.
+    MultipleParents,
+    /// A Component at the root of the spine declaring a level something else
+    /// claims to be above, so "the top tier" has two disagreeing answers.
+    LevelSpineDisagreement,
     // Decision points (axis of design space — BL-70)
     /// A *proposed* Decision holding ≥2 registered alternatives — an open fork
     /// the design has not chosen between. The "missing teeth" BL-70 named:
@@ -398,6 +403,8 @@ impl GapSource {
             GapSource::MissingIntermediateLevel => "missing_intermediate_level",
             GapSource::LevelMismatch => "level_mismatch",
             GapSource::OrphanLevel => "orphan_level",
+            GapSource::MultipleParents => "multiple_parents",
+            GapSource::LevelSpineDisagreement => "level_spine_disagreement",
             GapSource::UndecidedDecisionPoint => "undecided_decision_point",
             GapSource::UnvalidatedCapability => "unvalidated_capability",
             GapSource::KppUnbound => "kpp_unbound",
@@ -478,6 +485,8 @@ impl GapSource {
             | GapSource::MissingIntermediateLevel
             | GapSource::LevelMismatch
             | GapSource::OrphanLevel
+            | GapSource::MultipleParents
+            | GapSource::LevelSpineDisagreement
             | GapSource::UndecidedDecisionPoint
             | GapSource::KppUnbound
             | GapSource::KppBreached
@@ -2924,17 +2933,27 @@ impl DesignGraph {
                 HierarchyIssueKind::MissingIntermediateLevel => GapSource::MissingIntermediateLevel,
                 HierarchyIssueKind::LevelMismatch => GapSource::LevelMismatch,
                 HierarchyIssueKind::OrphanLevel => GapSource::OrphanLevel,
+                HierarchyIssueKind::MultipleParents => GapSource::MultipleParents,
+                HierarchyIssueKind::LevelSpineDisagreement => GapSource::LevelSpineDisagreement,
             };
             // Missing-intermediate is the highest-value Y defect; rank it up.
             let severity = match issue.kind {
                 HierarchyIssueKind::MissingIntermediateLevel => 0.7,
                 HierarchyIssueKind::LevelMismatch => 0.6,
                 HierarchyIssueKind::OrphanLevel => 0.45,
+                // A box in two boxes makes every containment walk ambiguous,
+                // so it outranks the floating-level finding.
+                HierarchyIssueKind::MultipleParents => 0.65,
+                HierarchyIssueKind::LevelSpineDisagreement => 0.5,
             };
             let title = match issue.kind {
                 HierarchyIssueKind::MissingIntermediateLevel => "Missing intermediate level",
                 HierarchyIssueKind::LevelMismatch => "Decomposition level mismatch",
                 HierarchyIssueKind::OrphanLevel => "Floating decomposition level",
+                HierarchyIssueKind::MultipleParents => "One box, two parents",
+                HierarchyIssueKind::LevelSpineDisagreement => {
+                    "Declared level disagrees with spine position"
+                }
             };
             // Fold the producing edge into the id so a CONTAINS and a
             // DEPENDS_ON missing-intermediate over the same pair get DISTINCT

@@ -302,7 +302,12 @@ impl ReflowService {
                        Every node carries `discontinued` (brief included): true when an \
                        ACCEPTED Decision has withdrawn it. The stored `status` records what was \
                        BUILT and does not move on withdrawal, so filtering a list on `status` \
-                       alone will count things that no longer exist.",
+                       alone will count things that no longer exist. PASS `level` TO ASK FOR ONE \
+                       RUNG OF THE DECOMPOSITION LADDER — `component` / `subsystem` / `system` / \
+                       `system_of_systems` / `enterprise`. That is how you ask for \"the \
+                       top-level boxes\": deriving them from the CONTAINS spine instead returns \
+                       leaves nobody wired to a parent, which is a different set and a \
+                       confidently wrong one.",
         annotations(read_only_hint = true)
     )]
     pub async fn scan_nodes(
@@ -310,7 +315,49 @@ impl ReflowService {
         Parameters(req): Parameters<ScanReq>,
     ) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
-        let nodes = g.scan_nodes(&req.node_type).map_err(dyno_err)?;
+        let mut nodes = g.scan_nodes(&req.node_type).map_err(dyno_err)?;
+        // `level` narrows to one rung of the decomposition ladder. Refused on
+        // any other type and on an unknown rung, rather than answered with an
+        // empty list: "no Components at that level" and "that is not a level"
+        // are different facts, and the second one silently reads as the first.
+        if let Some(level) = req.level.as_deref() {
+            const LEVELS: [&str; 5] = [
+                "component",
+                "subsystem",
+                "system",
+                "system_of_systems",
+                "enterprise",
+            ];
+            if req.node_type != reflow2_core::nodes::node::COMPONENT {
+                return Err(McpError::invalid_params(
+                    format!(
+                        "`level` narrows the decomposition ladder and only `Component`                          carries one, so it cannot filter `{}`. Drop `level`, or scan                          `Component`.",
+                        req.node_type
+                    ),
+                    None,
+                ));
+            }
+            if !LEVELS.contains(&level) {
+                return Err(McpError::invalid_params(
+                    format!(
+                        "`{}` is not a decomposition level. The ladder is: {}.",
+                        level,
+                        LEVELS.join(" ▸ ")
+                    ),
+                    None,
+                ));
+            }
+            nodes.retain(|n| {
+                n.properties
+                    .get("level")
+                    .and_then(|v| v.as_str())
+                    // The schema defaults an unset level to `component`, so an
+                    // older node with no level must still answer to it.
+                    .unwrap_or("component")
+                    == level
+            });
+        }
+        let nodes = nodes;
         let total = nodes.len();
         let offset = req.offset.unwrap_or(0).min(total);
         let brief = req.brief.unwrap_or(false);

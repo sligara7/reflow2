@@ -107,6 +107,7 @@ async fn withdrawn() -> ReflowService {
 
 async fn scanned(s: &ReflowService, brief: bool) -> serde_json::Value {
     j!(s.scan_nodes(Parameters(ScanReq {
+        level: None,
         node_type: "Capability".into(),
         brief: Some(brief),
         limit: None,

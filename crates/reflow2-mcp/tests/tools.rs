@@ -1922,6 +1922,7 @@ async fn change_event_declares_what_it_changed_atomically() {
         .await;
     assert!(refused.is_err(), "a missing affected node refuses the call");
     let events = jl!(s.scan_nodes(Parameters(ScanReq {
+        level: None,
         node_type: "ChangeEvent".into(),
         ..Default::default()
     })));
@@ -2243,6 +2244,7 @@ async fn read_side_loop_hint_fires_on_debt_then_only_on_change() {
 
     // First orientation read after the seeding writes surfaces the pointer once.
     let first = j!(s.scan_nodes(Parameters(ScanReq {
+        level: None,
         node_type: "Capability".into(),
         ..Default::default()
     })));
@@ -2258,6 +2260,7 @@ async fn read_side_loop_hint_fires_on_debt_then_only_on_change() {
     // A second read with no write in between stays quiet — the picture has not
     // moved, and boilerplate on every read is the anti-pattern C rejects.
     let second = j!(s.scan_nodes(Parameters(ScanReq {
+        level: None,
         node_type: "Capability".into(),
         ..Default::default()
     })));
@@ -2285,6 +2288,7 @@ async fn read_side_loop_hint_fires_on_debt_then_only_on_change() {
         distinct_from: None,
     })));
     let grown = j!(s.scan_nodes(Parameters(ScanReq {
+        level: None,
         node_type: "Capability".into(),
         ..Default::default()
     })));
@@ -2309,6 +2313,7 @@ async fn read_side_loop_hint_silent_when_the_loop_is_clean() {
     // A clean loop attaches no read hint — the pointer is state-derived, not
     // static, so silence is the correct output here.
     let read = j!(s.scan_nodes(Parameters(ScanReq {
+        level: None,
         node_type: "Capability".into(),
         ..Default::default()
     })));
@@ -2339,6 +2344,7 @@ async fn a_read_too_large_to_return_says_what_it_left_out() {
     }
 
     let page = j!(s.scan_nodes(Parameters(ScanReq {
+        level: None,
         node_type: "Capability".into(),
         ..Default::default()
     })));
@@ -2363,6 +2369,7 @@ async fn a_read_too_large_to_return_says_what_it_left_out() {
 
     // Resuming from next_offset reaches the rest: paging is real, not advice.
     let rest = j!(s.scan_nodes(Parameters(ScanReq {
+        level: None,
         node_type: "Capability".into(),
         offset: Some(returned as usize),
         ..Default::default()
@@ -2385,6 +2392,7 @@ async fn a_single_node_larger_than_the_budget_is_still_returned() {
     })));
 
     let page = j!(s.scan_nodes(Parameters(ScanReq {
+        level: None,
         node_type: "Capability".into(),
         ..Default::default()
     })));
@@ -2404,6 +2412,7 @@ async fn brief_gives_the_shape_without_the_prose() {
     })));
 
     let page = j!(s.scan_nodes(Parameters(ScanReq {
+        level: None,
         node_type: "Capability".into(),
         brief: Some(true),
         ..Default::default()
@@ -2439,6 +2448,7 @@ async fn an_explicit_limit_is_reported_as_the_reason_it_stopped() {
     }
 
     let page = j!(s.scan_nodes(Parameters(ScanReq {
+        level: None,
         node_type: "Capability".into(),
         limit: Some(2),
         ..Default::default()
@@ -2449,6 +2459,7 @@ async fn an_explicit_limit_is_reported_as_the_reason_it_stopped() {
 
     // Unbounded and small: nothing is capped, and the fields say so plainly.
     let all = j!(s.scan_nodes(Parameters(ScanReq {
+        level: None,
         node_type: "Capability".into(),
         ..Default::default()
     })));

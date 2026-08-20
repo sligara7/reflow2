@@ -91,6 +91,24 @@ pub enum HierarchyIssueKind {
     /// the tools lead you to — a Project holding a few subsystems — reported one
     /// orphan per subsystem, which is how reflow2's own design produced two.
     OrphanLevel,
+    /// A Component contained by MORE THAN ONE parent — a box in two boxes.
+    ///
+    /// The spine is a tree. Two parents make "which box is this in?" a question
+    /// with two answers, and every walk that assumes one silently picks whichever
+    /// it reached first. Found unflagged in reflow2's own design (`cmp:skills`,
+    /// under both `proj:reflow2` and `sys:agent-surface`).
+    MultipleParents,
+    /// A Component that sits at the ROOT of the spine while declaring a level
+    /// something else in the design claims to be above.
+    ///
+    /// This is the "two answers that disagree" defect, measured 2026-08-18: ask
+    /// for the top tier by declared `level` and you get the subsystems; ask by
+    /// spine position — components with no `CONTAINS` parent — and you get leaves
+    /// that were never wired to a parent. Both queries are reasonable, they
+    /// disagree, and the structural one is confidently wrong. Reported against
+    /// the node so the disagreement is fixed where it is, rather than left for
+    /// each caller to trip over.
+    LevelSpineDisagreement,
 }
 
 impl HierarchyIssueKind {
@@ -100,6 +118,8 @@ impl HierarchyIssueKind {
             HierarchyIssueKind::MissingIntermediateLevel => "missing_intermediate_level",
             HierarchyIssueKind::LevelMismatch => "level_mismatch",
             HierarchyIssueKind::OrphanLevel => "orphan_level",
+            HierarchyIssueKind::MultipleParents => "multiple_parents",
+            HierarchyIssueKind::LevelSpineDisagreement => "level_spine_disagreement",
         }
     }
 }
@@ -235,6 +255,73 @@ impl DesignGraph {
                         lvl.as_str()
                     ),
                 });
+            }
+        }
+
+        // multiple_parents: the spine is a tree, so two parents is a defect
+        // regardless of level arithmetic. Project parents COUNT here, unlike in
+        // the level checks: `proj:reflow2 CONTAINS cmp:skills` and
+        // `sys:agent-surface CONTAINS cmp:skills` are two boxes, and which one
+        // "the" box is cannot be answered.
+        for id in levels.keys() {
+            let parents: Vec<String> = self
+                .incoming(id, Some(edge::CONTAINS))?
+                .iter()
+                .filter(|e| projects.contains(&e.from_id) || levels.contains_key(&e.from_id))
+                .map(|e| e.from_id.clone())
+                .collect();
+            if parents.len() > 1 {
+                let mut named = parents.clone();
+                named.sort();
+                issues.push(HierarchyIssue {
+                    kind: HierarchyIssueKind::MultipleParents,
+                    components: vec![id.clone()],
+                    relation: Some("contains"),
+                    message: format!(
+                        "'{}' is contained by {} parents ({}) — the spine is a tree, so \
+                         \"which box is this in?\" has no single answer and every walk that \
+                         assumes one picks whichever it reached first",
+                        id,
+                        named.len(),
+                        named.join(", ")
+                    ),
+                });
+            }
+        }
+
+        // level_spine_disagreement: a parentless Component that declares a level
+        // something else claims to be above. Asking for the top tier by `level`
+        // and by spine position then return different sets.
+        //
+        // SELF-LIMITING BY CONSTRUCTION: the comparison is against the highest
+        // level actually PRESENT, so a flat design where every part is
+        // `component` reports nothing. Nothing here prescribes a ladder depth —
+        // that would be the over-modelling this project refuses.
+        if let Some(&top) = levels.values().max_by_key(|l| l.rank()) {
+            for (id, &lvl) in &levels {
+                if lvl.rank() >= top.rank() {
+                    continue; // legitimately a root
+                }
+                let has_parent = self
+                    .incoming(id, Some(edge::CONTAINS))?
+                    .iter()
+                    .any(|e| projects.contains(&e.from_id) || levels.contains_key(&e.from_id));
+                if !has_parent {
+                    issues.push(HierarchyIssue {
+                        kind: HierarchyIssueKind::LevelSpineDisagreement,
+                        components: vec![id.clone()],
+                        relation: None,
+                        message: format!(
+                            "'{}' declares level '{}' but sits at the ROOT of the spine — \
+                             nothing contains it, while '{}' exists above it. Asking for the \
+                             top tier by declared level and by spine position give different \
+                             answers, and this node is why",
+                            id,
+                            lvl.as_str(),
+                            top.as_str()
+                        ),
+                    });
+                }
             }
         }
 
