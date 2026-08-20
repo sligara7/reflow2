@@ -80,6 +80,28 @@ pub const STALE_NOTE: &str = "STALE: this server's executable has been replaced 
      --serve-shared &`). A SESSION RESTART ALONE, WITHOUT `--stop-shared`, CHANGES NOTHING: \
      `--shared` re-attaches to the same daemon.";
 
+/// What `loop_status.next` says when the server is not the binary on disk.
+///
+/// PUBLIC FOR THE SAME REASON AS [`STALE_NOTE`]: the branch cannot run in a
+/// test process, so a test that could only be checked by hand is no test. It
+/// lives in `next` rather than only in `served_by` because `next` is the list
+/// an agent acts on, and being BESIDE the actionable list is not the same as
+/// being IN it — the failure this whole line exists to answer.
+pub const STALE_NEXT: &str = "THE SERVER ANSWERING THIS IS NOT THE BINARY ON DISK — every \
+     computed rollup here came from code that has been replaced. Graph WRITES are unaffected. \
+     Refresh with `reflow2-mcp --graph-path <path> --stop-shared`, then make any tool call. A \
+     SESSION RESTART ALONE DOES NOT: `--shared` re-attaches to the same daemon. See \
+     `served_by.stale_note`.";
+
+/// What `loop_status.next` says when currency could not be determined at all.
+///
+/// Unknown is not `false` (`UNKNOWN_NOTE`), so it earns a `next` entry too: a
+/// session that cannot tell whether its answers come from current code should
+/// know that before it trusts a rollup, not after.
+pub const UNKNOWN_NEXT: &str = "This server CANNOT TELL whether it is still the binary it \
+     started from (/proc unreadable — non-Linux or restricted). Unknown is not `false`: verify \
+     the running build another way before trusting a rollup. See `served_by.stale_note`.";
+
 /// What it says when the executable is still the file we started from.
 pub const CURRENT_NOTE: &str =
     "current: this server's executable is still the file it was started from.";

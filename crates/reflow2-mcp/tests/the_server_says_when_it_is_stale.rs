@@ -30,6 +30,7 @@
 //! question nothing could answer before.
 
 use reflow2_mcp::service::*;
+use rmcp::handler::server::wrapper::Parameters;
 
 macro_rules! j {
     ($call:expr) => {
@@ -157,4 +158,88 @@ fn the_unknown_note_says_unknown() {
         "it must say outright that unknown is not a quiet no"
     );
     assert_ne!(UNKNOWN_NOTE, CURRENT_NOTE);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// FOURTH INSTANCE, 2026-08-19 — and the first three are in this file's header.
+//
+// The bit above was built after instance three and it did not prevent instance
+// four, because it rode on `graph_report` alone. That is not a call anything
+// points a session at: the session-start hook says "loop_status is the one
+// cheap call", the stop hook nudges there, and a whole day of work ran against
+// a daemon four hours older than the code without one signal reaching the
+// reader. Five merged PRs, a deliberate restart, no movement — the same shape
+// as 2026-08-08, with the remedy already shipped and unreachable.
+//
+// So the currency of the ANSWERER now rides beside the currency of the DESIGN.
+
+/// The orientation call carries the answer, not just the report nobody calls.
+#[tokio::test]
+async fn loop_status_says_whether_its_own_answers_are_current() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    let status = j!(s.loop_status(Parameters(Default::default())));
+    let served = &status["served_by"];
+
+    assert!(
+        !served.is_null(),
+        "loop_status is the call the project points sessions at; it must say who \
+         answered it: {status}"
+    );
+    assert!(
+        served.get("stale").is_some(),
+        "an explicit bit, not a version to compare — the inference is what readers \
+         got wrong in both directions: {served}"
+    );
+    assert!(served.get("reflow2_version").is_some(), "{served}");
+}
+
+/// CHEAP WHEN CURRENT. The remedy note is ~1 KB and the ordinary call must not
+/// pay for it, or `cap:loop-status`'s "one cheap call" erodes the way the
+/// per-check roll already did once.
+#[tokio::test]
+async fn a_current_server_costs_three_fields_and_does_not_touch_next() {
+    let s = ReflowService::in_memory().expect("in-memory service");
+    let status = j!(s.loop_status(Parameters(Default::default())));
+    let served = &status["served_by"];
+
+    // In a test process the exe is present and unchanged, so this is the
+    // current branch — the one that must stay quiet.
+    if served["stale"] == serde_json::Value::Bool(false) {
+        assert!(
+            served.get("stale_note").is_none(),
+            "a current server carries the FACT and drops the essay: {served}"
+        );
+        let next = status["next"].as_array().expect("next is a list");
+        for item in next {
+            let s = item.as_str().unwrap_or_default();
+            assert!(
+                !s.contains("NOT THE BINARY ON DISK") && !s.contains("CANNOT TELL"),
+                "a current server must not add currency debt to next: {s}"
+            );
+        }
+    }
+}
+
+/// The wording an agent would ACT on, asserted without arranging a replaced
+/// binary — the same reason `STALE_NOTE` is public. A branch that can only be
+/// checked by hand is the vacuous test this file already refuses.
+#[test]
+fn the_next_entries_name_the_remedy_and_the_trap() {
+    // The remedy, exactly.
+    assert!(STALE_NEXT.contains("--stop-shared"), "{STALE_NEXT}");
+    // AND the trap that produced all four instances: restarting is not enough.
+    assert!(
+        STALE_NEXT.contains("SESSION RESTART ALONE DOES NOT"),
+        "the entry must kill the assumption that a restart fixes it: {STALE_NEXT}"
+    );
+    assert!(STALE_NEXT.contains("re-attaches"), "{STALE_NEXT}");
+    // Writes are safe — said out loud, so nobody panics about the graph.
+    assert!(STALE_NEXT.contains("WRITES are unaffected"), "{STALE_NEXT}");
+
+    // Unknown is not false, and must not be phrased as if it were.
+    assert!(UNKNOWN_NEXT.contains("CANNOT TELL"), "{UNKNOWN_NEXT}");
+    assert!(
+        UNKNOWN_NEXT.contains("not `false`"),
+        "unknown must not read as a clean bill: {UNKNOWN_NEXT}"
+    );
 }
