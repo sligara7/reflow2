@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:c7a254d1e86da1b7dd2785ef62f65dd4495342105245c984421b2798dae11bfc",
+  "content_hash": "sha256:045f0cff9a1c6c934559bf4954f14bc882a24496cf41b7165c007a69cef1eaf9",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2712,6 +2712,12 @@
     },
     {
       "edge_type": "ASKS_ABOUT",
+      "from_id": "question:4e24a202aa6f1737",
+      "properties": {},
+      "to_id": "cmp:packaging"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
       "from_id": "question:52b1ed1377382961",
       "properties": {},
       "to_id": "req:plans-move-honestly"
@@ -2733,6 +2739,12 @@
       "from_id": "question:634fc0554d9ccfc6",
       "properties": {},
       "to_id": "cap:store"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:64551316de63fabb",
+      "properties": {},
+      "to_id": "cmp:registry"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -4611,6 +4623,12 @@
       "from_id": "chg:cluster-claims-built",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:cmp-skills-gets-one-parent",
+      "properties": {},
+      "to_id": "epoch:cmp-skills-gets-one-parent"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -6843,6 +6861,12 @@
       "from_id": "snap:epoch:capture-registers-its-source:cap:governance-proposal",
       "properties": {},
       "to_id": "epoch:capture-registers-its-source"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:cmp-skills-gets-one-parent:cmp:skills",
+      "properties": {},
+      "to_id": "epoch:cmp-skills-gets-one-parent"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -16469,6 +16493,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:cmp-skills-gets-one-parent",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:commands-ship",
       "properties": {
         "accepted_baseline": true,
@@ -19818,6 +19851,51 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:re-decomposition-becomes-an-operation",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:re-decomposition-becomes-an-operation",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:move-component-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:re-decomposition-becomes-an-operation",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:re-decomposition-becomes-an-operation",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:re-decomposition-becomes-an-operation",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-component-can-be-moved-not-just-given-another-parent"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:reading-carries-options",
       "properties": {
         "accepted_baseline": false,
@@ -23152,12 +23230,6 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "cmp:nudge"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "proj:reflow2",
-      "properties": {},
-      "to_id": "cmp:skills"
     },
     {
       "edge_type": "CONTAINS",
@@ -32441,6 +32513,12 @@
       "from_id": "cmp:identity",
       "properties": {},
       "to_id": "snap:epoch:the-kernel-becomes-one-subsystem:cmp:identity"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cmp:skills",
+      "properties": {},
+      "to_id": "snap:epoch:cmp-skills-gets-one-parent:cmp:skills"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -76039,6 +76117,15 @@
         "completeness": "complete",
         "conformance": "verified"
       },
+      "to_id": "cap:a-component-can-be-moved-not-just-given-another-parent"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:hierarchy",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
       "to_id": "cap:the-spine-is-checked-for-two-parents-and-for-level-disagreement"
     },
     {
@@ -76264,6 +76351,15 @@
         "completeness": "complete"
       },
       "to_id": "ver:handed-out-seat-liveness"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:move-component-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-component-can-be-moved-not-just-given-another-parent"
     },
     {
       "edge_type": "REALIZES",
@@ -77146,6 +77242,15 @@
         "completeness": "partial"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-capture",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-component-can-be-moved-not-just-given-another-parent"
     },
     {
       "edge_type": "REALIZES",
@@ -80076,6 +80181,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-move-leaves-exactly-one-parent",
+      "properties": {},
+      "to_id": "cap:a-component-can-be-moved-not-just-given-another-parent"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-node-attached-to-nothing-is-reported-whatever-its-type",
       "properties": {},
       "to_id": "cap:a-node-attached-to-nothing-is-reported-whatever-its-type"
@@ -81880,6 +81991,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:move-component-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:move-component-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:nodes",
       "properties": {
         "action": "created"
@@ -83568,7 +83687,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c4329e5e0fce69e92694e267402be1c882fc20f50ad0a7ce77a66d6912130b56",
+        "checksum": "sha256:5edf2f7e755547e3e9e91017d7c652f451fd764daf38f52b7c7a7486247cf320",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/hierarchy.rs",
         "name": "hierarchy.rs",
@@ -83844,6 +83963,17 @@
         "name": "mint_seat_liveness.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:move-component-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:d096230f4c9b28747c2ec676526332ecf66aebe7487bb7bbc25faea165955e67",
+        "location": "crates/reflow2-core/tests/move_component.rs",
+        "name": "move_component.rs",
+        "status": "realized"
       }
     },
     {
@@ -84391,7 +84521,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9494b6f9fba63592b9557dbff76f3fe96f46150b9d9e858f6e30280121fc533d",
+        "checksum": "sha256:199f3fc159a23836e5dfaf31eb8c51c47040973bde86dad09d7d39e48432b34b",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -84918,7 +85048,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ea63dab87774d3a0ac022b987cf8594f446c5033ddb8ad8f405916dd1514bf05",
+        "checksum": "sha256:0d0e5257d3a25397c12359b6882584a97b9e924587cdde187ce72965ca25902e",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -85257,6 +85387,16 @@
       "properties": {
         "description": "THREE THINGS, and the corpus had two of them while authors wrote all three into one. `name` is what a list renders; `description` is what the check IS; `findings` (new) is what a RUN found. `add_verification` gains `description`; `set_verification_status` gains `findings`; `loop_status`'s rollup shortens a long name AND says that it did. (The guard matched the OBSERVATION that named this defect and the REQUIREMENT that answers it; this is the built thing that closes both.)\n\n⭐⭐ THE REQUIREMENT NAMED ITS OWN PRECONDITION AND THE ANSWER WAS NO. It asked, in its own words: \"THE LOAD-BEARING UNCERTAINTY, to answer BEFORE building: WOULD A NEW FIELD ALONE CHANGE ANYTHING? A declared field nobody writes to leaves the corpus exactly as it is.\" Measured before writing any code:\n\n    Verifications                        164\n    median `name`                         76 words   (72 over 100, 17 over 300, longest 654)\n    `description` — DECLARED, fulltext,\n    and the node's EMBEDDING FIELD         1 use in 164\n\n⇒ SO A `findings` FIELD ALONE WOULD HAVE BECOME THE SECOND UNUSED FIELD. The uncertainty was real and the answer sat in the corpus for anyone who counted.\n\n⭐ AND THE ROOT CAUSE WAS REACHABILITY, NOT NEGLECT — found by reading the constructor rather than inferring from the number. `add_verification(id, name, method, level)` HAD NO PARAMETER FOR `description`. The only route was raw `create_node` and essentially nobody took it. Authors wrote reports into `name` because **`name` was the only string the constructor accepted**. The field was not ignored; it was unwritable. That is `dec:how-should-a-temporal-fact-carry-its-date-when-there-is-no-epoch` one door along — there, 112 nodes wrote an UNDECLARED property because the declared route did not fit; here, one node wrote a declared property because the route did not exist.\n\nWHERE EACH FIELD IS WRITTEN IS THE DESIGN, not a convenience:\n• `description` on the CONSTRUCTOR — what the check is, stated once.\n• `findings` on `set_verification_status` — what a RUN found, restated whenever an outcome changes. Evidence belongs to a run, so it is recorded when the run produces it, by the caller holding it.\n• Omitting `findings` LEAVES IT ALONE, exactly as `last_run_at` does since 2026-08-08 — re-marking a check passing without restating evidence must not erase it. Erasing is a deliberate act deserving an explicit one, the convention `set_interface_spec`, `set_decision_status` and `set_epoch_status` all state and which this function's own first line already promised.\n\nTHE ROLLUP, their second ask: `loop_status`'s `verifications.attention[]` shortens a `name` past 25 words — and carries `name_truncated`, `name_words`, and a top-level `names_truncated` note saying how many and where the full text is. ⭐ THE ANNOUNCEMENT IS THE POINT, not decoration: a silently shortened name reads as \"that is the whole name\", a vacuous zero one layer over, and it is the SIXTH of Anthony's own engineering principles — no silent caps or truncation. Truncating without fixing reachability would have been the stopgap `rule:fix-it-properly-while-it-is-still-cheap` forbids; cause and symptom were fixed together.\n\n⚠️ BOUNDS, stated rather than discovered later:\n• NOTHING IS MIGRATED. The 164 existing long names stay as they are. A property once written cannot be removed, so the best available repair would duplicate rather than move — and rewriting 164 authored names is not a mechanical act. New checks get the shape; old ones keep theirs. The median will fall slowly or not at all, and that is honest rather than disappointing.\n• `findings` IS NOT VALIDATED OR PARSED. reflow2 records what an author says a run found and never judges it (`dec:non-goal-reflow2-does-not-judge-whether-a-check-is-meaningful`). A `passing` status beside findings describing a failure is a contradiction only a reader can catch — dev_storyflow's 2026-08-07 report exactly, where a check recorded \"EXIT 0, verdict STALE\" and stayed passing forever. This gives that evidence a home; it does not make the contradiction computable.\n• The schema gains a PROPERTY, not a type, so the version stamp (counting node/edge types, 29/61) does not move and an older reflow2 can still read the graph.",
         "name": "A check records what it FOUND separately from what it IS, and the rollup that made a cheap call expensive to read says when it shortened a name",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-component-can-be-moved-not-just-given-another-parent",
+      "node_type": "Capability",
+      "properties": {
+        "description": "PROPOSAL 1, built 2026-08-20 on Anthony's word. DISTINCT FROM the two nodes nearest it: one was a single re-placement of reflow2's own kernel, the other measures whether walls hold. This is the OPERATION a user of any project needs to do either.\n\nTHE GAP, found by using reflow2 and MEASURED the way a user would hit it. Asked in a user's own words — \"move a component to a different parent, re-decompose\" — find_tools ranked contain_component top of 152 served tools. contain_component ADDS a parent and removes nothing, so the discoverable route is also the wrong one: the spine stops being a tree, and hierarchy_issues reports multiple_parents AFTERWARDS, which is the wrong end of the act. Re-decomposition is not exotic — adopting a brownfield system, acting on a design review, and severability work all consist of it.\n\nVERIFIED THE SAME WAY THE GAP WAS MEASURED: the identical query now ranks move_component first of 153, scoring 67.5 against add_component's 44.9.\n\nWHAT IT DOES: move_component(child_id, new_parent_id) detaches EVERY parent the child had and names them.\n  · It detaches a Project parent too. A component with no subsystem is often wired straight to the project PRECISELY BECAUSE it is homeless, so a move that only looked for Component parents would create the very defect it exists to prevent. That is not hypothetical - it happened to cmp:identity the same day.\n  · An EMPTY detached list is reported rather than folded into success: \"placed for the first time\" and \"moved\" are different facts, and a caller who believed they were moving something learns they were not.\n  · The level relation is REPORTED in level_note, never enforced - hierarchy_issues is the authority, and one rule with two homes is one rule that can disagree with itself. But it fires AT THE MOMENT OF THE MOVE, which is the difference between a defect avoided and a defect found.\n  · It does not snapshot for the caller - choosing the epoch is their call - but history_note names the record_change that preserves the previous parent whenever anything was detached.\n\nFIRST USE ON A REAL DESIGN, not a fixture: cmp:skills had carried two parents since before this session. One call detached the stale proj:reflow2 containment; hierarchy_issues went 3 findings to 2.\n\nA BUG FOUND BY USING IT, fixed before it shipped: history_note originally stayed silent whenever the child had ANY snapshot. A snapshot from an earlier epoch is no evidence that THIS move was recorded, so the rule went quiet for exactly the long-lived node whose history matters most - silent in the dangerous direction. It now fires on any detachment and states a fact rather than making an accusation. an_earlier_snapshot_does_not_silence_the_history_note pins it.\n\nSTATED LIMIT: this fixes the CONTAINMENT spine only. DEPENDS_ON, PROVIDES and CONSUMES edges follow the component unchanged, so a move can put a contract across a wall it did not previously cross and nothing says so.",
+        "name": "A component can be MOVED on the decomposition spine, not merely given another parent",
         "provenance": "authored",
         "status": "realized"
       }
@@ -90263,6 +90403,15 @@
       }
     },
     {
+      "node_id": "chg:cmp-skills-gets-one-parent",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "cmp:skills, snapshotted while it still holds both parents",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:commands-ship",
       "node_type": "ChangeEvent",
       "properties": {
@@ -91285,6 +91434,15 @@
       "properties": {
         "change_type": "new_feature",
         "name": "A published surface can carry a behavioural promise: Requirement gains a `designation`, and export_surface carries the published ones alongside the boundaries"
+      }
+    },
+    {
+      "node_id": "chg:re-decomposition-becomes-an-operation",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Re-decomposition becomes an operation — move_component ships, and the discoverable route to re-parenting stops being the one that creates a defect",
+        "subject": "system"
       }
     },
     {
@@ -97577,6 +97735,16 @@
       }
     },
     {
+      "node_id": "epoch:cmp-skills-gets-one-parent",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "cmp:skills is re-parented with move_component — the operation's first use on a real design, on the defect that motivated building it (2026-08-20)",
+        "sequence": 368,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:complementary-pairing",
       "node_type": "DesignEpoch",
       "properties": {
@@ -100335,6 +100503,16 @@
       }
     },
     {
+      "node_id": "frag:art:move-component-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered move_component.rs"
+      }
+    },
+    {
       "node_id": "frag:art:nodes",
       "node_type": "Fragment",
       "properties": {
@@ -101675,6 +101853,17 @@
       }
     },
     {
+      "node_id": "question:4e24a202aa6f1737",
+      "node_type": "Question",
+      "properties": {
+        "context_setter": "Declared level disagrees with spine position",
+        "gap_id": "gap:4e24a202aa6f1737",
+        "question": "Packaging is declared a leaf component, but nothing contains it — it sits at the top of the decomposition alongside the nine subsystems. So \"what are the top-level parts of reflow2?\" gives two different answers depending on whether you ask by declared level or by position in the spine. Which is right: does packaging belong inside a subsystem (the agent surface, or documentation), should it be raised to a subsystem in its own right, or is it correctly outside the product decomposition altogether — a build concern rather than a part of the delivered system?",
+        "rephrase_degraded": false,
+        "status": "asked"
+      }
+    },
+    {
       "node_id": "question:52b1ed1377382961",
       "node_type": "Question",
       "properties": {
@@ -101722,6 +101911,17 @@
         "question": "How will you prove the design store only ever keeps valid, well-formed records — or is this the same store your design already describes and tests elsewhere under a different name?",
         "rephrase_degraded": false,
         "status": "answered"
+      }
+    },
+    {
+      "node_id": "question:64551316de63fabb",
+      "node_type": "Question",
+      "properties": {
+        "context_setter": "Declared level disagrees with spine position",
+        "gap_id": "gap:64551316de63fabb",
+        "question": "The registry — the part that holds many designs in one process, opening them on demand and evicting them when idle — is declared a leaf component but nothing contains it, so it sits at the top of the decomposition alongside the nine subsystems. It is also the only component in that position whose capabilities are entirely unbuilt and unverified, which suggests the placement may be a symptom rather than the defect. Where does it belong: inside the agent surface, inside the foundation with the store it multiplexes, or as a subsystem of its own once the hosted tier is real?",
+        "rephrase_degraded": false,
+        "status": "asked"
       }
     },
     {
@@ -105607,6 +105807,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:cmp-skills-gets-one-parent:cmp:skills",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-refusal-maps-a-command-alias-to-what-is-served\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:adopt\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:bl-100\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:bl-101\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:brainstorm\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:capture-registers-its-source\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:change-an-existing-feature\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:delta-reconcile\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:governance-proposal\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:kit\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:kpp-proposal\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:link-projects-skill\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:onboarding\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:parallel-work\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:plan-increments\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:skills-served\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:the-agent-asks-who-it-is-talking-to\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:the-design-interview-precedes-the-capture\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:the-loop-holds-the-invitation\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:the-register-rule-reaches-the-words\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:the-skill-response-carries-the-lens\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Project\",\"other_id\":\"proj:reflow2\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Component\",\"other_id\":\"sys:agent-surface\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0100\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0101\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0110\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0120\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0360\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v040\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v050\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v060\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v061\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v070\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v080\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v090\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:skills\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:skills-build\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:skill-lint\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"CONSUMES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:mcp-tools\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:4ac1c3ccf483b4d6\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:4dfe80425e7f885e\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:7a268920fdfe0ba7\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:bd5aefd848b8d3e4\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:e114420e3f72541b\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:f58dc09a846a8783\",\"properties\":{}}]",
+        "state": "{\"kind\":\"module\",\"level\":\"component\",\"name\":\"skills\",\"provenance\":\"authored\",\"purpose\":\"The served skill catalogue: embedded bodies, the instruction catalogue, and the two tools that read them.\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cmp:skills",
+        "target_type": "Component"
+      }
+    },
+    {
       "node_id": "snap:epoch:constraint-is-not-only-numeric:art:capture-intent-skill",
       "node_type": "Snapshot",
       "properties": {
@@ -109075,6 +109285,18 @@
       }
     },
     {
+      "node_id": "fact:gap-to-prompt-tells-the-agent-to-strip-the-vocabulary-its-own-description-says-to-keep",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "FOUND 2026-08-20 while putting two real gaps to Anthony through the handshake — the tool contradicts ITSELF, in the one place a user's vocabulary is decided.\n\n=== THE TWO TEXTS, both served by the same tool ===\n\nThe PROMPT it emits, verbatim:\n\n    \"Rewrite this design gap as one plain-language question for a non-engineer.\n     No graph/systems-engineering jargon. Return only the question.\"\n\nThe TOOL'S OWN DESCRIPTION, verbatim:\n\n    \"Read who you are talking to (their `Contributor` description) and match that\n     domain; a `plain` question is not automatically one in their vocabulary, and\n     swapping vocabulary is not simplifying — a systems engineer wants `interface`\n     and `verification` kept.\"\n\nThe description learned the lesson. The template it emits did not. An agent that follows the template strips exactly the vocabulary the reader needs, and it will do so while the description sitting beside it says not to.\n\n=== WHY IT IS THE EXPENSIVE KIND OF CONTRADICTION ===\n\nThis is the same failure shape the revise-design skill already carries a correction for — a skill and a tool description disagreeing, where the resolution was that THE TOOL IS WHAT AN AGENT READS AT CALL TIME. Here both texts come from the same tool, so that tie-breaker does not apply, and the one an agent acts on is the WORSE one: a prompt is an instruction and a description is context, so the instruction wins.\n\n=== WHAT IT COSTS AN ARBITRARY USER'S PROJECT ===\n\ngap_to_prompt is the single point where a detector's vocabulary becomes a human's. A beamline scientist, a flight-test engineer, an acquisitions officer: each has a domain register, and 'no jargon' flattens all of them toward the same non-engineer default. The result is a question that is easy to read and impossible to answer precisely, put to the one person who could have answered it precisely. The standing correction on file is that a persona is a VOCABULARY SWAP, not a difficulty dial — and this template is a difficulty dial.\n\n=== EVIDENCE IT MATTERS, from the same session ===\n\nBoth gaps were answered against the description rather than the template — SE register kept, reflow2-internal jargon dropped. The resulting questions name the decomposition spine and the hosted tier, which is what makes them answerable in one word. The template's version would have said neither.\n\n=== A SECOND, SMALLER FINDING IN THE SAME RUN, and it is a CREDIT ===\n\nReusing a prompt id from a previous gap's round returned `rephrase_degraded: true` and fell back to the raw detector text rather than silently accepting a mismatched answer. It said it had degraded. That is exactly the behaviour Proposal 2 wants generalised, already working here.\n\n=== NOT FIXED, DELIBERATELY ===\n\nChanging that template changes what every gap question sounds like on every project reflow2 is used on. That is Anthony's call, not a silent edit.",
+        "subject_id": "cap:gap-to-prompt",
+        "valid_from": "2026-08-20"
+      }
+    },
+    {
       "node_id": "fact:graph-analysis-covers-a-third-of-the-edge-types",
       "node_type": "TemporalFact",
       "properties": {
@@ -109823,6 +110045,20 @@
         "level": "unit",
         "method": "test",
         "name": "A merge proposal discloses what it would destroy before it can be applied, and a proposal that deletes a node stops reporting itself as needing no review",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-move-leaves-exactly-one-parent",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/move_component.rs, 9 cases.\n\nWHAT IT PINS: that a re-parent leaves ONE parent rather than two; that a Project containment is detached like any other, which is the cmp:identity case that motivated the operation; that an empty `detached` distinguishes \"placed for the first time\" from \"moved\"; that moving somewhere it already sits is idempotent rather than duplicating an edge; that self-containment and unknown endpoints are refused BEFORE anything is detached, so a refusal cannot half-apply; that a level relation which will trip hierarchy_issues is named at the moment of the move; and that a detachment always names the record_change preserving the previous parent.\n\nTHE REGRESSION CASE IS THE INTERESTING ONE. an_earlier_snapshot_does_not_silence_the_history_note pins a bug found by USING the operation on a real design rather than by reading it: the first implementation suppressed the history note whenever the child carried any snapshot at all. A snapshot from an earlier, unrelated epoch is no evidence that THIS move was recorded, so the rule went silent for precisely the long-lived node whose history is most worth keeping — wrong in the dangerous direction. Without that test the corrected condition would be one refactor away from being reverted as redundant.\n\nWHAT IS DELIBERATELY NOT COVERED, stated rather than left to be found: no test asserts that a bad level is REFUSED, because it is not — hierarchy_issues is the authority on decomposition defects and giving one rule two homes gives it two homes that can disagree. And nothing here checks what happens to the DEPENDS_ON, PROVIDES and CONSUMES edges of a moved component: they follow it unchanged, which means a move can put a contract across a wall it did not previously cross, and no check anywhere says so.",
+        "findings": "RUN 2026-08-20: 9 passed, 0 failed. Whole crate 1110 passed / 0 failed across 106 binaries, which is exactly +8 tests and +1 binary against the 1102/105 baseline before this change — a foundation module was touched and nothing else moved.\n\nALSO EXERCISED AGAINST THE REAL DESIGN, not only fixtures: move_component was driven over stdio through the shared daemon against reflow2's own graph, on cmp:skills, which had carried two parents since before this session. Result: detached [\"proj:reflow2\"], already_there true, level_note null, history_note fired. hierarchy_issues went 3 findings to 2, and the multiple_parents finding is gone.\n\nA NEGATIVE RESULT WORTH KEEPING, because it looked like a bug in this work and was not: the first attempt drove a SECOND server process against the same store and got one tool, `reflow2_unavailable`. That is degraded.rs behaving correctly — the shared daemon holds the exclusive lock, so the second process degraded honestly instead of racing it. The \"tool not found\" error was truthful.",
+        "kind": "verification",
+        "last_run_at": "2026-08-20",
+        "level": "unit",
+        "method": "test",
+        "name": "A move leaves exactly one parent, and says what it detached",
         "status": "passing"
       }
     },
@@ -111810,7 +112046,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:bddc5e7148ef36d0a9183a5710a9ab43bfb21289483311252720a796250f3161",
+  "prev_content_hash": "sha256:c7a254d1e86da1b7dd2785ef62f65dd4495342105245c984421b2798dae11bfc",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -802,6 +802,36 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Move a Component to a different parent on the containment spine, \
+                       DETACHING every parent it already had and naming them. Use this to \
+                       re-decompose — adopting a brownfield system, acting on a design review, \
+                       or moving a part to the other side of a boundary. `contain_component` is \
+                       the wrong tool for that and is the reason this one exists: it ADDS a \
+                       parent and removes nothing, so the spine stops being a tree and \
+                       `hierarchy_issues` reports multiple_parents afterwards, which is the \
+                       wrong end of the act. A parent that is the Project itself is detached too \
+                       — a component with no subsystem is often wired straight to it, and that \
+                       is exactly the case that produces the defect. NEVER SILENT: `detached` \
+                       names every parent removed, and an EMPTY `detached` means the component \
+                       had no parent and was PLACED rather than moved, which is a different \
+                       fact worth knowing. The level relation is reported in `level_note`, not \
+                       enforced — hierarchy_issues is the authority. It does not snapshot for \
+                       you: `history_note` names the record_change that preserves the previous \
+                       parent, because the old containment is design history.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn move_component(
+        &self,
+        Parameters(req): Parameters<MoveComponentReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        ok_json(
+            g.move_component(&req.child_id, &req.new_parent_id)
+                .map_err(dyno_err)?,
+        )
+    }
+
+    #[tool(
         description = "Link a Capability to a Requirement it SATISFIES.",
         annotations(read_only_hint = false)
     )]

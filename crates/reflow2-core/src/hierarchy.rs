@@ -77,6 +77,31 @@ impl Level {
     }
 }
 
+/// What [`DesignGraph::move_component`] did — never a bare success, because a
+/// re-parent that silently dropped a containment the caller did not know about
+/// is the failure the operation exists to prevent.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct MoveOutcome {
+    /// The Component that moved.
+    pub child_id: String,
+    /// Its parent now.
+    pub new_parent_id: String,
+    /// Every parent DETACHED by the move, sorted. Empty means the component
+    /// was previously unplaced — a real and different fact from being moved,
+    /// which is why it is reported rather than folded into a success flag.
+    pub detached: Vec<String>,
+    /// The new parent already contained it, so only the other parents moved.
+    pub already_there: bool,
+    /// How the two levels relate, when the answer is not "parent exactly one
+    /// above child". Reported and never enforced: `hierarchy_issues` is the
+    /// authority, and one rule with two homes is one rule that can disagree
+    /// with itself.
+    pub level_note: Option<String>,
+    /// Present when a containment was detached and nothing has snapshotted the
+    /// child, naming the call that preserves the previous parent.
+    pub history_note: Option<String>,
+}
+
 /// What kind of decomposition defect (gap-surfacing.md GS-11).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
 #[serde(rename_all = "snake_case")]
@@ -332,5 +357,150 @@ impl DesignGraph {
                 .then(a.components.cmp(&b.components))
         });
         Ok(issues)
+    }
+    /// Move a Component to a different parent on the containment spine —
+    /// **detaching every parent it already had**, and saying which.
+    ///
+    /// ⭐ WHY THIS EXISTS AS ITS OWN OPERATION, and it is a product gap found
+    /// by using reflow2 on a real re-decomposition (2026-08-20): the only way
+    /// to re-parent used to be [`DesignGraph::contain_component`], which ADDS
+    /// a parent and removes nothing. Asked in a user's own words — *"move a
+    /// component to a different parent, re-decompose"* — `find_tools` ranked
+    /// `contain_component` top of 152, so the discoverable route is also the
+    /// wrong one: it leaves the old edge in place and the spine stops being a
+    /// tree. `hierarchy_issues` then reports `multiple_parents` AFTERWARDS,
+    /// which is the wrong end of the act. Re-decomposition is not exotic —
+    /// it is what adopting a brownfield system, or acting on a design review,
+    /// or doing severability work all consist of.
+    ///
+    /// **It never silently detaches.** The returned `detached` names every
+    /// parent removed, because "which box was this in before?" is design
+    /// history and a caller who did not realise there was one deserves to be
+    /// told at the moment it happens rather than by a later detector.
+    ///
+    /// **It does not snapshot for you, and says so.** The old containment is
+    /// design history; `record_change` against the child, taken while it still
+    /// says the old thing, is what preserves it (see the `revise-design`
+    /// skill). This returns [`MoveOutcome::history_note`] naming that call
+    /// whenever anything was detached — the remedy reachable from the message
+    /// the reader actually sees, rather than documented somewhere they are not
+    /// looking.
+    ///
+    /// It deliberately does NOT try to work out whether the move is already
+    /// recorded. The first version suppressed the note when the child had any
+    /// snapshot at all, which is silent for precisely the long-lived node whose
+    /// history matters most: a snapshot from an earlier epoch says nothing
+    /// about THIS move. A note that is occasionally redundant beats one that is
+    /// occasionally missing, so it states a fact rather than an accusation.
+    ///
+    /// The level relation is REPORTED, not enforced: `hierarchy_issues` is the
+    /// authority on decomposition defects and refusing here would give the
+    /// same rule two homes that could disagree.
+    pub fn move_component(
+        &mut self,
+        child_id: &str,
+        new_parent_id: &str,
+    ) -> Result<MoveOutcome, DynoError> {
+        if child_id == new_parent_id {
+            return Err(DynoError::Validation {
+                node_type: node::COMPONENT.into(),
+                property: "move_component".into(),
+                message: format!("'{child_id}' cannot contain itself."),
+            });
+        }
+        for (role, id) in [("child", child_id), ("new parent", new_parent_id)] {
+            if self.get_node(node::COMPONENT, id)?.is_none() {
+                return Err(DynoError::NodeNotFound {
+                    node_type: format!("{} ({role})", node::COMPONENT),
+                    node_id: id.to_string(),
+                });
+            }
+        }
+
+        // Every current parent, whatever type holds it: a Component parent is
+        // the ordinary case, but a node wired straight to the Project — which
+        // is what a component with no subsystem looks like — must come off too,
+        // or the move creates the very `multiple_parents` defect it exists to
+        // prevent. That is not hypothetical: it is exactly what happened when
+        // `cmp:identity` was given a real parent for the first time.
+        let mut detached = Vec::new();
+        for e in self.incoming(child_id, Some(edge::CONTAINS))? {
+            if e.from_id == new_parent_id {
+                continue;
+            }
+            self.delete_edge(edge::CONTAINS, &e.from_id, child_id)?;
+            detached.push(e.from_id);
+        }
+        detached.sort();
+
+        let already = self
+            .incoming(child_id, Some(edge::CONTAINS))?
+            .iter()
+            .any(|e| e.from_id == new_parent_id);
+        if !already {
+            self.contain_component(new_parent_id, child_id)?;
+        }
+
+        let child_level = self.component_level(child_id)?;
+        let parent_level = self.component_level(new_parent_id)?;
+        let level_note = match parent_level.rank() - child_level.rank() {
+            1 => None,
+            0 => Some(format!(
+                "'{new_parent_id}' and '{child_id}' are both at level '{}', so this containment                  is a level_mismatch — a parent should sit exactly one level above its child.                  Set the levels with add_component; hierarchy_issues is the authority.",
+                child_level.as_str()
+            )),
+            d if d < 0 => Some(format!(
+                "'{new_parent_id}' (level '{}') sits BELOW '{child_id}' (level '{}') — the                  containment is inverted and hierarchy_issues will report level_mismatch.",
+                parent_level.as_str(),
+                child_level.as_str()
+            )),
+            _ => Some(format!(
+                "'{new_parent_id}' (level '{}') is more than one level above '{child_id}' (level                  '{}') — hierarchy_issues will report missing_intermediate_level.",
+                parent_level.as_str(),
+                child_level.as_str()
+            )),
+        };
+
+        // Fires on ANY detachment, not only when the child has never been
+        // snapshotted — which is what this checked first, and it was wrong in
+        // the dangerous direction. A snapshot taken in some earlier epoch is no
+        // evidence that THIS move was recorded, so keying on "has ever been
+        // snapshotted" stayed silent for exactly the long-lived node whose
+        // history is most worth keeping. Worded as a fact rather than an
+        // accusation, so a caller who did record it is told nothing untrue.
+        let history_note = (!detached.is_empty()).then(|| {
+            let names = detached
+                .iter()
+                .map(|p| format!("'{p}'"))
+                .collect::<Vec<_>>()
+                .join(", ");
+            format!(
+                "Detached {names} from '{child_id}'. That containment is design history: if this \
+                 move is not already on the record, record_change against '{child_id}' preserves \
+                 it — taken BEFORE the edit it captures the previous parent, and taken after it \
+                 captures this one."
+            )
+        });
+
+        Ok(MoveOutcome {
+            child_id: child_id.to_string(),
+            new_parent_id: new_parent_id.to_string(),
+            detached,
+            already_there: already,
+            level_note,
+            history_note,
+        })
+    }
+
+    /// A Component's declared level, defaulting the way the schema does.
+    fn component_level(&self, id: &str) -> Result<Level, DynoError> {
+        Ok(self
+            .get_node(node::COMPONENT, id)?
+            .and_then(|n| {
+                n.properties
+                    .get("level")
+                    .and_then(|v| v.as_str().map(Level::from_key))
+            })
+            .unwrap_or(Level::Component))
     }
 }
