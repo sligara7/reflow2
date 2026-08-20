@@ -879,6 +879,38 @@ impl DesignGraph {
             .chain(added_after_baseline.iter())
             .filter(|i| i.modality == "required")
             .count();
+        // ⭐ NAME THE REMEDY WHERE THE READER IS. An item reported `outstanding`
+        // that HAS a passing check but no artifact is the exact shape of model
+        // work — a re-decomposition, a retirement, a ruling — and `outstanding`
+        // says "nobody has said whether this was deferred or dropped", which is
+        // a false question about finished work. The declaration that fixes it
+        // is `Capability.delivery: model`, and a reader looking at this reply
+        // has no way to know that exists. Measured 2026-08-20: the mechanism
+        // being built, tested and unreachable from where the person is stuck
+        // was the same failure four separate times in one session.
+        let checked_but_unbuilt: Vec<&str> = items
+            .iter()
+            .filter(|i| i.outcome == ScheduleOutcome::Outstanding)
+            .filter(|i| i.item_type == node::CAPABILITY)
+            .filter(|i| {
+                self.capability_has_evidence(&i.item_id).unwrap_or(false)
+                    && !self.capability_is_realized(&i.item_id).unwrap_or(true)
+            })
+            .map(|i| i.item_id.as_str())
+            .collect();
+        if !checked_but_unbuilt.is_empty() {
+            notes.push(format!(
+                "{} outstanding item(s) have a PASSING CHECK but nothing on disk realizing \
+                 them: {}. If the deliverable was a change to the DESIGN rather than a file \
+                 — a re-decomposition, a retirement, a governance ruling — say so with \
+                 set_capability_delivery(<id>, \"model\") and delivery is computed from the \
+                 check alone. If it is simply unbuilt, `outstanding` is correct and this note \
+                 is not for you.",
+                checked_but_unbuilt.len(),
+                checked_but_unbuilt.join(", ")
+            ));
+        }
+
         let ready_to_cut = missed_obligations.is_empty() && required_count > 0;
         if required_count == 0 {
             notes.push(format!(
@@ -949,15 +981,59 @@ impl DesignGraph {
     /// Delivered, by the same computation the delivery rollup uses — satisfied
     /// by a realized, passing capability. Never read from a status field
     /// (`req:completion-computed`).
+    ///
+    /// ⭐ WHAT COUNTS AS "REALIZED" DEPENDS ON `Capability.delivery`, and that
+    /// is the only thing the author gets to declare here. Both branches still
+    /// demand EVIDENCE — a passing check — so nothing became assertable:
+    ///
+    /// - `artifact` (the default): a file must realize it AND a check must
+    ///   pass. Unchanged, and the case almost every capability is in.
+    /// - `model`: the deliverable IS the design change, so there is no file to
+    ///   point at and the check is the whole of the evidence.
+    ///
+    /// WHY, measured 2026-08-20: `epoch:the-declared-walls-hold` was set
+    /// arrived with both its capabilities genuinely delivered and this reported
+    /// BOTH as `outstanding`, because delivery required an artifact and model
+    /// work produces none. `outstanding` means "nobody has said whether this
+    /// was deferred or discontinued", which is a false statement about
+    /// finished work — and it is asked again on every run. Re-decompositions,
+    /// retirements and governance rulings would accumulate as phantom
+    /// incompletions until somebody stopped scheduling that kind of work,
+    /// which is most of what systems engineering is.
+    ///
+    /// 🛑 THE REJECTED FIX, recorded so nobody retries it: inferring `model`
+    /// from the ABSENCE of an artifact. The commonest reason a capability has
+    /// no file is THAT NOBODY HAS BUILT IT YET, so that rule reports unbuilt
+    /// work as delivered the moment a check is attached to it — a false green
+    /// in the dangerous direction, and the same class of wrong answer as a
+    /// detector reporting clean because it had nothing to run on.
     fn item_is_delivered(&self, item_type: &str, item_id: &str) -> Result<bool, DynoError> {
         match item_type {
             node::REQUIREMENT => self.requirement_is_delivered(item_id),
             node::CAPABILITY => {
-                Ok(self.capability_is_realized(item_id)?
-                    && self.capability_has_evidence(item_id)?)
+                if !self.capability_has_evidence(item_id)? {
+                    return Ok(false);
+                }
+                Ok(self.capability_delivers_by_model(item_id)?
+                    || self.capability_is_realized(item_id)?)
             }
             _ => Ok(false),
         }
+    }
+
+    /// Whether this capability's deliverable is a change to the DESIGN rather
+    /// than a file — `Capability.delivery == "model"`. Absent reads as
+    /// `artifact`, the schema default, so every capability written before this
+    /// existed keeps the stricter rule rather than quietly loosening.
+    fn capability_delivers_by_model(&self, capability_id: &str) -> Result<bool, DynoError> {
+        Ok(self
+            .get_node(node::CAPABILITY, capability_id)?
+            .and_then(|n| {
+                n.properties
+                    .get("delivery")
+                    .and_then(|v| v.as_str().map(|s| s == "model"))
+            })
+            .unwrap_or(false))
     }
 
     // ---- Snapshots (never overwrite the past) -----------------------------

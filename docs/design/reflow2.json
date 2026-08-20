@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:8c5d311aa786a9c94f78bc2a928a80ae57027f4c389a956207a8fae47c5f3e0d",
+  "content_hash": "sha256:a925b5d9a6736d81b22ae588ca16c0910a184ee57fcae6cf08956c1f5ace5183",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -8294,6 +8294,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-gap-can-be-scheduled-into-an-increment-like-any-other-work",
+      "properties": {
+        "acted_at": "2026-08-20",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-generated-explainer-for-someone-new",
       "properties": {
         "acted_at": "2026-08-14",
@@ -8450,6 +8459,15 @@
       "from_id": "dec:idea-an-artifact-whose-checksum-returns-is-an-agent-going-in-circles",
       "properties": {
         "acted_at": "2026-08-17",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-an-increment-can-be-sliced-into-work-packages-with-an-owner",
+      "properties": {
+        "acted_at": "2026-08-20",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -8935,6 +8953,15 @@
       "from_id": "dec:idea-lifecycle-dimensions-on-a-requirement",
       "properties": {
         "acted_at": "2026-08-11",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-lining-work-up-in-increments-should-be-the-default-not-a-skill-you-remember",
+      "properties": {
+        "acted_at": "2026-08-20",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -17252,6 +17279,69 @@
         "action": "added"
       },
       "to_id": "cap:degraded-surface"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:delivery-can-be-a-model-change",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:delivery-kind-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:delivery-can-be-a-model-change",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:delivery-can-be-a-model-change",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-functional"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:delivery-can-be-a-model-change",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:delivery-can-be-a-model-change",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:delivery-can-be-a-model-change",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:delivery-can-be-a-model-change",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-capability-declares-what-kind-of-thing-delivers-it"
     },
     {
       "edge_type": "CHANGED",
@@ -75806,6 +75896,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:delivery-kind-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-capability-declares-what-kind-of-thing-delivers-it"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:dependency-manifest",
       "properties": {
         "completeness": "complete"
@@ -76099,6 +76198,15 @@
         "completeness": "complete"
       },
       "to_id": "cap:granularity-observation"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:graph",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-capability-declares-what-kind-of-thing-delivers-it"
     },
     {
       "edge_type": "REALIZES",
@@ -76695,6 +76803,15 @@
       "edge_type": "REALIZES",
       "from_id": "art:schema-functional",
       "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-capability-declares-what-kind-of-thing-delivers-it"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:schema-functional",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cmp:schema"
@@ -76852,6 +76969,15 @@
         "completeness": "complete"
       },
       "to_id": "ver:the-server-says-when-it-is-stale"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:service",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-capability-declares-what-kind-of-thing-delivers-it"
     },
     {
       "edge_type": "REALIZES",
@@ -77062,6 +77188,15 @@
         "completeness": "complete"
       },
       "to_id": "cap:the-record-moved-is-surfaced"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:temporal",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-capability-declares-what-kind-of-thing-delivers-it"
     },
     {
       "edge_type": "REALIZES",
@@ -77338,6 +77473,15 @@
         "completeness": "partial"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-capture",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-capability-declares-what-kind-of-thing-delivers-it"
     },
     {
       "edge_type": "REALIZES",
@@ -80580,6 +80724,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:delivery-kind-is-declared-not-inferred",
+      "properties": {},
+      "to_id": "cap:a-capability-declares-what-kind-of-thing-delivers-it"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:dependency-names-its-design",
       "properties": {},
       "to_id": "cap:design-dependencies-declared"
@@ -81788,6 +81938,14 @@
         "action": "created"
       },
       "to_id": "art:degraded"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:delivery-kind-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:delivery-kind-test"
     },
     {
       "edge_type": "YIELDED",
@@ -83391,6 +83549,17 @@
       }
     },
     {
+      "node_id": "art:delivery-kind-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:dcf79ca95ec1dae48c5ee69284cdd0edcf79e61acd798d59244762d1807cc4cb",
+        "location": "crates/reflow2-core/tests/delivery_kind.rs",
+        "name": "delivery_kind.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:dependency-manifest",
       "node_type": "Artifact",
       "properties": {
@@ -83757,7 +83926,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:746a4ad87bdc63607013c821b708338b1bc8fc7047fb4f431e986695accc2a94",
+        "checksum": "sha256:272a3a31be0e197cdc72c5729ffa7f735918a16ce01db9f5f0826a1ae1515c19",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "crates/reflow2-core/src/graph.rs",
@@ -84402,7 +84571,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:a156dba66ba8b296e63fa7b1d3a1ec883e458e0ca3ae8573933cba189978767a",
+        "checksum": "sha256:ca801b261fae0e187da754a8126a619799d4c771be2c2354c20fd7dba3965cf4",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/functional.yaml",
@@ -84617,7 +84786,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:199f3fc159a23836e5dfaf31eb8c51c47040973bde86dad09d7d39e48432b34b",
+        "checksum": "sha256:286f0b33532f87bcb4364790a7ed7c914320e1b2ed7e879e8bc240fa077bfb2e",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -84849,7 +85018,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:dfc4596eff0f00b82f2381a04755aff8d9c73ac88efddc6d1ab269cb06277e17",
+        "checksum": "sha256:c0d09386dd385cb5c65ee6df4a83f6ebef02674304b74fa753655490afa93052",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "crates/reflow2-core/src/temporal.rs",
@@ -85144,7 +85313,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0d0e5257d3a25397c12359b6882584a97b9e924587cdde187ce72965ca25902e",
+        "checksum": "sha256:3662c2f1bfad581c5db524453fad579fa7e27abcf91f248709d7b47afd03a187",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -85453,6 +85622,17 @@
         "checksum": "sha256:74adb819732277a637afc95b3563543eeb8f309dc7bf5c36985b5b1a1baa6e04",
         "location": "getting-started/skills/where-am-i/SKILL.md",
         "name": "where-am-i/SKILL.md — orientation, and the step that asks who the reader is",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-capability-declares-what-kind-of-thing-delivers-it",
+      "node_type": "Capability",
+      "properties": {
+        "delivery": "artifact",
+        "description": "DECISION 4, built 2026-08-20 on Anthony's word. DISTINCT FROM the fact that measured the defect: that node is the MEASUREMENT and is now closed with valid_to; this is the REMEDY. Conflating them would leave the design unable to say whether the fix happened.\n\nTHE DEFECT, found by running the loop honestly rather than looking for it: epoch:the-declared-walls-hold was set arrived with BOTH its capabilities genuinely delivered, and arrival_delta reported both `outstanding`. Delivery required an Artifact on disk; model work produces none. `outstanding` means \"nobody has said whether this was deferred or discontinued - that is the question to put to the user\", so reflow2 asked a question about finished work and would ask it again every run. Re-decompositions, retirements, governance rulings and corrections all produce no file; every one would pile up as a phantom incompletion until somebody stopped scheduling that kind of work, which is most of what systems engineering is.\n\nWHAT SHIPPED: Capability.delivery, an enum of `artifact` (default) or `model`, plus set_capability_delivery to declare it.\n  · `artifact` - a file realizes it AND a check passes. Unchanged, and the case almost every capability is in.\n  · `model` - the deliverable IS the design change, so the check is the whole of the evidence.\n\n⭐ IT DECLARES THE KIND, NEVER THE SUCCESS, and that is the whole reason it is safe to let an author state it. Both kinds still demand a passing check: the declaration loosens WHICH evidence is required, never WHETHER any is. Delivery stays computed from the golden thread, there is still no `achieved` modality, and there is still no way to mark anything done. Same shape as Interface.designation and Artifact.volatility - the author says the one thing only they can know, the computation earns the rest.\n\n🛑 THE REJECTED FIX, recorded because it was the version first proposed AND first approved, and it is wrong: inferring `model` from the ABSENCE of an artifact. The commonest reason a capability has no file is THAT NOBODY HAS BUILT IT YET. cap:graph-registry is in exactly that state today - unbuilt, unrealized - and under the inferred rule it would report DELIVERED the moment any check was pointed at it. A false green on unbuilt work, in the same dangerous direction as a detector reporting clean because it had nothing to run on. an_unbuilt_capability_with_a_passing_check_is_not_delivered pins it.\n\n⭐ THE REMEDY IS REACHABLE FROM THE MESSAGE THE READER SEES. Fixing the rule alone would have left the declaration built, tested and invisible - the same failure found FOUR separate times on 2026-08-20. arrival_delta now names set_capability_delivery when it reports an outstanding item that HAS a passing check and nothing on disk, and stays silent when there is no check at all, because then declaring model would not help either and the suggestion would be noise. It also does not accuse: it ends by saying that if the work is simply unbuilt, `outstanding` is correct.\n\nPROVEN ON THE CASE THAT FOUND IT, not only on fixtures: both capabilities of epoch:the-declared-walls-hold were declared `model` through the served tool against the live graph, and the increment went from two `outstanding` to two `delivered`.\n\nSTATED LIMIT, unchanged by this: an increment with nothing scheduled `required` is still reported as not ready to cut, while the plan-increments skill says `required` must be asked for and never assumed. A user following reflow2's own guidance still builds an increment reflow2 calls unscoped. That tension is recorded and NOT fixed here.",
+        "name": "A capability declares WHAT KIND of thing delivers it, so model work can be reported delivered",
+        "provenance": "authored",
         "status": "realized"
       }
     },
@@ -86170,6 +86350,7 @@
       "node_id": "cap:comparing-two-designs-does-not-reach-into-the-reporting-layer",
       "node_type": "Capability",
       "properties": {
+        "delivery": "model",
         "description": "CHANGE 2 of epoch:the-declared-walls-hold. Anthony's word, 2026-08-20. DISTINCT FROM change 1: that one moves nothing in the code and this one moves ~15 lines; they share an epoch and neither blocks the other.\n\nTHE WHOLE DEPENDENCY, read rather than assumed: `compare.rs` line 45 is `use crate::report::is_design_type;` and that is ALL of it. The function is two lines — `SNAPSHOT_TYPES.contains(&node_type)` — answering \"is this design content, or supporting material like provenance and history?\". So a 974-line module reaches into a 2025-line reporting module to borrow a lookup in a constant list, and that single edge is the whole `sys:time-history -> sys:coherence-loop` back-edge behind the second subsystem cycle.\n\nWHAT IT DOES NOT DO: duplicate the list. The sharing is CORRECT and report.rs says why in as many words — compare reuses it so \"design vs supporting\" means one thing everywhere. Two copies would drift.\n\nWHAT IT DOES: move SNAPSHOT_TYPES and is_design_type down into `nodes`. Three reasons, and the third is why this is a better home rather than a cycle-driven contortion:\n  1. the list is built ENTIRELY out of `node::` constants — it is a statement about node types, so it belongs with the node types;\n  2. `report` and `compare` BOTH already depend on `nodes`, so this adds no coupling at all — it only stops compare reaching sideways;\n  3. one shared definition survives, which is the property worth protecting.\n\nSIMULATED: with change 1 also applied, dropping this edge makes all eight subsystems a DAG — no cycles at any level.\n\nSHAPE WORTH NAMING: this is the same shape all three of PR #262's cycles had — ONE back-edge, and the fix is to ask what the borrowing module actually needed rather than to restructure anything.",
         "name": "Comparing two designs stops reaching into the reporting layer for a two-line lookup",
         "provenance": "authored",
@@ -87616,6 +87797,7 @@
       "node_id": "cap:the-foundation-is-one-subsystem-not-two-halves",
       "node_type": "Capability",
       "properties": {
+        "delivery": "model",
         "description": "CHANGE 1 of epoch:the-declared-walls-hold. Anthony's word, 2026-08-20. DISTINCT FROM the fact that measured the problem: that node is the MEASUREMENT, this is the REMEDY, and conflating them would leave the design unable to say whether the fix happened.\n\nWHAT IT DOES: moves cmp:nodes and cmp:schema so they sit with cmp:graph and cmp:provenance, and places cmp:identity, which today is in NO subsystem at all. PURE MODEL BOOKKEEPING — not one line of Rust changes.\n\nWHY: the code has a kernel of five modules everything sits on — nodes (46 of 52 modules transitively depend on it), provenance (44), identity (44), schema (43), graph (42). The declared decomposition CUTS IT IN HALF: nodes/schema in sys:vocabulary, graph/provenance in sys:store. graph reads nodes and schema; vocabulary and flow read graph. Traffic therefore crosses that boundary BOTH WAYS, and that is the entire sys:store <-> sys:vocabulary cycle. Any bisection of a mutually-dependent kernel produces a cycle one level up whatever the code does.\n\nA boundary only earns its keep if a change can be handed TO it and stop there. Two-way traffic leaves nothing for a blast radius to stop at, so \"a change inside the store stays in the store\" is false today.\n\nSIMULATED BEFORE PROPOSING, against the real import graph: the cycle disappears, NO new cycle appears anywhere, and the eight subsystems come one step closer to a DAG.\n\nOPEN SUB-QUESTION FOR ANTHONY: sys:store currently means \"where the data lives\". After this it means \"the foundation everything is built on\", which is a bigger idea and may want a different name. A naming call, not a technical constraint — the move is correct either way.\n\nIT IS A CORRECTION, NOT ONLY A FIX: those five modules ARE one layer, and the model currently says they are two.",
         "name": "The foundation is one subsystem, not two halves — the kernel stops being bisected by the decomposition",
         "provenance": "authored",
@@ -90770,6 +90952,15 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Field fix from the six-session fleet: reflow2 never exits silently, and a graph somebody else holds can still be exported"
+      }
+    },
+    {
+      "node_id": "chg:delivery-can-be-a-model-change",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "Delivery can be a model change — a capability declares what kind of thing delivers it, and arrival_delta stops asking about finished work",
+        "subject": "system"
       }
     },
     {
@@ -94092,6 +94283,15 @@
       }
     },
     {
+      "node_id": "dec:idea-a-gap-can-be-scheduled-into-an-increment-like-any-other-work",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony thinking out loud, 2026-08-20.\n\nHIS WORDS: \"add gaps that need to be closed to increments/epochs.\"\n\nWHY IT LANDS EXACTLY WHERE IT SHOULD: this design carries 89 open gaps, 85 of which have never been put to anybody. Two of them were surfaced and answered today only because he said, in as many words, that he does not like something identified and then dropped. A list of 89 that endures and is skimmed is durable and useless at the same time. Scheduling is the mechanism that turns a standing list into work with a moment attached.\n\n⚠️ THE MODELLING PROBLEM, stated first because it shapes every option: A GAP IS NOT A NODE. Gaps are COMPUTED from the condition every run — that is why gap:4e24a202aa6f1737 carried the same id this morning and this afternoon, and why it disappears the moment the condition is fixed rather than needing to be closed by hand. That property is valuable and should not be traded away. But it means there is nothing to hang a SCHEDULED_FOR edge on, and SCHEDULED_FOR is declared `from: [Capability, Requirement]` only.\n\nOPTIONS, none chosen:\n  (a) SCHEDULE THE QUESTION, not the gap. `gap_to_prompt` already mints a durable `question:<id>` node when a gap is put to somebody, and open_questions already tracks it until answered. Widening SCHEDULED_FOR to accept a Question would let 'these twelve questions get answered in increment 4' be said, with no change to how gaps are computed. Cheapest, and it reuses a node that already exists for exactly the purpose of making a gap durable.\n  (b) SCHEDULE THE AFFECTED NODE. Every gap names `affected_ids`; scheduling those is already possible where they are Capabilities or Requirements. Weak: the gap and the node are different things, and a component can carry several unrelated gaps.\n  (c) A GAP BECOMES A NODE when somebody accepts it as work — promotion rather than computation. Strongest expressive power, and the biggest change: it creates a second source of truth about whether the gap is still real, which is precisely what the computed-every-run design avoids.\n  (d) ACKNOWLEDGE, which already exists — `acknowledge_gap` records a reviewed judgement with a reason. But acknowledging says 'we looked and accept this', not 'we will fix this in increment 4'. Those are different answers and only one of them is a plan.\n\nRECOMMENDATION IF ASKED, and it is a finding rather than a decision: (a). It needs no change to gap computation, it reuses the Question node that already turns a computed gap into something durable and addressed to a person, and it composes with the work-package idea — a package could then hold questions as well as capabilities.\n\nCONNECTED TO A DEFECT ALREADY ON THE RECORD: `fact:a-capability-delivered-as-a-model-change-can-never-be-reported-delivered`. Closing a gap is almost always MODEL work, not a file, so if gaps become schedulable before delivery stops requiring an artifact, every scheduled gap would sit `outstanding` forever — the new mechanism would inherit the existing blind spot on day one. These two should be answered together, or the delivery one first.\n\nRELATED: dec:idea-lining-work-up-in-increments-should-be-the-default-not-a-skill-you-remember, dec:idea-an-increment-can-be-sliced-into-work-packages-with-an-owner.",
+        "name": "OPEN — can a gap that needs closing be scheduled into an increment, the way a capability or requirement is?",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-a-generated-explainer-for-someone-new",
       "node_type": "Decision",
       "properties": {
@@ -94267,6 +94467,15 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. The most concrete of the Class B candidates in `dec:idea-which-agent-pitfalls-can-reflow2-actually-reach`, separated because it is a specific buildable proposal rather than a triage, and because its measured bound is the interesting part.\n\nTHE PITFALL, in Anthony's words 2026-08-17: \"Infinite loops: Agents can get stuck repeatedly adding and removing the exact same line of code to fix a recurring error.\"\n\nTHE IDEA. reflow2 does not read code, but it records CONTENT HASHES. An oscillation has a signature that needs no semantic understanding at all: an artifact's checksum returning to a value it already held. A → B → A is a loop, and A → B → C → B is a smaller one. No language server, no diff parsing, no judgement — just a repeat in a sequence.\n\n⭐ THIS IS THE RIGHT SHAPE FOR REFLOW2 SPECIFICALLY, which is why it is worth separating out. Everything else in the pitfall list needs to understand code; this needs only to notice that the design has seen this exact content before. It is the same move `orphan_node`'s degree-zero rule makes — the finding that needs no judgement is the one worth computing.\n\n⚠️⚠️ AND THE MEASUREMENT SAYS IT CANNOT BE BUILT TODAY, which is the part that would have been missed by proposing it on plausibility. MEASURED ON REFLOW2'S OWN GRAPH, 2026-08-17:\n    Artifacts with ANY snapshotted checksum history:      23   (of 187 artifacts)\n    ...with more than one recorded prior value:             3\n    ...showing a checksum that returns to a prior value:    0\nThe three deepest histories (`art:heal`, `art:detect`, `art:service`) hold TWO prior checksums each. A detector run on that data would report zero oscillations and mean nothing by it — the vacuous zero this whole epoch exists to stamp out, shipped inside the fix for it.\n\n⇒ THE ROOT CAUSE IS ONE FIELD, NOT A SUBSYSTEM, and naming it is what makes this actionable. A Snapshot is taken by `record_change`, which the `design_updated` disposition calls and `design_holds` DOES NOT. So the commonest kind of code change — the refactor, the test fix, the churn where an oscillation would actually live — mints a ChangeEvent and records NO PRIOR CHECKSUM. The history is thin precisely where the signal would be.\n\nOPTIONS, none chosen:\n(A) HAVE `design_holds` SNAPSHOT THE PRIOR CHECKSUM TOO. Smallest change; the history starts accumulating immediately; the detector becomes possible later without further work. COST: a Snapshot per accept, on the commonest path.\n(B) KEEP A CHECKSUM LEDGER ON THE ARTIFACT rather than snapshotting the whole node — cheaper per write, but new vocabulary and a second place history lives.\n(C) DON'T BUILD IT. Oscillation may be better caught by the agent harness, which sees the edits as they happen, than by a design graph seeing them after the fact.\n(D) BUILD THE HISTORY NOW, THE DETECTOR LATER — deliberately, on the record, so the data exists by the time anyone wants the answer. This is the option the measurement argues for.\n\n📌 THE GENERAL LESSON, worth keeping whatever is decided: the detector was easy and the DATA was the constraint, and that was invisible until it was counted. Proposing it on plausibility would have produced a check that reports zero forever and is believed.",
         "name": "OPEN — an artifact whose checksum RETURNS to a previous value is an agent going in circles; the detector is trivial and the history reflow2 keeps is too thin to run it on",
         "rationale": "Recorded as brainstorming. The detector is trivial — a repeat in a sequence of content hashes, needing no semantic understanding — and reflow2 cannot run it: only 23 of 187 artifacts have any snapshotted checksum history and only 3 have more than one prior value, because `design_holds` accepts do not snapshot. The root cause is one missing write on the commonest path, not a missing subsystem. Proposing this on plausibility would have shipped a check that reports zero forever.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-an-increment-can-be-sliced-into-work-packages-with-an-owner",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony thinking out loud, 2026-08-20.\n\nHIS WORDS: \"allow a user to map out tasks in discretized increments (potentially, a manager could say, task package 1 is Alex's, task package 2 is AJ's, and so on).\"\n\nTHIS IS A WORK BREAKDOWN STRUCTURE, and it is worth naming as such because it is standard practice in exactly the world he comes from. A WBS slices an increment into packages, each with a single accountable owner. It is the artifact a manager actually manages with, and it is what makes 'who is behind?' answerable.\n\nWHAT REFLOW2 ALREADY HAS, and none of the three is this:\n  · OWNED_BY — whose AREA this is. Durable, standing, never released. About a REGION of the design, not a bundle of work.\n  · CLAIMS — who is IN it right now. Transient, advisory, session-scoped, released at checkout.\n  · AUTHORED_BY (role=approver) — who was ASKED to settle a decision. The only thing loop_status attributes today.\n\nA work package is none of those. It is a SCOPED BUNDLE OF WORK, inside an increment, with one accountable person, that exists until it is delivered. Standing like ownership, but about work rather than area; scoped like a claim, but durable and assigned rather than self-taken.\n\nWHY IT MIGHT MATTER MORE THAN IT LOOKS: the graph today can answer 'what is owed?' design-wide and 'what needs this person?' only for decisions they were asked to settle. It cannot answer 'what is Alex's slice of increment 3, and is it done?' — which is the question a manager asks every week. `loop_status(contributor_id)` already reports that most debt classes are `not_attributable`, which is the honest version of the same absence.\n\nOPTIONS, none chosen:\n  (a) A NEW EDGE on the existing schedule — SCHEDULED_FOR already carries `modality`; a package identifier plus an owner could ride alongside. Cheapest, no new node type. Weak: a package is a THING a manager names and talks about, and a property on an edge cannot be named or discussed.\n  (b) A WORK PACKAGE NODE contained by the increment, with capabilities and requirements scheduled into IT rather than directly into the epoch, and OWNED_BY the person. Most faithful to how WBS actually works, and it makes 'Alex's slice' a node you can ask about. Costs a schema addition and a level of indirection.\n  (c) REUSE OWNED_BY over a claimed region — no schema change at all, and claim_region can already describe a region by a query. Weak: ownership is about AREA and is never released, while a package is finished and closed; and a region defined by a query is not a set of tasks somebody agreed to do.\n  (d) DO NOTHING and let a manager keep the slicing outside reflow2. Honest option, and the status quo.\n\nCOUNTER-ARGUMENT, recorded beside the idea: reflow2 has deliberately kept people OUT of the blast radius — AUTHORED_BY, CLAIMS and OWNED_BY are all excluded from traceability so that a change never propagates into a person. Work packages are the point at which a design tool starts becoming a project-management tool, and that is a boundary worth crossing deliberately rather than by accident. The countervailing fact: `req:people-are-modellable-inside-the-design` is already an open requirement asking for organisation, role and who-performs-a-function, so the door is not closed.\n\nRELATED: dec:idea-lining-work-up-in-increments-should-be-the-default-not-a-skill-you-remember.",
+        "name": "OPEN — can an increment be sliced into discrete work packages, each with a named owner, so a manager can say \"package 1 is Alex's, package 2 is AJ's\"?",
         "status": "proposed"
       }
     },
@@ -94835,6 +95044,15 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-11, thinking out loud — nothing here is settled and nothing should be quoted back as intent.\n\nHIS IDEA, IN HIS WORDS: \"attach some type of additional parameters to each requirement or capability node. something that accounts for the full lifecycle of that requirement/capability. for instance, have fields for: develop-using, development-test-plan, operational-test-plan, production-plan, operational-deployed. there might be other 'dimensions' to a requirement node, but having something at the very beginning of design that already has an agent/user thinking from the get-go how it will eventually be fielded in an operational environment is good to have upfront. many of the things may be unknown-at-this-moment or N/A, but at least something is there to drive the thought process.\"\n\n⭐ THE GOAL IS THE PROMPT, NOT THE FIELD. Read his last sentence: the value he names is that the question gets ASKED early, and he expects most answers to be empty. That is a statement about when a thought happens, not about where a value is stored — and it is what separates the options below. An option that stores five mostly-empty fields but never asks anything would miss the point entirely; an option that asks all five questions and stores nothing until there is an answer would meet it.\n\nWHAT THE DESIGN ALREADY HOLDS, so a later reader is not re-deciding settled ground. Each of his five axes already has machinery, but scattered and edge-shaped rather than gathered on the node:\n- development-test-plan / operational-test-plan — `dec:idea-verification-is-planned-with-the-requirement` is ALREADY OPEN and asks almost exactly this: \"should reflow2 guide a project to plan HOW a need will be verified when the need is stated, rather than only asking for a check once something is built?\" His two test-plan axes are that question, split into a development arm and an operational arm — which is a V-model distinction that open question does not currently draw.\n- operational-deployed — Environment nodes, `deploy_to`, `reconcile_deployment` and `cmp:fielded` already model where something actually runs.\n- production-plan / readiness to field — the Readiness layer (TRL/MRL, ReadinessAssessment, GATED_ON with a required `min_level`) already models whether a thing is mature enough to field, and `SCHEDULED_FOR` models when it is due.\n- develop-using — nothing obvious models this. It is the one axis with no existing home.\n- Requirement already carries a five-state lifecycle (proposed/accepted/deferred/dropped/met) of which THREE ARE UNUSED — recorded in `chg:bl104-derived-completion` as \"the requirement lifecycle is 3/5 unused\". Any new lifecycle vocabulary has to answer why it would fare better than the one already there and unused.\n\nTHE OPTIONS, with what is cheap and what is expensive about each.\n\nA — PROPERTIES ON THE NODE, his literal proposal. Five enum/string fields on Requirement and Capability. Cheapest to build (schema YAML), and the fields are visible in every export and every view, so they nag by existing. EXPENSIVE: BL-198 has just spent this month REMOVING stored defaults — 3,207 of them across 59% of nodes — because a value written by the tool rather than by a person makes `compare_designs` unable to tell a default from a decision. Five fields defaulting to \"unknown\" on every node is that exact shape, freshly re-introduced. And \"N/A\" written by an agent is a judgement about scope, which `dec:readiness-is-an-observation-the-threshold-is-the-judgement` says the tool does not get to make on the user's behalf.\n\nB — ASK THE FIVE QUESTIONS, STORE NOTHING UNTIL THERE IS AN ANSWER. A gap detector in the existing detect-and-ask loop that asks, of a requirement, \"how will this be developed / checked in development / checked in operations / produced / fielded?\" No schema change; nothing is stored until somebody answers, so silence stays silence and never becomes a stored \"unknown\". Matches the goal he actually stated, since the thought is what he wants triggered. EXPENSIVE: the loop already owes 67 unasked gaps, and five new questions on every requirement would swamp it — this needs a rule about WHICH requirements deserve the questions (and when), or it drowns the thing it is added to.\n\nC — EDGES TO REAL NODES, which is what reflow2 does today. A test plan is a Verification, a production plan is a Release/DesignEpoch, fielding is an Environment. Nothing new at all. CHEAP and already queryable end to end. EXPENSIVE, and this is Anthony's actual complaint: it only ever happens when somebody REMEMBERS to draw the edge, so the thinking never gets prompted at the start — which is the whole thing he is asking for.\n\nD — A SIDE NODE PER AXIS, on the DimensionAssessment pattern that already exists for cross-cutting concerns. Keeps the requirement clean, lets an axis carry its own provenance and date, and extends to \"other dimensions\" without another schema change each time — which is the extensibility his aside asks about. EXPENSIVE: a node per axis per requirement is a lot of graph for something usually empty, and it is the heaviest of the four.\n\nTHE HONEST COUNTER-ARGUMENT TO THE WHOLE IDEA, recorded beside it rather than used to kill it: a checklist filled with \"unknown-at-this-moment\" on every node teaches people to skip it, and then reflow2 holds five more fields nobody reads — the exact failure already measured twice here, in the 3-of-5 unused requirement lifecycle and in the two evidence-quality axes used zero times. Whatever is chosen has to say what READS the answer, because a marker nothing reads is a comment.\n\nNOT DECIDED, and deliberately not ranked. B and C are not exclusive — B could be the prompt that leads to C's edges, which would need no new vocabulary at all.",
         "name": "OPEN — should a Requirement/Capability carry lifecycle dimensions from the moment it is written, so fielding is thought about at the start?",
         "rationale": "Anthony's, 2026-08-11: \"having something at the very beginning of design that already has an agent/user thinking from the get-go how it will eventually be fielded in an operational environment is good to have upfront.\" The design's V-model has both arms and no rungs, and this is a proposal for rungs stated at the top of the left arm — which is why it is worth recording even though four of the five axes already have scattered machinery.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-lining-work-up-in-increments-should-be-the-default-not-a-skill-you-remember",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony thinking out loud, 2026-08-20. Nothing here is intent and nothing should be built against it without his word.\n\nHIS WORDS: \"line up the work we're doing in increments/epochs (this already can be done, but this should become more like the default when user of reflow2 lines up a set of tasks).\"\n\nWHAT IS ALREADY TRUE, so the idea is about REACH rather than about capability: plan_epoch, add_release, schedule_for and arrival_delta all exist and work. The plan-increments skill describes the whole discipline including the four conventions nobody guesses. So this is not a missing mechanism. It is a mechanism that only fires when somebody remembers it exists.\n\nTHE SHAPE OF THE IDEA: today a user who lists five things to do gets five things done. The list lives in the conversation, or in a commit message, or in the agent's head. The plan-increments skill already names this exact failure in as many words — \"if you are maintaining a numbered list of upcoming work in the conversation, that is a delivery plan living outside the graph\" — and asks the agent to notice. Anthony's idea is that noticing should not be the mechanism.\n\nWHY IT IS THE SAME PATTERN AS THREE THINGS FOUND THIS SESSION, which is the argument FOR it: the mechanism EXISTS, is TESTED, and is UNREACHABLE FROM WHERE THE PERSON IS STUCK. A user lining up tasks is exactly where an increment is owed, and nothing at that moment says so.\n\nOPTIONS, none chosen:\n  (a) A TOOL-LEVEL NUDGE, the pattern reflow2 already uses — the capture tools return loop_hint lines, and the same could fire when several capabilities or requirements are created in one batch with none scheduled. Cheap, consistent with dec:the-discipline-arrives-at-the-tool, and it is a HINT rather than a gate.\n  (b) A DETECTOR — make 'work exists and is scheduled nowhere' a gap. The plan-increments skill already names unreleased_component as its gap, so half of this exists. Costs: on a young design almost everything is unscheduled, so it would fire everywhere and be trained away.\n  (c) A DEFAULT INCREMENT — a project always has a current open epoch, and newly captured work lands in it unless told otherwise. Strongest reach. RISK, and it is the serious one: this asserts a plan the user never made, which is the opposite of every other default in reflow2 (req:defaults-do-not-assert). An increment nobody scoped is the thing arrival_delta already refuses to call ready to cut.\n  (d) SKILL-LEVEL ONLY — sharpen the trigger wording and accept that it depends on the agent noticing. This is the status quo and it is what he is saying is not enough.\n\nHONEST COUNTER-ARGUMENT, recorded beside the idea rather than used to argue it down: reflow2's own increments have been planned by hand all session and it worked well — but only because the discipline was deliberately invoked. That is evidence for the idea, not against it. The real counter is (c)'s risk: a default that MAKES a plan is not the same as a default that ASKS for one, and only the second is in keeping with how reflow2 treats every other unstated thing.\n\nRELATED AND SEPARATELY ANSWERABLE: dec:idea-an-increment-can-be-sliced-into-work-packages-with-an-owner and dec:idea-a-gap-can-be-scheduled-into-an-increment-like-any-other-work.",
+        "name": "OPEN — should lining work up in increments be the DEFAULT when a user lines up a set of tasks, rather than a skill someone remembers to reach for?",
         "status": "proposed"
       }
     },
@@ -100254,6 +100472,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered degraded.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:delivery-kind-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered delivery_kind.rs"
       }
     },
     {
@@ -107193,7 +107421,8 @@
         "fact_type": "defect",
         "statement": "FOUND 2026-08-20 by running the loop honestly rather than by looking for it: epoch:the-declared-walls-hold was set arrived with BOTH its capabilities delivered, and arrival_delta reported BOTH as `outstanding`.\n\n=== THE MECHANISM, read from the source and not inferred ===\n\ncrates/reflow2-core/src/temporal.rs, item_is_delivered:\n\n    node::CAPABILITY => Ok(self.capability_is_realized(item_id)?\n                        && self.capability_has_evidence(item_id)?)\n\nand capability_is_realized (detect.rs) is: an Artifact REALIZES the capability, OR an Artifact realizes a Component the capability is ALLOCATED_TO.\n\nSo delivery requires A FILE ON DISK. `Capability.status` is never consulted. Verification evidence alone is not enough - measured directly: a capability at status `realized` WITH a passing system-level Verification attached still came back `outstanding`, because the AND requires both halves and the artifact half cannot be satisfied by a check.\n\n=== WHY THIS IS NOT 'JUST SET THE STATUS' ===\n\nThe governing doctrine is right and should not be weakened: delivery is COMPUTED from the golden thread, never asserted, and there is deliberately no `achieved` modality, because a plan that records its own success is a plan lying about itself. The defect is not that delivery is computed. It is that the computation admits exactly ONE kind of evidence - an artifact - while reflow2 itself models several.\n\n=== WHAT IT COSTS AN ARBITRARY USER'S PROJECT ===\n\nA large share of real increment content produces NO NEW FILE:\n  · a re-decomposition, or any boundary change\n  · a retirement - something correctly leaving the design\n  · a governance decision, an accepted rule, a settled question\n  · a correction to a model that was wrong about the world\n\nEvery one of those sits `outstanding` forever. And `outstanding` is DEFINED as 'still pointed here, not delivered, and nobody has said which of deferred or discontinued it is - that is the question to put to the user'. So the tool asks the user a question about work that is finished, and keeps asking. A plan that cannot mark model work delivered will, increment after increment, accumulate a backlog of phantom incompletions - and the natural response is to stop scheduling model work, which is precisely the work systems engineering is FOR.\n\nIt bites hardest on exactly the modularization and black-box work reflow2 is meant to support, because almost all of that is model change.\n\n=== A SECOND TENSION, IN THE SAME REPLY ===\n\narrival_delta also said: 'nothing is scheduled `required` ... so there is no obligation to miss and it is NOT ready to cut. An increment that promises nothing has not been scoped.' That is a fair criticism. But the plan-increments skill instructs the opposite - `required` is the scheduling face of a KPP, so 'ask, never assume' - and this plan used `expected` BECAUSE THE SKILL SAID TO. A user following reflow2's own guidance therefore builds an increment reflow2 then reports as unscoped and never ready to cut. Two pieces of correct guidance, in tension, with no way for the follower to satisfy both.\n\n=== STATED HONESTLY: NOT ACTED ON ===\n\nThe epoch is being LEFT reporting `outstanding`. Editing the plan to match what happened is what the skill forbids, and the false reading is itself the evidence. This is recorded for Anthony's decision, not fixed.",
         "subject_id": "epoch:the-declared-walls-hold",
-        "valid_from": "2026-08-20"
+        "valid_from": "2026-08-20",
+        "valid_to": "2026-08-20"
       }
     },
     {
@@ -110781,6 +111010,20 @@
       }
     },
     {
+      "node_id": "ver:delivery-kind-is-declared-not-inferred",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/delivery_kind.rs, 10 cases.\n\nWHAT IT PINS: that model work with a passing check reports delivered; that model work WITHOUT a check does not, so the declaration loosens which evidence is required and never whether any is; that an artifact capability still needs both halves; that an UNDECLARED capability keeps the stricter rule, so nothing written before this quietly loosens; that a bad delivery kind is refused naming the legal values; that declaring on an absent capability is refused; and that the setter preserves every other property, which is the BL-183 shape where a sharpening write silently unbuilds a verified capability.\n\nTHE TWO THAT EARN THEIR KEEP MOST:\n\nan_unbuilt_capability_with_a_passing_check_is_not_delivered pins THE REJECTED FIX — the version first proposed and first APPROVED, before reading the code showed it was wrong. Inferring `model` from a missing artifact reports unbuilt work as delivered the moment any check is pointed at it, because the commonest reason a capability has no file is that nobody has built it. Without this test the cheaper rule is one refactor away from being reinstated as a simplification.\n\nan_outstanding_item_with_a_check_but_no_file_names_the_remedy pins DISCOVERABILITY, with a sibling asserting the note stays SILENT when there is no check at all. Fixing the rule while leaving the declaration unmentioned would have reproduced, inside the very change that documents it, the failure found four separate times that day: the mechanism exists, is tested, and is unreachable from where the person is stuck.\n\nNOT COVERED, stated rather than left to be found: nothing checks that an author declared the RIGHT kind. That is a judgement about their own work, and reflow2 records what a person knows rather than second-guessing it — the same position REALIZES.conformance takes.",
+        "findings": "RUN 2026-08-20: 10 passed, 0 failed. Whole crate 1121 passed / 0 failed across 107 binaries, exactly +10 tests and +1 binary against the 1111/106 baseline — a foundation module and the schema were touched and nothing else moved. Re-run against the FINAL tree after an earlier run overlapped an edit, because a measurement taken around a change is the error this session made twice.\n\nPROVEN ON THE LIVE GRAPH, not only fixtures: both capabilities of epoch:the-declared-walls-hold were declared `model` through the served tool, and the increment went from two `outstanding` to two `delivered`. The discoverability note fired on the real case beforehand and correctly disappeared afterwards.\n\nA DEFECT THIS RUN CAUGHT THAT NOTHING ELSE COULD: inserting the new tool between an existing #[tool(...)] attribute and its function SWAPPED TWO SERVED DESCRIPTIONS — set_interface_designation described capability delivery and set_capability_delivery described interface designation. cargo build, cargo clippy -D warnings, cargo fmt and 1121 tests were all clean. Only the toolsnap gate saw it. An attribute is legal Rust wherever it sits; which function a description belongs to is a fact about the SERVED SURFACE, and only a check that reads the served surface can hold it.",
+        "kind": "verification",
+        "last_run_at": "2026-08-20",
+        "level": "unit",
+        "method": "test",
+        "name": "Model delivery is declared, never inferred from a missing file",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:dependency-names-its-design",
       "node_type": "Verification",
       "properties": {
@@ -112202,7 +112445,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:045f0cff9a1c6c934559bf4954f14bc882a24496cf41b7165c007a69cef1eaf9",
+  "prev_content_hash": "sha256:8c5d311aa786a9c94f78bc2a928a80ae57027f4c389a956207a8fae47c5f3e0d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

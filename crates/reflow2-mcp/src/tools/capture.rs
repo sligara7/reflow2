@@ -1100,6 +1100,37 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Declare WHAT KIND of thing delivers a capability — and never whether it \
+                       was delivered, which stays COMPUTED from the golden thread. `artifact` \
+                       (the default) means a file realizes it, and delivery needs BOTH the file \
+                       and a passing check. `model` means the deliverable IS the design change — \
+                       a re-decomposition, a retirement, a governance ruling, a correction to a \
+                       model that was wrong about the world — so there is no file to point at \
+                       and the passing check is the whole of the evidence. BOTH KINDS STILL \
+                       DEMAND A CHECK: this loosens WHICH evidence is required, never WHETHER \
+                       any is, so it is not a way to mark something done. WHY IT EXISTS: \
+                       arrival_delta reported an increment's genuinely delivered capabilities as \
+                       `outstanding` because delivery required a file, and `outstanding` means \
+                       'nobody has said whether this was deferred or dropped' — a false question \
+                       about finished work, asked again every run. NOT INFERRED FROM A MISSING \
+                       FILE, deliberately: the commonest reason a capability has no artifact is \
+                       that nobody has built it yet, so inferring would report unbuilt work as \
+                       delivered. Same shape as set_interface_designation — you declare the one \
+                       thing only you can know, and the computation earns the rest.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn set_capability_delivery(
+        &self,
+        Parameters(req): Parameters<CapabilityDeliveryReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        ok_json(NodeDto::from(
+            g.set_capability_delivery(&req.capability_id, &req.delivery)
+                .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
         description = "Give an Interface its external ROLE, which is what makes composition \
                        computable: `published` (this design OFFERS the contract and others may \
                        rely on it), `required` (this design NEEDS one of these FROM OUTSIDE), \

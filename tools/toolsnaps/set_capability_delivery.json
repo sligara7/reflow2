@@ -1,0 +1,25 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Declare WHAT KIND of thing delivers a capability — and never whether it was delivered, which stays COMPUTED from the golden thread. `artifact` (the default) means a file realizes it, and delivery needs BOTH the file and a passing check. `model` means the deliverable IS the design change — a re-decomposition, a retirement, a governance ruling, a correction to a model that was wrong about the world — so there is no file to point at and the passing check is the whole of the evidence. BOTH KINDS STILL DEMAND A CHECK: this loosens WHICH evidence is required, never WHETHER any is, so it is not a way to mark something done. WHY IT EXISTS: arrival_delta reported an increment's genuinely delivered capabilities as `outstanding` because delivery required a file, and `outstanding` means 'nobody has said whether this was deferred or dropped' — a false question about finished work, asked again every run. NOT INFERRED FROM A MISSING FILE, deliberately: the commonest reason a capability has no artifact is that nobody has built it yet, so inferring would report unbuilt work as delivered. Same shape as set_interface_designation — you declare the one thing only you can know, and the computation earns the rest.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "capability_id": {
+        "type": "string"
+      },
+      "delivery": {
+        "description": "`artifact` (the default) — a file realizes it, and delivery needs both\nthe file and a passing check. `model` — the deliverable IS the design\nchange, so the check is the whole of the evidence. It says what KIND\ndelivers this, NEVER whether it was delivered.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "capability_id",
+      "delivery"
+    ],
+    "type": "object"
+  },
+  "name": "set_capability_delivery"
+}
