@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:1820d2f6535226ba60d8862f7b0f309c7eed16d3e23c245ac6ab4e1854f47493",
+  "content_hash": "sha256:aee81246ebadc308185bc944897020ed2586bc922035705aacda2d070d5aa78c",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -18183,6 +18183,24 @@
         "action": "modified"
       },
       "to_id": "dec:does-enforced-default-to-gate-blocking"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-leaf-component-points-at-its-file",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:wall-check"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:every-leaf-component-points-at-its-file",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:wall-check-test"
     },
     {
       "edge_type": "CHANGED",
@@ -78425,6 +78443,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:claims",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:claims"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:compare",
       "properties": {
         "completeness": "complete"
@@ -79121,6 +79148,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:latent",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:latent"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:llm",
       "properties": {
         "completeness": "complete"
@@ -79182,6 +79218,15 @@
         "completeness": "complete"
       },
       "to_id": "cap:undeclared-seam-is-named"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:mcp-http",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:mcp-http"
     },
     {
       "edge_type": "REALIZES",
@@ -79338,6 +79383,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:proxy",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:proxy"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:publishable-promise-test",
       "properties": {
         "completeness": "complete"
@@ -79351,6 +79405,15 @@
         "completeness": "complete"
       },
       "to_id": "cap:readiness-gating"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:readiness",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:readiness"
     },
     {
       "edge_type": "REALIZES",
@@ -79376,6 +79439,15 @@
         "completeness": "partial"
       },
       "to_id": "cap:select-graph-by-id"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:registry",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:registry"
     },
     {
       "edge_type": "REALIZES",
@@ -79705,6 +79777,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:shared",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:shared"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:sibling-merge-test",
       "properties": {
         "completeness": "complete"
@@ -79873,6 +79954,15 @@
         "completeness": "complete"
       },
       "to_id": "cap:the-record-moved-is-surfaced"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:sync-debt",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:sync-debt"
     },
     {
       "edge_type": "REALIZES",
@@ -80137,11 +80227,29 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:tools-ask",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:tools-ask"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:tools-assure",
       "properties": {
         "completeness": "partial"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-assure",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:tools-assure"
     },
     {
       "edge_type": "REALIZES",
@@ -80158,6 +80266,15 @@
         "completeness": "partial"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-built",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:tools-built"
     },
     {
       "edge_type": "REALIZES",
@@ -80196,6 +80313,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:tools-capture",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:tools-capture"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:tools-claims",
       "properties": {
         "completeness": "complete"
@@ -80209,6 +80335,15 @@
         "completeness": "partial"
       },
       "to_id": "cap:stale-seat-refusal"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-claims",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:tools-claims"
     },
     {
       "edge_type": "REALIZES",
@@ -80246,6 +80381,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:tools-coherence",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:tools-coherence"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:tools-exchange",
       "properties": {
         "completeness": "complete"
@@ -80254,11 +80398,38 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:tools-exchange",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:tools-exchange"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-ingest",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:tools-ingest"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:tools-operate",
       "properties": {
         "completeness": "partial"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-operate",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:tools-operate"
     },
     {
       "edge_type": "REALIZES",
@@ -80276,6 +80447,15 @@
         "completeness": "partial"
       },
       "to_id": "cap:bulk-forms"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-query",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:tools-query"
     },
     {
       "edge_type": "REALIZES",
@@ -80319,6 +80499,15 @@
         "completeness": "complete"
       },
       "to_id": "cap:satisfaction-schedule"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-temporal",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:tools-temporal"
     },
     {
       "edge_type": "REALIZES",
@@ -84938,6 +85127,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:mcp-http",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:mcp-http"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:merge-driver-test",
       "properties": {
         "action": "created"
@@ -85039,6 +85236,14 @@
         "action": "created"
       },
       "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:proxy",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:proxy"
     },
     {
       "edge_type": "YIELDED",
@@ -85247,6 +85452,14 @@
         "action": "created"
       },
       "to_id": "art:service"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:shared",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:shared"
     },
     {
       "edge_type": "YIELDED",
@@ -85543,6 +85756,14 @@
         "action": "created"
       },
       "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:tools-ingest",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:tools-ingest"
     },
     {
       "edge_type": "YIELDED",
@@ -86905,6 +87126,17 @@
       }
     },
     {
+      "node_id": "art:mcp-http",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:a4d20ec48d8a0a3e024497ab67e55c49bba13ea12794ed3d92ad6877b56a46a6",
+        "location": "crates/reflow2-mcp/src/mcp_http.rs",
+        "name": "mcp_http.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:merge",
       "node_type": "Artifact",
       "properties": {
@@ -87106,6 +87338,17 @@
         "name": "provenance.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:proxy",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:c1537adc3cba37798e26a225d522ee834aaede8945c01af3b8eb1fa4c8b754b6",
+        "location": "crates/reflow2-mcp/src/proxy.rs",
+        "name": "proxy.rs",
+        "status": "realized"
       }
     },
     {
@@ -87543,6 +87786,17 @@
         "name": "getting-started/SETUP.md",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:shared",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:beea0318ad745475a9c61706967a8b58b472fceae88138bcfc3221e84b7312fe",
+        "location": "crates/reflow2-mcp/src/shared.rs",
+        "name": "shared.rs",
+        "status": "realized"
       }
     },
     {
@@ -88099,6 +88353,17 @@
       }
     },
     {
+      "node_id": "art:tools-ingest",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:e6e04f6b5a2c89e826cc363bcc011620b936d87ed503e151326291f62bc1ec40",
+        "location": "crates/reflow2-mcp/src/tools/ingest_tools.rs",
+        "name": "ingest_tools.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:tools-operate",
       "node_type": "Artifact",
       "properties": {
@@ -88346,7 +88611,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a345ed6fd61d7a2d12390a2b8ebbda07b4fc8843be4e8e9b96b6baa76a0fc832",
+        "checksum": "sha256:288ce7e07201756e1a5d5e086e2a1aa2b411a501ce675a46e9c760dbae479f74",
         "location": "tools/wall_check.py",
         "name": "wall_check.py",
         "status": "realized"
@@ -88357,7 +88622,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:18ce69e056b4661bfb77384aa33bbd0bb9c86a70815ad678795dc589f7f6d6cb",
+        "checksum": "sha256:8834f59d9cbca7b621d8645ecd5934d6d66bb3b7ead12f945e5d8830e48e5af9",
         "location": "tools/test_wall_check.py",
         "name": "test_wall_check.py",
         "status": "realized"
@@ -93892,6 +94157,15 @@
       "properties": {
         "change_type": "constraint_change",
         "name": "Snapshot of the enforced-default decision while it still reads NOT DECIDED with three lettered options, before Anthony's ruling is written into it"
+      }
+    },
+    {
+      "node_id": "chg:every-leaf-component-points-at-its-file",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Every leaf component points at the file that realizes it — the mapping wall_check reads is completed",
+        "subject": "record"
       }
     },
     {
@@ -103886,6 +104160,16 @@
       }
     },
     {
+      "node_id": "frag:art:mcp-http",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered mcp_http.rs"
+      }
+    },
+    {
       "node_id": "frag:art:merge-driver-test",
       "node_type": "Fragment",
       "properties": {
@@ -104013,6 +104297,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered provenance.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:proxy",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered proxy.rs"
       }
     },
     {
@@ -104273,6 +104567,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered service.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:shared",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered shared.rs"
       }
     },
     {
@@ -104653,6 +104957,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered tools/exchange.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:tools-ingest",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered ingest_tools.rs"
       }
     },
     {
@@ -115590,7 +115904,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:3db1ac5d66823786cfcecb959f6388a890c631e324df7accf71310ed995b2c50",
+  "prev_content_hash": "sha256:1820d2f6535226ba60d8862f7b0f309c7eed16d3e23c245ac6ab4e1854f47493",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

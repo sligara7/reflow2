@@ -350,10 +350,20 @@ def main() -> int:
             print(f"      {ext or '(no extension)'}: {len(paths)} file(s), e.g. {paths[0]}")
     if unreadable:
         print(f"  {len(unreadable)} file(s) the design names and disk does not have: {unreadable[:3]}")
-    unmapped = [c for c in components if c not in files_of]
+    # An ASSEMBLY correctly points at no file — its files are its children's, and
+    # registering an artifact for it would assert that a subsystem is a thing on
+    # disk. Counting it beside a genuine gap is the same false positive as
+    # calling a one-member level uncoupled: an arithmetic certainty dressed as a
+    # finding, and the way a signal earns being ignored.
+    has_children = {parent[c] for c in parent}
+    unmapped = [c for c in components if c not in files_of and c not in has_children]
+    assemblies = [c for c in components if c not in files_of and c in has_children]
     if unmapped:
-        print(f"  {len(unmapped)} component(s) point at NO file, so nothing here speaks about them:")
+        print(f"  {len(unmapped)} LEAF component(s) point at NO file, so nothing here speaks about them:")
         print(f"      {', '.join(sorted(unmapped)[:8])}{' ...' if len(unmapped) > 8 else ''}")
+    if assemblies:
+        print(f"  {len(assemblies)} assembl(y/ies) point at no file, which is CORRECT — their files")
+        print("      are their children's, and they are not counted as gaps")
     if unresolved:
         print(f"  {unresolved} import(s) resolved to no registered file — the answer is that much thinner")
 
