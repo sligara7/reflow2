@@ -738,6 +738,78 @@ def main() -> int:
                     }
                 )
 
+            # ⭐ WHAT THE DESIGN HAS NEVER HEARD OF. Every check above this line
+            # reasons over artifacts the design ALREADY KNOWS — the loop is
+            # `for art in artifacts`, and `reconcile_artifacts` does no file I/O
+            # at all, so the caller decides what is looked at. That makes
+            # `undocumented_addition` a drift kind THIS GATE STRUCTURALLY CANNOT
+            # PRODUCE: add a file, commit, push, and every check stays green.
+            # Measured 2026-08-21, and the same design-outward-to-files blind
+            # spot had just been found and fixed in tools/wall_check.py.
+            #
+            # The roots are DERIVED from the paths the design already gave, so
+            # this needs no configuration — the same property wall_check keeps.
+            #
+            # ⚠️ IT IS A NOTE, NEVER A FAILURE, AND THAT IS THE WHOLE POINT.
+            # `dec:idea-allocation-waits-for-the-last-responsible-moment`
+            # (accepted) defers allocation to the last responsible moment, and a
+            # RED BUILD here would force every new file to be placed at the
+            # moment it is written — reversing that ruling while appearing to
+            # implement it. NOTICING a file is unmodelled and DEMANDING it be
+            # allocated are different acts. This does the first. Anthony's call,
+            # 2026-08-21: a note first, and whether it ever becomes a failure is
+            # a governance question answered by whether this gets acted on or
+            # skimmed.
+            claimed_paths = set()
+            for art in artifacts:
+                loc = (art.get("properties", {}) or {}).get("location")
+                if loc:
+                    claimed_paths.add(os.path.normpath(os.path.join(opts.root, loc)))
+            source_roots = {
+                os.path.dirname(p) for p in claimed_paths if os.path.isdir(os.path.dirname(p))
+            }
+            # Only the outermost of any nested pair, so a directory is not walked twice.
+            tops = sorted(
+                r
+                for r in source_roots
+                if not any(r != o and r.startswith(o + os.sep) for o in source_roots)
+            )
+            unheard = []
+            for top in tops:
+                for dirpath, _, filenames in os.walk(top):
+                    for fn in filenames:
+                        # Source only. A `mod.rs` or `lib.rs` is a namespace
+                        # declaration rather than a unit of design — the same
+                        # reason an assembly correctly points at no file.
+                        if not fn.endswith((".rs", ".py")) or fn in ("mod.rs", "lib.rs"):
+                            continue
+                        full = os.path.normpath(os.path.join(dirpath, fn))
+                        if full not in claimed_paths:
+                            unheard.append(os.path.relpath(full, opts.root))
+            unheard.sort()
+            if unheard:
+                # GROUPED BY DIRECTORY, not listed. Ninety-seven filenames on one
+                # line is the signal a reader learns to skim, and a count that
+                # mixes kinds is a count nobody acts on — the same lesson that
+                # split assemblies out of wall_check's coverage gap twice over.
+                # The grouping is mechanical, so it states where they are and
+                # leaves which-of-these-matter to the person who knows.
+                by_dir = {}
+                for rel in unheard:
+                    by_dir.setdefault(os.path.dirname(rel) or ".", []).append(rel)
+                where = ", ".join(
+                    f"{d} {len(v)}"
+                    for d, v in sorted(by_dir.items(), key=lambda kv: -len(kv[1]))[:5]
+                )
+                extra = f", +{len(by_dir) - 5} more dir(s)" if len(by_dir) > 5 else ""
+                notes.append(
+                    f"unmodelled source: {len(unheard)} file(s) no Artifact points at, in "
+                    f"{len(by_dir)} director(y/ies) — {where}{extra}. NOT a failure and NOT a "
+                    f"demand to allocate them: the design simply has not been told they exist. "
+                    f"link-artifacts registers one; allocation stays deferred to the last "
+                    f"responsible moment (dec:idea-allocation-waits-for-the-last-responsible-moment)."
+                )
+
             drift = server.call(
                 "reconcile_artifacts", {"observed": observed, "exhaustive": True}
             )

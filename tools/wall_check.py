@@ -183,6 +183,14 @@ SCANNERS = {
     ".py": (strip_python, imports_python),
 }
 
+# Formats with NO IMPORT STRUCTURE AT ALL. A markdown doc or a YAML schema does
+# not import anything, so "could not read" is the wrong sentence for it — it
+# reads as a parsing gap when there is nothing to parse. Reporting it beside a
+# language the tool genuinely cannot handle is the same false positive as
+# counting an assembly beside a real coverage gap, and the third of that shape
+# in this file's short life.
+NO_IMPORTS = {".md", ".yaml", ".yml", ".json", ".toml", ".txt", ".lock", ".sh"}
+
 
 # ---------------------------------------------------------------- graph algorithms
 
@@ -276,7 +284,16 @@ def read_design(export_path):
                 if provider != consumer:
                     declared[consumer].add(provider)
     level = {c: (props[c].get("level") or "component") for c in components}
-    return components, files_of, parent, level, declared
+    # EVERY artifact location, not only the ones that realize a Component. This
+    # is what lets "the design has never heard of this file" be told apart from
+    # "the design knows this file but does not model it as a part" — two facts
+    # that a single 'unclaimed' count would blur into one unusable number.
+    known = {
+        props[i].get("location")
+        for i, t in node_type.items()
+        if t == "Artifact" and props[i].get("location")
+    }
+    return components, files_of, parent, level, declared, known
 
 
 # ---------------------------------------------------------------- the source side
@@ -304,6 +321,27 @@ def scan(files_of):
             else:
                 by_module[(None, os.path.splitext(os.path.basename(p))[0])] = p
 
+    # ⭐ WHAT THE DESIGN DOES NOT MENTION. Until 2026-08-21 this tool walked
+    # component -> files and nothing else, so a file nobody registered never
+    # entered the data structure and its absence could not be reported. That is
+    # the cost of taking the design as the only input: you can report on what
+    # the design mentions, and on nothing else. The roots are DERIVED from the
+    # paths the design already gave — so this still needs no configuration, and
+    # can now see what was never declared.
+    roots = {os.path.dirname(p) for paths in files_of.values() for p in paths}
+    roots = {r for r in roots if r and os.path.isdir(r)}
+    tops = sorted({r for r in roots if not any(r != o and r.startswith(o + os.sep) for o in roots)})
+    claimed = set(owner)
+    unclaimed = []
+    for top in tops:
+        for dp, _, fns in os.walk(top):
+            for f in fns:
+                full = os.path.join(dp, f)
+                ext = os.path.splitext(f)[1]
+                if ext in SCANNERS and full not in claimed:
+                    unclaimed.append(full)
+    unclaimed.sort()
+
     edges, unresolved, read = defaultdict(set), 0, 0
     for comp, paths in files_of.items():
         for p in paths:
@@ -321,7 +359,7 @@ def scan(files_of):
                 other = owner.get(target)
                 if other and other != comp:
                     edges[comp].add(other)
-    return edges, dict(unsupported), unreadable, unresolved, read
+    return edges, dict(unsupported), unreadable, unresolved, read, unclaimed
 
 
 # ---------------------------------------------------------------- report
@@ -335,8 +373,10 @@ def main() -> int:
     if not os.path.exists(args.export):
         print(f"no design export at {args.export} — nothing to check against.")
         return 0
-    components, files_of, parent, level, declared = read_design(args.export)
-    edges, unsupported, unreadable, unresolved, read = scan(files_of)
+    components, files_of, parent, level, declared, known = read_design(args.export)
+    edges, unsupported, unreadable, unresolved, read, unclaimed = scan(files_of)
+    unknown = [p for p in unclaimed if p not in known]
+    not_a_part = [p for p in unclaimed if p in known]
 
     print("=" * 74)
     print("COVERAGE — what this answer is actually built on")
@@ -344,10 +384,16 @@ def main() -> int:
     print(f"  {len(components)} component(s) in the design")
     print(f"  {len(files_of)} of them point at a file, via an Artifact location and REALIZES")
     print(f"  {read} file(s) read; {sum(len(v) for v in edges.values())} coupling edge(s) found")
-    if unsupported:
+    no_imports = {e: p for e, p in unsupported.items() if e in NO_IMPORTS}
+    cannot_parse = {e: p for e, p in unsupported.items() if e not in NO_IMPORTS}
+    if cannot_parse:
         print("  COULD NOT READ (no scanner for the language), counted not skipped:")
-        for ext, paths in sorted(unsupported.items()):
+        for ext, paths in sorted(cannot_parse.items()):
             print(f"      {ext or '(no extension)'}: {len(paths)} file(s), e.g. {paths[0]}")
+    if no_imports:
+        n = sum(len(v) for v in no_imports.values())
+        print(f"  {n} file(s) have NO IMPORT STRUCTURE to read ({', '.join(sorted(no_imports))}) —")
+        print("      not a parsing gap, and not counted as one")
     if unreadable:
         print(f"  {len(unreadable)} file(s) the design names and disk does not have: {unreadable[:3]}")
     # An ASSEMBLY correctly points at no file — its files are its children's, and
@@ -364,8 +410,23 @@ def main() -> int:
     if assemblies:
         print(f"  {len(assemblies)} assembl(y/ies) point at no file, which is CORRECT — their files")
         print("      are their children's, and they are not counted as gaps")
+    if unknown:
+        print(f"  ⚠ {len(unknown)} SOURCE FILE(S) THE DESIGN HAS NEVER HEARD OF — no Artifact")
+        print("      anywhere points at them, so nothing here can speak for them:")
+        for p in unknown[:6]:
+            print(f"      {p}")
+        if len(unknown) > 6:
+            print(f"      ... and {len(unknown) - 6} more")
+    if not_a_part:
+        print(f"  {len(not_a_part)} file(s) the design KNOWS but does not model as part of any")
+        print("      Component — registered against something else, or against nothing:")
+        for p in not_a_part[:6]:
+            print(f"      {p}")
+        if len(not_a_part) > 6:
+            print(f"      ... and {len(not_a_part) - 6} more")
     if unresolved:
-        print(f"  {unresolved} import(s) resolved to no registered file — the answer is that much thinner")
+        print(f"  {unresolved} import(s) resolved to no registered file — usually the same files")
+        print("      as above, seen from the other side. The answer is that much thinner.")
 
     print()
     print("=" * 74)

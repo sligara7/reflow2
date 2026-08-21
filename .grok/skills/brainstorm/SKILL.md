@@ -1,6 +1,6 @@
 ---
 name: brainstorm
-description: Use when the user is thinking out loud rather than deciding — "just brainstorming", "what if we", "a few options", several half-formed ideas in one breath, "I'm not sure yet", or working an idea through before committing to it. Records the ideas in the graph AS ideas, so nothing is lost and nothing is claimed as intent, and asks before promoting any of them into requirements or capabilities.
+description: Use when the user is thinking out loud rather than deciding — "just brainstorming", "what if we", "a few options", several half-formed ideas in one breath, "I'm not sure yet", or working an idea through before committing to it. Records the ideas in the graph AS ideas, so nothing is lost and nothing is claimed as intent; links each new idea to the ones it actually relates to, so a later search finds a line of reasoning rather than an orphan; and asks before promoting any of them into requirements or capabilities.
 ---
 
 # Think out loud, on the record
@@ -30,7 +30,7 @@ or a real decision left as a musing.
 
 ## 2. What not to do while the thinking is still happening
 
-- **Do not create Requirements or Capabilities.** Promotion is step 4 and needs the user's word.
+- **Do not create Requirements or Capabilities.** Promotion is step 5 and needs the user's word.
 - **Do not start building or researching** the idea unless asked. The point is the thinking.
 - **Do not run detect-and-ask over brainstormed nodes.** It would ask the user to firm up exactly
   what they deliberately left soft, which teaches them that thinking out loud has a cost.
@@ -71,7 +71,53 @@ being ideas: if a brainstormed option grows a design of its own, `register_alter
 fork, and *then* being nudged to choose is correct. That line is the useful one — the graph already
 tells a musing apart from a choice, and nobody has to remember which is which.
 
-## 4. End by choosing what survives — a promotion, not a commit
+## 4. Connect it to what is already there — the dots, joined at capture
+
+An idea read alone is half an idea. The same thought recorded three times over a month is three
+orphans; recorded once and *linked* it is a line of reasoning. **This step is nearly free here and
+expensive nowhere else: the near-matches are already in your hand.** You searched before writing,
+and the duplicate guard hands back the nodes it judged close. Today that list is used to avoid a
+duplicate and then dropped — the material for connecting the dots is produced, read, and discarded
+every single time.
+
+1. **Judge the near-matches you already have.** Do not run a fresh sweep for candidates. The two or
+   three the search and the guard surfaced are the ones worth looking at.
+2. **If one is genuinely related, name HOW.** The relation vocabulary already exists and accepts any
+   pair of nodes — pick the one that is true, with `create_edge`:
+
+   | relation | use it when |
+   | --- | --- |
+   | `CONTRADICTS` | both cannot hold; the design will have to pick |
+   | `EVOLVES_INTO` | this is the older thought, grown up |
+   | `DEPENDS_ON` | this is only worth anything if the other lands first |
+   | `CAUSES` / `TRIGGERS` | taking one forces the other |
+   | `BLOCKS` | one standing makes the other unbuildable |
+   | `DUPLICATES` | the same idea said twice — link them rather than merging; they were said for different reasons and both reasons matter |
+   | `ANTICIPATES` | the earlier one saw this coming |
+   | `OBSOLETES` | this retires the other outright |
+   | `RISKS` / `MITIGATES` | one is a hazard, the other answers it |
+
+   Put the reason in the edge's `evidence` — *why* you drew it, in a sentence. A relation with no
+   evidence is an assertion the next reader cannot check or overturn.
+
+   **Direction is part of the claim.** Every one of these reads as a sentence — *from RELATION to*.
+   Say it out loud before you write it: "the old idea EVOLVES_INTO the new one", "this idea
+   DEPENDS_ON that one landing first". Backwards, the same edge asserts something false and nothing
+   will catch it.
+3. **Two or three edges is a good outcome. Ten is a smell.** Relatedness is not similarity. If
+   everything links to everything, the neighbourhood stops carrying information.
+4. **If nothing is honestly related, write that line in the decision text** — *"searched; nearest
+   were X and Y; no real relation to either."* This is the half of the step people skip, and it is
+   not bookkeeping: it is the difference between an idea nobody has looked at and an idea somebody
+   looked at and found genuinely new. Only one of those is worth a second look later, and without
+   the line they are indistinguishable.
+
+🛑 **Never draw an edge to satisfy this step.** A fabricated relation is worse than a missing one.
+A missing edge leaves an idea hard to find; an invented edge puts a false neighbour in front of
+every later reader, and anything that searches by neighbourhood will keep repeating it. When you
+are unsure, the "no real relation" line *is* the correct answer — not the weaker one.
+
+## 5. End by choosing what survives — a promotion, not a commit
 
 When the thinking is done, ask which ideas the user wants to keep as intent. Then:
 
@@ -84,7 +130,7 @@ When the thinking is done, ask which ideas the user wants to keep as intent. The
 **Nothing is promoted for being the last one standing.** If only one idea remains and the user has
 not said they want it, it is still just an idea nobody chose.
 
-## 5. Honest limits
+## 6. Honest limits
 
 - **The graph has no `brainstorm` kind.** A `proposed` Decision is a node type meant for a choice
   someone is actually facing, which is close to an idea but not the same thing. Whether that
@@ -96,7 +142,18 @@ not said they want it, it is still just an idea nobody chose.
 - **A brainstorm is not a decision record.** When the user does decide, the decision gets its own
   rationale. Do not let "we talked about it" stand in for "we chose it, and here is why".
 
+- **Linking is the leg that was missing, and its absence was measured.** On 2026-08-21 reflow2's own
+  graph held 145 brainstormed ideas joined by 12 edges; 111 of them reached no other idea within two
+  hops, and the most common edge on an idea was its author. The relation vocabulary had existed the
+  whole time and no instruction ever pointed a brainstorm at it. That is why step 4 exists, and why
+  it asks for a written line when no edge is drawn — an instruction with no record of compliance is
+  how the first 145 went by.
+
 ## Before moving on
 
 `loop_status`. A brainstorm usually owes nothing — which is the point of recording it this way —
-but a promotion at step 4 is a real capture, and captures owe the loop a gap pass.
+but a promotion at step 5 is a real capture, and captures owe the loop a gap pass.
+
+The edges from step 4 are ordinary graph writes and do show up there. That is correct and not a
+reason to skip them: an idea linked to its neighbours is exactly the sort of change a later session
+should be able to see was made.

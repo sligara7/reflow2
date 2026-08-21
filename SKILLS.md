@@ -27,7 +27,7 @@ are a convenience for working on reflow2 itself.
 | Skill | When |
 |---|---|
 | **genesis** | Very start, or the graph is empty. Bootstraps from your opening brief. |
-| **brainstorm** | You are thinking out loud, not deciding. Records ideas *as* ideas — open questions, in your words, with the counter-arguments — and asks at the end which ones you want to keep as intent. |
+| **brainstorm** | You are thinking out loud, not deciding. Records ideas *as* ideas — open questions, in your words, with the counter-arguments — links each one to the ideas it actually relates to so a later search finds a line of reasoning rather than an orphan, and asks at the end which ones you want to keep as intent. |
 | **capture-intent** | You share a new idea, feature or requirement. Turns your words into nodes and wires the golden thread. |
 | **kpp-proposal** | Something you said sounds like it *must* hold no matter what. Asks you whether it is inviolable — a key performance parameter — rather than deciding for you, and records either answer. |
 | **detect-and-ask** | Before building, and after capturing. Finds gaps and puts them to you as plain questions. |

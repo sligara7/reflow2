@@ -466,6 +466,101 @@ class Reflow2Check(unittest.TestCase):
         self.assertIn("different properties", found, found)
 
 
+class UnmodelledSource(unittest.TestCase):
+    """The gate notices a source file the design has never heard of.
+
+    ⭐ WHY THIS WAS ABSENT UNTIL 2026-08-21. Every other check in the gate
+    reasons over artifacts the design ALREADY KNOWS — the loop is
+    `for art in artifacts`, and `reconcile_artifacts` does no file I/O, so the
+    caller decides what is looked at. `undocumented_addition` was therefore a
+    drift kind the gate STRUCTURALLY COULD NOT PRODUCE: add a file, commit,
+    push, and every check stayed green.
+
+    ⚠️ IT IS A NOTE, NEVER A FAILURE, and the distinction is the whole design.
+    `dec:idea-allocation-waits-for-the-last-responsible-moment` (accepted)
+    defers allocation to the last responsible moment. A red build here would
+    force every new file to be placed the moment it is written — reversing that
+    ruling while appearing to implement it. NOTICING a file is unmodelled and
+    DEMANDING it be allocated are different acts, and the gate does the first.
+    """
+
+    def setUp(self):
+        if not os.path.exists(BIN):
+            self.skipTest("reflow2-mcp binary not built")
+        self._tmp = tempfile.TemporaryDirectory()
+        self.tmp = pathlib.Path(self._tmp.name)
+        self.addCleanup(self._tmp.cleanup)
+
+    def build(self, extra_files=()):
+        """A design registering one file, plus whatever else is on disk."""
+        src = self.tmp / "src"
+        src.mkdir(parents=True, exist_ok=True)
+        (src / "known.rs").write_text("pub fn a() {}\n")
+        for name in extra_files:
+            (src / name).write_text("pub fn b() {}\n")
+        s = Server(BIN, str(self.tmp / "graph"))
+        try:
+            s.call("add_project", {"id": "proj:1", "name": "T"})
+            s.call("add_artifact", {"id": "art:known", "name": "known.rs",
+                                    "artifact_type": "code", "location": "src/known.rs"})
+            s.call("set_artifact_checksum", {
+                "artifact_id": "art:known",
+                "checksum": "sha256:" + hashlib.sha256((src / "known.rs").read_bytes()).hexdigest(),
+                "disposition": "baseline_established"})
+            path = self.tmp / "design.json"
+            s.call("export_graph", {"path": str(path), "overwrite": True})
+            return path
+        finally:
+            s.close()
+
+    def gate(self, export):
+        cmd = [sys.executable, str(CHECK), "--export", str(export),
+               "--root", str(self.tmp), "--bin", BIN]
+        return subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+
+    def test_a_file_the_design_never_heard_of_is_noted(self):
+        # It names the COUNT and the DIRECTORY, deliberately not every filename:
+        # ninety-seven names on one line is the signal a reader learns to skim,
+        # and a count that mixes kinds is one nobody acts on. The grouping is
+        # mechanical, so it says where to look and leaves which-of-these-matter
+        # to the person who knows.
+        export = self.build(extra_files=["stranger.rs"])
+        r = self.gate(export)
+        self.assertIn("unmodelled source", r.stdout, r.stdout)
+        self.assertIn("1 file(s)", r.stdout, r.stdout)
+        self.assertIn("src 1", r.stdout, r.stdout)
+
+    def test_it_is_a_NOTE_and_never_fails_the_build(self):
+        # The load-bearing assertion. If this ever flips to a failure it
+        # reverses an accepted ruling about WHEN allocation happens.
+        export = self.build(extra_files=["stranger.rs"])
+        r = self.gate(export)
+        self.assertIn("unmodelled source", r.stdout)
+        self.assertNotIn("FAIL  UNMODELLED", r.stdout)
+        self.assertEqual(r.returncode, 0, f"an unmodelled file must not fail the gate\n{r.stdout}")
+
+    def test_it_says_it_is_not_demanding_allocation(self):
+        # Wording is the mechanism here: a reader who takes this as "place this
+        # file now" has been pushed into allocating earlier than they know.
+        export = self.build(extra_files=["stranger.rs"])
+        r = self.gate(export)
+        self.assertIn("NOT a demand to allocate", r.stdout)
+        self.assertIn("last responsible moment", r.stdout)
+
+    def test_a_fully_modelled_tree_says_nothing(self):
+        export = self.build()
+        r = self.gate(export)
+        self.assertNotIn("unmodelled source", r.stdout,
+                         f"silence is the right answer when nothing is unmodelled\n{r.stdout}")
+
+    def test_a_namespace_declaration_is_not_counted(self):
+        # `mod.rs` and `lib.rs` declare a namespace rather than being a unit of
+        # design — the same reason an assembly correctly points at no file.
+        export = self.build(extra_files=["mod.rs", "lib.rs"])
+        r = self.gate(export)
+        self.assertNotIn("unmodelled source", r.stdout, r.stdout)
+
+
 class ExportChain(unittest.TestCase):
     """BL-107. `dec:export-hash-chain` gives the design a history independent of
     git — each export records the `content_hash` of the one it replaced. Six
