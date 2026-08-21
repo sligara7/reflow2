@@ -631,6 +631,35 @@ LINK_CONTRACT: dict[str, str] = {
     "checks the direction of the claim": "Direction is part of the claim",
 }
 
+# ---------------------------------------------------------------------------
+# The OPTIMISATION contract — optimize/SKILL.md, added 2026-08-21.
+#
+# Same shape as ASK_CONTRACT and LINK_CONTRACT, and pinned for a reason
+# particular to this skill: **every clause below is one a hurrying reader would
+# happily drop.** Writing the budget first feels like ceremony when you can
+# already see the fix; stopping under budget feels like leaving value on the
+# table; asserting structure instead of a duration is more work than a
+# threshold. Each of those three caught a real mistake during the two runs the
+# skill was written from — a 14.8x speedup that was still over budget, a
+# duration gate that failed on contention and would have been "fixed" by
+# raising it, and an architectural rule that a cache quietly traded away.
+#
+# The phrases are kept SHORT on purpose: a longer one straddles the file's line
+# wrap and fails on reflow rather than on meaning, which trains people to
+# weaken the check instead of honouring it.
+OPTIMIZE_CONTRACT: dict[str, str] = {
+    "budget precedes the code": "BEFORE you touch the code",
+    "the number is derived, not picked": "Derive the number; do not pick it",
+    "measures against the budget, not the starting point": "not against the old number",
+    "stops when the budget is met": "Under budget → STOP",
+    "records what was deliberately left undone": "what you deliberately left undone",
+    "guards assert structure rather than duration": "not duration",
+    "names the raise-the-threshold failure": "retires the gate",
+    "refuses to weaken a rule for speed": "do not weaken it",
+    "allows the answer 'nothing here'": "is a real and frequent answer",
+    "states how little it has been run": "has been run twice",
+}
+
 ASK_CONTRACT: dict[str, str] = {
     "offers a reading": "Say which answer you would give",
     "carries what would change it": "Name the condition under which your recommendation is wrong",
@@ -921,6 +950,17 @@ def main() -> int:
         check(
             f"brainstorm states the obligation: {label}",
             phrase in link_text,
+            f"missing {phrase!r}",
+        )
+
+    print("== the optimisation contract ==")
+    opt_md = SKILLS / "optimize" / "SKILL.md"
+    opt_text = opt_md.read_text(encoding="utf-8") if opt_md.exists() else ""
+    check("optimize/SKILL.md present", bool(opt_text))
+    for label, phrase in OPTIMIZE_CONTRACT.items():
+        check(
+            f"optimize states the obligation: {label}",
+            phrase in opt_text,
             f"missing {phrase!r}",
         )
 

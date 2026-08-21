@@ -34,6 +34,7 @@ are a convenience for working on reflow2 itself.
 | **impact-check** | Before changing or removing anything. Shows the blast radius so you edit only what is affected. |
 | **link-artifacts** | Right after you create or change a real file. Registers it with a checksum so drift is detectable. |
 | **check-health** | After structural changes. Cycles, single points of failure, duplicates, islands — how the design is *shaped*. |
+| **optimize** | Something is slow, big or expensive. Measures where the cost really is, makes you write the budget down BEFORE the code changes so the work has a condition under which it is finished, and leaves a guard that asserts the structure that makes it fast rather than a wall-clock time. |
 | **parallel-work** | Two people on one design. Claims the region, isolates the work in a worktree with its own graph, and merges the design semantically instead of by lines. |
 | **link-projects** | Two *separate* projects that must work together. You assert which boundary answers which — reflow2 drives that correspondence to a fully specified contract and names every axis nobody stated. Expect it to surface disagreements silence was hiding. |
 | **capture-session** | At any natural break, and before a long session ends. Writes down the reasoning that exists *only* in the conversation — what was tried and abandoned, what got measured, why the losing option lost — and routes each kind to the node type that already fits it. Not a transcript, and not for new intent. |
@@ -64,6 +65,7 @@ are a convenience for working on reflow2 itself.
 | Command | What it does |
 |---|---|
 | `/where` | Runs **where-am-i** — the design read back to you in plain language. |
+| `/optimize` | Makes one thing measurably faster, against a budget written down first. |
 | `/gaps` | Walks the open gaps and asks you about them. |
 | `/health` | Structural health: cycles, single points of failure, islands. |
 | `/decisions` | What has been decided, and the reasoning behind it. |
