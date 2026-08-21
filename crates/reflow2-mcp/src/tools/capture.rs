@@ -35,6 +35,7 @@ use reflow2_core::bulk::{
     AskedRecord as BulkAskedRecord, ChecksumAccept as BulkChecksumAccept, EdgeSpec as BulkEdgeSpec,
     GapAck as BulkGapAck, NodeSpec as BulkNodeSpec,
 };
+use reflow2_core::relate::RelationLink;
 use reflow2_core::temporal::ChangeRecord;
 use reflow2_core::{
     AgentAnswer, AgentBackend, AskedQuestion, ChangeType, DEFAULT_SCOPE_DEPTH, DesignGraph,
@@ -1225,6 +1226,33 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
         ok_json(g.budget_report(&req.constraint_id).map_err(dyno_err)?)
+    }
+
+    #[tool(
+        description = "Record what a node relates to — or that nothing does. Use it right after capturing an idea, decision or requirement, while the search you ran to check for duplicates is still in hand: those near-matches are the candidates, and today they are read once and thrown away. Draw the relations that are genuinely true (`CONTRADICTS`, `EVOLVES_INTO`, `DEPENDS_ON`, `CAUSES`, `TRIGGERS`, `BLOCKS`, `DUPLICATES`, `ANTICIPATES`, `OBSOLETES`, `RISKS`, `MITIGATES`, `MASKS`, `VIOLATES`), each with the reason in `evidence`. Two or three is a good outcome; ten is a smell, because relatedness is not similarity. If nothing is honestly related, pass `note` instead — that is a real answer, not a weaker one, and it is what tells a later reader this node was considered rather than never opened. NEVER invent a relation to have something to pass: a false neighbour is worse than a missing one, since anything that searches by neighbourhood repeats it forever. Refuses when you give neither.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn review_relations(
+        &self,
+        Parameters(req): Parameters<ReviewRelationsReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let links: Vec<RelationLink> = req
+            .links
+            .unwrap_or_default()
+            .into_iter()
+            .map(|l| RelationLink {
+                relation: l.relation,
+                other_type: l.other_type,
+                other_id: l.other_id,
+                evidence: l.evidence,
+                incoming: l.incoming.unwrap_or(false),
+            })
+            .collect();
+        let mut g = self.graph.write().await;
+        ok_json(
+            g.review_relations(&req.node_type, &req.node_id, &links, req.note.as_deref())
+                .map_err(dyno_err)?,
+        )
     }
 
     #[tool(

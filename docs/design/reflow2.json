@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e27c154e65ce06ba5f0aa1c09416e9585418649e3dd1bcc7c36a8df6dee485d6",
+  "content_hash": "sha256:a5878cd5763e1269688164562ce609342677dd79e1a01ca0597139830bee5cad",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1014,6 +1014,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:an-unconnected-idea-is-visible-as-one",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:relate"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -2639,6 +2647,14 @@
       "from_id": "dec:orientation-is-computed-not-written",
       "properties": {},
       "to_id": "dec:a-projection-is-named-and-the-battery-runs-over-it"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it",
+      "properties": {
+        "evidence": "Capability.inputs and outputs are declared in the schema, have no typed tool, no instruction and no detector - and stand at 3 of 192. The three-legs fact predicted this population before anyone counted it here, and it is why option (a) cannot begin with the declaring."
+      },
+      "to_id": "dec:idea-can-exhaustive-per-subsystem-tests-be-derived-rather-than-imagined"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -6269,6 +6285,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-third-leg-notices-an-unconnected-idea",
+      "properties": {},
+      "to_id": "epoch:the-co-change-experiment-is-run"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-tool-catalogue-weights-rare-words",
       "properties": {},
       "to_id": "epoch:vocabulary-the-tools-cannot-reach"
@@ -8830,6 +8852,15 @@
       "from_id": "dec:idea-can-a-design-hold-the-external-premise-it-rests-on",
       "properties": {
         "acted_at": "2026-08-17",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-can-exhaustive-per-subsystem-tests-be-derived-rather-than-imagined",
+      "properties": {
+        "acted_at": "2026-08-21",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -14765,6 +14796,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:baseline-3557f368757d70a1",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:relate"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:baseline-3b39b24ee5303e6c",
       "properties": {
         "accepted_baseline": true,
@@ -14816,6 +14856,15 @@
         "action": "modified"
       },
       "to_id": "art:claim-not-hidden-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-58da0e0bbbee2602",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-review-relations"
     },
     {
       "edge_type": "CHANGED",
@@ -23019,6 +23068,87 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-third-leg-notices-an-unconnected-idea",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:brainstorm-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-third-leg-notices-an-unconnected-idea",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-third-leg-notices-an-unconnected-idea",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-third-leg-notices-an-unconnected-idea",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-third-leg-notices-an-unconnected-idea",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-third-leg-notices-an-unconnected-idea",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-third-leg-notices-an-unconnected-idea",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-third-leg-notices-an-unconnected-idea",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:an-unconnected-idea-is-visible-as-one"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-third-leg-notices-an-unconnected-idea",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-what-notices-an-idea-that-connects-to-nothing"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-tool-catalogue-weights-rare-words",
       "properties": {
         "accepted_baseline": true,
@@ -24685,6 +24815,12 @@
       "from_id": "sys:coherence-loop",
       "properties": {},
       "to_id": "cmp:regions"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:relate"
     },
     {
       "edge_type": "CONTAINS",
@@ -27617,6 +27753,14 @@
       "to_id": "dec:should-a-design-be-able-to-say-it-describes-something-that-already-exists"
     },
     {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-stated-module-function-is-what-makes-failure-mode-testing-derivable",
+      "properties": {
+        "evidence": "Anthony asked the same question a day apart - 2026-08-20 'if we can modularize reflow2 and know which functions that each module is supposed to perform, we can then do more encompassing testing (what are the edge cases, what are the failure modes)', and 2026-08-21 'more exhaustive tests for each subsystem'. The earlier node named the mechanism; this one carries the measurement of how far off it is - 3 of 192 capabilities state their shape. Same thought, grown up."
+      },
+      "to_id": "dec:idea-can-exhaustive-per-subsystem-tests-be-derived-rather-than-imagined"
+    },
+    {
       "edge_type": "GOVERNED_BY",
       "from_id": "art:hxm-program-feedback-2026-08-19",
       "properties": {
@@ -27807,6 +27951,12 @@
       "from_id": "cap:allocate",
       "properties": {},
       "to_id": "decision:ack:d31369434b7b1347"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:an-unconnected-idea-is-visible-as-one",
+      "properties": {},
+      "to_id": "dec:idea-what-notices-an-idea-that-connects-to-nothing"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -80022,6 +80172,22 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:relate",
+      "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:an-unconnected-idea-is-visible-as-one"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:relate",
+      "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:relate"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:release-workflow",
       "properties": {
         "completeness": "complete"
@@ -80752,6 +80918,14 @@
         "conformance": "verified"
       },
       "to_id": "ver:a-session-with-no-seed-can-find-one"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-review-relations",
+      "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "ver:review-relations"
     },
     {
       "edge_type": "REALIZES",
@@ -84724,6 +84898,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:review-relations",
+      "properties": {},
+      "to_id": "cap:an-unconnected-idea-is-visible-as-one"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:reviewed-defects",
       "properties": {},
       "to_id": "cap:heal"
@@ -86773,7 +86953,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:ffbd6c892c7a4218deca0e66e8b92511bbec5d7aa9506af38cc077b174e25e4e",
+        "checksum": "sha256:994623c187efbe6436c39b4379713ec2ddcab0ebb13a1aff78bf6e352a2bedaa",
         "granularity": "atomic",
         "location": "getting-started/skills/brainstorm/SKILL.md",
         "name": "brainstorm/SKILL.md",
@@ -87216,7 +87396,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:bba1bd09988d27a5a06985f0db77fbca23955362cdd2e122a554d3ad8a8b9537",
+        "checksum": "sha256:86fd3979a368061de3eb0d5f41a595901c9180472936f8374a652893eab21b84",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -87871,7 +88051,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:838056539d013c95b2c0cd4d2895bb614fcba20d17375cd9a36d3b221176c143",
+        "checksum": "sha256:56bba795c42b5490fc50d743deb50f51c2b989dc60bc3dda1465a24afe390b72",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
@@ -88083,6 +88263,17 @@
       }
     },
     {
+      "node_id": "art:relate",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:e5df94c2d131f986ae7ec7928aff7437d9d1cb3491bda804bd85dccd4783f60f",
+        "location": "crates/reflow2-core/src/relate.rs",
+        "name": "relate.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:release-workflow",
       "node_type": "Artifact",
       "properties": {
@@ -88275,7 +88466,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:ee191ec5591c4a35fee2177dca3c113f17f84ad579d62052008104d28e1dc103",
+        "checksum": "sha256:8e4e5e01a564c0f45ed368d8efb40e4cf98e18ef9fc8429fda5492a43822233f",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/structure.yaml",
@@ -88434,7 +88625,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5437030ba8dd04d274204a581875a28dbd02ec976fd2bbe18de5dab5a97578d1",
+        "checksum": "sha256:d9ae95e3244b50c92f73ad3f9327a4b97cf231ffcfe77b192e8e29493c0bfa76",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -88521,7 +88712,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c5f26ddba09cc22757eae06556d98dec662d3fd690c30a4ebe9cbbcb922d3017",
+        "checksum": "sha256:4e568b827100677a8c152776771780d9f36e6d4388059ab1e8ff44cd7f0391b0",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -88849,6 +89040,17 @@
       }
     },
     {
+      "node_id": "art:test-review-relations",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:23ce30979251fee34495cd72eeaa3f9cc070931eb20b1d2b0730a42fc55732ff",
+        "location": "crates/reflow2-core/tests/review_relations.rs",
+        "name": "review_relations.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:test-search-first",
       "node_type": "Artifact",
       "properties": {
@@ -88983,7 +89185,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3662c2f1bfad581c5db524453fad579fa7e27abcf91f248709d7b47afd03a187",
+        "checksum": "sha256:680472e4a68eeb6afa25633f1a2a55dc2d525cda8fea4dd39d5259d97edab270",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -89560,6 +89762,16 @@
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:an-unconnected-idea-is-visible-as-one",
+      "node_type": "Capability",
+      "properties": {
+        "description": "An idea that connects to nothing is now visible AS SUCH — and an idea somebody judged and found genuinely new is not mistaken for one.\n\nTHE THIRD LEG of `dec:idea-do-ideas-form-a-graph-or-only-a-list`, accepted by Anthony 2026-08-21 as option (b): detect always, invite at a boundary.\n\nWHAT IT DOES. `review_relations` records what a node relates to, or that nothing does. It is ONE DOOR for both outcomes and REFUSES when given neither — because the two honest endings of an act of relating are an edge and the finding that there is nothing to draw, and only the first left a trace before this. `Decision.no_relation_note` is where the second ending lives. `unreviewed_ideas` is the detector: one AGGREGATE finding naming the proposed Decisions that carry neither.\n\n⭐ WHY THE NOTE IS THE WHOLE DESIGN AND NOT A DETAIL. Without it, \"nobody looked\" and \"somebody looked and there was honestly nothing\" are the SAME STATE — both carry no relation. A detector built over that would report the people who did the work, which is worse than not detecting at all: the careful answer becomes indistinguishable from the missing one, and then both get complained about.\n\n🛑 WHY IT IS AGGREGATE AND LOW-SEVERITY. Per-idea it would have fired 115 times on reflow2's own graph the day it shipped — every one of them correct, and the whole category filtered by the end of the week. One finding names the practice and lists the ideas.\n\n🛑 AND WHY NOTHING SUGGESTS RELATIONS. A false neighbour is worse than a missing one: a missing edge leaves an idea hard to find, an invented one puts a wrong neighbour in front of every later reader, and anything that searches by neighbourhood repeats it forever. So the tool takes judgements and never offers them.\n\nTHE TIMING IS AN INSTRUCTION, NOT CODE, which is how `req:detecting-is-not-asking` was delivered the first time (`cap:the-loop-holds-the-invitation`, a timing rule in three served surfaces). Detection is unconditional; the count is put to the user at a boundary — a capture-session, an increment close — never at the moment of thinking. The brainstorm skill's rule against running detect-and-ask over brainstormed nodes stands unchanged.\n\n📌 PROVENANCE OF THIS NODE, recorded because the repair is the interesting part: it was created by a PROBE. The dedup guard refused the real write, I re-sent a differently-worded call to read the near-matches it had truncated, and THAT call was not refused — so the node landed carrying the placeholder text \"probe of the guard's near-matches only\". The lesson was already written down from 2026-08-20 and repeated anyway. **A refusal message that does not say \"a reworded retry will land\" is a message that invites one.**",
+        "name": "An idea that connects to nothing is visible as such — and one somebody judged is not mistaken for it",
+        "provenance": "authored",
+        "status": "planned"
       }
     },
     {
@@ -93765,6 +93977,16 @@
       }
     },
     {
+      "node_id": "chg:baseline-3557f368757d70a1",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-21",
+        "name": "First baseline recorded: the artifact was registered without a checksum and nothing was compared",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-3b39b24ee5303e6c",
       "node_type": "ChangeEvent",
       "properties": {
@@ -93817,6 +94039,16 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-16",
         "name": "First baseline. 6 cases, three mutation-checked, three of them counterweights against the silent-field non-fix.",
+        "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:baseline-58da0e0bbbee2602",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-21",
+        "name": "First baseline recorded: the artifact was registered without a checksum and nothing was compared",
         "subject": "record"
       }
     },
@@ -96295,6 +96527,16 @@
       }
     },
     {
+      "node_id": "chg:the-third-leg-notices-an-unconnected-idea",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Something notices an idea that connects to nothing",
+        "rationale": "Anthony chose option (b) of `dec:idea-what-notices-an-idea-that-connects-to-nothing` on 2026-08-21, and asked for the idea to be brainstormed, linked, accepted and then built — which is what happened, in that order.\n\nTHE PREREQUISITE WAS PART OF THE ACCEPTANCE, not a caveat on it. The skill asked for \"no real relation\" in PROSE, and prose cannot be told apart from silence. So the first thing built was a structural home for the judgement: `Decision.no_relation_note`. Everything else rests on it.\n\n⭐ WHAT THE BRAINSTORM ITSELF PROVED, and it is the reason the linking step exists. Four searches run before writing turned up a COLLISION nobody had noticed — brainstorm/SKILL.md step 2 forbids running detect-and-ask over brainstormed nodes, and a detector on unlinked ideas is exactly that — and then turned up its RESOLUTION, `req:detecting-is-not-asking`, written eleven days earlier. Neither node mentioned the other. BOTH halves of that finding came out of the near-matches the linking step spends, not out of thinking harder.\n\nMEASURED AFTER LINKING: against a population where 115 of 147 ideas reach zero other ideas within two hops, the newly captured idea reached 2 at one hop, 4 at two and 9 at three. That is the \"one search instead of four\" Anthony described, working.\n\nTHE THREE STATES THE BUILD DISTINGUISHES: linked; reviewed and deliberately unlinked; nobody looked. Only the third is a finding. Fourteen tests exist mostly to pin that boundary — a blank note is not an answer, one bad link writes none of them, and a detector with nothing to run on says nothing rather than reporting \"0 of 0\".\n\nNOT BUILT, AND DELIBERATELY: cluster search, the second half Anthony named. It was measured to be ORDERED AFTER this one — built before linking existed it would have returned nothing for 77% of ideas, which reads as a broken feature rather than an unlinked graph.",
+        "summary": "review_relations records what a node relates to or that nothing does, and unreviewed_ideas reports the proposed decisions carrying neither."
+      }
+    },
+    {
       "node_id": "chg:the-tool-catalogue-weights-rare-words",
       "node_type": "ChangeEvent",
       "properties": {
@@ -97167,6 +97409,17 @@
         "purpose": "The graph registry: a process-level map from graph_id to an open design, owning the per-graph metadata that today rides on ReflowService as per-process state — graph_path, content_path, identity, and the write_gen counter the loop nudge reads (service.rs:94-99).\n\nNew module, does not exist today. What binds the process to one graph is the CLI contract and the startup path in main.rs, not the core: DesignGraph::open_rocksdb (graph.rs:113) is already a plain function call with no process-global state, and ReflowService.graph is already Arc<RwLock<DesignGraph>> (service.rs:74) because several sessions already share one server. So this component is a map of things already shaped to be shared, plus a lifecycle — on-demand bounded opening, single-flight so concurrent first requests for one graph collapse into one open, an idle timeout per graph, and a cap on simultaneously open graphs with a stated error at the cap.\n\nHolds N single-writer stores with one RocksDB lock each. It does not make any store multi-writer.",
         "status": "planned",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:relate",
+      "node_type": "Component",
+      "properties": {
+        "level": "component",
+        "name": "Relate",
+        "provenance": "authored",
+        "purpose": "Recording what a node relates to — and the judgement when nothing does. Holds review_relations (one door for both outcomes, refusing when given neither), has_review_relation (direction-blind on purpose, so the second node of every pair is not reported as an orphan) and unreviewed_ideas (the population the aggregate finding ranges over). Placed beside detect rather than inside it: this module WRITES the judgement the detector READS, and folding them together would let the detector's convenience shape what a person is asked to record.",
+        "status": "planned"
       }
     },
     {
@@ -98778,6 +99031,15 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-17, from Space Force capability development: designing against an adversary's deny/degrade/disrupt/destroy, with new intelligence arriving constantly — \"we would start designing something and then we would find that the adversary was doing something else and we would have to adjust the design.\" His own framing of the general case: \"the design was always evolving based on some new factor that hadn't been there when we first designed it.\"\n\n⭐ THE ASYMMETRY THAT NAMES THE GAP. reflow2's `propagate_change` answers *what does this DESIGN change touch?* His domain needs *what does this WORLD change touch?* — and those are different questions, because the design graph is CLOSED UNDER ITSELF. Every node reflow2 can reason about is part of the design. External reality enters only as observations ABOUT the design — drift, verification, reconciliation — never as PREMISES the design rests on. So an assumption about an adversary, a competitor, a regulator or a supplier is invisible: it shaped the design and is not in it.\n\n⇒ THE QUESTION IN ONE LINE: **when the intel is revised, can you find everything you built on it?** Today, no. There is nothing to propagate from.\n\n⭐⭐ AND THE MECHANISM IS ONE STEP AWAY, WHICH IS THE INTERESTING PART. `set_requirement_lineage` already declares `derived` — \"technical necessity nobody asked for, created by a design decision — pair it with governed_by to that Decision\" — and its own description states the consequence that matters here: **\"a derived requirement may lose its reason to exist if the decision behind it is re-opened.\"** That is EXACTLY the semantics he needs, already built, and pointed at an INTERNAL cause. The gap is that reflow2 models \"derived from a decision we made\" and has no notion of \"derived from a fact about the world.\"\n\nMEASURED ON REFLOW2'S OWN GRAPH, 2026-08-17, and the numbers argue against reaching for new vocabulary first:\n    EVOLVES_INTO edges in use     0\n    SUPERSEDES                    0\n    SUPPLEMENTS                   0\n    MITIGATES                     0\n    TRIGGERS                      0\n    MASKS                         0\n    RISKS                         1\n    EnvironmentRule nodes         0\n    Requirement `lineage`         176 of 176 `original` — `derived` and `decomposed` NEVER USED\nSo the evolution vocabulary AND the threat vocabulary already exist and are almost entirely unexercised. Declared and never written to is the trap `req:a-finding-has-somewhere-to-put-its-evidence` names explicitly, and adding a node type here without understanding why the existing ones went unused would repeat it at a larger scale. ⇒ See `dec:idea-is-the-evolution-vocabulary-unused-because-nothing-asks-for-it`.\n\nTHE SHAPES, none chosen:\n(A) A TemporalFact IS ALREADY THIS, USED DIFFERENTLY. It is a time-bounded assertion with `subject_id`, `valid_from`/`valid_to`, and `basis: measured | forecast`. An intel assessment is a forecast about a subject with a validity window; when it expires or is superseded, everything pointing at it is the blast radius. COST: `subject_id` points INTO the design, so a fact about an adversary has no subject to name — the shape fits and the anchor does not.\n(B) THE PREMISE IS AN ASSUMPTION NODE, and design elements DEPEND_ON it. Cleanest propagation story: revising the assumption walks the existing machinery. COST: new node type, and reflow2 has been careful about that.\n(C) THE ADVERSARY IS AN ACTOR. An Actor is \"who the designed system serves\" — an adversary is the anti-Actor, and their capabilities could hang off them. COST: inverts the type's meaning; and reflow2 holds only 3 Actors, so the type is barely exercised either.\n(D) DON'T MODEL THE WORLD — model the DEPENDENCE. Do not try to hold what the adversary can do; hold only \"requirement D exists BECAUSE of external premise P\", where P is a named, dated, citable claim and nothing more. Cheapest, and it is the half that makes the blast radius computable. The design never pretends to model the threat.\n(E) NOT REFLOW2'S JOB. Intel and market analysis live in their own systems; reflow2 records the design. COST: then the \"why did we build this?\" answer permanently leaves the graph, which is the thing he says was hardest.\n\n⚠️ THE HONEST BOUND WHICHEVER WAY THIS GOES: reflow2 cannot tell you the adversary changed. It can only tell you what you built on the belief that they had not — which is the same class of limit as `dec:non-goal-reflow2-does-not-know-what-is-deprecated`, and worth stating in the same breath as the capability.\n\n📌 WHY THIS IS NOT NICHE. Every long-lived design has premises that move: a regulation, a supplier, a platform version, a competitor, a funding line, a user population. Space Force is the sharpest instance because the premise is adversarial and therefore moves ON PURPOSE. NSLS-II has the same shape with a decade-old stack underneath it.",
         "name": "OPEN — reflow2 computes the blast radius of a DESIGN change; can it compute the blast radius of a WORLD change, when the premise a design rested on turns out to have moved?",
         "rationale": "Recorded as brainstorming. reflow2's graph is closed under itself: external reality enters only as observations about the design, never as premises the design rests on — so when an assumption is revised there is nothing to propagate from. The mechanism is one step away rather than absent: `lineage: derived` already means \"may lose its reason to exist if the decision behind it is re-opened\", pointed at an internal cause. But the evolution and threat vocabulary already present is measured at 0/0/0/0/0/1 uses, so understanding why it went unused should precede adding more.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-can-exhaustive-per-subsystem-tests-be-derived-rather-than-imagined",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Nothing here is intent.\n\nANTHONY, 2026-08-21: \"now that we've developed the 9 subsystems of reflow2, can we work on coming up with more exhaustive tests for each subsystem? things like edge cases and identify failure modes and other tests.\"\n\n📌 FIRST, TWO CORRECTIONS OF FACT, both small and both worth having straight before anyone plans work against them. There are TEN subsystems, not nine. And one of them, `cmp:packaging`, carries a `cmp:` id at subsystem level with ZERO components under it — a naming and containment oddity that predates today and is not a defect anyone has been asked about yet.\n\n═══════════════════════════════════════════════════════════════════\n🛑🛑 THE FINDING: EXHAUSTIVE TESTS CANNOT BE DERIVED FROM THIS DESIGN TODAY, AND THE REASON IS ONE NUMBER\n═══════════════════════════════════════════════════════════════════\n\n    Capabilities:                          192\n    ... declaring their INPUTS:              3\n    ... declaring their OUTPUTS:             3\n    ... declaring a SIGNATURE:               0\n    Constraints (where a hard limit lives):  1\n\nEDGE CASES ARE DERIVED FROM THE BOUNDARIES OF AN INPUT DOMAIN. FAILURE MODES ARE DERIVED FROM WHAT AN OUTPUT PROMISES. With neither stated for 189 of 192 capabilities, both can only be IMAGINED — which is what 1376 hand-written tests already are, and they are good ones, but imagining more of them is not what \"exhaustive\" means. `dec:idea-stated-module-function-is-what-makes-failure-mode-testing-derivable` (Anthony, 2026-08-20) said this a day early and named the mechanism: `Capability.inputs`/`outputs` exist in the schema with NO typed tool, NO instruction and NO detector — the three-legged failure again.\n\n═══════════════════════════════════════════════════════════════════\n🛑 AND THE PER-SUBSYSTEM PICTURE IS NOT TRUSTWORTHY YET\n═══════════════════════════════════════════════════════════════════\n\n    subsystem              components   verifications\n    sys:coherence-loop         28            68\n    sys:agent-surface          25            31\n    sys:store                   2            16\n    sys:foundation              6            14\n    sys:time-history            6            14\n    sys:intake                  4             6\n    sys:vocabulary              2             6\n    cmp:packaging               0             4\n    sys:human-channel           2             2\n    sys:documentation           1             0\n\n    181 Verifications; 27 of them reach NO subsystem at all.\n    127 real test FILES on disk; 47 are pointed at by an Artifact.\n    ⇒ 80 TEST FILES THE DESIGN HAS NEVER HEARD OF.\n\n⭐ SO \"sys:documentation HAS ZERO VERIFICATIONS\" MAY WELL BE FALSE. With 80 of 127 test files unmodelled, a zero in that table is as likely to be a MODELLING gap as a TESTING gap — and acting on it would mean writing tests for something already tested while something genuinely bare stays quiet. **A detector that reports zero because it had nothing to run on reads exactly like one that ran clean**, and this table currently has that defect. Anything built on these counts should re-measure first.\n\n📌 AND THE OTHER AXIS IS STILL UNTOUCHED: 181 of 181 Verifications carry `kind: verification`. ZERO carry `validation`. reflow2 ships the built-right / right-thing split and has never once used it on itself. \"More exhaustive\" in the built-right direction is already 1376 tests deep; the axis with nothing on it at all is whether each subsystem does the RIGHT thing.\n\n═══════════════════════════════════════════════════════════════════\nTHE OPTIONS\n═══════════════════════════════════════════════════════════════════\n\n(a) DECLARE THE SHAPE OF THE FUNCTIONS, THEN DERIVE. Populate `inputs`/`outputs` on one subsystem's capabilities, and generate the edge cases from the input boundaries and the failure modes from the output promises. THE ONLY ROUTE ON WHICH \"EXHAUSTIVE\" MEANS SOMETHING CHECKABLE rather than something claimed. EXPENSIVE, and it needs all three legs built first (a typed tool, an instruction, a detector), because 3-of-192 is what two missing legs look like. Worth doing on ONE subsystem as a trial before committing to ten.\n\n(b) TEST AGAINST THE INTERFACES THAT ALREADY EXIST. 17 Interfaces, 13 carrying a spec — and a spec clause is a failure mode waiting to be written down: violate each clause in turn and assert the refusal. CHEAP AND AVAILABLE NOW. LIMIT, stated plainly: only 4 of the 10 subsystems publish an interface, and the other six present nothing because nothing consumes them. This covers 4 subsystems well and 6 not at all.\n\n(c) START FROM THE THIN ROWS — documentation, human-channel, packaging. Intuitive and probably WRONG as stated, for the reason above: the thin rows are where the MODEL is thinnest, which is not the same as where the TESTING is thinnest. Do not do this without re-measuring.\n\n(d) MAKE THE NUMBERS REAL FIRST. Map the 80 unmodelled test files to Verifications so the per-subsystem table stops being fiction. CHEAPEST OF ALL, mechanical, and it is what every other option's numbers depend on. It adds no tests — which is exactly the objection to it, and the answer is that it tells you where to add them.\n\n(e) THE VALIDATION AXIS. Ask, per subsystem, \"does this do the right thing?\" rather than \"does it do what it says?\" — 181 Verifications and not one of them asks it. Different question from the one he asked, and possibly the more valuable one, which is why it is here rather than left out.\n\n═══════════════════════════════════════════════════════════════════\nWHAT IS NOT KNOWN\n═══════════════════════════════════════════════════════════════════\nWhether declared inputs/outputs would actually yield tests nobody had thought of, or merely restate the ones already written. THAT IS MEASURABLE ON ONE SUBSYSTEM and is the honest gate on (a): declare the shape for `sys:vocabulary` or `sys:store` (2 components each, small enough to finish), derive the cases mechanically, and count how many were NOT already covered by the existing suite. If the answer is near zero, (a) is elaborate bookkeeping and should be dropped.",
+        "name": "OPEN — can exhaustive per-subsystem tests be DERIVED, or only imagined? 3 of 192 capabilities state their shape",
         "status": "proposed"
       }
     },
@@ -116367,6 +116629,18 @@
       }
     },
     {
+      "node_id": "ver:review-relations",
+      "node_type": "Verification",
+      "properties": {
+        "description": "14 cases over review_relations and unreviewed_ideas. The boundary they exist to pin is that 'nobody looked' and 'somebody looked and there was honestly nothing' are DIFFERENT STATES — including that a blank note is not an answer, that one bad link writes none of them, that being related TO counts as connected, and that a detector with nothing to run on says nothing rather than reporting '0 of 0'.",
+        "kind": "verification",
+        "level": "unit",
+        "method": "test",
+        "name": "A review records one of exactly three states, and refuses to record none",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:reviewed-defects",
       "node_type": "Verification",
       "properties": {
@@ -116955,7 +117229,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:71305feabe668586a73a7e03c2830f2580be7abd3d2b6e44b8b29b566021b287",
+  "prev_content_hash": "sha256:e27c154e65ce06ba5f0aa1c09416e9585418649e3dd1bcc7c36a8df6dee485d6",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

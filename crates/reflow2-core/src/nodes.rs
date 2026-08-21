@@ -209,6 +209,20 @@ pub mod edge {
     /// `* → *` — source initiates target; in a process model the `role`
     /// property says what the trigger *means* (feeds vs forces a resync).
     pub const TRIGGERS: &str = "TRIGGERS";
+    /// `* → *` — source brings target about.
+    pub const CAUSES: &str = "CAUSES";
+    /// `* → *` — source standing makes target unreachable.
+    pub const BLOCKS: &str = "BLOCKS";
+    /// `* → *` — source breaks the rule or constraint target states.
+    pub const VIOLATES: &str = "VIOLATES";
+    /// `* → *` — source is a hazard to target.
+    pub const RISKS: &str = "RISKS";
+    /// `* → *` — source answers a hazard target carries.
+    pub const MITIGATES: &str = "MITIGATES";
+    /// `* → *` — source is the older thought target grew out of.
+    pub const EVOLVES_INTO: &str = "EVOLVES_INTO";
+    /// `* → *` — source hides target from view.
+    pub const MASKS: &str = "MASKS";
 
     // Depth axis (dimensions.yaml)
     /// `DimensionAssessment → *` — links an assessment to the node it scores.

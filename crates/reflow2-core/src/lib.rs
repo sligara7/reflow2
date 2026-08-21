@@ -66,6 +66,7 @@ pub mod propagate;
 pub mod provenance;
 pub mod readiness;
 pub mod regions;
+pub mod relate;
 pub mod report;
 pub mod sanitize;
 pub mod schema;

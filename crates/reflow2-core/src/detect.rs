@@ -292,6 +292,36 @@ pub enum GapSource {
     /// analysis of alternatives would sit undecided forever without a nudge.
     /// Compare them (`analyze_alternatives`), then `collapse_decision`.
     UndecidedDecisionPoint,
+    /// Proposed Decisions carrying no relation to anything and no note saying
+    /// somebody looked — **the ideas nobody has opened**.
+    ///
+    /// The third leg of `dec:idea-do-ideas-form-a-graph-or-only-a-list`
+    /// (accepted 2026-08-21). Vocabulary reaches a user's design only with a
+    /// typed tool, an instruction, AND a detector that notices its absence;
+    /// this graph had the first two and 145 ideas joined by 12 edges.
+    ///
+    /// AGGREGATE, and not for tidiness. Per-node it would have fired 115 times
+    /// on the day it shipped — every one of them correct, and the whole
+    /// category filtered by the end of the week. One finding names the practice
+    /// and lists the ideas.
+    ///
+    /// # Why it does not fire on an idea somebody judged
+    ///
+    /// `no_relation_note` is what separates "nobody looked" from "somebody
+    /// looked and there was honestly nothing". Without that distinction this
+    /// detector would report the people who did the work, which is worse than
+    /// not detecting at all — it makes the careful answer indistinguishable
+    /// from the missing one and then complains about both.
+    ///
+    /// # Why it does not fire at capture
+    ///
+    /// Detection is unconditional; the INVITATION waits for a boundary
+    /// (`req:detecting-is-not-asking`). The brainstorm skill forbids running
+    /// detect-and-ask over brainstormed nodes, because asking someone to firm
+    /// up what they deliberately left soft teaches them that thinking out loud
+    /// has a cost. The gap is computed always and PUT at a capture-session or
+    /// an increment close.
+    UnreviewedIdeas,
     // Verification vs validation (BL — edge-orthogonality)
     /// Capabilities with a passing verification-kind check but no passing
     /// validation-kind check — built to spec, but nothing confirms they meet the
@@ -406,6 +436,7 @@ impl GapSource {
             GapSource::MultipleParents => "multiple_parents",
             GapSource::LevelSpineDisagreement => "level_spine_disagreement",
             GapSource::UndecidedDecisionPoint => "undecided_decision_point",
+            GapSource::UnreviewedIdeas => "unreviewed_ideas",
             GapSource::UnvalidatedCapability => "unvalidated_capability",
             GapSource::KppUnbound => "kpp_unbound",
             GapSource::KppBreached => "kpp_breached",
@@ -450,6 +481,12 @@ impl GapSource {
             // the practice, not about any one pair — and per-pair keying would
             // expire it every time a component gained a dependency.
             GapSource::UndeclaredSeam => true,
+            // Aggregate for the same reason: the finding is about the PRACTICE
+            // of leaving ideas unconnected, not about any one idea. Per-node
+            // keying would expire the standing judgement every time somebody
+            // had a thought, which is the trap unvalidated_capability fell into
+            // and was re-acknowledged twenty times for.
+            GapSource::UnreviewedIdeas => true,
             // Everything else names the nodes the finding is actually about, so a
             // change to that set SHOULD expire the judgement. Listed exhaustively
             // rather than with a wildcard: a new aggregate detector must come here
@@ -1194,6 +1231,7 @@ impl DesignGraph {
         self.detect_declining_dimensions(&mut gaps)?;
         self.detect_hierarchy_gaps(&mut gaps)?;
         self.detect_undecided_decision_points(&mut gaps)?;
+        self.detect_unreviewed_ideas(&mut gaps)?;
         self.detect_unvalidated_capabilities(&mut gaps)?;
         self.detect_kpp_violations(&mut gaps)?;
         // The roll-up's blind spot: delivery climbs a decomposition without
@@ -3045,6 +3083,64 @@ impl DesignGraph {
                 ),
             });
         }
+        Ok(())
+    }
+
+    /// The ideas nobody has opened: proposed Decisions with no relation and no
+    /// note (`GapSource::UnreviewedIdeas`).
+    ///
+    /// One aggregate finding. The `affected_ids` are the ideas themselves, so
+    /// the question can name them, but the gap is one question about a practice
+    /// rather than 115 questions about 115 thoughts.
+    fn detect_unreviewed_ideas(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
+        let unreviewed = self.unreviewed_ideas()?;
+        if unreviewed.is_empty() {
+            return Ok(());
+        }
+        // The population this ranges over, so the finding can say what it is a
+        // fraction OF. "115 ideas unconnected" reads very differently at 147
+        // ideas and at 120 — and a detector that reports a numerator without a
+        // denominator has told you almost nothing.
+        let mut proposed = 0usize;
+        for dec in self.scan_nodes(node::DECISION)? {
+            if dec
+                .properties
+                .get("status")
+                .and_then(dynograph_core::Value::as_str)
+                == Some("proposed")
+            {
+                proposed += 1;
+            }
+        }
+        let n = unreviewed.len();
+        gaps.push(GapCandidate {
+            id: gap_id(GapSource::UnreviewedIdeas, &unreviewed),
+            gap_source: GapSource::UnreviewedIdeas,
+            scope: GapScope::Project,
+            // Deliberately below every finding that reports a contradiction or
+            // a missing piece of the golden thread. Nothing here is WRONG — the
+            // ideas are recorded and findable. They are just not reachable from
+            // each other, which costs a later reader a search they should not
+            // have had to run.
+            severity: 0.3,
+            title: format!("{n} of {proposed} open idea(s) connect to nothing"),
+            description: format!(
+                "{n} proposed decision(s) carry no relation to any other node and no note saying \
+                 the relations were reviewed — so a search that lands on one returns it alone, and \
+                 the reasoning it belongs to is not reachable from it. Relate the ones that are \
+                 genuinely related with review_relations, and use the same call to record a note \
+                 where nothing is honestly related. Do NOT draw an edge to clear this finding: a \
+                 false neighbour is worse than a missing one, because anything that searches by \
+                 neighbourhood repeats it."
+            ),
+            affected_ids: unreviewed.clone(),
+            suggested_depth: 2,
+            evidence: format!(
+                "{n} of {proposed} proposed Decision(s) have no inference-layer relation in either \
+                 direction and no `no_relation_note`; decision points with 2+ registered \
+                 alternatives and parked nodes are excluded."
+            ),
+        });
         Ok(())
     }
 
