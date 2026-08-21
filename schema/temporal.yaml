@@ -136,7 +136,7 @@ schema:
       extraction_hint: A Snapshot or ChangeEvent is pinned to the epoch it belongs to.
 
     SCHEDULED_FOR:
-      from: [Requirement, Capability]
+      from: [Requirement, Capability, Question]
       to: [DesignEpoch, Release]
       extraction_hint: >
         The satisfaction schedule — this requirement or capability is DUE at

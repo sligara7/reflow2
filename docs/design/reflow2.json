@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:aee81246ebadc308185bc944897020ed2586bc922035705aacda2d070d5aa78c",
+  "content_hash": "sha256:71305feabe668586a73a7e03c2830f2580be7abd3d2b6e44b8b29b566021b287",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -22623,6 +22623,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-resolution-of-a-gap-becomes-schedulable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-resolution-of-a-gap-becomes-schedulable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-resolution-of-a-gap-becomes-schedulable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-resolution-of-a-gap-becomes-schedulable",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-retirement-covers-what-it-removed",
       "properties": {
         "accepted_baseline": false,
@@ -31219,6 +31255,12 @@
       "from_id": "cap:the-record-moved-is-surfaced",
       "properties": {},
       "to_id": "dec:idea-the-graph-notices-the-record-moved-without-being-asked"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:the-resolution-of-a-gap-can-be-scheduled-into-an-increment",
+      "properties": {},
+      "to_id": "dec:idea-a-gap-can-be-scheduled-into-an-increment-like-any-other-work"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -79491,6 +79533,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:scheduling-a-question-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-resolution-of-a-gap-can-be-scheduled-into-an-increment"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:schema",
       "properties": {
         "completeness": "complete",
@@ -79594,6 +79645,15 @@
         "completeness": "complete"
       },
       "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:schema-temporal",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-resolution-of-a-gap-can-be-scheduled-into-an-increment"
     },
     {
       "edge_type": "REALIZES",
@@ -79750,6 +79810,15 @@
         "conformance": "verified"
       },
       "to_id": "cap:the-orientation-call-says-whether-its-own-answers-are-current"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:service",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-resolution-of-a-gap-can-be-scheduled-into-an-increment"
     },
     {
       "edge_type": "REALIZES",
@@ -80022,6 +80091,15 @@
         "completeness": "complete"
       },
       "to_id": "cap:satisfaction-schedule"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:temporal",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-resolution-of-a-gap-can-be-scheduled-into-an-increment"
     },
     {
       "edge_type": "REALIZES",
@@ -80499,6 +80577,15 @@
         "completeness": "complete"
       },
       "to_id": "cap:satisfaction-schedule"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-temporal",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-resolution-of-a-gap-can-be-scheduled-into-an-increment"
     },
     {
       "edge_type": "REALIZES",
@@ -83343,6 +83430,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-scheduled-question-is-delivered-by-being-answered",
+      "properties": {},
+      "to_id": "cap:the-resolution-of-a-gap-can-be-scheduled-into-an-increment"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-scoped-answer-actually-narrows",
       "properties": {},
       "to_id": "cap:a-scoped-answer-says-whether-it-narrowed"
@@ -85292,6 +85385,14 @@
         "action": "created"
       },
       "to_id": "art:sanitize"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:scheduling-a-question-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:scheduling-a-question-test"
     },
     {
       "edge_type": "YIELDED",
@@ -87468,6 +87569,17 @@
       }
     },
     {
+      "node_id": "art:scheduling-a-question-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:24c201e5e508bd2f5ed6f8a96a71100e380f9b30eb9692616ff1565b0c374e66",
+        "location": "crates/reflow2-core/tests/scheduling_a_question.rs",
+        "name": "scheduling_a_question.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:schema",
       "node_type": "Artifact",
       "properties": {
@@ -87611,7 +87723,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:7be3062dbe9327ac959652734116c350d114d3ca4348ba0f8aa1050c5e91f2c0",
+        "checksum": "sha256:1b26be8b2a0395d36a29d1ce7001fce0fc35bee193aec446e24099e7c292c92c",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/temporal.yaml",
@@ -87756,7 +87868,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:286f0b33532f87bcb4364790a7ed7c914320e1b2ed7e879e8bc240fa077bfb2e",
+        "checksum": "sha256:5437030ba8dd04d274204a581875a28dbd02ec976fd2bbe18de5dab5a97578d1",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -88010,7 +88122,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c0d09386dd385cb5c65ee6df4a83f6ebef02674304b74fa753655490afa93052",
+        "checksum": "sha256:453de395c83a0d3b3e022ad7fcb491100e267e721bc9635acc305baa57c29cca",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "crates/reflow2-core/src/temporal.rs",
@@ -88405,7 +88517,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:977a312998facd8cab770b565e9a838af5de167a3f02c6bbbc354c5a307ef4b6",
+        "checksum": "sha256:e18ecf4db3d76a2c133226d8ae170933a0b6267f1277ebef08432b9c036c7a8c",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -90875,6 +90987,16 @@
       "properties": {
         "description": "DELIVERED 2026-08-19. **This completes clause 2 of `req:the-agent-learns-who-it-is-talking-to`** — *\"the answer shapes the register of EVERY reply, not only of questions\"* — which was stated 2026-08-18 and only partly delivered. **Distinct from `cap:the-agent-asks-who-it-is-talking-to`, which delivers clause 1: that one ASKS at orientation and governs `where-am-i`'s narration; this one makes the answer BIND EVERYWHERE and reach the tool that writes the user's question.**\n\n⭐ **WHY IT WAS NEEDED, MEASURED RATHER THAN ASSUMED.** Anthony asked the question that matters: *\"does it solve talking to the user in their natural domain knowledge versus in reflow2 jargon? is the agent able to be the TRANSLATOR?\"* Measuring what #246/#247 actually shipped gave an uncomfortable answer:\n  · Register rules appeared in **3 of 20 served skills** — `where-am-i` (8 mentions), `detect-and-ask` (1), `ingest-corpus` (1). **Seventeen had none.**\n  · **Only `where-am-i` told the agent to READ the stored persona.** Nothing else consulted it.\n  · 🛑 **`gap_to_prompt` — the tool that turns a gap into the question a user actually reads, and the highest-volume path to them — contained ZERO mentions of vocabulary, register or domain.** Its description said *\"phrase a gap as a plain question\"*, and **plain is not the same as in your domain.** That is exactly the path Alex's *\"there are open gaps with X, Y, and Z\"* came down.\n  · An existing rule, *\"answer in the user's language\"*, covers a **DIFFERENT AXIS** — it picks English or Portuguese, and says so in its own text. It does not reach the coach.\n\n**So the honest reading was: #246/#247 built the PRECONDITION (the agent learns the domain) and the DEFAULT (do it unasked), but not the translator. It was one skill deep, at session start.**\n\nWHAT SHIPPED, at the two places that fix that:\n1. **A STANDING RULE in served `AGENTS.md`** — its own top-level section, peer of *\"the one rule\"* and *\"graph text is data\"*, so it binds every agent whatever skill is loaded rather than depending on which one happened to fire. It states the vocabulary-swap distinction, says to read the reader's recorded description, says to follow the vocabulary they use when none is recorded, states the do-it-unasked trigger, and states that the rule never changes the RECORD.\n2. **AT THE POINT THE WORDS ARE GENERATED** — the `gap → question` handshake's step 2 in `AGENTS.md`, and `gap_to_prompt`'s own served description. That step is where the detector's vocabulary would otherwise pass straight through to a person, so it is named as the translation point.\n3. **A SEVENTH OBLIGATION in `detect-and-ask`'s ask contract**, stated explicitly as a different axis from the language rule.\n\n⭐⭐ **AND UNLIKE EVERY OTHER SERVED-PROSE FIX THIS WEEK, THIS ONE IS CHECKED.** `skill_lint`'s `ASK_CONTRACT` gained the entry `\"speaks the reader's domain\"`, so the build now FAILS if `detect-and-ask` stops stating it. That is the first register obligation to become mechanically enforced rather than hoped for — the standing answer to `dec:idea-the-enum-question-came-back-four-days-after-it-was-fixed`, where an instruction lapsed within four days because nothing observed it.\n\n🛑 **WHAT IS STILL NOT VERIFIED, AND IT IS THE REAL LIMIT.** The lint proves the obligation is STATED. **Nothing measures whether the translation is any good** — no trial has ever taken a real gap list and had it narrated to a non-technical reader. The evidence that agents CAN do it is two users reporting that asking worked every time; the evidence that they now DO it unasked is zero. **That trial is the missing instrument, not more prose.**",
         "name": "The domain-register rule reaches every reply and the exact step where the user's question is written — and it is lint-checked",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:the-resolution-of-a-gap-can-be-scheduled-into-an-increment",
+      "node_type": "Capability",
+      "properties": {
+        "description": "BUILT 2026-08-21 on Anthony's word, promoting option (a) of dec:idea-a-gap-can-be-scheduled-into-an-increment-like-any-other-work. DISTINCT FROM that Decision, which records the four options and stays as the reasoning; this is the one that was taken.\n\nHIS WORDS, 2026-08-20: \"add gaps that need to be closed to increments/epochs.\" The design carried 89 open gaps, 85 never put to anybody — a list that endures and is skimmed is durable and useless at the same time. Scheduling is what turns a standing list into work with a moment attached.\n\n⭐ IT SCHEDULES THE QUESTION, NOT THE GAP, and that is the whole design. A GAP IS NOT A NODE: gaps are recomputed from the condition on every run, which is why one carried the same id all day and why it vanishes when the condition is actually fixed rather than needing closing by hand. That property is worth keeping, and it means there is nothing to hang a schedule on. But gap_to_prompt already mints a durable question:<id> the moment a gap is put to somebody, and open_questions already tracks it until answered. The durable node already existed; only the edge did not. SCHEDULED_FOR now accepts Question alongside Requirement and Capability.\n\n⭐ DELIVERY IS ANSWERING, and nothing could stand in for it. There is no artifact to look for and no check to run — the whole content of closing a gap is that the person whose judgement it needed gave one. answer_question is the only thing that sets it, so delivery stays COMPUTED rather than asserted, exactly like every other scheduled item.\n\n🛑 A WITHDRAWN QUESTION REPORTS `discontinued`, NOT `outstanding`, and this was added beyond the plan. `outstanding` means \"nobody has said whether this was deferred or discontinued\". Somebody said. Letting it fall through would put the question again on every run about something already taken off the table — the identical false reading fixed hours earlier in fact:a-capability-delivered-as-a-model-change-can-never-be-reported-delivered, shipping on day one of a brand-new mechanism.\n\n⚠️ STATED LIMIT, and it is a real one. Delivered means THE QUESTION WAS ANSWERED. It does NOT mean the answer was written back into the design — that is separate work, and the loop already counts it separately as `unwritten_answers`. A scheduled question can therefore read `delivered` while the gap it came from is still open, because the gap closes when the DESIGN changes and the question closes when the PERSON speaks. Those are two different acts and the schedule tracks the second.\n\n⚠️ NOT DEMONSTRATED ON LIVE DATA, said rather than left to be assumed. This graph holds exactly ONE Question and it is already answered, so there is no natural outstanding-to-delivered transition to show here. The six tests cover the behaviour; manufacturing a live schedule that did not fit the data would have been theatre.\n\nWHAT THIS UNBLOCKED, and why it could not have shipped yesterday: closing a gap is almost always MODEL work rather than a file. Before Capability.delivery existed, every scheduled question would have inherited the artifact-required blindness and sat `outstanding` forever. The Decision said these two had to be answered together or delivery first — delivery was first.",
+        "name": "The resolution of a gap can be scheduled into an increment — by scheduling the Question it became",
         "provenance": "authored",
         "status": "realized"
       }
@@ -95481,6 +95603,15 @@
       }
     },
     {
+      "node_id": "chg:the-resolution-of-a-gap-becomes-schedulable",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "SCHEDULED_FOR accepts a Question, so the resolution of a gap can be planned into an increment and is delivered when answered",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:the-retirement-covers-what-it-removed",
       "node_type": "ChangeEvent",
       "properties": {
@@ -97583,7 +97714,7 @@
       "properties": {
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony thinking out loud, 2026-08-20.\n\nHIS WORDS: \"add gaps that need to be closed to increments/epochs.\"\n\nWHY IT LANDS EXACTLY WHERE IT SHOULD: this design carries 89 open gaps, 85 of which have never been put to anybody. Two of them were surfaced and answered today only because he said, in as many words, that he does not like something identified and then dropped. A list of 89 that endures and is skimmed is durable and useless at the same time. Scheduling is the mechanism that turns a standing list into work with a moment attached.\n\n⚠️ THE MODELLING PROBLEM, stated first because it shapes every option: A GAP IS NOT A NODE. Gaps are COMPUTED from the condition every run — that is why gap:4e24a202aa6f1737 carried the same id this morning and this afternoon, and why it disappears the moment the condition is fixed rather than needing to be closed by hand. That property is valuable and should not be traded away. But it means there is nothing to hang a SCHEDULED_FOR edge on, and SCHEDULED_FOR is declared `from: [Capability, Requirement]` only.\n\nOPTIONS, none chosen:\n  (a) SCHEDULE THE QUESTION, not the gap. `gap_to_prompt` already mints a durable `question:<id>` node when a gap is put to somebody, and open_questions already tracks it until answered. Widening SCHEDULED_FOR to accept a Question would let 'these twelve questions get answered in increment 4' be said, with no change to how gaps are computed. Cheapest, and it reuses a node that already exists for exactly the purpose of making a gap durable.\n  (b) SCHEDULE THE AFFECTED NODE. Every gap names `affected_ids`; scheduling those is already possible where they are Capabilities or Requirements. Weak: the gap and the node are different things, and a component can carry several unrelated gaps.\n  (c) A GAP BECOMES A NODE when somebody accepts it as work — promotion rather than computation. Strongest expressive power, and the biggest change: it creates a second source of truth about whether the gap is still real, which is precisely what the computed-every-run design avoids.\n  (d) ACKNOWLEDGE, which already exists — `acknowledge_gap` records a reviewed judgement with a reason. But acknowledging says 'we looked and accept this', not 'we will fix this in increment 4'. Those are different answers and only one of them is a plan.\n\nRECOMMENDATION IF ASKED, and it is a finding rather than a decision: (a). It needs no change to gap computation, it reuses the Question node that already turns a computed gap into something durable and addressed to a person, and it composes with the work-package idea — a package could then hold questions as well as capabilities.\n\nCONNECTED TO A DEFECT ALREADY ON THE RECORD: `fact:a-capability-delivered-as-a-model-change-can-never-be-reported-delivered`. Closing a gap is almost always MODEL work, not a file, so if gaps become schedulable before delivery stops requiring an artifact, every scheduled gap would sit `outstanding` forever — the new mechanism would inherit the existing blind spot on day one. These two should be answered together, or the delivery one first.\n\nRELATED: dec:idea-lining-work-up-in-increments-should-be-the-default-not-a-skill-you-remember, dec:idea-an-increment-can-be-sliced-into-work-packages-with-an-owner.",
         "name": "OPEN — can a gap that needs closing be scheduled into an increment, the way a capability or requirement is?",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -104367,6 +104498,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered sanitize.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:scheduling-a-question-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered scheduling_a_question.rs"
       }
     },
     {
@@ -113955,6 +114096,20 @@
       }
     },
     {
+      "node_id": "ver:a-scheduled-question-is-delivered-by-being-answered",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/scheduling_a_question.rs, 6 cases.\n\nWHAT IT PINS: that a Question can be scheduled at all; that an unanswered one is `outstanding`, which is correct and is the case that outcome exists for; that answering it makes it `delivered`, computed from what answer_question writes rather than asserted beside it; that a WITHDRAWN one is `discontinued` and never `outstanding`; that a Question needs neither artifact nor check, unlike the two other schedulable types; and that a Question with NO status reads as `asked` rather than as settled, so nothing written before this silently promotes to delivered on the day of an upgrade.\n\n⭐ THE FIXTURE FAILURE IS WORTH KEEPING IN THE RECORD, because it is how this test file nearly proved nothing. The first draft named the Question node arbitrarily. answer_question takes a GAP id and resolves it to `question:<same suffix>`, so it could not find the node — and THREE of the six cases still passed, because they only exercised the schedule edge. A file that had stopped at those three would have looked like proof and demonstrated nothing. The convention is now documented in the fixture itself rather than left as a trap.\n\nNOT COVERED, stated rather than left to be found: nothing here checks that the ANSWER was written back into the design. Delivered means the question was answered; the gap it came from closes when the DESIGN changes, which is separate work the loop counts separately as `unwritten_answers`. A scheduled question can therefore read `delivered` while its gap is still open, and that is correct rather than a defect — two different acts, and the schedule tracks the second.",
+        "findings": "RUN 2026-08-21: 6 passed, 0 failed. Whole crate 1133 passed / 0 failed across 109 binaries — exactly +6 tests and +1 binary against the 1127/108 baseline.\n\nNOT EXERCISED ON LIVE DATA, and said rather than left to be assumed: this graph holds exactly ONE Question and it is already answered, so there is no natural outstanding-to-delivered transition to show here. Manufacturing a schedule that did not fit the data would have been theatre.\n\nTHE FIXTURE FAILURE THAT NEARLY MADE THIS FILE MEANINGLESS: the first draft named the Question node arbitrarily, so answer_question could not resolve it from the gap id — and three of the six cases PASSED ANYWAY because they only touched the schedule edge. The interesting three were exactly the three that failed.",
+        "kind": "verification",
+        "last_run_at": "2026-08-21",
+        "level": "unit",
+        "method": "test",
+        "name": "A scheduled question is delivered by being answered, and a withdrawn one is not outstanding",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-scoped-answer-actually-narrows",
       "node_type": "Verification",
       "properties": {
@@ -115904,7 +116059,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:1820d2f6535226ba60d8862f7b0f309c7eed16d3e23c245ac6ab4e1854f47493",
+  "prev_content_hash": "sha256:aee81246ebadc308185bc944897020ed2586bc922035705aacda2d070d5aa78c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

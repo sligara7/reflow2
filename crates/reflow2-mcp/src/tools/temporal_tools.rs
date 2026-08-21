@@ -87,7 +87,8 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Schedule a Requirement or Capability against the moment it is DUE — the \
+        description = "Schedule a Requirement, Capability or QUESTION against the moment it is DUE \
+                       — the \
                        satisfaction schedule, which is what makes a roadmap answerable \
                        (req:epochs-can-be-planned). The target is a DesignEpoch for the time axis \
                        or a Release for the capability-increment axis: two paired views of one \
@@ -100,7 +101,14 @@ impl ReflowService {
                        DELIBERATELY NOT add_epoch's AT_EPOCH, which means `belongs to` rather \
                        than `due at`. To reschedule, record the change against the epoch rather \
                        than re-pointing this edge — moving it silently would erase the slip and \
-                       let the plan rewrite its own history.",
+                       let the plan rewrite its own history. ⭐ SCHEDULING A `Question` IS HOW THE \
+                       RESOLUTION OF A GAP GETS PLANNED: gaps are recomputed every run and are not \
+                       nodes, so there is nothing to schedule, but the Question `gap_to_prompt` \
+                       mints when a gap is put to somebody IS durable — and it is DELIVERED WHEN \
+                       ANSWERED, needing no artifact and no check, because the whole content of \
+                       closing a gap is that the person whose judgement it needed gave one. A \
+                       WITHDRAWN question reports `discontinued`, not `outstanding` — somebody \
+                       said.",
         annotations(read_only_hint = false)
     )]
     pub async fn schedule_for(
