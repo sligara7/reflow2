@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:17f5f9edf98af4c3023bcd1a518ccfcd8ac5a814e6d5f82d765fc570f3b96d78",
+  "content_hash": "sha256:4789ab29550254ca1ceedadc6f1aabad62f0b027b84d419f5e0d97f71a2e34ce",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -10434,6 +10434,15 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:the-default-scope-depth-should-be-two",
       "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-graph-read-contract-stays-internal",
+      "properties": {
+        "acted_at": "2026-08-21",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -33406,6 +33415,12 @@
       "from_id": "ifc:graph-export",
       "properties": {},
       "to_id": "dec:export-door-spof-accepted"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "ifc:graph-read",
+      "properties": {},
+      "to_id": "dec:the-graph-read-contract-stays-internal"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -104714,6 +104729,16 @@
       }
     },
     {
+      "node_id": "dec:the-graph-read-contract-stays-internal",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "`ifc:graph-read` keeps designation `internal`. It is a real modular boundary — modules are swapped, tested and measured across it — but it is NOT a contract this design offers to anyone else.\n\nTHE TEST THAT DECIDED IT, and it is the test to re-apply rather than the answer to re-quote: is anybody outside this project's control writing code against these five functions? Anthony, 2026-08-21: \"nobody writing code against those five functions.\"\n\nTHE STRUCTURAL FACTS BEHIND THAT ANSWER, checked rather than assumed:\n  — `reflow2-core` is not published as a crate; it is not on crates.io.\n  — its only dependant is `reflow2-mcp`, by local path, inside the same workspace.\n  — users receive released binaries and speak MCP. They never link the library, so they could not call `GraphRead` if they wanted to.\n\nMODULAR IS NOT THE SAME AS PUBLISHED, and conflating them is what this decision refuses. A modular system holds many internal boundaries and publishes the few where somebody else is meant to supply the part. Publishing every boundary means nothing can change without a control board; publishing none means nobody can compete to supply anything. The graph read API is how reflow2's own analysis reads its own store — not a part a second supplier is wanted for.\n\nWHAT PUBLISHING WOULD HAVE COST: the boundary would enter the surface reflow2 shows other designs, other projects' tooling would pair against it, and adding a sixth operation would become a breaking change to a recorded promise instead of an ordinary edit.\n\nWHAT WOULD REOPEN THIS — two triggers, either sufficient:\n  (1) `reflow2-core` is published as a crate for others to build on.\n  (2) an implementation is wanted from somebody other than this project — a different store, a hosted backend.\nNeither holds today, and the designation is one call to change if one starts to.\n\n📌 NOT SETTLED HERE: `ifc:core-api` is marked `published` and fails the same test — a Rust library API, in the same undistributed crate, covering the whole 274-function surface rather than a specified subset. That is a larger question about what this project has already committed to, and it is open.",
+        "name": "DECIDED — the graph read contract stays internal, because nobody outside can call it",
+        "rationale": "ANTHONY'S WORD, 2026-08-21, answering the deciding question directly: nobody is writing code against those five functions.\n\nRECORDED RATHER THAN LEFT AS A DEFAULT. `internal` is what an Interface is until someone says otherwise, so the designation alone cannot distinguish \"considered and declined\" from \"nobody ever looked\" — the same two-states-look-identical problem this whole week has been about. Without this node a later reader finds a carefully specified contract sitting at the default value and cannot tell which it is.\n\nTHE HONEST HISTORY: it was set to `published` first, on the reasoning that reflow2's own tooling calls `published` the MOSA modular-system-interface distinction and Anthony's goal is modularity. That was reverted before anyone was asked, because publishing is a commitment and the tool says so plainly — and asserting a commitment on the owner's behalf is exactly what `rule:design-intent-moves-only-on-the-owners-word` forbids. The reversal was the right act; this decision is the part that was owed after it.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:the-kernel-is-its-own-system",
       "node_type": "Decision",
       "properties": {
@@ -121370,7 +121395,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:20fcb8d2bb55c685937d7c6e9367d032f3063622083ade76ddafd2e6267607c8",
+  "prev_content_hash": "sha256:17f5f9edf98af4c3023bcd1a518ccfcd8ac5a814e6d5f82d765fc570f3b96d78",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
