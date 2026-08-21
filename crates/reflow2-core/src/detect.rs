@@ -361,6 +361,46 @@ pub enum GapSource {
     /// human can make, and a release genuinely cut before the epoch spine
     /// existed is a real state to accept rather than repair.
     ReleaseWithoutEpoch,
+    /// A `Release` that is pinned to an epoch and deployed, and yet `INCLUDES`
+    /// nothing — a release record claiming to have shipped nothing.
+    ///
+    /// The schema has always said what this means. `INCLUDES`' own extraction
+    /// hint ends: *"The as-released view is read off these edges; a Release with
+    /// none is a version number, not a manifest."* Nothing enforced it.
+    ///
+    /// MEASURED, AND THE COST WAS A SHIPPED RELEASE. `release_includes_all`
+    /// defaults to `apply: false` — correctly, so you can read what a release is
+    /// about to package before packaging it. Its reply carries `"applied": false`
+    /// beside `"added": 304`, and 304 is a FORECAST. On 2026-08-21 that reply was
+    /// read as an accomplishment twice, and v0.38.0 was tagged, built, published
+    /// and asset-verified with 0 `INCLUDES` against v0.37.0's 275. The binaries
+    /// were always right; the design's record of what they contained was empty.
+    ///
+    /// EVERY CHECK THAT RAN PASSED. `isError` was false both times — nothing had
+    /// failed. `reflow2_check` was green. `release_report` was never called. The
+    /// hole is that a dry run and a write are indistinguishable to all of them,
+    /// which is `rule:success-is-read-from-the-authoritative-object` failing on a
+    /// third surface after `gh pr merge`. This detector is the reading of the
+    /// authoritative object, done by something that cannot forget to do it.
+    ///
+    /// # Why it does not consult `status`, and why that is the whole rule
+    ///
+    /// The sibling [`GapSource::ReleaseWithoutEpoch`] exempts a `planned`
+    /// release, because an epoch is minted at the cut and asking beforehand
+    /// alarms on correct work. Copying that exemption here would have missed the
+    /// defect that motivated the rule: **`rel:v0380` was tagged, published and
+    /// deployed while its `status` still said `planned`**, and still did when
+    /// this was written. A status field records what somebody remembered to
+    /// write down; `DEPLOYED_TO` records that the thing went out. This rule
+    /// keys on the structure and never reads the status, so a release cannot
+    /// escape it by being mislabelled — which is precisely how the one real
+    /// instance would have escaped.
+    ///
+    /// A gap rather than a defect: what a release ships is a judgement (and a
+    /// genuinely contentless release — a re-tag, a docs-only republish — is a
+    /// real state to accept), so it is asked, never repaired. `apply_heal` must
+    /// not invent a manifest; `cap:no-fabricated-repair` forbids exactly that.
+    ReleaseWithoutManifest,
     /// A decomposed Requirement whose children have never been checked against
     /// what the parent held: what did the parent say that no child says?
     ///
@@ -442,6 +482,7 @@ impl GapSource {
             GapSource::KppBreached => "kpp_breached",
             GapSource::KppContradicted => "kpp_contradicted",
             GapSource::ReleaseWithoutEpoch => "release_without_epoch",
+            GapSource::ReleaseWithoutManifest => "release_without_manifest",
             GapSource::DecompositionCoverage => "decomposition_coverage",
         }
     }
@@ -532,6 +573,11 @@ impl GapSource {
             // so accepting "v0.17.0 predates the epoch spine" must not also
             // accept the next release cut without one.
             | GapSource::ReleaseWithoutEpoch
+            // Per-release for the same reason as its sibling above, and with a
+            // sharper one: the recorded answer is "v0.36.0 really did ship
+            // nothing new". That is a claim about ONE release and must never
+            // carry to the next cut that forgets `apply: true`.
+            | GapSource::ReleaseWithoutManifest
             // Per-decomposition, and load-bearing rather than incidental. The
             // recorded answer — "these children cover the parent, except X" — is
             // a claim about THESE children. Adding or removing one makes the
@@ -1220,6 +1266,7 @@ impl DesignGraph {
         self.detect_unresolved_drift(&mut gaps)?;
         self.detect_unreleased_components(&mut gaps)?;
         self.detect_releases_without_epoch(&mut gaps)?;
+        self.detect_releases_without_manifest(&mut gaps)?;
         self.detect_status_contradictions(&mut gaps)?;
         self.detect_interface_pairing(&pop, &mut gaps)?;
         // The other direction from interface pairing: those two need an
@@ -2558,11 +2605,31 @@ impl DesignGraph {
             // "When is this planned release due?" is a real and different
             // question — a schedule question, wanting `SCHEDULED_FOR` and the
             // roadmap thread, not this rule.
-            if rel
-                .properties
-                .get("status")
-                .and_then(dynograph_core::Value::as_str)
-                == Some("planned")
+            //
+            // 🛑 BUT A DEPLOYED RELEASE IS OUT, WHATEVER ITS STATUS SAYS, and
+            // that clause was added 2026-08-21 because the exemption above had
+            // a hole big enough to drive the very defect through. `rel:v0380`
+            // was tagged, built, published and asset-verified while its
+            // `status` still read `planned` — nobody had moved it, because
+            // nothing makes you. So "status == planned" does not mean "not yet
+            // cut"; it means "nobody wrote it down", and trusting it hands an
+            // exemption to exactly the careless cut this rule exists to catch.
+            // `DEPLOYED_TO` is the structural fact and cannot be forgotten into
+            // existence: a genuinely planned release has no deployment.
+            //
+            // Found by the sibling rule's own tests (`release_without_manifest`,
+            // which never consulted the status for this reason) — the shared
+            // lesson being that a status property records what somebody
+            // remembered, and an edge records what happened.
+            let deployed = !self
+                .outgoing(&rel.node_id, Some(edge::DEPLOYED_TO))?
+                .is_empty();
+            if !deployed
+                && rel
+                    .properties
+                    .get("status")
+                    .and_then(dynograph_core::Value::as_str)
+                    == Some("planned")
             {
                 continue;
             }
@@ -2599,6 +2666,135 @@ impl DesignGraph {
                      considered — a name that matches an epoch node, or any other edge \
                      between them, does not pin it.",
                     rel.node_id
+                ),
+            });
+        }
+        Ok(())
+    }
+
+    /// A `Release` that is pinned and deployed and ships nothing (see
+    /// [`GapSource::ReleaseWithoutManifest`]).
+    ///
+    /// Reports the edge kinds it examined, the same discipline the sibling
+    /// carries: a finding that says "ships nothing" when it means "has no
+    /// `INCLUDES` edge" is the class of message a user learns to distrust.
+    fn detect_releases_without_manifest(
+        &self,
+        gaps: &mut Vec<GapCandidate>,
+    ) -> Result<(), DynoError> {
+        let releases = self.scan_nodes(node::RELEASE)?;
+        if releases.is_empty() {
+            return Ok(());
+        }
+        // If NO release anywhere records its contents, release contents are
+        // simply not modelled in this design — a whole-graph situation, not one
+        // gap per release. Same guard shape, and the same reasoning, as
+        // `detect_unreleased_components`' empty-`shipped` check: a design that
+        // has never used a feature is not a design that is failing at it.
+        // One pass answers both questions: whether ANY release records its
+        // contents, and how many do — the second being the denominator the
+        // evidence needs, so "this one is empty" always arrives beside "and the
+        // other 39 are not".
+        let mut with_manifest = 0usize;
+        for rel in &releases {
+            if !self
+                .outgoing(&rel.node_id, Some(edge::INCLUDES))?
+                .is_empty()
+            {
+                with_manifest += 1;
+            }
+        }
+        if with_manifest == 0 {
+            return Ok(());
+        }
+        for rel in &releases {
+            if !self
+                .outgoing(&rel.node_id, Some(edge::INCLUDES))?
+                .is_empty()
+            {
+                continue;
+            }
+            // Both are required, and each rules out a different false alarm.
+            //
+            // The epoch says the release has a place on the time axis — it was
+            // cut, not sketched. The deployment says it actually went out.
+            // Neither alone is enough: a roadmap release planned into a future
+            // epoch has the first and not the second, and asking it what it
+            // ships is the `unverified_capability` disease (BL-115) that floods
+            // a gap list until people skim it.
+            //
+            // `status` is deliberately not consulted — see the variant's docs.
+            // `rel:v0380`, the one real instance, was published while its status
+            // still read `planned`.
+            let pinned = self
+                .outgoing(&rel.node_id, Some(edge::AT_EPOCH))?
+                .into_iter()
+                .any(|e| matches!(self.get_node(node::DESIGN_EPOCH, &e.to_id), Ok(Some(_))));
+            if !pinned {
+                continue; // release_without_epoch's territory, not this one's
+            }
+            let deployed = !self
+                .outgoing(&rel.node_id, Some(edge::DEPLOYED_TO))?
+                .is_empty();
+            if !deployed {
+                continue; // cut but not yet out — the manifest can still land
+            }
+            let name = node_name(rel);
+            gaps.push(GapCandidate {
+                id: gap_id(
+                    GapSource::ReleaseWithoutManifest,
+                    std::slice::from_ref(&rel.node_id),
+                ),
+                gap_source: GapSource::ReleaseWithoutManifest,
+                scope: GapScope::Project,
+                // ⭐ BUILD-STOPPING, ON THE USER'S WORD (2026-08-21), and the
+                // number is chosen to land there rather than tuned to it.
+                //
+                // `reflow2_check` fails at `--gap-threshold` (default 0.8), and
+                // above that line sit the findings that say THE DESIGN ASSERTS
+                // SOMETHING THAT IS NOT TRUE — failing_verification at 0.80,
+                // kpp_contradicted 0.85, kpp_unbound 0.90, kpp_breached 0.95 —
+                // as against the questions below it, which wait for a human.
+                // This belongs with the first group: a deployed release whose
+                // manifest is empty is not an open question about the future,
+                // it is a false statement about the past.
+                //
+                // WHY A NOTE WAS NOT ENOUGH, measured: the v0.38.0 cut passed
+                // `reflow2_check` GREEN with 96 notes scrolling past it, and
+                // that is precisely how an empty manifest reached a published
+                // tag. A finding nobody is made to read is not a finding.
+                //
+                // Above failing_verification's 0.80 because a failing check is
+                // a signal to act BEFORE shipping, while this one can only ever
+                // be true AFTER; and deliberately not sitting exactly on the
+                // default threshold, so nudging `--gap-threshold` up one notch
+                // does not silently drop the rule out of the gate.
+                //
+                // A contentless release IS a real state — a re-tag, a docs-only
+                // republish — and stays acknowledgeable with a reason on the
+                // record. Red until somebody says why, never red forever.
+                severity: 0.85,
+                title: format!("“{name}” is deployed and records shipping nothing"),
+                description: format!(
+                    "“{name}” is pinned to an epoch and deployed, and no INCLUDES edge says \
+                     what it shipped. The as-released view is read off those edges, so \
+                     release_report answers with an empty manifest and “does what we released \
+                     match what we designed?” silently answers “nothing was released”. Did the \
+                     manifest never get written — release_includes_all defaults to a DRY RUN and \
+                     reports what it WOULD add — or did this release genuinely ship no new \
+                     content?"
+                ),
+                affected_ids: vec![rel.node_id.clone()],
+                suggested_depth: 1,
+                evidence: format!(
+                    "Release '{}' has an AT_EPOCH edge and at least one DEPLOYED_TO edge, and \
+                     zero INCLUDES edges. Only INCLUDES was counted; its `status` property was \
+                     not consulted, deliberately — rel:v0380 was tagged, published and deployed \
+                     while its status still read 'planned'. {} of {} release(s) in this design \
+                     record a manifest.",
+                    rel.node_id,
+                    with_manifest,
+                    releases.len()
                 ),
             });
         }

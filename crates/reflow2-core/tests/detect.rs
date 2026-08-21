@@ -1298,6 +1298,39 @@ fn a_release_with_no_epoch_is_reported() {
     assert_eq!(found[0].affected_ids, vec!["rel:v1".to_string()]);
 }
 
+/// ⭐ THE EXEMPTION'S HOLE, closed 2026-08-21.
+///
+/// `planned` exempts a release because an epoch is minted at the cut. But
+/// `rel:v0380` was tagged, published, deployed and asset-verified while its
+/// status still read `planned` — nobody moves it, because nothing makes them.
+/// So the exemption was handing a free pass to precisely the careless cut this
+/// rule exists to catch. A DEPLOYED release is out, whatever the status says.
+#[test]
+fn a_planned_status_does_not_exempt_a_release_that_is_already_deployed() {
+    let mut g = releases_and_epochs(2, &[0]);
+    // Back to the mislabelled shape the exemption used to let through.
+    g.create_node(
+        node::RELEASE,
+        "rel:v1",
+        Props::new().set("name", "v0.1.0").set("status", "planned"),
+    )
+    .unwrap();
+    assert!(
+        epochless(&g.detect_gaps().unwrap()).is_empty(),
+        "planned and not deployed — correctly exempt, the alarm-on-correct-work case"
+    );
+
+    // Now it ships. Nothing about its status changes; the fact of it does.
+    g.add_environment("env:prod", "production", None, None)
+        .unwrap();
+    g.deploy_to("rel:v1", "env:prod", Some("active")).unwrap();
+
+    let gaps = g.detect_gaps().unwrap();
+    let found = epochless(&gaps);
+    assert_eq!(found.len(), 1, "deployed and unpinned — reported");
+    assert_eq!(found[0].affected_ids, vec!["rel:v1".to_string()]);
+}
+
 #[test]
 fn a_pinned_release_is_silent() {
     let g = releases_and_epochs(3, &[0, 1, 2]);
@@ -1915,5 +1948,264 @@ fn it_never_says_what_is_missing() {
         gap.description.contains('?'),
         "it is a question, not a verdict: {}",
         gap.description
+    );
+}
+
+// ---- A release that is out, and records shipping nothing ------------------
+//
+// The defect this closes cost a published release. `release_includes_all`
+// defaults to a DRY RUN and answers `{"added": 304, "applied": false}`; that
+// reply was read as an accomplishment twice, and v0.38.0 was tagged, built,
+// published and asset-verified with an empty manifest — 0 INCLUDES against
+// v0.37.0's 275. Every check that ran passed, because a dry run and a write
+// are indistinguishable to all of them.
+
+/// A design with `count` releases: each pinned to its own epoch, deployed to a
+/// shared environment, and shipping one artifact — the shape of a healthy cut.
+/// Callers then break exactly one thing, so each test names its own defect.
+fn releases_with_manifests(count: usize) -> DesignGraph {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_environment("env:prod", "production", None, None)
+        .unwrap();
+    for i in 0..count {
+        g.add_artifact(
+            &format!("art:a{i}"),
+            &format!("a{i}.rs"),
+            Some("code"),
+            Some(&format!("src/a{i}.rs")),
+        )
+        .unwrap();
+        g.create_node(
+            node::DESIGN_EPOCH,
+            &format!("epoch:v{i}"),
+            Props::new()
+                .set("name", format!("v0.{i}.0 cut"))
+                .set("sequence", i as i64),
+        )
+        .unwrap();
+        g.add_release(&format!("rel:v{i}"), &format!("v0.{i}.0"), None, None)
+            .unwrap();
+        g.create_edge(
+            edge::AT_EPOCH,
+            node::RELEASE,
+            &format!("rel:v{i}"),
+            node::DESIGN_EPOCH,
+            &format!("epoch:v{i}"),
+            Props::new(),
+        )
+        .unwrap();
+        g.deploy_to(&format!("rel:v{i}"), "env:prod", Some("active"))
+            .unwrap();
+        g.release_includes(
+            &format!("rel:v{i}"),
+            node::ARTIFACT,
+            &format!("art:a{i}"),
+            Some("sha256:frozen"),
+        )
+        .unwrap();
+    }
+    g
+}
+
+fn empty_manifests(gaps: &[reflow2_core::GapCandidate]) -> Vec<&reflow2_core::GapCandidate> {
+    gaps.iter()
+        .filter(|g| g.gap_source == GapSource::ReleaseWithoutManifest)
+        .collect()
+}
+
+/// Delete every INCLUDES edge from one release — the exact state a dry-run
+/// `release_includes_all` leaves behind, since it writes nothing at all.
+fn strip_manifest(g: &mut DesignGraph, release_id: &str) {
+    for e in g
+        .outgoing(release_id, Some(edge::INCLUDES))
+        .unwrap()
+        .into_iter()
+    {
+        g.delete_edge(edge::INCLUDES, release_id, &e.to_id).unwrap();
+    }
+}
+
+#[test]
+fn a_deployed_release_that_ships_nothing_is_reported() {
+    let mut g = releases_with_manifests(3);
+    strip_manifest(&mut g, "rel:v1");
+
+    let gaps = g.detect_gaps().unwrap();
+    let found = empty_manifests(&gaps);
+
+    assert_eq!(found.len(), 1, "one empty manifest, one gap");
+    assert_eq!(found[0].affected_ids, vec!["rel:v1".to_string()]);
+    // The denominator earns its place: "this one is empty" must arrive beside
+    // "and the other two are not", or the reader cannot tell a slip from a
+    // design that never modelled release contents.
+    assert!(
+        found[0].evidence.contains("2 of 3 release(s)"),
+        "evidence names how many releases DO record a manifest: {}",
+        found[0].evidence
+    );
+}
+
+#[test]
+fn releases_that_record_what_they_shipped_are_silent() {
+    let g = releases_with_manifests(3);
+    assert!(
+        empty_manifests(&g.detect_gaps().unwrap()).is_empty(),
+        "every release has a manifest — nothing to report"
+    );
+}
+
+/// ⭐ THE LOAD-BEARING CASE, and the one a copied exemption would have missed.
+///
+/// The sibling `release_without_epoch` exempts a `planned` release, because an
+/// epoch is minted at the cut. Carrying that exemption over here looks obviously
+/// right and is wrong: **`rel:v0380` was tagged, published, deployed and
+/// asset-verified while its `status` still read `planned`** — so a status-based
+/// skip would have exempted the single real instance the rule exists for.
+///
+/// A status property records what somebody remembered to write down. A
+/// `DEPLOYED_TO` edge records that the thing went out. This rule reads the
+/// second and never the first.
+#[test]
+fn a_status_still_reading_planned_does_not_exempt_a_published_release() {
+    let mut g = releases_with_manifests(2);
+    strip_manifest(&mut g, "rel:v1");
+    // Explicitly the v0.38.0 state: out in the world, mislabelled at rest.
+    // `add_release` leaves Release.status at its `planned` default, so assert
+    // that rather than trust it — a helper that quietly set it would make this
+    // test pass while testing nothing.
+    let rel = g.get_node(node::RELEASE, "rel:v1").unwrap().unwrap();
+    assert_eq!(
+        rel.properties
+            .get("status")
+            .and_then(|v| v.as_str())
+            .unwrap_or("planned"),
+        "planned",
+        "the release under test must be the mislabelled shape"
+    );
+
+    let gaps = g.detect_gaps().unwrap();
+    let found = empty_manifests(&gaps);
+    assert_eq!(
+        found.len(),
+        1,
+        "deployed is deployed, whatever the status field says"
+    );
+    assert_eq!(found[0].affected_ids, vec!["rel:v1".to_string()]);
+}
+
+/// Cut but not yet out: the manifest can still land before anyone is affected,
+/// so asking now would be an alarm on correct work — the `unverified_capability`
+/// disease that floods a gap list until people skim it.
+#[test]
+fn a_pinned_release_that_has_not_shipped_yet_is_silent() {
+    let mut g = releases_with_manifests(2);
+    strip_manifest(&mut g, "rel:v1");
+    g.delete_edge(edge::DEPLOYED_TO, "rel:v1", "env:prod")
+        .unwrap();
+
+    assert!(
+        empty_manifests(&g.detect_gaps().unwrap()).is_empty(),
+        "not deployed — the manifest can still be written"
+    );
+}
+
+/// An unpinned release belongs to `release_without_epoch`, which already
+/// reports it. Firing both would be the DETECT/HEAL double-count in a new
+/// costume: two findings, one fix, and a user who learns to skim.
+#[test]
+fn an_unpinned_release_is_left_to_its_sibling_detector() {
+    let mut g = releases_with_manifests(2);
+    strip_manifest(&mut g, "rel:v1");
+    g.delete_edge(edge::AT_EPOCH, "rel:v1", "epoch:v1").unwrap();
+
+    let gaps = g.detect_gaps().unwrap();
+    assert!(
+        empty_manifests(&gaps).is_empty(),
+        "no epoch — not this rule's finding"
+    );
+    assert!(
+        sources(&gaps).contains(&GapSource::ReleaseWithoutEpoch),
+        "and the sibling does report it, so the release is not lost between them"
+    );
+}
+
+/// A design that has never recorded release contents is not a design failing at
+/// it. Without this guard the rule would greet every project that uses Releases
+/// without INCLUDES with one alarm per release, on the day they adopt reflow2.
+#[test]
+fn a_design_that_never_models_release_contents_is_silent() {
+    let mut g = releases_with_manifests(3);
+    for i in 0..3 {
+        strip_manifest(&mut g, &format!("rel:v{i}"));
+    }
+    assert!(
+        empty_manifests(&g.detect_gaps().unwrap()).is_empty(),
+        "contents are not modelled at all — a whole-graph fact, not 3 gaps"
+    );
+}
+
+/// The rule is per-release, so acknowledging "v0.36.0 really did ship nothing
+/// new" must not carry to the next cut that forgets `apply: true`.
+#[test]
+fn each_empty_release_gets_its_own_id() {
+    let mut g = releases_with_manifests(3);
+    strip_manifest(&mut g, "rel:v0");
+    strip_manifest(&mut g, "rel:v2");
+
+    let gaps = g.detect_gaps().unwrap();
+    let found = empty_manifests(&gaps);
+    assert_eq!(found.len(), 2);
+    assert_ne!(
+        found[0].id, found[1].id,
+        "two releases, two judgements — an acknowledgement must not carry"
+    );
+}
+
+/// ⭐ ANTHONY'S CALL, 2026-08-21: a published release with an empty manifest
+/// STOPS THE BUILD. This test is where that decision lives, because a severity
+/// is one edit away from being quietly tuned back down.
+///
+/// `reflow2_check` fails at `--gap-threshold`, default 0.8. Below it are the
+/// questions that wait for a human; at and above it are the findings that say
+/// the design asserts something untrue. The evidence for putting this one in
+/// the second group is that it was in the first: the v0.38.0 cut passed
+/// `reflow2_check` green with 96 notes scrolling past, which is how an empty
+/// manifest reached a published tag.
+#[test]
+fn an_empty_manifest_on_a_shipped_release_fails_the_build() {
+    const REFLOW2_CHECK_DEFAULT_GAP_THRESHOLD: f64 = 0.8;
+
+    let mut g = releases_with_manifests(2);
+    strip_manifest(&mut g, "rel:v1");
+
+    let gaps = g.detect_gaps().unwrap();
+    let found = empty_manifests(&gaps);
+    assert_eq!(found.len(), 1);
+    assert!(
+        found[0].severity >= REFLOW2_CHECK_DEFAULT_GAP_THRESHOLD,
+        "a release that shipped nothing must FAIL the gate, not be noted at \
+         {:.2} beneath the {:.2} threshold",
+        found[0].severity,
+        REFLOW2_CHECK_DEFAULT_GAP_THRESHOLD
+    );
+    // And it must clear the threshold with room, so raising --gap-threshold a
+    // notch does not silently drop the rule out of the gate.
+    assert!(
+        found[0].severity > REFLOW2_CHECK_DEFAULT_GAP_THRESHOLD,
+        "sitting exactly on the threshold makes the rule fragile to a one-notch raise"
+    );
+
+    // The sibling stays a question: WHICH epoch a release belongs to is a
+    // judgement, and nothing false has been asserted by its absence.
+    let mut g2 = releases_and_epochs(2, &[0]);
+    g2.add_environment("env:prod", "production", None, None)
+        .unwrap();
+    g2.deploy_to("rel:v1", "env:prod", Some("active")).unwrap();
+    let gaps2 = g2.detect_gaps().unwrap();
+    let epochless_found = epochless(&gaps2);
+    assert_eq!(epochless_found.len(), 1);
+    assert!(
+        epochless_found[0].severity < REFLOW2_CHECK_DEFAULT_GAP_THRESHOLD,
+        "release_without_epoch is a question, and questions do not stop a build"
     );
 }

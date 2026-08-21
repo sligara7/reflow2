@@ -471,6 +471,32 @@ joined by *traceability* edges) for HEAL's topology detectors.
   fault. `release_without_epoch` now raises it per release (BL-122). **Do not "fix" a release
   by renaming things to match**: a matching name plus an existing epoch node is exactly what
   made the missing edge invisible, and only the edge counts.
+- **A release must record what it shipped, and the cut ENDS by reading that record back.** An
+  `INCLUDES` edge per artifact and component is what makes the as-released view exist; the
+  schema has always said so (*"a Release with none is a version number, not a manifest"*) and
+  nothing enforced it until 2026-08-21. `release_without_manifest` now raises it per release
+  when a Release is pinned to an epoch, deployed, and includes nothing, **at severity 0.85 —
+  which STOPS THE BUILD** (Anthony's call, 2026-08-21). It sits with the findings that say the
+  design asserts something untrue rather than with the questions that wait for a human, because
+  a note was demonstrably not enough: the v0.38.0 cut passed `reflow2_check` green with 96 notes
+  scrolling past it. A genuinely contentless release — a re-tag, a docs-only republish — is
+  still a real state, and stays acknowledgeable with a reason on the record. **The rule never
+  consults `Release.status`** — `rel:v0380` was tagged, published, deployed and asset-verified
+  while its status still read `planned`, so a status-based exemption would have excused the one
+  case it exists for. The same clause was retrofitted to `release_without_epoch`, which had
+  exempted any `planned` release since BL-122 and now exempts one only while it is undeployed.
+  **The trap this closes:** `release_includes_all` defaults to a DRY RUN and answers
+  `{"added": 304, "applied": false}` — pass `apply: true`, and finish the cut with
+  `release_report`, which is the authoritative object. v0.38.0 was published with an empty
+  manifest because `isError` was false, `reflow2_check` was green, and nobody read the object.
+- **The whole cut is `flow:release-cut` in the graph — read it with `flow_report`, do not
+  reconstruct it.** Eight ordered steps with their transitions, including the two backward
+  "forces resync" edges that say what sends a cut back a step. It satisfies
+  `req:a-project-records-how-it-ships`, and it exists because five separate cuts each shipped a
+  different step wrong and recorded it only afterwards. **Order is load-bearing in three
+  places**: accept the `reflow2.toml` version drift BEFORE freezing the manifest, rebuild the
+  binary after the version bump and before the export, and export LAST because it costs the
+  session its MCP access.
 - **Structural topology detectors are selective.** A design's golden thread is tree-shaped,
   where every internal node is a naive articulation point — so `single_point_of_failure`
   only fires when a node separates ≥2 real subsystems (see `structure.rs`).
