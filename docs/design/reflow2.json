@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:6ff5948e10703ccee6a57234948bf74c5df694bc3d8aa653581380f33e04abfb",
+  "content_hash": "sha256:3db1ac5d66823786cfcecb959f6388a890c631e324df7accf71310ed995b2c50",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -6126,6 +6126,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:wall-check-reads-the-mapping-instead-of-guessing-it",
+      "properties": {},
+      "to_id": "epoch:wall-check-works-on-any-project"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:what-next-built",
       "properties": {},
       "to_id": "epoch:what-next-built"
@@ -7593,6 +7599,18 @@
       "from_id": "snap:epoch:v0280:art:export-via-binary",
       "properties": {},
       "to_id": "epoch:v0280"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:wall-check-works-on-any-project:cap:a-declared-wall-is-checked-against-the-coupling-it-contains",
+      "properties": {},
+      "to_id": "epoch:wall-check-works-on-any-project"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:wall-check-works-on-any-project:cmp:compare",
+      "properties": {},
+      "to_id": "epoch:wall-check-works-on-any-project"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -22926,6 +22944,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:wall-check-reads-the-mapping-instead-of-guessing-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:wall-check"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:wall-check-reads-the-mapping-instead-of-guessing-it",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:a-declared-wall-is-checked-against-the-coupling-it-contains"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:wall-check-reads-the-mapping-instead-of-guessing-it",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:compare"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:what-next-built",
       "properties": {
         "accepted_baseline": true,
@@ -24659,16 +24704,6 @@
         "weight_basis": "evidence"
       },
       "to_id": "cmp:graph"
-    },
-    {
-      "edge_type": "DEPENDS_ON",
-      "from_id": "cmp:compare",
-      "properties": {
-        "dependency_type": "function_call",
-        "optional": false,
-        "weight_basis": "evidence"
-      },
-      "to_id": "cmp:report"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -32726,6 +32761,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:a-declared-wall-is-checked-against-the-coupling-it-contains",
+      "properties": {},
+      "to_id": "snap:epoch:wall-check-works-on-any-project:cap:a-declared-wall-is-checked-against-the-coupling-it-contains"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cap:arrival-delta",
       "properties": {},
       "to_id": "snap:epoch:arrival-delta:cap:arrival-delta"
@@ -32933,6 +32974,12 @@
       "from_id": "cap:what-next",
       "properties": {},
       "to_id": "snap:epoch:what-next-built:cap:what-next"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cmp:compare",
+      "properties": {},
+      "to_id": "snap:epoch:wall-check-works-on-any-project:cmp:compare"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -78053,6 +78100,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:wall-check-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-declared-wall-is-checked-against-the-coupling-it-contains"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:where-am-i-skill",
       "properties": {
         "completeness": "complete",
@@ -83305,6 +83361,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:wall-check-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:wall-check-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:genesis-skill-registered",
       "properties": {
         "action": "created"
@@ -85959,9 +86023,20 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:007f328f17e2da4812258e9fd399d70ef51cfb52799094b1814432affacef3b8",
+        "checksum": "sha256:a345ed6fd61d7a2d12390a2b8ebbda07b4fc8843be4e8e9b96b6baa76a0fc832",
         "location": "tools/wall_check.py",
         "name": "wall_check.py",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:wall-check-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:18ce69e056b4661bfb77384aa33bbd0bb9c86a70815ad678795dc589f7f6d6cb",
+        "location": "tools/test_wall_check.py",
+        "name": "test_wall_check.py",
         "status": "realized"
       }
     },
@@ -86045,8 +86120,8 @@
       "node_id": "cap:a-declared-wall-is-checked-against-the-coupling-it-contains",
       "node_type": "Capability",
       "properties": {
-        "description": "BUILT 2026-08-20 as tools/wall_check.py, against req:modularity-computed. A decomposition is declared once, early, when it is cheapest to get wrong, and every later answer about severability and blast radius is computed through it. Nothing checked it.\n\nWhat it computes: the real Rust import graph (comments and string literals stripped), lifted to the declared subsystems through each Component's CONTAINS placement. It reports (1) module-level cycles, (2) SUBSYSTEM-level cycles - the walls that cannot be severed because traffic crosses them both ways, (3) Components whose design says nothing depends on them while their same-named module is coupled in the source, and (4) Components placed in no subsystem at all.\n\nWhy it reads the SOURCE and not the graph: every detector reflow2 ships checks the consistency of edges that EXIST. A missing coupling edge is a defect of ABSENCE, and the design cannot notice its own silence - measured here as a cycle detector correctly reporting zero over a subsystem layer that holds zero edges.\n\nSTATED LIMIT: an import graph is coupling, not a contract. These numbers answer 'does the wall I declared hold' and must never be imported as CONSUMES - see fact:adopt-ran-on-reflow2-and-the-mechanical-contract-recovery-collapsed.\n\nIT IS AN INSTRUMENT, NOT A GATE, and exits 0 always. Whether a subsystem cycle should stop the build is a governance question with an owner and has not been put to him.",
-        "name": "A declared wall is checked against the coupling it is supposed to contain",
+        "description": "BUILT 2026-08-20 as tools/wall_check.py against req:modularity-computed. GENERALISED 2026-08-21 (PROPOSAL 3, Anthony's word) from a reflow2-only script into something that works on whatever project a design describes.\n\n⭐ IT NEEDS NO CONFIGURATION, AND THAT IS THE DESIGN. The design already says where its code lives: every Artifact carries a `location`, and REALIZES says which Component that file is part of. So the file set, the component mapping and the project layout all come from the graph. Nothing to point at a repo, no language to declare, no paths to keep in step. A reflow2 user gets this the moment they have registered artifacts, which link-artifacts already asks them to do.\n\nWHAT IT REPLACED, and the measurement that justified it: the first version GUESSED. It walked `crates/*/src` — hardcoded — and matched a Rust module to a Component BY NAME. Held against the declared mapping on reflow2's own graph the two disagreed IN BOTH DIRECTIONS: name-matching reached 48 components, the graph 45, with 4 only in the graph and 7 only in the name match. A tool answering 'is your decomposition sound' cannot be guessing which file belongs to which part of it. The guess is also structurally blind to every non-Rust file, while a location is just a path — the declared mapping reaches .py, .yaml and .md.\n\nWHAT IT REPORTS: cycles at EVERY declared level, not only subsystems; coupling lifted through containment; and a comparison of what the DESIGN says against what the SOURCE does, in both directions.\n\n⭐ IT NEVER QUIETLY GUESSES, which is the property the tests pin hardest. Files in a language it has no reader for, files the design names and disk lacks, components pointing at no file, and imports resolving to no registered file are each COUNTED AND NAMED. A file the tool cannot parse is not a file with no dependencies, and reporting it as clean would be the vacuous zero this whole increment exists to end.\n\n⚠️ AND IT DOES NOT CALL A DIFFERENCE A DEFECT. A pair the design declares and the source lacks is reported as exactly that, with the reason stated: a contract can be real without an import — a process boundary, a file format, a human step — and this reads imports only.\n\nPROVEN ON ITS FIRST REAL RUN: it found `cmp:compare -> cmp:report`, declared a `function_call` with `weight_basis: evidence`, made FALSE eight hours earlier by PR #265 when `is_design_type` moved to `nodes`. Nobody had updated the design. Snapshotted and removed under epoch:wall-check-works-on-any-project.\n\nSTATED LIMIT, unchanged and load-bearing: an import graph is COUPLING, NOT A CONTRACT. These numbers answer 'does the wall I declared hold' and must never be written back as CONSUMES — see fact:adopt-ran-on-reflow2-and-the-mechanical-contract-recovery-collapsed, where a mechanical scan proposed 91 against a real 17.\n\nIT REMAINS AN INSTRUMENT, NOT A GATE, and exits 0 always. Whether a subsystem cycle should stop the build is a governance question with an owner. Its own test suite IS a gate (tools/test_wall_check.py, wired into ci.yml and the AGENTS.md gate block).",
+        "name": "A declared wall is checked against the coupling it contains — on any project, with no configuration",
         "provenance": "authored",
         "status": "realized"
       }
@@ -92995,6 +93070,15 @@
       "properties": {
         "change_type": "scope_change",
         "name": "`VERIFIES` admits `Constraint` on Anthony's word — a check may now say whether a limit holds. Proven through the importer, the path that was actually broken, with the counterweight that `VERIFIES → Project` is still refused. Project stays out and dev_storyflow's export still will not import until that half is decided."
+      }
+    },
+    {
+      "node_id": "chg:wall-check-reads-the-mapping-instead-of-guessing-it",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "cap:a-declared-wall..., snapshotted while it still describes the reflow2-only version",
+        "subject": "system"
       }
     },
     {
@@ -99996,6 +100080,16 @@
       }
     },
     {
+      "node_id": "epoch:wall-check-works-on-any-project",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The wall check stops guessing which file is which part, and starts reading it from the design — generalised beyond reflow2 (2026-08-21)",
+        "sequence": 370,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:what-next-built",
       "node_type": "DesignEpoch",
       "properties": {
@@ -102360,6 +102454,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered wall_check.py"
+      }
+    },
+    {
+      "node_id": "frag:art:wall-check-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered test_wall_check.py"
       }
     },
     {
@@ -107999,6 +108103,26 @@
       }
     },
     {
+      "node_id": "snap:epoch:wall-check-works-on-any-project:cap:a-declared-wall-is-checked-against-the-coupling-it-contains",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:wall-check\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:wall-check-test\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:modularity-computed\",\"properties\":{\"coverage\":\"partial\",\"rationale\":\"It computes whether a declared wall holds, which is one of the requirement's claims. It does NOT compute encapsulation or cohesion, and it reads coupling rather than contracts, so the requirement is not fully met by it.\"}}]",
+        "state": "{\"description\":\"BUILT 2026-08-20 as tools/wall_check.py, against req:modularity-computed. A decomposition is declared once, early, when it is cheapest to get wrong, and every later answer about severability and blast radius is computed through it. Nothing checked it.\\n\\nWhat it computes: the real Rust import graph (comments and string literals stripped), lifted to the declared subsystems through each Component's CONTAINS placement. It reports (1) module-level cycles, (2) SUBSYSTEM-level cycles - the walls that cannot be severed because traffic crosses them both ways, (3) Components whose design says nothing depends on them while their same-named module is coupled in the source, and (4) Components placed in no subsystem at all.\\n\\nWhy it reads the SOURCE and not the graph: every detector reflow2 ships checks the consistency of edges that EXIST. A missing coupling edge is a defect of ABSENCE, and the design cannot notice its own silence - measured here as a cycle detector correctly reporting zero over a subsystem layer that holds zero edges.\\n\\nSTATED LIMIT: an import graph is coupling, not a contract. These numbers answer 'does the wall I declared hold' and must never be imported as CONSUMES - see fact:adopt-ran-on-reflow2-and-the-mechanical-contract-recovery-collapsed.\\n\\nIT IS AN INSTRUMENT, NOT A GATE, and exits 0 always. Whether a subsystem cycle should stop the build is a governance question with an owner and has not been put to him.\",\"name\":\"A declared wall is checked against the coupling it is supposed to contain\",\"provenance\":\"authored\",\"status\":\"realized\"}",
+        "target_id": "cap:a-declared-wall-is-checked-against-the-coupling-it-contains",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:wall-check-works-on-any-project:cmp:compare",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:bl-109\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:certify-restructuring\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:changelog-view\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:compare-designs\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"ALLOCATED_TO\",\"other_type\":\"Capability\",\"other_id\":\"cap:comparison-discloses-build-skew\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"CONTAINS\",\"other_type\":\"Component\",\"other_id\":\"sys:time-history\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0360\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"REALIZES\",\"other_type\":\"Artifact\",\"other_id\":\"art:compare\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Component\",\"other_id\":\"cmp:export\",\"properties\":{\"dependency_type\":\"function_call\",\"optional\":false,\"weight_basis\":\"evidence\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Component\",\"other_id\":\"cmp:graph\",\"properties\":{\"dependency_type\":\"function_call\",\"optional\":false,\"weight_basis\":\"evidence\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Component\",\"other_id\":\"cmp:report\",\"properties\":{\"dependency_type\":\"function_call\",\"optional\":false,\"weight_basis\":\"evidence\"}}]",
+        "state": "{\"kind\":\"module\",\"level\":\"component\",\"name\":\"compare\",\"provenance\":\"authored\",\"purpose\":\"The compare module.\",\"status\":\"planned\",\"tier\":\"operational\"}",
+        "target_id": "cmp:compare",
+        "target_type": "Component"
+      }
+    },
+    {
       "node_id": "snap:epoch:what-next-built:cap:what-next",
       "node_type": "Snapshot",
       "properties": {
@@ -113087,7 +113211,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:92ea5c6ba3f7154edbd2b508f9e76aa93c575cfaca1b6046c03c586e3ce17bb7",
+  "prev_content_hash": "sha256:6ff5948e10703ccee6a57234948bf74c5df694bc3d8aa653581380f33e04abfb",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

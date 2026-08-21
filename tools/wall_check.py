@@ -1,77 +1,62 @@
 #!/usr/bin/env python3
-"""Do the walls this design declares actually hold in the source?
+"""Do the walls this design declares actually hold in its source? — any project.
 
 `req:modularity-computed` — *modularity is computed from the design, not
-asserted by the architecture diagram.* This is the instrument that computes it
-for reflow2 itself, by holding the declared decomposition up against the real
-Rust import graph.
+asserted by the architecture diagram.* This computes it, for whatever project
+the design describes, by holding the declared decomposition up against the real
+import graph of the files the design itself points at.
 
-⭐ THE MEASUREMENT THAT MOTIVATED IT, 2026-08-20
+⭐ IT NEEDS NO CONFIGURATION, AND THAT IS THE WHOLE DESIGN. The design already
+says where its code lives: every `Artifact` carries a `location`, and `REALIZES`
+says which `Component` that file is part of. So the file set, the
+component mapping and the project layout all come from the graph. There is
+nothing to point at a repo, no language to declare, no paths to keep in step.
 
-PR #262 made reflow2's module graph acyclic — 53 core modules and 25 MCP
-modules, zero cycles at top-module and file granularity. Lift *those same
-acyclic edges* up to the 8 declared subsystems, using each Component's CONTAINS
-placement, and **two cycles appear**:
+WHAT IT REPLACED, and why that matters more than it sounds. Until 2026-08-21
+this tool GUESSED the mapping: it walked `crates/*/src` — hardcoded — and matched
+a Rust module to a Component by NAME. Measured against the declared mapping on
+reflow2's own graph, the two disagreed in both directions: name-matching reached
+48 components, the graph reached 45, with 4 only in the graph and 7 only in the
+name match. A tool that answers "is your decomposition sound" cannot be guessing
+which file belongs to which part of it. And the guess is structurally blind to
+every non-Rust file — the declared mapping reaches `.py`, `.yaml` and `.md`
+because a location is just a path.
 
-    sys:store        <-> sys:vocabulary
-    sys:coherence-loop <-> sys:time-history
+⭐ THE MEASUREMENT THAT MOTIVATED THE TOOL, kept because it is the case to beat.
+PR #262 made reflow2's module graph acyclic. Lifting those same acyclic edges to
+the declared subsystems produced TWO CYCLES — `store` ↔ `vocabulary` and
+`coherence-loop` ↔ `time-history`. Neither was a defect in the source: the first
+was a five-module kernel bisected by the decomposition, the second a single
+back-edge. A wall you can hand a change to is one traffic crosses in ONE
+direction; at a mutually coupled boundary there is nothing for a blast radius to
+stop at, so severability there is not unmeasured — it is false.
 
-Neither is a defect in the source. The first is placement: the four-module
-kernel everything sits on — `nodes` (46 of 52 modules transitively depend on
-it), `provenance` (44), `schema` (43), `graph` (42) — is *cut in half* by the
-declared decomposition, `nodes`/`schema` in one subsystem and `graph`/
-`provenance` in the other. Any bisection of a mutually-dependent kernel
-produces a cycle at the level above it whatever the code does. The second is a
-single back-edge, `compare -> report`, the same shape all three of #262's
-cycles had.
+⚠️ WHAT THIS CANNOT CONCLUDE — the trap that predates the tool.
 
-Why that matters rather than being a curiosity: **a wall you can hand a change
-to is one that traffic crosses in a single direction.** At a mutually coupled
-boundary there is nothing for a blast radius to stop at, so severability there
-is not merely unmeasured — it is false.
+An import graph is **coupling, not a contract**. On 2026-08-19 a mechanical scan
+proposed 91 CONSUMES against a real 17; of 33 modules said to consume dyno-core,
+95 of 95 references were TYPES and not one was a call. The sparse hand-authored
+set was right. So these numbers are the right input for *"where could a wall go,
+and does the one I declared hold?"* and the WRONG input for CONSUMES. **Nothing
+here should be written into the graph as a contract edge.**
 
-⭐ WHY REFLOW2'S OWN CYCLE DETECTOR CANNOT FIND THIS, AND IS NOT BROKEN
-
-reflow2 has a circular-dependency detector and it correctly reports none, because
-the design holds exactly **two** coupling edges touching any of the 8
-subsystems, and both are `sys:store CONSUMES` an external interface. There are
-zero subsystem-to-subsystem edges, so the detector has nothing to run on. Its
-green reads as *"your subsystems are acyclic"* and means *"your subsystems have
-no modelled coupling"* — opposite facts wearing the same answer.
-
-That is the general shape, and it is the reason this file reads the source
-rather than the graph: every detector reflow2 ships checks the CONSISTENCY OF
-EDGES THAT EXIST. A missing coupling edge is a defect of ABSENCE, and absence
-is what the detector set does not ask about.
-
-⚠️ WHAT THIS CANNOT CONCLUDE — the trap is one day older than the tool
-
-An import graph is **coupling, not a contract.** On 2026-08-19 a mechanical
-scan proposed 91 CONSUMES edges against the real graph's 17; of 33 modules said
-to consume dyno-core, 95 of 95 references were TYPES (`Value` x76, `DynoError`
-x18, `PropertySpec` x1) and not one was a call. The sparse hand-authored set
-was right. See `fact:adopt-ran-on-reflow2-and-the-mechanical-contract-recovery-
-collapsed`.
-
-So these numbers are the right input for *"where could a wall go, and does the
-one I declared hold?"* and the WRONG input for CONSUMES. **Nothing here should
-be imported into the graph as a contract edge.**
-
-Two smaller limits, stated so they are not rediscovered:
+Three smaller limits, stated so they are not rediscovered:
 
   (a) Comments and string literals are stripped before anything is read. The
-      first pass of the adopt run reported a fourth cycle that was a rustdoc
-      link in a comment; stripping prose removed 26 of 175 edges — 15% of the
-      model — and the correction revealed a real three-hop cycle the noise had
-      masked. **Never derive structure from prose.**
-  (b) Components are matched to modules by NAME. A Component with no module of
-      its name is reported as unmatched rather than as coupled or uncoupled,
-      because those are different facts.
+      first adopt pass reported a cycle that was a rustdoc link in a comment;
+      stripping prose removed 15% of the model and revealed a real cycle the
+      noise had masked. **Never derive structure from prose.**
+  (b) Only languages with a scanner here are read. Everything else is COUNTED
+      AND NAMED under "could not read", never silently skipped — a file the
+      tool cannot parse is not a file with no dependencies.
+  (c) An import it cannot resolve to a registered file is counted and reported
+      for the same reason. A low resolution rate means the answer is thin, and
+      you should be told rather than left to assume coverage.
 
 ⚠️ THIS IS AN INSTRUMENT, NOT A GATE. It always exits 0. Whether a subsystem
 cycle should STOP THE BUILD is a governance question with an owner, and the
-`governance-proposal` skill exists precisely so that a tool does not answer it
-by default. `tools/reflow2_check.py` is the gate.
+`governance-proposal` skill exists precisely so a tool does not answer it by
+default. `tools/reflow2_check.py` is the gate.
 """
 
 import argparse
@@ -81,12 +66,14 @@ import re
 import sys
 from collections import defaultdict
 
-DEFAULT_CRATES = ("crates/reflow2-core", "crates/reflow2-mcp")
 DEFAULT_EXPORT = "docs/design/reflow2.json"
 
 
-def strip_prose(src: str) -> str:
-    """Remove comments and both string-literal forms. See limit (a) above."""
+# ---------------------------------------------------------------- prose stripping
+
+
+def strip_rust(src: str) -> str:
+    """Remove Rust comments and both string-literal forms. See limit (a)."""
     out = []
     i, n = 0, len(src)
     while i < n:
@@ -130,61 +117,74 @@ def strip_prose(src: str) -> str:
     return "".join(out)
 
 
-def module_path(root: str, path: str, crate_root_name: str) -> str:
-    rel = os.path.relpath(path, root)
-    if rel in ("lib.rs", "main.rs"):
-        # NOT "": an empty name is falsy, and an earlier draft silently dropped
-        # every edge out of main.rs — which is where `degraded` and `registry`
-        # are used from, so both read as uncoupled when they are not.
-        return crate_root_name
-    rel = rel[:-3]
-    if rel.endswith("/mod"):
-        rel = rel[:-4]
-    return rel.replace(os.sep, "::")
+def strip_python(src: str) -> str:
+    """Remove Python comments, docstrings and string literals. See limit (a).
+
+    Triple-quoted forms first: a module docstring naming other modules is
+    exactly the prose that must not become structure.
+    """
+    src = re.sub(r'"""(?:.|\n)*?"""', "", src)
+    src = re.sub(r"'''(?:.|\n)*?'''", "", src)
+    src = re.sub(r'"(?:[^"\\\n]|\\.)*"', '""', src)
+    src = re.sub(r"'(?:[^'\\\n]|\\.)*'", "''", src)
+    src = re.sub(r"#[^\n]*", "", src)
+    return src
 
 
-def scan_crate(crate: str):
-    """Module graph for one crate, file-granular. Returns (modules, edges)."""
-    src_root = os.path.join(crate, "src")
-    self_name = os.path.basename(crate).replace("-", "_")
-    files = [
-        os.path.join(dp, f)
-        for dp, _, fns in os.walk(src_root)
-        for f in fns
-        if f.endswith(".rs")
-    ]
-    crate_root_name = os.path.basename(crate) + "-root"
-    mods = {module_path(src_root, f, crate_root_name): f for f in files}
-    known = set(mods)
-    pattern = re.compile(
-        r"\b(crate|super|self|" + re.escape(self_name) + r")"
-        r"((?:::[A-Za-z_][A-Za-z0-9_]*)+)"
-    )
+# ---------------------------------------------------------------- import scanning
 
-    def resolve(parts):
-        for k in range(len(parts), 0, -1):
-            candidate = "::".join(parts[:k])
-            if candidate in known:
-                return candidate
-        return None
 
-    edges = defaultdict(set)
-    for mod, path in sorted(mods.items()):
-        text = strip_prose(open(path, encoding="utf-8", errors="replace").read())
-        parent = "::".join(mod.split("::")[:-1]) if "::" in mod else ""
-        for match in pattern.finditer(text):
-            kind, tail = match.group(1), match.group(2)
-            parts = tail.strip(":").split("::")
-            if kind in ("crate", self_name):
-                base = []
-            elif kind == "self":
-                base = mod.split("::") if mod != crate_root_name else []
-            else:
-                base = parent.split("::") if parent else []
-            target = resolve(base + parts)
-            if target is not None and target != mod:
-                edges[mod].add(target)
-    return known, edges
+def imports_rust(text: str, path: str, by_module: dict) -> tuple:
+    """(resolved file paths, unresolved symbol count) for one Rust file."""
+    crate_root = None
+    parts = path.split(os.sep)
+    if "src" in parts:
+        crate_root = os.sep.join(parts[: parts.index("src") + 1])
+    hits, misses = set(), 0
+    # `crate::x`, `super::x`, `self::x`, and `some_crate::x`
+    for m in re.finditer(r"\b([A-Za-z_][A-Za-z0-9_]*)((?:::[A-Za-z_][A-Za-z0-9_]*)+)", text):
+        head, tail = m.group(1), m.group(2)
+        first = tail.strip(":").split("::")[0]
+        if head in ("crate", "self", "super"):
+            target = by_module.get((crate_root, first))
+        elif "_" in head or head.islower():
+            # another crate in this workspace, e.g. `reflow2_core::nodes`
+            target = by_module.get((head.replace("_", "-"), first))
+        else:
+            continue
+        if target:
+            hits.add(target)
+        elif head in ("crate", "self", "super"):
+            misses += 1
+    return hits, misses
+
+
+def imports_python(text: str, path: str, by_module: dict) -> tuple:
+    """(resolved file paths, unresolved symbol count) for one Python file."""
+    hits, misses = set(), 0
+    names = set()
+    for m in re.finditer(r"^\s*import\s+([A-Za-z_][\w.]*)", text, re.M):
+        names.add(m.group(1).split(".")[-1])
+    for m in re.finditer(r"^\s*from\s+\.*([A-Za-z_][\w.]*)\s+import", text, re.M):
+        names.add(m.group(1).split(".")[-1])
+    for m in re.finditer(r"^\s*from\s+\.+\s*import\s+([A-Za-z_]\w*)", text, re.M):
+        names.add(m.group(1))
+    for name in names:
+        target = by_module.get((None, name))
+        if target and target != path:
+            hits.add(target)
+        elif target is None:
+            misses += 1
+    return hits, misses
+
+
+SCANNERS = {
+    ".rs": (strip_rust, imports_rust),
+    ".py": (strip_python, imports_python),
+}
+
+
+# ---------------------------------------------------------------- graph algorithms
 
 
 def find_cycles(nodes, edges):
@@ -220,7 +220,6 @@ def find_cycles(nodes, edges):
 
 
 def reverse_reach(nodes, edges):
-    """For each node, everything that transitively depends on it."""
     rev = defaultdict(set)
     for a, targets in edges.items():
         for b in targets:
@@ -239,146 +238,195 @@ def reverse_reach(nodes, edges):
     return out
 
 
-def load_design(export_path):
+# ---------------------------------------------------------------- the design side
+
+
+def read_design(export_path):
+    """Component → files, containment, levels and declared coupling, from the graph."""
     doc = json.load(open(export_path, encoding="utf-8"))
     node_type = {n["node_id"]: n["node_type"] for n in doc["nodes"]}
     props = {n["node_id"]: n.get("properties", {}) for n in doc["nodes"]}
     components = [i for i, t in node_type.items() if t == "Component"]
-    subsystems = {c for c in components if props[c].get("level") == "subsystem"}
 
-    parent = {}
-    provides = defaultdict(set)
-    design_dep = defaultdict(set)
+    files_of = defaultdict(list)
+    for e in doc["edges"]:
+        if (
+            e["edge_type"] == "REALIZES"
+            and node_type.get(e["from_id"]) == "Artifact"
+            and e["to_id"] in set(components)
+        ):
+            loc = props[e["from_id"]].get("location")
+            if loc:
+                files_of[e["to_id"]].append(loc)
+
+    parent, provides, consumes, declared = {}, defaultdict(set), defaultdict(set), defaultdict(set)
     for e in doc["edges"]:
         a, b, t = e["from_id"], e["to_id"], e["edge_type"]
-        if t == "CONTAINS" and a in subsystems and node_type.get(b) == "Component":
+        if t == "CONTAINS" and node_type.get(a) == node_type.get(b) == "Component":
             parent[b] = a
         elif t == "PROVIDES" and node_type.get(a) == "Component":
             provides[b].add(a)
+        elif t == "CONSUMES" and node_type.get(a) == "Component":
+            consumes[a].add(b)
         elif t == "DEPENDS_ON" and node_type.get(a) == node_type.get(b) == "Component":
-            design_dep[a].add(b)
-    for e in doc["edges"]:
-        if e["edge_type"] == "CONSUMES" and node_type.get(e["from_id"]) == "Component":
-            for p in provides.get(e["to_id"], ()):
-                if p != e["from_id"]:
-                    design_dep[e["from_id"]].add(p)
-    return components, subsystems, parent, design_dep
+            declared[a].add(b)
+    for consumer, ifaces in consumes.items():
+        for iface in ifaces:
+            for provider in provides.get(iface, ()):
+                if provider != consumer:
+                    declared[consumer].add(provider)
+    level = {c: (props[c].get("level") or "component") for c in components}
+    return components, files_of, parent, level, declared
+
+
+# ---------------------------------------------------------------- the source side
+
+
+def scan(files_of):
+    """Real coupling between components, from the files the design points at."""
+    owner, by_module = {}, {}
+    unreadable, unsupported = [], defaultdict(list)
+    for comp, paths in files_of.items():
+        for p in paths:
+            owner[p] = comp
+            ext = os.path.splitext(p)[1]
+            if ext not in SCANNERS:
+                unsupported[ext].append(p)
+                continue
+            if ext == ".rs":
+                parts = p.split(os.sep)
+                crate_root = os.sep.join(parts[: parts.index("src") + 1]) if "src" in parts else None
+                stem = os.path.splitext(os.path.basename(p))[0]
+                by_module[(crate_root, stem)] = p
+                if crate_root:
+                    crate_name = os.path.basename(os.path.dirname(crate_root))
+                    by_module[(crate_name, stem)] = p
+            else:
+                by_module[(None, os.path.splitext(os.path.basename(p))[0])] = p
+
+    edges, unresolved, read = defaultdict(set), 0, 0
+    for comp, paths in files_of.items():
+        for p in paths:
+            ext = os.path.splitext(p)[1]
+            if ext not in SCANNERS or not os.path.exists(p):
+                if ext in SCANNERS:
+                    unreadable.append(p)
+                continue
+            strip, find = SCANNERS[ext]
+            text = strip(open(p, encoding="utf-8", errors="replace").read())
+            hits, missed = find(text, p, by_module)
+            unresolved += missed
+            read += 1
+            for target in hits:
+                other = owner.get(target)
+                if other and other != comp:
+                    edges[comp].add(other)
+    return edges, dict(unsupported), unreadable, unresolved, read
+
+
+# ---------------------------------------------------------------- report
 
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("--export", default=DEFAULT_EXPORT, help="committed design export")
-    ap.add_argument("--crate", action="append", dest="crates", help="repeatable")
+    ap.add_argument("--export", default=DEFAULT_EXPORT, help="the committed design export")
     args = ap.parse_args()
-    crates = args.crates or list(DEFAULT_CRATES)
 
-    # --- the source side -------------------------------------------------
-    code_edges = set()
-    per_crate = []
-    for crate in crates:
-        mods, edges = scan_crate(crate)
-        per_crate.append((crate, mods, edges))
+    if not os.path.exists(args.export):
+        print(f"no design export at {args.export} — nothing to check against.")
+        return 0
+    components, files_of, parent, level, declared = read_design(args.export)
+    edges, unsupported, unreadable, unresolved, read = scan(files_of)
+
+    print("=" * 74)
+    print("COVERAGE — what this answer is actually built on")
+    print("=" * 74)
+    print(f"  {len(components)} component(s) in the design")
+    print(f"  {len(files_of)} of them point at a file, via an Artifact location and REALIZES")
+    print(f"  {read} file(s) read; {sum(len(v) for v in edges.values())} coupling edge(s) found")
+    if unsupported:
+        print("  COULD NOT READ (no scanner for the language), counted not skipped:")
+        for ext, paths in sorted(unsupported.items()):
+            print(f"      {ext or '(no extension)'}: {len(paths)} file(s), e.g. {paths[0]}")
+    if unreadable:
+        print(f"  {len(unreadable)} file(s) the design names and disk does not have: {unreadable[:3]}")
+    unmapped = [c for c in components if c not in files_of]
+    if unmapped:
+        print(f"  {len(unmapped)} component(s) point at NO file, so nothing here speaks about them:")
+        print(f"      {', '.join(sorted(unmapped)[:8])}{' ...' if len(unmapped) > 8 else ''}")
+    if unresolved:
+        print(f"  {unresolved} import(s) resolved to no registered file — the answer is that much thinner")
+
+    print()
+    print("=" * 74)
+    print("DO THE DECLARED WALLS HOLD?")
+    print("=" * 74)
+    by_level = defaultdict(list)
+    for c in components:
+        by_level[level[c]].append(c)
+    for lvl in sorted(by_level, key=lambda x: len(by_level[x]), reverse=True):
+        members = by_level[lvl]
+        # lift the component coupling to this level through containment
+        def up(c):
+            seen = set()
+            while c in parent and level.get(c) != lvl and c not in seen:
+                seen.add(c)
+                c = parent[c]
+            return c if level.get(c) == lvl else None
+
+        lifted, evidence = defaultdict(set), defaultdict(list)
         for a, targets in edges.items():
             for b in targets:
-                # leaf name, so `tools::query` and a cmp:query line up
-                la, lb = a.split("::")[-1], b.split("::")[-1]
-                if la != lb:
-                    code_edges.add((la, lb))
-    code_degree = defaultdict(int)
-    for a, b in code_edges:
-        code_degree[a] += 1
-        code_degree[b] += 1
-
-    print("=" * 74)
-    print("MODULE GRAPH — imports only, comments and string literals stripped")
-    print("=" * 74)
-    for crate, mods, edges in per_crate:
-        total = sum(len(v) for v in edges.values())
-        cycles = find_cycles(mods, edges)
-        up = reverse_reach(mods, edges)
-        widest = sorted(mods, key=lambda m: -len(up[m]))[:5]
-        print(f"  {crate}: {len(mods)} modules, {total} edges, {len(cycles)} cycle(s)")
-        for c in cycles:
-            print(f"      CYCLE: {' <-> '.join(c)}")
-        print(
-            "      kernel (widest blast radius): "
-            + ", ".join(f"{m} {len(up[m])}" for m in widest)
-        )
-
-    # --- the declared side ------------------------------------------------
-    if not os.path.exists(args.export):
-        print(f"\nno design export at {args.export} — source half only.")
-        return 0
-    components, subsystems, parent, design_dep = load_design(args.export)
-    print()
-    print("=" * 74)
-    print("DO THE DECLARED WALLS HOLD? — subsystem graph induced by real imports")
-    print("=" * 74)
-    mod_to_sub = {c.split(":", 1)[1]: s for c, s in parent.items()}
-    sub_edges = defaultdict(set)
-    evidence = defaultdict(list)
-    inside = crossing = 0
-    for a, b in code_edges:
-        sa, sb = mod_to_sub.get(a), mod_to_sub.get(b)
-        if sa is None or sb is None:
-            continue
-        if sa == sb:
-            inside += 1
+                ua, ub = up(a), up(b)
+                if ua and ub and ua != ub:
+                    lifted[ua].add(ub)
+                    evidence[(ua, ub)].append((a, b))
+        crossing = sum(len(v) for v in lifted.values())
+        cycles = find_cycles(set(members), lifted)
+        # "inside" only means something where a part HAS an inside. At the leaf
+        # level every edge crosses by construction, and printing "0 inside"
+        # there states an arithmetic certainty as if it were a measurement.
+        nests = any(parent.get(c) in members for c in parent)
+        if nests:
+            inside = sum(1 for a, ts in edges.items() for b in ts if up(a) and up(a) == up(b))
+            shape = f"{inside} edge(s) inside one, {crossing} crossing"
         else:
-            crossing += 1
-            sub_edges[sa].add(sb)
-            evidence[(sa, sb)].append((a, b))
-    print(f"  {len(subsystems)} subsystem(s); {len(parent)} component(s) placed in one")
-    print(f"  code edges with both ends placed: {inside} inside, {crossing} crossing")
-    print("  (crossing is not itself a fault — a foundation layer is SUPPOSED to")
-    print("   be depended on. Only a TWO-WAY crossing denies you a wall.)")
-    sub_cycles = find_cycles(subsystems, sub_edges)
-    print()
-    if not sub_cycles:
-        print("  NO SUBSYSTEM CYCLES — every declared wall is crossed one way only.")
-    else:
-        print(f"  {len(sub_cycles)} SUBSYSTEM CYCLE(S) — these walls cannot be severed:")
-    for cycle in sub_cycles:
-        print(f"    CYCLE: {' <-> '.join(cycle)}")
-        for a in cycle:
-            for b in sorted(sub_edges.get(a, ())):
-                if b in cycle:
-                    pairs = sorted(set(evidence[(a, b)]))
-                    shown = ", ".join(f"{x}->{y}" for x, y in pairs[:5])
-                    tail = " ..." if len(pairs) > 5 else ""
-                    print(f"      {a} -> {b}  via {len(pairs)}: {shown}{tail}")
-
-    # --- absence: a zero the source contradicts ---------------------------
-    print()
-    print("=" * 74)
-    print("ZEROES THE SOURCE CONTRADICTS — a false 'nothing depends on me'")
-    print("=" * 74)
-    design_degree = defaultdict(int)
-    for a, targets in design_dep.items():
-        design_degree[a] += len(targets)
-        for b in targets:
-            design_degree[b] += 1
-    contradicted, unmatched = [], []
-    for c in sorted(components):
-        if design_degree[c]:
+            shape = f"{crossing} edge(s) between them"
+        print(f"\n  {lvl}: {len(members)} part(s), {shape}")
+        if not any(up(a) for a in edges):
+            print("      nothing at this level carries coupling — SILENT about it, not clean")
             continue
-        leaf = c.split(":", 1)[1]
-        if leaf in code_degree and code_degree[leaf]:
-            contradicted.append((c, code_degree[leaf]))
-        elif leaf not in code_degree:
-            unmatched.append(c)
-    print(f"  {len(contradicted)} component(s) with NO coupling edge in the design")
-    print("  whose same-named module IS coupled in the source:")
-    for c, deg in sorted(contradicted, key=lambda x: -x[1]):
-        print(f"      {c:<34} design degree 0, code degree {deg}")
+        if not cycles:
+            print("      NO CYCLES — every wall at this level is crossed one way only")
+        for cyc in cycles:
+            print(f"      CYCLE: {' <-> '.join(cyc)}")
+            for a in sorted(cyc):
+                for b in sorted(lifted.get(a, ())):
+                    if b in cyc:
+                        ev = sorted(set(evidence[(a, b)]))
+                        shown = ", ".join(f"{x}->{y}" for x, y in ev[:4])
+                        print(f"         {a} -> {b}  via {len(ev)}: {shown}")
+
     print()
-    print(f"  {len(unmatched)} uncoupled component(s) name no module — not a verdict,")
-    print("  a different fact: " + ", ".join(unmatched[:8]) + (" ..." if len(unmatched) > 8 else ""))
-    unplaced = sorted(set(components) - set(parent) - subsystems)
-    if unplaced:
-        print()
-        print(f"  {len(unplaced)} component(s) in NO subsystem at all:")
-        print("      " + ", ".join(unplaced))
+    print("=" * 74)
+    print("WHAT THE DESIGN SAYS vs WHAT THE SOURCE DOES")
+    print("=" * 74)
+    real_pairs = {(a, b) for a, ts in edges.items() for b in ts}
+    declared_pairs = {(a, b) for a, ts in declared.items() for b in ts}
+    both = real_pairs & declared_pairs
+    print(f"  {len(declared_pairs)} declared coupling pair(s); {len(real_pairs)} in the source; {len(both)} agree")
+    undeclared = sorted(real_pairs - declared_pairs)
+    print(f"  {len(undeclared)} pair(s) the SOURCE has and the design does not:")
+    for a, b in undeclared[:10]:
+        print(f"      {a} -> {b}")
+    if len(undeclared) > 10:
+        print(f"      ... and {len(undeclared) - 10} more")
+    unbacked = sorted(declared_pairs - real_pairs)
+    print(f"  {len(unbacked)} pair(s) the DESIGN has and the source does not — NOT defects:")
+    print("      a contract can be real without an import (a process boundary, a")
+    print("      file format, a human step), and this tool only reads imports.")
+    for a, b in unbacked[:6]:
+        print(f"      {a} -> {b}")
 
     print()
     print("READ THE MODULE DOCSTRING BEFORE ACTING ON ANY OF THIS. An import graph")
