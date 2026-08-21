@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:21357071222c408bff3a0b0e6e918bec47ed623d02e21828a60ccf4c534b7367",
+  "content_hash": "sha256:6a63b2044a9916510314c7c8688e34ed29a240f2d75f56888c13312c0f191422",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3411,6 +3411,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-budget-is-what-makes-optimisation-stop",
+      "properties": {},
+      "to_id": "epoch:v0380"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:a-capability-states-what-it-takes-and-gives",
       "properties": {},
       "to_id": "epoch:vocabulary-the-tools-cannot-reach"
@@ -4431,6 +4437,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:baseline-09e42dc28449aaeb",
+      "properties": {},
+      "to_id": "epoch:v0380"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:baseline-0da0e8c66a8d93bc",
       "properties": {},
       "to_id": "epoch:v0240"
@@ -4467,9 +4479,21 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:baseline-23a6650df48c886f",
+      "properties": {},
+      "to_id": "epoch:v0380"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:baseline-24b34ec04af47e55",
       "properties": {},
       "to_id": "epoch:v0320"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:baseline-3557f368757d70a1",
+      "properties": {},
+      "to_id": "epoch:v0380"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -4503,9 +4527,27 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:baseline-58da0e0bbbee2602",
+      "properties": {},
+      "to_id": "epoch:v0380"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:baseline-62541d2bbec20b75",
       "properties": {},
       "to_id": "epoch:built-and-consumed-by-nothing"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:baseline-644e32d36f68250d",
+      "properties": {},
+      "to_id": "epoch:v0380"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:baseline-6569644bc3b4cba0",
+      "properties": {},
+      "to_id": "epoch:v0380"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -5205,6 +5247,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:every-leaf-component-points-at-its-file",
+      "properties": {},
+      "to_id": "epoch:v0380"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:every-skill-has-a-command",
       "properties": {},
       "to_id": "epoch:every-skill-has-a-command"
@@ -5232,6 +5280,12 @@
       "from_id": "chg:federation-decided",
       "properties": {},
       "to_id": "epoch:surface-export"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:fifteen-modules-become-parts-of-the-design",
+      "properties": {},
+      "to_id": "epoch:v0380"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -6165,6 +6219,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-gate-notices-a-file-the-design-never-heard-of",
+      "properties": {},
+      "to_id": "epoch:v0380"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-gate-survives-a-directory-and-honours-its-exit-codes",
       "properties": {},
       "to_id": "epoch:v0320"
@@ -6276,6 +6336,12 @@
       "from_id": "chg:the-philosophy-is-separated-from-its-pre-1-0-corollary",
       "properties": {},
       "to_id": "epoch:doing-it-right-becomes-design-intent"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-resolution-of-a-gap-becomes-schedulable",
+      "properties": {},
+      "to_id": "epoch:v0380"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -6918,6 +6984,12 @@
       "from_id": "rel:v0370",
       "properties": {},
       "to_id": "epoch:v0370"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "rel:v0380",
+      "properties": {},
+      "to_id": "epoch:v0380"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -13455,6 +13527,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-87a2fdd74483062e",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-89f8328befbee0ba",
       "properties": {
         "accepted_baseline": true,
@@ -14928,6 +15009,15 @@
         "action": "modified"
       },
       "to_id": "art:relate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-361570c674b615fc",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills-and-tools"
     },
     {
       "edge_type": "CHANGED",
@@ -27675,6 +27765,30 @@
     },
     {
       "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v0380",
+      "properties": {
+        "status": "active"
+      },
+      "to_id": "env:ci"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v0380",
+      "properties": {
+        "status": "active"
+      },
+      "to_id": "env:container"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
+      "from_id": "rel:v0380",
+      "properties": {
+        "status": "active"
+      },
+      "to_id": "env:dev"
+    },
+    {
+      "edge_type": "DEPLOYED_TO",
       "from_id": "rel:v040",
       "properties": {
         "status": "rolled_back"
@@ -27848,6 +27962,18 @@
         "doc_kind": "runbook"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:skills-and-tools",
+      "properties": {},
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:skills-and-tools",
+      "properties": {},
+      "to_id": "ifc:mcp-tools"
     },
     {
       "edge_type": "DOCUMENTS",
@@ -78917,6 +79043,12 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:v0370",
+      "properties": {},
+      "to_id": "epoch:v0380"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:v040",
       "properties": {},
       "to_id": "epoch:v050-cut"
@@ -87632,7 +87764,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "config",
-        "checksum": "sha256:4e54f1ce8853a840256adc88ebab74d8ce15a6594cfc4a38489b7c04a61a596e",
+        "checksum": "sha256:fecccf3852b74900a45e6f04a42052a4d3386ba3995d5fbeec101ffde30c02f2",
         "granularity": "atomic",
         "location": "reflow2.toml",
         "name": "reflow2.toml",
@@ -89041,6 +89173,17 @@
         "name": "skills.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:skills-and-tools",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:7332ba541db49bb736ef757cd3c0e232ccd5d1b8764c9ca6aff87feb8c13870e",
+        "location": "docs/skills-and-tools.md",
+        "name": "skills-and-tools.md",
+        "status": "realized"
       }
     },
     {
@@ -93338,6 +93481,16 @@
       }
     },
     {
+      "node_id": "chg:accept-87a2fdd74483062e",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-21",
+        "name": "Accepted a new baseline: the change carries no design meaning",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-89f8328befbee0ba",
       "node_type": "ChangeEvent",
       "properties": {
@@ -94337,6 +94490,16 @@
     },
     {
       "node_id": "chg:baseline-3557f368757d70a1",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-21",
+        "name": "First baseline recorded: the artifact was registered without a checksum and nothing was compared",
+        "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:baseline-361570c674b615fc",
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "baseline_established",
@@ -104308,6 +104471,16 @@
       }
     },
     {
+      "node_id": "epoch:v0380",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "release_cut",
+        "name": "v0.38.0 cut — two states that looked identical stop being the same",
+        "sequence": 373,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:v040",
       "node_type": "DesignEpoch",
       "properties": {
@@ -108131,9 +108304,19 @@
       "node_type": "Release",
       "properties": {
         "name": "v0.37.0",
-        "status": "deployed",
+        "status": "retired",
         "unit_type": "binary",
         "version": "0.37.0"
+      }
+    },
+    {
+      "node_id": "rel:v0380",
+      "node_type": "Release",
+      "properties": {
+        "name": "v0.38.0",
+        "status": "planned",
+        "unit_type": "binary",
+        "version": "0.38.0"
       }
     },
     {
@@ -117748,7 +117931,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:fb44966128dafd7d140c709ca9dfe235f6e0740cd052d30049b768e0b30c7ce9",
+  "prev_content_hash": "sha256:21357071222c408bff3a0b0e6e918bec47ed623d02e21828a60ccf4c534b7367",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -117846,7 +118029,7 @@
       "Verification"
     ],
     "node_types": 29,
-    "reflow2_version": "0.37.0",
+    "reflow2_version": "0.38.0",
     "schema_version": 1
   }
 }

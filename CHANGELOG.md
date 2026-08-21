@@ -31,6 +31,72 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.38.0] — 2026-08-21
+
+**Minor.** One new served tool, one new schema property, one new gap detector, a 21st served
+skill, and a 4x faster test suite. Nothing removed; nothing renamed.
+
+The theme is a sharper form of the one v0.37.0 ran into. That increment was about a report that
+cannot say what it did not look at. This one is about **two states that look identical and are
+not**: an idea nobody has opened versus one somebody judged and found genuinely new; a detector
+that ran clean versus one that had nothing to run on; a parse that found nothing versus a parse
+that was fed nothing. In each case the fix is a place to record the judgement, so the two stop
+being the same.
+
+### Added
+- **`review_relations(node_type, node_id, links, note)`** and **`Decision.no_relation_note`**.
+  Records what a node relates to — or, in writing, that nothing does. ONE DOOR for both
+  outcomes, and it REFUSES when given neither. Relations come from the inference vocabulary
+  (`CONTRADICTS`, `EVOLVES_INTO`, `DEPENDS_ON`, `ANTICIPATES`, …), each carrying its reason in
+  `evidence`; `incoming` flips the direction, because direction is part of the claim. It draws
+  nothing on its own and suggests nothing: a false neighbour is worse than a missing one, since
+  anything searching by neighbourhood repeats it forever.
+- **`unreviewed_ideas`** gap — proposed Decisions carrying neither a relation nor a note.
+  AGGREGATE and severity 0.3: one finding naming the practice and listing the ideas, because
+  per-idea it would have fired 115 times on reflow2's own graph the day it shipped. Detection is
+  unconditional; the invitation waits for a boundary (`req:detecting-is-not-asking`), so thinking
+  out loud still costs nothing at the moment of thinking.
+- **`optimize` skill** and **`/optimize`** — the 21st served skill, and the first about improving
+  something rather than describing it. Measure before forming an opinion (and be willing to
+  conclude *nothing here*); measure the product surface before the developer surface; find the
+  cause by falsifiable experiment on a copy; **write the budget down BEFORE the code**;
+  re-measure against the budget rather than the starting point and STOP when it is met; leave a
+  guard asserting the STRUCTURE that makes it fast, not a wall-clock duration; and when a rule
+  refuses the change, pay it in prose rather than weakening it.
+- **`tools/link_tests.py`** — which of a project's tests does the design know about? Zero
+  configuration, on the same terms as `wall_check`. Attributes a test to a component only when
+  its name matches a mapped source file AND it calls a function that file defines; everything
+  else is reported unattributed WITH ITS REASON. A guessed mapping would make a per-subsystem
+  table look complete while filing tests under the wrong part.
+- **`docs/skills-and-tools.md`** — every skill and every tool with a one-line description,
+  generated from the running server, plus who actually invokes what. (Short answer: nothing
+  fires by itself. Skills are served but never auto-loaded, and hooks emit instructions rather
+  than calls.)
+
+### Changed
+- **The schema is parsed once per process, not once per graph.** `open_in_memory` went from
+  **41.3 ms to 266 µs** and the test suite's in-test time from **191.8 s to 96.5 s**. The eleven
+  domain YAMLs are `include_str!`'d at compile time, so their bytes cannot parse to two different
+  answers; the parsed `Result` is now cached and `load_schema()` hands out a clone, because
+  `StorageEngine` takes the schema by value and two graphs must not share one.
+  Governed by **`con:graph-construction-is-setup-not-work`** (≤ 1 ms) — the first performance
+  budget this project has stated, written down before the code was touched.
+- **The `brainstorm` skill links ideas at capture.** Step 4 spends the near-matches the dedup
+  guard already returned instead of discarding them. Measured first: 145 brainstormed ideas
+  joined by 12 edges, 111 of them reaching no other idea within two hops, and the most common
+  edge on an idea was its author.
+- **`tools/wall_check.py` reads both ways.** It walked design-outward, so a file no `Artifact`
+  pointed at never entered its model — it could not report the gap because the gap was invisible
+  to its own data structure. It now derives walk roots from claimed paths and separates "the
+  design has never heard of this" from "known but not modelled as a part".
+- **The CI gate notices unmodelled source** — as a NOTE and never a failure.
+
+### Fixed
+- `wall_check` and `link_tests` strip string literals line by line rather than file-wide. One
+  unbalanced quote previously swallowed everything to the next quote, reducing `heal.rs` from
+  dozens of visible functions to one — and **a parse that silently shrinks the evidence reads
+  exactly like an honest "no evidence found"**.
+
 ## [0.37.0] — 2026-08-21
 
 **Minor.** Two new served tools, one new schema property, and a changed result shape on
