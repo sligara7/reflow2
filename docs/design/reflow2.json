@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:fb44966128dafd7d140c709ca9dfe235f6e0740cd052d30049b768e0b30c7ce9",
+  "content_hash": "sha256:21357071222c408bff3a0b0e6e918bec47ed623d02e21828a60ccf4c534b7367",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1898,6 +1898,14 @@
     {
       "edge_type": "ALLOCATED_TO",
       "from_id": "cap:onboarding",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:optimize-skill",
       "properties": {
         "weight_basis": "estimated"
       },
@@ -5623,6 +5631,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:option-d-was-built-as-a-tool-and-a-scoring-heuristic-was-abandoned",
+      "properties": {},
+      "to_id": "epoch:the-co-change-experiment-is-run"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:orphan-decision-degree-zero",
       "properties": {},
       "to_id": "epoch:v0220"
@@ -6214,6 +6228,12 @@
       "from_id": "chg:the-nudge-report-says-whether-a-hook-was-possible",
       "properties": {},
       "to_id": "epoch:v0310"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-optimize-skill-ships-with-its-own-n-of-2-stated",
+      "properties": {},
+      "to_id": "epoch:the-co-change-experiment-is-run"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -7708,6 +7728,12 @@
       "from_id": "snap:epoch:the-ask-elicits-a-lens-not-a-name:art:where-am-i-skill",
       "properties": {},
       "to_id": "epoch:the-ask-elicits-a-lens-not-a-name"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-co-change-experiment-is-run:dec:idea-can-exhaustive-per-subsystem-tests-be-derived-rather-than-imagined",
+      "properties": {},
+      "to_id": "epoch:the-co-change-experiment-is-run"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -11477,6 +11503,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "rule:reflow2-is-built-for-other-projects-not-for-itself",
+      "properties": {
+        "acted_at": "2026-08-21",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "rule:success-is-read-from-the-authoritative-object",
       "properties": {
         "acted_at": "2026-08-14",
@@ -14965,6 +15000,24 @@
         "action": "modified"
       },
       "to_id": "art:consumption"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-644e32d36f68250d",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:optimize-command"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-6569644bc3b4cba0",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:optimize-skill"
     },
     {
       "edge_type": "CHANGED",
@@ -20171,6 +20224,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:option-d-was-built-as-a-tool-and-a-scoring-heuristic-was-abandoned",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-can-exhaustive-per-subsystem-tests-be-derived-rather-than-imagined"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:orphan-decision-degree-zero",
       "properties": {
         "accepted_baseline": true,
@@ -22877,6 +22939,33 @@
         "action": "modified"
       },
       "to_id": "cap:nudge-absence-says-why"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-optimize-skill-ships-with-its-own-n-of-2-stated",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-optimize-skill-ships-with-its-own-n-of-2-stated",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills-catalog"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-optimize-skill-ships-with-its-own-n-of-2-stated",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:optimize-skill"
     },
     {
       "edge_type": "CHANGED",
@@ -34107,6 +34196,12 @@
       "from_id": "dec:idea-backlog-belongs-in-the-graph",
       "properties": {},
       "to_id": "snap:epoch:backlog-retired:dec:idea-backlog-belongs-in-the-graph"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-can-exhaustive-per-subsystem-tests-be-derived-rather-than-imagined",
+      "properties": {},
+      "to_id": "snap:epoch:the-co-change-experiment-is-run:dec:idea-can-exhaustive-per-subsystem-tests-be-derived-rather-than-imagined"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -80180,6 +80275,22 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:optimize-command",
+      "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:optimize-skill"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:optimize-skill",
+      "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:optimize-skill"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:orphan-attachment-test",
       "properties": {
         "completeness": "complete"
@@ -88261,6 +88372,28 @@
       }
     },
     {
+      "node_id": "art:optimize-command",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:2e77d869536dd2ec9b41412e8ced1f4516682f0c546a16a620b6219fb7dc6ff7",
+        "location": "getting-started/commands/optimize.md",
+        "name": "optimize.md",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:optimize-skill",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:d0b2e84e704cf9273df4bd8827e029a8205ffe8d5fa01078c358296c8c7ea9f1",
+        "location": "getting-started/skills/optimize/SKILL.md",
+        "name": "optimize/SKILL.md",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:orphan-attachment-test",
       "node_type": "Artifact",
       "properties": {
@@ -88876,7 +89009,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4e568b827100677a8c152776771780d9f36e6d4388059ab1e8ff44cd7f0391b0",
+        "checksum": "sha256:91b178074b3a1053f59932fd5c13139335078538356a73b7a6c5a6ad89e55082",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -88928,7 +89061,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:98a3e44742eb753247ba51122787bae5568b986b145fde8a643afac414b519a8",
+        "checksum": "sha256:1c3a2779a1848708582e8489463d54d4ae794d571a6b925b14a010364b727116",
         "granularity": "atomic",
         "location": "SKILLS.md",
         "name": "SKILLS.md",
@@ -91269,6 +91402,16 @@
         "provenance": "authored",
         "status": "planned",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:optimize-skill",
+      "node_type": "Capability",
+      "properties": {
+        "description": "A project can optimise one of its own modules against a target it wrote down FIRST — so the work has a condition under which it is finished, and leaves a measurement a later session can re-run.\n\nTHE 21st SERVED SKILL, and the first about improving something rather than describing it. Anthony, 2026-08-21: \"reflow2 is a tool for other projects... should we introduce an /optimize skill that any project could do on its modules?\"\n\nWHAT IT ACTUALLY CARRIES IS THE ORDER AND THE REFUSALS, not technique. Techniques belong to the project's own stack and reflow2 cannot supply them. It supplies: measure before forming an opinion and be willing to conclude NOTHING HERE; measure the product surface before the developer surface; find the cause by falsifiable experiment on a COPY; write the budget down BEFORE the code, derived rather than picked; re-measure against the BUDGET rather than the starting point and STOP when it is met; leave a guard asserting the STRUCTURE that makes the code fast rather than a wall-clock duration; and when a rule refuses the change, pay it in prose rather than weakening it.\n\nTHE THREE STEPS THAT EARNED THEIR PLACE each caught a real mistake in the two runs it was written from: a 14.8x speedup that was still over budget and would have shipped as a success; a duration gate that failed on suite contention and would have been fixed by raising the threshold, retiring it; and an architectural rule a cache quietly traded away, which cost one paragraph to pay honestly.\n\nIT DOES NOT WAIT FOR CONTRACTS. The first framing put optimisation after black boxes are identified. Measured: optimising needs a WALL, a TARGET and a MEASUREMENT, and both runs succeeded with the wall ABSENT because the other two were supplied. Gating on declared interfaces would withhold the cheapest return until the most expensive one is finished.\n\nHONEST LIMIT, WRITTEN INTO THE SKILL RATHER THAN OUT OF IT: the procedure has been run TWICE. skill_lint's OPTIMIZE_CONTRACT pins that admission alongside the nine other load-bearing clauses, so it cannot be quietly deleted once the skill feels established.",
+        "name": "A project can optimise a module against a budget written down first",
+        "provenance": "authored",
+        "status": "planned"
       }
     },
     {
@@ -94278,6 +94421,26 @@
       }
     },
     {
+      "node_id": "chg:baseline-644e32d36f68250d",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-21",
+        "name": "First baseline recorded: the artifact was registered without a checksum and nothing was compared",
+        "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:baseline-6569644bc3b4cba0",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-21",
+        "name": "First baseline recorded: the artifact was registered without a checksum and nothing was compared",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-689207db699d2712",
       "node_type": "ChangeEvent",
       "properties": {
@@ -95871,6 +96034,16 @@
       }
     },
     {
+      "node_id": "chg:option-d-was-built-as-a-tool-and-a-scoring-heuristic-was-abandoned",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Option (d) became a tool, and the scoring approach was measured and dropped",
+        "rationale": "Anthony chose (d) then (a). (d) was built as a reusable tool rather than a one-off script, because tests the design has never heard of is every project's problem.",
+        "summary": "link_tests.py attributes tests to components on a two-clause rule and refuses to guess at the rest."
+      }
+    },
+    {
       "node_id": "chg:orphan-decision-degree-zero",
       "node_type": "ChangeEvent",
       "properties": {
@@ -96621,6 +96794,16 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The nudge state distinguishes \"not installed here\" from \"cannot be installed here\" — a new NoHookForThisHarness variant read from the harness answer the installer now records"
+      }
+    },
+    {
+      "node_id": "chg:the-optimize-skill-ships-with-its-own-n-of-2-stated",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The optimize skill ships, with its n=2 stated in its own text",
+        "rationale": "Anthony asked for it after the procedure had been run twice by hand - once on the test suite (the schema parse cached, 41.3 ms -> 266 us, suite 191.8 s -> 96.5 s) and once on the product surface (the 26-48 s cold start, measured and deliberately left unfixed for want of a budget). He chose (c) then (a): run it again first, then write the skill.\n\nBoth runs are what the skill is made of, and its honest-limits section says so - steps 4, 6 and 7 each caught a real mistake, while steps 1, 2 and 3 are discipline generalised from two cases. skill_lint pins all ten clauses INCLUDING the n=2 admission, because every one of them is a clause a hurrying reader would happily drop: writing the budget first feels like ceremony when you can already see the fix, stopping under budget feels like leaving value on the table, and asserting structure instead of a duration is more work than a threshold.\n\nThe skill also contradicts the framing it was asked under, on purpose: it does NOT wait for black boxes to be identified, because both runs succeeded with no contract on the module.",
+        "summary": "A 21st served skill: optimise one module against a budget written down before the code changes."
       }
     },
     {
@@ -99278,7 +99461,7 @@
       "node_id": "dec:idea-can-exhaustive-per-subsystem-tests-be-derived-rather-than-imagined",
       "node_type": "Decision",
       "properties": {
-        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Nothing here is intent.\n\nANTHONY, 2026-08-21: \"now that we've developed the 9 subsystems of reflow2, can we work on coming up with more exhaustive tests for each subsystem? things like edge cases and identify failure modes and other tests.\"\n\n📌 FIRST, TWO CORRECTIONS OF FACT, both small and both worth having straight before anyone plans work against them. There are TEN subsystems, not nine. And one of them, `cmp:packaging`, carries a `cmp:` id at subsystem level with ZERO components under it — a naming and containment oddity that predates today and is not a defect anyone has been asked about yet.\n\n═══════════════════════════════════════════════════════════════════\n🛑🛑 THE FINDING: EXHAUSTIVE TESTS CANNOT BE DERIVED FROM THIS DESIGN TODAY, AND THE REASON IS ONE NUMBER\n═══════════════════════════════════════════════════════════════════\n\n    Capabilities:                          192\n    ... declaring their INPUTS:              3\n    ... declaring their OUTPUTS:             3\n    ... declaring a SIGNATURE:               0\n    Constraints (where a hard limit lives):  1\n\nEDGE CASES ARE DERIVED FROM THE BOUNDARIES OF AN INPUT DOMAIN. FAILURE MODES ARE DERIVED FROM WHAT AN OUTPUT PROMISES. With neither stated for 189 of 192 capabilities, both can only be IMAGINED — which is what 1376 hand-written tests already are, and they are good ones, but imagining more of them is not what \"exhaustive\" means. `dec:idea-stated-module-function-is-what-makes-failure-mode-testing-derivable` (Anthony, 2026-08-20) said this a day early and named the mechanism: `Capability.inputs`/`outputs` exist in the schema with NO typed tool, NO instruction and NO detector — the three-legged failure again.\n\n═══════════════════════════════════════════════════════════════════\n🛑 AND THE PER-SUBSYSTEM PICTURE IS NOT TRUSTWORTHY YET\n═══════════════════════════════════════════════════════════════════\n\n    subsystem              components   verifications\n    sys:coherence-loop         28            68\n    sys:agent-surface          25            31\n    sys:store                   2            16\n    sys:foundation              6            14\n    sys:time-history            6            14\n    sys:intake                  4             6\n    sys:vocabulary              2             6\n    cmp:packaging               0             4\n    sys:human-channel           2             2\n    sys:documentation           1             0\n\n    181 Verifications; 27 of them reach NO subsystem at all.\n    127 real test FILES on disk; 47 are pointed at by an Artifact.\n    ⇒ 80 TEST FILES THE DESIGN HAS NEVER HEARD OF.\n\n⭐ SO \"sys:documentation HAS ZERO VERIFICATIONS\" MAY WELL BE FALSE. With 80 of 127 test files unmodelled, a zero in that table is as likely to be a MODELLING gap as a TESTING gap — and acting on it would mean writing tests for something already tested while something genuinely bare stays quiet. **A detector that reports zero because it had nothing to run on reads exactly like one that ran clean**, and this table currently has that defect. Anything built on these counts should re-measure first.\n\n📌 AND THE OTHER AXIS IS STILL UNTOUCHED: 181 of 181 Verifications carry `kind: verification`. ZERO carry `validation`. reflow2 ships the built-right / right-thing split and has never once used it on itself. \"More exhaustive\" in the built-right direction is already 1376 tests deep; the axis with nothing on it at all is whether each subsystem does the RIGHT thing.\n\n═══════════════════════════════════════════════════════════════════\nTHE OPTIONS\n═══════════════════════════════════════════════════════════════════\n\n(a) DECLARE THE SHAPE OF THE FUNCTIONS, THEN DERIVE. Populate `inputs`/`outputs` on one subsystem's capabilities, and generate the edge cases from the input boundaries and the failure modes from the output promises. THE ONLY ROUTE ON WHICH \"EXHAUSTIVE\" MEANS SOMETHING CHECKABLE rather than something claimed. EXPENSIVE, and it needs all three legs built first (a typed tool, an instruction, a detector), because 3-of-192 is what two missing legs look like. Worth doing on ONE subsystem as a trial before committing to ten.\n\n(b) TEST AGAINST THE INTERFACES THAT ALREADY EXIST. 17 Interfaces, 13 carrying a spec — and a spec clause is a failure mode waiting to be written down: violate each clause in turn and assert the refusal. CHEAP AND AVAILABLE NOW. LIMIT, stated plainly: only 4 of the 10 subsystems publish an interface, and the other six present nothing because nothing consumes them. This covers 4 subsystems well and 6 not at all.\n\n(c) START FROM THE THIN ROWS — documentation, human-channel, packaging. Intuitive and probably WRONG as stated, for the reason above: the thin rows are where the MODEL is thinnest, which is not the same as where the TESTING is thinnest. Do not do this without re-measuring.\n\n(d) MAKE THE NUMBERS REAL FIRST. Map the 80 unmodelled test files to Verifications so the per-subsystem table stops being fiction. CHEAPEST OF ALL, mechanical, and it is what every other option's numbers depend on. It adds no tests — which is exactly the objection to it, and the answer is that it tells you where to add them.\n\n(e) THE VALIDATION AXIS. Ask, per subsystem, \"does this do the right thing?\" rather than \"does it do what it says?\" — 181 Verifications and not one of them asks it. Different question from the one he asked, and possibly the more valuable one, which is why it is here rather than left out.\n\n═══════════════════════════════════════════════════════════════════\nWHAT IS NOT KNOWN\n═══════════════════════════════════════════════════════════════════\nWhether declared inputs/outputs would actually yield tests nobody had thought of, or merely restate the ones already written. THAT IS MEASURABLE ON ONE SUBSYSTEM and is the honest gate on (a): declare the shape for `sys:vocabulary` or `sys:store` (2 components each, small enough to finish), derive the cases mechanically, and count how many were NOT already covered by the existing suite. If the answer is near zero, (a) is elaborate bookkeeping and should be dropped.",
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Nothing here is intent.\n\nANTHONY, 2026-08-21: \"now that we've developed the 9 subsystems of reflow2, can we work on coming up with more exhaustive tests for each subsystem? things like edge cases and identify failure modes and other tests.\"\n\n📌 FIRST, TWO CORRECTIONS OF FACT, both small and both worth having straight before anyone plans work against them. There are TEN subsystems, not nine. And one of them, `cmp:packaging`, carries a `cmp:` id at subsystem level with ZERO components under it — a naming and containment oddity that predates today and is not a defect anyone has been asked about yet.\n\n═══════════════════════════════════════════════════════════════════\n🛑🛑 THE FINDING: EXHAUSTIVE TESTS CANNOT BE DERIVED FROM THIS DESIGN TODAY, AND THE REASON IS ONE NUMBER\n═══════════════════════════════════════════════════════════════════\n\n    Capabilities:                          192\n    ... declaring their INPUTS:              3\n    ... declaring their OUTPUTS:             3\n    ... declaring a SIGNATURE:               0\n    Constraints (where a hard limit lives):  1\n\nEDGE CASES ARE DERIVED FROM THE BOUNDARIES OF AN INPUT DOMAIN. FAILURE MODES ARE DERIVED FROM WHAT AN OUTPUT PROMISES. With neither stated for 189 of 192 capabilities, both can only be IMAGINED — which is what 1376 hand-written tests already are, and they are good ones, but imagining more of them is not what \"exhaustive\" means. `dec:idea-stated-module-function-is-what-makes-failure-mode-testing-derivable` (Anthony, 2026-08-20) said this a day early and named the mechanism: `Capability.inputs`/`outputs` exist in the schema with NO typed tool, NO instruction and NO detector — the three-legged failure again.\n\n═══════════════════════════════════════════════════════════════════\n🛑 AND THE PER-SUBSYSTEM PICTURE IS NOT TRUSTWORTHY YET\n═══════════════════════════════════════════════════════════════════\n\n    subsystem              components   verifications\n    sys:coherence-loop         28            68\n    sys:agent-surface          25            31\n    sys:store                   2            16\n    sys:foundation              6            14\n    sys:time-history            6            14\n    sys:intake                  4             6\n    sys:vocabulary              2             6\n    cmp:packaging               0             4\n    sys:human-channel           2             2\n    sys:documentation           1             0\n\n    181 Verifications; 27 of them reach NO subsystem at all.\n    127 real test FILES on disk; 47 are pointed at by an Artifact.\n    ⇒ 80 TEST FILES THE DESIGN HAS NEVER HEARD OF.\n\n⭐ SO \"sys:documentation HAS ZERO VERIFICATIONS\" MAY WELL BE FALSE. With 80 of 127 test files unmodelled, a zero in that table is as likely to be a MODELLING gap as a TESTING gap — and acting on it would mean writing tests for something already tested while something genuinely bare stays quiet. **A detector that reports zero because it had nothing to run on reads exactly like one that ran clean**, and this table currently has that defect. Anything built on these counts should re-measure first.\n\n📌 AND THE OTHER AXIS IS STILL UNTOUCHED: 181 of 181 Verifications carry `kind: verification`. ZERO carry `validation`. reflow2 ships the built-right / right-thing split and has never once used it on itself. \"More exhaustive\" in the built-right direction is already 1376 tests deep; the axis with nothing on it at all is whether each subsystem does the RIGHT thing.\n\n═══════════════════════════════════════════════════════════════════\nTHE OPTIONS\n═══════════════════════════════════════════════════════════════════\n\n(a) DECLARE THE SHAPE OF THE FUNCTIONS, THEN DERIVE. Populate `inputs`/`outputs` on one subsystem's capabilities, and generate the edge cases from the input boundaries and the failure modes from the output promises. THE ONLY ROUTE ON WHICH \"EXHAUSTIVE\" MEANS SOMETHING CHECKABLE rather than something claimed. EXPENSIVE, and it needs all three legs built first (a typed tool, an instruction, a detector), because 3-of-192 is what two missing legs look like. Worth doing on ONE subsystem as a trial before committing to ten.\n\n(b) TEST AGAINST THE INTERFACES THAT ALREADY EXIST. 17 Interfaces, 13 carrying a spec — and a spec clause is a failure mode waiting to be written down: violate each clause in turn and assert the refusal. CHEAP AND AVAILABLE NOW. LIMIT, stated plainly: only 4 of the 10 subsystems publish an interface, and the other six present nothing because nothing consumes them. This covers 4 subsystems well and 6 not at all.\n\n(c) START FROM THE THIN ROWS — documentation, human-channel, packaging. Intuitive and probably WRONG as stated, for the reason above: the thin rows are where the MODEL is thinnest, which is not the same as where the TESTING is thinnest. Do not do this without re-measuring.\n\n(d) MAKE THE NUMBERS REAL FIRST. Map the 80 unmodelled test files to Verifications so the per-subsystem table stops being fiction. CHEAPEST OF ALL, mechanical, and it is what every other option's numbers depend on. It adds no tests — which is exactly the objection to it, and the answer is that it tells you where to add them.\n\n(e) THE VALIDATION AXIS. Ask, per subsystem, \"does this do the right thing?\" rather than \"does it do what it says?\" — 181 Verifications and not one of them asks it. Different question from the one he asked, and possibly the more valuable one, which is why it is here rather than left out.\n\n═══════════════════════════════════════════════════════════════════\nWHAT IS NOT KNOWN\n═══════════════════════════════════════════════════════════════════\nWhether declared inputs/outputs would actually yield tests nobody had thought of, or merely restate the ones already written. THAT IS MEASURABLE ON ONE SUBSYSTEM and is the honest gate on (a): declare the shape for `sys:vocabulary` or `sys:store` (2 components each, small enough to finish), derive the cases mechanically, and count how many were NOT already covered by the existing suite. If the answer is near zero, (a) is elaborate bookkeeping and should be dropped.\n\n═══════════════════════════════════════════════════════════════════\n✅ ANTHONY CHOSE (d) THEN (a), 2026-08-21 — AND (d) WAS BUILT AS A TOOL, NOT A SCRIPT\n═══════════════════════════════════════════════════════════════════\n\n`tools/link_tests.py`, sibling of `wall_check.py`, zero configuration: it reads Artifact.location and REALIZES from the export and derives the test roots from the paths the design already claims. Built as a TOOL because **tests the design has never heard of is every project's problem**, not reflow2's chore (`rule:reflow2-is-built-for-other-projects-not-for-itself`).\n\nRESULT ON REFLOW2:\n    81 source files mapped to a component\n    127 test files found beside them; 80 the design has never heard of\n    40 attributable on the two-clause rule (35 not yet registered)\n    87 NOT attributed, all reported with the reason\n\n🛑 THE SCORING APPROACH WAS TRIED FIRST, MEASURED, AND ABANDONED — recorded because somebody will propose it again and it looks obviously right. Ranking components by how many of their uniquely-owned functions a test calls left **27 of 80 files with no dominant owner** and put `cmp:graph` at the top of most of the rest, because opening a graph is SETUP and not SUBJECT. Excluding functions used by more than a third of all test files (setup by usage, not by opinion) improved it to 52 clear / 27 ambiguous — still guessing on a third of the corpus. **A guessed mapping is worse than a missing one here: it makes the per-subsystem table LOOK complete while filing tests under the wrong part.** So the rule is narrow — filename matches a mapped source file AND the test calls a function that file defines — and everything else is reported unattributed WITH ITS REASON.\n\n⭐ A SECOND FINDING AROSE FROM THE SAME WORK AND IS ABOUT REFLOW2'S OWN ARCHITECTURE. Attributing a test to a module mechanically is HARD HERE because 43 of 54 core modules hang their functions off one shared `DesignGraph` struct (58 impl blocks). An import scan cannot see which module a test exercises, because the test calls `g.propose_heal()` and never names `heal`. That is the same god-struct property that limits what \"optimise one module at a time\" can reach — algorithms and query shape, yes; data representation, no.\n\n📌 STILL OPEN AND UNCHANGED BY THIS: whether declared inputs/outputs would yield tests nobody had thought of. (a) has not been started.",
         "name": "OPEN — can exhaustive per-subsystem tests be DERIVED, or only imagined? 3 of 192 capabilities state their shape",
         "status": "proposed"
       }
@@ -104390,6 +104573,16 @@
         "enforced": true,
         "name": "Per-design state never lives in a process-global",
         "statement": "STATE THAT BELONGS TO A DESIGN LIVES ON THE DESIGN HANDLE, NOT IN A `static`. cap:graph-registry names the metadata that must become per-graph rather than per-process; every new process-global that is secretly per-design adds another line to that migration. Legitimately process-wide state is fine and exists today — the seat registry and the serve-shared mode flag are facts about the PROCESS, not about a design. The test is not 'is it a static' but 'would this need a different value for a second design open in the same process'.\n\nENFORCED — Anthony, 2026-08-09, answering the enforcement question as it was put to him (gap:ba21fb8550a81e07, \"should the build have stopped them, or is that advice?\"): \"Split it: clause 1 enforced, clause 2 advice.\"\n\nWHY THIS HALF CAN CARRY ENFORCEMENT AND ITS SIBLING CANNOT — the whole reason the split happened, and it was MEASURED BEFORE THE DECISION RATHER THAN AFTER. A violation of this clause is mechanically visible, because a process-global is a declaration in the source. The codebase holds exactly three runtime process-globals, all in crates/reflow2-core/src/identity.rs: the process's own seat id (`seat_id`, line 357), the attached-seat registry (`ATTACHED_SEATS`, line 486), and the shared-mode flag (`SERVES_MANY_SESSIONS`, line 578). The last two are the ones this rule's own text already calls legitimately process-wide. So enforcement stops nothing today and costs nobody a build; what it stops is the FOURTH one — which is exactly the erosion this rule was written against, one convenient global at a time, invisible until the migration.\n\nWHAT THE CHECK ACTUALLY DETECTS, AND WHAT IT DOES NOT. ver:no-per-design-process-globals is an allowlist over runtime `static` / `OnceLock` / `OnceCell` / `thread_local!` declarations in the crates' `src` trees. It FAILS when a global appears that the allowlist does not name, so the cost of adding one is stating why it is not per-design. It CANNOT judge whether a struct field is correctly scoped: the per-design metadata that rides on `ReflowService` today (graph_path, write_gen, read_hint) is not a global and the check has nothing to say about it — that is cap:graph-registry's work, and its absence is planned, not a violation. A check that claimed otherwise would be the green-washing the governance skill warns about: attaching a passing check to silence a finding rather than to detect a fault.\n\nTHE CLAUSE THAT LEFT: \"a design is named by an id that resolves to a location — never a path\" is now rule:a-design-is-named-by-an-id-not-a-path, and it is ADVISORY. It was split out rather than dropped because the two clauses sit in opposite positions against the code — that one has no compliant surface today, so an honest detector would fail against the entire existing tool surface, and the only ways to make it pass would be to block everything or to attach a check that proves nothing.\n\nEVIDENCE, 2026-08-09, from Anthony's question about running reflow2 behind a web app at 1k / 100k / 1M tenants (dec:idea-a-hosted-tier-of-many-single-writer-tenants). This costs nothing today and is expensive to retrofit, and the failure mode is erosion rather than a decision. reflow2's own design measured 1,828 nodes = 3.8 MB export vs 33 MB store, which is what makes hold-many-designs-per-process the architecture rather than an option.\n\nWHAT IT DOES NOT SAY: nothing about WHERE a design is stored, nothing about hosting, and nothing that requires the registry to be built. It only keeps the door open."
+      }
+    },
+    {
+      "node_id": "rule:reflow2-is-built-for-other-projects-not-for-itself",
+      "node_type": "DesignRule",
+      "properties": {
+        "category": "methodology",
+        "enforced": false,
+        "name": "Self-hosting is the proof of concept; the product is the point",
+        "statement": "ANTHONY, RESTATED 2026-08-21 AND HIS OWN FRAMING BOTH TIMES: \"as I state quite often, using reflow2 on reflow2 is our first proof of concept; however, reflow2 is a tool for other projects.\" Earlier, 2026-08-18 and again 2026-08-20: \"the goal is never to do things just for reflow2. That would be like building a wrench (a tool) just to build a tool. Tools are designed to be used elsewhere.\"\n\nTHREE STATEMENTS ACROSS FOUR DAYS. He does not repeat himself for emphasis; he repeats himself when the pull the other way is real, and it is — reflow2's own graph is the nearest, richest, most convenient thing to work on, and every finding in it is genuinely interesting.\n\nWHAT THE RULE BINDS, and it is not \"stop self-hosting\". Self-hosting is the proof of concept and it produces the evidence. What it binds is the READING of that evidence: **a finding about reflow2's own design is data about the PRODUCT, and the work it justifies is the work that reaches an arbitrary project.** \"reflow2's graph has 145 unlinked ideas\" is only worth acting on because every project's graph will look like that; the fix belongs in a served skill, a typed tool and a detector, not in a tidy-up of this one graph.\n\n⭐ THE TEST THAT MAKES IT OPERATIONAL, and it is cheap: ask `find_tools` the question a USER would ask, in their own words, with no reflow2 nouns in it. If the best match is wrong, or the discoverable sequence causes a defect, the product has the gap — regardless of how easily the same thing was done here by hand. Two that landed on 2026-08-20: \"does my declared decomposition match the real coupling?\" returned `set_interface_designation` as the best of 152 tools, while the session's actual finding came from a hand-written Python script; and \"move a component to a different parent\" returned `contain_component`, which ADDS a parent and never removes the old one — the discoverable sequence CAUSES the multiple-parents defect.\n\n📌 ADVISORY, NOT GATE-BLOCKING, and stated rather than defaulted. Nothing can mechanically check whether a piece of work was done for reflow2's sake or for the product's; asserting `enforced` would bill a detector nobody can write. It is a rule for judgement, and its enforcement is that Anthony says it again when it slips.\n\nRELATED BUT DIFFERENT: `rule:the-self-host-always-trails-what-it-teaches` is about LAG — reflow2's own design will always contain the class of defect it is about to learn to catch. That one says a gap here is not an indictment. This one says a gap here is not the point either — the point is what an arbitrary project gets.\n\n📌 RECORDED 2026-08-21 because until now this instruction existed ONLY in one agent's private memory file, which no other agent and no person reads. That is precisely the failure this skill exists to catch: a standing rule that would be lost the moment a different session picked up the work."
       }
     },
     {
@@ -111981,6 +112174,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:the-co-change-experiment-is-run:dec:idea-can-exhaustive-per-subsystem-tests-be-derived-rather-than-imagined",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"EVOLVES_INTO\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-stated-module-function-is-what-makes-failure-mode-testing-derivable\",\"properties\":{\"evidence\":\"Anthony asked the same question a day apart - 2026-08-20 'if we can modularize reflow2 and know which functions that each module is supposed to perform, we can then do more encompassing testing (what are the edge cases, what are the failure modes)', and 2026-08-21 'more exhaustive tests for each subsystem'. The earlier node named the mechanism; this one carries the measurement of how far off it is - 3 of 192 capabilities state their shape. Same thought, grown up.\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-21\",\"role\":\"author\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Nothing here is intent.\\n\\nANTHONY, 2026-08-21: \\\"now that we've developed the 9 subsystems of reflow2, can we work on coming up with more exhaustive tests for each subsystem? things like edge cases and identify failure modes and other tests.\\\"\\n\\n📌 FIRST, TWO CORRECTIONS OF FACT, both small and both worth having straight before anyone plans work against them. There are TEN subsystems, not nine. And one of them, `cmp:packaging`, carries a `cmp:` id at subsystem level with ZERO components under it — a naming and containment oddity that predates today and is not a defect anyone has been asked about yet.\\n\\n═══════════════════════════════════════════════════════════════════\\n🛑🛑 THE FINDING: EXHAUSTIVE TESTS CANNOT BE DERIVED FROM THIS DESIGN TODAY, AND THE REASON IS ONE NUMBER\\n═══════════════════════════════════════════════════════════════════\\n\\n    Capabilities:                          192\\n    ... declaring their INPUTS:              3\\n    ... declaring their OUTPUTS:             3\\n    ... declaring a SIGNATURE:               0\\n    Constraints (where a hard limit lives):  1\\n\\nEDGE CASES ARE DERIVED FROM THE BOUNDARIES OF AN INPUT DOMAIN. FAILURE MODES ARE DERIVED FROM WHAT AN OUTPUT PROMISES. With neither stated for 189 of 192 capabilities, both can only be IMAGINED — which is what 1376 hand-written tests already are, and they are good ones, but imagining more of them is not what \\\"exhaustive\\\" means. `dec:idea-stated-module-function-is-what-makes-failure-mode-testing-derivable` (Anthony, 2026-08-20) said this a day early and named the mechanism: `Capability.inputs`/`outputs` exist in the schema with NO typed tool, NO instruction and NO detector — the three-legged failure again.\\n\\n═══════════════════════════════════════════════════════════════════\\n🛑 AND THE PER-SUBSYSTEM PICTURE IS NOT TRUSTWORTHY YET\\n═══════════════════════════════════════════════════════════════════\\n\\n    subsystem              components   verifications\\n    sys:coherence-loop         28            68\\n    sys:agent-surface          25            31\\n    sys:store                   2            16\\n    sys:foundation              6            14\\n    sys:time-history            6            14\\n    sys:intake                  4             6\\n    sys:vocabulary              2             6\\n    cmp:packaging               0             4\\n    sys:human-channel           2             2\\n    sys:documentation           1             0\\n\\n    181 Verifications; 27 of them reach NO subsystem at all.\\n    127 real test FILES on disk; 47 are pointed at by an Artifact.\\n    ⇒ 80 TEST FILES THE DESIGN HAS NEVER HEARD OF.\\n\\n⭐ SO \\\"sys:documentation HAS ZERO VERIFICATIONS\\\" MAY WELL BE FALSE. With 80 of 127 test files unmodelled, a zero in that table is as likely to be a MODELLING gap as a TESTING gap — and acting on it would mean writing tests for something already tested while something genuinely bare stays quiet. **A detector that reports zero because it had nothing to run on reads exactly like one that ran clean**, and this table currently has that defect. Anything built on these counts should re-measure first.\\n\\n📌 AND THE OTHER AXIS IS STILL UNTOUCHED: 181 of 181 Verifications carry `kind: verification`. ZERO carry `validation`. reflow2 ships the built-right / right-thing split and has never once used it on itself. \\\"More exhaustive\\\" in the built-right direction is already 1376 tests deep; the axis with nothing on it at all is whether each subsystem does the RIGHT thing.\\n\\n═══════════════════════════════════════════════════════════════════\\nTHE OPTIONS\\n═══════════════════════════════════════════════════════════════════\\n\\n(a) DECLARE THE SHAPE OF THE FUNCTIONS, THEN DERIVE. Populate `inputs`/`outputs` on one subsystem's capabilities, and generate the edge cases from the input boundaries and the failure modes from the output promises. THE ONLY ROUTE ON WHICH \\\"EXHAUSTIVE\\\" MEANS SOMETHING CHECKABLE rather than something claimed. EXPENSIVE, and it needs all three legs built first (a typed tool, an instruction, a detector), because 3-of-192 is what two missing legs look like. Worth doing on ONE subsystem as a trial before committing to ten.\\n\\n(b) TEST AGAINST THE INTERFACES THAT ALREADY EXIST. 17 Interfaces, 13 carrying a spec — and a spec clause is a failure mode waiting to be written down: violate each clause in turn and assert the refusal. CHEAP AND AVAILABLE NOW. LIMIT, stated plainly: only 4 of the 10 subsystems publish an interface, and the other six present nothing because nothing consumes them. This covers 4 subsystems well and 6 not at all.\\n\\n(c) START FROM THE THIN ROWS — documentation, human-channel, packaging. Intuitive and probably WRONG as stated, for the reason above: the thin rows are where the MODEL is thinnest, which is not the same as where the TESTING is thinnest. Do not do this without re-measuring.\\n\\n(d) MAKE THE NUMBERS REAL FIRST. Map the 80 unmodelled test files to Verifications so the per-subsystem table stops being fiction. CHEAPEST OF ALL, mechanical, and it is what every other option's numbers depend on. It adds no tests — which is exactly the objection to it, and the answer is that it tells you where to add them.\\n\\n(e) THE VALIDATION AXIS. Ask, per subsystem, \\\"does this do the right thing?\\\" rather than \\\"does it do what it says?\\\" — 181 Verifications and not one of them asks it. Different question from the one he asked, and possibly the more valuable one, which is why it is here rather than left out.\\n\\n═══════════════════════════════════════════════════════════════════\\nWHAT IS NOT KNOWN\\n═══════════════════════════════════════════════════════════════════\\nWhether declared inputs/outputs would actually yield tests nobody had thought of, or merely restate the ones already written. THAT IS MEASURABLE ON ONE SUBSYSTEM and is the honest gate on (a): declare the shape for `sys:vocabulary` or `sys:store` (2 components each, small enough to finish), derive the cases mechanically, and count how many were NOT already covered by the existing suite. If the answer is near zero, (a) is elaborate bookkeeping and should be dropped.\",\"name\":\"OPEN — can exhaustive per-subsystem tests be DERIVED, or only imagined? 3 of 192 capabilities state their shape\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-can-exhaustive-per-subsystem-tests-be-derived-rather-than-imagined",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:the-co-change-experiment-is-run:dec:idea-do-ideas-form-a-graph-or-only-a-list",
       "node_type": "Snapshot",
       "properties": {
@@ -115023,6 +115226,18 @@
       }
     },
     {
+      "node_id": "fact:the-first-store-read-of-a-session-costs-26-to-48-seconds",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "property",
+        "name": "The first store-touching call of a session costs 26-48 s; a full export of the same store costs 2.1 s",
+        "statement": "MEASURED 2026-08-21 while looking for something to optimise on the PRODUCT surface rather than the developer surface. This is the largest cost a user of reflow2 pays and nothing in the design mentioned it.\n\n    open_questions    70 s   <- the SessionStart hook instructs every agent to call this FIRST\n    loop_status       60 s   <- the server's own instructions call it \"the one cheap call\"\n    graph_report      34-40 s\n    detect_defects    33 s\n    detect_gaps        3.2 s\n    everything else  < 0.5 s\n\nTwo independent runs, consistent to within a second. **The call every session is told to make first costs a minute.**\n\n⭐ IT IS ONE COST, PAID ONCE, NOT A COST PER CALL. The first store-touching call of a process pays it; every call afterwards — including the first call of a DIFFERENT node type — returns in 0.01-3 s. `scan_nodes(node_type: Question, limit: 5)` took 47.9 s and returned 8 KB; the same call immediately after took 0.02 s.\n\n🛑 AND IT IS NOT THE DATA. A direct `--export`, which opens the store and reads every node and edge, takes **2.1 s** on the same 77 MB store. So the ~26-48 s is not RocksDB, not the volume, and not the disk.\n\nTWO HYPOTHESES WERE FALSIFIED FIRST, both on a COPY of the store rather than the live one, which made the experiments free:\n  (1) \"It is the 999 LOG.old.* files.\" With them 2.07 s, without them 2.10 s. Falsified in thirty seconds.\n  (2) \"It is a stale rendezvous left by --stop-shared.\" On a pristine copy with no daemon and no rendezvous the first read still cost **26.3 s**. So ~26 s is INHERENT cold start; the ~48 s seen on the live store had roughly 20 s of stale-record timeout on top.\n\n⭐⭐ THE DIAGNOSTIC THAT CRACKED IT, worth more than the finding: **47.91 s and 47.99 s across two runs is a TIMER, NOT WORK.** Real work varies with cache state and load; two runs agreeing to within 0.08 s means something is WAITING. That pointed at `READY_TIMEOUT` (30 s) and `RESPAWN_AFTER` (6 s) in shared.rs rather than at any algorithm.\n\nWHERE THE REMAINING ~24 s LIVES, narrowed but NOT PROVEN: the gap between `--export` at 2.1 s and daemon startup at 26 s is whatever the server does that the exporter does not. shared.rs names the candidate in its own comment — \"a cold daemon opens RocksDB and builds the full-text index, which on a large design is seconds, not milliseconds\". A `fulltext` directory exists in the store (1.6 MB, 14 files), so something is persisted; whether it is rebuilt anyway, or validated, was not established.\n\n📌 WHY NO TEST COULD HAVE FOUND THIS. The suite constructs graphs with `open_in_memory` and never opens the on-disk daemon path at all. 1393 tests pass in 96.5 s and not one of them touches the thing every real session waits a minute for. **The developer surface and the product surface were measured on the same day and were not the same system.**\n\n🅿️ DELIBERATELY NOT FIXED. No budget has been stated for it, and the `optimize` skill written the same day says the budget comes before the code. This node is the measurement half; the target is owed.",
+        "subject_id": "cap:graph-registry",
+        "valid_from": "2026-08-21"
+      }
+    },
+    {
       "node_id": "fact:the-five-project-census-2026-08-09",
       "node_type": "TemporalFact",
       "properties": {
@@ -117533,7 +117748,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:a5878cd5763e1269688164562ce609342677dd79e1a01ca0597139830bee5cad",
+  "prev_content_hash": "sha256:fb44966128dafd7d140c709ca9dfe235f6e0740cd052d30049b768e0b30c7ce9",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
