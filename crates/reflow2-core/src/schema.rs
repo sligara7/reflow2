@@ -38,13 +38,44 @@ pub const SCHEMA_DOMAINS: &[(&str, &str)] = &[
     ("readiness", include_str!("../../../schema/readiness.yaml")),
 ];
 
+/// The parsed schema, built once per process.
+///
+/// # Why this is cached
+///
+/// The eleven domains are `include_str!`'d at compile time, so their bytes are
+/// fixed for the life of the binary and parsing them twice cannot produce two
+/// different answers. It was nonetheless being done on EVERY graph
+/// construction, which made `open_in_memory` cost 41.3 ms against 54.7 µs for
+/// an ordinary write — construction was 750× a write, and it is setup rather
+/// than work (`con:graph-construction-is-setup-not-work`, the budget stated
+/// before this was touched).
+///
+/// The `Result` is cached rather than the `Schema`, so a malformed domain still
+/// fails loud on the first call and every call after it. Caching only the
+/// success path would turn a broken schema into a panic at an unrelated
+/// callsite.
+static PARSED_SCHEMA: std::sync::LazyLock<Result<Schema, String>> =
+    std::sync::LazyLock::new(|| {
+        let yamls: Vec<&str> = SCHEMA_DOMAINS.iter().map(|(_, yaml)| *yaml).collect();
+        Schema::from_multiple_yamls(&yamls).map_err(|e| e.to_string())
+    });
+
 /// Merge all 11 domains into one validated [`Schema`].
 ///
 /// Fails loud (returns [`DynoError`]) if any domain fails to parse or the
 /// merged schema fails validation — never a silently partial vocabulary.
+///
+/// Returns a CLONE of the process-wide parse. The clone is deliberate and not
+/// an oversight: `StorageEngine` takes the schema by value, and two graphs in
+/// one process must not share one. Cloning a parsed schema is a memcpy of a few
+/// hundred small structs; parsing eleven YAML documents is not.
 pub fn load_schema() -> Result<Schema, DynoError> {
-    let yamls: Vec<&str> = SCHEMA_DOMAINS.iter().map(|(_, yaml)| *yaml).collect();
-    Schema::from_multiple_yamls(&yamls)
+    match &*PARSED_SCHEMA {
+        Ok(schema) => Ok(schema.clone()),
+        // The message is re-wrapped rather than the original error moved,
+        // because a cached error has to be returnable more than once.
+        Err(message) => Err(DynoError::Schema(message.clone())),
+    }
 }
 
 /// One `default:` the schema declares, with the enum values it must belong to.

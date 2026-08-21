@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a5878cd5763e1269688164562ce609342677dd79e1a01ca0597139830bee5cad",
+  "content_hash": "sha256:fb44966128dafd7d140c709ca9dfe235f6e0740cd052d30049b768e0b30c7ce9",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2650,11 +2650,27 @@
     },
     {
       "edge_type": "ANTICIPATES",
+      "from_id": "fact:the-eight-subsystems-are-groupings-not-black-boxes",
+      "properties": {
+        "evidence": "That measurement found ZERO of eight subsystems providing an interface, with every interface provided by a leaf component one level down - subsystems as groupings rather than black boxes. Four subsystems have since gained a PROVIDES edge, so the count aged; the finding did not, because none of the four carries a contract. It predicted the shape of today's answer before the edges existed."
+      },
+      "to_id": "dec:idea-what-would-a-provided-contract-buy-substitution-derived-tests-or-a-mock"
+    },
+    {
+      "edge_type": "ANTICIPATES",
       "from_id": "fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it",
       "properties": {
         "evidence": "Capability.inputs and outputs are declared in the schema, have no typed tool, no instruction and no detector - and stand at 3 of 192. The three-legs fact predicted this population before anyone counted it here, and it is why option (a) cannot begin with the declaring."
       },
       "to_id": "dec:idea-can-exhaustive-per-subsystem-tests-be-derived-rather-than-imagined"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it",
+      "properties": {
+        "evidence": "A skill is the INSTRUCTION leg and nothing else. The tool leg exists here (add_constraint, budget_report) and the detector leg does not - nothing notices a project optimising with no budget, or a Constraint nobody ever measured against. The three-legs fact predicts that an instruction shipped alone leaves the vocabulary empty in every project, which is exactly what option (b) is for."
+      },
+      "to_id": "dec:idea-should-optimize-be-a-served-skill-any-project-can-run"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -5601,6 +5617,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:optimisation-is-the-fourth-return-and-the-white-box-half",
+      "properties": {},
+      "to_id": "epoch:the-co-change-experiment-is-run"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:orphan-decision-degree-zero",
       "properties": {},
       "to_id": "epoch:v0220"
@@ -7701,6 +7723,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-co-change-experiment-is-run:dec:idea-what-would-a-provided-contract-buy-substitution-derived-tests-or-a-mock",
+      "properties": {},
+      "to_id": "epoch:the-co-change-experiment-is-run"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:the-discipline-arrives-at-the-tool:epoch:the-philosophy-is-in-the-product",
       "properties": {},
       "to_id": "epoch:the-discipline-arrives-at-the-tool"
@@ -9512,6 +9540,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-optimize-be-a-served-skill-any-project-can-run",
+      "properties": {
+        "acted_at": "2026-08-21",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-should-propagate-change-separate-crossing-an-interface-from-a-component-dump",
       "properties": {
         "acted_at": "2026-08-14",
@@ -9765,6 +9802,15 @@
     {
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-what-watches-for-the-last-responsible-moment-to-arrive",
+      "properties": {
+        "acted_at": "2026-08-21",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-what-would-a-provided-contract-buy-substitution-derived-tests-or-a-mock",
       "properties": {
         "acted_at": "2026-08-21",
         "role": "author"
@@ -11724,6 +11770,33 @@
         "validation_status": "unvalidated"
       },
       "to_id": "dec:idea-a-gap-can-be-scheduled-into-an-increment-like-any-other-work"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-budget-is-what-makes-optimisation-stop",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-budget-is-what-makes-optimisation-stop",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-graph-construction-is-setup"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-budget-is-what-makes-optimisation-stop",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-no-per-design-globals"
     },
     {
       "edge_type": "CHANGED",
@@ -14724,6 +14797,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:baseline-09e42dc28449aaeb",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-schema-parsed-once"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:baseline-0da0e8c66a8d93bc",
       "properties": {
         "accepted_baseline": true,
@@ -14784,6 +14866,15 @@
         "action": "modified"
       },
       "to_id": "art:alex-grok-feedback-2026-08-14"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-23a6650df48c886f",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-graph-construction-is-setup"
     },
     {
       "edge_type": "CHANGED",
@@ -20068,6 +20159,15 @@
         "action": "modified"
       },
       "to_id": "art:verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:optimisation-is-the-fourth-return-and-the-white-box-half",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-what-would-a-provided-contract-buy-substitution-derived-tests-or-a-mock"
     },
     {
       "edge_type": "CHANGED",
@@ -26195,6 +26295,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-should-optimize-be-a-served-skill-any-project-can-run",
+      "properties": {
+        "evidence": "The whole argument that the skill has content rests on one observation from one run: the budget refused a 14.8x speedup as not-yet-done at 2.79ms, and released the work at 266us. That Constraint IS the evidence. If it turns out to be the only budget anyone ever writes, the skill is instructing people to do something nobody does, and this node should be revisited against that.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "con:graph-construction-is-setup-not-work"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-the-ility-chooses-the-allocation-graph",
       "properties": {
         "note": "if the ility chooses the graph, it also chooses WHEN the moment arrives",
@@ -26233,6 +26343,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:idea-is-allocation-running-ahead-of-the-seams"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-what-would-a-provided-contract-buy-substitution-derived-tests-or-a-mock",
+      "properties": {
+        "evidence": "All three returns - substitution, derived failure modes, mocks - need the shape of the function stated, and that capability is what writes it. It was built because inputs/outputs were UNWRITABLE at 0 of 170; the tool now exists and stands at 3 of 192. So the blocker moved from 'no tool' to 'no instruction and no detector', and nothing here can proceed until that is faced.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "cap:a-capability-states-what-it-takes-and-gives"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -27754,11 +27874,27 @@
     },
     {
       "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-a-black-box-owes-an-interface-the-way-a-capability-owes-a-requirement",
+      "properties": {
+        "evidence": "Anthony asked the same thing on 2026-08-20 - a defined black box should have an interface, MOSA is not possible without contracts. This node is that question with the per-subsystem measurement attached (0 of 10 publish a contract; required 9/9 specified, internal 0/4) and a THIRD return added that the earlier node does not name: mockable test doubles."
+      },
+      "to_id": "dec:idea-what-would-a-provided-contract-buy-substitution-derived-tests-or-a-mock"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
       "from_id": "dec:idea-stated-module-function-is-what-makes-failure-mode-testing-derivable",
       "properties": {
         "evidence": "Anthony asked the same question a day apart - 2026-08-20 'if we can modularize reflow2 and know which functions that each module is supposed to perform, we can then do more encompassing testing (what are the edge cases, what are the failure modes)', and 2026-08-21 'more exhaustive tests for each subsystem'. The earlier node named the mechanism; this one carries the measurement of how far off it is - 3 of 192 capabilities state their shape. Same thought, grown up."
       },
       "to_id": "dec:idea-can-exhaustive-per-subsystem-tests-be-derived-rather-than-imagined"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-what-would-a-provided-contract-buy-substitution-derived-tests-or-a-mock",
+      "properties": {
+        "evidence": "That node argued optimisation as the fourth return from a contract and measured the three things it needs - a wall, a target, a measurement. This node is the same thought after the procedure was actually RUN, and the run contradicts one part of it: optimisation succeeded with the wall ABSENT because the target and the measurement were supplied. The idea grew up by being executed."
+      },
+      "to_id": "dec:idea-should-optimize-be-a-served-skill-any-project-can-run"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -34013,6 +34149,12 @@
       "from_id": "dec:idea-the-ility-chooses-the-allocation-graph",
       "properties": {},
       "to_id": "snap:epoch:the-co-change-experiment-is-run:dec:idea-the-ility-chooses-the-allocation-graph"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-what-would-a-provided-contract-buy-substitution-derived-tests-or-a-mock",
+      "properties": {},
+      "to_id": "snap:epoch:the-co-change-experiment-is-run:dec:idea-what-would-a-provided-contract-buy-substitution-derived-tests-or-a-mock"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -80864,6 +81006,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-graph-construction-is-setup",
+      "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "ver:graph-construction-is-setup"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-init",
       "properties": {
         "completeness": "complete"
@@ -80926,6 +81076,14 @@
         "conformance": "unchecked"
       },
       "to_id": "ver:review-relations"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:test-schema-parsed-once",
+      "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "ver:graph-construction-is-setup"
     },
     {
       "edge_type": "REALIZES",
@@ -84580,6 +84738,12 @@
       "from_id": "ver:granularity",
       "properties": {},
       "to_id": "cap:granularity-observation"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:graph-construction-is-setup",
+      "properties": {},
+      "to_id": "con:graph-construction-is-setup-not-work"
     },
     {
       "edge_type": "VERIFIES",
@@ -88341,7 +88505,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fb7598e079f2dba81017a6229a0b67d07e44677f4f6eb6a8c0372e9c0386eeb2",
+        "checksum": "sha256:359d429829c3f59ccb4173b98b99dde17261700b8e674fb3fa73182085a94b1e",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/schema.rs",
         "name": "crates/reflow2-core/src/schema.rs",
@@ -88964,6 +89128,17 @@
       }
     },
     {
+      "node_id": "art:test-graph-construction-is-setup",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:2a2729f4077c0f08f966fde19d0313ab98cf5eade96305ab81eb62e4b3bb7dc8",
+        "location": "crates/reflow2-core/tests/graph_construction_is_setup.rs",
+        "name": "graph_construction_is_setup.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:test-init",
       "node_type": "Artifact",
       "properties": {
@@ -89007,7 +89182,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4a6daa9a696479a7f84646fcfbf1da7b3f8ad7d31a13ea2441f714b9e50bfc7a",
+        "checksum": "sha256:fb8d7c914c3e6a8440050d4f5a09b719072e90f12a40e65222dc6f24f9752757",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/no_per_design_process_globals.rs",
         "name": "no_per_design_process_globals.rs",
@@ -89047,6 +89222,17 @@
         "checksum": "sha256:23ce30979251fee34495cd72eeaa3f9cc070931eb20b1d2b0730a42fc55732ff",
         "location": "crates/reflow2-core/tests/review_relations.rs",
         "name": "review_relations.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:test-schema-parsed-once",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:e5d6934d9a4d09b62dfe3c6e3af603e1233fff8073bd740019f43f6d2cb03095",
+        "location": "crates/reflow2-core/tests/the_schema_is_parsed_once.rs",
+        "name": "the_schema_is_parsed_once.rs",
         "status": "realized"
       }
     },
@@ -91899,6 +92085,16 @@
       }
     },
     {
+      "node_id": "chg:a-budget-is-what-makes-optimisation-stop",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "performance_optimization",
+        "name": "A budget is what makes optimisation stop",
+        "rationale": "THE FIRST PERFORMANCE BUDGET THIS PROJECT HAS EVER STATED, and it was written BEFORE the code was touched, on purpose. `con:graph-construction-is-setup-not-work` (1 ms) was derived rather than picked: construction is setup, so a caller that builds a graph and does twenty writes should spend most of its time on the writes.\\n\\nTHE CAUSE, found by measuring rather than guessing: `open_in_memory` cost 41.3 ms against 54.7 us for an `add_capability` write - 750x - because `load_schema()` re-parsed and re-merged eleven include_str!'d YAML documents on every call, in a binary where those bytes are fixed at compile time.\\n\\nTHE FIX caches the parsed Result in a LazyLock. The Result and not the Schema, so a malformed domain still fails loud on every call; and `load_schema()` hands out a CLONE, because StorageEngine takes the schema by value and two graphs must not share one.\\n\\nWHAT THE BUDGET BOUGHT: the first re-measurement read 2.79 ms - a 14.8x speedup AND OVER BUDGET. Without a number written down beforehand that is exactly where the work stops. The warm figure was 266 us, under budget, so it stopped there - leaving the obvious next move (Arc instead of cloning, worth 252 of those 266 us) undone because it needs a dependency's API in another repo. A defensible stopping point at a repo boundary.\\n\\nTWO LESSONS FOUND BY DOING. (1) A DURATION ASSERTION IN A PARALLEL SUITE MEASURES CONTENTION: the first durable test asserted 5 ms, measured 266 us alone and 6 ms inside `cargo test --workspace`, and failed. The usual response - raise the threshold until it stops complaining - retires the gate without anyone deciding to. It now asserts a cold-versus-warm RATIO, which survives contention because both halves are slowed equally and which pins the thing that actually broke. AN OPTIMISATION GUARD SHOULD ASSERT THE STRUCTURE THAT MAKES CODE FAST, NOT THE TIME IT TAKES. (2) OPTIMISATION IS WHERE ARCHITECTURAL RULES GET TRADED AWAY: the LazyLock tripped `no_per_design_process_globals`, whose own words are 'the door closes one convenient static at a time, each individually reasonable'. Paying it cost one paragraph stating why a compile-time-embedded schema is a fact about the BINARY and not about any design.",
+        "summary": "The schema is parsed once per process instead of once per graph: construction 41.3ms -> 266us, suite 191.8s -> 96.5s."
+      }
+    },
+    {
       "node_id": "chg:a-capability-states-what-it-takes-and-gives",
       "node_type": "ChangeEvent",
       "properties": {
@@ -93906,6 +94102,16 @@
       }
     },
     {
+      "node_id": "chg:baseline-09e42dc28449aaeb",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-21",
+        "name": "First baseline recorded: the artifact was registered without a checksum and nothing was compared",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-0da0e8c66a8d93bc",
       "node_type": "ChangeEvent",
       "properties": {
@@ -93965,6 +94171,16 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-15",
         "name": "First baseline. Copied verbatim into the repo from Alex's upload so the location resolves for anyone reading the nodes it produced — the capture-intent rule that a requirement with no recorded source can only be traced back by asking a person."
+      }
+    },
+    {
+      "node_id": "chg:baseline-23a6650df48c886f",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-21",
+        "name": "First baseline recorded: the artifact was registered without a checksum and nothing was compared",
+        "subject": "record"
       }
     },
     {
@@ -95642,6 +95858,16 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "set_verification_status stops deleting last_run_at when the optional parameter is omitted — the convention three sibling setters already documented"
+      }
+    },
+    {
+      "node_id": "chg:optimisation-is-the-fourth-return-and-the-white-box-half",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Optimisation joins the contract argument as its fourth return",
+        "rationale": "His words 2026-08-21. Recorded as a change event so the sharpening of the idea node has a snapshot to stand against.",
+        "summary": "Anthony extends the contract brainstorm with optimisation - and rates it above substitutability."
       }
     },
     {
@@ -97904,6 +98130,20 @@
       }
     },
     {
+      "node_id": "con:graph-construction-is-setup-not-work",
+      "node_type": "Constraint",
+      "properties": {
+        "category": "technical",
+        "concern": "core",
+        "direction": "maximum",
+        "limit": 1.0,
+        "name": "Constructing a design graph costs under 1 ms",
+        "priority": "medium",
+        "quantity": "milliseconds to construct one DesignGraph",
+        "statement": "CONSTRUCTING A DESIGN GRAPH MUST COST NO MORE THAN 1 MILLISECOND.\n\nMEASURED BEFORE THE BUDGET WAS SET, 2026-08-21: 41.3 ms per `DesignGraph::open_in_memory()`, against 54.7 microseconds for an `add_capability` write. **Construction costs 750x a write.**\n\nWHY THIS NUMBER AND NOT A ROUND ONE. The budget is derived rather than picked: construction is SETUP, not work, so a caller that builds a graph and then does twenty writes should spend most of its time on the writes. Twenty writes is about 1.1 ms, so 1 ms is the point at which setup stops dominating the thing it is setting up. Anything tighter would be arbitrary; anything looser leaves the same defect with a smaller number on it.\n\nWHAT IT IS PROTECTING. `open_in_memory` calls `schema::load_schema()`, which parses ELEVEN embedded YAML documents and merges them, every single time. 103 test files construct graphs, several dozen times each; the suite's slowest file by cost-per-test (`edges_need_both_ends.rs`, 2.44 s per test against a 0.92 s median for an entire binary) builds roughly sixteen graphs per test and does almost nothing else.\n\n⭐ THE POINT OF WRITING THIS DOWN BEFORE OPTIMISING, which is the whole experiment: **a budget is what makes optimisation STOP.** Without one there is no condition under which the work is finished, so it ends when attention runs out — which is gold-plating with a performance label on it. With one, the question \"should I also cache X?\" has an answer that is not a matter of taste.\n\n📌 HONEST LIMITS. (1) This is a DEBUG-BUILD number on one machine; it is a budget for a ratio that happens to be expressed in milliseconds, not a portable performance guarantee. (2) It says nothing about the RocksDB path, which pays a real filesystem cost no caching removes. (3) reflow2 held no other performance budget — this is the first one the project has ever stated, and the design carried exactly ONE Constraint before it, which was a semantic limit rather than a budget."
+      }
+    },
+    {
       "node_id": "con:pairing-stops-at-the-boundary",
       "node_type": "Constraint",
       "properties": {
@@ -99821,6 +100061,15 @@
       }
     },
     {
+      "node_id": "dec:idea-should-optimize-be-a-served-skill-any-project-can-run",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Nothing here is intent.\n\nANTHONY, 2026-08-21: \"as I state quite often, using reflow2 on reflow2 is our first proof of concept; however, reflow2 is a tool for other projects. that being said, should we introduce an /optimize skill (that would occur after black boxes have been identified) that any project could do on its modules?\"\n\n⭐ THE UNUSUAL THING ABOUT THIS IDEA IS THAT THE PROCEDURE WAS ALREADY RUN ONCE, BY HAND, AN HOUR BEFORE HE ASKED. That is not a coincidence to note in passing — it is the only evidence available about whether the skill would have content, and it is first-hand rather than imagined.\n\nTHE RUN, in the order it actually happened:\n  1. MEASURED WHERE THE TIME WENT. 191.8 s across 127 test binaries. The worst thing was not the biggest file but the worst COST PER UNIT OF WORK — 2.44 s/test in one file against a 0.92 s median for a whole binary.\n  2. FOUND THE CAUSE BY MEASURING, NOT GUESSING. open_in_memory 41.3 ms vs an add_capability write at 54.7 us: construction cost 750x a write. Cause: eleven include_str!'d YAML documents re-parsed on every construction.\n  3. WROTE THE BUDGET DOWN BEFORE TOUCHING CODE. `con:graph-construction-is-setup-not-work`, 1 ms, derived rather than picked.\n  4. OPTIMISED. Cached the parse.\n  5. RE-MEASURED AGAINST THE BUDGET AND STOPPED. Suite 191.8 s -> 96.5 s.\n  6. MADE THE MEASUREMENT DURABLE.\n  7. PAID THE GUARDS THAT FIRED.\n\n═══════════════════════════════════════════════════════════════════\n⭐⭐ THE STEP THAT EARNED ITS PLACE: THE BUDGET MADE THE WORK STOP\n═══════════════════════════════════════════════════════════════════\n\nFirst re-measurement after the fix read 2.79 ms — a 14.8x speedup AND OVER BUDGET. Without a number written down beforehand, \"14.8x faster\" is exactly where optimisation stops and everyone feels good. The warm figure was 266 us, under budget, so the work stopped there — leaving the obvious next move (Arc instead of cloning the schema, which would recover 252 of those 266 us) UNDONE, because it needs a dependency's API in another repo. **The budget produced a defensible stopping point at a repo boundary.** That is the anti-over-engineering mechanism working, and it is the strongest argument that the skill has real content rather than being a checklist.\n\n═══════════════════════════════════════════════════════════════════\n🛑 TWO THINGS BIT DURING THE RUN, AND BOTH BELONG IN THE SKILL\n═══════════════════════════════════════════════════════════════════\n\n(1) **A DURATION ASSERTION IN A PARALLEL SUITE MEASURES CONTENTION, NOT CODE.** The first durable test asserted \"a warm construction takes under 5 ms\". Alone: 266 us, comfortable. Inside `cargo test --workspace` with dozens of binaries competing: **6 ms, and the gate failed.** The usual response is to raise the threshold until it stops complaining, which RETIRES THE GATE WITHOUT ANYONE DECIDING TO. The fix was to assert a RATIO — cold construction versus warm — which survives contention because both halves are slowed equally, and which asserts the thing that actually broke: the parse happening once. ⇒ **AN OPTIMISATION GUARD SHOULD ASSERT THE STRUCTURE THAT MAKES THE CODE FAST, NOT THE TIME IT TAKES.** Time is a property of the machine as much as of the program.\n\n(2) **THE OPTIMISATION TRIPPED A DESIGN RULE, AND PAYING IT WAS ONE PARAGRAPH.** Caching the parse in a `LazyLock` is a process-global, and `no_per_design_process_globals` refused it. That test's own words: *\"the door closes one convenient static at a time, each individually reasonable.\"* Mine was one of those. The rule's question — would a second design open in this process need a different value? — had a clean answer (the YAML is compiled in; it is a fact about the BINARY), and the cost of the global was stating it. ⇒ **OPTIMISATION IS WHERE ARCHITECTURAL RULES GET QUIETLY TRADED AWAY FOR SPEED**, one reasonable exception at a time, and a skill that does not say so is missing the thing most worth saying.\n\n═══════════════════════════════════════════════════════════════════\n🛑 AND HIS PRECONDITION IS THE PART I WOULD PUSH BACK ON\n═══════════════════════════════════════════════════════════════════\n\nHe frames it as occurring AFTER black boxes have been identified. Measured earlier today, optimising one module needs THREE things and the contract is only one:\n  (i)   a WALL, so a change inside cannot leak out       — 0 of 10 subsystems publish a contract\n  (ii)  a TARGET, so you know when to stop                — 1 Constraint before today, and not a budget\n  (iii) a MEASUREMENT, so you can tell if you improved it — no benches, no criterion, not one Instant::now()\n\n**AND THE RUN ABOVE HAPPENED WITH (i) ABSENT.** No contract existed for the module optimised, and the work was still correct, bounded and successful — because (ii) and (iii) were supplied. You CANNOT optimise with a wall and no measurement; you can only change things and believe you improved them. So the skill does NOT need to wait for black boxes, and gating it on them would withhold the cheapest of the three returns until the most expensive one is finished. ⇒ **THE PRECONDITION IS A TARGET AND A MEASUREMENT, NOT A CONTRACT.** A contract makes optimisation SAFER (a change that leaks is caught); it does not make it possible.\n\n═══════════════════════════════════════════════════════════════════\nTHE OPTIONS\n═══════════════════════════════════════════════════════════════════\n\n(a) A SERVED `optimize` SKILL, gated on a target and a measurement rather than on black boxes. Its content is the ORDER and the REFUSALS, not the technique: measure before guessing; write the budget BEFORE the code; re-measure against the budget rather than against the old number; assert structure not duration; and when a rule refuses your change, pay it in prose rather than weakening it. CHEAPEST, and it is the leg reflow2 is best at. HONEST LIMIT: **ONE RUN IS NOT A PROCEDURE.** Everything above came from a single optimisation, in Rust, on a test suite, on one machine. A skill generalised from n=1 is a story about one afternoon wearing the costume of a method.\n\n(b) THE THIRD LEG FIRST — a detector. `Constraint` + `budget_report` is the TOOL leg and it exists; a skill would be the INSTRUCTION leg; nothing notices a project that has optimised without a budget, or a Constraint nobody ever measured against. Candidate finding: *a Constraint with no contribution recorded* — a budget stated and never checked, which is the shape a target takes when it decays into decoration.\n\n(c) DO NOTHING YET, AND RUN IT AGAIN FIRST. Optimise a second thing — ideally in a different language, or on something that is not a test suite — and see which of the seven steps survive contact. The strongest argument for waiting is that the two lessons above were BOTH discovered by doing rather than by thinking, and a second run is the only way to find the third.\n\n(d) FOLD IT INTO AN EXISTING SKILL rather than minting a twenty-first. `check-health` and `impact-check` already run after a change. Cheapest on surface area; loses the thing that makes the procedure work, which is that it is a SEQUENCE with a step that must come first.\n\n═══════════════════════════════════════════════════════════════════\nWHAT IS NOT KNOWN\n═══════════════════════════════════════════════════════════════════\nWhether any of the seven steps is reflow2-specific. Step 1 needed cargo's per-binary timings parsed out of test output — a project with no such output would need something else entirely, and a skill cannot supply it. The GENERIC part may be only steps 3, 5 and 6 (state the budget, re-measure against it, make it durable), with steps 1, 2 and 4 being \"do the obvious thing for your stack\". If that is the whole content, it is a short skill — and possibly a better one for being short.",
+        "name": "OPEN — should `optimize` be a served skill? The procedure was run once by hand and two of its lessons were found by doing, not thinking",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-should-propagate-change-separate-crossing-an-interface-from-a-component-dump",
       "node_type": "Decision",
       "properties": {
@@ -100124,6 +100373,15 @@
       "properties": {
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony thinking out loud, 2026-08-21. Nothing here is intent.\n\nHIS WORDS: \"as we are still in development of reflow2, if we add another file, does it automatically get added (being proactive) to a black box or is this something I have to remember (being reactive)? as a user using reflow2 is designing a new project, when do functions get allocated to a black box? again, does reflow2 do this automatically or is it something the user kicks off?\" And: \"the point on a new project is you don't immediately allocate functions to a black box.\"\n\n⭐ THIS IS NOT A NEW POSITION — IT IS THE OPEN HALF OF ONE ALREADY ACCEPTED. dec:idea-allocation-waits-for-the-last-responsible-moment settled the PRINCIPLE on 2026-08-14: defer to the last responsible moment, per-capability scope with a project default, and never allocating is a LEGITIMATE TERMINAL STATE rather than a stalled process. What was never settled is WHAT NOTICES THE MOMENT.\n\n⭐⭐ AND THE COUNTER-ARGUMENT RECORDED BESIDE THAT RULING PREDICTED TODAY'S MEASUREMENT, WORD FOR WORD. It was flagged to him before he accepted, and he accepted with it open: \"artifacts get written against an assumed structure long before anyone calls allocate. If real files already embody a de facto allocation, then deferring the decision defers only the RECORD of it, and the graph arrives late to something the build already did... it argues the trigger should watch ARTIFACTS APPEARING rather than the allocate call.\" That was a worry seven days ago. It is now measured.\n\n=== WHAT WAS MEASURED, 2026-08-21, and it is an ASYMMETRY ===\n\nALLOCATION IS SEMI-AUTOMATIC, and this half works. `unallocated_capability` is a real gap source: capture a capability bound to nothing and it fires on every detect_gaps, appears in loop_status, survives sessions, and the Stop hook nudges when graph writes happen with no loop check. `propose_allocation` will suggest a placement without applying it. So: you capture, reflow2 notices and KEEPS noticing, it can suggest, you decide.\n\nA NEW FILE IS SEEN BY NOTHING. The CI gate builds its observation list by iterating THE ARTIFACTS THE DESIGN ALREADY KNOWS and never walks the disk; reconcile_artifacts does no file I/O at all, so the caller supplies what is looked at. `undocumented_addition` therefore exists as a drift kind THE GATE STRUCTURALLY CANNOT PRODUCE. Add a file, commit, push: every check stays green. The Stop hook does not fire either, because it triggers on GRAPH WRITES and adding a file is not one.\n\n⇒ REFLOW2 IS PROACTIVE ABOUT INTENT IT HOLDS AND BLIND TO REALITY IT DOES NOT. Every automatic mechanism reasons over the graph. The moment the question is \"what exists that I was never told about?\", nothing looks.\n\n⚠️ AND THE SAME BLIND SPOT WAS JUST FOUND IN THE INSTRUMENT: wall_check walked design-outward-to-files and could not report a file nobody registered, until it was taught to derive its walk roots from the claimed paths. The gate has the identical shape and has not been taught. That the same structural error appeared independently in the tool and the gate is the finding, not the coincidence.\n\n=== OPTIONS, NONE CHOSEN ===\n\n  (a) THE GATE SWEEPS THE ROOTS THE DESIGN ALREADY POINTS AT and reports files no Artifact claims. Smallest, needs no configuration, and is exactly what wall_check now does — the code exists. Turns 'I forgot' from invisible into a note. ⚠️ Whether it should turn the build RED is a governance question with an owner and must be asked, not assumed.\n  (b) MAKE ALLOCATION TIMING RECORDABLE — a date or basis on ALLOCATED_TO. This is the stated TRIGGER of dec:idea-is-allocation-running-ahead-of-the-seams, parked precisely because 156 ALLOCATED_TO edges carry only weight_basis and nothing dates an allocation. Taking it would unpark that question rather than only answering this one.\n  (c) A DE FACTO ALLOCATION DETECTOR: when an unclaimed file's neighbours all sit in one component, propose that component. Uses propose_allocation, which already exists and already refuses to apply itself. Strongest reach, and the most likely to propose something confidently wrong — imports are coupling, not intent.\n  (d) DO NOTHING; keep it human discipline. The honest option, and the status quo. It is what produced fifteen unmodelled modules and a missed skills_tools over a single day of development.\n\n=== COUNTER-ARGUMENT, BESIDE THE IDEA RATHER THAN AGAINST IT ===\n\nWatching artifacts appear risks re-introducing exactly what the last-responsible-moment ruling was FOR. If every new file prompts 'which black box does this belong to?', the design is pushed back toward allocating early — at the moment of writing a file, which is often earlier than the moment of knowing. The distinction that keeps both: NOTICING a file is unmodelled is not the same as DEMANDING it be allocated. The first is a fact about coverage; the second is a decision about structure. An option that conflates them would undo the ruling while appearing to implement it.\n\nRELATED AND ALREADY SETTLED: dec:idea-allocation-waits-for-the-last-responsible-moment (accepted). PARKED, AND THIS MAY BE ITS TRIGGER: dec:idea-is-allocation-running-ahead-of-the-seams.",
         "name": "OPEN — the last responsible moment is agreed, but what WATCHES for it to arrive? Today's measurement says nothing does, and a seven-day-old counter-argument predicted exactly that",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-what-would-a-provided-contract-buy-substitution-derived-tests-or-a-mock",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Nothing here is intent.\n\nANTHONY, 2026-08-21: \"does each of the 10 subsystems have a defined interface contract? this is probably related to the tests for each subsystem. I had mentioned at some point that it would be nice to able to swap out a module for another (related to MOSA), but that is only possible if you defined contracts for each module/subsystem. I also feel like if you have defined contracts, you could mock its behavior for testing purposes.\"\n\n═══════════════════════════════════════════════════════════════════\nTHE ANSWER TO THE DIRECT QUESTION: NO — ZERO OF TEN\n═══════════════════════════════════════════════════════════════════\n\nFOUR of the ten subsystems declare a provided interface at all. Of those four:\n  sys:foundation    -> ifc:core-api       spec = a 2026-07-28 note saying the old `medium: REST` was a schema default and wrong\n  sys:store         -> ifc:graph-export   spec = the same kind of correction note\n  sys:human-channel -> ifc:reasoning-channel   NO SPEC\n  sys:time-history  -> ifc:temporal-api        NO SPEC\n\nBoth \"specs\" are PROVENANCE CORRECTIONS. They are true and useful and they name no operation, no input and no output. **Not one subsystem publishes something you could substitute against or mock from.** The other six provide nothing.\n\n═══════════════════════════════════════════════════════════════════\n⭐⭐ THE ASYMMETRY IS THE FINDING, AND IT IS STRUCTURAL RATHER THAN LAZY\n═══════════════════════════════════════════════════════════════════\n\n    designation   count   with a substantive spec\n    required        9            9  of 9\n    published       4            2  of 4   (the other two are correction notes)\n    internal        4            0  of 4\n\nREFLOW2 HAS WRITTEN CAREFUL CONTRACTS FOR EVERYTHING IT DEPENDS ON AND ALMOST NONE FOR WHAT IT OFFERS. That is not an oversight anyone made; it is what happens by default. You specify what you CONSUME because you must know what to expect from someone else. You leave what you PROVIDE unspecified because you are on both sides of it and nothing ever forces the question. `internal` — module to module, exactly where a swap would happen — is 0 of 4.\n\n⭐ AND THIS IS PRECISELY WHAT BLOCKS BOTH THINGS HE NAMED. Substitution matches what a module OFFERS. A mock stands in for what a module offers its callers. Both need the PROVIDED side specified, and the provided side is the side nobody wrote.\n\n═══════════════════════════════════════════════════════════════════\n⭐ ONE MISSING THING, NOW TRACEABLY THREE RETURNS\n═══════════════════════════════════════════════════════════════════\n\n  1. SUBSTITUTABILITY / MOSA        — swap a module that meets the contract (2026-08-20)\n  2. DERIVABLE FAILURE-MODE TESTING — edge cases from input boundaries, failure modes from output promises (2026-08-20)\n  3. MOCKABLE TEST DOUBLES          — NEW TODAY, and the cheapest of the three to demonstrate\n\nAll three are blocked by the same gap, and the gap already has a number: 192 capabilities, 3 declaring inputs, 3 declaring outputs, 0 declaring a signature. `set_capability_signature` EXISTS and is verified — it was built precisely because the fields were unwritable at 0 of 170. It is now used on 3 of 192. **The TOOL leg is built. The INSTRUCTION and the DETECTOR are not.**\n\n📌 MOCKING IS THE SHARPEST ARGUMENT OF THE THREE and it is worth saying why. Substitutability is a someday benefit — nobody is swapping the store this quarter. Derivable tests are a maybe: it is still unmeasured whether declared inputs produce cases nobody had thought of. **A mock pays immediately and locally**: a test that stands `sys:store` up against a fake instead of a real RocksDB is faster, and it is the only way to test the failure modes of a dependency you cannot make fail on demand. It is also the return with the shortest path to proving the contract is REAL — a contract you can mock is one you have actually specified, and a mock that diverges from the real module is a contract violation you can detect.\n\n═══════════════════════════════════════════════════════════════════\n🛑 A REAL TENSION, RECORDED RATHER THAN RESOLVED\n═══════════════════════════════════════════════════════════════════\n\nEarlier reasoning held that six subsystems present nothing BECAUSE NOTHING CONSUMES THEM, and that declaring interfaces for symmetry would FABRICATE CONTRACTS — asserting an agreement no two parties ever made. That argument is good and it is still good.\n\nHis MOSA argument cuts the other way: a contract is what makes substitution possible, so it is needed whether or not anything consumes it TODAY. An interface nobody consumes is not a fiction if the point of writing it is that someone else could implement it.\n\n**BOTH ARE RIGHT ABOUT DIFFERENT THINGS.** The fabrication risk is real for a CONSUMES edge — that asserts a relationship. It is much weaker for a PROVIDES spec, which asserts only \"this is what I offer\", a statement the module can make alone and be held to. That distinction is not currently drawn anywhere, and drawing it may dissolve the tension entirely.\n\n═══════════════════════════════════════════════════════════════════\nTHE OPTIONS\n═══════════════════════════════════════════════════════════════════\n\n(a) SPECIFY ONE SUBSYSTEM'S PROVIDED CONTRACT AND MOCK IT. `sys:store` is the candidate: 2 components, it already provides `ifc:graph-export`, and it is the dependency most worth faking in a test (real RocksDB is the slowest thing in the suite). Write the spec, build a mock against it, and see whether the mock catches anything. SMALLEST THING THAT PROVES ALL THREE RETURNS AT ONCE, because a contract you can mock is one you have really written.\n\n(b) THE THREE LEGS FOR CAPABILITY SIGNATURES. Instruction plus detector for `inputs`/`outputs`, since the tool exists. Cheap, and it moves 3-of-192 rather than answering a question. It is the ENABLER for (a) at scale but proves nothing on its own — and building the legs before knowing the vocabulary earns its keep is how 189 empty fields happen twice.\n\n(c) DECLARE THE MISSING PROVIDED INTERFACES for the six silent subsystems. Directly answers his question. RISKS exactly the fabrication the earlier reasoning warns of, unless the provides-versus-consumes distinction above is settled first.\n\n(d) MEASURE WHETHER A CONTRACT WOULD HAVE CAUGHT ANYTHING. Take the last N real defects and ask how many a specified provided interface would have prevented or caught. Answers \"is this worth it\" before any of the above, and it is the option that could kill the whole line of work honestly.\n\nNOT KNOWN: whether reflow2's own architecture even permits module substitution. Nearly every function is an `impl DesignGraph` method on one shared struct — which is also why attributing a test to a module mechanically was so hard today. A design where everything hangs off one god-struct may be UNSWAPPABLE regardless of what contracts get written, and that is measurable before committing to any option here.\n\n═══════════════════════════════════════════════════════════════════\n⭐ EXTENDED 2026-08-21 — OPTIMISATION IS THE FOURTH RETURN, AND HE RATES IT ABOVE SUBSTITUTABILITY\n═══════════════════════════════════════════════════════════════════\n\nHIS WORDS: \"the other thing I'd like to do is optimize. I feel that this is much easier if you do this internal to a module and one by one. if you have a contract with other modules, then you can really focus only on the internals of your black box (I think technically this is a white box since you can see what's inside). you can optimize one module at a time. this is probably more important than being able to swap out a module for another, but still the same principle.\"\n\n📐 HIS TERMINOLOGY POINT IS CORRECT AND WORTH KEEPING. Black box and white box are the same element seen from the two sides of one contract. SUBSTITUTION is the black-box activity — you replace the inside and only the contract matters. OPTIMISATION is the white-box activity — you keep the contract and rework the inside. **They are duals across the same boundary, which is why one contract buys both.** The design carries `req:recursive-black-box-decomposition` (accepted) and has no complementary word for the other view; nothing breaks without one, but the pairing is worth naming because it explains why these two returns arrive together.\n\n═══════════════════════════════════════════════════════════════════\n🛑🛑 BUT A CONTRACT IS NECESSARY AND NOT SUFFICIENT, AND THE MEASUREMENT SAYS SO PLAINLY\n═══════════════════════════════════════════════════════════════════\n\nOptimising one module needs THREE things. The contract is only the first:\n\n  (i)   A WALL — so a change to the inside cannot leak out.\n        STATUS: 0 of 10 subsystems publish a contract (measured above).\n  (ii)  A TARGET — what \"better\" means, and when to stop.\n        STATUS: 1 Constraint in the entire design, and it is a SEMANTIC limit\n        (\"what complementary-pairing can ever catch\"), not a budget.\n        0 DimensionAssessments. **There is no stated performance target anywhere.**\n  (iii) A MEASUREMENT — so you can tell whether you improved anything.\n        STATUS: no benches directory, no criterion dependency, and not one\n        `Instant::now()` or `elapsed()` in any test or tool. **Nothing in this\n        repository measures how long anything takes.**\n\n⭐⭐ AND THE ORDERING IS THE OPPOSITE OF THE INTUITION IN HIS MESSAGE. You CAN optimise a module with no contract, given a target and a measurement — people do it every day; they just risk breaking a caller and finding out later. You CANNOT optimise with a contract and no measurement: you can only change things and believe you improved them. **So for OPTIMISATION the contract is the LEAST urgent of the three, even though for SUBSTITUTION it is the most urgent.** The two returns want the same contract but not in the same order, and doing contracts first because they serve both would put the cheapest missing piece last.\n\n📌 THIS IS ALSO WHERE HIS OWN OVER-ENGINEERING CONCERN BITES HARDEST. Optimising without a stated target is the definition of gold-plating: there is no condition under which you are finished, so the work ends when attention runs out. A budget is what makes optimisation STOP. `Constraint` + `budget_report` is exactly that machinery, built, and used once — on something that is not a budget.\n\n═══════════════════════════════════════════════════════════════════\n📐 AND ISOLATION IS PARTIAL HERE FOR A REASON THAT IS NOT ABOUT CONTRACTS\n═══════════════════════════════════════════════════════════════════\n\n    54 core modules\n    43 of them add methods to the SHARED `DesignGraph` struct (58 impl blocks)\n    42 of them DO define types of their own\n\nSo modules own their OUTPUT types and not their STATE. Every one reads the same store through the same accessors. That means the internals a module can freely rework are its ALGORITHMS, and the internals it cannot are its DATA REPRESENTATION — changing how detection stores or indexes anything touches everybody. **Which caps what \"optimise one module at a time\" can reach**: constant factors and query shape, yes; a different index or layout, no. A contract at the seam does not change that, because the coupling is through shared state rather than through the interface.\n\n⇒ A FIFTH OPTION FOR THE LIST ABOVE:\n\n(e) GIVE ONE MODULE A TARGET AND A MEASUREMENT, AND OPTIMISE IT. Pick the slowest thing in the suite, state a budget as a `Constraint`, measure it, improve it, and see whether the budget was what made the work stop. CHEAPEST OF ALL THE OPTIONS — it needs no contract, no schema change and no new vocabulary, and it exercises `Constraint` + `budget_report`, which stand at 1 use. It also produces the first performance number this project has ever had, which every other option here would eventually need.",
+        "name": "OPEN — zero of ten subsystems publish a contract. Would writing one buy substitution, derivable tests, a mock, or optimisation?",
         "status": "proposed"
       }
     },
@@ -111743,6 +112001,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:the-co-change-experiment-is-run:dec:idea-what-would-a-provided-contract-buy-substitution-derived-tests-or-a-mock",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"EVOLVES_INTO\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-a-black-box-owes-an-interface-the-way-a-capability-owes-a-requirement\",\"properties\":{\"evidence\":\"Anthony asked the same thing on 2026-08-20 - a defined black box should have an interface, MOSA is not possible without contracts. This node is that question with the per-subsystem measurement attached (0 of 10 publish a contract; required 9/9 specified, internal 0/4) and a THIRD return added that the earlier node does not name: mockable test doubles.\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-21\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-capability-states-what-it-takes-and-gives\",\"properties\":{\"evidence\":\"All three returns - substitution, derived failure modes, mocks - need the shape of the function stated, and that capability is what writes it. It was built because inputs/outputs were UNWRITABLE at 0 of 170; the tool now exists and stands at 3 of 192. So the blocker moved from 'no tool' to 'no instruction and no detector', and nothing here can proceed until that is faced.\",\"optional\":false,\"weight_basis\":\"estimated\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Nothing here is intent.\\n\\nANTHONY, 2026-08-21: \\\"does each of the 10 subsystems have a defined interface contract? this is probably related to the tests for each subsystem. I had mentioned at some point that it would be nice to able to swap out a module for another (related to MOSA), but that is only possible if you defined contracts for each module/subsystem. I also feel like if you have defined contracts, you could mock its behavior for testing purposes.\\\"\\n\\n═══════════════════════════════════════════════════════════════════\\nTHE ANSWER TO THE DIRECT QUESTION: NO — ZERO OF TEN\\n═══════════════════════════════════════════════════════════════════\\n\\nFOUR of the ten subsystems declare a provided interface at all. Of those four:\\n  sys:foundation    -> ifc:core-api       spec = a 2026-07-28 note saying the old `medium: REST` was a schema default and wrong\\n  sys:store         -> ifc:graph-export   spec = the same kind of correction note\\n  sys:human-channel -> ifc:reasoning-channel   NO SPEC\\n  sys:time-history  -> ifc:temporal-api        NO SPEC\\n\\nBoth \\\"specs\\\" are PROVENANCE CORRECTIONS. They are true and useful and they name no operation, no input and no output. **Not one subsystem publishes something you could substitute against or mock from.** The other six provide nothing.\\n\\n═══════════════════════════════════════════════════════════════════\\n⭐⭐ THE ASYMMETRY IS THE FINDING, AND IT IS STRUCTURAL RATHER THAN LAZY\\n═══════════════════════════════════════════════════════════════════\\n\\n    designation   count   with a substantive spec\\n    required        9            9  of 9\\n    published       4            2  of 4   (the other two are correction notes)\\n    internal        4            0  of 4\\n\\nREFLOW2 HAS WRITTEN CAREFUL CONTRACTS FOR EVERYTHING IT DEPENDS ON AND ALMOST NONE FOR WHAT IT OFFERS. That is not an oversight anyone made; it is what happens by default. You specify what you CONSUME because you must know what to expect from someone else. You leave what you PROVIDE unspecified because you are on both sides of it and nothing ever forces the question. `internal` — module to module, exactly where a swap would happen — is 0 of 4.\\n\\n⭐ AND THIS IS PRECISELY WHAT BLOCKS BOTH THINGS HE NAMED. Substitution matches what a module OFFERS. A mock stands in for what a module offers its callers. Both need the PROVIDED side specified, and the provided side is the side nobody wrote.\\n\\n═══════════════════════════════════════════════════════════════════\\n⭐ ONE MISSING THING, NOW TRACEABLY THREE RETURNS\\n═══════════════════════════════════════════════════════════════════\\n\\n  1. SUBSTITUTABILITY / MOSA        — swap a module that meets the contract (2026-08-20)\\n  2. DERIVABLE FAILURE-MODE TESTING — edge cases from input boundaries, failure modes from output promises (2026-08-20)\\n  3. MOCKABLE TEST DOUBLES          — NEW TODAY, and the cheapest of the three to demonstrate\\n\\nAll three are blocked by the same gap, and the gap already has a number: 192 capabilities, 3 declaring inputs, 3 declaring outputs, 0 declaring a signature. `set_capability_signature` EXISTS and is verified — it was built precisely because the fields were unwritable at 0 of 170. It is now used on 3 of 192. **The TOOL leg is built. The INSTRUCTION and the DETECTOR are not.**\\n\\n📌 MOCKING IS THE SHARPEST ARGUMENT OF THE THREE and it is worth saying why. Substitutability is a someday benefit — nobody is swapping the store this quarter. Derivable tests are a maybe: it is still unmeasured whether declared inputs produce cases nobody had thought of. **A mock pays immediately and locally**: a test that stands `sys:store` up against a fake instead of a real RocksDB is faster, and it is the only way to test the failure modes of a dependency you cannot make fail on demand. It is also the return with the shortest path to proving the contract is REAL — a contract you can mock is one you have actually specified, and a mock that diverges from the real module is a contract violation you can detect.\\n\\n═══════════════════════════════════════════════════════════════════\\n🛑 A REAL TENSION, RECORDED RATHER THAN RESOLVED\\n═══════════════════════════════════════════════════════════════════\\n\\nEarlier reasoning held that six subsystems present nothing BECAUSE NOTHING CONSUMES THEM, and that declaring interfaces for symmetry would FABRICATE CONTRACTS — asserting an agreement no two parties ever made. That argument is good and it is still good.\\n\\nHis MOSA argument cuts the other way: a contract is what makes substitution possible, so it is needed whether or not anything consumes it TODAY. An interface nobody consumes is not a fiction if the point of writing it is that someone else could implement it.\\n\\n**BOTH ARE RIGHT ABOUT DIFFERENT THINGS.** The fabrication risk is real for a CONSUMES edge — that asserts a relationship. It is much weaker for a PROVIDES spec, which asserts only \\\"this is what I offer\\\", a statement the module can make alone and be held to. That distinction is not currently drawn anywhere, and drawing it may dissolve the tension entirely.\\n\\n═══════════════════════════════════════════════════════════════════\\nTHE OPTIONS\\n═══════════════════════════════════════════════════════════════════\\n\\n(a) SPECIFY ONE SUBSYSTEM'S PROVIDED CONTRACT AND MOCK IT. `sys:store` is the candidate: 2 components, it already provides `ifc:graph-export`, and it is the dependency most worth faking in a test (real RocksDB is the slowest thing in the suite). Write the spec, build a mock against it, and see whether the mock catches anything. SMALLEST THING THAT PROVES ALL THREE RETURNS AT ONCE, because a contract you can mock is one you have really written.\\n\\n(b) THE THREE LEGS FOR CAPABILITY SIGNATURES. Instruction plus detector for `inputs`/`outputs`, since the tool exists. Cheap, and it moves 3-of-192 rather than answering a question. It is the ENABLER for (a) at scale but proves nothing on its own — and building the legs before knowing the vocabulary earns its keep is how 189 empty fields happen twice.\\n\\n(c) DECLARE THE MISSING PROVIDED INTERFACES for the six silent subsystems. Directly answers his question. RISKS exactly the fabrication the earlier reasoning warns of, unless the provides-versus-consumes distinction above is settled first.\\n\\n(d) MEASURE WHETHER A CONTRACT WOULD HAVE CAUGHT ANYTHING. Take the last N real defects and ask how many a specified provided interface would have prevented or caught. Answers \\\"is this worth it\\\" before any of the above, and it is the option that could kill the whole line of work honestly.\\n\\nNOT KNOWN: whether reflow2's own architecture even permits module substitution. Nearly every function is an `impl DesignGraph` method on one shared struct — which is also why attributing a test to a module mechanically was so hard today. A design where everything hangs off one god-struct may be UNSWAPPABLE regardless of what contracts get written, and that is measurable before committing to any option here.\",\"name\":\"OPEN — zero of ten subsystems publish a contract. Would writing one buy substitution, derivable tests, or a mock?\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-what-would-a-provided-contract-buy-substitution-derived-tests-or-a-mock",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:the-discipline-arrives-at-the-tool:epoch:the-philosophy-is-in-the-product",
       "node_type": "Snapshot",
       "properties": {
@@ -112167,6 +112435,18 @@
         "statement": "MEASURED ON THE v0.30.0 CUT, 2026-08-13, and it produced a WRONG COMMITTED RECORD that every other check passed.\n\nTHREE BINARY VERSIONS WERE IN PLAY ON ONE MACHINE:\n\n    live MCP server    0.29.0 image   (the session's own tools)\n    target/release/    0.28.0, Aug 11 (**what `tools/reflow2_cli.py`'s DEFAULT_BIN resolves to**)\n    target/debug/      0.30.0         (built minutes earlier, the only correct one)\n\nThe release procedure's replay exists precisely to avoid the live server's old stamp: import into a temp store, export from it with the NEW binary. I ran that replay and passed `C.DEFAULT_BIN`. **The committed export came back stamped `0.28.0` — with PERFECTLY CORRECT LINEAGE**, `prev_content_hash` equal to main's `content_hash`, 2144 nodes, 8447 edges, `graph_id: reflow2`. Every property anyone checks was right except the one that says which reflow2 wrote it. Caught only by reading `stamp.reflow2_version` out of the written file before committing.\n\n⭐⭐ AND THE EXISTING STALENESS CAPABILITY CANNOT SEE THIS, WHICH IS THE FINDING. `cap:the-server-knows-its-own-currency` reports whether **the server's own executable has been REPLACED SINCE IT STARTED** — `ver:the-server-says-when-it-is-stale` demonstrates it by relinking a binary under a running daemon and watching the same server flip to `stale: true`. A server freshly spawned from a THREE-VERSION-OLD build has had nothing replaced under it, so it reads a definite **`stale: false`** and is telling the truth.\n\n⇒ **\"MY EXECUTABLE CHANGED UNDER ME\" AND \"I AM AN OLD BUILD\" ARE DIFFERENT FACTS, AND ONLY THE FIRST IS DETECTED.** The second is the one that mis-stamps a release record, and it is undetectable from inside the server: the binary is internally consistent and confident. It is visible only by comparing the stamp against the version the SOURCE claims.\n\n📌 THE NARROW FIX IS FREE AND IS NOW IN [[reflow2-release-cut-procedure]]: name the freshly built binary explicitly in the replay, never `DEFAULT_BIN`, and READ `stamp.reflow2_version` OUT OF THE WRITTEN FILE BEFORE COMMITTING — every cut, every time.\n\n📌 THE WIDER ONE IS NOT TAKEN AND IS NOT OBVIOUS: whether `reflow2_cli.py` should refuse, or at least say, when the binary it is about to drive reports a version older than the workspace's `Cargo.toml`. That is a comparison the CLI can make and currently does not, and it is the same shape as every other finding in this increment — the information existed and did not reach the person.\n\n⚠️ STILL TRUE AT SESSION END: `target/release/reflow2-mcp` on this machine remains **0.28.0**. CI builds its own release artifacts, so the PUBLISHED v0.30.0 binaries are unaffected; anything local defaulting to that path is driving a three-version-old server.",
         "subject_id": "proj:reflow2",
         "valid_from": "2026-08-13"
+      }
+    },
+    {
+      "node_id": "fact:a-parse-that-shrinks-the-evidence-is-indistinguishable-from-honest-emptiness",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "property",
+        "name": "A parsing bug that silently shrinks the evidence reads exactly like an honest 'no evidence found' — the vacuous zero, one layer down in the input stage",
+        "statement": "MEASURED 2026-08-21, in a tool written the same hour. Kept because the SHAPE recurs, not the bug.\n\n`link_tests.py` attributes a test to a component only if the test calls a function that component's source defines. It reported that `crates/reflow2-core/tests/heal.rs` calls NOTHING `heal.rs` defines — a clean, plausible, honest-looking negative.\n\nTHE CAUSE WAS IN THE READER, NOT THE CODE READ. Before scanning, the tool strips string literals so prose can never become structure. It did so across the WHOLE FILE with one regex. Regex quote-pairing is greedy and positional: one unbalanced quote — a Rust raw string, an escaped quote, an apostrophe the comment pass missed — pairs with the next quote far below, and everything between is deleted. heal.rs went from dozens of visible `pub fn` definitions to ONE.\n\n⭐⭐ THE GENERAL FORM: **A PARSING BUG THAT SILENTLY SHRINKS THE EVIDENCE IS INDISTINGUISHABLE FROM AN HONEST \"NO EVIDENCE FOUND\".** Both print zero. Both look like the tool working. No error, no warning, no partial result to be suspicious of — the tool is MORE confident, not less, because it found a smaller world and searched all of it.\n\n📌 THIS IS THE VACUOUS ZERO ONE LAYER DOWN. The known form is \"a detector reporting zero because it had nothing to run on reads exactly like one that ran clean\" (req:the-tool-finds-its-own-blind-spots; loop_status already refuses an unknown contributor_id for this reason). The NEW form is that the emptiness can be manufactured by the tool's own INPUT STAGE, after which every downstream count is honest arithmetic over a corrupted set.\n\n🛠️ WHAT CAUGHT IT: not a test — a human-scale sanity check. \"heal.rs defines one function\" is absurd to anyone who has seen the file. Nothing mechanical was going to flag it, because the number was internally consistent everywhere it was used.\n\n⇒ THE PRACTICE THIS ARGUES FOR: a stage that REDUCES its input should report what it REMOVED, not only what survived. The fix was to strip line by line, which cannot span lines; the durable part is the named regression test, so the next person who simplifies it back to one regex meets the case.",
+        "subject_id": "req:the-tool-finds-its-own-blind-spots",
+        "valid_from": "2026-08-21"
       }
     },
     {
@@ -114340,6 +114620,18 @@
       }
     },
     {
+      "node_id": "fact:eight-capabilities-are-reported-built-on-the-strength-of-a-test-file",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "property",
+        "name": "Eight capabilities are reported BUILT with only a test file realizing them, so unrealized_capability reports clean over all of them",
+        "statement": "MEASURED 2026-08-21 while making the per-subsystem test numbers real. EIGHT Capabilities are reported BUILT on the strength of a TEST FILE and nothing else — the only Artifact with a REALIZES edge to them is a file under `tests/`: cap:detect (<- art:test-discontinued-is-read), cap:ingest, cap:artifact-declares-its-own-shape, cap:cycle-names-its-basis, cap:evidence-scope, cap:mirror-surface, cap:publish-surface, cap:search-first-at-the-tool.\n\n🛑 A TEST DOES NOT BUILD A CAPABILITY. It checks one. REALIZES from a test artifact asserts the file DELIVERS the capability, which is false for all eight — cap:detect is delivered by detect.rs; art:test-discontinued-is-read merely exercises it.\n\n⭐ THE CONSEQUENCE IS A SILENT DETECTOR, NOT AN UNTIDY EDGE. `unrealized_capability` fires on a Capability with no REALIZES. All eight have one, so all eight report CLEAN — and a capability with a test and NO IMPLEMENTATION would be indistinguishable from a finished one. The vacuous-zero shape again.\n\n📌 HOW IT SPREAD, which matters more than the count. 16 test files REALIZE a Capability directly; 31 REALIZE a Verification. The 16 are the RECENT ones, four of them created this week by this agent (move_component, delivery_kind, sweep_coverage, scheduling_a_question). Two conventions sit side by side, nothing distinguishes them, and the wrong one is winning because it is ONE EDGE SHORTER. Nobody chose it.\n\nTHE REMEDY, unbuilt and named so the finding does not only state a problem: a test artifact should REALIZE a Verification, and the Verification should VERIFY the capability. One more node, and it is the whole difference between \"this is built\" and \"this is checked\". A detector for `capability_realized_only_by_a_test` is what would stop the shorter path being taken again.",
+        "subject_id": "cap:detect",
+        "valid_from": "2026-08-21"
+      }
+    },
+    {
       "node_id": "fact:eighteen-declared-properties-nothing-has-ever-written",
       "node_type": "TemporalFact",
       "properties": {
@@ -116045,6 +116337,18 @@
       }
     },
     {
+      "node_id": "ver:graph-construction-is-setup",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Holds con:graph-construction-is-setup-not-work. Asserts a cold-versus-warm RATIO rather than a duration, because a duration threshold in a parallel test suite measures machine contention: the first version of this check read 266 us alone and 6 ms under `cargo test --workspace`, and failed. The ratio pins the structure that makes the code fast - the parse happening once - which is what actually broke and was actually fixed.",
+        "kind": "verification",
+        "level": "unit",
+        "method": "test",
+        "name": "Constructing a design graph is setup, and the schema is parsed once per process",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:handed-out-seat-liveness",
       "node_type": "Verification",
       "properties": {
@@ -117229,7 +117533,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e27c154e65ce06ba5f0aa1c09416e9585418649e3dd1bcc7c36a8df6dee485d6",
+  "prev_content_hash": "sha256:a5878cd5763e1269688164562ce609342677dd79e1a01ca0597139830bee5cad",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

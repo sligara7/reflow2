@@ -74,6 +74,22 @@ const ALLOWED: &[(&str, &str, &str)] = &[
          client is indistinguishable from stdio by any other means, which is why \
          the mode is declared rather than guessed. Cannot differ per design.",
     ),
+    (
+        "reflow2-core/src/schema.rs",
+        "PARSED_SCHEMA",
+        "The eleven schema domains, parsed once. This is a fact about the \
+         BINARY, not about a design: the YAML is `include_str!`'d at compile \
+         time, so its bytes are identical for every design this process will \
+         ever open, and parsing them twice cannot produce two different \
+         answers. Applying the rule's own question — would a second design open \
+         in this process need a different value? — the answer is no, and it \
+         cannot become yes without the schema being loaded from disk, which \
+         would be a different design decision arriving through a different \
+         door. Note what is NOT shared: `load_schema()` hands out a CLONE, \
+         because `StorageEngine` takes the schema by value and two graphs must \
+         not share one. The cache is the parse; the schema each design gets is \
+         its own.",
+    ),
 ];
 
 fn crates_dir() -> PathBuf {
