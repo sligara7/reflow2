@@ -31,6 +31,53 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.37.0] — 2026-08-21
+
+**Minor.** Two new served tools, one new schema property, and a changed result shape on
+`detect_defects`. Nothing removed; nothing renamed.
+
+The theme is the one the increment kept running into: **a report that cannot say what it did
+not look at is indistinguishable from a report that looked and found nothing.** Four of the
+items below are that same problem in different clothes.
+
+### Added
+- **`move_component(child_id, new_parent_id)`** — re-decomposition as an operation. Detaches
+  EVERY parent the component had (a Project parent included) and names them. An empty
+  `detached` means it was PLACED, not moved — a different fact, reported rather than folded
+  into success. `level_note` reports the level relation at the moment of the move rather than
+  in a later sweep; `history_note` names the `record_change` that preserves the previous parent.
+  Previously the only route was `contain_component`, which ADDS a parent and removes nothing,
+  so the discoverable path left the spine no longer a tree.
+- **`set_capability_delivery(capability_id, delivery)`** and **`Capability.delivery`**
+  (`artifact` | `model`; absent reads as `artifact`). Declares WHAT KIND of thing delivers a
+  capability — never whether it was delivered, which stays computed. Both kinds still require a
+  passing check. Work whose deliverable is a design change (a re-decomposition, a retirement, a
+  governance ruling) can now be reported delivered instead of sitting `outstanding` forever.
+- **`swept.rule_populations`, `swept.coupling_by_level` and `swept.coverage_note`** on
+  `detect_defects`. What each rule actually walked, how much coupling exists at each declared
+  decomposition level, and one line naming what the sweep could NOT have found. A rule can walk
+  a large healthy population and still be silent about the level you asked about.
+- **`tools/wall_check.py`** — holds a declared decomposition up against the real import graph of
+  the files the design points at. Needs no configuration on any project: `Artifact.location` and
+  `REALIZES` already say where the code is and which part owns it.
+
+### Changed
+- `arrival_delta` names `set_capability_delivery` when it reports an item as `outstanding` that
+  has a passing check but nothing on disk — and stays silent when there is no check, because
+  then the declaration would not help either.
+- `gap_to_prompt`'s instruction now says to match the reader's domain and keep their field's
+  vocabulary, dropping only reflow2's own internal terms. It previously said "for a
+  non-engineer, no systems-engineering jargon", contradicting the tool's own description.
+- `detect_defects`' description points at the three new `swept` fields.
+
+### Fixed
+- Three module cycles inside the crates, found by an adopt pass over reflow2's own source. A
+  module cycle inside one crate is legal Rust and compiles silently forever.
+- Two **subsystem** cycles that the module fix did not remove: the five-module kernel was
+  bisected by the declared decomposition, and `compare` reached into `report` for a two-line
+  lookup. The design-type list moved down to `nodes`, where it is made of `node::` constants.
+
+
 ## [0.36.0] — 2026-08-19
 
 **The whole increment came from one user's field reports.** reflow2's second user — running it on
