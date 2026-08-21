@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ca578b3d578d39e2262d33d104f852ecf2579e137741b91ad70720f3f86ffae6",
+  "content_hash": "sha256:72e57c6f41ee5fdbe03d091f77852e61da9af6556ca451e2cf558474f9751324",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -897,6 +897,30 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-cut-exports-the-record-once-from-the-new-binary",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:packaging"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-cut-is-read-from-the-design",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:packaging"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-cut-moves-every-version-claim-together",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:packaging"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:a-decision-can-be-created-already-settled",
       "properties": {
         "weight_basis": "estimated"
@@ -942,6 +966,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-release-that-shipped-nothing-is-reported",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:detect"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -6497,6 +6529,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:v0380-status-corrected-to-deployed",
+      "properties": {},
+      "to_id": "epoch:v0380"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:v050-as-released",
       "properties": {},
       "to_id": "epoch:v050-hardening"
@@ -8039,6 +8077,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:v0380:rel:v0380",
+      "properties": {},
+      "to_id": "epoch:v0380"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:wall-check-works-on-any-project:cap:a-declared-wall-is-checked-against-the-coupling-it-contains",
       "properties": {},
       "to_id": "epoch:wall-check-works-on-any-project"
@@ -8406,6 +8450,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:an-empty-manifest-on-a-shipped-release-stops-the-build",
+      "properties": {
+        "acted_at": "2026-08-21",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -10736,6 +10789,15 @@
         "role": "author"
       },
       "to_id": "who:storyflow-api-boss"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-release-that-shipped-says-what-it-shipped",
+      "properties": {
+        "acted_at": "2026-08-21",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -20943,6 +21005,78 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:release-without-manifest-detector",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:release-without-manifest-detector",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-cut-exports-the-record-once-from-the-new-binary"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:release-without-manifest-detector",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-cut-is-read-from-the-design"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:release-without-manifest-detector",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-cut-moves-every-version-claim-together"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:release-without-manifest-detector",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-release-that-shipped-nothing-is-reported"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:release-without-manifest-detector",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:release-pinned-to-time"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:release-without-manifest-detector",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "flow:release-cut"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:release-without-manifest-detector",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:a-release-that-shipped-says-what-it-shipped"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:remote-sessions",
       "properties": {
         "accepted_baseline": true,
@@ -23706,6 +23840,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:v0380-status-corrected-to-deployed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "rel:v0380"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:v050-as-released",
       "properties": {
         "accepted_baseline": true,
@@ -24036,6 +24179,17 @@
         "action": "modified"
       },
       "to_id": "req:version-combination-is-an-object"
+    },
+    {
+      "edge_type": "CLAIMS",
+      "from_id": "who:claude-code",
+      "properties": {
+        "claimed_at": "2026-08-21T18:10:00Z",
+        "depth": 2,
+        "note": "Building release_without_manifest — a detector for a Release that is pinned to an epoch and deployed yet includes nothing (the v0.38.0 empty-manifest defect), plus the release-cut Flow that satisfies req:a-project-records-how-it-ships.",
+        "seat": "asligar-bitecool:654288:fc683529"
+      },
+      "to_id": "cmp:detect"
     },
     {
       "edge_type": "CONSTRAINS",
@@ -28160,6 +28314,12 @@
       "from_id": "cap:a-finding-describes-the-walk-that-produced-it",
       "properties": {},
       "to_id": "dec:a-misnaming-is-fixed-in-the-message-not-the-key"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:a-release-that-shipped-nothing-is-reported",
+      "properties": {},
+      "to_id": "dec:an-empty-manifest-on-a-shipped-release-stops-the-build"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -34516,6 +34676,12 @@
       "from_id": "rel:v0210",
       "properties": {},
       "to_id": "snap:epoch:v0210:rel:v0210"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "rel:v0380",
+      "properties": {},
+      "to_id": "snap:epoch:v0380:rel:v0380"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -80920,6 +81086,78 @@
       "to_id": "env:dev"
     },
     {
+      "edge_type": "PART_OF_FLOW",
+      "from_id": "cap:a-cut-exports-the-record-once-from-the-new-binary",
+      "properties": {
+        "step_order": 6,
+        "weight_basis": "estimated"
+      },
+      "to_id": "flow:release-cut"
+    },
+    {
+      "edge_type": "PART_OF_FLOW",
+      "from_id": "cap:a-cut-moves-every-version-claim-together",
+      "properties": {
+        "step_order": 1,
+        "weight_basis": "estimated"
+      },
+      "to_id": "flow:release-cut"
+    },
+    {
+      "edge_type": "PART_OF_FLOW",
+      "from_id": "cap:a-release-that-shipped-nothing-is-reported",
+      "properties": {
+        "step_order": 8,
+        "weight_basis": "estimated"
+      },
+      "to_id": "flow:release-cut"
+    },
+    {
+      "edge_type": "PART_OF_FLOW",
+      "from_id": "cap:changelog-view",
+      "properties": {
+        "step_order": 2,
+        "weight_basis": "estimated"
+      },
+      "to_id": "flow:release-cut"
+    },
+    {
+      "edge_type": "PART_OF_FLOW",
+      "from_id": "cap:derived-release-manifest",
+      "properties": {
+        "step_order": 4,
+        "weight_basis": "estimated"
+      },
+      "to_id": "flow:release-cut"
+    },
+    {
+      "edge_type": "PART_OF_FLOW",
+      "from_id": "cap:release-pinned-to-time",
+      "properties": {
+        "step_order": 5,
+        "weight_basis": "estimated"
+      },
+      "to_id": "flow:release-cut"
+    },
+    {
+      "edge_type": "PART_OF_FLOW",
+      "from_id": "cap:release-publishes-a-container",
+      "properties": {
+        "step_order": 7,
+        "weight_basis": "estimated"
+      },
+      "to_id": "flow:release-cut"
+    },
+    {
+      "edge_type": "PART_OF_FLOW",
+      "from_id": "cap:stamp",
+      "properties": {
+        "step_order": 3,
+        "weight_basis": "estimated"
+      },
+      "to_id": "flow:release-cut"
+    },
+    {
       "edge_type": "PRECEDES",
       "from_id": "epoch:a-comparison-discloses-its-own-confound",
       "properties": {},
@@ -84155,6 +84393,24 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:a-cut-exports-the-record-once-from-the-new-binary",
+      "properties": {},
+      "to_id": "req:a-project-records-how-it-ships"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-cut-is-read-from-the-design",
+      "properties": {},
+      "to_id": "req:a-project-records-how-it-ships"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-cut-moves-every-version-claim-together",
+      "properties": {},
+      "to_id": "req:a-project-records-how-it-ships"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:a-declared-wall-is-checked-against-the-coupling-it-contains",
       "properties": {
         "coverage": "partial",
@@ -84197,6 +84453,12 @@
         "evidence": "One instance of an accepted requirement — get_skill's refusal. No new requirement was written for it, deliberately."
       },
       "to_id": "req:a-refusal-names-what-would-have-worked"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-release-that-shipped-nothing-is-reported",
+      "properties": {},
+      "to_id": "req:a-release-that-shipped-says-what-it-shipped"
     },
     {
       "edge_type": "SATISFIES",
@@ -86249,6 +86511,78 @@
       "to_id": "ifc:mcp-tools-http"
     },
     {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:a-cut-exports-the-record-once-from-the-new-binary",
+      "properties": {
+        "role": "feeds — the record is committed and merged, so the tag can go out. Branch, draft PR, CI green, merge, THEN tag on main"
+      },
+      "to_id": "cap:release-publishes-a-container"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:a-cut-moves-every-version-claim-together",
+      "properties": {
+        "role": "feeds — the new version number is the heading the changelog entry is written under"
+      },
+      "to_id": "cap:changelog-view"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:a-release-that-shipped-nothing-is-reported",
+      "properties": {
+        "role": "forces resync — an empty release_report sends the cut BACK to the derivation, to be re-run with apply: true. This is the v0.38.0 loop, and it stayed unrun because nothing closed it: the tag was already pushed before anyone read the object"
+      },
+      "to_id": "cap:derived-release-manifest"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:changelog-view",
+      "properties": {
+        "role": "feeds — the increment's changes are now known, so the stamp can answer whether an upgrade note is owed. Pin every ChangeEvent of the INCREMENT first, found by diffing ids against the previous tag's export rather than against memory: v0.22.0's changelog read 12 entries before that diff and 47 after, with unmapped empty both times"
+      },
+      "to_id": "cap:stamp"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:derived-release-manifest",
+      "properties": {
+        "role": "forces resync — a manifest that froze a PRE-BUMP checksum sends the cut back to accept the version drift first, then re-freeze. Budget one gate failure and a second export every time this order is got wrong"
+      },
+      "to_id": "cap:a-cut-moves-every-version-claim-together"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:derived-release-manifest",
+      "properties": {
+        "role": "feeds — the manifest exists and now needs a moment on the time axis. PASS apply: true; the default is a dry run and reports what it WOULD add"
+      },
+      "to_id": "cap:release-pinned-to-time"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:release-pinned-to-time",
+      "properties": {
+        "role": "feeds — every graph write is done, so the record can be exported. Creating the epoch node is NOT enough; the Release needs the AT_EPOCH edge, and v0.17.0 still lacks one"
+      },
+      "to_id": "cap:a-cut-exports-the-record-once-from-the-new-binary"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:release-publishes-a-container",
+      "properties": {
+        "role": "feeds — the published assets are verified off the release object, and now the DESIGN's record of what they contained is verified the same way. Both readings are of the authoritative object, never of the call that wrote it"
+      },
+      "to_id": "cap:a-release-that-shipped-nothing-is-reported"
+    },
+    {
+      "edge_type": "TRIGGERS",
+      "from_id": "cap:stamp",
+      "properties": {
+        "role": "feeds — documentation is settled, so the graph's record of what ships is next. An upgrade note is owed if and only if the stamp MOVED, and a new property does not move it: the stamp carries node and edge TYPE names"
+      },
+      "to_id": "cap:derived-release-manifest"
+    },
+    {
       "edge_type": "VALID_FROM",
       "from_id": "fact:bl-105",
       "properties": {},
@@ -86805,6 +87139,18 @@
       "from_id": "ver:a-refusal-names-its-own-fix",
       "properties": {},
       "to_id": "cap:cluster-claims"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-release-that-shipped-nothing-is-reported",
+      "properties": {},
+      "to_id": "cap:a-release-that-shipped-nothing-is-reported"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-release-that-shipped-nothing-is-reported",
+      "properties": {},
+      "to_id": "cap:release-pinned-to-time"
     },
     {
       "edge_type": "VERIFIES",
@@ -87813,6 +88159,24 @@
       "from_id": "ver:the-record-moved-is-surfaced",
       "properties": {},
       "to_id": "cap:the-record-moved-is-surfaced"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:the-release-cut-reads-back-whole",
+      "properties": {},
+      "to_id": "cap:a-cut-exports-the-record-once-from-the-new-binary"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:the-release-cut-reads-back-whole",
+      "properties": {},
+      "to_id": "cap:a-cut-is-read-from-the-design"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:the-release-cut-reads-back-whole",
+      "properties": {},
+      "to_id": "cap:a-cut-moves-every-version-claim-together"
     },
     {
       "edge_type": "VERIFIES",
@@ -90065,7 +90429,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:86fd3979a368061de3eb0d5f41a595901c9180472936f8374a652893eab21b84",
+        "checksum": "sha256:d7ef0e7023c0ee9d84040d28ef212d0854359b56b5dc4eade7d56b49f5c89df8",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -92296,6 +92660,36 @@
       }
     },
     {
+      "node_id": "cap:a-cut-exports-the-record-once-from-the-new-binary",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Step 6 of `flow:release-cut`, and it is last of the graph work because it is destructive of MCP access.\n\nONLY ONE COMMIT IN THE INCREMENT MAY TOUCH `docs/design/reflow2.json`. A squash keeps only the last `prev_content_hash`, so two exporting commits leave the chain pointing at an intermediate `main` never saw (BL-156). Fold with `git reset --soft`, then restore the file FROM `origin/main` — never from the branch, because `export_graph` builds `prev_content_hash` from whatever file is already at that path, and exporting over the branch's own copy chains to a document about to be amended out of existence.\n\nEXPORT DIRECTLY FROM THE REAL STORE WITH THE NEW BINARY. The temp-store replay route injects schema defaults the source never stated — 182 injected values on the v0.28.0 cut, and `export_via_binary.py` now prints its own refusal saying so. Free the lock (`fuser .reflow2/graph/LOCK`, `kill -TERM`), drive the freshly built binary over stdio, and call `export_graph` with a `path`; `--export` is stdout-only and a copied stdout export has no lineage at all.\n\nVERIFY THREE THINGS IN THE WRITTEN FILE before committing: `stamp.reflow2_version` is the new version, `prev_content_hash` equals main's `content_hash`, and injected-value counts are unchanged against the baseline.\n\nCOST: killing the server ends MCP tool access for the session, which is why every graph write happens before this step.",
+        "name": "A cut exports the design record exactly once, from the freshly built binary, chained from main",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-cut-is-read-from-the-design",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`flow:release-cut` — eight ordered steps with their TRIGGERS transitions, read back by `flow_report`. reflow2 dogfooding `cap:model-process` on itself: before 2026-08-21 this design contained ZERO Flow nodes, having shipped the vocabulary and never used it.\n\nWHY IT HAD TO BE RECORDED RATHER THAN COMPUTED. `dec:orientation-is-computed-not-written` refused a START-HERE file because orientation is derivable. Release steps are NOT derivable from the graph: which registry, which workflow, which credential, what the tag format is, which files carry a version claim. Those are facts about the world outside the design, and no projection can compute them. The same derivability test that forbade the one argues for this.\n\nWHAT IT REPLACES. The seven steps existed only in an agent's private session notes, recovered for the v0.19.0 cut from `git show v0.18.0` plus grepping AGENTS.md for \"release\". At least three were unguessable from the repo: the upgrade note is owed if and only if the schema stamp moved; the manifest must be complete rather than hand-typed; the Release needs an AT_EPOCH edge and creating the epoch node is not enough. Every one of those was learned by getting it wrong.\n\nTHE COST OF NOT HAVING IT, MEASURED: v0.17.0 shipped with no epoch edge and still lacks one; v0.19.0 repeated that four hours before `changelog_view` needed it; v0.20.0's export was stamped with the previous version; v0.22.0's changelog silently dropped 35 shipping changes; and v0.38.0 was published with an empty manifest. Five cuts, five different steps, each recorded only after it failed.\n\nDISTINCT FROM the requirement it satisfies: that obliges ANY design holding Releases to record how it ships, and is a general rule reflow2 may one day detect the absence of in a user's project. This is reflow2's own instance of complying with it — one Flow, about this repo's cut, naming this repo's registries and files. The requirement would still stand if this Flow were deleted.",
+        "name": "reflow2's own release procedure is recorded as a Flow, so a cut is read from the design rather than from the last one",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-cut-moves-every-version-claim-together",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Step 1 of `flow:release-cut`. The version is claimed in more places than one: `Cargo.toml`, `reflow2.toml`, `Cargo.lock` (via `cargo update -p reflow2-core -p reflow2-mcp --offline`), the upgrade-note list in `docs/overview.md`, and two spots in `AGENTS.md`. `tools/check_doc_versions.py` verifies the documentation half.\n\nTHE TRAP, AND IT COSTS A RETRY EVERY TIME IT IS MISSED: `reflow2.toml` IS a registered artifact (`art:dependency-manifest`), so bumping it drifts the coherence gate with a `checksum_change`. Accept that drift two-sided as `design_holds` with a note — the design meaning of a cut lives in the Release and its epoch, never in a version string — and accept it BEFORE the manifest is frozen. `release_includes_all` freezes each artifact's CURRENT checksum, so accepting afterwards records that the release shipped the pre-bump file. Accepting first is one step; accepting after is two plus a second export.\n\nALSO REBUILD THE BINARY AFTER THIS STEP. A schema stamp carries the version of the binary that wrote it, so exporting later with a pre-bump build stamps the OLD version. That is why v0.20.0's committed export said 0.19.0.",
+        "name": "A cut moves every version claim together, and accepts the drift it causes before freezing the manifest",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "cap:a-decision-can-be-created-already-settled",
       "node_type": "Capability",
       "properties": {
@@ -92371,6 +92765,16 @@
         "provenance": "authored",
         "status": "realized",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:a-release-that-shipped-nothing-is-reported",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`release_without_manifest`: a Release with an AT_EPOCH edge, at least one DEPLOYED_TO edge and zero INCLUDES edges raises a gap at **severity 0.85, which FAILS `reflow2_check`** (default `--gap-threshold` 0.8). Anthony's call, 2026-08-21 — `dec:an-empty-manifest-on-a-shipped-release-stops-the-build`. It sits with the findings that say the design asserts something untrue, not with the questions that wait for a human, because a note was demonstrably not enough: the v0.38.0 cut passed the gate green with 96 notes scrolling past it.\n\nKeys on structure and never on `status`, deliberately: rel:v0380 was tagged, published, deployed and asset-verified while its status still read `planned`, so a status-based exemption would have excused the single instance the rule exists for.\n\nGuarded against flooding the same way `unreleased_component` is: if NO release in the design carries a manifest, release contents are simply not modelled here, and that is one whole-graph fact rather than one alarm per release. Measured against reflow2's own 40 releases before it was written — zero false positives — and then proved live by stripping v0.37.0's 275 INCLUDES edges from a copy of the real design and watching the gate go red.\n\nA genuinely contentless release — a re-tag, a docs-only republish — stays acknowledgeable with a reason on the record. Red until somebody says why, never red forever.\n\nThe read half of the same capability: a cut ENDS by calling `release_report` for the new release and reading the counts. Hundreds of artifacts, components and capabilities is the healthy answer; `artifacts: []` means the manifest never landed. This is the eighth and last step of `flow:release-cut`.\n\nAlso hardened its sibling: `release_without_epoch` exempted any `planned` release, and now exempts one only while it is UNDEPLOYED — found by this detector's own tests. The sibling stays at 0.6 and stays a question, because which epoch a release belongs to is a judgement and its absence asserts nothing false.",
+        "name": "A release that is out and records shipping nothing stops the build, and a cut ends by reading it",
+        "provenance": "authored",
+        "status": "verified"
       }
     },
     {
@@ -98678,6 +99082,15 @@
       }
     },
     {
+      "node_id": "chg:release-without-manifest-detector",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "A release that is out and records shipping nothing is now reported, and the cut procedure it belongs to is in the graph instead of in one agent's notes. `release_without_manifest` fires on a Release with an epoch, a deployment and zero INCLUDES — the v0.38.0 shape, which every check that ran passed over. It never consults `Release.status`, because rel:v0380 was published while its status read `planned`, and the sibling `release_without_epoch` was hardened the same way after this rule's own tests caught it trusting that field. `flow:release-cut` records the eight steps and their two backward resync edges; it is this design's FIRST Flow node, dogfooding a capability shipped long ago and never used on itself.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:remote-sessions",
       "node_type": "ChangeEvent",
       "properties": {
@@ -99481,6 +99894,15 @@
       "properties": {
         "change_type": "refactor",
         "name": "Version strings bumped to 0.37.0 for the cut",
+        "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:v0380-status-corrected-to-deployed",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "Snapshot of rel:v0380 before its status is corrected from `planned` to `deployed`",
         "subject": "record"
       }
     },
@@ -100949,6 +101371,16 @@
         "decision": "EPIGRAPH — \"Two roads diverged in a wood, and I— / I took the one less traveled by, / And that has made all the difference.\" — Robert Frost, 'The Road Not Taken'. Aptly, the poem is itself a hindsight tale: the speaker concedes the two roads were worn 'really about the same' and foresees telling it 'with a sigh' ages hence — the difference is authored in retrospect, not known at the fork. That is this decision's whole bet: credit for a road taken is assigned in hindsight, by the human, never scored in advance. (Unofficially, 'the Robert Frost decision.')\n\nreflow2 holds every Decision's alternatives as UNRANKED, forkable siblings — not a scored trade-study runner-up. The design is modelled as a navigable decision-MDP: the graph is the world-model (propagate/detect/compare evaluate a fork's consequences before anything is built), branches are the replay, and the reward signal is two-channel — the structural detectors (in-model holes: SPOFs, cycles, gaps) plus field trials (out-of-model holes only a real episode reveals, e.g. BL-74's loop-on-virtue collapse). Alternatives are stored cheaply (the unchosen option + its rationale, at the decision's epoch) and their consequence design is COMPUTED on demand by forking that epoch and replaying — never eagerly maintained as N full parallel designs, which would combinatorially explode and rot as the main line moves on (a non-stationary design). Which fork to expand is chosen by where the surprise is — a fresh defect, a failed trial, or a rationale that already flags doubt points back to a decision (high 'TD error') — not by enumerating the whole tree. Crucially the human is the reward function and does the credit assignment and policy update; reflow2 supplies the replay buffer and the world-model but never auto-optimizes a design by replay-and-score.",
         "name": "Alternatives are unranked forkable siblings; the human judges in hindsight, not a stored score",
         "rationale": "User decided the ranked-vs-unranked scope 2026-07-22 after developing the idea across three framings — choose-your-own-adventure (the decision tree you can turn back to), Analysis of Alternatives (the runner-up kept live), and a reinforcement-learning gridworld (replay an episode until you cross without falling in a hole). Unranked over a scored AoA because reflow2 routes judgment to the human (dec:report-dont-judge, dec:three-party-checks): a stored ranking would be the system asserting a preference it cannot honestly hold, and design episodes are too few, too expensive and too subjective for a stationary reward anyway. Derived-over-stored (store the fork, compute the consequence) is reflow2's recurring lesson (dec:certainty-derived, dec:component-verified-computed) and the only defence against an eagerly-maintained alternative rotting under a moving main line. Model-based-planning-not-model-free-crashing is the whole point of a design brain: propagate_change computes the blast radius before you edit, so you simulate the hole instead of falling in it — but BL-74 proves some holes are out-of-model and only a field episode finds them. This unifies the branch (BL-70), merge (dec:merge-three-way / dec:merge-conflict-semantics — how a forked road comes home) and claims (BL-44) threads under one primitive: alternatives as first-class, forkable, comparable, mergeable. The hindsight pass that motivated it is the mechanism already working by hand — dec:merge-survivor-provenance carries a 'reconsider' note tracing a near-bad merge back to its own fork. Deferred to their own decisions: how an alternative attaches to a Decision in the schema, the fork/branch ref layer (BL-70), the 'when has an episode taught us enough to revise' trigger, and the tool surface.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:an-empty-manifest-on-a-shipped-release-stops-the-build",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "`release_without_manifest` is raised at severity 0.85, above `reflow2_check`'s default `--gap-threshold` of 0.8, so a Release that is pinned to an epoch, deployed, and includes nothing FAILS the gate rather than appearing as a note.\n\nIt joins the band of findings that say the design asserts something untrue — failing_verification 0.80, kpp_contradicted 0.85, kpp_unbound 0.90, kpp_breached 0.95 — rather than the band below it, which holds questions waiting for a human. Its sibling `release_without_epoch` stays at 0.6 and stays a question: WHICH epoch a release belongs to is a judgement, and nothing false has been asserted by the edge's absence.\n\nA genuinely contentless release — a re-tag, a docs-only republish — remains a real state. It is red until somebody acknowledges it with a reason on the record, never red forever.\n\nDISTINCT FROM the requirement it settles a question about: that says the state shall be REPORTED, and would be satisfied by a detector of any severity. This says how loud the report is, which is a separate choice with its own cost — a red build on a contentless release — and could be reversed without touching the requirement at all.",
+        "name": "DECIDED — a published release recording that it shipped nothing stops the build",
+        "rationale": "ANTHONY'S CALL, 2026-08-21, asked as a direct choice between stopping the build, staying a note at 0.65, and expressing it as a DesignRule carrying enforcement. He chose to stop the build.\n\nTHE EVIDENCE PUT TO HIM, AND IT IS THE WHOLE ARGUMENT: a note was already demonstrably not enough. The v0.38.0 cut passed `reflow2_check` GREEN with 96 notes scrolling past it, and that is exactly how a tag was pushed, built, published and asset-verified over an empty manifest. A finding nobody is made to read is not a finding.\n\nTHE COST WAS STATED BEFORE HE CHOSE: a release that really did ship no new content will red-build until acknowledged, which is one call with his reason attached.\n\nWHY NOT THE DESIGNRULE ROUTE, which was offered and not taken: it is the cleaner separation of \"how bad\" from \"does CI fail\", and it would have needed checking that the rule actually reaches `reflow2_check`. Left on the table rather than refuted — if severity ever has to be tuned for a reason unrelated to CI, that is the route back.\n\nTHE NUMBER IS NOT TUNED TO THE THRESHOLD. 0.85 sits above 0.80 with room, deliberately, so raising `--gap-threshold` one notch does not silently drop the rule out of the gate — the failure mode this whole line of work exists to prevent.",
         "status": "accepted"
       }
     },
@@ -107556,6 +107988,18 @@
       }
     },
     {
+      "node_id": "flow:release-cut",
+      "node_type": "Flow",
+      "properties": {
+        "description": "The ordered procedure for producing a reflow2 release, recorded so a cut is read from the design rather than reconstructed from the last one. Eight steps; read back with `flow_report`.\n\nORDER IS LOAD-BEARING IN THREE PLACES, and each was learned by getting it wrong:\n— Step 1 before step 4, because `release_includes_all` freezes each artifact's CURRENT checksum and the version bump drifts `reflow2.toml`.\n— The binary is rebuilt after step 1 and before step 6, because the export's schema stamp carries the version of the binary that wrote it.\n— Step 6 is last of the graph work, because exporting from the real store means killing the server and ending MCP access for the session.\n\nTAGGING AND PUBLISHING IS THIS PROJECT'S DEPLOY. It reaches other people's machines and cannot be recalled, so AGENTS.md makes it per-session: ask every time, however recently it was granted.\n\nWHAT THIS FLOW DOES NOT COVER: which of the release's contents are worth an increment at all. That is `dec:release-trigger` and the `plan-increments` skill, upstream of step 1.",
+        "entry_point": "cap:a-cut-moves-every-version-claim-together",
+        "exit_point": "cap:a-release-that-shipped-nothing-is-reported",
+        "flow_type": "process",
+        "name": "Cutting a reflow2 release",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "frag:alex-2026-08-14-env-kit-stamp",
       "node_type": "Fragment",
       "properties": {
@@ -110576,7 +111020,7 @@
       "node_type": "Release",
       "properties": {
         "name": "v0.38.0",
-        "status": "planned",
+        "status": "deployed",
         "unit_type": "binary",
         "version": "0.38.0"
       }
@@ -110935,6 +111379,18 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "WHEN A SERVED TOOL REFUSES AN ARGUMENT BECAUSE IT IS NOT ONE OF A FIXED SET, THE REFUSAL NAMES THE SET. The caller should not have to make a second call to learn what would have worked.\n\nTHE GAP THIS CLOSES. `parse_enum` — the single helper every enum argument on the served surface passes through — refused with `unknown change type: \"correction\"` and nothing else. No enumeration, no nearest match, no pointer to `describe_schema`. The caller is usually an AGENT MID-TASK, for whom a refusal that does not say what would have worked costs a whole round trip and a context switch into schema reading.\n\n⭐ THE VALUES WERE NEVER UNAVAILABLE, WHICH IS WHAT MAKES THIS A DEFECT RATHER THAN A FEATURE REQUEST. serde already builds `unknown variant `correction`, expected one of `requirement_creep`, `new_feature`, …` and the helper was DISCARDING it with `map_err(|_| …)`. The answer was constructed and thrown away on every rejection.\n\nWHY THE FIX BELONGS IN THE SHARED HELPER, not at the call site that was reported: a hand-maintained list per tool rots the first time a variant is added, and one function serves every enum argument reflow2 exposes. Fixing it there means every refusal gains the list at once — which is what the reporter meant by \\\"this alone kills three of the eight\\\".\n\nEVIDENCE. Filed by dev_storyflow 2026-08-03 (api-boss): \\\"enum rejections should list the legal values… this alone kills three of the eight.\\\" RE-CONFIRMED STILL LIVE 2026-08-09 by dragon Boss (`cca98fbf`), who recorded the cost precisely: \\\"one wasted call, then describe_schema{node_type: ChangeEvent, required_only: true} to learn the 11 legal values.\\\" And reproduced a third time the same day by a session in THIS repo while recording a correction — which is how it came to be fixed.\n\nWHAT THIS REQUIREMENT DOES NOT SAY, so the scope is not read wider than it is: it does not ask for fuzzy nearest-match suggestions, and it does not ask that every refusal of any kind enumerate an alternative — only that a CLOSED SET, which the surface already knows, is stated rather than withheld. Where the message shape is unrecognised, the honest fallback is the underlying error's own words rather than a silent return to the bare verdict.\n\n⚠️ A SEPARATE AND UNRESOLVED HALF, recorded here so it is not mistaken for closed: dragon Boss's second point was that NONE of the eleven legal `change_type` values means \\\"the record was WRONG about reality\\\". `resync` connotes reality moving and the design catching up. Adding a value would move the schema stamp and is Anthony's call; this requirement is only about the refusal being useful, not about the vocabulary being complete.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:a-release-that-shipped-says-what-it-shipped",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A release that has gone out and records shipping nothing is reported",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A Release that is pinned to an epoch and deployed, and carries no INCLUDES edge, shall be reported as a gap — a release record claiming to have shipped nothing.\n\nTHE SCHEMA HAS ALWAYS SAID THIS AND NOTHING ENFORCED IT. The INCLUDES extraction hint ends: \"The as-released view is read off these edges; a Release with none is a version number, not a manifest.\" That sentence described a state the design could not detect.\n\nMEASURED, AND THE COST WAS A PUBLISHED RELEASE. On 2026-08-21 v0.38.0 was tagged, built, published and asset-verified with 0 INCLUDES against v0.37.0's 275. `release_includes_all` defaults to a dry run — correctly, so a cut can read what it is about to package — and its reply carries \"applied\": false beside \"added\": 304. The 304 is a forecast. It was read as an accomplishment twice, and every check that ran passed over the empty manifest: isError false both times, reflow2_check green, release_report never called.\n\nTHE DEFECT IS THAT A DRY RUN AND A WRITE ARE INDISTINGUISHABLE TO EVERY CHECK THAT RAN. This is `rule:success-is-read-from-the-authoritative-object` failing on a third surface after `gh pr merge`. The detector is that reading, performed by something that cannot forget to perform it.\n\nTHE RULE MUST NOT CONSULT `status`, and that is the load-bearing clause. Its sibling `release_without_epoch` exempts a `planned` release because an epoch is minted at the cut. Carrying that exemption here would have exempted the one real instance: rel:v0380 was published and deployed while its status still read `planned`, because nothing makes anyone move it. A status property records what somebody remembered to write down; a DEPLOYED_TO edge records that the thing went out.\n\nASKED, NEVER REPAIRED. What a release shipped is a judgement, and a genuinely contentless release — a re-tag, a docs-only republish — is a real state to accept. apply_heal must not invent a manifest (`cap:no-fabricated-repair`).\n\nDISTINCT FROM the TemporalFact recording the v0.38.0 incident: that says what happened once, on a dated occasion, to one release; this says what the design shall detect from now on, for every release. DISTINCT FROM the capability that delivers it: that describes the mechanism built, its severity and its guards, and could be replaced by a different mechanism without this obligation changing.",
         "status": "accepted"
       }
     },
@@ -114999,6 +115455,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:v0380:rel:v0380",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"DEPLOYED_TO\",\"other_type\":\"Environment\",\"other_id\":\"env:ci\",\"properties\":{\"status\":\"active\"}},{\"direction\":\"out\",\"edge_type\":\"DEPLOYED_TO\",\"other_type\":\"Environment\",\"other_id\":\"env:container\",\"properties\":{\"status\":\"active\"}},{\"direction\":\"out\",\"edge_type\":\"DEPLOYED_TO\",\"other_type\":\"Environment\",\"other_id\":\"env:dev\",\"properties\":{\"status\":\"active\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:acknowledgement-not-structure-test\",\"properties\":{\"as_checksum\":\"sha256:3b4c4074ec7ecc66f9fc6b66d3efa9a77e91b4a8d5b529b1a231cd4da9753692\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:adopt-skill\",\"properties\":{\"as_checksum\":\"sha256:14385c12b76516b9a8a8903216243912fcf602be1869d703c25af468a18a1e44\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:agent\",\"properties\":{\"as_checksum\":\"sha256:c33a33c15e2611b3\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:alex-grok-feedback-2026-08-14\",\"properties\":{\"as_checksum\":\"sha256:0318c29079069fab4d59770f29f5b9ec9895208d658b9b829f8cb46f019bc387\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:allocate\",\"properties\":{\"as_checksum\":\"sha256:21a8d661174e77cdc24d1335e769b59e1b4c6c3c7cb4fecc5dd54c8981f0e4a7\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:alternatives\",\"properties\":{\"as_checksum\":\"sha256:6b8cc9bacb9c7ae2091a70c89d6371d5ade0e1370c5c863e16f33f99f8a0039d\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:artifact\",\"properties\":{\"as_checksum\":\"sha256:ccdb4802d93e190fd79fc4d72cbdd89022c0470805f3150ecf2ba9a131169244\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:artifact-intent-test\",\"properties\":{\"as_checksum\":\"sha256:7befd2e936958a6b7d3ea06a1ec1d2edde451ca31354d7c8b49719cddd0d4b75\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:bl124-instrument\",\"properties\":{\"as_checksum\":\"sha256:06b64e606511407badac652aaf530cc2f9d012bb1bc53f95124cc32152c2e979\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:brainstorm-skill\",\"properties\":{\"as_checksum\":\"sha256:994623c187efbe6436c39b4379713ec2ddcab0ebb13a1aff78bf6e352a2bedaa\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:budget\",\"properties\":{\"as_checksum\":\"sha256:28210925da9f9641d9ca5d5a670c3da2c62be0a1d3be722fe4123823019d9c23\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:built-right-review\",\"properties\":{\"as_checksum\":\"sha256:8f5ffbc7c6e84b5e\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:bulk\",\"properties\":{\"as_checksum\":\"sha256:6e8e23fce35b21d6\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:capture-intent-skill\",\"properties\":{\"as_checksum\":\"sha256:e1051f00038030c69fd7208108d56b55e11169a2e4145461b677c11a779c39c3\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:capture-session-skill\",\"properties\":{\"as_checksum\":\"sha256:a9698e861f183c96a564e22ceab750a9a5d336831b2b63c0c65e233c9ce43fc3\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:change-event-text-test\",\"properties\":{\"as_checksum\":\"sha256:53aaabc0fddd3caa0924cb0ae6bee1cd8e77fd1e2eafe243b376dcc2562adf2a\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:changelog-test\",\"properties\":{\"as_checksum\":\"sha256:b19ba3353fcca3ca70c9a1b9326e500d7d411a4ee6aa9a25962102acef2f988f\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:check\",\"properties\":{\"as_checksum\":\"sha256:152fbfb8444b42118e81041c743afcb9050af7cb00d1e91d739a8c41edfed426\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:check-health-skill\",\"properties\":{\"as_checksum\":\"sha256:0599e56015b53dd5a57b9562bc0d9a82a065003ea1ea91fa9af0881c168ec80a\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:check-kit-manifest\",\"properties\":{\"as_checksum\":\"sha256:b78fa9e7b867218d12b5f4e478f55228619203e15bebb578d54b0bd00ea0a97d\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:checksum-dialect-test\",\"properties\":{\"as_checksum\":\"sha256:68138446368f22bbde0b1fe44360b85edeb941b4503dbb491750506a99c1711f\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:claim-age-test\",\"properties\":{\"as_checksum\":\"sha256:b8d4e975533b670e09be74d288144194ad388c69ed987738929f48cfc8b8d011\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:claim-not-hidden-test\",\"properties\":{\"as_checksum\":\"sha256:43b2258a9537a2cbb3e131acb781e11085a4b1e89fa599bd5325d46c1e42fe2f\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:claims\",\"properties\":{\"as_checksum\":\"sha256:5a933a36f2ff5606df032f929c969218e54fc9d142c8629a7743243d7e3fa241\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:coherence-gate-test\",\"properties\":{\"as_checksum\":\"sha256:96600d72781b41912070d15f2a34ec21b53f709f9d0aef3a10d8565605dd85d8\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:collaborating\",\"properties\":{\"as_checksum\":\"sha256:2575d415a74a3266b208ddf798e5e6516186d6c345324efb6f9b66e46b7367a3\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:compare\",\"properties\":{\"as_checksum\":\"sha256:cdc3f210cff2c471ba525017ae919335102c2df44a13f1c59e48a8ca1e2ad7ee\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:compose\",\"properties\":{\"as_checksum\":\"sha256:21f0cb3c189f4e8f4295e1d67788061e2ec7f91f018010ff992ef51bd0a1c377\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:compose-test\",\"properties\":{\"as_checksum\":\"sha256:6b58139a0fd5f095c64c4c465f03cfed8200015ef0e7af3a4e7cca064727de39\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:confirm\",\"properties\":{\"as_checksum\":\"sha256:276c4e707db8d55a34f673a533dcaa15629d6bd59be4d3232df21bff1e6ce7c3\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:confirmation-vocabulary-test\",\"properties\":{\"as_checksum\":\"sha256:48b47fe9de1616a9e70f824e098108c45fafc22d35c92f1a005fafd3d1e83c14\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:conformance-test\",\"properties\":{\"as_checksum\":\"sha256:7776124d5c2f276520f036b0414c9e143f6b45ae56f02d61cd672a343beb3fe0\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:consumption\",\"properties\":{\"as_checksum\":\"sha256:e2efa0a05f6a46929a0f4634871281407af7b196061300cf9fdf63f9a06a6050\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:contradiction-alignment-test\",\"properties\":{\"as_checksum\":\"sha256:5c4c6e7a717189396689405566ed54b8e67f10821b593d22b99ea37053450f1b\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:corpus\",\"properties\":{\"as_checksum\":\"sha256:9f9496cd532968cb39dc7461c83f488e856e97b00a4a438f2f25914ee044760d\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:coverage\",\"properties\":{\"as_checksum\":\"sha256:c3d8585b71d9bb6aa886b70998fa97a143ae2829a6ebb47a4803e18910ec176d\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:coverage-test\",\"properties\":{\"as_checksum\":\"sha256:da69705c4697580a151a6ee7355c388701d465220bf475c2ede5bac2b1469e25\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:cycles-test\",\"properties\":{\"as_checksum\":\"sha256:a62c88bd9814737dd97b620eda586cd5c28420031c057f7f196da584a79e1f72\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:dates\",\"properties\":{\"as_checksum\":\"sha256:b125b0aa1c36046cefe30e62298b0ec03ff7e8ff0c107820d1c8fafde6c9f36c\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:degraded\",\"properties\":{\"as_checksum\":\"sha256:eb126729e08e8d8d3ac45acec3a2e291e068dc1e9afed14a8647edf73300bdde\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:delivery-kind-test\",\"properties\":{\"as_checksum\":\"sha256:dcf79ca95ec1dae48c5ee69284cdd0edcf79e61acd798d59244762d1807cc4cb\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:dependency-manifest\",\"properties\":{\"as_checksum\":\"sha256:fecccf3852b74900a45e6f04a42052a4d3386ba3995d5fbeec101ffde30c02f2\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:depends\",\"properties\":{\"as_checksum\":\"sha256:45cd6ca68f900aa040d2c075a7dc08311afd8acf8e94bd266f101e4fe1ee8ae7\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:depends-test\",\"properties\":{\"as_checksum\":\"sha256:f2a9a6d42ce95561436f9ae64e64cef57bd11d90d2c5e6d5bb50825da3d2aee6\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:detect\",\"properties\":{\"as_checksum\":\"sha256:86fd3979a368061de3eb0d5f41a595901c9180472936f8374a652893eab21b84\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:detect-and-ask-skill\",\"properties\":{\"as_checksum\":\"sha256:4707652eaaccd0ec29233662cdcd87957f21f7e37bc0cb9724fad3b2758fc392\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:dimensions\",\"properties\":{\"as_checksum\":\"sha256:59ef210d5f8576a9f07b321dc546b653056ab4ecda17e0ec9269ed87a52c27dc\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:discover\",\"properties\":{\"as_checksum\":\"sha256:b876b5fc65f8dfe8b3c514d0537a0445dfbb51df24fcf6179e8b30b762988eaf\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:discover-test\",\"properties\":{\"as_checksum\":\"sha256:9a774749820828b965aef9eadc6d12d2f07a5e9dc28f05d1ddedc73eb6370a24\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:doc-impact-propagation\",\"properties\":{\"as_checksum\":\"sha256:43efb3dd59d17efa2aab4c25c5dc57495077f8d6fd31b1743e0bc8fa5df201fe\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:docker-build-script\",\"properties\":{\"as_checksum\":\"sha256:9ad56c234dcffbca6f016d50b71c5ffab9e33a3380d18c5fafb445de5474e079\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:docker-smoke-script\",\"properties\":{\"as_checksum\":\"sha256:f2019afd72ee2dbf3e3806a54e397a638e6b1ab37cc181c8a9b1f86c1089b229\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:dockerfile\",\"properties\":{\"as_checksum\":\"sha256:f014e913ac9e61dc2112f4383c0cc94cdf9e5d78fe307bcb2ad45ae316d6e719\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:drift\",\"properties\":{\"as_checksum\":\"sha256:d03decfe05f40310f62a43ac0f6a81993dba777adb056040a1f0564b64d76f2c\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:dto\",\"properties\":{\"as_checksum\":\"sha256:7df4f44d215da1ed659c6bdf5fcc40df9d4f1bb00c8b7ecf982ab8e7732a3ba2\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:enforced-rule-detector-test\",\"properties\":{\"as_checksum\":\"sha256:7e94e450dbda74bbb0e6b367ea082d0efecc5d353472db92c57d02728051aec2\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:evidence-quality-instrument\",\"properties\":{\"as_checksum\":\"sha256:8956d2d0d4f31fe1\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:evidence-quality-test\",\"properties\":{\"as_checksum\":\"sha256:edff3aa9e9469319c76f745c2e22d20a4e87b67ba2aff267cca10034d467f932\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:evidence-test\",\"properties\":{\"as_checksum\":\"sha256:7f9fad8c07f55057160caa8cab59660a6bfb1fdea295b8eb26f48bcc96ebbb40\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:export\",\"properties\":{\"as_checksum\":\"sha256:80709df69bd60b7a5d2a4de8e1ccb80ebac37baf705fd24c9d2e7b3195d89b90\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:export-via-binary\",\"properties\":{\"as_checksum\":\"sha256:0eec67e9d35aba549853dfdb058371975fcf5fd1aa1b062b8872415e2babbd43\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:fielded\",\"properties\":{\"as_checksum\":\"sha256:cfdf82f1a6497595\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:fleet-lessons\",\"properties\":{\"as_checksum\":\"sha256:196fa38802309fd377a360769264f4916825fa2fcfaf7e5cc35ed3b1b87f60d2\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:flow\",\"properties\":{\"as_checksum\":\"sha256:f6abe031170cd8123c44b3f87248b9841f9b31117d78d8325769fea6a34a5d8e\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:genesis\",\"properties\":{\"as_checksum\":\"sha256:8196df94f5775161\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:genesis-skill\",\"properties\":{\"as_checksum\":\"sha256:730e59e9cca3bdf7d6c19b02a4c21ce6e3fa1b4564adf6d202b72ba2fdc19b9f\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:github-mcp-study\",\"properties\":{\"as_checksum\":\"sha256:34701500af93dbcf\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:governance-proposal-skill\",\"properties\":{\"as_checksum\":\"sha256:fd8331443a248d4fbe0eb45a2888ff7deda5f059733753b7b43025ee0582147b\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:granularity\",\"properties\":{\"as_checksum\":\"sha256:199301145284e0fb30cfec667a6adb26c3af9db724a2f3049474659ee07c7f15\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:graph\",\"properties\":{\"as_checksum\":\"sha256:272a3a31be0e197cdc72c5729ffa7f735918a16ce01db9f5f0826a1ae1515c19\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:heal\",\"properties\":{\"as_checksum\":\"sha256:bd7df630caf299ba832eb39d624b62b24707438ec22690199eb595618836606a\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:hierarchy\",\"properties\":{\"as_checksum\":\"sha256:5edf2f7e755547e3e9e91017d7c652f451fd764daf38f52b7c7a7486247cf320\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:hxm-program-feedback-2026-08-19\",\"properties\":{\"as_checksum\":\"sha256:a5457da81bf1f13ddfbaad6f3a5269897d900a40882e97da5f6d0fbfa7cfc92e\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:identity\",\"properties\":{\"as_checksum\":\"sha256:b2040f682b99860815459e4b4c34150019ff02f40821f9dd9e75fadfda5bf29a\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:ility\",\"properties\":{\"as_checksum\":\"sha256:c9470d7c1a4175e93eebdd6ebfca422a28d87b566af445c610102cbbee03dca5\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:increment-plan\",\"properties\":{\"as_checksum\":\"sha256:d6a3a8bce014e75f1a2a524d0c76612ab8a1dc99ad32f7fbdeca286b51950652\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:ingest\",\"properties\":{\"as_checksum\":\"sha256:e36d3b386dcad3b33c12ed42a28685b2bcd3a9c8a2ccdd7d2704c230739407c0\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:ingest-handshake-test\",\"properties\":{\"as_checksum\":\"sha256:ddfa7e13d3b56156a9b463f434cd691718e1af489f27aaba169395c226d14b9a\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:init\",\"properties\":{\"as_checksum\":\"sha256:2b0c9b500c5d5e1a45497d5deef3382a41a6374851d5ffbf4fa91ae6d5958059\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:interface-spec-test\",\"properties\":{\"as_checksum\":\"sha256:07c82cd7671c1241\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:kit-instructions\",\"properties\":{\"as_checksum\":\"sha256:c5c52b1a6a96bd8d6ffae28b2250920c02731cacada309e9f9e453d07f52fb74\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:kit-pointer\",\"properties\":{\"as_checksum\":\"sha256:4329e5563666ab6708edfe68c0d0188818571b39ea408c70ef71663bc2f98f36\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:kpp-proposal-skill\",\"properties\":{\"as_checksum\":\"sha256:65a01535f32f023e\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:latent\",\"properties\":{\"as_checksum\":\"sha256:7280072322f2889e0a1e958c0d9293fb281e8938ff9dc368d1962d833434a421\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:llm\",\"properties\":{\"as_checksum\":\"sha256:6869d93e97fc9393\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:loop-nudge\",\"properties\":{\"as_checksum\":\"sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:machine-install\",\"properties\":{\"as_checksum\":\"sha256:f7b21dc97aa8ee9f4a6b33f59ea944d3e900671479d79ee7a4c023877929f9b6\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:main\",\"properties\":{\"as_checksum\":\"sha256:cd4dc46a42ac5da44ecf6f484eb33da8774333afc7fb13a13c554c0f395a766d\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:maturity\",\"properties\":{\"as_checksum\":\"sha256:f83c09736230e7d7359f69e72f64c70140cf609babb1b18f4661528193d38599\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:mcp-http\",\"properties\":{\"as_checksum\":\"sha256:a4d20ec48d8a0a3e024497ab67e55c49bba13ea12794ed3d92ad6877b56a46a6\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:merge\",\"properties\":{\"as_checksum\":\"sha256:075bab31f3c131b6\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:merge-driver-test\",\"properties\":{\"as_checksum\":\"sha256:cddbea4165e0e3b0\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:migrate-backlog\",\"properties\":{\"as_checksum\":\"sha256:4d0783bbb657970305906ae38eb8a51badd40b1229881929e81026149478dd80\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:mint-seat-liveness-test\",\"properties\":{\"as_checksum\":\"sha256:fa90553f10cfd1194c8ac6b5962e1c5c57dc269e5d662bc62869db823d923a44\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:move-component-test\",\"properties\":{\"as_checksum\":\"sha256:d096230f4c9b28747c2ec676526332ecf66aebe7487bb7bbc25faea165955e67\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:nodes\",\"properties\":{\"as_checksum\":\"sha256:56bba795c42b5490fc50d743deb50f51c2b989dc60bc3dda1465a24afe390b72\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:nudge-detect\",\"properties\":{\"as_checksum\":\"sha256:728650e901174321fd684df8aa431ccfd84bc3e806f2d725c416a9d7f2445814\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:operate\",\"properties\":{\"as_checksum\":\"sha256:e95e6f4c2658ebd1c7afa6e23385256e51272860a0cb56e2046d4c1b581881d0\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:ophyd-service-feedback-2026-08-19\",\"properties\":{\"as_checksum\":\"sha256:18ab1a2815d928cd7778a98e132bcb1fce46adb92b13bb66a57a926252a60e99\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:optimize-command\",\"properties\":{\"as_checksum\":\"sha256:2e77d869536dd2ec9b41412e8ced1f4516682f0c546a16a620b6219fb7dc6ff7\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:optimize-skill\",\"properties\":{\"as_checksum\":\"sha256:d0b2e84e704cf9273df4bd8827e029a8205ffe8d5fa01078c358296c8c7ea9f1\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:orphan-attachment-test\",\"properties\":{\"as_checksum\":\"sha256:9b9f0e13f76c8280676ec63aa2cd2637f83c64610545b11b01a8081422ec596f\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:parallel-work-skill\",\"properties\":{\"as_checksum\":\"sha256:a174eaa7a6781e8a3e5b3df9ce8629efabae2ae8e336dbe16c1ae26a2b33daf7\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:plan-increments-skill\",\"properties\":{\"as_checksum\":\"sha256:ce7feac76c8da9cd72c6188a2f0035565f37031c2632354820baaf7fc1ffcdcd\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:planning-at-scale\",\"properties\":{\"as_checksum\":\"sha256:f11dca3fb6aa4ea3ded7f0dc0ba4bf5137ddcf54893645e851b439840194ed14\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:preserve\",\"properties\":{\"as_checksum\":\"sha256:59b6e751c18dfc67d4546b6d6d70e1305b64864d3890d8cf786320687c9b84d4\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:propagate\",\"properties\":{\"as_checksum\":\"sha256:26dde99a1df42e6f\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:provenance\",\"properties\":{\"as_checksum\":\"sha256:b3cd0321b5dcda802926f3247ab45b6c1bbfc7bbd60ed38d2d95da29a3d6caf0\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:proxy\",\"properties\":{\"as_checksum\":\"sha256:c1537adc3cba37798e26a225d522ee834aaede8945c01af3b8eb1fa4c8b754b6\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:publishable-promise-test\",\"properties\":{\"as_checksum\":\"sha256:7979028e8c95724dd5696d9b1fee3f307c718b7d9f4e086a968620b602eec420\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:readiness\",\"properties\":{\"as_checksum\":\"sha256:f01d1b8a9f04a3efd4efe0fa05d12f9d1b330e4c4f16b9f1781ae6e645a38fa5\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:readme\",\"properties\":{\"as_checksum\":\"sha256:00ac00342910d276b036ffa093f2ed3ee8a7efb9abe9d3b2a5c21fcfa30939c8\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:regions-rs\",\"properties\":{\"as_checksum\":\"sha256:c44aeed44068400f04ccba69c3fd47d2a4b4999a036ed08494bf13f166fa2194\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:registry\",\"properties\":{\"as_checksum\":\"sha256:d8d916c194760d36e108eb96fe403611fe7f9b2488301600e7c584840fe56d77\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:relate\",\"properties\":{\"as_checksum\":\"sha256:e5df94c2d131f986ae7ec7928aff7437d9d1cb3491bda804bd85dccd4783f60f\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:release-workflow\",\"properties\":{\"as_checksum\":\"sha256:079bd2025a17eeadc09a98cdfdf658b2cc78180bd06b11bb59fff5a410d011cc\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:render-views\",\"properties\":{\"as_checksum\":\"sha256:99fc5da421a04f5e\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:report\",\"properties\":{\"as_checksum\":\"sha256:217e69f28fe29e31e3cd88f37513fcacb5e8882a242d2e17877c6bb814c06bf0\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:sanitize\",\"properties\":{\"as_checksum\":\"sha256:dc88dfbc4e1aacbc\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:scheduling-a-question-test\",\"properties\":{\"as_checksum\":\"sha256:24c201e5e508bd2f5ed6f8a96a71100e380f9b30eb9692616ff1565b0c374e66\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema\",\"properties\":{\"as_checksum\":\"sha256:359d429829c3f59ccb4173b98b99dde17261700b8e674fb3fa73182085a94b1e\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-build\",\"properties\":{\"as_checksum\":\"sha256:4c6d9b4d2298db40893e54004d41009a45bfd6757adc7dbd4cc510f39712a083\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-core\",\"properties\":{\"as_checksum\":\"sha256:3c14debf63e30806550295d9645fa4c3d47da88e722c020053f66c07b52f36bb\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-dimensions\",\"properties\":{\"as_checksum\":\"sha256:815273502db4fed6800182446fb496a08aace3a9b34757395892e6da37dbcdb9\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-environment\",\"properties\":{\"as_checksum\":\"sha256:7201c53b7e2c794b871f3d48b7da761884f5bccd7d9f90b9b7d07210e79053cc\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-functional\",\"properties\":{\"as_checksum\":\"sha256:ca801b261fae0e187da754a8126a619799d4c771be2c2354c20fd7dba3965cf4\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-inference\",\"properties\":{\"as_checksum\":\"sha256:07f5d9a9594cf5464bfeb426ce94e08f28769d90b154741144b6570a32d578ad\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-operate\",\"properties\":{\"as_checksum\":\"sha256:a986d436e5575b86d26ab38c52bbb37ff91e1ead726ad6e04fe0d74889b71361\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-readiness\",\"properties\":{\"as_checksum\":\"sha256:daf8ea6b9399cb16edfd8849adcd1bcd37ac1a7f3ae3acea80ecca8e035fdc9a\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-structure\",\"properties\":{\"as_checksum\":\"sha256:8e4e5e01a564c0f45ed368d8efb40e4cf98e18ef9fc8429fda5492a43822233f\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-temporal\",\"properties\":{\"as_checksum\":\"sha256:1b26be8b2a0395d36a29d1ce7001fce0fc35bee193aec446e24099e7c292c92c\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-verify\",\"properties\":{\"as_checksum\":\"sha256:25729faa169eb7a9c99b59afcd9f9e26b8d61c1dec903e1428a3cfec30a4f78b\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:scope\",\"properties\":{\"as_checksum\":\"sha256:d1b8a0c41bfec50ffc0a1eafd06636e811afa0f37596d34ca5dd76c2a791ba4b\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:scope-corpus-ingest\",\"properties\":{\"as_checksum\":\"sha256:de0871a98e6007aa5ee9e202d5396f014b3799efd72600f2a1a94de6d58ff182\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:scope-read-while-held\",\"properties\":{\"as_checksum\":\"sha256:e192c58480dafaddf26abc1577a6317c1cc71fbded5a9aa5ac305bdf87a23aea\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:seam\",\"properties\":{\"as_checksum\":\"sha256:e96c9c4c07a384fc845aa360edc7f505d90ecbecc8e38b08dd65e65b56cf1470\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:seam-test\",\"properties\":{\"as_checksum\":\"sha256:efb2faf35ec4cc6ed3df5a61f8fdf2af77aded2a6eb29ddabf2394dfc7ed195d\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:search\",\"properties\":{\"as_checksum\":\"sha256:a5f270c3646365f78d5c4b6004d1cf0f27285768017ccccce1983176318db40f\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:seat-liveness-shared-test\",\"properties\":{\"as_checksum\":\"sha256:8e5af9fd122fc56d39472920dc28410b6a157ed889964b4c01eed80fb8cd52aa\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:self-host-documents-guard\",\"properties\":{\"as_checksum\":\"sha256:a8ea60ec60130ff3e563724bf43a50491849b18ece1d24fd4dfe6b1fe09f06c4\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:server-currency-test\",\"properties\":{\"as_checksum\":\"sha256:88c9a74d46a1db42323c172030fec5203761fc7f6931ef692814c85fad22f553\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:service\",\"properties\":{\"as_checksum\":\"sha256:d9ae95e3244b50c92f73ad3f9327a4b97cf231ffcfe77b192e8e29493c0bfa76\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:session-debt-test\",\"properties\":{\"as_checksum\":\"sha256:062c1682b832952af474200bd28a7e046146cc8a2eefaca17dd42bfcecfc288d\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:setup\",\"properties\":{\"as_checksum\":\"sha256:c5ae98896e2558c42d86c890f7348c6c3b4f5d8895e6aafb723516edc24c2e56\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:shared\",\"properties\":{\"as_checksum\":\"sha256:beea0318ad745475a9c61706967a8b58b472fceae88138bcfc3221e84b7312fe\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:sibling-merge-test\",\"properties\":{\"as_checksum\":\"sha256:f8d14a991b90377fab5074ee51dbbcf165d2ab813b1b5e742688b19d534c700b\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:skill-ingest-corpus\",\"properties\":{\"as_checksum\":\"sha256:c221daad4dd73582e3abec93e7d0493e75f71f7809f138c1852271fa63f37ea4\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:skill-link-projects\",\"properties\":{\"as_checksum\":\"sha256:e758f8098e95ab2784de46b3cd83fcec1ceb4bdec8aad8011651b2d40fd3d205\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:skill-lint\",\"properties\":{\"as_checksum\":\"sha256:91b178074b3a1053f59932fd5c13139335078538356a73b7a6c5a6ad89e55082\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:skill-lint-test\",\"properties\":{\"as_checksum\":\"sha256:9352eb7ec610eb6187d482730ea021c18883d4548f4ba2ed3ab3b3fac0451bda\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:skills\",\"properties\":{\"as_checksum\":\"sha256:bf81f8f819dc1daf2011ddd11b2b938c00f1ad9ff5b5d059c97c89565e4ca795\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:skills-and-tools\",\"properties\":{\"as_checksum\":\"sha256:7332ba541db49bb736ef757cd3c0e232ccd5d1b8764c9ca6aff87feb8c13870e\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:skills-build\",\"properties\":{\"as_checksum\":\"sha256:beaa4bd48ef2fae4b6cdb0604f5e0ff9ce644d9bb39f1a9c6a7f7f2a630aa797\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:skills-catalog\",\"properties\":{\"as_checksum\":\"sha256:1c3a2779a1848708582e8489463d54d4ae794d571a6b925b14a010364b727116\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:stateless-seat-probe\",\"properties\":{\"as_checksum\":\"sha256:772b73a05ff491fe6dbca6adeb9697ad84e1ad9592e24b66793aae2716ae0783\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:storyflow-resolution-study\",\"properties\":{\"as_checksum\":\"sha256:ce30365401d775a82585729349538efe1a0fa43625783b2a39a6dc30f7d9ce83\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:structure\",\"properties\":{\"as_checksum\":\"sha256:ccfda8a24e43e6787b7d9640c66f340fc5295a9d8ec2e7b4549479355ce54b36\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:surface-usage-instrument\",\"properties\":{\"as_checksum\":\"sha256:b3b2bac1387c9c53\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:surprises\",\"properties\":{\"as_checksum\":\"sha256:b1cec4ec107ef2b1\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:sweep-coverage-test\",\"properties\":{\"as_checksum\":\"sha256:c47acbd5315df006de2e7209e7eb3c7d18f62e4d4630314be684512785d6659a\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:sync\",\"properties\":{\"as_checksum\":\"sha256:c79d8c79905d00199a758e49e4ad91d27539c15223d89aeb675848a8cdfae464\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:sync-debt\",\"properties\":{\"as_checksum\":\"sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:temporal\",\"properties\":{\"as_checksum\":\"sha256:453de395c83a0d3b3e022ad7fcb491100e267e721bc9635acc305baa57c29cca\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-a-session-with-no-seed-can-find-one\",\"properties\":{\"as_checksum\":\"sha256:d7ad0005715563e4089ca5a4f2ff2a4a2cb2b07c8feafd611610cb278c9cf468\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-check-kit-manifest\",\"properties\":{\"as_checksum\":\"sha256:35bd149e47e2a2669241c63df99a4c7b31d1120dd1bb857779376464f39b9bcc\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-degraded-server\",\"properties\":{\"as_checksum\":\"sha256:25db9bfb196de65609c48f3aec924f55bdcac7c8492066658f310832b17156ef\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-design-identity\",\"properties\":{\"as_checksum\":\"sha256:cba77191420374d58d2360da9c1d2a73adcdd1d750d25dafc3991c1a525773af\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-discontinued-is-read\",\"properties\":{\"as_checksum\":\"sha256:e06c721f5f95ad1e42a8e97c53ca55c985a4a961ef256ff57489025891adb93b\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-edges-need-both-ends\",\"properties\":{\"as_checksum\":\"sha256:10fcbe40f951649ca80e0bbac92e3399c45a1421e1484f580e95b97b12df7fb2\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-graph-construction-is-setup\",\"properties\":{\"as_checksum\":\"sha256:2a2729f4077c0f08f966fde19d0313ab98cf5eade96305ab81eb62e4b3bb7dc8\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-init\",\"properties\":{\"as_checksum\":\"sha256:80bb4b7b81a13ee0164d2e1c377ac326c95a2454b2a581cdfc9e86efc1dd8585\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-loop-nudge\",\"properties\":{\"as_checksum\":\"sha256:4d3313a3988968e436920662419a02f89fcc46d443d09ecd19d018bfe78dc688\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-mirror-refresh\",\"properties\":{\"as_checksum\":\"sha256:259d5952c7c46f429b9341e49c0aa91d7a9e65fe573c9acd1ca9ec5466af28d6\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-no-per-design-globals\",\"properties\":{\"as_checksum\":\"sha256:fb8d7c914c3e6a8440050d4f5a09b719072e90f12a40e65222dc6f24f9752757\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-nudge-path\",\"properties\":{\"as_checksum\":\"sha256:39bcf1f944d3ceed42a1c6e10922eb00362b50cf37e8fefbee4a94ec4a35b8c6\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-orientation-needs-nothing-to-start\",\"properties\":{\"as_checksum\":\"sha256:be6196c6181454d6249970f6273f7ba13272e5c4b025a73be5267009855e9db2\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-review-relations\",\"properties\":{\"as_checksum\":\"sha256:23ce30979251fee34495cd72eeaa3f9cc070931eb20b1d2b0730a42fc55732ff\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-schema-parsed-once\",\"properties\":{\"as_checksum\":\"sha256:e5d6934d9a4d09b62dfe3c6e3af603e1233fff8073bd740019f43f6d2cb03095\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-search-first\",\"properties\":{\"as_checksum\":\"sha256:f43ed9a42160d5031a44160b361a07be164ebbfb6910639a63ead22078150b29\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-served-skills\",\"properties\":{\"as_checksum\":\"sha256:3a28c5d6f3bc91ce95ad0bc3da6bcc85c1bbb71e73e42fa670b14b101b78629c\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-session-names-its-design\",\"properties\":{\"as_checksum\":\"sha256:3c302ebd5675b5bc9407d9318f6c164fcad4954354db4b7008f01b6cc0039e6d\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-sessions-cannot-cross-designs\",\"properties\":{\"as_checksum\":\"sha256:771424fd9bca485932d2b5e429b16f8940e982566102bef0fc2a905a0211adea\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-shared-sessions\",\"properties\":{\"as_checksum\":\"sha256:21673699d9d326c9db310fcb24068fa38074634b1949d2708c56f9f77a6c2e5f\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-stale-seat\",\"properties\":{\"as_checksum\":\"sha256:78b994c3da2476c2560bcd53dd776eb2232a1c4856a8427c63e9a08235cc628d\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:test-surface-orphaned\",\"properties\":{\"as_checksum\":\"sha256:9a86b59dc94de982a97460fbaa8e22a85d4929f2bbc0db0d6a62338bf0fbdede\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-ask\",\"properties\":{\"as_checksum\":\"sha256:1af50b2ca62b269db03167480eb448d545af280251cbd80f42ddca9dfdbb861c\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-assure\",\"properties\":{\"as_checksum\":\"sha256:419c91a71f07405d762b0cc580f7954544625a0f2f765ae0debf58b48d982acf\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-built\",\"properties\":{\"as_checksum\":\"sha256:ba6f62e02f9872a33d62483cc0aeacaa3fd2ca93cbcb5616771165ccf02edb8d\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-capture\",\"properties\":{\"as_checksum\":\"sha256:680472e4a68eeb6afa25633f1a2a55dc2d525cda8fea4dd39d5259d97edab270\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-claims\",\"properties\":{\"as_checksum\":\"sha256:9349d575b229d76389271afb868beaacfd0aaa3be3d0723982a92cf3b119ebfb\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-coherence\",\"properties\":{\"as_checksum\":\"sha256:f92e38756534fdbcd43156a002d805ee4eaa845fa6faabd480bafae48277abde\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-exchange\",\"properties\":{\"as_checksum\":\"sha256:f6720b2e49607c8ae69b578db4ec19ce65e9ec9e2be8e13c3bc16ee0d795229e\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-ingest\",\"properties\":{\"as_checksum\":\"sha256:e6e04f6b5a2c89e826cc363bcc011620b936d87ed503e151326291f62bc1ec40\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-operate\",\"properties\":{\"as_checksum\":\"sha256:25ab6353c7864b55aa042ac631ecc7ab16daef10aa8024927ecb840158aacbd5\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-query\",\"properties\":{\"as_checksum\":\"sha256:27a4ebeac2974cd8f834beee2605fff7718893524b9c5099b31128ad23d43cf9\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-skills\",\"properties\":{\"as_checksum\":\"sha256:f67433db8262fb925c5dcd13fb8fd04d779e5cf90401854b5e4614108166ecb3\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:tools-temporal\",\"properties\":{\"as_checksum\":\"sha256:e18ecf4db3d76a2c133226d8ae170933a0b6267f1277ebef08432b9c036c7a8c\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:unreachable-decision-test\",\"properties\":{\"as_checksum\":\"sha256:810c3100d3bc707836572fbe68fbf1649e42f28bb1a3d4e7bf1f1e34fc68e937\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:updating-doc\",\"properties\":{\"as_checksum\":\"sha256:878315a480167a9296209d6b30a41f9f13318292db228829243a7acc24338c23\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:upgrade-v0110\",\"properties\":{\"as_checksum\":\"sha256:ef7dbb708e027df2\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:upgrading-v0120\",\"properties\":{\"as_checksum\":\"sha256:c942d4189e9c77c9fb395b57909a43a2f71e7e93aca10996ebb28b56ac6e1e34\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:upgrading-v0130\",\"properties\":{\"as_checksum\":\"sha256:1b917d1e63831e3d1153783bd412a9d8b0ddd43853c465450473bf26d0972995\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:upgrading-v0150\",\"properties\":{\"as_checksum\":\"sha256:b1e1cee221b0bc6ed7f9e4411cda9dcd50a2dc2647785e06eaa7b1ce7329da28\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:upgrading-v0160\",\"properties\":{\"as_checksum\":\"sha256:00eea80c2a79cc4eed4d1db9402a4e90e23231745a8fdd4117f44a9f22f58f24\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:upgrading-v0180\",\"properties\":{\"as_checksum\":\"sha256:d1c21f5330ad0ea05f4efe46c08a010d5fb22ece05523922bb6324c7ec8a2eda\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:upgrading-v0190\",\"properties\":{\"as_checksum\":\"sha256:3a36b9b6b248af09\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:upgrading-v0210\",\"properties\":{\"as_checksum\":\"sha256:d16abc28ea59e3f9\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:upgrading-v0270\",\"properties\":{\"as_checksum\":\"sha256:6b9d7e9a3106aeb93da6040f6804e618845417db6599b75a03b50415bd131b91\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:usgov-genesis-feedback-2026-08-15\",\"properties\":{\"as_checksum\":\"sha256:4f3ce1ca9ee00ff17079b8925e6dccaf8161b82857cb6746f2f756edd59772ac\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:verify\",\"properties\":{\"as_checksum\":\"sha256:8f923178f4246edf7385fa125ee4e92e59c48ae5e0ffa7a45ecb04e569541f34\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:vocabulary\",\"properties\":{\"as_checksum\":\"sha256:47f07fc9b7effe9ebf321b360531ea10281864028731bf38acb8da67dfe29220\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:vocabulary-reach\",\"properties\":{\"as_checksum\":\"sha256:36120fad4c21c100d55a4ab1f2ba728eccc78c5586c3c1b4003a56a3639fe496\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:wall-check\",\"properties\":{\"as_checksum\":\"sha256:5c9b19e383922f7922cac701f6c93ae03fdfade9af7f5b3dba663a18ab894d04\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:wall-check-test\",\"properties\":{\"as_checksum\":\"sha256:8834f59d9cbca7b621d8645ecd5934d6d66bb3b7ead12f945e5d8830e48e5af9\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Artifact\",\"other_id\":\"art:where-am-i-skill\",\"properties\":{\"as_checksum\":\"sha256:74adb819732277a637afc95b3563543eeb8f309dc7bf5c36985b5b1a1baa6e04\"}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:agent\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:allocate\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:alternatives\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:artifact\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:budget\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:bulk\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:claims\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:compare\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:compose\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:confirm\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:consumption\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:corpus\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:coverage\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:dates\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:degraded\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:depends\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:detect\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:dimensions\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:discover\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:docs\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:drift\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:dto\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:export\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:fielded\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:flow\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:genesis\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:granularity\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:graph\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:heal\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:hierarchy\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:identity\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:ility\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:ingest\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:init\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:latent\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:llm\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:main\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:maturity\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:mcp-http\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:merge\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:nodes\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:nudge\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:operate\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:packaging\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:preserve\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:propagate\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:provenance\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:proxy\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:readiness\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:regions\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:registry\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:relate\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:report\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:sanitize\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:schema\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:scope\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:seam\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:search\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:service\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:shared\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:skills\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:structure\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:surprises\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:sync\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:sync-debt\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:temporal\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:tools-ask\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:tools-assure\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:tools-built\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:tools-capture\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:tools-claims\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:tools-coherence\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:tools-exchange\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:tools-ingest\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:tools-operate\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:tools-query\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:tools-skills\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:tools-temporal\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:verify\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:vocabulary\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"sys:agent-surface\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"sys:coherence-loop\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"sys:documentation\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"sys:foundation\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"sys:human-channel\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"sys:intake\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"sys:store\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"sys:time-history\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Component\",\"other_id\":\"sys:vocabulary\",\"properties\":{}}]",
+        "state": "{\"name\":\"v0.38.0\",\"status\":\"planned\",\"unit_type\":\"binary\",\"version\":\"0.38.0\"}",
+        "target_id": "rel:v0380",
+        "target_type": "Release"
+      }
+    },
+    {
       "node_id": "snap:epoch:wall-check-works-on-any-project:cap:a-declared-wall-is-checked-against-the-coupling-it-contains",
       "node_type": "Snapshot",
       "properties": {
@@ -118204,6 +118670,20 @@
       }
     },
     {
+      "node_id": "ver:a-release-that-shipped-nothing-is-reported",
+      "node_type": "Verification",
+      "properties": {
+        "description": "`crates/reflow2-core/tests/detect.rs` — 7 cases for `release_without_manifest` plus 1 that guards the sibling `release_without_epoch` after it was hardened.\n\nThe helper builds healthy cuts — each release pinned to its own epoch, deployed to a shared environment, shipping one artifact — and each test then breaks exactly ONE thing, so a case cannot pass for a reason it does not name.\n\nWHAT IS COVERED: a deployed release stripped of its manifest is reported, and its evidence names how many releases DO carry one; releases with manifests are silent; a release still labelled `planned` while deployed IS reported; a pinned but undeployed release is silent, because the manifest can still land; an unpinned release is left to `release_without_epoch` AND that sibling is asserted to report it, so nothing falls between the two rules; a design where no release records contents at all is silent, one whole-graph fact rather than one alarm per release; and two empty releases get two different gap ids, so an acknowledgement cannot carry from one cut to the next.\n\n⭐ THE CASE THAT EARNED ITS KEEP: `a_status_still_reading_planned_does_not_exempt_a_published_release`. Writing the sibling's `planned` exemption into this rule looked obviously right and would have exempted the only real instance — rel:v0380 was tagged, published, deployed and asset-verified while its status still read `planned`. The test asserts the release really is in that mislabelled shape before asserting the gap fires, so a helper that quietly set the status could not make it pass while testing nothing.\n\nThe same case then found the hole in the SIBLING, which had trusted `status` unconditionally since BL-122. `release_without_epoch` now exempts a `planned` release only while it is UNDEPLOYED, with its own test covering both sides of that clause.\n\nMEASURED AGAINST REALITY BEFORE IT WAS WRITTEN: all 40 releases in reflow2's own design were checked for the epoch + deploy + zero-INCLUDES shape. Zero would fire — every release carries a manifest — so the rule adds no false positives to the design that motivated it.",
+        "findings": "2026-08-21: `cargo test -p reflow2-core --no-default-features --test detect` — 70 passed, 0 failed. The whole core suite is green at exit 0, clippy and fmt clean.\n\nTHE RUN THAT MATTERED WAS THE RED ONE. `an_unpinned_release_is_left_to_its_sibling_detector` failed on first run, asserting that `release_without_epoch` would report the release this rule declines. It did not — because the sibling exempted any release whose status read `planned`, and the helper leaves `Release.status` at its `planned` default. That red test is what exposed the sibling's own status-trust hole, which had been there since BL-122 and would have excused the next cut published while mislabelled. The sibling was then hardened to exempt a planned release only while UNDEPLOYED, and the failing assertion passes for the right reason rather than being relaxed.\n\nMEASURED FIRST, ON REALITY: before the detector was written, all 40 Releases in reflow2's own design were scored for the epoch + deploy + zero-INCLUDES shape. Zero fire. The same sweep is what found that rel:v0380 still carries `status: planned` while tagged, published and deployed — which is the fact the status clause is built around.",
+        "kind": "verification",
+        "last_run_at": "2026-08-21",
+        "level": "unit",
+        "method": "test",
+        "name": "A deployed release with an empty manifest is reported, and a mislabelled status does not exempt it",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-revising-write-says-whether-the-state-survived",
       "node_type": "Verification",
       "properties": {
@@ -120048,6 +120528,20 @@
       }
     },
     {
+      "node_id": "ver:the-release-cut-reads-back-whole",
+      "node_type": "Verification",
+      "properties": {
+        "description": "`flow_report(flow:release-cut)`, read back after the Flow was written.\n\nWHAT IT CHECKS: that the RECORD is complete and legible to the next session. Eight steps come back in stated order 1–8; nine TRIGGERS transitions come back, every one carrying a `role`; `confessions` is empty, meaning `flow_report` found nothing left unstated — no unmatched entry or exit point, no step without a `step_order`, no transition without a role. The two backward edges are reported as a cycle, which is correct and is why cycles in a Flow are reported rather than judged: a process's loops are its design.\n\nWHAT IT DOES NOT CHECK, said plainly rather than left to be assumed: that a human or agent actually FOLLOWS the procedure. Nothing here observes a cut. The step that closes that hole is step 8's own detector (`ver:a-release-that-shipped-nothing-is-reported`), which turns the gate red when a release goes out with an empty manifest whether or not anyone read the Flow.\n\nWHY IT IS AN INSPECTION AND NOT A TEST: the subject is a design record, not code. Calling it a test would claim an automated check that does not exist, and `dec:certainty-derived` makes a status a claim about evidence.",
+        "findings": "2026-08-21, first run, immediately after the Flow was written: 8 steps returned in order 1–8, 9 transitions returned, every one carrying a `role`, and `confessions: []` — flow_report found nothing left unstated. One cycle reported, over all 8 members, which is the two deliberate \"forces resync\" edges: step 8 → step 4 (an empty release_report sends the cut back to re-run the derivation with apply: true) and step 4 → step 1 (a manifest frozen on a pre-bump checksum sends it back to accept the version drift first).\n\nCONTEXT WORTH RECORDING: this is the FIRST Flow node in reflow2's own design. The count was zero before today — `cap:model-process` shipped, was never used on this project, and so the vocabulary had never been tested against a real process by its own authors. It held: nothing about the release cut needed a node type that did not exist, and the one thing worth saying that the model does not carry — which steps are destructive of the session's own tooling — went into the Flow description rather than into a new property.",
+        "kind": "verification",
+        "last_run_at": "2026-08-21",
+        "level": "system",
+        "method": "inspection",
+        "name": "flow_report returns the cut as eight ordered steps with every transition's role stated",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-server-says-when-it-is-stale",
       "node_type": "Verification",
       "properties": {
@@ -120205,7 +120699,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:6a63b2044a9916510314c7c8688e34ed29a240f2d75f56888c13312c0f191422",
+  "prev_content_hash": "sha256:ca578b3d578d39e2262d33d104f852ecf2579e137741b91ad70720f3f86ffae6",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
