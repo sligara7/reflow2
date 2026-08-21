@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:c65826395c7a0ee96ebe8199f70ebe51424403a8c885c50df09534aca1450158",
+  "content_hash": "sha256:42f2c96994abe58963e00e4b30ad84f881f60b11fa3141a3d372b5a32d422c0f",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -22966,6 +22966,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-graph-read-side-becomes-a-contract",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:granularity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-graph-read-side-becomes-a-contract",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-graph-read-side-becomes-a-contract",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:surprises"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-graph-read-side-becomes-a-contract",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "ifc:graph-read"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-installer-says-the-graph-is-tracked-20260808",
       "properties": {
         "accepted_baseline": true,
@@ -24261,6 +24297,17 @@
       "to_id": "req:version-combination-is-an-object"
     },
     {
+      "edge_type": "CLAIMS",
+      "from_id": "who:claude-code",
+      "properties": {
+        "claimed_at": "2026-08-21T20:45:00Z",
+        "depth": 1,
+        "note": "Specifying the read side of the graph as an extractable contract (ifc:graph-read) — step 1 toward swappable, independently testable and independently optimisable modules.",
+        "seat": "asligara7-bitecool:654288:fc683529"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
       "edge_type": "CONSTRAINS",
       "from_id": "con:pairing-stops-at-the-boundary",
       "properties": {
@@ -24333,11 +24380,59 @@
       "edge_type": "CONSUMES",
       "from_id": "cmp:allocate",
       "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:graph-read"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:allocate",
+      "properties": {
         "dependency_type": "function_call",
         "weight": 0.8,
         "weight_basis": "evidence"
       },
       "to_id": "ifc:req-dyno-graph-api"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:compare",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:graph-read"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:confirm",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:graph-read"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:consumption",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:graph-read"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:corpus",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:graph-read"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:coverage",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:graph-read"
     },
     {
       "edge_type": "CONSUMES",
@@ -24362,12 +24457,28 @@
     },
     {
       "edge_type": "CONSUMES",
+      "from_id": "cmp:granularity",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:graph-read"
+    },
+    {
+      "edge_type": "CONSUMES",
       "from_id": "cmp:graph",
       "properties": {
         "weight": 0.9,
         "weight_basis": "evidence"
       },
       "to_id": "ifc:req-dyno-core-api"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:ility",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:graph-read"
     },
     {
       "edge_type": "CONSUMES",
@@ -24403,6 +24514,46 @@
         "weight_basis": "estimated"
       },
       "to_id": "ifc:rendezvous-sidecar"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:maturity",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:graph-read"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:propagate",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:graph-read"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:regions",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:graph-read"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:report",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:graph-read"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:scope",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:graph-read"
     },
     {
       "edge_type": "CONSUMES",
@@ -24450,11 +24601,35 @@
       "edge_type": "CONSUMES",
       "from_id": "cmp:structure",
       "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:graph-read"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:structure",
+      "properties": {
         "dependency_type": "function_call",
         "weight": 0.8,
         "weight_basis": "evidence"
       },
       "to_id": "ifc:req-dyno-graph-api"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:surprises",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:graph-read"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:vocabulary",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:graph-read"
     },
     {
       "edge_type": "CONSUMES",
@@ -81700,6 +81875,14 @@
     },
     {
       "edge_type": "PROVIDES",
+      "from_id": "cmp:graph",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:graph-read"
+    },
+    {
+      "edge_type": "PROVIDES",
       "from_id": "cmp:main",
       "properties": {
         "weight_basis": "estimated"
@@ -99732,6 +99915,15 @@
       }
     },
     {
+      "node_id": "chg:the-graph-read-side-becomes-a-contract",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The read side of the graph is specified as a contract — `ifc:graph-read`, five operations derived by counting every call site in reflow2-core, with its exclusions and its error model written down. Provided by cmp:graph, consumed by the 16 modules measured to read the store and never write it. This is step 1 of making a module swappable, independently testable and independently optimisable: the spec is the test of whether the boundary is real, and it comes before any Rust.",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:the-installer-says-the-graph-is-tracked-20260808",
       "node_type": "ChangeEvent",
       "properties": {
@@ -110062,6 +110254,24 @@
       }
     },
     {
+      "node_id": "ifc:graph-read",
+      "node_type": "Interface",
+      "properties": {
+        "auth": "none",
+        "designation": "internal",
+        "endpoint": "Today: inherent methods on `reflow2_core::DesignGraph` (crates/reflow2-core/src/graph.rs). After extraction: a `reflow2_core::GraphRead` trait, taken as `&dyn GraphRead` — the shape `LlmBackend` already uses in 6 call sites and the only proven swap point in the crate.",
+        "error_model": "`Result<T, DynoError>`, where DynoError is dynograph-foundation's error type — inherited with the payload types, not defined here.\n\nABSENCE IS NOT AN ERROR, and this is the load-bearing clause for anyone writing a second implementation:\n  — a node that does not exist is `Ok(None)`, never `Err`\n  — a type with no nodes, or a node with no matching edges, is `Ok(vec![])`, never `Err`\n  — an UNKNOWN node_type is a real error and must NOT be answered `Ok(None)` or `Ok(vec![])`. \"No such type\" and \"no such node\" are different facts and must not share a reply — `get_node` already refuses this way at the tool surface, and an implementation that collapsed them would silently answer \"nothing there\" for every typo.\n\nAn `Err` therefore means the store could not answer, never that the answer was empty. A conforming implementation that returned empty on failure would satisfy the signatures and break every caller's meaning, which is why this is written down rather than left to the types.",
+        "medium": "library",
+        "name": "Graph read API — the five operations a module needs to read a design without being able to change it",
+        "operations": "FIVE OPERATIONS, ALL `&self`, ALL READ-ONLY. Derived by counting every call site in reflow2-core, not chosen by taste — these five carry 324 of the calls that reach the store.\n\n  fn get_node(&self, node_type: &str, id: &str) -> Result<Option<StoredNode>, DynoError>\n  fn scan_nodes(&self, node_type: &str) -> Result<Vec<StoredNode>, DynoError>\n  fn count_nodes(&self, node_type: &str) -> Result<usize, DynoError>\n  fn outgoing(&self, from_id: &str, edge_type: Option<&str>) -> Result<Vec<StoredEdge>, DynoError>\n  fn incoming(&self, to_id: &str, edge_type: Option<&str>) -> Result<Vec<StoredEdge>, DynoError>\n\nCall counts as measured 2026-08-21: get_node 113, scan_nodes 78, outgoing 59, incoming 57, count_nodes 17.\n\nDELIBERATELY EXCLUDED, and each exclusion is the contract saying something:\n  — every write (create_edge 55, upsert_node 22, delete_node 3, delete_edge 3). A module holding this contract CANNOT change the design, which is what makes a read-only module safe to swap and cheap to test.\n  — `design_network` and the other derived views. They are BUILT from these five (structure.rs `build_network`), so they are consumers of this contract, not part of it. Putting a derived view in the contract would force every alternative implementation to reimplement reflow2's own analysis.\n  — `engine()` and `graph_id()`. `search.rs` reaches through them to the storage engine directly, which is why search is NOT a clean consumer of this boundary despite calling only three methods. Naming that here is the point: the exclusion is what tells you search needs work before it can be swapped.",
+        "paradigm": "synchronous",
+        "payload_format": "none",
+        "payload_schema": "Values crossing the boundary are `dynograph_storage::{StoredNode, StoredEdge}` and `dynograph_core::Value`, passed as owned Rust values in-process — no serialization, which is why `payload_format` is `none` rather than a wire format.\n\n  StoredNode { graph_id: String, node_type: String, node_id: String, properties: HashMap<String, Value> }\n  StoredEdge { .. from_id / to_id / edge_type / properties }\n\n⚠️ THIS CONTRACT INHERITS ANOTHER. Those types belong to dynograph-foundation, recorded here as `ifc:req-dyno-storage-api` (designation `required` — reflow2 consumes it and does not own it). So an alternative implementation of this boundary is free to store bytes however it likes, but is NOT free to invent its own node and edge types: it must produce these. That is a real constraint on substitutability and it is inherited, not chosen.",
+        "provenance": "authored",
+        "transport_security": "none"
+      }
+    },
+    {
       "node_id": "ifc:mcp-protocol",
       "node_type": "Interface",
       "properties": {
@@ -116631,6 +116841,18 @@
       }
     },
     {
+      "node_id": "fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "property",
+        "name": "The undeclared-seam finding can never reach zero: couplings are read from DEPENDS_ON and contracts from PROVIDES/CONSUMES, and on this design those two sets are disjoint by construction",
+        "statement": "MEASURED 2026-08-21 on reflow2's own design (2845 nodes), while starting work on the gap 'x72 pair(s) of parts depend on each other with no contract written down'.\n\nTHE NUMBERS:\n  component couplings (Component DEPENDS_ON Component)      72\n  ...of those, with a two-sided contract                      0\n  declared contract pairs (an Interface with both a\n    PROVIDES and a CONSUMES side)                            26\n  ...of those, carrying a DEPENDS_ON edge                     0\n\nThe two sets are COMPLETELY DISJOINT. `seam_sets` computes `couplings` from DEPENDS_ON alone and `declared` from PROVIDES/CONSUMES alone, then subtracts. Since nothing in this design is recorded both ways, the subtraction is a no-op and the finding reports 100% undeclared no matter how many contracts anyone writes. WRITING A CONTRACT DOES NOT CREATE A DEPENDS_ON EDGE, so the number cannot move. This is a list that cannot reach zero, which is the third instance of that pattern found in one day.\n\nTHE CAUSE IS A LEVEL SPLIT, AND IT IS VISIBLE IN TWO LINES:\n  all 72 coupled pairs are cmp <-> cmp (module level)\n  22 of the 26 contract pairs involve a sys: subsystem; only 4 are cmp <-> cmp\n\nSo the design records CONTRACTS at the subsystem boundary and DEPENDENCIES at the module boundary, and the detector compares one against the other.\n\nTHE 72 ARE NOT SEAMS. Every one of them is INSIDE A SINGLE CRATE - zero cross a crate boundary, measured by mapping each component to its realizing artifacts' paths. And 43 of the 54 files in reflow2-core are `impl DesignGraph`: they are one type split across files for readability, not clients across a contract. Demanding a published contract between two impl blocks of the same struct is an alarm on correct work.\n\nTHE REAL BOUNDARIES ARE ALREADY DECLARED, which the finding's wording hides. The four cmp <-> cmp contract pairs are exactly the genuine ones - cmp:service <-> cmp:graph (reflow2-mcp to reflow2-core), cmp:service <-> cmp:registry, cmp:skills <-> cmp:service, cmp:init <-> cmp:export - and every external dependency is specified too (6 of the 17 Interfaces have no provider at all because they are things reflow2 consumes: the dynograph APIs, the ambient agent, the MCP protocol, an authenticating gateway, an exclusive local store).\n\n=> SO THE STANDING READING OF THIS DESIGN WAS WRONG. '0 of 10 subsystems publish a contract - reflow2 specifies everything it depends on and almost nothing it offers' is not what the graph says. It publishes 11 interfaces with providers and consumes 6 it does not own. What it does not do is draw DEPENDS_ON at the boundaries it has published, which is the only reason the seam metric reads zero.\n\nWHAT THIS DOES NOT SETTLE, and it is a modelling decision for the owner rather than a defect to repair: which level should carry contracts, and whether DEPENDS_ON between two impl blocks of one struct is a dependency worth recording at all.",
+        "subject_id": "cmp:seam",
+        "valid_from": "2026-08-21"
+      }
+    },
+    {
       "node_id": "fact:defaults-are-injected-by-dynograph-at-write",
       "node_type": "TemporalFact",
       "properties": {
@@ -120907,7 +121129,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:72e57c6f41ee5fdbe03d091f77852e61da9af6556ca451e2cf558474f9751324",
+  "prev_content_hash": "sha256:c65826395c7a0ee96ebe8199f70ebe51424403a8c885c50df09534aca1450158",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
