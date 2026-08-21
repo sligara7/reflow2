@@ -54,11 +54,12 @@
 //! Pure arithmetic over edges already in the graph — no file I/O, no LLM, and
 //! deterministic: the same design always yields the byte-identical report.
 
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 
 use dynograph_core::{DynoError, Value};
 use serde::Serialize;
 
+use crate::StoredNode;
 use crate::graph::DesignGraph;
 use crate::graph_read::GraphRead;
 use crate::nodes::{edge, node};
@@ -202,16 +203,35 @@ pub fn granularity_report(g: &dyn GraphRead) -> Result<GranularityReport, DynoEr
     // say "this file is that part", and counting it would make every
     // properly-registered artifact look coarser than it is.
     let mut per_artifact: BTreeMap<String, Vec<String>> = BTreeMap::new();
+    // Which ids ARE capabilities, asked once rather than once per edge.
+    //
+    // This loop used to call `get_node(CAPABILITY, ..)` for every REALIZES edge
+    // purely to type-check its target — 333 point lookups on reflow2's own
+    // design, against 218 artifacts. That made the reading cost one store read
+    // per EDGE when its answer is about ARTIFACTS, which is exactly what
+    // `con:granularity-reads-scale-with-artifacts-not-edges` forbids. One scan
+    // answers all of them, and membership is then free.
+    let capability_ids: BTreeSet<String> = g
+        .scan_nodes(node::CAPABILITY)?
+        .into_iter()
+        .map(|n| n.node_id)
+        .collect();
+    // The artifacts are kept, not just their ids: the observation loop below
+    // needs each flagged artifact's properties, and re-reading them would be
+    // paying the store twice for something already in hand.
+    let mut artifacts: BTreeMap<String, StoredNode> = BTreeMap::new();
     for art in g.scan_nodes(node::ARTIFACT)? {
+        let art_id = art.node_id.clone();
         let mut caps: Vec<String> = Vec::new();
         for e in g.outgoing(&art.node_id, Some(edge::REALIZES))? {
-            if g.get_node(node::CAPABILITY, &e.to_id)?.is_some() {
+            if capability_ids.contains(&e.to_id) {
                 caps.push(e.to_id);
             }
         }
         if !caps.is_empty() {
             caps.sort();
-            per_artifact.insert(art.node_id, caps);
+            artifacts.insert(art.node_id.clone(), art);
+            per_artifact.insert(art_id, caps);
         }
     }
 
@@ -297,7 +317,7 @@ pub fn granularity_report(g: &dyn GraphRead) -> Result<GranularityReport, DynoEr
             continue;
         }
         let at_or_above = counts.iter().filter(|&&c| c >= realizes).count();
-        let art = g.get_node(node::ARTIFACT, artifact_id)?;
+        let art = artifacts.get(artifact_id);
         let prop = |k: &str| {
             art.as_ref()
                 .and_then(|a| a.properties.get(k))

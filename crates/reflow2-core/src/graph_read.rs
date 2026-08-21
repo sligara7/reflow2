@@ -123,3 +123,109 @@ impl GraphRead for crate::graph::DesignGraph {
         crate::graph::DesignGraph::incoming(self, to_id, edge_type)
     }
 }
+
+/// How many store reads a module made, by operation.
+///
+/// A count, not a duration, and that is the point. Per-read cost was measured
+/// FLAT — `get_node` cost 58.0µs over a 2853-node design and 55.1µs over a
+/// 199-node one — so the store indexes correctly and what a module actually
+/// controls is how many times it asks, not how long each ask takes. A count is
+/// also the one measurement a parallel test suite cannot distort: a duration
+/// assertion measures machine contention, and the usual response is to raise
+/// the threshold until it stops complaining, which retires the gate without
+/// anybody deciding to.
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]
+pub struct ReadCounts {
+    pub get_node: usize,
+    pub scan_nodes: usize,
+    pub count_nodes: usize,
+    pub outgoing: usize,
+    pub incoming: usize,
+    /// Nodes actually handed back by `scan_nodes` — a scan is one CALL but not
+    /// one unit of work, and a budget that counted only calls would rate
+    /// "scan everything twice" as cheap.
+    pub nodes_scanned: usize,
+}
+
+impl ReadCounts {
+    /// Every call that reached the store.
+    #[must_use]
+    pub fn total(&self) -> usize {
+        self.get_node + self.scan_nodes + self.count_nodes + self.outgoing + self.incoming
+    }
+}
+
+/// Wraps any [`GraphRead`] and counts what passes through it.
+///
+/// THE SECOND REAL IMPLEMENTATION OF THIS CONTRACT, after `DesignGraph` itself,
+/// and the one that makes the contract pay for itself immediately: the optimize
+/// skill names "it cannot supply your measurement" as its own honest limit, and
+/// before this there was no way to ask what a module costs the store without
+/// editing the module. Now any module behind the contract can be measured from
+/// the outside, by construction, without touching it.
+///
+/// It is a decorator, so it composes: wrap a real graph, a test fake, or
+/// another decorator, and the module under measurement cannot tell.
+///
+/// ```no_run
+/// # use reflow2_core::graph_read::{CountingRead, GraphRead};
+/// # fn demo(g: &dyn GraphRead) -> Result<(), dynograph_core::DynoError> {
+/// let counted = CountingRead::new(g);
+/// let _ = reflow2_core::granularity::granularity_report(&counted)?;
+/// assert!(counted.counts().total() > 0);
+/// # Ok(())
+/// # }
+/// ```
+pub struct CountingRead<'a> {
+    inner: &'a dyn GraphRead,
+    counts: std::cell::RefCell<ReadCounts>,
+}
+
+impl<'a> CountingRead<'a> {
+    #[must_use]
+    pub fn new(inner: &'a dyn GraphRead) -> Self {
+        Self {
+            inner,
+            counts: std::cell::RefCell::new(ReadCounts::default()),
+        }
+    }
+
+    /// What has passed through so far. Cheap to call, and does not reset.
+    #[must_use]
+    pub fn counts(&self) -> ReadCounts {
+        *self.counts.borrow()
+    }
+}
+
+impl GraphRead for CountingRead<'_> {
+    fn get_node(&self, node_type: &str, id: &str) -> Result<Option<StoredNode>, DynoError> {
+        self.counts.borrow_mut().get_node += 1;
+        self.inner.get_node(node_type, id)
+    }
+
+    fn scan_nodes(&self, node_type: &str) -> Result<Vec<StoredNode>, DynoError> {
+        self.counts.borrow_mut().scan_nodes += 1;
+        let out = self.inner.scan_nodes(node_type)?;
+        self.counts.borrow_mut().nodes_scanned += out.len();
+        Ok(out)
+    }
+
+    fn count_nodes(&self, node_type: &str) -> Result<usize, DynoError> {
+        self.counts.borrow_mut().count_nodes += 1;
+        self.inner.count_nodes(node_type)
+    }
+
+    fn outgoing(
+        &self,
+        from_id: &str,
+        edge_type: Option<&str>,
+    ) -> Result<Vec<StoredEdge>, DynoError> {
+        self.counts.borrow_mut().outgoing += 1;
+        self.inner.outgoing(from_id, edge_type)
+    }
+
+    fn incoming(&self, to_id: &str, edge_type: Option<&str>) -> Result<Vec<StoredEdge>, DynoError> {
+        self.counts.borrow_mut().incoming += 1;
+        self.inner.incoming(to_id, edge_type)
+    }
+}
