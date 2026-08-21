@@ -1,0 +1,80 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record what a node relates to — or that nothing does. Use it right after capturing an idea, decision or requirement, while the search you ran to check for duplicates is still in hand: those near-matches are the candidates, and today they are read once and thrown away. Draw the relations that are genuinely true (`CONTRADICTS`, `EVOLVES_INTO`, `DEPENDS_ON`, `CAUSES`, `TRIGGERS`, `BLOCKS`, `DUPLICATES`, `ANTICIPATES`, `OBSOLETES`, `RISKS`, `MITIGATES`, `MASKS`, `VIOLATES`), each with the reason in `evidence`. Two or three is a good outcome; ten is a smell, because relatedness is not similarity. If nothing is honestly related, pass `note` instead — that is a real answer, not a weaker one, and it is what tells a later reader this node was considered rather than never opened. NEVER invent a relation to have something to pass: a false neighbour is worse than a missing one, since anything that searches by neighbourhood repeats it forever. Refuses when you give neither.",
+  "inputSchema": {
+    "$defs": {
+      "RelationLinkReq": {
+        "additionalProperties": false,
+        "description": "One relation for `review_relations`.",
+        "properties": {
+          "evidence": {
+            "description": "WHY this relation is true, in a sentence. Required — a relation with no\nevidence is an assertion the next reader can neither check nor overturn.",
+            "type": "string"
+          },
+          "incoming": {
+            "default": null,
+            "description": "Draw the edge FROM the other node instead. Direction is part of the\nclaim: every one of these reads as a sentence, *from RELATION to*, and\nbackwards the same edge asserts something false with nothing to catch it.",
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "other_id": {
+            "type": "string"
+          },
+          "other_type": {
+            "type": "string"
+          },
+          "relation": {
+            "description": "`CONTRADICTS` (both cannot hold) / `EVOLVES_INTO` (the older thought,\ngrown up) / `DEPENDS_ON` (only worth anything if the other lands first)\n/ `CAUSES` / `TRIGGERS` (taking one forces the other) / `BLOCKS` /\n`DUPLICATES` (the same thing said twice — link, do not merge; they were\nsaid for different reasons) / `ANTICIPATES` (the earlier one saw this\ncoming) / `OBSOLETES` / `RISKS` / `MITIGATES` (one is a hazard, the\nother answers it) / `MASKS` / `VIOLATES`.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "relation",
+          "other_type",
+          "other_id",
+          "evidence"
+        ],
+        "type": "object"
+      }
+    },
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "links": {
+        "description": "The relations you judged to be real. Empty is a valid answer — pass\n`note` instead.",
+        "items": {
+          "$ref": "#/$defs/RelationLinkReq"
+        },
+        "type": [
+          "array",
+          "null"
+        ]
+      },
+      "node_id": {
+        "type": "string"
+      },
+      "node_type": {
+        "description": "The node whose relations were reviewed (e.g. `Decision`).",
+        "type": "string"
+      },
+      "note": {
+        "default": null,
+        "description": "Required when `links` is empty: what you searched, what was nearest, and\nwhy nothing was honestly related. This is the half people skip, and it\nis what separates a node somebody judged and found genuinely new from\none nobody has opened — without it the two are the same node.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "node_type",
+      "node_id"
+    ],
+    "type": "object"
+  },
+  "name": "review_relations"
+}

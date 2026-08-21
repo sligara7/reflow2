@@ -82,8 +82,9 @@ every single time.
 
 1. **Judge the near-matches you already have.** Do not run a fresh sweep for candidates. The two or
    three the search and the guard surfaced are the ones worth looking at.
-2. **If one is genuinely related, name HOW.** The relation vocabulary already exists and accepts any
-   pair of nodes — pick the one that is true, with `create_edge`:
+2. **If one is genuinely related, name HOW.** `review_relations` is the door — it takes the
+   relations you judged real, or the note saying there were none, and refuses if you give it
+   neither. The vocabulary accepts any pair of nodes; pick the one that is true:
 
    | relation | use it when |
    | --- | --- |
@@ -106,11 +107,18 @@ every single time.
    will catch it.
 3. **Two or three edges is a good outcome. Ten is a smell.** Relatedness is not similarity. If
    everything links to everything, the neighbourhood stops carrying information.
-4. **If nothing is honestly related, write that line in the decision text** — *"searched; nearest
-   were X and Y; no real relation to either."* This is the half of the step people skip, and it is
-   not bookkeeping: it is the difference between an idea nobody has looked at and an idea somebody
-   looked at and found genuinely new. Only one of those is worth a second look later, and without
-   the line they are indistinguishable.
+4. **If nothing is honestly related, pass `note` to the same call** — *"searched; nearest were X
+   and Y; no real relation to either."* This is the half of the step people skip, and it is not
+   bookkeeping: it is the difference between an idea nobody has looked at and an idea somebody
+   looked at and found genuinely new. Only one of those is worth a second look later, and nothing —
+   not a person, not a detector — can tell them apart without it. **A note is a full answer, not a
+   weaker one.**
+
+**Nothing here is asked of the user, and nothing here nags.** `unreviewed_ideas` counts the ideas
+that carry neither a relation nor a note, but the detection and the *invitation* are different acts
+(`req:detecting-is-not-asking`): the count is computed always and put to the user at a boundary — a
+capture-session, an increment close — never at the moment of thinking. Step 2's rule stands
+unchanged.
 
 🛑 **Never draw an edge to satisfy this step.** A fabricated relation is worse than a missing one.
 A missing edge leaves an idea hard to find; an invented edge puts a false neighbour in front of
@@ -142,6 +150,9 @@ not said they want it, it is still just an idea nobody chose.
 - **A brainstorm is not a decision record.** When the user does decide, the decision gets its own
   rationale. Do not let "we talked about it" stand in for "we chose it, and here is why".
 
+- **The detector is aggregate, and low-severity, on purpose.** One finding names the practice and
+  lists the ideas. Per-idea it would have fired 115 times on reflow2's own graph the day it
+  shipped — every one of them correct, and the whole category filtered by the end of the week.
 - **Linking is the leg that was missing, and its absence was measured.** On 2026-08-21 reflow2's own
   graph held 145 brainstormed ideas joined by 12 edges; 111 of them reached no other idea within two
   hops, and the most common edge on an idea was its author. The relation vocabulary had existed the

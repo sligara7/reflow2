@@ -1690,6 +1690,48 @@ pub struct ConstrainsReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct ReviewRelationsReq {
+    /// The node whose relations were reviewed (e.g. `Decision`).
+    pub node_type: String,
+    pub node_id: String,
+    /// The relations you judged to be real. Empty is a valid answer — pass
+    /// `note` instead.
+    #[serde(default)]
+    pub links: Option<Vec<RelationLinkReq>>,
+    /// Required when `links` is empty: what you searched, what was nearest, and
+    /// why nothing was honestly related. This is the half people skip, and it
+    /// is what separates a node somebody judged and found genuinely new from
+    /// one nobody has opened — without it the two are the same node.
+    #[serde(default)]
+    pub note: Option<String>,
+}
+
+/// One relation for `review_relations`.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct RelationLinkReq {
+    /// `CONTRADICTS` (both cannot hold) / `EVOLVES_INTO` (the older thought,
+    /// grown up) / `DEPENDS_ON` (only worth anything if the other lands first)
+    /// / `CAUSES` / `TRIGGERS` (taking one forces the other) / `BLOCKS` /
+    /// `DUPLICATES` (the same thing said twice — link, do not merge; they were
+    /// said for different reasons) / `ANTICIPATES` (the earlier one saw this
+    /// coming) / `OBSOLETES` / `RISKS` / `MITIGATES` (one is a hazard, the
+    /// other answers it) / `MASKS` / `VIOLATES`.
+    pub relation: String,
+    pub other_type: String,
+    pub other_id: String,
+    /// WHY this relation is true, in a sentence. Required — a relation with no
+    /// evidence is an assertion the next reader can neither check nor overturn.
+    pub evidence: String,
+    /// Draw the edge FROM the other node instead. Direction is part of the
+    /// claim: every one of these reads as a sentence, *from RELATION to*, and
+    /// backwards the same edge asserts something false with nothing to catch it.
+    #[serde(default)]
+    pub incoming: Option<bool>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct BudgetReportReq {
     pub constraint_id: String,
 }

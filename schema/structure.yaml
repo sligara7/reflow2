@@ -99,6 +99,21 @@ schema:
         # as a trade already made. Reaching `accepted` is now a separate act
         # (`set_decision_status`, or `collapse_decision` choosing a fork).
         status: { type: enum, values: [proposed, accepted, superseded, rejected], default: proposed, indexed: true }
+        # The structural home for "somebody looked and there was nothing to draw"
+        # (2026-08-21, dec:idea-what-notices-an-idea-that-connects-to-nothing).
+        #
+        # Without it, an idea nobody has opened and an idea somebody judged and
+        # found genuinely new are INDISTINGUISHABLE — both carry no relation —
+        # and any detector over the first would keep reporting the second. The
+        # brainstorm skill asks for the judgement in prose; prose cannot be told
+        # apart from silence, so the judgement gets a place of its own. Written
+        # by `review_relations`, which is also the door the edges go through, so
+        # the two possible outcomes of one act are recorded the same way.
+        #
+        # Deliberately a NOTE and not a boolean: what was searched and what was
+        # nearest is the part a later reader can overturn. A bare `true` would
+        # say the review happened and nothing about whether it was any good.
+        no_relation_note: { type: string, fulltext: true, description: "Set when the relations of this node were reviewed and none was honest — what was searched, what was nearest, why nothing was drawn. Its PRESENCE is what separates a considered idea from an unopened one." }
       embedding_field: decision
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 80 }
       extraction_hint: >

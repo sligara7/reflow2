@@ -116,6 +116,11 @@ NON_TOOL_TERMS = {
     # HealIssue's field for a finding with no honest mechanical repair
     # (req:a-repair-suggestion-never-proposes-fabrication, 2026-08-10).
     "repair_is_a_judgement",
+    # A GAP SOURCE key (detect.rs), not a tool. The brainstorm skill names it so
+    # a reader can tell what the linking step is measured by — and so that the
+    # sentence promising the invitation is held has something concrete to be
+    # about.
+    "unreviewed_ideas",
     "shaping",
     "governs_retired",
     # CorpusReport / CorpusDocument fields and DocumentStatus values (BL-186) —
@@ -604,13 +609,24 @@ TOOL_CONVENTIONS: dict[str, str] = {
 # writing — the shape `distinct_from` already uses on the dedup guard.
 LINK_CONTRACT: dict[str, str] = {
     "spends the near-matches already in hand": "Judge the near-matches you already have",
+    "names the one call that writes either outcome": "`review_relations` is the door",
     "names the relation vocabulary rather than leaving it to be found": (
-        "The relation vocabulary already exists"
+        "The vocabulary accepts any pair of nodes"
     ),
     "asks why the edge was drawn": "Put the reason in the edge's `evidence`",
     "accepts 'no real relation' as an answer, in writing": (
-        "If nothing is honestly related, write that line in the decision text"
+        "If nothing is honestly related, pass `note` to the same call"
     ),
+    # Kept short deliberately: a longer phrase would straddle the file's line
+    # wrap and fail on reflow rather than on meaning, which trains people to
+    # weaken the check instead of honouring it.
+    "says a note is a full answer": "A note is a full answer",
+    # The timing clause, and the reason it is checked rather than trusted: the
+    # detector this skill points at is exactly the kind of thing step 2 forbids
+    # running over brainstormed nodes. What makes it legitimate is that the
+    # detection and the invitation are different acts. Drop that sentence and
+    # the skill starts recommending a nag.
+    "holds the invitation for a boundary": "never at the moment of thinking",
     "forbids manufacturing one to satisfy the step": "Never draw an edge to satisfy this step",
     "checks the direction of the claim": "Direction is part of the claim",
 }
