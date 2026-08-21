@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:42f2c96994abe58963e00e4b30ad84f881f60b11fa3141a3d372b5a32d422c0f",
+  "content_hash": "sha256:20fcb8d2bb55c685937d7c6e9367d032f3063622083ade76ddafd2e6267607c8",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -950,6 +950,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-module-can-be-read-swapped-and-tested-behind-a-contract",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:graph"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -12309,6 +12317,51 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-module-stands-behind-the-read-contract",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:granularity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-module-stands-behind-the-read-contract",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:graph-read"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-module-stands-behind-the-read-contract",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-module-can-be-read-swapped-and-tested-behind-a-contract"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-module-stands-behind-the-read-contract",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:granularity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-module-stands-behind-the-read-contract",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ifc:graph-read"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:a-node-attached-to-nothing-is-reported-whatever-its-type",
       "properties": {
         "accepted_baseline": true,
@@ -15249,6 +15302,15 @@
         "action": "modified"
       },
       "to_id": "art:docker-smoke-script"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-b2e233dd322c6c0e",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph-read"
     },
     {
       "edge_type": "CHANGED",
@@ -82780,6 +82842,24 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:graph-read",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-module-can-be-read-swapped-and-tested-behind-a-contract"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:graph-read",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "ifc:graph-read"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:heal",
       "properties": {
         "conformance": "unchecked"
@@ -84720,6 +84800,12 @@
         "evidence": "Covers orphan_node, the BL-199 gate and link-artifacts. PARTIAL on purpose: the requirement is about findings generally, and only the one family that caused a data loss has been done."
       },
       "to_id": "req:a-finding-names-the-remedy-not-only-the-problem"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-module-can-be-read-swapped-and-tested-behind-a-contract",
+      "properties": {},
+      "to_id": "req:recursive-black-box-decomposition"
     },
     {
       "edge_type": "SATISFIES",
@@ -87403,6 +87489,12 @@
       "from_id": "ver:a-merge-says-what-it-destroys",
       "properties": {},
       "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-module-stands-behind-the-contract",
+      "properties": {},
+      "to_id": "cap:a-module-can-be-read-swapped-and-tested-behind-a-contract"
     },
     {
       "edge_type": "VERIFIES",
@@ -91061,7 +91153,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:199301145284e0fb30cfec667a6adb26c3af9db724a2f3049474659ee07c7f15",
+        "checksum": "sha256:57980cc0df925752e627affd40cdbf2891f7275710c4611cecc2f34f1e00e1f7",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/granularity.rs",
         "name": "granularity.rs",
@@ -91080,6 +91172,17 @@
         "name": "crates/reflow2-core/src/graph.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:graph-read",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:c279071042794ec305522b740959fdb58a670974aa6597f9181a8c1b74a94243",
+        "location": "crates/reflow2-core/src/graph_read.rs",
+        "name": "graph_read.rs",
+        "status": "realized"
       }
     },
     {
@@ -93066,6 +93169,16 @@
         "provenance": "authored",
         "status": "realized",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:a-module-can-be-read-swapped-and-tested-behind-a-contract",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`GraphRead` (crates/reflow2-core/src/graph_read.rs) — the Rust trait realizing `ifc:graph-read`, and the second trait ever to exist in this crate. `LlmBackend` was the first and the only, since 2026-07.\n\n`impl GraphRead for DesignGraph` delegates to the inherent methods and hides nothing, so the 274-function struct is untouched and every existing caller keeps working. What it adds is the option to ask for `&dyn GraphRead` instead.\n\nTHE PILOT IS `granularity`. Its body moved out of `impl DesignGraph` into a free `granularity_report(g: &dyn GraphRead)`, with a one-line inherent method left behind so `report.rs`, `ility.rs` and the existing tests never noticed. A refactor that forced its callers to change would be paying for the boundary twice.\n\nWHAT THE MOVE BUYS, demonstrated rather than asserted, in three tests:\n  — RUNS WITH NO STORE. The same report computed over a design that is two Vec's: no RocksDB, no schema, no disk, no lock.\n  — CANNOT TELL WHICH IMPLEMENTATION IT IS READING. Population, mean and the flagged artifact ids are asserted EQUAL between a real DesignGraph and a hand-built fake sharing no code with it. Had the module reached past the contract for anything at all, this would not compile, let alone agree.\n  — LETS A REFUSAL THROUGH. An unknown node type arrives as an error, not as an empty design — with a control case proving an empty-but-valid design is `Ok`, so the assertion is not vacuous.\n\nAND THE COMPILER NOW ENFORCES WHAT THE DOCS ASSERTED: `GraphRead` has no writes, so a module behind it cannot change what it reads.\n\nNOT YET DONE, and deliberately not overstated: 15 other read-only modules are recorded as consuming this contract but still take `&self` on DesignGraph. This is one module, proven end to end, so the cost of the next is known rather than guessed.",
+        "name": "A module stands behind the read contract, so it can be swapped, tested with no store, and held still to be measured",
+        "provenance": "authored",
+        "status": "verified"
       }
     },
     {
@@ -95478,6 +95591,15 @@
       }
     },
     {
+      "node_id": "chg:a-module-stands-behind-the-read-contract",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "`GraphRead` exists — the second trait in this crate after `LlmBackend` — and `granularity` is the first module to stand behind it rather than inside `DesignGraph`. Its body became a free `granularity_report(&dyn GraphRead)` with a one-line inherent method left behind, so no caller changed. Three tests prove the boundary: the report runs over a design that is two Vec's with no store at all; the same module cannot tell a real DesignGraph from a fake sharing no code with it; and an unknown node type reaches the caller as an error rather than as an empty design, with a control case so the assertion is not vacuous.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:a-node-attached-to-nothing-is-reported-whatever-its-type",
       "node_type": "ChangeEvent",
       "properties": {
@@ -97665,6 +97787,16 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-15",
         "name": "First baseline recorded: the artifact was registered without a checksum and nothing was compared"
+      }
+    },
+    {
+      "node_id": "chg:baseline-b2e233dd322c6c0e",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-21",
+        "name": "First baseline, set at registration.",
+        "subject": "record"
       }
     },
     {
@@ -119024,6 +119156,20 @@
       }
     },
     {
+      "node_id": "ver:a-module-stands-behind-the-contract",
+      "node_type": "Verification",
+      "properties": {
+        "description": "`crates/reflow2-core/tests/granularity.rs` — 12 cases, of which 3 are new and exist to prove the boundary is real rather than decorative.\n\n`the_reading_runs_against_a_design_that_is_only_two_vectors` — the granularity report computed over a design held in two `Vec`s. No RocksDB, no schema, no disk, no lock. Before `ifc:graph-read` no module in this crate could be exercised without standing up a store.\n\n`the_same_module_cannot_tell_which_implementation_it_is_reading` — SUBSTITUTABILITY, demonstrated. The same function over a real `DesignGraph` and over a fake sharing no code with it, asserted equal on population, mean and the flagged artifact ids. If the module had reached past the contract for anything — the engine, the graph id, a derived view — this could not compile, let alone agree.\n\n`an_unknown_node_type_reaches_the_caller_as_an_error` — the obligation the signatures cannot carry. It runs a CONTROL first: an empty-but-valid design returns `Ok` with population 0. Then the same emptiness with a store that cannot answer, which must be `Err`. One thing changes and the outcome flips, so the assertion is not vacuous — without the control it would have passed even if the module treated every failure as an empty design.\n\nWHAT IS NOT CLAIMED: nothing here measures performance, so the third of the three goals — optimise a module against a budget — is enabled by this boundary and not yet exercised across it. The `optimize` skill wants a budget written down first, and none has been.",
+        "findings": "2026-08-21, first run: `cargo test -p reflow2-core --no-default-features --test granularity` — 12 passed, 0 failed. Whole core suite green, clippy and fmt clean.\n\nTHE SUBSTITUTABILITY CASE AGREED ON EVERY FIELD IT COMPARED — population 10, identical mean, and `[\"art:fat\"]` flagged by both — between a real RocksDB-less DesignGraph and a design made of two Vec's that shares no code with it.\n\nTHE CONTROL IS WHAT MAKES THE THIRD TEST WORTH HAVING. Written first without it, `an_unknown_node_type_reaches_the_caller_as_an_error` asserted only that a store which cannot answer produces `Err` — which would have passed even if the module treated every failure as an empty design. Adding the empty-but-valid case (Ok, population 0) means one thing changes and the outcome flips.",
+        "kind": "verification",
+        "last_run_at": "2026-08-21",
+        "level": "integration",
+        "method": "test",
+        "name": "The same module reads a real store and a two-vector fake and cannot tell them apart",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-move-leaves-exactly-one-parent",
       "node_type": "Verification",
       "properties": {
@@ -121129,7 +121275,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:c65826395c7a0ee96ebe8199f70ebe51424403a8c885c50df09534aca1450158",
+  "prev_content_hash": "sha256:42f2c96994abe58963e00e4b30ad84f881f60b11fa3141a3d372b5a32d422c0f",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

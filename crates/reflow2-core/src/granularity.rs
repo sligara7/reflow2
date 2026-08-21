@@ -60,6 +60,7 @@ use dynograph_core::{DynoError, Value};
 use serde::Serialize;
 
 use crate::graph::DesignGraph;
+use crate::graph_read::GraphRead;
 use crate::nodes::{edge, node};
 
 /// How far above this design's own mean an artifact must sit before it is
@@ -167,164 +168,117 @@ impl DesignGraph {
     ///
     /// See the module docs for what this does and — more importantly — what it
     /// refuses to do.
+    ///
+    /// A one-line delegation to [`granularity_report`], which is where the
+    /// work lives. Kept so that every existing caller — `report.rs`,
+    /// `ility.rs`, the tests — is untouched by the module moving behind a
+    /// contract: a refactor that forced its callers to change would be paying
+    /// for the boundary twice.
     pub fn granularity_report(&self) -> Result<GranularityReport, DynoError> {
-        // Capabilities realized per artifact. Components are deliberately not
-        // counted: an artifact realizing its component is the ordinary way to
-        // say "this file is that part", and counting it would make every
-        // properly-registered artifact look coarser than it is.
-        let mut per_artifact: BTreeMap<String, Vec<String>> = BTreeMap::new();
-        for art in self.scan_nodes(node::ARTIFACT)? {
-            let mut caps: Vec<String> = Vec::new();
-            for e in self.outgoing(&art.node_id, Some(edge::REALIZES))? {
-                if self.get_node(node::CAPABILITY, &e.to_id)?.is_some() {
-                    caps.push(e.to_id);
-                }
-            }
-            if !caps.is_empty() {
-                caps.sort();
-                per_artifact.insert(art.node_id, caps);
+        granularity_report(self)
+    }
+}
+
+/// Read how the build's granularity compares with the design's, over anything
+/// that can be read as a design.
+///
+/// ⭐ THE FIRST MODULE IN THIS CRATE TO STAND BEHIND [`GraphRead`] RATHER THAN
+/// INSIDE `DesignGraph`, and the pilot for the rest. Taking `&dyn GraphRead`
+/// rather than `&DesignGraph` buys three things that were not previously
+/// possible for any module here:
+///
+/// - **it can be swapped**: any implementation of the contract can be fed to
+///   it, and it cannot tell the difference;
+/// - **it can be tested with no store at all** — see this module's tests,
+///   which build a design in memory as plain vectors;
+/// - **it can be optimised against a budget**, because the boundary is now
+///   somewhere a measurement can be taken and held still.
+///
+/// It also cannot corrupt anything it reads. `GraphRead` has no writes, so the
+/// compiler now enforces what the module docs used to only assert.
+pub fn granularity_report(g: &dyn GraphRead) -> Result<GranularityReport, DynoError> {
+    // Capabilities realized per artifact. Components are deliberately not
+    // counted: an artifact realizing its component is the ordinary way to
+    // say "this file is that part", and counting it would make every
+    // properly-registered artifact look coarser than it is.
+    let mut per_artifact: BTreeMap<String, Vec<String>> = BTreeMap::new();
+    for art in g.scan_nodes(node::ARTIFACT)? {
+        let mut caps: Vec<String> = Vec::new();
+        for e in g.outgoing(&art.node_id, Some(edge::REALIZES))? {
+            if g.get_node(node::CAPABILITY, &e.to_id)?.is_some() {
+                caps.push(e.to_id);
             }
         }
+        if !caps.is_empty() {
+            caps.sort();
+            per_artifact.insert(art.node_id, caps);
+        }
+    }
 
-        let population = per_artifact.len();
-        let mut counts: Vec<usize> = per_artifact.values().map(Vec::len).collect();
-        counts.sort_unstable();
+    let population = per_artifact.len();
+    let mut counts: Vec<usize> = per_artifact.values().map(Vec::len).collect();
+    counts.sort_unstable();
 
-        let mut notes = Vec::new();
-        let not_observed_about = vec![
-            "Artifacts nobody registered. This reads REALIZES edges, so a file the design never \
+    let mut notes = Vec::new();
+    let not_observed_about = vec![
+        "Artifacts nobody registered. This reads REALIZES edges, so a file the design never \
              claimed is invisible here — run coverage_report for that question."
-                .to_string(),
-            "The size of anything. This measures the DESIGN's granularity against the build's; \
+            .to_string(),
+        "The size of anything. This measures the DESIGN's granularity against the build's; \
              an artifact of six thousand lines realizing exactly one capability is silent here."
-                .to_string(),
-            "Outliers that hide each other. The spread an artifact is measured against includes \
+            .to_string(),
+        "Outliers that hide each other. The spread an artifact is measured against includes \
              the outliers themselves, so several equally coarse artifacts mask one another and \
              may all go unreported. Read this as a prompt to look, never as a count of how many \
              there are."
-                .to_string(),
-            "Which side is right. N capabilities in one artifact may mean the artifact should be \
+            .to_string(),
+        "Which side is right. N capabilities in one artifact may mean the artifact should be \
              N files, or that the design over-decomposed and should hold fewer capabilities, or \
              that it is correct for this phase. That judgement is not reflow2's."
-                .to_string(),
-        ];
+            .to_string(),
+    ];
 
-        if population < MIN_POPULATION {
-            notes.push(format!(
-                "{population} artifact(s) realize a capability — below the {MIN_POPULATION} this \
+    if population < MIN_POPULATION {
+        notes.push(format!(
+            "{population} artifact(s) realize a capability — below the {MIN_POPULATION} this \
                  will speak about. A spread computed over so few would describe the sample, not \
                  the design, so nothing is reported."
-            ));
-            return Ok(GranularityReport {
-                observations: Vec::new(),
-                population,
-                mean_capabilities_per_artifact: 0.0,
-                median_capabilities_per_artifact: 0.0,
-                unusual_at: UNUSUAL_AT,
-                min_distinctions: MIN_DISTINCTIONS,
-                not_observed_about,
-                notes,
-            });
-        }
+        ));
+        return Ok(GranularityReport {
+            observations: Vec::new(),
+            population,
+            mean_capabilities_per_artifact: 0.0,
+            median_capabilities_per_artifact: 0.0,
+            unusual_at: UNUSUAL_AT,
+            min_distinctions: MIN_DISTINCTIONS,
+            not_observed_about,
+            notes,
+        });
+    }
 
-        let n = counts.len() as f64;
-        let mean = counts.iter().sum::<usize>() as f64 / n;
-        let variance = counts
-            .iter()
-            .map(|&c| {
-                let d = c as f64 - mean;
-                d * d
-            })
-            .sum::<f64>()
-            / (n - 1.0);
-        let sd = variance.sqrt();
-        let med = median(&counts);
+    let n = counts.len() as f64;
+    let mean = counts.iter().sum::<usize>() as f64 / n;
+    let variance = counts
+        .iter()
+        .map(|&c| {
+            let d = c as f64 - mean;
+            d * d
+        })
+        .sum::<f64>()
+        / (n - 1.0);
+    let sd = variance.sqrt();
+    let med = median(&counts);
 
-        if sd == 0.0 {
-            notes.push(
-                "Every registered artifact realizes the same number of capabilities, so nothing \
+    if sd == 0.0 {
+        notes.push(
+            "Every registered artifact realizes the same number of capabilities, so nothing \
                  is out of line with anything. A design whose build is uniformly coarse is not \
                  reported as a problem — there is no outlier, and an absolute bar is exactly what \
                  this refuses to apply."
-                    .to_string(),
-            );
-            return Ok(GranularityReport {
-                observations: Vec::new(),
-                population,
-                mean_capabilities_per_artifact: mean,
-                median_capabilities_per_artifact: med,
-                unusual_at: UNUSUAL_AT,
-                min_distinctions: MIN_DISTINCTIONS,
-                not_observed_about,
-                notes,
-            });
-        }
-
-        let mut observations = Vec::new();
-        for (artifact_id, capability_ids) in &per_artifact {
-            let realizes = capability_ids.len();
-            let unusual = (realizes as f64 - mean) / sd;
-            if unusual < UNUSUAL_AT || realizes < MIN_DISTINCTIONS {
-                continue;
-            }
-            let at_or_above = counts.iter().filter(|&&c| c >= realizes).count();
-            let art = self.get_node(node::ARTIFACT, artifact_id)?;
-            let prop = |k: &str| {
-                art.as_ref()
-                    .and_then(|a| a.properties.get(k))
-                    .and_then(Value::as_str)
-                    .map(str::to_string)
-            };
-            let mut reasons = vec![format!(
-                "The design distinguishes {realizes} capabilities here; the build holds them in \
-                 one artifact, so it separates none of them."
-            )];
-            reasons.push(format!(
-                "The median registered artifact realizes {med} capability(ies), across a \
-                 population of {population}."
-            ));
-            if at_or_above == 1 {
-                reasons.push(
-                    "No other artifact in this design realizes as many, so this is not the \
-                     design's normal coarseness — it is one place that did not follow the rest."
-                        .to_string(),
-                );
-            } else {
-                reasons.push(format!(
-                    "{at_or_above} artifacts realize at least this many."
-                ));
-            }
-            observations.push(GranularityObservation {
-                artifact_id: artifact_id.clone(),
-                name: prop("name"),
-                location: prop("location"),
-                realizes_capabilities: realizes,
-                capability_ids: capability_ids.clone(),
-                at_or_above,
-                unusual,
-                reasons,
-            });
-        }
-
-        // Most out-of-line first; id breaks ties so the report is deterministic.
-        observations.sort_by(|a, b| {
-            b.unusual
-                .partial_cmp(&a.unusual)
-                .unwrap_or(std::cmp::Ordering::Equal)
-                .then_with(|| a.artifact_id.cmp(&b.artifact_id))
-        });
-
-        if observations.is_empty() {
-            notes.push(format!(
-                "No artifact both sits {UNUSUAL_AT} standard deviations above this design's own \
-                 mean of {mean:.2} and collapses at least {MIN_DISTINCTIONS} distinctions. That \
-                 is an ordinary answer, not a clean bill of health — the cutoff is \
-                 distributional, so a uniformly coarse design reports nothing."
-            ));
-        }
-
-        Ok(GranularityReport {
-            observations,
+                .to_string(),
+        );
+        return Ok(GranularityReport {
+            observations: Vec::new(),
             population,
             mean_capabilities_per_artifact: mean,
             median_capabilities_per_artifact: med,
@@ -332,6 +286,80 @@ impl DesignGraph {
             min_distinctions: MIN_DISTINCTIONS,
             not_observed_about,
             notes,
-        })
+        });
     }
+
+    let mut observations = Vec::new();
+    for (artifact_id, capability_ids) in &per_artifact {
+        let realizes = capability_ids.len();
+        let unusual = (realizes as f64 - mean) / sd;
+        if unusual < UNUSUAL_AT || realizes < MIN_DISTINCTIONS {
+            continue;
+        }
+        let at_or_above = counts.iter().filter(|&&c| c >= realizes).count();
+        let art = g.get_node(node::ARTIFACT, artifact_id)?;
+        let prop = |k: &str| {
+            art.as_ref()
+                .and_then(|a| a.properties.get(k))
+                .and_then(Value::as_str)
+                .map(str::to_string)
+        };
+        let mut reasons = vec![format!(
+            "The design distinguishes {realizes} capabilities here; the build holds them in \
+                 one artifact, so it separates none of them."
+        )];
+        reasons.push(format!(
+            "The median registered artifact realizes {med} capability(ies), across a \
+                 population of {population}."
+        ));
+        if at_or_above == 1 {
+            reasons.push(
+                "No other artifact in this design realizes as many, so this is not the \
+                     design's normal coarseness — it is one place that did not follow the rest."
+                    .to_string(),
+            );
+        } else {
+            reasons.push(format!(
+                "{at_or_above} artifacts realize at least this many."
+            ));
+        }
+        observations.push(GranularityObservation {
+            artifact_id: artifact_id.clone(),
+            name: prop("name"),
+            location: prop("location"),
+            realizes_capabilities: realizes,
+            capability_ids: capability_ids.clone(),
+            at_or_above,
+            unusual,
+            reasons,
+        });
+    }
+
+    // Most out-of-line first; id breaks ties so the report is deterministic.
+    observations.sort_by(|a, b| {
+        b.unusual
+            .partial_cmp(&a.unusual)
+            .unwrap_or(std::cmp::Ordering::Equal)
+            .then_with(|| a.artifact_id.cmp(&b.artifact_id))
+    });
+
+    if observations.is_empty() {
+        notes.push(format!(
+            "No artifact both sits {UNUSUAL_AT} standard deviations above this design's own \
+                 mean of {mean:.2} and collapses at least {MIN_DISTINCTIONS} distinctions. That \
+                 is an ordinary answer, not a clean bill of health — the cutoff is \
+                 distributional, so a uniformly coarse design reports nothing."
+        ));
+    }
+
+    Ok(GranularityReport {
+        observations,
+        population,
+        mean_capabilities_per_artifact: mean,
+        median_capabilities_per_artifact: med,
+        unusual_at: UNUSUAL_AT,
+        min_distinctions: MIN_DISTINCTIONS,
+        not_observed_about,
+        notes,
+    })
 }
