@@ -325,3 +325,226 @@ fn several_coarse_artifacts_mask_each_other() {
             .collect::<Vec<_>>()
     );
 }
+
+// ---- The module standing on its own, with no store behind it -------------
+//
+// Everything above builds a real DesignGraph. Everything below does not, and
+// that difference is the point of `ifc:graph-read`.
+//
+// Before this contract existed, reflow2-core had 274 public functions on one
+// struct across 43 files and exactly one trait. No module could be swapped,
+// held still and measured, or tested without a store — not because anyone had
+// written the wrong code, but because there was no boundary to stand outside
+// of. `granularity` is the pilot: it now takes `&dyn GraphRead`, so what
+// follows is the same report, computed over a design made of two vectors.
+
+use dynograph_core::{DynoError, Value};
+use dynograph_storage::{StoredEdge, StoredNode};
+use reflow2_core::graph_read::GraphRead;
+use reflow2_core::nodes::node;
+use std::collections::HashMap;
+
+/// A design held in two vectors. No store, no schema, no disk, no lock.
+struct Vectors {
+    nodes: Vec<StoredNode>,
+    edges: Vec<StoredEdge>,
+    /// Types this fake admits. Everything else is an ERROR, never an empty
+    /// answer — the one obligation in the contract that the signatures cannot
+    /// express, honoured here so the test proves the caller survives it.
+    known_types: Vec<&'static str>,
+}
+
+impl Vectors {
+    fn check_type(&self, node_type: &str) -> Result<(), DynoError> {
+        if self.known_types.contains(&node_type) {
+            Ok(())
+        } else {
+            Err(DynoError::UnknownNodeType(node_type.to_string()))
+        }
+    }
+}
+
+impl GraphRead for Vectors {
+    fn get_node(&self, node_type: &str, id: &str) -> Result<Option<StoredNode>, DynoError> {
+        self.check_type(node_type)?;
+        Ok(self
+            .nodes
+            .iter()
+            .find(|n| n.node_type == node_type && n.node_id == id)
+            .cloned())
+    }
+
+    fn scan_nodes(&self, node_type: &str) -> Result<Vec<StoredNode>, DynoError> {
+        self.check_type(node_type)?;
+        Ok(self
+            .nodes
+            .iter()
+            .filter(|n| n.node_type == node_type)
+            .cloned()
+            .collect())
+    }
+
+    fn count_nodes(&self, node_type: &str) -> Result<usize, DynoError> {
+        Ok(self.scan_nodes(node_type)?.len())
+    }
+
+    fn outgoing(
+        &self,
+        from_id: &str,
+        edge_type: Option<&str>,
+    ) -> Result<Vec<StoredEdge>, DynoError> {
+        Ok(self
+            .edges
+            .iter()
+            .filter(|e| e.from_id == from_id && edge_type.is_none_or(|t| e.edge_type == t))
+            .cloned()
+            .collect())
+    }
+
+    fn incoming(&self, to_id: &str, edge_type: Option<&str>) -> Result<Vec<StoredEdge>, DynoError> {
+        Ok(self
+            .edges
+            .iter()
+            .filter(|e| e.to_id == to_id && edge_type.is_none_or(|t| e.edge_type == t))
+            .cloned()
+            .collect())
+    }
+}
+
+fn fake_node(node_type: &str, id: &str) -> StoredNode {
+    StoredNode {
+        graph_id: "fake".into(),
+        node_type: node_type.into(),
+        node_id: id.into(),
+        properties: HashMap::from([("name".to_string(), Value::String(id.to_string()))]),
+    }
+}
+
+fn realizes(art: &str, cap: &str) -> StoredEdge {
+    StoredEdge {
+        graph_id: "fake".into(),
+        edge_type: "REALIZES".into(),
+        from_id: art.into(),
+        to_id: cap.into(),
+        properties: HashMap::new(),
+    }
+}
+
+/// One fat artifact against nine lean ones — the shape the reading exists to
+/// notice, built here without a store.
+fn one_outlier_among_many() -> Vectors {
+    let mut nodes = vec![fake_node("Artifact", "art:fat")];
+    let mut edges = Vec::new();
+    for i in 0..8 {
+        nodes.push(fake_node("Capability", &format!("cap:fat{i}")));
+        edges.push(realizes("art:fat", &format!("cap:fat{i}")));
+    }
+    for i in 0..9 {
+        let (a, c) = (format!("art:lean{i}"), format!("cap:lean{i}"));
+        nodes.push(fake_node("Artifact", &a));
+        nodes.push(fake_node("Capability", &c));
+        edges.push(realizes(&a, &c));
+    }
+    Vectors {
+        nodes,
+        edges,
+        known_types: vec!["Artifact", "Capability"],
+    }
+}
+
+#[test]
+fn the_reading_runs_against_a_design_that_is_only_two_vectors() {
+    let report = reflow2_core::granularity::granularity_report(&one_outlier_among_many())
+        .expect("no store required");
+
+    assert_eq!(report.population, 10, "ten artifacts realize capabilities");
+    let flagged: Vec<&str> = report
+        .observations
+        .iter()
+        .map(|o| o.artifact_id.as_str())
+        .collect();
+    assert_eq!(
+        flagged,
+        vec!["art:fat"],
+        "the one artifact holding eight distinctions is the finding; the nine lean ones are not"
+    );
+}
+
+/// ⭐ SUBSTITUTABILITY, DEMONSTRATED RATHER THAN ASSERTED.
+///
+/// The same function, the same assertions, over an implementation that shares
+/// no code with `DesignGraph` — no RocksDB, no schema, no `.reflow2/` on disk.
+/// If `granularity` had reached past the contract for anything at all, this
+/// could not compile, let alone agree.
+#[test]
+fn the_same_module_cannot_tell_which_implementation_it_is_reading() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    g.add_artifact("art:fat", "fat.rs", Some("code"), Some("src/fat.rs"))
+        .unwrap();
+    for i in 0..8 {
+        g.add_capability(&format!("cap:fat{i}"), "c", "c", None)
+            .unwrap();
+        g.realizes(
+            "art:fat",
+            node::CAPABILITY,
+            &format!("cap:fat{i}"),
+            None,
+            None,
+        )
+        .unwrap();
+    }
+    for i in 0..9 {
+        let (a, c) = (format!("art:lean{i}"), format!("cap:lean{i}"));
+        g.add_artifact(&a, "lean.rs", Some("code"), Some("src/lean.rs"))
+            .unwrap();
+        g.add_capability(&c, "c", "c", None).unwrap();
+        g.realizes(&a, node::CAPABILITY, &c, None, None).unwrap();
+    }
+
+    let from_store = reflow2_core::granularity::granularity_report(&g).unwrap();
+    let from_vectors =
+        reflow2_core::granularity::granularity_report(&one_outlier_among_many()).unwrap();
+
+    assert_eq!(from_store.population, from_vectors.population);
+    assert_eq!(
+        from_store.mean_capabilities_per_artifact,
+        from_vectors.mean_capabilities_per_artifact
+    );
+    let ids = |r: &reflow2_core::granularity::GranularityReport| {
+        r.observations
+            .iter()
+            .map(|o| o.artifact_id.clone())
+            .collect::<Vec<_>>()
+    };
+    assert_eq!(ids(&from_store), ids(&from_vectors));
+}
+
+/// The obligation the signatures cannot carry: an UNKNOWN node type is an
+/// error, not an empty answer. A conforming implementation must fail loud, and
+/// the caller must let that failure through rather than reading it as "nothing
+/// there" — which is how a typo would otherwise answer reassuringly forever.
+#[test]
+fn an_unknown_node_type_reaches_the_caller_as_an_error() {
+    // The control, and without it this test would be vacuous: an EMPTY design
+    // whose types are known is a fine answer, not a failure.
+    let empty_but_known = Vectors {
+        nodes: vec![],
+        edges: vec![],
+        known_types: vec!["Artifact", "Capability"],
+    };
+    let ok = reflow2_core::granularity::granularity_report(&empty_but_known)
+        .expect("no artifacts is a design state, not an error");
+    assert_eq!(ok.population, 0);
+
+    // The same emptiness, but the store cannot answer at all. One thing
+    // changed; the outcome must flip.
+    let cannot_answer = Vectors {
+        nodes: vec![],
+        edges: vec![],
+        known_types: vec![], // admits nothing — even "Artifact" is unknown here
+    };
+    assert!(
+        reflow2_core::granularity::granularity_report(&cannot_answer).is_err(),
+        "the store could not answer, and that must not arrive as an empty design"
+    );
+}
