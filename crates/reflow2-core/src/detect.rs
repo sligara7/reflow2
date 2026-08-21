@@ -3063,6 +3063,42 @@ impl DesignGraph {
             if self.is_discontinued(&n.node_id)? {
                 continue;
             }
+            // NOT STARTED: you cannot check what nobody has built.
+            //
+            // This is the THIRD time this detector has narrowed for the same
+            // reason, and the two above say why — the per-artifact rule that
+            // made 22 of 25 findings, and BL-73's 21 near-identical
+            // acknowledges. Measured here before changing: 28 of the 92
+            // findings on reflow2's own design were roadmap rows nobody had
+            // started, and a list that cannot reach zero teaches you to skim
+            // it. That is not a tidiness argument. reflow2's own v0.38.0 was
+            // published with an empty manifest past a gate showing 96 notes.
+            //
+            // ⚠️ READING `status` ALONE IS NOT ENOUGH, and that is the whole
+            // shape of this exemption. A capability marked `planned` that an
+            // Artifact already realizes IS built and its status is merely
+            // stale — the `rel:v0380` shape, where a published, deployed
+            // release still read `planned` because nothing makes anyone move
+            // it. So both must hold: the status says not started, AND nothing
+            // builds it. Measured, that distinction keeps exactly one live
+            // question on this design (`cap:explains-itself`, planned with a
+            // file already realizing it) that trusting the status would have
+            // silenced — which is the entire point.
+            //
+            // DIRECT realization only. The indirect path
+            // (`art -REALIZES-> cmp <-ALLOCATED_TO- cap`) that
+            // `unrealized_capability` rightly accepts is too loose HERE:
+            // measured, it calls all 29 planned capabilities built, because
+            // each is allocated to a component some file realizes, and the
+            // exemption then does nothing at all.
+            let not_started = n
+                .properties
+                .get("status")
+                .and_then(dynograph_core::Value::as_str)
+                == Some("planned");
+            if not_started && self.incoming(&n.node_id, Some(edge::REALIZES))?.is_empty() {
+                continue;
+            }
             let mut carrier = None;
             for e in self.outgoing(&n.node_id, Some(edge::ALLOCATED_TO))? {
                 if self.has_passing_verification(&e.to_id)? {

@@ -2209,3 +2209,118 @@ fn an_empty_manifest_on_a_shipped_release_fails_the_build() {
         "release_without_epoch is a question, and questions do not stop a build"
     );
 }
+
+// ---- A capability nobody has built yet is not asked for proof ------------
+//
+// 28 of the 92 findings on reflow2's own design were roadmap rows nobody had
+// started. A list that cannot reach zero teaches you to skim it, and this
+// project has already paid for that: v0.38.0 was published with an empty
+// manifest past a gate showing 96 notes.
+
+/// One capability at `status`, allocated to a component with no check of its
+/// own, so nothing is riding a carrier and each test measures its own rule.
+fn one_capability(status: &str) -> DesignGraph {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    // The detector returns early unless the design has verifications at all,
+    // so give it one that checks something unrelated.
+    g.add_verification("ver:other", "other", None, None, None)
+        .unwrap();
+    g.add_capability("cap:other", "Other", "Does something else", None)
+        .unwrap();
+    g.verifies("ver:other", "Capability", "cap:other").unwrap();
+    g.set_verification_status("ver:other", "passing", None, None)
+        .unwrap();
+
+    g.add_capability("cap:x", "X", "Does X", Some(status))
+        .unwrap();
+    g
+}
+
+fn unverified(gaps: &[reflow2_core::GapCandidate]) -> Vec<&reflow2_core::GapCandidate> {
+    gaps.iter()
+        .filter(|g| {
+            g.gap_source == GapSource::UnverifiedCapability && g.affected_ids == vec!["cap:x"]
+        })
+        .collect()
+}
+
+#[test]
+fn a_planned_capability_nobody_has_built_is_not_asked_for_a_check() {
+    let g = one_capability("planned");
+    assert!(
+        unverified(&g.detect_gaps().unwrap()).is_empty(),
+        "nothing has been built, so there is nothing a check could examine"
+    );
+}
+
+#[test]
+fn a_realized_capability_with_no_check_is_still_asked() {
+    let g = one_capability("realized");
+    assert_eq!(
+        unverified(&g.detect_gaps().unwrap()).len(),
+        1,
+        "it exists and nothing proves it works — the question stands"
+    );
+}
+
+/// ⭐ THE CASE THE EXEMPTION EXISTS TO NOT SWALLOW, and the reason it reads
+/// structure as well as status.
+///
+/// A capability marked `planned` that an Artifact already realizes is BUILT;
+/// its status is stale. That is the `rel:v0380` shape — a release published,
+/// deployed and asset-verified while its status still read `planned`, because
+/// nothing makes anyone move it. Trusting `status` alone here would hand the
+/// quietest possible exemption to exactly the work most likely to be forgotten.
+///
+/// Measured on reflow2's own design: this distinction is worth exactly one live
+/// question (`cap:explains-itself`), and that one question is the whole reason
+/// the rule is written with two conditions instead of one.
+#[test]
+fn a_stale_planned_status_does_not_excuse_something_already_built() {
+    let mut g = one_capability("planned");
+    g.add_artifact("art:x", "x.rs", Some("code"), Some("src/x.rs"))
+        .unwrap();
+    g.create_edge(
+        edge::REALIZES,
+        node::ARTIFACT,
+        "art:x",
+        node::CAPABILITY,
+        "cap:x",
+        Props::new(),
+    )
+    .unwrap();
+
+    assert_eq!(
+        unverified(&g.detect_gaps().unwrap()).len(),
+        1,
+        "a file builds it, so it is built whatever the status field says"
+    );
+}
+
+/// The indirect path is deliberately NOT accepted here. Measured on reflow2's
+/// own design, allowing `art -REALIZES-> cmp <-ALLOCATED_TO- cap` called all 29
+/// planned capabilities built — because each is allocated to a component some
+/// file realizes — and the exemption removed nothing at all.
+#[test]
+fn being_allocated_to_a_built_component_does_not_count_as_built_here() {
+    let mut g = one_capability("planned");
+    g.add_component("cmp:host", "Host", "hosts x", None)
+        .unwrap();
+    g.allocate("cap:x", "cmp:host").unwrap();
+    g.add_artifact("art:host", "host.rs", Some("code"), Some("src/host.rs"))
+        .unwrap();
+    g.create_edge(
+        edge::REALIZES,
+        node::ARTIFACT,
+        "art:host",
+        node::COMPONENT,
+        "cmp:host",
+        Props::new(),
+    )
+    .unwrap();
+
+    assert!(
+        unverified(&g.detect_gaps().unwrap()).is_empty(),
+        "the component is built; this capability still is not"
+    );
+}

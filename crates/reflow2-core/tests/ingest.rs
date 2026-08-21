@@ -1363,6 +1363,25 @@ fn an_extracted_check_is_planned_and_does_not_silence_the_gap() {
         "a document's claim is not an observed outcome"
     );
 
+    // The capability must be BUILT for this test to be testing its own claim.
+    //
+    // It was not, until 2026-08-21, and the test passed for a reason it did not
+    // name: `unverified_capability` fired on every capability, so an ingested
+    // one nothing had built raised the gap regardless of what its check said.
+    // The rule now exempts a capability that is `planned` AND that nothing
+    // realizes — you cannot check what nobody has built, and `unrealized_
+    // capability` is already asking the more fundamental question — which made
+    // this assertion fail and exposed the dependency.
+    //
+    // Building it separates the two: the capability exists, so "does anything
+    // prove this works?" is live, and the ONLY thing that could answer it is
+    // the extracted check. That is the claim in the doc comment above, now
+    // actually under test rather than incidentally true.
+    g.add_artifact("art:cache", "cache.rs", Some("code"), Some("src/cache.rs"))
+        .unwrap();
+    g.realizes("art:cache", node::CAPABILITY, "cap:cache", None, None)
+        .unwrap();
+
     let still_asking = g.detect_gaps().unwrap().into_iter().any(|gap| {
         gap.gap_source == GapSource::UnverifiedCapability
             && gap.affected_ids.contains(&"cap:cache".to_string())

@@ -111,6 +111,18 @@ jobs:
         # eleven releases. This fails if the design record drifts back to
         # REALIZES-only and silently loses the ability to catch that regression.
         run: python3 tools/self_host_uses_documents.py docs/design/reflow2.json
+      - name: Design intent moves only on the owner's word
+        # The one ENFORCED rule this project has that actually enforces. Anthony
+        # marked it gate-blocking on 2026-08-09 ("stop the build") and nothing
+        # checked it for twelve days, because an honest check would have gone red
+        # against 57% of the settled design on the day it landed. His answer was
+        # to grandfather: guard what is settled from here, do not reopen what
+        # came before. The boundary lives in the graph on
+        # dec:the-authority-check-guards-forward-not-backward, not in the script,
+        # so silencing a finding means editing the design where a review sees it.
+        run: python3 tools/check_intent_authority.py docs/design/reflow2.json
+      - name: Intent-authority suite (hermetic — it must never pass quietly)
+        run: python3 tools/test_check_intent_authority.py
       - name: Merge-driver suite (real git branches, not a home-grown client)
         # Git is the client this contract is with, so git runs the test: two
         # branches editing different parts of one export must merge with no

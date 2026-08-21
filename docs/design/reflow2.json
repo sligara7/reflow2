@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:72e57c6f41ee5fdbe03d091f77852e61da9af6556ca451e2cf558474f9751324",
+  "content_hash": "sha256:c65826395c7a0ee96ebe8199f70ebe51424403a8c885c50df09534aca1450158",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1710,6 +1710,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:init"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:intent-authority-is-checked",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:detect"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -15244,6 +15252,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:baseline-b359c83c6549a618",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check-intent-authority"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:baseline-b76f09916bd26b0e",
       "properties": {
         "accepted_baseline": true,
@@ -15277,6 +15294,15 @@
         "action": "modified"
       },
       "to_id": "art:upgrading-v0270"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-e1aa7514ebda2b48",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check-intent-authority-test"
     },
     {
       "edge_type": "CHANGED",
@@ -19472,6 +19498,60 @@
         "action": "modified"
       },
       "to_id": "cap:skills-served"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:intent-authority-check-and-planned-exemption",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:check-intent-authority"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:intent-authority-check-and-planned-exemption",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:check-intent-authority-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:intent-authority-check-and-planned-exemption",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:intent-authority-check-and-planned-exemption",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:intent-authority-is-checked"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:intent-authority-check-and-planned-exemption",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:the-authority-check-guards-forward-not-backward"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:intent-authority-check-and-planned-exemption",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "rule:design-intent-moves-only-on-the-owners-word"
     },
     {
       "edge_type": "CHANGED",
@@ -24179,17 +24259,6 @@
         "action": "modified"
       },
       "to_id": "req:version-combination-is-an-object"
-    },
-    {
-      "edge_type": "CLAIMS",
-      "from_id": "who:claude-code",
-      "properties": {
-        "claimed_at": "2026-08-21T18:10:00Z",
-        "depth": 2,
-        "note": "Building release_without_manifest — a detector for a Release that is pinned to an epoch and deployed yet includes nothing (the v0.38.0 empty-manifest defect), plus the release-cut Flow that satisfies req:a-project-records-how-it-ships.",
-        "seat": "asligar-bitecool:654288:fc683529"
-      },
-      "to_id": "cmp:detect"
     },
     {
       "edge_type": "CONSTRAINS",
@@ -30198,6 +30267,18 @@
       "from_id": "cap:install-reaches-the-agent",
       "properties": {},
       "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:intent-authority-is-checked",
+      "properties": {},
+      "to_id": "dec:the-authority-check-guards-forward-not-backward"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:intent-authority-is-checked",
+      "properties": {},
+      "to_id": "rule:design-intent-moves-only-on-the-owners-word"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -81867,6 +81948,24 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:check-intent-authority",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:intent-authority-is-checked"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:check-intent-authority-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:intent-authority-is-checked"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:check-kit-manifest",
       "properties": {
         "completeness": "complete"
@@ -85059,6 +85158,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:intent-authority-is-checked",
+      "properties": {},
+      "to_id": "req:settled-intent-carries-the-owners-name"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:interface-spec",
       "properties": {},
       "to_id": "req:interface-spec-complete"
@@ -87658,6 +87763,18 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:intent-authority-is-checked",
+      "properties": {},
+      "to_id": "cap:intent-authority-is-checked"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:intent-authority-is-checked",
+      "properties": {},
+      "to_id": "rule:design-intent-moves-only-on-the-owners-word"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:interface-spec",
       "properties": {},
       "to_id": "cap:interface-spec"
@@ -90112,6 +90229,28 @@
       }
     },
     {
+      "node_id": "art:check-intent-authority",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:b3bdbe2e9cb92ce48ef5180dc76e346b959d30fb2a2fd21f7aab4c902ee054b1",
+        "location": "tools/check_intent_authority.py",
+        "name": "check_intent_authority.py",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:check-intent-authority-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:f514f02e0cd344417e02dc726b3aaf158f504496dcd8fa879203e27422bfaf4d",
+        "location": "tools/test_check_intent_authority.py",
+        "name": "test_check_intent_authority.py",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:check-kit-manifest",
       "node_type": "Artifact",
       "properties": {
@@ -90429,7 +90568,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d7ef0e7023c0ee9d84040d28ef212d0854359b56b5dc4eade7d56b49f5c89df8",
+        "checksum": "sha256:62ca733e6c5de3e199afdecade1a013b2c10f8a13f7ed90a8f5b5ee02339f023",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -93950,6 +94089,16 @@
       }
     },
     {
+      "node_id": "cap:intent-authority-is-checked",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`tools/check_intent_authority.py`, run in CI against the committed export. It enforces `rule:design-intent-moves-only-on-the-owners-word`, which Anthony marked ENFORCED on 2026-08-09 — \"if a session recorded a decision as accepted without you saying so, should that stop the build, or is it advice?\" → stop the build — and which nothing checked for twelve days.\n\nWHAT COUNTS AS SETTLING INTENT, from the rule's own text: a Requirement off `proposed`, a Decision `accepted`, a DesignRule's `enforced` recorded. What counts as the owner's word: an `AUTHORED_BY role=approver` edge, structure rather than prose. A `reviewer` edge is not a signature and does not satisfy it.\n\nGRANDFATHERED, ON HIS INSTRUCTION, and the boundary is now materialised on `dec:the-authority-check-guards-forward-not-backward` — which recorded his ruling on 2026-08-11 and deliberately deferred the mechanism to build time. 356 settled nodes exempt, 63 already carrying an approver.\n\nTHE SET IS IN THE GRAPH, NOT IN THE SCRIPT. Which nodes were already settled is a fact about the design; a list inside `tools/` could be edited to silence a finding without that edit ever surfacing in a design review.\n\nA SET, NOT A COUNT. Failing when unapproved settled nodes exceed a baseline is smaller and wrong: add an approver to one old node while introducing one new violation and the count is unchanged, so the check passes while the thing it guards has happened. That is the same two-states-look-identical failure the rule itself exists against, and its check must not reproduce it.\n\nIT CANNOT PASS QUIETLY. Missing rule, missing ruling, a ruling still only `proposed`, an unreadable export — every way of not knowing exits 2, never 0. Four of its ten tests exist only to pin that.",
+        "name": "A settled node with nobody's name on it stops the build, from a recorded boundary forward",
+        "provenance": "authored",
+        "status": "verified"
+      }
+    },
+    {
       "node_id": "cap:interface-spec",
       "node_type": "Capability",
       "properties": {
@@ -97336,6 +97485,16 @@
       }
     },
     {
+      "node_id": "chg:baseline-b359c83c6549a618",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-21",
+        "name": "First baseline, set at registration rather than left null — art:detect sat with no baseline for releases because that step was skipped, and reported no_baseline on every gate run since.",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-b76f09916bd26b0e",
       "node_type": "ChangeEvent",
       "properties": {
@@ -97370,6 +97529,16 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-09",
         "name": "First baseline for the v0.27.0 upgrade note, written because the schema stamp moved (60 to 61 edge types, OWNED_BY added). Nothing moved; this is a new file getting its first hash."
+      }
+    },
+    {
+      "node_id": "chg:baseline-e1aa7514ebda2b48",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-21",
+        "name": "First baseline, set at registration.",
+        "subject": "record"
       }
     },
     {
@@ -98538,6 +98707,15 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The working instructions follow the skills into the server; a project keeps only a pointer"
+      }
+    },
+    {
+      "node_id": "chg:intent-authority-check-and-planned-exemption",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Anthony's grandfathering answer becomes a running check, and unbuilt work stops being asked for proof. `tools/check_intent_authority.py` enforces `rule:design-intent-moves-only-on-the-owners-word` from a boundary of 356 already-settled nodes recorded on his ruling — the mechanism that ruling deliberately deferred to build time. Separately, `unverified_capability` now exempts a capability that is `planned` AND that nothing directly realizes, removing 28 of 92 findings while keeping the one whose status is merely stale.",
+        "subject": "system"
       }
     },
     {
@@ -104100,7 +104278,11 @@
       "node_id": "dec:the-authority-check-guards-forward-not-backward",
       "node_type": "Decision",
       "properties": {
+        "cutoff_epoch": "epoch:v0380",
+        "cutoff_note": "Boundary materialised 2026-08-21, when the check was built — the moment this decision said to record it. 356 settled nodes are exempt (217 Decisions, 126 Requirements, 13 DesignRules); 63 already carry an approver. Anthony was quoted 121 of 214 on 2026-08-09 and the design has grown by roughly two hundred settled nodes since, so this set is the state on the day the detector landed, not that day's. THE ROLLING READING IS DELIBERATE AND OVERRULEABLE: fixing the boundary at 2026-08-09 instead would hand him 222 items settled since to review one at a time, which is the backfill he refused, arriving late rather than early. Narrowing it to that export is a mechanical change if he wants those questions. ADDING AN ID HERE IS NOT A WAY TO GO GREEN: this is a dated boundary, and the honest routes are to record his approval or to move the status back to proposed.",
+        "cutoff_recorded_at": "2026-08-21",
         "decision": "GRANDFATHER IT. The check owed by rule:design-intent-moves-only-on-the-owners-word applies only to nodes that reach a settled state AFTER a recorded cutoff. Everything settled before the cutoff is out of its scope permanently, and is NOT backfilled.\n\nAnthony, 2026-08-11, answering the question put to him as gap:9d265ef455a2e245 / question:9d265ef455a2e245.\n\nTHE MEASUREMENT THAT MADE THIS A QUESTION AT ALL, taken before it was asked rather than after:\n\n  accepted Decisions (excluding `decision:ack:` review records)   105, of which  50 carry any AUTHORED_BY,  47 to who:ajs\n  Requirements moved off `proposed`                               109, of which  43 carry any AUTHORED_BY,  36 to who:ajs\n  TOTAL SETTLED                                                   214, of which  93 carry any AUTHORED_BY,  83 to who:ajs\n\nSo 121 of 214 settled nodes carry nobody's name. Every one of them moved on the owner's word — the word simply was never recorded as an edge. A check written to the letter of the spec would therefore have gone red against 57% of the settled design on the day it landed, and NONE of those would have been violations.\n\n⭐ THIS IS THE SIBLING CLAUSE'S TRAP, ONE RULE OVER, AND IT WAS NOT NAMED IN THE SPEC. rule:a-design-is-named-by-an-id-not-a-path is advisory for exactly this reason, in its own words: \"an honest detector would fail against the entire existing tool surface on the day it was written, and the only ways to make it green would be to block every build or to attach a check that proves nothing.\" The authority rule's detector spec listed ONE precondition (resolve the forked owner identity) and missed this one. The fork is now resolved — 6 Contributors, `ctr:anthony` gone, `who:ajs` sole owner identity — so the FIRST precondition is met and this is what was underneath it.\n\nWHY FORWARD-ONLY IS THE ANSWER AND NOT A CONCESSION. The threat the rule was made enforced against is an AGENT WRITING IN THE OWNER'S VOICE (rule text, 2026-08-09: \"what one person needs protection from is not another person; it is an agent writing in his voice\"). That threat is entirely prospective. The 121 are not that threat; they are bookkeeping that predates the rule. A check scoped to them would be measuring conformance to a convention that did not exist when they were written — the same error as dec:reopen-supersedes' \"7 of 14 obsoleted-but-accepted\", which turned out to be measuring conformance and not deviation.\n\nWHAT WAS REJECTED AND WHY, recorded so neither is re-litigated:\n\n(1) BACKFILL THE 121, then enforce across everything. Rejected. It would record the owner's approval 121 times on nodes no agent can individually evidence, and it makes the check green BY CONSTRUCTION — which is precisely the green-washing cap:governance-proposal's own description forbids (\"never attach a verification to close the finding, because a graph node green-washes exactly like a document\"). The attribution would be defensible in aggregate and unevidenced one by one, which is the worst combination: queryable and unfounded. dev_storyflow's finding ⑮ is the same shape — edges that are queryable and wrong are strictly worse than prose that is honestly informal.\n\n(2) FLIP THE RULE BACK TO ADVISORY. Rejected. It reverses the owner's explicit 2026-08-09 answer (\"stop the build\") to buy nothing but a closed gap, and it would leave this project with zero enforced rules that actually enforce.\n\n⚠️ THE MECHANISM IS A REAL DESIGN CHOICE INSIDE THIS DECISION, NOT A FREE ONE. A Decision carries NO TIMESTAMP (the same limit that stops what_next scoring staleness), so \"after the cutoff\" cannot key on a date. It must key on the design's own time axis — a DesignEpoch, or the ChangeEvent boundary at which the detector lands — which is what req:graph-indexes-snapshots exists to make answerable without a git lookup. The cutoff epoch is to be recorded WHEN THE DETECTOR IS BUILT, not now: minting it in advance would date the rule to a moment nothing enforced.\n\nWHAT THIS DOES NOT DO. It does not close gap:9d265ef455a2e245. That gap is unverified_enforced_rule and needs a PASSING Verification, and no check exists yet — the gap stays open as honest debt, and acknowledging it here would be recording a judgement the owner did not make. It also says nothing about rule:bl-41, the OTHER enforced rule with no detector (gap:b5ca966a38d7f372), which is a different problem: a rule about LLM behaviour that graph state may not be able to detect at all, and the first real customer for req:a-rule-says-whether-it-can-be-checked-at-all.\n\n📌 THIS DECISION IS THE FIRST NODE BORN COMPLIANT WITH THE RULE IT SHAPES — settled only on the owner's word, and carrying an AUTHORED_BY approver edge to who:ajs recording that word at the moment it was given.",
+        "grandfathered_ids": "[\"dec:a-dated-field-report-is-registered-and-parked\",\"dec:a-tied-merge-breaks-by-degree-not-by-alphabet\",\"dec:adoption-is-reported-the-loop-still-computes\",\"dec:advisory-concurrency\",\"dec:agent-navigates-content\",\"dec:aggregate-gap-keyed-on-rule\",\"dec:an-unplanned-cut-slips-every-later-increment-by-one\",\"dec:anchored-first\",\"dec:arrival-delta\",\"dec:ask-not-repair\",\"dec:attention-is-measured-behaviourally-not-lexically\",\"dec:auto-merge-at-90-destroys-sibling-names\",\"dec:backlog-is-retired\",\"dec:bl83a-functional-decomposition\",\"dec:bulk-is-all-or-nothing-with-per-item-findings\",\"dec:bulk-keeps-the-judgement-per-item\",\"dec:calibration-is-an-edge\",\"dec:certainty-derived\",\"dec:commands-are-the-exception\",\"dec:commitment-edges-survive-snapshots\",\"dec:component-verified-computed\",\"dec:content-growth-is-bounded-by-what-not-by-size\",\"dec:content-manifest\",\"dec:content-store-implementation\",\"dec:coord-board-in-graph\",\"dec:core-api-spof-accepted\",\"dec:corpus-ingest-mechanism\",\"dec:coverage-scope-is-declared\",\"dec:describe-a-design-without-binding-to-it\",\"dec:design-diff-vocabulary\",\"dec:documentation-has-no-operational-coupling\",\"dec:epoch-pins-a-version-combination\",\"dec:evidence-scope-on-the-verifies-edge\",\"dec:export-door-spof-accepted\",\"dec:export-hash-chain\",\"dec:export-once-per-pr\",\"dec:export-serialisation-belongs-to-the-gate\",\"dec:fix-the-comparison-before-pointing-it-earlier\",\"dec:fnv1a-foundational\",\"dec:fork-point-address\",\"dec:foundation-cycle-is-a-warning\",\"dec:gap-reporting-when-most-intent-is-unbuilt\",\"dec:governance-integrates-not-splits\",\"dec:graph-spof-accepted\",\"dec:how-should-a-temporal-fact-carry-its-date-when-there-is-no-epoch\",\"dec:idea-a-capture-session-skill-the-user-types\",\"dec:idea-a-gap-can-be-scheduled-into-an-increment-like-any-other-work\",\"dec:idea-feedback-arrives-by-git-push-and-pull\",\"dec:idea-how-do-triage-findings-become-plannable-work\",\"dec:idea-should-reflow2s-own-design-be-re-derived-through-a-principled-se-process\",\"dec:idea-the-graph-notices-the-record-moved-without-being-asked\",\"dec:idea-what-notices-an-idea-that-connects-to-nothing\",\"dec:identity-out-of-band\",\"dec:install-once-per-machine\",\"dec:loop-status-state-not-history\",\"dec:manifest-derived-is-not-manifest-accepted\",\"dec:merge-survivor-provenance\",\"dec:multi-writer-architecture\",\"dec:nested-graphs\",\"dec:operational-spof\",\"dec:orientation-is-computed-not-written\",\"dec:owned-by-is-the-third-who-axis\",\"dec:ownership-reads-claims-before-adding-an-edge\",\"dec:pairing-role-placement\",\"dec:passing-is-verified\",\"dec:pointing-a-session-is-project-scope-only\",\"dec:proposed-requirements-pruned\",\"dec:read-hint-shape\",\"dec:read-while-held-mechanism\",\"dec:readiness-forecast-is-a-temporal-fact\",\"dec:readiness-is-an-observation-the-threshold-is-the-judgement\",\"dec:release-trigger\",\"dec:release-trigger-needs-a-required-item\",\"dec:reopen-supersedes\",\"dec:repo-file-embedded\",\"dec:report-dont-judge\",\"dec:rmcp-v3-upgrade\",\"dec:sanitize-spof-accepted\",\"dec:schedule-is-an-edge-with-modality\",\"dec:service-spof-accepted\",\"dec:sidecar-loss-guarded-by-store-evidence\",\"dec:skills-served\",\"dec:stateless-seat-handle\",\"dec:temporal-backfill-from-releases\",\"dec:the-content-store-is-discontinued\",\"dec:the-kernel-is-its-own-system\",\"dec:the-mcp-surface-is-two-boundaries-not-one-medium\",\"dec:the-other-uaf-domains-wait-for-a-project-that-needs-them\",\"dec:the-safe-reading-lives-in-the-reader-not-the-store\",\"dec:the-stranded-server-correction-stands\",\"dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one\",\"dec:three-party-checks\",\"dec:two-sided-accept\",\"dec:verification-freshness-not-a-gap\",\"dec:views-are-projections\",\"dec:what-lives-where\",\"dec:where-content-lives\",\"dec:where-plans-live\",\"decision:ack:034e96a2e1a7f4d0\",\"decision:ack:046d5d7e84c91989\",\"decision:ack:07bb37be6d5cd129\",\"decision:ack:0a63dc6a6c47e039\",\"decision:ack:0a77650b58242054\",\"decision:ack:101a69b0a4f8eed6\",\"decision:ack:127934176c8341bd\",\"decision:ack:1740e2ac1ab8c993\",\"decision:ack:19822d94e3adcd21\",\"decision:ack:1c044be82819a511\",\"decision:ack:1d9ec21937d2d172\",\"decision:ack:1e7c0975c76f27fe\",\"decision:ack:1f62e721f3cfa3da\",\"decision:ack:2081c4b64282a08b\",\"decision:ack:2162197689aecdb2\",\"decision:ack:22386cd2f1a1fa96\",\"decision:ack:233d08765e4cfc7b\",\"decision:ack:260a7ea303ec87f1\",\"decision:ack:2a9626b1798c1959\",\"decision:ack:2ef80cfd8036988f\",\"decision:ack:30182d6495cdfe54\",\"decision:ack:328f9220b2bcfe4e\",\"decision:ack:33be77a4e91bc8ae\",\"decision:ack:35dde67d212688fb\",\"decision:ack:378cbdafd1fa41fb\",\"decision:ack:39bc6f37b50dc9c3\",\"decision:ack:3a667fe34b66bffd\",\"decision:ack:3f600ff329ecb31a\",\"decision:ack:41e84391c187d118\",\"decision:ack:4589232c9150f8fe\",\"decision:ack:48b5379679665396\",\"decision:ack:48cde54264aac425\",\"decision:ack:4a6cb8914622b724\",\"decision:ack:4ac1c3ccf483b4d6\",\"decision:ack:4d5e909b76d01f3c\",\"decision:ack:4dc755507da9ffe5\",\"decision:ack:4dfe80425e7f885e\",\"decision:ack:4f9dcb95353889c2\",\"decision:ack:532359c4b9e132a3\",\"decision:ack:5551e27a6da191b0\",\"decision:ack:593e26aed260f0a3\",\"decision:ack:65b894fcc73c3961\",\"decision:ack:6632226c74b49c3a\",\"decision:ack:66c6e5b6a10c8ac3\",\"decision:ack:695a599323c7edfe\",\"decision:ack:6ac59b7adcc72d03\",\"decision:ack:72f2c38d8acdeac2\",\"decision:ack:73e198ee5e28f1f1\",\"decision:ack:755a5d5272eb702d\",\"decision:ack:75651a693cc63b9c\",\"decision:ack:75d815c93cad4c86\",\"decision:ack:785c79650b436ed3\",\"decision:ack:7957f52a429a38a3\",\"decision:ack:7a268920fdfe0ba7\",\"decision:ack:7a65e7fed7172917\",\"decision:ack:7d8edafb0bd7aea3\",\"decision:ack:7dfea41c0d708eab\",\"decision:ack:80f8bc457bfe9e16\",\"decision:ack:85a8e6f0446bbbfd\",\"decision:ack:8692d02c7fa57cd9\",\"decision:ack:896e6b1107e0b6b4\",\"decision:ack:8ce3d04154396568\",\"decision:ack:8f3bacedc618f3d4\",\"decision:ack:90a90e90df05c31a\",\"decision:ack:946dd6b0bb464229\",\"decision:ack:94d6436f52168f32\",\"decision:ack:95ddc1083445d73d\",\"decision:ack:967cb35c16df7571\",\"decision:ack:9b2071dba7dfe759\",\"decision:ack:9eb6b2b4c5513865\",\"decision:ack:9ff80e5afcd024e9\",\"decision:ack:a3a499e09447e1e3\",\"decision:ack:a714fec7e55225b4\",\"decision:ack:a752db1dd8a251b2\",\"decision:ack:ac64f6e79aa8a17d\",\"decision:ack:acaf4106e0b94ec0\",\"decision:ack:b0ef8ce1e452f881\",\"decision:ack:b0f6553a7bd01e49\",\"decision:ack:b13f13bfabebbd39\",\"decision:ack:b25bb8d8db80dfd3\",\"decision:ack:b419dc7ce8da8c12\",\"decision:ack:b53c7315f39f3640\",\"decision:ack:b5ecdffa784222a5\",\"decision:ack:bab6219e3365123a\",\"decision:ack:bd5aefd848b8d3e4\",\"decision:ack:be224976b1f4f6e1\",\"decision:ack:c0ad59f11915ba50\",\"decision:ack:c510544d78bf4fef\",\"decision:ack:c628f709c27ad035\",\"decision:ack:c8cfb3f3be9183af\",\"decision:ack:c9fd9c1708bed944\",\"decision:ack:ca4e30e6002dfd13\",\"decision:ack:cd7e9eaaeba49218\",\"decision:ack:d1c2d599af5b45ce\",\"decision:ack:d31369434b7b1347\",\"decision:ack:d39c8c716229303c\",\"decision:ack:d610aa40cddc6c70\",\"decision:ack:dd3647889c878492\",\"decision:ack:dd3c69b16fec5439\",\"decision:ack:dfe1b2a6caace1f4\",\"decision:ack:e114420e3f72541b\",\"decision:ack:e2f901aa220997b4\",\"decision:ack:e99afa635a6340fb\",\"decision:ack:e9ba5784cf1cfa36\",\"decision:ack:ebf17b5d2c53cf03\",\"decision:ack:ec1f9f94c89d2f67\",\"decision:ack:f58dc09a846a8783\",\"decision:ack:f66d5a4a818d9fbe\",\"decision:ack:f78628387e7c41cc\",\"decision:ack:fc0919cac4f2727a\",\"decision:ack:heal:4b023a9e7da76757\",\"decision:ack:heal:4bd7c50f777fe56e\",\"decision:ack:heal:554698fdd93307a7\",\"decision:ack:heal:61df710ed7d3ca8f\",\"decision:ack:heal:81571c7881a57813\",\"decision:ack:heal:bda06fadbc343090\",\"decision:ack:heal:d6d4f53469211481\",\"decision:ack:heal:e533183803d878a4\",\"decision:ack:heal:f737a5cdf35a906d\",\"req:a-consumer-project-ends-up-with-a-committable-record\",\"req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue\",\"req:a-fit-is-not-a-test\",\"req:a-hint-names-its-next-call\",\"req:a-node-carries-a-revision\",\"req:a-project-records-how-it-ships\",\"req:a-question-arrives-with-a-reading\",\"req:a-refusal-names-what-would-have-worked\",\"req:a-repair-suggestion-never-proposes-fabrication\",\"req:a-rule-says-whether-it-can-be-checked-at-all\",\"req:a-session-can-tell-it-is-not-alone\",\"req:a-session-chooses-its-design\",\"req:a-surface-states-its-own-scope\",\"req:accreted-intent-becomes-a-design\",\"req:adopt-existing\",\"req:adopt-says-how-much-it-got\",\"req:agent-artifacts-are-captured\",\"req:agent-authored-feedback-is-reproducible-and-never-leaves-unasked\",\"req:agent-native\",\"req:an-absent-property-means-nobody-said-it\",\"req:an-artifact-declares-what-only-its-author-knows\",\"req:an-irreversible-operation-is-concurrency-aware\",\"req:analyse-at-any-level\",\"req:as-built-honest\",\"req:blocking-is-partial\",\"req:build-granularity-is-visible\",\"req:claims-have-owners\",\"req:coherence\",\"req:complementary-pairing\",\"req:completion-computed\",\"req:composed-analysis\",\"req:computed-evidence-reaches-its-axis\",\"req:concurrent-planning\",\"req:content-reaches-every-seat\",\"req:content-store-for-what-the-graph-points-at\",\"req:context-is-a-modelled-quantity\",\"req:conventions-ride-the-tool-not-only-the-skill\",\"req:corpus-ingest\",\"req:coverage-visible\",\"req:decision-status-not-asserted\",\"req:decomposition-covers-its-parent\",\"req:design-anything\",\"req:design-composes\",\"req:design-dependencies-declared\",\"req:design-identity\",\"req:design-reachable-without-the-repo\",\"req:design-the-simulator\",\"req:deterministic-core\",\"req:drift-has-direction\",\"req:drift-rolls-up-to-a-score\",\"req:driving-agent\",\"req:edge-defaults-do-not-assert\",\"req:epochs-can-be-planned\",\"req:evidence-says-what-it-covered\",\"req:explains-itself\",\"req:export-says-what-it-cannot-carry\",\"req:framework-is-chosen-not-defaulted\",\"req:friction-has-a-baseline\",\"req:friction-has-a-severity-bar\",\"req:frictionless-update\",\"req:functional-vocabulary-computes\",\"req:golden-thread\",\"req:graph-indexes-snapshots\",\"req:human-decides\",\"req:intent-preserved\",\"req:interface-spec-complete\",\"req:inviolable-intent\",\"req:invocation\",\"req:key-interfaces\",\"req:kit-reaches-the-agent\",\"req:linking-two-projects-is-a-served-process\",\"req:many-designs-one-service\",\"req:many-people-and-many-projects-compose\",\"req:mode-is-chosen-and-changeable\",\"req:modularity-computed\",\"req:never-silently-absent\",\"req:no-idea-goes-quiet\",\"req:no-se-knowledge\",\"req:no-setup-per-project\",\"req:no-silent-fallback\",\"req:nudge-covers-bypass\",\"req:nudge-path-proven\",\"req:onboard-newcomer\",\"req:ownership-is-an-edge-so-debt-has-an-addressee\",\"req:persistence\",\"req:plans-move-honestly\",\"req:platform\",\"req:publishable-promise\",\"req:read-surfaces-debt\",\"req:read-while-held\",\"req:readiness-gates-the-roadmap\",\"req:reflow2-consumable-as-an-image\",\"req:released-eq-designed\",\"req:requirement-lineage\",\"req:restructuring-is-certified\",\"req:reviewed-defects\",\"req:roads-not-taken\",\"req:schema-prose-is-checked\",\"req:seam-incompatibility\",\"req:seat-identity-survives-stateless-mcp\",\"req:seat-per-client\",\"req:session-memory-in-graph\",\"req:sessions-across-machines\",\"req:sessions-share-a-graph\",\"req:set-scoped-acknowledgement-keys-on-its-rule\",\"req:snapshot-per-revision-not-per-epoch\",\"req:sources-are-kept-not-just-parsed\",\"req:stale-seat-knows\",\"req:supporting-is-not-conflict\",\"req:survives-upgrade\",\"req:the-design-says-what-was-built-and-never-used\",\"req:the-export-is-serialised-rather-than-socially-enforced\",\"req:the-git-exchange-path-is-defended-not-only-documented\",\"req:the-server-is-the-authority-on-its-own-currency\",\"req:the-store-is-reachable-from-a-session\",\"req:the-tool-finds-its-own-blind-spots\",\"req:thin-install\",\"req:trajectory-position-is-computed\",\"req:trust-boundary-at-ingress\",\"req:verification-keeps-up\",\"req:vocabulary-covers-information\",\"req:vocabulary-covers-materiel\",\"req:vocabulary-covers-personnel\",\"req:vocabulary-covers-states\",\"req:what-changed-since-i-looked-and-by-whom\",\"req:what-next\",\"rule:a-design-is-named-by-an-id-not-a-path\",\"rule:a-lesson-is-generalised-before-it-is-built\",\"rule:an-identified-issue-is-enduring-never-dropped\",\"rule:design-information-lives-in-the-graph-not-in-documents\",\"rule:design-intent-moves-only-on-the-owners-word\",\"rule:feedback-sources-have-a-priority-order-and-anthony-set-it\",\"rule:fix-it-properly-while-it-is-still-cheap\",\"rule:fixes-are-judged-by-the-third-party\",\"rule:no-foreclosure\",\"rule:nothing-lands-on-main-directly\",\"rule:per-design-state-is-never-a-process-global\",\"rule:reflow2-is-built-for-other-projects-not-for-itself\",\"rule:the-export-is-written-once-per-branch\"]",
         "name": "The authority detector binds on what is settled from here, not on the 121 settled nodes that predate it",
         "rationale": "The rule was made enforced to stop an agent settling intent in the owner's voice — a prospective threat. The 121 unattributed settled nodes are not that threat; they are bookkeeping predating the rule, and 121 of 214 means an unscoped check would go red on history rather than on violations. Backfilling would make the check green by construction on evidence no agent holds; reverting to advisory would discard the owner's explicit answer. Forward-only is the only option that leaves the check meaning something on the day it lands.",
         "status": "accepted"
@@ -113313,6 +113495,18 @@
       }
     },
     {
+      "node_id": "req:settled-intent-carries-the-owners-name",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A node that asserts settled intent carries the owner's recorded approval, and one that does not is reported",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A Requirement moved off `proposed`, a Decision marked `accepted`, or a DesignRule whose `enforced` has been recorded shall carry an `AUTHORED_BY role=approver` edge naming the person whose word it was. A settled node without one shall be reported, and — since `rule:design-intent-moves-only-on-the-owners-word` is ENFORCED — shall fail the build.\n\nWHY STRUCTURE AND NOT PROSE. \"He approved it\" written in a description is a claim an agent can make about anybody. An edge to a named Contributor is the design saying it in a form a query can read and a review can audit. A `reviewer` edge is not a signature; only `approver` is.\n\nFROM A RECORDED BOUNDARY FORWARD, never backward. `dec:the-authority-check-guards-forward-not-backward` carries Anthony's ruling and the materialised set. The threat this guards is prospective — an agent writing in the owner's voice — and nodes settled before the convention existed are bookkeeping, not violations. A check scoped to them would measure conformance to a rule that did not exist when they were written.\n\n⚠️ THIS REQUIREMENT IS AT `proposed` AND MUST STAY THERE UNTIL ANTHONY SAYS OTHERWISE. That is not caution for its own sake: settling it would be the exact act it describes, performed by an agent, on a requirement about agents not doing that. The check built for it would go red on this node — which is the strongest test available that the rule is real.\n\nDISTINCT FROM the DesignRule it derives from: the rule is the standing instruction in Anthony's words and carries the enforcement decision; this states the checkable property, and is what a capability can satisfy. DISTINCT FROM the capability that delivers it: that describes one script, its boundary and its refusal modes, and could be replaced by a Rust detector without this obligation changing.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:skill-adherence-is-measured",
       "node_type": "Requirement",
       "properties": {
@@ -119607,6 +119801,20 @@
       }
     },
     {
+      "node_id": "ver:intent-authority-is-checked",
+      "node_type": "Verification",
+      "properties": {
+        "description": "`tools/check_intent_authority.py`, gated in CI against the committed export, with `tools/test_check_intent_authority.py` as its hermetic regression net — 10 cases, stdlib only, building their own minimal designs.\n\nBOTH DIRECTIONS: a Decision `accepted` with no approver fails; the same Decision with an `AUTHORED_BY role=approver` edge passes; a grandfathered node is exempt; a `proposed` Requirement is not a settling at all, because an agent may propose anything. All three settling acts are covered — a Requirement off `proposed`, a Decision `accepted`, a DesignRule's `enforced` — since an early draft that checked only Decisions would have passed on the other two. A `reviewer` edge does NOT satisfy it: a review is not a signature.\n\n⭐ FOUR OF THE TEN EXIST ONLY TO PIN THAT IT CANNOT PASS QUIETLY. Missing rule, missing ruling, a ruling still only `proposed`, an unreadable export — each exits 2, never 0. That is the property that matters most here: the rule guards against an agent writing in the owner's voice, and a check that reports success when it could not run would be that failure wearing a green badge.\n\nTHE FIXTURE FOUND ITS OWN BUG. The first draft's minimal design tripped the check on its own scaffolding — the rule node and the ruling node are themselves settled intent, and the fixture had not signed them. That is the check working, and the fixture now signs them explicitly.",
+        "findings": "2026-08-21, first run. `tools/test_check_intent_authority.py` — 10 of 10 passed. `tools/check_intent_authority.py docs/design/reflow2.json` — exit 0: \"419 node(s) assert settled intent; 63 carry an approver; 356 are grandfathered.\"\n\nPROVED IT CATCHES THE THING, not just that it runs. A Decision with `status: accepted` and no approver edge was injected into a copy of the real 2837-node design; the check went red naming that node and exited 1. Clean before, red after, on real data — because a check that has only ever been seen passing is indistinguishable from one that cannot fail.\n\nTHE RED RUN THAT MATTERED WAS ITS OWN FIXTURE. The first draft of the test suite failed on its own scaffolding: the rule node and the grandfathering decision are themselves settled intent, and the fixture had not signed them. The check was right and the fixture was wrong — which is the strongest evidence available that the rule's three settling acts are actually being read.",
+        "kind": "verification",
+        "last_run_at": "2026-08-21",
+        "level": "system",
+        "method": "test",
+        "name": "A settled node with no approver fails the build, and every way of not knowing exits 2",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:interface-spec",
       "node_type": "Verification",
       "properties": {
@@ -120699,7 +120907,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ca578b3d578d39e2262d33d104f852ecf2579e137741b91ad70720f3f86ffae6",
+  "prev_content_hash": "sha256:72e57c6f41ee5fdbe03d091f77852e61da9af6556ca451e2cf558474f9751324",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
