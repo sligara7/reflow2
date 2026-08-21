@@ -1705,7 +1705,13 @@ pub struct PinAtEpochReq {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ScheduleForReq {
-    /// `Requirement` or `Capability` — the thing that is due.
+    /// `Requirement`, `Capability` or `Question` — the thing that is due.
+    ///
+    /// A `Question` is how the RESOLUTION OF A GAP gets scheduled. Gaps
+    /// themselves are recomputed every run and are not nodes, so there is
+    /// nothing to hang a schedule on; the Question `gap_to_prompt` mints when a
+    /// gap is put to somebody IS the durable thing, and it is delivered when it
+    /// is answered.
     pub item_type: String,
     pub item_id: String,
     /// `DesignEpoch` (time axis) or `Release` (capability-increment axis).

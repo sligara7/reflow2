@@ -947,6 +947,14 @@ impl DesignGraph {
     ) -> Result<ScheduledItem, DynoError> {
         let outcome = if self.item_is_delivered(item_type, item_id)? {
             ScheduleOutcome::Delivered
+        } else if item_type == node::QUESTION && self.question_status(item_id)? == "withdrawn" {
+            // WITHDRAWN IS SOMEBODY'S DECISION, so it must not fall through to
+            // `outstanding` — which means "nobody has said whether this was
+            // deferred or discontinued". Somebody said. Reporting it as
+            // outstanding would ask again, every run, about a question already
+            // taken off the table: the same false reading that made an epoch's
+            // delivered work look unfinished until 2026-08-20.
+            ScheduleOutcome::Discontinued
         } else {
             let mut elsewhere: Vec<String> = self
                 .outgoing(item_id, Some(edge::SCHEDULED_FOR))?
@@ -1017,8 +1025,29 @@ impl DesignGraph {
                 Ok(self.capability_delivers_by_model(item_id)?
                     || self.capability_is_realized(item_id)?)
             }
+            // A QUESTION IS DELIVERED WHEN IT IS ANSWERED, and nothing else
+            // could stand in for that. There is no artifact to look for and no
+            // check to run: the whole content of closing a gap is that the
+            // person whose judgement it needed gave one. `answer_question` is
+            // the only thing that sets this, so delivery stays computed from
+            // the record rather than asserted beside it.
+            node::QUESTION => Ok(self.question_status(item_id)? == "answered"),
             _ => Ok(false),
         }
+    }
+
+    /// A Question's `status` — `asked`, `answered` or `withdrawn`. Absent reads
+    /// as `asked`, the schema default, so a Question written before this
+    /// existed is never mistaken for a settled one.
+    fn question_status(&self, question_id: &str) -> Result<String, DynoError> {
+        Ok(self
+            .get_node(node::QUESTION, question_id)?
+            .and_then(|n| {
+                n.properties
+                    .get("status")
+                    .and_then(|v| v.as_str().map(str::to_string))
+            })
+            .unwrap_or_else(|| "asked".to_string()))
     }
 
     /// Whether this capability's deliverable is a change to the DESIGN rather
