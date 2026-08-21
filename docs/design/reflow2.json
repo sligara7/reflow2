@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:71305feabe668586a73a7e03c2830f2580be7abd3d2b6e44b8b29b566021b287",
+  "content_hash": "sha256:e27c154e65ce06ba5f0aa1c09416e9585418649e3dd1bcc7c36a8df6dee485d6",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -804,6 +804,20 @@
     {
       "edge_type": "ABOUT_ENTITY",
       "from_id": "fact:ten-components-report-a-zero-blast-radius-the-source-contradicts",
+      "properties": {},
+      "to_id": "req:modularity-computed"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:the-design-outward-blind-spot-appeared-in-three-independent-places",
+      "properties": {
+        "note": "the measurement behind option (a): nothing watched artifacts appearing"
+      },
+      "to_id": "dec:idea-what-watches-for-the-last-responsible-moment-to-arrive"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:the-design-outward-blind-spot-appeared-in-three-independent-places",
       "properties": {},
       "to_id": "req:modularity-computed"
     },
@@ -2598,6 +2612,24 @@
     },
     {
       "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-detect-vocabulary-that-nothing-reaches",
+      "properties": {
+        "confidence": 0.85,
+        "evidence": "Anthony asked the general form of this question on 2026-08-09: 'are there other orphan developments (actually implemented design) that nothing detects or surfaces?' An idea connected to nothing is another member of that class, found twelve days later by a different route. The earlier node asked for the class; this one is an instance of it."
+      },
+      "to_id": "dec:idea-what-notices-an-idea-that-connects-to-nothing"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-what-gets-searched-repeatedly-is-becoming-important",
+      "properties": {
+        "confidence": 0.8,
+        "evidence": "Both ideas notice the SAME discarded material: what a pre-capture search surfaced, and how relevant each hit was, is read once and thrown away. The 2026-08-10 idea proposed keeping it as a weighted importance signal; this one proposes keeping it as an edge. The earlier one had already seen that the search result carries information worth persisting — it differs on what to do with it, not on the observation. Drawn 2026-08-21."
+      },
+      "to_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list"
+    },
+    {
+      "edge_type": "ANTICIPATES",
       "from_id": "dec:merge-survivor-provenance",
       "properties": {},
       "to_id": "dec:a-tied-merge-breaks-by-degree-not-by-alphabet"
@@ -2607,6 +2639,15 @@
       "from_id": "dec:orientation-is-computed-not-written",
       "properties": {},
       "to_id": "dec:a-projection-is-named-and-the-battery-runs-over-it"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it",
+      "properties": {
+        "confidence": 0.85,
+        "evidence": "The three-legs measurement (2026-08-18) predicted this exact hole in advance: an instruction without a detector that notices ABSENCE leaves the vocabulary empty in every project using reflow2, not only in reflow2's own graph. 145 ideas joined by 12 edges is what that prediction looks like when it comes true. The fact named the leg before anyone went looking for it."
+      },
+      "to_id": "dec:idea-what-notices-an-idea-that-connects-to-nothing"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -4278,6 +4319,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:anthony-names-the-two-halves-of-connecting-the-dots",
+      "properties": {},
+      "to_id": "epoch:the-co-change-experiment-is-run"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:anthony-rules-on-five",
       "properties": {},
       "to_id": "epoch:anthony-rules-on-five"
@@ -4791,6 +4838,12 @@
       "from_id": "chg:cmp-skills-gets-one-parent",
       "properties": {},
       "to_id": "epoch:cmp-skills-gets-one-parent"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:co-change-disagrees-with-the-functional-allocation",
+      "properties": {},
+      "to_id": "epoch:the-co-change-experiment-is-run"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -6009,6 +6062,12 @@
       "from_id": "chg:the-black-box-mechanism-is-settled",
       "properties": {},
       "to_id": "epoch:the-owner-rules-on-scope-and-reachability"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-brainstorm-skill-connects-the-dots",
+      "properties": {},
+      "to_id": "epoch:the-co-change-experiment-is-run"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -7608,6 +7667,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-co-change-experiment-is-run:dec:idea-do-ideas-form-a-graph-or-only-a-list",
+      "properties": {},
+      "to_id": "epoch:the-co-change-experiment-is-run"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-co-change-experiment-is-run:dec:idea-the-ility-chooses-the-allocation-graph",
+      "properties": {},
+      "to_id": "epoch:the-co-change-experiment-is-run"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:the-discipline-arrives-at-the-tool:epoch:the-philosophy-is-in-the-product",
       "properties": {},
       "to_id": "epoch:the-discipline-arrives-at-the-tool"
@@ -8882,6 +8953,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list",
+      "properties": {
+        "acted_at": "2026-08-21",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-document-generation",
       "properties": {
         "acted_at": "2026-08-03",
@@ -9635,9 +9715,27 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-what-notices-an-idea-that-connects-to-nothing",
+      "properties": {
+        "acted_at": "2026-08-21",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-what-to-do-about-two-designs-answering-to-one-id",
       "properties": {
         "acted_at": "2026-08-13",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-what-watches-for-the-last-responsible-moment-to-arrive",
+      "properties": {
+        "acted_at": "2026-08-21",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -11185,6 +11283,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "rule:an-identified-issue-is-enduring-never-dropped",
+      "properties": {
+        "acted_at": "2026-08-20",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "rule:bl-135",
       "properties": {
         "acted_at": "2026-08-08",
@@ -11576,6 +11683,16 @@
         "validation_status": "validated"
       },
       "to_id": "dec:idea-a-finding-carries-its-bounds"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "rule:an-identified-issue-is-enduring-never-dropped",
+      "properties": {
+        "basis": "correlational",
+        "note": "the rule is why this was surfaced and built rather than left in a list of 89",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-a-gap-can-be-scheduled-into-an-increment-like-any-other-work"
     },
     {
       "edge_type": "CHANGED",
@@ -14270,6 +14387,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:anthony-names-the-two-halves-of-connecting-the-dots",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:anthony-rules-on-five",
       "properties": {
         "accepted_baseline": true,
@@ -16871,6 +16997,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:co-change-disagrees-with-the-functional-allocation",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-the-ility-chooses-the-allocation-graph"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:commands-ship",
       "properties": {
         "accepted_baseline": true,
@@ -18354,6 +18489,15 @@
         "action": "modified"
       },
       "to_id": "dec:nested-graphs"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:fifteen-modules-become-parts-of-the-design",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:wall-check"
     },
     {
       "edge_type": "CHANGED",
@@ -22083,6 +22227,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-brainstorm-skill-connects-the-dots",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:brainstorm-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-brainstorm-skill-connects-the-dots",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-brainstorm-skill-connects-the-dots",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills-catalog"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-brainstorm-skill-connects-the-dots",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-design-interview-precedes-the-capture",
       "properties": {
         "accepted_baseline": true,
@@ -22183,6 +22363,15 @@
     {
       "edge_type": "CHANGED",
       "from_id": "chg:the-gate-checks-the-export-can-be-read-back",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-gate-notices-a-file-the-design-never-heard-of",
       "properties": {
         "accepted_baseline": true,
         "action": "modified"
@@ -24225,6 +24414,18 @@
       "edge_type": "CONTAINS",
       "from_id": "sys:agent-surface",
       "properties": {},
+      "to_id": "cmp:bulk"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "cmp:discover"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
       "to_id": "cmp:dto"
     },
     {
@@ -24351,6 +24552,12 @@
       "edge_type": "CONTAINS",
       "from_id": "sys:agent-surface",
       "properties": {},
+      "to_id": "cmp:tools-skills"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
       "to_id": "cmp:tools-temporal"
     },
     {
@@ -24381,7 +24588,31 @@
       "edge_type": "CONTAINS",
       "from_id": "sys:coherence-loop",
       "properties": {},
+      "to_id": "cmp:compose"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
       "to_id": "cmp:confirm"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:consumption"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:coverage"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:depends"
     },
     {
       "edge_type": "CONTAINS",
@@ -24411,6 +24642,12 @@
       "edge_type": "CONTAINS",
       "from_id": "sys:coherence-loop",
       "properties": {},
+      "to_id": "cmp:granularity"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
       "to_id": "cmp:heal"
     },
     {
@@ -24418,6 +24655,18 @@
       "from_id": "sys:coherence-loop",
       "properties": {},
       "to_id": "cmp:hierarchy"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:ility"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:maturity"
     },
     {
       "edge_type": "CONTAINS",
@@ -24435,6 +24684,12 @@
       "edge_type": "CONTAINS",
       "from_id": "sys:coherence-loop",
       "properties": {},
+      "to_id": "cmp:regions"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
       "to_id": "cmp:report"
     },
     {
@@ -24442,6 +24697,12 @@
       "from_id": "sys:coherence-loop",
       "properties": {},
       "to_id": "cmp:scope"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "cmp:seam"
     },
     {
       "edge_type": "CONTAINS",
@@ -24466,6 +24727,12 @@
       "from_id": "sys:documentation",
       "properties": {},
       "to_id": "cmp:docs"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:foundation",
+      "properties": {},
+      "to_id": "cmp:dates"
     },
     {
       "edge_type": "CONTAINS",
@@ -24508,6 +24775,12 @@
       "from_id": "sys:human-channel",
       "properties": {},
       "to_id": "cmp:llm"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:intake",
+      "properties": {},
+      "to_id": "cmp:corpus"
     },
     {
       "edge_type": "CONTAINS",
@@ -24556,6 +24829,12 @@
       "from_id": "sys:time-history",
       "properties": {},
       "to_id": "cmp:merge"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:time-history",
+      "properties": {},
+      "to_id": "cmp:preserve"
     },
     {
       "edge_type": "CONTAINS",
@@ -25643,6 +25922,17 @@
       "edge_type": "DEPENDS_ON",
       "from_id": "dec:exploratory-staging",
       "properties": {
+        "confidence": 0.8,
+        "evidence": "exploratory-staging left the 'should an idea be its own KIND' question turning explicitly on whether any computation would read the distinction. Cluster-search over an idea's neighbourhood is a candidate for exactly that computation, so the older question cannot be settled until this one is answered. Drawn 2026-08-21 by the brainstorm skill's own linking step.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:exploratory-staging",
+      "properties": {
         "optional": false,
         "weight_basis": "estimated"
       },
@@ -25688,6 +25978,47 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list",
+      "properties": {
+        "note": "that node asks what an idea IS; this asks what it is CONNECTED TO",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:exploratory-staging"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list",
+      "properties": {
+        "confidence": 0.8,
+        "evidence": "The linking step is nearly free only because the search has already run — it judges the near-matches already in hand rather than sweeping for candidates. If search-before-capture ever stopped being universal, linking at capture would become an expensive extra pass and the argument for putting it in the brainstorm skill would collapse. Drawn 2026-08-21.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-search-first-fires-without-being-remembered"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list",
+      "properties": {
+        "note": "option (c) would be the first absence-shaped detector reflow2 has",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "fact:the-design-outward-blind-spot-appeared-in-three-independent-places"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list",
+      "properties": {
+        "note": "accretion over years presumes the pile can later be read as a whole — unlinked ideas do not accrete",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:accreted-intent-becomes-a-design"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-every-project-shapes-its-own-git-governance",
       "properties": {
         "note": "The general case rests on the specific one. reflow2's own git rules are the worked example: if reflow2 cannot wire its OWN export and branch policy into its OWN governance layer, prompting every consumer to shape theirs would be shipping a shape that has never been shown to hold. Do the self-host case first, then generalise.",
@@ -25708,6 +26039,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-is-allocation-running-ahead-of-the-seams",
+      "properties": {
+        "note": "whether allocation runs ahead of seams depends on which graph allocation was drawn on",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-the-ility-chooses-the-allocation-graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-may-unmotivated-work-merge-into-the-primary-design",
       "properties": {
         "note": "Same missing axis, stronger evidence. exploratory-staging asks whether a not-yet-agreed wish belongs in the design at all, measured at 34 of 73 open gaps. A fork is a place where unagreed work is THE POINT rather than a leftover, so answering the fork case likely answers the wish case; deciding them apart risks one foreclosing the other, which that node already warns about for the cancelled-state question.",
@@ -25715,6 +26056,47 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:exploratory-staging"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-the-ility-chooses-the-allocation-graph",
+      "properties": {
+        "note": "if the ility chooses the graph, it also chooses WHEN the moment arrives",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-allocation-waits-for-the-last-responsible-moment"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-what-notices-an-idea-that-connects-to-nothing",
+      "properties": {
+        "confidence": 0.85,
+        "evidence": "This is the third leg of that idea and has nothing to detect against until its first leg exists. A detector for unlinked ideas shipped before the linking step would report 111 of 145 on day one and be correct, which is not a useful thing to ship. Drawn 2026-08-21 by the linking step itself.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-what-watches-for-the-last-responsible-moment-to-arrive",
+      "properties": {
+        "note": "the accepted principle whose open counter-argument this is",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-allocation-waits-for-the-last-responsible-moment"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-what-watches-for-the-last-responsible-moment-to-arrive",
+      "properties": {
+        "note": "option (b) here would be this one's stated trigger",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-is-allocation-running-ahead-of-the-seams"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -33442,6 +33824,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list",
+      "properties": {},
+      "to_id": "snap:epoch:the-co-change-experiment-is-run:dec:idea-do-ideas-form-a-graph-or-only-a-list"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "dec:idea-does-a-capability-need-a-cancelled-state",
       "properties": {},
       "to_id": "snap:epoch:the-vocabulary-says-where-abandonment-lives:dec:idea-does-a-capability-need-a-cancelled-state"
@@ -33469,6 +33857,12 @@
       "from_id": "dec:idea-search-first-fires-without-being-remembered",
       "properties": {},
       "to_id": "snap:epoch:the-owner-rules-on-scope-and-reachability:dec:idea-search-first-fires-without-being-remembered"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-the-ility-chooses-the-allocation-graph",
+      "properties": {},
+      "to_id": "snap:epoch:the-co-change-experiment-is-run:dec:idea-the-ility-chooses-the-allocation-graph"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -77567,6 +77961,15 @@
       "to_id": "ifc:mcp-tools"
     },
     {
+      "edge_type": "MITIGATES",
+      "from_id": "req:detecting-is-not-asking",
+      "properties": {
+        "confidence": 0.85,
+        "evidence": "This idea carries a real hazard: the brainstorm skill's step 2 forbids running detect-and-ask over brainstormed nodes, because asking a user to firm up what they deliberately left soft teaches them that thinking out loud has a cost. A naive detector IS that. req:detecting-is-not-asking (2026-08-19) answers it by splitting the two acts — detection unconditional, invitation held for a boundary — so the leg can be built without taxing the thinking. Neither node mentioned the other before this edge."
+      },
+      "to_id": "dec:idea-what-notices-an-idea-that-connects-to-nothing"
+    },
+    {
       "edge_type": "OBSOLETES",
       "from_id": "dec:backlog-is-retired",
       "properties": {
@@ -78373,6 +78776,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:bulk",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:bulk"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:capture-intent-skill",
       "properties": {
         "completeness": "complete"
@@ -78494,6 +78906,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:coherence-gate-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:reconcile-built"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:compare",
       "properties": {
         "completeness": "complete"
@@ -78507,6 +78928,15 @@
         "completeness": "complete"
       },
       "to_id": "cap:composed-analysis"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:compose",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:compose"
     },
     {
       "edge_type": "REALIZES",
@@ -78559,6 +78989,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:consumption",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:consumption"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:contradiction-alignment-test",
       "properties": {
         "completeness": "complete"
@@ -78575,11 +79014,29 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:corpus",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:corpus"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:coverage",
       "properties": {
         "completeness": "complete"
       },
       "to_id": "cap:coverage"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:coverage",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:coverage"
     },
     {
       "edge_type": "REALIZES",
@@ -78604,6 +79061,15 @@
         "completeness": "partial"
       },
       "to_id": "cap:claims-carry-their-age"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:dates",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:dates"
     },
     {
       "edge_type": "REALIZES",
@@ -78645,6 +79111,15 @@
         "completeness": "complete"
       },
       "to_id": "cap:design-dependencies-declared"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:depends",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:depends"
     },
     {
       "edge_type": "REALIZES",
@@ -78735,6 +79210,15 @@
         "completeness": "complete"
       },
       "to_id": "cap:describe-design-at-path"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:discover",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:discover"
     },
     {
       "edge_type": "REALIZES",
@@ -78928,6 +79412,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:granularity",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:granularity"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:graph",
       "properties": {
         "completeness": "partial",
@@ -79110,6 +79603,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:ility",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:ility"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:ingest",
       "properties": {
         "completeness": "complete"
@@ -79263,6 +79765,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:maturity",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:maturity"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:mcp-http",
       "properties": {
         "completeness": "complete",
@@ -79409,6 +79920,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:preserve",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:preserve"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:propagate",
       "properties": {
         "completeness": "complete"
@@ -79473,6 +79993,15 @@
         "conformance": "verified"
       },
       "to_id": "cap:a-session-with-no-seed-can-find-one"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:regions-rs",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:regions"
     },
     {
       "edge_type": "REALIZES",
@@ -79719,6 +80248,15 @@
         "completeness": "complete"
       },
       "to_id": "cap:seam-incompatibility"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:seam",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:seam"
     },
     {
       "edge_type": "REALIZES",
@@ -80552,6 +81090,15 @@
         "conformance": "unchecked"
       },
       "to_id": "cap:skills-served"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-skills",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:tools-skills"
     },
     {
       "edge_type": "REALIZES",
@@ -84860,6 +85407,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:coherence-gate-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:coherence-gate-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:collaborating",
       "properties": {
         "action": "created"
@@ -86218,7 +86773,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:6f101376a547fe6ef1f9a9d7d2d3da29b84505a96b352ed69d19b8514772c0ec",
+        "checksum": "sha256:ffbd6c892c7a4218deca0e66e8b92511bbec5d7aa9506af38cc077b174e25e4e",
         "granularity": "atomic",
         "location": "getting-started/skills/brainstorm/SKILL.md",
         "name": "brainstorm/SKILL.md",
@@ -86322,7 +86877,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cf4e86690ccd846f37228812ef55352845f046d0a4903b63cd08e5a4a3764528",
+        "checksum": "sha256:152fbfb8444b42118e81041c743afcb9050af7cb00d1e91d739a8c41edfed426",
         "granularity": "atomic",
         "location": "tools/reflow2_check.py",
         "name": "reflow2_check.py",
@@ -86402,6 +86957,17 @@
         "name": "claims.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:coherence-gate-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:96600d72781b41912070d15f2a34ec21b53f709f9d0aef3a10d8565605dd85d8",
+        "location": "tools/test_reflow2_check.py",
+        "name": "test_reflow2_check.py",
+        "status": "realized"
       }
     },
     {
@@ -87955,7 +88521,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1c9f08c30b33df405f7c3fedf8605d544975f4320086b36de26809821039a6e4",
+        "checksum": "sha256:c5f26ddba09cc22757eae06556d98dec662d3fd690c30a4ebe9cbbcb922d3017",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -88007,7 +88573,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:24eb607efc9ebc2803533ca7aba6fcfc6aca8ca8b6bbf8b1cb49cb1c7e3cec4a",
+        "checksum": "sha256:98a3e44742eb753247ba51122787bae5568b986b145fde8a643afac414b519a8",
         "granularity": "atomic",
         "location": "SKILLS.md",
         "name": "SKILLS.md",
@@ -88723,7 +89289,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:288ce7e07201756e1a5d5e086e2a1aa2b411a501ce675a46e9c760dbae479f74",
+        "checksum": "sha256:5c9b19e383922f7922cac701f6c93ae03fdfade9af7f5b3dba663a18ab894d04",
         "location": "tools/wall_check.py",
         "name": "wall_check.py",
         "status": "realized"
@@ -93037,6 +93603,15 @@
       }
     },
     {
+      "node_id": "chg:anthony-names-the-two-halves-of-connecting-the-dots",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "dec:idea-do-ideas-form-a-graph-or-only-a-list, snapshotted before his chosen direction is written into it",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:anthony-rules-on-five",
       "node_type": "ChangeEvent",
       "properties": {
@@ -93881,6 +94456,15 @@
       }
     },
     {
+      "node_id": "chg:co-change-disagrees-with-the-functional-allocation",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "dec:idea-the-ility-chooses-the-allocation-graph, snapshotted while its maintainability branch still reads as un-run",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:commands-ship",
       "node_type": "ChangeEvent",
       "properties": {
@@ -94336,6 +94920,15 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Anthony collapses the nested-graphs decision: a graph per ownership boundary, levels inside each"
+      }
+    },
+    {
+      "node_id": "chg:fifteen-modules-become-parts-of-the-design",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Fifteen source modules the design knew as files become parts of it — Components, placed in the subsystem whose function they serve",
+        "subject": "record"
       }
     },
     {
@@ -95407,6 +96000,16 @@
       }
     },
     {
+      "node_id": "chg:the-brainstorm-skill-connects-the-dots",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The brainstorm skill connects the dots",
+        "rationale": "Anthony gave his word 2026-08-21 on the first of the two halves he named: \"the brainstorm skill is the perfect place to start linking ideas. it is like when a person starts 'connecting the dots'.\"\n\nMEASURED BEFORE BUILDING: 145 brainstormed ideas joined by 12 edges; 111 of them reached no other idea within two hops; the most common edge on an idea was its author.\n\nTHE MISSING LEG WAS THE INSTRUCTION, NOT THE TOOL. The connective vocabulary had existed the whole time - twelve wildcard relation types in the inference layer (CONTRADICTS, EVOLVES_INTO, DEPENDS_ON, CAUSES, BLOCKS, DUPLICATES, ANTICIPATES, OBSOLETES, RISKS, MITIGATES, TRIGGERS, VIOLATES), used 81 times across the graph and 29 times between two Decisions - and the brainstorm skill named none of them.\n\nTHE SKILL IS THE RIGHT HOME FOR ONE REASON THAT OUTWEIGHS THE OTHERS: the near-matches are already in hand at capture. The skill already requires a search before writing, and the dedup guard already returns the nodes it judged close. That list was read to avoid a duplicate and then discarded, every single time. Linking there costs one judgement, not a pass.\n\nTHE STEP TAKES THE THIRD SHAPE rather than either extreme. Merely offering candidates depends on the agent choosing well, which is the status quo that produced 12 edges across 145 ideas. Requiring an edge manufactures relations to satisfy an instruction, and a false neighbour is worse than a missing one because anything that searches by neighbourhood repeats it. So the step asks for the honest edges AND for a written line when none is drawn - the same shape distinct_from already uses on the dedup guard, and the only one of the three that leaves a record of the judgement either way.\n\nDOGFOODED on the idea that produced it, which now carries three edges drawn under the new step.\n\nSTILL MISSING: the third leg. Nothing yet notices an idea that names no relation and no line. That detector is what would make this hold across sessions rather than depending on each agent reading the skill.",
+        "summary": "The brainstorm skill now links each new idea to the ones it actually relates to, and records an explicit line when no relation is honest."
+      }
+    },
+    {
       "node_id": "chg:the-design-interview-precedes-the-capture",
       "node_type": "ChangeEvent",
       "properties": {
@@ -95454,6 +96057,15 @@
       "properties": {
         "change_type": "new_feature",
         "name": "`reflow2_check.py` gains a ROUND TRIP check: export → import → re-export, compared structurally, so a committed export that cannot be read back is caught. The only probe that sees this class — content_hash, the lineage chain and sync_status all compare the export to ITSELF and never run the importer. dev_storyflow's export had been unrestorable for four days with every one of those green."
+      }
+    },
+    {
+      "node_id": "chg:the-gate-notices-a-file-the-design-never-heard-of",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The coherence gate sweeps the roots the design points at and notes source files no Artifact claims — a note, never a failure",
+        "subject": "system"
       }
     },
     {
@@ -95959,6 +96571,19 @@
       }
     },
     {
+      "node_id": "cmp:bulk",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "bulk",
+        "provenance": "authored",
+        "purpose": "Bulk forms — one call where the served surface measured N. The batched half of the write path, so a caller doing 144 consecutive things does one.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cmp:claims",
       "node_type": "Component",
       "properties": {
@@ -95985,6 +96610,19 @@
       }
     },
     {
+      "node_id": "cmp:compose",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "compose",
+        "provenance": "authored",
+        "purpose": "COMPOSE — analyse two designs together without merging them, so a system-of-systems question can be asked of parts that stay separately owned.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cmp:confirm",
       "node_type": "Component",
       "properties": {
@@ -95998,6 +96636,58 @@
       }
     },
     {
+      "node_id": "cmp:consumption",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "consumption",
+        "provenance": "authored",
+        "purpose": "What the design built and nothing in the design consumes. Refuses to say 'unused' where recording a consumer is not the design's habit — the ratio is the finding, not the count.\n\nDISTINCT FROM epoch:built-and-consumed-by-nothing, chg:consumption-detector-built — read and judged different in KIND. Those are the capability or requirement this module serves; this is the module itself. A part and the thing it is for are not the same node, and collapsing them would leave the design unable to say which of the two moved.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:corpus",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "corpus",
+        "provenance": "authored",
+        "purpose": "CORPUS — a folder of documents becomes one design in a single batched handshake. The scale sibling of capture-intent.\n\nDISTINCT FROM cap:corpus-ingest, chg:bl186-folder-driver, epoch:bl186-folder-driver — read and judged different in KIND. Those are the capability or requirement this module serves; this is the module itself. A part and the thing it is for are not the same node, and collapsing them would leave the design unable to say which of the two moved.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:coverage",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "coverage",
+        "provenance": "authored",
+        "purpose": "COVERAGE — what the design has never been told about, computed against a caller-supplied sweep of what exists.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:dates",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "dates",
+        "provenance": "authored",
+        "purpose": "DATES — the small amount of calendar arithmetic a design brain needs. The core takes no clock, so every date is one the caller supplied.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cmp:degraded",
       "node_type": "Component",
       "properties": {
@@ -96006,6 +96696,19 @@
         "name": "degraded",
         "provenance": "authored",
         "purpose": "The server that starts when the graph cannot be opened: one tool, reflow2_unavailable, and the reason in the handshake instructions.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:depends",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "depends",
+        "provenance": "authored",
+        "purpose": "DEPENDS — declare which version of another design you depend on, and check whether it still says what you thought.",
         "status": "planned",
         "tier": "operational"
       }
@@ -96032,6 +96735,19 @@
         "name": "dimensions",
         "provenance": "authored",
         "purpose": "The dimensions module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:discover",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "discover",
+        "provenance": "authored",
+        "purpose": "DISCOVER — say what design lives at a path without binding to it, so a session can look before it opens.",
         "status": "planned",
         "tier": "operational"
       }
@@ -96128,6 +96844,19 @@
       }
     },
     {
+      "node_id": "cmp:granularity",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "granularity",
+        "provenance": "authored",
+        "purpose": "Granularity — does the build separate what the design separates? The as-designed/as-built shape question, distinct from whether either is correct.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cmp:graph",
       "node_type": "Component",
       "properties": {
@@ -96175,6 +96904,19 @@
         "name": "identity",
         "provenance": "authored",
         "purpose": "Which design this store holds: minting, adoption, refusal, and the label on top.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:ility",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "ility",
+        "provenance": "authored",
+        "purpose": "What the graph can actually say about the quality axes, and — as much to the point — what it cannot.",
         "status": "planned",
         "tier": "operational"
       }
@@ -96240,6 +96982,19 @@
         "name": "main",
         "provenance": "authored",
         "purpose": "The main module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:maturity",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "maturity",
+        "provenance": "authored",
+        "purpose": "Where a design sits on the trajectory from function to structure. The report that put seams at 0 of 73 and started the black-box work.",
         "status": "planned",
         "tier": "operational"
       }
@@ -96323,6 +97078,19 @@
       }
     },
     {
+      "node_id": "cmp:preserve",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "preserve",
+        "provenance": "authored",
+        "purpose": "Function preservation — the certificate a restructuring can earn. A restructuring is safe exactly when function is provably preserved.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cmp:propagate",
       "node_type": "Component",
       "properties": {
@@ -96371,6 +97139,19 @@
         "name": "readiness",
         "provenance": "authored",
         "purpose": "TRL/MRL readiness assessments, the GATED_ON thresholds an increment states, and the forward roadmap computation that turns them into a delivery epoch with a named reason. Separate from `dimensions` on purpose: a dimension TRENDS a quality axis of the design, a readiness level is a FACT about the maturity of an enabling technology and it GATES.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:regions",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "regions",
+        "provenance": "authored",
+        "purpose": "REGIONS — what parts this design has, for a session that holds nothing yet and needs somewhere to start.",
         "status": "planned",
         "tier": "operational"
       }
@@ -96436,6 +97217,19 @@
         "name": "scope",
         "provenance": "authored",
         "purpose": "Scoped analysis: the region a part of the design covers (containment closure, then traceability radius) and the detectors narrowed to it, with the four buckets that keep a narrowed answer honest. Separate from cmp:detect because the question is different — detect decides what a finding IS, this decides whose it is.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:seam",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "seam",
+        "provenance": "authored",
+        "purpose": "SEAM — say when two linked designs disagree at a boundary.",
         "status": "planned",
         "tier": "operational"
       }
@@ -96683,6 +97477,19 @@
         "name": "query",
         "provenance": "authored",
         "purpose": "The QUERY slice of the served surface (11 tools): the generic read and write path for any node or edge type, including the compare-and-swap that prevents a lost update — create_node, create_edge, get_node, scan_nodes, describe_schema.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:tools-skills",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "skills_tools",
+        "provenance": "authored",
+        "purpose": "The served-skill slice of the surface (5 tools): read one skill, list them all, read the working instructions, name the design. Split from skills.rs by #262 to break a module cycle. MISSED when its eleven siblings were modelled in #270, and found by the wall check reporting files the design does not model as parts.",
         "status": "planned",
         "tier": "operational"
       }
@@ -98105,6 +98912,15 @@
       }
     },
     {
+      "node_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony thinking out loud, 2026-08-21. Nothing here is intent.\n\nHIS WORDS: \"can proposed ideas (like those from brainstorm) form a graph? looking at any idea individually may give you an incomplete picture. for example, we talked about black-boxes, systems engineering, functional allocation, and a few other inter-related ideas that paint a bigger, more holistic picture about what I'm trying to link together. or when my brother mentioned that sometimes he just wants to jot down ideas for a project over time. bottomline, does reflow2 link ideas/concepts or does it rely on the agent to do this?\"\n\n=== THE ANSWER, MEASURED 2026-08-21 RATHER THAN ESTIMATED ===\n\n    145  idea-Decisions (dec:idea-*), of which 123 still proposed\n     12  edges joining any TWO of them\n     68  whose ONLY edge is AUTHORED_BY — they connect to their author and to nothing else\n      8  with no edges at all\n\nAnd the shape of what an idea IS connected to, across the whole population:\n    134  AUTHORED_BY -> Contributor\n     20  GOVERNED_BY -> Decision\n     19  CONTRADICTS -> Decision\n     13  DEPENDS_ON  -> Decision\n\n⇒ THE MOST COMMON EDGE ON AN IDEA IS ITS AUTHOR. **The design records WHO had an idea far more reliably than WHAT IT RELATES TO.** Roughly half the idea population is an island that says 'Anthony thought this' and nothing further.\n\n⭐ SO: REFLOW2 DOES NOT LINK IDEAS. IT RELIES ENTIRELY ON THE AGENT, AND THE AGENT MOSTLY DOES NOT. The evidence is this session: four of the twelve idea-to-idea edges in the entire graph were drawn BY HAND in one hour, only because Anthony asked for them in as many words. Every brainstorm before that produced a node and no edges — including three captured the previous day by the same agent following the same skill, which instructs recording the idea and says nothing about connecting it to its neighbours.\n\n=== WHY IT MATTERS, IN HIS OWN CASE ===\n\nFour nodes carry one argument between them and none of them says so on its own: allocation-waits-for-the-last-responsible-moment (accepted), what-watches-for-the-moment-to-arrive, the-ility-chooses-the-allocation-graph, and is-allocation-running-ahead-of-the-seams. Read singly, each is a reasonable question. Read together they are one position about WHEN and ON WHAT BASIS a boundary gets drawn. A reader meeting any one of them alone gets an incomplete picture — which is exactly what he said.\n\nAND HIS BROTHER'S CASE IS THE SAME SHAPE AT A DIFFERENT TIMESCALE: `req:accreted-intent-becomes-a-design` (a body of intent accreted over years, contradicting itself and never built, can still become a design) presumes the accretion can later be READ AS A WHOLE. Ideas jotted over months with no edges between them do not accrete into anything; they pile.\n\n=== OPTIONS, NONE CHOSEN ===\n\n  (a) THE STATUS QUO — the agent draws edges when it thinks to. Measured rate: 12 edges across 145 ideas, and a third of those in the hour after being asked. This is the option that produced the number.\n  (b) THE BRAINSTORM SKILL REQUIRES NAMING A NEIGHBOUR. Cheap, needs no schema, and testable — the skill already makes the agent search before writing, so the near-matches are IN HAND at the moment of capture and are currently used only to avoid duplicates, then discarded. ⚠️ Risk: an edge drawn to satisfy an instruction is an asserted relationship nobody meant, which `req:a-repair-suggestion-never-proposes-fabrication` forbids for exactly this reason.\n  (c) A DETECTOR FOR THE ABSENCE — 'this idea shares vocabulary with N others and links to none'. It is the absence-shaped detector reflow2 structurally lacks (see fact:the-design-outward-blind-spot-appeared-in-three-independent-places), so building it would be the first of its kind rather than one more of many.\n  (d) COMPUTE ADJACENCY, DO NOT STORE IT. `search_design` already ranks by BM25 over every node's text, so 'ideas near this one' is answerable TODAY as a READ without asserting any edge. Respects the no-fabrication rule completely: it SHOWS adjacency rather than CLAIMING a relationship. ⚠️ And its limit is the whole point — a similarity score cannot carry WHY two ideas are related, and the why is the content. The four edges drawn today each carry a note like 'option (b) here would be this one's stated trigger'; no ranking function produces that sentence.\n  (e) DO NOTHING. Honest, and its cost is the measurement above.\n\n=== COUNTER-ARGUMENT, RECORDED BESIDE RATHER THAN AGAINST ===\n\nAn idea graph could be worse than an idea list. Edges between musings are cheap to draw and expensive to trust: two ideas mentioning 'allocation' are not thereby related, and a densely-linked pile of half-formed thoughts reads as a structure when it is a word cloud. This project has twice retired metric-driven verdicts that fired on correct architecture; a similarity-driven idea graph is the same hazard one level up. WHATEVER IS CHOSEN, THE EDGE THAT EARNS ITS KEEP CARRIES A REASON — which is an argument for (b) or (d) over (c), and against any automatic drawing.\n\nDISTINCT FROM `dec:exploratory-staging`, which asks whether a half-formed idea has a HOME (a kind, a type, a status) and lists what such a kind would buy: retirement candidates and at-a-glance readability. Neither is linking. That node is about what an idea IS; this one is about what an idea is CONNECTED TO.\n\n═══════════════════════════════════════════════════════════════════\n⭐ ANTHONY NAMES BOTH HALVES, 2026-08-21 — AND THE SECOND IS BETTER THAN OPTION (d)\n═══════════════════════════════════════════════════════════════════\n\nHIS WORDS: \"I think the brainstorm skill is the perfect place to start linking ideas. it is like when a person starts 'connecting the dots'. secondly, when as part of a search, the graph starts returning clusters of inter-related ideas to the agent instead of single ideas. like our example from earlier, we'd just to have to do one search (maybe it is limited to like 2 or 3 connected nodes from a searched idea).\"\n\nHALF ONE IS OPTION (b), and the skill is the right home for a reason the options above understated: THE NEAR-MATCHES ARE ALREADY IN HAND AT THE MOMENT OF CAPTURE. The brainstorm skill already makes the agent search before writing, and the dedup guard already returns the nodes it judged close. Today that list is used to avoid a duplicate AND THEN THROWN AWAY. The information needed to connect the dots is produced, read, and discarded, every single time.\n\nHALF TWO IS NOT OPTION (d) AND IS BETTER THAN IT. Option (d) proposed computing adjacency by SIMILARITY. His proposal is to follow the EDGES THAT EXIST and return the neighbourhood, bounded to 2 or 3 hops. That is stronger on the exact axis (d) was weak on: a similarity score cannot say WHY two ideas are related, but a real edge carries the reason it was drawn with. It also needs no schema change — it is a READ.\n\n⭐⭐ AND THE TWO COMPOUND. Linking at capture makes search return clusters; a search that returns clusters shows the next agent the neighbourhood it is writing into; seeing the neighbourhood makes the next link better. A virtuous cycle — but one that needs a seed, because it multiplies whatever is already there.\n\n🛑 WHICH IS THE FINDING: THE TWO HALVES ARE ORDERED, AND MEASURABLY SO. Measured 2026-08-21, traversing every edge except attribution and bookkeeping:\n\n    ideas that reach ZERO other ideas within 2 hops:   111 of 145\n    median other-ideas within 2 hops:                  0\n    at 3 hops:                                         110 of 145 still zero\n\n⇒ CLUSTER-SEARCH BUILT TODAY WOULD RETURN NOTHING FOR 77% OF IDEAS. It would not be wrong, it would be empty — and an empty result from a new feature reads as the feature not working rather than as the graph being unlinked. HALF ONE MUST PRECEDE HALF TWO, or the second ships looking broken.\n\n✅ AND THERE IS ALREADY A WORKING DEMONSTRATION OF WHAT IT WOULD FEEL LIKE. The allocation cluster returns 1 idea at one hop and 2 at two hops — `what-watches-for-the-moment-to-arrive` and `is-allocation-running-ahead-of-the-seams` — because those are the only edges that exist. That is exactly the \"one search instead of four\" he described, working, on the one part of the graph that has been linked. It is a demo and a measurement of the gap at the same time.\n\n📌 STILL NOT DECIDED: whether the skill should REQUIRE a neighbour or merely offer the near-matches for the agent to judge. Requiring one manufactures edges to satisfy an instruction, which is the fabrication hazard recorded above. Offering them depends on the agent choosing well, which is the status quo that produced 12 edges across 145 ideas. The middle — offer the near-matches AND require an explicit \"none of these\" when none is drawn — is the shape `distinct_from` already uses on the dedup guard, and it is the only one of the three that leaves a record of the judgement either way.",
+        "name": "OPEN — do ideas form a GRAPH, or only a list? Measured: 145 ideas, 12 edges between any two of them, and 68 that connect to nothing but their author",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-document-generation",
       "node_type": "Decision",
       "properties": {
@@ -98905,7 +99721,7 @@
       "node_id": "dec:idea-the-ility-chooses-the-allocation-graph",
       "node_type": "Decision",
       "properties": {
-        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony thinking out loud, 2026-08-08. Nothing here is intent and nothing has been chosen. THE IDEA, his words: allocation of functions to systems/services could be driven by what the system is for — \"maybe you allocate functions based on it being fault tolerant or very highly reliable or easily maintainable or based on maximal performance\" — and the agent would deduce the likely answer and then ASK (\"is this design about performance or reliability or maintainability or highly secure\"), because \"answering that question really determines how you allocate functions to which services\" and \"if you don't ask upfront, these cost a lot in having to rework services after they've been already developed\". It follows an earlier thought of his in the same conversation: that allocation could be decided by graph theory alone — Leiden communities for clustering, or PageRank to avoid bottlenecks and god nodes — with domain-oriented and function-oriented decomposition \"thrown out the window\". WHAT ALREADY EXISTS, checked rather than assumed: the `dimension` enum in schema/dimensions.yaml already carries reliability, performance, maintainability, security, scalability, observability, testability, coupling and maturity, attachable to ANY node; `propose_allocation` already clusters the weighted capability graph with Leiden and never auto-applies; `evaluate_allocation` already computes modularity, misplaced capabilities and god-components as selective articulation points; and `ility_report` (BL-184, from Anthony's own correction on 2026-08-03) already maps those computations onto the axis each one informs, emitting named findings and never a score. SO THE DIRECTION IS THE NEW PART: everything above runs GRAPH → ILITY, reading structure and saying what it implies. This idea runs ILITY → GRAPH, stating the attribute and letting it drive the allocation. Same vocabulary, opposite direction of inference, and that direction does not exist. AN OBSERVATION WORTH KEEPING WHATEVER IS DECIDED: the attribute may change not just the OBJECTIVE FUNCTION but WHICH GRAPH IS BUILT. Performance wants the call-frequency / data-volume graph and minimal cross-boundary chatter, which is what Leiden on DEPENDS_ON.weight already does. Reliability wants no articulation points and may deliberately DUPLICATE a function across services so one failure domain cannot take everything — which directly OPPOSES maximal modularity, since a modularity-optimal partition is often reliability-hostile. Maintainability wants things that change together to live together, which is a CO-CHANGE graph, a different edge set entirely. Security wants boundaries following trust and data classification with some nodes separated regardless of coupling — constrained partitioning, not clustering at all. Four attributes, four different graphs over the same functions; any single \"run Leiden and allocate\" answer silently picks performance. THE ONE THAT IS RUNNABLE TODAY, and it is a cheap falsifiable experiment: maintainability. reflow2 already holds 316 ChangeEvents with CHANGED edges, which IS a co-change graph, already populated, needing no instrumentation — cluster it and diff against evaluate_allocation's current map to see whether things that change together are allocated together. Performance is NOT runnable: evaluate_allocation reports total_internal 1, total_external 0, unweighted_dependencies 1 — one capability-to-capability dependency edge in the whole design, unweighted, which is why modularity reads a meaningless 1.00. Reliability and security have no substrate at all yet. COUNTER-ARGUMENTS, recorded beside the idea rather than used to argue it down: (1) a service boundary carries obligations no coupling graph encodes — deployment unit, failure domain, team ownership, release cadence, data residency, regulatory scope — so two functions Leiden puts together may belong apart because one is audited and one is not, and no resolution parameter can see that; (2) this project has already paid twice for metric-driven verdicts, retiring `unexpected_coupling` because it fired on correct architecture (\"that coupling IS the product\") and accepting SPOFs deliberately in dec:sanitize-spof-accepted and dec:service-spof-accepted, so a purely metric-driven allocator would flag all three and be wrong each time; (3) clustering on ESTIMATED weights is an opinion with extra steps and a modularity score on top, which is worse than the opinion because it looks objective — the schema's own weight_basis (estimated / evidence / measured) exists to keep that distinction visible. WHERE THE IDEA IS STRONGEST, narrower than \"replace the old methods\": it makes allocation ARGUABLE. Today domain-versus-function is unfalsifiable and the louder voice wins; computing modularity, bottleneck centrality and cross-boundary weight for candidate allocations turns it into evidence — which is the shape register_alternative / analyze_alternatives already have, with dec:parallel-alternatives putting AoA alternatives in design-space via CONTRADICTS.",
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony thinking out loud, 2026-08-08. Nothing here is intent and nothing has been chosen. THE IDEA, his words: allocation of functions to systems/services could be driven by what the system is for — \"maybe you allocate functions based on it being fault tolerant or very highly reliable or easily maintainable or based on maximal performance\" — and the agent would deduce the likely answer and then ASK (\"is this design about performance or reliability or maintainability or highly secure\"), because \"answering that question really determines how you allocate functions to which services\" and \"if you don't ask upfront, these cost a lot in having to rework services after they've been already developed\". It follows an earlier thought of his in the same conversation: that allocation could be decided by graph theory alone — Leiden communities for clustering, or PageRank to avoid bottlenecks and god nodes — with domain-oriented and function-oriented decomposition \"thrown out the window\". WHAT ALREADY EXISTS, checked rather than assumed: the `dimension` enum in schema/dimensions.yaml already carries reliability, performance, maintainability, security, scalability, observability, testability, coupling and maturity, attachable to ANY node; `propose_allocation` already clusters the weighted capability graph with Leiden and never auto-applies; `evaluate_allocation` already computes modularity, misplaced capabilities and god-components as selective articulation points; and `ility_report` (BL-184, from Anthony's own correction on 2026-08-03) already maps those computations onto the axis each one informs, emitting named findings and never a score. SO THE DIRECTION IS THE NEW PART: everything above runs GRAPH → ILITY, reading structure and saying what it implies. This idea runs ILITY → GRAPH, stating the attribute and letting it drive the allocation. Same vocabulary, opposite direction of inference, and that direction does not exist. AN OBSERVATION WORTH KEEPING WHATEVER IS DECIDED: the attribute may change not just the OBJECTIVE FUNCTION but WHICH GRAPH IS BUILT. Performance wants the call-frequency / data-volume graph and minimal cross-boundary chatter, which is what Leiden on DEPENDS_ON.weight already does. Reliability wants no articulation points and may deliberately DUPLICATE a function across services so one failure domain cannot take everything — which directly OPPOSES maximal modularity, since a modularity-optimal partition is often reliability-hostile. Maintainability wants things that change together to live together, which is a CO-CHANGE graph, a different edge set entirely. Security wants boundaries following trust and data classification with some nodes separated regardless of coupling — constrained partitioning, not clustering at all. Four attributes, four different graphs over the same functions; any single \"run Leiden and allocate\" answer silently picks performance. THE ONE THAT IS RUNNABLE TODAY, and it is a cheap falsifiable experiment: maintainability. reflow2 already holds 316 ChangeEvents with CHANGED edges, which IS a co-change graph, already populated, needing no instrumentation — cluster it and diff against evaluate_allocation's current map to see whether things that change together are allocated together. Performance is NOT runnable: evaluate_allocation reports total_internal 1, total_external 0, unweighted_dependencies 1 — one capability-to-capability dependency edge in the whole design, unweighted, which is why modularity reads a meaningless 1.00. Reliability and security have no substrate at all yet. COUNTER-ARGUMENTS, recorded beside the idea rather than used to argue it down: (1) a service boundary carries obligations no coupling graph encodes — deployment unit, failure domain, team ownership, release cadence, data residency, regulatory scope — so two functions Leiden puts together may belong apart because one is audited and one is not, and no resolution parameter can see that; (2) this project has already paid twice for metric-driven verdicts, retiring `unexpected_coupling` because it fired on correct architecture (\"that coupling IS the product\") and accepting SPOFs deliberately in dec:sanitize-spof-accepted and dec:service-spof-accepted, so a purely metric-driven allocator would flag all three and be wrong each time; (3) clustering on ESTIMATED weights is an opinion with extra steps and a modularity score on top, which is worse than the opinion because it looks objective — the schema's own weight_basis (estimated / evidence / measured) exists to keep that distinction visible. WHERE THE IDEA IS STRONGEST, narrower than \"replace the old methods\": it makes allocation ARGUABLE. Today domain-versus-function is unfalsifiable and the louder voice wins; computing modularity, bottleneck centrality and cross-boundary weight for candidate allocations turns it into evidence — which is the shape register_alternative / analyze_alternatives already have, with dec:parallel-alternatives putting AoA alternatives in design-space via CONTRADICTS.\n\n═══════════════════════════════════════════════════════════════════\n⭐⭐ THE MAINTAINABILITY EXPERIMENT WAS RUN, 2026-08-21, AND IT CONFIRMS THE FOUR-GRAPHS OBSERVATION WITH NUMBERS\n═══════════════════════════════════════════════════════════════════\n\nAnthony returned to this on 2026-08-21: \"should allocation be done in the graph by what communities of nodes form and then draw a boundary around them and say that is service x?\" — the same idea, asked directly. Two things were RE-MEASURED rather than re-read, and one experiment this node called runnable was actually run.\n\nRE-MEASURED, AND UNCHANGED AFTER 13 DAYS. `evaluate_allocation` still reports total_internal 1, total_external 0, unweighted_dependencies 1 — ONE capability-to-capability dependency edge in the whole design. So THE PERFORMANCE BRANCH IS STILL NOT RUNNABLE, exactly as this node said. What HAS changed is that `modularity` now reads `None` instead of a meaningless 1.00 — #261 stopped the tool reporting a perfect score over an empty structure, which is the defect fact:defect-allocation-health-is-green-over-an-empty-structure recorded.\n\nCONFIRMED IN THE CODE: `propose_allocation` does cluster with Leiden (allocate.rs:315) and does not auto-apply. So the mechanism Anthony is asking about EXISTS and deliberately stops short of drawing the boundary.\n\n🔬 THE CO-CHANGE EXPERIMENT, RUN ON DATA THAT NEEDED NO INSTRUMENTATION:\n    562 ChangeEvents; 246 touch two or more nodes\n    536 co-change observations between Components, via the artifacts they realize\n    380 of 536 — 71% — CROSS A SUBSYSTEM BOUNDARY\n\n⚠️ AND IT IS NOT A HUB ARTIFACT, which was the first thing to suspect. `cmp:service` is the router every new tool touches and accounts for 36% of observations; removing it entirely leaves 343 observations of which 241 cross — 70%, unchanged. The signal survives its own most obvious confound.\n\nWHAT THAT MEANS, stated carefully: things that CHANGE TOGETHER in reflow2 are mostly NOT ALLOCATED TOGETHER. That is not a defect and this node should not be read as finding one. The decomposition is deliberately FUNCTIONAL (dec:bl83a-functional-decomposition: \"the functional systems a design-graph tool IS\"), and co-change disagreeing with function is EXACTLY WHAT THE FOUR-GRAPHS OBSERVATION ABOVE PREDICTS. The prediction was made before the measurement and the measurement agrees with it.\n\nTHE CONCRETE PAIRS ARE THE CONVINCING PART, because each is obviously right on both readings:\n    8x  cmp:schema + cmp:vocabulary        (different subsystems — adding a node type touches both)\n    7x  cmp:report + cmp:tools-coherence   (different subsystems — a report and the tool that serves it)\n    6x  cmp:nodes  + cmp:vocabulary        (different subsystems)\n    6x  cmp:nodes  + cmp:schema            (same subsystem — the kernel, correctly together)\nFunction says schema and vocabulary are different systems. Maintenance says they move as one. BOTH ARE TRUE, and no single partition satisfies both — which is the whole content of this idea.\n\n⇒ SO THE ANSWER TO \"CLUSTER AND DRAW A BOUNDARY\" IS NOT NO, IT IS \"ON WHICH GRAPH?\". Leiden on the dependency graph cannot run here at all (one edge). Leiden on the co-change graph would run today and would produce a MATERIALLY DIFFERENT decomposition from the one in place — 70% of its strongest signal crosses the current boundaries. Picking either silently picks an ility, which is the trap this node named in August and now has evidence for.\n\n📌 WHAT IS STILL NOT KNOWN, so this stays open rather than settling: whether a co-change-derived decomposition would be BETTER. 70% disagreement measures difference, not improvement. Nothing here compares the two against any outcome anybody cares about, and the counter-arguments above — a service boundary carries obligations no coupling graph encodes, and this project has twice retired metric-driven verdicts that fired on correct architecture — apply to the co-change graph exactly as they applied to the dependency one.",
         "name": "OPEN — does the quality attribute a system is FOR decide how functions are allocated, and does each attribute need its own graph?",
         "rationale": "Recorded under the brainstorm skill so the thinking survives without being claimed as intent. Three things make it worth keeping even if none of it is built: the ility-to-graph direction is genuinely absent while its whole vocabulary is present; the four-graphs observation would change what any future allocation feature computes rather than merely how it weights; and the co-change experiment is runnable today on data already in the graph, which makes at least one branch falsifiable now instead of after instrumentation. The counter-arguments are recorded beside rather than against — an idea killed in conversation loses its reasoning, an idea recorded with its objection keeps both.",
         "status": "proposed"
@@ -99022,12 +99838,30 @@
       }
     },
     {
+      "node_id": "dec:idea-what-notices-an-idea-that-connects-to-nothing",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Nothing here is intent. Anthony asked for it to be thought through this way rather than built on the spot, 2026-08-21: \"I'd like to capture as the third leg... maybe we brainstorm on it and test out our new concept to see if it links to other related ideas? then we accept the proposed idea and then implement?\"\n\nTHE OPEN QUESTION: what, if anything, should notice an idea that connects to nothing?\n\nWHY IT IS OPEN AT ALL. The brainstorm skill now asks for the honest edges AND for a written line when none is drawn. That is the INSTRUCTION leg. `fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it` says an instruction without a detector leaves the vocabulary empty in EVERY project, not just this one — and the 145-ideas-12-edges measurement is what that emptiness looks like when only two legs are present. So the missing leg is named and the shape of the hole is known.\n\n🛑🛑 AND THE OBVIOUS BUILD COLLIDES WITH THE SKILL IT WOULD SERVE. brainstorm/SKILL.md step 2 says, in as many words: \"Do not run detect-and-ask over brainstormed nodes. It would ask the user to firm up exactly what they deliberately left soft, which teaches them that thinking out loud has a cost.\" A detector that fires on every unlinked idea is precisely that. Built naively, the third leg would tax the one activity the whole skill exists to keep free.\n\n⭐ THE COLLISION WAS ALREADY SETTLED, ELEVEN DAYS EARLY, BY A REQUIREMENT NEITHER NODE MENTIONS. `req:detecting-is-not-asking` (Anthony, 2026-08-19): detecting a gap and inviting its closure are DIFFERENT ACTS and only one is urgent — detection stays unconditional, the invitation waits for a boundary. Every option below is really a position on WHERE this one lands on that line. That is the finding of this brainstorm, and it came out of the search the new linking step spends rather than from thinking harder.\n\n=== THE OPTIONS ===\n\n(a) A `detect_gaps` finding — say `unlinked_idea` — on any proposed Decision with no relation edge and no \"no real relation\" line. CHEAP: the detector framework exists and this is a two-predicate rule. EXPENSIVE: it lands in the list a user reads as their to-do, which is the nudge the skill forbids, and it would land there 111 times on this graph the day it shipped. A finding that fires a hundred times on day one teaches people to filter the whole category.\n\n(b) The same rule, but the INVITATION held until a boundary — a capture-session, an increment close — while the detection itself runs always. Exactly the shape `req:detecting-is-not-asking` describes, and it keeps thinking-out-loud free at the moment of thinking. More work than (a): the detector is the easy half, the boundary is the part that has to be chosen and honoured.\n\n(c) Not a per-node finding at all, but a POPULATION LINE in the sweep's coverage — \"145 ideas, 12 linked, 111 reaching nothing\" — reported as a number, never as a defect against any one idea. CHEAPEST and quietest, and it inherits the property the coverage work was built for: a detector that reports zero because it had NOTHING TO RUN ON is distinguishable from one that ran clean. It answers \"is the linking step working\" without ever telling any individual idea it is deficient. WEAKEST on the three legs, though: a number in a report is not something the loop asks about, and the leg was specified as a detector that surfaces absence.\n\n(d) Nothing on the ideas; the compliance check on the SKILL is the whole third leg. Already built as `LINK_CONTRACT` in skill_lint (2026-08-21). HONEST LIMIT, stated plainly: that check guards the INSTRUCTION against deletion, not the graph against being unlinked. It would pass green over a graph where no agent ever drew an edge. It is a real guard, but it is not this leg.\n\n(e) Do nothing and let the instruction carry it. The null option, and it deserves a fair hearing: it is exactly what was in force for the previous 145 ideas, and it is what produced 12 edges. The evidence against it is unusually direct.\n\n=== WHAT IS NOT YET KNOWN ===\nWhether the \"no real relation\" line can be READ mechanically at all. The skill asks for it in prose, and a detector that cannot tell \"somebody looked and found nothing\" from \"nobody looked\" would report the two identically — which is the exact failure the line was added to prevent. If it cannot be read, the line needs a structural home (a property, or an edge to nothing) before any of (a)-(c) can distinguish them. THAT QUESTION IS PRIOR TO THE CHOICE, and it is measurable rather than arguable.\n\n=== HOW THIS NODE WAS LINKED ===\nRecorded here because it is the first use of the step it is about. The near-matches came from four searches run before writing; four edges were drawn and each names its reason in `evidence`. The collision in the second paragraph and the reconciliation in the third were both found in those hits, not reasoned out — which is the case the linking step was arguing for.\n\n═══════════════════════════════════════════════════════════════════\n✅ ACCEPTED BY ANTHONY, 2026-08-21 — OPTION (b), WITH THE PRIOR QUESTION ANSWERED FIRST\n═══════════════════════════════════════════════════════════════════\n\nHIS CHOICE: detect always, invite at a boundary. The detector runs unconditionally so the record stays honest; the INVITATION waits for a boundary (a capture-session, an increment close) so that thinking out loud costs nothing at the moment of thinking. This is `req:detecting-is-not-asking` applied to the case it was not written for, and it is why the collision recorded above does not have to be paid for.\n\nAND THE PREREQUISITE IS PART OF THE ACCEPTANCE, not a caveat on it. \"Looked and found nothing\" needs a home a detector can READ. The skill asks for it in prose today, and prose cannot be told apart from silence — so the very first thing built has to be a structural place for that judgement, on the pattern `distinct_from` already uses on the dedup guard: the guard does not infer that you considered the duplicate, it makes you say so, and then the saying is a fact rather than an inference.\n\nWITHOUT IT THE DETECTOR WOULD REPORT THE TWO STATES IDENTICALLY — an idea somebody looked at and found genuinely new, and an idea nobody has opened — which is the exact failure the \"no real relation\" line was added to prevent. A detector that cannot tell those apart is not a weaker version of this leg. It is a machine for producing false findings about people who did the work.\n\n⭐ SO THE THREE STATES THE BUILD MUST DISTINGUISH ARE:\n  (A) LINKED — carries at least one relation to another node.\n  (B) REVIEWED AND DELIBERATELY UNLINKED — somebody judged the near-matches and drew nothing, and said so.\n  (C) NOBODY LOOKED — the only one of the three that is a finding.\n\nOption (c)'s population line is not a rival to this and should not be argued against it: a count over the whole graph answers \"is the linking step working at all\", which is a different question from \"which idea has nobody opened\". If it is cheap once (C) is computable, it is worth having beside it.",
+        "name": "OPEN — what should notice an idea that connects to nothing?",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:idea-what-to-do-about-two-designs-answering-to-one-id",
       "node_type": "Decision",
       "properties": {
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-13, from his own observation that graph_id may not be unique. Nothing here is intent and nothing has been chosen.\n\n⚙️ HOW THIS WAS CREATED, said plainly: `add_decision`'s search-first guard fired and named three nodes. All three were read and judged different (below). The `distinct_from` override could not be used because the parameter would not serialize as an array from this client — it arrived as a string and was refused — so the node was written with `create_node` instead. That is a workaround for a client serialization fault, NOT an evasion of the guard: the reading and the judgement the guard asks for were both done first, and are recorded here in place of the edge.\n\nREAD AND JUDGED DIFFERENT FROM THE THREE THE GUARD NAMED. `fact:two-adopted-stores-share-one-graph-id-2026-08-13` is the MEASUREMENT — two stores, one id, and why; this is the question of what to DO about it, which a fact cannot hold. `dec:identity-out-of-band` is the accepted PRINCIPLE, and this node defers to it entirely rather than reopening it. `dec:idea-a-session-holds-several-graphs` asks whether ONE SESSION should reason across several designs at once — orthogonal: that is breadth of attachment, this is two designs being indistinguishable by name.\n\n⭐ THIS IS NOT A MISSING DECISION. `dec:identity-out-of-band` is ACCEPTED and settles the principle: \"a design's identity is a UUID minted at genesis and stored in the graph; the friendly name is a label on top of it.\" It names what it rejected and why — \"deriving from the project name or path (TWO DESIGNS CAN SHARE BOTH, and the id must survive being copied)\". The shape of the answer is decided. What is open is what to do about designs adopted BEFORE it, and that touches HIS data.\n\n═══ THE OPTIONS ═══\n\nA — REFUSE THE AMBIGUOUS ID AND LIST WHAT IT MATCHED. The registry stops silently overwriting; `attach` on a duplicated id fails naming both paths, and discovery reports the collision instead of hiding one design. CHEAP, LOCAL, TOUCHES NO STORED DATA. Not a new policy either: `dec:how-a-session-is-pointed-at-a-design` already states the rule, written before this case was known — \"DEFAULT WHEN EXACTLY ONE DESIGN IS REACHABLE; REFUSE AND LIST THEM WHEN SEVERAL ARE. A design chosen by silence is how three graphs appeared on one repo.\" Leaves both designs unreachable by name, but LOUDLY rather than silently.\n\nB — RE-MINT THE COLLIDING LEGACY IDS. Fixes it at the root and matches `dec:identity-out-of-band` exactly. EXPENSIVE: `graph_id` is part of the export's content hash, so re-minting breaks every existing export, chain link and committed record for that design — precisely what adoption was introduced to protect. Anthony's data, Anthony's call, and it needs a migration story rather than a flag.\n\nC — ANTHONY'S COMPOSITE NAME, in his words: \"can you name a graph by graph_id.first_node_unique_id\". Recorded as offered, with three objections beside it rather than used to kill it. (1) A GRAPH CAN HOLD SEVERAL PROJECT NODES — dev_storyflow holds two, `proj:fleet_ops` and `proj:storyflow`, neither mirrored, and the schema says only that there is \"normally\" one, in an extraction hint. `Project.mirror_of` exists so a mirrored foreign project can sit alongside yours, so mirroring adds more. (2) \"FIRST\" IS UNDEFINED — no ordering exists; exports sort by id, so \"first\" means alphabetically first, an arbitrary tiebreak on a name. (3) IT IS CIRCULAR, and this is the strong one: identity lives in sidecars precisely so it is readable BEFORE opening, because opening MINTS an identity — the failure that once created a third graph beside two populated ones. `Registry::discover` and `describe_at` both depend on never opening. A name derived from a node inside the graph must be read by opening the graph you chose by name.\n  📌 THE RESCUE THAT KEEPS THE INSIGHT: the composite need not be DERIVED at read time — it could be WRITTEN into the sidecar at mint or adopt, staying pre-open readable. But then it is doing option B's job with extra steps, since the sidecar already carries `label` separately from `graph_id`.\n  ⚠️ THE TENSION TO NAME: deriving identity from graph content is the shape `dec:identity-out-of-band` rejected on principle — \"names are assigned with zero coordination, NEVER DERIVED FROM SHARED STATE\". Its rationale records the fleet DELETING a mint-race guard, because the race was an artifact of deriving the handle at all.\n\nD — SCOPE AROUND IT. One registry root per neighbourhood so colliding designs never co-occur. Does not survive his actual case: `~/project` IS the neighbourhood and both stores live in it.\n\n═══ COUNTER-ARGUMENTS ═══\n\n⚠️ 1. NOTHING IS BROKEN TODAY. No transport is wired to the registry, so no session can yet select a design by id. The collision is LATENT — which argues for fixing it BEFORE the transport ships rather than after.\n⚠️ 2. TWO STORES IS NOT A POPULATION. One owner's machine, and the count may never grow: the four minted designs are clean and every future design mints. Option A may be the whole of what is ever needed.\n⚠️ 3. RE-MINTING IS THE EXPENSIVE KIND OF RIGHT. It repairs the model and invalidates the record; the adoption decision already weighed that trade once and went the other way, for stated reasons that have not changed.\n\n📌 A FAIR POINT FOR ACTING: the registry's entire isolation guarantee — `ver:a-session-cannot-name-another-design`, passing — rests on ids being unique, and every fixture in it uses distinct ids. The guarantee is not wrong, but it has never been tested against the one case that is true on the owner's own disk.",
         "name": "OPEN — what happens when two designs answer to one graph_id, now that the id is an ADDRESS and not just a label?",
         "rationale": "Recorded under the brainstorm skill so the thinking survives without being claimed as intent. Kept separate from the pair-types question because the two are unrelated and one node holding both could only ever be half-answered. Worth keeping for three things: the principle is already settled by dec:identity-out-of-band so only the migration is open; Anthony's composite proposal is recorded in his own words with the circularity objection beside it rather than used to argue it down; and the latency point is time-sensitive, because the collision stays harmless only until a transport makes graph_id an address — which is the next thing the linking work would build.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-what-watches-for-the-last-responsible-moment-to-arrive",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony thinking out loud, 2026-08-21. Nothing here is intent.\n\nHIS WORDS: \"as we are still in development of reflow2, if we add another file, does it automatically get added (being proactive) to a black box or is this something I have to remember (being reactive)? as a user using reflow2 is designing a new project, when do functions get allocated to a black box? again, does reflow2 do this automatically or is it something the user kicks off?\" And: \"the point on a new project is you don't immediately allocate functions to a black box.\"\n\n⭐ THIS IS NOT A NEW POSITION — IT IS THE OPEN HALF OF ONE ALREADY ACCEPTED. dec:idea-allocation-waits-for-the-last-responsible-moment settled the PRINCIPLE on 2026-08-14: defer to the last responsible moment, per-capability scope with a project default, and never allocating is a LEGITIMATE TERMINAL STATE rather than a stalled process. What was never settled is WHAT NOTICES THE MOMENT.\n\n⭐⭐ AND THE COUNTER-ARGUMENT RECORDED BESIDE THAT RULING PREDICTED TODAY'S MEASUREMENT, WORD FOR WORD. It was flagged to him before he accepted, and he accepted with it open: \"artifacts get written against an assumed structure long before anyone calls allocate. If real files already embody a de facto allocation, then deferring the decision defers only the RECORD of it, and the graph arrives late to something the build already did... it argues the trigger should watch ARTIFACTS APPEARING rather than the allocate call.\" That was a worry seven days ago. It is now measured.\n\n=== WHAT WAS MEASURED, 2026-08-21, and it is an ASYMMETRY ===\n\nALLOCATION IS SEMI-AUTOMATIC, and this half works. `unallocated_capability` is a real gap source: capture a capability bound to nothing and it fires on every detect_gaps, appears in loop_status, survives sessions, and the Stop hook nudges when graph writes happen with no loop check. `propose_allocation` will suggest a placement without applying it. So: you capture, reflow2 notices and KEEPS noticing, it can suggest, you decide.\n\nA NEW FILE IS SEEN BY NOTHING. The CI gate builds its observation list by iterating THE ARTIFACTS THE DESIGN ALREADY KNOWS and never walks the disk; reconcile_artifacts does no file I/O at all, so the caller supplies what is looked at. `undocumented_addition` therefore exists as a drift kind THE GATE STRUCTURALLY CANNOT PRODUCE. Add a file, commit, push: every check stays green. The Stop hook does not fire either, because it triggers on GRAPH WRITES and adding a file is not one.\n\n⇒ REFLOW2 IS PROACTIVE ABOUT INTENT IT HOLDS AND BLIND TO REALITY IT DOES NOT. Every automatic mechanism reasons over the graph. The moment the question is \"what exists that I was never told about?\", nothing looks.\n\n⚠️ AND THE SAME BLIND SPOT WAS JUST FOUND IN THE INSTRUMENT: wall_check walked design-outward-to-files and could not report a file nobody registered, until it was taught to derive its walk roots from the claimed paths. The gate has the identical shape and has not been taught. That the same structural error appeared independently in the tool and the gate is the finding, not the coincidence.\n\n=== OPTIONS, NONE CHOSEN ===\n\n  (a) THE GATE SWEEPS THE ROOTS THE DESIGN ALREADY POINTS AT and reports files no Artifact claims. Smallest, needs no configuration, and is exactly what wall_check now does — the code exists. Turns 'I forgot' from invisible into a note. ⚠️ Whether it should turn the build RED is a governance question with an owner and must be asked, not assumed.\n  (b) MAKE ALLOCATION TIMING RECORDABLE — a date or basis on ALLOCATED_TO. This is the stated TRIGGER of dec:idea-is-allocation-running-ahead-of-the-seams, parked precisely because 156 ALLOCATED_TO edges carry only weight_basis and nothing dates an allocation. Taking it would unpark that question rather than only answering this one.\n  (c) A DE FACTO ALLOCATION DETECTOR: when an unclaimed file's neighbours all sit in one component, propose that component. Uses propose_allocation, which already exists and already refuses to apply itself. Strongest reach, and the most likely to propose something confidently wrong — imports are coupling, not intent.\n  (d) DO NOTHING; keep it human discipline. The honest option, and the status quo. It is what produced fifteen unmodelled modules and a missed skills_tools over a single day of development.\n\n=== COUNTER-ARGUMENT, BESIDE THE IDEA RATHER THAN AGAINST IT ===\n\nWatching artifacts appear risks re-introducing exactly what the last-responsible-moment ruling was FOR. If every new file prompts 'which black box does this belong to?', the design is pushed back toward allocating early — at the moment of writing a file, which is often earlier than the moment of knowing. The distinction that keeps both: NOTICING a file is unmodelled is not the same as DEMANDING it be allocated. The first is a fact about coverage; the second is a decision about structure. An option that conflates them would undo the ruling while appearing to implement it.\n\nRELATED AND ALREADY SETTLED: dec:idea-allocation-waits-for-the-last-responsible-moment (accepted). PARKED, AND THIS MAY BE ITS TRIGGER: dec:idea-is-allocation-running-ahead-of-the-seams.",
+        "name": "OPEN — the last responsible moment is agreed, but what WATCHES for it to arrive? Today's measurement says nothing does, and a seven-day-old counter-argument predicted exactly that",
         "status": "proposed"
       }
     },
@@ -102175,6 +103009,16 @@
       }
     },
     {
+      "node_id": "epoch:the-co-change-experiment-is-run",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The maintainability branch of the ility-allocation idea is RUN — the experiment the idea called runnable, executed on data already in the graph (2026-08-21)",
+        "sequence": 372,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:the-declared-walls-hold",
       "node_type": "DesignEpoch",
       "properties": {
@@ -102911,6 +103755,16 @@
         "enforced": false,
         "name": "A lesson is generalised before it is built — reflow2 is not tuned to the project that happened to reveal the problem",
         "statement": "When a defect is found in one design, ask what the GENERAL form is before building anything. A detector, threshold or guard fitted to the project that happened to expose the problem makes reflow2 better at that project and worse everywhere else.\n\nANTHONY'S WORDS, 2026-08-14: *\"I don't want to be hyper focused on solving this by creating another requirement which then causes another issue later on. I don't want this to become like a decision tree where it is so specialized to some training data that it is no longer generalizable.\"*\n\n⭐ THE PRINCIPLE ALREADY EXISTED IN THREE PLACES AND HAD NO HOME — which is why it kept being re-derived and re-failed:\n  · `req:the-tool-finds-its-own-blind-spots` (accepted): *\"a detector that reaches zero findings by only asking questions the graph can already answer HAS BEEN TUNED TO THE INSTRUMENT. Satisfying this requirement by adding checks that happen to pass is the failure mode, not the fix.\"*\n  · BL-5's lesson, in a `detect.rs` comment: **a loud detector needs a different QUESTION, not a tuned number.**\n  · `dec:idea-silence-is-reported-not-inferred`, where the concern was raised again.\n\nTHREE MEASURED INSTANCES OF THE FAILURE, each found by a person or agent working by hand rather than by any check:\n  1. `chg:orphan-decision-degree-zero` (2026-08-01) — a clean bill from every detector; zero-degree nodes counted by hand. **One detector was added for that one case.**\n  2. `req:the-tool-finds-its-own-blind-spots` (2026-08-07) — six blind spots, all found by hand.\n  3. 2026-08-14 — 43 live planned capabilities invisible to every tool (`fact:the-build-list-is-suppressed-by-realized-via-component`); an agent had to leave the graph and grep the tree.\n\n📌 THE POSITIVE FORM, because a rule stated only as a prohibition is hard to act on: `granularity_report` is the pattern to copy. It answers a judgement-shaped question — *is the build coarser than the design?* — with **no threshold and no severity**, by comparing against THIS design's own distribution and refusing a verdict. `BL-42`'s `realized_via_component` guard is the counter-example: it solved a real noise problem measured on one storyflow adopt trial and created greenfield-increment blindness that nothing recorded for six weeks.\n\nENFORCEMENT: **advisory, on Anthony's word 2026-08-14.** He was asked whether shipping a check tuned to one design's data should stop the build, and answered that it is advice. That is the honest answer: *\"is this overfitted?\"* is a judgement about why code was written, which is not a property the graph can see — so an enforced version would owe a detector nobody could write, leaving a 0.6 finding open forever. **Advisory here means findable and quotable in review, not weak.**"
+      }
+    },
+    {
+      "node_id": "rule:an-identified-issue-is-enduring-never-dropped",
+      "node_type": "DesignRule",
+      "properties": {
+        "category": "practice",
+        "enforced": false,
+        "name": "An identified issue is enduring — a finding is never 'not mine to fix here'",
+        "statement": "Anthony, 2026-08-20, correcting this agent: \"I don't like when something is identified and dropped/forgotten. If it is identified as a gap/issue in the graph, that means it is enduring and we'll eventually come around to fixing it.\"\n\nWHAT HE WAS CORRECTING: the sentence \"which are a different defect and not mine to fix here\", written about two level_spine_disagreement findings. The scoping was true — they were out of that PR — but the wording reads as dismissal, and dismissal is how a real finding leaves the record.\n\nWHAT THE RULE DEMANDS. Name which PR or increment something is out of scope FOR, never whether it matters. And before moving on, make sure it is either (a) a durable node, (b) an asked Question with somebody's name on it, or (c) a computed finding that will fire again — never only a sentence in a conversation.\n\nWHY HE IS RIGHT ON THE MECHANICS TOO, checked rather than assumed: gaps ARE durable. gap:4e24a202aa6f1737 carried the same id morning and afternoon, because a gap is recomputed from the condition and disappears only when the condition is fixed. So the record already endures; what does not endure is anyone's attention to it.\n\nWARNING — THE FAILURE IT GUARDS IS NOT FORGETTING, IT IS SKIMMING. This design carried 89 open gaps of which 85 had never been put to anybody. That list endured perfectly and was useless. Two were surfaced and answered only because he said this out loud. A durable finding nobody reads is indistinguishable from a lost one, which is why the remedy is to ASK rather than merely to record — and why scheduling the resolution of a gap into an increment was built the following day.\n\nDELIBERATELY ADVISORY, not gate-blocking: no computation can tell a scoping sentence from a dismissal, so a check here would fire on correct behaviour. Its power is `enforced: false` until somebody states otherwise, per dec:enforced-is-stated-not-defaulted."
       }
     },
     {
@@ -103818,6 +104672,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered checksum_dialect.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:coherence-gate-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered test_reflow2_check.py"
       }
     },
     {
@@ -110597,6 +111461,26 @@
       }
     },
     {
+      "node_id": "snap:epoch:the-co-change-experiment-is-run:dec:idea-do-ideas-form-a-graph-or-only-a-list",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-21\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:exploratory-staging\",\"properties\":{\"note\":\"that node asks what an idea IS; this asks what it is CONNECTED TO\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:accreted-intent-becomes-a-design\",\"properties\":{\"note\":\"accretion over years presumes the pile can later be read as a whole — unlinked ideas do not accrete\",\"optional\":false,\"weight_basis\":\"estimated\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony thinking out loud, 2026-08-21. Nothing here is intent.\\n\\nHIS WORDS: \\\"can proposed ideas (like those from brainstorm) form a graph? looking at any idea individually may give you an incomplete picture. for example, we talked about black-boxes, systems engineering, functional allocation, and a few other inter-related ideas that paint a bigger, more holistic picture about what I'm trying to link together. or when my brother mentioned that sometimes he just wants to jot down ideas for a project over time. bottomline, does reflow2 link ideas/concepts or does it rely on the agent to do this?\\\"\\n\\n=== THE ANSWER, MEASURED 2026-08-21 RATHER THAN ESTIMATED ===\\n\\n    145  idea-Decisions (dec:idea-*), of which 123 still proposed\\n     12  edges joining any TWO of them\\n     68  whose ONLY edge is AUTHORED_BY — they connect to their author and to nothing else\\n      8  with no edges at all\\n\\nAnd the shape of what an idea IS connected to, across the whole population:\\n    134  AUTHORED_BY -> Contributor\\n     20  GOVERNED_BY -> Decision\\n     19  CONTRADICTS -> Decision\\n     13  DEPENDS_ON  -> Decision\\n\\n⇒ THE MOST COMMON EDGE ON AN IDEA IS ITS AUTHOR. **The design records WHO had an idea far more reliably than WHAT IT RELATES TO.** Roughly half the idea population is an island that says 'Anthony thought this' and nothing further.\\n\\n⭐ SO: REFLOW2 DOES NOT LINK IDEAS. IT RELIES ENTIRELY ON THE AGENT, AND THE AGENT MOSTLY DOES NOT. The evidence is this session: four of the twelve idea-to-idea edges in the entire graph were drawn BY HAND in one hour, only because Anthony asked for them in as many words. Every brainstorm before that produced a node and no edges — including three captured the previous day by the same agent following the same skill, which instructs recording the idea and says nothing about connecting it to its neighbours.\\n\\n=== WHY IT MATTERS, IN HIS OWN CASE ===\\n\\nFour nodes carry one argument between them and none of them says so on its own: allocation-waits-for-the-last-responsible-moment (accepted), what-watches-for-the-moment-to-arrive, the-ility-chooses-the-allocation-graph, and is-allocation-running-ahead-of-the-seams. Read singly, each is a reasonable question. Read together they are one position about WHEN and ON WHAT BASIS a boundary gets drawn. A reader meeting any one of them alone gets an incomplete picture — which is exactly what he said.\\n\\nAND HIS BROTHER'S CASE IS THE SAME SHAPE AT A DIFFERENT TIMESCALE: `req:accreted-intent-becomes-a-design` (a body of intent accreted over years, contradicting itself and never built, can still become a design) presumes the accretion can later be READ AS A WHOLE. Ideas jotted over months with no edges between them do not accrete into anything; they pile.\\n\\n=== OPTIONS, NONE CHOSEN ===\\n\\n  (a) THE STATUS QUO — the agent draws edges when it thinks to. Measured rate: 12 edges across 145 ideas, and a third of those in the hour after being asked. This is the option that produced the number.\\n  (b) THE BRAINSTORM SKILL REQUIRES NAMING A NEIGHBOUR. Cheap, needs no schema, and testable — the skill already makes the agent search before writing, so the near-matches are IN HAND at the moment of capture and are currently used only to avoid duplicates, then discarded. ⚠️ Risk: an edge drawn to satisfy an instruction is an asserted relationship nobody meant, which `req:a-repair-suggestion-never-proposes-fabrication` forbids for exactly this reason.\\n  (c) A DETECTOR FOR THE ABSENCE — 'this idea shares vocabulary with N others and links to none'. It is the absence-shaped detector reflow2 structurally lacks (see fact:the-design-outward-blind-spot-appeared-in-three-independent-places), so building it would be the first of its kind rather than one more of many.\\n  (d) COMPUTE ADJACENCY, DO NOT STORE IT. `search_design` already ranks by BM25 over every node's text, so 'ideas near this one' is answerable TODAY as a READ without asserting any edge. Respects the no-fabrication rule completely: it SHOWS adjacency rather than CLAIMING a relationship. ⚠️ And its limit is the whole point — a similarity score cannot carry WHY two ideas are related, and the why is the content. The four edges drawn today each carry a note like 'option (b) here would be this one's stated trigger'; no ranking function produces that sentence.\\n  (e) DO NOTHING. Honest, and its cost is the measurement above.\\n\\n=== COUNTER-ARGUMENT, RECORDED BESIDE RATHER THAN AGAINST ===\\n\\nAn idea graph could be worse than an idea list. Edges between musings are cheap to draw and expensive to trust: two ideas mentioning 'allocation' are not thereby related, and a densely-linked pile of half-formed thoughts reads as a structure when it is a word cloud. This project has twice retired metric-driven verdicts that fired on correct architecture; a similarity-driven idea graph is the same hazard one level up. WHATEVER IS CHOSEN, THE EDGE THAT EARNS ITS KEEP CARRIES A REASON — which is an argument for (b) or (d) over (c), and against any automatic drawing.\\n\\nDISTINCT FROM `dec:exploratory-staging`, which asks whether a half-formed idea has a HOME (a kind, a type, a status) and lists what such a kind would buy: retirement candidates and at-a-glance readability. Neither is linking. That node is about what an idea IS; this one is about what an idea is CONNECTED TO.\",\"name\":\"OPEN — do ideas form a GRAPH, or only a list? Measured: 145 ideas, 12 edges between any two of them, and 68 that connect to nothing but their author\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:the-co-change-experiment-is-run:dec:idea-the-ility-chooses-the-allocation-graph",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-08\",\"role\":\"author\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony thinking out loud, 2026-08-08. Nothing here is intent and nothing has been chosen. THE IDEA, his words: allocation of functions to systems/services could be driven by what the system is for — \\\"maybe you allocate functions based on it being fault tolerant or very highly reliable or easily maintainable or based on maximal performance\\\" — and the agent would deduce the likely answer and then ASK (\\\"is this design about performance or reliability or maintainability or highly secure\\\"), because \\\"answering that question really determines how you allocate functions to which services\\\" and \\\"if you don't ask upfront, these cost a lot in having to rework services after they've been already developed\\\". It follows an earlier thought of his in the same conversation: that allocation could be decided by graph theory alone — Leiden communities for clustering, or PageRank to avoid bottlenecks and god nodes — with domain-oriented and function-oriented decomposition \\\"thrown out the window\\\". WHAT ALREADY EXISTS, checked rather than assumed: the `dimension` enum in schema/dimensions.yaml already carries reliability, performance, maintainability, security, scalability, observability, testability, coupling and maturity, attachable to ANY node; `propose_allocation` already clusters the weighted capability graph with Leiden and never auto-applies; `evaluate_allocation` already computes modularity, misplaced capabilities and god-components as selective articulation points; and `ility_report` (BL-184, from Anthony's own correction on 2026-08-03) already maps those computations onto the axis each one informs, emitting named findings and never a score. SO THE DIRECTION IS THE NEW PART: everything above runs GRAPH → ILITY, reading structure and saying what it implies. This idea runs ILITY → GRAPH, stating the attribute and letting it drive the allocation. Same vocabulary, opposite direction of inference, and that direction does not exist. AN OBSERVATION WORTH KEEPING WHATEVER IS DECIDED: the attribute may change not just the OBJECTIVE FUNCTION but WHICH GRAPH IS BUILT. Performance wants the call-frequency / data-volume graph and minimal cross-boundary chatter, which is what Leiden on DEPENDS_ON.weight already does. Reliability wants no articulation points and may deliberately DUPLICATE a function across services so one failure domain cannot take everything — which directly OPPOSES maximal modularity, since a modularity-optimal partition is often reliability-hostile. Maintainability wants things that change together to live together, which is a CO-CHANGE graph, a different edge set entirely. Security wants boundaries following trust and data classification with some nodes separated regardless of coupling — constrained partitioning, not clustering at all. Four attributes, four different graphs over the same functions; any single \\\"run Leiden and allocate\\\" answer silently picks performance. THE ONE THAT IS RUNNABLE TODAY, and it is a cheap falsifiable experiment: maintainability. reflow2 already holds 316 ChangeEvents with CHANGED edges, which IS a co-change graph, already populated, needing no instrumentation — cluster it and diff against evaluate_allocation's current map to see whether things that change together are allocated together. Performance is NOT runnable: evaluate_allocation reports total_internal 1, total_external 0, unweighted_dependencies 1 — one capability-to-capability dependency edge in the whole design, unweighted, which is why modularity reads a meaningless 1.00. Reliability and security have no substrate at all yet. COUNTER-ARGUMENTS, recorded beside the idea rather than used to argue it down: (1) a service boundary carries obligations no coupling graph encodes — deployment unit, failure domain, team ownership, release cadence, data residency, regulatory scope — so two functions Leiden puts together may belong apart because one is audited and one is not, and no resolution parameter can see that; (2) this project has already paid twice for metric-driven verdicts, retiring `unexpected_coupling` because it fired on correct architecture (\\\"that coupling IS the product\\\") and accepting SPOFs deliberately in dec:sanitize-spof-accepted and dec:service-spof-accepted, so a purely metric-driven allocator would flag all three and be wrong each time; (3) clustering on ESTIMATED weights is an opinion with extra steps and a modularity score on top, which is worse than the opinion because it looks objective — the schema's own weight_basis (estimated / evidence / measured) exists to keep that distinction visible. WHERE THE IDEA IS STRONGEST, narrower than \\\"replace the old methods\\\": it makes allocation ARGUABLE. Today domain-versus-function is unfalsifiable and the louder voice wins; computing modularity, bottleneck centrality and cross-boundary weight for candidate allocations turns it into evidence — which is the shape register_alternative / analyze_alternatives already have, with dec:parallel-alternatives putting AoA alternatives in design-space via CONTRADICTS.\",\"name\":\"OPEN — does the quality attribute a system is FOR decide how functions are allocated, and does each attribute need its own graph?\",\"rationale\":\"Recorded under the brainstorm skill so the thinking survives without being claimed as intent. Three things make it worth keeping even if none of it is built: the ility-to-graph direction is genuinely absent while its whole vocabulary is present; the four-graphs observation would change what any future allocation feature computes rather than merely how it weights; and the co-change experiment is runnable today on data already in the graph, which makes at least one branch falsifiable now instead of after instrumentation. The counter-arguments are recorded beside rather than against — an idea killed in conversation loses its reasoning, an idea recorded with its objection keeps both.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-the-ility-chooses-the-allocation-graph",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:the-discipline-arrives-at-the-tool:epoch:the-philosophy-is-in-the-product",
       "node_type": "Snapshot",
       "properties": {
@@ -113539,6 +114423,18 @@
       }
     },
     {
+      "node_id": "fact:the-design-outward-blind-spot-appeared-in-three-independent-places",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "MEASURED 2026-08-21. The same structural blind spot was found in THREE INDEPENDENT PLACES in one day, and that it arose independently is the finding rather than the coincidence.\n\nTHE SHAPE, stated once: a computation that takes THE DESIGN as its only input can report on what the design mentions and on nothing else. Absence is then unreportable BY CONSTRUCTION, not by oversight — no amount of care in writing the check helps, because the missing thing never enters the data structure.\n\nTHE THREE:\n\n  1. `arrival_delta` decided delivery by looking for an Artifact. Work whose deliverable was a DESIGN CHANGE had no file to find, so an epoch with both capabilities genuinely delivered reported both `outstanding` — a false statement about finished work, re-asked on every run. Fixed by Capability.delivery (#268).\n\n  2. `tools/wall_check.py` walked component -> files from REALIZES. A file nobody registered never entered the map, so it could not be reported — while the tool's own headline number, '64 of 73 mapped', read as a coverage story. FIFTEEN real source modules sat outside the model, including one (skills_tools) that this agent had itself skipped while modelling its eleven siblings. Fixed by deriving the walk roots FROM THE CLAIMED PATHS, which keeps the no-configuration property.\n\n  3. `tools/reflow2_check.py`, the CI gate, builds its observation list with `for art in artifacts` and never walks the disk; `reconcile_artifacts` does no file I/O at all. `undocumented_addition` was therefore a drift kind THE GATE STRUCTURALLY COULD NOT PRODUCE — add a file, commit, push, and every check stayed green. Fixed the same way, as a NOTE rather than a failure.\n\nWHY IT IS ONE FINDING AND NOT THREE BUGS: nobody copied the mistake between them. Three different authors' code, three different purposes, converging on the same stance because reading from the graph is the natural way to write a check in this system — and it is the stance that cannot see absence. A fourth instance should be expected wherever a new check is written, and the question that catches it is: WHAT IS THIS CHECK'S ONLY INPUT, AND WHAT CAN THAT INPUT NEVER MENTION?\n\nDISTINCT FROM `fact:ten-components-report-a-zero-blast-radius-the-source-contradicts` (2026-08-20), which named the same stance in the DETECTORS. What today adds is that it is not a detector property: it reached an INSTRUMENT and a GATE, which are different code with different authors. It is an architectural stance of the product, not a defect class in one subsystem.\n\nWHAT IT COSTS AN ARBITRARY USER'S PROJECT: every reassuring number reflow2 gives about coverage, cycles or blast radius is computed over what the user already told it. A project that has modelled half its code gets confident answers about that half and silence about the rest, with nothing distinguishing the two.",
+        "subject_id": "req:modularity-computed",
+        "valid_from": "2026-08-21"
+      }
+    },
+    {
       "node_id": "fact:the-diamond-meets-at-dynographs-internals-not-its-interface",
       "node_type": "TemporalFact",
       "properties": {
@@ -116059,7 +116955,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:aee81246ebadc308185bc944897020ed2586bc922035705aacda2d070d5aa78c",
+  "prev_content_hash": "sha256:71305feabe668586a73a7e03c2830f2580be7abd3d2b6e44b8b29b566021b287",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

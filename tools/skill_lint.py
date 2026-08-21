@@ -586,6 +586,35 @@ TOOL_CONVENTIONS: dict[str, str] = {
 #
 # Anthony asked for this shape to be CEMENTED rather than repeated, 2026-07-31,
 # after it was used on him for five standing gaps. Six obligations:
+# ---------------------------------------------------------------------------
+# The LINKING contract — brainstorm/SKILL.md, added 2026-08-21.
+#
+# The same shape as ASK_CONTRACT above and for the same reason. reflow2's own
+# graph held 145 brainstormed ideas joined by 12 edges, 111 of them reaching no
+# other idea within two hops, while the relation vocabulary that would have
+# joined them had existed the whole time and was used 81 times elsewhere. The
+# missing leg was never the tool; it was the instruction. An instruction that
+# can be quietly deleted is the same as one that was never written, so the five
+# clauses that make the step work are pinned here rather than hoped for.
+#
+# The fourth clause is the load-bearing one. Asking for edges alone produces
+# fabricated relations, and a false neighbour is worse than a missing one
+# because anything that searches by neighbourhood repeats it. The step is only
+# honest because it accepts "no real relation" AS AN ANSWER and asks for it in
+# writing — the shape `distinct_from` already uses on the dedup guard.
+LINK_CONTRACT: dict[str, str] = {
+    "spends the near-matches already in hand": "Judge the near-matches you already have",
+    "names the relation vocabulary rather than leaving it to be found": (
+        "The relation vocabulary already exists"
+    ),
+    "asks why the edge was drawn": "Put the reason in the edge's `evidence`",
+    "accepts 'no real relation' as an answer, in writing": (
+        "If nothing is honestly related, write that line in the decision text"
+    ),
+    "forbids manufacturing one to satisfy the step": "Never draw an edge to satisfy this step",
+    "checks the direction of the claim": "Direction is part of the claim",
+}
+
 ASK_CONTRACT: dict[str, str] = {
     "offers a reading": "Say which answer you would give",
     "carries what would change it": "Name the condition under which your recommendation is wrong",
@@ -867,6 +896,17 @@ def main() -> int:
         "The decision stays with the user" in ask_text,
         "the separation must be stated, not implied",
     )
+
+    print("== the linking contract ==")
+    link_md = SKILLS / "brainstorm" / "SKILL.md"
+    link_text = link_md.read_text(encoding="utf-8") if link_md.exists() else ""
+    check("brainstorm/SKILL.md present", bool(link_text))
+    for label, phrase in LINK_CONTRACT.items():
+        check(
+            f"brainstorm states the obligation: {label}",
+            phrase in link_text,
+            f"missing {phrase!r}",
+        )
 
     # The two negative checks, over EVERY served skill — the load-bearing half.
     all_skill_text = {
