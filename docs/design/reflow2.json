@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:4789ab29550254ca1ceedadc6f1aabad62f0b027b84d419f5e0d97f71a2e34ce",
+  "content_hash": "sha256:ea507b3a1cb906d1f91e600302fae3910c66abded0fdfb0c3316778f0e366887",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -5141,6 +5141,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:core-api-withdrawn-from-the-published-surface",
+      "properties": {},
+      "to_id": "epoch:v0380"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:corpus-trial-finds-silent-merge-loss",
       "properties": {},
       "to_id": "epoch:dev-storyflow-trial"
@@ -8093,6 +8099,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:v0380:dec:core-api-spof-accepted",
+      "properties": {},
+      "to_id": "epoch:v0380"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:v0380:ifc:core-api",
+      "properties": {},
+      "to_id": "epoch:v0380"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:v0380:rel:v0380",
       "properties": {},
       "to_id": "epoch:v0380"
@@ -8599,6 +8617,15 @@
       "properties": {
         "acted_at": "2026-07-25",
         "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:core-api-withdrawn-from-the-published-surface",
+      "properties": {
+        "acted_at": "2026-08-21",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -17903,6 +17930,24 @@
         "action": "modified"
       },
       "to_id": "dec:coord-board-in-graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:core-api-withdrawn-from-the-published-surface",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:core-api-spof-accepted"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:core-api-withdrawn-from-the-published-surface",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ifc:core-api"
     },
     {
       "edge_type": "CHANGED",
@@ -33412,6 +33457,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "ifc:core-api",
+      "properties": {},
+      "to_id": "dec:core-api-withdrawn-from-the-published-surface"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "ifc:graph-export",
       "properties": {},
       "to_id": "dec:export-door-spof-accepted"
@@ -34824,6 +34875,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:core-api-spof-accepted",
+      "properties": {},
+      "to_id": "snap:epoch:v0380:dec:core-api-spof-accepted"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "dec:coverage-scope-is-declared",
       "properties": {},
       "to_id": "snap:epoch:coverage-scope-settled:dec:coverage-scope-is-declared"
@@ -35043,6 +35100,12 @@
       "from_id": "fact:defect-typed-tool-parameter-names-are-inconsistent",
       "properties": {},
       "to_id": "snap:epoch:usgov-genesis-feedback-triaged:fact:defect-typed-tool-parameter-names-are-inconsistent"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "ifc:core-api",
+      "properties": {},
+      "to_id": "snap:epoch:v0380:ifc:core-api"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -98646,6 +98709,15 @@
       }
     },
     {
+      "node_id": "chg:core-api-withdrawn-from-the-published-surface",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "Snapshot of dec:core-api-spof-accepted before its stale topology sentence is corrected",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:corpus-trial-finds-silent-merge-loss",
       "node_type": "ChangeEvent",
       "properties": {
@@ -102281,9 +102353,19 @@
       "node_id": "dec:core-api-spof-accepted",
       "node_type": "Decision",
       "properties": {
-        "decision": "ifc:core-api — the DesignGraph API cmp:graph provides and the MCP service consumes — is the sole operational path between the Design Store and the Agent Surface subsystems. Accepted as a SPOF, like dec:graph-spof-accepted and dec:service-spof-accepted.",
+        "decision": "ifc:core-api — the DesignGraph API that `cmp:graph` provides and `cmp:service` consumes — is the sole operational path between the design store and the agent surface. Accepted as a SPOF, like dec:graph-spof-accepted and dec:service-spof-accepted.\n\n📌 CORRECTED 2026-08-21, and the prior wording is in `snap:epoch:v0380:dec:core-api-spof-accepted`. This said the path ran \"between the Design Store and the Agent Surface subsystems\", which stopped being true and was not noticed. `cmp:graph` sits in `sys:foundation`, not `sys:store` — `sys:store` contains only `cmp:export` and `cmp:search`. The rationale below already recorded that BL-83a moved the provider to `cmp:graph`; what nobody updated was the sentence naming which subsystems the bridge joins, so the decision described a topology that had moved under it.\n\nTHE JUDGEMENT WAS AND REMAINS CORRECT — one store, one surface over it, and the bridge between them is inherently single. Only the description was stale, which is the more insidious of the two: a wrong decision gets argued with, while a right decision describing the wrong parts is read straight past.",
         "name": "The DesignGraph API is an accepted single point of failure",
         "rationale": "One store, one surface over it (req:agent-native, single-writer storage): the bridge between them is inherently single. Surfaced when BL-83a retired cmp:core and moved the API's provider to cmp:graph; the topology is honest, not a defect to engineer away.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:core-api-withdrawn-from-the-published-surface",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "`ifc:core-api` moves from `published` to `internal`. The published surface is now three boundaries — `ifc:mcp-tools`, `ifc:mcp-tools-http`, `ifc:graph-export` — and every one of them passes the test: agents call the tool surfaces, and other tools and designs read the export document.\n\nTHE SAME TEST THAT SETTLED `ifc:graph-read`, applied here and failing: is anybody outside this project's control writing code against it? No. `reflow2-core` is not on crates.io, its only dependant is `reflow2-mcp` by local path in the same workspace, and users receive binaries and speak MCP rather than linking the library.\n\nWHAT IT WAS DOING WHILE PUBLISHED, which is the concrete harm rather than a tidiness argument: `export_surface` is the document handed to another team or a vendor, and this was in it. Asked \"what may I build against?\", reflow2 answered with the entire Rust API of an undistributed crate — 277 public functions, described in two of nine fields.\n\nTHE UNDERLYING PROBLEM IS THAT ITS NAME IS ITS SCOPE. \"DesignGraph API\" means whatever that struct exposes today, and it grows whenever anyone adds a method. A contract whose scope grows by default cannot be relied on or satisfied by a second implementation. That is not fixable by writing more prose about it; the route to real contracts here is more narrow interfaces like `ifc:graph-read`, whose five operations are named and where adding a sixth is a deliberate act.\n\nWHAT WOULD REOPEN IT — the same two triggers as `ifc:graph-read`, either sufficient: `reflow2-core` is published as a crate for others to build on, or an implementation is wanted from somebody other than this project. Neither holds today.\n\nWHAT WAS FIXED ALONGSIDE, all of it recorded rather than silently tidied:\n  — `spec` held a 2026-07-28 changelog note in place of a specification; the note is history and now lives in the change record and the snapshot, and the field describes the contract.\n  — `payload_schema` read `unspecified` while eleven `schema/*.yaml` artifacts carried `SPECIFIES` edges with `format: json_schema`. The design contradicted itself about whether its own contract was written down; the field now names them.\n  — `error_model`, `endpoint`, `payload_format`, `auth` and `transport_security` were unstated. All are now stated, and the last three are `none` — a fact about a library boundary with no wire, no principal and no channel, not a gap.\n  — `operations` is now an explicit statement that this boundary CANNOT enumerate its operations, rather than a blank that reads as unfinished paperwork.\n  — `dec:core-api-spof-accepted` named a topology that had moved; corrected, with the prior wording in `snap:epoch:v0380:dec:core-api-spof-accepted`.\n\n🛑 ONE FINDING COULD NOT BE FIXED, AND THE REASON IS THE MORE INTERESTING RESULT. Nothing verifies this contract, and nothing verifies ANY contract in this design, because **`VERIFIES` cannot target an Interface at all**: the schema enumerates its targets as Capability, Requirement, Artifact, Component, DesignRule and Constraint. An attempt to attach `ver:store` — which does validate the eleven schema files that specify this boundary — was refused by the edge validator.\n\nSo reflow2 can check a rule, a budget, a part and a file, and cannot check a CONTRACT. Interfaces are the nodes a modular open-systems approach turns on, and they are the one kind of node the design cannot attach evidence to. That edge's own schema comments record it under-enumerating its targets TWICE before — Requirement and Constraint were each true in a real design before the list admitted it — so Interface may be the third instance of the same pattern rather than a deliberate exclusion. Left as an open question rather than fixed on the way past: widening a `to` list is a schema change and belongs to its own decision.\n\nWHAT WAS DELIBERATELY NOT CHANGED: both `sys:foundation` and `cmp:graph` provide it, and both `sys:agent-surface` and `cmp:service` consume it, which is why this one interface generated 16 of the design's declared contract pairs from what the SPOF decision calls a single path. Whether a subsystem should re-declare what its own module declares is a modelling question about levels, not a defect to repair on the way past.",
+        "name": "DECIDED — the DesignGraph API is withdrawn from the published surface",
+        "rationale": "ANTHONY'S CALL, 2026-08-21: \"go with your recommendation to fix all the findings and put internal\", after a review that laid out seven findings and named which of them were judgement rather than fact.\n\nWHY THIS IS RECORDED RATHER THAN JUST DONE. Withdrawing a published designation is a statement about what this project commits to — the opposite direction from publishing, and equally his to make. And `internal` is the DEFAULT, so a boundary sitting at it carries no evidence of whether anyone considered the question. Without this node, a later reader finds the same ambiguity that made the review necessary in the first place.\n\nTHE REVIEW ITSELF IS THE THING WORTH KEEPING, more than the answer: the test is \"who outside your control writes code against this?\", and it is re-applicable to every boundary rather than being a verdict about this one.",
         "status": "accepted"
       }
     },
@@ -110450,15 +110532,19 @@
       "node_id": "ifc:core-api",
       "node_type": "Interface",
       "properties": {
-        "auth": "unspecified",
-        "designation": "published",
+        "auth": "none",
+        "designation": "internal",
+        "endpoint": "`reflow2_core::DesignGraph`, linked directly by callers within this workspace. No transport, no wire, no address — it is a Rust library API, which is why `payload_format`, `auth` and `transport_security` are all `none` rather than unspecified: there is no serialization, no principal and no channel, and saying so is a fact about the boundary rather than a gap in describing it.",
+        "error_model": "`Result<T, DynoError>`, where `DynoError` is dynograph-foundation's error type — inherited with the payload types rather than defined here.\n\nAbsence is not an error: a node that is not there is `Ok(None)`, a type with no nodes is `Ok(vec![])`. An unknown node type IS an error and must not be answered as an empty result — \"no such type\" and \"no such node\" are different facts and must not share a reply. `ifc:graph-read` states the same obligation for its subset, and states it in more detail because that one has to survive a second implementation.",
         "medium": "library",
         "name": "DesignGraph API",
+        "operations": "⚠️ THIS BOUNDARY CANNOT ENUMERATE ITS OPERATIONS, AND THAT IS THE MOST IMPORTANT THING RECORDED ABOUT IT.\n\n`DesignGraph` exposes **277 public functions** across 43 files (measured 2026-08-21), and the number grows whenever anyone adds a method. Its name — \"DesignGraph API\" — therefore means \"whatever that struct happens to expose today\". A contract whose scope grows by default is a label on a moving target, not something a second implementation could satisfy or a reader could rely on.\n\nIt is recorded here as unenumerable rather than left blank, because blank reads as \"nobody got round to it\" and the truth is \"it cannot be done in this shape\".\n\n⭐ THE ONE ENUMERATED SUBSET IS `ifc:graph-read`: five named read operations, where adding a sixth is a deliberate act somebody has to justify. That is what a module can be swapped, tested and measured across — demonstrated on `granularity`, which reads a design made of two Vec's and cannot tell it from a real store. If more of this surface is ever wanted as a real contract, the route is more narrow interfaces like that one, not an attempt to write down all 277.",
         "paradigm": "synchronous",
-        "payload_format": "unspecified",
+        "payload_format": "none",
+        "payload_schema": "The eleven `schema/*.yaml` files, which declare every node type, edge type and property this API reads and writes: build, core, dimensions, environment, functional, inference, operate, readiness, structure, temporal, verify.\n\nThey are recorded as such structurally — each carries a `SPECIFIES` edge to this interface with `format: json_schema` — and this field now says the same thing. Until 2026-08-21 it read `unspecified` while those eleven edges asserted the opposite, so the design contradicted itself about whether its own contract was written down.\n\nValues crossing the boundary are `dynograph_storage::{StoredNode, StoredEdge}` and `dynograph_core::Value`, owned Rust values passed in-process. Those types belong to dynograph-foundation (`ifc:req-dyno-storage-api`, designation `required`) and are inherited, not defined here.",
         "provenance": "authored",
-        "spec": "Corrected 2026-07-28: this claimed `medium: REST` because REST was the schema default, and it is a Rust library API linked directly by callers — no transport, no wire, no endpoint. The false value was never chosen by anyone; it arrived by default.",
-        "transport_security": "unspecified"
+        "spec": "The whole public surface of `reflow2_core::DesignGraph` — the in-process Rust API every module of this crate reads and writes the design through. INTERNAL: reflow2-core is not distributed as a crate, so nothing outside this workspace can link it, and this boundary promises nobody anything. `dec:core-api-withdrawn-from-the-published-surface` records why, and names the two triggers that would reopen it.\n\nIT IS A BOUNDARY THE DESIGN CANNOT FULLY DESCRIBE, and the `operations` field says so at length rather than leaving a blank that would read as unfinished paperwork. 277 public functions, growing by default. The narrow, enumerable subset is `ifc:graph-read`.\n\nA NOTE ON WHY `medium: library` MATTERS AND IS NOT DECORATION: this is linked into its callers rather than called across, so it cannot fail on its own, and the structural detectors need to know that to avoid reporting a linked-in foundation as a single point of failure. It carried `medium: REST` until 2026-07-28 — never chosen by anyone, it arrived as the schema default, and a default that asserts is exactly what `cap:defaults-are-not-serialized` now prevents. That correction is history and lives in the change record and in `snap:epoch:v0380:ifc:core-api`; this field describes the contract.",
+        "transport_security": "none"
       }
     },
     {
@@ -116097,6 +116183,26 @@
       }
     },
     {
+      "node_id": "snap:epoch:v0380:dec:core-api-spof-accepted",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Interface\",\"other_id\":\"ifc:core-api\",\"properties\":{}}]",
+        "state": "{\"decision\":\"ifc:core-api — the DesignGraph API cmp:graph provides and the MCP service consumes — is the sole operational path between the Design Store and the Agent Surface subsystems. Accepted as a SPOF, like dec:graph-spof-accepted and dec:service-spof-accepted.\",\"name\":\"The DesignGraph API is an accepted single point of failure\",\"rationale\":\"One store, one surface over it (req:agent-native, single-writer storage): the bridge between them is inherently single. Surfaced when BL-83a retired cmp:core and moved the API's provider to cmp:graph; the topology is honest, not a defect to engineer away.\",\"status\":\"accepted\"}",
+        "target_id": "dec:core-api-spof-accepted",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:v0380:ifc:core-api",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CONSUMES\",\"other_type\":\"Component\",\"other_id\":\"cmp:service\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"CONSUMES\",\"other_type\":\"Component\",\"other_id\":\"sys:agent-surface\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"CONSUMES\",\"other_type\":\"Component\",\"other_id\":\"sys:coherence-loop\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"CONSUMES\",\"other_type\":\"Component\",\"other_id\":\"sys:human-channel\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"CONSUMES\",\"other_type\":\"Component\",\"other_id\":\"sys:intake\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"CONSUMES\",\"other_type\":\"Component\",\"other_id\":\"sys:store\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"CONSUMES\",\"other_type\":\"Component\",\"other_id\":\"sys:time-history\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"CONSUMES\",\"other_type\":\"Component\",\"other_id\":\"sys:vocabulary\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"PROVIDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:graph\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"PROVIDES\",\"other_type\":\"Component\",\"other_id\":\"sys:foundation\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-build\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"in\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-core\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"in\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-dimensions\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"in\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-environment\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"in\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-functional\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"in\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-inference\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"in\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-operate\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"in\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-readiness\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"in\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-structure\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"in\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-temporal\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"in\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-verify\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:core-api-spof-accepted\",\"properties\":{}}]",
+        "state": "{\"auth\":\"unspecified\",\"designation\":\"published\",\"medium\":\"library\",\"name\":\"DesignGraph API\",\"paradigm\":\"synchronous\",\"payload_format\":\"unspecified\",\"provenance\":\"authored\",\"spec\":\"Corrected 2026-07-28: this claimed `medium: REST` because REST was the schema default, and it is a Rust library API linked directly by callers — no transport, no wire, no endpoint. The false value was never chosen by anyone; it arrived by default.\",\"transport_security\":\"unspecified\"}",
+        "target_id": "ifc:core-api",
+        "target_type": "Interface"
+      }
+    },
+    {
       "node_id": "snap:epoch:v0380:rel:v0380",
       "node_type": "Snapshot",
       "properties": {
@@ -116179,6 +116285,18 @@
         "subject_id": "epoch:the-declared-walls-hold",
         "valid_from": "2026-08-20",
         "valid_to": "2026-08-20"
+      }
+    },
+    {
+      "node_id": "fact:a-contract-is-the-one-thing-reflow2-cannot-attach-evidence-to",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "property",
+        "name": "VERIFIES cannot target an Interface, so no contract in any reflow2 design can carry a check — and interfaces are the nodes MOSA turns on",
+        "statement": "FOUND 2026-08-21 while fixing the finding \"nothing verifies ifc:core-api\". The fix was refused by the edge validator:\n\n  Invalid edge: VERIFIES cannot connect Verification to Interface\n\nThe schema enumerates VERIFIES targets as **Capability, Requirement, Artifact, Component, DesignRule, Constraint**. Interface is absent.\n\nSO REFLOW2 CAN ATTACH EVIDENCE TO A RULE, A BUDGET, A PART, A FILE, A CAPABILITY AND A REQUIREMENT — AND NOT TO A CONTRACT. Every Interface in every design using reflow2 is unverifiable by construction. reflow2's own 17 interfaces have zero incoming VERIFIES edges, and that reads as \"nobody wrote one\" when the truth is \"nobody could\".\n\nWHY IT MATTERS MORE THAN A MISSING EDGE TYPE USUALLY WOULD. A contract is the node a modular open-systems approach turns on — `set_interface_designation`'s own description calls `published` \"the distinction a systems-engineering ICD publishes and that MOSA calls a modular system interface\". The question \"does this boundary actually hold?\" is the most natural thing anyone would want to check about a published contract, and it is the one question this vocabulary cannot express. `ifc:mcp-tools` is specified 9 of 9 fields, is the surface every user's agent calls, and cannot carry a single piece of evidence that it behaves as specified.\n\n⭐ IT MAY BE THE THIRD INSTANCE OF A PATTERN THIS EDGE HAS ALREADY RECORDED ABOUT ITSELF. `schema/verify.yaml` carries a long comment on VERIFIES under-enumerating its targets twice: the extraction hint named three types while four were true, and later the `to` list itself was derived from a census that found five types by edge count and MISSED TWO carrying one edge each — which made an existing export unimportable by the binary that wrote it for four days while every gate read green. Its own words: \"a schema tightening that silently orphans existing data is a breaking change wearing a validation error's clothes.\" Interface may simply be the next unlisted-but-wanted target, never censused because no edge existed to count — an absence cannot appear in a survey of what is present.\n\nWHAT THIS FACT DOES NOT SETTLE: whether Interface SHOULD be added. That is a schema change and Anthony's call. Two things argue for care rather than speed — the same comment warns that narrowing this list broke a real design, so widening it deserves the same scrutiny in reverse; and it is worth asking first what a check on a contract would MEAN, since a conformance test against a specified boundary is a different kind of evidence from a unit test on a capability.\n\nNOTE ON THE STAMP: the schema stamp carries node and edge TYPE NAMES, not their target lists, so adding Interface to this `to` list would not move it and would owe no upgrade note.",
+        "subject_id": "cmp:verify",
+        "valid_from": "2026-08-21"
       }
     },
     {
@@ -121395,7 +121513,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:17f5f9edf98af4c3023bcd1a518ccfcd8ac5a814e6d5f82d765fc570f3b96d78",
+  "prev_content_hash": "sha256:4789ab29550254ca1ceedadc6f1aabad62f0b027b84d419f5e0d97f71a2e34ce",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
