@@ -340,7 +340,7 @@ fn several_coarse_artifacts_mask_each_other() {
 
 use dynograph_core::{DynoError, Value};
 use dynograph_storage::{StoredEdge, StoredNode};
-use reflow2_core::graph_read::GraphRead;
+use reflow2_core::graph_read::{CountingRead, GraphRead};
 use reflow2_core::nodes::node;
 use std::collections::HashMap;
 
@@ -546,5 +546,104 @@ fn an_unknown_node_type_reaches_the_caller_as_an_error() {
     assert!(
         reflow2_core::granularity::granularity_report(&cannot_answer).is_err(),
         "the store could not answer, and that must not arrive as an empty design"
+    );
+}
+
+// ---- The budget, held by a count rather than a clock --------------------
+//
+// `con:granularity-reads-scale-with-artifacts-not-edges`: the reading shall
+// make no more than N + 2 store reads, N = artifact count.
+//
+// DERIVED, not picked. The answer is ABOUT artifacts, so the reads it needs are
+// one scan to find them, one `outgoing` each, and one scan for the population
+// it compares against. Nothing about the question requires a read per EDGE.
+//
+// MEASURED BEFORE the budget was written, on reflow2's own design (2853 nodes,
+// 218 artifacts): 552 reads, of which 333 were `get_node` — one per REALIZES
+// edge, each asking only "is this id a Capability?". After: 220, exactly at
+// budget, with zero `get_node`.
+//
+// ⚠️ THIS WAS NEVER A SPEED CHANGE AND THE MEASUREMENT SAYS SO. Wall clock went
+// ~201ms -> ~216ms, which is noise: reads more than halved and time did not
+// move, because a `scan_nodes` returning 199 nodes costs what 199 point lookups
+// were costing. The budget buys the STRUCTURAL property — cost scales with what
+// the reading reports on — and buys no speed. `granularity_report` is ~0.3% of
+// `graph_report` in the same configuration, so optimising it for wall clock
+// would have been manufacturing work.
+
+fn budget_shaped_design(artifacts: usize) -> Vectors {
+    let mut nodes = Vec::new();
+    let mut edges = Vec::new();
+    for i in 0..artifacts {
+        let (a, c) = (format!("art:{i}"), format!("cap:{i}"));
+        nodes.push(fake_node("Artifact", &a));
+        nodes.push(fake_node("Capability", &c));
+        edges.push(realizes(&a, &c));
+        // a second edge per artifact: under the OLD shape this cost another
+        // read each, which is precisely what the budget forbids
+        edges.push(realizes(&a, &format!("cap:{}", (i + 1) % artifacts)));
+    }
+    Vectors {
+        nodes,
+        edges,
+        known_types: vec!["Artifact", "Capability"],
+    }
+}
+
+#[test]
+fn the_reading_costs_one_store_read_per_artifact_plus_a_constant() {
+    for artifacts in [10usize, 40, 120] {
+        let design = budget_shaped_design(artifacts);
+        let counted = CountingRead::new(&design);
+        reflow2_core::granularity::granularity_report(&counted).unwrap();
+        let c = counted.counts();
+
+        let budget = artifacts + 2;
+        assert!(
+            c.total() <= budget,
+            "{artifacts} artifacts: {} reads against a budget of {budget} \
+             (get_node {}, scan_nodes {}, outgoing {}) — \
+             con:granularity-reads-scale-with-artifacts-not-edges",
+            c.total(),
+            c.get_node,
+            c.scan_nodes,
+            c.outgoing
+        );
+        assert_eq!(
+            c.get_node, 0,
+            "not one point lookup: whether an id is a Capability is answered by \
+             one scan, and whether an artifact has properties by the scan already done"
+        );
+    }
+}
+
+/// ⭐ THE ASSERTION THAT MAKES THE BUDGET MEAN SOMETHING: reads must not grow
+/// with EDGES. Doubling the edges while holding the artifacts fixed must not
+/// change the count at all — the old shape would have doubled it, and a budget
+/// checked only at one size could not tell the two apart.
+#[test]
+fn adding_edges_does_not_cost_the_reading_anything() {
+    let design = budget_shaped_design(40);
+    let counted = CountingRead::new(&design);
+    reflow2_core::granularity::granularity_report(&counted).unwrap();
+    let before = counted.counts().total();
+
+    // same artifacts, four times the edges
+    let mut denser = budget_shaped_design(40);
+    for i in 0..40 {
+        for k in 2..4 {
+            denser.edges.push(realizes(
+                &format!("art:{i}"),
+                &format!("cap:{}", (i + k) % 40),
+            ));
+        }
+    }
+    let counted = CountingRead::new(&denser);
+    reflow2_core::granularity::granularity_report(&counted).unwrap();
+    let after = counted.counts().total();
+
+    assert_eq!(
+        before, after,
+        "the reading is about artifacts; edges must not appear in its bill"
     );
 }

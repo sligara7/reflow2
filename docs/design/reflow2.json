@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:20fcb8d2bb55c685937d7c6e9367d032f3063622083ade76ddafd2e6267607c8",
+  "content_hash": "sha256:17f5f9edf98af4c3023bcd1a518ccfcd8ac5a814e6d5f82d765fc570f3b96d78",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -19194,6 +19194,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:granularity-optimised-against-a-written-budget",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:granularity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:granularity-optimised-against-a-written-budget",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph-read"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:granularity-optimised-against-a-written-budget",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:granularity-observation"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:granularity-optimised-against-a-written-budget",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "con:granularity-reads-scale-with-artifacts-not-edges"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:holds-the-invitation-capture-intent",
       "properties": {
         "accepted_baseline": true,
@@ -24368,6 +24404,16 @@
         "seat": "asligara7-bitecool:654288:fc683529"
       },
       "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "CONSTRAINS",
+      "from_id": "con:granularity-reads-scale-with-artifacts-not-edges",
+      "properties": {
+        "basis": "measured",
+        "contribution": 220.0,
+        "measured_at": "2026-08-21"
+      },
+      "to_id": "cap:granularity-observation"
     },
     {
       "edge_type": "CONSTRAINS",
@@ -87972,6 +88018,18 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:granularity-stays-within-its-read-budget",
+      "properties": {},
+      "to_id": "cap:granularity-observation"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:granularity-stays-within-its-read-budget",
+      "properties": {},
+      "to_id": "con:granularity-reads-scale-with-artifacts-not-edges"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:graph-construction-is-setup",
       "properties": {},
       "to_id": "con:graph-construction-is-setup-not-work"
@@ -91153,7 +91211,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:57980cc0df925752e627affd40cdbf2891f7275710c4611cecc2f34f1e00e1f7",
+        "checksum": "sha256:8a2758d249e024cebdfdf5b8b44c189f996a59498823a3ab7bd0c52b17cbf011",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/granularity.rs",
         "name": "granularity.rs",
@@ -91179,7 +91237,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c279071042794ec305522b740959fdb58a670974aa6597f9181a8c1b74a94243",
+        "checksum": "sha256:05d063016d1fb7924b09aa4475789311e193e2f05f7568f8c58cf284bbfed18f",
         "location": "crates/reflow2-core/src/graph_read.rs",
         "name": "graph_read.rs",
         "status": "realized"
@@ -98929,6 +98987,15 @@
       }
     },
     {
+      "node_id": "chg:granularity-optimised-against-a-written-budget",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "performance_optimization",
+        "name": "`CountingRead` — the second real implementation of `ifc:graph-read` — and `granularity` brought inside a budget written before the code changed. 552 store reads to 220 (N+2, N=218 artifacts), get_node 333 to 0. Wall clock did NOT move and that is the honest result: the budget bought the structural property that cost scales with artifacts rather than edges, and bought no speed. Guarded by a COUNT at three sizes plus an edges-do-not-cost-anything assertion, never by a timer.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:holds-the-invitation-capture-intent",
       "node_type": "ChangeEvent",
       "properties": {
@@ -101659,6 +101726,20 @@
         "purpose": "The neutral type system — the node and edge types that ARE a design. What any design is made of, before any of it is stored or checked.",
         "status": "planned",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "con:granularity-reads-scale-with-artifacts-not-edges",
+      "node_type": "Constraint",
+      "properties": {
+        "category": "technical",
+        "concern": "core",
+        "direction": "maximum",
+        "limit": 220.0,
+        "name": "The granularity reading costs one store read per artifact it reports on, plus a constant",
+        "priority": "medium",
+        "quantity": "store_reads",
+        "statement": "`granularity_report` shall make no more than **N + 2 store reads**, where N is the number of Artifact nodes.\n\nTHE DERIVATION, and it is a statement about what ought to be true rather than a round number. The reading's answer is ABOUT ARTIFACTS: how many capabilities each one realizes. So the reads it structurally needs are one scan to find the artifacts, one `outgoing` per artifact to find that artifact's REALIZES edges, and one scan for whatever population it must compare against — N + 2. Nothing about the question requires a read per EDGE, and a cost that grows with edges is the reading paying for the shape of the data rather than the shape of its own answer.\n\nMEASURED BEFORE THE BUDGET WAS WRITTEN, 2026-08-21, over reflow2's own design (2853 nodes, 218 artifacts): **552 reads** — 1 `scan_nodes`, 218 `outgoing`, and **333 `get_node`**. The budget at N=218 is 220, so it is currently at **2.5x**. The 333 are one per REALIZES edge, each asking only \"is this id a Capability?\", which one scan answers for all of them.\n\nWHY READS AND NOT MILLISECONDS. Per-read cost was measured as FLAT: `get_node` cost 58.0µs over a 2853-node graph and 55.1µs over a 199-node one, a 1.1x spread across a 14x size difference. Nothing is scanning linearly, so the store indexes correctly and the cost is fixed per-call overhead. That makes the READ COUNT the thing a module controls and the wall clock the thing it does not — and a count is also immune to the trap where a duration assertion in a parallel suite measures machine contention and gets its threshold raised until it stops complaining.\n\n⚠️ HONEST LIMITS. Measured on the in-memory backend in a debug build, which is NOT what users run — they get RocksDB. The read COUNT is a property of the module and carries across backends; the per-read microseconds above do not, and are quoted only to justify counting reads instead of timing them.\n\n⚠️ AND THIS IS NOT A SPEED ARGUMENT. `granularity_report` costs ~250ms against `graph_report`'s ~78s in the same configuration — 0.3% of it. Optimising it for wall clock would be manufacturing work, and the optimize skill says to say so. This budget exists for the STRUCTURAL property: a reading about artifacts should cost per artifact. The real speed target is whatever makes `graph_report` cost 78s, and that has not been measured."
       }
     },
     {
@@ -120051,6 +120132,20 @@
       }
     },
     {
+      "node_id": "ver:granularity-stays-within-its-read-budget",
+      "node_type": "Verification",
+      "properties": {
+        "description": "`crates/reflow2-core/tests/granularity.rs` — two checks holding `con:granularity-reads-scale-with-artifacts-not-edges`, both COUNTS rather than durations.\n\n`the_reading_costs_one_store_read_per_artifact_plus_a_constant` runs at 10, 40 and 120 artifacts and asserts total reads ≤ N + 2, plus `get_node == 0`. Three sizes, because a budget checked at one size cannot tell a constant from a coefficient.\n\n`adding_edges_does_not_cost_the_reading_anything` is the one that makes the budget mean something: it quadruples the edges while holding the artifacts fixed and asserts the read count is UNCHANGED. The old shape would have quadrupled it. Without this, a budget that happened to pass at one density would look healthy while the defect it forbids was still present.\n\n⚠️ A COUNT, DELIBERATELY, NOT A CLOCK. A duration assertion in a parallel suite measures machine contention, and the standing response is to raise the threshold until it stops complaining — which retires the gate without anybody deciding to. Per-read cost was also measured FLAT (58.0µs over 2853 nodes against 55.1µs over 199), so what the module controls is how many times it asks, not how long each ask takes.\n\nMEASURED BOTH WAYS. Reverting the fix — putting the per-edge `get_node` back — fails both checks and names the constraint in the message (\"10 artifacts: 32 reads against a budget of 12\"). Restoring it passes 14 of 14. A guard that has only ever been seen green is indistinguishable from one that cannot fail.\n\nWHAT IT DOES NOT CHECK: wall-clock time, deliberately. The change halved the reads and moved the clock not at all (~201ms to ~216ms, noise), because a scan returning 199 nodes costs about what 199 point lookups cost. The budget buys a structural property and buys no speed, and it would be dishonest to guard it with a timer.",
+        "findings": "2026-08-21: 14 of 14 granularity tests pass, including both budget checks. Measured on reflow2's own design (2853 nodes, 218 artifacts) via `CountingRead`:\n\n  BEFORE   552 reads   1 scan_nodes, 333 get_node, 218 outgoing   ~201ms\n  AFTER    220 reads   2 scan_nodes,   0 get_node, 218 outgoing   ~216ms\n  BUDGET   220 (N+2, N=218)\n\nAT BUDGET, so the work STOPPED. Two changes, measured separately: replacing the per-edge `get_node` type-check with one `scan_nodes(Capability)` took 552 → 227, still over; keeping the artifact nodes from the scan already performed rather than re-reading the seven flagged ones took 227 → 220, exactly at budget. Under budget means stop, even though a third change is visible.\n\n⭐ THE CLOCK DID NOT MOVE AND THAT IS THE HONEST RESULT. Reads more than halved; wall time went from ~201ms to ~216ms, which is noise. A `scan_nodes` returning 199 nodes costs about what 199 point lookups cost, so this bought the structural property — cost scales with what the reading reports on — and bought no speed. The budget said so in advance, which is the whole reason for writing it first.\n\nWHAT WAS DELIBERATELY LEFT UNDONE: the 218 `outgoing` calls, one per artifact. Removing them needs a bulk edge-scan the storage contract does not offer, so it would mean changing dynograph-foundation's API — another repo. At budget, so it stops here rather than reaching across that boundary.\n\nAND THE REAL SPEED TARGET IS ELSEWHERE, UNMEASURED: `graph_report` costs ~78s in the same configuration against granularity's ~216ms. Granularity is 0.3% of it. Nothing here touches that, and optimising granularity for wall clock would have been manufacturing work.",
+        "kind": "verification",
+        "last_run_at": "2026-08-21",
+        "level": "unit",
+        "method": "measurement",
+        "name": "The reading costs one store read per artifact plus a constant, and adding edges costs it nothing",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:graph-construction-is-setup",
       "node_type": "Verification",
       "properties": {
@@ -121275,7 +121370,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:42f2c96994abe58963e00e4b30ad84f881f60b11fa3141a3d372b5a32d422c0f",
+  "prev_content_hash": "sha256:20fcb8d2bb55c685937d7c6e9367d032f3063622083ade76ddafd2e6267607c8",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
