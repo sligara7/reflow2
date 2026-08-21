@@ -212,6 +212,28 @@ class WallCheck(unittest.TestCase):
         self.assertEqual(out.returncode, 0)
         self.assertIn("nothing to check against", out.stdout)
 
+    def test_an_assembly_pointing_at_no_file_is_not_counted_as_a_gap(self):
+        """A subsystem's files ARE its children's. Registering an artifact for
+        it would assert that an assembly is a thing on disk, so pointing at no
+        file is correct — and counting it beside a genuine gap is an arithmetic
+        certainty dressed as a finding."""
+        with tempfile.TemporaryDirectory() as tmp:
+            doc = design(
+                ["sys:one", "cmp:a", "cmp:orphan"],
+                [("cmp:a", "src/a.py")],
+                contains=[("sys:one", "cmp:a")],
+                levels={"sys:one": "subsystem"},
+            )
+            out = self.run_in(tmp, doc, {"src/a.py": "x = 1\n"})
+            self.assertIn("1 LEAF component(s) point at NO file", out)
+            self.assertIn("cmp:orphan", out)
+            self.assertIn("which is CORRECT", out)
+            # the assembly must not appear in the gap line
+            gap_line = [ln for ln in out.splitlines() if "LEAF component(s) point at NO file" in ln]
+            self.assertTrue(gap_line)
+            following = out.split("LEAF component(s) point at NO file")[1].splitlines()[1]
+            self.assertNotIn("sys:one", following)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
