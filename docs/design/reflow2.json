@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:92ea5c6ba3f7154edbd2b508f9e76aa93c575cfaca1b6046c03c586e3ce17bb7",
+  "content_hash": "sha256:6ff5948e10703ccee6a57234948bf74c5df694bc3d8aa653581380f33e04abfb",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -9902,6 +9902,15 @@
       "properties": {
         "acted_at": "2026-08-04",
         "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-vocabulary-half-of-the-foundation-is-deliberately-open",
+      "properties": {
+        "acted_at": "2026-08-20",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -23284,6 +23293,78 @@
     },
     {
       "edge_type": "CONSUMES",
+      "from_id": "sys:agent-surface",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:core-api"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "sys:coherence-loop",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:core-api"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "sys:coherence-loop",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:reasoning-channel"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "sys:coherence-loop",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:temporal-api"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "sys:human-channel",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:core-api"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "sys:intake",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:core-api"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "sys:intake",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:reasoning-channel"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "sys:intake",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:temporal-api"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "sys:store",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:core-api"
+    },
+    {
+      "edge_type": "CONSUMES",
       "from_id": "sys:store",
       "properties": {
         "weight": 0.9,
@@ -23299,6 +23380,30 @@
         "weight_basis": "evidence"
       },
       "to_id": "ifc:req-dyno-storage-api"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "sys:time-history",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:core-api"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "sys:time-history",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:graph-export"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "sys:vocabulary",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:core-api"
     },
     {
       "edge_type": "CONTAINS",
@@ -23796,7 +23901,25 @@
       "edge_type": "CONTAINS",
       "from_id": "sys:agent-surface",
       "properties": {},
+      "to_id": "cmp:latent"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
       "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "cmp:mcp-http"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "cmp:proxy"
     },
     {
       "edge_type": "CONTAINS",
@@ -23814,7 +23937,85 @@
       "edge_type": "CONTAINS",
       "from_id": "sys:agent-surface",
       "properties": {},
+      "to_id": "cmp:shared"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "cmp:sync-debt"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "cmp:tools-ask"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "cmp:tools-assure"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "cmp:tools-built"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "cmp:tools-capture"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "cmp:tools-claims"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "cmp:tools-coherence"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "cmp:tools-exchange"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "cmp:tools-ingest"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "cmp:tools-operate"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "cmp:tools-query"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "cmp:tools-temporal"
     },
     {
       "edge_type": "CONTAINS",
@@ -31303,6 +31504,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "dec:the-vocabulary-half-of-the-foundation-is-deliberately-open",
+      "properties": {},
+      "to_id": "req:recursive-black-box-decomposition"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "dec:three-party-checks",
       "properties": {
         "note": "The LLM speaks, the graph counts, the human decides - the division this rule states as policy"
@@ -32220,6 +32427,12 @@
       "from_id": "sys:foundation",
       "properties": {},
       "to_id": "dec:the-kernel-is-its-own-system"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "sys:foundation",
+      "properties": {},
+      "to_id": "dec:the-vocabulary-half-of-the-foundation-is-deliberately-open"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -75587,6 +75800,38 @@
       "to_id": "ifc:mcp-tools-http"
     },
     {
+      "edge_type": "PROVIDES",
+      "from_id": "sys:foundation",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:core-api"
+    },
+    {
+      "edge_type": "PROVIDES",
+      "from_id": "sys:human-channel",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:reasoning-channel"
+    },
+    {
+      "edge_type": "PROVIDES",
+      "from_id": "sys:store",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:graph-export"
+    },
+    {
+      "edge_type": "PROVIDES",
+      "from_id": "sys:time-history",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:temporal-api"
+    },
+    {
       "edge_type": "REALIZES",
       "from_id": "art:acknowledgement-not-structure-test",
       "properties": {
@@ -93113,6 +93358,19 @@
       }
     },
     {
+      "node_id": "cmp:latent",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "latent",
+        "provenance": "authored",
+        "purpose": "The server that starts in a directory which has NOT opted into a design: it costs nothing, serves a reduced surface, and says how to begin rather than failing.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cmp:llm",
       "node_type": "Component",
       "properties": {
@@ -93134,6 +93392,19 @@
         "name": "main",
         "provenance": "authored",
         "purpose": "The main module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:mcp-http",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "mcp_http",
+        "provenance": "authored",
+        "purpose": "The MCP-over-HTTP client primitives — post a JSON-RPC line, read the reply. Split out in #262 along the honest line: this knows how to SPEAK to a server, `shared` knows how to MANAGE one, `proxy` knows how to FORWARD a session to one.",
         "status": "planned",
         "tier": "operational"
       }
@@ -93225,6 +93496,19 @@
         "name": "provenance",
         "provenance": "authored",
         "purpose": "The provenance module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:proxy",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "proxy",
+        "provenance": "authored",
+        "purpose": "The session half of shared mode: speak stdio to the client and HTTP to the shared server, so every session on one design reaches the same store without any of them owning it.",
         "status": "planned",
         "tier": "operational"
       }
@@ -93335,6 +93619,19 @@
       }
     },
     {
+      "node_id": "cmp:shared",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "shared",
+        "provenance": "authored",
+        "purpose": "The management half of shared mode: one server per design, discovered or started automatically, with the rendezvous record and liveness that make 'attach to the existing one' work.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cmp:skills",
       "node_type": "Component",
       "properties": {
@@ -93387,6 +93684,19 @@
       }
     },
     {
+      "node_id": "cmp:sync-debt",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "sync_debt",
+        "provenance": "authored",
+        "purpose": "Whether the shared record has moved since this seat last looked — the staleness a session needs at the moment it ORIENTS rather than at the moment it writes.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cmp:temporal",
       "node_type": "Component",
       "properties": {
@@ -93395,6 +93705,149 @@
         "name": "temporal",
         "provenance": "authored",
         "purpose": "The temporal module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:tools-ask",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "ask",
+        "provenance": "authored",
+        "purpose": "The ASK slice of the served surface (5 tools): turning a detected gap into a question a person can answer, and recording the reply — gap_to_prompt, gaps_to_prompts, open_questions, answer_question, withdraw_question.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:tools-assure",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "assure",
+        "provenance": "authored",
+        "purpose": "The ASSURE slice of the served surface (10 tools): checks and the quality of their evidence — add_verification, set_verification_status, set_verification_kind, verifies, set_evidence_scope, calibrated_against.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:tools-built",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "built",
+        "provenance": "authored",
+        "purpose": "The AS-BUILT slice of the served surface (10 tools): reconciling the design against what is actually on disk — declare_dependency, reconcile_dependencies, reconcile_artifacts, set_artifact_checksum, set_artifact_intent.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:tools-capture",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "capture",
+        "provenance": "authored",
+        "purpose": "The CAPTURE slice of the served surface, and the largest at 35 tools: turning intent into typed nodes and the golden thread between them — genesis, add_project, add_requirement, add_capability, add_component, move_component, satisfies, allocate.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:tools-claims",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "claims_tools",
+        "provenance": "authored",
+        "purpose": "The CLAIMS slice of the served surface (5 tools): who holds which region of the design right now, advisory and session-scoped — claim_region, mint_seat, release_claim, claim_report.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:tools-coherence",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "coherence",
+        "provenance": "authored",
+        "purpose": "The COHERENCE slice of the served surface, 31 tools: the loop itself — what is owed, what is missing, what a change would touch. detect_gaps, loop_status, what_next, propagate_change, detect_defects, vocabulary_coverage.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:tools-exchange",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "exchange",
+        "provenance": "authored",
+        "purpose": "The EXCHANGE slice of the served surface (18 tools): moving a design across a boundary — export_graph, export_surface, mirror_surface, pair_designs, seam_report, compare_designs.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:tools-ingest",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "ingest_tools",
+        "provenance": "authored",
+        "purpose": "The INGEST slice of the served surface (2 tools): the batched handshake that turns a document, or a folder of them, into one design — ingest_step, ingest_corpus_step.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:tools-operate",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "operate_tools",
+        "provenance": "authored",
+        "purpose": "The OPERATE slice of the served surface (13 tools): the world the design runs in — releases, environments, resources, deployment. add_release, add_environment, add_resource, deploy_to.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:tools-query",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "query",
+        "provenance": "authored",
+        "purpose": "The QUERY slice of the served surface (11 tools): the generic read and write path for any node or edge type, including the compare-and-swap that prevents a lost update — create_node, create_edge, get_node, scan_nodes, describe_schema.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:tools-temporal",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "temporal_tools",
+        "provenance": "authored",
+        "purpose": "The TEMPORAL slice of the served surface (10 tools): the time axis — epochs, schedules, snapshots and the planned-versus-delivered delta. schedule_for, arrival_delta, add_epoch, pin_at_epoch, changelog_view.",
         "status": "planned",
         "tier": "operational"
       }
@@ -96517,6 +96970,16 @@
         "decision": "RECORDED AS A REFRAME PLUS A MEASUREMENT, NOT AS A PROPOSAL. Anthony, 2026-08-04, stating the root question that unifies the dev_storyflow corpus and the reflow2-dogfooding threads: \"how do we transition documents to graph entities? whether that is a huge corpus of documents in dev_storyflow or getting away from using documents in reflow2, it is how do we make decisions based on graph content, not documents.\" Nothing here is settled.\n\nTHE SPLIT. (IN) documents become graph entities — ingest_step, provenance Fragments, the content store, cross-document convergence. Partly built, and every remaining piece is scheduled across epoch:v0240-planned..v0280-planned. (OUT) a person or agent DECIDES from graph content instead of from a document. Almost nothing is scheduled. The whole increment plan is capture, detection, seams and write-surface.\n\n⭐ THE MEASUREMENT, AND ALL OF IT IS FIRST-HAND FROM ONE SESSION ON 2026-08-04 RATHER THAN RECALLED. `reviewed_gaps` returned 130,922 CHARACTERS and could not be read at all — it was written to a file and queried with `jq`. That is the tool answering \"what have we already decided to accept\", which is a decision-making read, and it was unusable AS a read. It joins: `loop_status` at 72,886 characters until [BL-205] fixed it the day before, and it is the call the SessionStart hook and the server instructions both call \"the one cheap call\"; `describe_schema` on ONE node type at ~30 KB ([BL-142]); and `scan_nodes` on 241 Decisions, where the where-am-i skill's own guidance forced reading names only and confessing that exactly one had been read in full. Add the standing limit: 52 properties are `fulltext: true` and `Decision.rationale` is not one of them.\n\nTHEY ARE ALL ONE DEFECT: A READ THAT RETURNS EVERYTHING IT KNOWS INSTEAD OF WHAT WAS ASKED. The graph holds the content correctly. It cannot serve it back at the size it now holds. That is neither a vocabulary problem nor an ingest problem, which is why every framing so far has missed it — `dec:idea-backlog-belongs-in-the-graph` reasoned about what a node can HOLD, and the binding constraint is what a read can RETURN.\n\nTHE CONSEQUENCE THAT SHOULD NOT BE SOFTENED: TODAY A DOCUMENT BEATS THE GRAPH FOR MAKING A DECISION, AND IT IS A FAIR FIGHT THE GRAPH LOSES. A document can be skimmed, searched with ctrl-F, and read end to end. The graph offers 130 KB or a list of names. Reaching for the markdown is therefore RATIONAL BEHAVIOUR RESPONDING TO A REAL DIFFERENCE, not a bad habit to be disciplined out of, and no improvement to capture changes it.\n\nTHE SHAPE OF AN ANSWER, offered because the in-house precedent is already built and shipped rather than as advocacy: the transition is not documents → graph, it is DOCUMENTS → GRAPH → DERIVED DOCUMENTS. `cap:changelog-view` (\"a changelog is a derivable view of the graph's own delta\") shipped in v0.20.0 and CHANGELOG.md is generated today; `dec:views-are-projections` is accepted; `tools/render_views.py` is 44 KB of renderer producing docs/viewpoints.md and has existed since 2026-07-19. The renderer, the doctrine and the proof all exist — the backlog simply is not one of its views. This also explains why option (d) on `dec:idea-backlog-belongs-in-the-graph` kept losing: it was judged as a RIVAL to the capture options when it is the OUT half of the same answer, and that node already half-saw it (\"solves RETRIEVAL and not CAPTURE — it composes with (a)/(b) rather than competing\").\n\n⭐ THE TEST THIS YIELDS, AND IT IS ANTHONY'S OWN DELETION INSTINCT MADE SAFE. He asked: \"should I delete the documents and force us to use the reflow2 graph?\" Deletion is the right TEST and the wrong COMMITMENT. The test is: CAN YOU DELETE THIS DOCUMENT AND REGENERATE IT FROM THE GRAPH? Yes → the graph is the source and the document was a view. No → the document is still the source, and WHAT CANNOT BE REGENERATED IS PRECISELY WHAT THE GRAPH IS MISSING. Run it per document, never on the repo at once, and regenerate BEFORE deleting so nothing is ever at risk. Where each stands today, assessed 2026-08-04: CHANGELOG.md PASSES (already derived); docs/viewpoints.md PASSES; COORD.md's in-progress table passes the day `claim_region` is used for real, because the computation exists and is served (`dec:coord-board-in-graph`); docs/backlog.md FAILS, and the rows that cannot regenerate are the exact statement of what vocabulary is absent; AGENTS.md FAILS PERMANENTLY AND CORRECTLY, because an agent reads it before it knows reflow2 exists. That last row is why this is not a march toward zero documents — it is a march toward zero documents that are SOURCES, and the test says which is which instead of leaving it to taste.\n\nFOR A CORPUS THE TEST POINTS THE OTHER WAY. Source documents cannot be regenerated and must not be — `req:sources-are-kept-not-just-parsed` says so. The test applies instead to the READING: after ingest, can \"what did I want to build, and what of it exists\" be answered without opening a document? A no means the ingest landed prose rather than structure, which is exactly what the 52-fulltext-properties limit predicts for rows imported as long descriptions.\n\nWHAT IS NOT DECIDED HERE. Whether the OUT half is a v0.24.0 obligation, its own increment, or a discipline applied to every read as it is touched. Which reads to fix first, and by what rule — `reviewed_gaps` is the loudest but `scan_nodes` on a mature type may be the most consequential. Whether \"answer-shaped rather than type-shaped\" needs new tools or bounded forms of the existing ones. And whether the backlog renderer is a `render_views.py` view, a served tool, or neither.\n\n--- COUNTED 2026-08-04, SAME SESSION. The item left unverified above is now closed, and it answers the bug-list-or-increment question against the cheaper reading. ---\n\n⭐ OF 33 COLLECTION-RETURNING READ TOOLS ON THE SERVED SURFACE, EXACTLY THREE LET THE CALLER BOUND THE RESULT, AND ONLY ONE CAN PAGE. Counted over `crates/reflow2-mcp/src/tools/*.rs` (144 tool functions across 12 modules). The 33 are: alternatives_for, budget_report, changelog_view, claim_report, confirmation_ledger, content_manifest, coverage_report, describe_schema, detect_defects, detect_gaps, dimension_drifts, evidence_report, export_graph, export_surface, find_tools, flow_report, granularity_report, graph_report, graph_report_markdown, hierarchy_issues, ility_report, loop_status, maturity_report, open_questions, readiness_report, recall_resolutions, release_report, reviewed_defects, reviewed_gaps, scan_nodes, seam_report, search_design, surprising_connections. The three bounded: `scan_nodes` (limit + offset + next_offset + capped_by — the only real paging), `search_design` (limit, no offset), `find_tools` (limit with a default). The only other `limit` in the tool surface is `Constraint.limit`, a domain property, not a bound.\n\nSO IT IS AN INCREMENT, NOT A BUG LIST — the guess of \"four\" was low by an order of magnitude. TWO HONEST QUALIFIERS THAT KEEP THE NUMBER FROM BEING OVERSTATED. (i) Not all 30 are broken today: several bound themselves internally rather than by parameter — `loop_status` became a digest under [BL-205], and `graph_report_markdown` is a summary by construction. The claim is that the CALLER cannot bound them, not that all thirty are unreadable now. (ii) Because none of them share a paging mechanism, each fix is bespoke. That is the real cost, and it is the argument for treating this as one increment with a common shape rather than as thirty separate rows — which is exactly how [BL-205] was filed and fixed, alone, one tool at a time, three days ago.\n\nTHE SHAPE THIS SUGGESTS, not chosen: `scan_nodes` already solved this problem completely — `total` against `returned`, `omitted`, `next_offset`, `capped_by`, and a payload budget so a cap is never silent but never a surprise. It is an in-house pattern, tested, and adopted by exactly one tool. Generalising it is a smaller design question than inventing one.",
         "name": "OPEN — \"documents to graph entities\" is TWO problems, and the failing one is reading the graph back, not getting content into it",
         "rationale": "Recorded because the measurement is perishable in the exact way this project keeps rediscovering: \"reviewed_gaps returned 130,922 characters\" becomes \"reads felt big once\" within a session or two, and then the next reader re-derives it or, worse, does not. The numbers are first-hand from a single sitting and are written down so the next session argues from them.\n\nKept as its own node rather than appended to `dec:idea-backlog-belongs-in-the-graph` because it CONTRADICTS that node's framing rather than extending it. That node asks what a node and an edge can hold and concludes the answer turns on how much of a row becomes structure; this one says the binding constraint is downstream of that entirely — a perfectly structured graph nobody can read back is still a graph nobody decides from. Folding the correction into the node it corrects would hide it.\n\nDeliberately does NOT register alternatives, so this stays a question rather than becoming a fork the loop asks Anthony to choose between.\n\nAMENDED the same session: the item this node named as unchecked was checked, and the answer (3 of 33, one pager) moved it from a bug list to an increment. Recorded as an amendment with the prior state snapshotted rather than as a fresh node, because the unchecked and checked forms are the same claim at two confidence levels — and the fact that naming the hole is what got it filled within the hour is worth the record.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:the-vocabulary-half-of-the-foundation-is-deliberately-open",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "ANTHONY'S WORD, 2026-08-20: \"Exempt it — but only the half that deserves exemption, and put the reason on the record rather than leaving it looking like an unfixed defect.\"\n\nTHE APPARENT DEFECT: sys:foundation holds five modules and ALL FIVE are reached from outside it. Every other subsystem that presents anything presents a narrow face — sys:time-history exposes 1 of 5, sys:store 1 of 2. Read as a ratio, the foundation looks like the one subsystem that failed to encapsulate.\n\nWHAT THE MEASUREMENT ACTUALLY SHOWS, and it is why the ratio misleads. Reach is NOT uniform across those five:\n\n    nodes        6 subsystems reach it\n    graph        5\n    identity     2\n    schema       1\n    provenance   1\n\nThree of the five are already narrow. Only `nodes` and `graph` are broadly shared, and they are shared for DIFFERENT REASONS:\n\n  · `nodes` and `schema` are VOCABULARY. They define what a node type and an edge type ARE. You cannot put an interface in front of the alphabet — every part of the design needs the words themselves, and a facade over them would be indirection that buys nothing. Nobody wraps SI units in an API.\n  · `graph` is BEHAVIOUR — how the store is reached. That one genuinely can state a contract, and it does: ifc:core-api, provided by cmp:graph since before this decision and now also by sys:foundation at the subsystem level.\n\nTHE RULING: a wide face on the vocabulary half of the foundation is CORRECT and is not to be reported, argued about, or 'fixed' by a later session. The behavioural half already has its contract.\n\nWHY THIS IS RECORDED RATHER THAN LEFT IMPLICIT, which is the part Anthony asked for specifically: an unexplained asymmetry in a design is re-examined and re-argued by every session that meets it. Recording the reasoning costs one node and ends that loop. It is the same discipline as `ruling: parks` — a deliberate state that would otherwise read as a defect, said out loud with its reason attached.\n\nWHAT WAS REJECTED: forcing a narrow facade over `nodes` so the foundation would look symmetrical with its siblings. That is over-engineering in the exact sense Anthony names — adding a layer because the model looks asymmetric, not because anything is wrong. A design-graph tool IS a typed store of identified nodes; its vocabulary being universally reachable is what that sentence means in code.\n\n⚠️ WHAT THIS DOES NOT EXEMPT: the blast radius is unchanged and still real. `nodes` is transitively depended on by 46 of 52 core modules. This ruling says a wide FACE is correct there; it does not say a change to `nodes` is cheap, and nothing here should be read as licence to treat the foundation as low-risk.",
+        "name": "The vocabulary half of sys:foundation is deliberately open — a wide face there is correct, not an unfixed defect",
+        "rationale": "Recorded under req:recursive-black-box-decomposition, which asks that every element be a black box with inner function and an interface. A foundation layer is the one place where that framing needs a stated exception rather than a stated interface: the vocabulary is not a service some parts call, it is the shared language all of them are written in. Making that explicit is what stops the requirement being read as unsatisfied forever at exactly one node.",
         "status": "accepted"
       }
     },
@@ -102086,6 +102549,21 @@
       }
     },
     {
+      "node_id": "ifc:reasoning-channel",
+      "node_type": "Interface",
+      "properties": {
+        "auth": "unspecified",
+        "description": "What sys:human-channel PRESENTS to the rest of reflow2: the one place the deterministic core hands a judgement out to an LLM and takes an answer back. Two modules stand behind it — `llm` (the backend contract) and `agent` (the ambient-agent handshake).\n\nDISTINCT FROM ifc:ambient-agent, which is `required` and points OUTWARD at the harness reflow2 asks to think. This is the INWARD face: what coherence-loop and intake call when they need a rephrase or a judgement. One is the need, the other is the offer, and a black box has both.",
+        "designation": "internal",
+        "medium": "unspecified",
+        "name": "Reasoning channel",
+        "paradigm": "unspecified",
+        "payload_format": "unspecified",
+        "provenance": "authored",
+        "transport_security": "unspecified"
+      }
+    },
+    {
       "node_id": "ifc:rendezvous-sidecar",
       "node_type": "Interface",
       "properties": {
@@ -102182,6 +102660,21 @@
         "designation": "internal",
         "medium": "unspecified",
         "name": "How a session says which design it is attached to — graph_id in, bound session out",
+        "paradigm": "unspecified",
+        "payload_format": "unspecified",
+        "provenance": "authored",
+        "transport_security": "unspecified"
+      }
+    },
+    {
+      "node_id": "ifc:temporal-api",
+      "node_type": "Interface",
+      "properties": {
+        "auth": "unspecified",
+        "description": "What sys:time-history PRESENTS: epochs, snapshots, schedules and the planned-versus-delivered delta. ONE of its five modules is reachable from outside — `temporal` — and the other four (compare, merge, readiness, alternatives) are internal. That 1-of-5 ratio is what makes this subsystem an actual black box rather than a label: the face is narrow and the inside is hidden.",
+        "designation": "internal",
+        "medium": "unspecified",
+        "name": "Temporal API",
         "paradigm": "unspecified",
         "payload_format": "unspecified",
         "provenance": "authored",
@@ -112594,7 +113087,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:a925b5d9a6736d81b22ae588ca16c0910a184ee57fcae6cf08956c1f5ace5183",
+  "prev_content_hash": "sha256:92ea5c6ba3f7154edbd2b508f9e76aa93c575cfaca1b6046c03c586e3ce17bb7",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
