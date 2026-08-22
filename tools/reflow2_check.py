@@ -209,6 +209,13 @@ def hash_file(path: str) -> str:
     return f"sha256:{h.hexdigest()}"
 
 
+# A location that is not a working-tree path at all. `add_artifact` invites a
+# URI ("Path / URI / content-hash"), and an artifact reached over the network
+# cannot be judged from a checkout — see the fourth-state comment in the
+# reconcile loop. Deliberately anchored and scheme-shaped rather than a bare
+# "://" search, so a path that merely contains those characters is unaffected.
+REMOTE_LOCATION = re.compile(r"^[A-Za-z][A-Za-z0-9+.-]*://")
+
 _TOML_SECTION = re.compile(r"^\s*\[([^\]]+)\]\s*$")
 _TOML_INLINE = re.compile(r"^\s*([A-Za-z0-9_.-]+)\s*=\s*\{(.+)\}\s*$")
 _TOML_UNCLOSED = re.compile(r"^\s*([A-Za-z0-9_.-]+)\s*=\s*\{[^}]*$")
@@ -703,9 +710,32 @@ def main() -> int:
             # was false by 20 artifacts until this used scan_all.
             artifacts = server.scan_all("Artifact")
             observed = []
+            remote_located = []
             for art in artifacts:
                 props = art.get("properties", {})
                 location = props.get("location") or props.get("name")
+                # A REMOTE LOCATION IS A FOURTH STATE, alongside missing,
+                # present-and-hashable, and the directory case below.
+                #
+                # `add_artifact`'s own served description says location is
+                # "Path / URI / content-hash" — so a published OpenAPI URL, a
+                # vendor datasheet or a standard is CORRECT modelling that the
+                # tool surface explicitly invites. This loop then joined it to
+                # the project root and asked the filesystem, which turns
+                # `https://…` into `./https:/…`, finds nothing, and reports
+                # `missing_artifact` — as-built DRIFT, a red build, for a
+                # design that did nothing wrong. Found 2026-08-22 by
+                # registering one.
+                #
+                # Treated exactly like the directory: present, unhashable,
+                # which the core already words as `no_baseline` — "cannot be
+                # judged, surfaced rather than treated as unchanged". reflow2
+                # performs no network I/O and is not about to start, so the
+                # honest answer is that this gate cannot judge it.
+                if location and REMOTE_LOCATION.match(location):
+                    remote_located.append((art["node_id"], location))
+                    observed.append({"artifact_id": art["node_id"], "present": True})
+                    continue
                 path = os.path.join(opts.root, location) if location else None
                 if not path or not os.path.exists(path):
                     observed.append({"artifact_id": art["node_id"], "present": False})
@@ -736,6 +766,15 @@ def main() -> int:
                         "present": True,
                         "checksum": hash_file(path),
                     }
+                )
+
+            # NO SILENT CAPS: an artifact this gate could not judge must say
+            # so, or "0 drift findings" reads as "everything was checked".
+            for node_id, location in sorted(remote_located):
+                notes.append(
+                    f"not judged: {node_id} is located at {location}, which is not a "
+                    f"working-tree path — this gate does no network I/O, so it can say "
+                    f"nothing about whether that artifact still matches the design"
                 )
 
             # ⭐ WHAT THE DESIGN HAS NEVER HEARD OF. Every check above this line

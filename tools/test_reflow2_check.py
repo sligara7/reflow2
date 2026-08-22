@@ -561,6 +561,84 @@ class UnmodelledSource(unittest.TestCase):
         self.assertNotIn("unmodelled source", r.stdout, r.stdout)
 
 
+class RemoteLocatedArtifact(unittest.TestCase):
+    """An artifact located at a URI is NOT judged, and is not called missing.
+
+    ⭐ THE TOOL SURFACE INVITES THIS AND THE GATE USED TO PUNISH IT.
+    `add_artifact`'s served description says location is "Path / URI /
+    content-hash", so registering a published OpenAPI document, a vendor
+    datasheet or a standard at its URL is correct modelling. The reconcile loop
+    then joined that location to the project root and asked the filesystem,
+    turning `https://...` into `./https:/...`, finding nothing, and reporting
+    `missing_artifact` — as-built DRIFT and a red build for a design that did
+    nothing wrong. Found 2026-08-22 by registering one.
+
+    ⚠️ NOT-JUDGED IS NOT PASSED, and the note is the load-bearing half. reflow2
+    performs no network I/O, so the gate genuinely cannot say whether a remote
+    artifact still matches. Silently omitting it would make "0 drift findings"
+    read as "everything was checked" — the failure StoryFlow's principle #6 is
+    written against. The gate must say out loud what it could not judge.
+    """
+
+    def setUp(self):
+        if not os.path.exists(BIN):
+            self.skipTest("reflow2-mcp binary not built")
+        self._tmp = tempfile.TemporaryDirectory()
+        self.tmp = pathlib.Path(self._tmp.name)
+        self.addCleanup(self._tmp.cleanup)
+
+    def build(self, location):
+        s = Server(BIN, str(self.tmp / "graph"))
+        try:
+            coherent(s)
+            s.call("add_artifact", {"id": "art:remote", "name": "an external spec",
+                                    "artifact_type": "document", "location": location})
+            path = self.tmp / "design.json"
+            s.call("export_graph", {"path": str(path), "overwrite": True})
+            return path
+        finally:
+            s.close()
+
+    def gate(self, export):
+        cmd = [sys.executable, str(CHECK), "--export", str(export),
+               "--root", str(self.tmp), "--bin", BIN]
+        return subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+
+    def test_a_uri_located_artifact_is_not_reported_missing(self):
+        r = self.gate(self.build("https://example.invalid/openapi.yaml"))
+        self.assertNotIn("missing_artifact", r.stdout,
+                         "a URI location is not a missing file — the tool surface "
+                         f"explicitly invites it:\n{r.stdout}")
+
+    def test_it_says_out_loud_that_it_could_not_judge(self):
+        r = self.gate(self.build("https://example.invalid/openapi.yaml"))
+        self.assertIn("not judged", r.stdout,
+                      "silence here would make a bounded sweep read as a complete "
+                      f"one:\n{r.stdout}")
+        self.assertIn("example.invalid", r.stdout,
+                      "the note must name WHICH artifact went unjudged")
+
+    def test_a_genuinely_missing_local_file_is_still_a_failure(self):
+        """The counterweight, and without it the fix would be a way to hide drift.
+
+        A plain relative path that does not exist must still fail. If the
+        pattern were loose enough to swallow ordinary paths, every missing
+        artifact in every project would quietly become a note.
+        """
+        r = self.gate(self.build("src/not_here.rs"))
+        self.assertIn("missing_artifact", r.stdout,
+                      f"an absent local file is still drift:\n{r.stdout}")
+
+    def test_a_path_containing_a_colon_is_still_treated_as_a_path(self):
+        """Anchored and scheme-shaped, not a bare '://' search."""
+        weird = self.tmp / "odd"
+        weird.mkdir(parents=True, exist_ok=True)
+        (weird / "a.txt").write_text("x\n")
+        r = self.gate(self.build("odd/a.txt"))
+        self.assertNotIn("not judged", r.stdout,
+                         f"an ordinary path must not be mistaken for a URI:\n{r.stdout}")
+
+
 class ExportChain(unittest.TestCase):
     """BL-107. `dec:export-hash-chain` gives the design a history independent of
     git — each export records the `content_hash` of the one it replaced. Six

@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:17324d8c336cc538e8e7464e0c25ee421dd63cd2a158020abdce17cde852c841",
+  "content_hash": "sha256:9f46df87023c1c6b3ce9730aa50731d6ba3810891da764d1c1a35f7377ace83a",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2719,6 +2719,14 @@
         "evidence": "That measurement found ZERO of eight subsystems providing an interface, with every interface provided by a leaf component one level down - subsystems as groupings rather than black boxes. Four subsystems have since gained a PROVIDES edge, so the count aged; the finding did not, because none of the four carries a contract. It predicted the shape of today's answer before the edges existed."
       },
       "to_id": "dec:idea-what-would-a-provided-contract-buy-substitution-derived-tests-or-a-mock"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it",
+      "properties": {
+        "evidence": "The three-legs finding (2026-08-18) named the general form four days before this idea: reflow2's detectors check the CONSISTENCY OF WHAT EXISTS, so anything optional stays invisible to the loop. It measured that on FIELDS. This idea is the same failure one level up, on whole RULES — 13 of 19 unchecked and unenforced, therefore unreportable — and the enforced-only blind spot it names is the same shape as decomposition_coverage's, which that fact already called out by name."
+      },
+      "to_id": "dec:idea-a-rule-with-no-check-is-reported-even-when-unenforced"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -9291,6 +9299,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-do-another-projects-principles-belong-in-reflow2-or-only-the-machinery",
+      "properties": {
+        "acted_at": "2026-08-22T15:30:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list",
       "properties": {
         "acted_at": "2026-08-21",
@@ -12634,6 +12651,24 @@
         "action": "added"
       },
       "to_id": "req:a-refusal-names-what-would-have-worked"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-remote-located-artifact-is-not-a-missing-file",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-remote-located-artifact-is-not-a-missing-file",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:coherence-gate-test"
     },
     {
       "edge_type": "CHANGED",
@@ -24778,17 +24813,6 @@
       "to_id": "req:version-combination-is-an-object"
     },
     {
-      "edge_type": "CLAIMS",
-      "from_id": "who:claude-code",
-      "properties": {
-        "claimed_at": "2026-08-22T14:05:00Z",
-        "depth": 1,
-        "note": "Making the ChangeSubject axis reachable from record_change: ChangeRecord gains a subject field so the caller can state the axis, instead of the generic path hardcoding None with no way to override.",
-        "seat": "asligar-bitecool:1452717:5032b01b"
-      },
-      "to_id": "cmp:temporal"
-    },
-    {
       "edge_type": "CONSTRAINS",
       "from_id": "con:a-sweep-builds-its-network-a-fixed-number-of-times",
       "properties": {
@@ -26200,6 +26224,15 @@
         "evidence": "This node is the cross-graph case that node's own counter-argument anticipates: derived notification fails structurally when the dependency edge lives in the consumer's graph"
       },
       "to_id": "dec:who-needs-to-know"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-a-check-records-that-it-was-once-observed-failing",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "Applies to OPTION (c) ONLY, and is drawn so the conflict cannot be missed if (c) is ever picked up. The source document proposes reflow2 'refuse to accept a passing verification that has never recorded a failing run' — a refusal is reflow2 validating a check rather than recording a claim, which is exactly what this accepted non-goal forbids. Options (a) and (b) do NOT conflict: recording what the author says a check was observed to do is the same class of instrument as provenance and the drift dispositions. Picking (c) means overturning this non-goal deliberately, not working around it."
+      },
+      "to_id": "dec:non-goal-reflow2-does-not-judge-whether-a-check-is-meaningful"
     },
     {
       "edge_type": "CONTRADICTS",
@@ -28919,6 +28952,38 @@
         "doc_kind": "readme"
       },
       "to_id": "cap:skills-served"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:storyflow-engineering-principles",
+      "properties": {
+        "doc_kind": "design_doc"
+      },
+      "to_id": "dec:idea-a-capability-checked-only-at-unit-level-is-a-finding"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:storyflow-engineering-principles",
+      "properties": {
+        "doc_kind": "design_doc"
+      },
+      "to_id": "dec:idea-a-check-records-that-it-was-once-observed-failing"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:storyflow-engineering-principles",
+      "properties": {
+        "doc_kind": "design_doc"
+      },
+      "to_id": "dec:idea-a-rule-with-no-check-is-reported-even-when-unenforced"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:storyflow-engineering-principles",
+      "properties": {
+        "doc_kind": "design_doc"
+      },
+      "to_id": "dec:idea-do-another-projects-principles-belong-in-reflow2-or-only-the-machinery"
     },
     {
       "edge_type": "DOCUMENTS",
@@ -88053,6 +88118,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-remote-located-artifact-is-not-judged-and-says-so",
+      "properties": {},
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-revising-write-says-whether-the-state-survived",
       "properties": {},
       "to_id": "cap:a-revising-write-says-whether-the-state-survived"
@@ -91043,7 +91114,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:152fbfb8444b42118e81041c743afcb9050af7cb00d1e91d739a8c41edfed426",
+        "checksum": "sha256:ef8305f9eaa9fc930bdcceb3f39d6132e8d976dadb9e667e513e818eba058f36",
         "granularity": "atomic",
         "location": "tools/reflow2_check.py",
         "name": "reflow2_check.py",
@@ -91152,7 +91223,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:96600d72781b41912070d15f2a34ec21b53f709f9d0aef3a10d8565605dd85d8",
+        "checksum": "sha256:0de15178f027f0579427ae278b15b9718f43c179d87834df6a31ee5b88ad30eb",
         "location": "tools/test_reflow2_check.py",
         "name": "test_reflow2_check.py",
         "status": "realized"
@@ -92835,6 +92906,16 @@
         "name": "stateless_seat_probe.py",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:storyflow-engineering-principles",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "location": "https://claude.ai/code/artifact/8ec19249-0529-4ef7-b5e5-eaf97167eec8",
+        "name": "Nine Principles, Paid For — StoryFlow's engineering principles, compiled 2026-08-22",
+        "status": "realized"
       }
     },
     {
@@ -96214,6 +96295,17 @@
       "properties": {
         "change_type": "new_feature",
         "name": "A refused enum argument now names its legal values — fixed in the one shared helper every served enum passes through, so all of them gain it at once"
+      }
+    },
+    {
+      "node_id": "chg:a-remote-located-artifact-is-not-a-missing-file",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "The design gate stops calling a URI-located artifact a missing file — and says out loud that it could not judge it",
+        "rationale": "Found by registering one: the StoryFlow principles document has a durable URL and no working-tree path, so recording its provenance turned the build red for a design that had done nothing wrong. The note is the load-bearing half rather than a nicety — reflow2 performs no network I/O and cannot say whether a remote artifact still matches, so omitting it silently would make \"0 drift findings\" read as \"everything was checked\". That is exactly the failure StoryFlow's principle #6 is written against, met in the same session that read it. MUTATION-CHECKED: disabling the new branch turned exactly the two behavioural tests red and left both counterweights green; restoring it turned all four green.",
+        "subject": "system",
+        "summary": "`reflow2_check.py` joined every Artifact's `location` to the project root and asked the filesystem, so a location of `https://...` became `./https:/...`, resolved to nothing, and was reported as `missing_artifact` — as-built drift and a RED BUILD. `add_artifact`'s own served description says location is \"Path / URI / content-hash\", so registering a published OpenAPI document, a vendor datasheet or a standard at its URL is correct modelling that the tool surface explicitly invites. Remote locations are now a fourth state alongside missing, present-and-hashable, and the existing directory case: present, unhashable, not judged — and each one is named in a note."
       }
     },
     {
@@ -103184,6 +103276,17 @@
       }
     },
     {
+      "node_id": "dec:idea-a-capability-checked-only-at-unit-level-is-a-finding",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. From StoryFlow's principle #5, \"Real-path tests — unit-green is not live-green\": a test that feeds synthetic objects to a pure function proves the function is pure, and says nothing about whether anything calls it or whether the wire shape matches. Their worked case was a prose-rendering suite that was GREEN while the surface rendered no prose at all.\n\nTHEIR PROPOSED CHECK IS ALREADY COMPUTABLE HERE, WITH NO NEW VOCABULARY: \"assert that each capability has at least one verification at `integration` or `system` level rather than `unit`.\"\n\nMEASURED, 2026-08-22. Verification.level across 191 checks: integration 105, unit 72, system 11, acceptance 3. 154 capabilities carry a check; 47 of them are verified ONLY at unit level. The field has existed the whole time and NOTHING READS IT — no detector, no report, no rollup. That is the three-legs pattern with the tool and the data present and the detector missing, which is the same diagnosis as `change_axis_unstated` and cheaper to close, because no schema change is needed.\n\nA SIBLING ALREADY EXISTS AND IS INSTRUCTIVE: `component_granularity_verification` fires when a capability is covered only by a check aimed at its COMPONENT rather than at itself — 9 capabilities here. That is the same argument on a different axis (WHAT is checked rather than HOW DEEP), and its existence is evidence the shape is acceptable in this design.\n\n⭐ THE HONEST CAVEAT, and the document states it first: level is a PROXY. It does not measure path realism, it measures a label the author chose. A unit test can cross a real boundary and an \"integration\" test can mock everything. The document's own words — \"cheap, and it makes the gap visible without pretending to measure path realism\" — are the right register, and any finding must be worded that way or it will overclaim. This is also uncomfortably close to StoryFlow's own rule A(f): substituting a proxy that is easy to compute for the question actually asked.\n\nAGAINST BUILDING IT: 47 of 154 is a third of the design, and a finding that fires on a third of everything on day one is a finding people filter. If built, aggregate — one question about the practice, not 47 about capabilities.",
+        "name": "OPEN — should a capability whose every check is `unit` level be a finding? 47 of 154 here, and the field is already recorded and never read",
+        "no_relation_note": "Searched 2026-08-22 on verification level and check granularity. Nearest were dec:component-verified-computed (ACCEPTED — component-granularity verification as a computed third state) and dec:idea-verification-is-planned-with-the-requirement (OPEN — planning a check when the need is stated). Both READ and judged NOT related in the relation vocabulary's sense: they are siblings arguing adjacent things about checks, not causes, dependencies or contradictions of this one. Component-granularity asks WHAT is checked; this asks HOW DEEP. Neither has to land first, neither blocks the other, and both could hold at once. Recorded as a note rather than a DEPENDS_ON, which would be false and would make a later reader think this waits on something. NOTE WRITTEN BY HAND because review_relations was not on this session's served tool surface.",
+        "rationale": "Recorded because it is the cheapest of the three mechanisms — the data is present, the field is populated, and only a reader is missing — and because its caveat is unusually clean: the proxy is admitted by the source that proposes it. Left open rather than proposed because a third of the design lighting up at once is a real adoption risk, and because whether a label-based proxy is worth having at all is a judgement about how much reflow2 should infer.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-a-capability-declares-its-input-path",
       "node_type": "Decision",
       "properties": {
@@ -103210,6 +103313,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-09, describing what has already happened rather than a hypothetical.\n\nTHE SHAPE, in his numbering: projectA = **dynograph-foundation**, projectB = **reflow2**, projectC = **flo2**, projectD = **storyflow**. C depends on B; B depends on A; **D ALSO depends on A, and not on B.** A diamond, with A at the point. (projectE = embeddings-rs, and whether it is even a reflow2 project is undecided — recorded as unknown rather than assumed either way.)\n\n⚠️ THE INCIDENT, WHICH IS THE EVIDENCE AND IS NOT HYPOTHETICAL. Anthony: \\\"projectB caused changes in projectA, which I implemented real time. **The risk was that the changes that projectB required on projectA might have caused issues with projectA now being able to support projectD** (I thought about it, but really didn't test that anything didn't break in projectD by using an updated projectA).\\\"\n\n⇒ A change was levied UP one arm of the diamond and shipped, and **nothing checked the other arm.** The owner noticed the risk by thinking, and the check was never run. That is the failure mode, already realised, on the real projects.\n\n=== WHY THIS IS NOT `dec:who-needs-to-know`, AND THE DIFFERENCE IS STRUCTURAL ===\n\nThat node asks whether notification is SUBSCRIBED or DERIVED from the blast radius, and prefers derived because `propagate_from` already computes who a change impacts. Its recorded counter-argument is: *\\\"a blast radius is only as good as the edges that exist, so an unrecorded dependency means a silent non-notification.\\\"*\n\n**IN THE CROSS-GRAPH CASE THAT COUNTER STOPS BEING A RISK AND BECOMES A CERTAINTY.** The edge D→A lives in **D's graph**. A's graph does not hold it and cannot. So A's blast radius is not *possibly* incomplete — it is **NECESSARILY TRUNCATED AT THE GRAPH BOUNDARY**, every time, by construction. Derived notification cannot work from the upstream side, and no amount of edge hygiene in A fixes it.\n\n⭐ AND IT IS THE SAME STRUCTURAL FACT `dec:idea-gap-flows-to-the-dependency` already turned on, pointing the other way. There, Anthony's Google-service argument defeated \\\"the upstream pulls\\\": a widely-depended-on design **cannot enumerate its dependents**. That killed pull for RECEIVING requirements. Here the identical fact kills push for SENDING warnings — A cannot warn D because A does not know D exists. **One fact, two directions, two different unbuildable mechanisms.** Which is a strong hint that the answer has to live on the CONSUMER side in both cases.\n\n=== OPTIONS, NONE CHOSEN ===\n\n**(A) THE CONSUMER MIRRORS AND NOTICES.** Each dependent mirrors the upstream's published surface and detects when the mirror drifts from the real one. **The machinery is already built and shipped** — `export_surface` (upstream publishes), `mirror_surface` / `mirrors` (consumer mirrors), `pair_designs`, `seam_report`. FOR: it scales exactly where push fails, because it needs no registry and no knowledge of who depends on you; each consumer looks after itself. It also inverts the burden onto the party who actually cares. COUNTER: it is a PULL, so it only fires when the consumer runs it — D learns it is broken when D next looks, not when A changes. For a project nobody has opened in three months, that is late.\n\n**(B) A COMPOSITION RUN ACROSS ALL THE GRAPHS AT ONCE.** `compose_and_analyse` and `pair_designs` exist; `dec:linked-repos-poc` RAN this on reflow2 + flo2 + dynograph-foundation on 2026-08-06 and found \\\"the linking works, the labelling does not exist.\\\" **THAT BLOCKER HAS SINCE CLEARED** — reflow2 now declares 9 `required` interfaces, five of them pointed at dynograph (`ifc:req-dyno-*`). FOR: it computes the diamond directly — two consumers requiring the same interface means a change to it touches both — and Anthony HOLDS ALL FOUR GRAPHS, so it is runnable today. COUNTER: it needs somebody with every graph in hand, which is exactly the arrangement the Google-service argument says does not generalise. **Fine for the trial, not the answer.**\n\n**(C) THE UPSTREAM KEEPS A REGISTRY OF ITS CONSUMERS.** FOR: A could then warn D. COUNTER: refuted twice already — registration is a write, so pull cannot bootstrap, and a heavily-depended-on design will not maintain it. Retained only for the small-federation case.\n\n**(D) NOTHING MECHANICAL; THE OWNER REMEMBERS.** COUNTER: this is what happened, and the record above is what it cost — the risk was identified and the test still was not run. Not because anyone was careless, but because nothing made the omission visible afterwards.\n\n=== THE FIRST TESTABLE STEP, WHICH COSTS ALMOST NOTHING ===\n\n**Does storyflow (D) DECLARE its dependency on dynograph-foundation (A) as a `required` interface, the way reflow2 (B) now does?** reflow2's five `ifc:req-dyno-*` interfaces exist; whether D has any equivalent is UNKNOWN AND CHECKABLE. If it does not, no mechanism in any option above can work for D, and declaring it is the prerequisite for all of them. If it does, the diamond is already computable with tools that shipped.\n\n📌 AND THE METHOD IS ANTHONY'S OWN, STATED THE SAME DAY: *\\\"the best development of reflow2 has been propose something — trial it with a real project — then learn from it — iterate upon the solution and try again.\\\"* These four projects are that trial, and the diamond is the first thing to run it on.\n\nNOTHING IS PROMOTED.",
         "name": "OPEN — when a change to a shared upstream is driven by one dependent, how does the OTHER dependent find out? (the diamond: B and D both depend on A, and A's blast radius stops at its own graph)",
         "rationale": "Captured under the brainstorm skill, and kept SEPARATE from two neighbours it would otherwise be merged into — a node holding two questions can only ever be half-answered. `dec:idea-gap-flows-to-the-dependency` is the UP direction (how a dependent levies a need on its upstream); this is the DOWN-AND-SIDEWAYS direction (how a change to a shared upstream reaches a sibling that never asked). `dec:who-needs-to-know` is the SAME-GRAPH version and prefers derived notification; the point of this node is that derivation is structurally impossible across a graph boundary, which that node's own counter-argument anticipates without naming the cross-graph case.\n\nRecorded because the failure has already occurred on the real projects and was survived by luck rather than by a check — and because the prerequisite that blocked every mechanism (no labelled seam) cleared three days after it was written down.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-a-check-records-that-it-was-once-observed-failing",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. From StoryFlow's unnumbered rule A, clause (d): \"A test never observed red proves nothing. Red-then-green, or mutate the fix and confirm the suite notices. A green suite says the tests pass — not that they would catch a regression.\"\n\n⭐ THE EVIDENCE THAT THIS IS REAL IS ALREADY IN THIS GRAPH, AND IT IS THE SAME SHAPE THAT JUSTIFIED `subject` EARLIER TODAY. 51 of 191 Verifications contain the word MUTATION in their prose — \"MUTATION-CHECKED FIVE WAYS, each failing exactly the tests that name it\", \"MUTATION-CHECKED against five seeded regressions\", \"WRITTEN BEFORE THE FIX: the four bug cases failed and all five counterweights passed\". The discipline is being practised, carefully, by whoever writes these. IT IS BEING WRITTEN INTO FREE TEXT BECAUSE THERE IS NOWHERE ELSE TO PUT IT. Nothing can count it, query it, or notice its absence — which is the exact argument that carried `ChangeSubject`, one field over.\n\nWHAT IT WOULD BE: a Verification records whether it has ever been observed FAILING — not as a status (status is now), but as a fact about its history. `set_verification_status(failing)` already exists, so the honest cheap version is derived rather than declared: has this check ever been written `failing`? On this design that answer is currently NO for essentially all 191, because a check is created and then set passing.\n\nTHREE FORMS, increasingly strong:\n(a) DERIVED — compute \"ever observed failing\" from the status history. Free, no new vocabulary, and worth nothing here because the history does not exist: statuses are overwritten, not journalled.\n(b) A FIELD the author sets — \"this check was observed red, on this date, by this means (red-then-green / mutation / seeded regression)\". Cheap, honest, and it makes the 51 prose paragraphs into something countable.\n(c) A REFUSAL — the document proposes reflow2 \"refuse to accept a `passing` verification that has never recorded a `failing` run\".\n\n🛑 (c) DIRECTLY CONTRADICTS AN ACCEPTED NON-GOAL and must not be built without overturning it. dec:non-goal-reflow2-does-not-judge-whether-a-check-is-meaningful says a passing Verification is a claim reflow2 RECORDS and never one it VALIDATES. Refusing a passing status is reflow2 judging the check. (b) does not cross that line — it records what the author says, exactly like `provenance` and the drift dispositions, and leaves the judging to a human.\n\nHONEST LIMIT, the same one req:a-fix-says-whether-it-corrected-the-cause states about itself: this records what the AUTHOR SAYS about their check. It cannot detect a check that was never really red but is claimed to have been. Worth having because the alternative is no signal at all; worth never overselling.\n\nWHY IT MATTERS BEYOND THIS PROJECT: 42 of this design's checks have never run at all, and nothing distinguishes them from the 188 marked passing in any rollup a user reads. \"Passing\" and \"never able to fail\" and \"never executed\" are three different states wearing one word.",
+        "name": "OPEN — should a Verification record that it was once observed FAILING, so a check that could never have failed is distinguishable from one that passes? 51 of 191 already say so in prose",
+        "rationale": "Recorded because the prose count is unusually strong evidence — 51 independent authors' paragraphs working around a missing field is the same measurement that justified the change-event axis, and it was found by reading the graph rather than by reasoning about it. Left open because form (c) contradicts an accepted non-goal, which is Anthony's to overturn or uphold, and because (b) adds vocabulary that will stay empty without the third leg.",
         "status": "proposed"
       }
     },
@@ -103308,6 +103421,16 @@
         "decision": "RECORDED AS A FINDING, 2026-08-19, split out of `fact:changing-one-sentence-in-a-long-decision-cost-a-full-6242-character-resend` because it had been filed under the wrong fix. Nothing built, nothing asked for.\n\n**WHAT HAPPENED, twice in one session.** A `Decision` was written with a closing tag and the `rationale` ARGUMENT emitted inside the `decision` parameter. Both calls **succeeded**. What landed was a decision body ending in tool-call markup, and no `rationale` property at all:\n\n  1. `dec:idea-parks-shipped-...` — body ended `</decision>` then `<parameter name=\"rationale\">…`\n  2. `dec:idea-what-is-reflow2s-part-in-an-automated-translation` — body ended `</decision>` then `<rationale>…</rationale></invoke>`\n\n**NO LAYER NOTICED.** Not the schema (a string is a string), not `undeclared` (the property is declared and was simply absent), not the revision block (it faithfully reported replacing one property — it just cannot know the replacement is corrupt), not the dedup guard, not `detect_defects`. Both were caught only because the reply was read. **A design brain silently carrying `</invoke>` inside a Decision's prose is a worse outcome than any awkward edit**, because everything downstream — `search_design`'s index, the embedding field, a `where-am-i` narration, an export a person reads — treats it as content.\n\n🛑 **AND IT IS NOT THE `resolve_decision` CASE.** Both were FIRST writes of NEW nodes. A resolution-append tool would not have been reachable and would have prevented neither. Filing these with the resend measurement was an error, corrected the same day when Anthony asked for the evidence to be walked through.\n\n✅ **MEASURED, AND IT IS THE REASSURING ANSWER: THIS IS NEW, NOT LONG-STANDING.** The committed export was scanned — all 2,607 nodes, every string property, for closing tool-call tags and `<parameter name=` — and found **0**. So no earlier session left absorbed markup in this graph, and the two instances above (both since corrected) are the only ones. The scan is ~10 lines of Python and is the cheap form of the check any guard would institutionalise.\n\n═══════════════════════════════════════════════\nIDEAS, and none is as cheap as it first looks\n\n**A. Reject a text property whose value contains tool-call markup.**\n   ⚠️ COUNTER, AND IT IS FATAL TO THE NAIVE FORM: this very node, and the fact it was split from, both quote `</decision>` and `</invoke>` ON PURPOSE — and the scan above found exactly those two as its only hits once they existed. A rule matching those strings anywhere would refuse the only two nodes in the design that document the bug. Any guard has to key on SHAPE — markup at the TAIL of a value, immediately followed by what parses as another parameter name — not on the strings appearing at all.\n\n**B. Warn rather than refuse.** Surface it the way `undeclared` surfaces an unknown property: the write lands, the reply says \"this value ends in what looks like a tool-call boundary\". Cheaper, no false-refusal risk, and it fails in the safe direction. ⚠️ But it inherits `undeclared`'s own disease if it ever fires on correct writes — which is the exact complaint hxm_program filed about `ChangeEvent.description`.\n\n**C. A periodic scan rather than a write-time check.** The 10-line scan above, run in CI over the committed export. Catches the class with no false-refusal risk and no per-write cost, at the price of finding it later rather than at the moment of the write. ⚠️ Later may be fine here: the failure is silent but not destructive — nothing else breaks while it sits.\n\n**D. Do nothing, and treat it as a caller defect.** Defensible: the caller emitted a malformed call and the transport accepted it. ⚠️ Counter: reflow2's whole posture is that a silent wrong write is worse than a loud refusal, and this is a silent wrong write. `dec:two-sided-accept` and the dedup guard both exist because the design does not trust a write to be right just because it parsed.\n\n**E. The generalisation worth naming.** `cap:a-revising-write-says-whether-the-state-survived` computes whether the REPLACED state survived. Nothing computes whether the REPLACEMENT is plausible. Those are different questions and only the first is built.\n\n═══════════════════════════════════════════════\n⚠️ HONEST BOUNDS, stated so this is not over-read\n\n· n = 2, one session, one caller, one model. Not a rate.\n· Both were on parameters over 4,000 characters, and none of roughly thirty short writes the same day malformed — suggestive that long free-text arguments are where boundaries get mis-emitted, but observational and confounded, since the long writes also carry the most retyped text.\n· NO USER REPORTED THIS. It is a self-host observation, and by `dec:idea-field-evidence-is-a-prioritisation-input` it ranks below anything two projects filed this week. What makes it worth recording at all is that the failure is SILENT and lands in the durable record.\n· STILL NOT ESTABLISHED: whether any USER's graph carries such markup. Only this design was scanned, and it is the one graph whose caller is known.",
         "name": "OPEN — a prose field swallowed tool-call markup and the write SUCCEEDED: nothing refuses, flags or notices a node whose body ends in `</decision><rationale>…</invoke>`",
         "rationale": "Split into its own node rather than left inside the resend fact because the two were filed together only by coincidence of timing, and that coincidence led to a wrong recommendation — that `resolve_decision` would fix both. It fixes one. Recorded as an open question rather than a proposal because the obvious guard is not obvious: the naive string match would refuse the very nodes that document the defect, which is a good reason to think before building. Kept explicitly below the field-reported items in priority, per the design's own rule that field evidence outranks self-host observation, so that recording it does not smuggle it up the queue. The dedup guard named the fact it was split from, which is correct behaviour and was read before declaring them distinct — the split is deliberate, not an accident of wording.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-a-rule-with-no-check-is-reported-even-when-unenforced",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. From StoryFlow's principles document (art:storyflow-engineering-principles), whose closing note states the case better than a summary can: \"Structure alone found none of these. The leverage of a graph is not tidiness — it is that a graph CAN bind each rule to an executable check and then report which rules have none.\"\n\nMEASURED ON THIS DESIGN, 2026-08-22. 19 DesignRules. 16 have NO Verification pointing at them. Of those 16, only 3 are `enforced: true` — and `unverified_enforced_rule`, the detector that exists, fires ONLY on enforced rules. So 13 unchecked rules are structurally invisible: written down, checked by nothing, and never mentioned again.\n\nTHE SHAPE IS fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it, one level up. There it was optional FIELDS staying empty because no detector noticed their absence. Here it is whole RULES, and the same enforced-only blind spot that hid change_axis_unstated hides these.\n\nTHE OPTIONS:\n(a) Widen `unverified_enforced_rule` to all rules. Simple, and it turns 3 findings into 16 overnight on this design alone — probably too loud, and loud-on-day-one is how a whole category gets filtered forever.\n(b) A separate AGGREGATE finding: \"N of M rules have no check\" — one question, one acknowledgement, the shape `change_axis_unstated` and `unreviewed_ideas` already use. Naturally quiet, and it asks exactly the question the document says is the point.\n(c) Require a rule to state WHY it has no check, rather than to have one. The document's own note says \"this rule has no detector and here is why\" is a legitimate end state — so the finding becomes not \"you lack a check\" but \"you have neither a check nor a reason\".\n\n⭐ (c) IS THE INTERESTING ONE and it is not obvious. It reframes the goal: not that every rule is automated — several of these nine explicitly cannot be — but that no rule is SILENTLY unautomated. That is the distinction review_relations already makes for ideas, where a written note is a full answer and not a weaker one.\n\nCOUNTER-ARGUMENT, recorded rather than resolved: reflow2 has an accepted non-goal that it does not judge whether a check is MEANINGFUL. Reporting that a rule has no check at all stays the right side of that line — an absence, not a quality judgement — but (c) edges closer, because \"is that reason good enough?\" is precisely the judgement the non-goal refuses.",
+        "name": "OPEN — should reflow2 report a rule that nothing checks, including the UNENFORCED ones? 13 of this design's 19 rules are invisible to the detector that exists",
+        "rationale": "Recorded because the measurement is concrete and the blind spot is the same one this session already fixed once for change events. Not proposed as intent because (a), (b) and (c) are a real fork with different costs, and because it may be subsumed by the governing question about whether reflow2 ships rule machinery at all.",
         "status": "proposed"
       }
     },
@@ -103645,6 +103768,17 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — from the 2026-08-01 dynograph-foundation review. Nothing here is settled; recorded as a minor idea with a real objection.\n\nTHE IDEA: percentile and median (unused, in dynograph-vector::stats) would let surprising_connections report \"the top 5% most surprising couplings in THIS design\" rather than everything over a fixed score. A distributional cut self-calibrates to the graph it is run on; an absolute one does not, and a design with 100 nodes and one with 10,000 do not have the same natural scale.\n\nTHE HONEST COUNTER-ARGUMENT, and it is the projects own lesson: BL-23 established that when a detector punishes correct work, the answer is A DIFFERENT QUESTION, not a tuned threshold. A percentile is still a threshold — it just moves rather than sits still. Worse, a top-N-percent rule ALWAYS returns something, so a design with no surprising couplings at all would still be handed a list, which is exactly the false-signal failure the noise-floor work (BL-42) was about.\n\nWHERE IT MIGHT STILL HELP: not as a cut, but as CONTEXT on a finding already made — \"surprise 2.56, which is the highest in this design\" is more useful to a reader than a bare number, and asserts nothing extra.",
         "name": "OPEN — should surprise and severity be reported as distributional positions rather than absolute scores?",
         "rationale": "Kept deliberately small and recorded with the objection first, because the naive form of this idea contradicts an established lesson and a later session should meet the objection at the same moment as the idea.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-do-another-projects-principles-belong-in-reflow2-or-only-the-machinery",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony brought StoryFlow's \"Nine Principles, Paid For\" (art:storyflow-engineering-principles) and asked how to integrate the lessons into reflow2. This node holds the governing question; the sibling ideas hold the specific mechanisms.\n\nOPTION A — SHIP THE PRINCIPLES. reflow2 seeds a new project with a starter set of DesignRules, the way it already serves skills. Cheap, immediately useful to someone with no rules of their own, and it makes the vocabulary concrete rather than empty. AGAINST: they are ONE project's rules, paid for by ONE project's incidents. A beamline control system and a story engine do not share \"observe it live in a browser\". Shipping them asserts reflow2 knows what a user's engineering standards should be, a much larger claim than reflow2 makes anywhere else.\n\nOPTION B — SHIP THE MACHINERY ONLY. reflow2 gains what the document's own closing note names as the leverage: \"a graph CAN bind each rule to an executable check and then report which rules have none.\" No principle ships; the ABILITY to hold a principle with a check, and to be told which principles have none, ships. AGAINST: an empty mechanism is exactly the shape that stays empty forever — the three-legs finding says vocabulary needs a tool, an instruction AND a detector, and B supplies two of three while leaving a user with nothing to imitate.\n\nOPTION C — SHIP THE MACHINERY, PLUS THE PRINCIPLES AS AN OPTIONAL, CLEARLY-ATTRIBUTED EXAMPLE SET. Not defaults, not seeded; something a project can read and adopt deliberately, labelled as StoryFlow's and paid for by StoryFlow's incidents.\n\nWHAT IS NOT IN DOUBT: several of the nine map onto vocabulary reflow2 ALREADY HAS and does not read — Verification.level (#5), Verification.method (#4), ChangeType::DefectFix (#1). Those are the sibling ideas and are worth building on any answer here.\n\nWHAT DOES NOT FIT REFLOW2 AT ALL, said plainly so the integration is not oversold: #2's AST scan for swallowed exceptions, #6's pagination-contract check and #7's file-length ratchets are code-level lints over a user's source. reflow2 does not read a project's source and should not start. Their design-level shadows are a different and much smaller thing.",
+        "name": "OPEN — do StoryFlow's nine engineering principles belong IN reflow2 as shipped rules, or does reflow2 ship only the machinery that binds ANY project's rules to checks?",
+        "no_relation_note": "Searched 2026-08-22 for existing nodes on reflow2 serving other projects vs itself. Nearest were rule:reflow2-is-built-for-other-projects-not-for-itself and rule:fixes-are-judged-by-the-third-party — both READ and judged NOT related in the relation vocabulary's sense. They state the PRINCIPLE that reflow2 serves other projects; this asks a narrower product question those rules do not reach, namely whether reflow2 may ship another project's engineering standards as content. A DEPENDS_ON would be false (this is answerable without either rule) and a CONTRADICTS would be false (option C is compatible with both). Recorded as a note rather than a forced edge: a false neighbour would put those two rules in front of every later reader of this question and they do not answer it. NOTE WRITTEN BY HAND because review_relations was not on this session's served tool surface — the server was rebuilt mid-session and the client's tool list is fixed at connect time.",
+        "rationale": "Open rather than settled because the answer turns on a judgement only Anthony can make: whether reflow2 may ever ship an opinion about how somebody else should engineer. His standing rule says the product is for other projects, which argues against importing one deployment's conclusions as everyone's defaults — but the same rule's whole point is that findings are data about the PRODUCT, and these nine are findings from a real deployment. The tension is genuine, which is why this is a question and not an answer.",
         "status": "proposed"
       }
     },
@@ -120107,6 +120241,20 @@
       }
     },
     {
+      "node_id": "ver:a-remote-located-artifact-is-not-judged-and-says-so",
+      "node_type": "Verification",
+      "properties": {
+        "description": "4 cases, tools/test_reflow2_check.py::RemoteLocatedArtifact, driven end to end against the built binary and a real throwaway graph. TWO BEHAVIOURAL: a `https://` location is not reported `missing_artifact`, and the gate says \"not judged\" naming which artifact it could not judge. TWO COUNTERWEIGHTS, and without them the fix would be a way to HIDE drift: a genuinely absent local path is still `missing_artifact`, and an ordinary relative path is not mistaken for a URI (the pattern is anchored and scheme-shaped, not a bare \"://\" search). MUTATION-CHECKED 2026-08-22: disabling the new branch failed exactly the two behavioural cases and left both counterweights green; restoring it returned all four to green — so the check has been observed red and is known to be capable of failing.",
+        "findings": "4 of 4 passing. Observed RED first: the pre-fix gate reported \"FAIL DRIFT art:remote: missing_artifact\" on a design whose only fault was registering a document at its URL, which is the bug reproduced rather than argued. After the fix the same design reports a note naming the unjudged artifact and exits clean.",
+        "kind": "verification",
+        "last_run_at": "2026-08-22T15:50:00Z",
+        "level": "system",
+        "method": "test",
+        "name": "A URI-located artifact is neither called missing nor silently passed",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-revising-write-says-whether-the-state-survived",
       "node_type": "Verification",
       "properties": {
@@ -122206,7 +122354,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:05082495ef2fe09abec1aa754f60e81851404090deca889214b3e4d0b7e51911",
+  "prev_content_hash": "sha256:17324d8c336cc538e8e7464e0c25ee421dd63cd2a158020abdce17cde852c841",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
