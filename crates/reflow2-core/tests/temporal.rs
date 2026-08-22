@@ -48,6 +48,7 @@ fn record_change_preserves_pre_change_state() {
             change_event_id: "chg:tighten-latency",
             name: "Tighten latency to 100ms",
             change_type: ChangeType::RequirementCreep,
+            subject: None,
             target_type: node::REQUIREMENT,
             target_id: "req:latency",
             action: ChangeAction::Modified,
@@ -120,6 +121,7 @@ fn added_change_takes_no_snapshot() {
             change_event_id: "chg:add-cap",
             name: "Add caching capability",
             change_type: ChangeType::NewFeature,
+            subject: None,
             target_type: node::CAPABILITY,
             target_id: "cap:new",
             action: ChangeAction::Added,
@@ -207,6 +209,7 @@ fn a_reallocation_keeps_the_old_owner_in_the_snapshot() {
             change_event_id: "chg:move-z",
             name: "Z moves from A to B",
             change_type: ChangeType::ScopeChange,
+            subject: None,
             target_type: node::CAPABILITY,
             target_id: "cap:z",
             action: ChangeAction::Modified,
@@ -262,6 +265,7 @@ fn snapshot_edges_exclude_bookkeeping_and_are_sorted() {
         change_event_id: "chg:first",
         name: "first edit",
         change_type: ChangeType::Refactor,
+        subject: None,
         target_type: node::CAPABILITY,
         target_id: "cap:c",
         action: ChangeAction::Modified,
@@ -553,6 +557,7 @@ fn history_cannot_be_recorded_into_an_epoch_that_has_not_happened() {
             target_type: "Requirement",
             target_id: "req:a",
             change_type: ChangeType::ScopeChange,
+            subject: None,
             action: ChangeAction::Modified,
         })
         .expect_err("a snapshot of the present cannot belong to a point that has not happened");
@@ -578,6 +583,7 @@ fn an_arrived_epoch_accepts_history_again() {
         target_type: "Requirement",
         target_id: "req:a",
         change_type: ChangeType::ScopeChange,
+        subject: None,
         action: ChangeAction::Modified,
     })
     .expect("once an epoch has arrived, history belongs in it");
@@ -809,6 +815,7 @@ fn record_the_plan(g: &mut DesignGraph, change_id: &str, epoch: &str) {
         change_event_id: change_id,
         name: "replan",
         change_type: ChangeType::Refactor,
+        subject: None,
         target_type: node::DESIGN_EPOCH,
         target_id: epoch,
         action: ChangeAction::Modified,

@@ -356,7 +356,11 @@ impl ReflowService {
         description = "Record a change to a node in an epoch (snapshots the prior state). \
                        CONVENTION: record the change BEFORE you make it — the snapshot captures \
                        the state as it is now, so calling this afterwards preserves what you \
-                       already replaced.",
+                       already replaced. TWO QUESTIONS, NOT ONE: `change_type` says WHY, and \
+                       `subject` says WHICH AXIS — `system` (the thing changed) or `record` \
+                       (the thing did not change and only the design's knowledge of it did, \
+                       e.g. a re-sync or a drift you are accepting). Leaving `subject` out is \
+                       a true answer and is never inferred from `change_type`.",
         annotations(read_only_hint = false)
     )]
     pub async fn record_change(
@@ -366,6 +370,11 @@ impl ReflowService {
         let change_type: ChangeType = parse_enum(&req.change_type, "change type")?;
         reject_reserved_change_type(change_type)?;
         let action = parse_enum(&req.action, "change action")?;
+        let subject = req
+            .subject
+            .as_deref()
+            .map(|s| parse_enum::<reflow2_core::ChangeSubject>(s, "change subject"))
+            .transpose()?;
         let rec = ChangeRecord {
             epoch_id: &req.epoch_id,
             change_event_id: &req.change_event_id,
@@ -373,6 +382,7 @@ impl ReflowService {
             target_type: &req.target_type,
             target_id: &req.target_id,
             change_type,
+            subject,
             action,
         };
         let mut g = self.write_lock().await;

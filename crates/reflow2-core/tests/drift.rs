@@ -522,6 +522,7 @@ fn accepting_with_design_updated_ties_code_and_design_into_one_change() {
         target_type: node::CAPABILITY,
         target_id: "cap:score",
         change_type: ChangeType::TestFailureFix,
+        subject: None,
         action: reflow2_core::temporal::ChangeAction::Modified,
     })
     .unwrap();
@@ -669,6 +670,7 @@ fn the_ledger_tells_a_design_updated_claim_from_a_design_holds_one() {
         target_type: node::CAPABILITY,
         target_id: "cap:score",
         change_type: ChangeType::TestFailureFix,
+        subject: None,
         action: reflow2_core::temporal::ChangeAction::Modified,
     })
     .unwrap();

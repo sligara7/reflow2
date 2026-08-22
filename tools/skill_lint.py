@@ -121,8 +121,19 @@ NON_TOOL_TERMS = {
     # sentence promising the invitation is held has something concrete to be
     # about.
     "unreviewed_ideas",
+    # A GAP SOURCE key (detect.rs), not a tool — detect-and-ask names it so a
+    # reader can tell which finding is the one asking about a change's axis.
+    "change_axis_unstated",
     "shaping",
     "governs_retired",
+    # ChangeEvent.subject and its two values (2026-08-22) — the revise-design
+    # skill names the FIELD and both members because that is the instruction:
+    # `change_type` says why, `subject` says which axis. A step that told a
+    # reader to "state the axis" without naming what to pass would be the
+    # unreachable-vocabulary failure the field was added to fix.
+    "subject",
+    "system",
+    "record",
     # CorpusReport / CorpusDocument fields and DocumentStatus values (BL-186) —
     # the ingest-corpus skill names what it tells you to READ in the report, not
     # tools. `token_sort_ratio` is the resolution function whose lexical limit

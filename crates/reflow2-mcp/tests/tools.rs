@@ -2046,6 +2046,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         target_type: "Capability".into(),
         target_id: "cap:flight".into(),
         change_type: "refactor".into(),
+        subject: Some("system".into()),
         action: "modified".into(),
     })));
     assert!(

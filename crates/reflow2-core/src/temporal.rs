@@ -437,6 +437,18 @@ pub struct ChangeRecord<'a> {
     pub name: &'a str,
     /// Why the design changed.
     pub change_type: ChangeType,
+    /// WHICH AXIS this change is on — [`ChangeSubject::System`] (the thing
+    /// changed) or [`ChangeSubject::Record`] (the thing did not change and only
+    /// the design's knowledge of it did).
+    ///
+    /// A FIELD RATHER THAN AN INFERENCE, AND A FIELD RATHER THAN NOTHING.
+    /// `record_change` is the generic path and genuinely cannot derive the axis
+    /// from `change_type` — the mapping is not total, and a `resync` is
+    /// honestly either one. That argument rules out GUESSING; it does not rule
+    /// out ASKING, and for a while this struct treated the two as the same
+    /// thing, so the axis was unreachable through the one door most callers
+    /// use. `None` still means nobody said, which stays a true answer.
+    pub subject: Option<ChangeSubject>,
     /// Node type of what changed.
     pub target_type: &'a str,
     /// Node id of what changed.
@@ -1390,15 +1402,16 @@ impl DesignGraph {
             None
         };
 
-        // UNSTATED on purpose. `record_change` is the generic path and cannot
-        // know which axis the caller is on — a resync can be either — so it
-        // passes None rather than inferring one. Absent means nobody said,
-        // which is true; a guess here would be a claim nobody made.
+        // NEVER INFERRED, ALWAYS ASKABLE. This path cannot derive the axis
+        // from `change_type` — the mapping is not total, and a `resync` is
+        // honestly either one — so it does not try. What it does now is carry
+        // what the CALLER said. `None` still means nobody said, which is true;
+        // what it no longer means is "nobody could".
         let change_event = self.add_change_event(
             rec.change_event_id,
             rec.name,
             rec.change_type,
-            None,
+            rec.subject,
             None,
             None,
         )?;

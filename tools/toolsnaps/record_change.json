@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Record a change to a node in an epoch (snapshots the prior state). CONVENTION: record the change BEFORE you make it — the snapshot captures the state as it is now, so calling this afterwards preserves what you already replaced.",
+  "description": "Record a change to a node in an epoch (snapshots the prior state). CONVENTION: record the change BEFORE you make it — the snapshot captures the state as it is now, so calling this afterwards preserves what you already replaced. TWO QUESTIONS, NOT ONE: `change_type` says WHY, and `subject` says WHICH AXIS — `system` (the thing changed) or `record` (the thing did not change and only the design's knowledge of it did, e.g. a re-sync or a drift you are accepting). Leaving `subject` out is a true answer and is never inferred from `change_type`.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
@@ -23,6 +23,14 @@
       },
       "name": {
         "type": "string"
+      },
+      "subject": {
+        "default": null,
+        "description": "WHICH AXIS this change is on — `system` (the thing changed) or `record`\n(only the design's knowledge of it changed). OPTIONAL, and leaving it\nout is a true answer: absent means nobody said, and it is never inferred\nfrom `change_type`, because the mapping is not total — a `resync` can be\neither.",
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "target_id": {
         "type": "string"

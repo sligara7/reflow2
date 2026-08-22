@@ -2672,6 +2672,13 @@ pub struct RecordChangeReq {
     pub target_id: String,
     /// Change type key (e.g. `new_feature`).
     pub change_type: String,
+    /// WHICH AXIS this change is on — `system` (the thing changed) or `record`
+    /// (only the design's knowledge of it changed). OPTIONAL, and leaving it
+    /// out is a true answer: absent means nobody said, and it is never inferred
+    /// from `change_type`, because the mapping is not total — a `resync` can be
+    /// either.
+    #[serde(default)]
+    pub subject: Option<String>,
     /// `added` | `modified` | `removed`.
     pub action: String,
 }
