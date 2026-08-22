@@ -3558,23 +3558,31 @@ impl DesignGraph {
         // a weak test — here it exposed redundant code, and the honest fix was
         // to delete it rather than keep a guard that reads as protection.
         //
-        // 🛑 HONEST LIMIT, AND IT IS A REAL HOLE RATHER THAN A CAVEAT.
+        // WHERE THE SILENCE IS REPORTED, and it is deliberately NOT here.
         // `req:work-says-whether-it-reaches-a-consumer` requires that a design
         // which has declared NO audience reads as "cannot judge", never as
-        // clean. Nothing surfaced does that today.
+        // clean. This detector cannot say it: with nothing classified there is
+        // no per-requirement question to ask, and inventing one would assert a
+        // claim nobody made.
         //
-        // `vocabulary_coverage` was the obvious home and DOES NOT FIT: its
-        // `unused` list names node types and edge types only, so an unused
-        // PROPERTY is counted in `properties_on_used_types` and never named.
-        // That is principle B — a set of named things reduced to a scalar —
-        // inside reflow2's own instrument, and it was found by asserting the
-        // opposite in a test and watching it fail.
+        // `vocabulary_coverage` was the obvious home and DID NOT FIT — its
+        // `unused` list named node types and edge types only, so an unused
+        // PROPERTY was counted in `properties_on_used_types` and never named.
+        // That is principle B, a set of named things reduced to a scalar,
+        // inside reflow2's own instrument; it was found by asserting the
+        // opposite in a test and watching it fail, and it was FIXED AT THE ROOT
+        // on 2026-08-22 rather than special-cased for this one field. The
+        // report now names the properties it counts, so an undeclared
+        // `Artifact.audience` comes back as `build: node property
+        // Artifact.audience` — and so does every other field no project ever
+        // filled in.
         //
-        // So the silence is UNREPORTED, it is named here and pinned by
-        // `tests/internal_only_delivery.rs`, and closing it is owed work. The
-        // source document calls this a legitimate end state — "this rule has no
-        // detector, and here is why" — and it is only legitimate while written
-        // down.
+        // 🛑 THE LIMIT THAT REMAINS, stated because rounding it up to "closed"
+        // is the easy mistake: that naming rides the FLAT LIST, which is
+        // withheld unless asked for, on measured grounds. So the silence is
+        // reportable rather than reported — the default reply says the domain's
+        // properties are under-filled without saying which one. Pinned by
+        // `tests/internal_only_delivery.rs`, which asserts both halves.
 
         for req in self.scan_nodes(node::REQUIREMENT)? {
             // A need the user settled OUT is not a need. Dropping or deferring

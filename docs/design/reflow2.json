@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:aa4969af2e4a36e7914304878691172fc0aa73577fa6965442687ba4411e567c",
+  "content_hash": "sha256:aef68226414be603674814034c1e1e5079d7ac59f0d026955423010d45f1af27",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -24661,6 +24661,51 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:vocabulary-coverage-names-the-properties-it-counts",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:vocabulary-coverage-names-the-properties-it-counts",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:vocabulary-coverage-names-the-properties-it-counts",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:vocabulary-coverage-names-the-properties-it-counts",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:a-design-says-which-vocabulary-it-has-never-used"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:vocabulary-coverage-names-the-properties-it-counts",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:work-declares-who-it-reaches"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:wall-check-reads-the-mapping-instead-of-guessing-it",
       "properties": {
         "accepted_baseline": true,
@@ -24856,6 +24901,17 @@
         "action": "modified"
       },
       "to_id": "req:version-combination-is-an-object"
+    },
+    {
+      "edge_type": "CLAIMS",
+      "from_id": "who:claude-code",
+      "properties": {
+        "claimed_at": "2026-08-22T17:30:00Z",
+        "depth": 2,
+        "note": "Closing the vocabulary_coverage hole: the unused list names node and edge TYPES only, so an unused PROPERTY is counted and never named. Adding property naming behind include_unused, plus a per-domain properties figure.",
+        "seat": "asligar-bitecool:1700453:f2009d15"
+      },
+      "to_id": "cap:a-design-says-which-vocabulary-it-has-never-used"
     },
     {
       "edge_type": "CONSTRAINS",
@@ -35913,6 +35969,12 @@
       "from_id": "art:main",
       "properties": {},
       "to_id": "fact:defect-main-rs-realizes-the-wrong-capability"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:a-design-says-which-vocabulary-it-has-never-used",
+      "properties": {},
+      "to_id": "fact:naming-properties-grows-the-list-where-it-can-be-acted-on"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -91582,7 +91644,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:250d678e31216340fc45c5734375a6ede8f081fbbbbc829545edc91e1cead493",
+        "checksum": "sha256:59ec4efea1a1c2a1b3c74fa43d6f13b97f4adc49b56528fc7d3f8dfdf56d588b",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -93473,7 +93535,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f92e38756534fdbcd43156a002d805ee4eaa845fa6faabd480bafae48277abde",
+        "checksum": "sha256:cf6164249cc6c5b76a1fbf9b889fa6296a46a6d8e73979afe3549b6a46cd4666",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -93729,7 +93791,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:47f07fc9b7effe9ebf321b360531ea10281864028731bf38acb8da67dfe29220",
+        "checksum": "sha256:aff8e71109d50f4f84de1b69395b6b84358257d9ffc23af5ef71274706afc1f1",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/vocabulary.rs",
         "name": "crates/reflow2-core/src/vocabulary.rs",
@@ -93891,10 +93953,10 @@
       "node_type": "Capability",
       "properties": {
         "capability_type": "query",
-        "description": "`vocabulary_coverage` answers a question nothing else in reflow2 asks. The detectors check the CONSISTENCY OF WHAT EXISTS; the absence-checkers it has (unsatisfied_requirement, unallocated_capability) check absences of REQUIRED structure. So vocabulary a design has never touched is invisible to every other computation, in every project, forever.\\n\\n(The FACT records the trial; this is the built thing the trial chose the shape of. `cap:the-design-says-what-its-own-tools-cannot-write` is the repo-side INSTRUMENT that reads reflow2's own files; this is the PRODUCT capability that works on any graph.)\\n\\nPORTABLE BY CONSTRUCTION: the schema is embedded in the binary and the corpus comes from the caller's own graph, so the answer needs nothing about any project's file layout. That was the deciding property \\u2014 the earlier prototype read reflow2's schema directory and toolsnaps and would have generalised to nobody.\\n\\nFOUR DECISIONS, ALL TAKEN FROM A TWO-ARM TRIAL RUN ON REFLOW2 ITSELF rather than from argument:\\n  SHIP THE FIGURES \\u2014 they passed both arms. '0 of 61 edge types' on a day-one design is a true and useful statement, not noise.\\n  GROUP THE LIST \\u2014 by the SCHEMA'S OWN eleven domains, never a grouping this code invented. The trial found unused vocabulary clustering into whole subsystems and the clusters turned out to BE the domains, so a mature design reads about four findings instead of thirty-one.\\n  MAKE IT PARKABLE \\u2014 an ACCEPTED Decision at `decision:vocab:<domain>` declares a domain deliberately unused. Needed because OWNED_BY's absence is already ruled deliberate; without it the report would name a settled decision as a hole forever (`req:a-deliberate-state-is-not-a-defect`). No new tool: add_decision + set_decision_status, and the id is stated on every finding so the remedy rides on the output rather than on a skill nobody loads.\\n  KEEP THE FLAT LIST BEHIND A REQUEST \\u2014 measured through the shipped tool, a day-one design produces 88 items and a mature one 31. The list is LONGEST for the user least able to act on it, so pushing it would have made the feature worst for exactly the people it is for.\\n\\nAND A FIFTH THE TRIAL FORCED: a design under ten nodes gets a `note` saying the figures mean it has BARELY STARTED. Straight out of genesis every figure is near zero, and reporting that as coverage would hand a new user a wall of red on their first read.",
+        "description": "`vocabulary_coverage` answers a question nothing else in reflow2 asks. The detectors check the CONSISTENCY OF WHAT EXISTS; the absence-checkers it has (unsatisfied_requirement, unallocated_capability) check absences of REQUIRED structure. So vocabulary a design has never touched is invisible to every other computation, in every project, forever.\n\n(The FACT records the trial; this is the built thing the trial chose the shape of. `cap:the-design-says-what-its-own-tools-cannot-write` is the repo-side INSTRUMENT that reads reflow2's own files; this is the PRODUCT capability that works on any graph.)\n\nPORTABLE BY CONSTRUCTION: the schema is embedded in the binary and the corpus comes from the caller's own graph, so the answer needs nothing about any project's file layout. That was the deciding property — the earlier prototype read reflow2's schema directory and toolsnaps and would have generalised to nobody.\n\nFOUR DECISIONS, ALL TAKEN FROM A TWO-ARM TRIAL RUN ON REFLOW2 ITSELF rather than from argument:\n  SHIP THE FIGURES — they passed both arms. '0 of 61 edge types' on a day-one design is a true and useful statement, not noise.\n  GROUP THE LIST — by the SCHEMA'S OWN eleven domains, never a grouping this code invented. The trial found unused vocabulary clustering into whole subsystems and the clusters turned out to BE the domains, so a mature design reads about four findings instead of thirty-one.\n  MAKE IT PARKABLE — an ACCEPTED Decision at `decision:vocab:<domain>` declares a domain deliberately unused. Needed because OWNED_BY's absence is already ruled deliberate; without it the report would name a settled decision as a hole forever (`req:a-deliberate-state-is-not-a-defect`). No new tool: add_decision + set_decision_status, and the id is stated on every finding so the remedy rides on the output rather than on a skill nobody loads.\n  KEEP THE FLAT LIST BEHIND A REQUEST — measured through the shipped tool, a day-one design produces 88 items and a mature one 31. The list is LONGEST for the user least able to act on it, so pushing it would have made the feature worst for exactly the people it is for.\n\nAND A FIFTH THE TRIAL FORCED: a design under ten nodes gets a `note` saying the figures mean it has BARELY STARTED. Straight out of genesis every figure is near zero, and reporting that as coverage would hand a new user a wall of red on their first read.\n\nA SIXTH, 2026-08-22 — THE LIST NAMES PROPERTIES, NOT ONLY TYPES. As shipped, `unused` named node types and edge types only, so an unused PROPERTY was counted in `properties_on_used_types` and never named: a set of named things reduced to a scalar, inside the one instrument built to report absence. The consequence was concrete — a design that had declared no `Artifact.audience` anywhere was silent in every report reflow2 served, and the only thing that could name it was a hand-written script pointed at reflow2's own files, which generalised to nobody. Found by writing the assertion and watching it FAIL, not by reasoning.\n  Fixed at the root rather than special-cased for `audience`, which is what makes one change serve every optional field in every project: `Capability.inputs`/`outputs`/`capability_type` (0 of 170), `ChangeEvent.subject`, `Fragment.*`, the five never-set timestamps.\n  THE WITHHOLDING DECISION WAS KEPT. The names ride the flat list that was already behind `include_unused`; the default reply grew by ONE figure per domain (`domains[].properties`), never by a wall of names. Extending the withheld list was the only shape that could close the hole without re-creating the noise the fourth decision measured.\n  EDGE PROPERTIES CAME TOO, on the same walk that already had the edges in hand (`GOVERNED_BY.ruling` was 0 of 912 and nothing shipped could say so), reported as a second figure so the vacuous-zero rule stays visible.\n  🛑 HONEST LIMIT, PINNED BY A TEST: a property carrying a schema DEFAULT can never be named unused, because the store materialises defaults on write and every instance carries one. What this names is the UNDEFAULTED optional — which is the class that matters precisely because `req:defaults-do-not-assert` is why the fields worth asking about have no default. And the naming is REPORTABLE rather than REPORTED: it arrives only when somebody asks for the list.",
         "inputs": "[\"include_unused\"]",
         "name": "A design reports which of the vocabulary it has never used, grouped by domain, parkable, with the list on request",
-        "outputs": "[\"node_types\",\"edge_types\",\"properties_on_used_types\",\"domains\",\"parked_domains\",\"unused\",\"note\"]",
+        "outputs": "[\"node_types\",\"edge_types\",\"properties_on_used_types\",\"properties_on_used_edge_types\",\"domains\",\"parked_domains\",\"unused\",\"note\"]",
         "provenance": "authored",
         "status": "verified"
       }
@@ -101311,6 +101373,15 @@
       "properties": {
         "change_type": "scope_change",
         "name": "`VERIFIES` admits `Constraint` on Anthony's word — a check may now say whether a limit holds. Proven through the importer, the path that was actually broken, with the counterweight that `VERIFIES → Project` is still refused. Project stays out and dev_storyflow's export still will not import until that half is decided."
+      }
+    },
+    {
+      "node_id": "chg:vocabulary-coverage-names-the-properties-it-counts",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "`vocabulary_coverage` names the unused PROPERTIES it has only ever counted — the third leg made general instead of one more special case",
+        "subject": "system"
       }
     },
     {
@@ -119498,6 +119569,17 @@
       }
     },
     {
+      "node_id": "fact:naming-properties-grows-the-list-where-it-can-be-acted-on",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "measurement",
+        "statement": "MEASURED 2026-08-22 through the shipped binary, on both arms of the original trial, immediately after `vocabulary_coverage` began NAMING the properties it had only ever counted.\n\n                       before   after   growth\n  mature (2897 nodes)      31      70     +39  (+126%)\n  day-one (2 nodes)        88     101     +13  (+15%)\n\n⭐ THE ASYMMETRY IS THE POINT, AND IT IS THE ANSWER TO THE OBJECTION THIS CHANGE HAD TO CLEAR. The trial's fourth decision withheld the flat list because it was LONGEST FOR THE USER LEAST ABLE TO ACT ON IT — 88 items on day one against 31 on a mature design. Naming properties could only have made that worse; instead it narrowed the gap from 57 items to 31, because the vacuous-zero rule suppresses every property of every type that has no instances, and on day one almost no type has any. The list grows where somebody can act on it and barely moves where they cannot.\n\nThe DEFAULT reply, which is what every caller pays for, grew from about 2.4 KB to 2973 bytes on the day-one arm — one `properties` figure per domain, eleven numbers, never a list.\n\nWHAT THE MATURE ARM FOUND ON REFLOW2 ITSELF, none of which any shipped report could state before:\n  `Artifact.audience` — 0 of 190. reflow2 added the field in #295 so that a deliverable declares who it reaches, and has classified NOT ONE OF ITS OWN. That is `rule:the-self-host-always-trails-what-it-teaches` again, and it is now visible rather than inferred.\n  22 EDGE properties on edge types that have edges: `ALLOCATED_TO.{weight,frequency,data_volume,note}`, `PROVIDES.{weight,frequency,data_volume}`, `CONSUMES.{frequency,data_volume}` — the entire coupling vocabulary the structural detectors read, declared and never once written. `TRIGGERS.{confidence,evidence}`, `BLOCKS.confidence`, `RISKS.confidence`, `EVOLVES_INTO.confidence`, `VERIFIES.coverage`, `CONTAINS.note`, `ASKS_ABOUT.note`.\n  `Project.mirror_*` (4), `Fragment.{summary,intent,phase,created_by,created_at}`, `Snapshot.captured_at`, `Release.created_at`, `Artifact.created_at`, `Project.created_at` — the never-set timestamp cluster, still there.\n  `Constraint.{objective,rationale}`, `Requirement.source`, `Question.prompt_id`, `Verification.location`, `Environment.description`, `Artifact.{description,signature}`.\n\n⚠️ WHAT THE FIGURES ARE NOT. `properties_on_used_types` reads 155 of 178 and `properties_on_used_edge_types` 59 of 81, and NEITHER counts a property that carries a schema DEFAULT as capable of being unused — the store materialises defaults on write, so every instance carries one. What is named is the UNDEFAULTED optional. That is the class that matters (`req:defaults-do-not-assert` is why the fields worth asking about have no default) but it means these figures are an UNDER-count of vocabulary nobody chose, not a full one.",
+        "subject_id": "cap:a-design-says-which-vocabulary-it-has-never-used",
+        "valid_from": "2026-08-22"
+      }
+    },
+    {
       "node_id": "fact:nine-of-twenty-skills-are-edited-without-a-drift-signal",
       "node_type": "TemporalFact",
       "properties": {
@@ -122458,13 +122540,13 @@
       "node_id": "ver:vocabulary-coverage-keeps-the-four-trial-decisions",
       "node_type": "Verification",
       "properties": {
-        "description": "crates/reflow2-core/tests/vocabulary_coverage_reports_what_was_never_used.rs.\\n\\nEach probe pins ONE decision rather than testing the feature generally: figures always / list only on request; the share computed so the reader is not left dividing; grouped by the schema's own domains, ordered worst-covered first, with ALL eleven reported so a missing domain cannot read as fully used; a domain parkable ONLY by an ACCEPTED ruling, with the remedy stated on the finding; and the barely-started note firing under ten nodes and standing down above.\\n\\nFive mutations, each killing exactly its own probe: flat list always returned; share divided by total+1; only unused domains reported; a PROPOSED ruling parking a domain; the note never firing.\\n\\nALSO EXERCISED THROUGH THE BUILT BINARY on both trial arms, because a core test cannot see the surface: mature 22/29 + 37/61 + 141/169 with 31 items on request; day-one 2/29 + 0/61 + 8/18 with 88 on request and the note present. Default reply ~2.4 KB either way.",
-        "findings": "1083 core tests pass, clippy clean, both trial arms reproduced through the shipped binary. The domain cross-check confirms all 29 node types and 61 edge types belong to exactly one domain \\u2014 domain_membership errors rather than answering partially if its shallow parse and the real schema loader ever disagree.",
+        "description": "crates/reflow2-core/tests/vocabulary_coverage_reports_what_was_never_used.rs, plus one cross-file tripwire in tests/internal_only_delivery.rs.\n\nTHE ORIGINAL FIVE, one decision each: figures always / list only on request; the share computed so the reader is not left dividing; grouped by the schema's own domains, ordered worst-covered first, with ALL eleven reported so a missing domain cannot read as fully used; a domain parkable ONLY by an ACCEPTED ruling, with the remedy stated on the finding; and the barely-started note firing under ten nodes and standing down above.\n\nFIVE MORE, 2026-08-22, for the properties the list now NAMES rather than only counts:\n  an unused property is named, node and edge alike, and the naming still rides the WITHHELD list;\n  a property is named ONLY on a type that has instances — the vacuous-zero rule applied to the names as strictly as to the figures;\n  one instance carrying a property makes it used, without taking the rest of the type down with it;\n  a DEFAULTED property can never be named, because the store materialises defaults on write — the honest limit, pinned so nobody upgrades the claim;\n  property names come out sorted within their type.\n\n🛑 THAT LAST PROBE WAS WRONG ON ITS FIRST WRITING AND THE SECOND VERSION IS THE POINT. It compared two calls and asserted they matched. The schema is a process-wide OnceLock, so both calls walk the same HashMap with the same seed and agree whether or not anything is sorted — an assertion that could only ever pass. Order has to be checked against something outside the map, so it now asserts ascending property names within each type, which a dropped `names.sort()` kills.\n\nAND THE CROSS-FILE TRIPWIRE INVERTED. `nothing_classified_yields_no_finding_but_the_silence_is_now_reportable` used to assert that `vocabulary_coverage` did NOT name `Artifact.audience`, holding the hole open on the record. It now asserts that it DOES — and separately that the default reply still withholds the list, so 'closed' cannot be quietly rounded up from 'reportable'.\n\nFOUR MUTATIONS RUN AGAINST THE NEW CODE, each killed by exactly its own probe and no other: dropped `names.sort()`; properties named on types with no instances; the property counted but not named (the original hole, restored — killed by the cross-file tripwire); the per-domain figure leaking out of the totals.",
+        "findings": "All workspace tests pass (exit 0, both crates), clippy clean on core and mcp, fmt clean, schema validates, skill_lint green, 155 toolsnaps regenerated with exactly one changed. Both trial arms reproduced through the shipped binary after the change: mature 23/29 node types, 42/61 edge types, 155/178 node properties, 59/81 edge properties, 70 items on request; day-one 101 items on request with 13 of them properties, default reply 2973 bytes. The list grew by 126% on the mature arm and 15% on the day-one one — the asymmetry `fact:naming-properties-grows-the-list-where-it-can-be-acted-on` records, and the reason naming properties did not re-create the noise the fourth trial decision was taken to avoid.",
         "kind": "verification",
-        "last_run_at": "2026-08-18T06:30:00Z",
+        "last_run_at": "2026-08-22T18:05:00Z",
         "level": "integration",
         "method": "test",
-        "name": "Five probes, one per decision the two-arm trial made, so a later session cannot quietly undo one without a red test",
+        "name": "Eleven probes — one per decision the two-arm trial made, plus the five that keep the property naming honest — so a later session cannot quietly undo one without a red test",
         "status": "passing"
       }
     },
@@ -122509,7 +122591,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:9f46df87023c1c6b3ce9730aa50731d6ba3810891da764d1c1a35f7377ace83a",
+  "prev_content_hash": "sha256:aa4969af2e4a36e7914304878691172fc0aa73577fa6965442687ba4411e567c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

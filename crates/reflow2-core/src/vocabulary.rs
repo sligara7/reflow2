@@ -665,6 +665,16 @@ pub struct DomainCoverage {
     pub domain: String,
     pub node_types: Coverage,
     pub edge_types: Coverage,
+    /// Properties on this domain's types THAT HAVE INSTANCES — node and edge
+    /// vocabulary together, because the reader's question here is *where*
+    /// rather than *which kind*, and the two top-level figures already split it.
+    ///
+    /// This is the DEPTH dimension, and without it a domain reads fully covered
+    /// on both figures above while every optional field on those types goes
+    /// unfilled — which is precisely the state `Artifact.audience` was in.
+    /// Fixed-size, so it can ride in the default reply: it is one more number
+    /// per domain, never a list that grows with the schema.
+    pub properties: Coverage,
     /// Whether a ruling says this domain is deliberately unused here.
     pub parked: bool,
     /// The ruling's reason, when there is one.
@@ -681,13 +691,18 @@ pub struct DomainCoverage {
 pub struct VocabularyCoverage {
     pub node_types: Coverage,
     pub edge_types: Coverage,
-    /// Properties, counted ONLY on node types that have instances.
+    /// NODE properties, counted ONLY on node types that have instances.
     ///
     /// A zero on a type with no nodes is a vacuous zero: a design that has
     /// never created an `EnvironmentRule` says nothing about whether
     /// `EnvironmentRule.authority` is writable. An earlier instrument counted
     /// them together and six empty types made 46 properties look like evidence.
     pub properties_on_used_types: Coverage,
+    /// EDGE properties, counted ONLY on edge types that have edges — the same
+    /// vacuous-zero rule one level over, and the half the figures used to omit
+    /// entirely. `GOVERNED_BY.ruling` was 0 of 912 and no shipped report could
+    /// say so.
+    pub properties_on_used_edge_types: Coverage,
     /// Every domain, worst-covered first, so the shape of the gap is visible
     /// without reading a list of names.
     pub domains: Vec<DomainCoverage>,
@@ -699,6 +714,31 @@ pub struct VocabularyCoverage {
     /// day-one design produces 97 items and a mature one 59, so the list is at
     /// its longest for the user least able to act on it. The figures above
     /// survived both arms; this did not.
+    ///
+    /// Four kinds of entry, each stated in the same shape so the list can be
+    /// grepped as well as read: `<domain>: node type X`, `<domain>: edge type
+    /// X`, `<domain>: node property X.p`, `<domain>: edge property X.p`.
+    ///
+    /// **THE PROPERTIES WERE COUNTED HERE LONG BEFORE THEY WERE NAMED, AND THAT
+    /// WAS THE HOLE.** A set of named things reduced to a scalar is not a check
+    /// of the set: `properties_on_used_types` said 197 of 215 and nothing could
+    /// say *which* 18 — so a design that had declared no `Artifact.audience`
+    /// anywhere was silent in every report reflow2 served, and the only
+    /// instrument that could name it was a hand-written script pointed at
+    /// reflow2's own files, which generalised to nobody. Extending THIS list
+    /// rather than adding a report keeps the withholding decision intact: the
+    /// default reply grew by one figure per domain, not by 200 lines.
+    ///
+    /// 🛑 A property carrying a schema `default` can never appear here, because
+    /// the store materialises defaults on write (`Schema::validate_node`), so
+    /// every instance carries one and the property reads as used whether or not
+    /// anybody ever chose the value. What this list names is the UNDEFAULTED
+    /// optional — which is the class that matters, since
+    /// `req:defaults-do-not-assert` is why the fields worth asking about
+    /// (`audience`, `granularity`, `volatility`, `subject`) have no default.
+    /// Naming the defaulted ones would need a "nobody ever varied from the
+    /// default" reading, and the store cannot tell that from a deliberate
+    /// choice of the default value.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub unused: Option<Vec<String>>,
     /// Said in WORDS when the figures cannot mean anything yet.
@@ -739,21 +779,65 @@ impl DesignGraph {
                 seen.extend(n.properties.keys().cloned());
             }
         }
-        // Every edge type that has at least one edge. Walked per type through
-        // the same index the detectors use, so "used" means the same thing here
-        // as it does to HEAL rather than being a second opinion.
+        // Every edge type that has at least one edge, and which of its declared
+        // properties any of those edges actually carries. Walked per type
+        // through the same index the detectors use, so "used" means the same
+        // thing here as it does to HEAL rather than being a second opinion.
+        //
+        // The property keys are collected on the SAME pass that decides whether
+        // the type is used at all — the edges are already in hand, so naming
+        // the unused edge vocabulary costs a union of string keys and no extra
+        // read.
         let index = self.node_type_index()?;
         let mut edge_used: BTreeSet<String> = BTreeSet::new();
+        let mut used_edge_props: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
         for edge_type in schema.edge_types.keys() {
-            if !self.all_edges_of_type(edge_type, &index)?.is_empty() {
-                edge_used.insert(edge_type.clone());
+            let edges = self.all_edges_of_type(edge_type, &index)?;
+            if edges.is_empty() {
+                continue;
             }
+            edge_used.insert(edge_type.clone());
+            let seen = used_edge_props.entry(edge_type.clone()).or_default();
+            for e in edges {
+                seen.extend(e.properties.keys().cloned());
+            }
+        }
+
+        // Naming an unused property, for either half of the vocabulary. The
+        // schema holds properties in a `HashMap`, so the names are SORTED
+        // before they are walked: this module promises byte-identical output on
+        // repeated calls, and the moment these names entered the list that
+        // promise started depending on the order.
+        fn unused_properties<'a, D>(
+            defs: Option<&'a D>,
+            seen: Option<&BTreeSet<String>>,
+            keys: impl Fn(&'a D) -> Vec<&'a String>,
+        ) -> (usize, usize, Vec<&'a String>) {
+            let Some(defs) = defs else {
+                return (0, 0, Vec::new());
+            };
+            let mut names = keys(defs);
+            names.sort();
+            let total = names.len();
+            let missing: Vec<&String> = names
+                .into_iter()
+                .filter(|p| !seen.is_some_and(|s| s.contains(*p)))
+                .collect();
+            (total - missing.len(), total, missing)
         }
 
         let domains = crate::schema::domain_membership()?;
         let mut per_domain = Vec::new();
         let mut parked_domains = 0;
         let mut unused: Vec<String> = Vec::new();
+        // Accumulated from the per-domain figures rather than recomputed, so
+        // the two readings cannot disagree: the domains partition the whole
+        // schema (`domain_membership` refuses to answer unless they do), which
+        // makes the totals identical by construction instead of by inspection.
+        let mut prop_used = 0;
+        let mut prop_total = 0;
+        let mut edge_prop_used = 0;
+        let mut edge_prop_total = 0;
 
         for (domain, (dn, de)) in &domains {
             let n_used = dn
@@ -778,10 +862,56 @@ impl DesignGraph {
                     unused.push(format!("{domain}: edge type {t}"));
                 }
             }
+
+            // PROPERTIES, COUNTED AND NAMED ONLY ON TYPES THAT HAVE INSTANCES —
+            // the vacuous-zero rule, applied to the names as strictly as it was
+            // already applied to the figures. A type with nothing in it says
+            // nothing about whether its properties are writable, and naming
+            // them would fill the list with the one design that cannot act on
+            // it: a new one.
+            let (mut d_used, mut d_total) = (0usize, 0usize);
+            for t in dn {
+                if node_counts.get(t).copied().unwrap_or(0) == 0 {
+                    continue;
+                }
+                let (u, n, missing) = unused_properties(
+                    schema.node_types.get(t),
+                    used_props.get(t),
+                    |d: &NodeTypeDef| d.properties.keys().collect(),
+                );
+                d_used += u;
+                d_total += n;
+                for p in missing {
+                    unused.push(format!("{domain}: node property {t}.{p}"));
+                }
+            }
+            prop_used += d_used;
+            prop_total += d_total;
+
+            let (mut de_used, mut de_total) = (0usize, 0usize);
+            for t in de {
+                if !edge_used.contains(t) {
+                    continue;
+                }
+                let (u, n, missing) = unused_properties(
+                    schema.edge_types.get(t),
+                    used_edge_props.get(t),
+                    |d: &EdgeTypeDef| d.properties.keys().collect(),
+                );
+                de_used += u;
+                de_total += n;
+                for p in missing {
+                    unused.push(format!("{domain}: edge property {t}.{p}"));
+                }
+            }
+            edge_prop_used += de_used;
+            edge_prop_total += de_total;
+
             per_domain.push(DomainCoverage {
                 domain: domain.clone(),
                 node_types: Coverage::new(n_used, dn.len()),
                 edge_types: Coverage::new(e_used, de.len()),
+                properties: Coverage::new(d_used + de_used, d_total + de_total),
                 parked: ruling.is_some(),
                 parked_because: ruling.and_then(|d| {
                     d.properties
@@ -792,6 +922,13 @@ impl DesignGraph {
                 park_with: park_id,
             });
         }
+        // Worst-covered first, on BREADTH only — properties are deliberately
+        // out of the sort key. Node and edge coverage answer "have you touched
+        // this domain at all", which is the question that orders a reading;
+        // property coverage answers "how deeply", which is only worth asking
+        // about a domain you have already entered. Folding depth into the rank
+        // would push a domain you use heavily and shallowly above one you have
+        // never opened.
         per_domain.sort_by(|a, b| {
             (a.node_types.share + a.edge_types.share)
                 .partial_cmp(&(b.node_types.share + b.edge_types.share))
@@ -804,21 +941,12 @@ impl DesignGraph {
             .filter(|(_, c)| **c > 0)
             .map(|(t, _)| t)
             .collect();
-        let mut prop_total = 0;
-        let mut prop_used = 0;
-        for t in &live {
-            if let Some(def) = schema.node_types.get(*t) {
-                prop_total += def.properties.len();
-                let seen = used_props.get(*t).cloned().unwrap_or_default();
-                prop_used += def.properties.keys().filter(|p| seen.contains(*p)).count();
-            }
-        }
-
         let total_nodes: usize = node_counts.values().sum();
         Ok(VocabularyCoverage {
             node_types: Coverage::new(live.len(), schema.node_types.len()),
             edge_types: Coverage::new(edge_used.len(), schema.edge_types.len()),
             properties_on_used_types: Coverage::new(prop_used, prop_total),
+            properties_on_used_edge_types: Coverage::new(edge_prop_used, edge_prop_total),
             domains: per_domain,
             parked_domains,
             unused: include_unused.then_some(unused),
