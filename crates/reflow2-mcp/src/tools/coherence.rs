@@ -112,22 +112,28 @@ impl ReflowService {
     }
 
     #[tool(
-        description = "Which of the design VOCABULARY this design has ever actually used \
-                       \u{2014} node types, edge types, and properties on the types that have \
-                       instances. Answers a question nothing else asks: reflow2's detectors check \
-                       the CONSISTENCY OF WHAT EXISTS, so vocabulary a design has never touched is \
-                       invisible to every other computation. GROUPED BY THE SCHEMA'S OWN ELEVEN \
-                       DOMAINS, not by a grouping this tool invented, because unused vocabulary \
-                       clusters into whole subsystems \u{2014} a mature design reads about four \
-                       findings instead of thirty-one. Each domain carries `park_with`: the id of \
-                       a Decision whose ACCEPTANCE declares that domain deliberately unused here, \
-                       so a settled choice stops being reported as a hole (`add_decision` with \
-                       that id, then `set_decision_status accepted` \u{2014} no new tool). THE \
+        description = "Which of the design VOCABULARY this design has ever used \u{2014} node \
+                       types, edge types, and properties on the types that have instances. \
+                       Answers what nothing else asks: the detectors check the CONSISTENCY OF \
+                       WHAT EXISTS, so vocabulary a design never touched is invisible to every \
+                       other computation. GROUPED BY THE SCHEMA'S OWN ELEVEN DOMAINS, never one \
+                       this tool invented: unused vocabulary clusters into whole subsystems, so \
+                       a mature design reads about four findings instead of thirty-one. Each \
+                       domain carries `park_with`, the id of a Decision whose ACCEPTANCE \
+                       declares it deliberately unused here, so a settled choice stops reading \
+                       as a hole (`add_decision`, then `set_decision_status accepted`). THE \
                        FLAT LIST IS WITHHELD BY DEFAULT and returned only with \
-                       `include_unused`: measured, a day-one design produces 97 items and a \
-                       mature one 59, so the list is longest for the user least able to act on \
-                       it. A design with under ten nodes gets a `note` saying the figures mean it \
-                       has barely STARTED rather than that anything is going unused.",
+                       `include_unused`: measured, 97 items on a day-one design and 59 on a \
+                       mature one \u{2014} longest for the user least able to act on it. ASKED \
+                       FOR, IT NAMES PROPERTIES TOO \u{2014} `<domain>: node property \
+                       Artifact.audience`, `<domain>: edge property GOVERNED_BY.ruling` \
+                       \u{2014} the only way to learn WHICH declared field a design never \
+                       filled in; the figures alone reduce a set of named things to a fraction. \
+                       Counted and named ONLY on types that HAVE INSTANCES, since a zero on an \
+                       empty type is vacuous. A property with a schema DEFAULT can never be \
+                       named: the store writes it onto every instance, so what this reports is \
+                       the undefaulted optional. Under ten nodes a `note` says the figures mean \
+                       the design has barely STARTED, not that vocabulary is going unused.",
         annotations(read_only_hint = true)
     )]
     pub async fn vocabulary_coverage(

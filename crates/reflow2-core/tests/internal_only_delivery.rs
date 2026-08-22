@@ -87,20 +87,29 @@ fn one_consumer_facing_deliverable_settles_it() {
 /// guard dead and the assertion inert.
 ///
 /// SECOND ATTEMPT: asserted that `vocabulary_coverage` names `Artifact.audience`
-/// as unused, which would have made the silence reported somewhere. IT DOES
-/// NOT. Its `unused` list names NODE TYPES and EDGE TYPES only; an unused
-/// PROPERTY is counted in `properties_on_used_types` and never named. That is
+/// as unused, which would have made the silence reported somewhere. IT DID
+/// NOT. Its `unused` list named NODE TYPES and EDGE TYPES only; an unused
+/// PROPERTY was counted in `properties_on_used_types` and never named. That is
 /// principle B in reflow2's own instrument — a set of named things reduced to a
 /// scalar — and it was found by writing this assertion and watching it fail.
+/// The failure was left standing as a recorded hole rather than papered over.
 ///
-/// 🛑 SO THIS IS RECORDED AS AN HONEST HOLE, NOT AS A PASS. A design that has
-/// declared no audience anywhere is SILENT in every surfaced report: no
-/// finding, and no report that names the field as never used. The third leg is
-/// incomplete for this vocabulary and the test says so rather than pretending
-/// otherwise — which is the end state the source document explicitly calls
-/// legitimate: "this rule has no detector, and here is why."
+/// ✅ THIRD ATTEMPT, AND THE ONE THAT HOLDS (2026-08-22): the hole was closed at
+/// the root rather than special-cased for `audience`. `vocabulary_coverage`
+/// now NAMES the properties it had only ever counted, node and edge alike, so
+/// the assertion this test could not make is the assertion it now makes — and
+/// every other undeclared field in every project got the same treatment in the
+/// same change.
+///
+/// 🛑 WHAT IS STILL TRUE, AND IT IS WHY THE DETECTOR KEEPS A LIMIT NOTE. The
+/// naming rides the flat list, which is WITHHELD BY DEFAULT on measured
+/// grounds — so a design that has declared no audience is named only when
+/// somebody asks for the list. The default reply says the `build` domain's
+/// properties are under-filled without saying which one. That is a real
+/// difference from a finding that arrives unasked, and it is stated rather
+/// than rounded up to "closed".
 #[test]
-fn nothing_classified_yields_no_finding_and_nothing_yet_reports_that() {
+fn nothing_classified_yields_no_finding_but_the_silence_is_now_reportable() {
     let mut g = seeded();
     artifact(&mut g, "art:thing", None);
 
@@ -109,16 +118,25 @@ fn nothing_classified_yields_no_finding_and_nothing_yet_reports_that() {
         "with nothing classified there is no per-requirement question to ask"
     );
 
-    // Pinned so the hole cannot close silently: the day `vocabulary_coverage`
-    // starts naming unused PROPERTIES, this goes red and the comment above —
-    // and the detector's own HONEST LIMIT note — must be rewritten.
+    // THE ASSERTION THAT USED TO FAIL. The silence is no longer nowhere: the
+    // vocabulary report names the field nobody ever wrote.
     let cov = g.vocabulary_coverage(true).expect("coverage");
     let unused = cov.unused.expect("asked for the list");
     assert!(
-        !unused.iter().any(|u| u.contains("audience")),
-        "vocabulary_coverage has started naming unused properties — the honest-hole note in \
-         this test and in detect_internal_only_delivery is now stale and must be corrected: \
-         {unused:?}"
+        unused.contains(&"build: node property Artifact.audience".to_string()),
+        "a design that declared no audience must be told WHICH field it never used, not \
+         handed a fraction: {unused:?}"
+    );
+
+    // And the limit that remains, pinned so nobody upgrades the claim by
+    // accident: it is on the list, and the list is not in the default reply.
+    assert!(
+        g.vocabulary_coverage(false)
+            .expect("coverage")
+            .unused
+            .is_none(),
+        "the naming rides the withheld list — a default reply that named it would undo the \
+         decision that withholding was measured to be right"
     );
 }
 
