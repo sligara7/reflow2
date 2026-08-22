@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:0a36acbc307b0539f09eda8ea2666369ba5fa35a161e63d7b0239c724ea95700",
+  "content_hash": "sha256:8b77d8a3cf1dcaaf7d1c6404efe30eebf3f5ae36c527891e5e49d93c49fea050",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -970,6 +970,14 @@
     {
       "edge_type": "ALLOCATED_TO",
       "from_id": "cap:a-published-contract-is-asked-for-its-evidence",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-published-contract-says-what-two-systems-must-agree-on",
       "properties": {
         "weight_basis": "estimated"
       },
@@ -12710,6 +12718,42 @@
         "action": "modified"
       },
       "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-published-contract-says-what-two-systems-must-agree-on",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-published-contract-says-what-two-systems-must-agree-on",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ifc:graph-export"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-published-contract-says-what-two-systems-must-agree-on",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ifc:mcp-tools-http"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-published-contract-says-what-two-systems-must-agree-on",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:interface-spec-complete"
     },
     {
       "edge_type": "CHANGED",
@@ -36100,6 +36144,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:an-unconnected-idea-is-visible-as-one",
+      "properties": {},
+      "to_id": "fact:the-review-relations-redo-was-a-no-op-once-somebody-read-the-code"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:claim-liveness",
       "properties": {},
       "to_id": "fact:defect-a-tool-minted-seat-is-never-registered-so-gone-is-still-unreachable"
@@ -36667,6 +36717,12 @@
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "fact:feedback-triage-status-across-three-sources-2026-08-16"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "req:defaults-do-not-assert",
+      "properties": {},
+      "to_id": "fact:a-materialised-default-defeats-a-completeness-check"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -83383,6 +83439,15 @@
       "edge_type": "REALIZES",
       "from_id": "art:detect",
       "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-published-contract-says-what-two-systems-must-agree-on"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:detect",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cap:aggregate-gap-keying"
@@ -85741,6 +85806,12 @@
       "from_id": "cap:a-published-contract-is-asked-for-its-evidence",
       "properties": {},
       "to_id": "req:key-interfaces"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-published-contract-says-what-two-systems-must-agree-on",
+      "properties": {},
+      "to_id": "req:interface-spec-complete"
     },
     {
       "edge_type": "SATISFIES",
@@ -88454,6 +88525,12 @@
       "from_id": "ver:a-published-contract-is-asked-for-its-evidence",
       "properties": {},
       "to_id": "cap:a-published-contract-is-asked-for-its-evidence"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-published-contract-says-what-two-systems-must-agree-on",
+      "properties": {},
+      "to_id": "cap:a-published-contract-says-what-two-systems-must-agree-on"
     },
     {
       "edge_type": "VERIFIES",
@@ -91838,7 +91915,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3be43ea0f6912b495f1c23e92372b0cf00ed13449dfabc753f2b7b12685237b2",
+        "checksum": "sha256:7099c886ead2225baf4dcecff1b176b3a0473fd93f811c3085bddb7d3b0b3063",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -94202,6 +94279,16 @@
       "properties": {
         "description": "TWO FINDINGS, and the split is the point.\n\n`unverified_published_contract` names an Interface designated `published` or `both` that no PASSING check verifies. Per-contract, severity 0.6 — level with `unverified_enforced_rule` and above `unverified_capability`, on that finding's own reasoning: an unproven capability is work not yet confirmed, while this is an obligation to somebody ELSE that nobody can observe compliance with. Publishing is what raises it; an internal boundary with no check is not this finding. `both` is billed because it offers a contract as well as needing one; `required` is not, because a contract this design needs from OUTSIDE is somebody else's promise to prove.\n\n`no_published_boundary` asks the posture question ONCE, aggregate, severity 0.3, when a design records boundaries and designates none of them published.\n\n⭐ WHY THE SECOND ONE HAS TO EXIST, AND IT IS A FACT ABOUT THE SCHEMA RATHER THAN A PREFERENCE. `Interface.designation` DEFAULTS to `internal`, so a boundary nobody classified and one deliberately kept internal are stored identically — the schema says so in as many words, and `pair_designs` already refuses to paper over it. That makes a ZERO from the first detector genuinely ambiguous, and reporting it as clean would be the \"a detector answering zero over an empty population reads exactly like one that ran clean\" failure the loop refuses everywhere else. So the zero asks a question instead.\n  Contrast `Artifact.audience`, which is deliberately UNDEFAULTED: silence there is legible as silence, so `internal_only_delivery` needs no such companion. The two detectors are siblings whose population reporting differs ONLY because one property has a default and the other does not — the clearest argument yet for `req:defaults-do-not-assert`.\n\n🛑 IT COULD NOT HAVE EXISTED BEFORE 2026-08-21. `VERIFIES` could not reach an `Interface` at all until #291 (`fact:a-contract-is-the-one-thing-reflow2-cannot-attach-evidence-to`), so every contract in every design read as unverified and this would have fired on all of them — correctly and uselessly. The edge landed and exactly ONE check has been drawn since, on reflow2's own design: vocabulary with no detector, seen from outside. The finding's evidence SAYS SO, so a reader of an older design does not mistake the absence for neglect.\n\nNARROW BY CONSTRUCTION: it fires only on what a design has already CHOSEN to publish, and a design with no boundaries at all is asked nothing — it has not declined to publish one, it has not got there, the same reasoning as `vocabulary_coverage`'s barely-started note.\n\nMEASURED ON REFLOW2 ITSELF the day it was built: 3 published boundaries, 2 reported — `ifc:graph-export` and `ifc:mcp-tools-http`, both with zero incoming VERIFIES. `ifc:mcp-tools` is silent because it carries a passing check. Design-wide gaps 73 to 75.\n\nDISTINCT FROM `dec:idea-a-black-box-owes-an-interface-the-way-a-capability-owes-a-requirement`, which was read before this was created. That Decision is an OPEN brainstorm holding four options; this is the one that got built, and it is idea B in that node's own lettering. The relationship is the same as `cap:a-design-says-which-vocabulary-it-has-never-used` to its idea node: the Decision records what was considered, the Capability records what exists. Ideas A, C and D there remain open and unbuilt.\n\n⚠️ NOT BUILT, AND DELIBERATELY: nothing here asks whether a published contract's SPEC is complete. `req:interface-spec-complete` is accepted and still unimplemented — 3 of 3 published boundaries here have 4 to 5 agreement fields unset. Adjacent, different work, and folding it in would have made one finding answer two questions.",
         "name": "A published contract is asked for its evidence, and a design that publishes nothing is asked whether it meant to",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-published-contract-says-what-two-systems-must-agree-on",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`incomplete_published_contract` — an Interface designated `published` or `both` with any of the nine structured agreement axes unanswered. Per-contract, severity 0.45: below `unverified_published_contract` (0.6), because a published promise with NO evidence at all is a stronger finding than one whose description has gaps; above the ordinary 0.3 notes, because an undescribed seam is what makes two designs uncheckable against each other.\n\nSERVES `req:interface-spec-complete`, accepted and unimplemented until now. Its point is not completeness for its own sake — two designs cannot be checked for INCOMPATIBILITY at a seam unless the seam is described in comparable terms, so `mirror_surface` could link two designs and still not tell you they disagree.\n\n⭐ THE ONE THAT NEARLY GOT AWAY: `unspecified` IS UNSET. Five of the nine axes are enums DEFAULTING to `unspecified`, and the store materialises defaults on write — so a presence test counts the word as an answer, and the first cut of this detector was GREEN OVER EXACTLY WHAT IT EXISTS TO CHECK. Measured before the fix: `ifc:mcp-tools-http` read 9 of 9 complete while its `medium` said `unspecified`, and `ifc:graph-export` reported 4 gaps where there are 6. Recorded in full as `fact:a-materialised-default-defeats-a-completeness-check` — read before this node was created and judged DISTINCT: that fact is the general lesson about defaults across three instances in one day, this is the built thing whose repair produced it.\n\n⚠️ AND THE OPPOSITE ERROR IS EQUALLY AVAILABLE: `none` IS AN ANSWER. `auth: none` on an unauthenticated local pipe is a deliberate statement and `ifc:mcp-tools` makes exactly it; sweeping `none` in with `unspecified` would nag a design that had answered honestly.\n\nIT REPORTS, IT DOES NOT JUDGE. Some axes are genuinely meaningless for some boundaries — a library linked into its callers has no endpoint, a one-way feed has no error model a consumer parses. This NAMES which axes are unset and leaves applicability to the design (`dec:report-dont-judge`); a list of required fields would be reflow2 deciding what a mechanical, human or physical interface must look like.\n\nAND IT ASKS IN THE REQUIREMENT'S WORDS, NOT THE COLUMN'S: each unset axis carries its gloss — `payload_schema` reads as \"which fields are mandatory, and their types\". Pinned by a test, because it is trivially strippable in a refactor and nothing else would notice.\n\n🛑 HONEST LIMIT, ON THE FINDING ITSELF RATHER THAN ONLY IN A COMMENT. `req:interface-spec-complete` names SIX characteristics; the schema has fields for FIVE. There is nowhere to record performance and constraints — rate limits, concurrency, timeouts — so a design can clear this finding completely and still not say what it promises under load. The evidence string says so, because a detector that quietly checks five sixths of a requirement and reports clean is the green-gate-over-what-it-does-not-cover failure.\n\nDISTINCT FROM `cap:a-published-contract-is-asked-for-its-evidence`, built the same day and walking the same published set: that one asks whether anything SHOWS the contract holds, this asks whether the contract is DESCRIBED well enough for anyone to compare it. A design can be in either state alone — a fully specified contract nobody checks, a checked contract nobody described — and one acknowledgement must not settle both. Pinned by a test.\nDISTINCT FROM `cap:interface-spec`, which is the WRITE side: `set_interface_spec` and the nine fields. That capability made the axes recordable; this one notices when they were not recorded.\nDISTINCT FROM `dec:idea-a-black-box-owes-an-interface-the-way-a-capability-owes-a-requirement`, an OPEN brainstorm where this is idea B. That node's own measurement is now STALE — it recorded 3 of 4 published boundaries incomplete including `ifc:core-api`, which is no longer designated published; the figures above supersede it. Ideas A, C and D there remain unbuilt.\n\nMEASURED ON REFLOW2 ITSELF: of 3 published boundaries, `ifc:graph-export` fires with 6 unset axes; `ifc:mcp-tools-http` fires on `medium` alone; `ifc:mcp-tools` is silent at a genuine 9 of 9.",
+        "name": "A published contract is asked which of the agreement axes it never filled in",
         "provenance": "authored",
         "status": "realized"
       }
@@ -96673,6 +96760,15 @@
       "properties": {
         "change_type": "defect_fix",
         "name": "propose_heal says what it swept and whether its scorer ran — the first theme of the triage-fixes increment"
+      }
+    },
+    {
+      "node_id": "chg:a-published-contract-says-what-two-systems-must-agree-on",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "A published contract is asked which agreement axes it never filled in — and `unspecified` is read as unset, which the first cut got wrong",
+        "subject": "system"
       }
     },
     {
@@ -117504,6 +117600,18 @@
       }
     },
     {
+      "node_id": "fact:a-materialised-default-defeats-a-completeness-check",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "MEASURED 2026-08-22 while building `incomplete_published_contract`. THE FIRST CUT OF THE DETECTOR WAS GREEN OVER EXACTLY THE THING IT EXISTS TO CHECK, and the cause was a schema default.\n\nFive of the nine interface agreement axes are enums DEFAULTING to `unspecified` (`medium`, `paradigm`, `payload_format`, `auth`, `transport_security`). The store MATERIALISES defaults on write (`Schema::validate_node`), so every Interface ever created already carries the word. A presence test — is this property set? — therefore counts `unspecified` as an ANSWER.\n\nMEASURED BEFORE THE FIX, on reflow2's own three published boundaries:\n  `ifc:mcp-tools-http`   read 9 of 9 COMPLETE while its `medium` said `unspecified`\n  `ifc:graph-export`     reported 4 unset axes where there are 6\n  `ifc:mcp-tools`        9 of 9, and this one is genuinely true\n\n⭐ SO A COMPLETENESS CHECK OVER DEFAULTED FIELDS MEASURES NOTHING, AND REPORTS SUCCESS. It is not that the check was slightly wrong; it is that the property it tested was guaranteed true for every node in every design. The fix reads `unspecified` as UNSET.\n\n⚠️ AND THE OPPOSITE ERROR IS JUST AS AVAILABLE: `none` IS AN ANSWER. `auth: none` and `transport_security: none` on an unauthenticated local pipe are deliberate statements, and `ifc:mcp-tools` makes exactly them. Sweeping `none` in with `unspecified` would nag a design that had answered honestly. DECLARED ABSENCE AND UNDECLARED ABSENCE ARE DIFFERENT FACTS, and only a vocabulary that separates them can tell a finished contract from an untouched one.\n\n🛑 THIS IS THE THIRD TIME IN ONE DAY THAT MATERIALISED DEFAULTS DECIDED A DESIGN. (1) `vocabulary_coverage` can never name a DEFAULTED property as unused, so what it reports is the undefaulted optional only — an under-count, stated as an honest limit. (2) `no_published_boundary` had to exist at all because `Interface.designation` defaults to `internal`, making \"unclassified\" and \"deliberately internal\" indistinguishable, while `Artifact.audience` needs no such companion BECAUSE it is undefaulted. (3) This.\n\nTHE GENERAL FORM, and it is the argument `req:defaults-do-not-assert` was accepted on, now with a mechanism rather than a principle: A STORED DEFAULT DOES NOT MERELY ASSERT SOMETHING NOBODY SAID — IT MAKES THE ABSENCE UNDETECTABLE. Every later computation that tries to find out whether anyone answered gets `true`, and no test written against the schema alone can see it, because the schema is where the lie is. The three cases above differ in what they cost: an under-count, an extra detector, and a check that could not fail.\n\nWHAT THIS DOES NOT SAY: that defaults are wrong. `Requirement.status` defaulting to `proposed` is right, because `proposed` is a true statement about a requirement nobody has ruled on. The distinction is whether the default is a FACT about the unset state or a GUESS standing in for one — and `unspecified` is the rare case of a default that honestly names its own emptiness, which is why the repair here was cheap. The expensive ones are defaults that name a plausible value.",
+        "subject_id": "req:defaults-do-not-assert",
+        "valid_from": "2026-08-22"
+      }
+    },
+    {
       "node_id": "fact:a-parse-that-shrinks-the-evidence-is-indistinguishable-from-honest-emptiness",
       "node_type": "TemporalFact",
       "properties": {
@@ -120288,6 +120396,18 @@
       }
     },
     {
+      "node_id": "fact:the-review-relations-redo-was-a-no-op-once-somebody-read-the-code",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "AN OWED ITEM THAT DISSOLVED ON INSPECTION, 2026-08-22. Two sessions carried \"REDO TWO `review_relations` CALLS\" as debt. Reading the code closed it in five minutes and it should never have been carried.\n\nTHE ITEM: `dec:idea-a-capability-checked-only-at-unit-level-is-a-finding` and `dec:idea-do-another-projects-principles-belong-in-reflow2-or-only-the-machinery` had their `no_relation_note` written by hand with `create_node`, because `review_relations` was absent from that session's tool surface. The redo was owed so the writes would go through the proper door.\n\nWHAT THE CODE ACTUALLY DOES:\n  · `review_relations` with a note and no links writes EXACTLY ONE THING — `no_relation_note` on the node (`relate.rs`). No timestamp, no reviewed marker, no edge.\n  · `unreviewed_ideas` clears a Decision on `properties.contains_key(\"no_relation_note\")`. It reads the PROPERTY and cannot see how the property got there.\n\n⇒ The hand-written notes are already recognised, already carry substantive content (each says what was searched and why nothing was honestly related), and the redo would write the same key with the same value. VERIFIED: both nodes carry the property in the committed export, and neither appears in the unconnected-idea finding.\n\n⭐ THE ONLY THING THE TOOL ADDS IS ITS WRITE-TIME REFUSAL — it rejects a review that records neither links nor a note, so \"nobody looked\" can never masquerade as \"somebody looked and found nothing\". That guard protects against an EMPTY review, and both of these are full ones. It would have passed.\n\n🛑 THE LESSON IS NOT ABOUT `review_relations`. It is that an owed item was carried across two sessions and one handoff note on the strength of a REASONABLE ASSUMPTION — that going through the tool must do something the direct write did not — which nobody spent five minutes checking. The same day, and in the same session, the gh `remote-https` root cause was re-derived from scratch while a three-day-old node already held it. TWO INSTANCES, ONE SHAPE: work carried or repeated because nobody read what was already there. Debt should be re-read before it is re-scheduled.\n\nWHAT REMAINS TRUE: the tool surface defect is real and separate. `review_relations`, `move_component` and `set_capability_delivery` were missing from two consecutive sessions (151 of 155 served tools), and the standing hypothesis is that the client fixes its tool list AT CONNECT and the shared server was stale at that moment. That is worth confirming; this note only says the REDO is not.",
+        "subject_id": "cap:an-unconnected-idea-is-visible-as-one",
+        "valid_from": "2026-08-22"
+      }
+    },
+    {
       "node_id": "fact:the-root-cause-was-on-the-record-and-a-session-re-derived-it-anyway",
       "node_type": "TemporalFact",
       "properties": {
@@ -120709,6 +120829,20 @@
         "level": "integration",
         "method": "test",
         "name": "Six probes over both findings, and the two mutations that survived are recorded rather than hidden",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-published-contract-says-what-two-systems-must-agree-on",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/unverified_published_contract.rs, second half.\n\nSIX PROBES: an incomplete published contract names WHICH axes are unset and never names one that is set; a fully specified contract is not asked; an internal boundary is never asked to describe itself; the two published findings are INDEPENDENT in both directions (described-but-unchecked, and checked-but-undescribed); the finding admits the sixth characteristic it cannot ask about; and `unspecified` is unset while `none` is an answer.\n\n⭐ THE FOURTH PROBE IS THE ONE THAT MATTERED, AND IT WAS WRITTEN BECAUSE THE DETECTOR WAS ALREADY WRONG. Five of the nine axes default to `unspecified` and the store materialises defaults on write, so the first cut's presence test counted the word as an answer — a check that was guaranteed to pass on every node in every design. Caught by a schema read, not by a failing test, because no test existed that could fail. `ifc:mcp-tools-http` had read 9 of 9 complete with `medium: unspecified`.\n\nSIX MUTATIONS, ALL KILLED: treat `unspecified` as an answer (the bug itself, now caught by two probes); treat `none` as unset, which would nag a design that answered honestly; bill internal boundaries; drop the sixth-characteristic limit from the evidence; report only the COUNT of unset axes rather than which; drop the plain-English gloss so the finding speaks in column names.\n\n🛑 THE LAST TWO WERE ADDED AFTER A SURVIVOR. Dropping the gloss initially killed nothing — the assertions only read the evidence string, and the gloss lives in the description. That is the same inert-assertion shape found twice already today: an assertion that reads the wrong field cannot see a change to the right one. Both halves are now pinned.\n\nRUN AGAINST REFLOW2'S OWN DESIGN: `ifc:graph-export` fires with 6 unset axes, `ifc:mcp-tools-http` on `medium` alone, `ifc:mcp-tools` silent at a genuine 9 of 9.",
+        "findings": "12 probes in the file pass (6 for this capability, 6 for its sibling). Whole workspace green: 80 suites, exit 0. Six mutations run against this detector, all killed — including the two added after a survivor showed the gloss assertion was reading the wrong field. Against reflow2's own design: `ifc:graph-export` fires with 6 unset axes, `ifc:mcp-tools-http` on `medium` alone, `ifc:mcp-tools` silent at a genuine 9 of 9.",
+        "kind": "verification",
+        "last_run_at": "2026-08-22T22:05:00Z",
+        "level": "integration",
+        "method": "test",
+        "name": "Six probes, six mutations, and the one that caught a detector which could not have failed",
         "status": "passing"
       }
     },
@@ -122878,7 +123012,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:9c77115d62cc8e3f4350b710595322777b264f459e4d27a2125a3aaada2548d8",
+  "prev_content_hash": "sha256:0a36acbc307b0539f09eda8ea2666369ba5fa35a161e63d7b0239c724ea95700",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
