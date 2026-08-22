@@ -267,7 +267,10 @@ impl ReflowService {
                        `change_type`, because the mapping is not total. Use `defect_fix` when the \
                        design was right and the code was wrong, and `test_failure_fix` only when a \
                        check actually caught it — the difference is provenance, and it is the one \
-                       five sessions each guessed differently before these existed. \
+                       five sessions each guessed differently before these existed. Use \
+                       `documentation` when the thing was right and only its description of itself \
+                       was wrong; the test is behavioural, not file-shaped, so a normative document \
+                       that changes what somebody DOES takes a real label instead. \
                        TEXT GOES IN `summary` (what changed — indexed and searchable) and \
                        `rationale` (why, and the lesson). THERE IS NO `description` FIELD: \
                        reaching for one is the commonest mistake here, and it is refused \

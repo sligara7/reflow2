@@ -20,7 +20,7 @@
       },
       "change_type": {
         "default": null,
-        "description": "For `design_holds`: why the code moved (`test_failure_fix` (default) /\n`refactor` / `performance_optimization` / …). Refused with the other two\ndispositions rather than ignored.",
+        "description": "For `design_holds`: why the code moved (`test_failure_fix` (default) /\n`refactor` / `performance_optimization` / `documentation` / …). Refused\nwith the other two dispositions rather than ignored.\n\n`documentation` is the one to reach for when the file changed and\nNOTHING IT DESCRIBES BEHAVES DIFFERENTLY — a stale comment, a hand-kept\ncount, a docstring that outlived what it documented. The test is\nbehavioural rather than file-shaped: a normative document (a gate list,\na skill's instructions) changes what somebody DOES, so it is a real\nchange and takes a real label.",
         "type": [
           "string",
           "null"

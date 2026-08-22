@@ -315,6 +315,39 @@ pub enum ChangeType {
     PerformanceOptimization,
     /// A structural change with no behavior change.
     Refactor,
+    /// **The thing was right and its description of itself was wrong.** A
+    /// comment, docstring, README paragraph, served tool description or
+    /// hand-kept count that no longer matches what it describes — corrected,
+    /// with nothing it describes moving.
+    ///
+    /// THE TEST, and it is the whole boundary: *does anything the text
+    /// describes behave differently afterwards?* If yes this is not the right
+    /// value, however doc-shaped the diff looks. In THIS repo that line matters
+    /// more than in most, because several documents are normative — AGENTS.md's
+    /// gate list, a skill's instructions, a `#[tool(description = …)]` an agent
+    /// picks tools by. Editing those changes what somebody DOES, so they are a
+    /// real change on the system axis, not documentation.
+    ///
+    /// ADDED 2026-08-22, AND THE SPREAD IS THE ARGUMENT — the same shape that
+    /// justified [`DefectFix`](Self::DefectFix), measured rather than felt. 13
+    /// ChangeEvents on this project's own graph record a documentation-only
+    /// change, under THREE different labels that cannot all be right:
+    /// `refactor` ×8 ("Comment reference to the renamed category; behaviour
+    /// unchanged"), `test_failure_fix` ×4 ("SETUP.md aligned to the corrected
+    /// wording… THE DESIGN HOLDS"), `defect_fix` ×1. None of the three means
+    /// this, and `refactor`'s own doc says *structural change* — a comment is
+    /// not structure.
+    ///
+    /// ⭐ THE FOURTH REACH WAS FROM ANOTHER PROJECT AND IS STILL UNMET.
+    /// dev_storyflow tried `change_type: "correction"` (2026-08-03,
+    /// re-confirmed 2026-08-09) and the refusal is pinned by
+    /// `a_rejected_enum_lists_the_legal_values`. **That is a DIFFERENT need and
+    /// this variant does not answer it**: correcting a RECORD that was wrong is
+    /// the `record` half of [`ChangeSubject`](ChangeSubject) — which exists,
+    /// and which no served tool can write (0 of 592 ChangeEvents carry one).
+    /// Kept separate deliberately, so a real gap is not papered over by a
+    /// value that happens to be adjacent.
+    Documentation,
     /// A change to what is in/out of scope.
     ScopeChange,
     /// A change to a constraint.
@@ -350,6 +383,7 @@ impl ChangeType {
             ChangeType::DefectFix => "defect_fix",
             ChangeType::PerformanceOptimization => "performance_optimization",
             ChangeType::Refactor => "refactor",
+            ChangeType::Documentation => "documentation",
             ChangeType::ScopeChange => "scope_change",
             ChangeType::ConstraintChange => "constraint_change",
             ChangeType::EnvironmentChange => "environment_change",

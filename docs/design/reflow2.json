@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e0cbee9d7dc2c5673f6c137ce0c22a353e9b86057568b7019521b6dd6909b568",
+  "content_hash": "sha256:05082495ef2fe09abec1aa754f60e81851404090deca889214b3e4d0b7e51911",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3514,6 +3514,12 @@
       "from_id": "chg:a-design-says-which-vocabulary-it-has-never-used",
       "properties": {},
       "to_id": "epoch:vocabulary-the-tools-cannot-reach"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-documentation-change-has-a-name",
+      "properties": {},
+      "to_id": "epoch:a-documentation-change-has-a-name"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -7180,6 +7186,12 @@
       "from_id": "snap:epoch:a-deliberate-state-is-counted-not-a-defect:art:heal",
       "properties": {},
       "to_id": "epoch:a-deliberate-state-is-counted-not-a-defect"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:a-documentation-change-has-a-name:art:schema-temporal",
+      "properties": {},
+      "to_id": "epoch:a-documentation-change-has-a-name"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -12289,6 +12301,42 @@
         "action": "modified"
       },
       "to_id": "req:declared-vocabulary-is-reachable-from-the-surface"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-documentation-change-has-a-name",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-documentation-change-has-a-name",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-documentation-change-has-a-name",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-documentation-change-has-a-name",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
     },
     {
       "edge_type": "CHANGED",
@@ -34696,6 +34744,12 @@
       "from_id": "art:release-workflow",
       "properties": {},
       "to_id": "snap:epoch:the-image-must-start:art:release-workflow"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:schema-temporal",
+      "properties": {},
+      "to_id": "snap:epoch:a-documentation-change-has-a-name:art:schema-temporal"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -88952,6 +89006,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-served-tool-surface-matches-its-goldens",
+      "properties": {},
+      "to_id": "ifc:mcp-tools"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-server-says-when-it-is-stale",
       "properties": {},
       "to_id": "cap:the-orientation-call-says-whether-its-own-answers-are-current"
@@ -92352,7 +92412,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:1b26be8b2a0395d36a29d1ce7001fce0fc35bee193aec446e24099e7c292c92c",
+        "checksum": "sha256:5d77d0dcfc656e479cebe5374eb6a48f335443186344a7cd298275d1157ab978",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/temporal.yaml",
@@ -92497,7 +92557,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d9ae95e3244b50c92f73ad3f9327a4b97cf231ffcfe77b192e8e29493c0bfa76",
+        "checksum": "sha256:35926bef2b5006c1a50a426f1da370d50c5fdb78263d21d32e93f7fd62e0d182",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -92762,7 +92822,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:453de395c83a0d3b3e022ad7fcb491100e267e721bc9635acc305baa57c29cca",
+        "checksum": "sha256:89e26530632393d9f8cc4959d9fbe851a6c767424b8d15342d12b0ed881bb50b",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "crates/reflow2-core/src/temporal.rs",
@@ -93190,7 +93250,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e18ecf4db3d76a2c133226d8ae170933a0b6267f1277ebef08432b9c036c7a8c",
+        "checksum": "sha256:592a46c201df19dc7158b5f3ab5b2882680e5a32a6f1295e6cc3e5521ecfd25f",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -95935,6 +95995,14 @@
         "change_type": "new_feature",
         "name": "vocabulary_coverage ships in the shape a two-arm trial chose",
         "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:a-documentation-change-has-a-name",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "ChangeType gains `documentation` — 13 doc-only ChangeEvents were recorded under three labels that cannot all be right, and a fourth project reached for a word that is still not there"
       }
     },
     {
@@ -106686,6 +106754,16 @@
       }
     },
     {
+      "node_id": "epoch:a-documentation-change-has-a-name",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "A documentation change has a name — \"the thing was right and its description of itself was wrong\" stops borrowing three other labels (2026-08-22)",
+        "sequence": 376,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:a-finding-has-somewhere-to-put-its-evidence",
       "node_type": "DesignEpoch",
       "properties": {
@@ -114929,6 +115007,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:a-documentation-change-has-a-name:art:schema-temporal",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:d7334b25184278142393ad3cee84c4a0bff14c3a6640be744d739ecedb26e5b8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:d7334b25184278142393ad3cee84c4a0bff14c3a6640be744d739ecedb26e5b8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:7be3062dbe9327ac959652734116c350d114d3ca4348ba0f8aa1050c5e91f2c0\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{\"as_checksum\":\"sha256:7be3062dbe9327ac959652734116c350d114d3ca4348ba0f8aa1050c5e91f2c0\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{\"as_checksum\":\"sha256:7be3062dbe9327ac959652734116c350d114d3ca4348ba0f8aa1050c5e91f2c0\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0360\",\"properties\":{\"as_checksum\":\"sha256:7be3062dbe9327ac959652734116c350d114d3ca4348ba0f8aa1050c5e91f2c0\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0370\",\"properties\":{\"as_checksum\":\"sha256:7be3062dbe9327ac959652734116c350d114d3ca4348ba0f8aa1050c5e91f2c0\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0380\",\"properties\":{\"as_checksum\":\"sha256:1b26be8b2a0395d36a29d1ce7001fce0fc35bee193aec446e24099e7c292c92c\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:the-resolution-of-a-gap-can-be-scheduled-into-an-increment\",\"properties\":{\"completeness\":\"partial\",\"conformance\":\"verified\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:schema\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:core-api\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"out\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:graph-export\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"out\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:mcp-tools\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"out\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:mcp-tools-http\",\"properties\":{\"format\":\"json_schema\"}}]",
+        "state": "{\"artifact_type\":\"spec\",\"checksum\":\"sha256:1b26be8b2a0395d36a29d1ce7001fce0fc35bee193aec446e24099e7c292c92c\",\"granularity\":\"atomic\",\"last_confirmed_at\":\"2026-08-02\",\"location\":\"schema/temporal.yaml\",\"name\":\"temporal.yaml\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:schema-temporal",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:a-finding-has-somewhere-to-put-its-evidence:art:verify",
       "node_type": "Snapshot",
       "properties": {
@@ -121778,11 +121866,13 @@
       "node_type": "Verification",
       "properties": {
         "description": "CONFORMANCE OF AN IMPLEMENTATION AGAINST A PUBLISHED CONTRACT, which is what a check on an Interface asserts and what a check on a Capability does not. `ifc:mcp-tools` promises that `tools/list` returns every served tool with its JSON Schema, and that the field-level contract \"travels with the surface and cannot drift from the build\". This is the check that the promise is still kept: one committed golden per tool in `tools/toolsnaps/`, holding the WHOLE served object — name, description, inputSchema, annotations — compared against the live binary driven over real stdio. 155 goldens as of 2026-08-22. A real surface change becomes a deliberate `--update` that shows up in the diff, named tool by tool.\n\nIT DRIVES THE BUILT BINARY OVER REAL STDIO rather than an in-process client, on AGENTS.md's rule that every other layer is a client we wrote and only the shipped wire format is trustworthy. That is also why it verifies THIS boundary: the stdio transport is the one it actually speaks.\n\n═══ WHY IT EXISTS: a bug FAMILY, not a worry ═══\nThree defects where the surface an agent binds to changed and nothing noticed — a parameter lost its type (BL-28), a stale binary served an old shape (BL-32), prose moved into the wrong envelope (BL-48). The gate turned that family into a mechanical tripwire.\n\n═══ WHAT THIS GREEN DOES NOT COVER, so it is not read wider than it is ═══\n· NOT THE HTTP BOUNDARY. It speaks stdio, so it says nothing about `ifc:mcp-tools-http` — which remains unchecked, and is the half flo2's `ifc:reflow2-design-api` actually pairs with.\n· NOT THE ERROR MODEL. `ifc:mcp-tools` specifies TWO layers a consumer must handle — JSON-RPC transport `error`, and tool-level failure as a normal result carrying `isError: true` — and a golden of the `tools/list` payload cannot see either. The most expensive defect this project has had (v0.38.0 shipping an empty manifest) was precisely a caller reading a reply's shape and not its content, and this check would not have caught it.\n· NOT WHETHER THE SCHEMA IS RIGHT — only that it has not moved. A wrong shape frozen on day one stays green forever.\n\n═══ THE GATE'S OWN DEFECT, found and fixed 2026-08-16 ═══\nIt defaulted `--bin` to `target/debug/reflow2-mcp` and reported \"ALL 149 TOOLSNAPS MATCH\" against whatever stale build was sitting there — a check that could not fail reporting a pass, the shape this project keeps finding. CI was never exposed (ci.yml builds debug in the same job first), so it was a local-developer defect and specifically bit whoever followed the RELEASE PROCEDURE, which builds release and leaves debug behind. Fixed by `chg:the-surface-gate-says-which-binary-it-read`: every verdict now NAMES the binary and its build time and warns when any source is newer. The default must stay debug, because CI builds debug.",
+        "findings": "ALL 155 TOOLSNAPS MATCH — the served surface is unchanged. Run 2026-08-22 against target/debug/reflow2-mcp, and THE VERDICT NAMED THE BINARY AND ITS BUILD TIME, which is `chg:the-surface-gate-says-which-binary-it-read` visibly working: before that fix this gate reported \"ALL 149 MATCH\" against a stale build and could not fail.\n\nSECOND RUN THE SAME DAY REPORTED DRIFT (2), AND THAT WAS THE POINT. Adding `documentation` to ChangeType changed two served descriptions — `add_change_event`'s tool description and `set_artifact_checksum`'s `change_type` parameter. The gate named both, they were blessed with `--update`, and the diff shows exactly what moved. A deliberate surface change is therefore distinguishable from drift, which is the whole reason the goldens are committed.\n\nWHAT THIS GREEN DOES NOT SAY, restated because a passing check gets quoted wider than it is: nothing about `ifc:mcp-tools-http` (this drives stdio), nothing about the two-layer error model (a `tools/list` golden cannot see `isError`), and nothing about whether the frozen schemas are RIGHT — only that they have not moved.",
         "kind": "verification",
+        "last_run_at": "2026-08-22",
         "level": "system",
         "method": "test",
         "name": "Every served tool's name, prose, schema and annotations match a committed golden (tools/toolsnap.py, CI on every push)",
-        "status": "planned"
+        "status": "passing"
       }
     },
     {
@@ -121957,7 +122047,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:01a67a3843fc239b508a08e1558d5cafa23bdfbed946dfca343ee319a6a4df75",
+  "prev_content_hash": "sha256:e0cbee9d7dc2c5673f6c137ce0c22a353e9b86057568b7019521b6dd6909b568",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
