@@ -513,6 +513,35 @@ pub enum GapSource {
     /// cannot nag a design that has not started. `internal` boundaries are
     /// plumbing the owner may change freely and are never asked about here.
     UnverifiedPublishedContract,
+    /// An Interface designated `published` or `both` whose AGREEMENT AXES are
+    /// not all filled in — the structured fields two systems have to compare
+    /// before anyone can say whether they are compatible.
+    ///
+    /// Serves `req:interface-spec-complete`, accepted and unimplemented until
+    /// now. Its point is not completeness for its own sake: two designs cannot
+    /// be checked for INCOMPATIBILITY at a seam unless the seam is described in
+    /// comparable terms, so `mirror_surface` can link two designs and still not
+    /// tell you they disagree.
+    ///
+    /// # It reports, it does not judge
+    ///
+    /// Some axes are genuinely meaningless for some boundaries — a library
+    /// linked into its callers has no `endpoint`, a one-way data feed has no
+    /// `error_model` a consumer parses. This names WHICH axes are unset and
+    /// leaves applicability to the design (`dec:report-dont-judge`), because a
+    /// list of required fields would be this tool deciding what a mechanical,
+    /// human or physical interface must look like.
+    ///
+    /// # 🛑 It cannot ask for the sixth characteristic
+    ///
+    /// `req:interface-spec-complete` names six: protocol, data types,
+    /// operations, auth, errors, and PERFORMANCE AND CONSTRAINTS — rate limits,
+    /// concurrency, timeouts. The schema has fields for the first five and
+    /// NONE for the sixth, so a design can satisfy this finding completely and
+    /// still not say what it promises under load. Stated here because a
+    /// detector that quietly checks five sixths of a requirement and reports
+    /// clean is the "green gate over what it does not cover" failure.
+    IncompletePublishedContract,
     /// The design has boundaries and has designated NONE of them `published` —
     /// so this project either publishes nothing on purpose, or nobody has
     /// classified its boundaries, and `Interface.designation` cannot tell those
@@ -538,6 +567,7 @@ impl GapSource {
     pub fn as_str(self) -> &'static str {
         match self {
             GapSource::UnverifiedPublishedContract => "unverified_published_contract",
+            GapSource::IncompletePublishedContract => "incomplete_published_contract",
             GapSource::NoPublishedBoundary => "no_published_boundary",
             GapSource::DesignWithoutIntent => "design_without_intent",
             GapSource::ConceptWithoutDesign => "concept_without_design",
@@ -646,6 +676,9 @@ impl GapSource {
             // contract, and must not silently cover the next surface this
             // design publishes.
             GapSource::UnverifiedPublishedContract => false,
+            // PER-INTERFACE too: "this boundary's schema lives in the OpenAPI
+            // file rather than in the graph" is a claim about ONE contract.
+            GapSource::IncompletePublishedContract => false,
             // AGGREGATE — a claim about POSTURE rather than about any node.
             // "This design publishes nothing on purpose" must survive somebody
             // adding a boundary, or the acknowledgement expires on every write.
@@ -1428,6 +1461,9 @@ impl DesignGraph {
         // when nothing is published at all, the ambiguity that a defaulted
         // `designation` creates, asked once rather than assumed away.
         self.detect_unverified_published_contracts(&mut gaps)?;
+        // The other half of the same boundary: described in terms another
+        // design could compare, or not.
+        self.detect_incomplete_published_contracts(&mut gaps)?;
 
         gaps.sort_by(|a, b| {
             // `false` sorts before `true`, so "has anchors" comes first.
@@ -3706,6 +3742,138 @@ impl DesignGraph {
                         n.node_id
                     )
                 },
+            });
+        }
+        Ok(())
+    }
+
+    /// The AGREEMENT AXES a published contract has left unset
+    /// (`GapSource::IncompletePublishedContract`), serving
+    /// `req:interface-spec-complete`.
+    ///
+    /// Separate from `detect_unverified_published_contracts` above even though
+    /// both walk the published set, because they ask different questions and a
+    /// design can be in either state independently: a fully specified contract
+    /// with no check, and a checked contract nobody described. Collapsing them
+    /// would make one finding answer two questions and one acknowledgement
+    /// settle both.
+    fn detect_incomplete_published_contracts(
+        &self,
+        gaps: &mut Vec<GapCandidate>,
+    ) -> Result<(), DynoError> {
+        // The five characteristics `req:interface-spec-complete` names that the
+        // schema actually has fields for, paired with the words the requirement
+        // uses — so the finding speaks the need's language rather than the
+        // column names.
+        const AXES: &[(&str, &str)] = &[
+            ("medium", "the technology it runs over"),
+            ("paradigm", "synchronous or event-driven"),
+            ("payload_format", "how the payload is serialized"),
+            (
+                "payload_schema",
+                "which fields are mandatory, and their types",
+            ),
+            ("endpoint", "where a request goes"),
+            ("operations", "what actions are permitted"),
+            ("auth", "how identity is verified"),
+            ("transport_security", "how data is protected in transit"),
+            ("error_model", "the failure vocabulary a consumer parses"),
+        ];
+
+        for n in self.scan_nodes(node::INTERFACE)? {
+            if !matches!(
+                n.properties
+                    .get("designation")
+                    .and_then(dynograph_core::Value::as_str),
+                Some("published" | "both")
+            ) {
+                continue;
+            }
+            let missing: Vec<&(&str, &str)> = AXES
+                .iter()
+                .filter(|(field, _)| {
+                    match n
+                        .properties
+                        .get(*field)
+                        .and_then(dynograph_core::Value::as_str)
+                    {
+                        None | Some("") => true,
+                        // 🛑 `unspecified` IS UNSET, AND MISSING THIS WOULD HAVE
+                        // MADE THE WHOLE DETECTOR GREEN OVER THE THING IT
+                        // EXISTS TO CHECK. Five of these nine axes are enums
+                        // DEFAULTING to `unspecified`, and the store
+                        // materialises defaults on write — so every Interface
+                        // ever created already carries the word, and a
+                        // presence test would have counted it as an answer.
+                        // Measured before the fix: `ifc:mcp-tools-http` read
+                        // 9 of 9 complete while its `medium` said
+                        // `unspecified`, and `ifc:graph-export` reported four
+                        // gaps instead of six.
+                        Some("unspecified") => true,
+                        // ...but `none` IS AN ANSWER and must never be swept up
+                        // with it. `auth: none` and `transport_security: none`
+                        // are what an unauthenticated local pipe honestly says,
+                        // and `ifc:mcp-tools` says exactly that. Conflating a
+                        // declared absence with an undeclared one is the same
+                        // error `Artifact.audience` refuses by having no
+                        // default at all.
+                        Some(_) => false,
+                    }
+                })
+                .collect();
+            if missing.is_empty() {
+                continue;
+            }
+            let name = node_name(&n);
+            let listed = missing
+                .iter()
+                .map(|(f, gloss)| format!("`{f}` ({gloss})"))
+                .collect::<Vec<_>>()
+                .join(", ");
+            gaps.push(GapCandidate {
+                id: gap_id(
+                    GapSource::IncompletePublishedContract,
+                    std::slice::from_ref(&n.node_id),
+                ),
+                gap_source: GapSource::IncompletePublishedContract,
+                scope: GapScope::Project,
+                // Below `unverified_published_contract` (0.6) deliberately: a
+                // published promise with NO evidence at all is a stronger
+                // finding than one whose description has gaps. Above the
+                // ordinary 0.3 notes because an undescribed seam is what makes
+                // two designs uncheckable against each other.
+                severity: 0.45,
+                title: format!(
+                    "The published contract “{name}” does not say {} of the things two systems \
+                     must agree on",
+                    missing.len()
+                ),
+                description: format!(
+                    "“{name}” is designated published, so another system may be built against it \
+                     — but it does not record {listed}. Two designs cannot be checked for \
+                     INCOMPATIBILITY at a seam unless the seam is described in comparable terms, \
+                     so an unrecorded axis is one nothing can compare. Fill in what applies with \
+                     set_interface_spec. If an axis is genuinely meaningless here — a library has \
+                     no endpoint, a one-way feed has no error model a consumer parses — say so \
+                     once and this will not be asked again."
+                ),
+                affected_ids: vec![n.node_id.clone()],
+                suggested_depth: 2,
+                evidence: format!(
+                    "Interface '{}' has {} of {} agreement axes unset: {}. NOTE THE LIMIT: \
+                     `req:interface-spec-complete` names SIX characteristics and the schema has \
+                     fields for five — there is nowhere to record performance and constraints \
+                     (rate limits, concurrency, timeouts), so filling every axis above still \
+                     leaves the sixth unsaid.",
+                    n.node_id,
+                    missing.len(),
+                    AXES.len(),
+                    missing
+                        .iter()
+                        .map(|(f, _)| *f)
+                        .collect::<Vec<_>>()
+                        .join(", ")
+                ),
             });
         }
         Ok(())
