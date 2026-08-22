@@ -1460,6 +1460,12 @@ impl DesignGraph {
             change_event_id: &ce_id,
             name: &name,
             change_type: st.change_type,
+            // UNSTATED, and this caller is the reason the field is an Option.
+            // A re-ingest genuinely cannot tell the two axes apart: the source
+            // document may describe a system that moved, or it may just be a
+            // better description of one that did not, and nothing reaching
+            // this point distinguishes them. Saying nothing is the true answer.
+            subject: None,
             target_type: node_type,
             target_id: id,
             action: ChangeAction::Modified,

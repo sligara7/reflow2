@@ -183,6 +183,7 @@ fn full_coherence_loop() {
             change_event_id: "chg:tighten",
             name: "Tighten latency 200ms -> 100ms",
             change_type: ChangeType::RequirementCreep,
+            subject: None,
             target_type: node::REQUIREMENT,
             target_id: "req:latency",
             action: ChangeAction::Modified,

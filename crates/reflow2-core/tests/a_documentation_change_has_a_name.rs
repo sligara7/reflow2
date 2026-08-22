@@ -39,6 +39,7 @@ fn a_change(id: &'static str, change_type: ChangeType) -> ChangeRecord<'static> 
         change_event_id: id,
         name: "the doc comment claimed the schema allows any target; it has been an enumeration since 2026-08-08",
         change_type,
+        subject: None,
         target_type: "Artifact",
         target_id: "art:thing",
         action: ChangeAction::Modified,

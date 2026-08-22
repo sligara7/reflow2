@@ -434,6 +434,35 @@ pub enum GapSource {
     /// free: derived requirements hang off the Decision that created them and
     /// carry no such edge.
     DecompositionCoverage,
+    /// Recorded changes that never say WHICH AXIS they are on — whether the
+    /// SYSTEM changed, or only the design's KNOWLEDGE of it did
+    /// (`ChangeEvent.subject`).
+    ///
+    /// # Why an absence detector rather than a consistency one
+    ///
+    /// This is the leg that decides whether a piece of vocabulary ever reaches
+    /// a user's design at all. A typed tool writes it and an instruction says
+    /// when — and with nothing noticing its ABSENCE, the loop that exists to
+    /// surface gaps never asks, so the field stays empty in every project
+    /// forever. `fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it`
+    /// measured that shape across three cases; this is the first detector
+    /// written to close it deliberately.
+    ///
+    /// It must therefore fire where the vocabulary has NEVER been used, which
+    /// is exactly what `decomposition_coverage` cannot do: that one keys on a
+    /// node already carrying a `DECOMPOSES` edge, so a project that never
+    /// decomposed anything reads clean. Keying on the population of
+    /// ChangeEvents instead means a design that has recorded changes and never
+    /// stated an axis is the loudest case rather than the silent one.
+    ///
+    /// # What it is not
+    ///
+    /// Not a claim that any change is wrong. The changes are recorded and
+    /// findable; what is missing is a distinction nobody can recover later,
+    /// because the person who knew it has moved on. And not a demand: a
+    /// project whose events come from bulk ingest genuinely cannot know the
+    /// axis, which is why one acknowledgement settles the whole practice.
+    ChangeAxisUnstated,
 }
 
 impl GapSource {
@@ -484,6 +513,7 @@ impl GapSource {
             GapSource::ReleaseWithoutEpoch => "release_without_epoch",
             GapSource::ReleaseWithoutManifest => "release_without_manifest",
             GapSource::DecompositionCoverage => "decomposition_coverage",
+            GapSource::ChangeAxisUnstated => "change_axis_unstated",
         }
     }
 
@@ -528,6 +558,13 @@ impl GapSource {
             // had a thought, which is the trap unvalidated_capability fell into
             // and was re-acknowledged twenty times for.
             GapSource::UnreviewedIdeas => true,
+            // Aggregate, and the reason is the same practice argument: the
+            // finding is about a design that does not record the axis, not
+            // about any one change. Per-event keying would expire the standing
+            // judgement on every single write — which is worse here than
+            // anywhere else, because ChangeEvents are the fastest-growing node
+            // type in any active design.
+            GapSource::ChangeAxisUnstated => true,
             // Everything else names the nodes the finding is actually about, so a
             // change to that set SHOULD expire the judgement. Listed exhaustively
             // rather than with a wildcard: a new aggregate detector must come here
@@ -1284,6 +1321,9 @@ impl DesignGraph {
         // The roll-up's blind spot: delivery climbs a decomposition without
         // anything ever asking whether the children amount to the parent.
         self.detect_decomposition_coverage(&mut gaps)?;
+        // Absence, not consistency: fires loudest where the axis has NEVER
+        // been stated, which is the case every other detector here misses.
+        self.detect_change_axis_unstated(&mut gaps)?;
 
         gaps.sort_by(|a, b| {
             // `false` sorts before `true`, so "has anchors" comes first.
@@ -3371,6 +3411,74 @@ impl DesignGraph {
                 "{n} of {proposed} proposed Decision(s) have no inference-layer relation in either \
                  direction and no `no_relation_note`; decision points with 2+ registered \
                  alternatives and parked nodes are excluded."
+            ),
+        });
+        Ok(())
+    }
+
+    /// Recorded changes that never say which axis they are on
+    /// (`GapSource::ChangeAxisUnstated`).
+    ///
+    /// One aggregate finding over every ChangeEvent in the design. The
+    /// numerator is the events carrying no `subject`; the denominator is all of
+    /// them, because a count without its population has said almost nothing —
+    /// "12 changes unstated" reads very differently at 12 events and at 400.
+    ///
+    /// # Why it fires at zero usage rather than staying quiet
+    ///
+    /// This is the whole point of the detector and the reason it is written as
+    /// an absence check. A design that has recorded changes and never once
+    /// stated an axis is the case most worth asking about, and it is precisely
+    /// the case a consistency check cannot see: keying on events that already
+    /// HAVE a subject would report only the design that had begun using the
+    /// vocabulary, and would read clean for the design that never did.
+    fn detect_change_axis_unstated(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
+        let mut unstated: Vec<String> = Vec::new();
+        let mut total = 0usize;
+        for ev in self.scan_nodes(node::CHANGE_EVENT)? {
+            total += 1;
+            // PRESENCE IS ENOUGH, and deliberately so: `subject` is a schema
+            // enum, and every write path — the typed constructors and
+            // `import_graph` alike — goes through `create_node`, which refuses
+            // anything but `system` or `record`. A blank cannot reach the
+            // store, so an emptiness guard here would be dead code pretending
+            // to be a defence. `tests/change_axis_unstated.rs` pins the
+            // refusal, so this stays honest if the schema ever loosens.
+            if !ev.properties.contains_key("subject") {
+                unstated.push(ev.node_id.clone());
+            }
+        }
+        if unstated.is_empty() {
+            return Ok(());
+        }
+        let n = unstated.len();
+        gaps.push(GapCandidate {
+            id: gap_id(GapSource::ChangeAxisUnstated, &unstated),
+            gap_source: GapSource::ChangeAxisUnstated,
+            scope: GapScope::Project,
+            // Below every finding that reports a contradiction or a break in
+            // the golden thread. Nothing here is WRONG: the changes are
+            // recorded and findable. What is missing is a distinction that
+            // cannot be reconstructed once the person who knew it has moved on,
+            // which is a real cost and a quiet one.
+            severity: 0.3,
+            title: format!("{n} of {total} recorded change(s) do not say what kind of change they were"),
+            description: format!(
+                "{n} recorded change(s) do not say whether the SYSTEM changed or whether only the \
+                 design's record of it did — a re-sync, an accepted drift, a question finally \
+                 settled. Both are real and they mean opposite things to anyone later asking what \
+                 actually moved, and nothing can tell them apart afterwards: only the person making \
+                 the change knew. State it with `subject` on record_change or add_change_event. If \
+                 this distinction is not one this project needs — or the events came from a bulk \
+                 import that could not know — acknowledge this once and it will not be asked again."
+            ),
+            affected_ids: unstated.clone(),
+            suggested_depth: 1,
+            evidence: format!(
+                "{n} of {total} ChangeEvent(s) carry no `subject`. The property is optional and \
+                 never inferred from `change_type`, because the mapping is not total — a `resync` \
+                 is honestly either axis — so an unstated one means nobody said, and this finding \
+                 is what asks."
             ),
         });
         Ok(())

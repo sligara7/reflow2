@@ -151,6 +151,7 @@ fn reactive_propagation_uses_change_event_targets_as_seeds() {
         change_event_id: "chg:relax-latency",
         name: "Relax latency to 300ms",
         change_type: ChangeType::ScopeChange,
+        subject: None,
         target_type: node::REQUIREMENT,
         target_id: "req:latency",
         action: ChangeAction::Modified,

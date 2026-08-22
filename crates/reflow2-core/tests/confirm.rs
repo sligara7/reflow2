@@ -153,6 +153,7 @@ fn a_design_updated_accept_is_a_different_claim_than_design_holds() {
         change_event_id: "chg:widen",
         name: "Scoring widened",
         change_type: ChangeType::RequirementCreep,
+        subject: None,
         target_type: node::CAPABILITY,
         target_id: "cap:score",
         action: ChangeAction::Modified,
