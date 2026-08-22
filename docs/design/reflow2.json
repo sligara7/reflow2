@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b12b07ca11aa549b335260ea07a1a42bd24ea5c7caa44738ce9f12449f3ec261",
+  "content_hash": "sha256:62b94f17927b49fe6d001d656511f407b4ab24259ca75157ceb787c371aaa4a3",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -6865,9 +6865,45 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "fact:a-contract-is-the-one-thing-reflow2-cannot-attach-evidence-to",
+      "properties": {},
+      "to_id": "epoch:a-record-that-still-reads-confident"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "fact:a-fresh-server-on-an-old-build-is-not-stale-and-stamps-confidently",
       "properties": {},
       "to_id": "epoch:v0300"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet",
+      "properties": {},
+      "to_id": "epoch:a-record-that-still-reads-confident"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "fact:the-orientation-reads-cost-ten-seconds-and-the-store-is-not-why",
+      "properties": {},
+      "to_id": "epoch:a-record-that-still-reads-confident"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "fact:the-seam-report-half-of-the-poc-finally-ran",
+      "properties": {},
+      "to_id": "epoch:a-record-that-still-reads-confident"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "fact:the-storage-seam-is-published-in-design-and-private-in-code",
+      "properties": {},
+      "to_id": "epoch:a-record-that-still-reads-confident"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "fact:twelve-records-that-still-read-confident",
+      "properties": {},
+      "to_id": "epoch:a-record-that-still-reads-confident"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -9117,6 +9153,15 @@
       "from_id": "dec:idea-can-the-unaccepted-be-purged-in-bulk",
       "properties": {
         "acted_at": "2026-08-12",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-compose-both-chains-as-one-stress-test",
+      "properties": {
+        "acted_at": "2026-08-21",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -27015,6 +27060,16 @@
       "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-a-change-upstream-reaches-the-sibling-that-never-asked",
       "properties": {
+        "evidence": "\"How does the other dependent find out?\" cannot be designed until both dependents are visible in one place at once. Today they are not: storyflow's arm declares no `required` interfaces so it pairs with nothing, and its export carries graph_id `reflow2`, the same as reflow2's. The stress test is what would establish whether the sibling is even reachable — so the notification question waits on it rather than the other way round.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-compose-both-chains-as-one-stress-test"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-a-change-upstream-reaches-the-sibling-that-never-asked",
+      "properties": {
         "dependency_type": "control_flow",
         "optional": false,
         "weight_basis": "estimated"
@@ -28760,6 +28815,14 @@
         "evidence": "That node argued optimisation as the fourth return from a contract and measured the three things it needs - a wall, a target, a measurement. This node is the same thought after the procedure was actually RUN, and the run contradicts one part of it: optimisation succeeded with the wall ABSENT because the target and the measurement were supplied. The idea grew up by being executed."
       },
       "to_id": "dec:idea-should-optimize-be-a-served-skill-any-project-can-run"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:linked-repos-poc",
+      "properties": {
+        "evidence": "The older thought grown up. The 2026-08-06 PoC composed three designs in a LINE (dynograph-foundation -> reflow2 -> flo2) and proved the mechanism. This is the same idea with the second arm attached, so the shared upstream sits in the middle of a DIAMOND rather than at the end of a chain — which exercises something the line could not: whether the tooling can see two consumers of one dependency at all. Direction is deliberate: the PoC came first and this is its successor, not the reverse."
+      },
+      "to_id": "dec:idea-compose-both-chains-as-one-stress-test"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -82073,6 +82136,12 @@
     },
     {
       "edge_type": "PRECEDES",
+      "from_id": "epoch:v0380",
+      "properties": {},
+      "to_id": "epoch:a-record-that-still-reads-confident"
+    },
+    {
+      "edge_type": "PRECEDES",
       "from_id": "epoch:v040",
       "properties": {},
       "to_id": "epoch:v050-cut"
@@ -103115,6 +103184,16 @@
       }
     },
     {
+      "node_id": "dec:idea-compose-both-chains-as-one-stress-test",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-21. Nothing here is intent and nothing is settled.\n\nHIS IDEA, in his words: \"there are 2 sets of linked projects. 1) dynograph-foundation : reflow2 : flo2 and 2) dynograph-foundation : storyflow. the key (but obvious) is that dynograph-foundation is used in both. probably need to do a git pull on both dev_storyflow and storyflow repos on this machine, but all repos/reflow2 projects are on this machine. this would really stress linking multiple projects. also as we discuss making changes to dynograph-foundation, we can't make these in isolation to storyflow.\"\n\n⭐ IDEA A — THE FOUR-CORNER RUN ITSELF. `dec:linked-repos-poc` composed THREE designs on 2026-08-06 (reflow2 + flo2 + dynograph-foundation) and it worked: zero skipped edges, ids namespaced, one true positive. What has never run is BOTH ARMS AT ONCE with the shared upstream in the middle. That is a different test, not a bigger one: three designs in a line exercise linking; two chains meeting at a shared node exercise whether the tooling can see a diamond at all.\n\n🛑 IDEA B — MEASURED TODAY, IT WOULD HIT TWO KNOWN BLOCKERS, AND BOTH WERE PREDICTED. State of the four corners, read 2026-08-21:\n\n  reflow2               2868 nodes   graph_id `reflow2`                published 3 / required 9 / internal 6\n  dynograph-foundation   179 nodes   graph_id `dynograph-foundation`   published 15 / required 0\n  flo2                   109 nodes   graph_id `1a97fc1f1de4d5d2`       published 5 / required 1 / internal 1\n  dev_storyflow         1373 nodes   graph_id `reflow2`  🔴            published 0 / required 0 (44 internal, 9 unset)\n\n  (1) THE graph_id COLLISION IS REAL AND STILL THERE. dev_storyflow's export and its `.reflow2/graph.id.json` both carry graph_id `reflow2`; only `label` says `dev_storyflow`. `fact:the-diamond-meets-at-dynographs-internals-not-its-interface` called this out on 2026-08-09 as \"a collision waiting to happen\", and nothing has changed. `compose_and_analyse` takes an explicit namespace so a run can be forced through, but anything keying on graph_id sees two designs claiming to be reflow2.\n  (2) STORYFLOW'S ARM IS UNLABELLED. 53 interfaces, none `required`, none `published` — the exact state reflow2 was in before PR #130. Pairing matches complements, so storyflow's arm of the diamond CANNOT pair with anything today. A four-corner run would produce a real seam on one arm and an honest zero on the other, and the zero would need reading correctly.\n\n⭐ IDEA C — HIS SECOND SENTENCE IS THE MORE IMPORTANT ONE, AND IT IS ALREADY AN OPEN QUESTION. \"We can't make these in isolation to storyflow\" is `dec:idea-a-change-upstream-reaches-the-sibling-that-never-asked` — B and D both depend on A, and A's blast radius stops at its own graph. Stated as a working constraint rather than a question, which is new: he is describing how he intends to work, not asking whether it is a problem.\n\n⭐ IDEA D — AND THE PRIOR RECORD SAYS A NAIVE DIAMOND CHECK WOULD REPORT ALL-CLEAR. `fact:the-diamond-meets-at-dynographs-internals-not-its-interface` measured it: reflow2 consumes dynograph as a RUST LIBRARY API (5 required interfaces), storyflow consumes it as a REST API (6 interfaces). DISJOINT SURFACES over one shared implementation. So \"do B and D require the same interface?\" answers NO and means nothing. The question that would have caught the real incident is \"did the change reach BELOW both published surfaces into shared implementation\" — which is about dynograph's OWN internals and is answerable only inside dynograph's graph.\n\n⭐ IDEA E — AND TODAY'S FINDING IS EXACTLY THAT LAYER. `fact:the-storage-seam-is-published-in-design-and-private-in-code`: `ifc:kv-backend` is the ONE node in any of these four designs that names the shared substrate beneath both consumers' surfaces, and its design says `published` while its code says `pub(crate)`. If a four-corner run is meant to find the diamond's real risk, that node is where the risk lives — not at the paired interfaces, which are exactly the places a change CANNOT reach both consumers.\n\n📋 IDEA F — CHEAP PREREQUISITES, offered as observations rather than a plan. A `git pull` on both storyflow repos, as he suggests. dev_storyflow's export lives at `.reflow2/design.export.json` rather than under `docs/design/`, so it is not a committed record the way the other three are, and it was written by reflow2 0.26.1 while dynograph-foundation's was written by 0.16.0 — a four-way compose would span three writer versions. `dec:linked-repos-poc` already showed cross-version composition surviving eight minor versions with nothing dropped, which is evidence and not proof.\n\n⚠️ WHAT IS NOT PROPOSED HERE: changing anything in storyflow or dev_storyflow. AGENTS.md rule 6 forbids landing work there without Anthony's word, and declaring storyflow's `required` interfaces — the step that would make its arm pair — is design about a project this session has not been asked to touch.\n\nDISTINCT FROM the three nodes the guard surfaced. `dec:linked-repos-poc` RAN a three-design composition and is about whether the mechanism works; this asks whether both arms together are a different test. The diamond FACT measured the shape of the two consumers' surfaces on one dated occasion; this proposes an action and records what it would hit today. `dec:idea-a-change-upstream-reaches-the-sibling-that-never-asked` asks how notification should work; this asks whether composing everything at once is how you would find out you needed it.",
+        "name": "OPEN — should BOTH dependency chains be composed at once as a four-corner stress test, and is the shared upstream changeable without storyflow in the room?",
+        "rationale": "Captured under the brainstorm skill: recorded as ideas so nothing is lost and nothing is claimed as intent.\n\nSearched the graph BEFORE writing, which is the lesson from earlier this session — `fact:the-seam-report-half-of-the-poc-finally-ran` records re-deriving an analysis the design already held. That search is why ideas C, D and E point at existing nodes rather than restating them.\n\nThe state table in idea B was read today rather than recalled, because the last two times this was reasoned about from memory the numbers had moved.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-corpus-ingest-strategies",
       "node_type": "Decision",
       "properties": {
@@ -106478,6 +106557,16 @@
         "name": "A project is set up right on the first run — the three things the second user hit before he could design anything",
         "sequence": 328,
         "status": "planned"
+      }
+    },
+    {
+      "node_id": "epoch:a-record-that-still-reads-confident",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "A record keeps reading confident after the thing it describes has moved — twelve instances in one day, and every fix was a place the disagreement becomes visible",
+        "sequence": 374,
+        "status": "arrived"
       }
     },
     {
@@ -119374,6 +119463,19 @@
       }
     },
     {
+      "node_id": "fact:twelve-records-that-still-read-confident",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.8,
+        "fact_type": "measurement",
+        "name": "COUNTED across one session: twelve places where a record still read confident after the thing it described had moved — and the tools caught seven of them unprompted",
+        "statement": "SYNTHESIS OF ONE SESSION, 2026-08-21, eight merged PRs (#281–#288). Recorded because the pattern exists in no single node — each instance is written on its own node and none of them says there were twelve.\n\nTHE SHAPE: a record goes on asserting something after the thing it describes has moved, and nothing about the record looks wrong. It is not a wrong record; it is a record that has stopped being checked against anything.\n\n=== THE INSTANCES, all found or fixed this session ===\n\n  1. `rel:v0380` carried `status: planned` while tagged, published, deployed and asset-verified.\n  2. `release_without_epoch` exempted any `planned` release — so it would have excused exactly the release above. A status field trusted where an edge was the truth.\n  3. `dec:one-process-many-stores` — `status: accepted`, name \"ACCEPTED 2026-08-06\", body opening \"PROPOSED, NOT SETTLED.\"\n  4. `dec:core-api-spof-accepted` named a topology BL-83a had moved; the judgement was right and the sentence was stale.\n  5. `ifc:core-api` was `published` — in the document handed to a vendor — for a crate nobody outside can link.\n  6. `ifc:core-api`'s `spec` field held a 2026-07-28 changelog note where the specification belongs.\n  7. `ifc:core-api`'s `payload_schema` read `unspecified` while ELEVEN artifacts carried SPECIFIES edges at it.\n  8. `ifc:kv-backend` (dynograph-foundation) is `published` in the design and `pub(crate)` in the code.\n  9. `unverified_capability` asked 28 unbuilt roadmap rows to prove themselves — a list that could not reach zero.\n 10. `open_questions`, the first call of every session and documented as cheap, costs 11.7s of which 10.3 is a defect sweep nobody asked for; and \"the first store read costs 26–48s\" had been carried for weeks as the STORE being slow, which it is not.\n 11. `seam_report` returned `incompatible: 0` beside `unstated: 30`, and the August PoC's `unmet_needs: 0` beside `dead_surface: 15` — zeros that read as health and mean nobody said anything.\n 12. An analysis was RE-DERIVED that `dec:linked-repos-poc` had already done, better, on 2026-08-06.\n\n⭐ THE FIX WAS THE SAME SHAPE EVERY TIME, AND IT WAS NEVER MORE PROSE. Each one closed by making the disagreement VISIBLE somewhere that fails: a detector keyed on an edge rather than a status; a gate that turns red; a count asserted in a test; a field that says \"this cannot be enumerated\" instead of sitting blank; a note recording that somebody looked and found nothing. A promise written in a decision is not a guard — that recurred three times on its own (the release procedure, the SPOF description, and the local-case protection flo2's work would test).\n\n⭐⭐ AND THE COUNTER-EVIDENCE MATTERS MORE THAN THE COUNT. SEVEN of the twelve were caught by the design's own machinery, unprompted, while doing something else:\n  — the dedup guard refused four near-duplicate writes and named what to read;\n  — `create_node`'s revision note said \"no snapshot holds the state it replaced — checked, not assumed\", which is the only reason a Decision's prior wording survives;\n  — compare-and-swap refused a stale hash;\n  — the export divergence guard refused to drop a claim edge and named it;\n  — `reflow2_check` refused a severed lineage chain mid-fold;\n  — `loop_status` reported its OWN server as stale, which is why the performance numbers were re-measured rather than trusted;\n  — `seam_report` refused to call 30 unstated axes agreement.\nSo the pattern is not that the design rots unnoticed. It is that the design notices exactly where somebody built a place for it to notice, and nowhere else.\n\n⚠️ LIMITS. \"Twelve\" is a count of what one session happened to touch, not a survey — nobody swept the design for this shape, and a sweep would find more. Instances 1–9 are verifiable on their nodes; 10 and 11 are on their own TemporalFacts; 12 is recorded on `fact:the-seam-report-half-of-the-poc-finally-ran`. The claim that the fix was \"the same shape every time\" is a reading of twelve cases by the agent that worked them, and is the softest thing here.",
+        "subject_id": "epoch:a-record-that-still-reads-confident",
+        "valid_from": "2026-08-21"
+      }
+    },
+    {
       "node_id": "fact:two-adopted-stores-share-one-graph-id-2026-08-13",
       "node_type": "TemporalFact",
       "properties": {
@@ -121663,7 +121765,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ea507b3a1cb906d1f91e600302fae3910c66abded0fdfb0c3316778f0e366887",
+  "prev_content_hash": "sha256:b12b07ca11aa549b335260ea07a1a42bd24ea5c7caa44738ce9f12449f3ec261",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
