@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:01a67a3843fc239b508a08e1558d5cafa23bdfbed946dfca343ee319a6a4df75",
+  "content_hash": "sha256:e0cbee9d7dc2c5673f6c137ce0c22a353e9b86057568b7019521b6dd6909b568",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3502,6 +3502,12 @@
       "from_id": "chg:a-claim-may-be-a-query-20260808",
       "properties": {},
       "to_id": "epoch:a-claim-may-be-a-query"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-contract-can-carry-evidence",
+      "properties": {},
+      "to_id": "epoch:a-contract-can-carry-evidence"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -7156,6 +7162,12 @@
       "from_id": "snap:epoch:a-claim-may-be-a-query:dec:a-claim-may-need-a-list-rather-than-a-radius",
       "properties": {},
       "to_id": "epoch:a-claim-may-be-a-query"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:a-contract-can-carry-evidence:art:schema-verify",
+      "properties": {},
+      "to_id": "epoch:a-contract-can-carry-evidence"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -12217,6 +12229,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-contract-can-carry-evidence",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-verify"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:a-design-says-which-vocabulary-it-has-never-used",
       "properties": {
         "accepted_baseline": false,
@@ -14293,6 +14314,15 @@
         "action": "modified"
       },
       "to_id": "art:degraded"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-e1668bec9f44fdce",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:verify"
     },
     {
       "edge_type": "CHANGED",
@@ -34666,6 +34696,12 @@
       "from_id": "art:release-workflow",
       "properties": {},
       "to_id": "snap:epoch:the-image-must-start:art:release-workflow"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:schema-verify",
+      "properties": {},
+      "to_id": "snap:epoch:a-contract-can-carry-evidence:art:schema-verify"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -92330,7 +92366,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:25729faa169eb7a9c99b59afcd9f9e26b8d61c1dec903e1428a3cfec30a4f78b",
+        "checksum": "sha256:ffe70350f93e9d7011450a7d749c308ffc3791ccc679ccb0a2faee2f958ae668",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/verify.yaml",
@@ -93323,7 +93359,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8f923178f4246edf7385fa125ee4e92e59c48ae5e0ffa7a45ecb04e569541f34",
+        "checksum": "sha256:9b11f9d4c7ef0fa12132c0dc3f4ae7f49f7ead1b244ec7d0060477fe19237301",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/verify.rs",
         "name": "verify.rs",
@@ -95885,6 +95921,14 @@
       }
     },
     {
+      "node_id": "chg:a-contract-can-carry-evidence",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "VERIFIES' target enumeration admits Interface — all 18 contracts carried zero checks because the edge was illegal, while the check for one of them already existed and had to hang off a Capability"
+      }
+    },
+    {
       "node_id": "chg:a-design-says-which-vocabulary-it-has-never-used",
       "node_type": "ChangeEvent",
       "properties": {
@@ -97497,6 +97541,16 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "cargo fmt only."
+      }
+    },
+    {
+      "node_id": "chg:accept-e1668bec9f44fdce",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-22",
+        "name": "DOC COMMENT ONLY — no behaviour moved, so the design HOLDS; the code was always right and only its description of itself was stale. `verifies()` carried `/// target_type is required because the schema allows any target`, true until 2026-08-08 when `to: \"*\"` became an enumeration precisely so `unverified_enforced_rule` could be asked. Admitting Interface makes it doubly wrong: a reader taking it at face value would conclude no schema edit was needed for that change at all. Replaced with the true reason (the target type is not inferable from the id) and a pointer to schema/verify.yaml as the authority, where the list now carries the reasoning for every type on it and for Project being deliberately off it. Recorded as `defect_fix` rather than `refactor` because nothing was restructured — a false statement was corrected. There is no `documentation` change type; the legal list has no room for \"the code was right and the comment lied\", which is worth noticing given how this project keeps finding records that disagree with what they describe.",
+        "subject": "system"
       }
     },
     {
@@ -106582,6 +106636,16 @@
       }
     },
     {
+      "node_id": "epoch:a-contract-can-carry-evidence",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "A contract can carry evidence — VERIFIES reaches an Interface, and the check that already existed can finally attach (2026-08-22)",
+        "sequence": 375,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:a-default-is-not-a-difference",
       "node_type": "DesignEpoch",
       "properties": {
@@ -114835,6 +114899,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:a-contract-can-carry-evidence:art:schema-verify",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:31bc6ca6b00b389dced1dd7ad29164bd2be7b080d6c8a948be99ad57430cf980\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:31bc6ca6b00b389dced1dd7ad29164bd2be7b080d6c8a948be99ad57430cf980\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:31bc6ca6b00b389dced1dd7ad29164bd2be7b080d6c8a948be99ad57430cf980\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:31bc6ca6b00b389dced1dd7ad29164bd2be7b080d6c8a948be99ad57430cf980\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:1418c86a6303e07bc4ad46637cd321420d11e337e8a0d447338e5de316c9d990\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:1418c86a6303e07bc4ad46637cd321420d11e337e8a0d447338e5de316c9d990\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:1418c86a6303e07bc4ad46637cd321420d11e337e8a0d447338e5de316c9d990\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:1418c86a6303e07bc4ad46637cd321420d11e337e8a0d447338e5de316c9d990\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:1418c86a6303e07bc4ad46637cd321420d11e337e8a0d447338e5de316c9d990\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:1418c86a6303e07bc4ad46637cd321420d11e337e8a0d447338e5de316c9d990\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:1418c86a6303e07bc4ad46637cd321420d11e337e8a0d447338e5de316c9d990\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:9f5e06e9d9d3ad4da457aea1a582d56b2cf8a683b30beef2f2eb163415ebbee9\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:9f5e06e9d9d3ad4da457aea1a582d56b2cf8a683b30beef2f2eb163415ebbee9\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:9f5e06e9d9d3ad4da457aea1a582d56b2cf8a683b30beef2f2eb163415ebbee9\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{\"as_checksum\":\"sha256:25729faa169eb7a9c99b59afcd9f9e26b8d61c1dec903e1428a3cfec30a4f78b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{\"as_checksum\":\"sha256:25729faa169eb7a9c99b59afcd9f9e26b8d61c1dec903e1428a3cfec30a4f78b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0360\",\"properties\":{\"as_checksum\":\"sha256:25729faa169eb7a9c99b59afcd9f9e26b8d61c1dec903e1428a3cfec30a4f78b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0370\",\"properties\":{\"as_checksum\":\"sha256:25729faa169eb7a9c99b59afcd9f9e26b8d61c1dec903e1428a3cfec30a4f78b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0380\",\"properties\":{\"as_checksum\":\"sha256:25729faa169eb7a9c99b59afcd9f9e26b8d61c1dec903e1428a3cfec30a4f78b\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:schema\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:core-api\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"out\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:graph-export\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"out\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:mcp-tools\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"out\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:mcp-tools-http\",\"properties\":{\"format\":\"json_schema\"}}]",
+        "state": "{\"artifact_type\":\"spec\",\"checksum\":\"sha256:25729faa169eb7a9c99b59afcd9f9e26b8d61c1dec903e1428a3cfec30a4f78b\",\"granularity\":\"atomic\",\"last_confirmed_at\":\"2026-08-02\",\"location\":\"schema/verify.yaml\",\"name\":\"verify.yaml\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:schema-verify",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:a-default-is-not-a-difference:cap:defaults-are-not-serialized",
       "node_type": "Snapshot",
       "properties": {
@@ -121700,6 +121774,18 @@
       }
     },
     {
+      "node_id": "ver:the-served-tool-surface-matches-its-goldens",
+      "node_type": "Verification",
+      "properties": {
+        "description": "CONFORMANCE OF AN IMPLEMENTATION AGAINST A PUBLISHED CONTRACT, which is what a check on an Interface asserts and what a check on a Capability does not. `ifc:mcp-tools` promises that `tools/list` returns every served tool with its JSON Schema, and that the field-level contract \"travels with the surface and cannot drift from the build\". This is the check that the promise is still kept: one committed golden per tool in `tools/toolsnaps/`, holding the WHOLE served object — name, description, inputSchema, annotations — compared against the live binary driven over real stdio. 155 goldens as of 2026-08-22. A real surface change becomes a deliberate `--update` that shows up in the diff, named tool by tool.\n\nIT DRIVES THE BUILT BINARY OVER REAL STDIO rather than an in-process client, on AGENTS.md's rule that every other layer is a client we wrote and only the shipped wire format is trustworthy. That is also why it verifies THIS boundary: the stdio transport is the one it actually speaks.\n\n═══ WHY IT EXISTS: a bug FAMILY, not a worry ═══\nThree defects where the surface an agent binds to changed and nothing noticed — a parameter lost its type (BL-28), a stale binary served an old shape (BL-32), prose moved into the wrong envelope (BL-48). The gate turned that family into a mechanical tripwire.\n\n═══ WHAT THIS GREEN DOES NOT COVER, so it is not read wider than it is ═══\n· NOT THE HTTP BOUNDARY. It speaks stdio, so it says nothing about `ifc:mcp-tools-http` — which remains unchecked, and is the half flo2's `ifc:reflow2-design-api` actually pairs with.\n· NOT THE ERROR MODEL. `ifc:mcp-tools` specifies TWO layers a consumer must handle — JSON-RPC transport `error`, and tool-level failure as a normal result carrying `isError: true` — and a golden of the `tools/list` payload cannot see either. The most expensive defect this project has had (v0.38.0 shipping an empty manifest) was precisely a caller reading a reply's shape and not its content, and this check would not have caught it.\n· NOT WHETHER THE SCHEMA IS RIGHT — only that it has not moved. A wrong shape frozen on day one stays green forever.\n\n═══ THE GATE'S OWN DEFECT, found and fixed 2026-08-16 ═══\nIt defaulted `--bin` to `target/debug/reflow2-mcp` and reported \"ALL 149 TOOLSNAPS MATCH\" against whatever stale build was sitting there — a check that could not fail reporting a pass, the shape this project keeps finding. CI was never exposed (ci.yml builds debug in the same job first), so it was a local-developer defect and specifically bit whoever followed the RELEASE PROCEDURE, which builds release and leaves debug behind. Fixed by `chg:the-surface-gate-says-which-binary-it-read`: every verdict now NAMES the binary and its build time and warns when any source is newer. The default must stay debug, because CI builds debug.",
+        "kind": "verification",
+        "level": "system",
+        "method": "test",
+        "name": "Every served tool's name, prose, schema and annotations match a committed golden (tools/toolsnap.py, CI on every push)",
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "ver:the-server-says-when-it-is-stale",
       "node_type": "Verification",
       "properties": {
@@ -121871,7 +121957,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:62b94f17927b49fe6d001d656511f407b4ab24259ca75157ceb787c371aaa4a3",
+  "prev_content_hash": "sha256:01a67a3843fc239b508a08e1558d5cafa23bdfbed946dfca343ee319a6a4df75",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

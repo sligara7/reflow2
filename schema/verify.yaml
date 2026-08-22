@@ -167,10 +167,45 @@ schema:
       # whole Project reads as a modelling slip rather than a need — but it has
       # not been ruled on, and dev_storyflow's export still carries one, so that
       # export still will not import until somebody decides.
-      to: [Capability, Requirement, Artifact, Component, DesignRule, Constraint]
+      #
+      # ⭐ Interface added 2026-08-22, Anthony's call, and it is the THIRD time
+      # this list has been found short — the two above are recorded as the
+      # extraction hint under-enumerating, then the census missing a long tail.
+      # This one could not appear in either, because no edge existed to count:
+      # AN ABSENCE CANNOT SHOW UP IN A SURVEY OF WHAT IS PRESENT.
+      #
+      # THE COST OF IT BEING ABSENT, measured on reflow2's own design: ALL 18
+      # Interfaces carry ZERO incoming VERIFIES — not a low number, the total
+      # absence a banned edge produces — which reads as "nobody wrote one" when
+      # the truth was "nobody could". Three of those are PUBLISHED contracts.
+      # `ifc:mcp-tools` is specified 9 of 9 axes, is the surface every user's
+      # agent binds to, and could not carry a single piece of evidence that it
+      # still offers what it says.
+      #
+      # AND THE CHECK ALREADY EXISTED. `tools/toolsnap.py` freezes every served
+      # tool schema as a committed golden and fails CI when the live binary
+      # disagrees — conformance of an implementation against a published
+      # contract, which is exactly what a check on an Interface asserts. It had
+      # to hang off a Capability instead, so "which of my contracts have no
+      # check?" was unaskable. That is the same argument DesignRule was admitted
+      # on, one node type over.
+      #
+      # WHAT A CHECK ON A CONTRACT MEANS, stated so it is not confused with a
+      # unit test: it asserts the boundary STILL OFFERS WHAT IT SAYS — the
+      # operations, the payload shape, the error model. A Capability's check
+      # asks whether the behaviour works; a contract's asks whether the promise
+      # is still kept. Different evidence, different failure, both worth having.
+      #
+      # WIDENING IS THE SAFE DIRECTION, which the two incidents above were not.
+      # This list going NARROWER orphaned real data and made a committed export
+      # unimportable for four days; going wider refuses less than before and can
+      # orphan nothing. The stamp carries node and edge TYPE NAMES, not target
+      # lists, so this owes no upgrade note.
+      to:
+        [Capability, Requirement, Artifact, Component, DesignRule, Constraint, Interface]
       extraction_hint: >
         A Verification checks a Capability, Artifact, Component, Requirement,
-        DesignRule, or Constraint. Requirement was already true and unlisted here
+        DesignRule, Constraint, or Interface. Requirement was already true and unlisted here
         — three such edges existed while this hint named only three types, which
         is how a hint stops being a description and becomes a guess. Constraint
         was added later for the same reason one level down: it was true in a real

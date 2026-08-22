@@ -270,7 +270,14 @@ impl DesignGraph {
     }
 
     /// `Verification VERIFIES target` — the check and the thing it checks.
-    /// `target_type` is required because the schema allows any target.
+    ///
+    /// `target_type` is required because the target is not inferable from the
+    /// id. It is NOT because "the schema allows any target": that was true
+    /// until 2026-08-08, when `to: "*"` became an enumeration precisely so
+    /// `unverified_enforced_rule` could be asked, and this sentence has been
+    /// stale ever since. The schema is the authority on which types are legal —
+    /// see `schema/verify.yaml`, where the list carries the reasoning for every
+    /// type on it and for `Project` being deliberately off it.
     ///
     /// PROPAGATE reads this edge as Upstream from the Verification, so a failing
     /// check reaches the Capability it covers and the Requirement behind it.
