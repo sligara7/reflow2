@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:05082495ef2fe09abec1aa754f60e81851404090deca889214b3e4d0b7e51911",
+  "content_hash": "sha256:17324d8c336cc538e8e7464e0c25ee421dd63cd2a158020abdce17cde852c841",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -21269,6 +21269,78 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:record-change-can-state-its-axis",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:changelog-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:record-change-can-state-its-axis",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:record-change-can-state-its-axis",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:record-change-can-state-its-axis",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:record-change-can-state-its-axis",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:record-change-can-state-its-axis",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:record-change-can-state-its-axis",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:record-change-can-state-its-axis",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:tools-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:recover-from-tests",
       "properties": {
         "accepted_baseline": false,
@@ -23042,6 +23114,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-axis-has-a-detector",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-axis-has-a-detector",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect-and-ask-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-axis-has-a-detector",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-axis-has-a-detector",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-black-box-mechanism-is-settled",
       "properties": {
         "accepted_baseline": false,
@@ -24673,23 +24781,12 @@
       "edge_type": "CLAIMS",
       "from_id": "who:claude-code",
       "properties": {
-        "claimed_at": "2026-08-21T20:45:00Z",
+        "claimed_at": "2026-08-22T14:05:00Z",
         "depth": 1,
-        "note": "Specifying the read side of the graph as an extractable contract (ifc:graph-read) — step 1 toward swappable, independently testable and independently optimisable modules.",
-        "seat": "asligara7-bitecool:654288:fc683529"
+        "note": "Making the ChangeSubject axis reachable from record_change: ChangeRecord gains a subject field so the caller can state the axis, instead of the generic path hardcoding None with no way to override.",
+        "seat": "asligar-bitecool:1452717:5032b01b"
       },
-      "to_id": "cmp:graph"
-    },
-    {
-      "edge_type": "CLAIMS",
-      "from_id": "who:claude-code",
-      "properties": {
-        "claimed_at": "2026-08-21T23:40:00Z",
-        "depth": 1,
-        "note": "Optimising the single-point-of-failure sweep: the operational network is rebuilt twice per candidate and the graph never changes between candidates.",
-        "seat": "asligara7-bitecool:654288:fc683529"
-      },
-      "to_id": "cmp:heal"
+      "to_id": "cmp:temporal"
     },
     {
       "edge_type": "CONSTRAINS",
@@ -88715,6 +88812,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:record-change-carries-its-axis",
+      "properties": {},
+      "to_id": "cap:change"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:release-without-epoch",
       "properties": {},
       "to_id": "cap:release-pinned-to-time"
@@ -88919,6 +89022,12 @@
       "from_id": "ver:surface",
       "properties": {},
       "to_id": "cap:surface"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:the-axis-has-a-detector",
+      "properties": {},
+      "to_id": "cap:detect"
     },
     {
       "edge_type": "VERIFIES",
@@ -90921,7 +91030,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b19ba3353fcca3ca70c9a1b9326e500d7d411a4ee6aa9a25962102acef2f988f",
+        "checksum": "sha256:075283faf5c7028373ef537f97ef83474930d7ecb1b729bd7b5b051277182061",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/changelog.rs",
         "name": "tests/changelog.rs",
@@ -91295,7 +91404,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:62ca733e6c5de3e199afdecade1a013b2c10f8a13f7ed90a8f5b5ee02339f023",
+        "checksum": "sha256:34cb7e527ded1a2c6fe1c21cfbf658cac269a0863fcf6b6511c60f56b2a84214",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -91308,7 +91417,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:4707652eaaccd0ec29233662cdcd87957f21f7e37bc0cb9724fad3b2758fc392",
+        "checksum": "sha256:af1f8a7726b443bda8f31bf2028dd67d474cce63b5e0d52794ef373fcd0a8dad",
         "location": "getting-started/skills/detect-and-ask/SKILL.md",
         "name": "detect-and-ask/SKILL.md — the ask half of the loop, and now the rule for when NOT to ask",
         "status": "realized"
@@ -91718,7 +91827,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e36d3b386dcad3b33c12ed42a28685b2bcd3a9c8a2ccdd7d2704c230739407c0",
+        "checksum": "sha256:63abe09bfecab794cc4827029e37f3e3a45e08ece5b72881f40a7fec10602641",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/ingest.rs",
         "name": "ingest.rs",
@@ -92557,7 +92666,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:35926bef2b5006c1a50a426f1da370d50c5fdb78263d21d32e93f7fd62e0d182",
+        "checksum": "sha256:1daf25c083f1111aee3f9db9b91e857098f02846108261ed5681f0a8ccb13a25",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -92644,7 +92753,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:91b178074b3a1053f59932fd5c13139335078538356a73b7a6c5a6ad89e55082",
+        "checksum": "sha256:1c8abae071d380316d208d33d7ad8d73565da98cea4cf8f8fe2d42a35901e06a",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -92822,7 +92931,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:89e26530632393d9f8cc4959d9fbe851a6c767424b8d15342d12b0ed881bb50b",
+        "checksum": "sha256:576779d35a052b066c59a9d4d167ef16cbe2250516612d842a987c8829a3f3dc",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "crates/reflow2-core/src/temporal.rs",
@@ -93250,7 +93359,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:592a46c201df19dc7158b5f3ab5b2882680e5a32a6f1295e6cc3e5521ecfd25f",
+        "checksum": "sha256:9fc25917518ce6f7c9aeab8613363229137ff1491a7cb1654ec80d36c3c9c325",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -99999,6 +100108,17 @@
       }
     },
     {
+      "node_id": "chg:record-change-can-state-its-axis",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "`record_change` can state its axis — ChangeRecord gains `subject`, so the generic change path stops being the one door the ChangeSubject field cannot be reached through",
+        "rationale": "The existing comment in `record_change` argues correctly that the generic path must not INFER an axis, because the mapping from change_type is not total. It then draws the wrong conclusion — that the axis must be absent — when the available move is to let the CALLER state it. Not-inferring and not-askable are different things, and conflating them is what left 468 of 593 change events with no axis. Adding the field to the struct rather than defaulting it makes every one of the 19 construction sites answer the question explicitly, which is the point of the axis.",
+        "subject": "system",
+        "summary": "`ChangeSubject {system, record}` was added to the ChangeEvent schema and to `add_change_event`, but `ChangeRecord` — the struct `record_change` takes — carries no `subject` field, so `record_change` passes `None` unconditionally and no caller can say otherwise. The artifact-checksum paths were NOT the gap: `set_artifact_checksum` already stamps the axis itself from the disposition (`design_holds` -> system, `baseline_established` -> record) and `design_updated` inherits it from the event the caller already wrote. `record_change` is the only remaining door. Fix: `ChangeRecord` gains `subject: Option<ChangeSubject>`, `record_change` passes it through, and `RecordChangeReq` exposes it on the served surface."
+      }
+    },
+    {
       "node_id": "chg:recover-from-tests",
       "node_type": "ChangeEvent",
       "properties": {
@@ -100447,6 +100567,17 @@
       "properties": {
         "change_type": "new_feature",
         "name": "BL-198 step 1 landed by REMOVING `default:` from ten properties, not by changing code. The route changed on a measurement: `default:` in the schema YAML is not documentation — dynograph-core applies it at WRITE time (schema.rs:507 inserts any missing property that declares one), which is where 3,207 stored values across 59% of the design came from. So export-side suppression could never have worked — the store cannot tell a chosen value from an injected one — and the real fix is one YAML token per property. FORWARD-ONLY: nodes already written keep what they hold, so the export does not churn and compare_designs sees nothing; the phantom-diff cost this epoch was scoped around does not arise on this route at all. TEN of 81 removed, 71 kept, and the RATIO is the finding: three mechanically-obvious candidates turned out to be meaningful and were kept on evidence."
+      }
+    },
+    {
+      "node_id": "chg:the-axis-has-a-detector",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The third leg — `change_axis_unstated` asks about changes that never said what kind of change they were",
+        "rationale": "Anthony, for the third time: reflow2 is a tool for other projects, not about itself. The typed tool and the instruction shipped in #293 and the detector was deferred on the grounds that 468 legacy events would be noise — but those 468 are REFLOW2'S OWN graph, and a team adopting reflow2 next week has none of them. That reasoning used a fact about the self-host to decide what a user's project gets, which is the failure mode he has now named three times. The noise concern was also simply wrong on the mechanics: the aggregate-gap machinery (`is_aggregate`) already collapses any population into ONE finding with a stable id, so 468 events produce one question, not 468. Without this leg the field ships reachable and stays empty in every project forever, invisible to the loop that exists to surface gaps.",
+        "subject": "system",
+        "summary": "A new aggregate GapSource, `ChangeAxisUnstated`, firing on ChangeEvents that carry no `subject`. Reports its denominator (468 of 594 on this design), severity 0.30, one acknowledgement settling the practice. Written deliberately as an ABSENCE check so it fires where the vocabulary has NEVER been used — the case `decomposition_coverage` structurally cannot see, because that one keys on a node already carrying the edge it is about."
       }
     },
     {
@@ -121358,6 +121489,20 @@
       }
     },
     {
+      "node_id": "ver:record-change-carries-its-axis",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Seven cases across two files. CORE (crates/reflow2-core/tests/record_change_can_state_its_axis.rs, 3): a subject stated on ChangeRecord reaches the stored event, on BOTH values so the check cannot pass against a hardcoded one, and an omitted subject stays absent. SERVED SURFACE (crates/reflow2-mcp/tests/record_change_carries_the_axis.rs, 4): the same three through the tool, plus a value outside the enum refused with the parameter named and NOTHING written — a partial event would be worse than the refusal. THE SPLIT IS THE POINT, NOT DUPLICATION: the original defect was a field that existed in Rust and could not be reached by the caller who needed it, so a core-only check would re-create exactly the condition being fixed. WHAT IS DELIBERATELY ASSERTED AS ABSENCE: the third case in each file pins that `resync` — the change type whose axis genuinely cannot be derived — still stores no subject when none was given. Inference is the failure this field exists to avoid, and a default value would reintroduce it silently.",
+        "findings": "7 of 7 passing. Run against the built binary as well as the library: the served cases go through ReflowService, and toolsnap confirms `subject` is on the published record_change schema (one golden changed, nine lines, nothing else moved). The refusal case was checked to reject `sistem` by naming \"change subject\" and to leave no ChangeEvent behind.",
+        "kind": "verification",
+        "last_run_at": "2026-08-22T10:30:00Z",
+        "level": "integration",
+        "method": "test",
+        "name": "record_change carries the caller's axis, at the core and at the served tool",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:release-without-epoch",
       "node_type": "Verification",
       "properties": {
@@ -121724,6 +121869,20 @@
       }
     },
     {
+      "node_id": "ver:the-axis-has-a-detector",
+      "node_type": "Verification",
+      "properties": {
+        "description": "6 cases, crates/reflow2-core/tests/change_axis_unstated.rs. THE LOAD-BEARING ONE IS ZERO USAGE: a design with changes and no axis on any of them must be asked, which is precisely what a consistency-shaped check cannot see — decomposition_coverage keys on a Requirement already carrying a DECOMPOSES edge, so a project that never decomposed reads clean with all three legs apparently present. Also pinned: the complement (a fully stated design is not asked, so the detector cannot pass by always firing), silence on a design with no changes at all, the partial case reporting only the unstated ones, and the DENOMINATOR appearing in the title, because a numerator alone cannot distinguish a drifting design from one that just started. THE AGGREGATE PROPERTY HAS ITS OWN CASE: the gap id must survive the population growing, or the user's standing acknowledgement is undone by the next change anybody records — the trap unvalidated_capability fell into and was re-acknowledged about twenty times for, and sharper here because ChangeEvents are the fastest-growing node type in any active design. The sixth case pins that a blank axis cannot be written at all (the schema enum refuses it on every path including import_graph), which is what licenses the detector to be a plain presence check rather than carrying an emptiness guard that could never fire.",
+        "findings": "6 of 6 passing. Also exercised against this design's live graph rather than only fixtures: it produced ONE gap reading \"468 of 594 recorded change(s) do not say what kind of change they were\", at severity 0.30. That run is the evidence against the reason this detector was nearly not built — 468 unstated events yield one question, not 468, because the aggregate keying already existed.",
+        "kind": "verification",
+        "last_run_at": "2026-08-22T14:58:00Z",
+        "level": "integration",
+        "method": "test",
+        "name": "change_axis_unstated fires at zero usage, aggregates, and stays silent once answered",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-capture-skills-do-not-hand-the-vocabulary-back",
       "node_type": "Verification",
       "properties": {
@@ -122047,7 +122206,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e0cbee9d7dc2c5673f6c137ce0c22a353e9b86057568b7019521b6dd6909b568",
+  "prev_content_hash": "sha256:05082495ef2fe09abec1aa754f60e81851404090deca889214b3e4d0b7e51911",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
