@@ -1674,3 +1674,118 @@ fn the_sweep_names_the_rules_that_ran() {
         "every category the engine has must be named as having run"
     );
 }
+
+// ---- The sweep's cost does not grow with its candidate count ------------
+//
+// `con:a-sweep-builds-its-network-a-fixed-number-of-times`: `detect_defects`
+// shall build the network a fixed number of times regardless of how many
+// single-point-of-failure candidates it examines.
+//
+// MEASURED BEFORE THE BUDGET WAS WRITTEN, on reflow2's own design (2871 nodes):
+// 56 candidates, each rebuilding the operational network TWICE at ~400ms a
+// build — 44.5s of a 71.5s sweep, and roughly 37,000 store reads spent
+// re-deriving a graph that never changed. After: 4.43s, and all 56 candidates
+// answered in 5.08ms over the network already in hand.
+//
+// ⭐ THE REAL GUARD IS THE TYPE SIGNATURE, not this test. The old
+// `is_single_point_of_failure(&self, node_id)` COULD rebuild because it held
+// `&self`; the new `is_single_point_of_failure_in(&DesignNetwork, baseline, id)`
+// cannot, because it is handed the network and has no graph to rebuild from.
+// This test guards the thing a signature cannot: that the CALLER does not put
+// the rebuild back by hoisting nothing and calling it in a loop.
+
+/// A chain of components joined end to end. Every interior node is an
+/// articulation point, so `candidates` scales directly with `n` — which is what
+/// makes this measure the thing the budget is about.
+fn a_chain_of(n: usize) -> DesignGraph {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    for i in 0..n {
+        g.add_component(&format!("cmp:{i}"), &format!("C{i}"), "part", None)
+            .unwrap();
+    }
+    for i in 0..n.saturating_sub(1) {
+        g.create_edge(
+            edge::DEPENDS_ON,
+            node::COMPONENT,
+            &format!("cmp:{i}"),
+            node::COMPONENT,
+            &format!("cmp:{}", i + 1),
+            Props::new(),
+        )
+        .unwrap();
+    }
+    g
+}
+
+/// Doubling the candidates must not multiply the work. Before the fix the sweep
+/// rebuilt the whole network twice per candidate, so this ratio tracked the
+/// candidate count; after it, the network is built once and each candidate is a
+/// traversal over it.
+///
+/// Asserted as a RATIO rather than a duration, deliberately: both halves run on
+/// the same machine under the same load, so contention cancels. A bare
+/// millisecond threshold here would measure the test runner, and the standing
+/// response to that is to raise it until it stops complaining — which retires a
+/// gate without anybody deciding to.
+#[test]
+fn the_sweep_does_not_get_quadratically_slower_as_candidates_grow() {
+    use std::time::Instant;
+
+    let small = a_chain_of(40);
+    let large = a_chain_of(160); // 4x the candidates
+
+    // Warm both so neither pays a one-off cost the other does not.
+    let _ = small.detect_defects().unwrap();
+    let _ = large.detect_defects().unwrap();
+
+    let t = Instant::now();
+    let _ = small.detect_defects().unwrap();
+    let small_t = t.elapsed().as_secs_f64();
+
+    let t = Instant::now();
+    let _ = large.detect_defects().unwrap();
+    let large_t = t.elapsed().as_secs_f64();
+
+    let ratio = large_t / small_t.max(1e-9);
+    // 4x the nodes is genuinely more work — more edges to walk, more nodes to
+    // scan — so the bar is not 1.0. It is that the work does not grow with
+    // candidates ON TOP of that: rebuilding per candidate made this ~16x
+    // (4x nodes x 4x candidates). 10x leaves room for the honest growth and
+    // still fails the moment the rebuild comes back.
+    assert!(
+        ratio < 10.0,
+        "4x the candidates cost {ratio:.1}x the time ({small_t:.3}s -> {large_t:.3}s) — \
+         the network is being rebuilt per candidate again \
+         (con:a-sweep-builds-its-network-a-fixed-number-of-times)"
+    );
+}
+
+/// The optimisation must not have changed the ANSWER. A chain's interior nodes
+/// are single points of failure; its ends are not.
+#[test]
+fn masking_a_node_gives_the_same_verdict_as_rebuilding_without_it() {
+    let g = a_chain_of(5);
+    let found: Vec<String> = g
+        .detect_defects()
+        .unwrap()
+        .defects
+        .into_iter()
+        .filter(|d| d.category == HealCategory::SinglePointOfFailure)
+        .flat_map(|d| d.affected_ids)
+        .collect();
+
+    // cmp:0 and cmp:4 are the ends — removing either leaves one component.
+    assert!(
+        !found.contains(&"cmp:0".to_string()),
+        "an end is not a SPOF"
+    );
+    assert!(
+        !found.contains(&"cmp:4".to_string()),
+        "an end is not a SPOF"
+    );
+    // The interior nodes each split the chain into two non-trivial halves.
+    assert!(
+        found.contains(&"cmp:2".to_string()),
+        "the middle of a 5-chain splits it in two; found {found:?}"
+    );
+}

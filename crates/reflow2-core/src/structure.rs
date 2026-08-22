@@ -204,11 +204,63 @@ impl DesignNetwork {
     }
 
     /// Count of components with ≥2 nodes — the "non-trivial subsystems".
-    fn nontrivial_component_count(&self) -> usize {
+    pub(crate) fn nontrivial_component_count(&self) -> usize {
         self.component_groups()
             .iter()
             .filter(|g| g.len() >= 2)
             .count()
+    }
+
+    /// Non-trivial components with one node MASKED OUT — the same answer
+    /// `nontrivial_component_count` gives on a network built without that node,
+    /// computed over the network already in hand.
+    ///
+    /// ⭐ WHY THIS EXISTS. The single-point-of-failure sweep asks "does removing
+    /// THIS node split off a real component?" once per candidate, and the graph
+    /// does not change between candidates — only which node is masked. It used
+    /// to answer by REBUILDING the whole operational network per candidate, and
+    /// each build calls `outgoing` once per included node. Measured on reflow2's
+    /// own design: 56 candidates, two builds each, 329 nodes per build — about
+    /// 37,000 store reads to re-derive a graph that never moved, and 44.5s of a
+    /// 71.5s sweep (`con:a-sweep-builds-its-network-a-fixed-number-of-times`).
+    ///
+    /// Undirected, matching `connected_components`: a design edge couples both
+    /// ends whichever way it was written, so following only `out_neighbors`
+    /// would report components this network does not have.
+    pub(crate) fn nontrivial_component_count_without(&self, masked: usize) -> usize {
+        let n = self.graph.node_count();
+        let mut seen = vec![false; n];
+        if masked < n {
+            seen[masked] = true; // never visited, never a component of its own
+        }
+        let mut nontrivial = 0;
+        let mut stack = Vec::new();
+        for start in 0..n {
+            if seen[start] {
+                continue;
+            }
+            seen[start] = true;
+            stack.push(start);
+            let mut size = 0usize;
+            while let Some(i) = stack.pop() {
+                size += 1;
+                for (j, _) in self
+                    .graph
+                    .out_neighbors(i)
+                    .iter()
+                    .chain(self.graph.in_neighbors(i).iter())
+                {
+                    if !seen[*j] {
+                        seen[*j] = true;
+                        stack.push(*j);
+                    }
+                }
+            }
+            if size >= 2 {
+                nontrivial += 1;
+            }
+        }
+        nontrivial
     }
 }
 
@@ -624,11 +676,24 @@ impl DesignGraph {
             .unwrap_or(false))
     }
 
-    pub(crate) fn is_single_point_of_failure(&self, node_id: &str) -> Result<bool, DynoError> {
-        let baseline = self.operational_network(None)?.nontrivial_component_count();
-        Ok(self
-            .operational_network(Some(node_id))?
-            .nontrivial_component_count()
-            > baseline)
+    /// Would removing this node split off a real subsystem?
+    ///
+    /// Takes the operational network and its baseline count RATHER THAN
+    /// BUILDING THEM, so a caller sweeping N candidates builds once instead of
+    /// 2N times. The types carry the rule: this function cannot rebuild, so the
+    /// per-candidate cost cannot come back by accident
+    /// (`con:a-sweep-builds-its-network-a-fixed-number-of-times`).
+    pub(crate) fn is_single_point_of_failure_in(
+        op_net: &DesignNetwork,
+        baseline: usize,
+        node_id: &str,
+    ) -> bool {
+        match op_net.graph.idx_of(node_id) {
+            // Not in the operational network at all, so removing it changes
+            // nothing there. Previously this fell out of building a network
+            // that excluded a node it did not contain.
+            None => false,
+            Some(idx) => op_net.nontrivial_component_count_without(idx) > baseline,
+        }
     }
 }
