@@ -488,12 +488,57 @@ pub enum GapSource {
     /// that ran clean — the trap `loop_status` already refuses an unknown
     /// contributor_id to avoid.
     InternalOnlyDelivery,
+    /// An Interface designated `published` or `both` that no passing check
+    /// verifies — a promise others are entitled to rely on, with no evidence
+    /// it holds.
+    ///
+    /// The sibling of `UnverifiedEnforcedRule`, one layer over. Both name an
+    /// obligation nobody can observe compliance with; the rule claims the power
+    /// to fail a build, and a published contract claims a consumer may depend
+    /// on it. Neither can ride a carrier one hop away: an interface is not
+    /// allocated anywhere, so either something checks it or nothing does.
+    ///
+    /// # It could not have existed before 2026-08-21
+    ///
+    /// `VERIFIES` could not reach an `Interface` at all until then
+    /// (`fact:a-contract-is-the-one-thing-reflow2-cannot-attach-evidence-to`),
+    /// so every interface in every design read as unverified and a detector
+    /// would have fired on all of them, correctly and uselessly. The edge
+    /// landed, and exactly ONE check has been drawn since — which is what a
+    /// vocabulary with no detector looks like from the outside.
+    ///
+    /// # Narrow by construction
+    ///
+    /// It fires only on what a design has already CHOSEN to publish, so it
+    /// cannot nag a design that has not started. `internal` boundaries are
+    /// plumbing the owner may change freely and are never asked about here.
+    UnverifiedPublishedContract,
+    /// The design has boundaries and has designated NONE of them `published` —
+    /// so this project either publishes nothing on purpose, or nobody has
+    /// classified its boundaries, and `Interface.designation` cannot tell those
+    /// apart because it DEFAULTS to `internal`.
+    ///
+    /// # Why the default forces a separate finding
+    ///
+    /// `Artifact.audience` is undefaulted, so silence there is legible as
+    /// silence. `designation` is not: an unclassified boundary and a
+    /// deliberately internal one are stored identically, which the schema says
+    /// in as many words and which `pair_designs` already refuses to paper over.
+    /// So `UnverifiedPublishedContract` returning zero is genuinely ambiguous,
+    /// and reporting it as clean would be the "nothing to run on reads like a
+    /// pass" failure the loop refuses everywhere else.
+    ///
+    /// ONE aggregate finding, low severity, acknowledgeable — never one per
+    /// boundary. The question is about the project's posture, asked once.
+    NoPublishedBoundary,
 }
 
 impl GapSource {
     /// Stable snake_case key (used in the gap id hash and for display).
     pub fn as_str(self) -> &'static str {
         match self {
+            GapSource::UnverifiedPublishedContract => "unverified_published_contract",
+            GapSource::NoPublishedBoundary => "no_published_boundary",
             GapSource::DesignWithoutIntent => "design_without_intent",
             GapSource::ConceptWithoutDesign => "concept_without_design",
             GapSource::DesignWithoutBuild => "design_without_build",
@@ -596,6 +641,26 @@ impl GapSource {
             // about ONE need, and must not also accept the next requirement
             // that lands in the same state.
             GapSource::InternalOnlyDelivery => false,
+            // PER-INTERFACE, same reason: "this boundary is exercised by a
+            // conformance suite we run elsewhere" is a claim about ONE
+            // contract, and must not silently cover the next surface this
+            // design publishes.
+            GapSource::UnverifiedPublishedContract => false,
+            // AGGREGATE — a claim about POSTURE rather than about any node.
+            // "This design publishes nothing on purpose" must survive somebody
+            // adding a boundary, or the acknowledgement expires on every write.
+            //
+            // 🛑 AND THIS DECLARATION IS CURRENTLY UNOBSERVABLE, WHICH IS
+            // RECORDED RATHER THAN HIDDEN. Flipping it to `false` fails no
+            // test, because the finding names NO nodes: `gap_id`'s per-node
+            // branch hashes an empty list, so the id is stable either way. It
+            // is kept at `true` because it states what the finding IS, and
+            // because the day anyone gives it `affected_ids` the flag becomes
+            // the only thing keeping the acknowledgement alive — but a reader
+            // should not mistake it for protection that is being exercised
+            // today. Found by mutation, like the dead guard in
+            // `detect_internal_only_delivery` above.
+            GapSource::NoPublishedBoundary => true,
             // Everything else names the nodes the finding is actually about, so a
             // change to that set SHOULD expire the judgement. Listed exhaustively
             // rather than with a wildcard: a new aggregate detector must come here
@@ -1359,6 +1424,10 @@ impl DesignGraph {
         // a consumer can reach delivers. Silent unless the design has actually
         // declared some audiences.
         self.detect_internal_only_delivery(&mut gaps)?;
+        // A promise others may rely on, with nothing showing it holds — and,
+        // when nothing is published at all, the ambiguity that a defaulted
+        // `designation` creates, asked once rather than assumed away.
+        self.detect_unverified_published_contracts(&mut gaps)?;
 
         gaps.sort_by(|a, b| {
             // `false` sorts before `true`, so "has anchors" comes first.
@@ -3517,6 +3586,131 @@ impl DesignGraph {
         Ok(())
     }
 
+    /// A published contract with no passing check, and the posture question
+    /// when a design has published nothing at all.
+    ///
+    /// Two findings on purpose, because "prove this promise" and "have you
+    /// decided what you publish?" are different questions — the same split
+    /// `UnverifiedEnforcedRule` and `UnstatedRuleEnforcement` already draw, and
+    /// collapsing them there was what made the old reading wrong.
+    fn detect_unverified_published_contracts(
+        &self,
+        gaps: &mut Vec<GapCandidate>,
+    ) -> Result<(), DynoError> {
+        let interfaces = self.scan_nodes(node::INTERFACE)?;
+        if interfaces.is_empty() {
+            // A design with no boundaries at all has not declined to publish
+            // one; it has not got there. Same reasoning as the barely-started
+            // note in `vocabulary_coverage` — an empty design must not be shown
+            // a wall of red on its first read.
+            return Ok(());
+        }
+
+        // `published` OFFERS the contract; `both` offers AND needs one. Both
+        // are promises somebody outside may rely on, so both are billed.
+        // `required` is a promise somebody ELSE made and is not this design's
+        // to prove; `internal` is plumbing the owner may change freely.
+        let published: Vec<_> = interfaces
+            .iter()
+            .filter(|n| {
+                matches!(
+                    n.properties
+                        .get("designation")
+                        .and_then(dynograph_core::Value::as_str),
+                    Some("published" | "both")
+                )
+            })
+            .collect();
+
+        if published.is_empty() {
+            let total = interfaces.len();
+            gaps.push(GapCandidate {
+                id: gap_id(GapSource::NoPublishedBoundary, &[]),
+                gap_source: GapSource::NoPublishedBoundary,
+                scope: GapScope::Project,
+                // Low, and aggregate. Nothing here is wrong — publishing
+                // nothing is a legitimate posture for a design with no
+                // consumers. What is missing is whether anybody chose it.
+                severity: 0.3,
+                title: format!(
+                    "{total} boundary(ies) recorded and none is designated published — deliberate, \
+                     or unclassified?"
+                ),
+                description: format!(
+                    "This design records {total} boundary(ies) and designates none of them as \
+                     published, so nothing here promises anything to anyone outside. That may be \
+                     exactly right. But `designation` DEFAULTS to internal, so a boundary nobody \
+                     classified and one deliberately kept internal are stored identically, and \
+                     this cannot tell them apart. Which is it? Mark the ones others may rely on \
+                     with set_interface_designation, or acknowledge this once if this design \
+                     publishes nothing on purpose."
+                ),
+                affected_ids: Vec::new(),
+                suggested_depth: 1,
+                evidence: format!(
+                    "{total} Interface node(s), 0 with designation `published` or `both`. The \
+                     property defaults to `internal`, so this count cannot distinguish a settled \
+                     choice from an unclassified boundary — which is why the question is asked \
+                     rather than answered."
+                ),
+            });
+            return Ok(());
+        }
+
+        for n in published {
+            // `dec:passing-is-verified`: a `planned` check must not silence the
+            // question, or this becomes the green-washing it exists to catch.
+            if self.has_passing_verification(&n.node_id)? {
+                continue;
+            }
+            let name = node_name(n);
+            let attached = self.incoming(&n.node_id, Some(edge::VERIFIES))?.len();
+            gaps.push(GapCandidate {
+                id: gap_id(
+                    GapSource::UnverifiedPublishedContract,
+                    std::slice::from_ref(&n.node_id),
+                ),
+                gap_source: GapSource::UnverifiedPublishedContract,
+                scope: GapScope::Project,
+                // Level with `unverified_enforced_rule` (0.6) and above
+                // `unverified_capability` (0.55), on that finding's own
+                // reasoning: an unproven capability is work not yet confirmed,
+                // while this is an obligation to somebody else that nobody can
+                // observe compliance with. Publishing is what raises it — an
+                // internal boundary with no check is not this finding.
+                severity: 0.6,
+                title: format!("Nothing shows the published contract “{name}” holds"),
+                description: format!(
+                    "“{name}” is designated published — this design offers it and others are \
+                     entitled to rely on it — but no passing check verifies it. What exercises \
+                     this boundary? If it is not actually a published surface, \
+                     set_interface_designation says so."
+                ),
+                affected_ids: vec![n.node_id.clone()],
+                suggested_depth: 2,
+                evidence: if attached == 0 {
+                    format!(
+                        "Interface '{}' is designated `{}` and has 0 incoming VERIFIES. Note that \
+                         VERIFIES could not reach an Interface at all before 2026-08-21, so an \
+                         older design has none for a reason that is not neglect.",
+                        n.node_id,
+                        n.properties
+                            .get("designation")
+                            .and_then(dynograph_core::Value::as_str)
+                            .unwrap_or("published"),
+                    )
+                } else {
+                    format!(
+                        "Interface '{}' has {attached} incoming VERIFIES, none of them passing; a \
+                         check that has not passed shows nothing.",
+                        n.node_id
+                    )
+                },
+            });
+        }
+        Ok(())
+    }
+
     /// A Requirement delivered only by artifacts declared `internal`
     /// (`GapSource::InternalOnlyDelivery`).
     ///
@@ -3534,11 +3728,24 @@ impl DesignGraph {
     /// declared ones, and the count of undeclared siblings goes in the evidence
     /// where a reader can weigh it.
     ///
-    /// # Nothing to run on is not clean
+    /// # Nothing to run on is not clean — and where that is actually reported
     ///
     /// If the design declares no audience anywhere, this returns without a
-    /// finding — and that silence is reported by `audience_population` rather
-    /// than left to look like a pass.
+    /// finding.
+    ///
+    /// 🛑 THIS COMMENT USED TO SAY the silence was "reported by
+    /// `audience_population`". **No such thing has ever existed** — the name
+    /// appeared in this sentence and nowhere else in the codebase, and it was
+    /// found by grepping for it while building the sibling detector below.
+    /// A doc comment naming a mechanism that does not exist is worse than one
+    /// admitting a hole: it answers the reviewer's question and stops the
+    /// search. Corrected 2026-08-22 rather than deleted, because the false
+    /// claim is the interesting part.
+    ///
+    /// What is true: the silence is REPORTABLE, not REPORTED. Since #296
+    /// `vocabulary_coverage` names an unused `Artifact.audience` in its
+    /// `unused` list — but that list is withheld unless asked for, so nothing
+    /// puts it in front of a reader unprompted. See the note in the body.
     fn detect_internal_only_delivery(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
         let mut audience_of: std::collections::HashMap<String, String> =
             std::collections::HashMap::new();
