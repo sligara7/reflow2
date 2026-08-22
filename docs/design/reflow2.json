@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:9f46df87023c1c6b3ce9730aa50731d6ba3810891da764d1c1a35f7377ace83a",
+  "content_hash": "sha256:aa4969af2e4a36e7914304878691172fc0aa73577fa6965442687ba4411e567c",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -9301,8 +9301,8 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-do-another-projects-principles-belong-in-reflow2-or-only-the-machinery",
       "properties": {
-        "acted_at": "2026-08-22T15:30:00Z",
-        "role": "author"
+        "acted_at": "2026-08-22T16:25:00Z",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -12264,6 +12264,51 @@
         "action": "modified"
       },
       "to_id": "art:schema-verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-deliverable-declares-who-it-reaches",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-deliverable-declares-who-it-reaches",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-deliverable-declares-who-it-reaches",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-build"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-deliverable-declares-who-it-reaches",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-deliverable-declares-who-it-reaches",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-built"
     },
     {
       "edge_type": "CHANGED",
@@ -29122,6 +29167,14 @@
       "to_id": "dec:idea-compose-both-chains-as-one-stress-test"
     },
     {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "rule:fixes-are-judged-by-the-third-party",
+      "properties": {
+        "evidence": "Merged 2026-08-22 on Anthony's ruling. This 2026-08-06 statement is the earlier form; the survivor carries his own wording and absorbed this one's worked examples and its where-does-the-fix-land test verbatim. Neither was authoritative while both stood — a live instance of req:a-rule-knows-where-it-is-authoritatively-stated. SUPERSEDES was tried first and is not a legal DesignRule-to-DesignRule edge; EVOLVES_INTO is the honest relation anyway, since nothing here was withdrawn, only grown into one place. Retired on the record rather than deleted: it was true when written."
+      },
+      "to_id": "rule:reflow2-is-built-for-other-projects-not-for-itself"
+    },
+    {
       "edge_type": "GOVERNED_BY",
       "from_id": "art:hxm-program-feedback-2026-08-19",
       "properties": {
@@ -31819,6 +31872,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:plan-increments",
+      "properties": {},
+      "to_id": "rule:reflow2-is-built-for-other-projects-not-for-itself"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:plan-movement-recorded",
       "properties": {},
       "to_id": "decision:ack:ec1f9f94c89d2f67"
@@ -33555,6 +33614,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "dec:backup-belongs-to-the-consumer",
+      "properties": {},
+      "to_id": "rule:reflow2-is-built-for-other-projects-not-for-itself"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "dec:central-host",
       "properties": {},
       "to_id": "rule:no-foreclosure"
@@ -34223,6 +34288,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:design-dependencies-declared",
+      "properties": {},
+      "to_id": "rule:reflow2-is-built-for-other-projects-not-for-itself"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:design-identity",
       "properties": {},
       "to_id": "dec:identity-out-of-band"
@@ -34547,6 +34618,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:skill-use-survives-a-long-session",
+      "properties": {},
+      "to_id": "rule:reflow2-is-built-for-other-projects-not-for-itself"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "req:snapshot-per-revision-not-per-epoch",
       "properties": {},
       "to_id": "dec:snapshot-id-per-revision"
@@ -34661,6 +34738,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "req:work-says-whether-it-reaches-a-consumer",
+      "properties": {},
+      "to_id": "rule:reflow2-is-built-for-other-projects-not-for-itself"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "rule:design-intent-moves-only-on-the-owners-word",
       "properties": {},
       "to_id": "dec:the-authority-check-guards-forward-not-backward"
@@ -34759,6 +34842,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "ver:check-reconciles-dependencies",
+      "properties": {},
+      "to_id": "rule:reflow2-is-built-for-other-projects-not-for-itself"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "ver:constructors-preserve",
       "properties": {},
       "to_id": "req:no-silent-fallback"
@@ -34780,6 +34869,12 @@
       "from_id": "ver:toml-fallback-reader",
       "properties": {},
       "to_id": "rule:fixes-are-judged-by-the-third-party"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "ver:toml-fallback-reader",
+      "properties": {},
+      "to_id": "rule:reflow2-is-built-for-other-projects-not-for-itself"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -86730,6 +86825,12 @@
       "to_id": "req:what-next"
     },
     {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:work-declares-who-it-reaches",
+      "properties": {},
+      "to_id": "req:work-says-whether-it-reaches-a-consumer"
+    },
+    {
       "edge_type": "SCHEDULED_FOR",
       "from_id": "cap:arrival-delta",
       "properties": {
@@ -89287,6 +89388,12 @@
       "to_id": "cap:what-next"
     },
     {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:work-declares-who-it-reaches",
+      "properties": {},
+      "to_id": "cap:work-declares-who-it-reaches"
+    },
+    {
       "edge_type": "VIOLATES",
       "from_id": "cap:corpus-ingest",
       "properties": {
@@ -90971,7 +91078,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ccdb4802d93e190fd79fc4d72cbdd89022c0470805f3150ecf2ba9a131169244",
+        "checksum": "sha256:7ba76e31fce39525425a2c8ae8189f9d250b978e9f87702c1f8441ac6c8239c9",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/artifact.rs",
         "name": "artifact.rs",
@@ -91475,7 +91582,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:34cb7e527ded1a2c6fe1c21cfbf658cac269a0863fcf6b6511c60f56b2a84214",
+        "checksum": "sha256:250d678e31216340fc45c5734375a6ede8f081fbbbbc829545edc91e1cead493",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -92466,7 +92573,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:4c6d9b4d2298db40893e54004d41009a45bfd6757adc7dbd4cc510f39712a083",
+        "checksum": "sha256:2c9f47a63f9390766d363ca439ee03137eaf6001dc146d672b745e024feb43f5",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/build.yaml",
@@ -92737,7 +92844,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1daf25c083f1111aee3f9db9b91e857098f02846108261ed5681f0a8ccb13a25",
+        "checksum": "sha256:9411259ccee50fd2056e2cf6f8c990a38d32345552b76c6faf5174804036fa9e",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -93327,7 +93434,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ba6f62e02f9872a33d62483cc0aeacaa3fd2ca93cbcb5616771165ccf02edb8d",
+        "checksum": "sha256:99946023af510211b4f6a9199e312acb6bf9e7b4751f26efafbbdf0bdbd23791",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/built.rs",
         "name": "tools/built.rs",
@@ -96124,6 +96231,16 @@
       }
     },
     {
+      "node_id": "cap:work-declares-who-it-reaches",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`Artifact.audience` records `consumer` or `internal`, set through `set_artifact_intent` alongside granularity and volatility. The `internal_only_delivery` finding then names a Requirement whose every DECLARED delivering artifact is internal, with none declared consumer. Per-requirement rather than aggregate, because accepting \"this need is served by our own tooling on purpose\" is a claim about one need. Never inferred from a path: a directory rule would encode one project's layout, which is the failure the requirement exists to prevent. An undeclared artifact is evidence of neither side and its count goes in the evidence. KNOWN INCOMPLETE: a design that has declared no audience anywhere is silent in every surfaced report, because vocabulary_coverage names unused node and edge TYPES but never unused PROPERTIES.",
+        "name": "A deliverable declares who it is for, and a need nothing consumer-facing delivers is reported",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "chg:a-budget-is-what-makes-optimisation-stop",
       "node_type": "ChangeEvent",
       "properties": {
@@ -96176,6 +96293,17 @@
       "properties": {
         "change_type": "new_feature",
         "name": "VERIFIES' target enumeration admits Interface — all 18 contracts carried zero checks because the edge was illegal, while the check for one of them already existed and had to hang off a Capability"
+      }
+    },
+    {
+      "node_id": "chg:a-deliverable-declares-who-it-reaches",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "A deliverable declares who it is for — `Artifact.audience`, and a need nothing consumer-facing delivers is reported",
+        "rationale": "Anthony's ruling: merge the duplicate rules, and build the proxy detector advisory rather than blocking. The requirement exists because a rule binds only the people building reflow2 while a requirement makes it something reflow2 DOES for every project — the split `req:a-fix-says-whether-it-corrected-the-cause` established at his request on 2026-08-17. NEVER PATH-DERIVED: a first sketch classified by directory, which encodes one project's layout and is the exact failure the rule forbids. MUTATION-CHECKED THREE WAYS; the third mutation caught nothing, which proved a guard dead and exposed that `vocabulary_coverage` names unused node and edge TYPES but never PROPERTIES — recorded as an open hole rather than closed.",
+        "subject": "system",
+        "summary": "`Artifact.audience` (`consumer` | `internal`) added to the schema, reachable through `set_artifact_intent` beside granularity and volatility, refused outside the enum. New `internal_only_delivery` finding names a Requirement whose every DECLARED delivering artifact is internal with none declared consumer — per-requirement, severity 0.45. Also merges the two duplicate DesignRules stating that reflow2 is built for other projects, moving all six governance edges to the survivor, and adds `req:work-says-whether-it-reaches-a-consumer` as the product form of that rule."
       }
     },
     {
@@ -103775,11 +103903,11 @@
       "node_id": "dec:idea-do-another-projects-principles-belong-in-reflow2-or-only-the-machinery",
       "node_type": "Decision",
       "properties": {
-        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony brought StoryFlow's \"Nine Principles, Paid For\" (art:storyflow-engineering-principles) and asked how to integrate the lessons into reflow2. This node holds the governing question; the sibling ideas hold the specific mechanisms.\n\nOPTION A — SHIP THE PRINCIPLES. reflow2 seeds a new project with a starter set of DesignRules, the way it already serves skills. Cheap, immediately useful to someone with no rules of their own, and it makes the vocabulary concrete rather than empty. AGAINST: they are ONE project's rules, paid for by ONE project's incidents. A beamline control system and a story engine do not share \"observe it live in a browser\". Shipping them asserts reflow2 knows what a user's engineering standards should be, a much larger claim than reflow2 makes anywhere else.\n\nOPTION B — SHIP THE MACHINERY ONLY. reflow2 gains what the document's own closing note names as the leverage: \"a graph CAN bind each rule to an executable check and then report which rules have none.\" No principle ships; the ABILITY to hold a principle with a check, and to be told which principles have none, ships. AGAINST: an empty mechanism is exactly the shape that stays empty forever — the three-legs finding says vocabulary needs a tool, an instruction AND a detector, and B supplies two of three while leaving a user with nothing to imitate.\n\nOPTION C — SHIP THE MACHINERY, PLUS THE PRINCIPLES AS AN OPTIONAL, CLEARLY-ATTRIBUTED EXAMPLE SET. Not defaults, not seeded; something a project can read and adopt deliberately, labelled as StoryFlow's and paid for by StoryFlow's incidents.\n\nWHAT IS NOT IN DOUBT: several of the nine map onto vocabulary reflow2 ALREADY HAS and does not read — Verification.level (#5), Verification.method (#4), ChangeType::DefectFix (#1). Those are the sibling ideas and are worth building on any answer here.\n\nWHAT DOES NOT FIT REFLOW2 AT ALL, said plainly so the integration is not oversold: #2's AST scan for swallowed exceptions, #6's pagination-contract check and #7's file-length ratchets are code-level lints over a user's source. reflow2 does not read a project's source and should not start. Their design-level shadows are a different and much smaller thing.",
-        "name": "OPEN — do StoryFlow's nine engineering principles belong IN reflow2 as shipped rules, or does reflow2 ship only the machinery that binds ANY project's rules to checks?",
+        "decision": "SETTLED 2026-08-22 BY ANTHONY, IN HIS OWN WORDS: \"if the principles are not generally applicable to any design project, then we can discard. I'm just trying to apply some of the things I've learned in developing storyflow to a wider set of projects.\"\n\nOPTION A IS REJECTED. reflow2 does not ship StoryFlow's nine principles as rules, defaults, or a seeded starter set. They are one project's rules, paid for by one project's incidents, and shipping them would assert that reflow2 knows what a user's engineering standards should be.\n\nTHE CRITERION IS GENERAL APPLICABILITY, AND IT IS ALREADY THIS PROJECT'S STANDING RULE. `rule:a-lesson-is-generalised-before-it-is-built` says it from his words of 2026-08-14: \"I don't want this to become like a decision tree where it is so specialized to some training data that it is no longer generalizable.\" A principle is carried in only if the GENERAL form is true of any design project; the specific form that produced it stays in StoryFlow.\n\nWHAT THIS DOES NOT MEAN. It does not mean the nine were unhelpful — the opposite. They are field evidence from a real deployment, and two of them (rules A and B) name failure modes reflow2 both practises and violates. The ruling is about what SHIPS, not about what is worth reading.\n\nTHE SORT ITSELF IS A SEPARATE ACT and is not settled here. Which of the nine have a general form, which are already carried by existing reflow2 vocabulary, and which are code-level lints over a user's source that reflow2 must not attempt, is the follow-on question. The sibling ideas hold the three that survived a first pass.\n\n⭐ ONE MEASURED FINDING SURVIVES REGARDLESS OF THE SORT, because it is about reflow2 rather than about StoryFlow: principle B (\"a set reduced to a scalar is not a check of the set\") is VIOLATED BY REFLOW2'S OWN INSTRUMENT. `vocabulary_coverage` counts unused properties in `properties_on_used_types` and its `unused` list names node types and edge types only — so an unused PROPERTY is counted and never named, and no report can say WHICH vocabulary a design has never touched. Found 2026-08-22 by asserting the opposite in a test and watching it fail.",
+        "name": "DECIDED — a StoryFlow principle enters reflow2 only in its GENERAL form; what is not generally applicable to any design project is discarded",
         "no_relation_note": "Searched 2026-08-22 for existing nodes on reflow2 serving other projects vs itself. Nearest were rule:reflow2-is-built-for-other-projects-not-for-itself and rule:fixes-are-judged-by-the-third-party — both READ and judged NOT related in the relation vocabulary's sense. They state the PRINCIPLE that reflow2 serves other projects; this asks a narrower product question those rules do not reach, namely whether reflow2 may ship another project's engineering standards as content. A DEPENDS_ON would be false (this is answerable without either rule) and a CONTRADICTS would be false (option C is compatible with both). Recorded as a note rather than a forced edge: a false neighbour would put those two rules in front of every later reader of this question and they do not answer it. NOTE WRITTEN BY HAND because review_relations was not on this session's served tool surface — the server was rebuilt mid-session and the client's tool list is fixed at connect time.",
-        "rationale": "Open rather than settled because the answer turns on a judgement only Anthony can make: whether reflow2 may ever ship an opinion about how somebody else should engineer. His standing rule says the product is for other projects, which argues against importing one deployment's conclusions as everyone's defaults — but the same rule's whole point is that findings are data about the PRODUCT, and these nine are findings from a real deployment. The tension is genuine, which is why this is a question and not an answer.",
-        "status": "proposed"
+        "rationale": "Recorded as decided rather than left open because Anthony stated the criterion directly and it matches a standing rule he had already given. Option A is closed by his word. What remains is the per-principle sort, which is work rather than a decision, and the one product finding above, which stands on its own measurement.",
+        "status": "accepted"
       }
     },
     {
@@ -108801,7 +108929,8 @@
       "node_type": "DesignRule",
       "properties": {
         "enforced": false,
-        "name": "Every fix is judged by what it does for somebody else's project — this repo is the test rig, not the target",
+        "name": "MERGED 2026-08-22 into rule:reflow2-is-built-for-other-projects-not-for-itself — read that one; this is kept as history",
+        "no_relation_note": "Absorbed, not withdrawn. EVOLVES_INTO points at the survivor, which carries Anthony's own wording and took this node's worked examples and its where-does-the-fix-land test verbatim. The six GOVERNED_BY edges that pointed here now also point at the survivor; the originals are left in place as history rather than deleted.",
         "statement": "Anthony, 2026-08-06: \"most changes we do here are not for the sake of reflow2 itself (though we often apply reflow2 tools/skills on itself). so when we fix something, it must be from the perspective that we are improving reflow2 for anybody that may use it in their project.\"\n\nTHE RULE: when a defect is found while working on reflow2's own design, the fix is judged by what it does for a CONSUMER — a project that installed reflow2 and whose authors will never read this repository. Improving reflow2's own repo state is not the objective; it is the evidence.\n\nDISTINCT FROM THE DOGFOODING RATIONALE, and the two are easy to conflate. req:skill-use-survives-a-long-session records that using the skills on this project is the INSTRUMENT that finds defects. This rule says how to judge the FIX once the instrument has fired. One is about detection, the other about the target. Both are needed, and only holding the first produces a beautifully-instrumented repository that has fixed nothing for anybody.\n\nTHE FAILURE MODE IT FORBIDS, which is subtle because it looks like completion: find a hole, patch it HERE, mark the requirement met, and leave every consumer with the hole. The repo goes green, the design says the need is satisfied, and nothing is true of anyone else's project.\n\nTHE WORKED EXAMPLE THAT PROMPTED IT, same day, and it is the clearest test of the rule available. Asked whether anything runs `reconcile_dependencies`, the first answer was \"reflow2's own CI does not\" — accurate, small, and actionable by adding a step to this repo's workflow. Applying this rule reframed it: `reflow2_check.py` is THE GATE THAT SHIPS TO EVERY CONSUMER IN THE KIT, and it reconciles ARTIFACTS but never DEPENDENCIES. Same underlying fact; the second framing is the one worth acting on, and only the second one fixes anything for anybody. Adding a CI step here would have satisfied the first reading and left req:design-dependencies-declared unenforced in every project that installs reflow2.\n\nHOW TO APPLY IT, concretely: when a finding is written, ask where the fix lands. If it lands in `.github/`, `tools/build_design_graph.py`, or anything else that exists only because reflow2 develops itself, ask what the CONSUMER-facing equivalent is — the served tool surface, a skill, `reflow2_check.py`, the kit, the installer, a tool DESCRIPTION. If there is no consumer-facing equivalent, that absence is usually the real finding.\n\nWHY IT IS A RULE AND NOT A REQUIREMENT: it constrains how every other change is judged rather than describing behaviour anything can satisfy, which is the same shape as rule:no-foreclosure. Nothing verifies it; it is applied by whoever is deciding what to build, and its evidence is the framing of the findings that follow it.\n\nTHE COUNTER-PRESSURE, recorded so the rule is not applied blindly: reflow2 IS a real project with real operational needs, and some work genuinely is for this repo alone — the release procedure, the export discipline, COORD. The rule does not forbid that work. It forbids MISTAKING it for product work, and it forbids closing a consumer-facing requirement with a repo-facing fix."
       }
     },
@@ -108841,8 +108970,8 @@
       "properties": {
         "category": "methodology",
         "enforced": false,
-        "name": "Self-hosting is the proof of concept; the product is the point",
-        "statement": "ANTHONY, RESTATED 2026-08-21 AND HIS OWN FRAMING BOTH TIMES: \"as I state quite often, using reflow2 on reflow2 is our first proof of concept; however, reflow2 is a tool for other projects.\" Earlier, 2026-08-18 and again 2026-08-20: \"the goal is never to do things just for reflow2. That would be like building a wrench (a tool) just to build a tool. Tools are designed to be used elsewhere.\"\n\nTHREE STATEMENTS ACROSS FOUR DAYS. He does not repeat himself for emphasis; he repeats himself when the pull the other way is real, and it is — reflow2's own graph is the nearest, richest, most convenient thing to work on, and every finding in it is genuinely interesting.\n\nWHAT THE RULE BINDS, and it is not \"stop self-hosting\". Self-hosting is the proof of concept and it produces the evidence. What it binds is the READING of that evidence: **a finding about reflow2's own design is data about the PRODUCT, and the work it justifies is the work that reaches an arbitrary project.** \"reflow2's graph has 145 unlinked ideas\" is only worth acting on because every project's graph will look like that; the fix belongs in a served skill, a typed tool and a detector, not in a tidy-up of this one graph.\n\n⭐ THE TEST THAT MAKES IT OPERATIONAL, and it is cheap: ask `find_tools` the question a USER would ask, in their own words, with no reflow2 nouns in it. If the best match is wrong, or the discoverable sequence causes a defect, the product has the gap — regardless of how easily the same thing was done here by hand. Two that landed on 2026-08-20: \"does my declared decomposition match the real coupling?\" returned `set_interface_designation` as the best of 152 tools, while the session's actual finding came from a hand-written Python script; and \"move a component to a different parent\" returned `contain_component`, which ADDS a parent and never removes the old one — the discoverable sequence CAUSES the multiple-parents defect.\n\n📌 ADVISORY, NOT GATE-BLOCKING, and stated rather than defaulted. Nothing can mechanically check whether a piece of work was done for reflow2's sake or for the product's; asserting `enforced` would bill a detector nobody can write. It is a rule for judgement, and its enforcement is that Anthony says it again when it slips.\n\nRELATED BUT DIFFERENT: `rule:the-self-host-always-trails-what-it-teaches` is about LAG — reflow2's own design will always contain the class of defect it is about to learn to catch. That one says a gap here is not an indictment. This one says a gap here is not the point either — the point is what an arbitrary project gets.\n\n📌 RECORDED 2026-08-21 because until now this instruction existed ONLY in one agent's private memory file, which no other agent and no person reads. That is precisely the failure this skill exists to catch: a standing rule that would be lost the moment a different session picked up the work."
+        "name": "Self-hosting is the proof of concept; the product is the point — and every fix is judged by what it does for somebody else's project",
+        "statement": "ANTHONY, THREE TIMES IN FOUR DAYS AND HIS OWN FRAMING EACH TIME. 2026-08-21: \"as I state quite often, using reflow2 on reflow2 is our first proof of concept; however, reflow2 is a tool for other projects.\" 2026-08-18 and again 2026-08-20: \"the goal is never to do things just for reflow2. That would be like building a wrench (a tool) just to build a tool. Tools are designed to be used elsewhere.\" And 2026-08-06: \"most changes we do here are not for the sake of reflow2 itself (though we often apply reflow2 tools/skills on itself). so when we fix something, it must be from the perspective that we are improving reflow2 for anybody that may use it in their project.\"\n\nHe does not repeat himself for emphasis; he repeats himself when the pull the other way is real, and it is — reflow2's own graph is the nearest, richest, most convenient thing to work on, and every finding in it is genuinely interesting.\n\nWHAT THE RULE BINDS, and it is not \"stop self-hosting\". Self-hosting is the proof of concept and it produces the evidence. What it binds is the READING of that evidence: **a finding about reflow2's own design is data about the PRODUCT, and the work it justifies is the work that reaches an arbitrary project.** \"reflow2's graph has 145 unlinked ideas\" is only worth acting on because every project's graph will look like that; the fix belongs in a served skill, a typed tool and a detector, not in a tidy-up of this one graph. Improving reflow2's own repo state is not the objective; it is the evidence.\n\nTHE FAILURE MODE IT FORBIDS, which is subtle because it looks like completion: find a hole, patch it HERE, mark the requirement met, and leave every consumer with the hole. The repo goes green, the design says the need is satisfied, and nothing is true of anyone else's project.\n\n⭐ THE TEST THAT MAKES IT OPERATIONAL, and it is cheap: ask `find_tools` the question a USER would ask, in their own words, with no reflow2 nouns in it. If the best match is wrong, or the discoverable sequence causes a defect, the product has the gap — regardless of how easily the same thing was done here by hand. Two that landed on 2026-08-20: \"does my declared decomposition match the real coupling?\" returned `set_interface_designation` as the best of 152 tools, while the session's actual finding came from a hand-written Python script; and \"move a component to a different parent\" returned `contain_component`, which ADDS a parent and never removes the old one — the discoverable sequence CAUSES the multiple-parents defect.\n\n⭐ THE SECOND TEST, WHICH ASKS WHERE THE FIX LANDS. When a finding is written, ask where its repair goes. If it lands in `.github/`, `tools/build_design_graph.py`, or anything else that exists only because reflow2 develops itself, ask what the CONSUMER-FACING equivalent is — the served tool surface, a skill, `reflow2_check.py`, the kit, the installer, a tool DESCRIPTION. If there is no consumer-facing equivalent, that absence is usually the real finding.\n\nTHE WORKED EXAMPLE THAT PROMPTED THE SECOND TEST, 2026-08-06, and it is the clearest available. Asked whether anything runs `reconcile_dependencies`, the first answer was \"reflow2's own CI does not\" — accurate, small, and actionable by adding a step to this repo's workflow. Applying the rule reframed it: `reflow2_check.py` is THE GATE THAT SHIPS TO EVERY CONSUMER IN THE KIT, and it reconciles ARTIFACTS but never DEPENDENCIES. Same underlying fact; only the second framing fixes anything for anybody. Adding a CI step here would have satisfied the first reading and left `req:design-dependencies-declared` unenforced in every project that installs reflow2.\n\nA SECOND WORKED EXAMPLE, 2026-08-22, recorded because it is the rule being broken by an agent that had read it. Asked to build a detector, the agent deferred it on the grounds that \"468 legacy events would be noise\" — 468 events in REFLOW2'S OWN graph, where a project adopting reflow2 next week has none. A fact about the self-host was used to decide what a user's project gets. Anthony corrected it, for the third time.\n\nDISTINCT FROM THE DOGFOODING RATIONALE, and the two are easy to conflate. `req:skill-use-survives-a-long-session` records that using the skills on this project is the INSTRUMENT that finds defects. This rule says how to judge the FIX once the instrument has fired. Both are needed, and only holding the first produces a beautifully-instrumented repository that has fixed nothing for anybody.\n\nRELATED BUT DIFFERENT: `rule:the-self-host-always-trails-what-it-teaches` is about LAG — reflow2's own design will always contain the class of defect it is about to learn to catch. That one says a gap here is not an indictment. This one says a gap here is not the point either — the point is what an arbitrary project gets.\n\nWHY IT IS A RULE AND NOT A REQUIREMENT: it constrains how every other change is judged rather than describing behaviour anything can satisfy, the same shape as `rule:no-foreclosure`. THE PRODUCT FORM IS A SEPARATE NODE AND EXISTS: `req:work-says-whether-it-reaches-a-consumer` carries the same philosophy as something reflow2 DOES for every project, which is the split `req:a-fix-says-whether-it-corrected-the-cause` established.\n\nTHE COUNTER-PRESSURE, recorded so the rule is not applied blindly: reflow2 IS a real project with real operational needs, and some work genuinely is for this repo alone — the release procedure, the export discipline, COORD. The rule does not forbid that work. It forbids MISTAKING it for product work, and it forbids closing a consumer-facing requirement with a repo-facing fix.\n\n📌 ADVISORY, NOT GATE-BLOCKING, and stated rather than defaulted. Whether a piece of work was done for reflow2's sake or the product's cannot be mechanically decided, and asserting `enforced` would bill a detector nobody can write. What CAN be checked is the narrower proxy in `req:work-says-whether-it-reaches-a-consumer`: a need that nothing consumer-facing delivers. That is advisory too, by Anthony's ruling of 2026-08-22.\n\n📌 MERGED 2026-08-22 ON ANTHONY'S RULING. This statement absorbed `rule:fixes-are-judged-by-the-third-party` (2026-08-06), which said the same thing in different words and governed six nodes while this one governed none. Two copies meant neither was authoritative — a live instance of `req:a-rule-knows-where-it-is-authoritatively-stated`. The absorbed node is superseded, not deleted: it was true, and design history is retired on the record."
       }
     },
     {
@@ -115205,6 +115334,18 @@
         "provenance": "authored",
         "statement": "A person returning to the design must be able to ask \"what is the most pressing thing to work on?\" and get an answer computed from the design itself, with its reasoning visible — not a hand-maintained ordering in a file. The answer must rank an unmade decision ABOVE the work that waits on it, because being told to build something blocked on a choice only the human can make is worse than being told nothing. It must distinguish what is undecided from what is unbuilt from what is misshapen, since those need different actions from different people. And it must be a projection over the graph, never a stored list: a second place where priority lives is a second place for it to go stale, which is the failure the whole backlog-in-the-graph move exists to end.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:work-says-whether-it-reaches-a-consumer",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A project can tell work that serves its own machinery apart from work that reaches its consumers, so \"did we close a user-facing need with an internal fix?\" is answerable from the graph",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A deliverable must be able to record WHO IT IS FOR — a consumer of the product, or the project's own machinery — and the design must then be able to answer, without asking a person: is there a need here that nothing consumer-facing delivers?\n\nDELIBERATELY DISTINCT FROM `rule:reflow2-is-built-for-other-projects-not-for-itself` and from `rule:fixes-are-judged-by-the-third-party`, and the split is the point. Those RULES are how the people building reflow2 work; they bind this project and can never bind anyone else's. This REQUIREMENT is the product carrying the same philosophy, so every project using reflow2 inherits the question. That is the identical shape as `req:a-fix-says-whether-it-corrected-the-cause`, which exists because Anthony asked on 2026-08-17 for his building philosophy to be \"built into the design of reflow2\" rather than merely stated at its developers. A rule states it; a requirement makes it something reflow2 DOES.\n\nALSO DISTINCT FROM `req:a-fix-says-whether-it-corrected-the-cause`, which was surfaced as near: that one asks whether a repair reached the CAUSE or worked around it. This one asks who the work was FOR. A root-cause fix can still land entirely in internal machinery, and a workaround can ship straight to a consumer; the two axes are independent and both are currently unrecorded.\n\n⭐ THE DISTINCTION IS UNIVERSAL, NOT REFLOW2'S. Every project that ships anything has internal machinery and a delivered product, and confuses them under pressure: a team's own scripts against what the beamline actually does, CI configuration against the library, a build tool against the API. The failure it enables is the same everywhere and it LOOKS LIKE COMPLETION — find a hole, patch it in the internal half, mark the need met, and leave every consumer with the hole. The repo goes green and nothing is true of anybody else.\n\n⚠️ NEVER INFERRED FROM A PATH. A first sketch of this proposed classifying deliverables by directory — `.github/` internal, `crates/` shipped — which encodes ONE project's layout and is exactly the failure it exists to prevent. The audience is DECLARED by the project or it is unknown, and unknown is a true answer.\n\n⚠️ AND NEVER A JUDGEMENT. Internal work is legitimate and necessary; a release procedure, a coordination board and an export discipline are real work that reaches no consumer. The requirement is that the difference be VISIBLE, never that internal work be discouraged (`dec:report-dont-judge`).\n\n🛑 THE DETECTOR MUST SAY WHEN IT HAD NOTHING TO RUN ON. If no deliverable in a project has declared an audience, the reading is \"I cannot judge this\", NOT zero findings. A detector reporting zero because its population was empty reads exactly like one that ran clean — `loop_status` already refuses an unknown contributor_id for this reason, and this is the same trap one level over.\n\nHONEST LIMIT, the same class as `provenance` and the drift dispositions: this records what the author SAYS a deliverable is for. It cannot detect an internal tool declared consumer-facing. Worth having because the alternative is no signal at all; worth never overselling.",
+        "status": "proposed"
       }
     },
     {
@@ -122352,9 +122493,23 @@
         "name": "what_next answers in four bands, the exploration slot is not optional, and liveness is what makes the shaping band readable (crates/reflow2-core/tests/what_next.rs, 11 cases). THE ONE THAT MUST NEVER REGRESS is a_marked_decision_is_never_ranked_however_it_would_score: a `proposed` Decision carrying AUTHORED_BY role=approver is the user's own durable self-prioritisation — it already existed and was simply never named one — and no computed score may reorder it or demote it into the ranked band, so the test gives a marked decision every scoring signal available and asserts it still never appears there. MUTATION-CHECKED: removing the band-1 short-circuit fails exactly that test and no other. THE SECOND LOAD-BEARING CASE is a_decision_nothing_points_at_is_still_surfaced. Every ranking signal here is built on connectedness, so a decision nothing points at scores zero forever and would never be shown — dec:bl-155's unused-versus-unreachable trap arriving through a ranking instead of a usage count. A suite that only checked the ranking would stay green while the fifth slot was dropped as over-engineering, which is precisely what the two independent derivations of that slot (the Q-table framing, and Anthony's own \"top 4 and bottom 1\") exist to prevent. THE SHAPING BAND'S CASES PIN A CAVEAT THIS DESIGN RECORDED BEFORE THE CODE EXISTED: cap:what-next warned that raw GOVERNED_BY in-degree is the wrong signal because its top hit was a pruning decision governing ten DROPPED requirements, and a_decision_governing_only_retired_work_does_not_shape_anything IS that fixture — a 9-dead-node decision must lose to a 3-live-node one. MUTATION-CHECKED: removing the liveness filter fails exactly the two liveness tests and no others. breadth_of_governed_types_is_reported_but_never_ranks pins the refinement that was TRIED AND REJECTED on measurement — weighting by distinct governed types demotes every exemplar the capability names as correct, because governing eight Components is shaping and single-typedness is not shallowness — so `shapes` is reported and kept out of the score. ALSO PINNED: retired governed nodes are COUNTED and reported rather than silently dropped; the shaping band holds only ACCEPTED decisions, never open ones, because it answers a different question for a different reader; `alignment: supporting` on a CONTRADICTS edge is corroboration and must not raise the score, which heal.rs paid for once already; `decision:ack:` review records are excluded both as decisions and as governed sources, because they dominate raw GOVERNED_BY counts (measured, excluding them took that edge type from 867 to 255) so leaving them in makes the answer confidently wrong rather than merely noisy; the unexplored pick is stable across two readings of an unchanged design and ADVANCES when a decision is settled, since the core takes no clock and no RNG and the rotation is derived from the count of accepted decisions; and `not_shown` accounts for every open decision the answer omitted. WHAT IS NOT COVERED, stated rather than left to be discovered: nothing here checks that the WEIGHTS are right. They are a deliberately coarse guide against a stated acceptance criterion of \"general ballpark\", and the tests assert the ORDER the signals produce, never the absolute numbers.",
         "status": "passing"
       }
+    },
+    {
+      "node_id": "ver:work-declares-who-it-reaches",
+      "node_type": "Verification",
+      "properties": {
+        "description": "7 cases, crates/reflow2-core/tests/internal_only_delivery.rs. FIRES: a need whose only declared delivery is `internal`. DOES NOT FIRE: one `consumer` deliverable alongside internal work (the rule forbids MISTAKING internal work for product work, never doing it); a requirement the user dropped; a design that has classified nothing. AN UNDECLARED ARTIFACT IS EVIDENCE OF NEITHER SIDE and is counted in the evidence rather than read as internal. Per-requirement, not aggregate, pinned by a two-need case: accepting \"this one is internal on purpose\" must not pre-accept the next. An audience outside the enum is refused naming both legal values. MUTATION-CHECKED THREE WAYS: counting undeclared artifacts as internal failed exactly the undeclared case; ignoring `dropped` status failed exactly the dropped case; and REMOVING THE \"nothing to run on\" GUARD FAILED NOTHING — which proved the guard was dead code rather than the test weak, and it was deleted. 🛑 THAT THIRD MUTATION EXPOSED A REAL HOLE, recorded rather than closed: a design that has declared no audience anywhere is silent in every surfaced report. `vocabulary_coverage` was the obvious home and does not fit — its unused list names node and edge TYPES, never PROPERTIES, so the field is counted and never named. This check pins that hole so it cannot close silently.",
+        "findings": "7 of 7 passing. Two of three mutations caught exactly the cases naming them; the third caught nothing and that was the useful one — it proved a guard dead and exposed that no surfaced report names an unused PROPERTY, which is now recorded as an open hole rather than papered over.",
+        "kind": "verification",
+        "last_run_at": "2026-08-22T16:20:00Z",
+        "level": "integration",
+        "method": "test",
+        "name": "A need delivered only by internal work is asked about, and an unclassified design is not judged",
+        "status": "passing"
+      }
     }
   ],
-  "prev_content_hash": "sha256:17324d8c336cc538e8e7464e0c25ee421dd63cd2a158020abdce17cde852c841",
+  "prev_content_hash": "sha256:9f46df87023c1c6b3ce9730aa50731d6ba3810891da764d1c1a35f7377ace83a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

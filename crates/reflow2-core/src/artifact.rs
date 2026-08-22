@@ -706,9 +706,11 @@ impl DesignGraph {
         artifact_id: &str,
         granularity: Option<&str>,
         volatility: Option<&str>,
+        audience: Option<&str>,
     ) -> Result<StoredNode, DynoError> {
         const GRANULARITIES: [&str; 3] = ["atomic", "opaque", "pending_expansion"];
         const VOLATILITIES: [&str; 3] = ["stable", "append_only", "living"];
+        const AUDIENCES: [&str; 2] = ["consumer", "internal"];
 
         // Reject with the legal values named. An enum rejection that does not
         // list what IS allowed costs a round-trip to `describe_schema` and is
@@ -743,6 +745,22 @@ impl DesignGraph {
                 ),
             });
         }
+        if let Some(a) = audience
+            && !AUDIENCES.contains(&a)
+        {
+            return Err(DynoError::Validation {
+                node_type: node::ARTIFACT.into(),
+                property: "audience".into(),
+                message: format!(
+                    "'{a}' is not an Artifact audience (one of {}). `consumer` means a user \
+                     of the product reaches it; `internal` means it serves this project's own \
+                     machinery. Leaving it unset is a true answer and is never inferred — in \
+                     particular it is never derived from the file's path, because that would \
+                     encode one project's layout.",
+                    AUDIENCES.join(", ")
+                ),
+            });
+        }
 
         let Some(existing) = self.get_node(node::ARTIFACT, artifact_id)? else {
             return Err(DynoError::NodeNotFound {
@@ -759,6 +777,9 @@ impl DesignGraph {
         }
         if let Some(v) = volatility {
             props = props.set("volatility", v);
+        }
+        if let Some(a) = audience {
+            props = props.set("audience", a);
         }
         self.create_node(node::ARTIFACT, artifact_id, props)
     }
