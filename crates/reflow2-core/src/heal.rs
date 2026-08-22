@@ -1738,6 +1738,12 @@ impl DesignGraph {
         // but never candidates: the operational thing to make redundant is the
         // part, not the file.
         let op_net = self.operational_network(None)?;
+        // The baseline is INVARIANT across candidates and used to be rebuilt
+        // inside every one of them. Measured on reflow2's own design: 56
+        // candidates, each rebuilding this identical network, ~401ms a time —
+        // 22 seconds of a 71-second sweep spent deriving the same answer 56
+        // times (`con:a-sweep-builds-its-network-a-fixed-number-of-times`).
+        let baseline = op_net.nontrivial_component_count();
         for ap in op_net.articulation_points() {
             let ty = op_net.type_of(ap);
             if !crate::structure::OPERATIONAL_TYPES.contains(&ty) {
@@ -1762,7 +1768,7 @@ impl DesignGraph {
             if self.couples_only_as_a_library(&id)? {
                 continue;
             }
-            if self.is_single_point_of_failure(&id)? {
+            if crate::graph::DesignGraph::is_single_point_of_failure_in(&op_net, baseline, &id) {
                 issues.push(HealIssue {
                     id: issue_id(HealCategory::SinglePointOfFailure, std::slice::from_ref(&id)),
                     category: HealCategory::SinglePointOfFailure,

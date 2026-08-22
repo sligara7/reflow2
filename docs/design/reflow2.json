@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:62b94f17927b49fe6d001d656511f407b4ab24259ca75157ceb787c371aaa4a3",
+  "content_hash": "sha256:01a67a3843fc239b508a08e1558d5cafa23bdfbed946dfca343ee319a6a4df75",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -23810,6 +23810,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-spof-sweep-stops-rebuilding-its-graph",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-spof-sweep-stops-rebuilding-its-graph",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-spof-sweep-stops-rebuilding-its-graph",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-spof-sweep-stops-rebuilding-its-graph",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "con:a-sweep-builds-its-network-a-fixed-number-of-times"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-stale-daemon-was-stopped-and-the-work-is-now-served-2026-08-20",
       "properties": {
         "accepted_baseline": false,
@@ -24565,6 +24601,27 @@
         "seat": "asligara7-bitecool:654288:fc683529"
       },
       "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "CLAIMS",
+      "from_id": "who:claude-code",
+      "properties": {
+        "claimed_at": "2026-08-21T23:40:00Z",
+        "depth": 1,
+        "note": "Optimising the single-point-of-failure sweep: the operational network is rebuilt twice per candidate and the graph never changes between candidates.",
+        "seat": "asligara7-bitecool:654288:fc683529"
+      },
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "CONSTRAINS",
+      "from_id": "con:a-sweep-builds-its-network-a-fixed-number-of-times",
+      "properties": {
+        "basis": "measured",
+        "contribution": 3.0,
+        "measured_at": "2026-08-21"
+      },
+      "to_id": "cap:heal"
     },
     {
       "edge_type": "CONSTRAINS",
@@ -88871,6 +88928,18 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-sweep-does-not-scale-with-its-candidates",
+      "properties": {},
+      "to_id": "cap:heal"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:the-sweep-does-not-scale-with-its-candidates",
+      "properties": {},
+      "to_id": "con:a-sweep-builds-its-network-a-fixed-number-of-times"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-vocabulary-says-where-abandonment-lives",
       "properties": {},
       "to_id": "req:schema-prose-is-checked"
@@ -91477,7 +91546,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:bd7df630caf299ba832eb39d624b62b24707438ec22690199eb595618836606a",
+        "checksum": "sha256:d96dd706db3632149066681374b1e7fbf1e8994d81914c624b48e0ba80b7daa2",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
@@ -92581,7 +92650,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ccfda8a24e43e6787b7d9640c66f340fc5295a9d8ec2e7b4549479355ce54b36",
+        "checksum": "sha256:19643a1528b63a8b91517a129d70db7a4291a1c56c7777819b81d4924497a924",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/structure.rs",
         "name": "structure.rs",
@@ -100560,6 +100629,15 @@
       }
     },
     {
+      "node_id": "chg:the-spof-sweep-stops-rebuilding-its-graph",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "performance_optimization",
+        "name": "The single-point-of-failure sweep stops rebuilding the operational network once per candidate. `is_single_point_of_failure(&self, id)` — which built TWO full networks per call, one of them the invariant baseline — becomes `is_single_point_of_failure_in(&DesignNetwork, baseline, id)`, which is handed the network and cannot rebuild. Measured on reflow2's own design: 56 candidates at 878ms each became 5.08ms for all 56; detect_structural_defects 44.5s → 4.43s; and on RELEASE + RocksDB the first call of every session, `open_questions`, went 11.7s → 2.95s. The answer is unchanged: 54 defects, 13 structural issues, before and after.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:the-stale-daemon-was-stopped-and-the-work-is-now-served-2026-08-20",
       "node_type": "ChangeEvent",
       "properties": {
@@ -101973,6 +102051,20 @@
         "purpose": "The neutral type system — the node and edge types that ARE a design. What any design is made of, before any of it is stored or checked.",
         "status": "planned",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "con:a-sweep-builds-its-network-a-fixed-number-of-times",
+      "node_type": "Constraint",
+      "properties": {
+        "category": "technical",
+        "concern": "core",
+        "direction": "maximum",
+        "limit": 4.0,
+        "name": "A defect sweep builds its network a fixed number of times, never once per candidate",
+        "priority": "medium",
+        "quantity": "network_builds_per_sweep",
+        "statement": "`detect_defects` shall build the design/operational network **no more than 4 times per call, independent of how many single-point-of-failure candidates it examines**.\n\nTHE DERIVATION, and it is a statement about what ought to be true rather than a round number. The question the sweep asks of each candidate is \"does removing THIS node split off a non-trivial component?\" The graph DOES NOT CHANGE between candidates — only which node is masked. So the network has to be constructed once and interrogated N times; nothing about the question requires reconstructing it per candidate. Four is what the sweep legitimately needs: a design network for the structural rules, one for the sweep scope, one operational network for the articulation scan, and one baseline component count. A fifth would need an argument; a per-candidate one cannot have one.\n\nMEASURED BEFORE THE BUDGET WAS WRITTEN, 2026-08-21, on reflow2's own design (2871 nodes) with the in-memory backend in a debug build:\n\n  detect_defects                  71.5s\n    sweep_scope                   15.1s\n    all_defects                   56.3s\n      detect_structural_defects   44.5s   <- 62% of the whole\n  operational_network(None) x1   401ms    (329 nodes)\n  articulation_points            191µs    -> 56 candidates\n  is_single_point_of_failure x1  878ms    = TWO network builds\n\n  56 candidates x 878ms = 49s, which IS detect_structural_defects.\n\nSo the sweep currently builds ~115 networks per call where 4 would do. Each build calls `outgoing` once per included node — 329 of them — so this is roughly **37,000 store reads spent re-deriving a graph that never changed**. Of those builds, HALF are the `operational_network(None)` baseline, which is byte-identical on every one of the 56 iterations.\n\nWHY BUILDS AND NOT SECONDS. A count is what the code controls and what survives a loaded machine; a duration assertion in a parallel suite measures contention, and the standing response is to raise the threshold until it stops complaining, which retires the gate without anybody deciding to. It is also the quantity that carries across backends, which seconds do not.\n\n⚠️ HONEST LIMITS. The breakdown above is the in-memory backend in a debug build, which is NOT what users run. The RATIO is the transferable part; on RocksDB with a release binary the same call measures 10.3s. Two candidate counts (56 here) is one design's shape, and a design with more subsystems has more candidates and pays more — which is exactly what the \"independent of candidates\" clause exists to stop.\n\n📌 WHAT THIS IS FOR, so the number is not mistaken for tidiness: `detect_defects` is paid by `loop_status` and, through the loop hint, by `open_questions` — the first call every session makes, measured at 11.7s of which 10.3 is this. The sweep is not a background chore; it is on the critical path of saying hello."
       }
     },
     {
@@ -121620,6 +121712,20 @@
       }
     },
     {
+      "node_id": "ver:the-sweep-does-not-scale-with-its-candidates",
+      "node_type": "Verification",
+      "properties": {
+        "description": "`crates/reflow2-core/tests/heal.rs` — two checks holding `con:a-sweep-builds-its-network-a-fixed-number-of-times`.\n\n`the_sweep_does_not_get_quadratically_slower_as_candidates_grow` builds two chains of components, 40 and 160 long. Every interior node of a chain is an articulation point, so candidates scale directly with length — which is what makes the test measure the thing the budget is about. It asserts a RATIO under 10x for a 4x size increase.\n\n⚠️ A RATIO, NOT A THRESHOLD, DELIBERATELY. Both halves run on the same machine under the same load, so contention cancels. A bare millisecond bound here would measure the test runner, and the standing response to that is to raise it until it stops complaining — which retires a gate without anybody deciding to. The bar is 10x rather than 1x because 4x the nodes IS genuinely more work: more edges to walk, more nodes to scan. What it forbids is that cost growing with candidates ON TOP of that.\n\n`masking_a_node_gives_the_same_verdict_as_rebuilding_without_it` is the correctness half: on a 5-chain the ends are not single points of failure and the middle is. The optimisation replaced \"rebuild the network without this node and recount\" with \"mask this node in the network already built\", and those must agree.\n\n⭐ THE REAL GUARD IS THE TYPE SIGNATURE AND THIS TEST GUARDS WHAT A SIGNATURE CANNOT. The old `is_single_point_of_failure(&self, node_id)` could rebuild because it held `&self`. The new `is_single_point_of_failure_in(&DesignNetwork, baseline, node_id)` is handed the network and has no graph to rebuild from, so the per-candidate cost cannot return inside that function. What it CAN do is return at the call site, by hoisting nothing and calling in a loop — which is exactly what the ratio test catches.\n\nMUTATION-CHECKED, and it bites hard. Putting the per-candidate rebuild back at the call site fails the ratio check at **19.8x** with a message naming the constraint: \\\"4x the candidates cost 19.8x the time (0.259s -> 5.132s) — the network is being rebuilt per candidate again\\\". Restoring passes 50 of 50. A guard seen only green is indistinguishable from one that cannot fail.",
+        "findings": "2026-08-21. 50 of 50 heal tests pass, whole core suite green, 0 failures.\n\nMEASURED ON reflow2'S OWN DESIGN (2871 nodes), in-memory debug, before and after:\n\n  detect_structural_defects   44.50s  ->   4.43s\n  all_defects                 56.32s  ->  16.65s\n  is_single_point_of_failure  878ms PER CANDIDATE  ->  5.08ms for ALL 56\n  defects found                   54  ->      54   (unchanged)\n  structural issues               13  ->      13   (unchanged)\n\nON THE PATH USERS ACTUALLY TAKE — release binary, real RocksDB, driven over stdio through the real tool surface:\n\n  open_questions   11.7s -> 2.95s     <= the FIRST call of every session\n  loop_status      11.4s -> 2.50s\n  graph_report     10.9s -> 2.18s warm\n  detect_gaps      0.51s -> 0.53s     (untouched, as expected)\n  get_node/scan_nodes unchanged\n\nAGAINST THE BUDGET, WHICH IS WHAT DECIDES WHETHER TO STOP: `con:a-sweep-builds-its-network-a-fixed-number-of-times` allows 4 network builds per sweep, independent of candidates. Now 3 — two design networks and one operational network. UNDER BUDGET, SO THE WORK STOPPED.\n\nDELIBERATELY LEFT UNDONE, and each would be a further gain: `sweep_scope` is now the largest remaining part (15.3s of ~32s in-memory), of which `rule_populations` is 9.1s; and `design_network` is still built TWICE per sweep — once in `sweep_scope`, once in `detect_structural_defects` — which sharing would remove. Both are inside budget, so they stop here rather than being taken because they are visible. Reopening them wants its own measurement and its own number.\n\nMUTATION-CHECKED: restoring the per-candidate rebuild fails the ratio check at 19.8x and names the constraint in the message.",
+        "kind": "verification",
+        "last_run_at": "2026-08-21",
+        "level": "integration",
+        "method": "measurement",
+        "name": "Four times the candidates does not cost four times the sweep, and masking a node gives the same verdict as rebuilding without it",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-vocabulary-says-where-abandonment-lives",
       "node_type": "Verification",
       "properties": {
@@ -121765,7 +121871,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b12b07ca11aa549b335260ea07a1a42bd24ea5c7caa44738ce9f12449f3ec261",
+  "prev_content_hash": "sha256:62b94f17927b49fe6d001d656511f407b4ab24259ca75157ceb787c371aaa4a3",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
