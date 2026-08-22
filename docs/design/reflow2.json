@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:aef68226414be603674814034c1e1e5079d7ac59f0d026955423010d45f1af27",
+  "content_hash": "sha256:9c77115d62cc8e3f4350b710595322777b264f459e4d27a2125a3aaada2548d8",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2566,6 +2566,24 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:work-declares-who-it-reaches",
+      "properties": {
+        "note": "The declaring half — `Artifact.audience` and the `set_artifact_intent` path that writes it. Dual allocation because the capability genuinely spans both: one component lets a deliverable SAY who it is for, the other REPORTS the need nothing consumer-facing delivers. Precedent: cap:the-loop-holds-the-invitation is allocated to cmp:agent and cmp:skills.",
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:artifact"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:work-declares-who-it-reaches",
+      "properties": {
+        "note": "The reporting half — `detect_internal_only_delivery` lives here alongside the other 16 detectors, and `art:detect` realizes it exactly as it realizes cap:undeclared-seam-is-named and cap:release-pinned-to-time.",
+        "weight_basis": "evidence"
+      },
+      "to_id": "cmp:detect"
     },
     {
       "edge_type": "ANNOTATES",
@@ -6255,6 +6273,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-as-built-record-catches-up-with-what-295-built",
+      "properties": {},
+      "to_id": "epoch:work-declares-who-it-reaches-is-accepted"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-black-box-mechanism-is-settled",
       "properties": {},
       "to_id": "epoch:the-owner-rules-on-scope-and-reachability"
@@ -6654,6 +6678,12 @@
       "from_id": "chg:wire-planning-cluster",
       "properties": {},
       "to_id": "epoch:wire-planning-cluster"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:work-declares-who-it-reaches-is-accepted",
+      "properties": {},
+      "to_id": "epoch:work-declares-who-it-reaches-is-accepted"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -8220,6 +8250,18 @@
       "from_id": "snap:epoch:wire-planning-cluster:dec:where-plans-live:r2",
       "properties": {},
       "to_id": "epoch:wire-planning-cluster"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:work-declares-who-it-reaches-is-accepted:cap:work-declares-who-it-reaches",
+      "properties": {},
+      "to_id": "epoch:work-declares-who-it-reaches-is-accepted"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:work-declares-who-it-reaches-is-accepted:req:work-says-whether-it-reaches-a-consumer",
+      "properties": {},
+      "to_id": "epoch:work-declares-who-it-reaches-is-accepted"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -11660,6 +11702,15 @@
       "properties": {
         "acted_at": "2026-07-24",
         "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:work-says-whether-it-reaches-a-consumer",
+      "properties": {
+        "acted_at": "2026-08-22T19:05:00Z",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -23194,6 +23245,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-as-built-record-catches-up-with-what-295-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:work-declares-who-it-reaches"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-axis-has-a-detector",
       "properties": {
         "accepted_baseline": true,
@@ -24903,15 +24963,13 @@
       "to_id": "req:version-combination-is-an-object"
     },
     {
-      "edge_type": "CLAIMS",
-      "from_id": "who:claude-code",
+      "edge_type": "CHANGED",
+      "from_id": "chg:work-declares-who-it-reaches-is-accepted",
       "properties": {
-        "claimed_at": "2026-08-22T17:30:00Z",
-        "depth": 2,
-        "note": "Closing the vocabulary_coverage hole: the unused list names node and edge TYPES only, so an unused PROPERTY is counted and never named. Adding property naming behind include_unused, plus a per-domain properties figure.",
-        "seat": "asligar-bitecool:1700453:f2009d15"
+        "accepted_baseline": false,
+        "action": "modified"
       },
-      "to_id": "cap:a-design-says-which-vocabulary-it-has-never-used"
+      "to_id": "req:work-says-whether-it-reaches-a-consumer"
     },
     {
       "edge_type": "CONSTRAINS",
@@ -35384,6 +35442,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "cap:work-declares-who-it-reaches",
+      "properties": {},
+      "to_id": "snap:epoch:work-declares-who-it-reaches-is-accepted:cap:work-declares-who-it-reaches"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "cmp:compare",
       "properties": {},
       "to_id": "snap:epoch:wall-check-works-on-any-project:cmp:compare"
@@ -35897,6 +35961,12 @@
       "from_id": "req:the-export-is-serialised-rather-than-socially-enforced",
       "properties": {},
       "to_id": "snap:epoch:export-rule-enters-the-governance-layer:req:the-export-is-serialised-rather-than-socially-enforced"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "req:work-says-whether-it-reaches-a-consumer",
+      "properties": {},
+      "to_id": "snap:epoch:work-declares-who-it-reaches-is-accepted:req:work-says-whether-it-reaches-a-consumer"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -82816,6 +82886,15 @@
       "edge_type": "REALIZES",
       "from_id": "art:artifact",
       "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:work-declares-who-it-reaches"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:artifact",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cmp:artifact"
@@ -83281,6 +83360,15 @@
         "completeness": "complete"
       },
       "to_id": "cap:undeclared-seam-is-named"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:detect",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:work-declares-who-it-reaches"
     },
     {
       "edge_type": "REALIZES",
@@ -84244,6 +84332,15 @@
       "edge_type": "REALIZES",
       "from_id": "art:schema-build",
       "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:work-declares-who-it-reaches"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:schema-build",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cmp:schema"
@@ -84511,6 +84608,15 @@
         "conformance": "verified"
       },
       "to_id": "cap:the-resolution-of-a-gap-can-be-scheduled-into-an-increment"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:service",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:work-declares-who-it-reaches"
     },
     {
       "edge_type": "REALIZES",
@@ -85052,6 +85158,15 @@
         "completeness": "partial"
       },
       "to_id": "cap:bulk-forms"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-built",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:work-declares-who-it-reaches"
     },
     {
       "edge_type": "REALIZES",
@@ -96296,7 +96411,7 @@
       "node_id": "cap:work-declares-who-it-reaches",
       "node_type": "Capability",
       "properties": {
-        "description": "`Artifact.audience` records `consumer` or `internal`, set through `set_artifact_intent` alongside granularity and volatility. The `internal_only_delivery` finding then names a Requirement whose every DECLARED delivering artifact is internal, with none declared consumer. Per-requirement rather than aggregate, because accepting \"this need is served by our own tooling on purpose\" is a claim about one need. Never inferred from a path: a directory rule would encode one project's layout, which is the failure the requirement exists to prevent. An undeclared artifact is evidence of neither side and its count goes in the evidence. KNOWN INCOMPLETE: a design that has declared no audience anywhere is silent in every surfaced report, because vocabulary_coverage names unused node and edge TYPES but never unused PROPERTIES.",
+        "description": "`Artifact.audience` records `consumer` or `internal`, set through `set_artifact_intent` alongside granularity and volatility. The `internal_only_delivery` finding then names a Requirement whose every DECLARED delivering artifact is internal, with none declared consumer. Per-requirement rather than aggregate, because accepting \"this need is served by our own tooling on purpose\" is a claim about one need. Never inferred from a path: a directory rule would encode one project's layout, which is the failure the requirement exists to prevent. An undeclared artifact is evidence of neither side and its count goes in the evidence.\n\nWAS KNOWN INCOMPLETE, AND THE HOLE IS NOW CLOSED (2026-08-22, #296). This node used to end: \"a design that has declared no audience anywhere is silent in every surfaced report, because vocabulary_coverage names unused node and edge TYPES but never unused PROPERTIES.\" That was true when written and is no longer. `vocabulary_coverage` now names the properties it counts, so a design that has declared no audience comes back as `build: node property Artifact.audience` — fixed at the root for every optional field in every project rather than special-cased for this one.\n\n🛑 WHAT REMAINS TRUE, so this does not get rounded up to \"closed\": that naming rides the FLAT LIST, which is withheld unless asked for. The silence is REPORTABLE, not REPORTED — the default reply says the `build` domain's properties are under-filled without saying which one. `detect_internal_only_delivery` carries the same limit note, and `tests/internal_only_delivery.rs` pins both halves.\n\n⚠️ AND REFLOW2 HAS NOT USED IT. `Artifact.audience` is 0 of 190 on this design: the field exists so a deliverable declares who it reaches, and not one of reflow2's own is classified. `rule:the-self-host-always-trails-what-it-teaches`, visible now instead of inferred.\n\nAS-BUILT, recorded 2026-08-22 after `detect_gaps` reported this capability allocated to no component and realized by no artifact — both true of the RECORD and neither true of the code, which #295 shipped. Allocated to `cmp:artifact` (the declaring half) and `cmp:detect` (the reporting half); realized by `art:schema-build` (the property), `art:artifact` + `art:tools-built` + `art:service` (the write path), and `art:detect` (the finding).",
         "name": "A deliverable declares who it is for, and a need nothing consumer-facing delivers is reported",
         "provenance": "authored",
         "status": "realized"
@@ -100852,6 +100967,15 @@
       }
     },
     {
+      "node_id": "chg:the-as-built-record-catches-up-with-what-295-built",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "resync",
+        "name": "The as-built record catches up with what #295 actually built — the capability gets the components that own it, the five files that realize it, and a description that no longer claims a hole #296 closed",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:the-axis-has-a-detector",
       "node_type": "ChangeEvent",
       "properties": {
@@ -101439,6 +101563,15 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Anthony is warming to graph-only: no git snapshots, render on demand"
+      }
+    },
+    {
+      "node_id": "chg:work-declares-who-it-reaches-is-accepted",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "resync",
+        "name": "Anthony's word arrives on `req:work-says-whether-it-reaches-a-consumer` — accepted, and renamed from a paragraph to a phrase",
+        "subject": "record"
       }
     },
     {
@@ -108890,6 +109023,16 @@
       }
     },
     {
+      "node_id": "epoch:work-declares-who-it-reaches-is-accepted",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "Anthony accepts that work declares who it reaches — the requirement moves off `proposed` on his word, and its name stops being a paragraph (2026-08-22)",
+        "sequence": 377,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "rule:a-design-is-named-by-an-id-not-a-path",
       "node_type": "DesignRule",
       "properties": {
@@ -115412,11 +115555,11 @@
       "node_type": "Requirement",
       "properties": {
         "lineage": "original",
-        "name": "A project can tell work that serves its own machinery apart from work that reaches its consumers, so \"did we close a user-facing need with an internal fix?\" is answerable from the graph",
+        "name": "A project must be able to tell work that reaches its consumers from work that serves only its own machinery",
         "priority": "medium",
         "provenance": "authored",
-        "statement": "A deliverable must be able to record WHO IT IS FOR — a consumer of the product, or the project's own machinery — and the design must then be able to answer, without asking a person: is there a need here that nothing consumer-facing delivers?\n\nDELIBERATELY DISTINCT FROM `rule:reflow2-is-built-for-other-projects-not-for-itself` and from `rule:fixes-are-judged-by-the-third-party`, and the split is the point. Those RULES are how the people building reflow2 work; they bind this project and can never bind anyone else's. This REQUIREMENT is the product carrying the same philosophy, so every project using reflow2 inherits the question. That is the identical shape as `req:a-fix-says-whether-it-corrected-the-cause`, which exists because Anthony asked on 2026-08-17 for his building philosophy to be \"built into the design of reflow2\" rather than merely stated at its developers. A rule states it; a requirement makes it something reflow2 DOES.\n\nALSO DISTINCT FROM `req:a-fix-says-whether-it-corrected-the-cause`, which was surfaced as near: that one asks whether a repair reached the CAUSE or worked around it. This one asks who the work was FOR. A root-cause fix can still land entirely in internal machinery, and a workaround can ship straight to a consumer; the two axes are independent and both are currently unrecorded.\n\n⭐ THE DISTINCTION IS UNIVERSAL, NOT REFLOW2'S. Every project that ships anything has internal machinery and a delivered product, and confuses them under pressure: a team's own scripts against what the beamline actually does, CI configuration against the library, a build tool against the API. The failure it enables is the same everywhere and it LOOKS LIKE COMPLETION — find a hole, patch it in the internal half, mark the need met, and leave every consumer with the hole. The repo goes green and nothing is true of anybody else.\n\n⚠️ NEVER INFERRED FROM A PATH. A first sketch of this proposed classifying deliverables by directory — `.github/` internal, `crates/` shipped — which encodes ONE project's layout and is exactly the failure it exists to prevent. The audience is DECLARED by the project or it is unknown, and unknown is a true answer.\n\n⚠️ AND NEVER A JUDGEMENT. Internal work is legitimate and necessary; a release procedure, a coordination board and an export discipline are real work that reaches no consumer. The requirement is that the difference be VISIBLE, never that internal work be discouraged (`dec:report-dont-judge`).\n\n🛑 THE DETECTOR MUST SAY WHEN IT HAD NOTHING TO RUN ON. If no deliverable in a project has declared an audience, the reading is \"I cannot judge this\", NOT zero findings. A detector reporting zero because its population was empty reads exactly like one that ran clean — `loop_status` already refuses an unknown contributor_id for this reason, and this is the same trap one level over.\n\nHONEST LIMIT, the same class as `provenance` and the drift dispositions: this records what the author SAYS a deliverable is for. It cannot detect an internal tool declared consumer-facing. Worth having because the alternative is no signal at all; worth never overselling.",
-        "status": "proposed"
+        "statement": "A deliverable must be able to record WHO IT IS FOR — a consumer of the product, or the project's own machinery — and the design must then be able to answer, without asking a person: is there a need here that nothing consumer-facing delivers?\n\nDELIBERATELY DISTINCT FROM `rule:reflow2-is-built-for-other-projects-not-for-itself` and from `rule:fixes-are-judged-by-the-third-party`, and the split is the point. Those RULES are how the people building reflow2 work; they bind this project and can never bind anyone else's. This REQUIREMENT is the product carrying the same philosophy, so every project using reflow2 inherits the question. That is the identical shape as `req:a-fix-says-whether-it-corrected-the-cause`, which exists because Anthony asked on 2026-08-17 for his building philosophy to be \"built into the design of reflow2\" rather than merely stated at its developers. A rule states it; a requirement makes it something reflow2 DOES.\n\nALSO DISTINCT FROM `req:a-fix-says-whether-it-corrected-the-cause`, which was surfaced as near: that one asks whether a repair reached the CAUSE or worked around it. This one asks who the work was FOR. A root-cause fix can still land entirely in internal machinery, and a workaround can ship straight to a consumer; the two axes are independent and both are currently unrecorded.\n\n⭐ THE DISTINCTION IS UNIVERSAL, NOT REFLOW2'S. Every project that ships anything has internal machinery and a delivered product, and confuses them under pressure: a team's own scripts against what the beamline actually does, CI configuration against the library, a build tool against the API. The failure it enables is the same everywhere and it LOOKS LIKE COMPLETION — find a hole, patch it in the internal half, mark the need met, and leave every consumer with the hole. The repo goes green and nothing is true of anybody else.\n\n⚠️ NEVER INFERRED FROM A PATH. A first sketch of this proposed classifying deliverables by directory — `.github/` internal, `crates/` shipped — which encodes ONE project's layout and is exactly the failure it exists to prevent. The audience is DECLARED by the project or it is unknown, and unknown is a true answer.\n\n⚠️ AND NEVER A JUDGEMENT. Internal work is legitimate and necessary; a release procedure, a coordination board and an export discipline are real work that reaches no consumer. The requirement is that the difference be VISIBLE, never that internal work be discouraged (`dec:report-dont-judge`).\n\n🛑 THE DETECTOR MUST SAY WHEN IT HAD NOTHING TO RUN ON. If no deliverable in a project has declared an audience, the reading is \"I cannot judge this\", NOT zero findings. A detector reporting zero because its population was empty reads exactly like one that ran clean — `loop_status` already refuses an unknown contributor_id for this reason, and this is the same trap one level over.\n\nHONEST LIMIT, the same class as `provenance` and the drift dispositions: this records what the author SAYS a deliverable is for. It cannot detect an internal tool declared consumer-facing. Worth having because the alternative is no signal at all; worth never overselling.\n\nACCEPTED 2026-08-22 ON ANTHONY'S WORD (`epoch:work-declares-who-it-reaches-is-accepted`). He agreed to ADDING this requirement in #295 before seeing how it was phrased, so it was deliberately left at `proposed` until he had read the wording — `dec:certainty-derived` makes every move off `proposed` his signature, and promoting it unread would have forged it. He read the statement and accepted; the NAME was shortened in the same act, from a paragraph carrying an embedded quotation to the need in one clause. Nothing in the statement itself moved.",
+        "status": "accepted"
       }
     },
     {
@@ -117191,6 +117334,26 @@
         "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.\\n\\nANTHONY'S CLARIFICATION, 2026-07-30, and it corrects the framing this node was first written with: what he wants committed is NOT the realized product or a future codebase. It is a SLICE OF THE REFLOW2 GRAPH ITSELF — \\\"this is the planned capabilities of epoch_1, epoch_2 … epoch_n\\\" — so that he can open the repo and see \\\"that is when I get capability X\\\", or \\\"capability Y is not expected until increment_13\\\". His words: \\\"it isn't the realized product/artifact of the project, but snapshot of the project at epoch or increment that I'm looking to capture in git.\\\" He is explicitly open to something other than git.\\n\\nTHE FIRST FRAMING HERE WAS WRONG AND IS CORRECTED. This node originally organised everything around \\\"git can only store the past, and a plan is not a past\\\". That is too glib. A plan document is a PRESENT artifact describing a future, and committing one is ordinary — git stores plans perfectly well. The real objection was never to committing plans; it was only ever to using BRANCHES as the record, and that narrower objection stands.\\n\\n(a) BRANCH PER EPOCH — `epoch_1`, `epoch_2`, each holding a projected design. Matches the mental model directly: check out `epoch_n`, look.\\n    Costs: checking out a branch normally makes the whole REPO reflect that state, and here there is no future code to reflect, so the branch buys nothing the file would not. A full export is 1.6 MB today, so N epochs is N × 1.6 MB of near-identical JSON, rewritten on every replan. Branches also invite merge semantics that do not apply — nobody merges epoch_2 into main. And the plan's MOVEMENT stays invisible: a branch pointer moves silently, which is exactly what `req:plans-move-honestly` needs to see.\\n\\n(b) A FILE PER EPOCH ON MAIN — `docs/design/epochs/epoch_3.{md,json}`. Browsing is easier than a checkout, there is one history rather than N, and every replan is an ordinary commit to that file.\\n    THE PROPERTY THIS BUYS FOR FREE: `git log -p docs/design/epochs/epoch_3.md` IS the plan's revision history. A large part of `req:plans-move-honestly` — \\\"when a planned epoch's content moves, the plan's own change is a dated event on the record\\\" — would be satisfied by git doing what git is good at, rather than by new machinery in reflow2.\\n\\n(c) RENDER IT, DO NOT AUTHOR IT — and this is what (b) should probably be generated BY. An epoch slice is a VIEWPOINT. `tools/render_views.py` already renders viewpoints as pure projections of the graph, already confesses anything a view needs that the graph cannot supply, and ALREADY RENDERS THE EPOCH CHAIN BACKWARD (\\\"Axis Z as a viewpoint: the epoch chain, and what happened at each\\\"). The forward direction is the same renderer reading scheduled edges instead of recorded ones. Under this option the graph holds the schedule as single source of truth, the renderer emits one small file per epoch, and git holds their history.\\n    Cost: a generated file can go stale against the graph — which is a drift check reflow2 already knows how to do, and the same one `dataflow.html` staleness already gets in another repo.\\n\\nWHAT A SLICE ACTUALLY CONTAINS, since \\\"slice\\\" is the word he used and it is much smaller than an export: the epoch and its date, capabilities expected by then, requirements expected satisfied, KPPs required by then, the version combination pinned once it arrives, and the delta against the previous epoch. Kilobytes, not megabytes.\\n\\nTHE OPEN QUESTION IS NARROWER THAN IT WAS: not \\\"git or not git\\\", but WHICH JOB GIT DOES. Git looks right for the HISTORY of the plan document and for pinning arrived epochs; the graph looks right for the schedule itself. The failure mode to avoid is making git the source of truth for the schedule, because then two places disagree about when capability X arrives and neither is wrong.\",\"name\":\"OPEN — how per-epoch slices of the design become browsable: branches, files, or a rendered viewpoint\",\"rationale\":\"Anthony's idea, his clarification, and his invitation to suggest something better; recorded so the reasoning survives whichever way it goes.\\n\\nKept rather than tidied away: the original framing of this node (\\\"git can only store the past\\\") was mine and was misleading, and the correction is recorded rather than silently overwritten because the prior text is what a reader would otherwise have found and believed. The snapshot at `epoch:wire-planning-cluster` holds the earlier wording.\\n\\nNot argued down: option (a) is his own original mechanism and is recorded with the mental model it serves stated first. Its costs are listed beside it, not in place of it.\",\"status\":\"proposed\"}",
         "target_id": "dec:where-plans-live",
         "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:work-declares-who-it-reaches-is-accepted:cap:work-declares-who-it-reaches",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:work-declares-who-it-reaches\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:work-says-whether-it-reaches-a-consumer\",\"properties\":{}}]",
+        "state": "{\"description\":\"`Artifact.audience` records `consumer` or `internal`, set through `set_artifact_intent` alongside granularity and volatility. The `internal_only_delivery` finding then names a Requirement whose every DECLARED delivering artifact is internal, with none declared consumer. Per-requirement rather than aggregate, because accepting \\\"this need is served by our own tooling on purpose\\\" is a claim about one need. Never inferred from a path: a directory rule would encode one project's layout, which is the failure the requirement exists to prevent. An undeclared artifact is evidence of neither side and its count goes in the evidence. KNOWN INCOMPLETE: a design that has declared no audience anywhere is silent in every surfaced report, because vocabulary_coverage names unused node and edge TYPES but never unused PROPERTIES.\",\"name\":\"A deliverable declares who it is for, and a need nothing consumer-facing delivers is reported\",\"provenance\":\"authored\",\"status\":\"realized\"}",
+        "target_id": "cap:work-declares-who-it-reaches",
+        "target_type": "Capability"
+      }
+    },
+    {
+      "node_id": "snap:epoch:work-declares-who-it-reaches-is-accepted:req:work-says-whether-it-reaches-a-consumer",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Capability\",\"other_id\":\"cap:work-declares-who-it-reaches\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"DesignRule\",\"other_id\":\"rule:reflow2-is-built-for-other-projects-not-for-itself\",\"properties\":{}}]",
+        "state": "{\"lineage\":\"original\",\"name\":\"A project can tell work that serves its own machinery apart from work that reaches its consumers, so \\\"did we close a user-facing need with an internal fix?\\\" is answerable from the graph\",\"priority\":\"medium\",\"provenance\":\"authored\",\"statement\":\"A deliverable must be able to record WHO IT IS FOR — a consumer of the product, or the project's own machinery — and the design must then be able to answer, without asking a person: is there a need here that nothing consumer-facing delivers?\\n\\nDELIBERATELY DISTINCT FROM `rule:reflow2-is-built-for-other-projects-not-for-itself` and from `rule:fixes-are-judged-by-the-third-party`, and the split is the point. Those RULES are how the people building reflow2 work; they bind this project and can never bind anyone else's. This REQUIREMENT is the product carrying the same philosophy, so every project using reflow2 inherits the question. That is the identical shape as `req:a-fix-says-whether-it-corrected-the-cause`, which exists because Anthony asked on 2026-08-17 for his building philosophy to be \\\"built into the design of reflow2\\\" rather than merely stated at its developers. A rule states it; a requirement makes it something reflow2 DOES.\\n\\nALSO DISTINCT FROM `req:a-fix-says-whether-it-corrected-the-cause`, which was surfaced as near: that one asks whether a repair reached the CAUSE or worked around it. This one asks who the work was FOR. A root-cause fix can still land entirely in internal machinery, and a workaround can ship straight to a consumer; the two axes are independent and both are currently unrecorded.\\n\\n⭐ THE DISTINCTION IS UNIVERSAL, NOT REFLOW2'S. Every project that ships anything has internal machinery and a delivered product, and confuses them under pressure: a team's own scripts against what the beamline actually does, CI configuration against the library, a build tool against the API. The failure it enables is the same everywhere and it LOOKS LIKE COMPLETION — find a hole, patch it in the internal half, mark the need met, and leave every consumer with the hole. The repo goes green and nothing is true of anybody else.\\n\\n⚠️ NEVER INFERRED FROM A PATH. A first sketch of this proposed classifying deliverables by directory — `.github/` internal, `crates/` shipped — which encodes ONE project's layout and is exactly the failure it exists to prevent. The audience is DECLARED by the project or it is unknown, and unknown is a true answer.\\n\\n⚠️ AND NEVER A JUDGEMENT. Internal work is legitimate and necessary; a release procedure, a coordination board and an export discipline are real work that reaches no consumer. The requirement is that the difference be VISIBLE, never that internal work be discouraged (`dec:report-dont-judge`).\\n\\n🛑 THE DETECTOR MUST SAY WHEN IT HAD NOTHING TO RUN ON. If no deliverable in a project has declared an audience, the reading is \\\"I cannot judge this\\\", NOT zero findings. A detector reporting zero because its population was empty reads exactly like one that ran clean — `loop_status` already refuses an unknown contributor_id for this reason, and this is the same trap one level over.\\n\\nHONEST LIMIT, the same class as `provenance` and the drift dispositions: this records what the author SAYS a deliverable is for. It cannot detect an internal tool declared consumer-facing. Worth having because the alternative is no signal at all; worth never overselling.\",\"status\":\"proposed\"}",
+        "target_id": "req:work-says-whether-it-reaches-a-consumer",
+        "target_type": "Requirement"
       }
     },
     {
@@ -122591,7 +122754,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:aa4969af2e4a36e7914304878691172fc0aa73577fa6965442687ba4411e567c",
+  "prev_content_hash": "sha256:aef68226414be603674814034c1e1e5079d7ac59f0d026955423010d45f1af27",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
