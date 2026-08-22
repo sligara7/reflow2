@@ -2547,8 +2547,15 @@ pub struct SetChecksumReq {
     /// already exists (that would be a real change, laundered).
     pub disposition: String,
     /// For `design_holds`: why the code moved (`test_failure_fix` (default) /
-    /// `refactor` / `performance_optimization` / …). Refused with the other two
-    /// dispositions rather than ignored.
+    /// `refactor` / `performance_optimization` / `documentation` / …). Refused
+    /// with the other two dispositions rather than ignored.
+    ///
+    /// `documentation` is the one to reach for when the file changed and
+    /// NOTHING IT DESCRIBES BEHAVES DIFFERENTLY — a stale comment, a hand-kept
+    /// count, a docstring that outlived what it documented. The test is
+    /// behavioural rather than file-shaped: a normative document (a gate list,
+    /// a skill's instructions) changes what somebody DOES, so it is a real
+    /// change and takes a real label.
     #[serde(default)]
     pub change_type: Option<String>,
     /// For `design_updated`: the ChangeEvent recorded when the design was
