@@ -463,6 +463,31 @@ pub enum GapSource {
     /// project whose events come from bulk ingest genuinely cannot know the
     /// axis, which is why one acknowledgement settles the whole practice.
     ChangeAxisUnstated,
+    /// A Requirement whose every delivering artifact is declared `internal` —
+    /// a stated need that nothing a CONSUMER can reach delivers.
+    ///
+    /// The product form of `rule:reflow2-is-built-for-other-projects-not-for-itself`,
+    /// and it serves `req:work-says-whether-it-reaches-a-consumer`. The failure
+    /// it names is universal and LOOKS LIKE COMPLETION: find a hole, patch it
+    /// in the project's own machinery, mark the need met, and leave every
+    /// consumer with the hole. The repo goes green and nothing is true of
+    /// anybody else.
+    ///
+    /// # Never inferred from a path
+    ///
+    /// `Artifact.audience` is DECLARED. A first sketch classified by directory
+    /// — `.github/` internal, `crates/` shipped — which encodes one project's
+    /// layout and would make this detector useful to exactly one repository,
+    /// which is the failure the rule behind it forbids.
+    ///
+    /// # It reports having nothing to run on
+    ///
+    /// If no artifact in the design declares an audience, this yields NO
+    /// finding and the population is reported as unclassified instead. A
+    /// detector answering zero over an empty population reads exactly like one
+    /// that ran clean — the trap `loop_status` already refuses an unknown
+    /// contributor_id to avoid.
+    InternalOnlyDelivery,
 }
 
 impl GapSource {
@@ -514,6 +539,7 @@ impl GapSource {
             GapSource::ReleaseWithoutManifest => "release_without_manifest",
             GapSource::DecompositionCoverage => "decomposition_coverage",
             GapSource::ChangeAxisUnstated => "change_axis_unstated",
+            GapSource::InternalOnlyDelivery => "internal_only_delivery",
         }
     }
 
@@ -565,6 +591,11 @@ impl GapSource {
             // anywhere else, because ChangeEvents are the fastest-growing node
             // type in any active design.
             GapSource::ChangeAxisUnstated => true,
+            // PER-REQUIREMENT, not aggregate, and the split matters: accepting
+            // "this need is served by our own tooling on purpose" is a claim
+            // about ONE need, and must not also accept the next requirement
+            // that lands in the same state.
+            GapSource::InternalOnlyDelivery => false,
             // Everything else names the nodes the finding is actually about, so a
             // change to that set SHOULD expire the judgement. Listed exhaustively
             // rather than with a wildcard: a new aggregate detector must come here
@@ -1324,6 +1355,10 @@ impl DesignGraph {
         // Absence, not consistency: fires loudest where the axis has NEVER
         // been stated, which is the case every other detector here misses.
         self.detect_change_axis_unstated(&mut gaps)?;
+        // The product form of the third-party rule: a stated need that nothing
+        // a consumer can reach delivers. Silent unless the design has actually
+        // declared some audiences.
+        self.detect_internal_only_delivery(&mut gaps)?;
 
         gaps.sort_by(|a, b| {
             // `false` sorts before `true`, so "has anchors" comes first.
@@ -2994,9 +3029,9 @@ impl DesignGraph {
                 // obligation nobody can observe compliance with, and it is
                 // stated at the project level rather than about one part.
                 severity: 0.6,
-                title: format!("Nothing detects a violation of \u{201c}{name}\u{201d}"),
+                title: format!("Nothing detects a violation of “{name}”"),
                 description: format!(
-                    "The rule \u{201c}{name}\u{201d} is enforced — its violations are \
+                    "The rule “{name}” is enforced — its violations are \
                      gate-blocking — but no passing verification could detect one. What checks \
                      it, or should it be advisory rather than enforced?"
                 ),
@@ -3035,11 +3070,9 @@ impl DesignGraph {
                 // conventions at all. Well below unverified_enforced_rule
                 // (0.6), because this asks for a word and that asks for a check.
                 severity: 0.4,
-                title: format!(
-                    "\u{201c}{name}\u{201d} does not say whether breaking it stops the build"
-                ),
+                title: format!("“{name}” does not say whether breaking it stops the build"),
                 description: format!(
-                    "The rule \u{201c}{name}\u{201d} does not say whether its violations are \
+                    "The rule “{name}” does not say whether its violations are \
                      gate-blocking. Absent is not read as either answer \u{2014} is breaking this \
                      rule something that should stop the build, or is it advice?"
                 ),
@@ -3159,9 +3192,9 @@ impl DesignGraph {
                 gap_source: GapSource::UnverifiedCapability,
                 scope: GapScope::Capability,
                 severity: 0.55,
-                title: format!("Nothing verifies \u{201c}{name}\u{201d}"),
+                title: format!("Nothing verifies “{name}”"),
                 description: format!(
-                    "\u{201c}{name}\u{201d} has no verification proving it works — how will \
+                    "“{name}” has no verification proving it works — how will \
                      you confirm it?"
                 ),
                 affected_ids: vec![n.node_id.clone()],
@@ -3201,10 +3234,10 @@ impl DesignGraph {
                 severity: 0.35,
                 title: format!(
                     "{count} capability(ies) verified only at component granularity via \
-                     \u{201c}{cmp_name}\u{201d}"
+                     “{cmp_name}”"
                 ),
                 description: format!(
-                    "\u{201c}{cmp_name}\u{201d}'s passing check is the only verification these \
+                    "“{cmp_name}”'s passing check is the only verification these \
                      capabilities have: {listed}. That is a real check, one hop away — deepen \
                      with per-capability verifications where the behaviour deserves its own \
                      proof, or accept component granularity here once."
@@ -3481,6 +3514,139 @@ impl DesignGraph {
                  is what asks."
             ),
         });
+        Ok(())
+    }
+
+    /// A Requirement delivered only by artifacts declared `internal`
+    /// (`GapSource::InternalOnlyDelivery`).
+    ///
+    /// The thread is Requirement <-SATISFIES- Capability <-REALIZES- Artifact.
+    /// A requirement fires when it HAS delivering artifacts, at least one of
+    /// them declares an audience, and EVERY declared one says `internal`.
+    ///
+    /// # Why an undeclared artifact does not clear the finding, and does not cause it
+    ///
+    /// Unknown is a true answer, so an artifact with no audience is evidence of
+    /// nothing in either direction: it neither proves a consumer is served nor
+    /// proves one is not. Requiring every artifact to be declared would make
+    /// the finding unreachable in practice; letting an undeclared one COUNT as
+    /// internal would invent a claim nobody made. So the rule reads only the
+    /// declared ones, and the count of undeclared siblings goes in the evidence
+    /// where a reader can weigh it.
+    ///
+    /// # Nothing to run on is not clean
+    ///
+    /// If the design declares no audience anywhere, this returns without a
+    /// finding — and that silence is reported by `audience_population` rather
+    /// than left to look like a pass.
+    fn detect_internal_only_delivery(&self, gaps: &mut Vec<GapCandidate>) -> Result<(), DynoError> {
+        let mut audience_of: std::collections::HashMap<String, String> =
+            std::collections::HashMap::new();
+        for art in self.scan_nodes(node::ARTIFACT)? {
+            if let Some(a) = art
+                .properties
+                .get("audience")
+                .and_then(dynograph_core::Value::as_str)
+            {
+                audience_of.insert(art.node_id.clone(), a.to_string());
+            }
+        }
+        // NO "nothing to run on" GUARD HERE, AND ITS ABSENCE IS DELIBERATE.
+        // One was written and a mutation proved it DEAD: with nothing declared
+        // no requirement can reach a non-empty `declared_internal`, so the
+        // early return changed no outcome. A surviving mutation is not always
+        // a weak test — here it exposed redundant code, and the honest fix was
+        // to delete it rather than keep a guard that reads as protection.
+        //
+        // 🛑 HONEST LIMIT, AND IT IS A REAL HOLE RATHER THAN A CAVEAT.
+        // `req:work-says-whether-it-reaches-a-consumer` requires that a design
+        // which has declared NO audience reads as "cannot judge", never as
+        // clean. Nothing surfaced does that today.
+        //
+        // `vocabulary_coverage` was the obvious home and DOES NOT FIT: its
+        // `unused` list names node types and edge types only, so an unused
+        // PROPERTY is counted in `properties_on_used_types` and never named.
+        // That is principle B — a set of named things reduced to a scalar —
+        // inside reflow2's own instrument, and it was found by asserting the
+        // opposite in a test and watching it fail.
+        //
+        // So the silence is UNREPORTED, it is named here and pinned by
+        // `tests/internal_only_delivery.rs`, and closing it is owed work. The
+        // source document calls this a legitimate end state — "this rule has no
+        // detector, and here is why" — and it is only legitimate while written
+        // down.
+
+        for req in self.scan_nodes(node::REQUIREMENT)? {
+            // A need the user settled OUT is not a need. Dropping or deferring
+            // something is their word too.
+            let status = req
+                .properties
+                .get("status")
+                .and_then(dynograph_core::Value::as_str)
+                .unwrap_or("proposed");
+            if matches!(status, "dropped" | "deferred") {
+                continue;
+            }
+
+            let mut declared_internal: Vec<String> = Vec::new();
+            let mut declared_consumer = false;
+            let mut undeclared = 0usize;
+            for sat in self.incoming(&req.node_id, Some(edge::SATISFIES))? {
+                for real in self.incoming(&sat.from_id, Some(edge::REALIZES))? {
+                    match audience_of.get(&real.from_id).map(String::as_str) {
+                        Some("consumer") => declared_consumer = true,
+                        Some("internal") => declared_internal.push(real.from_id.clone()),
+                        _ => undeclared += 1,
+                    }
+                }
+            }
+            if declared_consumer || declared_internal.is_empty() {
+                continue;
+            }
+
+            let n = declared_internal.len();
+            let mut affected = vec![req.node_id.clone()];
+            affected.extend(declared_internal.iter().cloned());
+            let name = req
+                .properties
+                .get("name")
+                .and_then(dynograph_core::Value::as_str)
+                .unwrap_or(&req.node_id)
+                .to_string();
+            gaps.push(GapCandidate {
+                id: gap_id(GapSource::InternalOnlyDelivery, &affected),
+                gap_source: GapSource::InternalOnlyDelivery,
+                scope: GapScope::Project,
+                // Above the practice-shaped findings and below anything
+                // reporting a contradiction. Nothing here is proven wrong: the
+                // need may be genuinely internal. What is worth asking is
+                // whether a user-facing need was closed with an internal fix,
+                // which is a specific and expensive mistake.
+                severity: 0.45,
+                title: format!("Only internal work delivers “{name}” — nothing a consumer reaches"),
+                description: format!(
+                    "Everything delivering this need is declared as serving the project's own \
+                     machinery rather than its users: {n} internal deliverable(s) and nothing \
+                     marked `consumer`. That may be exactly right — plenty of needs are \
+                     internal, and reflow2 does not judge which. It is worth one look because \
+                     the opposite case is a specific and expensive mistake: closing a \
+                     user-facing need with a fix that only reaches your own tooling looks like \
+                     completion, and the gap it leaves belongs to everybody downstream. Either \
+                     mark the deliverable that a user actually reaches with \
+                     `set_artifact_intent(audience: consumer)`, or acknowledge this once."
+                ),
+                affected_ids: affected,
+                suggested_depth: 2,
+                evidence: format!(
+                    "Requirement '{}' is satisfied only through artifacts declared \
+                     `audience: internal` ({n} of them), with none declared `consumer` and \
+                     {undeclared} carrying no audience at all. An undeclared artifact is read \
+                     as evidence of NEITHER side — unknown is a true answer and is never \
+                     counted as internal.",
+                    req.node_id
+                ),
+            });
+        }
         Ok(())
     }
 

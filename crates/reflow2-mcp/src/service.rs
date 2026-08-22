@@ -2523,6 +2523,16 @@ pub struct ArtifactIntentReq {
     /// full severity either way.
     #[serde(default)]
     pub volatility: Option<String>,
+    /// WHO THIS DELIVERABLE IS FOR: `consumer` (a user of the product reaches
+    /// it) or `internal` (it serves this project's own machinery — CI, a
+    /// release script, a coordination board).
+    ///
+    /// Leaving it unset is a true answer and is NEVER inferred — in particular
+    /// never from the file's PATH, because a path rule encodes one project's
+    /// layout and is exactly the failure
+    /// `req:work-says-whether-it-reaches-a-consumer` exists to prevent.
+    #[serde(default)]
+    pub audience: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]

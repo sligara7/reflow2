@@ -198,8 +198,13 @@ impl ReflowService {
                        content change is EXPECTED and reports as `expected_change` rather than \
                        being recorded, so you are not owed a disposition on every reconcile \
                        forever). ABSENCE still fires at full severity whatever the volatility, \
-                       because a missing file is always a real finding. Omitted fields are left \
-                       alone; every other property is preserved.",
+                       because a missing file is always a real finding. `audience` says WHO THE \
+                       DELIVERABLE IS FOR — `consumer` (a user of the product reaches it) or \
+                       `internal` (it serves this project's own machinery: CI, a release script, \
+                       a coordination board). Leaving it unset is a true answer and is NEVER \
+                       inferred, in particular never from the file's path, because that would \
+                       encode one project's layout. Omitted fields are left alone; every other \
+                       property is preserved.",
         annotations(read_only_hint = false)
     )]
     pub async fn set_artifact_intent(
@@ -212,6 +217,7 @@ impl ReflowService {
                 &req.artifact_id,
                 req.granularity.as_deref(),
                 req.volatility.as_deref(),
+                req.audience.as_deref(),
             )
             .map_err(dyno_err)?;
         ok_json(NodeDto::from(artifact))
