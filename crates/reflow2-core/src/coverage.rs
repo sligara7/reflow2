@@ -56,6 +56,7 @@ use std::collections::{BTreeMap, BTreeSet};
 use dynograph_core::{DynoError, Value};
 
 use crate::graph::DesignGraph;
+use crate::graph_read::GraphRead;
 use crate::nodes::node;
 
 /// One thing the caller saw on disk. `mass` is whatever the caller counts —
@@ -177,159 +178,184 @@ impl DesignGraph {
     /// See the module docs for the contract. The short version: the caller
     /// sweeps, reflow2 compares against registered artifact locations, and the
     /// answer is unclaimed *regions* ranked by mass — never a score.
+    /// Measure what the design covers of a swept tree (BL-95).
+    ///
+    /// A delegation to [`coverage_report`], kept so no caller changed when the
+    /// reading moved behind `ifc:graph-read`.
     pub fn coverage_report(
         &self,
         observed: &[ObservedPath],
         exclusions: &[String],
         swept_at: Option<&str>,
     ) -> Result<CoverageReport, DynoError> {
-        let artifacts = self.scan_nodes(node::ARTIFACT)?;
-        let claims_list: Vec<String> = artifacts
-            .iter()
-            .filter_map(|a| {
-                a.properties
-                    .get("location")
-                    .and_then(Value::as_str)
-                    .map(normalise)
-            })
-            .filter(|l| !l.is_empty())
-            .collect();
-
-        // What the numbers below are standing on (BL-188). Collected from the
-        // nodes rather than inferred from the paths: whether a directory is a
-        // settled archive or an untouched backlog is a statement its author
-        // makes, and no amount of looking at the tree can recover it.
-        let by_granularity = |want: &str| -> Vec<String> {
-            artifacts
-                .iter()
-                .filter(|a| {
-                    a.properties
-                        .get("granularity")
-                        .and_then(Value::as_str)
-                        .unwrap_or("atomic")
-                        == want
-                })
-                .map(|a| a.node_id.clone())
-                .collect()
-        };
-        let pending_expansion = by_granularity("pending_expansion");
-        let opaque_claims = by_granularity("opaque");
-        let exclusions: Vec<String> = exclusions.iter().map(|e| normalise(e)).collect();
-
-        let mut excluded = Vec::new();
-        let mut claimed = 0usize;
-        let mut claimed_mass = 0u64;
-        let mut unclaimed: Vec<(String, u64)> = Vec::new();
-        let mut unclaimed_mass = 0u64;
-        let mut matched_claims: BTreeSet<String> = BTreeSet::new();
-
-        for obs in observed {
-            let path = normalise(&obs.path);
-            if let Some(rule) = exclusions.iter().find(|e| claims(e, &path)) {
-                excluded.push(ExcludedPath {
-                    path,
-                    excluded_by: rule.clone(),
-                });
-                continue;
-            }
-            // EVERY claim that covers this path is marked seen, not just the
-            // first one found (music_graph F10). A design may legitimately
-            // register `archive/` as a whole AND `archive/reco.py` inside it;
-            // with `find`, whichever came first absorbed the observation and
-            // the other was reported in `unobserved_locations` — a file the
-            // sweep had just handed us, named as never swept.
-            //
-            // That is worse than a wrong number. The field answers "did you
-            // forget to sweep something", so a false entry is an alarm on
-            // correct modelling, and a reader who meets one stops trusting the
-            // only thing the field was for.
-            //
-            // The COUNT deliberately stays one per observed path: two claims
-            // covering one file is one file, and incrementing per claim would
-            // trade this bug for an inflated `claimed`.
-            let mut covered = false;
-            for c in claims_list.iter().filter(|c| claims(c, &path)) {
-                matched_claims.insert(c.clone());
-                covered = true;
-            }
-            if covered {
-                claimed += 1;
-                claimed_mass += obs.mass;
-            } else {
-                unclaimed_mass += obs.mass;
-                unclaimed.push((path, obs.mass));
-            }
-        }
-
-        // Roll unclaimed paths up to the SHALLOWEST directory none of whose
-        // observed contents are claimed. Without this a vendored tree arrives as
-        // 900 findings instead of one, and nobody reads the 900.
-        let mut has_claimed_below: BTreeSet<String> = BTreeSet::new();
-        for obs in observed {
-            let path = normalise(&obs.path);
-            if exclusions.iter().any(|e| claims(e, &path)) {
-                continue;
-            }
-            if claims_list.iter().any(|c| claims(c, &path)) {
-                for dir in ancestors(&path) {
-                    has_claimed_below.insert(dir);
-                }
-            }
-        }
-
-        let mut regions: BTreeMap<String, (usize, u64, Vec<String>)> = BTreeMap::new();
-        for (path, mass) in &unclaimed {
-            // The shallowest ancestor with nothing claimed under it; if every
-            // ancestor holds something claimed, the file stands alone.
-            let region = ancestors(path)
-                .into_iter()
-                .find(|d| !has_claimed_below.contains(d))
-                .unwrap_or_else(|| path.clone());
-            let entry = regions.entry(region).or_insert((0, 0, Vec::new()));
-            entry.0 += 1;
-            entry.1 += mass;
-            if entry.2.len() < 3 {
-                entry.2.push(path.clone());
-            }
-        }
-
-        let mut unclaimed_regions: Vec<UnclaimedRegion> = regions
-            .into_iter()
-            .map(|(path, (paths, mass, examples))| UnclaimedRegion {
-                path,
-                paths,
-                mass,
-                examples,
-            })
-            .collect();
-        // Biggest silence first; ties broken by path so the answer is stable.
-        unclaimed_regions.sort_by(|a, b| {
-            b.mass
-                .cmp(&a.mass)
-                .then(b.paths.cmp(&a.paths))
-                .then(a.path.cmp(&b.path))
-        });
-
-        let mut unobserved_locations: Vec<String> = claims_list
-            .iter()
-            .filter(|c| !matched_claims.contains(*c))
-            .cloned()
-            .collect();
-        unobserved_locations.sort();
-        unobserved_locations.dedup();
-
-        Ok(CoverageReport {
-            observed: claimed + unclaimed.len(),
-            claimed,
-            unclaimed: unclaimed.len(),
-            claimed_mass,
-            unclaimed_mass,
-            unclaimed_regions,
-            excluded,
-            unobserved_locations,
-            swept_at: swept_at.map(str::to_string),
-            pending_expansion,
-            opaque_claims,
-        })
+        coverage_report(self, observed, exclusions, swept_at)
     }
+}
+
+/// Measure what the design covers of a swept tree, over anything readable as a
+/// design.
+///
+/// Behind [`GraphRead`] since 2026-08-21, the second module to move there after
+/// `granularity`. It was the cheapest possible next step — 335 lines making
+/// exactly ONE store call — which is why it went first: the move is mechanical,
+/// so anything that broke would be the contract's fault rather than the
+/// module's.
+///
+/// See the module docs for the contract. The short version: the caller sweeps,
+/// reflow2 compares against registered artifact locations, and the answer is
+/// unclaimed *regions* ranked by mass — never a score.
+pub fn coverage_report(
+    g: &dyn GraphRead,
+    observed: &[ObservedPath],
+    exclusions: &[String],
+    swept_at: Option<&str>,
+) -> Result<CoverageReport, DynoError> {
+    let artifacts = g.scan_nodes(node::ARTIFACT)?;
+    let claims_list: Vec<String> = artifacts
+        .iter()
+        .filter_map(|a| {
+            a.properties
+                .get("location")
+                .and_then(Value::as_str)
+                .map(normalise)
+        })
+        .filter(|l| !l.is_empty())
+        .collect();
+
+    // What the numbers below are standing on (BL-188). Collected from the
+    // nodes rather than inferred from the paths: whether a directory is a
+    // settled archive or an untouched backlog is a statement its author
+    // makes, and no amount of looking at the tree can recover it.
+    let by_granularity = |want: &str| -> Vec<String> {
+        artifacts
+            .iter()
+            .filter(|a| {
+                a.properties
+                    .get("granularity")
+                    .and_then(Value::as_str)
+                    .unwrap_or("atomic")
+                    == want
+            })
+            .map(|a| a.node_id.clone())
+            .collect()
+    };
+    let pending_expansion = by_granularity("pending_expansion");
+    let opaque_claims = by_granularity("opaque");
+    let exclusions: Vec<String> = exclusions.iter().map(|e| normalise(e)).collect();
+
+    let mut excluded = Vec::new();
+    let mut claimed = 0usize;
+    let mut claimed_mass = 0u64;
+    let mut unclaimed: Vec<(String, u64)> = Vec::new();
+    let mut unclaimed_mass = 0u64;
+    let mut matched_claims: BTreeSet<String> = BTreeSet::new();
+
+    for obs in observed {
+        let path = normalise(&obs.path);
+        if let Some(rule) = exclusions.iter().find(|e| claims(e, &path)) {
+            excluded.push(ExcludedPath {
+                path,
+                excluded_by: rule.clone(),
+            });
+            continue;
+        }
+        // EVERY claim that covers this path is marked seen, not just the
+        // first one found (music_graph F10). A design may legitimately
+        // register `archive/` as a whole AND `archive/reco.py` inside it;
+        // with `find`, whichever came first absorbed the observation and
+        // the other was reported in `unobserved_locations` — a file the
+        // sweep had just handed us, named as never swept.
+        //
+        // That is worse than a wrong number. The field answers "did you
+        // forget to sweep something", so a false entry is an alarm on
+        // correct modelling, and a reader who meets one stops trusting the
+        // only thing the field was for.
+        //
+        // The COUNT deliberately stays one per observed path: two claims
+        // covering one file is one file, and incrementing per claim would
+        // trade this bug for an inflated `claimed`.
+        let mut covered = false;
+        for c in claims_list.iter().filter(|c| claims(c, &path)) {
+            matched_claims.insert(c.clone());
+            covered = true;
+        }
+        if covered {
+            claimed += 1;
+            claimed_mass += obs.mass;
+        } else {
+            unclaimed_mass += obs.mass;
+            unclaimed.push((path, obs.mass));
+        }
+    }
+
+    // Roll unclaimed paths up to the SHALLOWEST directory none of whose
+    // observed contents are claimed. Without this a vendored tree arrives as
+    // 900 findings instead of one, and nobody reads the 900.
+    let mut has_claimed_below: BTreeSet<String> = BTreeSet::new();
+    for obs in observed {
+        let path = normalise(&obs.path);
+        if exclusions.iter().any(|e| claims(e, &path)) {
+            continue;
+        }
+        if claims_list.iter().any(|c| claims(c, &path)) {
+            for dir in ancestors(&path) {
+                has_claimed_below.insert(dir);
+            }
+        }
+    }
+
+    let mut regions: BTreeMap<String, (usize, u64, Vec<String>)> = BTreeMap::new();
+    for (path, mass) in &unclaimed {
+        // The shallowest ancestor with nothing claimed under it; if every
+        // ancestor holds something claimed, the file stands alone.
+        let region = ancestors(path)
+            .into_iter()
+            .find(|d| !has_claimed_below.contains(d))
+            .unwrap_or_else(|| path.clone());
+        let entry = regions.entry(region).or_insert((0, 0, Vec::new()));
+        entry.0 += 1;
+        entry.1 += mass;
+        if entry.2.len() < 3 {
+            entry.2.push(path.clone());
+        }
+    }
+
+    let mut unclaimed_regions: Vec<UnclaimedRegion> = regions
+        .into_iter()
+        .map(|(path, (paths, mass, examples))| UnclaimedRegion {
+            path,
+            paths,
+            mass,
+            examples,
+        })
+        .collect();
+    // Biggest silence first; ties broken by path so the answer is stable.
+    unclaimed_regions.sort_by(|a, b| {
+        b.mass
+            .cmp(&a.mass)
+            .then(b.paths.cmp(&a.paths))
+            .then(a.path.cmp(&b.path))
+    });
+
+    let mut unobserved_locations: Vec<String> = claims_list
+        .iter()
+        .filter(|c| !matched_claims.contains(*c))
+        .cloned()
+        .collect();
+    unobserved_locations.sort();
+    unobserved_locations.dedup();
+
+    Ok(CoverageReport {
+        observed: claimed + unclaimed.len(),
+        claimed,
+        unclaimed: unclaimed.len(),
+        claimed_mass,
+        unclaimed_mass,
+        unclaimed_regions,
+        excluded,
+        unobserved_locations,
+        swept_at: swept_at.map(str::to_string),
+        pending_expansion,
+        opaque_claims,
+    })
 }

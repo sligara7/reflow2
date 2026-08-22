@@ -24,6 +24,7 @@
 use dynograph_core::DynoError;
 
 use crate::graph::DesignGraph;
+use crate::graph_read::GraphRead;
 use crate::nodes::{edge, node};
 
 /// How a capability's claim currently stands against reality.
@@ -187,228 +188,247 @@ impl DesignGraph {
     /// realizing artifacts. Capabilities with no artifacts are absent by
     /// design: "nothing is built yet" is `unrealized_capability`'s question,
     /// not a confirmation question.
+    /// Compute the confirmation ledger — one entry per capability that has
+    /// realizing artifacts.
+    ///
+    /// A delegation to [`confirmation_ledger`], kept so no caller changed when
+    /// the reading moved behind `ifc:graph-read`.
     pub fn confirmation_ledger(&self) -> Result<ConfirmationLedger, DynoError> {
-        let mut claims = Vec::new();
+        confirmation_ledger(self)
+    }
+}
 
-        for cap in self.scan_nodes(node::CAPABILITY)? {
-            // Both P3 shapes (BL-38): files realizing the capability, or files
-            // realizing a component it is allocated to.
-            let mut artifacts: Vec<String> = self
-                .incoming(&cap.node_id, Some(edge::REALIZES))?
-                .into_iter()
-                .map(|e| e.from_id)
-                .collect();
-            for alloc in self.outgoing(&cap.node_id, Some(edge::ALLOCATED_TO))? {
-                for e in self.incoming(&alloc.to_id, Some(edge::REALIZES))? {
-                    artifacts.push(e.from_id);
-                }
+/// Compute the confirmation ledger, over anything readable as a design.
+///
+/// ⭐ THE FIRST MODULE TO EXERCISE MOST OF THE CONTRACT. `granularity` used
+/// three of the five operations and `coverage` uses one; this uses four —
+/// `scan_nodes`, `get_node`, `outgoing` and `incoming` — so it is the first
+/// real test that `ifc:graph-read` is wide enough to stand a module on rather
+/// than merely wide enough for the easy case.
+///
+/// One entry per capability that has realizing artifacts. Capabilities with no
+/// artifacts are absent by design: "nothing is built yet" is
+/// `unrealized_capability`'s question, not a confirmation question.
+pub fn confirmation_ledger(g: &dyn GraphRead) -> Result<ConfirmationLedger, DynoError> {
+    let mut claims = Vec::new();
+
+    for cap in g.scan_nodes(node::CAPABILITY)? {
+        // Both P3 shapes (BL-38): files realizing the capability, or files
+        // realizing a component it is allocated to.
+        let mut artifacts: Vec<String> = g
+            .incoming(&cap.node_id, Some(edge::REALIZES))?
+            .into_iter()
+            .map(|e| e.from_id)
+            .collect();
+        for alloc in g.outgoing(&cap.node_id, Some(edge::ALLOCATED_TO))? {
+            for e in g.incoming(&alloc.to_id, Some(edge::REALIZES))? {
+                artifacts.push(e.from_id);
             }
-            artifacts.sort();
-            artifacts.dedup();
-            if artifacts.is_empty() {
-                continue;
-            }
-
-            let mut drift_events = 0usize;
-            let mut unresolved = 0usize;
-            let mut design_holds = 0usize;
-            let mut design_updated = 0usize;
-            let mut baseline_claims = 0usize;
-            let mut confirmations = 0usize;
-            let mut last_claim_at: Option<String> = None;
-            let mut last_confirmed_at: Option<String> = None;
-
-            for art in &artifacts {
-                // BL-158 · someone ran a reconcile and this still matched. Read
-                // off the artifact rather than off an event, because a clean
-                // check is not a change (see `drift::stamp_confirmed`).
-                if let Some(node) = self.get_node(node::ARTIFACT, art)?
-                    && let Some(at) = node
-                        .properties
-                        .get("last_confirmed_at")
-                        .and_then(dynograph_core::Value::as_str)
-                {
-                    confirmations += 1;
-                    if last_confirmed_at.as_deref().is_none_or(|prev| at > prev) {
-                        last_confirmed_at = Some(at.to_string());
-                    }
-                }
-                for e in self.incoming(art, Some(edge::DEPENDS_ON))? {
-                    let Some(ev) = self.get_node(node::DRIFT_EVENT, &e.from_id)? else {
-                        continue;
-                    };
-                    drift_events += 1;
-                    let resolved = ev
-                        .properties
-                        .get("resolved")
-                        .and_then(dynograph_core::Value::as_bool)
-                        .unwrap_or(false);
-                    if !resolved {
-                        unresolved += 1;
-                    }
-                }
-                for e in self.incoming(art, Some(edge::CHANGED))? {
-                    // Only accept claims count; ordinary change history on the
-                    // artifact (a record_change) is not a disposition.
-                    let is_claim = e
-                        .properties
-                        .get("accepted_baseline")
-                        .and_then(dynograph_core::Value::as_bool)
-                        .unwrap_or(false);
-                    if !is_claim {
-                        continue;
-                    }
-                    let Some(ev) = self.get_node(node::CHANGE_EVENT, &e.from_id)? else {
-                        continue;
-                    };
-                    // A first baseline is not an accept at all (BL-157), and it
-                    // has to be tested FIRST: it only ever CHANGED the artifact,
-                    // so the design-moved test below would silently count it as
-                    // a `design_holds` claim — the same fiction one layer over,
-                    // now in the ledger's own arithmetic.
-                    let is_first_baseline = ev
-                        .properties
-                        .get("change_type")
-                        .and_then(dynograph_core::Value::as_str)
-                        == Some(crate::temporal::ChangeType::BaselineEstablished.as_str());
-                    if is_first_baseline {
-                        baseline_claims += 1;
-                    } else {
-                        // Which kind of claim is this accept? A design-moving
-                        // event also CHANGED a non-Artifact design node.
-                        let mut moved_design = false;
-                        for t in self.outgoing(&ev.node_id, Some(edge::CHANGED))? {
-                            if t.to_id != *art && self.get_node(node::ARTIFACT, &t.to_id)?.is_none()
-                            {
-                                moved_design = true;
-                                break;
-                            }
-                        }
-                        if moved_design {
-                            design_updated += 1;
-                        } else {
-                            design_holds += 1;
-                        }
-                    }
-                    // `last_claim_at` is read by the freshness comparison as
-                    // "the newest accepted change to the code this check
-                    // covers", so a first baseline must NOT feed it: nothing
-                    // moved, and letting it in would mark every passing check
-                    // on the capability stale the moment someone registered a
-                    // checksum that had been missing all along.
-                    if is_first_baseline {
-                        continue;
-                    }
-                    if let Some(at) = ev
-                        .properties
-                        .get("detected_at")
-                        .and_then(dynograph_core::Value::as_str)
-                    {
-                        // ISO-8601 strings order lexically; the caller supplies
-                        // them (the core takes no clock).
-                        if last_claim_at.as_deref().is_none_or(|prev| at > prev) {
-                            last_claim_at = Some(at.to_string());
-                        }
-                    }
-                }
-            }
-
-            let design_edits = self.incoming(&cap.node_id, Some(edge::CHANGED))?.len();
-
-            // BL-106 · the TIME axis. The newest dated run across this
-            // capability's PASSING checks — passing only, because
-            // `dec:passing-is-verified` means a failing check is not evidence
-            // whose age is worth comparing.
-            let mut last_verified_at: Option<String> = None;
-            for e in self.incoming(&cap.node_id, Some(edge::VERIFIES))? {
-                let Some(v) = self.get_node(node::VERIFICATION, &e.from_id)? else {
-                    continue;
-                };
-                if v.properties
-                    .get("status")
-                    .and_then(dynograph_core::Value::as_str)
-                    != Some("passing")
-                {
-                    continue;
-                }
-                if let Some(at) = v
-                    .properties
-                    .get("last_run_at")
-                    .and_then(dynograph_core::Value::as_str)
-                {
-                    // ISO-8601 orders lexically; the caller supplies it (the
-                    // core takes no clock), exactly as last_claim_at above.
-                    if last_verified_at.as_deref().is_none_or(|prev| at > prev) {
-                        last_verified_at = Some(at.to_string());
-                    }
-                }
-            }
-
-            // Undated on either side is Unknown, never a pass.
-            let verification_freshness = match (&last_verified_at, &last_claim_at) {
-                (Some(ran), Some(accepted)) => freshness_of(ran, accepted),
-                _ => VerificationFreshness::Unknown,
-            };
-
-            // `confirmations` and `baseline_claims` both count as looking
-            // (BL-157, BL-158). A clean reconcile IS an examination — that it
-            // recorded no divergence is its RESULT, not evidence that it never
-            // happened, and treating the two the same is what let a
-            // 107-artifact sweep leave this number untouched.
-            let state = if unresolved > 0 {
-                ConfirmationState::Drifting
-            } else if drift_events
-                + design_holds
-                + design_updated
-                + design_edits
-                + baseline_claims
-                + confirmations
-                > 0
-            {
-                ConfirmationState::Confirmed
-            } else {
-                ConfirmationState::Unexamined
-            };
-
-            claims.push(ClaimConfirmation {
-                capability_id: cap.node_id.clone(),
-                capability_name: cap
-                    .properties
-                    .get("name")
-                    .and_then(dynograph_core::Value::as_str)
-                    .unwrap_or(&cap.node_id)
-                    .to_string(),
-                state,
-                artifacts,
-                drift_events,
-                unresolved_drift_events: unresolved,
-                design_holds_claims: design_holds,
-                design_updated_claims: design_updated,
-                baseline_claims,
-                confirmations,
-                last_confirmed_at,
-                design_edits,
-                last_claim_at,
-                last_verified_at,
-                verification_freshness,
-            });
+        }
+        artifacts.sort();
+        artifacts.dedup();
+        if artifacts.is_empty() {
+            continue;
         }
 
-        claims.sort_by(|a, b| a.capability_id.cmp(&b.capability_id));
-        let count = |s: ConfirmationState| claims.iter().filter(|c| c.state == s).count();
-        let fresh = |f: VerificationFreshness| {
-            claims
-                .iter()
-                .filter(|c| c.verification_freshness == f)
-                .count()
+        let mut drift_events = 0usize;
+        let mut unresolved = 0usize;
+        let mut design_holds = 0usize;
+        let mut design_updated = 0usize;
+        let mut baseline_claims = 0usize;
+        let mut confirmations = 0usize;
+        let mut last_claim_at: Option<String> = None;
+        let mut last_confirmed_at: Option<String> = None;
+
+        for art in &artifacts {
+            // BL-158 · someone ran a reconcile and this still matched. Read
+            // off the artifact rather than off an event, because a clean
+            // check is not a change (see `drift::stamp_confirmed`).
+            if let Some(node) = g.get_node(node::ARTIFACT, art)?
+                && let Some(at) = node
+                    .properties
+                    .get("last_confirmed_at")
+                    .and_then(dynograph_core::Value::as_str)
+            {
+                confirmations += 1;
+                if last_confirmed_at.as_deref().is_none_or(|prev| at > prev) {
+                    last_confirmed_at = Some(at.to_string());
+                }
+            }
+            for e in g.incoming(art, Some(edge::DEPENDS_ON))? {
+                let Some(ev) = g.get_node(node::DRIFT_EVENT, &e.from_id)? else {
+                    continue;
+                };
+                drift_events += 1;
+                let resolved = ev
+                    .properties
+                    .get("resolved")
+                    .and_then(dynograph_core::Value::as_bool)
+                    .unwrap_or(false);
+                if !resolved {
+                    unresolved += 1;
+                }
+            }
+            for e in g.incoming(art, Some(edge::CHANGED))? {
+                // Only accept claims count; ordinary change history on the
+                // artifact (a record_change) is not a disposition.
+                let is_claim = e
+                    .properties
+                    .get("accepted_baseline")
+                    .and_then(dynograph_core::Value::as_bool)
+                    .unwrap_or(false);
+                if !is_claim {
+                    continue;
+                }
+                let Some(ev) = g.get_node(node::CHANGE_EVENT, &e.from_id)? else {
+                    continue;
+                };
+                // A first baseline is not an accept at all (BL-157), and it
+                // has to be tested FIRST: it only ever CHANGED the artifact,
+                // so the design-moved test below would silently count it as
+                // a `design_holds` claim — the same fiction one layer over,
+                // now in the ledger's own arithmetic.
+                let is_first_baseline = ev
+                    .properties
+                    .get("change_type")
+                    .and_then(dynograph_core::Value::as_str)
+                    == Some(crate::temporal::ChangeType::BaselineEstablished.as_str());
+                if is_first_baseline {
+                    baseline_claims += 1;
+                } else {
+                    // Which kind of claim is this accept? A design-moving
+                    // event also CHANGED a non-Artifact design node.
+                    let mut moved_design = false;
+                    for t in g.outgoing(&ev.node_id, Some(edge::CHANGED))? {
+                        if t.to_id != *art && g.get_node(node::ARTIFACT, &t.to_id)?.is_none() {
+                            moved_design = true;
+                            break;
+                        }
+                    }
+                    if moved_design {
+                        design_updated += 1;
+                    } else {
+                        design_holds += 1;
+                    }
+                }
+                // `last_claim_at` is read by the freshness comparison as
+                // "the newest accepted change to the code this check
+                // covers", so a first baseline must NOT feed it: nothing
+                // moved, and letting it in would mark every passing check
+                // on the capability stale the moment someone registered a
+                // checksum that had been missing all along.
+                if is_first_baseline {
+                    continue;
+                }
+                if let Some(at) = ev
+                    .properties
+                    .get("detected_at")
+                    .and_then(dynograph_core::Value::as_str)
+                {
+                    // ISO-8601 strings order lexically; the caller supplies
+                    // them (the core takes no clock).
+                    if last_claim_at.as_deref().is_none_or(|prev| at > prev) {
+                        last_claim_at = Some(at.to_string());
+                    }
+                }
+            }
+        }
+
+        let design_edits = g.incoming(&cap.node_id, Some(edge::CHANGED))?.len();
+
+        // BL-106 · the TIME axis. The newest dated run across this
+        // capability's PASSING checks — passing only, because
+        // `dec:passing-is-verified` means a failing check is not evidence
+        // whose age is worth comparing.
+        let mut last_verified_at: Option<String> = None;
+        for e in g.incoming(&cap.node_id, Some(edge::VERIFIES))? {
+            let Some(v) = g.get_node(node::VERIFICATION, &e.from_id)? else {
+                continue;
+            };
+            if v.properties
+                .get("status")
+                .and_then(dynograph_core::Value::as_str)
+                != Some("passing")
+            {
+                continue;
+            }
+            if let Some(at) = v
+                .properties
+                .get("last_run_at")
+                .and_then(dynograph_core::Value::as_str)
+            {
+                // ISO-8601 orders lexically; the caller supplies it (the
+                // core takes no clock), exactly as last_claim_at above.
+                if last_verified_at.as_deref().is_none_or(|prev| at > prev) {
+                    last_verified_at = Some(at.to_string());
+                }
+            }
+        }
+
+        // Undated on either side is Unknown, never a pass.
+        let verification_freshness = match (&last_verified_at, &last_claim_at) {
+            (Some(ran), Some(accepted)) => freshness_of(ran, accepted),
+            _ => VerificationFreshness::Unknown,
         };
-        Ok(ConfirmationLedger {
-            drifting: count(ConfirmationState::Drifting),
-            confirmed: count(ConfirmationState::Confirmed),
-            unexamined: count(ConfirmationState::Unexamined),
-            stale_verification: fresh(VerificationFreshness::Stale),
-            unknown_verification_freshness: fresh(VerificationFreshness::Unknown),
-            claims,
-        })
+
+        // `confirmations` and `baseline_claims` both count as looking
+        // (BL-157, BL-158). A clean reconcile IS an examination — that it
+        // recorded no divergence is its RESULT, not evidence that it never
+        // happened, and treating the two the same is what let a
+        // 107-artifact sweep leave this number untouched.
+        let state = if unresolved > 0 {
+            ConfirmationState::Drifting
+        } else if drift_events
+            + design_holds
+            + design_updated
+            + design_edits
+            + baseline_claims
+            + confirmations
+            > 0
+        {
+            ConfirmationState::Confirmed
+        } else {
+            ConfirmationState::Unexamined
+        };
+
+        claims.push(ClaimConfirmation {
+            capability_id: cap.node_id.clone(),
+            capability_name: cap
+                .properties
+                .get("name")
+                .and_then(dynograph_core::Value::as_str)
+                .unwrap_or(&cap.node_id)
+                .to_string(),
+            state,
+            artifacts,
+            drift_events,
+            unresolved_drift_events: unresolved,
+            design_holds_claims: design_holds,
+            design_updated_claims: design_updated,
+            baseline_claims,
+            confirmations,
+            last_confirmed_at,
+            design_edits,
+            last_claim_at,
+            last_verified_at,
+            verification_freshness,
+        });
     }
+
+    claims.sort_by(|a, b| a.capability_id.cmp(&b.capability_id));
+    let count = |s: ConfirmationState| claims.iter().filter(|c| c.state == s).count();
+    let fresh = |f: VerificationFreshness| {
+        claims
+            .iter()
+            .filter(|c| c.verification_freshness == f)
+            .count()
+    };
+    Ok(ConfirmationLedger {
+        drifting: count(ConfirmationState::Drifting),
+        confirmed: count(ConfirmationState::Confirmed),
+        unexamined: count(ConfirmationState::Unexamined),
+        stale_verification: fresh(VerificationFreshness::Stale),
+        unknown_verification_freshness: fresh(VerificationFreshness::Unknown),
+        claims,
+    })
 }

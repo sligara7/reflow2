@@ -304,3 +304,168 @@ fn states_do_not_bleed_between_capabilities() {
     assert_eq!(by_id("cap:score").state, ConfirmationState::Drifting);
     assert_eq!(by_id("cap:render").state, ConfirmationState::Unexamined);
 }
+
+// ---- The ledger standing on its own, with no store behind it ------------
+//
+// ⭐ THE FIRST MODULE TO EXERCISE MOST OF `ifc:graph-read`. `granularity` uses
+// three of the five operations and `coverage` uses one; this uses FOUR —
+// scan_nodes, get_node, outgoing and incoming. So it is the first real test
+// that the contract is wide enough to stand a module on, rather than merely
+// wide enough for the easy case.
+
+mod no_store {
+    use dynograph_core::{DynoError, Value};
+    use dynograph_storage::{StoredEdge, StoredNode};
+    use reflow2_core::graph_read::GraphRead;
+    use std::collections::HashMap;
+
+    /// A design held in two vectors. No store, no schema, no disk, no lock.
+    struct Vectors {
+        nodes: Vec<StoredNode>,
+        edges: Vec<StoredEdge>,
+    }
+
+    impl Vectors {
+        /// An unknown type is an ERROR, never an empty answer — the obligation
+        /// `ifc:graph-read` states that the signatures cannot.
+        fn known(&self, t: &str) -> Result<(), DynoError> {
+            if ["Capability", "Artifact", "Component", "Verification"].contains(&t) {
+                Ok(())
+            } else {
+                Err(DynoError::UnknownNodeType(t.to_string()))
+            }
+        }
+    }
+
+    impl GraphRead for Vectors {
+        fn get_node(&self, t: &str, id: &str) -> Result<Option<StoredNode>, DynoError> {
+            self.known(t)?;
+            Ok(self
+                .nodes
+                .iter()
+                .find(|n| n.node_type == t && n.node_id == id)
+                .cloned())
+        }
+        fn scan_nodes(&self, t: &str) -> Result<Vec<StoredNode>, DynoError> {
+            self.known(t)?;
+            Ok(self
+                .nodes
+                .iter()
+                .filter(|n| n.node_type == t)
+                .cloned()
+                .collect())
+        }
+        fn count_nodes(&self, t: &str) -> Result<usize, DynoError> {
+            Ok(self.scan_nodes(t)?.len())
+        }
+        fn outgoing(&self, f: &str, e: Option<&str>) -> Result<Vec<StoredEdge>, DynoError> {
+            Ok(self
+                .edges
+                .iter()
+                .filter(|x| x.from_id == f && e.is_none_or(|t| x.edge_type == t))
+                .cloned()
+                .collect())
+        }
+        fn incoming(&self, to: &str, e: Option<&str>) -> Result<Vec<StoredEdge>, DynoError> {
+            Ok(self
+                .edges
+                .iter()
+                .filter(|x| x.to_id == to && e.is_none_or(|t| x.edge_type == t))
+                .cloned()
+                .collect())
+        }
+    }
+
+    fn node(t: &str, id: &str, props: &[(&str, &str)]) -> StoredNode {
+        StoredNode {
+            graph_id: "fake".into(),
+            node_type: t.into(),
+            node_id: id.into(),
+            properties: props
+                .iter()
+                .map(|(k, v)| ((*k).to_string(), Value::String((*v).to_string())))
+                .collect::<HashMap<_, _>>(),
+        }
+    }
+
+    fn edge(t: &str, from: &str, to: &str) -> StoredEdge {
+        StoredEdge {
+            graph_id: "fake".into(),
+            edge_type: t.into(),
+            from_id: from.into(),
+            to_id: to.into(),
+            properties: HashMap::new(),
+        }
+    }
+
+    /// One capability with a file behind it, and one with nothing — the second
+    /// must be absent, because "nothing is built yet" is a different question.
+    fn two_capabilities() -> Vectors {
+        Vectors {
+            nodes: vec![
+                node("Capability", "cap:built", &[("name", "Built")]),
+                node("Capability", "cap:bare", &[("name", "Bare")]),
+                node(
+                    "Artifact",
+                    "art:f",
+                    &[("name", "f.rs"), ("checksum", "sha256:1")],
+                ),
+            ],
+            edges: vec![edge("REALIZES", "art:f", "cap:built")],
+        }
+    }
+
+    #[test]
+    fn the_ledger_is_computed_over_a_design_that_is_only_two_vectors() {
+        let ledger = reflow2_core::confirm::confirmation_ledger(&two_capabilities())
+            .expect("no store required");
+
+        let ids: Vec<&str> = ledger
+            .claims
+            .iter()
+            .map(|c| c.capability_id.as_str())
+            .collect();
+        assert_eq!(
+            ids,
+            vec!["cap:built"],
+            "a capability with a realizing file is in the ledger; one with none is not"
+        );
+    }
+
+    /// The obligation the types cannot carry, with a CONTROL so it is not
+    /// vacuous: an empty-but-valid design is `Ok`, and only a store that
+    /// cannot answer is `Err`.
+    #[test]
+    fn a_store_that_cannot_answer_does_not_arrive_as_an_empty_ledger() {
+        let empty = Vectors {
+            nodes: vec![],
+            edges: vec![],
+        };
+        let ok = reflow2_core::confirm::confirmation_ledger(&empty)
+            .expect("no capabilities is a design state, not a failure");
+        assert!(ok.claims.is_empty());
+
+        struct Broken;
+        impl GraphRead for Broken {
+            fn get_node(&self, t: &str, _: &str) -> Result<Option<StoredNode>, DynoError> {
+                Err(DynoError::UnknownNodeType(t.to_string()))
+            }
+            fn scan_nodes(&self, t: &str) -> Result<Vec<StoredNode>, DynoError> {
+                Err(DynoError::UnknownNodeType(t.to_string()))
+            }
+            fn count_nodes(&self, t: &str) -> Result<usize, DynoError> {
+                Err(DynoError::UnknownNodeType(t.to_string()))
+            }
+            fn outgoing(&self, _: &str, _: Option<&str>) -> Result<Vec<StoredEdge>, DynoError> {
+                Ok(vec![])
+            }
+            fn incoming(&self, _: &str, _: Option<&str>) -> Result<Vec<StoredEdge>, DynoError> {
+                Ok(vec![])
+            }
+        }
+        assert!(
+            reflow2_core::confirm::confirmation_ledger(&Broken).is_err(),
+            "the store could not answer, and that must not read as an empty ledger"
+        );
+    }
+}
