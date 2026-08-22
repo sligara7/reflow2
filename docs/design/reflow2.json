@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ea507b3a1cb906d1f91e600302fae3910c66abded0fdfb0c3316778f0e366887",
+  "content_hash": "sha256:b12b07ca11aa549b335260ea07a1a42bd24ea5c7caa44738ce9f12449f3ec261",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2673,6 +2673,14 @@
         "confidence": 0.9
       },
       "to_id": "dec:legitimate-islands-need-the-detector-fix"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-a-hosted-tier-of-many-single-writer-tenants",
+      "properties": {
+        "evidence": "The earlier idea saw this coming and asked it without a number: \"what does reflow2 look like at 1k / 100k / 1M tenants each holding their OWN design, and what must not be foreclosed now?\" This one arrives with the number — flo2 at ~10,000 simultaneous users on different projects — and with the second half the earlier one only gestured at, namely what must not be foreclosed being the LOCAL case specifically. Direction is deliberate: the abstract question anticipated the concrete one, not the reverse."
+      },
+      "to_id": "dec:idea-does-serving-flo2-cost-the-local-case"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -9294,6 +9302,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-does-serving-flo2-cost-the-local-case",
+      "properties": {
+        "acted_at": "2026-08-21",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-does-unmotivated-severity-key-on-built-not-provenance",
       "properties": {
         "acted_at": "2026-08-11",
@@ -10027,6 +10044,15 @@
         "role": "author"
       },
       "to_id": "who:alex"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-where-does-the-10k-work-actually-land",
+      "properties": {
+        "acted_at": "2026-08-21",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -24018,6 +24044,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:two-more-modules-behind-the-read-contract",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:confirm"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:two-more-modules-behind-the-read-contract",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:coverage"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:two-more-modules-behind-the-read-contract",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:a-module-can-be-read-swapped-and-tested-behind-a-contract"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:two-more-modules-behind-the-read-contract",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ifc:graph-read"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:unbounded-reads-counted",
       "properties": {
         "accepted_baseline": false,
@@ -26999,6 +27061,26 @@
         "weight_basis": "estimated"
       },
       "to_id": "req:accreted-intent-becomes-a-design"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-does-serving-flo2-cost-the-local-case",
+      "properties": {
+        "evidence": "Whether serving flo2 costs the local case depends on WHICH LAYER absorbs the scaling work. If it lands in dynograph-foundation as a new `impl KvBackend`, reflow2's shape does not move and the local case is barely at risk. If it lands in reflow2 by loosening \"one design = one directory = one engine\", the local case is exactly what is being changed. So the cost question cannot be answered before the layer question.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-where-does-the-10k-work-actually-land"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-does-serving-flo2-cost-the-local-case",
+      "properties": {
+        "evidence": "This question exists only if that shape is actually built. `dec:one-process-many-stores` decides that a hosted reflow2 holds N single-writer stores in one process; this asks what that costs the local single-project case and whether the shape survives 10,000 tenants. Drop the hosting work and this idea evaporates with it — which is what makes the dependency real rather than merely topical.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:one-process-many-stores"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -90790,7 +90872,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:276c4e707db8d55a34f673a533dcaa15629d6bd59be4d3232df21bff1e6ce7c3",
+        "checksum": "sha256:509b37c237f11e19352ff798b61889799c3485ed5172eb7e7ed18f6fc67a9762",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/confirm.rs",
         "name": "confirm.rs",
@@ -90866,7 +90948,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c3d8585b71d9bb6aa886b70998fa97a143ae2829a6ebb47a4803e18910ec176d",
+        "checksum": "sha256:94c373a4b7b515af4bab89e1c80faef636b022999a9434b4674c1737a458cf7c",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/coverage.rs",
         "name": "coverage.rs",
@@ -100497,6 +100579,15 @@
       }
     },
     {
+      "node_id": "chg:two-more-modules-behind-the-read-contract",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "`coverage` and `confirm` move behind `ifc:graph-read`, taking the count from one module to three. Both were selected by MEASUREMENT rather than guess: of the 17 read-only modules, only these two make zero calls outside the contract's five operations. `confirm` is the first to exercise FOUR of the five (scan_nodes, get_node, outgoing, incoming), so it is the first real test that the contract is wide enough to stand a module on rather than merely wide enough for the easy case. Both keep a one-line inherent method, so no caller changed. Also corrected an earlier suggestion: `report` is NOT cheap — it needs 26 other DesignGraph methods.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:unbounded-reads-counted",
       "node_type": "ChangeEvent",
       "properties": {
@@ -103233,6 +103324,16 @@
       }
     },
     {
+      "node_id": "dec:idea-does-serving-flo2-cost-the-local-case",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony thinking out loud, 2026-08-21, before any flo2-driven change is made. Nothing here is intent and nothing is settled.\n\nHIS CONCERN, in his words: \"my concern is that by making the changes to reflow2 required by flo2, that it wouldn't be able to support its original use case (which is how we are currently using it now). that's why I was thinking we need to consider this early because I would hate to break the current use case because we made a whole bunch of changes to make reflow2 work for flo2.\"\n\n⭐ IDEA A — THE LOCAL CASE IS DEFENDED BY INTENT BUT NOT BY A GUARD, AND THAT IS THE GAP. Three things already stand between flo2's work and a broken local path: `req:persistence` (accepted — the design lives at ./.reflow2/graph inside the repo, travelling with it), `req:invocation` (accepted — an MCP server over stdio), and `dec:one-process-many-stores`' own instruction that \"the overwhelmingly common case is one project, one directory, --graph-path, and it must keep working exactly as it does\", with the framing \"single-graph mode is multi-graph mode with a registry of one, pre-populated at startup and with selection defaulted — NOT a second code path\". That framing is the right shape and it is a DESIGN PRINCIPLE, not a check. Nothing today fails when it stops being true. The cheap answer to a regression worry is a guard, not a promise.\n\n⭐ IDEA B — HIS STATED SCALE MAY EXCEED WHAT THE ACCEPTED DECISION COVERS. flo2 is a web app at flo2.io, collaborative (many people on the SAME project at once) and expecting on the order of 10,000 simultaneously logged-in users across DIFFERENT projects. `dec:one-process-many-stores` accepts N open RocksDB stores in one process, each carrying its own block cache, file handles and tantivy index, and names resource exhaustion as an accepted risk requiring \"a cap on simultaneously open graphs, with a clear error at the cap rather than silent thrashing\". 10,000 open stores in one process is not that shape. At that number the answer is partitioning across many processes — which is item #8, blast radius, which flo2's own tracker says to decide BEFORE designing the registry because \"retrofitting it onto a registry designed for one process is a rewrite of the piece everything else is gated on\". The decision was accepted without a number attached; the number changes which question is being answered.\n\n⭐ IDEA C — AND THAT MAY CUT THE OTHER WAY, WHICH IS THE HOPEFUL VERSION. A sharded shape — many processes, each holding few graphs — is CLOSER to today's local behaviour than one fat process holding everything. If the answer at 10k is partitioning, the invasiveness to the local path may go DOWN rather than up, because each process keeps roughly the shape it has now. Recorded as a possibility, not a claim; nobody has designed it.\n\n⭐ IDEA D — THE COLLABORATIVE AXIS MAY ALREADY BE MET AND IS WORTH NOT REBUILDING. \"Many people on the same project at once\" is `req:sessions-share-a-graph` (accepted) delivered by `cap:shared-sessions` (VERIFIED — \"several sessions work one design at once, through one server\"). Single-writer is not relaxed by any of this: one process holds the lock, many sessions speak to it. So flo2's collaboration requirement may need nothing new, and the genuinely unbuilt axis is the many-PROJECTS one.\n\nWHAT IS NOT IN DOUBT, so it does not get re-litigated here: whether flo2 gets its own fork. `dec:one-process-many-stores` answers that — one reflow2, N single-writer stores, the directory stays the unit of a design — and it explicitly rejected many-designs-in-one-store. The open questions above are about SHAPE and PROOF, not about forking.\n\n🛑 A SEPARATE DEFECT NOTICED WHILE READING, not part of this question: `dec:one-process-many-stores` carries `status: accepted` and a name beginning \"ACCEPTED 2026-08-06 (conditional)\", while its own body opens \"PROPOSED, NOT SETTLED.\" The status moved and the text did not. A reader can honestly conclude either. Left alone — whether it is settled is Anthony's to say.\n\nDISTINCT FROM the three nodes the guard surfaced. `dec:one-process-many-stores` decides the SHAPE of hosting and assumes it is worth doing; this asks what it COSTS the existing case and whether a stated scale still fits. `req:many-people-and-many-projects-compose` requires the two axes to hold together; this asks what would PROVE a third thing — the local path — still holds while they do. `dec:the-registry-root-is-the-tenant-boundary` settles where the tenant line falls inside the registry; this asks whether a registry of that shape survives 10k.",
+        "name": "OPEN — what would PROVE that building for flo2 has not broken the local single-project case, and does 10k tenants even fit the accepted shape?",
+        "rationale": "Captured under the brainstorm skill: recorded as ideas so nothing is lost and nothing is claimed as intent. Anthony raised it deliberately EARLY — before the flo2-driven changes are made rather than after — which is the whole point of recording it now.\n\nThe four ideas are kept apart because they have different answers: A wants a check written, B wants a number decided, C is a possibility nobody has explored, and D may need nothing at all. Collapsing them into one node would make it answerable only in halves.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-does-unmotivated-severity-key-on-built-not-provenance",
       "node_type": "Decision",
       "properties": {
@@ -104112,6 +104213,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Source: Alex Sligar's 2026-08-05 research, specifically Zep/Graphiti, described there as \"temporal knowledge graphs that encode what happened, when, and how entities relate over time\" for agents that \"must reason about evolving facts\". Graphiti's distinguishing feature in that family is BI-TEMPORALITY: every fact carries both when it was true in the world and when the system came to know it. STILL OPEN.\n\nWHAT REFLOW2 HAS, CHECKED IN schema/temporal.yaml RATHER THAN RECALLED: TemporalFact carries VALID_FROM and VALID_TO, both pointing at a DesignEpoch, plus `basis: measured|forecast` and an author-stated `confidence`. So the design already models world-time properly, and BL-68 already separated observation from projection — which is the harder half of what Graphiti does and reflow2 got there independently. What TemporalFact does NOT carry is any epoch for when the assertion ENTERED the record. ChangeEvent has `detected_at`, DriftEvent has `detected_at`, DimensionObservation has `observed_at` — the arrival time exists on the EVENTS but not on the FACT.\n\nTHE CONSEQUENCE, and it is why this may be worth more than schema tidiness: a retroactively discovered fact is written with VALID_FROM at the epoch it became true, and the record then reads as though the design always knew. \"The beamline analysis code has assumed a single detector since 2016\" and \"we discovered in August 2026 that the beamline analysis code has assumed a single detector since 2016\" become the same node. The second is the more useful sentence, because it tells a reader that everything designed between 2016 and 2026 was designed in ignorance of it — and that is exactly the reasoning a brownfield adoption needs. This is Anthony's own operating context (a ten-year-old bluesky/tiled stack being evolved on the fly), not a hypothetical.\n\nWHERE IT ALREADY BITES, POSSIBLY: cap:as-of-epoch answers \"what did the design say at epoch n\" from snapshots. If retroactive facts are written with early VALID_FROM, an as-of-epoch answer can attribute knowledge to a past epoch that nobody had then — a subtler version of the same fiction dec:readiness-forecast-is-a-temporal-fact was created to stop. NOT VERIFIED: whether as-of-epoch actually reads TemporalFact validity or only Snapshots was not checked, and that determines whether this is a live defect or only a modelling gap. Check before treating it as either.\n\nWHAT IS CHEAP: adding a RECORDED_AT epoch edge (or reusing AT_EPOCH, which already means \"belongs to\" for Snapshot and ChangeEvent) is additive, and req:defaults-do-not-assert has a clean answer for the backfill — absent means unstated, which reads as unstated.\n\nTHE COUNTER-ARGUMENT: nothing currently READS TemporalFact validity for anything a user sees, and reflow2's record already has a long list of declared-and-read-by-nothing fields (embedding_field, Project.domain) that this would join. A second time axis is also a real conceptual cost on a vocabulary that is already large, and the honest test is whether any computation would use it — which is the same bar dec:exploratory-staging is being held to. If the answer is \"only a human reading the node would notice\", the cheaper fix is prose in the fact's statement, not schema.",
         "name": "OPEN — should a TemporalFact record WHEN IT WAS LEARNED as well as when it was true, since VALID_FROM/VALID_TO carry only world-time and a retroactive discovery loses its own arrival?",
         "rationale": "Recorded as an idea because the missing half was verified in the schema and the brownfield consequence is Anthony's actual working context, but the deciding test — does any computation read it — is unanswered, and that test is what dec:exploratory-staging established as the bar for new vocabulary. Also recorded because BL-68 already made the harder measured/forecast distinction, which makes this the same argument one step along rather than a new idea.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-where-does-the-10k-work-actually-land",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-21: \"it sounds like the changes to make it work for 10000 logged in users would be changes to dynograph-foundation, not necessarily to reflow2? ... rocksdb was developed by meta ... it'd be surprising to me if rocksdb can't support maybe 10000000 logged in users ... I'd rather build reflow2 now to be used by thousands of users rather than building it for like 10 people now and having to completely redesign it later to scale.\"\n\n⭐ HIS INSTINCT IS RIGHT ABOUT THE BYTE LAYER, AND THE CODE IS BETTER PREPARED THAN EXPECTED. READ 2026-08-21 in dynograph-foundation: `KvBackend` IS A TRAIT (`crates/dynograph-storage/src/backend.rs:210`, `Send + Sync`) with two implementations already — `MemoryBackend` and `RocksBackend`. `StorageEngine` holds `backend: Box<dyn KvBackend>`, and its own comment says why: \"keeps `StorageEngine` a single concrete type regardless of which backend is in use, so both constructors return the same type and THE REGISTRY HOLDS THEM UNIFORMLY\". Somebody already designed for the registry case. ⇒ A DIFFERENT BYTE STORE FOR HOSTING — object storage, a networked KV, something sharded — IS A NEW `impl KvBackend` INSIDE dynograph-foundation AND NEEDS NO REFLOW2 CHANGE AT ALL, because reflow2 holds `StorageEngine`, which does not change type. That is his hypothesis, confirmed by reading rather than assumed.\n\n⭐ AND HIS POINT ABOUT ROCKSDB IS RIGHT FOR THE REASON HE SUSPECTED. RocksDB at Meta's scale runs FEW instances with enormous keyspaces, not ten thousand instances side by side. The engine is not the ceiling. What would be expensive at 10k is not RocksDB's throughput but the number of OPEN INSTANCES: reflow2's unit is one design = one directory = one `StorageEngine`, and each carries a schema Arc, an LRU read cache behind a Mutex, a write buffer and a tantivy full-text index. Disk is not the problem — measured, reflow2's own 2862-node design is an 8 MB store, so 10k of those is ~80 GB, which is ordinary. Live instances in one process is the problem.\n\n🛑 SO THE SPLIT IS NOT THE ONE HIS QUESTION ASSUMES, AND THIS IS THE USEFUL PART. dynograph-foundation owns WHAT THE BYTES LIVE ON, and is already shaped to take a new answer. reflow2 owns HOW MANY DESIGNS A PROCESS HOLDS OPEN AND WHETHER A DESIGN IS A DIRECTORY — `DesignGraph { engine: StorageEngine }`, one per design, welded. **That second thing is where 10k bites, and it is reflow2's, not dynograph's.**\n\n⭐ THE REJECTED ALTERNATIVE MAY DESERVE RE-READING FOR THE HOSTED CASE SPECIFICALLY. `dec:one-process-many-stores` considered \"many designs inside a single store, relying on graph_id namespacing\" and rejected it. Two things are worth noticing. First, the mechanism already exists: every key is namespaced by graph_id today (`keys::edge_key(graph_id, ..)`, `adj_out_key(graph_id, ..)`), so co-habiting is not new machinery. Second, EVERY REASON GIVEN FOR THE REJECTION IS A LOCAL-CASE REASON — the per-project directory, per-project export, backups and `--import` restore, the sidecar identity files, the git merge driver, and \"a project's design lives under its own .reflow2/\". A hosted tenant at flo2.io has no repo, no git merge driver and no `.reflow2/` on anybody's laptop. ⇒ The rejection may be entirely correct for local and not binding for hosted, which would give TWO SHAPES OVER ONE CODEBASE rather than a fork. Nobody has tested that reading; it is offered as a question, not a conclusion.\n\n⭐ WHAT ACTUALLY BUYS THE OPTIONALITY HE WANTS. He is asking not to have to redesign later. The thing that secures that is NOT choosing the backend now — that choice is already deferred, cleanly, behind `KvBackend`. It is keeping THE UNIT OF A DESIGN a decision reflow2 can still change. Today \"a design is a directory with its own engine\" is welded into `DesignGraph`, so moving to \"a design is a namespace inside a shared engine\" is a change to reflow2's core type rather than a configuration. Whether that weld should be loosened — and what it would cost — is the open question, and it is the same shape as the `ifc:graph-read` work done today one level up: a concrete type where a contract would let the thing behind it change.\n\n🛑 THE NUMBER NOBODY HAS: how many `StorageEngine` instances actually fit in one process before it degrades. Everything above is structure, not measurement. That number decides whether the registry-with-a-cap in `dec:one-process-many-stores` is sufficient at flo2's scale or whether partitioning is required, and it is cheaply measurable — open N stores, watch memory and file handles. It should be measured before the registry is designed, not after.\n\n⚠️ ONE LIMIT ON THE GOOD NEWS: `KvBackend` is `pub(crate)`. The byte layer is swappable from INSIDE dynograph-foundation and not from outside it, so a new backend is a change to that repo rather than something reflow2 or flo2 could supply. That is fine while the same person owns both, and worth knowing before anyone plans otherwise.",
+        "name": "OPEN — at 10k tenants, which layer changes? The byte store is already swappable; what is welded is \"one design = one directory = one engine\", and that is reflow2's",
+        "rationale": "Captured under the brainstorm skill. Recorded as ideas, nothing promoted, nothing settled.\n\nKept separate from `dec:idea-does-serving-flo2-cost-the-local-case` because that one asks what hosting COSTS the existing use case and what would prove it safe; this asks WHICH LAYER the scaling work lands in. They are answered by different people looking at different repos, and one can be settled without the other.",
         "status": "proposed"
       }
     },
@@ -119060,6 +119171,19 @@
       }
     },
     {
+      "node_id": "fact:the-orientation-reads-cost-ten-seconds-and-the-store-is-not-why",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "name": "MEASURED on real RocksDB with a RELEASE binary: the two calls documented as cheap orientation reads cost ~11.5s each, and ~10s of that is detect_defects riding along on a reply nobody asked it of",
+        "statement": "MEASURED 2026-08-21 through the REAL MCP tool surface, driven over stdio against a REAL RocksDB store built from reflow2's own committed export (2862 nodes, 12139 edges, 8 MB on disk). Both build profiles, because users run release binaries and developers run debug.\n\n                      debug      RELEASE\n  get_node            0.01s       0.00s\n  scan_nodes          0.11s       0.01s\n  export_graph        3.10s       0.36s\n  detect_gaps         3.11s       0.51s\n  detect_defects     40.8s       10.3s     <== the hot spot\n  loop_status        47.5s       11.4s\n  open_questions     50.6s       11.7s     <== the FIRST call of every session\n  graph_report    45–92s       10.9–22.4s\n\n⭐ THE FINDING: `detect_defects` COSTS ~10s AND RIDES ALONG ON CALLS THAT NEVER ASKED FOR IT. `loop_status` reports a structural-defect count so it pays; `open_questions` pays it through the `loop_hint` attached to its reply. `open_questions` does its own work in about half a second and costs 11.7. So the two calls this project's own instructions call the cheap orientation reads — the SessionStart hook, the server instructions and the Stop hook all push an agent at them — are the two most expensive calls on the surface, and neither is expensive because of what it was asked to do.\n\n🛑 AND IT CORRECTS A STANDING BELIEF. \"The first store read of a session costs 26–48s\" has been carried as a known cost and read as the STORE being slow. It is not the store: `get_node` is sub-millisecond and `scan_nodes` is 10ms on the real backend. The cost is a whole-design sweep bolted onto an orientation reply.\n\n=== TWO HYPOTHESES FALSIFIED FIRST, both cheap, both recorded so nobody re-runs them ===\n\n(1) THAT THE SYNC CHECK WAS READING AND HASHING EVERY KNOWN EXPORT FILE. `sync_debt` does exactly that per path in `last_synced` — read, full serde_json parse, SHA-256, verify — and this design has ~15 such paths, several at 7.5 MB. FALSIFIED: a probe store with `last_synced` EMPTY still took 46.5s.\n(2) THAT `export_graph` INSIDE THE DEBT COMPUTATION WAS THE COST. FALSIFIED: 3.1s debug, 0.36s release.\n\nThe cause was found by timing each tool in an ISOLATED fresh process, which also ruled out ordering and cache effects — `detect_gaps` measured 3.11 / 3.06 / 3.11 while `open_questions` measured 50.59 / 50.44 / 50.86.\n\n=== WHAT IS NOT ESTABLISHED ===\n\nWHY `detect_defects` costs 20x what `detect_gaps` costs over the same graph. Both sweep the whole design; nothing here looks inside either. That ratio is the next measurement and it has not been taken.\n\nNOTHING WAS OPTIMISED. Anthony's call — \"we can optimize another day\". The likely fix is to REMOVE the work rather than speed it up: do not compute a defect sweep for a reply nobody asked it of, which would take `open_questions` from ~11.7s to ~0.6s on the call every session makes first. Recorded as a target, not a plan; the optimize skill wants a derived budget written before any change and none has been.\n\n⚠️ BOUND: one machine, one design, one shape of design. The RATIOS are the transferable part; the absolute seconds are not.",
+        "subject_id": "cmp:service",
+        "valid_from": "2026-08-21"
+      }
+    },
+    {
       "node_id": "fact:the-owner-uses-reflow2-as-a-funnel-for-random-order-input",
       "node_type": "TemporalFact",
       "properties": {
@@ -119092,6 +119216,19 @@
         "statement": "THE SEAM PAIRS. dec:linked-repos-poc's remaining half is now satisfied, and seam_report has been exercised for the first time.\n\nTHAT PoC (2026-08-06) reported paired=0 against BOTH dynograph-foundation and flo2, with 15 and 5 published interfaces landing in dead surface, and named the cause exactly: reflow2 declared no `required` interface anywhere, so pairing — which matches complements, never like with like — could never produce a pair. It called declaring them \"the cheapest next step\" and deliberately left it to Anthony's word. He gave it 2026-08-09, choosing to declare the environmental boundaries alongside the code ones.\n\nMEASURED, BEFORE AND AFTER, against dynograph-foundation:\n  paired         0  ->  5   (all at name_score 100)\n  dead_surface  15  ->  1   (only their /v1 REST API, which reflow2 genuinely does not use)\n  unmet_needs    0  ->  3   ambient-agent, exclusive-local-store, mcp-protocol\n\nAnd against flo2: unmet_needs 0 -> 4, dead_surface 5 -> 3.\n\n⚠️ THE MOST IMPORTANT NUMBER IS THE ONE THAT STOPPED BEING ZERO. The PoC called `unmet_needs: 0` \"the most dangerous number in the run\" — it reads as \"nothing is missing\" and meant \"we never said we needed anything\". It is now 3 and 4, which are real findings rather than an absence.\n\n⭐ A MODELLING ERROR MADE AND CORRECTED IN THE SAME SITTING, recorded because the correction is the lesson. The first attempt declared ONE umbrella interface for the whole dynograph dependency. Pairing returned NINE candidates and ZERO pairs: a pair needs a name match at or above 85/100, and an umbrella scored 62-78 against nine crisp names. THEY DECOMPOSED AND WE LUMPED. reflow2 links five named crates that map 1:1 onto five of their published interfaces, so the umbrella was deleted (never committed, never true — a mistake rather than history) and replaced with five requirements at the publisher's granularity, named to match. All five then paired at 100.\n\nSEAM_REPORT, RUN FOR THE FIRST TIME EVER — the PoC listed this as what it could NOT answer, because the check needs pairs and there were none: 5 pairs checked, 10 axes agreed, 0 incompatible, 0 differing, AND 30 AXES STATED BY NOBODY. The tool refuses to read that as compatibility, and says so unprompted: \"an unstated axis is not an agreed one, and this is not a claim of compatibility.\" It also names what it did not examine — the TYPES crossing the boundaries. So the honest verdict is that the machinery works and the contracts on both sides are almost entirely unstated, which is a true statement about two designs nobody wrote to be composed.\n\nA REAL WEAKNESS FOUND WHILE DOING IT, worth filing rather than working around: candidate noise scales as N×M. Five requirements against nine published library APIs produced 33 candidates, of which 5 were the real pairs. Every \"X API\" scores 60-83 against every other \"Y API\" on string similarity. Worse, an interface that has ALREADY paired at 100 still appears as a candidate against seven others — ifc:req-dyno-storage-api paired exactly with storage-api and is still offered against cluster-api, game-api, graph-api and four more. Suppressing candidates for a side that already has an exact match would remove most of the noise at no cost to the signal.",
         "subject_id": "cap:complementary-pairing",
         "valid_from": "2026-08-09"
+      }
+    },
+    {
+      "node_id": "fact:the-seam-report-half-of-the-poc-finally-ran",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "name": "seam_report ran against real pairs for the first time — 5 paired, 0 conflicts, and 30 of 40 axes stated by NOBODY",
+        "statement": "MEASURED 2026-08-21, at Anthony's direction, against dynograph-foundation's committed export (179 nodes, written by reflow2 0.16.0, unchanged since 2026-07-27). This is THE HALF `dec:linked-repos-poc` COULD NOT REACH on 2026-08-06 and has sat `proposed` for two weeks waiting for.\n\n=== THE POC'S OWN PREDICTION HELD, EXACTLY ===\n\nIts closing line: \"THE CHEAPEST NEXT STEP, NOT TAKEN HERE: declare reflow2's `required` interfaces... It would convert 15 dead surfaces into real pairs or real unmet needs.\" That step was taken since. Re-running the same pairing today:\n\n  2026-08-06   paired 0    dead_surface 15   unmet_needs 0    seam_findings 0\n  2026-08-21   paired 5    dead_surface  1   unmet_needs 3    seam_report RAN\n\nAll five pair at name_score 100/100 and agree on medium: req-dyno-core-api<->core-api, graph-api, resolution-api, storage-api, vector-api. The three unmet needs are correct and none is dynograph's to publish — the ambient agent, an exclusive local block device, the MCP protocol. The one dead surface is `ifc:rest-v1`, dynograph's 80-operation HTTP API, which reflow2 genuinely does not consume.\n\n=== WHAT seam_report ACTUALLY SAID, AND IT IS NOT \"COMPATIBLE\" ===\n\n  pairs_checked 5 | agreed 10 axes | differs 0 | incompatible 0 | UNSTATED 30\n\nIts own words: \"an unstated axis is not an agreed one, and this is not a claim of compatibility.\" So the seam between reflow2 and dynograph-foundation is **75% UNDESCRIBED**, not 75% agreed. Both sides stated `medium: library` and almost nothing else — no payload_schema, no error_model, no operations on reflow2's side of any pair.\n\n⇒ THE ANSWER IS A GOOD ONE AND THE NUMBER LOOKS LIKE A PASS. `incompatible: 0` beside `unstated: 30` is the same shape as the PoC's own warning about `unmet_needs: 0` — a zero that reads as health and means nobody said anything. The tool says so itself rather than leaving it to be misread, which is the behaviour worth recording.\n\n=== AND IT NAMED WHAT IT STRUCTURALLY CANNOT SEE ===\n\n\"The TYPES that cross these boundaries. Every axis here is a property OF a boundary; a struct or message that travels through one is part of the contract and is invisible to this check. A real case: a provider's storage API returned a type owned by its text crate, and the consumer read all three fields while naming neither.\" That is the exact breakage class this pair is exposed to, and no axis above would catch it (`con:pairing-stops-at-the-boundary`).\n\n=== WHAT THIS SETTLES AND WHAT IT DOES NOT ===\n\nSETTLED: the PoC's unanswered half — \"whether seam_report's contract comparison is any good\" — is now answerable. It ran, it refused to overclaim, and it named its own blind spot. The mechanism works.\n\nNOT SETTLED: whether the two designs AGREE, because they have not said enough to disagree. The cheapest next step is now the mirror of the last one: state payload_schema, error_model and operations on the five `req-dyno-*` interfaces. That is a morning's work and it is the only thing that makes this report say more than \"nobody said\".\n\n📌 METHOD NOTE, recorded because it cost time: this analysis was largely RE-DERIVED before `dec:linked-repos-poc` was found. Anthony redirected — \"if you search the linking of projects, this was already discussed in the past\" — and the prior record was both earlier and sharper, including `fact:the-diamond-meets-at-dynographs-internals-not-its-interface`. SEARCH THE GRAPH FOR PRIOR CROSS-PROJECT WORK BEFORE RE-RUNNING THE ANALYSIS; this design has a two-week head start on anyone re-deriving it.",
+        "subject_id": "dec:linked-repos-poc",
+        "valid_from": "2026-08-21"
       }
     },
     {
@@ -119128,6 +119265,19 @@
         "statement": "THIRD INSTANCE, AND THE FIRST ONE WHERE THE PEOPLE LOSING THE CYCLE HAD ALREADY WRITTEN THE DEFECT DOWN. Deliberately NOT a new defect: fact:defect-a-running-server-cannot-say-it-is-stale (2026-08-07) already states this case in almost these words — '--serve-shared is detached on purpose, so every session that restarted RE-ATTACHED TO THE SAME STALE PROCESS and nothing anywhere reported a problem' — and fact:defect-stale-server-reproduced-first-hand-here records the second. This node exists for what those two do NOT say. WHAT HAPPENED, 2026-08-08 late: Anthony went home specifically to restart and pick up the new binary, restarted the session, and the served surface was unchanged. Measured rather than assumed: `describe_schema(from: DesignRule, to: Component)` still answered 'No edge type specifically models DesignRule -> Component' and still showed CONSTRAINS as `from: [\"*\"]`, minutes after that enumeration was built, gated and pushed. `ps` explains it: the `--serve-shared` daemon has held the graph since 10:16 that morning, while the restart spawned a NEW `--shared` CLIENT (23:50) which attached to it. WHAT IS NEW AND WORTH THE NODE: (1) THE DOCUMENTED REMEDY IS THE THING THAT FAILS. Every prior record treats 'restart' as the escape from a stale server. Under `--shared` a session restart does not touch the daemon, so the remedy silently does nothing and the user reasonably believes it worked. The actual remedy is `--stop-shared`, which appears in NEITHER prior fact. (2) IT COST A WHOLE DAY OF DOGFOODING. Five merged PRs — the seat-liveness fix, both governance detectors, the skill, the enforced tri-state — were built, gated and merged without one of them ever running through a live session, because the daemon predated all of it. The handoff note written that evening had to say 'check the version rather than assume', which is the workaround this requirement exists to abolish. (3) IT WAS CAUGHT ONLY BY DELIBERATE CHECKING. The session tested a schema fact it happened to know had changed. Nothing surfaced it, and a session without that specific memory would have proceeded on a stale surface believing it was current — which is exactly how the four sessions in the 2026-08-07 report drew opposite conclusions from the same true value. WHY THIS IS AN ARGUMENT AND NOT A COMPLAINT: `req:the-server-is-the-authority-on-its-own-currency` has NOTHING SATISFYING IT and has sat among the 0.60 unsatisfied-requirement gaps all day. The fix is not research: `/proc/self/exe` is marked `(deleted)` the moment the binary is replaced, w-6904efa6 demonstrated it live on a real pid, and it is one syscall with no second source and no version-string comparison. THREE INSTANCES ACROSS TWO PROJECTS AND TWO MACHINES, and the third landed on the maintainer. THE HONEST CAVEAT, because recurrence is not automatically corroboration: these three share a cause rather than a method — two were found by noticing an impossible value, this one by testing a remembered fact — so they add weight to the COST, not to the diagnosis, which was already certain.",
         "subject_id": "req:the-server-is-the-authority-on-its-own-currency",
         "valid_from": "2026-08-08"
+      }
+    },
+    {
+      "node_id": "fact:the-storage-seam-is-published-in-design-and-private-in-code",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "property",
+        "name": "dynograph-foundation designates ifc:kv-backend `published` — the seam under StorageEngine — while the code makes `KvBackend` pub(crate), so the one node naming the shared layer beneath the diamond promises an extension point nobody outside can implement",
+        "statement": "READ 2026-08-21 in /home/ajs7/project/dynograph-foundation, at Anthony's invitation (\"dynograph-foundation is also my project... we can also review it\"). READ ONLY — nothing was written to that repo.\n\nITS DESIGN SAYS: `ifc:kv-backend`, designation **published**, named \"KvBackend trait (storage seam)\", spec \"The narrow seam underneath StorageEngine. All schema-aware behaviour — validation, the reverse index, the read cache, the write-buffer overlay, the full-text sidecar — sits ABOVE this trait; everything that touches bytes goes through it\", operations \"six byte-level primitives over six named column families, plus ordered prefix iteration\".\n\nITS CODE SAYS: `pub(crate) trait KvBackend: Send + Sync` (crates/dynograph-storage/src/backend.rs:210). Two implementations, `MemoryBackend` and `RocksBackend`. No public re-export found.\n\n⇒ THE SEAM IS REAL AND IT IS NOT REACHABLE. Swappable from INSIDE dynograph-foundation, not from outside it. A new backend — object storage, a networked KV, something sharded — is a change to that repo, not something reflow2 or flo2 could supply. That is fine while one person owns all three and is worth knowing before anyone plans otherwise.\n\n⭐ WHY THIS ONE MATTERS MORE THAN AN ORDINARY VISIBILITY MISMATCH. `fact:the-diamond-meets-at-dynographs-internals-not-its-interface` established that reflow2 and storyflow consume DISJOINT surfaces over one shared implementation, and that \"neither consumer's graph can see that layer at all\". `ifc:kv-backend` is the ONE node in any of these designs that names that layer. So the single place the shared substrate is modelled is also the place where the design and the code disagree about whether anyone may build on it.\n\n⭐ AND IT IS THE SEAM THE 10k QUESTION TURNS ON. `dec:idea-where-does-the-10k-work-actually-land` records the reading that a hosted byte store is a new `impl KvBackend` needing no reflow2 change, because `StorageEngine` holds `Box<dyn KvBackend>` and does not change type. That reading is correct about the SHAPE and depends on this visibility: today only dynograph-foundation can supply one.\n\n📌 ALSO OBSERVED IN THE SAME READ, unprompted and relevant to flo2's architecture: dynograph-foundation already has the hosted-service shape, and it is real in code rather than aspirational. `ifc:rest-v1` is specified 9/9 — 80 operations at /v1, bearer JWT when configured. `ifc:auth-provider` is a PUBLIC trait (`pub use auth::{AuthProvider, BearerJwt, Identity, NoAuth}` in dynograph-service), described as \"an EXTENSION POINT\", with an integration test asserting a JWT is rejected without a token and accepted with one. There are `dynograph-service` and `dynograph-client` crates, plus `ifc:ops-probes` at 8/9 and a Unix-socket transport. flo2's tracker states \"reflow2 has NO AUTHENTICATION and is not getting any — AuthN and authZ are flo2's, at the layer in front\", which is true of reflow2 and NOT true of the layer beneath it.\n\n⚠️ NOT ESTABLISHED, and deliberately not assumed: whether reflow2 could usefully run as a CLIENT of a dynograph-service rather than embedding StorageEngine. It would not be a `KvBackend` swap — that trait is byte-level and synchronous, and putting HTTP under it per operation would be worse, not better. It would be a swap at the graph-operations level, roughly where `ifc:graph-read` sits. Offered as a shape nobody has costed, not as a recommendation.\n\n⚠️ BOUND: dynograph-foundation's committed export was written by reflow2 0.16.0 on 2026-07-27 and its working tree is at v0.12.0. The design may lag its own code; only the two facts above were checked against source.",
+        "subject_id": "dep:dynograph-foundation",
+        "valid_from": "2026-08-21"
       }
     },
     {
@@ -121513,7 +121663,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:4789ab29550254ca1ceedadc6f1aabad62f0b027b84d419f5e0d97f71a2e34ce",
+  "prev_content_hash": "sha256:ea507b3a1cb906d1f91e600302fae3910c66abded0fdfb0c3316778f0e366887",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
