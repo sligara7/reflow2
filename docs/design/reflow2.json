@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:f23e3109a22e7141cbc4202e23fda626925b07878efc9a34b0b52323a4cd1381",
+  "content_hash": "sha256:f3d724d4024816d9376ae8e7598f00c1c60ca5452ae759d99c04db58e243008f",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1110,6 +1110,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:an-acknowledgement-says-whose-judgement-it-was",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:detect"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -11659,6 +11667,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-design-says-what-crosses-each-boundary-between-its-parts",
+      "properties": {
+        "acted_at": "2026-08-23",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue",
       "properties": {
         "acted_at": "2026-08-09",
@@ -17485,6 +17502,69 @@
         "action": "modified"
       },
       "to_id": "dec:idea-allocation-waits-for-the-last-responsible-moment"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-acknowledgement-says-whose-judgement-it-was",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:bulk"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-acknowledgement-says-whose-judgement-it-was",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-acknowledgement-says-whose-judgement-it-was",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-acknowledgement-says-whose-judgement-it-was",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-acknowledgement-says-whose-judgement-it-was",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:bulk"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-acknowledgement-says-whose-judgement-it-was",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:an-acknowledgement-says-whose-judgement-it-was",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:tools-coherence"
     },
     {
       "edge_type": "CHANGED",
@@ -86099,6 +86179,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:acknowledgement-approver-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:an-acknowledgement-says-whose-judgement-it-was"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:acknowledgement-not-structure-test",
       "properties": {
         "completeness": "complete"
@@ -88999,6 +89088,12 @@
       "edge_type": "SATISFIES",
       "from_id": "cap:a-contract-answers-at-the-altitude-you-asked",
       "properties": {},
+      "to_id": "req:a-design-says-what-crosses-each-boundary-between-its-parts"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-contract-answers-at-the-altitude-you-asked",
+      "properties": {},
       "to_id": "req:an-undeclared-coupling-is-named-not-just-counted"
     },
     {
@@ -89147,6 +89242,12 @@
       "from_id": "cap:allocate",
       "properties": {},
       "to_id": "req:golden-thread"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:an-acknowledgement-says-whose-judgement-it-was",
+      "properties": {},
+      "to_id": "req:settled-intent-carries-the-owners-name"
     },
     {
       "edge_type": "SATISFIES",
@@ -91962,6 +92063,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:an-acknowledgement-says-whose-judgement-it-was",
+      "properties": {},
+      "to_id": "cap:an-acknowledgement-says-whose-judgement-it-was"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:arrival-delta",
       "properties": {},
       "to_id": "cap:arrival-delta"
@@ -93285,6 +93392,14 @@
         "action": "created"
       },
       "to_id": "art:setup"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:acknowledgement-approver-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:acknowledgement-approver-test"
     },
     {
       "edge_type": "YIELDED",
@@ -94701,6 +94816,17 @@
       }
     },
     {
+      "node_id": "art:acknowledgement-approver-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:7c7a9c2ba6f6fb70860c211a851e673972e9e958832e195234d226e521cf073d",
+        "location": "crates/reflow2-core/tests/an_acknowledgement_says_whose.rs",
+        "name": "an_acknowledgement_says_whose.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:acknowledgement-not-structure-test",
       "node_type": "Artifact",
       "properties": {
@@ -94861,7 +94987,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6e8e23fce35b21d6",
+        "checksum": "sha256:e9ee5de2425cd151146a8c137ed10751c411de98e03acb3d889e6b1ffe35f85c",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/bulk.rs",
         "name": "bulk.rs",
@@ -95287,7 +95413,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b840adefdbe30bf6479f70584cc63509c109e7a949dd5f1cd3c20fa20450ccea",
+        "checksum": "sha256:0d2a77fde29e53ee229535c17b868ced71cfc7ca9c76fe89b1370ec08cf3df5a",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -96604,7 +96730,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f068b7f7036eb397d48d9ad7f55a145531605a1c033fda3054355b65e691277a",
+        "checksum": "sha256:8ca880481bd97609608d3d07dcd4cfb85df152f104ee8b8504361291e642faee",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -97233,7 +97359,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a2dc930815e40a4ba23cc9c7a9e2f13be9ddd7642c8b64d6fddd80180da7a540",
+        "checksum": "sha256:1e552dcb925f591a7c654d5f160ce4ad07b8d0b4e8b1d3a123f4280ee4968a34",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -97864,6 +97990,16 @@
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:an-acknowledgement-says-whose-judgement-it-was",
+      "node_type": "Capability",
+      "properties": {
+        "description": "BUILT 2026-08-23 on Anthony's word, closing `fact:acknowledge-gap-records-a-judgement-without-recording-whose`. DISTINCT FROM that fact, which is the MEASUREMENT: it holds the numbers and how the defect stayed hidden; this is the remedy, so the design can say whether the fix happened separately from what it found.\n\n`acknowledge_gap` and `acknowledge_gaps` take an optional `approver` (and `acted_at`) and draw `AUTHORED_BY role=approver` on the Decision they mint. The bulk form carries it PER ITEM, for the same reason `reason` is per item: a batch under one shared approver would record a judgement nobody made for every gap but one.\n\nTHREE BEHAVIOURS, and the middle one is a decision about consequence rather than a shortcut.\n1. A named approver is recorded.\n2. AN ABSENT APPROVER IS ALLOWED AND REPORTED. Refusing would leave a design that has modelled no Contributor unable to accept a gap at all — which is most solo designs on day one. So the reply says the acknowledgement carries nobody's name and will be reported by `check_intent_authority`, rather than accepting it in silence. That silence is what let 49 unattributed nodes be written in a single pass.\n3. AN APPROVER NAMING NO CONTRIBUTOR IS REFUSED AND NOTHING IS WRITTEN. A typo would otherwise attach the owner's authority to somebody who does not exist, which is worse than recording none.\n\nADDITIVE: `acknowledge_gap`'s old signature is unchanged, so every existing caller still compiles and still works — it simply now gets told when it recorded nobody.",
+        "name": "An acknowledgement records whose judgement it was, and says so plainly when nobody's name is on it",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -102084,6 +102220,15 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Snapshot of the late-allocation idea while all three sub-questions still read as open, before Anthony's answers are written into it"
+      }
+    },
+    {
+      "node_id": "chg:an-acknowledgement-says-whose-judgement-it-was",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "acknowledge_gap records whose judgement it was — the one write whose purpose is to record that somebody decided could not say who",
+        "subject": "system"
       }
     },
     {
@@ -114109,6 +114254,16 @@
       }
     },
     {
+      "node_id": "frag:art:acknowledgement-approver-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered an_acknowledgement_says_whose.rs"
+      }
+    },
+    {
       "node_id": "frag:art:acknowledgement-not-structure-test",
       "node_type": "Fragment",
       "properties": {
@@ -117362,6 +117517,18 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "When a design has RULED that a node is correctly attached to nothing, or correctly unsatisfied, a detector must be able to see that ruling and report the node accordingly — rather than counting a deliberate state as a structural defect. (Distinct from the FACT the guard named, which records one measured instance; this is the intent that answers it and a second instance besides.)\n\n⭐ THE SHAPE THAT MAKES THIS URGENT, in the reporter's words: THE DISPOSITION RULE AND THE DEFECT DETECTOR MAKE EACH OTHER UNREADABLE, AND THE DIRECTION IS THE BAD ONE — THE CORRECT ACTION DEGRADES THE INSTRUMENT. It is self-reinforcing: a later seat watching the count climb has an incentive to stop registering documents and leave them absent, which is the worse state.\n\nTWO MEASURED INSTANCES:\n\n(a) `orphan_node` FIRES ON THE STATE A STANDING RULING PRESCRIBES. A fleet has a ruling for dated per-increment scope proposals whose increment has shipped: register the Artifact, record WHY no claims were extracted, draw NO claim edges. A `DOCUMENTS` edge would be false — it would count a superseded document as coverage in their ingest ledger, which buckets on exactly that edge — and absence would be false too, a pretend backlog someone re-mines. \"Registered, no doctrine, on purpose\" is the correct end state. Measured: defects moved 88 → 97 across ten artifact writes, eight of them deliberate no-claim registrations, with 31 more documents owed in the same genre. A boss reading \"97 structural defects\" cannot tell the deliberate ones from the real ones.\n   ⭐ AND THE TOOL ALREADY CONTAINS THE SENTENCE THAT EXONERATES THE NODE: its own `repair_is_a_judgement` text reads \"a parked thought that correctly governs nothing yet\" — accurate, and it files the node as a problem anyway.\n\n(b) `disconnected_community` CANNOT SEE AN INTENDED-UNSATISFIED RULING. A requirement was disconnected on purpose, recorded in an accepted Decision saying no SATISFIES may be drawn to it. The detector's suggested fix is `generate_bridge` — PRECISELY THE FORGERY THE RULING FORBIDS — and an agent working the defect list top-down would do it.\n\nWHAT IS OWED, cheapest first as they filed it: a first-class marker for \"attached to nothing ON PURPOSE\" — their COORD.md already calls this PARKED in prose and the schema has no word for it — with `orphan_node` skipping it and reporting `parked: N` separately; and a way for a Decision that governs a requirement's unsatisfied-ness to be visible to the structural detector, so it can say \"unsatisfied BY RULING (see dec:…)\".\n\nWHY NOT JUST ACKNOWLEDGE: `acknowledge_defect` exists and stores a reason, but acknowledging 31 findings one at a time to record ONE ruling is the wrong shape, and the acknowledgement expires \"when the shape changes\" on nodes whose shape is deliberately fixed.\n\nRELATED AND SETTLED THE OTHER WAY, named so this does not reopen it: `dec:report-dont-judge` says reflow2 reports and never ranks. This is not a request to judge — it is a request to READ A RULING THE DESIGN ALREADY MADE, the same move `designation: required` made for `unprovided_interface` on 2026-08-09.\n\n⚠️ BOUND THE REPORTER STATED AND I HAVE NOT CLOSED: they did not check whether the guard built for the `DOCUMENTS`/`REALIZES` asymmetry was meant to cover this case and misses it, or whether this case was never contemplated. Those are different reports and only the second is evidenced.\n\nREPORTED BY dev_storyflow's fleet, 2026-08-04 and 2026-08-15.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:a-design-says-what-crosses-each-boundary-between-its-parts",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A design can say what crosses each boundary between its parts, at the level the boundary is actually defined",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Where two parts of a design depend on each other, the design must be able to record WHAT PASSES BETWEEN THEM — what crosses, in which direction, over what — and a coupling with no such record must be reachable as a question rather than left silent.\n\nTHE CONTRACT IS RECORDED AT THE LOWEST LEVEL THAT ACTUALLY DEFINES IT, and higher levels answer by projection. Asking \"is there an interface between A and B?\" at any altitude must be answerable, and the answer must name where the contract really lives rather than asserting one between the boxes that were asked about.\n\nANTHONY, 2026-08-23, IN HIS WORDS: \"defining contracts for the components is a key part of my vision for reflow2\" — said of the product, and confirmed as product intent when asked directly rather than inferred from the remark.\n\nDISTINCT FROM `dec:idea-a-contract-is-declared-at-the-lowest-level-and-rolled-up`, which stays `proposed` and is the QUESTION about reflow2's own model: which level should carry its contracts, and whether DEPENDS_ON between two impl blocks of one struct is a dependency worth recording. This is the PRODUCT requirement — what reflow2 must let any project do. The two can be answered independently, and the design one may yet be answered \"leave it at module level\" without touching this at all.\n\nWHY IT IS ABOUT THE PRODUCT AND NOT HOUSEKEEPING ON THIS DESIGN: reflow2 is a tool for other projects, and the test of any vocabulary is whether it reaches a user's design, where real crate, service and organisational boundaries exist. reflow2's own 64 uncontracted module pairs were the first exercise of it and a poor one — measured 2026-08-23, all 64 sit inside a single crate and most are impl blocks of one struct, so they were never the seams this is about.\n\nIT CAN FAIL INDEPENDENTLY of anything built for it: a design that records couplings and contracts in vocabularies that never meet violates it however either is implemented — exactly the state `fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet` measured, and what `cap:a-contract-answers-at-the-altitude-you-asked` began to answer.",
         "status": "accepted"
       }
     },
@@ -124273,6 +124440,18 @@
       }
     },
     {
+      "node_id": "fact:i-proposed-before-reading-three-times-in-one-session",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "AN AGENT WORKING THIS TOOL PROPOSED A PLAN BEFORE ASKING THE GRAPH WHAT IT ALREADY KNEW — THREE TIMES IN ONE SESSION. Recorded because each instance was caught by a different mechanism and only the pattern shows the failure is systematic rather than three accidents. || (1) SETTING `medium: REST` ON `ifc:mcp-tools-http` to close an incomplete-contract gap, when THAT NODE'S OWN `spec` FIELD argues at length that `unspecified` is the honest answer and that REST is positively wrong. Caught by reading the node one step too late; reverted within the minute. (2) PROPOSING CONTRACTS FOR 64 ‘UNCONTRACTED’ MODULE PAIRS, and getting them approved, when `fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet` — recorded TWO DAYS EARLIER — said all 64 sit inside one crate, that most are impl blocks of one struct, and that the number could not move whatever anyone wrote. Caught only because a routine `search_design` before starting surfaced that node. (3) RECOMMENDING THE ROLL-UP BE ADDED TO `seam_report`, which turned out to compare TWO LINKED DESIGNS and could not host it at all; the user chose that option on my description of it. Caught by reading the source before writing. || ⭐ THE COMMON MECHANISM, AND IT IS NOT LAZINESS: in all three the graph HELD THE ANSWER and the proposal was formed from the DETECTOR'S OUTPUT instead. A gap says what is absent; it cannot say whether the absence is a hole or a conclusion. `ifc:graph-export` had six unset axes and `ifc:mcp-tools-http` had one, reported IN IDENTICAL WORDS, and one of those absences was a hole while the other was a defended answer. ⇒ THE GUARD IS ONE CALL: `search_design` ON THE SUBJECT BEFORE PROPOSING A PLAN, NOT BEFORE WRITING THE NODE. By the time a node is being written the plan is already committed and the cost of abandoning it is paid in reputation as well as time. || ⚠️ AND THE SAME SESSION BROKE `rule:success-is-read-from-the-authoritative-object` THREE TIMES, in scripts checking whether a tool call had worked: reading the JSON-RPC envelope for `result` rather than the tool result for `isError`. One of those silently reported five decisions as created when none was, and a later probe overwrote a real node with the word `probe`. ⇒ THAT RULE IS ONE OF THE THREE DOWNGRADED TO ADVISORY THE SAME DAY FOR HAVING NO DETECTOR — AND IT WAS BROKEN THREE TIMES BY THE AGENT WHO DOWNGRADED IT, WITHIN THE HOUR. The strongest argument yet that it is worth a detector: it is not an obscure rule, it is the one an agent breaks while working normally. || SOURCE: this session, 2026-08-23. Written from the conversation and the diffs, which is the only place the pattern exists — each instance is recorded separately, none of them together.",
+        "subject_id": "prj:reflow2",
+        "valid_from": "2026-08-23"
+      }
+    },
+    {
       "node_id": "fact:id-uniqueness-has-three-levels-and-one-is-enforced-2026-08-13",
       "node_type": "TemporalFact",
       "properties": {
@@ -124411,6 +124590,18 @@
         "subject_id": "prj:reflow2",
         "valid_from": "2026-08-16",
         "value": "{\"measured_on\":\"docs/design/reflow2.json, 2026-08-16\",\"correction\":\"the claim that the 8 subsystems were drawn afterwards as containers is FALSE - dec:bl83a-functional-decomposition (accepted, 2026-07-23, derived with the user) records them as a deliberate functional carving from the product's purpose, with the 38 Rust modules re-parented under them and the crate view retired\",\"how_the_error_happened\":\"measured the edges and inferred the history without reading the governing Decision\",\"still_true\":{\"components\":56,\"subsystems\":8,\"modules\":48,\"ALLOCATED_TO_to_module\":177,\"ALLOCATED_TO_to_subsystem\":1,\"DECOMPOSES\":0,\"coupling_crossing_peer_subsystems\":6,\"coupling_inside_peer\":17,\"coupling_foundation\":50,\"capability_load_median\":3,\"capability_load_max\":16,\"coupled_pairs\":73,\"pairs_with_declared_interface\":0,\"interfaces\":15,\"interfaces_describing_an_internal_boundary\":0},\"swap_test\":{\"cmp:detect\":\"13 functions, 2 dependents, 0 declared interfaces\",\"cmp:heal\":\"4, 1, 0\",\"cmp:search\":\"1, 0, 0\"},\"recommendation\":\"do NOT re-derive the functional decomposition - it exists and is sound; DO declare the internal seams\",\"my_judgement_not_the_graphs\":\"treating store+vocabulary as foundation is what makes the decomposition read as cohesive\"}"
+      }
+    },
+    {
+      "node_id": "fact:seam-report-is-named-for-something-it-does-not-do",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "`seam_report` DOES NOT REPORT ON THIS DESIGN'S SEAMS. It compares PAIRED BOUNDARIES ACROSS TWO LINKED DESIGNS (`req:seam-incompatibility`): it takes `other: &GraphExport` and a list of `(our interface id, their interface id)` pairs, and answers whether the two sides agree on medium, paradigm, auth and the rest. It has nothing to do with the couplings inside one design. || THE THING THAT DOES OWN THAT DEFINITION IS `seam_sets`, in `maturity.rs` — `pub(crate)`, deliberately extracted so the maturity `seams` band and `detect_undeclared_seams` cannot disagree about what a contract is, and reachable from no tool at all. || MEASURED CONSEQUENCE, 2026-08-23: asked where a within-design seam roll-up should live, an agent read the NAME and recommended `seam_report`; the user chose that option on the recommendation. The mistake surfaced only on opening the source. The reason he gave for choosing it — one definition of a contract, no second place that could drift — was correct and was preserved by extending `seam_sets` instead, so the outcome was right and the route to it was luck. || ⭐ THE GENERAL SHAPE, and it is what makes this worth recording rather than filing as a personal slip: A NAME IS A CONTRACT WITH THE READER, AND ON A 156-TOOL SURFACE IT IS THE ONLY PART MOST CALLERS READ. `find_tools` ranks over name, description and parameter names, so a tool whose name describes a different job than it does is mis-discoverable by construction — and `cap:tool-search` exists precisely because the surface is too large to hold in context, which means nobody is going to read the body first. || NOT ESTABLISHED, and deliberately not fixed here: whether the right answer is renaming `seam_report` (a published-surface change with toolsnaps and existing callers behind it), renaming the internal `seam_sets`, or leaving both and letting the new `seam_coverage` carry the within-design meaning. Recorded so the next reader meets the ambiguity before it costs them the same detour.",
+        "subject_id": "cmp:seam",
+        "valid_from": "2026-08-23"
       }
     },
     {
@@ -125594,6 +125785,20 @@
         "level": "integration",
         "method": "test",
         "name": "AoA + decision-point suite (tests/alternatives.rs) — 8 cases",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:an-acknowledgement-says-whose-judgement-it-was",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/an_acknowledgement_says_whose.rs, 5 cases.\n\nTHE CASE THAT EARNED ITS KEEP IS `an_approver_who_does_not_exist_is_refused_and_nothing_is_written`, AND IT FAILED ON THE FIRST ATTEMPT. The Decision is minted before the approver can be checked, so the obvious implementation left an ACCEPTED Decision with no name behind on every refusal — the exact state the parameter exists to prevent, produced by the code meant to prevent it. The check now runs before anything is written.\n\nThe rest: a named approver lands as `AUTHORED_BY role=approver` (author or reviewer would not satisfy the intent-authority rule, so the role is asserted rather than the edge alone); an absent approver is ALLOWED and invents nobody, because refusing would leave a design that has modelled no Contributor unable to accept a gap; the gap is acknowledged and reaches `reviewed_gaps` either way, since attribution is not about whether the judgement took effect; and the old `acknowledge_gap` signature still compiles and still records nobody, which is what makes this additive.",
+        "findings": "5 cases passing, alongside `cargo test --workspace` (45 suites, 0 failures), fmt, core and mcp clippy, skill_lint, smoke_mcp and all 156 toolsnaps. Driven against a scratch design over real stdio, all three paths behave: no approver records the Decision and returns `approved_by: null` with the `unattributed` sentence; `approver: who:ghost` is refused naming the id and pointing at add_contributor; a real approver lands `AUTHORED_BY {role: approver, acted_at}`. THE REFUSAL CASE FAILED ON ITS FIRST RUN and that is the finding: the Decision is minted before the approver can be checked, so the obvious implementation left an accepted Decision with no name behind on every refusal — the exact state the parameter exists to prevent. The check now runs before anything is written.",
+        "kind": "verification",
+        "last_run_at": "2026-08-23",
+        "level": "integration",
+        "method": "test",
+        "name": "An approver is recorded, an absent one is reported, and a name nobody can check leaves nothing behind",
         "status": "passing"
       }
     },
@@ -127690,7 +127895,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:69d76e6beffec0e2640f9f7cdc590d9bb6b0df2fddce336c863786a97b6bcbde",
+  "prev_content_hash": "sha256:f23e3109a22e7141cbc4202e23fda626925b07878efc9a34b0b52323a4cd1381",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

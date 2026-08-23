@@ -768,9 +768,32 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await;
         let decision_id = g
-            .acknowledge_gap(&req.gap_id, &req.affected_ids, &req.reason)
+            .acknowledge_gap_by(
+                &req.gap_id,
+                &req.affected_ids,
+                &req.reason,
+                req.approver.as_deref(),
+                req.acted_at.as_deref(),
+            )
             .map_err(dyno_err)?;
-        ok_json(json!({ "acknowledged": req.gap_id, "decision_id": decision_id }))
+        // THE ABSENCE IS REPORTED, NEVER ASSUMED. An acknowledgement is the
+        // owner's word by definition, so one carrying no name is a real state
+        // worth saying out loud rather than a quiet default — and a caller who
+        // never learns it happened is exactly how 49 of these were written in
+        // one pass before anyone noticed.
+        let mut out = json!({ "acknowledged": req.gap_id, "decision_id": decision_id });
+        match req.approver.as_deref() {
+            Some(who) => {
+                out["approved_by"] = json!(who);
+            }
+            None => {
+                out["approved_by"] = JsonValue::Null;
+                out["unattributed"] = json!(
+                    "This acknowledgement carries NOBODY'S NAME. It mints an accepted Decision — settled intent — and `rule:design-intent-moves-only-on-the-owners-word` says that needs a name, so it will be reported by check_intent_authority. Pass `approver` (the Contributor whose judgement it is) to record it. Recorded anyway rather than refused, because a design that has modelled no Contributor must still be able to accept a gap."
+                );
+            }
+        }
+        ok_json(out)
     }
 
     #[tool(
@@ -791,6 +814,8 @@ impl ReflowService {
             .gaps
             .into_iter()
             .map(|g| BulkGapAck {
+                approver: g.approver,
+                acted_at: g.acted_at,
                 gap_id: g.gap_id,
                 affected_ids: g.affected_ids,
                 reason: g.reason,

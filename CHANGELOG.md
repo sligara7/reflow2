@@ -31,6 +31,38 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed — an acknowledgement says whose judgement it was
+
+**Minor** (two tools gain optional parameters; nothing existing breaks).
+
+`acknowledge_gap` mints an `accepted` Decision — settled intent by
+`rule:design-intent-moves-only-on-the-owners-word` — and drew no `AUTHORED_BY` edge and had no
+parameter to supply one. **The one write whose entire purpose is to record that somebody decided
+something could not say who.**
+
+Measured 2026-08-23: acknowledging 50 gaps in one detect-and-ask pass produced **49 nodes that
+failed this project's own `check_intent_authority` gate in a single stroke.** It stayed invisible
+because acknowledgements were rare enough that the gate's dated grandfather set absorbed the
+historical ones — a defect that only shows at scale is one the tool's own dogfooding was too small
+to find.
+
+- `acknowledge_gap` and `acknowledge_gaps` take an optional **`approver`** (and `acted_at`) and draw
+  `AUTHORED_BY role=approver` on the Decision. The bulk form carries it **per item**, for the same
+  reason `reason` is per item.
+- **An absent approver is allowed and REPORTED.** Refusing would leave a design that has modelled no
+  `Contributor` unable to accept a gap at all — most solo designs on day one. So the reply says the
+  acknowledgement carries nobody's name and will be reported by the gate, rather than accepting it
+  in silence. That silence is what let 49 unattributed nodes be written in one pass.
+- **An approver naming no Contributor is refused, and nothing is written.** A typo would otherwise
+  attach the owner's authority to somebody who does not exist.
+- Additive: the old `acknowledge_gap` signature is unchanged, so existing callers still work — they
+  are simply now told when they recorded nobody.
+
+**The test for the refusal failed on the first attempt**, and that is the finding worth keeping: the
+Decision is minted before the approver can be checked, so the obvious implementation left an
+accepted Decision with no name behind on every refusal — the exact state the parameter exists to
+prevent, produced by the code meant to prevent it. The check now runs before anything is written.
+
 ### Added — a contract answers at the altitude you asked
 
 **Minor.** One new served tool (`seam_coverage`); nothing existing changes shape.

@@ -1601,6 +1601,23 @@ pub struct GapAckReq {
     /// Why THIS gap is acceptable. One reason per gap — a shared one would be
     /// the erosion `dec:ask-not-repair` and `dec:two-sided-accept` forbid.
     pub reason: String,
+    /// WHOSE judgement this is — the `Contributor` who decided the gap is
+    /// acceptable. Draws `AUTHORED_BY role=approver` on the Decision this
+    /// mints.
+    ///
+    /// OPTIONAL, and the absence is REPORTED rather than assumed: a design that
+    /// has modelled no Contributor would otherwise be unable to acknowledge
+    /// anything. But an acknowledgement IS the owner's word by definition, and
+    /// one with no name on it fails `check_intent_authority` — measured
+    /// 2026-08-23, acknowledging 50 gaps produced 49 such nodes in one stroke.
+    ///
+    /// A name that matches no Contributor is REFUSED, not ignored: a typo would
+    /// otherwise attach the owner's authority to somebody who does not exist.
+    #[serde(default)]
+    pub approver: Option<String>,
+    /// When the judgement was made. The core takes no clock.
+    #[serde(default)]
+    pub acted_at: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -2101,6 +2118,23 @@ pub struct AcknowledgeGapReq {
     pub affected_ids: Vec<String>,
     /// Why this gap is acceptable. Recorded as the Decision's rationale.
     pub reason: String,
+    /// WHOSE judgement this is — the `Contributor` who decided the gap is
+    /// acceptable. Draws `AUTHORED_BY role=approver` on the Decision this
+    /// mints.
+    ///
+    /// OPTIONAL, and the absence is REPORTED rather than assumed: a design that
+    /// has modelled no Contributor would otherwise be unable to acknowledge
+    /// anything. But an acknowledgement IS the owner's word by definition, and
+    /// one with no name on it fails `check_intent_authority` — measured
+    /// 2026-08-23, acknowledging 50 gaps produced 49 such nodes in one stroke.
+    ///
+    /// A name that matches no Contributor is REFUSED, not ignored: a typo would
+    /// otherwise attach the owner's authority to somebody who does not exist.
+    #[serde(default)]
+    pub approver: Option<String>,
+    /// When the judgement was made. The core takes no clock.
+    #[serde(default)]
+    pub acted_at: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
