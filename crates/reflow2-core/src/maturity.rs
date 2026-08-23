@@ -159,6 +159,53 @@ pub(crate) struct SeamSets {
     /// an Interface without depending on each other, which is why the band
     /// intersects rather than subtracts.
     pub declared: BTreeSet<(String, String)>,
+    /// The `Component.level` these sets were lifted to, or `None` for the raw
+    /// module-level answer.
+    pub altitude: Option<String>,
+    /// How many couplings existed BEFORE lifting.
+    ///
+    /// **THIS IS WHAT STOPS A ZERO FROM FLATTERING.** Lifted to `subsystem`,
+    /// this design reports nothing undeclared — but it compared 11 pairs, not
+    /// 72. Without this figure beside it, "0 undeclared" reads as "everything
+    /// is contracted" when it means "everything is contracted AT THIS
+    /// ALTITUDE", which is the whole family of defect this project keeps
+    /// finding.
+    pub raw_couplings: usize,
+    /// How many contract pairs existed before lifting.
+    pub raw_declared: usize,
+    /// Endpoints that reached no container at the requested level and were
+    /// dropped from both sets. Counted rather than silently kept at their own
+    /// level, which would mix two altitudes in one answer.
+    pub unreachable: usize,
+}
+
+/// One boundary that IS covered, and where the contract actually lives.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct CoveredSeam {
+    /// The two parts, at the altitude asked for.
+    pub between: (String, String),
+    /// The finest-level pairs whose contract covers it. Empty at module
+    /// altitude, where the pair IS the place it is declared.
+    pub declared_at: Vec<String>,
+}
+
+/// Which boundaries are covered by a contract at a chosen altitude.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct SeamCoverage {
+    /// The level this was answered at; `None` is the raw module answer.
+    pub altitude: Option<String>,
+    /// Couplings visible at this altitude.
+    pub couplings: usize,
+    /// Contract pairs visible at this altitude.
+    pub declared: usize,
+    /// Couplings covered by a contract at or below them.
+    pub covered: usize,
+    /// Couplings with no contract at or below them — the finding.
+    pub uncovered: Vec<(String, String)>,
+    /// Every covered boundary, naming where its contract is actually declared.
+    pub covered_by: Vec<CoveredSeam>,
+    /// What this answer compared, and what it therefore does NOT say.
+    pub scope_note: String,
 }
 
 impl SeamSets {
@@ -178,6 +225,36 @@ impl DesignGraph {
     /// "declared" twice would let a detector and a band disagree about what a
     /// contract is, and the band would be the one nobody could argue with.
     pub(crate) fn seam_sets(&self) -> Result<SeamSets, DynoError> {
+        self.seam_sets_at(None)
+    }
+
+    /// [`seam_sets`](Self::seam_sets), answered at a chosen ALTITUDE.
+    ///
+    /// `altitude` is a `Component.level` (`subsystem`, `system`, …). Each side
+    /// of every coupling and every contract is LIFTED to the nearest container
+    /// at that level before the two sets are compared, so the question becomes
+    /// *"is this coupling covered by a contract declared at or below it?"*
+    /// rather than *"do these two exact modules share one?"*.
+    ///
+    /// **BOTH SETS ARE LIFTED, AND THAT SYMMETRY IS THE WHOLE CORRECTNESS
+    /// ARGUMENT.** `fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet`
+    /// measured the two sets as DISJOINT BY CONSTRUCTION on this design — 72
+    /// couplings, 26 contract pairs, zero shared — because couplings are
+    /// recorded between modules and contracts between the boxes that contain
+    /// them. Lifting one side alone would not fix that; lifting both puts them
+    /// in the same vocabulary for the first time.
+    ///
+    /// MEASURED 2026-08-23 on reflow2's own design: at module level 72
+    /// couplings against 42 declared leaves 64 undeclared; lifted to
+    /// `subsystem` it is 11 against 13 and **nothing** undeclared. That zero is
+    /// real and it is also the reason [`SeamSets::altitude`] and
+    /// [`SeamSets::raw_couplings`] exist — see their docs.
+    ///
+    /// A component that reaches no container at the requested level is DROPPED
+    /// from both sets rather than compared against itself, and the count of
+    /// what was dropped rides on the result. Silently keeping it at its own
+    /// level would mix two altitudes in one answer.
+    pub(crate) fn seam_sets_at(&self, altitude: Option<&str>) -> Result<SeamSets, DynoError> {
         let mut provided: HashMap<String, HashSet<String>> = HashMap::new();
         let mut consumed: HashMap<String, HashSet<String>> = HashMap::new();
         for i in self.scan_nodes(node::INTERFACE)? {
@@ -222,9 +299,171 @@ impl DesignGraph {
                 }
             }
         }
+        let raw_couplings = couplings.len();
+        let raw_declared = declared.len();
+        let (couplings, declared, unreachable) = match altitude {
+            None => (couplings, declared, 0),
+            Some(level) => {
+                let mut lift_cache: HashMap<String, Option<String>> = HashMap::new();
+                let mut dropped = 0usize;
+                let mut lift_pairs =
+                    |set: BTreeSet<(String, String)>,
+                     graph: &Self,
+                     dropped: &mut usize|
+                     -> Result<BTreeSet<(String, String)>, DynoError> {
+                        let mut out = BTreeSet::new();
+                        for (a, b) in set {
+                            let la = graph.lift_to_level(&a, level, &mut lift_cache)?;
+                            let lb = graph.lift_to_level(&b, level, &mut lift_cache)?;
+                            match (la, lb) {
+                                (Some(x), Some(y)) if x != y => {
+                                    out.insert(if x < y { (x, y) } else { (y, x) });
+                                }
+                                // Same container: the coupling is INTERNAL to one
+                                // box at this altitude, so it is not a seam here.
+                                (Some(_), Some(_)) => {}
+                                _ => *dropped += 1,
+                            }
+                        }
+                        Ok(out)
+                    };
+                let c = lift_pairs(couplings, self, &mut dropped)?;
+                let d = lift_pairs(declared, self, &mut dropped)?;
+                (c, d, dropped)
+            }
+        };
         Ok(SeamSets {
             couplings,
             declared,
+            altitude: altitude.map(str::to_string),
+            raw_couplings,
+            raw_declared,
+            unreachable,
+        })
+    }
+
+    /// The nearest container of `id` at `level`, or `id` itself if it is
+    /// already there. `None` when the spine runs out before reaching it.
+    fn lift_to_level(
+        &self,
+        id: &str,
+        level: &str,
+        cache: &mut HashMap<String, Option<String>>,
+    ) -> Result<Option<String>, DynoError> {
+        if let Some(hit) = cache.get(id) {
+            return Ok(hit.clone());
+        }
+        let mut here = id.to_string();
+        let mut seen: HashSet<String> = HashSet::new();
+        let answer = loop {
+            if !seen.insert(here.clone()) {
+                break None; // a containment cycle; refuse rather than loop
+            }
+            let node = self.get_node(node::COMPONENT, &here)?;
+            let Some(node) = node else { break None };
+            if prop(&node, "level") == Some(level) {
+                break Some(here);
+            }
+            let parent = self
+                .incoming(&here, Some(edge::CONTAINS))?
+                .into_iter()
+                .map(|e| e.from_id)
+                .find(|p| p.starts_with("cmp:") || p.starts_with("sys:"));
+            match parent {
+                Some(p) => here = p,
+                None => break None,
+            }
+        };
+        cache.insert(id.to_string(), answer.clone());
+        Ok(answer)
+    }
+
+    /// Which boundaries are covered by a contract, answered at the altitude
+    /// you asked the question at.
+    ///
+    /// `req:an-undeclared-coupling-is-named-not-just-counted` is answered at
+    /// module level today, and that is the only level at which it can be
+    /// answered — so a design that DECLARES ITS CONTRACTS AT THE SUBSYSTEM
+    /// BOUNDARY reads as having none at all. Anthony, 2026-08-23:
+    /// *"this should be defined at the lowest level that actually defines the
+    /// interface and the rest is rolled up so that if somebody asked at a high
+    /// level, 'is there an interface between subsystem_A and subsystem_B?' the
+    /// view … would say 'yes', but the graph would actually show it is
+    /// subsystem_A.component_2 <-> subsystem_B.component_5 that the contract is
+    /// actually defined."*
+    ///
+    /// THIS IS A PROJECTION AND NOTHING IS WRITTEN BACK. The answer is derived
+    /// from `CONTAINS` + `PROVIDES` + `CONSUMES` on every call. Storing a
+    /// rolled-up edge between two subsystems would make the graph assert a
+    /// contract nobody declared, which `dec:views-are-projections` forbids.
+    ///
+    /// `covered_by` names the LEAF pair for every covered boundary, because
+    /// "yes there is an interface" without saying where it is declared is the
+    /// half-answer that sends a reader hunting.
+    pub fn seam_coverage(&self, altitude: Option<&str>) -> Result<SeamCoverage, DynoError> {
+        let sets = self.seam_sets_at(altitude)?;
+        let mut covered_by: Vec<CoveredSeam> = Vec::new();
+        let raw = self.seam_sets_at(None)?;
+        for (a, b) in sets.couplings.intersection(&sets.declared) {
+            // Where it is ACTUALLY declared: the finest-level contract pairs
+            // that lift into this one.
+            let mut at: Vec<String> = Vec::new();
+            if altitude.is_some() {
+                let mut cache = HashMap::new();
+                for (p, c) in &raw.declared {
+                    let (lp, lc) = (
+                        self.lift_to_level(p, altitude.unwrap_or_default(), &mut cache)?,
+                        self.lift_to_level(c, altitude.unwrap_or_default(), &mut cache)?,
+                    );
+                    if let (Some(x), Some(y)) = (lp, lc) {
+                        let pair = if x < y { (x, y) } else { (y, x) };
+                        if pair == (a.clone(), b.clone()) {
+                            at.push(format!("{p} ↔ {c}"));
+                        }
+                    }
+                }
+            }
+            at.sort();
+            at.dedup();
+            covered_by.push(CoveredSeam {
+                between: (a.clone(), b.clone()),
+                declared_at: at,
+            });
+        }
+        Ok(SeamCoverage {
+            altitude: sets.altitude.clone(),
+            couplings: sets.couplings.len(),
+            declared: sets.declared.len(),
+            covered: covered_by.len(),
+            uncovered: sets.undeclared(),
+            covered_by,
+            scope_note: match altitude {
+                None => format!(
+                    "Module level, nothing lifted: {} coupling(s) compared against {} contract \
+                     pair(s). A design that declares its contracts at a HIGHER boundary than it \
+                     records its dependencies will read as uncovered here and be fully covered one \
+                     altitude up — pass `altitude` to ask at the level the contracts live.",
+                    sets.raw_couplings, sets.raw_declared,
+                ),
+                Some(level) => format!(
+                    "Answered at `{level}`: {} coupling(s) compared, lifted from {} at module \
+                     level{}. A ZERO HERE MEANS EVERY COUPLING VISIBLE AT THIS ALTITUDE IS \
+                     COVERED — it says nothing about the {} finer-grained couplings underneath, \
+                     which are a different question asked at a different level.",
+                    sets.couplings.len(),
+                    sets.raw_couplings,
+                    if sets.unreachable > 0 {
+                        format!(
+                            "; {} endpoint(s) reached no container at this level and were dropped \
+                             from both sides",
+                            sets.unreachable
+                        )
+                    } else {
+                        String::new()
+                    },
+                    sets.raw_couplings,
+                ),
+            },
         })
     }
 

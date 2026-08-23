@@ -31,6 +31,42 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added — a contract answers at the altitude you asked
+
+**Minor.** One new served tool (`seam_coverage`); nothing existing changes shape.
+
+`undeclared_seam` asks *"do these two exact modules share a contract?"*, and could only ever ask it
+at module level. So a design that records its **dependencies** between modules and declares its
+**contracts** at the subsystem boundary reads as having none at all —
+`fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet` measured the two sets as
+**disjoint by construction**, which meant the number could not move however many contracts anyone
+wrote.
+
+- **`seam_coverage {altitude}`** lifts **both** the couplings and the contracts to the nearest
+  container at a chosen `Component.level`, then compares them. The question becomes *"is this
+  coupling covered by a contract declared at or below it?"*
+- **`covered_by` names the leaf pair** where each contract actually sits, so *"yes, A and B
+  interface"* always arrives with where to look.
+- Measured on this design: **72 couplings / 42 contracts / 64 uncovered** at module level;
+  **11 / 13 / 0** at `subsystem`.
+
+**Lifting both sets is the whole correctness argument, and the half-fix looks right.** Rolling up
+only the couplings leaves the vocabularies exactly as disjoint as before, because the contracts stay
+between the leaves. The test for it was proven non-inert by reverting to that half-fix.
+
+**A zero here is the most dangerous answer the tool can give, and it is designed around.** Every
+reply carries the raw count, and an altitude that reaches nothing reports how many endpoints were
+dropped — asked at `system`, which this design populates with nothing, it says *0 couplings
+compared, 114 endpoints unreachable* rather than a clean bill.
+
+**Nothing is written back.** The roll-up derives on every call; a stored edge between two subsystems
+would make the graph assert a contract nobody declared. Pinned by a case comparing export content
+hashes before and after.
+
+Deliberately unchanged: `detect_undeclared_seams` and the maturity `seams` band still answer at
+module level, so the 64 stays visible. Changing what a detector reports is a louder act than adding
+a way to ask, and which altitude that gap is about is the owner's call.
+
 ### Changed — the same paragraph, sent once instead of fifty times
 
 **Patch.** Nothing is withheld and no parameter is added; the same words are simply not repeated.

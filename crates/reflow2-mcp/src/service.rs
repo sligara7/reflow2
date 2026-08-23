@@ -2365,6 +2365,21 @@ pub struct ScopeReq {
     pub depth: Option<usize>,
 }
 
+/// `seam_coverage`'s one argument.
+#[derive(Debug, Default, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct SeamCoverageReq {
+    /// The `Component.level` to answer at — `subsystem`, `system`,
+    /// `system_of_systems`, `enterprise`. Omit for the raw module-level answer.
+    ///
+    /// Both couplings AND contracts are lifted to this level before they are
+    /// compared. Lifting one side alone would not help: on this design the two
+    /// sets are disjoint by construction, because dependencies are recorded
+    /// between modules and contracts between the boxes that contain them.
+    #[serde(default)]
+    pub altitude: Option<String>,
+}
+
 /// `graph_report`'s one argument.
 #[derive(Debug, Default, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]

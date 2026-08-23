@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:69d76e6beffec0e2640f9f7cdc590d9bb6b0df2fddce336c863786a97b6bcbde",
+  "content_hash": "sha256:f23e3109a22e7141cbc4202e23fda626925b07878efc9a34b0b52323a4cd1381",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -910,6 +910,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:hierarchy"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-contract-answers-at-the-altitude-you-asked",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:maturity"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -13868,6 +13876,60 @@
         "action": "modified"
       },
       "to_id": "dec:a-claim-may-need-a-list-rather-than-a-radius"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-contract-answers-at-the-altitude-you-asked",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:maturity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-contract-answers-at-the-altitude-you-asked",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-contract-answers-at-the-altitude-you-asked",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-contract-answers-at-the-altitude-you-asked",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:maturity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-contract-answers-at-the-altitude-you-asked",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:seam"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-contract-answers-at-the-altitude-you-asked",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:tools-coherence"
     },
     {
       "edge_type": "CHANGED",
@@ -87806,6 +87868,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:seam-coverage-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-contract-answers-at-the-altitude-you-asked"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:seam-test",
       "properties": {
         "completeness": "complete"
@@ -88923,6 +88994,12 @@
       "from_id": "cap:a-component-can-be-moved-not-just-given-another-parent",
       "properties": {},
       "to_id": "req:a-part-can-be-moved-not-only-given-a-second-parent"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-contract-answers-at-the-altitude-you-asked",
+      "properties": {},
+      "to_id": "req:an-undeclared-coupling-is-named-not-just-counted"
     },
     {
       "edge_type": "SATISFIES",
@@ -91657,6 +91734,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-contract-answers-at-the-altitude-you-asked",
+      "properties": {},
+      "to_id": "cap:a-contract-answers-at-the-altitude-you-asked"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-deliberate-state-is-counted",
       "properties": {},
       "to_id": "cap:a-ruling-parks-a-node-and-parked-nodes-are-counted"
@@ -94029,6 +94112,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:seam-coverage-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:seam-coverage-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:search",
       "properties": {
         "action": "created"
@@ -95775,7 +95866,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f83c09736230e7d7359f69e72f64c70140cf609babb1b18f4661528193d38599",
+        "checksum": "sha256:54ba771c18b1afc5eac61926c48f4429e6cde44621c8e12f51ef0e78cd2fc22c",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/maturity.rs",
         "name": "maturity.rs",
@@ -96433,6 +96524,17 @@
       }
     },
     {
+      "node_id": "art:seam-coverage-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:603b3fd3af338c53b0a04134d79d2b7fea979a5e11b9b80a1ec37d7def62c4e6",
+        "location": "crates/reflow2-core/tests/seam_coverage.rs",
+        "name": "seam_coverage.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:seam-test",
       "node_type": "Artifact",
       "properties": {
@@ -96502,7 +96604,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:88146fb2ba58a6c5ce1a7f7efcbcf694bbe554cdc49614a8e1196910782c7bc2",
+        "checksum": "sha256:f068b7f7036eb397d48d9ad7f55a145531605a1c033fda3054355b65e691277a",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -97131,7 +97233,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:47bedf3cfef12b1520d642e656b0eadf3243eff41d20a32e6389d1f098bd302f",
+        "checksum": "sha256:a2dc930815e40a4ba23cc9c7a9e2f13be9ddd7642c8b64d6fddd80180da7a540",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -97487,6 +97589,16 @@
       "properties": {
         "description": "PROPOSAL 1, built 2026-08-20 on Anthony's word. DISTINCT FROM the two nodes nearest it: one was a single re-placement of reflow2's own kernel, the other measures whether walls hold. This is the OPERATION a user of any project needs to do either.\n\nTHE GAP, found by using reflow2 and MEASURED the way a user would hit it. Asked in a user's own words — \"move a component to a different parent, re-decompose\" — find_tools ranked contain_component top of 152 served tools. contain_component ADDS a parent and removes nothing, so the discoverable route is also the wrong one: the spine stops being a tree, and hierarchy_issues reports multiple_parents AFTERWARDS, which is the wrong end of the act. Re-decomposition is not exotic — adopting a brownfield system, acting on a design review, and severability work all consist of it.\n\nVERIFIED THE SAME WAY THE GAP WAS MEASURED: the identical query now ranks move_component first of 153, scoring 67.5 against add_component's 44.9.\n\nWHAT IT DOES: move_component(child_id, new_parent_id) detaches EVERY parent the child had and names them.\n  · It detaches a Project parent too. A component with no subsystem is often wired straight to the project PRECISELY BECAUSE it is homeless, so a move that only looked for Component parents would create the very defect it exists to prevent. That is not hypothetical - it happened to cmp:identity the same day.\n  · An EMPTY detached list is reported rather than folded into success: \"placed for the first time\" and \"moved\" are different facts, and a caller who believed they were moving something learns they were not.\n  · The level relation is REPORTED in level_note, never enforced - hierarchy_issues is the authority, and one rule with two homes is one rule that can disagree with itself. But it fires AT THE MOMENT OF THE MOVE, which is the difference between a defect avoided and a defect found.\n  · It does not snapshot for the caller - choosing the epoch is their call - but history_note names the record_change that preserves the previous parent whenever anything was detached.\n\nFIRST USE ON A REAL DESIGN, not a fixture: cmp:skills had carried two parents since before this session. One call detached the stale proj:reflow2 containment; hierarchy_issues went 3 findings to 2.\n\nA BUG FOUND BY USING IT, fixed before it shipped: history_note originally stayed silent whenever the child had ANY snapshot. A snapshot from an earlier epoch is no evidence that THIS move was recorded, so the rule went quiet for exactly the long-lived node whose history matters most - silent in the dangerous direction. It now fires on any detachment and states a fact rather than making an accusation. an_earlier_snapshot_does_not_silence_the_history_note pins it.\n\nSTATED LIMIT: this fixes the CONTAINMENT spine only. DEPENDS_ON, PROVIDES and CONSUMES edges follow the component unchanged, so a move can put a contract across a wall it did not previously cross and nothing says so.",
         "name": "A component can be MOVED on the decomposition spine, not merely given another parent",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-contract-answers-at-the-altitude-you-asked",
+      "node_type": "Capability",
+      "properties": {
+        "description": "BUILT 2026-08-23 on Anthony's word. DISTINCT FROM `dec:idea-a-contract-is-declared-at-the-lowest-level-and-rolled-up`, which records the QUESTION and stays `proposed`: he authorised the roll-up PROJECTION, not the wider rule that would move the detector's altitude too. And DISTINCT FROM `fact:lifting-both-sets-is-what-made-the-two-vocabularies-meet`, which is the MEASUREMENT behind it — that node holds the numbers and the near-miss; this is the thing that was built. Keeping them apart is what lets the design say whether the fix happened, separately from what it found.\n\nALSO DISTINCT FROM `dec:idea-a-view-can-slice-by-altitude-not-only-by-aspect`, which stays open and is a different thing wearing the same word. That one asks which nodes are TOP LEVEL for a management reader — an ABSTRACTION filter, and its own text records why it is stuck: a filter chosen by the renderer rather than derived from the graph is the renderer fill-in the doctrine calls a defect. This is a ROLL-UP ALONG CONTAINMENT — answering a question at the level it was asked by walking down the spine. No filter, no new property, no schema change, which is exactly why it was buildable today and that one was not.\n\nWHAT IT DOES: `seam_coverage {altitude}` lifts BOTH the couplings and the contracts to the nearest container at a chosen `Component.level`, then compares them. `covered_by` names the finest-level pair where each contract actually sits, so \"yes, A and B interface\" always arrives with where to look.",
+        "name": "A boundary question is answered at the altitude it was asked, naming the leaf where the contract actually lives",
         "provenance": "authored",
         "status": "realized"
       }
@@ -99972,6 +100084,15 @@
       "properties": {
         "change_type": "scope_change",
         "name": "Snapshot of the decision while it still reads OPEN / NOT YET DECIDED, before Anthony's ruling is written into it"
+      }
+    },
+    {
+      "node_id": "chg:a-contract-answers-at-the-altitude-you-asked",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "seam coverage answers at a chosen altitude — both couplings and contracts are lifted, so the two vocabularies meet for the first time",
+        "subject": "system"
       }
     },
     {
@@ -115038,6 +115159,16 @@
       }
     },
     {
+      "node_id": "frag:art:seam-coverage-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered seam_coverage.rs"
+      }
+    },
+    {
       "node_id": "frag:art:search",
       "node_type": "Fragment",
       "properties": {
@@ -124164,6 +124295,18 @@
       }
     },
     {
+      "node_id": "fact:lifting-both-sets-is-what-made-the-two-vocabularies-meet",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "THE UNDECLARED-SEAM FINDING COULD NOT REACH ZERO, AND THE REASON WAS AN ALTITUDE MISMATCH RATHER THAN MISSING CONTRACTS. `fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet` measured the two sets as DISJOINT BY CONSTRUCTION — couplings read from DEPENDS_ON between modules, contracts from PROVIDES/CONSUMES between the boxes that contain them — so writing a contract could never move the number. MEASURED 2026-08-23 on reflow2's own design: module level 72 couplings against 42 contract pairs leaves 64 undeclared; LIFTED TO `subsystem` it is 11 against 13 with NOTHING undeclared. || ⭐ LIFTING BOTH SETS IS THE WHOLE CORRECTNESS ARGUMENT, AND THE HALF-FIX LOOKS RIGHT. Rolling up only the COUPLINGS is the obvious move and leaves the two vocabularies exactly as disjoint as they were — the contracts are still recorded between the leaves. Proven by reverting to that half-fix and watching the one case that matters fail while four others stayed green, which is why the case exists. || ⚠️ A ZERO HERE IS THE MOST DANGEROUS ANSWER THE TOOL CAN GIVE, and it is designed around. 'Nothing undeclared' at subsystem altitude compared ELEVEN couplings, not seventy-two. Every reply therefore carries the raw count and, when an altitude reaches nothing, the number of endpoints dropped — asked at `system`, where this design has no components at all, it reports 0 couplings compared and 114 endpoints unreachable rather than a clean bill. A vacuous zero that announces its own vacuity. || NOTHING IS WRITTEN BACK. The roll-up is derived on every call from CONTAINS + PROVIDES + CONSUMES. A stored edge between two subsystems would make the graph assert a contract nobody declared and be indistinguishable afterwards from one somebody did — `dec:views-are-projections`, and Anthony's own standing rule that a view is a projection and renderer fill-ins are defects. Pinned by a case that exports the design before and after and compares content hashes. || WHAT IT DOES NOT SETTLE: whether `detect_undeclared_seams` and the maturity `seams` band should themselves move to an altitude, or keep answering at module level. They are unchanged here on purpose — changing what a detector reports is a louder act than adding a way to ask, and the 64 remains visible until somebody decides which altitude that gap is about. || SOURCE: measured 2026-08-23 on reflow2 0.38.0, driving the built binary over real stdio.",
+        "subject_id": "cmp:seam",
+        "valid_from": "2026-08-23"
+      }
+    },
+    {
       "node_id": "fact:music-graph-f8-to-f20-verified-against-the-build-2026-08-17",
       "node_type": "TemporalFact",
       "properties": {
@@ -124990,6 +125133,20 @@
         "level": "unit",
         "method": "test",
         "name": "A dated claim reads back with its age, and an undated one says nothing",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-contract-answers-at-the-altitude-you-asked",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/seam_coverage.rs, 5 cases on a fixture built to be the exact shape of the problem: a dependency recorded between two modules and a contract declared between two DIFFERENT modules, so the two sets are disjoint at module level and meet only when lifted.\n\nTHE CASE THAT CARRIES THE CORRECTNESS ARGUMENT is `lifted_to_the_altitude_where_the_contract_lives_it_is_covered`, because lifting only the COUPLINGS is the obvious half-fix and looks right — the contracts stay between the leaves and the vocabularies remain as disjoint as before. Proven non-inert by reverting to that half-fix: that one case fails while the other four stay green.\n\nThe rest pin what keeps a roll-up honest rather than merely small: a coupling internal to one box is NOT a seam one level up (both sets lift, so it disappears rather than becoming a self-pair); an altitude nothing reaches reports 0 couplings compared AND the count of endpoints dropped, so a vacuous zero announces its own vacuity instead of reading as a clean bill; and the projection writes nothing back, pinned by exporting the design before and after and comparing content hashes — a stored edge between two subsystems would make the graph assert a contract nobody declared and be indistinguishable afterwards from one somebody did.",
+        "findings": "5 cases passing, alongside `cargo test --workspace` (40 suites, 0 failures), fmt, core and mcp clippy, skill_lint and smoke_mcp. MEASURED on reflow2's own design driving the built binary over real stdio: module altitude 72 couplings / 42 contracts / 64 uncovered; `subsystem` 11 / 13 / 0, with `sys:coherence-loop <-> sys:foundation` naming `cmp:allocate <-> cmp:graph` as where its contract actually sits; `system` (a level this design populates with nothing) reporting 0 couplings compared and 114 endpoints dropped rather than a clean bill. PROVEN NON-INERT by reverting to the half-fix that lifts only the couplings: `lifted_to_the_altitude_where_the_contract_lives_it_is_covered` fails and the other four stay green, which is the point — the half-fix is the obvious move and looks correct.",
+        "kind": "verification",
+        "last_run_at": "2026-08-23",
+        "level": "integration",
+        "method": "test",
+        "name": "Both sets lift, a zero says what it compared, and the roll-up writes nothing back",
         "status": "passing"
       }
     },
@@ -127533,7 +127690,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:cdd7fda0e1a95a04716ba7b92fa75271eba3d4bbf48e45929be004fe45d0e7b6",
+  "prev_content_hash": "sha256:69d76e6beffec0e2640f9f7cdc590d9bb6b0df2fddce336c863786a97b6bcbde",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
