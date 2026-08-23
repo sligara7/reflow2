@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:8b77d8a3cf1dcaaf7d1c6404efe30eebf3f5ae36c527891e5e49d93c49fea050",
+  "content_hash": "sha256:be7ad7df607a3da44106f7d9942af80c6a972cbb094fdeea044ff644a4c91317",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -6367,6 +6367,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-idea-cycle-was-a-mistyped-distinction",
+      "properties": {},
+      "to_id": "epoch:the-idea-cycle-was-a-mistyped-distinction"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-installer-says-the-graph-is-tracked-20260808",
       "properties": {},
       "to_id": "epoch:v0250"
@@ -8038,6 +8044,12 @@
       "from_id": "snap:epoch:the-floating-parts-get-a-home:dec:bl83a-functional-decomposition",
       "properties": {},
       "to_id": "epoch:the-floating-parts-get-a-home"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-idea-cycle-was-a-mistyped-distinction:dec:idea-do-ideas-form-a-graph-or-only-a-list",
+      "properties": {},
+      "to_id": "epoch:the-idea-cycle-was-a-mistyped-distinction"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -23639,6 +23651,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-idea-cycle-was-a-mistyped-distinction",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:exploratory-staging"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-idea-cycle-was-a-mistyped-distinction",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-installer-says-the-graph-is-tracked-20260808",
       "properties": {
         "accepted_baseline": true,
@@ -27587,16 +27617,6 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:idea-gap-flows-to-the-dependency"
-    },
-    {
-      "edge_type": "DEPENDS_ON",
-      "from_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list",
-      "properties": {
-        "note": "that node asks what an idea IS; this asks what it is CONNECTED TO",
-        "optional": false,
-        "weight_basis": "estimated"
-      },
-      "to_id": "dec:exploratory-staging"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -35706,6 +35726,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list",
+      "properties": {},
+      "to_id": "snap:epoch:the-idea-cycle-was-a-mistyped-distinction:dec:idea-do-ideas-form-a-graph-or-only-a-list"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "dec:idea-does-a-capability-need-a-cancelled-state",
       "properties": {},
       "to_id": "snap:epoch:the-vocabulary-says-where-abandonment-lives:dec:idea-does-a-capability-need-a-cancelled-state"
@@ -36660,6 +36686,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:exploratory-staging",
+      "properties": {},
+      "to_id": "fact:a-distinctness-note-had-to-wear-a-dependency-edge"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "dec:export-once-per-pr",
       "properties": {},
       "to_id": "fact:defect-lineage-message-omits-its-own-decision"
@@ -36675,6 +36707,12 @@
       "from_id": "dec:idea-detect-vocabulary-that-nothing-reaches",
       "properties": {},
       "to_id": "fact:precedes-is-unused-in-storyflow-and-flowless-here"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list",
+      "properties": {},
+      "to_id": "fact:a-distinctness-note-had-to-wear-a-dependency-edge"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -101283,6 +101321,15 @@
       }
     },
     {
+      "node_id": "chg:the-idea-cycle-was-a-mistyped-distinction",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "The `do-ideas-form-a-graph` → `exploratory-staging` dependency is retracted — it asserted DISTINCTNESS, not dependency, and made a real dependency unreadable",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:the-installer-says-the-graph-is-tracked-20260808",
       "node_type": "ChangeEvent",
       "properties": {
@@ -108524,6 +108571,16 @@
         "epoch_type": "revision",
         "name": "The two components floating at the root of the spine are placed on Anthony's word — packaging is promoted to a subsystem, the registry is put where its code actually lives (2026-08-20)",
         "sequence": 369,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:the-idea-cycle-was-a-mistyped-distinction",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The only circular dependency in the design turns out to be a distinctness note wearing a dependency edge (2026-08-23)",
+        "sequence": 378,
         "status": "arrived"
       }
     },
@@ -117151,6 +117208,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:the-idea-cycle-was-a-mistyped-distinction:dec:idea-do-ideas-form-a-graph-or-only-a-list",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"ANTICIPATES\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-what-gets-searched-repeatedly-is-becoming-important\",\"properties\":{\"confidence\":0.8,\"evidence\":\"Both ideas notice the SAME discarded material: what a pre-capture search surfaced, and how relevant each hit was, is read once and thrown away. The 2026-08-10 idea proposed keeping it as a weighted importance signal; this one proposes keeping it as an edge. The earlier one had already seen that the search result carries information worth persisting — it differs on what to do with it, not on the observation. Drawn 2026-08-21.\"}},{\"direction\":\"in\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:exploratory-staging\",\"properties\":{\"confidence\":0.8,\"evidence\":\"exploratory-staging left the 'should an idea be its own KIND' question turning explicitly on whether any computation would read the distinction. Cluster-search over an idea's neighbourhood is a candidate for exactly that computation, so the older question cannot be settled until this one is answered. Drawn 2026-08-21 by the brainstorm skill's own linking step.\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-what-notices-an-idea-that-connects-to-nothing\",\"properties\":{\"confidence\":0.85,\"evidence\":\"This is the third leg of that idea and has nothing to detect against until its first leg exists. A detector for unlinked ideas shipped before the linking step would report 111 of 145 on day one and be correct, which is not a useful thing to ship. Drawn 2026-08-21 by the linking step itself.\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-21\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:exploratory-staging\",\"properties\":{\"note\":\"that node asks what an idea IS; this asks what it is CONNECTED TO\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-search-first-fires-without-being-remembered\",\"properties\":{\"confidence\":0.8,\"evidence\":\"The linking step is nearly free only because the search has already run — it judges the near-matches already in hand rather than sweeping for candidates. If search-before-capture ever stopped being universal, linking at capture would become an expensive extra pass and the argument for putting it in the brainstorm skill would collapse. Drawn 2026-08-21.\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:accreted-intent-becomes-a-design\",\"properties\":{\"note\":\"accretion over years presumes the pile can later be read as a whole — unlinked ideas do not accrete\",\"optional\":false,\"weight_basis\":\"estimated\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony thinking out loud, 2026-08-21. Nothing here is intent.\\n\\nHIS WORDS: \\\"can proposed ideas (like those from brainstorm) form a graph? looking at any idea individually may give you an incomplete picture. for example, we talked about black-boxes, systems engineering, functional allocation, and a few other inter-related ideas that paint a bigger, more holistic picture about what I'm trying to link together. or when my brother mentioned that sometimes he just wants to jot down ideas for a project over time. bottomline, does reflow2 link ideas/concepts or does it rely on the agent to do this?\\\"\\n\\n=== THE ANSWER, MEASURED 2026-08-21 RATHER THAN ESTIMATED ===\\n\\n    145  idea-Decisions (dec:idea-*), of which 123 still proposed\\n     12  edges joining any TWO of them\\n     68  whose ONLY edge is AUTHORED_BY — they connect to their author and to nothing else\\n      8  with no edges at all\\n\\nAnd the shape of what an idea IS connected to, across the whole population:\\n    134  AUTHORED_BY -> Contributor\\n     20  GOVERNED_BY -> Decision\\n     19  CONTRADICTS -> Decision\\n     13  DEPENDS_ON  -> Decision\\n\\n⇒ THE MOST COMMON EDGE ON AN IDEA IS ITS AUTHOR. **The design records WHO had an idea far more reliably than WHAT IT RELATES TO.** Roughly half the idea population is an island that says 'Anthony thought this' and nothing further.\\n\\n⭐ SO: REFLOW2 DOES NOT LINK IDEAS. IT RELIES ENTIRELY ON THE AGENT, AND THE AGENT MOSTLY DOES NOT. The evidence is this session: four of the twelve idea-to-idea edges in the entire graph were drawn BY HAND in one hour, only because Anthony asked for them in as many words. Every brainstorm before that produced a node and no edges — including three captured the previous day by the same agent following the same skill, which instructs recording the idea and says nothing about connecting it to its neighbours.\\n\\n=== WHY IT MATTERS, IN HIS OWN CASE ===\\n\\nFour nodes carry one argument between them and none of them says so on its own: allocation-waits-for-the-last-responsible-moment (accepted), what-watches-for-the-moment-to-arrive, the-ility-chooses-the-allocation-graph, and is-allocation-running-ahead-of-the-seams. Read singly, each is a reasonable question. Read together they are one position about WHEN and ON WHAT BASIS a boundary gets drawn. A reader meeting any one of them alone gets an incomplete picture — which is exactly what he said.\\n\\nAND HIS BROTHER'S CASE IS THE SAME SHAPE AT A DIFFERENT TIMESCALE: `req:accreted-intent-becomes-a-design` (a body of intent accreted over years, contradicting itself and never built, can still become a design) presumes the accretion can later be READ AS A WHOLE. Ideas jotted over months with no edges between them do not accrete into anything; they pile.\\n\\n=== OPTIONS, NONE CHOSEN ===\\n\\n  (a) THE STATUS QUO — the agent draws edges when it thinks to. Measured rate: 12 edges across 145 ideas, and a third of those in the hour after being asked. This is the option that produced the number.\\n  (b) THE BRAINSTORM SKILL REQUIRES NAMING A NEIGHBOUR. Cheap, needs no schema, and testable — the skill already makes the agent search before writing, so the near-matches are IN HAND at the moment of capture and are currently used only to avoid duplicates, then discarded. ⚠️ Risk: an edge drawn to satisfy an instruction is an asserted relationship nobody meant, which `req:a-repair-suggestion-never-proposes-fabrication` forbids for exactly this reason.\\n  (c) A DETECTOR FOR THE ABSENCE — 'this idea shares vocabulary with N others and links to none'. It is the absence-shaped detector reflow2 structurally lacks (see fact:the-design-outward-blind-spot-appeared-in-three-independent-places), so building it would be the first of its kind rather than one more of many.\\n  (d) COMPUTE ADJACENCY, DO NOT STORE IT. `search_design` already ranks by BM25 over every node's text, so 'ideas near this one' is answerable TODAY as a READ without asserting any edge. Respects the no-fabrication rule completely: it SHOWS adjacency rather than CLAIMING a relationship. ⚠️ And its limit is the whole point — a similarity score cannot carry WHY two ideas are related, and the why is the content. The four edges drawn today each carry a note like 'option (b) here would be this one's stated trigger'; no ranking function produces that sentence.\\n  (e) DO NOTHING. Honest, and its cost is the measurement above.\\n\\n=== COUNTER-ARGUMENT, RECORDED BESIDE RATHER THAN AGAINST ===\\n\\nAn idea graph could be worse than an idea list. Edges between musings are cheap to draw and expensive to trust: two ideas mentioning 'allocation' are not thereby related, and a densely-linked pile of half-formed thoughts reads as a structure when it is a word cloud. This project has twice retired metric-driven verdicts that fired on correct architecture; a similarity-driven idea graph is the same hazard one level up. WHATEVER IS CHOSEN, THE EDGE THAT EARNS ITS KEEP CARRIES A REASON — which is an argument for (b) or (d) over (c), and against any automatic drawing.\\n\\nDISTINCT FROM `dec:exploratory-staging`, which asks whether a half-formed idea has a HOME (a kind, a type, a status) and lists what such a kind would buy: retirement candidates and at-a-glance readability. Neither is linking. That node is about what an idea IS; this one is about what an idea is CONNECTED TO.\\n\\n═══════════════════════════════════════════════════════════════════\\n⭐ ANTHONY NAMES BOTH HALVES, 2026-08-21 — AND THE SECOND IS BETTER THAN OPTION (d)\\n═══════════════════════════════════════════════════════════════════\\n\\nHIS WORDS: \\\"I think the brainstorm skill is the perfect place to start linking ideas. it is like when a person starts 'connecting the dots'. secondly, when as part of a search, the graph starts returning clusters of inter-related ideas to the agent instead of single ideas. like our example from earlier, we'd just to have to do one search (maybe it is limited to like 2 or 3 connected nodes from a searched idea).\\\"\\n\\nHALF ONE IS OPTION (b), and the skill is the right home for a reason the options above understated: THE NEAR-MATCHES ARE ALREADY IN HAND AT THE MOMENT OF CAPTURE. The brainstorm skill already makes the agent search before writing, and the dedup guard already returns the nodes it judged close. Today that list is used to avoid a duplicate AND THEN THROWN AWAY. The information needed to connect the dots is produced, read, and discarded, every single time.\\n\\nHALF TWO IS NOT OPTION (d) AND IS BETTER THAN IT. Option (d) proposed computing adjacency by SIMILARITY. His proposal is to follow the EDGES THAT EXIST and return the neighbourhood, bounded to 2 or 3 hops. That is stronger on the exact axis (d) was weak on: a similarity score cannot say WHY two ideas are related, but a real edge carries the reason it was drawn with. It also needs no schema change — it is a READ.\\n\\n⭐⭐ AND THE TWO COMPOUND. Linking at capture makes search return clusters; a search that returns clusters shows the next agent the neighbourhood it is writing into; seeing the neighbourhood makes the next link better. A virtuous cycle — but one that needs a seed, because it multiplies whatever is already there.\\n\\n🛑 WHICH IS THE FINDING: THE TWO HALVES ARE ORDERED, AND MEASURABLY SO. Measured 2026-08-21, traversing every edge except attribution and bookkeeping:\\n\\n    ideas that reach ZERO other ideas within 2 hops:   111 of 145\\n    median other-ideas within 2 hops:                  0\\n    at 3 hops:                                         110 of 145 still zero\\n\\n⇒ CLUSTER-SEARCH BUILT TODAY WOULD RETURN NOTHING FOR 77% OF IDEAS. It would not be wrong, it would be empty — and an empty result from a new feature reads as the feature not working rather than as the graph being unlinked. HALF ONE MUST PRECEDE HALF TWO, or the second ships looking broken.\\n\\n✅ AND THERE IS ALREADY A WORKING DEMONSTRATION OF WHAT IT WOULD FEEL LIKE. The allocation cluster returns 1 idea at one hop and 2 at two hops — `what-watches-for-the-moment-to-arrive` and `is-allocation-running-ahead-of-the-seams` — because those are the only edges that exist. That is exactly the \\\"one search instead of four\\\" he described, working, on the one part of the graph that has been linked. It is a demo and a measurement of the gap at the same time.\\n\\n📌 STILL NOT DECIDED: whether the skill should REQUIRE a neighbour or merely offer the near-matches for the agent to judge. Requiring one manufactures edges to satisfy an instruction, which is the fabrication hazard recorded above. Offering them depends on the agent choosing well, which is the status quo that produced 12 edges across 145 ideas. The middle — offer the near-matches AND require an explicit \\\"none of these\\\" when none is drawn — is the shape `distinct_from` already uses on the dedup guard, and it is the only one of the three that leaves a record of the judgement either way.\",\"name\":\"OPEN — do ideas form a GRAPH, or only a list? Measured: 145 ideas, 12 edges between any two of them, and 68 that connect to nothing but their author\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:the-image-must-start:art:release-workflow",
       "node_type": "Snapshot",
       "properties": {
@@ -117585,6 +117652,18 @@
         "statement": "FOUND 2026-08-21 while fixing the finding \"nothing verifies ifc:core-api\". The fix was refused by the edge validator:\n\n  Invalid edge: VERIFIES cannot connect Verification to Interface\n\nThe schema enumerates VERIFIES targets as **Capability, Requirement, Artifact, Component, DesignRule, Constraint**. Interface is absent.\n\nSO REFLOW2 CAN ATTACH EVIDENCE TO A RULE, A BUDGET, A PART, A FILE, A CAPABILITY AND A REQUIREMENT — AND NOT TO A CONTRACT. Every Interface in every design using reflow2 is unverifiable by construction. reflow2's own 17 interfaces have zero incoming VERIFIES edges, and that reads as \"nobody wrote one\" when the truth is \"nobody could\".\n\nWHY IT MATTERS MORE THAN A MISSING EDGE TYPE USUALLY WOULD. A contract is the node a modular open-systems approach turns on — `set_interface_designation`'s own description calls `published` \"the distinction a systems-engineering ICD publishes and that MOSA calls a modular system interface\". The question \"does this boundary actually hold?\" is the most natural thing anyone would want to check about a published contract, and it is the one question this vocabulary cannot express. `ifc:mcp-tools` is specified 9 of 9 fields, is the surface every user's agent calls, and cannot carry a single piece of evidence that it behaves as specified.\n\n⭐ IT MAY BE THE THIRD INSTANCE OF A PATTERN THIS EDGE HAS ALREADY RECORDED ABOUT ITSELF. `schema/verify.yaml` carries a long comment on VERIFIES under-enumerating its targets twice: the extraction hint named three types while four were true, and later the `to` list itself was derived from a census that found five types by edge count and MISSED TWO carrying one edge each — which made an existing export unimportable by the binary that wrote it for four days while every gate read green. Its own words: \"a schema tightening that silently orphans existing data is a breaking change wearing a validation error's clothes.\" Interface may simply be the next unlisted-but-wanted target, never censused because no edge existed to count — an absence cannot appear in a survey of what is present.\n\nWHAT THIS FACT DOES NOT SETTLE: whether Interface SHOULD be added. That is a schema change and Anthony's call. Two things argue for care rather than speed — the same comment warns that narrowing this list broke a real design, so widening it deserves the same scrutiny in reverse; and it is worth asking first what a check on a contract would MEAN, since a conformance test against a specified boundary is a different kind of evidence from a unit test on a capability.\n\nNOTE ON THE STAMP: the schema stamp carries node and edge TYPE NAMES, not their target lists, so adding Interface to this `to` list would not move it and would owe no upgrade note.",
         "subject_id": "cmp:verify",
         "valid_from": "2026-08-21"
+      }
+    },
+    {
+      "node_id": "fact:a-distinctness-note-had-to-wear-a-dependency-edge",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "THE DESIGN'S ONLY CIRCULAR DEPENDENCY, RESOLVED 2026-08-23, AND IT WAS NEVER A DEPENDENCY.\n\n`dec:exploratory-staging` and `dec:idea-do-ideas-form-a-graph-or-only-a-list` each carried a DEPENDS_ON to the other. Reading both edges settled it in minutes:\n\n  KEPT   exploratory-staging → do-ideas-form-a-graph. Dated 2026-08-21, confidence 0.8, and carrying real evidence: exploratory-staging turns on whether ANY COMPUTATION would read the idea-kind distinction, and cluster-search over an idea's neighbourhood is a candidate for exactly that computation — so the older question cannot be settled until this one is answered. That is a genuine ordering claim.\n\n  RETRACTED   do-ideas-form-a-graph → exploratory-staging. No date, no confidence, no evidence. Its whole content was the note *\"that node asks what an idea IS; this asks what it is CONNECTED TO\"* — which is not a dependency claim at all. It says the two are DIFFERENT.\n\n⭐ AND THE SENTENCE WAS ALREADY IN THE NODE'S OWN PROSE, WORD FOR WORD: \"DISTINCT FROM `dec:exploratory-staging`... That node is about what an idea IS; this one is about what an idea is CONNECTED TO.\" So the edge duplicated, in the wrong edge type, something the node already said better. Deleting it lost nothing and made a real dependency readable again.\n\n🛑 THE VOCABULARY GAP IS THE FINDING, NOT THE CYCLE. There is NO EDGE TYPE MEANING \"RELATED BUT DISTINCT\" between two Decisions. `describe_schema` for that pair returns nothing that models it: DEPENDS_ON, EVOLVES_INTO, CONTRADICTS and the rest accept Decision→Decision only through a `*` wildcard on both ends. So somebody with a true and useful thing to say — \"these two questions are adjacent and must not be confused\" — had one honest option, prose, and one available option, a wrong edge. They took both, and the wrong edge outlived the prose in every computation that walks the graph.\n\n⚠️ THIS IS THE SECOND OBSERVED INSTANCE OF THE SAME SHAPE, and Anthony raised the first from another session the same day: SUPERSEDES is `Fragment → Fragment` only and has ZERO edges in this design, while sessions reaching for a replacement relation between two same-type nodes get refused and fall back to EVOLVES_INTO — which also only wildcard-accepts the pair. A third instance appeared in this session: linking two TemporalFacts, nothing models the pair either.\n  ⇒ THE PATTERN: when the schema models no edge for a real relationship, the relationship does not go unrecorded. IT GETS RECORDED AS SOMETHING ELSE, and the something else is then read by every detector as if it meant what it says. A wildcard-accepted edge is not a neutral fallback; it is an assertion in the wrong vocabulary.\n\nWHAT THIS DOES NOT SETTLE: whether to add such an edge type. That is a schema change and Anthony's call. Three instances is a pattern worth naming, not yet a mandate — and `schema/verify.yaml` already warns from its own history that widening or narrowing an endpoint list deserves scrutiny in both directions.",
+        "subject_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list",
+        "valid_from": "2026-08-23"
       }
     },
     {
@@ -123012,7 +123091,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:0a36acbc307b0539f09eda8ea2666369ba5fa35a161e63d7b0239c724ea95700",
+  "prev_content_hash": "sha256:8b77d8a3cf1dcaaf7d1c6404efe30eebf3f5ae36c527891e5e49d93c49fea050",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
