@@ -36,7 +36,7 @@
       },
       "medium": {
         "default": null,
-        "description": "How the contract is CARRIED: `REST` / `gRPC` / `event` / `graphql` /\n`cli` / `library` / `data` / `mechanical` / `electrical` / `human`.\nUnset reads as `unspecified`, which is deliberately not a claim that a\nboundary is REST. Worth setting even when the rest of the spec is\nunknown: two boundaries can only be wired together if their media match,\nand a `library` or `data` foundation is linked into its callers rather\nthan called across, so it cannot fail on its own and the structural\ndetectors need to know that to avoid reporting it as a single point of\nfailure.",
+        "description": "How the contract is CARRIED: `REST` / `gRPC` / `json_rpc` / `event` /\n`graphql` / `cli` / `library` / `data` / `mechanical` / `electrical` /\n`human`.\nUnset reads as `unspecified`, which is deliberately not a claim that a\nboundary is REST. Worth setting even when the rest of the spec is\nunknown: two boundaries can only be wired together if their media match,\nand a `library` or `data` foundation is linked into its callers rather\nthan called across, so it cannot fail on its own and the structural\ndetectors need to know that to avoid reporting it as a single point of\nfailure.",
         "type": [
           "string",
           "null"
