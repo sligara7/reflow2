@@ -495,10 +495,10 @@ pub(crate) fn node_error(g: &DesignGraph, node_type: &str, e: DynoError) -> McpE
     )
 }
 
-/// Return a payload as the tool result: structured JSON (no envelope) plus a
-/// text rendering, so clients that read either `structuredContent` or `content`
-/// both get the data. Returning a raw `CallToolResult` registers no output
-/// schema (the wire format is the payload directly).
+/// Return a payload as the tool result: structured JSON, plus the [`STRUCTURED_ONLY`]
+/// signpost in `content` for anyone reading the wrong field. Returning a raw
+/// `CallToolResult` registers no output schema (the wire format is the payload
+/// directly).
 pub(crate) fn ok_json<T: serde::Serialize>(value: T) -> Result<CallToolResult, McpError> {
     json_result(envelope(serde_json::to_value(value).map_err(ser_err)?))
 }
@@ -715,13 +715,51 @@ pub(crate) fn read_debt_summary(s: &LoopStatus) -> String {
     )
 }
 
-/// Build the tool result from an already-enveloped object: structured JSON plus
-/// a text rendering, so clients reading either `structuredContent` or `content`
-/// both get the data.
+/// What the `content` block of a JSON tool result says, now that it is a
+/// signpost rather than a second copy of the payload.
+///
+/// **It says nothing about the design.** It is addressed to whoever is reading
+/// the wrong field, and its only job is to name the right one.
+///
+/// The payload's SIZE is deliberately not in here. Measuring it means
+/// serializing the whole reply a second time purely to produce a number, on the
+/// exact replies where that is most expensive — and the sentence is actionable
+/// without it.
+pub(crate) const STRUCTURED_ONLY: &str = "This reply's payload is in `structuredContent`.      reflow2 no longer duplicates it into `content`, because sending every reply twice was the      difference between an answer a client could read and one it refused outright. If you are      reading this string, your client is reading `content` for a tool that declares structured      output: read `structuredContent` instead. Prose tools (graph_report_markdown and its      siblings) are unaffected and still return their document here.";
+
+/// Build the tool result from an already-enveloped object: the payload as
+/// `structuredContent`, and a one-line signpost in `content`.
+///
+/// **IT USED TO SEND THE PAYLOAD TWICE**, byte for byte, once in each field, on
+/// the reasoning that a client may read either. That reasoning was sound when
+/// `structuredContent` was new. What it cost was never measured until
+/// 2026-08-23: unscoped `detect_gaps` was 79,566 characters of payload and
+/// **157,785 bytes on the wire**, and the harness refused the call. Half of
+/// that was a copy nobody read. The same tax was on every reply this server has
+/// ever sent, and it is why `graph_report` (88,932 and 91,330) and
+/// `loop_status` (72,886) are refused as well
+/// (`fact:the-first-move-of-a-session-did-not-fit`).
+///
+/// WHY A SIGNPOST RATHER THAN AN EMPTY `content`. An empty block would save the
+/// same bytes, and a client that reads only `content` would get silence — which
+/// is indistinguishable from reflow2 not being configured at all, the precise
+/// outage `req:never-silently-absent` exists to end and the reason `proxy.rs`
+/// keeps a process on stdio whatever state the server is in. One sentence costs
+/// ~450 bytes against a payload measured in tens of thousands and turns that
+/// silence into an instruction.
+///
+/// WHY NOT GATE IT ON THE NEGOTIATED PROTOCOL VERSION, which is the obvious
+/// answer and was the first one proposed: `structuredContent` arrived in
+/// `2025-06-18`, and rmcp will still negotiate `2024-11-05` and `2025-03-26`,
+/// so the server genuinely can be handed a client that predates the field.
+/// But the version lives on the `RequestContext`, and of 156 tool handlers
+/// exactly ONE takes one (`claim_region`, for the seat). Gating here means
+/// threading a context through the other 155 and all 151 `ok_json` call sites —
+/// a large invasive change to protect a client nobody could name, against a
+/// signpost that costs one line and protects them anyway.
 pub(crate) fn json_result(v: JsonValue) -> Result<CallToolResult, McpError> {
-    let text = serde_json::to_string(&v).map_err(ser_err)?;
     let mut result = CallToolResult::structured(v);
-    result.content = vec![ContentBlock::text(text)];
+    result.content = vec![ContentBlock::text(STRUCTURED_ONLY)];
     Ok(result)
 }
 

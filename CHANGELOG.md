@@ -31,6 +31,33 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed — a reply goes out once
+
+**Patch.** No tool's inputs or result shape changes; what changes is that the payload stops being
+transmitted twice.
+
+Every tool result carried its payload **twice, byte for byte** — once as `structuredContent`, once
+as a text `content` block — on the reasoning that a client may read either. That was sound when
+`structuredContent` was new. What it cost was never measured until 2026-08-23: unscoped
+`detect_gaps` was 79,566 characters of payload and **157,785 bytes on the wire**, half of it a copy
+no client read. The same tax was on every reply this server has ever sent.
+
+- **The `content` block of a JSON tool result is now a one-line signpost** naming the field the
+  payload is in. Measured on this design: **26,096 bytes on the wire, down from 53,181 after the
+  reply budget and 157,785 before either** — a 6× reduction, with the payload itself unchanged.
+- **A signpost rather than an empty block, deliberately.** Empty saves the same bytes and leaves a
+  client reading the wrong field with silence — indistinguishable from reflow2 never having been
+  configured, which is the outage `req:never-silently-absent` exists to end. ~450 bytes turns that
+  into an instruction.
+- **Prose tools are untouched.** `graph_report_markdown` and its siblings declare no structured
+  output, so `content` is their only carrier and still holds the document. Pinned by a test.
+- Not gated on the negotiated protocol version, which was the first proposal:
+  `structuredContent` arrived in `2025-06-18` and rmcp still negotiates `2024-11-05` and
+  `2025-03-26`, so a pre-structured client is genuinely possible — but the version lives on the
+  `RequestContext`, and of 156 tool handlers exactly **one** takes one. Gating meant threading a
+  context through the other 155 and all 151 `ok_json` call sites, to protect a client the signpost
+  protects for one line.
+
 ### Changed — the first move of a session fits in the reply
 
 **Minor** (the result shape of `detect_gaps` gains fields; one new optional parameter).
