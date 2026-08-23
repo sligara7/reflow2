@@ -383,6 +383,71 @@ def _git(args: list[str], cwd: str) -> str | None:
     return out.stdout if out.returncode == 0 else None
 
 
+def _changed_paths(root: str) -> tuple[set[str], str] | None:
+    """Repo-relative paths THIS CHANGE touched, with a word for what was compared.
+    `None` when git cannot answer at all.
+
+    WHY THIS EXISTS. The unmodelled-source note below is correct and was being
+    skimmed: it reports every unmodelled file in the tree (107 here), which reads
+    as an institutional backlog rather than as anything the reader did. Measured
+    from the other side on 2026-08-23 — a dev_storyflow agent built a four-lane
+    feature, registered ZERO artifacts, and named the aggregate framing as the
+    reason: "391 is not a number anybody can act on ... three gaps on the node I
+    just edited would have been a task." The files a reader actually touched are
+    the subset they can act on now, and they are usually two or three.
+
+    IT DOES NOT CHANGE THE SEVERITY, and that is deliberate. The note stays a
+    note — `dec:idea-allocation-waits-for-the-last-responsible-moment` defers
+    allocation, and failing the build here would reverse that ruling while
+    appearing to implement it (Anthony, 2026-08-21). Narrowing WHAT IS SHOWN and
+    demanding action are different acts; this does the first.
+
+    Two sources, unioned, because either alone lies. `status --porcelain` sees a
+    file written but not yet committed; the merge-base diff sees one committed
+    earlier on this branch. A session that commits as it goes would be invisible
+    to the first, and one that has not committed yet invisible to the second.
+    """
+    top_out = _git(["rev-parse", "--show-toplevel"], root)
+    if not top_out:
+        return None
+    top = top_out.strip()
+    changed: set[str] = set()
+    parts: list[str] = []
+
+    status = _git(["status", "--porcelain"], top)
+    if status is not None:
+        for line in status.splitlines():
+            if len(line) < 4:
+                continue
+            path = line[3:]
+            # A rename reads `old -> new`; the NEW name is the one on disk.
+            if " -> " in path:
+                path = path.split(" -> ", 1)[1]
+            changed.add(os.path.normpath(path.strip().strip('"')))
+        parts.append("uncommitted work")
+
+    # Everything committed on this branch since it left the trunk. The base is
+    # tried in order rather than assumed: a clone with no `origin`, or a trunk
+    # called something else, must degrade to "no branch half" and SAY so, not
+    # silently report a smaller set.
+    for base in ("origin/HEAD", "origin/main", "origin/master", "main", "master"):
+        merge_base = _git(["merge-base", "HEAD", base], top)
+        if not merge_base:
+            continue
+        diff = _git(["diff", "--name-only", merge_base.strip(), "HEAD"], top)
+        if diff is None:
+            continue
+        for line in diff.splitlines():
+            if line.strip():
+                changed.add(os.path.normpath(line.strip()))
+        parts.append(f"commits since {base}")
+        break
+
+    if not parts:
+        return None
+    return changed, " and ".join(parts)
+
+
 def _repo_relative(path: str) -> tuple[str, str] | None:
     """`(repo_root, path_within_repo)`, or None when the file is not in a git
     working tree. `git show REV:path` only understands repo-relative paths, so
@@ -841,6 +906,38 @@ def main() -> int:
                         if full not in claimed_paths:
                             unheard.append(os.path.relpath(full, opts.root))
             unheard.sort()
+
+            # ⭐ LEAD WITH WHAT THIS CHANGE TOUCHED. Same finding, narrowed to the
+            # subset the reader can act on right now. The aggregate still prints
+            # below it, so nothing is hidden — but it stops being the first thing
+            # read, which is what turned it into furniture.
+            touched = _changed_paths(opts.root)
+            if touched is None:
+                # A ZERO HERE MUST NOT READ AS A CLEAN RESULT. Without git there
+                # is no "this change" to scope to, and staying silent would be
+                # indistinguishable from having looked and found nothing.
+                if unheard:
+                    notes.append(
+                        "unmodelled source, THIS CHANGE: not computed — git could not say which "
+                        "files this working copy touched, so only the whole-tree count below is "
+                        "available. That is a missing measurement, not a clean result."
+                    )
+            else:
+                changed_paths, basis = touched
+                mine = [u for u in unheard if u in changed_paths]
+                if mine:
+                    shown = ", ".join(mine[:8])
+                    more = f", +{len(mine) - 8} more" if len(mine) > 8 else ""
+                    notes.append(
+                        f"unmodelled source, THIS CHANGE: {len(mine)} of the file(s) you "
+                        f"touched ({basis}) have no Artifact pointing at them — {shown}{more}. "
+                        f"link-artifacts registers one against the capability it realizes, with a "
+                        f"checksum so a later edit is detectable. Registering is an OFFER, not a "
+                        f"demand: allocation stays deferred to the last responsible moment "
+                        f"(dec:idea-allocation-waits-for-the-last-responsible-moment), and this "
+                        f"is a note either way."
+                    )
+
             if unheard:
                 # GROUPED BY DIRECTORY, not listed. Ninety-seven filenames on one
                 # line is the signal a reader learns to skim, and a count that
