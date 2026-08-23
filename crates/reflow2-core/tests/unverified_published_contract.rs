@@ -1,3 +1,13 @@
+//! What a design owes for the boundaries it PUBLISHES — three findings.
+//!
+//! The file is named for the first of them and now covers all three; they are
+//! tested together because they walk the same population and their INDEPENDENCE
+//! is itself something to assert.
+//!
+//!   `unverified_published_contract`   nothing shows this promise holds
+//!   `no_published_boundary`           you publish nothing — deliberate, or unclassified?
+//!   `incomplete_published_contract`   the promise is not described in comparable terms
+//!
 //! A published contract with no passing check — and the posture question a
 //! design gets when it has published nothing at all.
 //!
@@ -234,4 +244,258 @@ fn the_posture_question_keeps_its_id_and_each_promise_gets_its_own() {
         .collect();
     assert_eq!(ids.len(), 2, "two published contracts, two questions");
     assert_ne!(ids[0], ids[1], "each keyed on its own boundary");
+}
+
+// ---------------------------------------------------------------------------
+// THE OTHER HALF OF THE SAME BOUNDARY: described in terms another design could
+// compare, or not (`incomplete_published_contract`, serving
+// `req:interface-spec-complete`).
+//
+// Separate from the finding above even though both walk the published set,
+// because a design can be in either state independently: a fully specified
+// contract nobody checks, and a checked contract nobody described.
+// ---------------------------------------------------------------------------
+
+/// Fill every agreement axis the schema has a field for.
+fn fully_specified(g: &mut DesignGraph, id: &str) {
+    g.set_interface_spec(
+        id,
+        Some("REST"),
+        Some("synchronous"),
+        Some("json"),
+        Some("openapi.yaml"),
+        Some("/v1/things"),
+        Some("GET, POST"),
+        Some("oauth2"),
+        Some("tls"),
+        Some("RFC 7807 problem+json"),
+    )
+    .expect("spec");
+}
+
+#[test]
+fn a_published_contract_missing_agreement_axes_names_which() {
+    let mut g = DesignGraph::open_in_memory().expect("open");
+    g.add_interface("ifc:api", "The public API").expect("ifc");
+    g.set_interface_designation("ifc:api", "published")
+        .expect("designation");
+    g.set_interface_spec(
+        "ifc:api",
+        Some("REST"),
+        Some("synchronous"),
+        Some("json"),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    )
+    .expect("spec");
+
+    let gap = finding(&g, GapSource::IncompletePublishedContract).expect("six axes unset");
+    assert!(
+        gap.affected_ids.contains(&"ifc:api".to_string()),
+        "the finding names the boundary"
+    );
+    for axis in [
+        "payload_schema",
+        "endpoint",
+        "operations",
+        "auth",
+        "transport_security",
+        "error_model",
+    ] {
+        assert!(
+            gap.evidence.contains(axis),
+            "every unset axis is NAMED, never reduced to a count — the whole point of \
+             req:interface-spec-complete is that a seam be described in COMPARABLE terms, and a \
+             fraction is not comparable: {axis} missing from {}",
+            gap.evidence
+        );
+    }
+    assert!(
+        !gap.evidence.contains("medium,") && !gap.evidence.contains("paradigm"),
+        "and an axis that IS set must not be named: {}",
+        gap.evidence
+    );
+
+    // ⭐ THE QUESTION IS ASKED IN THE REQUIREMENT'S WORDS, NOT THE COLUMN'S.
+    // `payload_schema` is a field name; "which fields are mandatory, and their
+    // types" is the thing two systems have to agree on. The gloss is what makes
+    // this answerable by somebody who never reads the schema — the standing
+    // "speak the reader's domain" rule — and it is trivially strippable in a
+    // refactor, so it is pinned rather than trusted.
+    assert!(
+        gap.description
+            .contains("which fields are mandatory, and their types"),
+        "each unset axis carries its plain-English gloss, not just its field name: {}",
+        gap.description
+    );
+    assert!(
+        gap.description
+            .contains("the failure vocabulary a consumer parses"),
+        "...for every axis, not only the first: {}",
+        gap.description
+    );
+}
+
+#[test]
+fn a_fully_specified_contract_is_not_asked() {
+    let mut g = DesignGraph::open_in_memory().expect("open");
+    g.add_interface("ifc:api", "The public API").expect("ifc");
+    g.set_interface_designation("ifc:api", "published")
+        .expect("designation");
+    fully_specified(&mut g, "ifc:api");
+
+    assert!(
+        finding(&g, GapSource::IncompletePublishedContract).is_none(),
+        "every axis the schema can hold is filled"
+    );
+}
+
+#[test]
+fn an_internal_boundary_is_never_asked_to_describe_itself() {
+    // Plumbing the owner may change freely. Only what a design has CHOSEN to
+    // publish is billed — the same gate as the sibling finding.
+    let mut g = DesignGraph::open_in_memory().expect("open");
+    g.add_interface("ifc:guts", "Internal plumbing")
+        .expect("ifc");
+
+    assert!(
+        billed(&g, GapSource::IncompletePublishedContract).is_empty(),
+        "an internal boundary owes nobody a description"
+    );
+}
+
+#[test]
+fn the_two_published_findings_are_independent() {
+    // 🛑 THE REASON THESE ARE TWO DETECTORS AND NOT ONE. A design can be in
+    // either state alone, and one acknowledgement must not settle both
+    // questions.
+    let mut g = DesignGraph::open_in_memory().expect("open");
+    g.add_interface("ifc:described", "Described but unchecked")
+        .expect("ifc");
+    g.set_interface_designation("ifc:described", "published")
+        .expect("designation");
+    fully_specified(&mut g, "ifc:described");
+
+    assert!(
+        finding(&g, GapSource::IncompletePublishedContract).is_none(),
+        "fully described"
+    );
+    assert!(
+        finding(&g, GapSource::UnverifiedPublishedContract).is_some(),
+        "and still has nothing showing it holds — described is not checked"
+    );
+
+    // Now the mirror image: checked, but never described.
+    let mut g2 = DesignGraph::open_in_memory().expect("open");
+    g2.add_interface("ifc:checked", "Checked but undescribed")
+        .expect("ifc");
+    g2.set_interface_designation("ifc:checked", "published")
+        .expect("designation");
+    check(&mut g2, "ver:c", "ifc:checked", "passing");
+
+    assert!(
+        finding(&g2, GapSource::UnverifiedPublishedContract).is_none(),
+        "a passing check settles the evidence question"
+    );
+    assert!(
+        finding(&g2, GapSource::IncompletePublishedContract).is_some(),
+        "and leaves the description question entirely open — checked is not described"
+    );
+}
+
+#[test]
+fn the_finding_admits_the_characteristic_it_cannot_ask_about() {
+    // 🛑 `req:interface-spec-complete` names SIX characteristics; the schema has
+    // fields for five. There is nowhere to record performance and constraints —
+    // rate limits, concurrency, timeouts — so a design can clear this finding
+    // completely and still not say what it promises under load. A detector that
+    // quietly checks five sixths of a requirement and reports clean is the
+    // green-gate-over-what-it-does-not-cover failure, so it says so in the
+    // evidence a reader actually sees.
+    let mut g = DesignGraph::open_in_memory().expect("open");
+    g.add_interface("ifc:api", "The public API").expect("ifc");
+    g.set_interface_designation("ifc:api", "published")
+        .expect("designation");
+
+    let gap = finding(&g, GapSource::IncompletePublishedContract).expect("nothing specified");
+    assert!(
+        gap.evidence.contains("performance and constraints"),
+        "the limit rides on the finding, not only in a doc comment nobody reads: {}",
+        gap.evidence
+    );
+}
+
+#[test]
+fn unspecified_is_unset_and_none_is_an_answer() {
+    // 🛑 THE MOST IMPORTANT ASSERTION IN THIS FILE, and the detector was WRONG
+    // until it was written. Five of the nine agreement axes are enums DEFAULTING
+    // to `unspecified`, and the store materialises defaults on write — so every
+    // Interface ever created already carries the word. A presence test counts it
+    // as an answer, which would have made this detector green over exactly the
+    // thing it exists to check.
+    //
+    // MEASURED ON REFLOW2'S OWN DESIGN before the fix: `ifc:mcp-tools-http` read
+    // 9 of 9 complete while its `medium` said `unspecified`, and
+    // `ifc:graph-export` reported four gaps where there are six.
+    //
+    // ⭐ AND THE OTHER HALF IS JUST AS LOAD-BEARING: `none` IS AN ANSWER.
+    // `auth: none` on an unauthenticated local pipe is a real, deliberate
+    // statement, and sweeping it up with `unspecified` would nag a design that
+    // had answered honestly. Declared absence and undeclared absence are
+    // different facts — the distinction `Artifact.audience` enforces by having
+    // no default at all.
+    let mut g = DesignGraph::open_in_memory().expect("open");
+    g.add_interface("ifc:api", "The public API").expect("ifc");
+    g.set_interface_designation("ifc:api", "published")
+        .expect("designation");
+    g.set_interface_spec(
+        "ifc:api",
+        Some("unspecified"), // explicitly saying nothing
+        Some("synchronous"),
+        Some("json"),
+        Some("openapi.yaml"),
+        Some("/v1/things"),
+        Some("GET"),
+        Some("none"), // ...as against an honest "no auth"
+        Some("none"),
+        Some("problem+json"),
+    )
+    .expect("spec");
+
+    let gap = finding(&g, GapSource::IncompletePublishedContract)
+        .expect("`unspecified` medium is an unanswered axis, not an answered one");
+    assert!(
+        gap.evidence.contains("medium"),
+        "an axis explicitly set to `unspecified` is reported as unset: {}",
+        gap.evidence
+    );
+    assert!(
+        !gap.evidence.contains("auth") && !gap.evidence.contains("transport_security"),
+        "but `none` is a real answer and must not be reported — a design that said 'no auth' \
+         answered the question: {}",
+        gap.evidence
+    );
+
+    // And the whole finding stands down once the last unanswered axis is named.
+    g.set_interface_spec(
+        "ifc:api",
+        Some("REST"),
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+    )
+    .expect("spec");
+    assert!(
+        finding(&g, GapSource::IncompletePublishedContract).is_none(),
+        "every axis now carries a real answer"
+    );
 }
