@@ -498,13 +498,37 @@ impl ReflowService {
                        conclusions from the same true value, and two builds in one working \
                        session share a version anyway. `stale_note` carries the fix, which is \
                        `--stop-shared` plus any tool call — NOT a session restart, which \
-                       re-attaches to the same daemon and silently changes nothing.",
+                       re-attaches to the same daemon and silently changes nothing. THE FULL \
+                       VERIFICATION ROLL IS WITHHELD BY DEFAULT and returned only with \
+                       `include_verifications`: measured here, every check with its last run was \
+                       152,803 of the report's 166,934 characters — 91.5% of the one read a \
+                       session makes to ask what to look at, spent on a list that says \
+                       \"196 passing, 1 planned\". What comes back instead is the same digest \
+                       `loop_status` returns: counts by status, how many never ran, and every \
+                       check NOT currently passing, in full.",
         annotations(read_only_hint = true)
     )]
-    pub async fn graph_report(&self) -> Result<CallToolResult, McpError> {
+    pub async fn graph_report(
+        &self,
+        Parameters(req): Parameters<GraphReportReq>,
+    ) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
-        let mut report = serde_json::to_value(g.graph_report().map_err(dyno_err)?)
+        let full = g.graph_report().map_err(dyno_err)?;
+        let roll = full.verifications.clone();
+        let mut report = serde_json::to_value(full)
             .map_err(|e| McpError::internal_error(e.to_string(), None))?;
+        // THE ROLL IS 91.5% OF THIS REPORT AND IT IS NOT WHERE THE ANSWER IS.
+        // 197 checks, 196 of them passing; 93% of those bytes are the `name`
+        // field, because 113 of the names carry whole reports (longest: 654
+        // words) written there before `add_verification` could reach
+        // `description`. The digest is the one `loop_status` already returns, so
+        // the name truncation and its announcement come with it rather than
+        // being written twice.
+        report["verifications"] = if req.include_verifications {
+            serde_json::to_value(&roll).map_err(ser_err)?
+        } else {
+            verification_digest(&roll).map_err(ser_err)?
+        };
         report["served_by"] = served_by();
         self.ok_read(&g, report)
     }
@@ -1014,7 +1038,10 @@ fn verification_digest(
         "never_run": never_run,
         "attention": attention,
         "omitted": all.len() - attention.len(),
-        "full_list": "graph_report — every check with its status and last run",
+        "full_list": "graph_report {\"include_verifications\": true} — every check with its \
+                      status and last run. NAME THE FLAG: that report withholds the roll for the \
+                      same reason this digest exists, so a bare `graph_report` no longer returns \
+                      it.",
     });
     if truncated_count > 0
         && let Some(obj) = out.as_object_mut()

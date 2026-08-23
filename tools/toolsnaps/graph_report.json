@@ -2,9 +2,17 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "The 'what should I look at?' rollup report (SYNTHESIZE). Its `served_by` block says whether this server is STILL THE CODE IT WAS STARTED FROM — a server that predates a rebuild keeps serving the old surface, and until 2026-08-09 nothing said so. READ `served_by.stale`: `true` means every computed number here came from a binary no longer on disk; `null` means the server could not tell (never read it as false). It is DERIVED, not compared: a version literal left four sessions drawing opposite conclusions from the same true value, and two builds in one working session share a version anyway. `stale_note` carries the fix, which is `--stop-shared` plus any tool call — NOT a session restart, which re-attaches to the same daemon and silently changes nothing.",
+  "description": "The 'what should I look at?' rollup report (SYNTHESIZE). Its `served_by` block says whether this server is STILL THE CODE IT WAS STARTED FROM — a server that predates a rebuild keeps serving the old surface, and until 2026-08-09 nothing said so. READ `served_by.stale`: `true` means every computed number here came from a binary no longer on disk; `null` means the server could not tell (never read it as false). It is DERIVED, not compared: a version literal left four sessions drawing opposite conclusions from the same true value, and two builds in one working session share a version anyway. `stale_note` carries the fix, which is `--stop-shared` plus any tool call — NOT a session restart, which re-attaches to the same daemon and silently changes nothing. THE FULL VERIFICATION ROLL IS WITHHELD BY DEFAULT and returned only with `include_verifications`: measured here, every check with its last run was 152,803 of the report's 166,934 characters — 91.5% of the one read a session makes to ask what to look at, spent on a list that says \"196 passing, 1 planned\". What comes back instead is the same digest `loop_status` returns: counts by status, how many never ran, and every check NOT currently passing, in full.",
   "inputSchema": {
-    "properties": {},
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "include_verifications": {
+        "default": false,
+        "description": "Return EVERY check with its status and last run, instead of the digest.\n\nOff by default because the roll was 152,803 of this report's 166,934\ncharacters — 91.5% of the one read a session makes to decide what to look\nat, spent on a list whose content is \"196 passing, 1 planned\". Ask for it\nwhen you actually want the roll; `loop_status`'s `full_list` points here.",
+        "type": "boolean"
+      }
+    },
     "type": "object"
   },
   "name": "graph_report"

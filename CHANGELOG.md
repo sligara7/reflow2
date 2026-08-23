@@ -31,6 +31,37 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed — a report is not a list of every check
+
+**Minor** (`graph_report` gains an optional parameter and its `verifications` field changes shape
+by default).
+
+`graph_report` answers *"what should I look at?"* and is what the **where-am-i** skill reads.
+Measured after the duplicate emission was already gone: **166,934 characters, of which 152,803 —
+91.5% — were the full verification roll.** 197 checks, 196 passing. The one read that exists to
+point a session somewhere spent nine tenths of itself saying "196 passing, 1 planned".
+
+93% of the roll was the `name` field. **113 of the 197 names run over 25 words; the longest is
+654** — reports written into a name because `description` was declared and unreachable from
+`add_verification` for a long time. The clue was already on the wire:
+`graph_report_markdown` renders the same report for a human in 6,172 bytes, 27× smaller.
+
+- **The roll is withheld by default**, replaced by the same digest `loop_status` already returns —
+  counts by status, how many never ran, and every check NOT currently passing, in full. Reusing it
+  is why the 25-word name truncation and its announcement are not written twice.
+  **166,934 → 15,480 bytes on the wire.**
+- **`include_verifications: true` returns the whole roll** (165,207 bytes), and
+  `loop_status`'s `full_list` pointer now names that flag. A withheld list whose retrieval
+  instruction has gone stale is worse than one that was never withheld, so both pointers are
+  asserted by test.
+- **The limit, stated rather than hidden:** the digest keeps every not-passing check in full, so it
+  is flat in the *passing remainder*, not in the check count. Here 196 of 197 pass. On a design
+  mid-build with two hundred `planned` checks this report would be large again — real, unmeasured,
+  and deliberately not built for.
+- Budgeting the report stops 113 essay-length names flooding a reply; **it does not move the
+  reports out of the name fields.** New checks land correctly now that `add_verification` reaches
+  `description` and `findings`; the existing 113 stay stranded.
+
 ### Changed — a reply goes out once
 
 **Patch.** No tool's inputs or result shape changes; what changes is that the payload stops being
