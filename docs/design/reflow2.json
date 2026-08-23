@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:07cc19b3a55b0cb4f2e99f92ac299ad47713f52bbdc48a8d0edc4cc7f380994d",
+  "content_hash": "sha256:ace95248aeebd858dba81aaaf7d4e49d7449172af24cd6532ef06565dad175e8",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -13678,6 +13678,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-4728dff33e9b970b",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-489316048746f57d",
       "properties": {
         "accepted_baseline": true,
@@ -23579,6 +23588,114 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-first-move-must-fit",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-first-move-must-fit",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:coherence-gate-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-first-move-must-fit",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-first-move-must-fit",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect-and-ask-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-first-move-must-fit",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:reply-budget-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-first-move-must-fit",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:scope"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-first-move-must-fit",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-first-move-must-fit",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-ask"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-first-move-must-fit",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-first-move-must-fit",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:bounded-reads"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-first-move-must-fit",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-first-move-must-fit",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-floating-parts-get-a-home",
       "properties": {
         "accepted_baseline": false,
@@ -25195,6 +25312,17 @@
         "action": "modified"
       },
       "to_id": "req:work-says-whether-it-reaches-a-consumer"
+    },
+    {
+      "edge_type": "CLAIMS",
+      "from_id": "who:ajs",
+      "properties": {
+        "claimed_at": "2026-08-23T03:30:00Z",
+        "depth": 2,
+        "note": "Extending cap:bounded-reads to detect_gaps — the unscoped call is refused by the harness on a mature design, so the documented first move of a session cannot be executed. Touching crates/reflow2-core/src/detect.rs and crates/reflow2-mcp/src/tools/coherence.rs.",
+        "seat": "asligar-bitecool:2195132:17195d30"
+      },
+      "to_id": "cap:bounded-reads"
     },
     {
       "edge_type": "CONSTRAINS",
@@ -84563,6 +84691,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:reply-budget-test",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:bounded-reads"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:report",
       "properties": {
         "completeness": "partial"
@@ -89711,6 +89848,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-first-move-fits",
+      "properties": {},
+      "to_id": "cap:bounded-reads"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-git-exchange-path-is-defended",
       "properties": {},
       "to_id": "cap:the-design-record-merges-per-node-in-every-clone"
@@ -90755,6 +90898,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:reply-budget-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:reply-budget-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:report",
       "properties": {
         "action": "created"
@@ -91705,7 +91856,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ef8305f9eaa9fc930bdcceb3f39d6132e8d976dadb9e667e513e818eba058f36",
+        "checksum": "sha256:f29f79f75c4fcd9b7c6243da78ba272b289d791f73cc4b393921f7eae711d7e0",
         "granularity": "atomic",
         "location": "tools/reflow2_check.py",
         "name": "reflow2_check.py",
@@ -91814,7 +91965,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0de15178f027f0579427ae278b15b9718f43c179d87834df6a31ee5b88ad30eb",
+        "checksum": "sha256:b51bebabb052739d7b54a9360f26d530d2ae22fe3d8feee5c7f3d33e08c32924",
         "location": "tools/test_reflow2_check.py",
         "name": "test_reflow2_check.py",
         "status": "realized"
@@ -92066,7 +92217,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7099c886ead2225baf4dcecff1b176b3a0473fd93f811c3085bddb7d3b0b3063",
+        "checksum": "sha256:b840adefdbe30bf6479f70584cc63509c109e7a949dd5f1cd3c20fa20450ccea",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -92079,7 +92230,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:af1f8a7726b443bda8f31bf2028dd67d474cce63b5e0d52794ef373fcd0a8dad",
+        "checksum": "sha256:06472b2b9f5849361f4ec35f5064c371a1309684d98b5b68f55c218cbcaa2346",
         "location": "getting-started/skills/detect-and-ask/SKILL.md",
         "name": "detect-and-ask/SKILL.md — the ask half of the loop, and now the rule for when NOT to ask",
         "status": "realized"
@@ -93003,6 +93154,17 @@
       }
     },
     {
+      "node_id": "art:reply-budget-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:107021c42987ed4302bf56d5d1cc7bc9418265d31f40b1592a58a43712270c1c",
+        "location": "crates/reflow2-core/tests/reply_budget.rs",
+        "name": "reply_budget.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:report",
       "node_type": "Artifact",
       "properties": {
@@ -93211,7 +93373,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d1b8a0c41bfec50ffc0a1eafd06636e811afa0f37596d34ca5dd76c2a791ba4b",
+        "checksum": "sha256:76d488152b0b41598e09aed8589bb5df0484d00382033b76bde3070ff5c638f8",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/scope.rs",
         "name": "crates/reflow2-core/src/scope.rs",
@@ -93328,7 +93490,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9076d30bc52f8441e91da49d49ca83d75bf7fe856face992559cf61ad87a9335",
+        "checksum": "sha256:9fccecd6a86d0ee6e03cb9c86948c836a36469e6029f46bcde0bf3479a9f3f90",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -93415,7 +93577,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1c8abae071d380316d208d33d7ad8d73565da98cea4cf8f8fe2d42a35901e06a",
+        "checksum": "sha256:48838d243f078f4e86dc443c5737f8816fcc89a0af908ad0d04cca4117488367",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -93892,7 +94054,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1af50b2ca62b269db03167480eb448d545af280251cbd80f42ddca9dfdbb861c",
+        "checksum": "sha256:573f80c154e5d5e16526565ccac6a3c3bc124a5726cd1197470c167a715dece2",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/ask.rs",
         "name": "tools/ask.rs",
@@ -93957,7 +94119,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2de90829fc61fc11845fc1f8f9c6486e0ec7db96b3a5afc95488295557201810",
+        "checksum": "sha256:1488c1070be4230addd912e661b70556ccf551dab1331859f7ac45e2ae3bdfa6",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -97529,6 +97691,16 @@
         "change_type": "defect_fix",
         "detected_at": "2026-08-20",
         "name": "The coupling axis reports NOT MEASURABLE rather than a value when there is no partition — consistent with ility's existing doctrine that an uninformed axis says so instead of reading clean. An absence of evidence is not evidence of modularity.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-4728dff33e9b970b",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-23",
+        "name": "Allowlist entries only: `count`, `by_source` and `budget` are GapReport FIELDS the skill now names, not tools. The lint rule itself is unchanged.",
         "subject": "system"
       }
     },
@@ -101391,6 +101563,15 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "DEFECT, found and fixed 2026-08-12: tools/export_via_binary.py MATERIALIZED 182 property values nobody chose, and shipped them in a release. It imports the source document into a FRESH temp graph, and import runs every node through schema validation, which INSERTS any declared property the node omits (dynograph schema.rs). So 91 Artifacts that honestly carried no `granularity`/`volatility` came back out asserting `atomic`/`stable`. Measured across the record: 81 of 172 artifacts carried granularity through PR #155 (exported via the live server), then 172 of 172 in v0.28.0 and PR #157, both exported through this tool. THIS IS fact:bl-198's DEFECT REINTRODUCED BY THE TOOL BUILT TO FIX THE STAMP, and its cost arrived exactly as BL-198 predicted: compare_designs against the live graph reported 91 phantom changes, the same instrument that has twice produced a false data-loss claim here. NOTHING WAS LOST — the live store was always correct; the RECORD over-asserted. AND THE TOOL CANNOT REPAIR ITS OWN DAMAGE: after the round trip nothing can tell an injected value from a chosen one, which is BL-198's whole point. So the fix is two-part. (1) The record is re-exported DIRECTLY from the real store with the new binary, which gives the correct stamp AND changes no property — the temp graph was only ever needed because the running server held the lock, so freeing the lock removes the need for the round trip entirely. (2) The tool now DIFFS what it wrote against its source and reports every (node_type, property) it materialized, refusing to be silent about it; it cannot undo the injection, so it names it and tells the caller to export directly instead."
+      }
+    },
+    {
+      "node_id": "chg:the-first-move-must-fit",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "The unscoped detect_gaps answers within a budget and says what it withheld — the first move of a session stops being refused",
+        "subject": "system"
       }
     },
     {
@@ -111059,6 +111240,16 @@
       }
     },
     {
+      "node_id": "frag:art:reply-budget-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered reply_budget.rs"
+      }
+    },
+    {
       "node_id": "frag:art:report",
       "node_type": "Fragment",
       "properties": {
@@ -120446,6 +120637,19 @@
       }
     },
     {
+      "node_id": "fact:the-first-move-of-a-session-did-not-fit",
+      "node_type": "TemporalFact",
+      "properties": {
+        "as_of": "2026-08-23",
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE ONE CALL EVERY INSTRUCTION FILE TELLS A SESSION TO MAKE FIRST COULD NOT BE MADE AT ALL ON A MATURE DESIGN. Unscoped `detect_gaps` on reflow2's own graph (2,920 nodes, 77 open gaps) serialized to 79,566 characters and went out TWICE — once as `structuredContent` and once as a text `content` block — for 157,785 bytes on the wire, which the harness refused outright. ⇒ THE FAILURE IS INVISIBLE TO REFLOW2: the refusal happens in the CLIENT, so the session sees a wall of harness text and reflow2 never gets to suggest `scope`. That is the whole shape of it — the thing that knows how to narrow is the one thing that cannot speak. || WHAT THE REPLY WAS MADE OF, and it is not what the guess would be: 35% affected_ids, 25% description, 18% evidence, 15% title. Almost all of the id lists sat in THREE rollup gaps — one enumerating 468 ChangeEvents whose own title already read '468 of 605'. So capping the id lists alone took it only to 60,437 and did not fit; only dropping the prose (to 22,194) got under any cap worth the name. || THE CLAIM THAT WAS ALREADY IN THE GRAPH: `cap:bounded-reads` — 'a read that would not fit answers with a bounded page and says what it left out' — has read `verified` since 2026-07-25. Its check, `ver:bounded-reads`, drives `scan_nodes` paging. It was true of what it covered and silent about the call the loop orbits. || TWO CONSEQUENCES FOUND ONLY BY FIXING IT. (1) `reflow2_check.py` decided a gap was ANCHORED by `affected_ids` being non-empty, and only an anchored gap fails a build — so a budgeted reply would have turned the gate GREEN on a design full of critical gaps, more reliably the bigger the design got. Reproduced: 100 unsatisfied critical requirements, gate printed 'OK — design and build agree (103 notes)'. (2) The Python clients' envelope unwrap took anything carrying `count` and `items` and returned the list, which had ALREADY been silently discarding `scan_nodes`' own `omitted` and `capped_by` — the 'what I left out' a bounded read exists to report, thrown away before any reader saw it. || SIBLINGS, SAME SHAPE, STILL OPEN: `graph_report` refused at 88,932 and 91,330 chars (`fact:defect-graph-report-outgrows-its-own-reply-linearly`), `loop_status` measured at 72,886, `detect_defects` unbudgeted at 50 findings. || SOURCE: measured here 2026-08-23 on reflow2 0.38.0, driving the built binary over real stdio.",
+        "subject_id": "cmp:detect",
+        "valid_from": "2026-08-23"
+      }
+    },
+    {
       "node_id": "fact:the-first-store-read-of-a-session-costs-26-to-48-seconds",
       "node_type": "TemporalFact",
       "properties": {
@@ -122952,6 +123156,20 @@
       }
     },
     {
+      "node_id": "ver:the-first-move-fits",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/reply_budget.rs (10 cases) plus three checks in tools/smoke_mcp.py driving the built binary over real stdio, and one regression case in tools/test_reflow2_check.py. What it pins: an answer that fits comes back whole with no note; an answer that does not drops the cheapest information first (affected_ids capped, then the prose from EVERY row, never from some); `count` and `by_source` cover every open gap in every tier; the last resort — where a gap is genuinely absent from the list — says how many and keeps the highest-severity ones; a budget smaller than the empty reply does not underflow; a compacted row deserializes as a GapCandidate and asks the SAME question as the full one, because gap_to_prompt fills it back in from the graph; and a scoped answer is budgeted too, with different advice, because telling a reader who scoped to scope is advice they cannot follow. THE GATE CASE IS THE ONE THAT NEARLY GOT AWAY: reflow2_check.py judged a gap anchored by affected_ids, so a budgeted reply would have turned the build GREEN on 100 open critical gaps. Verified live by reverting the fix and watching the test fail.",
+        "findings": "10 core cases, 3 smoke checks over real stdio, 1 gate regression case — all passing. MEASURED EFFECT on this design (77 open gaps, 2,920 nodes): the unscoped reply fell from 157,785 bytes on the wire to 53,181, a 66% cut, and `count` stayed 77. TWO DEFECTS CAUGHT BY THE TESTS RATHER THAN BY REVIEW. (1) reflow2_check.py judged a gap ANCHORED by `affected_ids` being non-empty; against a budgeted reply it printed 'OK — design and build agree (103 notes)' on 100 open critical gaps. Proven live by reverting the fix. (2) A budget of 0 reached the last-resort truncation with an empty list and underflowed `len() - lo`; `[]` still costs 2 characters, so the guard cannot be inferred from 'nothing to drop'. Also proven live by removing the guard and watching it panic. Both tests were checked for being INERT before being believed.",
+        "kind": "verification",
+        "last_run_at": "2026-08-23",
+        "level": "integration",
+        "method": "test",
+        "name": "detect_gaps answers within a budget, and a shorter answer is never a quieter one",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-git-exchange-path-is-defended",
       "node_type": "Verification",
       "properties": {
@@ -123238,7 +123456,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:a467772bb62e45c47d88d84393e1bde0141dbadb5ebd62e25ac9742b2994fef8",
+  "prev_content_hash": "sha256:07cc19b3a55b0cb4f2e99f92ac299ad47713f52bbdc48a8d0edc4cc7f380994d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
