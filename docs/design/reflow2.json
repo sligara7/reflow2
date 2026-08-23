@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ace95248aeebd858dba81aaaf7d4e49d7449172af24cd6532ef06565dad175e8",
+  "content_hash": "sha256:f1e597b515a7846fc0a571d9dfbf5f5ea9db3977a22a1bca637bf05662d6cf3a",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -12865,6 +12865,33 @@
         "action": "modified"
       },
       "to_id": "art:coherence-gate-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-reply-is-not-sent-twice",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-reply-is-not-sent-twice",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:bounded-reads"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-reply-is-not-sent-twice",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "CHANGED",
@@ -84700,6 +84727,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:reply-sent-once-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:bounded-reads"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:report",
       "properties": {
         "completeness": "partial"
@@ -88846,6 +88882,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-reply-is-sent-once",
+      "properties": {},
+      "to_id": "cap:bounded-reads"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-revising-write-says-whether-the-state-survived",
       "properties": {},
       "to_id": "cap:a-revising-write-says-whether-the-state-survived"
@@ -90903,6 +90945,14 @@
         "action": "created"
       },
       "to_id": "art:reply-budget-test"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:reply-sent-once-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:reply-sent-once-test"
     },
     {
       "edge_type": "YIELDED",
@@ -93165,6 +93215,17 @@
       }
     },
     {
+      "node_id": "art:reply-sent-once-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:327f061047a9a2a3a81426b9ecfcfc1dbf3f6bd851bc084abc6b080a6c4140ef",
+        "location": "crates/reflow2-mcp/tests/reply_is_sent_once.rs",
+        "name": "reply_is_sent_once.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:report",
       "node_type": "Artifact",
       "properties": {
@@ -93490,7 +93551,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9fccecd6a86d0ee6e03cb9c86948c836a36469e6029f46bcde0bf3479a9f3f90",
+        "checksum": "sha256:6350b2aea267c1e84c6c568cc55efecdeb7aaeb8f4df89d1b1065a16a73756ba",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -97118,6 +97179,15 @@
         "rationale": "Found by registering one: the StoryFlow principles document has a durable URL and no working-tree path, so recording its provenance turned the build red for a design that had done nothing wrong. The note is the load-bearing half rather than a nicety — reflow2 performs no network I/O and cannot say whether a remote artifact still matches, so omitting it silently would make \"0 drift findings\" read as \"everything was checked\". That is exactly the failure StoryFlow's principle #6 is written against, met in the same session that read it. MUTATION-CHECKED: disabling the new branch turned exactly the two behavioural tests red and left both counterweights green; restoring it turned all four green.",
         "subject": "system",
         "summary": "`reflow2_check.py` joined every Artifact's `location` to the project root and asked the filesystem, so a location of `https://...` became `./https:/...`, resolved to nothing, and was reported as `missing_artifact` — as-built drift and a RED BUILD. `add_artifact`'s own served description says location is \"Path / URI / content-hash\", so registering a published OpenAPI document, a vendor datasheet or a standard at its URL is correct modelling that the tool surface explicitly invites. Remote locations are now a fourth state alongside missing, present-and-hashable, and the existing directory case: present, unhashable, not judged — and each one is named in a note."
+      }
+    },
+    {
+      "node_id": "chg:a-reply-is-not-sent-twice",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "A JSON reply goes out once, and the text block becomes a signpost rather than a second copy",
+        "subject": "system"
       }
     },
     {
@@ -111250,6 +111320,16 @@
       }
     },
     {
+      "node_id": "frag:art:reply-sent-once-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered reply_is_sent_once.rs"
+      }
+    },
+    {
       "node_id": "frag:art:report",
       "node_type": "Fragment",
       "properties": {
@@ -120259,6 +120339,18 @@
       }
     },
     {
+      "node_id": "fact:every-reply-was-sent-twice",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "EVERY TOOL RESULT THIS SERVER HAS EVER SENT CARRIED ITS PAYLOAD TWICE, BYTE FOR BYTE — once as `structuredContent` and once as a text `content` block. The reasoning was sound (`json_result`: 'so clients reading either both get the data') and the cost was never measured. It is a flat 2× on every reply, and it is why three separate rollups are refused by harnesses rather than one: `detect_gaps` at 79,566 chars of payload = 157,785 bytes on the wire, `graph_report` at 88,932 and 91,330, `loop_status` at 72,886. || THE FIX IS ONE LINE AND THE CHOICE INSIDE IT IS THE INTERESTING PART. An EMPTY `content` block saves exactly the same bytes. A SIGNPOST — one sentence naming the field the payload is in — costs ~450 bytes against payloads in the tens of thousands, and is what a client reading the wrong field gets INSTEAD OF SILENCE. Silence there is indistinguishable from reflow2 never having been configured, which is `req:never-silently-absent` and the reason `proxy.rs` keeps a process on stdio whatever state the server is in. So the cheaper option was rejected for the one that fails loudly. || WHY NOT THE OBVIOUS ANSWER, and this is the measurement that killed it: gate the duplication on the negotiated protocol version. `structuredContent` arrived in MCP `2025-06-18` and rmcp 3.1.2 still negotiates `2024-11-05` and `2025-03-26`, so a client that predates the field is genuinely reachable — the version is not a hypothetical. BUT the negotiated version lives on the `RequestContext`, and OF 156 TOOL HANDLERS EXACTLY ONE TAKES ONE (`claim_region`, for the seat). Gating meant threading a context through the other 155 and all 151 `ok_json` call sites, to protect a client nobody could name, against a signpost that protects them for one line. ⇒ THE CHEAP CORRECT FIX AND THE PRINCIPLED-LOOKING ONE WERE 1 LINE AND ~300 LINES, AND THE PRINCIPLED-LOOKING ONE WAS PROPOSED FIRST, BEFORE ANYONE COUNTED. || ANTHONY'S OWN CLIENTS WERE NEVER AT RISK AND THIS WAS CHECKED RATHER THAN ASSUMED: all three in-repo Python clients (smoke_mcp, reflow2_cli, reflow2_check) read `structuredContent` FIRST and fall back to `content` only when it is absent; the `j!` macro every Rust tool test uses reads `structured_content` only; `proxy.rs` forwards raw JSON-RPC bytes and parses neither field; and prose tools (`ok_markdown`) never wrote `structuredContent` at all, so `content` remains their only carrier and is untouched. || MEASURED EFFECT, this design, 77 open gaps: 157,785 bytes on the wire before any of this work, 53,181 after the reply budget, 26,096 after the signpost — 6×, with the payload itself unchanged at 27,846 characters. || SOURCE: measured 2026-08-23 on reflow2 0.38.0, driving the built binary over real stdio. Decided by Anthony the same day after being shown the options.",
+        "subject_id": "cmp:service",
+        "valid_from": "2026-08-23"
+      }
+    },
+    {
       "node_id": "fact:external-agent-side-report-2026-08-11",
       "node_type": "TemporalFact",
       "properties": {
@@ -121085,6 +121177,18 @@
       }
     },
     {
+      "node_id": "fact:what-the-read-surface-costs-once-a-reply-is-sent-once",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "THE WHOLE ORIENTATION SURFACE, MEASURED IN ONE SWEEP, with the duplicate emission removed — so these are the real sizes a client now sees. Bytes on the wire, reflow2's own design (2,932 nodes): open_questions 871 · what_next 3,157 · vocabulary_coverage 3,438 · graph_report_markdown 6,172 · loop_status 13,943 · detect_gaps 26,096 · detect_defects 46,314 · GRAPH_REPORT 165,858. || TWO FINDINGS, AND BOTH ARGUE AGAINST BUILDING FROM A LIST. (1) `loop_status` NEEDED NO WORK. It was measured at 72,886 chars and refused in-session (BL-205), and it is now 13,943 — the duplicate was most of it. Budgeting it was about to be recommended and MEASURING FIRST CANCELLED THE WORK ENTIRELY. (2) `graph_report` IS NOW THE WORST TOOL ON THE SURFACE BY SIX TIMES, and at 165,858 bytes it is LARGER THAN detect_gaps WAS BEFORE ANY OF THIS WORK. Halving it did not save it; it is the one that genuinely needs a budget of its own. It is also what the where-am-i skill reads, so 'tell me where this design stands' is STILL refused on a mature design. || THE SHARPEST CLUE ABOUT WHERE ITS BULK IS: `graph_report_markdown` renders THE SAME REPORT FOR A HUMAN in 6,172 bytes. The machine-readable form of the same content costs 27× more. That gap is very unlikely to be information; the detect_gaps precedent says look for enumeration nobody reads (there, 35% of the reply was affected_ids and almost all of it sat in three rollups). || RANKING IS NOT A WORK LIST. Everything under 15,000 bytes here is fine, and touching it would be tidying rather than fixing. The queue this justifies is graph_report, then detect_defects, and nothing else. || SOURCE: measured 2026-08-23 on reflow2 0.38.0, driving the built binary over real stdio, one process, one sweep.",
+        "subject_id": "cmp:report",
+        "valid_from": "2026-08-23"
+      }
+    },
+    {
       "node_id": "ver:a-capability-states-what-it-takes-and-gives",
       "node_type": "Verification",
       "properties": {
@@ -121325,6 +121429,20 @@
         "level": "system",
         "method": "test",
         "name": "A URI-located artifact is neither called missing nor silently passed",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-reply-is-sent-once",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/reply_is_sent_once.rs, 3 cases. It pins the two properties that make the saving safe rather than merely small: the `content` block does NOT carry the payload again and is strictly smaller than it; and it is NOT EMPTY and NAMES `structuredContent`, because a client reading the wrong field must get an instruction rather than a silence indistinguishable from reflow2 being absent. The third case guards the blast radius in the other direction: graph_report_markdown declares no structured output, so `content` is its only carrier and must still hold the document, never a signpost pointing somewhere it never wrote. Proven non-inert by restoring the duplicate and watching the first two fail while the prose case correctly stayed green.",
+        "findings": "3 cases passing, alongside `cargo test --workspace` (50 suites, 0 failures), fmt, mcp clippy, smoke_mcp and all 155 toolsnaps. MEASURED EFFECT on this design: detect_gaps fell from 53,181 bytes on the wire to 26,096 (157,785 before the reply budget) with the payload itself unchanged at 27,846 characters — the signpost is 489. PROVEN NON-INERT: restoring the duplicate made the two saving-related cases fail, while the prose case correctly stayed green because it guards a different property. THE SWEEP AFTERWARDS IS THE MORE USEFUL RESULT: `loop_status` went 72,886 → 13,943 and needs no work of its own, so measuring cancelled a piece of planned work outright; `graph_report` is now the worst tool on the surface at 165,858 and is what where-am-i reads. See `fact:what-the-read-surface-costs-once-a-reply-is-sent-once`.",
+        "kind": "verification",
+        "last_run_at": "2026-08-23",
+        "level": "integration",
+        "method": "test",
+        "name": "A JSON reply carries its payload once, and the text block names where it went",
         "status": "passing"
       }
     },
@@ -123456,7 +123574,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:07cc19b3a55b0cb4f2e99f92ac299ad47713f52bbdc48a8d0edc4cc7f380994d",
+  "prev_content_hash": "sha256:ace95248aeebd858dba81aaaf7d4e49d7449172af24cd6532ef06565dad175e8",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
