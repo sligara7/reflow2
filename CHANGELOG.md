@@ -31,6 +31,64 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.39.0] — 2026-08-23
+
+### Added — a boundary that could not name itself
+
+**Minor** (a schema enum gains a value; nothing existing changes shape).
+
+`ifc:mcp-tools-http` carried `medium: unspecified` because the vocabulary named no value for MCP
+over streamable HTTP. That was the honest answer — `REST` means verbs on a resource tree, and this
+is a **single endpoint carrying JSON-RPC 2.0** where every operation is a named tool — but a blank
+is not neutral. `medium` is a pairing-key axis and unset reads as UNKNOWN, never as agreement, so
+that boundary could pair with **nothing**.
+
+- **`json_rpc`** added to `Interface.medium`, at all four sites the vocabulary is defined: the
+  authoritative enum in `schema/structure.yaml`, `MEDIUM_VALUES` **and** the interface-extraction
+  prompt in `ingest.rs`, and the `set_interface_spec` doc that becomes the served tool's schema
+  description. Both halves of the ingest path had to learn the word, or the value would exist only
+  for hand-written calls.
+- **The stamp does not move.** It carries node and edge TYPE names, and an enum VALUE is neither —
+  which is exactly why no upgrade note is owed for it, and exactly the blindness that had been used
+  to argue against adding it.
+
+**The objection that had blocked it was recorded twice, with opposite conclusions.**
+`schema/structure.yaml` cites the stamp's blindness as evidence that adding a value *"locks nobody
+out"* — a reason it is **safe**; the interface node cited the same fact as a reason to **decline**.
+Settled by separating two questions: the missing word is fixed, and the stamp not counting
+vocabulary is a **separate** defect with its own history, not repaired by leaving a boundary
+unnameable.
+
+Checked rather than assumed, per `dec:edge-orthogonality` — a vocabulary distinction earns its keep
+only if a computation reads it. Seam pairing compares `medium` as a plain string, so `json_rpc`
+matches its like and refuses `REST` with no new branch; `is_foundation_medium` special-cases only
+`library` and `data`, so `json_rpc` correctly stays a runtime boundary that can fail on its own.
+
+### Changed — the gate names the unmodelled files you just touched
+
+**Patch** (a note's wording and scope; no interface changes, and severity is deliberately unchanged).
+
+The unmodelled-source note was correct and was being skimmed. On this repo it reports **107 files**,
+which reads as an institutional backlog rather than as anything the reader did.
+
+Measured from the other side the same day: a dev_storyflow agent built a four-lane feature,
+registered **zero artifacts**, and named that aggregate framing as one of seven reasons it stopped
+reaching for reflow2 — *"391 is not a number anybody can act on ... three gaps on the node I just
+edited would have been a task."*
+
+- The finding now **leads with the subset this working copy touched** — usually two or three files.
+  The whole-tree count still prints beneath it, so nothing is hidden; it stops being read first.
+- Two sources unioned, because either alone lies: `git status --porcelain` sees a file written but
+  not committed, the merge-base diff sees one committed earlier on the branch.
+- **Outside a git tree it says the measurement was NOT COMPUTED**, rather than reporting zero. A
+  detector with nothing to run on must not read like one that ran clean.
+
+**Severity is unchanged and that is the point.** `dec:idea-allocation-waits-for-the-last-responsible-moment`
+defers allocation, and failing the build here would reverse that ruling while appearing to implement
+it. Narrowing what is SHOWN and DEMANDING action are different acts; this does the first, and the
+wording says registering is an offer.
+
+
 ### Fixed — an acknowledgement says whose judgement it was
 
 **Minor** (two tools gain optional parameters; nothing existing breaks).
