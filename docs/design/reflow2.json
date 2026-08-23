@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:4c95e41cf3642982aee6bbaa3692fbe6b4812eca9c7346b68d68745a30d6d80b",
+  "content_hash": "sha256:f5cfc61096dab0c8b785890b50748bdd183e3f37dec7e29754cf3b94cef0d72d",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -5991,6 +5991,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:mcp-tools-http-medium-json-rpc",
+      "properties": {},
+      "to_id": "epoch:2026-08-23-json-rpc-medium"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:merge-driver-built",
       "properties": {},
       "to_id": "epoch:kpp-capture"
@@ -7488,6 +7494,12 @@
       "from_id": "rel:v090",
       "properties": {},
       "to_id": "epoch:v090"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:2026-08-23-json-rpc-medium:ifc:mcp-tools-http",
+      "properties": {},
+      "to_id": "epoch:2026-08-23-json-rpc-medium"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -23200,6 +23212,42 @@
         "action": "modified"
       },
       "to_id": "ifc:mcp-tools"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:mcp-tools-http-medium-json-rpc",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:mcp-tools-http-medium-json-rpc",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:mcp-tools-http-medium-json-rpc",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:mcp-tools-http-medium-json-rpc",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ifc:mcp-tools-http"
     },
     {
       "edge_type": "CHANGED",
@@ -39302,6 +39350,12 @@
       "from_id": "ifc:core-api",
       "properties": {},
       "to_id": "snap:epoch:v0380:ifc:core-api"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "ifc:mcp-tools-http",
+      "properties": {},
+      "to_id": "snap:epoch:2026-08-23-json-rpc-medium:ifc:mcp-tools-http"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -96040,7 +96094,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:63abe09bfecab794cc4827029e37f3e3a45e08ece5b72881f40a7fec10602641",
+        "checksum": "sha256:8024f573056617d2e8792a7642a78f1c4f3715c7dd936b5b9014ab5b9883ae2f",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/ingest.rs",
         "name": "ingest.rs",
@@ -96764,7 +96818,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:8e4e5e01a564c0f45ed368d8efb40e4cf98e18ef9fc8429fda5492a43822233f",
+        "checksum": "sha256:dc894895cff69b007bc663a933c27ce0140389291e30be34ec032fcff8abb2ac",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/structure.yaml",
@@ -96934,7 +96988,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8ca880481bd97609608d3d07dcd4cfb85df152f104ee8b8504361291e642faee",
+        "checksum": "sha256:1d421b6efa44459d20732c4aa8c0873036e3a5d0473679f004f5fb2df9a11d5d",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -104278,6 +104332,15 @@
       "properties": {
         "change_type": "scope_change",
         "name": "reflow2's own published MCP boundary was specified — five unstated axes filled, prompted by a cross-project seam check rather than by any internal detector"
+      }
+    },
+    {
+      "node_id": "chg:mcp-tools-http-medium-json-rpc",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "The HTTP tool surface's medium moves from unspecified to json_rpc, and its spec stops saying the blank was deliberate",
+        "subject": "record"
       }
     },
     {
@@ -111885,6 +111948,16 @@
       }
     },
     {
+      "node_id": "epoch:2026-08-23-json-rpc-medium",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The medium vocabulary gains json_rpc, and the HTTP tool surface can finally name itself",
+        "sequence": 379,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:a-check-can-say-whether-a-limit-holds",
       "node_type": "DesignEpoch",
       "properties": {
@@ -116368,14 +116441,14 @@
         "designation": "published",
         "endpoint": "The address given to `--http`, or the one a `--serve-shared` daemon announces. A SINGLE MCP endpoint, not a resource tree — every operation is a named tool reached through `tools/call`. `--http-allow-host` restricts which Host headers are accepted; that is a host allowlist, NOT authentication.",
         "error_model": "Identical to `ifc:mcp-tools`: JSON-RPC 2.0 `error` responses for transport-level failures, and a normal result carrying `isError: true` with the explanation in the first content block for tool-level ones. A caller that checks only for `error` will read a refused write as a success.",
-        "medium": "unspecified",
+        "medium": "json_rpc",
         "name": "MCP tool surface (streamable HTTP transport)",
         "operations": "Identical to the stdio transport, because it is the same protocol: `initialize`, the `notifications/initialized` notification, `tools/list`, and `tools/call`. The transport differs; the contract above it does not.",
         "paradigm": "synchronous",
         "payload_format": "json",
         "payload_schema": "Identical to `ifc:mcp-tools`: `tools/list` returns each tool's `inputSchema` as JSON Schema generated from the Rust request types, so the field-level contract travels with the surface and cannot drift from the build.",
         "provenance": "authored",
-        "spec": "SPLIT OUT OF `ifc:mcp-tools` ON 2026-08-13, ON ANTHONY'S WORD. One Interface had been describing two boundaries — its own `endpoint` said so: *\"a stdio pipe to a launched process, OR the address given to `--http`\"*. Everything above the transport is identical, because it is the same protocol; what differs is that this one can be reached remotely, can sit behind a gateway, and can terminate TLS, and the stdio one can do none of those.\n\n🛑 `medium` IS DELIBERATELY `unspecified` AND THAT IS THE HONEST ANSWER, NOT AN OVERSIGHT. The enum offers REST / gRPC / event / graphql / cli / library / data / mechanical / electrical / human, and **none of them names MCP over streamable HTTP**. `REST` is wrong: this is not resource-oriented, it is a SINGLE endpoint carrying JSON-RPC 2.0, and every operation is a named tool rather than a verb on a resource. `cli` belongs to the other half. `gRPC` is a different protocol.\n\n⭐ THE SPLIT QUARANTINED THE PROBLEM RATHER THAN SOLVING IT. Before, one wrong value (`REST`) covered both transports; now the stdio half is correctly `cli` and the missing vocabulary is isolated to this node alone. Adding `json_rpc` to the enum remains the open option — declined for now because enum values are NOT counted by the version stamp (it counts node and edge TYPES), so a new value is a compatibility event nothing can detect, which is the stamp-blindness pattern this design has already recorded four instances of.\n\n⚠️ THE COST OF LEAVING IT UNSPECIFIED, stated because it is real: `medium` is a pairing-key axis, and `unspecified` reads as UNKNOWN and never as agreement. **So this boundary cannot pair with anything until the vocabulary question is settled** — including with flo2, whose `ifc:reflow2-design-api` says `REST`. That is a true report of the situation rather than a failure of the check: nobody can honestly say what medium this is.\n\n📌 THIS IS THE HALF flo2 ACTUALLY MEANS. Its spec reads *\"MCP carried over HTTP, as reflow2 already serves with --http / --serve-shared\"*, so the correspondence a user would assert is flo2's `ifc:reflow2-design-api` ↔ THIS node, not the stdio one. The `transport_security` disagreement measured on 2026-08-13 (ours `none`, theirs `tls`) therefore lands here, and lands SHARPER: on a stdio pipe there is no transport to secure and the mismatch could be waved away as a segment artefact, but this boundary really is plain HTTP with no TLS while flo2 says `tls`. **Reading (b) — a real assumption gap — is now the more likely of the two.** Resolving it still needs flo2's side.\n\n✅ `auth: none` and `transport_security: none` are facts: no authentication and no TLS anywhere in `crates/`. `--http-allow-host` is a Host-header allowlist. Terminating TLS and authenticating is `ifc:authenticating-gateway`'s job — a REQUIRED boundary whose name reads \"reflow2 has no authentication and is not getting any\".",
+        "spec": "SPLIT OUT OF `ifc:mcp-tools` ON 2026-08-13, ON ANTHONY'S WORD. One Interface had been describing two boundaries — its own `endpoint` said so: *\"a stdio pipe to a launched process, OR the address given to `--http`\"*. Everything above the transport is identical, because it is the same protocol; what differs is that this one can be reached remotely, can sit behind a gateway, and can terminate TLS, and the stdio one can do none of those.\n\n✅ `medium: json_rpc` SINCE 2026-08-23, ON ANTHONY'S WORD — \"add json_rpc and close the stale question\". Until then this node carried `unspecified`, and the paragraphs below record why, because the reasoning is what makes the value defensible rather than arbitrary.\n\nWHAT THE BLANK WAS. The enum offered REST / gRPC / event / graphql / cli / library / data / mechanical / electrical / human, and NONE OF THEM NAMED MCP OVER STREAMABLE HTTP. `REST` is wrong: this is not resource-oriented, it is a SINGLE endpoint carrying JSON-RPC 2.0, and every operation is a named tool rather than a verb on a resource. `cli` belongs to the other half. `gRPC` is a different protocol. So `unspecified` was the honest answer to a vocabulary that could not say this — not an oversight, and not a field nobody got round to.\n\nWHY IT WAS ADDED RATHER THAN ENDURED. `medium` is a pairing-key axis and `unspecified` reads as UNKNOWN, never as agreement, so this boundary could pair with NOTHING — including flo2's `ifc:reflow2-design-api`, which is the correspondence a user would actually assert. A permanent blank is not a neutral state; it is a boundary that cannot be checked against anybody.\n\nTHE OBJECTION THAT HAD BLOCKED IT, AND HOW IT WAS SETTLED. Adding the value was declined once because enum VALUES are not counted by the version stamp (which counts node and edge TYPES), making a new value a compatibility event nothing can detect — the stamp-blindness pattern this design has recorded four instances of. THE SAME FACT WAS RECORDED TWICE IN THIS PROJECT WITH OPPOSITE CONCLUSIONS: `schema/structure.yaml` cites the stamp's blindness as evidence that adding a value LOCKS NOBODY OUT, i.e. as a reason it is SAFE, while this node cited it as a reason to decline. Settled 2026-08-23 by separating two questions: the missing WORD is fixed, and the stamp not counting vocabulary is a SEPARATE defect with its own history, which is not repaired by leaving a boundary unnameable.\n\nWHAT READS THE NEW VALUE, checked rather than assumed (`dec:edge-orthogonality`: a vocabulary distinction earns its keep only if a computation reads it). Seam pairing compares `medium` as a plain string across `BASE_AXES`, so `json_rpc` matches its like and refuses `REST` with no new branch. `is_foundation_medium` special-cases only `library` and `data` — the media a consumer LINKS AGAINST rather than calls across — and `json_rpc` correctly falls outside it, so the structural detectors go on treating this as a runtime boundary that can fail on its own.\n\n📌 THIS IS THE HALF flo2 ACTUALLY MEANS. Its spec reads *\"MCP carried over HTTP, as reflow2 already serves with --http / --serve-shared\"*, so the correspondence a user would assert is flo2's `ifc:reflow2-design-api` ↔ THIS node, not the stdio one. The `transport_security` disagreement measured on 2026-08-13 (ours `none`, theirs `tls`) therefore lands here, and lands SHARPER: on a stdio pipe there is no transport to secure and the mismatch could be waved away as a segment artefact, but this boundary really is plain HTTP with no TLS while flo2 says `tls`. **Reading (b) — a real assumption gap — is now the more likely of the two.** STILL OPEN: resolving it needs flo2's side, and setting `medium` does not touch it. What HAS changed is that the two boundaries can now be paired at all, so the disagreement is reachable by a check instead of hidden behind an unknown medium.\n\n✅ `auth: none` and `transport_security: none` are facts: no authentication and no TLS anywhere in `crates/`. `--http-allow-host` is a Host-header allowlist. Terminating TLS and authenticating is `ifc:authenticating-gateway`'s job — a REQUIRED boundary whose name reads \"reflow2 has no authentication and is not getting any\".",
         "transport_security": "none"
       }
     },
@@ -116553,12 +116626,13 @@
       "node_id": "question:0bab956571a6ba6a",
       "node_type": "Question",
       "properties": {
+        "answer": "Anthony, 2026-08-23: \"add json_rpc and close the stale question.\"\n\nTHE QUESTION WAS STALE WHEN IT WAS ASKED BACK TO HIM, AND THAT IS THE FINDING. It asked him to specify six of nine agreement axes on the published design-export contract, or narrow its designation. Reading the two nodes rather than the question's wording: `ifc:graph-export` records ALL NINE — payload_schema, endpoint, operations, auth, transport_security, error_model, medium (`data`), paradigm (`batch`), payload_format (`json`) — each in substantive detail. The gap it came from is in neither the open list (3 gaps, none of them this) nor the 159 reviewed-and-accepted ones. So the work was DONE and nobody closed the question behind it. Being re-asked a question already answered by the design is how a user learns the loop is not listening.\n\nWHAT WAS ACTUALLY STILL OPEN was one axis on the OTHER interface: `ifc:mcp-tools-http` carried `medium: unspecified` because the enum named no value for MCP over streamable HTTP. That blank was honest — REST is resource-oriented and this is a SINGLE endpoint carrying JSON-RPC 2.0 where every operation is a named tool — but it had a real cost, since `medium` is a pairing-key axis and `unspecified` reads as UNKNOWN, never as agreement. The boundary could pair with nothing, including flo2's `ifc:reflow2-design-api`.\n\nHIS DECISION: add `json_rpc` to the vocabulary rather than narrow the designation or leave the blank. Added 2026-08-23 to `schema/structure.yaml` (the authoritative enum), to `MEDIUM_VALUES` and the interface-extraction prompt in `crates/reflow2-core/src/ingest.rs`, and to the `set_interface_spec` doc in `crates/reflow2-mcp/src/service.rs`.\n\nTHE OBJECTION THAT HAD BLOCKED IT, AND WHY IT WAS SET ASIDE: adding the value was previously declined because enum VALUES are not counted by the version stamp, making a new value an undetectable compatibility event. The same fact is recorded twice in this project with opposite conclusions — `schema/structure.yaml` says the stamp's blindness \"locks nobody out\" and treats it as a reason adding is SAFE, while `ifc:mcp-tools-http` cited it as a reason to decline. Settled by separating them: the missing WORD is fixed here, and the stamp not counting vocabulary is a SEPARATE defect with its own four-instance history that is not repaired by leaving a boundary unnameable.\n\nNOT YET DONE, stated so nobody reads this as complete: the code and schema carry `json_rpc`, but `ifc:mcp-tools-http` still holds `medium: unspecified` in the graph. The schema is embedded with `include_str!`, so the running server validates against the OLD enum and refused the write. Setting it needs a server carrying the new build. The `transport_security` disagreement with flo2 (ours `none`, theirs `tls`) is untouched and still needs flo2's side.",
         "asked_at": "2026-08-23",
         "context_setter": "The published contract “Design export document” does not say 6 of the things two systems must agree on",
         "gap_id": "gap:0bab956571a6ba6a",
         "question": "Two interfaces are designated published, so another system may be built against them — but the design export document does not record six of the nine agreement axes (payload schema, endpoint, operations, auth, transport security, error model) and the HTTP tool surface does not record its medium. Specify them, or narrow the designation to internal?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -120425,6 +120499,16 @@
         "provider": "https://github.com/sligara7/dynograph-foundation.git",
         "resource_type": "design-dependency",
         "version": "v0.12.0"
+      }
+    },
+    {
+      "node_id": "snap:epoch:2026-08-23-json-rpc-medium:ifc:mcp-tools-http",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"PROVIDES\",\"other_type\":\"Component\",\"other_id\":\"cmp:service\",\"properties\":{\"weight_basis\":\"estimated\"}},{\"direction\":\"in\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-build\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"in\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-core\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"in\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-dimensions\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"in\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-environment\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"in\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-functional\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"in\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-inference\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"in\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-operate\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"in\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-readiness\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"in\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-structure\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"in\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-temporal\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"in\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Artifact\",\"other_id\":\"art:schema-verify\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:shared-sessions\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"decision:ack:7f72f4a7ae00b8de\",\"properties\":{}}]",
+        "state": "{\"auth\":\"none\",\"designation\":\"published\",\"endpoint\":\"The address given to `--http`, or the one a `--serve-shared` daemon announces. A SINGLE MCP endpoint, not a resource tree — every operation is a named tool reached through `tools/call`. `--http-allow-host` restricts which Host headers are accepted; that is a host allowlist, NOT authentication.\",\"error_model\":\"Identical to `ifc:mcp-tools`: JSON-RPC 2.0 `error` responses for transport-level failures, and a normal result carrying `isError: true` with the explanation in the first content block for tool-level ones. A caller that checks only for `error` will read a refused write as a success.\",\"medium\":\"unspecified\",\"name\":\"MCP tool surface (streamable HTTP transport)\",\"operations\":\"Identical to the stdio transport, because it is the same protocol: `initialize`, the `notifications/initialized` notification, `tools/list`, and `tools/call`. The transport differs; the contract above it does not.\",\"paradigm\":\"synchronous\",\"payload_format\":\"json\",\"payload_schema\":\"Identical to `ifc:mcp-tools`: `tools/list` returns each tool's `inputSchema` as JSON Schema generated from the Rust request types, so the field-level contract travels with the surface and cannot drift from the build.\",\"provenance\":\"authored\",\"spec\":\"SPLIT OUT OF `ifc:mcp-tools` ON 2026-08-13, ON ANTHONY'S WORD. One Interface had been describing two boundaries — its own `endpoint` said so: *\\\"a stdio pipe to a launched process, OR the address given to `--http`\\\"*. Everything above the transport is identical, because it is the same protocol; what differs is that this one can be reached remotely, can sit behind a gateway, and can terminate TLS, and the stdio one can do none of those.\\n\\n🛑 `medium` IS DELIBERATELY `unspecified` AND THAT IS THE HONEST ANSWER, NOT AN OVERSIGHT. The enum offers REST / gRPC / event / graphql / cli / library / data / mechanical / electrical / human, and **none of them names MCP over streamable HTTP**. `REST` is wrong: this is not resource-oriented, it is a SINGLE endpoint carrying JSON-RPC 2.0, and every operation is a named tool rather than a verb on a resource. `cli` belongs to the other half. `gRPC` is a different protocol.\\n\\n⭐ THE SPLIT QUARANTINED THE PROBLEM RATHER THAN SOLVING IT. Before, one wrong value (`REST`) covered both transports; now the stdio half is correctly `cli` and the missing vocabulary is isolated to this node alone. Adding `json_rpc` to the enum remains the open option — declined for now because enum values are NOT counted by the version stamp (it counts node and edge TYPES), so a new value is a compatibility event nothing can detect, which is the stamp-blindness pattern this design has already recorded four instances of.\\n\\n⚠️ THE COST OF LEAVING IT UNSPECIFIED, stated because it is real: `medium` is a pairing-key axis, and `unspecified` reads as UNKNOWN and never as agreement. **So this boundary cannot pair with anything until the vocabulary question is settled** — including with flo2, whose `ifc:reflow2-design-api` says `REST`. That is a true report of the situation rather than a failure of the check: nobody can honestly say what medium this is.\\n\\n📌 THIS IS THE HALF flo2 ACTUALLY MEANS. Its spec reads *\\\"MCP carried over HTTP, as reflow2 already serves with --http / --serve-shared\\\"*, so the correspondence a user would assert is flo2's `ifc:reflow2-design-api` ↔ THIS node, not the stdio one. The `transport_security` disagreement measured on 2026-08-13 (ours `none`, theirs `tls`) therefore lands here, and lands SHARPER: on a stdio pipe there is no transport to secure and the mismatch could be waved away as a segment artefact, but this boundary really is plain HTTP with no TLS while flo2 says `tls`. **Reading (b) — a real assumption gap — is now the more likely of the two.** Resolving it still needs flo2's side.\\n\\n✅ `auth: none` and `transport_security: none` are facts: no authentication and no TLS anywhere in `crates/`. `--http-allow-host` is a Host-header allowlist. Terminating TLS and authenticating is `ifc:authenticating-gateway`'s job — a REQUIRED boundary whose name reads \\\"reflow2 has no authentication and is not getting any\\\".\",\"transport_security\":\"none\"}",
+        "target_id": "ifc:mcp-tools-http",
+        "target_type": "Interface"
       }
     },
     {
@@ -128110,7 +128194,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f3d724d4024816d9376ae8e7598f00c1c60ca5452ae759d99c04db58e243008f",
+  "prev_content_hash": "sha256:4c95e41cf3642982aee6bbaa3692fbe6b4812eca9c7346b68d68745a30d6d80b",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

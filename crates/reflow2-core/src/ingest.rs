@@ -844,7 +844,7 @@ impl DesignGraph {
                 "interfaces",
                 pass_prompt(
                     input,
-                    r#"[pass:interfaces] Which contracts connect the components — APIs, events, data feeds, physical or human connection points? Return JSON {"interfaces":[{"id":"ifc:<slug>","name":"...","medium":"REST|gRPC|event|graphql|cli|library|data|mechanical|electrical|human","spec":"endpoint path, signature, or protocol detail","provided_by_component_id":"cmp:...","consumed_by_component_ids":["cmp:..."]}]} using only known component ids. Omit a side you cannot ground in the text rather than guessing it."#,
+                    r#"[pass:interfaces] Which contracts connect the components — APIs, events, data feeds, physical or human connection points? Return JSON {"interfaces":[{"id":"ifc:<slug>","name":"...","medium":"REST|gRPC|json_rpc|event|graphql|cli|library|data|mechanical|electrical|human","spec":"endpoint path, signature, or protocol detail","provided_by_component_id":"cmp:...","consumed_by_component_ids":["cmp:..."]}]} using only known component ids. Omit a side you cannot ground in the text rather than guessing it."#,
                     Some(&cmp_roster),
                 ),
                 &mut errors,
@@ -1936,6 +1936,7 @@ const PRIORITY_VALUES: &[&str] = &["low", "medium", "high", "critical"];
 const MEDIUM_VALUES: &[&str] = &[
     "REST",
     "gRPC",
+    "json_rpc",
     "event",
     "graphql",
     "cli",

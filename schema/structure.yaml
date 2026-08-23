@@ -47,13 +47,30 @@ schema:
         # "nobody has said" rather than as agreement, which a defaulted `REST` on
         # both sides would have falsely satisfied.
         #
+        # `json_rpc` added 2026-08-23 on Anthony's word. The enum named no
+        # value for MCP over streamable HTTP, so `ifc:mcp-tools-http` sat at
+        # `unspecified` — honestly, but at a cost: `medium` is a pairing-key
+        # axis, so that boundary could not pair with ANYTHING, including flo2's
+        # `ifc:reflow2-design-api`. `REST` was the wrong escape hatch: this is a
+        # SINGLE endpoint carrying JSON-RPC 2.0 where every operation is a named
+        # tool, not verbs on a resource tree.
+        #
+        # Adding it had been declined once on the ground that enum values are
+        # invisible to the version stamp. That reasoning is recorded two ways in
+        # this project and they disagree: the note below says the stamp's
+        # blindness LOCKS NOBODY OUT (a reason it is safe), while the interface
+        # node cited the same fact as a reason to decline. Settled by treating
+        # them as two questions — the missing WORD is fixed here; the stamp not
+        # counting vocabulary is a separate defect with its own history and is
+        # not fixed by leaving a boundary unnameable.
+        #
         # Enum VALUES are not counted by the version stamp, so this locks nobody
         # out. Note that defaults apply ON CREATE, never retroactively: every
         # Interface written before today keeps whatever it already has, so an
         # existing design may still claim a medium nobody chose. Those have to be
         # corrected by hand — which is what makes this worth reporting rather
         # than silently changing.
-        medium: { type: enum, values: [REST, gRPC, event, graphql, cli, library, data, mechanical, electrical, human, unspecified], default: unspecified, indexed: true, description: "How the contract is carried. `unspecified` is the honest default — silence is not a claim that a boundary is REST. Read by seam checking and by boundary pairing, where a wrong value is worse than an absent one: two boundaries can only be wired together if their media match, so an unstated medium must read as UNKNOWN and never as agreement." }
+        medium: { type: enum, values: [REST, gRPC, json_rpc, event, graphql, cli, library, data, mechanical, electrical, human, unspecified], default: unspecified, indexed: true, description: "How the contract is carried. `unspecified` is the honest default — silence is not a claim that a boundary is REST. Read by seam checking and by boundary pairing, where a wrong value is worse than an absent one: two boundaries can only be wired together if their media match, so an unstated medium must read as UNKNOWN and never as agreement." }
         spec: { type: string, description: "Free-text detail that the structured fields below do not carry — a prose note, a link to an OpenAPI document, a connector drawing. Kept because no field set covers every domain, but it is NOT where the things two systems must agree on belong: those are structured, because prose cannot be compared." }
         # req:interface-spec-complete (Anthony, 2026-07-27). A published contract
         # has to carry what two systems must AGREE on, in terms a computation can

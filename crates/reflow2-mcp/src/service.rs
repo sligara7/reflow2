@@ -2613,8 +2613,9 @@ pub struct ProposeHealReq {
 #[serde(deny_unknown_fields)]
 pub struct InterfaceSpecReq {
     pub interface_id: String,
-    /// How the contract is CARRIED: `REST` / `gRPC` / `event` / `graphql` /
-    /// `cli` / `library` / `data` / `mechanical` / `electrical` / `human`.
+    /// How the contract is CARRIED: `REST` / `gRPC` / `json_rpc` / `event` /
+    /// `graphql` / `cli` / `library` / `data` / `mechanical` / `electrical` /
+    /// `human`.
     /// Unset reads as `unspecified`, which is deliberately not a claim that a
     /// boundary is REST. Worth setting even when the rest of the spec is
     /// unknown: two boundaries can only be wired together if their media match,
