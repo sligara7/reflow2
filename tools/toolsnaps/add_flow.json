@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Create a Flow — an ordered process linking Capabilities end to end (a user journey, an assembly sequence, an operating loop). Attach each step with `part_of_flow` (+ step_order); join steps with TRIGGERS edges via `create_edge`, giving each a `role` property saying what the transition means ('feeds', 'forces resync') — in a process the backward edges are the point, and without a role they are indistinguishable from forward ones. Read it back with `flow_report`.",
+  "description": "Create a Flow — an ordered process linking Capabilities end to end (a user journey, an assembly sequence, an operating loop). Attach each step with `part_of_flow` (+ step_order); join steps with TRIGGERS edges via `create_edge`, giving each a `role` property saying what the transition means ('feeds', 'forces resync') — in a process the backward edges are the point, and without a role they are indistinguishable from forward ones. Read it back with `flow_report`. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it again with the same id and only what you are changing — omitted fields keep their stored value, so correcting one never means re-sending a 2 KB field you did not touch.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
@@ -42,12 +42,15 @@
         "type": "string"
       },
       "name": {
-        "type": "string"
+        "default": null,
+        "type": [
+          "string",
+          "null"
+        ]
       }
     },
     "required": [
-      "id",
-      "name"
+      "id"
     ],
     "type": "object"
   },

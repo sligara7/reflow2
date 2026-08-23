@@ -31,11 +31,11 @@ async fn shared_service() -> ReflowService {
     let s = ReflowService::in_memory().expect("in-memory service");
     j!(s.add_project(Parameters(IdName {
         id: "proj:seat".into(),
-        name: "Seat".into()
+        name: Some("Seat".into()),
     })));
     j!(s.add_contributor(Parameters(ContributorReq {
         id: "who:ann".into(),
-        name: "Ann".into(),
+        name: Some("Ann".into()),
         kind: None,
         handle: None,
         description: None,

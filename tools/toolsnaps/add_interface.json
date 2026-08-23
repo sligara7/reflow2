@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Create an Interface node — a contract between parts (an API, event, data feed, CLI, library boundary, or physical/human connection point). Model one whenever two Components talk to each other, then pair it with `provides` and `consumes`: that pairing is what makes a change on one side of a boundary surface the other side.",
+  "description": "Create an Interface node — a contract between parts (an API, event, data feed, CLI, library boundary, or physical/human connection point). Model one whenever two Components talk to each other, then pair it with `provides` and `consumes`: that pairing is what makes a change on one side of a boundary surface the other side. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it again with the same id and only what you are changing — omitted fields keep their stored value, so correcting one never means re-sending a 2 KB field you did not touch.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
@@ -12,13 +12,16 @@
         "type": "string"
       },
       "name": {
+        "default": null,
         "description": "Human-readable name.",
-        "type": "string"
+        "type": [
+          "string",
+          "null"
+        ]
       }
     },
     "required": [
-      "id",
-      "name"
+      "id"
     ],
     "type": "object"
   },

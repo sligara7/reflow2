@@ -237,6 +237,131 @@ pub(crate) fn parse_readiness_kind(raw: &str) -> Result<ReadinessKind, McpError>
     })
 }
 
+/// Fields that are REQUIRED TO CREATE a node and OPTIONAL TO REVISE one.
+///
+/// # The failure this removes
+///
+/// The typed constructors document merge semantics — *"what you pass
+/// overwrites, what you omit survives"* — and then required their required
+/// fields on every call. So correcting a Decision's `rationale` meant
+/// re-transmitting its `decision` body verbatim, purely to satisfy a field
+/// nobody was changing. **The correction mechanism was the thing generating the
+/// corruption:** a dev_storyflow session mangled a re-sent field FOUR TIMES in
+/// one sitting, twice while actively trying not to, and every recovery came
+/// from `revision.replaced[].prior` in the reply.
+///
+/// MEASURED on this design, 2026-08-23: median required content is 2,041 bytes
+/// on a Decision and 1,979 on a Requirement; **20% of all nodes force retyping
+/// more than 2 KB to change one other field, and the worst is 23,990 bytes.**
+///
+/// # Why this is safer than what it replaces, not merely kinder
+///
+/// A mistyped id used to CREATE a node silently — `add_decision` with
+/// `dec:typoo` and full content made a second, near-identical-looking decision.
+/// Now a call that omits the content and names a node that does not exist is
+/// REFUSED, and the refusal names the id. The looser schema buys a stricter
+/// outcome.
+///
+/// # It reports EVERY missing field, not the first
+///
+/// One missing field per refusal costs one round trip per field, which is a
+/// complaint this project has already had from the other end: *"`get_node`
+/// needs both `id` and `node_type`, and discovering that cost two failed calls
+/// — the first error named only `node_type`."* So the fields are collected and
+/// [`finish`](Self::finish) names all of them at once.
+///
+/// The stored value is read and passed straight back through, so the write is
+/// byte-identical to the one the caller would have made by hand — and the
+/// revision block therefore correctly reports that field as unmoved.
+pub(crate) struct RequiredFields {
+    node_type: String,
+    id: String,
+    /// The node as it stands, fetched ONCE however many fields are resolved.
+    existing: Option<reflow2_core::StoredNode>,
+    missing: Vec<String>,
+}
+
+impl RequiredFields {
+    pub(crate) fn new(g: &DesignGraph, node_type: &str, id: &str) -> Result<Self, McpError> {
+        Ok(Self {
+            node_type: node_type.to_string(),
+            id: id.to_string(),
+            existing: g.get_node(node_type, id).map_err(dyno_err)?,
+            missing: Vec::new(),
+        })
+    }
+
+    /// Resolve a string field: what the caller passed, else what the node
+    /// already holds, else recorded as missing and reported by `finish`.
+    ///
+    /// Returns a placeholder on the missing path rather than erroring here, so
+    /// every field gets its turn and the caller learns all of them at once. The
+    /// placeholder never reaches the store: `finish` is what lets the write
+    /// proceed, and it refuses when anything was missing.
+    pub(crate) fn str(&mut self, field: &str, passed: Option<String>) -> String {
+        if let Some(v) = passed {
+            return v;
+        }
+        match self
+            .existing
+            .as_ref()
+            .and_then(|n| n.properties.get(field))
+            .and_then(reflow2_core::Value::as_str)
+        {
+            Some(v) => v.to_string(),
+            None => {
+                self.missing.push(field.to_string());
+                String::new()
+            }
+        }
+    }
+
+    /// The numeric sibling, for the two fields that are not strings:
+    /// `DesignEpoch.sequence` and `ReadinessAssessment.level`.
+    pub(crate) fn i64(&mut self, field: &str, passed: Option<i64>) -> i64 {
+        if let Some(v) = passed {
+            return v;
+        }
+        match self
+            .existing
+            .as_ref()
+            .and_then(|n| n.properties.get(field))
+            .and_then(reflow2_core::Value::as_i64)
+        {
+            Some(v) => v,
+            None => {
+                self.missing.push(field.to_string());
+                0
+            }
+        }
+    }
+
+    /// Refuse if anything could not be resolved, naming every such field.
+    pub(crate) fn finish(self) -> Result<(), McpError> {
+        if self.missing.is_empty() {
+            return Ok(());
+        }
+        let named = self
+            .missing
+            .iter()
+            .map(|f| format!("`{f}`"))
+            .collect::<Vec<_>>()
+            .join(", ");
+        let (verb, them) = if self.missing.len() == 1 {
+            ("is", "it")
+        } else {
+            ("are", "them")
+        };
+        Err(McpError::invalid_params(
+            format!(
+                "{named} {verb} required to CREATE {} '{}', and no such node exists yet to take                  {them} from. These are optional only when REVISING a node that already holds                  {them} — which is what lets you correct one field without re-sending the                  others. If you meant to create this node, pass {named}; if you meant to revise                  an existing one, check the id for a typo.",
+                self.node_type, self.id,
+            ),
+            None,
+        ))
+    }
+}
+
 pub(crate) fn dyno_err(e: DynoError) -> McpError {
     match e {
         // Caused by what the caller supplied — a bad id, type, edge, value, or
@@ -868,16 +993,19 @@ pub struct IdName {
     /// Stable node id (e.g. `req:offline`).
     pub id: String,
     /// Human-readable name.
-    pub name: String,
+    #[serde(default)]
+    pub name: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct RequirementReq {
     pub id: String,
-    pub name: String,
+    #[serde(default)]
+    pub name: Option<String>,
     /// The requirement statement.
-    pub statement: String,
+    #[serde(default)]
+    pub statement: Option<String>,
     /// Ids you read and judged DIFFERENT from this one, when reflow2 has
     /// already told you something close exists. Naming them is the deliberate
     /// decision: sharpen an existing node by calling with ITS id, or start a
@@ -891,9 +1019,11 @@ pub struct RequirementReq {
 #[serde(deny_unknown_fields)]
 pub struct CapabilityReq {
     pub id: String,
-    pub name: String,
+    #[serde(default)]
+    pub name: Option<String>,
     /// What this capability does.
-    pub description: String,
+    #[serde(default)]
+    pub description: Option<String>,
     /// `planned` (default) / `in_progress` / `realized` / `verified`. Leave it
     /// unset when designing forwards — a new capability really is planned.
     /// Set it when recording a capability that already exists, so the graph
@@ -992,9 +1122,11 @@ pub struct ProvenanceReq {
 #[serde(deny_unknown_fields)]
 pub struct ComponentReq {
     pub id: String,
-    pub name: String,
+    #[serde(default)]
+    pub name: Option<String>,
     /// What this part is for.
-    pub description: String,
+    #[serde(default)]
+    pub description: Option<String>,
     /// Axis-Y decomposition rank: `component` (default), `subsystem`,
     /// `system`, `system_of_systems`, `enterprise`. Set it whenever the part
     /// is really an assembly — `hierarchy_issues` compares the levels either
@@ -1126,7 +1258,8 @@ pub struct DescribeSchemaReq {
 #[serde(deny_unknown_fields)]
 pub struct AddArtifactReq {
     pub id: String,
-    pub name: String,
+    #[serde(default)]
+    pub name: Option<String>,
     /// `code` (default) / `spec` / `document` / `diagram` / `model` / …
     #[serde(default)]
     pub artifact_type: Option<String>,
@@ -1203,7 +1336,8 @@ pub struct LinkArtifactReq {
 #[serde(deny_unknown_fields)]
 pub struct VerificationReq {
     pub id: String,
-    pub name: String,
+    #[serde(default)]
+    pub name: Option<String>,
     /// HOW the check was made. `test` (default) / `analysis` / `inspection` /
     /// `demonstration` — the four canonical methods — plus `measurement`,
     /// `observation` (watching it run in the field, unchanged), `review` and
@@ -1299,7 +1433,8 @@ pub struct CalibratedAgainstReq {
 #[serde(deny_unknown_fields)]
 pub struct ReleaseReq {
     pub id: String,
-    pub name: String,
+    #[serde(default)]
+    pub name: Option<String>,
     #[serde(default)]
     pub version: Option<String>,
     /// `container` (default) / `package` / `binary` / `bundle` / `physical_build` / `publication`.
@@ -1311,7 +1446,8 @@ pub struct ReleaseReq {
 #[serde(deny_unknown_fields)]
 pub struct EnvironmentReq {
     pub id: String,
-    pub name: String,
+    #[serde(default)]
+    pub name: Option<String>,
     /// `production` (default) / `development` / `staging` / `field` / `lab` / `physical_site`.
     #[serde(default)]
     pub env_type: Option<String>,
@@ -1324,7 +1460,8 @@ pub struct EnvironmentReq {
 #[serde(deny_unknown_fields)]
 pub struct ResourceReq {
     pub id: String,
-    pub name: String,
+    #[serde(default)]
+    pub name: Option<String>,
     /// Who supplies it (cloud provider, vendor, utility).
     #[serde(default)]
     pub provider: Option<String>,
@@ -1463,15 +1600,19 @@ pub struct AddReadinessReq {
     pub id: String,
     /// The enabling technology this level is about — usually a Component or an
     /// Artifact.
-    pub target_type: String,
-    pub target_id: String,
+    #[serde(default)]
+    pub target_type: Option<String>,
+    #[serde(default)]
+    pub target_id: Option<String>,
     /// `TRL` (technology) or `MRL` (manufacturing). Required: the two ladders
     /// are not interchangeable, and a technology can be demonstrable and
     /// unmanufacturable — which is exactly the case a roadmap must state.
-    pub kind: String,
+    #[serde(default)]
+    pub kind: Option<String>,
     /// The rung, 1-9 inclusive. Refused outside that range rather than clamped:
     /// a clamped 12 silently becomes 9 and reports a technology as mature.
-    pub level: i64,
+    #[serde(default)]
+    pub level: Option<i64>,
     /// What was demonstrated, where, by whom.
     #[serde(default)]
     pub evidence: Option<String>,
@@ -1542,7 +1683,8 @@ pub struct PrecedesReq {
 #[serde(deny_unknown_fields)]
 pub struct AddFlowReq {
     pub id: String,
-    pub name: String,
+    #[serde(default)]
+    pub name: Option<String>,
     #[serde(default)]
     pub description: Option<String>,
     /// `process` (default) / `data_flow` / `control_flow` / `decision_flow` /
@@ -1633,8 +1775,10 @@ pub struct ReconcileDeploymentReq {
 #[serde(deny_unknown_fields)]
 pub struct AddConstraintReq {
     pub id: String,
-    pub name: String,
-    pub statement: String,
+    #[serde(default)]
+    pub name: Option<String>,
+    #[serde(default)]
+    pub statement: Option<String>,
     /// `technical` (default) / `business` / `operational` / `physical` /
     /// `regulatory` / `budget` / `schedule` / `kpp`.
     #[serde(default)]
@@ -1801,9 +1945,11 @@ pub struct RequireResourceReq {
 #[serde(deny_unknown_fields)]
 pub struct DecisionReq {
     pub id: String,
-    pub name: String,
+    #[serde(default)]
+    pub name: Option<String>,
     /// What was decided.
-    pub decision: String,
+    #[serde(default)]
+    pub decision: Option<String>,
     /// Why — the part worth recording.
     #[serde(default)]
     pub rationale: Option<String>,
@@ -1858,7 +2004,8 @@ pub struct ContributorReq {
     /// Stable id (e.g. `who:ajs`, `who:claude-code`).
     #[serde(alias = "contributor_id")]
     pub id: String,
-    pub name: String,
+    #[serde(default)]
+    pub name: Option<String>,
     /// `person` (default) / `automated_agent` / `organization`.
     #[serde(default)]
     pub kind: Option<String>,
@@ -2608,10 +2755,13 @@ pub struct DimensionDriftReq {
 #[serde(deny_unknown_fields)]
 pub struct AddEpochReq {
     pub id: String,
-    pub name: String,
+    #[serde(default)]
+    pub name: Option<String>,
     /// `baseline` | `revision` | `milestone` | `incident_response` | `release_cut`.
-    pub epoch_type: String,
-    pub sequence: i64,
+    #[serde(default)]
+    pub epoch_type: Option<String>,
+    #[serde(default)]
+    pub sequence: Option<i64>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -2627,9 +2777,11 @@ pub struct EpochStatusReq {
 #[serde(deny_unknown_fields)]
 pub struct AddChangeEventReq {
     pub id: String,
-    pub name: String,
+    #[serde(default)]
+    pub name: Option<String>,
     /// Change type key (e.g. `new_feature`, `scope_change`, `defect_fix`).
-    pub change_type: String,
+    #[serde(default)]
+    pub change_type: Option<String>,
     /// WHICH AXIS this event is on — `system` (the thing changed) or `record`
     /// (only the design's knowledge of it changed). OPTIONAL, and leaving it
     /// out is a true answer: absent means nobody said, and it is never inferred

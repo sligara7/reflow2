@@ -34,14 +34,14 @@ async fn svc_with_an_epoch_and_a_target() -> ReflowService {
     let s = ReflowService::in_memory().expect("in-memory service");
     j!(s.add_epoch(Parameters(AddEpochReq {
         id: "epoch:e".into(),
-        name: "e".into(),
-        epoch_type: "revision".into(),
-        sequence: 1,
+        name: Some("e".into()),
+        epoch_type: Some("revision".into()),
+        sequence: Some(1),
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:thing".into(),
-        name: "A thing".into(),
-        description: "as it stands today".into(),
+        name: Some("A thing".into()),
+        description: Some("as it stands today".into()),
         status: None,
         distinct_from: None,
     })));

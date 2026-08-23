@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Record a Release — a packaged, operable version: a container image, a published package, a manufactured build. Part of answering the `no_deploy_operate` gap.",
+  "description": "Record a Release — a packaged, operable version: a container image, a published package, a manufactured build. Part of answering the `no_deploy_operate` gap. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it again with the same id and only what you are changing — omitted fields keep their stored value, so correcting one never means re-sending a 2 KB field you did not touch.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
@@ -11,7 +11,11 @@
         "type": "string"
       },
       "name": {
-        "type": "string"
+        "default": null,
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "unit_type": {
         "default": null,
@@ -30,8 +34,7 @@
       }
     },
     "required": [
-      "id",
-      "name"
+      "id"
     ],
     "type": "object"
   },

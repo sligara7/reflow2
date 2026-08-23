@@ -52,7 +52,11 @@ impl ReflowService {
     #[tool(
         description = "Record a Release — a packaged, operable version: a container image, a \
                        published package, a manufactured build. Part of answering the \
-                       `no_deploy_operate` gap.",
+                       `no_deploy_operate` gap. \
+                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
+                       again with the same id and only what you are changing \u{2014} omitted \
+                       fields keep their stored value, so correcting one never means re-sending \
+                       a 2 KB field you did not touch.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_release(
@@ -60,10 +64,13 @@ impl ReflowService {
         Parameters(req): Parameters<ReleaseReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await;
+        let mut __rf =
+            crate::service::RequiredFields::new(&g, reflow2_core::nodes::node::RELEASE, &req.id)?;
+        let name = __rf.str("name", req.name);
         ok_json(NodeDto::from(
             g.add_release(
                 &req.id,
-                &req.name,
+                &name,
                 req.version.as_deref(),
                 req.unit_type.as_deref(),
             )
@@ -74,7 +81,11 @@ impl ReflowService {
     #[tool(
         description = "Record an Environment — where a Release runs: a cloud region, a lab bench, \
                        a physical site. More than a deploy target; it is the context whose rules \
-                       the design must satisfy.",
+                       the design must satisfy. \
+                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
+                       again with the same id and only what you are changing \u{2014} omitted \
+                       fields keep their stored value, so correcting one never means re-sending \
+                       a 2 KB field you did not touch.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_environment(
@@ -82,10 +93,16 @@ impl ReflowService {
         Parameters(req): Parameters<EnvironmentReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await;
+        let mut __rf = crate::service::RequiredFields::new(
+            &g,
+            reflow2_core::nodes::node::ENVIRONMENT,
+            &req.id,
+        )?;
+        let name = __rf.str("name", req.name);
         ok_json(NodeDto::from(
             g.add_environment(
                 &req.id,
-                &req.name,
+                &name,
                 req.env_type.as_deref(),
                 req.location.as_deref(),
             )
@@ -95,7 +112,11 @@ impl ReflowService {
 
     #[tool(
         description = "Record a Resource the built thing needs — a database, a queue, a secret, a \
-                       GPU, power, bandwidth.",
+                       GPU, power, bandwidth. \
+                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
+                       again with the same id and only what you are changing \u{2014} omitted \
+                       fields keep their stored value, so correcting one never means re-sending \
+                       a 2 KB field you did not touch.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_resource(
@@ -103,8 +124,11 @@ impl ReflowService {
         Parameters(req): Parameters<ResourceReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await;
+        let mut __rf =
+            crate::service::RequiredFields::new(&g, reflow2_core::nodes::node::RESOURCE, &req.id)?;
+        let name = __rf.str("name", req.name);
         ok_json(NodeDto::from(
-            g.add_resource(&req.id, &req.name, req.provider.as_deref())
+            g.add_resource(&req.id, &name, req.provider.as_deref())
                 .map_err(dyno_err)?,
         ))
     }
@@ -198,22 +222,35 @@ impl ReflowService {
                        EXPECT a technology to reach later is forecast_readiness, never this — \
                        recording a projection as an observation puts a fiction inside the \
                        machinery the roadmap is computed from, where it propagates. A rung \
-                       outside 1-9 is refused rather than clamped.",
+                       outside 1-9 is refused rather than clamped. \
+                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
+                       again with the same id and only what you are changing \u{2014} omitted \
+                       fields keep their stored value, so correcting one never means re-sending \
+                       a 2 KB field you did not touch.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_readiness(
         &self,
         Parameters(req): Parameters<AddReadinessReq>,
     ) -> Result<CallToolResult, McpError> {
-        let kind = parse_readiness_kind(&req.kind)?;
         let mut g = self.write_lock().await;
+        let ty = reflow2_core::nodes::node::READINESS_ASSESSMENT;
+        let mut __rf = crate::service::RequiredFields::new(&g, ty, &req.id)?;
+        let kind_s = __rf.str("kind", req.kind);
+        let target_type = __rf.str("target_type", req.target_type);
+        let target_id = __rf.str("target_id", req.target_id);
+        let level = __rf.i64("level", req.level);
+        // Every field first, THEN the refusal — so a caller missing three of
+        // them learns all three, rather than one per round trip.
+        __rf.finish()?;
+        let kind = parse_readiness_kind(&kind_s)?;
         ok_json(NodeDto::from(
             g.add_readiness(&ReadinessObservation {
                 id: &req.id,
-                target_type: &req.target_type,
-                target_id: &req.target_id,
+                target_type: &target_type,
+                target_id: &target_id,
                 kind,
-                level: req.level,
+                level,
                 evidence: req.evidence.as_deref(),
                 assessed_at: req.assessed_at.as_deref(),
             })

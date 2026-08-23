@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a467772bb62e45c47d88d84393e1bde0141dbadb5ebd62e25ac9742b2994fef8",
+  "content_hash": "sha256:07cc19b3a55b0cb4f2e99f92ac299ad47713f52bbdc48a8d0edc4cc7f380994d",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -21803,6 +21803,78 @@
         "action": "added"
       },
       "to_id": "req:sessions-across-machines"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:required-to-create-optional-to-revise",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:mint-seat-liveness-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:required-to-create-optional-to-revise",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:required-to-create-optional-to-revise",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-search-first"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:required-to-create-optional-to-revise",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-assure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:required-to-create-optional-to-revise",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:required-to-create-optional-to-revise",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:required-to-create-optional-to-revise",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-operate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:required-to-create-optional-to-revise",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
     },
     {
       "edge_type": "CHANGED",
@@ -92636,7 +92708,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fa90553f10cfd1194c8ac6b5962e1c5c57dc269e5d662bc62869db823d923a44",
+        "checksum": "sha256:d2f9427ce71a7cb85b77e233fd24c93a0b626952e6ccb629211b8a6e34d158cb",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/mint_seat_liveness.rs",
         "name": "mint_seat_liveness.rs",
@@ -93256,7 +93328,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9411259ccee50fd2056e2cf6f8c990a38d32345552b76c6faf5174804036fa9e",
+        "checksum": "sha256:9076d30bc52f8441e91da49d49ca83d75bf7fe856face992559cf61ad87a9335",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -93729,7 +93801,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f43ed9a42160d5031a44160b361a07be164ebbfb6910639a63ead22078150b29",
+        "checksum": "sha256:59b8b8d85f3560a487b3ee0598c862dde9ce2d043fbfac693ba4b5610dca10a8",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/search_first_fires_at_the_tool.rs",
         "name": "search_first_fires_at_the_tool.rs — six cases: the refusal, the rollback, both deliberate routes, the no-false-refusal counterweight, and the cross-type catch",
@@ -93833,7 +93905,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:419c91a71f07405d762b0cc580f7954544625a0f2f765ae0debf58b48d982acf",
+        "checksum": "sha256:ae1db46142ce6d5660cb8364668e3a6e18676d22a5c307b0ca7082de6eb43900",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/assure.rs",
         "name": "tools/assure.rs",
@@ -93846,7 +93918,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:99946023af510211b4f6a9199e312acb6bf9e7b4751f26efafbbdf0bdbd23791",
+        "checksum": "sha256:e4b14c79a6ea42e16617956bfc31b31567f71bb3816dc02fdb203f104ac9a6f6",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/built.rs",
         "name": "tools/built.rs",
@@ -93859,7 +93931,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:93603c0c1d5ebd021edc3ee22c34bbc38a7acc887da528ce8a09c2d4f8cb234d",
+        "checksum": "sha256:2a648299ace586c3a2bf756992dc4272955c062b4facd7d58437d5ecb0dbdcb7",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -93922,7 +93994,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:25ab6353c7864b55aa042ac631ecc7ab16daef10aa8024927ecb840158aacbd5",
+        "checksum": "sha256:5104c18c33113d5f0f62a4a70d19d31c0cfd4ef380b4d3d6948fd5c039fe5405",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/operate_tools.rs",
         "name": "tools/operate_tools.rs",
@@ -93959,7 +94031,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9fc25917518ce6f7c9aeab8613363229137ff1491a7cb1654ec80d36c3c9c325",
+        "checksum": "sha256:2890f5398f56043c31d0522d9b6c76f83fe763eedf3c4bffb7bf4922dc1b8f38",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -100875,6 +100947,17 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Sessions on another machine: name the hosts the server will answer for"
+      }
+    },
+    {
+      "node_id": "chg:required-to-create-optional-to-revise",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "A typed constructor's required fields are required TO CREATE and optional TO REVISE — across all 17, because a rule with an exception list is a rule the next type quietly escapes",
+        "rationale": "Reported from dev_storyflow by two sessions from opposite sides: one hit the retype burden, one hit the corruption it caused — four mangled fields in a single sitting, twice while actively trying not to, every recovery coming from `revision.replaced[].prior`. Measured on reflow2's own design: median required content 2,041 B on a Decision, 1,979 on a Requirement; 20% of all nodes force retyping over 2 KB to change one other field, worst case 23,990 B. The all-at-once refusal also serves a separate report that one missing field per error costs one round trip per field.",
+        "subject": "system",
+        "summary": "Content fields on every `add_*` constructor become optional when the node already exists, resolved from the stored value. `RequiredFields` collects them and refuses naming EVERY missing one at once, rather than the first. 18 toolsnaps now require only `id`, and all 18 descriptions state the rule."
       }
     },
     {
@@ -123155,7 +123238,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:be7ad7df607a3da44106f7d9942af80c6a972cbb094fdeea044ff644a4c91317",
+  "prev_content_hash": "sha256:a467772bb62e45c47d88d84393e1bde0141dbadb5ebd62e25ac9742b2994fef8",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

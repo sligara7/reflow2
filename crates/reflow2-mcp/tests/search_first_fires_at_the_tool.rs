@@ -57,8 +57,8 @@ fn req(
 ) -> RequirementReq {
     RequirementReq {
         id: id.into(),
-        name: name.into(),
-        statement: statement.into(),
+        name: Some(name.into()),
+        statement: Some(statement.into()),
         distinct_from,
     }
 }
@@ -202,8 +202,8 @@ async fn a_capability_restating_a_requirement_is_caught_across_types() {
     let err = s
         .add_capability(Parameters(CapabilityReq {
             id: "cap:cumulative".into(),
-            name: "Send cumulative totals".into(),
-            description: IDEA_B.into(),
+            name: Some("Send cumulative totals".into()),
+            description: Some(IDEA_B.into()),
             status: None,
             distinct_from: None,
         }))

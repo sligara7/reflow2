@@ -56,8 +56,8 @@ const SECOND: &str = "Every reading carries the running total, and the receiver 
 fn req(id: &str, name: &str, statement: &str) -> RequirementReq {
     RequirementReq {
         id: id.into(),
-        name: name.into(),
-        statement: statement.into(),
+        name: Some(name.into()),
+        statement: Some(statement.into()),
         distinct_from: None,
     }
 }
@@ -65,8 +65,8 @@ fn req(id: &str, name: &str, statement: &str) -> RequirementReq {
 fn decision(id: &str, name: &str, text: &str, rationale: Option<&str>) -> DecisionReq {
     DecisionReq {
         id: id.into(),
-        name: name.into(),
-        decision: text.into(),
+        name: Some(name.into()),
+        decision: Some(text.into()),
         rationale: rationale.map(str::to_string),
         distinct_from: None,
     }

@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Record a Verification — a check that something meets its intent. `method` says HOW you looked: test, analysis, inspection and demonstration are the four canonical ones, plus measurement, observation (watching it run in the field, unchanged), review and simulation. Answers the `build_without_verification` and `unverified_capability` gaps. Pair it with `verifies` to say what it checks. ⚠️ KEEP `name` SHORT — it is what a list renders. Put the account of what the check IS in `description`, and what a RUN FOUND in `findings` on set_verification_status. Measured on reflow2's own graph before those were reachable: median Verification name 76 words, longest 654, because `description` was declared and this constructor had no parameter for it, so everyone wrote reports into the name.",
+  "description": "Record a Verification — a check that something meets its intent. `method` says HOW you looked: test, analysis, inspection and demonstration are the four canonical ones, plus measurement, observation (watching it run in the field, unchanged), review and simulation. Answers the `build_without_verification` and `unverified_capability` gaps. Pair it with `verifies` to say what it checks. ⚠️ KEEP `name` SHORT — it is what a list renders. Put the account of what the check IS in `description`, and what a RUN FOUND in `findings` on set_verification_status. Measured on reflow2's own graph before those were reachable: median Verification name 76 words, longest 654, because `description` was declared and this constructor had no parameter for it, so everyone wrote reports into the name. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it again with the same id and only what you are changing — omitted fields keep their stored value, so correcting one never means re-sending a 2 KB field you did not touch.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
@@ -35,12 +35,15 @@
         ]
       },
       "name": {
-        "type": "string"
+        "default": null,
+        "type": [
+          "string",
+          "null"
+        ]
       }
     },
     "required": [
-      "id",
-      "name"
+      "id"
     ],
     "type": "object"
   },
