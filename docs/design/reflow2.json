@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:2b8f9b2b7e092adf11248379edf4fc50ba671197d693a0860b7fa75bf3a4751d",
+  "content_hash": "sha256:c568c2b2b7b162f69c1b6af17dda2cda9e8ea8b927bb1d624e81aaa79638ba57",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -25420,17 +25420,6 @@
         "action": "modified"
       },
       "to_id": "req:work-says-whether-it-reaches-a-consumer"
-    },
-    {
-      "edge_type": "CLAIMS",
-      "from_id": "who:ajs",
-      "properties": {
-        "claimed_at": "2026-08-23T03:30:00Z",
-        "depth": 2,
-        "note": "Extending cap:bounded-reads to detect_gaps — the unscoped call is refused by the harness on a mature design, so the documented first move of a session cannot be executed. Touching crates/reflow2-core/src/detect.rs and crates/reflow2-mcp/src/tools/coherence.rs.",
-        "seat": "asligar-bitecool:2195132:17195d30"
-      },
-      "to_id": "cap:bounded-reads"
     },
     {
       "edge_type": "CONSTRAINS",
@@ -121127,6 +121116,18 @@
       }
     },
     {
+      "node_id": "fact:the-read-surface-after-the-sweep-2026-08-23",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "THE WHOLE ORIENTATION SURFACE AFTER FOUR MERGES (#303–#306), measured from merged main on reflow2's own design. Bytes on the wire: open_questions 871 · what_next 3,157 · vocabulary_coverage 3,438 · graph_report_markdown 6,172 · loop_status 13,637 · graph_report 15,485 · detect_gaps 26,096 · detect_defects 26,169. BEFORE: graph_report ~334,000 · detect_gaps 157,785 · loop_status ~146,000 · detect_defects ~93,000 (the 'before' figures are the payload doubled, because every reply was sent twice). EVERY READ A SESSION MAKES TO ORIENT NOW FITS. || ⭐ THE FINDING THAT OUTLIVES THE NUMBERS: FOUR TOOLS NEEDED THREE DIFFERENT MECHANISMS, AND REACHING FOR A BUDGET EVERY TIME WOULD HAVE BEEN WRONG THREE TIMES OUT OF FOUR. (1) `detect_gaps` — a genuine budget: measure the payload, drop the cheapest information first, say what was withheld and how to get it. (2) `graph_report` — nothing to budget; 91.5% was one list nobody asked for, withheld behind a flag with a digest that already existed. (3) EVERY reply — not big, DOUBLED: the payload went out as both `structuredContent` and a text block, and removing that alone fixed `loop_status` outright (72,886 and refused → 13,637) and CANCELLED A PLANNED PIECE OF WORK. (4) `detect_defects` — not big, REPETITIVE: 52% was three paragraphs repeated across 50 rows, so nothing needed withholding at all. ⇒ ASK WHETHER A REPLY IS BIG, DOUBLED, OR MERELY REPETITIVE BEFORE BUILDING ANYTHING. Each answer has a different fix and only one of them is a budget. || ⭐ AND MEASURE BEFORE YOU CUT, EVERY TIME. On `detect_gaps` the guess would have been the id lists — they were 35%, capping them was not enough, and only the prose got it under a cap. On `graph_report` the clue was already on the wire: the MARKDOWN rendering of the same report was 27× smaller than the JSON one. On `loop_status` measuring first meant not building at all. || WHAT IS STILL OPEN: 113 of 197 Verification names carry whole reports (longest 654 words) — the replies no longer flood, but the reports are still in the wrong field, and that is a DATA problem in this design rather than a code one. The `graph_report` digest is flat in the PASSING remainder only, so a design mid-build with two hundred `planned` checks would be large again — real, unmeasured, deliberately not built for. || SOURCE: measured 2026-08-23 from merged main (0014ca6), driving the built binary over real stdio, one process, one sweep.",
+        "subject_id": "cmp:report",
+        "valid_from": "2026-08-23"
+      }
+    },
+    {
       "node_id": "fact:the-review-relations-redo-was-a-no-op-once-somebody-read-the-code",
       "node_type": "TemporalFact",
       "properties": {
@@ -123823,7 +123824,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:4a41806a2cb92933e97a5f0613bfd50cc60c14f4a7ace049aa62ff715216931a",
+  "prev_content_hash": "sha256:2b8f9b2b7e092adf11248379edf4fc50ba671197d693a0860b7fa75bf3a4751d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
