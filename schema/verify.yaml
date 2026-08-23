@@ -23,7 +23,11 @@ schema:
         kind: { type: enum, values: [verification, validation], default: verification, indexed: true, description: "Verification = built right (meets the spec); validation = right thing (meets the operational intent/need). A distinct axis from method/level. Was the VALIDATES edge (retired, dec:edge-orthogonality); read by the unvalidated_capability gap." }
         level: { type: enum, values: [unit, integration, system, acceptance], default: unit, indexed: true }
         location: { type: string, description: "Path to the test/inspection artifact." }
-        status: { type: enum, values: [planned, passing, failing, skipped, blocked], default: planned, indexed: true }
+        # `superseded` added 2026-08-23: a check REPLACED by a broader one is not
+        # `skipped` (which means a run was deliberately not made) and must not go
+        # on reporting `passing`. Read by `loop_status.verifications.by_status`
+        # and by graph_report, so a retired check stops counting as live coverage.
+        status: { type: enum, values: [planned, passing, failing, skipped, blocked, superseded], default: planned, indexed: true }
         last_run_at: { type: string }
         # Added 2026-08-17 for req:a-finding-has-somewhere-to-put-its-evidence.
         #
@@ -242,6 +246,45 @@ schema:
     # defect. Only the outside source could. No check internal to a design can
     # establish its own independence, so reflow2 records the relation rather
     # than trying to detect circularity analytically.
+    IMPLEMENTS:
+      from: Artifact
+      to: Verification
+      extraction_hint: >
+        This file IS the executable form of that check — the script, test or
+        harness a Verification is actually run BY. Not REALIZES (that says a
+        file implements a CAPABILITY; a check interrogates one rather than
+        providing it), not DOCUMENTS (this is executable, not prose), and not
+        CALIBRATED_AGAINST (nothing here was fitted to the check's output).
+      # WHY THIS EXISTS, and it was filed by somebody who did the right thing.
+      #
+      # dragon Boss, 2026-08-19, had written a Verification and then written the
+      # script that re-runs the repeatable half of it. `describe_schema
+      # {from: Artifact, to: Verification}` answered honestly — no edge type
+      # names both sides — and listed three that name one side exactly plus
+      # sixteen reachable only through a double wildcard. THEY FOLLOWED THE
+      # GUIDANCE AND LEFT THE EDGE OUT rather than assert one that is wrong.
+      # The check stayed an orphan Artifact, and the question the design most
+      # wants to ask later — "which of our checks are wired to something
+      # runnable?" — was the one thing no edge could express.
+      #
+      # ⭐ WHAT IT BUYS, which is the `dec:edge-orthogonality` test this had to
+      # pass: `loop_status.verifications.never_run` is ONE number today covering
+      # two very different debts — a check nobody has run, and a check with no
+      # executable form at all. With this edge those separate.
+      #
+      # ⚠️ ENUMERATED, NOT `*`, for the reason spelled out on VERIFIES above: a
+      # wildcard would ACCEPT this pair and never MODEL it, so describe_schema
+      # would go on ranking it merely tolerated. And the honest wildcard answer
+      # is what stopped the reporter asserting a wrong edge in the first place —
+      # that distinction is worth keeping, so this is a modelled fit rather than
+      # a widened loophole.
+      properties:
+        # How much of the check this file actually runs. A Verification often has
+        # a repeatable half and a judgement half; saying which is which stops a
+        # green script being read as the whole check having passed.
+        covers: { type: enum, values: [whole, partial], default: whole }
+        note: { type: string }
+
     CALIBRATED_AGAINST:
       from: "*"
       to: [Artifact, Verification]

@@ -31,6 +31,43 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added — relationships between records stop being wildcard leftovers
+
+**Minor, and it MOVES THE SCHEMA STAMP: 61 → 63 edge types.** `docs/upgrading-to-v0.40.0.md` is
+owed and written. Node types unchanged at 29; `schema_version` still 1. Every change is additive —
+a v0.39.0 export imports unchanged.
+
+dev_storyflow filed three independent reports across four days, none of them connecting the three,
+and together they name a class: **relationships between RECORDS are thinner in the vocabulary than
+relationships to Requirements.** The golden thread — Requirement ← Capability ← Component ←
+Artifact — is richly modelled. Verification-to-Artifact, rule-to-rule and check-to-check were not,
+and each time a session reached for one it found a `*` wildcard or a refusal.
+
+- **`IMPLEMENTS` (Artifact → Verification)** — *this file is the executable form of that check*.
+  ⇒ `loop_status.verifications` gains **`no_executable_form`**: `never_run` was one number covering
+  a check somebody wrote a script for and has not run, and a check with **nothing to run at all**.
+- **`COMPLEMENTS` (DesignRule → DesignRule)** — *these stand beside each other and must never be
+  merged*. ⇒ **HEAL now refuses the merge**, in both `propose_heal` and `apply_heal`. `DUPLICATES`
+  is declared `* -> *`, so two rules could be joined by it and one deleted irreversibly; the only
+  prior protection was a paragraph asking readers not to.
+- **`SUPERSEDES` accepts Verification → Verification**, and **`Verification.status` gains
+  `superseded`** — a retired check stops counting as live coverage and stops appearing in
+  `attention`, which lists checks that are *not passing*. A superseded check is not a quiet failure.
+
+**Two candidates raised the same day were DECLINED**, and the reason is the entry fee:
+`ChangeEvent → Decision` and a which-repo-does-this-govern property both answer real friction, and
+neither has a computation that would read it. `dec:edge-orthogonality` — a vocabulary distinction
+earns its keep only if something reads it — and adding unread vocabulary while
+`req:a-vocabulary-distinction-proves-it-is-read` is open would be filing the defect and committing
+it in one motion.
+
+⭐ **THE FINDING WORTH MORE THAN THE EDGES: adding an edge type is the SAFE kind of schema change,
+and the changes that DON'T move the stamp are the dangerous ones.** The stamp counts type NAMES
+only, so a new edge type makes an older binary refuse the graph and name what it lacks — while a
+widened endpoint, a new enum value or a new property all pass the stamp check, open fine, and then
+fault one import at a time. Three of this release's four changes are in that invisible category and
+ship alongside the two visible ones deliberately: the stamp move is what protects them.
+
 ## [0.39.0] — 2026-08-23
 
 ### Added — a boundary that could not name itself

@@ -259,7 +259,7 @@ pub struct AllocationSummary {
 pub struct VerificationRecency {
     pub verification_id: String,
     pub name: String,
-    /// `planned` / `passing` / `failing` / `skipped` / `blocked`.
+    /// `planned` / `passing` / `failing` / `skipped` / `blocked` / `superseded`.
     pub status: String,
     /// When it last ran. `None` means it never did — and a `passing` or
     /// `failing` with `None` is an **assertion**, not a measurement.
@@ -267,6 +267,16 @@ pub struct VerificationRecency {
     /// How many nodes this check speaks for. A stale check with a large fan-out
     /// is asserting more than one about a single capability.
     pub verifies: usize,
+    /// Whether any Artifact is named as this check's executable form
+    /// (an incoming `IMPLEMENTS`).
+    ///
+    /// ⭐ THE ABSENCE IS THE SIGNAL. `never_run` conflated two very different
+    /// debts — a check somebody wrote a script for and has not run, and a check
+    /// with nothing to run at all. The first is a scheduling problem; the second
+    /// means the check exists only as a sentence. Filed by dragon Boss
+    /// 2026-08-19, who had written exactly such a script and found no edge type
+    /// naming both ends, so left the edge out rather than assert a wrong one.
+    pub has_executable_form: bool,
 }
 
 /// The rolled-up state of the design graph.
@@ -631,6 +641,9 @@ impl DesignGraph {
                     .filter(|t| !t.is_empty())
                     .map(str::to_string),
                 verifies,
+                has_executable_form: !self
+                    .incoming(&v.node_id, Some(edge::IMPLEMENTS))?
+                    .is_empty(),
             });
         }
         // Failing first, then by id: the loud ones lead, and a stable order
@@ -641,6 +654,10 @@ impl DesignGraph {
                 "blocked" => 1,
                 "skipped" => 2,
                 "passing" => 3,
+                // A superseded check sorts BELOW a passing one: it is retired,
+                // not merely quiet, and it is the one status a reader never
+                // needs to act on.
+                "superseded" => 5,
                 _ => 4,
             };
             rank(&a.status)

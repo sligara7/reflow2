@@ -327,11 +327,20 @@ mod tests {
         // can demand TRL 7 of one technology and 4 of another. Moves the stamp:
         // the next release owes an upgrade note.
         assert_eq!(schema.node_types.len(), 29, "expected 29 node types");
-        // 61 since OWNED_BY (2026-08-09) — the third "who" axis: whose AREA
-        // this is, durable and never released, distinct from AUTHORED_BY
-        // (who wrote it) and CLAIMS (who is in it right now). Moves the
-        // stamp: the next release owes an upgrade note.
-        assert_eq!(schema.edge_types.len(), 61, "expected 61 edge types");
+        // 63 since IMPLEMENTS + COMPLEMENTS (2026-08-23) — record-to-record
+        // relations, which were thinner in this vocabulary than relations to
+        // Requirements: a check can now name the file that RUNS it, and two
+        // rules can declare that they stand beside each other and must never
+        // be merged. 61 before that, since OWNED_BY (2026-08-09), the third
+        // "who" axis: whose AREA this is, durable and never released, distinct
+        // from AUTHORED_BY (who wrote it) and CLAIMS (who is in it now).
+        //
+        // ⭐ THIS ASSERTION IS THE POINT, NOT AN OBSTACLE. Two new edge types
+        // move the schema stamp, and the stamp is what makes an older binary
+        // REFUSE a graph it cannot read rather than fault on one edge at a
+        // time. A count pinned here is what forces the author of the next edge
+        // type to notice they owe an upgrade note.
+        assert_eq!(schema.edge_types.len(), 63, "expected 63 edge types");
     }
 
     #[test]

@@ -45,10 +45,65 @@ capture what answers yes:
    ones nothing else will record, because no task owns them.
 6. **Did the user state a rule in passing?** "Always X", "never Y", "don't bother with Z." Said
    once, meant standing.
+7. **Did this session make something in the graph FALSE?** A measurement that has been re-measured,
+   a finding that was fixed, a question answered by doing rather than by deciding. **This is the
+   only test that does not add a node**, and it is the one everything else in this skill is
+   structurally unable to reach — see below.
 
-**The test underneath all six:** *would a session six weeks from now redo this work, or repeat
+**The test underneath all seven:** *would a session six weeks from now redo this work, or repeat
 this mistake, because nobody wrote it down?* If you cannot name what would be lost, nothing would
 be — do not capture it.
+
+## Test 7 is different, and it exists because the other six caused the problem
+
+The first six ADD. So does every other mechanism in the loop: capture-intent adds nodes,
+`record_change` adds an event, `loop_status` counts what is OWED. **Nothing anywhere asks what a
+session made false**, so a finding that motivated a fix survives the fix and goes on proposing work
+that is already done.
+
+**Test 2 is how it happens.** *"Did somebody measure something? … a number in the graph is evidence
+a later session can check."* That is right, and it is exactly how a measurement gets written and
+never closed. Measured on reflow2's own design, 2026-08-23: **274 TemporalFacts, every one
+`basis: measured`, and 7 carrying a `valid_to`.** The field that closes a fact exists and is 97%
+unused. 200 of the 267 open ones describe a node that has since changed.
+
+**It is not hypothetical and it is not rare.** In the session that added this test, an agent read a
+2026-08-21 measurement — *"NOTHING WAS OPTIMISED"*, *"that ratio is the next measurement and it has
+not been taken"* — and quoted its numbers as current. Both claims had been false since a PR merged
+days earlier, which took the measurement AND fixed it: `open_questions` 11.7s → 2.95s. The user
+caught it, not the graph. The same shape was reported independently on a different project.
+
+**How to find the candidates**, since "what did I invalidate?" is not answerable by staring:
+
+- For each change this session recorded, **`search_design` for findings about that subject.** The
+  work you just did names its own candidates.
+- A `Verification` you re-ran, a number you re-measured, a defect you fixed — each one probably has
+  an older node asserting the state you just changed.
+- ⚠️ **Cross-session staleness is out of reach here and say so rather than implying coverage.** The
+  fact above was invalidated by a *different session, days later*. This test catches the case where
+  the session that breaks a finding is the session that closes it. Nothing in this skill reaches
+  the rest.
+
+🛑 **DO NOT CLOSE WHAT YOU DID NOT VERIFY.** "I think that got fixed" is not grounds. A merged
+change with numbers is. Closing a finding that is still true is worse than leaving a stale one
+open, because the stale one is at least visible.
+
+🛑 **AND CLOSING PRESERVES — IT NEVER REPLACES.** Add the closure; keep every word of what you are
+closing. **A closed measurement is evidence; an erased one is a hole**, and the hole is worse than
+the staleness because nobody can tell it was ever there. Say what retired it, and leave the method,
+the numbers and the falsified hypotheses exactly where they are — those outlive the figures.
+
+*This paragraph exists because the first finding ever closed under test 7 was closed WRONG, minutes
+after the test shipped: the closure was written by overwriting the statement, destroying the
+measurement it was closing. The tool's own "no snapshot holds the prior value" warning caught it,
+and it was restored, snapshotted and re-applied. **The pull toward replacing is strong because a
+closure reads like a correction** — it is not; it is an addition with a date on it.*
+
+**A PARTIALLY superseded finding is NOT closed.** If some of it is still true, say which part moved
+and leave it open — `valid_to` is a claim that the WHOLE thing stopped being true. A companion
+measurement from the same day, about cold-start cost, was left open on exactly this ground: its
+`open_questions` figure was stale, its ~26s daemon-startup claim was never re-measured, and closing
+it would have asserted something nobody checked.
 
 ## Do not capture
 
@@ -75,6 +130,7 @@ a near neighbour — use it rather than inventing a home:
 | A stretch of work whose *lesson* is the output | DesignEpoch, via `add_epoch` |
 | A standing rule the user stated | DesignRule |
 | New intent — something they want built | **Stop and use capture-intent.** Requirements are not session residue |
+| A finding this session **RETIRED** | Close it where it lives — `valid_to` on the TemporalFact, or the Decision's status — and say in the text **what** retired it. The only row here that does not create a node |
 
 Attribute it: `authored_by`. Someone's idea relayed by you is still theirs, and six weeks later
 nobody can tell from the prose.
@@ -108,6 +164,11 @@ confident sentence that turns out to be reconstructed is worse than nothing.
 - **A skill still has to be reached for.** If you notice the user asking for this in their own
   words session after session, that is worth reporting — the **report-friction** skill is for
   exactly that.
+- **Test 7 covers the same-session case only, and that is the smaller half.** A finding is usually
+  invalidated by a session that never reads it. Closing the cross-session case needs something that
+  computes staleness rather than something that asks — open in reflow2's own design as
+  `dec:idea-how-does-the-graph-learn-what-a-session-invalidated`. **Do not read test 7 as that
+  question being answered.**
 
 ## Before moving on
 

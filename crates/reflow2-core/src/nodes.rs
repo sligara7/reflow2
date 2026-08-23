@@ -204,6 +204,16 @@ pub mod edge {
     pub const OBSOLETES: &str = "OBSOLETES";
     /// `* → *` — two nodes cover the same ground (candidates to merge).
     pub const DUPLICATES: &str = "DUPLICATES";
+    /// A file IS the executable form of a check (Artifact -> Verification).
+    /// Read by the verification digest, which uses its ABSENCE to tell a check
+    /// nobody has run from a check with nothing to run.
+    /// An earlier form is replaced: a revised Fragment, or a narrower check a
+    /// broader one absorbed. Widened to Verification pairs 2026-08-23.
+    pub const SUPERSEDES: &str = "SUPERSEDES";
+    pub const IMPLEMENTS: &str = "IMPLEMENTS";
+    /// Two DesignRules that deliberately stand beside each other and must never
+    /// be merged. Read by `possible_duplicate`, which REFRAINS when it is drawn.
+    pub const COMPLEMENTS: &str = "COMPLEMENTS";
     /// `* → *` — a planned/anticipated need (may lack follow-through).
     pub const ANTICIPATES: &str = "ANTICIPATES";
     /// `* → *` — source initiates target; in a process model the `role`
