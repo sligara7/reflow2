@@ -1,11 +1,19 @@
 {
-  "content_hash": "sha256:f5cfc61096dab0c8b785890b50748bdd183e3f37dec7e29754cf3b94cef0d72d",
+  "content_hash": "sha256:184314cb91ecfa49f48cd788215eea28b9bee108773a5796e73fa3701166939c",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
       "from_id": "fact:a-capability-delivered-as-a-model-change-can-never-be-reported-delivered",
       "properties": {},
       "to_id": "epoch:the-declared-walls-hold"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:an-agent-stopped-reaching-for-reflow2-and-a-second-one-reproduced-it-the-same-day",
+      "properties": {
+        "evidence": "Names the hard limit on this capability from the outside: the highest-rated fix asks it to key on whether an edited file is a registered artifact, which it cannot do because the hook deliberately never reads the graph."
+      },
+      "to_id": "cap:skill-triggers"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -11508,6 +11516,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "fact:an-agent-stopped-reaching-for-reflow2-and-a-second-one-reproduced-it-the-same-day",
+      "properties": {
+        "acted_at": "2026-08-23",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "fact:precedes-is-unused-in-storyflow-and-flowless-here",
       "properties": {
         "acted_at": "2026-08-09",
@@ -18126,6 +18143,15 @@
         "action": "modified"
       },
       "to_id": "art:usgov-genesis-feedback-2026-08-15"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-2a6b4ab0fa445baa",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dev-storyflow-feedback-2026-08-23"
     },
     {
       "edge_type": "CHANGED",
@@ -32009,6 +32035,22 @@
     },
     {
       "edge_type": "DOCUMENTS",
+      "from_id": "art:dev-storyflow-feedback-2026-08-23",
+      "properties": {
+        "doc_kind": "field_report"
+      },
+      "to_id": "fact:an-agent-stopped-reaching-for-reflow2-and-a-second-one-reproduced-it-the-same-day"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:dev-storyflow-feedback-2026-08-23",
+      "properties": {
+        "doc_kind": "field_report"
+      },
+      "to_id": "req:skill-use-survives-a-long-session"
+    },
+    {
+      "edge_type": "DOCUMENTS",
       "from_id": "art:doc-impact-propagation",
       "properties": {
         "doc_kind": "design_doc"
@@ -32298,6 +32340,14 @@
         "evidence": "Merged 2026-08-22 on Anthony's ruling. This 2026-08-06 statement is the earlier form; the survivor carries his own wording and absorbed this one's worked examples and its where-does-the-fix-land test verbatim. Neither was authoritative while both stood — a live instance of req:a-rule-knows-where-it-is-authoritatively-stated. SUPERSEDES was tried first and is not a legal DesignRule-to-DesignRule edge; EVOLVES_INTO is the honest relation anyway, since nothing here was withdrawn, only grown into one place. Retired on the record rather than deleted: it was true when written."
       },
       "to_id": "rule:reflow2-is-built-for-other-projects-not-for-itself"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "art:dev-storyflow-feedback-2026-08-23",
+      "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:a-dated-field-report-is-registered-and-parked"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -40220,6 +40270,14 @@
       "from_id": "req:defaults-do-not-assert",
       "properties": {},
       "to_id": "fact:a-materialised-default-defeats-a-completeness-check"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "req:skill-use-survives-a-long-session",
+      "properties": {
+        "evidence": "The third and fourth observations of this requirement, 2026-08-23 — the first from outside this repo, and the first where a SECOND agent reproduced the reported failure the same day."
+      },
+      "to_id": "fact:an-agent-stopped-reaching-for-reflow2-and-a-second-one-reproduced-it-the-same-day"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -95691,6 +95749,17 @@
       }
     },
     {
+      "node_id": "art:dev-storyflow-feedback-2026-08-23",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:6da88dfcba0cb3bd4d2128020f6c99e0bfe247dddd00563a5783847bcebff49f",
+        "location": "docs/feedback/2026-08-23-dev-storyflow-agent-feedback.md",
+        "name": "dev_storyflow agent feedback, entries new since 2026-08-16 — ten friction items, and a first-person account of WHY AN AGENT STOPPED REACHING FOR REFLOW2 MID-SESSION",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:dimensions",
       "node_type": "Artifact",
       "properties": {
@@ -102689,6 +102758,16 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-15",
         "name": "First baseline. Copied verbatim from ~/project/usgov/feedback.md so the location resolves for anyone reading the nodes it produced; the source project is a separate repo and was not modified."
+      }
+    },
+    {
+      "node_id": "chg:baseline-2a6b4ab0fa445baa",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-23",
+        "name": "First baseline. Excerpt of lines 6204-6725 of the dev_storyflow fleet's single append-only reflow2_feedback.md, verified as new by confirming the 2026-08-16 upload is a STRICT PREFIX of the 2026-08-23 one. A frozen dated field report: it is correct precisely by NOT tracking the design as it moves, which is why it is parked rather than left to read as an orphan.",
+        "subject": "record"
       }
     },
     {
@@ -122532,6 +122611,17 @@
       }
     },
     {
+      "node_id": "fact:an-agent-stopped-reaching-for-reflow2-and-a-second-one-reproduced-it-the-same-day",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "skill_use_decay_observation",
+        "statement": "THE THIRD OBSERVATION OF `req:skill-use-survives-a-long-session`, and the first from OUTSIDE this repo — followed within hours by a fourth, in the session that read it.\n\nWHAT dev_storyflow REPORTED. Anthony asked its driving agent directly whether it was using reflow2 to the fullest. It answered no, and wrote the account from inside the failure. Over ~12 hours it built a four-lane feature across two repos — a library, two gates, three endpoints, two panels, two browser probes — and REGISTERED ZERO ARTIFACTS until challenged. Used constantly: search_design, get_node, create_node, create_edges, export_graph, loop_status, get_skill. Used once, too late: propagate_from — and that single call immediately found a stale Interface no grep would have surfaced. NEVER USED: detect_gaps, gap_to_prompt, impact-check, detect_defects, reconcile_artifacts, coverage_report, evidence_report.\n\n⭐ ITS OWN DIAGNOSIS, AND IT IS THE FINDING: \"the tools worked — I STOPPED REACHING FOR THEM, and that is a design problem, not a discipline problem.\" Seven reasons, most load-bearing first: (1) `loop_hint` is on every response, identical and enormous, so it became wallpaper — it appeared ~40 times and the number moved by one or two all day; (2) 391 is not a number anybody can act on, it reads as someone else's permanent backlog, where THREE GAPS ON THE NODE I JUST EDITED would have been a task; (3) skills are PULL, and the thing that would tell you to load one is itself a lookup you must remember to make — by the time you recognise an impact-check situation you are three files into the refactor; (4) for CODE questions grep genuinely beats the graph, and that correct local habit hardened into skipping the graph for DESIGN questions too; (5) write-time friction (add_change_event cannot set rationale; get_node needs node_type) trained it to route around typed tools, and once routing around one you stop reaching for its NEIGHBOURS — add_artifact was a neighbour it never tried; (6) skipping has NO COST AT THE MOMENT OF SKIPPING — code compiled, 93 tests passed, ratchets stayed green, and the only thing that got worse was the graph's accuracy, which is invisible from inside the build; (7) the framing is \"the loop OWES\" — bookkeeping FOR reflow2 — and nothing in it says THIS WILL SAVE YOU AN HOUR, which propagate_from then did inside one call.\n\n⭐⭐ THE CORROBORATION, WHICH IS WHY THIS IS A FACT AND NOT A REPORT. The Claude Code session that READ this feedback reproduced FOUR of the seven reasons on reflow2's own repo, the same day, with the hooks installed and the skills served: (i) `loop_hint` came back on nearly every call and was acted on ZERO times — reasons 1 and 2; (ii) a skill was loaded only when the Stop hook forced it, and it then reported the impact step had been skipped twice — reason 3; (iii) a Decision was edited with no `record_change`, and nothing failed — reason 6; (iv) THREE REGISTERED ARTIFACTS were edited and none reconciled, caught by `reflow2_check.py` and NOT by the agent. Two independent agents, two fleets, one wall.\n\n⭐ WHAT ACTUALLY CHANGED BEHAVIOUR THAT DAY, MEASURED: three BLOCKING gates (artifact checksum drift, intent authority, toolsnap goldens) each produced an immediate fix. Zero passive hints did. The Stop hook worked BECAUSE IT BLOCKED, not because it spoke. That is the discriminator this fact exists to record — the evidence favours FEWER, HARDER interventions over more, softer ones, and it is this requirement's own candidate mechanism (2) rather than (1).\n\n🛑 AND THE ASK THAT CANNOT BE BUILT AS WRITTEN. Its highest-rated fix (b) was \"fire on the first Edit of a file that IS A REGISTERED ARTIFACT, saying what is downstream\". `tools/loop_nudge.py` CANNOT DO THIS AND SAYS SO: the hook deliberately does not read the graph, because the session's own MCP server holds the single-writer lock and the committed export can be a session stale. Its comments already rule out the sibling case in the same words — \"that rules out the spec's 'an artifact checksum drift names link-artifacts' AS LITERALLY WRITTEN: drift is a fact about the graph versus the disk, and nothing here can see either\". So the hook can only key on the session's OWN OP TALLY. The thing that CAN read the design is the GATE, which runs outside the lock against the committed export — exactly the surface that caught the unreconciled artifacts.\n\nBOUND, stated rather than glossed: reason (4)'s claim that grep beats the graph for code questions is the agent's own judgement and is probably right, but nothing here measures it. And the four reproduced reasons were observed by the agent reporting them, which is the same self-report weakness the first two observations of this requirement carry.",
+        "subject_id": "req:skill-use-survives-a-long-session",
+        "valid_from": "2026-08-23"
+      }
+    },
+    {
       "node_id": "fact:apply-heal-would-have-destroyed-the-wrong-contributor",
       "node_type": "TemporalFact",
       "properties": {
@@ -128194,7 +128284,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:4c95e41cf3642982aee6bbaa3692fbe6b4812eca9c7346b68d68745a30d6d80b",
+  "prev_content_hash": "sha256:f5cfc61096dab0c8b785890b50748bdd183e3f37dec7e29754cf3b94cef0d72d",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
