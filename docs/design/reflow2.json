@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:4a41806a2cb92933e97a5f0613bfd50cc60c14f4a7ace049aa62ff715216931a",
+  "content_hash": "sha256:2b8f9b2b7e092adf11248379edf4fc50ba671197d693a0860b7fa75bf3a4751d",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -24404,6 +24404,33 @@
         "action": "modified"
       },
       "to_id": "ver:content-surface"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-same-paragraph-fifty-times",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-same-paragraph-fifty-times",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:bounded-reads"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-same-paragraph-fifty-times",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:tools-coherence"
     },
     {
       "edge_type": "CHANGED",
@@ -84772,6 +84799,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:repair-notes-lifted-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:bounded-reads"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:reply-budget-test",
       "properties": {
         "completeness": "partial",
@@ -90025,6 +90061,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-same-paragraph-fifty-times",
+      "properties": {},
+      "to_id": "cap:bounded-reads"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-served-tool-surface-matches-its-goldens",
       "properties": {},
       "to_id": "ifc:mcp-tools"
@@ -91006,6 +91048,14 @@
         "action": "created"
       },
       "to_id": "art:render-views"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:repair-notes-lifted-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:repair-notes-lifted-test"
     },
     {
       "edge_type": "YIELDED",
@@ -93281,6 +93331,17 @@
       }
     },
     {
+      "node_id": "art:repair-notes-lifted-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:a01343b1c8eca823cbcf68d5f2a804085b2f7ab490dd33d5595330e1ecff0c05",
+        "location": "crates/reflow2-mcp/tests/the_same_paragraph_fifty_times.rs",
+        "name": "the_same_paragraph_fifty_times.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:reply-budget-test",
       "node_type": "Artifact",
       "properties": {
@@ -94268,7 +94329,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9f39a6cdcf57a55c9839c25b5eb47b83083c690403776f4762b3cded3e3c3bc6",
+        "checksum": "sha256:47bedf3cfef12b1520d642e656b0eadf3243eff41d20a32e6389d1f098bd302f",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -101966,6 +102027,15 @@
       "properties": {
         "change_type": "deprecation",
         "name": "The content-store retirement now OBSOLETES everything its own text says it removed, not just one capability of five. FOUND WITHIN MINUTES OF SHIPPING THE READER FIX, 2026-08-12, and BY that fix: with `discontinued` finally visible on a read, `cap:content-manifest` came back `realized / discontinued:false` for a tool that no longer exists. `dec:the-content-store-is-discontinued` (accepted 2026-08-09) names its casualties explicitly — \"content_put / content_get / content_exists / CONTENT_MANIFEST, content.rs, content_tools.rs, the --content-path flag, and BOTH TEST FILES\" — but its OBSOLETES edges reached `cap:content-store` and the five Decisions it supersedes, and nothing else. THE RECORD CONTRADICTED ITSELF: the prose said removed, the structure said live. FOUR NODES WERE STRANDED, AND THE TWO WORST ARE VERIFICATIONS. `ver:content-store` and `ver:content-surface` both read `passing`, last_run_at 2026-07-31, for test files deleted on 2026-08-09 — a PASSING CHECK IS THE STRONGEST CLAIM THIS SYSTEM MAKES, and both were attached to nothing while sitting inside the 138-passing count the graph report shows. `cap:content-manifest` (realized) and `cap:session-artifacts` (VERIFIED, and its whole mechanism was content_put) were the other two. THIS RECORDS AN EXISTING DECISION RATHER THAN MAKING A NEW ONE — Anthony's word 2026-08-12, \"go ahead and draw the edges\", given after being shown that it moves delivery arithmetic, silences three detectors on those nodes, and changes the confirmed/passing counts. He was asked precisely because this project treats those numbers carefully; the edges make the structure agree with prose he had already accepted. ⭐ THE GENERALISABLE PART, and the reason this is worth reading later: A RETIREMENT IS DRAWN ONE EDGE AT A TIME WHILE THE THING BEING RETIRED IS A CLUSTER — a capability, its siblings, its verifications, its artifacts. Nothing checks that a discontinuation covers everything its own decision text names, and nothing did here. That gap is why four nodes sat wrong for three days with every gate green, and it is a candidate detector: a Decision whose text names removals that carry no OBSOLETES."
+      }
+    },
+    {
+      "node_id": "chg:the-same-paragraph-fifty-times",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "detect_defects sends each repair explanation once instead of once per row — 52% of the reply was three paragraphs repeated",
+        "subject": "system"
       }
     },
     {
@@ -111414,6 +111484,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered render_views.py"
+      }
+    },
+    {
+      "node_id": "frag:art:repair-notes-lifted-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered the_same_paragraph_fifty_times.rs"
       }
     },
     {
@@ -121071,6 +121151,18 @@
       }
     },
     {
+      "node_id": "fact:the-same-paragraph-fifty-times",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "OVER HALF OF `detect_defects` WAS THREE PARAGRAPHS REPEATED. Measured 2026-08-23 with the duplicate emission already gone: 46,399 characters, 45,186 of them findings — and 52.3% of THOSE were one field, `repair_is_a_judgement`. 50 rows carrying 3 DISTINCT VALUES: one 797-character paragraph 24 times, one 216-character paragraph 8 times, 18 rows with none. The field is `Option<&'static str>` — a fixed literal per detector branch — so it is boilerplate BY CONSTRUCTION, and nothing in the repo reads it as data. Sending each once: 46,314 → 26,169 bytes on the wire. || THIS IS A DIFFERENT SHAPE FROM THE TWO FIXES BEFORE IT AND THE DIFFERENCE IS THE POINT. `detect_gaps` WITHHOLDS prose when a reply will not fit; `graph_report` WITHHOLDS a list unless asked. Nothing is withheld here — no list shortened, no prose truncated, no judgement about what a reader needs — so it needs no flag, no budget and no note about what was lost. ⇒ WHEN A REPLY IS TOO BIG, ASK WHETHER IT IS BIG OR MERELY REPETITIVE BEFORE REACHING FOR A BUDGET. Three tools, three different answers: withhold, withhold-unless-asked, and stop repeating. || THE READER'S RULE IS TOTAL, WHICH IS WHY A MAP IS NOT SIMPLY A SUBSTITUTE: `row.repair_is_a_judgement ?? map[row.category]`. A row keeps its own text whenever that text is not the one its category holds, so a future detector giving one category two explanations cannot silently hand a row the wrong one. And a category with only ONE row is not lifted at all — a map entry plus the sentence explaining the map costs more than one paragraph inline, and a mechanism that fires where it does not pay is how a reply grows while claiming to shrink. || ⚠️ THE BUG I INTRODUCED AND THE INERT TEST THAT LET IT THROUGH, both worth more than the fix. `Scoped<T>` names its list `items`, the unscoped reply names it `defects` — the first version looked only for `defects` and was A SILENT NO-OP ON EVERY SCOPED CALL. Found by driving the built binary, not by a test. THEN THE TEST WRITTEN FOR IT PASSED AGAINST THE BUG: its fixture produced no note-bearing findings inside the region, so the assertion loop never executed. Caught only by reintroducing the bug and watching the test stay green. The categories that carry a repair note are the ones whose findings are DISCONNECTED BY DEFINITION, so a synthetic region holding several of them is awkward to build — the shape handling is now pinned directly on both list shapes instead of through a graph that may or may not contain the case. ⇒ A TEST THAT ITERATES A COLLECTION ASSERTS NOTHING WHEN THE COLLECTION IS EMPTY, and a fixture is not evidence that it is not. || SOURCE: measured 2026-08-23 on reflow2 0.38.0, driving the built binary over real stdio.",
+        "subject_id": "cmp:heal",
+        "valid_from": "2026-08-23"
+      }
+    },
+    {
       "node_id": "fact:the-se-deferrals-stated-precondition-has-been-met",
       "node_type": "TemporalFact",
       "properties": {
@@ -123518,6 +123610,20 @@
       }
     },
     {
+      "node_id": "ver:the-same-paragraph-fifty-times",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/the_same_paragraph_fifty_times.rs, 5 cases. Because nothing is withheld here, what has to hold is that the saving cannot make a reader WRONG: every finding still resolves by `row.repair_is_a_judgement ?? map[row.category]`; a row whose text differs from its category's keeps its own, so the fallback is never merely probably right; the lift fires on BOTH list shapes (`defects` unscoped, `items` scoped); and it does not fire on a category with one row, where a map entry plus the sentence explaining it costs more than the paragraph inline. THE SHAPE CASE IS PINNED DIRECTLY RATHER THAN THROUGH A FIXTURE, and that is the finding: the first version of it passed against the bug it was written for, because the categories carrying a repair note are the ones whose findings are disconnected by definition, so its scoped region held none and the assertion loop never executed.",
+        "findings": "5 cases passing, alongside `cargo test --workspace` (50 suites, 0 failures), fmt, mcp clippy, skill_lint, smoke_mcp and all 155 toolsnaps. MEASURED: detect_defects 46,314 → 26,169 bytes on the wire, all 50 findings present, every one resolving to its explanation; scoped proj:reflow2 at depth 3 also lifts (10,243 bytes, 18 rows, none left inline). PROVEN NON-INERT TWICE, and the second time is the finding: with lifting removed entirely one case fails; with the SCOPED-BLIND bug restored (looking only for `defects`, so `Scoped<T>`'s `items` is untouched) the shape case fails. IT DID NOT, IN ITS FIRST FORM. That version drove a real fixture whose scoped region contained no note-bearing findings, so its assertion loop never executed and it stayed green against the exact bug it was written for. Rewritten to pin both list shapes directly.",
+        "kind": "verification",
+        "last_run_at": "2026-08-23",
+        "level": "integration",
+        "method": "test",
+        "name": "detect_defects sends each repair explanation once, and every finding still resolves to its own",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-served-tool-surface-matches-its-goldens",
       "node_type": "Verification",
       "properties": {
@@ -123717,7 +123823,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f1e597b515a7846fc0a571d9dfbf5f5ea9db3977a22a1bca637bf05662d6cf3a",
+  "prev_content_hash": "sha256:4a41806a2cb92933e97a5f0613bfd50cc60c14f4a7ace049aa62ff715216931a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
