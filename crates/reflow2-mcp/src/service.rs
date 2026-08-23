@@ -2365,6 +2365,20 @@ pub struct ScopeReq {
     pub depth: Option<usize>,
 }
 
+/// `graph_report`'s one argument.
+#[derive(Debug, Default, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct GraphReportReq {
+    /// Return EVERY check with its status and last run, instead of the digest.
+    ///
+    /// Off by default because the roll was 152,803 of this report's 166,934
+    /// characters — 91.5% of the one read a session makes to decide what to look
+    /// at, spent on a list whose content is "196 passing, 1 planned". Ask for it
+    /// when you actually want the roll; `loop_status`'s `full_list` points here.
+    #[serde(default)]
+    pub include_verifications: bool,
+}
+
 /// `detect_gaps`'s arguments: a scope, and a ceiling on the reply.
 ///
 /// A type of its own rather than a `budget_chars` bolted onto [`ScopeReq`],

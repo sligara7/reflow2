@@ -49,7 +49,7 @@ macro_rules! j {
 #[tokio::test]
 async fn served_by_states_staleness_rather_than_leaving_it_to_be_inferred() {
     let s = ReflowService::in_memory().expect("in-memory service");
-    let report = j!(s.graph_report());
+    let report = j!(s.graph_report(Parameters(GraphReportReq::default())));
     let served = &report["served_by"];
 
     assert!(
@@ -68,7 +68,7 @@ async fn served_by_states_staleness_rather_than_leaving_it_to_be_inferred() {
 #[tokio::test]
 async fn a_binary_that_has_not_been_replaced_says_so() {
     let s = ReflowService::in_memory().expect("in-memory service");
-    let served = j!(s.graph_report())["served_by"].clone();
+    let served = j!(s.graph_report(Parameters(GraphReportReq::default())))["served_by"].clone();
 
     // Linux only: elsewhere /proc is absent and `null` is the correct answer.
     if std::path::Path::new("/proc/self/exe").exists() {
@@ -94,7 +94,7 @@ async fn a_binary_that_has_not_been_replaced_says_so() {
 #[tokio::test]
 async fn unknown_is_never_reported_as_current() {
     let s = ReflowService::in_memory().expect("in-memory service");
-    let served = j!(s.graph_report())["served_by"].clone();
+    let served = j!(s.graph_report(Parameters(GraphReportReq::default())))["served_by"].clone();
     let stale = &served["stale"];
 
     assert!(

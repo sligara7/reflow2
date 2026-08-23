@@ -121,7 +121,7 @@ async fn golden_thread_and_reports() {
     );
 
     // graph_report is the rollup; node_counts + gap_count present.
-    let report = j!(s.graph_report());
+    let report = j!(s.graph_report(Parameters(GraphReportReq::default())));
     assert!(report["total_nodes"].as_u64().unwrap() >= 4);
     assert!(report["gap_count"].as_u64().unwrap() >= 1);
 
@@ -2698,10 +2698,10 @@ async fn an_empty_seat_is_refused_rather_than_quietly_defaulted() {
 #[tokio::test]
 async fn minting_a_seat_writes_nothing() {
     let s = claimable().await;
-    let before = j!(s.graph_report());
+    let before = j!(s.graph_report(Parameters(GraphReportReq::default())));
     let a = j!(s.mint_seat());
     let b = j!(s.mint_seat());
-    let after = j!(s.graph_report());
+    let after = j!(s.graph_report(Parameters(GraphReportReq::default())));
     assert_eq!(
         before["node_count"], after["node_count"],
         "minting a seat must not touch the graph"

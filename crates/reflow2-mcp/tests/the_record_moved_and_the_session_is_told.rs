@@ -465,7 +465,8 @@ fn the_sync_record_is_readable_without_opening_the_graph() {
 // stays a conscious act (`dec:ask-not-repair`).
 // ---------------------------------------------------------------------------
 
-use reflow2_mcp::service::ReflowService;
+use reflow2_mcp::service::{GraphReportReq, ReflowService};
+use rmcp::handler::server::wrapper::Parameters;
 
 /// A service over a real store, plus that store's path. `in_memory` will not do:
 /// the finding is gated on a `graph_path`, which an in-memory service has not
@@ -480,7 +481,10 @@ fn service_on_disk(tag: &str) -> (Scratch, ReflowService, String) {
 /// would have seen. Deliberately through a real tool rather than the internal:
 /// what matters is that the finding reaches somebody who never asked for it.
 async fn hint_from_a_read(svc: &ReflowService) -> Option<String> {
-    let result = svc.graph_report().await.expect("tool ok");
+    let result = svc
+        .graph_report(Parameters(GraphReportReq::default()))
+        .await
+        .expect("tool ok");
     let out = result
         .structured_content
         .as_ref()

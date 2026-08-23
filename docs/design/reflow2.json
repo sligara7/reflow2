@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:f1e597b515a7846fc0a571d9dfbf5f5ea9db3977a22a1bca637bf05662d6cf3a",
+  "content_hash": "sha256:4a41806a2cb92933e97a5f0613bfd50cc60c14f4a7ace049aa62ff715216931a",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -12895,6 +12895,51 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-report-is-not-a-list-of-every-check",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-report-is-not-a-list-of-every-check",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-report-is-not-a-list-of-every-check",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:bounded-reads"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-report-is-not-a-list-of-every-check",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-report-is-not-a-list-of-every-check",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:a-required-interface-is-not-an-unprovided-one",
       "properties": {
         "accepted_baseline": true,
@@ -14080,6 +14125,15 @@
         "action": "modified"
       },
       "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-86120115ec83ae15",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:server-currency-test"
     },
     {
       "edge_type": "CHANGED",
@@ -84752,6 +84806,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:report-roll-withheld-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:bounded-reads"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:sanitize",
       "properties": {
         "completeness": "complete"
@@ -88888,6 +88951,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-report-is-not-a-list-of-every-check",
+      "properties": {},
+      "to_id": "cap:bounded-reads"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-revising-write-says-whether-the-state-survived",
       "properties": {},
       "to_id": "cap:a-revising-write-says-whether-the-state-survived"
@@ -90961,6 +91030,14 @@
         "action": "created"
       },
       "to_id": "art:report"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:report-roll-withheld-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:report-roll-withheld-test"
     },
     {
       "edge_type": "YIELDED",
@@ -93239,6 +93316,17 @@
       }
     },
     {
+      "node_id": "art:report-roll-withheld-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:4153e2b121b9d7c82e33bca52d8f9111465f6537d0ebcc5d6e8ccbecaf383232",
+        "location": "crates/reflow2-mcp/tests/a_report_is_not_a_list_of_every_check.rs",
+        "name": "a_report_is_not_a_list_of_every_check.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:sanitize",
       "node_type": "Artifact",
       "properties": {
@@ -93538,7 +93626,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:88c9a74d46a1db42323c172030fec5203761fc7f6931ef692814c85fad22f553",
+        "checksum": "sha256:42c6554f25714be6d982a8f946c3617f20dda3f32448aca7f349f114ed645bef",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/the_server_says_when_it_is_stale.rs",
         "name": "the_server_says_when_it_is_stale.rs",
@@ -93551,7 +93639,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6350b2aea267c1e84c6c568cc55efecdeb7aaeb8f4df89d1b1065a16a73756ba",
+        "checksum": "sha256:88146fb2ba58a6c5ce1a7f7efcbcf694bbe554cdc49614a8e1196910782c7bc2",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -94180,7 +94268,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1488c1070be4230addd912e661b70556ccf551dab1331859f7ac45e2ae3bdfa6",
+        "checksum": "sha256:9f39a6cdcf57a55c9839c25b5eb47b83083c690403776f4762b3cded3e3c3bc6",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -97191,6 +97279,15 @@
       }
     },
     {
+      "node_id": "chg:a-report-is-not-a-list-of-every-check",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "graph_report withholds the full verification roll by default — 91.5% of the orientation read was one list",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:a-required-interface-is-not-an-unprovided-one",
       "node_type": "ChangeEvent",
       "properties": {
@@ -98141,6 +98238,16 @@
         "change_type": "new_feature",
         "detected_at": "2026-07-31",
         "name": "PR #2 (fix/surface-last-run-at): detect.rs and report.rs now carry Verification.last_run_at — a failing gap says WHEN the check last ran, and a `failing` that never ran says 'never run' rather than implying a measurement was taken; loop_status and graph_report list each check with its status, last_run_at and how many nodes it speaks for. Deliberately not wired into loop_status's `clean`/`next`: visibility, not a new nag. NO DESIGN NODE MOVED, which is why this is design_holds. Whether this earns a capability of its own is OPEN and is the user's call — note that it is NOT cap:verification-freshness (BL-106, still `planned`), which is the confirmation-ledger freshness fact and a different surface. Until then last_run_at stays what it has been since it was added: written by verify.rs and read by nothing in the core."
+      }
+    },
+    {
+      "node_id": "chg:accept-86120115ec83ae15",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-23",
+        "name": "Call-site only: graph_report now takes a parameter, so this test passes GraphReportReq::default(). What the check asserts — that the server says when it is stale — is unchanged.",
+        "subject": "system"
       }
     },
     {
@@ -111340,6 +111447,16 @@
       }
     },
     {
+      "node_id": "frag:art:report-roll-withheld-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_report_is_not_a_list_of_every_check.rs"
+      }
+    },
+    {
       "node_id": "frag:art:sanitize",
       "node_type": "Fragment",
       "properties": {
@@ -118132,6 +118249,18 @@
       }
     },
     {
+      "node_id": "fact:a-report-is-not-a-list-of-every-check",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "THE REPORT A SESSION READS TO DECIDE WHAT TO LOOK AT WAS 91.5% ROLL CALL. `graph_report` measured 166,934 characters AFTER the duplicate emission was already removed — 152,803 of them the full verification roll. 197 checks, 196 of them passing. The one read that exists to point a session somewhere spent nine tenths of itself saying '196 passing, 1 planned'. It is also what the where-am-i skill reads, so 'where does this design stand' was refused on a mature design. || AND 93% OF THE ROLL WAS ONE FIELD: `name`, 129,994 chars over 197 entries. 113 OF THE 197 NAMES RUN OVER 25 WORDS AND THE LONGEST IS 654 — whole reports written into a name because `description` was declared and unreachable from `add_verification` for a long time. ⇒ THE BULK WAS NOT INFORMATION, IT WAS A DATA-ENTRY SCAR, and the sharpest clue was already on the wire: `graph_report_markdown` renders THE SAME REPORT for a human in 6,172 bytes, 27× smaller. || BOTH MECHANISMS ALREADY EXISTED AND NEITHER HAD BEEN POINTED HERE. `vocabulary_coverage` withholds its flat list unless asked (`include_unused`); `loop_status` already returns a verification DIGEST with names cut at 25 words and the cut announced. Reusing that same digest is why the truncation is not written twice — and it is also why `loop_status`'s `full_list` pointer had to move from `graph_report` to `graph_report {include_verifications: true}`, or a withheld list would have been left with a stale retrieval instruction, which is worse than never withholding it. MEASURED: 166,934 → 15,480 bytes on the wire, roll still reachable at 165,207. || ⚠️ THE LIMIT, STATED RATHER THAN HIDDEN: the digest keeps every check that is NOT currently passing IN FULL, because that is what a reader acts on. So it is flat in the PASSING remainder, not in the check count. Here 196 of 197 pass and the saving is 11×; ON A DESIGN MID-BUILD WITH TWO HUNDRED `planned` CHECKS THIS REPORT WOULD BE LARGE AGAIN. That case is real, UNMEASURED, and deliberately not built for — the same 'measure before you cut' rule that cancelled the planned `loop_status` work an hour earlier. || A SECOND LIMIT WORTH SAYING: budgeting the report stops 113 essay-length names flooding a reply; IT DOES NOT MOVE THE REPORTS OUT OF THE NAME FIELDS. `add_verification` now reaches `description` and `findings`, so new checks land correctly and the existing 113 stay stranded. || SOURCE: measured 2026-08-23 on reflow2 0.38.0, driving the built binary over real stdio.",
+        "subject_id": "cmp:report",
+        "valid_from": "2026-08-23"
+      }
+    },
+    {
       "node_id": "fact:a-ruling-already-silences-orphan-node-but-cannot-be-counted",
       "node_type": "TemporalFact",
       "properties": {
@@ -121447,6 +121576,20 @@
       }
     },
     {
+      "node_id": "ver:a-report-is-not-a-list-of-every-check",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-mcp/tests/a_report_is_not_a_list_of_every_check.rs, 4 cases. THE ONE THAT MATTERS MOST IS THE POINTER: withholding a list is only honest while the instruction for getting it back is true, and `loop_status`'s digest sends readers to `graph_report` for the roll — so a rename of the flag here silently breaks a route over there. Both pointers are asserted to name `include_verifications`. The others pin that the default is the digest rather than the list; that the roll comes back whole when asked; that the digest is FLAT in the passing remainder while the roll is linear (40 more passing checks, growth compared); and that no other section of the report moved between the two forms — `loop_hint` excluded, because dec:read-hint-shape throttles it deliberately and comparing it would pin the throttle rather than the report. Proven non-inert: reverting to the always-full roll fails three of the four.",
+        "findings": "4 cases passing, alongside `cargo test --workspace` (50 suites, 0 failures), fmt, mcp clippy, skill_lint, smoke_mcp and all 155 toolsnaps. MEASURED: graph_report 166,934 → 15,480 bytes on the wire, the roll still reachable at 165,207, and both `full_list` pointers (its own digest and loop_status's) naming the flag. PROVEN NON-INERT: reverting to the always-full roll fails three of the four. TWO THINGS THE TESTS TAUGHT RATHER THAN CONFIRMED. (1) On a THREE-check design the digest is BIGGER than the roll it replaces (4,456 vs 4,050), because it carries a fixed sentence saying how to get the roll back — so the property worth pinning is not \"smaller\" but FLAT IN THE PASSING REMAINDER while the roll is linear, which is what turns 166,934 into 15,480 at 197 checks. (2) The first version of the flatness case padded with `planned` checks and failed, because the digest keeps every not-passing check IN FULL — which is correct, and is exactly the limit now recorded in `fact:a-report-is-not-a-list-of-every-check`.",
+        "kind": "verification",
+        "last_run_at": "2026-08-23",
+        "level": "integration",
+        "method": "test",
+        "name": "graph_report withholds the verification roll, and the pointer back to it resolves",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-revising-write-says-whether-the-state-survived",
       "node_type": "Verification",
       "properties": {
@@ -123574,7 +123717,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ace95248aeebd858dba81aaaf7d4e49d7449172af24cd6532ef06565dad175e8",
+  "prev_content_hash": "sha256:f1e597b515a7846fc0a571d9dfbf5f5ea9db3977a22a1bca637bf05662d6cf3a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
