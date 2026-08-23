@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:f3d724d4024816d9376ae8e7598f00c1c60ca5452ae759d99c04db58e243008f",
+  "content_hash": "sha256:4c95e41cf3642982aee6bbaa3692fbe6b4812eca9c7346b68d68745a30d6d80b",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -9263,6 +9263,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-contract-is-declared-at-the-lowest-level-and-rolled-up",
+      "properties": {
+        "acted_at": "2026-08-23",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-critical-path-through-the-undecided",
       "properties": {
         "acted_at": "2026-08-10",
@@ -11461,6 +11470,15 @@
     {
       "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:eed3ee3e11fcfe41",
+      "properties": {
+        "acted_at": "2026-08-23",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:f384097e7d8b01b0",
       "properties": {
         "acted_at": "2026-08-23",
         "role": "approver"
@@ -36593,9 +36611,33 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:agent",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:allocate",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:alternatives",
       "properties": {},
       "to_id": "dec:fork-point-address"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:artifact",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:budget",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -36617,9 +36659,33 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:compare",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:confirm",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:degraded",
       "properties": {},
       "to_id": "decision:ack:532359c4b9e132a3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:detect",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:dimensions",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -36635,6 +36701,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:drift",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:export",
       "properties": {},
       "to_id": "dec:export-door-spof-accepted"
@@ -36647,15 +36719,57 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:export",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:fielded",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:flow",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:genesis",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:graph",
       "properties": {},
       "to_id": "dec:graph-spof-accepted"
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:graph",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:heal",
       "properties": {},
       "to_id": "dec:merge-survivor-provenance"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:heal",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:hierarchy",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -36671,6 +36785,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:ingest",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:llm",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:merge",
       "properties": {},
       "to_id": "dec:merge-three-way"
@@ -36683,9 +36809,21 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:nodes",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:nudge",
       "properties": {},
       "to_id": "decision:ack:cd7e9eaaeba49218"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:operate",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -36695,9 +36833,27 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:propagate",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:provenance",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:registry",
       "properties": {},
       "to_id": "dec:one-process-many-stores"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:report",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -36707,15 +36863,39 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:sanitize",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:schema",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:scope",
       "properties": {},
       "to_id": "decision:ack:2081c4b64282a08b"
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:scope",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:search",
       "properties": {},
       "to_id": "dec:bl-103"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:search",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -36767,6 +36947,18 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:structure",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:surprises",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:sync",
       "properties": {},
       "to_id": "decision:ack:fc0919cac4f2727a"
@@ -36779,9 +36971,21 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:temporal",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:verify",
       "properties": {},
       "to_id": "dec:bl-185"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:verify",
+      "properties": {},
+      "to_id": "decision:ack:f384097e7d8b01b0"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -107562,10 +107766,10 @@
       "node_id": "dec:idea-a-contract-is-declared-at-the-lowest-level-and-rolled-up",
       "node_type": "Decision",
       "properties": {
-        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-23. THIS IS HIS ANSWER TO THE QUESTION `fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet` DELIBERATELY LEFT TO THE OWNER: which level should carry contracts.\n\nHIS WORDS: \"say we have a subsystem_A <--> subsystem_B interface - my thoughts this should be defined at the lowest level that actually defines the interface and the rest is rolled up so that if somebody asked at a high level, 'is there an interface between subsystem_A and subsystem_B?' the 'view' capturing at subsystem to subsystem level would say 'yes', but the graph would actually show it is actually subsystem_A.component_2 <--> subsystem_B.component_5 that the interface contract is actually defined.\"\n\nTHE DESIGN ALREADY DOES THE FIRST HALF, AND THE MEASUREMENT THAT CALLED IT A DEFECT WAS READING IT AS ONE. `fact:the-eight-subsystems-are-groupings-not-black-boxes` (2026-08-17) recorded '0 of 8 subsystems provide an interface - EVERY interface in the design is provided by a LEAF component one level down' and read that as the tier having no contracts. UNDER THIS PROPOSAL THAT IS NOT A DEFECT, IT IS THE RULE BEING FOLLOWED. A contract belongs where it is defined; a subsystem carrying its own copy would be duplicating its child's. (Re-measured 2026-08-23: it is now 4 of 10 subsystems providing, so the tier is no longer silent either way.)\n\n=> SO WHAT IS MISSING IS NOT CONTRACTS, IT IS THE ROLL-UP. That is already an open question of its own: `dec:idea-a-view-can-slice-by-altitude-not-only-by-aspect` records that reflow2's ten views all slice by ASPECT and none by ALTITUDE, so 'show me the top level' has no projection behind it. His proposal and that one are the same need approached from opposite ends.\n\nWHAT IT WOULD SETTLE, and this is the sharp part: `undeclared_seam` reports 64 of 72 module pairs uncontracted, and `fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet` measured that the number CANNOT MOVE - couplings come from DEPENDS_ON and contracts from PROVIDES/CONSUMES and the two sets are disjoint by construction. Verified independently 2026-08-23: all 64 pairs are inside ONE crate, zero cross a crate boundary, and 44 of the 55 files in reflow2-core carry `impl DesignGraph`, so most of those 'couplings' are impl blocks of the same struct. Under a roll-up rule the detector asks a different question: not 'does this pair share a contract' but 'is this coupling covered by a contract declared at or below it'.\n\nCOUNTER-ARGUMENTS, recorded beside the idea rather than against it:\n* A roll-up VIEW must be a pure projection - this project's standing rule is that a view is a projection and renderer fill-ins are defects. Answering 'yes, A and B interface' when the edge exists only between two leaves is a DERIVATION, and it must be derived on read, never written back as an edge between the subsystems, or the graph starts asserting contracts nobody declared.\n* It does not say what to do about coupling covered by NO contract at any level. That is still the real finding, and a carelessly written roll-up could hide it.\n\nNOT ESTABLISHED: whether DEPENDS_ON between two impl blocks of one struct is a dependency worth recording at all - the other half of what that fact left open, and untouched by this.",
-        "name": "OPEN — a contract is declared at the LOWEST level that actually defines it, and higher levels answer by ROLL-UP",
-        "rationale": "Recorded via the brainstorm skill at `proposed`. It is the owner's answer to a question a measured finding explicitly left to him, which is why it is captured as a fully-formed option rather than a musing - but it is NOT promoted, because he has not said to build it.",
-        "status": "proposed"
+        "decision": "ACCEPTED 2026-08-23 on Anthony's word. Captured the day before as brainstorming and promoted unchanged when he was asked to settle the seam question — the wording below is his, from the capture, and is preserved rather than rewritten.\n\nTHIS IS HIS ANSWER TO THE QUESTION `fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet` DELIBERATELY LEFT TO THE OWNER: which level should carry contracts.\n\nHIS WORDS: \"say we have a subsystem_A <--> subsystem_B interface - my thoughts this should be defined at the lowest level that actually defines the interface and the rest is rolled up so that if somebody asked at a high level, 'is there an interface between subsystem_A and subsystem_B?' the 'view' capturing at subsystem to subsystem level would say 'yes', but the graph would actually show it is actually subsystem_A.component_2 <--> subsystem_B.component_5 that the interface contract is actually defined.\"\n\nTHE DESIGN ALREADY DOES THE FIRST HALF, AND THE MEASUREMENT THAT CALLED IT A DEFECT WAS READING IT AS ONE. `fact:the-eight-subsystems-are-groupings-not-black-boxes` (2026-08-17) recorded '0 of 8 subsystems provide an interface - EVERY interface in the design is provided by a LEAF component one level down' and read that as the tier having no contracts. UNDER THIS RULE THAT IS NOT A DEFECT, IT IS THE RULE BEING FOLLOWED. A contract belongs where it is defined; a subsystem carrying its own copy would be duplicating its child's. (Re-measured 2026-08-23: it is now 4 of 10 subsystems providing, so the tier is no longer silent either way.)\n\n=> SO WHAT IS MISSING IS NOT CONTRACTS, IT IS THE ROLL-UP. That is already an open question of its own: `dec:idea-a-view-can-slice-by-altitude-not-only-by-aspect` records that reflow2's ten views all slice by ASPECT and none by ALTITUDE, so 'show me the top level' has no projection behind it. This rule and that one are the same need approached from opposite ends — and that one is STILL OPEN, so accepting this does not mean the roll-up view exists.\n\nWHAT IT SETTLED, and this is the sharp part: `undeclared_seam` reports 64 of 72 module pairs uncontracted, and `fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet` measured that the number CANNOT MOVE - couplings come from DEPENDS_ON and contracts from PROVIDES/CONSUMES and the two sets are disjoint by construction. Verified independently 2026-08-23: all 64 pairs are inside ONE crate, zero cross a crate boundary, and 44 of the 55 files in reflow2-core carry `impl DesignGraph`, so most of those 'couplings' are impl blocks of the same struct. Under this rule the question becomes not 'does this pair share a contract' but 'is this coupling covered by a contract declared at or below it' — and `seam_coverage {altitude}` answers it: 72/8/64 at module, 11/11/0 at subsystem. The gap itself was acknowledged once on this design (`decision:ack:f384097e7d8b01b0`), NOT silenced by changing a detector default.\n\nCOUNTER-ARGUMENTS, recorded beside the idea before it was settled and still live:\n* A roll-up VIEW must be a pure projection - this project's standing rule is that a view is a projection and renderer fill-ins are defects. Answering 'yes, A and B interface' when the edge exists only between two leaves is a DERIVATION, and it must be derived on read, never written back as an edge between the subsystems, or the graph starts asserting contracts nobody declared. `seam_coverage` honours this: it writes nothing back.\n* It does not say what to do about coupling covered by NO contract at any level. That is still the real finding, and a carelessly written roll-up could hide it. THIS IS WHY the detector was left answering at module level when the alternative was offered.\n\nNOT ESTABLISHED: whether DEPENDS_ON between two impl blocks of one struct is a dependency worth recording at all - the other half of what that fact left open, offered to him as the root fix on 2026-08-23 and not taken in that pass.",
+        "name": "A contract is declared at the LOWEST level that actually defines it, and higher levels answer by ROLL-UP",
+        "rationale": "Captured at `proposed` via the brainstorm skill, 2026-08-23, as the owner's answer to a question `fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet` explicitly left to him. ACCEPTED the same day, on Anthony's word, when he was asked to settle the 64-uncontracted-pairs seam question and chose to promote this position rather than restate it. He was offered, and declined, defaulting the undeclared-seam detector to subsystem altitude — so this rule governs how contracts are DECLARED, and changes nothing about what the detector REPORTS.",
+        "status": "accepted"
       }
     },
     {
@@ -111527,6 +111731,16 @@
         "decision": "Accepted the gap gap:eed3ee3e11fcfe41.",
         "name": "Reviewed: gap:eed3ee3e11fcfe41",
         "rationale": "Anthony, 2026-08-23: this is the BACKLOG, not a hole. These requirements are recorded forward work and the trace should keep showing them until something delivers them; dropping them to shorten the list would trade a commitment record for a to-do list. Reviewed as a class rather than one at a time, and the review expires per requirement if its text changes, so a requirement that is quietly re-scoped comes back to be judged again.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:f384097e7d8b01b0",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:f384097e7d8b01b0.",
+        "name": "Reviewed: gap:f384097e7d8b01b0",
+        "rationale": "These 64 boundaries are held in the code, not in the design, and that is correct rather than missing. A contract is declared at the lowest level that actually defines it and higher levels answer by roll-up (`dec:idea-a-contract-is-declared-at-the-lowest-level-and-rolled-up`, accepted 2026-08-23 on Anthony's word) — so the absence of an interface between two modules of one subsystem is the rule being followed, not a hole in the record.\n\nMeasured, not asserted: at module altitude `seam_coverage` reads 72 couplings, 8 covered, 64 uncovered; lifted to subsystem it reads 11 couplings, 11 covered, 0 uncovered. Independently, all 64 pairs sit inside ONE crate with zero crossing a crate boundary, and 44 of the 55 files in reflow2-core carry `impl DesignGraph` — so the majority of these \"couplings\" are impl blocks of the same struct calling each other. Writing 64 interface contracts for them would document a struct's method calls as system boundaries.\n\nTHE ACKNOWLEDGEMENT IS DELIBERATELY NARROW. It accepts this finding on THIS design; it does not change what the undeclared-seam detector reports anywhere else. Defaulting the detector to subsystem altitude was offered and declined, because a roll-up answering \"covered\" at subsystem level says nothing about a coupling covered by no contract at ANY level — the counter-argument Anthony recorded beside his own idea before he was asked to settle it.\n\nWHAT WOULD OVERTURN THIS: reflow2 splitting into separately-released crates. The moment one of these module pairs crosses a release boundary it becomes a real contract, and this reason stops holding for that pair. The review expiring when any of the 31 affected components change is the mechanism that should catch it.",
         "status": "accepted"
       }
     },
@@ -116984,12 +117198,13 @@
       "node_id": "question:f384097e7d8b01b0",
       "node_type": "Question",
       "properties": {
+        "answer": "Anthony, 2026-08-23. Coupling internal to one binary is NOT something he wants contracts written for — the 64 pairs are not to be modelled as interfaces.\n\nTHE SUBSTANCE OF HIS ANSWER WAS ALREADY ON THE RECORD, in his own words, captured the same day as brainstorming at `dec:idea-a-contract-is-declared-at-the-lowest-level-and-rolled-up`: an interface \"should be defined at the lowest level that actually defines the interface and the rest is rolled up so that if somebody asked at a high level, 'is there an interface between subsystem_A and subsystem_B?' the 'view' capturing at subsystem to subsystem level would say 'yes', but the graph would actually show it is actually subsystem_A.component_2 <--> subsystem_B.component_5 that the interface contract is actually defined.\" Asked to settle it, he chose to PROMOTE that position rather than restate it — it is now `accepted`.\n\nWHAT HE DECLINED, AND WHY IT MATTERS: offered the option of defaulting the undeclared-seam finding to subsystem altitude, he declined it. The detector goes on answering at module level for every project. His own counter-argument, recorded beside the idea before he was asked, is the reason it would have been wrong: a roll-up that answers \"covered\" at subsystem level says nothing about coupling covered by NO contract at any level, and `seam_coverage`'s `scope_note` says the same thing in the tool. So the finding is accepted ONCE, on this design, with his name on it — not silenced everywhere by a changed default.\n\nMEASUREMENTS THIS RESTS ON, both 2026-08-23: module altitude reads 72 couplings / 8 covered / 64 uncovered, subsystem altitude reads 11 / 11 / 0; and all 64 pairs are inside ONE crate with zero crossing a crate boundary, 44 of the 55 files in reflow2-core carrying `impl DesignGraph` — most of the pairs are impl blocks of the same struct.\n\nSTILL NOT SETTLED by this answer, and named so it is not mistaken for closed: whether DEPENDS_ON between two impl blocks of one struct is a dependency worth recording at all. He was offered that as the root fix and did not take it in this pass.",
         "asked_at": "2026-08-23",
         "context_setter": "64 pair(s) of parts depend on each other with no contract written down",
         "gap_id": "gap:f384097e7d8b01b0",
         "question": "Sixty-four pairs of components depend on each other with no interface recorded between them. Model those seams as interfaces, or is coupling internal to one binary not something you want contracts written for?",
         "rephrase_degraded": false,
-        "status": "asked"
+        "status": "answered"
       }
     },
     {
@@ -127895,7 +128110,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f23e3109a22e7141cbc4202e23fda626925b07878efc9a34b0b52323a4cd1381",
+  "prev_content_hash": "sha256:f3d724d4024816d9376ae8e7598f00c1c60ca5452ae759d99c04db58e243008f",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
