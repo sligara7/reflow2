@@ -1,0 +1,22 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Which boundaries between parts are covered by a contract — ANSWERED AT THE ALTITUDE YOU ASK AT. Pass `altitude` (a Component `level`: `subsystem`, `system`, …) and every coupling and every contract is lifted to the nearest container at that level before they are compared, so the question becomes \"is this coupling covered by a contract declared at or BELOW it?\" rather than \"do these two exact modules share one?\". Omit it for the raw module-level answer. WHY IT MATTERS: a design that declares its contracts at the subsystem boundary and its dependencies between modules reads as having NO contracts at all — measured on reflow2 itself, 64 of 72 couplings undeclared at module level and NOTHING undeclared once lifted to subsystem. `covered_by` names the LEAF pair where each contract actually lives, because \"yes, there is an interface\" without saying where it is declared sends the reader hunting. 🛑 READ `scope_note`: a zero here means every coupling VISIBLE AT THIS ALTITUDE is covered, and says nothing about the finer ones underneath. NOTHING IS WRITTEN BACK — this is derived on every call, because storing a rolled-up edge would make the graph assert a contract nobody declared.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "altitude": {
+        "default": null,
+        "description": "The `Component.level` to answer at — `subsystem`, `system`,\n`system_of_systems`, `enterprise`. Omit for the raw module-level answer.\n\nBoth couplings AND contracts are lifted to this level before they are\ncompared. Lifting one side alone would not help: on this design the two\nsets are disjoint by construction, because dependencies are recorded\nbetween modules and contracts between the boxes that contain them.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "type": "object"
+  },
+  "name": "seam_coverage"
+}

@@ -96,6 +96,34 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Which boundaries between parts are covered by a contract \u{2014} ANSWERED AT \
+                       THE ALTITUDE YOU ASK AT. Pass `altitude` (a Component `level`: `subsystem`, \
+                       `system`, \u{2026}) and every coupling and every contract is lifted to the \
+                       nearest container at that level before they are compared, so the question \
+                       becomes \"is this coupling covered by a contract declared at or BELOW it?\" \
+                       rather than \"do these two exact modules share one?\". Omit it for the raw \
+                       module-level answer. WHY IT MATTERS: a design that declares its contracts at \
+                       the subsystem boundary and its dependencies between modules reads as having \
+                       NO contracts at all \u{2014} measured on reflow2 itself, 64 of 72 couplings \
+                       undeclared at module level and NOTHING undeclared once lifted to subsystem. \
+                       `covered_by` names the LEAF pair where each contract actually lives, because \
+                       \"yes, there is an interface\" without saying where it is declared sends the \
+                       reader hunting. \u{1F6D1} READ `scope_note`: a zero here means every coupling \
+                       VISIBLE AT THIS ALTITUDE is covered, and says nothing about the finer ones \
+                       underneath. NOTHING IS WRITTEN BACK \u{2014} this is derived on every call, \
+                       because storing a rolled-up edge would make the graph assert a contract \
+                       nobody declared.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn seam_coverage(
+        &self,
+        Parameters(req): Parameters<SeamCoverageReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        ok_json(g.seam_coverage(req.altitude.as_deref()).map_err(dyno_err)?)
+    }
+
+    #[tool(
         description = "What parts this design has, so a session that holds NOTHING can pick where \
                        to stand. The one orientation read that asks for no seed, no scope and no \
                        topic — call it at check-in, before you have a lane. Each row is a part the \

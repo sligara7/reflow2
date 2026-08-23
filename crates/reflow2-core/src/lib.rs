@@ -136,7 +136,7 @@ pub use ingest::{
 pub use llm::{
     LlmBackend, LlmError, LlmParams, LlmRequest, LlmResponse, MockLlmBackend, complete_json,
 };
-pub use maturity::{MaturityBand, MaturityProfile};
+pub use maturity::{CoveredSeam, MaturityBand, MaturityProfile, SeamCoverage};
 pub use merge::{
     AutoResolution, ConflictKind, MergeAction, MergeApplyReport, MergeConflict, MergeError,
     MergeProposal, MergeSummary, MergeUnit, Resolution, Source, merge_designs, resolve_merge,
