@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:cdd7fda0e1a95a04716ba7b92fa75271eba3d4bbf48e45929be004fe45d0e7b6",
+  "content_hash": "sha256:69d76e6beffec0e2640f9f7cdc590d9bb6b0df2fddce336c863786a97b6bcbde",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2817,6 +2817,22 @@
       "from_id": "dec:orientation-is-computed-not-written",
       "properties": {},
       "to_id": "dec:a-projection-is-named-and-the-battery-runs-over-it"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet",
+      "properties": {
+        "evidence": "That measurement ends by naming exactly this as the question it leaves to the owner — 'which level should carry contracts' — so the earlier fact saw this idea coming and this idea is the answer to it. Drawn FROM the fact TO this decision."
+      },
+      "to_id": "dec:idea-a-contract-is-declared-at-the-lowest-level-and-rolled-up"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:reflow2s-black-boxes-hold-no-functions-allocation-went-straight-to-the-modules",
+      "properties": {
+        "evidence": "That fact measured 177 of 178 ALLOCATED_TO edges landing on a module and DECOMPOSES at zero, and named the missing function layer as a real allocation-recording gap. It saw this question coming; this idea states what the missing layer would be. Drawn FROM the fact TO this decision."
+      },
+      "to_id": "dec:idea-a-capability-is-a-set-of-functions-and-a-black-box-delivers-functions"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -9204,6 +9220,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-capability-is-a-set-of-functions-and-a-black-box-delivers-functions",
+      "properties": {
+        "acted_at": "2026-08-23",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-capture-session-skill-the-user-types",
       "properties": {
         "acted_at": "2026-08-12",
@@ -9252,6 +9277,15 @@
       "from_id": "dec:idea-a-hosted-tier-of-many-single-writer-tenants",
       "properties": {
         "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-nested-part-has-an-address-not-only-a-parent",
+      "properties": {
+        "acted_at": "2026-08-23",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -29109,6 +29143,15 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-a-capability-is-a-set-of-functions-and-a-black-box-delivers-functions",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "That requirement says every element is a black box with INNER FUNCTION and interfaces. This idea says a black box delivers FUNCTIONS but not capabilities, and that a capability is a set of functions across several boxes. Both cannot sit comfortably while Capability is ALLOCATED_TO exactly one Component — the design has to say whether a capability lives in a box or across a configuration."
+      },
+      "to_id": "req:recursive-black-box-decomposition"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "dec:idea-a-change-upstream-reaches-the-sibling-that-never-asked",
       "properties": {
         "alignment": "supporting",
@@ -29125,6 +29168,15 @@
         "evidence": "Applies to OPTION (c) ONLY, and is drawn so the conflict cannot be missed if (c) is ever picked up. The source document proposes reflow2 'refuse to accept a passing verification that has never recorded a failing run' — a refusal is reflow2 validating a check rather than recording a claim, which is exactly what this accepted non-goal forbids. Options (a) and (b) do NOT conflict: recording what the author says a check was observed to do is the same class of instrument as provenance and the drift dispositions. Picking (c) means overturning this non-goal deliberately, not working around it."
       },
       "to_id": "dec:non-goal-reflow2-does-not-judge-whether-a-check-is-meaningful"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-a-contract-is-declared-at-the-lowest-level-and-rolled-up",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "That fact reads '0 of 8 subsystems provide an interface; every interface is provided by a leaf one level down' as the tier having NO CONTRACTS AT ALL. Under this proposal the same observation is the rule being correctly followed. Same measurement, opposite verdict — the design will have to pick which reading it holds."
+      },
+      "to_id": "fact:the-eight-subsystems-are-groupings-not-black-boxes"
     },
     {
       "edge_type": "CONTRADICTS",
@@ -30232,6 +30284,26 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:idea-gap-flows-to-the-dependency"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-a-contract-is-declared-at-the-lowest-level-and-rolled-up",
+      "properties": {
+        "evidence": "The roll-up half of this proposal IS an altitude view. Declaring a contract at the lowest level is only usable if a higher altitude can answer 'is there an interface between A and B', and that projection does not exist — so this idea is worth nothing unless that one lands first.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-a-view-can-slice-by-altitude-not-only-by-aspect"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-a-nested-part-has-an-address-not-only-a-parent",
+      "properties": {
+        "evidence": "An address through the spine only means anything because that requirement already demands nesting as deep as the design needs. Without recursive containment there is no path to address, so this idea rests entirely on that requirement holding.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:recursive-black-box-decomposition"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -88786,6 +88858,14 @@
     },
     {
       "edge_type": "RISKS",
+      "from_id": "dec:idea-a-nested-part-has-an-address-not-only-a-parent",
+      "properties": {
+        "evidence": "Option (b), a STORED dotted id, encodes a part's position into its identity — and that capability exists precisely so parts can be moved. Every use of it would make a stored address wrong. The idea as written threatens a capability shipped three days earlier."
+      },
+      "to_id": "cap:a-component-can-be-moved-not-just-given-another-parent"
+    },
+    {
+      "edge_type": "RISKS",
       "from_id": "dec:idea-embeddings-adoption",
       "properties": {
         "evidence": "CONDITIONAL, and the edge exists mainly so the tension is findable: this decision is still `proposed`, so nothing is risked today. Answering it YES is what would bear on req:deterministic-core, because an ANN index is approximate by construction and embeddings need a model. Recorded 2026-08-04 because the node had NO design edges at all — its only edge was AUTHORED_BY, so propagate_from reported 0 impacted and no detector could see it (the BL-162 shape: a Decision that governs nothing is invisible). The scope is narrower than the blanket reading: the risk is real for search_design and anything feeding a gate, and materially weaker for ingest resolution, whose output under dec:ask-not-repair is a merge_candidate a human rules on rather than a verdict.",
@@ -107173,6 +107253,16 @@
       }
     },
     {
+      "node_id": "dec:idea-a-capability-is-a-set-of-functions-and-a-black-box-delivers-functions",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-23, and he flagged it for checking himself: \"may have to verify this statement against true systems engineering doctrine.\"\n\nHIS WORDS: \"I believe a capability is a set of functions working together to deliver that capability. Black boxes deliver functionality, not necessarily a capability... then capabilities can be expressed at subsystem_B.component_1 (delivers function_K) <--> subsystem_A.component_2 (delivers function_L) <--> subsystem_C.component_5 (delivers function_J)... function_K + function_L + function_J = capability_R.\"\n\n✅ THE DOCTRINE CHECK HE ASKED FOR, and it supports him. UAF places Capability in the STRATEGIC domain — an ability to achieve a desired effect under specified standards and conditions — and it is realized by a CONFIGURATION of resources performing functions, never owned by one resource. DoDAF says the same through its matrices: CV-6 maps Capability to Operational Activities, and SV-5a is literally the Operational-Activity-to-Systems-Function traceability matrix — an N-to-N mapping, which only exists because one capability spans many functions across many systems. So 'a black box performs functions; a capability emerges from functions across boxes' is the doctrinal position, not a deviation from it.\n\n🛑 AND IT CONTRADICTS WHAT REFLOW2 DOES TODAY, which is why this matters more than the other two. Measured 2026-08-23: there is NO `Function` node type in the schema (29 types, none of them Function). Capability is joined to Component by ALLOCATED_TO, and `fact:reflow2s-black-boxes-hold-no-functions-allocation-went-straight-to-the-modules` measured 177 of 178 ALLOCATED_TO edges pointing at a MODULE, one at a subsystem, and DECOMPOSES at ZERO. reflow2 currently models a capability as belonging to ONE part. Under his reading that is the wrong shape: it collapses the function layer out and makes a capability something a box owns rather than something a configuration achieves.\n\nTHE OPTIONS:\n(a) ADD A `Function` NODE TYPE. Component PERFORMS Function; Capability is COMPOSED OF Functions. Doctrinally clean and it makes his three-part example expressible. COUNTER: a schema change is the most expensive kind here — it needs an upgrade doc and a foundation migration — and 182 existing allocations would have to mean something afterwards.\n(b) LET A CAPABILITY BE ALLOCATED TO SEVERAL COMPONENTS and read the set as the configuration. Cheap; no schema change; the edge already permits it. COUNTER: it loses WHICH function each part contributes, which is the whole content of his example — K, L and J are not interchangeable.\n(c) TREAT `Flow` AS THE FUNCTION LAYER. It already models an ordered process with steps and roled transitions. COUNTER: a Flow is a SEQUENCE and a capability is not necessarily sequential; forcing one into the other would misrepresent both.\n(d) DO NOTHING — one-part allocation is a simplification reflow2 chose, and it is adequate for the projects it serves.\n\nNOT ESTABLISHED: whether any USER of reflow2 has hit this. Every measurement behind it is from reflow2's own design, and `reflow2 is a wrench` says the test is whether a user's project needs it — nobody has asked that question yet.",
+        "name": "OPEN — is a capability a SET OF FUNCTIONS across several parts, with a black box delivering functions rather than capabilities? It would need a Function type reflow2 does not have",
+        "rationale": "Recorded via the brainstorm skill at `proposed`. Kept separate from the nesting and contract-level questions because it is the only one of the three that would change the SCHEMA, and it can be answered no whatever the other two decide.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-a-capture-session-skill-the-user-types",
       "node_type": "Decision",
       "properties": {
@@ -107199,6 +107289,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. From StoryFlow's unnumbered rule A, clause (d): \"A test never observed red proves nothing. Red-then-green, or mutate the fix and confirm the suite notices. A green suite says the tests pass — not that they would catch a regression.\"\n\n⭐ THE EVIDENCE THAT THIS IS REAL IS ALREADY IN THIS GRAPH, AND IT IS THE SAME SHAPE THAT JUSTIFIED `subject` EARLIER TODAY. 51 of 191 Verifications contain the word MUTATION in their prose — \"MUTATION-CHECKED FIVE WAYS, each failing exactly the tests that name it\", \"MUTATION-CHECKED against five seeded regressions\", \"WRITTEN BEFORE THE FIX: the four bug cases failed and all five counterweights passed\". The discipline is being practised, carefully, by whoever writes these. IT IS BEING WRITTEN INTO FREE TEXT BECAUSE THERE IS NOWHERE ELSE TO PUT IT. Nothing can count it, query it, or notice its absence — which is the exact argument that carried `ChangeSubject`, one field over.\n\nWHAT IT WOULD BE: a Verification records whether it has ever been observed FAILING — not as a status (status is now), but as a fact about its history. `set_verification_status(failing)` already exists, so the honest cheap version is derived rather than declared: has this check ever been written `failing`? On this design that answer is currently NO for essentially all 191, because a check is created and then set passing.\n\nTHREE FORMS, increasingly strong:\n(a) DERIVED — compute \"ever observed failing\" from the status history. Free, no new vocabulary, and worth nothing here because the history does not exist: statuses are overwritten, not journalled.\n(b) A FIELD the author sets — \"this check was observed red, on this date, by this means (red-then-green / mutation / seeded regression)\". Cheap, honest, and it makes the 51 prose paragraphs into something countable.\n(c) A REFUSAL — the document proposes reflow2 \"refuse to accept a `passing` verification that has never recorded a `failing` run\".\n\n🛑 (c) DIRECTLY CONTRADICTS AN ACCEPTED NON-GOAL and must not be built without overturning it. dec:non-goal-reflow2-does-not-judge-whether-a-check-is-meaningful says a passing Verification is a claim reflow2 RECORDS and never one it VALIDATES. Refusing a passing status is reflow2 judging the check. (b) does not cross that line — it records what the author says, exactly like `provenance` and the drift dispositions, and leaves the judging to a human.\n\nHONEST LIMIT, the same one req:a-fix-says-whether-it-corrected-the-cause states about itself: this records what the AUTHOR SAYS about their check. It cannot detect a check that was never really red but is claimed to have been. Worth having because the alternative is no signal at all; worth never overselling.\n\nWHY IT MATTERS BEYOND THIS PROJECT: 42 of this design's checks have never run at all, and nothing distinguishes them from the 188 marked passing in any rollup a user reads. \"Passing\" and \"never able to fail\" and \"never executed\" are three different states wearing one word.",
         "name": "OPEN — should a Verification record that it was once observed FAILING, so a check that could never have failed is distinguishable from one that passes? 51 of 191 already say so in prose",
         "rationale": "Recorded because the prose count is unusually strong evidence — 51 independent authors' paragraphs working around a missing field is the same measurement that justified the change-event axis, and it was found by reading the graph rather than by reasoning about it. Left open because form (c) contradicts an accepted non-goal, which is Anthony's to overturn or uphold, and because (b) adds vocabulary that will stay empty without the third leg.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-a-contract-is-declared-at-the-lowest-level-and-rolled-up",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-23. THIS IS HIS ANSWER TO THE QUESTION `fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet` DELIBERATELY LEFT TO THE OWNER: which level should carry contracts.\n\nHIS WORDS: \"say we have a subsystem_A <--> subsystem_B interface - my thoughts this should be defined at the lowest level that actually defines the interface and the rest is rolled up so that if somebody asked at a high level, 'is there an interface between subsystem_A and subsystem_B?' the 'view' capturing at subsystem to subsystem level would say 'yes', but the graph would actually show it is actually subsystem_A.component_2 <--> subsystem_B.component_5 that the interface contract is actually defined.\"\n\nTHE DESIGN ALREADY DOES THE FIRST HALF, AND THE MEASUREMENT THAT CALLED IT A DEFECT WAS READING IT AS ONE. `fact:the-eight-subsystems-are-groupings-not-black-boxes` (2026-08-17) recorded '0 of 8 subsystems provide an interface - EVERY interface in the design is provided by a LEAF component one level down' and read that as the tier having no contracts. UNDER THIS PROPOSAL THAT IS NOT A DEFECT, IT IS THE RULE BEING FOLLOWED. A contract belongs where it is defined; a subsystem carrying its own copy would be duplicating its child's. (Re-measured 2026-08-23: it is now 4 of 10 subsystems providing, so the tier is no longer silent either way.)\n\n=> SO WHAT IS MISSING IS NOT CONTRACTS, IT IS THE ROLL-UP. That is already an open question of its own: `dec:idea-a-view-can-slice-by-altitude-not-only-by-aspect` records that reflow2's ten views all slice by ASPECT and none by ALTITUDE, so 'show me the top level' has no projection behind it. His proposal and that one are the same need approached from opposite ends.\n\nWHAT IT WOULD SETTLE, and this is the sharp part: `undeclared_seam` reports 64 of 72 module pairs uncontracted, and `fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet` measured that the number CANNOT MOVE - couplings come from DEPENDS_ON and contracts from PROVIDES/CONSUMES and the two sets are disjoint by construction. Verified independently 2026-08-23: all 64 pairs are inside ONE crate, zero cross a crate boundary, and 44 of the 55 files in reflow2-core carry `impl DesignGraph`, so most of those 'couplings' are impl blocks of the same struct. Under a roll-up rule the detector asks a different question: not 'does this pair share a contract' but 'is this coupling covered by a contract declared at or below it'.\n\nCOUNTER-ARGUMENTS, recorded beside the idea rather than against it:\n* A roll-up VIEW must be a pure projection - this project's standing rule is that a view is a projection and renderer fill-ins are defects. Answering 'yes, A and B interface' when the edge exists only between two leaves is a DERIVATION, and it must be derived on read, never written back as an edge between the subsystems, or the graph starts asserting contracts nobody declared.\n* It does not say what to do about coupling covered by NO contract at any level. That is still the real finding, and a carelessly written roll-up could hide it.\n\nNOT ESTABLISHED: whether DEPENDS_ON between two impl blocks of one struct is a dependency worth recording at all - the other half of what that fact left open, and untouched by this.",
+        "name": "OPEN — a contract is declared at the LOWEST level that actually defines it, and higher levels answer by ROLL-UP",
+        "rationale": "Recorded via the brainstorm skill at `proposed`. It is the owner's answer to a question a measured finding explicitly left to him, which is why it is captured as a fully-formed option rather than a musing - but it is NOT promoted, because he has not said to build it.",
         "status": "proposed"
       }
     },
@@ -107248,6 +107348,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — Anthony thinking out loud, 2026-08-09, about using reflow2 behind a web app. Nothing here is intent and nothing has been chosen. DISTINCT FROM dec:live-tier, and the distinction is the whole point: that decision is about MANY WRITERS ON ONE DESIGN (the state-funeral case — thousands replanning one echeloned plan, which needs consensus and would mean replacing single-writer RocksDB). This is the opposite shape: N TENANTS, EACH WITH THEIR OWN graph_id AND ONE WRITER. No write contention, no consensus, no shared-store rewrite. The two cases share a tier and share almost none of their difficulty. THE SCALE STEPS ARE NOT EVENLY SPACED. 1k is a deployment problem and the design already points at it: cap:graph-registry (planned) specifies a bounded, evict-when-idle map from graph key to open design, and cap:select-graph-by-id (unrealized) lets a session name what it wants. Hold a few hundred designs hot, evict the rest. THE STEP CHANGE IS 1k TO 100k, and it is forced by one measured number: reflow2's OWN design is 1,828 nodes = a 3.8 MB export and a 33 MB store on disk — roughly 9x inflation, being RocksDB plus the tantivy index. At 100k tenants that is ~3.3 TB if all were resident, so the hot set is necessarily ~1% or less, which INVERTS the problem: cold open stops being an edge case and becomes the steady state. shared.rs budgets 30 SECONDS for a cold open today. The engineering question changes from 'hold many designs' (which the registry answers) to 'make opening a design cheap' (which it does not address at all). 100k TO 1M IS THEN HORIZONTAL: ~4 TB of cold blobs is unremarkable for object storage and the hot set grows with concurrency, not with registrations. A FIFTH ROAD, alongside dec:live-tier's four, and it fits what reflow2 already believes: OBJECT STORAGE HOLDS THE EXPORT AS THE SOURCE OF TRUTH, a node HYDRATES a RocksDB+tantivy cache on demand, and eviction is free because the cache is derived. This dissolves placement (any node can serve any tenant), dissolves durability (the object store's problem), and makes an idle tenant cost a ~3.8 MB cold blob instead of a 33 MB live store. reflow2 already has the primitive: the export is deterministic, sorted, content-hashed and self-contained — that IS a per-tenant blob, and the store is already derived rather than authoritative. WHAT IS ACTUALLY MISSING TODAY, recorded as unbuilt rather than merely absent: cap:graph-registry is planned and nothing builds it; cap:select-graph-by-id is unrealized and unverified; ver:a-session-cannot-name-another-design is PLANNED, and dec:one-process-many-stores was accepted CONDITIONAL on it, so that condition is half met; and dec:live-tier names 'no identity or authorization', which at this scale is not a gap but the product. THE FOUR WAYS TO FORECLOSE, all cheap to avoid now: (1) PROCESS-GLOBALS THAT ARE REALLY PER-DESIGN — cap:graph-registry's own text already lists graph_path, content_path, identity and write_gen as things that must become per-graph; every new static that is secretly per-design is a future migration. (2) PATH AS IDENTITY — cap:select-graph-by-id frames it correctly as 'the server maps id to path', id primary and path derived; sidecar files beside the store (.id.json, .sync.json) want to become object metadata resolved by a resolver. (3) A WHOLE-DOCUMENT WRITE ON A HOT PATH — the export being whole-document is correct for an archival action and fatal on a per-change path, which also makes BL-198 (stop serializing defaults) a SCALING decision rather than tidiness, since blob size is hydrate time. (4) BUILDING MULTI-TENANCY BEFORE PROVING ISOLATION — at this scale that is a security boundary, and retrofitting one into a running multi-tenant system is the sequencing mistake that cannot be walked back. WHAT IS NOT A PROBLEM, worth stating because it is counter-intuitive: the scaling axis is the NUMBER OF TENANTS, not the size of one design. A tenant's graph is small, so full scans, Leiden, modularity and every detector remain cheap per tenant. Single-writer-per-design is a FEATURE here rather than a limit — it is what makes N tenants embarrassingly parallel — so the box would be removing it, not keeping it. THE ONE MEASUREMENT WORTH TAKING NOW, while nothing depends on the answer: hydrate-and-index time as a function of design size (200 / 2k / 20k nodes, import to first query). Under a second for a typical tenant and the cache model is routine engineering; seconds and a read model in front becomes necessary — and that is better known before designing around the opposite assumption.",
         "name": "OPEN — what does reflow2 look like at 1k / 100k / 1M tenants each holding their OWN design, and what must not be foreclosed now?",
         "rationale": "Recorded under the brainstorm skill so the thinking survives without being claimed as intent. Kept SEPARATE from dec:live-tier rather than appended to it, because one node holding two questions can only ever be half-answered and these two differ in their hardest part: many-writers-one-design needs consensus, many-single-writer-tenants needs cheap hydration. Worth keeping even if none of it is built, for three reasons: the 9x store-to-export ratio is a measured anchor that decides the architecture and was not previously written down anywhere; the fifth road follows from a primitive reflow2 already has rather than from new invention; and the four foreclosures are cheap now and expensive later, which is exactly the class of thing a design graph exists to hold. Anthony's framing was explicitly about not painting into a corner rather than about building this, and the record should keep that distinction.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-a-nested-part-has-an-address-not-only-a-parent",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-23, thinking out loud about how reflow2 should express its own decomposition.\n\nHIS WORDS: \"I want express reflow2 as 10 subsystems. Then say one of the subsystems is A and say there are 5 components associated with subsystem_A. They should be 'nested' as something like subsystem_A.component_1, subsystem_A.component_2, and so on. If component_2 [has] 3 sub-components, it'd be subsystem_A.component_2.sub_component_1.\"\n\n⭐ MEASURED THE SAME DAY, AND IT CHANGES THE QUESTION: THE TEN SUBSYSTEMS ALREADY EXIST. reflow2 declares exactly 10 Components at `level: subsystem` (sys:agent-surface, sys:coherence-loop, sys:documentation, sys:foundation, sys:human-channel, sys:intake, sys:store, sys:time-history, sys:vocabulary, plus cmp:packaging), and ZERO components sit outside one — every component is parented on the CONTAINS spine. `req:recursive-black-box-decomposition` already requires nesting 'as deep as the design needs', and `Component.level` already carries the rung. So the STRUCTURE he is describing is built and populated.\n\nWHAT IS ACTUALLY OPEN is narrower and it is about IDENTITY, not shape: should the path through the spine be expressible as an ADDRESS a person can read, write and search by? Today `cmp:detect` says nothing about where it sits; you learn that by walking CONTAINS.\n\nTHE OPTIONS AS THEY STAND:\n(a) DERIVE the path on read — a computed `path` field on any component, never stored. Cheap, cannot go stale, and it is a pure projection, which is what this project already demands of views. COUNTER: it is not an identity, so you cannot address a node by it, and two components with the same leaf name in different subsystems still collide in search.\n(b) STORE the dotted id — `sys:coherence-loop.detect`. Reads exactly as he wrote it. COUNTER: an id that encodes position BREAKS THE MOMENT SOMETHING MOVES, and `cap:a-component-can-be-moved-not-just-given-another-parent` was built three days ago precisely so parts CAN move. This option makes the id a lie every time that capability is used.\n(c) DO NOTHING — the spine is the answer and an address is a rendering concern.\n\nNOT ESTABLISHED: whether anybody needs to ADDRESS a node by path, or only to SEE the path. Those want different answers, and nothing measured says which is wanted.\n\n⚠️ ONE ANOMALY FOUND WHILE MEASURING, worth its own look: `cmp:packaging` is at `level: subsystem`, contains NOTHING, provides nothing and consumes nothing — a subsystem with no inside. It is also the only one named `cmp:` rather than `sys:`.",
+        "name": "OPEN — should a nested part have an ADDRESS (subsystem_A.component_2.sub_component_1), or is the containment spine enough?",
+        "rationale": "Recorded via the brainstorm skill at `proposed`. Split from the contract-level and capability-composition questions he raised in the same breath, because each can be answered without the others.",
         "status": "proposed"
       }
     },
@@ -127423,7 +127533,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e286ab5a9eadc78f5786a01e0530c2ac988be2feee95b9d2b3b2a6dafa751235",
+  "prev_content_hash": "sha256:cdd7fda0e1a95a04716ba7b92fa75271eba3d4bbf48e45929be004fe45d0e7b6",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
