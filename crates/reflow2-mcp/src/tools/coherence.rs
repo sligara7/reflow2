@@ -333,6 +333,43 @@ impl ReflowService {
                         ),
                     );
                 }
+                // AN UNEXPORTED GRAPH IS OWED WORK, so it belongs in `next`
+                // rather than only in a row a reader may skim.
+                //
+                // The sentence already existed — `SyncDebt::message` puts it on
+                // the in-step line, deliberately, "because that is the line a
+                // session reads before standing down". It was then filtered out
+                // of everything served: `record_moved` above takes only
+                // `is_actionable()` debts, and `in_step` is not actionable. So
+                // the reading aid was written, tested, and never surfaced.
+                //
+                // REPORTED TWICE. dragon Boss, 2026-08-16, then again
+                // 2026-08-22 after re-exporting as a control and getting
+                // `wrote: "changed"` against a green verdict — *"`state` is the
+                // field a session reads, and the counts are the field it
+                // skims"*. Reproduced here the same day: `export_nodes: 2897`
+                // beside `live_nodes: 2899`, verdict `in_step`, read and passed
+                // over by the session that then had to be told.
+                //
+                // 🛑 THE VERDICT IS DELIBERATELY UNCHANGED. `state` answers
+                // whether the RECORD moved ahead of this seat, and
+                // `ver:the-record-moved-is-surfaced` pins "ordinary unexported
+                // work is NEVER reported" as a property this rests on — making
+                // `in_step` go red would fire on nearly every session
+                // mid-flight. What was missing was never a different verdict;
+                // it was that the verdict could be read ALONE.
+                let unexported: Vec<String> = debts
+                    .iter()
+                    .filter(|d| d.live_nodes > d.export_nodes)
+                    .map(|d| d.message())
+                    .collect();
+                if !unexported.is_empty()
+                    && let Some(arr) = obj.get_mut("next").and_then(|v| v.as_array_mut())
+                {
+                    for m in unexported {
+                        arr.push(json!(m));
+                    }
+                }
                 // Every known target, including the quiet ones — "checked three
                 // records, all in step" and "checked nothing" must not share an
                 // answer.

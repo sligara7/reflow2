@@ -14,6 +14,8 @@
 //! [`ChangeEvent`]: crate::nodes::node::CHANGE_EVENT
 //! [`DesignEpoch`]: crate::nodes::node::DESIGN_EPOCH
 
+use std::collections::{BTreeMap, HashMap};
+
 use dynograph_core::{DynoError, Value};
 use dynograph_storage::{StoredEdge, StoredNode};
 
@@ -1469,6 +1471,56 @@ impl DesignGraph {
         target_id: &str,
         content_hash: &str,
     ) -> Result<Option<String>, DynoError> {
+        Ok(self
+            .prior_state_coverage(target_id, content_hash, &[], &HashMap::new())?
+            .whole)
+    }
+
+    /// What of a node's PRIOR state some snapshot still holds — whole-node and
+    /// FIELD BY FIELD.
+    ///
+    /// # Why the field half had to exist
+    ///
+    /// [`snapshot_preserving`](Self::snapshot_preserving) asks only whether a
+    /// snapshot matches the node's ENTIRE prior state, and a revising write
+    /// reports its answer to the caller. That made it say "no snapshot holds
+    /// the state it replaced" in a case where the replaced field's prior value
+    /// was sitting in a snapshot untouched:
+    ///
+    /// ```text
+    ///   record_change            snapshot at S0
+    ///   write #1  name, rationale     node now S1     (decision unchanged)
+    ///   write #2  decision            prior is S1  -> no snapshot hashes to S1
+    /// ```
+    ///
+    /// The `decision` value write #2 replaced is in the S0 snapshot, verbatim.
+    /// REPORTED FROM THE FIELD 2026-08-21 by a dev_storyflow session that
+    /// checked the snapshot by hand rather than believing the message — and the
+    /// message is emphatic, says "checked, not assumed", and prescribes a
+    /// three-step undo. **Following that undo would write a reconstruction over
+    /// a timeline that was already correct**, so a wrong loud warning was about
+    /// to cause the loss it warns against.
+    ///
+    /// # What it answers
+    ///
+    /// `whole` is the old question, unchanged: a snapshot of the complete prior
+    /// state, which means everything is recoverable together. `by_field` is the
+    /// weaker but far more common answer: for each field named, the snapshot
+    /// holding THAT field's prior value. A field in neither is genuinely at
+    /// risk, and only those deserve the strong warning.
+    ///
+    /// Deterministic: where several snapshots hold a value, the
+    /// lexicographically smallest id wins, so repeated calls agree.
+    pub fn prior_state_coverage(
+        &self,
+        target_id: &str,
+        content_hash: &str,
+        fields: &[String],
+        prior_props: &HashMap<String, Value>,
+    ) -> Result<PriorStateCoverage, DynoError> {
+        let mut whole: Option<String> = None;
+        let mut by_field: BTreeMap<String, String> = BTreeMap::new();
+
         for snapshot in self.scan_nodes(node::SNAPSHOT)? {
             if snapshot.properties.get("target_id").and_then(Value::as_str) != Some(target_id) {
                 continue;
@@ -1479,12 +1531,44 @@ impl DesignGraph {
             let Ok(state) = parse_snapshot_state(&snapshot) else {
                 continue;
             };
-            if crate::graph::node_content_hash(&state) == content_hash {
-                return Ok(Some(snapshot.node_id));
+            if crate::graph::node_content_hash(&state) == content_hash
+                && whole.as_ref().is_none_or(|w| snapshot.node_id < *w)
+            {
+                whole = Some(snapshot.node_id.clone());
+            }
+            for field in fields {
+                // ABSENT IS NOT A MATCH. A snapshot that never held the field
+                // preserves nothing about it, and treating two Nones as equal
+                // would report a value as safe because it was missing from both
+                // — the emptiest possible evidence dressed as the strongest.
+                let Some(was) = prior_props.get(field) else {
+                    continue;
+                };
+                if state.get(field) == Some(was) {
+                    by_field
+                        .entry(field.clone())
+                        .and_modify(|held| {
+                            if snapshot.node_id < *held {
+                                held.clone_from(&snapshot.node_id);
+                            }
+                        })
+                        .or_insert_with(|| snapshot.node_id.clone());
+                }
             }
         }
-        Ok(None)
+        Ok(PriorStateCoverage { whole, by_field })
     }
+}
+
+/// What some snapshot still holds of a node's prior state — see
+/// [`DesignGraph::prior_state_coverage`].
+#[derive(Debug, Clone, Default, serde::Serialize)]
+pub struct PriorStateCoverage {
+    /// A snapshot of the COMPLETE prior state, when one exists.
+    pub whole: Option<String>,
+    /// Per requested field, the snapshot holding that field's prior value.
+    /// A requested field absent from this map is held by nothing.
+    pub by_field: BTreeMap<String, String>,
 }
 
 /// Read the `state` JSON a [`snapshot_node`](DesignGraph::snapshot_node) stored
