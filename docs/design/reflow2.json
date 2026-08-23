@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:be7ad7df607a3da44106f7d9942af80c6a972cbb094fdeea044ff644a4c91317",
+  "content_hash": "sha256:a467772bb62e45c47d88d84393e1bde0141dbadb5ebd62e25ac9742b2994fef8",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -24227,6 +24227,41 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-snapshot-warning-is-field-aware-and-the-export-note-reaches-the-caller",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-snapshot-warning-is-field-aware-and-the-export-note-reaches-the-caller",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-snapshot-warning-is-field-aware-and-the-export-note-reaches-the-caller",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-snapshot-warning-is-field-aware-and-the-export-note-reaches-the-caller",
+      "properties": {
+        "accepted_baseline": false
+      },
+      "to_id": "fact:both-defects-were-found-by-disbelieving-a-reassuring-answer"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-specifies-edges-are-drawn-and-the-vocabulary-is-measured",
       "properties": {
         "accepted_baseline": false,
@@ -36767,6 +36802,12 @@
       "from_id": "req:the-server-is-the-authority-on-its-own-currency",
       "properties": {},
       "to_id": "fact:the-stale-server-defect-recurred-to-the-people-who-wrote-it-down"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "rule:success-is-read-from-the-authoritative-object",
+      "properties": {},
+      "to_id": "fact:both-defects-were-found-by-disbelieving-a-reassuring-answer"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -93490,7 +93531,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:576779d35a052b066c59a9d4d167ef16cbe2250516612d842a987c8829a3f3dc",
+        "checksum": "sha256:1b46a4d365b289a7bb7b5d8a9ec4edb952a63ecf88e35bdd69560bdf61b9e4d2",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "crates/reflow2-core/src/temporal.rs",
@@ -93818,7 +93859,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:680472e4a68eeb6afa25633f1a2a55dc2d525cda8fea4dd39d5259d97edab270",
+        "checksum": "sha256:93603c0c1d5ebd021edc3ee22c34bbc38a7acc887da528ce8a09c2d4f8cb234d",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -93844,7 +93885,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cf6164249cc6c5b76a1fbf9b889fa6296a46a6d8e73979afe3549b6a46cd4666",
+        "checksum": "sha256:2de90829fc61fc11845fc1f8f9c6486e0ec7db96b3a5afc95488295557201810",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -101517,6 +101558,17 @@
         "change_type": "refactor",
         "name": "The served-skill TOOLS move out of the skill DATA, breaking a module cycle adopt found in reflow2's own source",
         "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:the-snapshot-warning-is-field-aware-and-the-export-note-reaches-the-caller",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "name": "Two wrong-in-the-reassuring-direction reports fixed: a snapshot warning that was false and prescribed a corrupting undo, and a durability aid that was written, tested and filtered out of everything served",
+        "rationale": "Both came from the dev_storyflow reflow2_feedback.md read of 2026-08-23 (411 new lines since the 2026-08-16 triage at 6,203). Both were reported by a session that DISBELIEVED a reassuring answer and checked — one read the snapshot back by hand, the other re-exported as a control and got `wrote: changed` against a green verdict. Neither would have surfaced from inside.",
+        "subject": "system",
+        "summary": "`prior_state_coverage` replaces a whole-node snapshot test with a field-aware one, so a revising write stops claiming \"no snapshot holds the state it replaced\" about a value the snapshot holds verbatim. And `loop_status` now surfaces the unexported-work sentence in `next` — it already existed on the in-step line and was filtered out because `in_step` is not `is_actionable()`."
       }
     },
     {
@@ -118538,6 +118590,18 @@
       }
     },
     {
+      "node_id": "fact:both-defects-were-found-by-disbelieving-a-reassuring-answer",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "TWO DEFECTS FIXED 2026-08-23 FROM ONE FEEDBACK READ, AND THEY ARE THE SAME DEFECT. Both told a caller something reassuring that was false, and neither could have been found by anyone who believed the tool.\n\n① THE SNAPSHOT WARNING WAS FALSE AND ITS REMEDY WOULD HAVE CAUSED THE LOSS IT WARNED ABOUT.\n`snapshot_preserving` compared the WHOLE node's content hash against every snapshot. So after the ordinary sequence — record_change, write field A, write field B — nothing hashed to the state B replaced, and the revision block said \"NO SNAPSHOT HOLDS THE STATE IT REPLACED — checked, not assumed\" about a value sitting in the snapshot verbatim. It then prescribed a three-step undo: write the prior value back, record_change, re-apply. **A session that believed it would have snapshotted a RECONSTRUCTION over a timeline that was already correct.**\n  🛑 THE PHRASE \"checked, not assumed\" IS WHAT MAKES IT DANGEROUS. It was added to earn trust and it succeeded; the check behind it was answering a coarser question than the sentence claimed. A message that says it looked must have looked at the thing it names.\n  FIXED at the root: `prior_state_coverage` answers whole-node AND field-by-field, and the strong warning now fires only on fields nothing holds — naming them, and explicitly excluding preserved ones from the undo, because applying the undo to a preserved field IS the corruption.\n\n② THE DURABILITY AID WAS WRITTEN, TESTED, AND FILTERED OUT OF EVERYTHING SERVED.\n`loop_status.sync` reported `state: in_step` beside `export_nodes: 2897, live_nodes: 2899`. The sentence explaining that — *\"2 node(s) here have never been exported… export before you finish\"* — ALREADY EXISTED in `SyncDebt::message`, on the in-step line, with a comment saying it was placed there \"because that is the line a session reads before standing down\". It reached nobody: `loop_status` surfaces `message()` only for `is_actionable()` debts, and `in_step` is not actionable.\n  ⭐ SO THE FIX WAS NOT TO WRITE ANYTHING. It was to stop discarding what was already written. The first attempt at this fix ADDED A SECOND SENTENCE saying the same thing, which was reverted on finding the original.\n  🛑 AND THE VERDICT WAS DELIBERATELY LEFT ALONE. The obvious fix — derive `state` from the counts so `in_step` cannot appear beside `live > export` — would break `ver:the-record-moved-is-surfaced`, which pins \"ordinary unexported work is NEVER reported\" because `state` answers whether the RECORD moved ahead of this seat, not whether your work is durable. Changing it would fire on nearly every session mid-flight. **What was missing was never a different verdict; it was that the verdict could be read ALONE.**\n\n⭐⭐ THE COMMON SHAPE, AND IT IS THE REASON THESE ARE ONE NODE. A tool that is wrong in the ALARMING direction gets investigated within minutes — somebody chases the alarm. A tool that is wrong in the REASSURING direction is believed, and the cost lands later on somebody who never saw the reading. Both of these were found by a reporter who refused the reassurance and paid for a control: one read the snapshot back by hand, the other re-exported and got `wrote: \"changed\"` against a green verdict. **Neither is reachable from inside the system, because from inside both look exactly like working.**\n\n⚠️ AND REFLOW2 HAD ALREADY SHIPPED THE COUNTS FOR ② IN AUGUST, specifically to make the green falsifiable. They did make it falsifiable. They did not make it falsified — the reporter's words are the finding: *\"`state` is the field a session reads, and the counts are the field it skims.\"* Adding evidence beside a verdict does not change what a reader takes away; the verdict has to carry it.",
+        "subject_id": "rule:success-is-read-from-the-authoritative-object",
+        "valid_from": "2026-08-23"
+      }
+    },
+    {
       "node_id": "fact:changing-one-sentence-in-a-long-decision-cost-a-full-6242-character-resend",
       "node_type": "TemporalFact",
       "properties": {
@@ -123091,7 +123155,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:8b77d8a3cf1dcaaf7d1c6404efe30eebf3f5ae36c527891e5e49d93c49fea050",
+  "prev_content_hash": "sha256:be7ad7df607a3da44106f7d9942af80c6a972cbb094fdeea044ff644a4c91317",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

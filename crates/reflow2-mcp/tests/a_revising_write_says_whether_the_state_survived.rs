@@ -91,8 +91,10 @@ async fn a_destroyed_state_is_named_as_destroyed() {
     );
     let note = rev.get("note").and_then(serde_json::Value::as_str).unwrap();
     assert!(
-        note.contains("NO SNAPSHOT HOLDS THE STATE IT REPLACED"),
-        "the reply must state the fact, not the rule: {note}"
+        note.contains("NO SNAPSHOT HOLDS THE PRIOR VALUE OF") && note.contains("`decision`"),
+        "the reply must state the fact, not the rule — and since 2026-08-23 it names the FIELD \
+         rather than claiming the whole state, because the undo it prescribes must never be \
+         applied to a field a snapshot still holds: {note}"
     );
     assert!(
         note.contains("checked, not assumed"),
@@ -216,8 +218,21 @@ async fn a_snapshot_of_a_different_state_does_not_count_as_preservation() {
     );
     let note = second["revision"]["note"].as_str().unwrap_or_default();
     assert!(
-        note.contains("NO SNAPSHOT HOLDS THE STATE IT REPLACED"),
+        note.contains("NO SNAPSHOT HOLDS THE PRIOR VALUE OF") && note.contains("`decision`"),
         "and the reply says so plainly: {note}"
+    );
+    // ⭐ AND THIS IS WHY THE FIELD-AWARE CHECK COMPARES VALUES RATHER THAN
+    // PRESENCE. The snapshot DOES hold a `decision` — the original one. Only
+    // comparing it against the value actually being replaced tells a live
+    // preservation from a stale one, and getting that wrong would reassure a
+    // caller that something destroyed is recoverable.
+    assert!(
+        second["revision"]
+            .get("fields_preserved_in")
+            .and_then(serde_json::Value::as_object)
+            .is_none_or(|m| !m.contains_key("decision")),
+        "the snapshot holds a DIFFERENT `decision`, so it preserves nothing about this one: {}",
+        second["revision"]
     );
 }
 
@@ -264,5 +279,154 @@ async fn an_ordinary_enrichment_is_not_warned_about_at_all() {
     assert!(
         !note.contains("NO SNAPSHOT"),
         "an enrichment that replaced nothing gets no destruction warning: {note}"
+    );
+}
+
+// ---------------------------------------------------------------------------
+// THE MIDDLE CASE, REPORTED FROM THE FIELD 2026-08-21 AND WRONG UNTIL 08-23.
+//
+// The two probes above cover the ends: nothing preserved, everything preserved.
+// A dev_storyflow session hit the middle and CHECKED rather than believing —
+// snapshot, write #1 to one field, write #2 to another. Nothing hashes to the
+// state write #2 replaced, so the block said "NO SNAPSHOT HOLDS THE STATE IT
+// REPLACED — checked, not assumed" while the replaced value sat in the snapshot
+// verbatim.
+//
+// 🛑 AND THE REMEDY WAS THE DANGEROUS PART. That message prescribes a
+// three-step undo: write the prior value back, record_change, re-apply. A
+// session that believed it would have snapshotted a RECONSTRUCTION over a
+// timeline that was already correct — a loud wrong warning causing the loss it
+// warns about.
+// ---------------------------------------------------------------------------
+
+/// Snapshot, then change field A, then change field B — the ordinary shape of a
+/// second revision, and the one that used to be reported as catastrophic.
+async fn snapshot_then_two_writes(s: &ReflowService) -> serde_json::Value {
+    with_a_decision(s).await;
+    let _ = j!(s.record_change(Parameters(
+        serde_json::from_value(serde_json::json!({
+            "epoch_id":"epoch:e","change_event_id":"chg:c","name":"revising",
+            "target_type":"Decision","target_id":"dec:x","change_type":"scope_change",
+            "action":"modified"
+        }))
+        .unwrap()
+    )));
+    // Write #1 touches `rationale` only. `decision` is untouched, so the
+    // snapshot still holds its value exactly.
+    let _ = j!(s.create_node(Parameters(
+        serde_json::from_value(serde_json::json!({
+            "node_type":"Decision","id":"dec:x","props":{"rationale":"a better why"}
+        }))
+        .unwrap()
+    )));
+    // Write #2 replaces `decision`. Its prior value IS in the snapshot.
+    j!(s.create_node(Parameters(
+        serde_json::from_value(serde_json::json!({
+            "node_type":"Decision","id":"dec:x","props":{"decision":"REPLACED text"}
+        }))
+        .unwrap()
+    )))
+}
+
+#[tokio::test]
+async fn a_field_the_snapshot_still_holds_is_not_reported_as_destroyed() {
+    let s = svc().await;
+    let v = snapshot_then_two_writes(&s).await;
+    let rev = v.get("revision").expect("revision block");
+
+    let held = rev
+        .get("fields_preserved_in")
+        .and_then(serde_json::Value::as_object)
+        .expect("the per-field answer is present when no whole-state snapshot is");
+    let snap = held
+        .get("decision")
+        .and_then(serde_json::Value::as_str)
+        .expect("`decision`'s prior value is in the snapshot and must be NAMED as such");
+    assert!(snap.contains("dec:x"), "and it names the snapshot: {snap}");
+
+    assert!(
+        rev.get("fields_at_risk")
+            .and_then(serde_json::Value::as_array)
+            .is_none_or(|a| a.is_empty()),
+        "nothing is at risk here: {:?}",
+        rev.get("fields_at_risk")
+    );
+
+    let note = rev.get("note").and_then(serde_json::Value::as_str).unwrap();
+    assert!(
+        !note.contains("NO SNAPSHOT HOLDS"),
+        "🛑 THE BUG. The value is in the snapshot; saying nothing holds it is false: {note}"
+    );
+    assert!(
+        !note.contains("To undo"),
+        "🛑 AND THE WORSE HALF. Prescribing the undo here would write a reconstruction over a \
+         correct timeline — the warning causing the loss it warns about: {note}"
+    );
+    assert!(
+        note.contains("Nothing is lost"),
+        "the caller is told the plain outcome instead: {note}"
+    );
+}
+
+#[tokio::test]
+async fn a_mixed_write_names_only_the_field_actually_at_risk() {
+    // One replaced field the snapshot holds, one it never did. The strong
+    // warning must fire for the second and MUST NOT sweep up the first, because
+    // its undo instruction applied to a preserved field is the corruption.
+    let s = svc().await;
+    with_a_decision(&s).await;
+    let _ = j!(s.record_change(Parameters(
+        serde_json::from_value(serde_json::json!({
+            "epoch_id":"epoch:e","change_event_id":"chg:c","name":"revising",
+            "target_type":"Decision","target_id":"dec:x","change_type":"scope_change",
+            "action":"modified"
+        }))
+        .unwrap()
+    )));
+    // `name` is added-then-changed AFTER the snapshot, so its intermediate
+    // value was never captured; `decision` has not moved since the snapshot.
+    let _ = j!(s.create_node(Parameters(
+        serde_json::from_value(serde_json::json!({
+            "node_type":"Decision","id":"dec:x","props":{"name":"an intermediate name"}
+        }))
+        .unwrap()
+    )));
+    let v = j!(s.create_node(Parameters(
+        serde_json::from_value(serde_json::json!({
+            "node_type":"Decision","id":"dec:x",
+            "props":{"name":"a third name","decision":"REPLACED text"}
+        }))
+        .unwrap()
+    )));
+
+    let rev = v.get("revision").expect("revision block");
+    let at_risk: Vec<&str> = rev
+        .get("fields_at_risk")
+        .and_then(serde_json::Value::as_array)
+        .expect("something IS at risk here")
+        .iter()
+        .filter_map(serde_json::Value::as_str)
+        .collect();
+    assert_eq!(
+        at_risk,
+        vec!["name"],
+        "only `name`'s intermediate value was never snapshotted"
+    );
+
+    let held = rev
+        .get("fields_preserved_in")
+        .and_then(serde_json::Value::as_object)
+        .expect("and `decision` is still held");
+    assert!(held.contains_key("decision"));
+
+    let note = rev.get("note").and_then(serde_json::Value::as_str).unwrap();
+    assert!(
+        note.contains("`name`") && note.contains("To undo"),
+        "the warning fires, and NAMES the field rather than a count: {note}"
+    );
+    assert!(
+        note.contains("do NOT include") && note.contains("`decision`"),
+        "and it explicitly excludes the preserved field from the undo, because applying the \
+         undo to it is the corruption: {note}"
     );
 }

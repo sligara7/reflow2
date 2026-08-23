@@ -162,8 +162,8 @@ pub use search::{SearchHit, SearchResult};
 pub use surprises::SurprisingConnection;
 pub use temporal::{
     ArrivalDelta, BaselineSource, ChangeAction, ChangeRecord, ChangeSubject, ChangeType, EpochType,
-    PlanRevision, ScheduleOutcome, ScheduledItem, SnapshotEdge, parse_snapshot_edges,
-    parse_snapshot_state,
+    PlanRevision, PriorStateCoverage, ScheduleOutcome, ScheduledItem, SnapshotEdge,
+    parse_snapshot_edges, parse_snapshot_state,
 };
 pub use verify::{
     CapabilityVerification, ObservedVerification, VerificationDriftReport, VerificationFinding,

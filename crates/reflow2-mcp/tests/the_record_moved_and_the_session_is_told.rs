@@ -638,3 +638,130 @@ fn the_counts_do_not_mask_a_record_that_moved_ahead() {
         actionable[0]
     );
 }
+
+// ---------------------------------------------------------------------------
+// AND THE SENTENCE HAS TO REACH THE CALLER.
+//
+// The two probes above prove `message()` says the right thing. It then reached
+// nobody: `loop_status` surfaced `message()` only for `is_actionable()` debts,
+// and `in_step` is not actionable, so the unexported-work line was written,
+// tested, and filtered out of everything served.
+//
+// Reported twice from dev_storyflow — 2026-08-16, then 2026-08-22 after a
+// session re-exported as a control and got `wrote: "changed"` against a green
+// verdict. Reproduced here the same day: `export_nodes: 2897` beside
+// `live_nodes: 2899`, verdict `in_step`, read and passed over.
+// ---------------------------------------------------------------------------
+
+#[tokio::test]
+async fn loop_status_puts_unexported_work_in_the_list_a_session_reads() {
+    use rmcp::handler::server::wrapper::Parameters;
+
+    // An ON-DISK service: the sync check is gated on `graph_path`, so an
+    // in-memory one has no record to be in step with and this could not fail.
+    let dir = Scratch::new("loopstatus-unexported");
+    let file = dir.path().join("reflow2.json");
+    let svc = reflow2_mcp::service::ReflowService::new(&dir.graph_path()).expect("service");
+
+    // A design, exported — so the seat has a record it is in step with.
+    svc.add_project(Parameters(
+        serde_json::from_value(serde_json::json!({"id":"proj:p","name":"P"})).unwrap(),
+    ))
+    .await
+    .expect("project");
+    svc.export_graph(Parameters(
+        serde_json::from_value(serde_json::json!({"path": file.to_str().unwrap()})).unwrap(),
+    ))
+    .await
+    .expect("export");
+
+    // ...and then work that never reached it. This is the ordinary mid-session
+    // state, and the one that used to read as entirely clean.
+    svc.add_requirement(Parameters(
+        serde_json::from_value(
+            serde_json::json!({"id":"req:unexported","name":"Late","statement":"must hold"}),
+        )
+        .unwrap(),
+    ))
+    .await
+    .expect("requirement");
+
+    let v = svc
+        .loop_status(Parameters(
+            serde_json::from_value(serde_json::json!({})).unwrap(),
+        ))
+        .await
+        .expect("loop_status")
+        .structured_content
+        .expect("structured");
+
+    let next = v
+        .get("next")
+        .and_then(serde_json::Value::as_array)
+        .expect("`next` is the list a session reads before standing down")
+        .iter()
+        .filter_map(serde_json::Value::as_str)
+        .collect::<Vec<_>>()
+        .join(" | ");
+
+    assert!(
+        next.contains("never been exported"),
+        "🛑 THE BUG. Unexported work must appear in `next`, not only in a `sync` row a reader \
+         skims — the sentence existed and reached nobody: {next}"
+    );
+
+    // COUNTERWEIGHT: the verdict itself must NOT have moved. Making `in_step`
+    // go red here would fire on almost every session mid-flight, which is the
+    // noise `ver:the-record-moved-is-surfaced` exists to exclude.
+    let state = v["sync"][0]["state"].as_str().unwrap_or_default();
+    assert_eq!(
+        state, "in_step",
+        "the record genuinely has not moved ahead of this seat; only the reading aid was missing"
+    );
+}
+
+#[tokio::test]
+async fn a_fully_exported_graph_adds_nothing_to_next() {
+    use rmcp::handler::server::wrapper::Parameters;
+
+    let dir = Scratch::new("loopstatus-exported");
+    let file = dir.path().join("reflow2.json");
+    let svc = reflow2_mcp::service::ReflowService::new(&dir.graph_path()).expect("service");
+
+    svc.add_project(Parameters(
+        serde_json::from_value(serde_json::json!({"id":"proj:p","name":"P"})).unwrap(),
+    ))
+    .await
+    .expect("project");
+    svc.export_graph(Parameters(
+        serde_json::from_value(serde_json::json!({"path": file.to_str().unwrap()})).unwrap(),
+    ))
+    .await
+    .expect("export");
+
+    let v = svc
+        .loop_status(Parameters(
+            serde_json::from_value(serde_json::json!({})).unwrap(),
+        ))
+        .await
+        .expect("loop_status")
+        .structured_content
+        .expect("structured");
+
+    let next = serde_json::to_string(&v["next"]).unwrap_or_default();
+    assert!(
+        !next.contains("never been exported"),
+        "a seat that HAS exported must stay quiet — an aid that fires on correct work is a false \
+         alarm on the path every session takes, and would be switched off inside a day: {next}"
+    );
+    // 🛑 AND NOTHING AT ALL ABOUT THE RECORD, not merely a missing phrase.
+    // Checking only for the phrase let a mutation through: surfacing EVERY
+    // target's message pushes "X is exactly where this graph left it" into
+    // `next` for every in-step record, which is a to-do list entry for work
+    // nobody has to do. The quiet message hid the noisy behaviour.
+    assert!(
+        !next.contains("reflow2.json") && !next.contains("exactly where this graph left it"),
+        "`next` is what the loop OWES; an in-step record owes nothing and must not appear in it \
+         at all: {next}"
+    );
+}

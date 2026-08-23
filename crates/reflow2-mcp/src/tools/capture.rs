@@ -12,7 +12,7 @@
 
 #![allow(unused_imports)]
 
-use std::collections::HashMap;
+use std::collections::{BTreeMap, HashMap};
 use std::sync::Arc;
 use std::sync::atomic::{AtomicU64, Ordering};
 
@@ -274,6 +274,21 @@ pub(crate) struct Revision {
     /// agent which ignores every hint.
     #[serde(skip_serializing_if = "Option::is_none")]
     prior_state_preserved_in: Option<String>,
+    /// Per replaced field, the snapshot holding THAT field's prior value, when
+    /// no single snapshot holds the whole prior state.
+    ///
+    /// The middle case this block could not express until 2026-08-23, and its
+    /// absence made the strong warning FALSE in the ordinary two-write
+    /// sequence: snapshot, change field A, change field B. Nothing hashes to
+    /// the state B replaced, yet B's prior value is sitting in the snapshot
+    /// untouched. Reported from the field by a session that checked instead of
+    /// believing.
+    #[serde(skip_serializing_if = "BTreeMap::is_empty")]
+    fields_preserved_in: BTreeMap<String, String>,
+    /// Replaced fields NOTHING holds — the only ones genuinely at risk, and the
+    /// only ones the undo instruction now applies to.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    fields_at_risk: Vec<String>,
     note: String,
 }
 
@@ -321,10 +336,33 @@ pub(crate) fn revision_of(
     // THE COMPUTED HALF. Ask the graph whether the state being replaced is
     // preserved, instead of restating the snapshot-first rule at a caller who
     // may already have followed it.
-    let preserved = g
-        .snapshot_preserving(&prior.node_id, &prior_content_hash)
-        .ok()
-        .flatten();
+    let replaced_fields: Vec<String> = replaced.iter().map(|r| r.field.clone()).collect();
+    let coverage = g
+        .prior_state_coverage(
+            &prior.node_id,
+            &prior_content_hash,
+            &replaced_fields,
+            &prior.properties,
+        )
+        .unwrap_or_default();
+    let preserved = coverage.whole.clone();
+    // A whole-state snapshot covers every field by definition, so the per-field
+    // map is only interesting when it does NOT exist. Reporting both would say
+    // the same thing twice and invite a reader to compare them.
+    let fields_preserved_in = if preserved.is_some() {
+        BTreeMap::new()
+    } else {
+        coverage.by_field.clone()
+    };
+    let fields_at_risk: Vec<String> = if preserved.is_some() {
+        Vec::new()
+    } else {
+        replaced_fields
+            .iter()
+            .filter(|f| !coverage.by_field.contains_key(*f))
+            .cloned()
+            .collect()
+    };
 
     let note = if replaced.is_empty() && changed {
         "This call added properties to an existing node and overwrote nothing.".to_string()
@@ -338,20 +376,75 @@ pub(crate) fn revision_of(
             replaced.len(),
             if replaced.len() == 1 { "y" } else { "ies" },
         )
-    } else {
+    } else if fields_at_risk.is_empty() {
+        // THE MIDDLE CASE, AND IT USED TO BE REPORTED AS THE WORST ONE. No
+        // single snapshot holds the whole prior state, but every field this
+        // call replaced is preserved somewhere — the ordinary result of a
+        // second write after one record_change. Saying "nothing holds this"
+        // here was false, and its undo instruction would have written a
+        // reconstruction over a correct timeline.
         format!(
-            "This call REPLACED {} propert{} on a node that already existed, AND NO SNAPSHOT \
-             HOLDS THE STATE IT REPLACED — checked, not assumed. The prior value{} above {} \
-             now the only copy in existence, and this reply is the only place {} appears. \
-             `record_change` BEFORE the merge is what puts the old state in the design's own \
-             timeline; called now it would snapshot the REPLACEMENT and the history would be \
-             wrong. To undo: write the prior value{} back, then record_change, then re-apply.",
+            "This call REPLACED {} propert{} on a node that already existed. No single snapshot \
+             holds the whole prior state — but EVERY replaced field's prior value IS preserved, \
+             field by field, in `fields_preserved_in` above. Nothing is lost. This is the \
+             ordinary shape after a second write following one `record_change`, and it needs no \
+             undo: read the named snapshot if you want a value back.",
             replaced.len(),
             if replaced.len() == 1 { "y" } else { "ies" },
-            if replaced.len() == 1 { "" } else { "s" },
-            if replaced.len() == 1 { "is" } else { "are" },
-            if replaced.len() == 1 { "it" } else { "they" },
-            if replaced.len() == 1 { "" } else { "s" },
+        )
+    } else {
+        // AND THE STRONG WARNING NOW FIRES ONLY ON WHAT IS ACTUALLY AT RISK.
+        // It names the fields rather than the count, because the undo it
+        // prescribes must not be applied to a field a snapshot already holds.
+        format!(
+            "This call REPLACED {} propert{} on a node that already existed, AND NO SNAPSHOT \
+             HOLDS THE PRIOR VALUE OF {} — checked, not assumed. For {}, the value in \
+             `replaced` above is the only copy in existence and this reply is the only place it \
+             appears. `record_change` BEFORE the merge is what puts the old state in the \
+             design's own timeline; called now it would snapshot the REPLACEMENT and the \
+             history would be wrong. To undo: write {} prior value{} back, then record_change, \
+             then re-apply.{}",
+            replaced.len(),
+            if replaced.len() == 1 { "y" } else { "ies" },
+            fields_at_risk
+                .iter()
+                .map(|f| format!("`{f}`"))
+                .collect::<Vec<_>>()
+                .join(", "),
+            if fields_at_risk.len() == 1 {
+                "that field"
+            } else {
+                "those fields"
+            },
+            if fields_at_risk.len() == 1 {
+                "that"
+            } else {
+                "those"
+            },
+            if fields_at_risk.len() == 1 { "" } else { "s" },
+            if fields_preserved_in.is_empty() {
+                String::new()
+            } else {
+                format!(
+                    " THE OTHER REPLACED FIELD{} IS FINE: {} — see `fields_preserved_in`, and do \
+                     NOT include {} in the undo.",
+                    if fields_preserved_in.len() == 1 {
+                        ""
+                    } else {
+                        "S ARE"
+                    },
+                    fields_preserved_in
+                        .keys()
+                        .map(|f| format!("`{f}`"))
+                        .collect::<Vec<_>>()
+                        .join(", "),
+                    if fields_preserved_in.len() == 1 {
+                        "it"
+                    } else {
+                        "them"
+                    },
+                )
+            },
         )
     };
 
@@ -361,6 +454,8 @@ pub(crate) fn revision_of(
         changed,
         prior_content_hash,
         prior_state_preserved_in: preserved,
+        fields_preserved_in,
+        fields_at_risk,
         note,
     })
 }
