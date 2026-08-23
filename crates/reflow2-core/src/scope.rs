@@ -65,7 +65,7 @@ use std::collections::BTreeSet;
 
 use dynograph_core::DynoError;
 
-use crate::detect::{GapCandidate, GapScope};
+use crate::detect::{GapCandidate, GapRow, GapScope, NARROW_THE_SCOPE, ReplyBudget, budget_gaps};
 use crate::graph::DesignGraph;
 use crate::heal::HealIssue;
 use crate::nodes::edge;
@@ -190,6 +190,16 @@ pub struct Scoped<T> {
     /// either would have to be read before it could be understood.
     #[serde(skip_serializing_if = "Option::is_none", default)]
     pub narrowing_note: Option<String>,
+    /// What this reply had to withhold from `items` in order to be readable at
+    /// all — a THIRD thing an answer can be wrong about, on an axis the other
+    /// two say nothing about. `note` is about the region being too small and
+    /// `narrowing_note` about it being too large; this is about the ANSWER
+    /// being too large, which is a fact about the reader rather than the design.
+    ///
+    /// `None` on a reader that does not budget its reply, so its absence means
+    /// "nothing was withheld for size" and never "nobody looked".
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    pub budget: Option<ReplyBudget>,
     pub items: Vec<T>,
 }
 
@@ -267,6 +277,27 @@ impl<T> Scoped<T> {
             unanchored,
             project_level,
             share_of_anchored,
+            budget: None,
+            items,
+        }
+    }
+
+    /// Replace the items with a budgeted rendering of them, recording what that
+    /// cost. Separate from [`Scoped::new`] because only some readers budget.
+    fn budgeted<U>(self, items: Vec<U>, budget: ReplyBudget) -> Scoped<U> {
+        Scoped {
+            scope: self.scope,
+            depth: self.depth,
+            region_size: self.region_size,
+            note: self.note,
+            total: self.total,
+            in_scope: self.in_scope,
+            out_of_scope: self.out_of_scope,
+            unanchored: self.unanchored,
+            project_level: self.project_level,
+            share_of_anchored: self.share_of_anchored,
+            narrowing_note: self.narrowing_note,
+            budget: Some(budget),
             items,
         }
     }
@@ -341,6 +372,30 @@ impl DesignGraph {
             project_level,
             items,
         ))
+    }
+
+    /// [`detect_gaps_in_scope`](Self::detect_gaps_in_scope), in a reply that
+    /// fits in `budget_chars`.
+    ///
+    /// Scoping is what the unscoped reader is TOLD to do when its own answer
+    /// will not fit, so a scoped answer that will not fit either would make
+    /// that advice a dead end. Measured on reflow2's own design, a Component at
+    /// depth 3 holds 50–60 of the 83 gaps — most of the way back to the reply
+    /// that was refused in the first place.
+    ///
+    /// `in_scope` counts what is IN the region; `budget.listed` counts what is
+    /// in this reply. They are different numbers whenever the tail was dropped,
+    /// and both are reported for that reason.
+    pub fn detect_gaps_in_scope_within(
+        &self,
+        seed_id: &str,
+        depth: usize,
+        budget_chars: usize,
+    ) -> Result<Scoped<GapRow>, DynoError> {
+        let mut scoped = self.detect_gaps_in_scope(seed_id, depth)?;
+        let gaps = std::mem::take(&mut scoped.items);
+        let report = budget_gaps(gaps, budget_chars, NARROW_THE_SCOPE);
+        Ok(scoped.budgeted(report.items, report.budget))
     }
 
     /// `detect_defects`, narrowed the same way.

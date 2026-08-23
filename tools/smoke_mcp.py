@@ -41,9 +41,30 @@ def _unwrap(value):
     read can add a sibling `loop_hint` (BL-91), and additive metadata must not
     defeat the unwrap.
     """
-    if isinstance(value, dict) and {"count", "items"} <= value.keys():
+    # Unwrap ONLY the bare envelope. `loop_hint` (BL-91) is inert prose and may
+    # ride along; anything else is a payload the tool BUILT around its list —
+    # detect_gaps carries `budget` (what the reply withheld) and `by_source`
+    # (the counts that cover every gap, listed or not), and handing back the
+    # list alone would silently throw away the half that says the list is
+    # incomplete. Presence-not-exact-set was right when the only sibling was a
+    # hint and wrong the moment one mattered.
+    if isinstance(value, dict) and {"count", "items"} <= value.keys() <= {
+        "count", "items", "loop_hint"
+    }:
         return value["items"]
     return value
+
+
+def gaps_of(server, **args):
+    """The gap LIST out of `detect_gaps`.
+
+    The tool answers with a budgeted envelope — `count` and `by_source` over
+    every open gap, `budget` saying what the reply withheld to be readable, and
+    `items` — so the list has to be asked for by name. Worth the small friction:
+    a caller that wanted only the list used to get it without ever learning the
+    list might be short.
+    """
+    return server.call("detect_gaps", args)["items"]
 
 
 class Server:
@@ -482,7 +503,7 @@ def run(binary: str, graph_path: str) -> int:
           ["properties"].get("provenance") == "authored")
 
     print("\n== 2. DETECT gaps, and the ask-the-user handshake ==")
-    gaps = s.call("detect_gaps")
+    gaps = gaps_of(s)
     sources = [g["gap_source"] for g in gaps]
     c.ok("gaps detected", len(gaps) > 0, sources)
     c.ok("a fully paired contract is not reported as a gap",
@@ -525,7 +546,7 @@ def run(binary: str, graph_path: str) -> int:
         for cmp_id in ("cmp:board", "cmp:engine"):
             s.call("allocate", {"from_id": cap, "to_id": cmp_id})
 
-    dup_gaps = [g for g in s.call("detect_gaps")
+    dup_gaps = [g for g in gaps_of(s)
                 if g["gap_source"] == "possible_duplicate"]
     c.ok("two components with the same capabilities are reported (BL-27)",
          len(dup_gaps) == 1, [g["title"] for g in dup_gaps])
@@ -574,7 +595,7 @@ def run(binary: str, graph_path: str) -> int:
         "affected": [{"node_type": "Component", "node_id": "cmp:ghost"}]})
     c.ok("a missing affected node refuses the whole call", ghost is not None, ghost)
 
-    gaps = s.call("detect_gaps")
+    gaps = gaps_of(s)
     sources = [g["gap_source"] for g in gaps]
 
     # BL-27: a gap that names nodes describes something wrong NOW; a phase
@@ -608,7 +629,7 @@ def run(binary: str, graph_path: str) -> int:
     s.call("acknowledge_gap", {"gap_id": ack_gap["id"],
                                "affected_ids": ack_gap["affected_ids"],
                                "reason": "deliberate for v1"})
-    open_ids = {g["id"] for g in s.call("detect_gaps")}
+    open_ids = {g["id"] for g in gaps_of(s)}
     c.ok("an acknowledged gap leaves the open list", ack_gap["id"] not in open_ids)
     reviewed = s.call("reviewed_gaps")
     match = [r for r in reviewed if r["gap_id"] == ack_gap["id"]]
@@ -652,7 +673,7 @@ def run(binary: str, graph_path: str) -> int:
     s.call("withdraw_gap_acknowledgement", {"gap_id": ack_gap["id"]})
     s.call("withdraw_gap_acknowledgement", {"gap_id": "gap:deadbeefdeadbeef"})
     c.ok("withdrawing puts the gap back",
-         ack_gap["id"] in {g["id"] for g in s.call("detect_gaps")})
+         ack_gap["id"] in {g["id"] for g in gaps_of(s)})
     h1 = s.call("gap_to_prompt", {"gap": gaps[0], "answers": []})
     if c.ok("handshake asks the agent for phrasing", h1.get("status") == "needs_llm", h1):
         h2 = s.call("gap_to_prompt", {
@@ -663,6 +684,24 @@ def run(binary: str, graph_path: str) -> int:
         c.ok("handshake returns a user-facing question",
              h2.get("status") == "ok" and "question" in h2.get("prompt", {}), h2)
 
+    # A row from a BUDGETED reply has to work here too. `detect_gaps` withholds
+    # `description`, `evidence` and `affected_ids` when the full answer would not
+    # fit, and the agent hands back the row it was given — so without rehydration
+    # this phrases the question from a blank description and records it against
+    # an EMPTY anchor set. Driven through the real wire because that is the only
+    # place the compaction actually happens.
+    compact = s.call("detect_gaps", {"budget_chars": 1})
+    row = compact["items"][0]
+    c.ok("a tiny budget really does compact the reply",
+         compact["budget"]["detail"] == "titles_only" and not row.get("description"),
+         compact["budget"])
+    c.ok("and the count is not budgeted away",
+         compact["count"] == len(gaps_of(s)), compact["count"])
+    full = next(g for g in gaps_of(s) if g["id"] == row["id"])
+    c.ok("a compacted row asks the same question as the full one",
+         s.call("gap_to_prompt", {"gap": row, "answers": []})
+         == s.call("gap_to_prompt", {"gap": full, "answers": []}))
+
     print("\n== 3. register a built file, with a drift baseline ==")
     s.call("link_artifact", {
         "artifact_id": "art:flight", "name": "BallFlight.cs",
@@ -671,7 +710,7 @@ def run(binary: str, graph_path: str) -> int:
         "checksum": "sha256:v1",
     })
     flagged = {
-        i for g in s.call("detect_gaps")
+        i for g in gaps_of(s)
         if g["gap_source"] == "unrealized_capability" for i in g["affected_ids"]
     }
     c.ok("the linked capability is no longer unrealized", "cap:flight" not in flagged, flagged)
@@ -683,7 +722,7 @@ def run(binary: str, graph_path: str) -> int:
          cov["artifacts"] >= 1 and cov["artifacts_verified"] == 0, cov)
 
     print("\n== 3b. answer the gaps DETECT raises (the write side) ==")
-    before = {g["gap_source"] for g in s.call("detect_gaps")}
+    before = {g["gap_source"] for g in gaps_of(s)}
     c.ok("verification gap is raised", "build_without_verification" in before, before)
     c.ok("deploy/operate gap is raised", "no_deploy_operate" in before, before)
 
@@ -702,7 +741,7 @@ def run(binary: str, graph_path: str) -> int:
     s.call("governed_by", {"from_type": "Component", "from_id": "cmp:physics",
                            "to_type": "Decision", "to_id": "dec:engine"})
 
-    after = {g["gap_source"] for g in s.call("detect_gaps")}
+    after = {g["gap_source"] for g in gaps_of(s)}
     c.ok("verification gap closed", "build_without_verification" not in after, after)
     c.ok("deploy/operate gap closed", "no_deploy_operate" not in after, after)
 
@@ -712,7 +751,7 @@ def run(binary: str, graph_path: str) -> int:
     # detect_gaps, detect_defects and graph_report alike.
     s.call("set_verification_status", {"verification_id": "ver:flight",
                                        "status": "failing"})
-    red_gaps = s.call("detect_gaps")
+    red_gaps = gaps_of(s)
     red = next((g for g in red_gaps if g["gap_source"] == "failing_verification"), None)
     c.ok("a failing check is surfaced as a gap (BL-30)", red is not None,
          sorted({g["gap_source"] for g in red_gaps}))
@@ -727,7 +766,7 @@ def run(binary: str, graph_path: str) -> int:
     s.call("set_verification_status", {"verification_id": "ver:flight",
                                        "status": "passing"})
     c.ok("green again: the gap clears and coverage counts it",
-         not any(g["gap_source"] == "failing_verification" for g in s.call("detect_gaps"))
+         not any(g["gap_source"] == "failing_verification" for g in gaps_of(s))
          and s.call("graph_report")["verification"]["capabilities_verified"] == 1)
 
     s.call("set_verification_status", {"verification_id": "ver:flight",
@@ -766,14 +805,14 @@ def run(binary: str, graph_path: str) -> int:
          any(g["gap_source"] == "unresolved_drift"
              and "ver:flight" in g["affected_ids"]
              and "set_verification_status" in g["description"]
-             for g in s.call("detect_gaps")))
+             for g in gaps_of(s)))
     vr2 = s.call("reconcile_verification", {
         "observed": [{"verification_id": "ver:flight", "outcome": "failed"}]})
     c.ok("a later agreeing run resolves the divergence",
          vr2["resolved_events"] == vr["recorded_events"]
          and not any(g["gap_source"] == "unresolved_drift"
                      and "ver:flight" in g["affected_ids"]
-                     for g in s.call("detect_gaps")), vr2)
+                     for g in gaps_of(s)), vr2)
 
     print("\n== 4. reconcile: nothing changed ==")
     r = s.call("reconcile_artifacts", {"observed": [
@@ -805,8 +844,8 @@ def run(binary: str, graph_path: str) -> int:
         "record_events": True, "detected_at": "2026-07-19T10:00:00Z"})
     c.ok("the divergence is recorded", len(r.get("recorded_events", [])) == 1, r)
     c.ok("and persists as a gap until the second question is answered",
-         any(g["gap_source"] == "unresolved_drift" for g in s.call("detect_gaps")),
-         sorted({g["gap_source"] for g in s.call("detect_gaps")}))
+         any(g["gap_source"] == "unresolved_drift" for g in gaps_of(s)),
+         sorted({g["gap_source"] for g in gaps_of(s)}))
     led = s.call("confirmation_ledger")
     c.ok("the ledger says the capability is drifting", led["drifting"] >= 1, led)
 
@@ -835,7 +874,7 @@ def run(binary: str, graph_path: str) -> int:
         {"artifact_id": "art:flight", "present": True, "checksum": "sha256:v2"}]})
     c.ok("an accepted change is the new baseline", r["findings"] == [], r["findings"])
     c.ok("answering the question clears the unresolved_drift gap",
-         not any(g["gap_source"] == "unresolved_drift" for g in s.call("detect_gaps")))
+         not any(g["gap_source"] == "unresolved_drift" for g in gaps_of(s)))
     led = s.call("confirmation_ledger")
     c.ok("the ledger now says confirmed — with the claim visible, not just a tick",
          led["confirmed"] >= 1 and led["drifting"] == 0 and
@@ -967,7 +1006,7 @@ def run(binary: str, graph_path: str) -> int:
          [f["kind"] for f in fr["findings"]] == ["deployment_missing"], fr["findings"])
     c.ok("and it nags as a persistent gap",
          any(g["gap_source"] == "unresolved_drift"
-             and "env:prod" in g["affected_ids"] for g in s.call("detect_gaps")))
+             and "env:prod" in g["affected_ids"] for g in gaps_of(s)))
     s.call("deploy_to", {"release_id": "rel:v1", "environment_id": "env:prod",
                          "status": "rolled_back"})
     fr2 = s.call("reconcile_deployment", {
@@ -975,7 +1014,7 @@ def run(binary: str, graph_path: str) -> int:
     c.ok("correcting the declaration and re-observing resolves the event",
          fr2["resolved_events"] == fr["recorded_events"]
          and not any(g["gap_source"] == "unresolved_drift"
-                     and "env:prod" in g["affected_ids"] for g in s.call("detect_gaps")),
+                     and "env:prod" in g["affected_ids"] for g in gaps_of(s)),
          fr2)
     fr = s.call("reconcile_deployment", {
         "observed": [{"environment_id": "env:ghost", "running": ["rel:v1"]}]})
@@ -1052,7 +1091,7 @@ def run(binary: str, graph_path: str) -> int:
                                             "statement": "reachable over stdio"}})
     c.ok("create_node lands a typed node over stdio",
          made["node_id"] == "req:crud" and made["properties"]["name"] == "CRUD probe", made)
-    reqs = s.call("scan_nodes", {"node_type": "Requirement"})
+    reqs = s.call("scan_nodes", {"node_type": "Requirement"})["items"]
     c.ok("scan_nodes lists them (envelope unwrapped)",
          any(n["node_id"] == "req:crud" for n in reqs), [n["node_id"] for n in reqs])
     hits = s.call("search_design", {"query": "CRUD probe reachable"})["hits"]
@@ -1065,7 +1104,7 @@ def run(binary: str, graph_path: str) -> int:
          absent is None, absent)
 
     print("\n== 10. the design survives a restart ==")
-    first_gaps = sorted(g["id"] for g in s.call("detect_gaps"))
+    first_gaps = sorted(g["id"] for g in gaps_of(s))
     # Snapshot what is on the record right before the process ends, so the
     # check after reopening is against reality rather than an assumption.
     before_restart = s.call("open_questions")
@@ -1184,7 +1223,7 @@ def run(binary: str, graph_path: str) -> int:
     c.ok("it imports whole into a fresh graph in another process",
          rep["nodes_written"] == len(doc["nodes"]) and not rep["skipped_edges"], rep)
     c.ok("and the restored design diagnoses the same",
-         len(r.call("detect_gaps")) == len(s.call("detect_gaps")))
+         len(gaps_of(r)) == len(gaps_of(s)))
     c.ok("and re-exports to the same document",
          r.call("export_graph")["nodes"] == doc["nodes"])
     r.close()
@@ -1240,14 +1279,14 @@ def run(binary: str, graph_path: str) -> int:
     # that follows) can differ between runs on an unchanged graph. That would
     # make reviewing a gap pointless — the id it was accepted under might not
     # come back — so it has to be checked here, where the processes are real.
-    second_gaps = sorted(g["id"] for g in s.call("detect_gaps"))
+    second_gaps = sorted(g["id"] for g in gaps_of(s))
     c.ok("the same graph gives the same gaps in a fresh process",
          first_gaps == second_gaps,
          f"{len(first_gaps)} vs {len(second_gaps)}")
 
     # Acknowledging is what settles an answered question — done after the
     # determinism check above, which has to compare an unmutated graph.
-    ack_target = [g for g in s.call("detect_gaps") if g["id"] == answered_gap][0]
+    ack_target = [g for g in gaps_of(s) if g["id"] == answered_gap][0]
     s.call("acknowledge_gap", {"gap_id": answered_gap,
                                "affected_ids": ack_target["affected_ids"],
                                "reason": "deliberate for v1"})

@@ -79,6 +79,7 @@ impl ReflowService {
                 "GapCandidate",
             )?);
         }
+        let gaps = self.rehydrate_gaps(gaps).await?;
 
         let answered = req.gaps.iter().filter(|g| !g.answers.is_empty()).count();
         if answered != 0 && answered != req.gaps.len() {
@@ -168,6 +169,7 @@ impl ReflowService {
         Parameters(req): Parameters<GapToPromptReq>,
     ) -> Result<CallToolResult, McpError> {
         let gap: GapCandidate = parse_struct_param(req.gap, "GapCandidate")?;
+        let gap = self.rehydrate_gap(gap).await?;
 
         if req.answers.is_empty() {
             // Prepare pass: harvest the prompt the op would issue.
@@ -284,5 +286,74 @@ impl ReflowService {
         let mut g = self.write_lock().await;
         let found = g.withdraw_question(&req.gap_id).map_err(dyno_err)?;
         ok_json(json!({ "withdrawn": found, "gap_id": req.gap_id }))
+    }
+}
+
+impl ReflowService {
+    /// Fill a COMPACTED gap back in from the graph before it is used.
+    ///
+    /// `detect_gaps` withholds `description`, `evidence` and `affected_ids`
+    /// when the full reply would not fit (`ReplyDetail::TitlesOnly`), and an
+    /// agent hands the row it was given straight back here. Used as-is, that
+    /// row would phrase the question from a blank description and — worse —
+    /// record it against an EMPTY anchor set, so `open_questions` would carry a
+    /// question attached to nothing. The compaction is a fact about the reply,
+    /// never about the gap, so it is undone here rather than pushed onto the
+    /// caller.
+    ///
+    /// Only a row that is compacted is looked up: a real candidate always
+    /// carries both prose fields, so `description` and `evidence` both empty is
+    /// the discriminator, and the ordinary path pays nothing.
+    ///
+    /// A compacted row whose gap is no longer detected is REFUSED rather than
+    /// asked about. It means the gap closed between the two calls, and phrasing
+    /// a question about a gap that is gone — from a row with no content in it —
+    /// is not something to do quietly.
+    pub(crate) async fn rehydrate_gap(&self, gap: GapCandidate) -> Result<GapCandidate, McpError> {
+        Ok(self.rehydrate_gaps(vec![gap]).await?.remove(0))
+    }
+
+    /// [`rehydrate_gap`](Self::rehydrate_gap) for a batch, detecting ONCE.
+    ///
+    /// `gaps_to_prompts` takes a whole ask at a time, and rehydrating each row
+    /// on its own would re-run the detectors once per gap — the same answer,
+    /// recomputed, for every row of one batch.
+    pub(crate) async fn rehydrate_gaps(
+        &self,
+        gaps: Vec<GapCandidate>,
+    ) -> Result<Vec<GapCandidate>, McpError> {
+        let compacted = |gap: &GapCandidate| gap.description.is_empty() && gap.evidence.is_empty();
+        if !gaps.iter().any(compacted) {
+            return Ok(gaps);
+        }
+        let open = {
+            let g = self.graph.read().await;
+            g.detect_gaps().map_err(dyno_err)?
+        };
+        gaps.into_iter()
+            .map(|gap| {
+                if !compacted(&gap) {
+                    return Ok(gap);
+                }
+                open.iter()
+                    .find(|candidate| candidate.id == gap.id)
+                    .cloned()
+                    .ok_or_else(|| Self::gap_is_gone(&gap.id))
+            })
+            .collect()
+    }
+
+    fn gap_is_gone(gap_id: &str) -> McpError {
+        {
+            McpError::invalid_params(
+                format!(
+                    "gap {gap_id} carries no description or evidence, so it is a row from a \
+                     BUDGETED detect_gaps reply — and no open gap has that id any more. It was \
+                     either closed or acknowledged since that reply. Re-run detect_gaps and ask \
+                     about what is still open."
+                ),
+                None,
+            )
+        }
     }
 }

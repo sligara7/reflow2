@@ -855,13 +855,308 @@ pub struct GapCandidate {
     /// Short human-readable summary.
     pub title: String,
     /// Why this matters.
+    ///
+    /// Skipped when empty rather than serialized as `""`, because a BUDGETED
+    /// reply blanks it (see [`GapReport`]) and a reader must be able to tell
+    /// "this was withheld to fit" from "this gap has nothing to say". Empty on
+    /// the way in for the same reason: a compact row handed straight back to
+    /// `gap_to_prompt` has to deserialize.
+    #[serde(default, skip_serializing_if = "String::is_empty")]
     pub description: String,
     /// The node ids involved.
     pub affected_ids: Vec<String>,
     /// 1..5 — how deep an answer to ask for (storyflow's "heat").
     pub suggested_depth: u8,
-    /// Raw signal backing the gap, for auditing.
+    /// Raw signal backing the gap, for auditing. Withheld the same way
+    /// `description` is, and for the same reason.
+    #[serde(default, skip_serializing_if = "String::is_empty")]
     pub evidence: String,
+}
+
+/// The default ceiling on a detector's reply, in characters of serialized JSON.
+///
+/// **A reply nobody can read is not an answer.** `detect_gaps` is the call the
+/// coherence loop orbits and the one every instruction file tells a session to
+/// make first. Unscoped, on reflow2's own design, it was 79,566 characters of
+/// gaps — and the harness refused it outright. What the session then saw was a
+/// wall of *harness* text, never reflow2's, so the tool could not even suggest
+/// narrowing: the one failure mode where the thing that knows the answer never
+/// gets to speak. `cap:bounded-reads` had said since 2026-07-25 that a read
+/// which would not fit answers with a bounded page and says what it left out.
+/// It was `verified` — of `scan_nodes`, which is what `ver:bounded-reads`
+/// actually drives — and silent about the first move of a session.
+///
+/// Measured here on 2026-08-23, 77 open gaps, 2,920 nodes:
+///
+/// | reply | payload |
+/// |---|---|
+/// | as it was served | 79,566 |
+/// | `affected_ids` capped at [`AFFECTED_CAP`] | 60,437 |
+/// | titles only | 22,194 |
+///
+/// Capping the id lists alone was not enough and that is the interesting half:
+/// 35% of the reply was `affected_ids` and almost all of it sat in THREE rollup
+/// gaps, one of which enumerated 468 ChangeEvents whose own title already said
+/// "468 of 605". The long tail is prose, spread evenly, and only dropping it
+/// gets an answer under any cap worth the name.
+///
+/// The figure counts CHARACTERS OF PAYLOAD, and an agent sees about twice it:
+/// every reply is emitted once as `structuredContent` and again as a text
+/// `content` block, because a client may read either (`json_result` in
+/// reflow2-mcp). So 30,000 here is roughly 60,000 characters at the agent —
+/// inside the smallest cap in use, with the session still left room to work.
+///
+/// It is a DEFAULT, not a law. `budget_chars` raises it for a caller that knows
+/// it has room, the same shape `depth` has on a scope. What is not optional is
+/// that the reply says it was cut, and says what would get the rest.
+pub const DEFAULT_REPLY_BUDGET_CHARS: usize = 30_000;
+
+/// How many of a gap's `affected_ids` survive into a `full` reply.
+///
+/// Eight rather than a round ten for no better reason than that it is enough to
+/// recognise a pattern and too few to read as the whole set. The count is never
+/// lost: [`GapRow::affected_total`] is always present.
+pub const AFFECTED_CAP: usize = 8;
+
+/// What an UNSCOPED reader should do to see what a budgeted reply withheld.
+pub const NARROW_WITH_SCOPE: &str = "To read the reasoning behind one, narrow with `scope` (a \
+     Component, Capability or Project id — `design_regions` names the parts this design has), or \
+     raise `budget_chars` if this client has the room.";
+
+/// What an ALREADY-SCOPED reader should do. Deliberately not the same sentence:
+/// telling somebody who scoped to scope is advice they cannot follow.
+pub const NARROW_THE_SCOPE: &str = "This answer is already scoped, so what gets more of it is a \
+     smaller `depth`, a seed further down the containment spine, or a higher `budget_chars` if \
+     this client has the room.";
+
+/// How much of a reply's own content it had to withhold in order to be readable.
+///
+/// Not to be confused with a design budget ([`crate::budget`]) — that is a mass
+/// or a latency the DESIGN must fit inside; this is how much of an ANSWER fits
+/// inside the reader. It lives here rather than in a module of its own because
+/// exactly one reader uses it; move it when a second one does.
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub struct ReplyBudget {
+    /// `full` — every field of every listed finding.
+    /// `titles_only` — id, kind, severity and title kept; the prose and the
+    /// affected-id lists withheld.
+    pub detail: ReplyDetail,
+    /// Size of the reply that was actually built, in characters of JSON.
+    pub chars: usize,
+    /// The ceiling it was built to fit.
+    pub budget_chars: usize,
+    /// How many findings are in `items`.
+    pub listed: usize,
+    /// How many findings there are. `listed < of` means the tail was dropped;
+    /// the counts by kind still cover all of them.
+    pub of: usize,
+    /// Said in WORDS whenever anything was withheld, naming what went and the
+    /// exact calls that get it back. Absent when the full answer fit, so its
+    /// presence is the signal and its absence is never ambiguous.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub note: Option<String>,
+}
+
+/// Which tier a budgeted reply settled on.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum ReplyDetail {
+    /// Nothing withheld beyond the standing [`AFFECTED_CAP`].
+    Full,
+    /// `description`, `evidence` and `affected_ids` withheld from every row.
+    TitlesOnly,
+}
+
+/// One gap as it appears in a budgeted reply: the candidate, plus the two
+/// figures that keep a shortened `affected_ids` from reading as the whole set.
+///
+/// Flattened, so the JSON keys are the ones `detect_gaps` has always emitted
+/// and a row handed straight back to `gap_to_prompt` still deserializes.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct GapRow {
+    #[serde(flatten)]
+    pub gap: GapCandidate,
+    /// How many nodes this gap actually touches — always present, whether or
+    /// not the list was cut. A field that appeared only on bad news would make
+    /// its absence read as good news.
+    pub affected_total: usize,
+    /// How many ids were withheld from `affected_ids`. Absent when none were.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub affected_withheld: Option<usize>,
+}
+
+/// Every open gap, in as much detail as fits.
+///
+/// `count` and `by_source` describe ALL of them and are never budgeted away, so
+/// the reply can shrink without ever becoming quieter about how much is open —
+/// `req:no-idea-goes-quiet` applied to the tool's own answer.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct GapReport {
+    /// Open gaps in the whole design. Independent of how many are listed.
+    pub count: usize,
+    /// How many of each kind — over all `count` of them, not over `items`.
+    pub by_source: BTreeMap<String, usize>,
+    /// What this reply had to leave out to be readable.
+    pub budget: ReplyBudget,
+    pub items: Vec<GapRow>,
+}
+
+/// Fit `gaps` into `budget_chars`, dropping the cheapest information first.
+///
+/// The order is measured rather than assumed (see [`DEFAULT_REPLY_BUDGET_CHARS`]):
+///
+/// 1. Cap every gap's `affected_ids` at [`AFFECTED_CAP`], always. A rollup that
+///    enumerates 468 nodes is not communicating; its own title already says so.
+/// 2. If that still does not fit, withhold `description` and `evidence` from
+///    EVERY row. Uniformly, never from the low-severity ones only — a list
+///    where half the rows carry an explanation teaches the reader that the
+///    other half matter less, which is a judgement nothing here made.
+/// 3. If even titles do not fit, list the ones that do, highest severity first,
+///    and say how many are not listed. `count` and `by_source` still cover them.
+///
+/// Step 3 is the last resort and it is the one that must never be silent: it is
+/// the only tier where a finding is absent from the reply altogether.
+///
+/// `next_step` is the sentence that ends the note: what THIS caller should do to
+/// see more. A parameter because the honest answer differs — an unscoped reader
+/// is told to narrow with `scope`, and telling a reader who already scoped to
+/// scope would be advice they cannot follow.
+pub fn budget_gaps(gaps: Vec<GapCandidate>, budget_chars: usize, next_step: &str) -> GapReport {
+    let count = gaps.len();
+    let mut by_source = BTreeMap::new();
+    for gap in &gaps {
+        let key = serde_json::to_value(gap.gap_source)
+            .ok()
+            .and_then(|v| v.as_str().map(str::to_string))
+            .unwrap_or_else(|| "unknown".to_string());
+        *by_source.entry(key).or_insert(0usize) += 1;
+    }
+
+    let rows: Vec<GapRow> = gaps.into_iter().map(GapRow::capped).collect();
+
+    let full_chars = json_len(&rows);
+    if full_chars <= budget_chars {
+        let withheld: usize = rows.iter().filter_map(|r| r.affected_withheld).sum();
+        return GapReport {
+            count,
+            by_source,
+            budget: ReplyBudget {
+                detail: ReplyDetail::Full,
+                chars: full_chars,
+                budget_chars,
+                listed: rows.len(),
+                of: count,
+                note: (withheld > 0).then(|| {
+                    format!(
+                        "Full detail. {withheld} affected-node id(s) across {n} gap(s) were not \
+                         listed: a gap carries at most {AFFECTED_CAP} of them, and \
+                         `affected_total` on each row says how many it really touches. Pass \
+                         `budget_chars` higher to see the rest.",
+                        n = rows
+                            .iter()
+                            .filter(|r| r.affected_withheld.is_some())
+                            .count(),
+                    )
+                }),
+            },
+            items: rows,
+        };
+    }
+
+    // Tier 2 — the prose goes, from every row.
+    let mut titles: Vec<GapRow> = rows.into_iter().map(GapRow::titles_only).collect();
+    let mut chars = json_len(&titles);
+    let mut dropped = 0usize;
+    // Tier 3 — even titles do not fit. The list is already sorted by severity,
+    // so the longest prefix that fits is also the worst gaps. Found by bisection
+    // rather than by popping one at a time: a design with thousands of gaps and
+    // a small budget would otherwise re-serialize the whole list once per row.
+    // `!is_empty` is load-bearing, not a tidy-up: an empty list still serializes
+    // to `[]`, so a budget of 0 or 1 reaches here with nothing to drop and the
+    // arithmetic below would underflow on `len() - lo`.
+    if chars > budget_chars && !titles.is_empty() {
+        let (mut lo, mut hi) = (1usize, titles.len());
+        while lo < hi {
+            let mid = lo + (hi - lo).div_ceil(2);
+            if json_len(&titles[..mid]) <= budget_chars {
+                lo = mid;
+            } else {
+                hi = mid - 1;
+            }
+        }
+        dropped = titles.len() - lo;
+        titles.truncate(lo);
+        chars = json_len(&titles);
+    }
+
+    let listed = titles.len();
+    let note = if dropped > 0 {
+        format!(
+            "WITHHELD TO FIT, AND THE LIST ITSELF IS SHORT: {listed} of {count} open gap(s) are \
+             listed here, highest severity first — {dropped} are NOT, and the full answer would \
+             have been {full_chars} characters against a budget of {budget_chars}. `count` and \
+             `by_source` above still cover every one of the {count}, so nothing is hidden from \
+             the totals, only from the list. {next_step}"
+        )
+    } else {
+        format!(
+            "WITHHELD TO FIT: every one of the {count} open gap(s) is listed, but `description`, \
+             `evidence` and `affected_ids` were withheld from all of them — in full this answer \
+             is {full_chars} characters against a budget of {budget_chars}, which is the size at \
+             which a client refuses the call and reflow2 never gets to say any of this. What is \
+             here is complete as a LIST: every gap's id, kind, severity, title and \
+             `affected_total`. {next_step}"
+        )
+    };
+
+    GapReport {
+        count,
+        by_source,
+        budget: ReplyBudget {
+            detail: ReplyDetail::TitlesOnly,
+            chars,
+            budget_chars,
+            listed,
+            of: count,
+            note: Some(note),
+        },
+        items: titles,
+    }
+}
+
+/// Serialized size of a reply fragment. Falls back to `usize::MAX` rather than
+/// zero if it cannot be serialized: a size that cannot be measured must read as
+/// "too big", never as "fits".
+fn json_len<T: serde::Serialize + ?Sized>(v: &T) -> usize {
+    serde_json::to_string(v)
+        .map(|s| s.len())
+        .unwrap_or(usize::MAX)
+}
+
+impl GapRow {
+    /// The gap with its affected list capped, which is what every tier starts
+    /// from.
+    fn capped(mut gap: GapCandidate) -> Self {
+        let affected_total = gap.affected_ids.len();
+        let affected_withheld = affected_total.checked_sub(AFFECTED_CAP).filter(|n| *n > 0);
+        if affected_withheld.is_some() {
+            gap.affected_ids.truncate(AFFECTED_CAP);
+        }
+        Self {
+            gap,
+            affected_total,
+            affected_withheld,
+        }
+    }
+
+    /// The same row with everything but its name withheld.
+    fn titles_only(mut self) -> Self {
+        self.gap.description.clear();
+        self.gap.evidence.clear();
+        self.gap.affected_ids.clear();
+        self.affected_withheld = (self.affected_total > 0).then_some(self.affected_total);
+        self
+    }
 }
 
 /// A gap turned into a plain-language question the user actually answers
@@ -1320,6 +1615,21 @@ impl DesignGraph {
             }
         }
         Ok(open)
+    }
+
+    /// [`detect_gaps`](Self::detect_gaps), in a reply that fits in
+    /// `budget_chars` and says what it left out to get there.
+    ///
+    /// The detection is untouched — every gap is still found, still counted and
+    /// still named. What is budgeted is only how much is SAID about each one.
+    /// See [`budget_gaps`] for the order things go in, and
+    /// [`DEFAULT_REPLY_BUDGET_CHARS`] for why this exists at all.
+    pub fn detect_gaps_within(&self, budget_chars: usize) -> Result<GapReport, DynoError> {
+        Ok(budget_gaps(
+            self.detect_gaps()?,
+            budget_chars,
+            NARROW_WITH_SCOPE,
+        ))
     }
 
     /// Gaps that were reviewed and accepted, with the reason given for each.

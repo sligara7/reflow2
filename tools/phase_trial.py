@@ -202,7 +202,7 @@ def run_p3(s: Server, p: Probes, files: dict[str, pathlib.Path]) -> None:
                               "description": "Designed, never written.", "status": "planned"})
     s.call("satisfies", {"from_id": "cap:unbuilt", "to_id": "req:coherence"})
     s.call("allocate", {"from_id": "cap:unbuilt", "to_id": "cmp:core"})
-    sources = [g["gap_source"] for g in s.call("detect_gaps")]
+    sources = [g["gap_source"] for g in s.call("detect_gaps")["items"]]
     p.score("P3", "a capability designed but never built",
             "unrealized_capability" in sources, f"gaps: {sorted(set(sources))}")
 
@@ -226,7 +226,7 @@ def run_p4(s: Server, p: Probes, files: dict[str, pathlib.Path]) -> None:
 
     # Probe 5 — a capability claiming to be verified with nothing verifying it.
     s.call("set_capability_status", {"capability_id": "cap:heal", "status": "verified"})
-    gaps = s.call("detect_gaps")
+    gaps = s.call("detect_gaps")["items"]
     sources = [g["gap_source"] for g in gaps]
     named = [g for g in gaps if "cap:heal" in g.get("affected_ids", [])]
     p.score("P4", "a capability with no verification is surfaced at all",
@@ -246,7 +246,7 @@ def run_p4(s: Server, p: Probes, files: dict[str, pathlib.Path]) -> None:
     s.call("verifies", {"verification_id": "ver:drift",
                         "target_type": "Capability", "target_id": "cap:drift"})
     s.call("set_verification_status", {"verification_id": "ver:drift", "status": "failing"})
-    gaps = s.call("detect_gaps")
+    gaps = s.call("detect_gaps")["items"]
     named = any("ver:drift" in g.get("affected_ids", []) or "cap:drift" in g.get("affected_ids", [])
                 for g in gaps)
     p.score("P4", "a FAILING verification is surfaced as a problem", named,
@@ -258,7 +258,7 @@ def run_p4(s: Server, p: Probes, files: dict[str, pathlib.Path]) -> None:
     r = s.call("reconcile_verification", {
         "observed": [{"verification_id": "ver:detect", "outcome": "failed"}],
         "record_events": True})
-    gaps = s.call("detect_gaps")
+    gaps = s.call("detect_gaps")["items"]
     named = [g for g in gaps if g["gap_source"] == "unresolved_drift"
              and "ver:detect" in g.get("affected_ids", [])]
     p.score("P4", "a way to reconcile recorded status against a real test run",
@@ -290,7 +290,7 @@ def run_p5(s: Server, p: Probes) -> None:
                              "location": "src/orphan.rs", "artifact_type": "code",
                              "target_type": "Component", "target_id": "cmp:orphaned-build",
                              "checksum": "sha256:orphan"})
-    gaps = s.call("detect_gaps")
+    gaps = s.call("detect_gaps")["items"]
     named = [g for g in gaps if g["gap_source"] == "unreleased_component"
              and "cmp:orphaned-build" in g.get("affected_ids", [])]
     p.score("P5", "a built component that no release contains", bool(named),
@@ -303,7 +303,7 @@ def run_p5(s: Server, p: Probes) -> None:
     r = s.call("reconcile_deployment", {
         "observed": [{"environment_id": "env:dev", "running": []}],
         "record_events": True})
-    gaps = s.call("detect_gaps")
+    gaps = s.call("detect_gaps")["items"]
     named = [g for g in gaps if g["gap_source"] == "unresolved_drift"
              and "env:dev" in g.get("affected_ids", [])
              and "rel:v020" in g.get("affected_ids", [])]

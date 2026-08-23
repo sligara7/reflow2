@@ -31,6 +31,46 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed — the first move of a session fits in the reply
+
+**Minor** (the result shape of `detect_gaps` gains fields; one new optional parameter).
+
+`detect_gaps` unscoped on this design returned **79,566 characters** and harnesses refused the
+call outright. So the one call every instruction file tells a session to make first could not be
+made at all on a mature design — and because the refusal came from the *client*, what the session
+saw was a wall of harness text. reflow2 never got to say "pass `scope`".
+
+`cap:bounded-reads` has said since 2026-07-25 that a read which would not fit answers with a
+bounded page and says what it left out. It read `verified` — of `scan_nodes`, which is what
+`ver:bounded-reads` actually drives — and was silent about the call the whole loop orbits.
+
+- **`detect_gaps` now answers within a budget** (`budget_chars`, default 30,000 characters of
+  payload; a client sees about twice that, because every reply is emitted as both
+  `structuredContent` and a text block). The reply carries `budget`, which says which tier it
+  landed in and what it withheld, in words.
+- **A shorter answer is never a quieter one.** `count` and the new `by_source` describe every
+  open gap in every tier. Only in the last resort is a gap absent from the list at all, and the
+  reply says so and names how many.
+- Cheapest information goes first, which is measured rather than assumed: a gap's `affected_ids`
+  are capped at 8 (35% of the reply was id lists, almost all of it in three rollups, one of them
+  enumerating 468 ChangeEvents whose own title already said "468 of 605"); then the prose goes
+  from every row, never from some. Every row carries `affected_total` regardless.
+- Scoped detection is budgeted the same way. Scoping is what an over-budget reader is *told* to
+  do, and a Component at depth 3 holds 50–60 of this design's 83 gaps — so a scoped answer that
+  would not fit either would have made the advice a dead end.
+- `gap_to_prompt` and `gaps_to_prompts` **fill a withheld row back in from the graph.** Without
+  it the ask half of the loop phrased questions from a blank description and recorded them
+  against an empty anchor set.
+- **`reflow2_check.py` read `affected_ids` to decide whether a gap was anchored** — and an
+  anchored gap is the only kind that fails a build. Against a budgeted reply it would have called
+  every real gap a phase nudge and gone GREEN on a design full of them, more reliably the bigger
+  the design got. It reads `affected_total` now, asks for the whole reply
+  (`--gap-reply-budget`), and fails outright if it was handed a list it knows is short.
+- **The envelope unwrap in the Python clients was gutting rich payloads.** It unwrapped anything
+  carrying `count` and `items`, which silently discarded `scan_nodes`' own `omitted` and
+  `capped_by` — the very "what I left out" a bounded read exists to report. It now unwraps only
+  the bare envelope.
+
 ## [0.38.0] — 2026-08-21
 
 **Minor.** One new served tool, one new schema property, one new gap detector, a 21st served

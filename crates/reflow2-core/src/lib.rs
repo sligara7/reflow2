@@ -103,7 +103,11 @@ pub use corpus::{
 };
 pub use coverage::{CoverageReport, ObservedPath, UnclaimedRegion};
 pub use depends::{DependencyDeclaration, DependencyFinding, DependencyReport, ObservedDependency};
-pub use detect::{AskedQuestion, AskedRecord, GapCandidate, GapPrompt, GapScope, GapSource};
+pub use detect::{
+    AFFECTED_CAP, AskedQuestion, AskedRecord, DEFAULT_REPLY_BUDGET_CHARS, GapCandidate, GapPrompt,
+    GapReport, GapRow, GapScope, GapSource, NARROW_THE_SCOPE, NARROW_WITH_SCOPE, ReplyBudget,
+    ReplyDetail, budget_gaps,
+};
 pub use dimensions::{Dimension, DimensionDrift, DriftDirection};
 pub use discover::{DesignAtPath, DesignPathState, describe_at};
 pub use drift::{DriftFinding, DriftKind, DriftReport, ObservedArtifact, ReconcileOptions};

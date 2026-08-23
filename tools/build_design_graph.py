@@ -941,7 +941,7 @@ def analyse(s: Server) -> None:
     print(f"  {dict(rep['node_counts'])}")
     print(f"{'=' * 64}")
 
-    gaps = s.call("detect_gaps")
+    gaps = s.call("detect_gaps")["items"]
     print(f"\n-- detect_gaps: {len(gaps)} --")
     for g in gaps:
         who = ", ".join(g["affected_ids"]) or "(project-level)"
@@ -1001,7 +1001,7 @@ def analyse(s: Server) -> None:
         for p in REPO.glob(pat)
         if p.name != "lib.rs"  # pure re-export shims; not a meaningful unit
     ) + [REPO / "tools/reflow2_init.py"]
-    arts = s.call("scan_nodes", {"node_type": "Artifact"})
+    arts = s.call("scan_nodes", {"node_type": "Artifact"})["items"]
     if isinstance(arts, dict):  # CLI path envelopes lists; smoke_mcp does not
         arts = arts["items"]
     by_loc = {a["properties"].get("location"): a["node_id"]
