@@ -78,7 +78,7 @@ def main() -> int:
                             "target_type": "Capability", "target_id": "cap:charge"})
         s.call("set_verification_status", {"verification_id": "ver:charge", "status": "passing"})
         print(f"   {s.call('graph_report')['total_nodes']} nodes, "
-              f"{len(s.call('detect_gaps'))} gaps — a clean thread")
+              f"{s.call('detect_gaps')['count']} gaps — a clean thread")
 
         # ---- N rounds of test → fix → accept. Each one legitimate. --------
         print(f"\n== {args.cycles} rounds of test-fails / fix-code / accept ==")
@@ -117,7 +117,7 @@ def main() -> int:
 
         # ---- What does the design now know? -------------------------------
         print("\n== after N cycles and a release, does the design know? ==")
-        gaps = s.call("detect_gaps")
+        gaps = s.call("detect_gaps")["items"]
         sources = sorted({g["gap_source"] for g in gaps})
         # Genuine since BL-35: the ledger reports the whole movement history —
         # how many times the code moved, and what each move was claimed to mean.
@@ -139,7 +139,7 @@ def main() -> int:
              if "24h" in desc else True,
              "nothing compares a description against what the code became")
 
-        accepts = [e for e in s.call("scan_nodes", {"node_type": "ChangeEvent"})
+        accepts = [e for e in s.call("scan_nodes", {"node_type": "ChangeEvent"})["items"]
                    if e["node_id"].startswith("chg:accept-")]
         note("every accept had to answer the second question, on the record",
              len(accepts) == drifts,
@@ -149,7 +149,7 @@ def main() -> int:
         # Tightened (was `> 0`, which one surviving event weakly satisfied while
         # four of five had collapsed into it): every drift must leave its own
         # event, or "drifted once" and "drifted N times" are the same graph.
-        events = len(s.call("scan_nodes", {"node_type": "DriftEvent"}))
+        events = s.call("scan_nodes", {"node_type": "DriftEvent"})["count"]
         note("the graph records EVERY drift, not just the latest",
              events == drifts,
              f"{events} DriftEvent(s) retained for {drifts} drift(s)")

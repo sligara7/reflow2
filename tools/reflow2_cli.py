@@ -65,7 +65,16 @@ def _unwrap(value):
     read can add a sibling `loop_hint` (BL-91), and additive metadata must not
     defeat the unwrap.
     """
-    if isinstance(value, dict) and {"count", "items"} <= value.keys():
+    # Unwrap ONLY the bare envelope. `loop_hint` (BL-91) is inert prose and may
+    # ride along; anything else is a payload the tool BUILT around its list —
+    # detect_gaps carries `budget` (what the reply withheld) and `by_source`
+    # (the counts that cover every gap, listed or not), and handing back the
+    # list alone would silently throw away the half that says the list is
+    # incomplete. Presence-not-exact-set was right when the only sibling was a
+    # hint and wrong the moment one mattered.
+    if isinstance(value, dict) and {"count", "items"} <= value.keys() <= {
+        "count", "items", "loop_hint"
+    }:
         return value["items"]
     return value
 

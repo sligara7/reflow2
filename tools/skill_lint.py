@@ -116,6 +116,13 @@ NON_TOOL_TERMS = {
     # HealIssue's field for a finding with no honest mechanical repair
     # (req:a-repair-suggestion-never-proposes-fabrication, 2026-08-10).
     "repair_is_a_judgement",
+    # GapReport fields (2026-08-23) — detect-and-ask names them because the
+    # reply is now BUDGETED, and the one thing a reader must not do is report a
+    # shortened answer as fewer gaps. `count` and `by_source` are the figures
+    # that never shrink; `budget` is what says the rest of the reply did.
+    "count",
+    "by_source",
+    "budget",
     # A GAP SOURCE key (detect.rs), not a tool. The brainstorm skill names it so
     # a reader can tell what the linking step is measured by — and so that the
     # sentence promising the invitation is held has something concrete to be

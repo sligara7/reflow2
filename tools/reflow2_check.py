@@ -173,10 +173,14 @@ class Server:
             die(2, f"{tool}: {text}")
         if "structuredContent" in result:
             value = result["structuredContent"]
-            # Presence, not exact set: an orientation read can add a sibling
-            # `loop_hint` (BL-91) to the {count, items} envelope, and that extra
-            # key must not defeat the list unwrap.
-            if isinstance(value, dict) and {"count", "items"} <= value.keys():
+            # Unwrap ONLY the bare envelope. `loop_hint` (BL-91) is inert
+            # prose and may ride along; anything else is a payload the tool
+            # BUILT around its list — detect_gaps carries `budget` and
+            # `by_source`, and returning the list alone would silently discard
+            # the half that says the list is incomplete.
+            if isinstance(value, dict) and {"count", "items"} <= value.keys() <= {
+                "count", "items", "loop_hint"
+            }:
                 return value["items"]
             return value
         blocks = result.get("content") or []
@@ -634,6 +638,17 @@ def main() -> int:
         default=0.8,
         help="anchored gaps at/above this severity fail the build (default 0.8)",
     )
+    ap.add_argument(
+        "--gap-reply-budget",
+        type=int,
+        default=5_000_000,
+        help=(
+            "characters of detect_gaps reply to ask for (default 5,000,000). "
+            "Deliberately enormous: the tool's own default is sized for an agent's "
+            "context window and this is a script reading a pipe, so the gate wants "
+            "every gap in full and would rather be slow than judge a partial list"
+        ),
+    )
     opts = ap.parse_args()
 
     if not os.path.exists(opts.export):
@@ -918,9 +933,30 @@ def main() -> int:
             # has said it depends on no other design, which is a statement, not a
             # silence — and reconcile's own note already says so if asked.
 
-            gaps = server.call("detect_gaps", {}) or []
+            reply = server.call("detect_gaps", {"budget_chars": opts.gap_reply_budget}) or []
+            # A rich envelope now, a bare list against a server older than the
+            # budget (0.38.0 and before). Both are read rather than one assumed.
+            gaps = reply.get("items", []) if isinstance(reply, dict) else reply
+            budget = reply.get("budget") if isinstance(reply, dict) else None
+            if budget and budget.get("listed", 0) < budget.get("of", 0):
+                # The one tier where gaps are absent from the list altogether.
+                # A gate that judged only what it was shown, and said nothing
+                # about the rest, would be the erosion this script exists to
+                # catch, performed by the script.
+                failures.append(
+                    f"GAPS   detect_gaps listed {budget['listed']} of {budget['of']} open "
+                    f"gap(s) — the rest were not shown, so this gate cannot judge them. "
+                    f"Re-run with a larger --gap-reply-budget."
+                )
             for gap in gaps:
-                anchored = bool(gap.get("affected_ids"))
+                # `affected_total`, NOT `affected_ids`: a budgeted reply
+                # withholds the id lists when the full answer would not fit, and
+                # reading emptiness as "unanchored" would demote every real gap
+                # to a phase nudge and turn this gate GREEN with the design full
+                # of them. `affected_total` is present in every tier. The
+                # fallback keeps this working against a server older than the
+                # budget (0.38.0 and before), where the field does not exist.
+                anchored = bool(gap.get("affected_total", len(gap.get("affected_ids") or [])))
                 severity = float(gap.get("severity", 0.0))
                 line = f"{gap.get('id')} [{severity:.2f}] {gap.get('title')}"
                 if anchored and severity >= opts.gap_threshold:

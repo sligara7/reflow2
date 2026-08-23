@@ -112,7 +112,7 @@ async fn golden_thread_and_reports() {
     let s = seeded().await;
 
     // The capability is unallocated → a gap should surface.
-    let gaps = jl!(s.detect_gaps(Parameters(ScopeReq::default())));
+    let gaps = jl!(s.detect_gaps(Parameters(GapScopeReq::default())));
     let arr = gaps.as_array().expect("gaps is a JSON array");
     assert!(
         arr.iter()
@@ -212,7 +212,7 @@ async fn genesis_bootstraps_then_detect_hands_off() {
     })));
 
     // Seeded P0/P1 with no P2 → DETECT's first-round structure gap fires.
-    let gaps = jl!(s.detect_gaps(Parameters(ScopeReq::default())));
+    let gaps = jl!(s.detect_gaps(Parameters(GapScopeReq::default())));
     assert!(
         gaps.as_array()
             .unwrap()
@@ -255,7 +255,7 @@ async fn link_artifact_closes_the_unrealized_capability_gap() {
     assert_eq!(link["completeness"], "complete");
 
     // cap:score is unrealized → the gap fires, naming it.
-    let gaps = jl!(s.detect_gaps(Parameters(ScopeReq::default())));
+    let gaps = jl!(s.detect_gaps(Parameters(GapScopeReq::default())));
     let unrealized: Vec<&serde_json::Value> = gaps
         .as_array()
         .unwrap()
@@ -293,7 +293,7 @@ async fn link_artifact_closes_the_unrealized_capability_gap() {
         fragment_id: None,
         checksum: None,
     })));
-    let gaps2 = jl!(s.detect_gaps(Parameters(ScopeReq::default())));
+    let gaps2 = jl!(s.detect_gaps(Parameters(GapScopeReq::default())));
     assert!(
         !gaps2
             .as_array()
@@ -307,7 +307,7 @@ async fn link_artifact_closes_the_unrealized_capability_gap() {
 #[tokio::test]
 async fn gap_to_prompt_collect_then_serve() {
     let s = seeded().await;
-    let gaps = jl!(s.detect_gaps(Parameters(ScopeReq::default())));
+    let gaps = jl!(s.detect_gaps(Parameters(GapScopeReq::default())));
     let gap = gaps
         .as_array()
         .unwrap()
@@ -383,7 +383,7 @@ async fn interface_tools_pair_both_sides_of_a_contract() {
     );
 
     // Both sides present → no interface-pairing question.
-    let gaps = jl!(s.detect_gaps(Parameters(ScopeReq::default())));
+    let gaps = jl!(s.detect_gaps(Parameters(GapScopeReq::default())));
     let sources: Vec<&str> = gaps
         .as_array()
         .expect("gaps array")
@@ -408,7 +408,7 @@ async fn a_contract_with_no_provider_surfaces_as_a_gap_over_the_surface() {
         to_id: "ifc:state".into()
     })));
 
-    let gaps = jl!(s.detect_gaps(Parameters(ScopeReq::default())));
+    let gaps = jl!(s.detect_gaps(Parameters(GapScopeReq::default())));
     let found = gaps
         .as_array()
         .expect("gaps array")
@@ -635,7 +635,7 @@ async fn the_write_side_can_answer_what_detect_asks_for() {
         checksum: Some("sha256:v1".into()),
     })));
 
-    let before: Vec<String> = jl!(s.detect_gaps(Parameters(ScopeReq::default())))
+    let before: Vec<String> = jl!(s.detect_gaps(Parameters(GapScopeReq::default())))
         .as_array()
         .expect("items is an array")
         .iter()
@@ -681,7 +681,7 @@ async fn the_write_side_can_answer_what_detect_asks_for() {
         status: Some("active".into()),
     })));
 
-    let after: Vec<String> = jl!(s.detect_gaps(Parameters(ScopeReq::default())))
+    let after: Vec<String> = jl!(s.detect_gaps(Parameters(GapScopeReq::default())))
         .as_array()
         .expect("items is an array")
         .iter()
@@ -1113,7 +1113,7 @@ async fn marking_a_requirement_dropped_stops_the_nagging() {
         distinct_from: None,
     })));
     assert!(
-        flagged(&jl!(s.detect_gaps(Parameters(ScopeReq::default())))),
+        flagged(&jl!(s.detect_gaps(Parameters(GapScopeReq::default())))),
         "an unsatisfied requirement is asked about — once, by DETECT"
     );
     assert!(
@@ -1132,7 +1132,7 @@ async fn marking_a_requirement_dropped_stops_the_nagging() {
     );
 
     assert!(
-        !flagged(&jl!(s.detect_gaps(Parameters(ScopeReq::default())))),
+        !flagged(&jl!(s.detect_gaps(Parameters(GapScopeReq::default())))),
         "DETECT goes quiet"
     );
     assert!(
@@ -1149,7 +1149,7 @@ async fn marking_a_requirement_dropped_stops_the_nagging() {
 #[tokio::test]
 async fn asking_a_gap_records_the_question_it_asked() {
     let s = seeded().await;
-    let gaps = jl!(s.detect_gaps(Parameters(ScopeReq::default())));
+    let gaps = jl!(s.detect_gaps(Parameters(GapScopeReq::default())));
     let gap = gaps.as_array().unwrap()[0].clone();
     let gap_id = gap["id"].as_str().unwrap().to_string();
     let gap_affected: Vec<String> = gap["affected_ids"]
@@ -1279,11 +1279,11 @@ async fn a_design_round_trips_through_export_and_import() {
 
     // And it behaves the same, not merely serializes the same.
     assert_eq!(
-        jl!(fresh.detect_gaps(Parameters(ScopeReq::default())))
+        jl!(fresh.detect_gaps(Parameters(GapScopeReq::default())))
             .as_array()
             .unwrap()
             .len(),
-        jl!(s.detect_gaps(Parameters(ScopeReq::default())))
+        jl!(s.detect_gaps(Parameters(GapScopeReq::default())))
             .as_array()
             .unwrap()
             .len(),
@@ -1313,7 +1313,7 @@ async fn a_wrong_edge_can_be_retracted_without_deleting_its_endpoints() {
     let s = seeded().await;
 
     // The seeded SATISFIES edge is visible to detect: no unsatisfied gap.
-    let gaps = jl!(s.detect_gaps(Parameters(ScopeReq::default())));
+    let gaps = jl!(s.detect_gaps(Parameters(GapScopeReq::default())));
     let unsatisfied = |gaps: &serde_json::Value| {
         gaps.as_array()
             .unwrap()
@@ -1344,7 +1344,7 @@ async fn a_wrong_edge_can_be_retracted_without_deleting_its_endpoints() {
             == "req:physics",
         "the requirement must survive the retraction"
     );
-    let after = jl!(s.detect_gaps(Parameters(ScopeReq::default())));
+    let after = jl!(s.detect_gaps(Parameters(GapScopeReq::default())));
     assert_eq!(
         unsatisfied(&after),
         1,
@@ -2151,7 +2151,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
 #[tokio::test]
 async fn an_asked_question_can_be_withdrawn() {
     let s = seeded().await;
-    let gaps = jl!(s.detect_gaps(Parameters(ScopeReq::default())));
+    let gaps = jl!(s.detect_gaps(Parameters(GapScopeReq::default())));
     let gap = gaps.as_array().unwrap()[0].clone();
     let gap_id = gap["id"].as_str().unwrap().to_string();
 
@@ -2852,7 +2852,7 @@ async fn a_rejected_bulk_write_errors_and_still_names_every_failure() {
 #[tokio::test]
 async fn each_gap_is_replayed_against_only_its_own_answers() {
     let s = seeded().await;
-    let gaps = jl!(s.detect_gaps(Parameters(ScopeReq::default())));
+    let gaps = jl!(s.detect_gaps(Parameters(GapScopeReq::default())));
     let all = gaps.as_array().unwrap().clone();
     assert!(all.len() >= 2, "need two gaps to prove they stay separate");
     let (a, b) = (all[0].clone(), all[1].clone());
@@ -2921,7 +2921,7 @@ async fn each_gap_is_replayed_against_only_its_own_answers() {
 #[tokio::test]
 async fn a_half_answered_ask_batch_is_refused() {
     let s = seeded().await;
-    let gaps = jl!(s.detect_gaps(Parameters(ScopeReq::default())));
+    let gaps = jl!(s.detect_gaps(Parameters(GapScopeReq::default())));
     let all = gaps.as_array().unwrap().clone();
     let (a, b) = (all[0].clone(), all[1].clone());
 

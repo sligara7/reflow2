@@ -38,11 +38,11 @@ use reflow2_core::bulk::{
 use reflow2_core::temporal::ChangeRecord;
 use reflow2_core::{
     AgentAnswer, AgentBackend, AskedQuestion, ChangeType, DEFAULT_REGION_DEPTH,
-    DEFAULT_SCOPE_DEPTH, DesignGraph, Dimension, DriftDisposition, DynoError, EpochType,
-    GapCandidate, GenesisOptions, HealOptions, HealProposal, HealStrategy, IngestOptions,
-    LinkArtifactOptions, LoopStatus, ObservedArtifact, ObservedPath, PromptCollector,
-    PropagateOptions, ReadinessForecast, ReadinessGate, ReadinessKind, ReadinessObservation,
-    ReconcileOptions, StoredNode, Value,
+    DEFAULT_REPLY_BUDGET_CHARS, DEFAULT_SCOPE_DEPTH, DesignGraph, Dimension, DriftDisposition,
+    DynoError, EpochType, GapCandidate, GenesisOptions, HealOptions, HealProposal, HealStrategy,
+    IngestOptions, LinkArtifactOptions, LoopStatus, ObservedArtifact, ObservedPath,
+    PromptCollector, PropagateOptions, ReadinessForecast, ReadinessGate, ReadinessKind,
+    ReadinessObservation, ReconcileOptions, StoredNode, Value,
 };
 
 use crate::dto::{EdgeDto, NodeDto};
@@ -58,28 +58,39 @@ impl ReflowService {
                        question a team that owns a subsystem asks day to day. The region is that \
                        seed's containment closure plus the propagation radius around it (`depth`, \
                        default 2). NOT the same computation as claim_region, which takes the \
-                       radius alone and defaults differently — the two were described as one \
-                       until 2026-08-17 and are not. A scoped answer always reports what it left \
-                       out: `total` across the whole design against `in_scope`, plus \
+                       radius alone and defaults differently. A scoped answer always reports \
+                       what it left out: `total` across the whole design against `in_scope`, plus \
                        `out_of_scope` and `region_size`. IT ALSO REPORTS WHETHER IT NARROWED AT \
                        ALL: `share_of_anchored` is how much of everything the design has to say \
                        is in this answer, and a `narrowing_note` appears in words when that is \
                        over half — at the old default of 3, all 56 Components of reflow2's own \
                        design returned 50-60 of its 83 gaps and nothing said so. Project-level rollups still appear when they touch \
                        your part, counted as `project_level` and carrying `scope: project` \
-                       themselves — filtering is not the tool deciding what you may worry about.",
+                       themselves — filtering is not the tool deciding what you may worry \
+                       about. THE REPLY IS BOUNDED SO A CLIENT CANNOT REFUSE IT: unscoped on \
+                       this design it was 79,566 characters and harnesses refused the call \
+                       outright, so the session saw a wall of harness text and reflow2 never got \
+                       to suggest scoping. `budget` says which tier this reply landed in and \
+                       exactly what it withheld; `count` and `by_source` cover every gap either \
+                       way, so a shorter answer is never a quieter one. Raise `budget_chars` if \
+                       your client has the room.",
         annotations(read_only_hint = true)
     )]
     pub async fn detect_gaps(
         &self,
-        Parameters(req): Parameters<ScopeReq>,
+        Parameters(req): Parameters<GapScopeReq>,
     ) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
+        let budget = req.budget_chars.unwrap_or(DEFAULT_REPLY_BUDGET_CHARS);
         match req.scope.as_deref() {
-            None => ok_json(g.detect_gaps().map_err(dyno_err)?),
+            None => ok_json(g.detect_gaps_within(budget).map_err(dyno_err)?),
             Some(seed) => ok_json(
-                g.detect_gaps_in_scope(seed, req.depth.unwrap_or(DEFAULT_SCOPE_DEPTH))
-                    .map_err(dyno_err)?,
+                g.detect_gaps_in_scope_within(
+                    seed,
+                    req.depth.unwrap_or(DEFAULT_SCOPE_DEPTH),
+                    budget,
+                )
+                .map_err(dyno_err)?,
             ),
         }
     }

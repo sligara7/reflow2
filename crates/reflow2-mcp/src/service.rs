@@ -2327,6 +2327,45 @@ pub struct ScopeReq {
     pub depth: Option<usize>,
 }
 
+/// `detect_gaps`'s arguments: a scope, and a ceiling on the reply.
+///
+/// A type of its own rather than a `budget_chars` bolted onto [`ScopeReq`],
+/// which `detect_defects` also uses: a parameter that appears on a tool and does
+/// nothing there is a worse surface than one that is missing.
+#[derive(Debug, Default, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct GapScopeReq {
+    /// Narrow the answer to the part of the design around this node — a
+    /// Component a team owns, a Project, a Capability. Omit for the whole
+    /// design.
+    #[serde(default)]
+    pub scope: Option<String>,
+    /// Hops from the seed (default 2 — enough to reach a Component's own
+    /// capabilities, the requirements they satisfy, and what realizes them, and
+    /// no further). Meaningless without `scope`.
+    ///
+    /// It was 3 until 2026-08-17, and 3 did not narrow: measured over all 56
+    /// Components of reflow2's own design, every one returned 50-60 of the 83
+    /// gaps. Raising it back is allowed and the reply will say what it cost —
+    /// see `share_of_anchored` and `narrowing_note`.
+    #[serde(default)]
+    pub depth: Option<usize>,
+    /// How many characters of JSON this reply may spend, before the prose is
+    /// withheld to make it fit (default 30,000).
+    ///
+    /// RAISE IT ONLY IF YOU KNOW THIS CLIENT HAS THE ROOM. The default is set
+    /// below the smallest tool-output cap in use, because the failure it exists
+    /// to stop is not a slow call — it is the CLIENT refusing the reply, at
+    /// which point the session sees a wall of harness text and reflow2 never
+    /// gets to suggest narrowing. On reflow2's own design the unbounded answer
+    /// was 79,566 characters and was refused exactly that way.
+    ///
+    /// Every reply says which tier it landed in and what it withheld, at
+    /// `budget`; the gap COUNT and the counts by kind are never budgeted away.
+    #[serde(default)]
+    pub budget_chars: Option<usize>,
+}
+
 #[derive(Debug, Default, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct RegionsReq {

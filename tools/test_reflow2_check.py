@@ -120,6 +120,30 @@ class Reflow2Check(unittest.TestCase):
         self.assertEqual(r.returncode, 0, f"expected clean pass\n{r.stdout}\n{r.stderr}")
         self.assertIn("design and build agree", r.stdout)
 
+    def test_a_budgeted_gap_reply_still_fails_the_build(self):
+        """The gate reads `detect_gaps`, and `detect_gaps` bounds its own reply.
+
+        On a design big enough to be budgeted, the reply withholds every gap's
+        `affected_ids` — and the gate used to read an empty list as "unanchored",
+        which demotes a real gap to a phase nudge that never fails a build. So
+        the gate would have gone GREEN on a design with a hundred critical
+        requirements nothing satisfies, and gone greener the bigger the design
+        got. It reads `affected_total` instead, which every tier carries.
+        """
+        def many_open_gaps(s: Server) -> None:
+            coherent(s)
+            for i in range(100):
+                s.call("create_node", {"node_type": "Requirement", "id": f"req:open-{i}",
+                                       "props": {"name": f"Unmet need {i}",
+                                                 "statement": "The system shall do this too.",
+                                                 "priority": "critical"}})
+
+        r = self.gate(self.export(many_open_gaps))
+        self.assertEqual(
+            r.returncode, 1,
+            f"a budgeted reply must not turn a design full of gaps green\n{r.stdout}\n{r.stderr}")
+        self.assertIn("GAP", r.stdout, "and the gaps must be named, not merely counted")
+
     def test_a_missing_export_cannot_run(self):
         r = self.gate(self.tmp / "does-not-exist.json")
         self.assertEqual(r.returncode, 2, "a missing export is 'could not run', never a pass")

@@ -138,13 +138,13 @@ def main() -> int:
                                    "id": "cap:charge"})["node"]["properties"]["description"]
         note("the design now describes what was actually built", desc == BUILT, desc)
 
-        snaps = s.call("scan_nodes", {"node_type": "Snapshot"})
+        snaps = s.call("scan_nodes", {"node_type": "Snapshot"})["items"]
         states = [json.loads(n["properties"]["state"]) for n in snaps]
         original = [st for st in states if st.get("description") == DESIGNED]
         note("the ORIGINAL intent is still recoverable from axis Z",
              bool(original), f"{len(snaps)} snapshot(s); original description preserved: {bool(original)}")
 
-        events = s.call("scan_nodes", {"node_type": "ChangeEvent"})
+        events = s.call("scan_nodes", {"node_type": "ChangeEvent"})["items"]
         fixes = [e for e in events if e["properties"].get("change_type") == "test_failure_fix"]
         note("every fix is on the record, typed as a test-failure fix",
              len(fixes) >= 5, f"{len(events)} ChangeEvent(s), {len(fixes)} test_failure_fix")
@@ -161,7 +161,7 @@ def main() -> int:
              f"{cap_led.get('design_holds_claims')} design-holds — cycle 4 is the one, "
              "and the ledger says so")
 
-        gaps = s.call("detect_gaps")
+        gaps = s.call("detect_gaps")["items"]
         note("and the graph is quiet, because it is genuinely coherent now",
              True, f"gaps: {sorted({g['gap_source'] for g in gaps})}")
 
@@ -184,7 +184,7 @@ def main() -> int:
         s.call("release_includes", {"release_id": "rel:1", "target_type": "Artifact",
                                     "target_id": "art:charge", "as_checksum": sha(code)})
         rr = s.call("release_report", {"release_id": "rel:1"})
-        pinned = s.call("scan_nodes", {"node_type": "Release"})
+        pinned = s.call("scan_nodes", {"node_type": "Release"})["items"]
         note("the release records which epoch / which artifact versions it shipped",
              rr["artifacts"] == [["art:charge", sha(code)]] and bool(pinned),
              f"manifest {rr['artifacts']}, pinned AT_EPOCH epoch:release")

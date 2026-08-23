@@ -134,7 +134,7 @@ def main() -> int:
         print("== reflow2 holding its own operating model ==")
         rep = s.call("graph_report")
         print(f"   {rep['total_nodes']} nodes, {rep['gap_count']} gaps, {rep['defect_count']} defects")
-        gaps = s.call("detect_gaps")
+        gaps = s.call("detect_gaps")["items"]
         gap_sources = sorted({g["gap_source"] for g in gaps})
         print(f"   gaps: {gap_sources}")
         if "concept_without_design" in gap_sources:

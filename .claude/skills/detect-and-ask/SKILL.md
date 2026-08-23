@@ -41,6 +41,17 @@ the record**: the gaps stay counted and stay loud (`req:no-idea-goes-quiet`).
    particular). **Never present a scoped answer as the whole picture** — if `out_of_scope` is not
    zero, say so, because a team told only about its own corner will conclude the program is
    healthy.
+
+   **The reply is bounded, and `budget` says what that cost.** Past a certain size the full
+   answer is one a client refuses outright — so `detect_gaps` withholds each gap's
+   `description`, `evidence` and `affected_ids` rather than sending a reply nobody can read, and
+   `budget.detail` says which tier you are looking at. **A shorter answer is never a quieter
+   one**: `count` and `by_source` cover every open gap in every tier, and only in the last resort
+   (`budget.listed` below `budget.of`) is a gap absent from the list at all — which the reply
+   says in words. To read the reasoning behind a particular gap, `scope` to the part it is in;
+   the handshake in step 2 works on a withheld row either way, because reflow2 fills it back in
+   from the graph. **Do not report a budgeted answer as fewer gaps** — the number that matters is
+   `count`, and it did not move.
 2. For each gap worth resolving now, run the **gap_to_prompt handshake**:
    a. Call `gap_to_prompt` with `gap` = the GapCandidate and `answers: []`. It returns
       `{ "status": "needs_llm", "prompts": [{ "id", "prompt", "expect_json" }] }`.
