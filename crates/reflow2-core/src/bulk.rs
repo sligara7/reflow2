@@ -128,6 +128,11 @@ pub struct GapAck {
     pub gap_id: String,
     pub affected_ids: Vec<String>,
     pub reason: String,
+    /// Whose judgement THIS one is. Per item, never per call — the same
+    /// argument `reason` already makes: a batch under one shared approver
+    /// would record a judgement nobody made for every gap but one.
+    pub approver: Option<String>,
+    pub acted_at: Option<String>,
 }
 
 /// Run `op` over every item inside one atomic batch, collecting each failure
@@ -289,7 +294,15 @@ impl DesignGraph {
             self,
             items,
             |a| a.gap_id.clone(),
-            |g, a| g.acknowledge_gap(&a.gap_id, &a.affected_ids, &a.reason),
+            |g, a| {
+                g.acknowledge_gap_by(
+                    &a.gap_id,
+                    &a.affected_ids,
+                    &a.reason,
+                    a.approver.as_deref(),
+                    a.acted_at.as_deref(),
+                )
+            },
         )
     }
 }

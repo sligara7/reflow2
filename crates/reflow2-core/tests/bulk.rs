@@ -353,11 +353,15 @@ fn each_acknowledged_gap_keeps_its_own_reason() {
             gap_id: "gap:one".into(),
             affected_ids: vec!["req:live".into()],
             reason: "accepted because the first thing is fine".into(),
+            approver: None,
+            acted_at: None,
         },
         GapAck {
             gap_id: "gap:two".into(),
             affected_ids: vec!["cap:score".into()],
             reason: "accepted for an entirely different reason".into(),
+            approver: None,
+            acted_at: None,
         },
     ];
     let r = g.acknowledge_gaps(&items).unwrap();

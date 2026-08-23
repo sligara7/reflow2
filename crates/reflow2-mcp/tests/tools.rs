@@ -1218,6 +1218,8 @@ async fn asking_a_gap_records_the_question_it_asked() {
         gap_id: gap_id.clone(),
         affected_ids: gap_affected.clone(),
         reason: "the physics engine owns it".into(),
+        approver: None,
+        acted_at: None,
     })));
     assert!(
         jl!(s.open_questions()).as_array().unwrap().is_empty(),

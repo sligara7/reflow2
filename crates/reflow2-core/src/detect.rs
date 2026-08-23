@@ -1332,6 +1332,61 @@ impl DesignGraph {
         affected_ids: &[String],
         reason: &str,
     ) -> Result<String, DynoError> {
+        self.acknowledge_gap_by(gap_id, affected_ids, reason, None, None)
+    }
+
+    /// [`acknowledge_gap`](Self::acknowledge_gap), recording WHOSE judgement it
+    /// was.
+    ///
+    /// **THE ONE WRITE WHOSE ENTIRE PURPOSE IS TO RECORD THAT SOMEBODY DECIDED
+    /// SOMETHING COULD NOT SAY WHO.** It mints an `accepted` Decision — settled
+    /// intent by `rule:design-intent-moves-only-on-the-owners-word` — and drew
+    /// no `AUTHORED_BY` edge and had no parameter to supply one. Measured
+    /// 2026-08-23: acknowledging 50 gaps in one detect-and-ask pass produced 49
+    /// nodes that failed this project's own `check_intent_authority` gate in a
+    /// single stroke.
+    ///
+    /// It stayed invisible because acknowledgements were rare enough that the
+    /// gate's dated grandfather set absorbed the historical ones. **A defect
+    /// that only shows at scale is one the tool's own dogfooding was too small
+    /// to find.**
+    ///
+    /// `approver` is optional rather than required, and that is a judgement
+    /// about consequence rather than a shortcut: a design that has modelled no
+    /// `Contributor` at all would otherwise be unable to acknowledge anything,
+    /// and refusing there would make the tool unusable exactly where a solo
+    /// user needs it. **The absence is reported instead of assumed** — the
+    /// caller is told the acknowledgement carries nobody's name, which is
+    /// `dec:report-dont-judge` on the write side.
+    ///
+    /// An `approver` naming no `Contributor` IS refused. A typo would otherwise
+    /// attach the owner's authority to a name that does not exist, which is
+    /// worse than recording none — the same argument `loop_status` makes for
+    /// refusing an unknown `contributor_id`.
+    pub fn acknowledge_gap_by(
+        &mut self,
+        gap_id: &str,
+        affected_ids: &[String],
+        reason: &str,
+        approver: Option<&str>,
+        acted_at: Option<&str>,
+    ) -> Result<String, DynoError> {
+        // CHECKED BEFORE ANYTHING IS MINTED. The Decision is created below; a
+        // check placed after it would leave an ACCEPTED Decision with no
+        // approver behind on every refusal — the exact state this parameter
+        // exists to prevent, produced by the code meant to prevent it. Caught
+        // by the test written for it, which failed on the first attempt.
+        if let Some(who) = approver
+            && self.get_node(node::CONTRIBUTOR, who)?.is_none()
+        {
+            return Err(DynoError::Validation {
+                node_type: node::DECISION.to_string(),
+                property: "approver".into(),
+                message: format!(
+                    "no Contributor `{who}` in this design, so the acknowledgement was NOT recorded. An approver who does not exist attaches the owner's authority to a name nobody can check, which is worse than recording none. Create them with add_contributor, or omit `approver` and the reply will say the judgement carries nobody's name."
+                ),
+            });
+        }
         let decision_id = ack_decision_id(gap_id);
         self.create_node(
             node::DECISION,
@@ -1352,6 +1407,20 @@ impl DesignGraph {
             // fault and must surface, not leave the Decision unlinked from what
             // it governs (BL-58).
             self.governed_by(&node_type, target, node::DECISION, &decision_id, None)?;
+        }
+        if let Some(who) = approver {
+            let mut props = crate::nodes::Props::new().set("role", "approver");
+            if let Some(at) = acted_at {
+                props = props.set("acted_at", at);
+            }
+            self.create_edge(
+                edge::AUTHORED_BY,
+                node::DECISION,
+                &decision_id,
+                node::CONTRIBUTOR,
+                who,
+                props,
+            )?;
         }
         Ok(decision_id)
     }
