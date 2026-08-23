@@ -585,6 +585,142 @@ class UnmodelledSource(unittest.TestCase):
         self.assertNotIn("unmodelled source", r.stdout, r.stdout)
 
 
+class UnmodelledSourceScopedToThisChange(unittest.TestCase):
+    """The unmodelled-source note LEADS with the files this change touched.
+
+    ⭐ WHY, and it was measured rather than guessed. The whole-tree note is
+    correct and was being skimmed: on reflow2's own repo it reports 107 files,
+    which reads as an institutional backlog rather than as anything the reader
+    did. A dev_storyflow agent named that framing on 2026-08-23 as a reason it
+    stopped reaching for reflow2 at all — "391 is not a number anybody can act
+    on ... three gaps on the node I just edited would have been a task" — and
+    the session that read the report reproduced the same skim the same day.
+
+    ⚠️ SEVERITY IS UNCHANGED AND THAT IS THE POINT. Narrowing WHAT IS SHOWN and
+    DEMANDING action are different acts; this class pins the first and the
+    sibling class above pins that the second never happens.
+    """
+
+    def setUp(self):
+        if not os.path.exists(BIN):
+            self.skipTest("reflow2-mcp binary not built")
+        if shutil.which("git") is None:
+            self.skipTest("git not available")
+        self._tmp = tempfile.TemporaryDirectory()
+        self.tmp = pathlib.Path(self._tmp.name)
+        self.addCleanup(self._tmp.cleanup)
+
+    def git(self, *args):
+        subprocess.run(["git", *args], cwd=self.tmp, check=True,
+                       capture_output=True, text=True, timeout=60)
+
+    def build(self, committed=(), touched=()):
+        """A repo where `committed` files are in history and `touched` are not.
+
+        Both sets are UNMODELLED — the design registers only `known.rs`. The
+        difference between them is the whole assertion: one was changed by this
+        working copy and one was not.
+        """
+        src = self.tmp / "src"
+        src.mkdir(parents=True, exist_ok=True)
+        (src / "known.rs").write_text("pub fn a() {}\n")
+        for name in committed:
+            (src / name).write_text("pub fn old() {}\n")
+        self.git("init", "-q")
+        self.git("-c", "user.email=t@t", "-c", "user.name=t", "add", "-A")
+        self.git("-c", "user.email=t@t", "-c", "user.name=t", "commit", "-q", "-m", "base")
+        for name in touched:
+            (src / name).write_text("pub fn new() {}\n")
+
+        s = Server(BIN, str(self.tmp / "graph"))
+        try:
+            s.call("add_project", {"id": "proj:1", "name": "T"})
+            s.call("add_artifact", {"id": "art:known", "name": "known.rs",
+                                    "artifact_type": "code", "location": "src/known.rs"})
+            s.call("set_artifact_checksum", {
+                "artifact_id": "art:known",
+                "checksum": "sha256:" + hashlib.sha256((src / "known.rs").read_bytes()).hexdigest(),
+                "disposition": "baseline_established"})
+            path = self.tmp / "design.json"
+            s.call("export_graph", {"path": str(path), "overwrite": True})
+            return path
+        finally:
+            s.close()
+
+    def gate(self, export):
+        cmd = [sys.executable, str(CHECK), "--export", str(export),
+               "--root", str(self.tmp), "--bin", BIN]
+        return subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+
+    def test_a_touched_unmodelled_file_is_named(self):
+        export = self.build(touched=["fresh.rs"])
+        r = self.gate(export)
+        self.assertIn("unmodelled source, THIS CHANGE", r.stdout, r.stdout)
+        self.assertIn("src/fresh.rs", r.stdout, r.stdout)
+
+    def test_it_NARROWS_and_leaves_the_untouched_out(self):
+        # THE LOAD-BEARING ASSERTION. If the scoped line ever names a file this
+        # change did not touch, it has become the aggregate under a new heading
+        # and buys nothing. `old.rs` is unmodelled too — and is not this
+        # reader's problem right now.
+        export = self.build(committed=["old.rs"], touched=["fresh.rs"])
+        r = self.gate(export)
+        scoped = [ln for ln in r.stdout.splitlines() if "THIS CHANGE" in ln]
+        self.assertTrue(scoped, r.stdout)
+        self.assertIn("src/fresh.rs", scoped[0])
+        self.assertNotIn("src/old.rs", scoped[0])
+        # ...while the whole-tree note still counts BOTH, so nothing is hidden.
+        aggregate = [ln for ln in r.stdout.splitlines() if "unmodelled source: " in ln]
+        self.assertTrue(aggregate, r.stdout)
+        self.assertIn("2 file(s)", aggregate[0])
+
+    def test_it_is_still_only_a_note(self):
+        export = self.build(touched=["fresh.rs"])
+        r = self.gate(export)
+        self.assertIn("THIS CHANGE", r.stdout)
+        self.assertEqual(r.returncode, 0,
+                         f"scoping must not change severity\n{r.stdout}")
+        self.assertIn("OFFER, not a demand", r.stdout)
+
+    def test_touching_only_MODELLED_files_says_nothing_scoped(self):
+        # Editing a registered file is the ordinary case and must stay quiet.
+        export = self.build()
+        (self.tmp / "src" / "known.rs").write_text("pub fn a() { /* edited */ }\n")
+        r = self.gate(export)
+        self.assertNotIn("THIS CHANGE", r.stdout, r.stdout)
+
+    def test_without_git_it_says_so_instead_of_reporting_zero(self):
+        # 🛑 A DETECTOR WITH NOTHING TO RUN ON MUST NOT READ LIKE ONE THAT RAN
+        # CLEAN. Outside a git working tree there is no "this change" to scope
+        # to, and silence would be indistinguishable from having looked.
+        nogit = tempfile.TemporaryDirectory()
+        self.addCleanup(nogit.cleanup)
+        root = pathlib.Path(nogit.name)
+        src = root / "src"
+        src.mkdir(parents=True)
+        (src / "known.rs").write_text("pub fn a() {}\n")
+        (src / "stranger.rs").write_text("pub fn b() {}\n")
+        s = Server(BIN, str(root / "graph"))
+        try:
+            s.call("add_project", {"id": "proj:1", "name": "T"})
+            s.call("add_artifact", {"id": "art:known", "name": "known.rs",
+                                    "artifact_type": "code", "location": "src/known.rs"})
+            s.call("set_artifact_checksum", {
+                "artifact_id": "art:known",
+                "checksum": "sha256:" + hashlib.sha256((src / "known.rs").read_bytes()).hexdigest(),
+                "disposition": "baseline_established"})
+            export = root / "design.json"
+            s.call("export_graph", {"path": str(export), "overwrite": True})
+        finally:
+            s.close()
+        r = subprocess.run(
+            [sys.executable, str(CHECK), "--export", str(export), "--root", str(root), "--bin", BIN],
+            capture_output=True, text=True, timeout=120)
+        self.assertIn("not computed", r.stdout, r.stdout)
+        self.assertIn("missing measurement, not a clean result", r.stdout, r.stdout)
+        self.assertEqual(r.returncode, 0, r.stdout)
+
+
 class RemoteLocatedArtifact(unittest.TestCase):
     """An artifact located at a URI is NOT judged, and is not called missing.
 

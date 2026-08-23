@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:184314cb91ecfa49f48cd788215eea28b9bee108773a5796e73fa3701166939c",
+  "content_hash": "sha256:90e30c2f97923fe80041217afb5dcb11177d1aac46b2d1e347d1bbfdefc9928c",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -6635,6 +6635,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-gate-names-the-unmodelled-files-you-just-touched",
+      "properties": {},
+      "to_id": "epoch:2026-08-23-gate-names-what-you-touched"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-gate-notices-a-file-the-design-never-heard-of",
       "properties": {},
       "to_id": "epoch:v0380"
@@ -7502,6 +7508,12 @@
       "from_id": "rel:v090",
       "properties": {},
       "to_id": "epoch:v090"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:2026-08-23-gate-names-what-you-touched:art:check",
+      "properties": {},
+      "to_id": "epoch:2026-08-23-gate-names-what-you-touched"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -26364,6 +26376,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-gate-names-the-unmodelled-files-you-just-touched",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-gate-names-the-unmodelled-files-you-just-touched",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:coherence-gate-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-gate-notices-a-file-the-design-never-heard-of",
       "properties": {
         "accepted_baseline": true,
@@ -36709,6 +36739,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "chg:the-gate-names-the-unmodelled-files-you-just-touched",
+      "properties": {},
+      "to_id": "dec:idea-what-watches-for-the-last-responsible-moment-to-arrive"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:agent",
       "properties": {},
       "to_id": "decision:ack:f384097e7d8b01b0"
@@ -38620,6 +38656,12 @@
       "from_id": "art:capture-intent-skill",
       "properties": {},
       "to_id": "snap:epoch:the-loop-holds-the-invitation:art:capture-intent-skill"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:check",
+      "properties": {},
+      "to_id": "snap:epoch:2026-08-23-gate-names-what-you-touched:art:check"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -95368,7 +95410,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f29f79f75c4fcd9b7c6243da78ba272b289d791f73cc4b393921f7eae711d7e0",
+        "checksum": "sha256:679e180a9517fadd15e65959b8410f4e94f6d0c8abbcf4bb2afc4bd3dc7f0211",
         "granularity": "atomic",
         "location": "tools/reflow2_check.py",
         "name": "reflow2_check.py",
@@ -95477,7 +95519,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b51bebabb052739d7b54a9360f26d530d2ae22fe3d8feee5c7f3d33e08c32924",
+        "checksum": "sha256:20ae406a84e6182ba2911a667016e90d94203c49d4217e8d15571f205bf9a0dd",
         "location": "tools/test_reflow2_check.py",
         "name": "test_reflow2_check.py",
         "status": "realized"
@@ -105262,6 +105304,17 @@
       }
     },
     {
+      "node_id": "chg:the-gate-names-the-unmodelled-files-you-just-touched",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The unmodelled-source note is scoped to what this change touched, and says so when git cannot tell it",
+        "rationale": "REFINES OPTION (a) OF `dec:idea-what-watches-for-the-last-responsible-moment-to-arrive`; IT DOES NOT SETTLE IT. That option — the gate sweeps the roots the design points at and notes files no Artifact claims — had already landed as a whole-tree note. Measured 2026-08-23: on this repo it reports 107 files, and a dev_storyflow agent independently named that aggregate framing as one of seven reasons it stopped reaching for reflow2 at all (\"391 is not a number anybody can act on ... three gaps on the node I just edited would have been a task\"). The session that read that report had skimmed the same 107-file note earlier the same day. So the finding now LEADS with the subset this working copy touched — usually two or three files — and the whole-tree count still prints beneath it.\n\nOPTIONS (b), (c) AND (d) ARE UNTOUCHED and the decision stays `proposed`. What watches for the last responsible moment is still Anthony's to answer; this only makes one of the four less skimmable.\n\nIT DELIBERATELY DOES NOT CONFLATE NOTICING WITH DEMANDING — the counter-argument recorded beside that decision, and the reason severity is unchanged. The note says registering is an OFFER, and `dec:idea-allocation-waits-for-the-last-responsible-moment` is cited in the text a reader sees.\n\nHONEST ABSENCE IS PART OF THE FEATURE: `_changed_paths` returns None rather than an empty set when git cannot answer, and the gate then says the measurement was NOT COMPUTED. A detector with nothing to run on must not read like one that ran clean.\n\n⚠️ VOCABULARY NOTE, filed because it is the THIRD instance of one class. This event is joined to that Decision through GOVERNED_BY on a `*` wildcard, because NO EDGE TYPE NAMES BOTH ChangeEvent AND Decision. dev_storyflow reported the same shape twice in the days before — no edge for \"this file is the executable form of that check\" (Artifact→Verification), and SUPERSEDES refused between two Verifications. The pattern they name holds here: relationships between RECORDS are thinner in the vocabulary than relationships to Requirements.",
+        "subject": "system",
+        "summary": "The unmodelled-source finding leads with the files this change touched; the whole-tree count still follows it. Severity unchanged — still a note, still an offer. Says so explicitly when git cannot tell it what changed."
+      }
+    },
+    {
       "node_id": "chg:the-gate-notices-a-file-the-design-never-heard-of",
       "node_type": "ChangeEvent",
       "properties": {
@@ -112024,6 +112077,16 @@
         "name": "Reviewed: heal:f737a5cdf35a906d",
         "rationale": "Carries dec:sanitize-spof-accepted (2026-07-25): true and expected — cmp:sanitize is reached only through cmp:ingest, because INGEST is the only path foreign text currently enters by, so every route to the trust boundary runs through one component. `add_redundancy` is the wrong shape (a second copy of a pure text filter is duplication, not resilience). What dissolves it is the SECOND CALLER: detect-and-report on graph import. Deliberately NOT wiring cmp:export to cmp:sanitize to quiet the detector, because that edge does not exist in the code.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "epoch:2026-08-23-gate-names-what-you-touched",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The coherence gate leads with the unmodelled files THIS change touched, instead of the whole tree",
+        "sequence": 380,
+        "status": "arrived"
       }
     },
     {
@@ -120581,6 +120644,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:2026-08-23-gate-names-what-you-touched:art:check",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0100\",\"properties\":{\"as_checksum\":\"sha256:6002847b15115694\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0101\",\"properties\":{\"as_checksum\":\"sha256:6002847b15115694\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0110\",\"properties\":{\"as_checksum\":\"sha256:6002847b15115694\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0120\",\"properties\":{\"as_checksum\":\"sha256:6002847b15115694\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:6002847b15115694\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:6002847b15115694\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:6002847b15115694\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:99d7a0d0af8db7a3\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:99d7a0d0af8db7a3\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:99d7a0d0af8db7a3\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:99d7a0d0af8db7a3\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:a1f3fd49ba2b91fbb23aeec8de41d0a09f7c4d2b3c3bed97963eb3457867df4e\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:e13223ac72649aa498bcc78fbf4824f6b5a3a346fc78c3516bd79075eae5cd1a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:e13223ac72649aa498bcc78fbf4824f6b5a3a346fc78c3516bd79075eae5cd1a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:8a65b62d63d432035cb24244f35cdbb3098ee2cb990ac6c181eddc797e12605b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:a663b78895bd7c095bc88340def62806526b14be46856c5b21cfc5eb0e7f67e2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:a663b78895bd7c095bc88340def62806526b14be46856c5b21cfc5eb0e7f67e2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:a663b78895bd7c095bc88340def62806526b14be46856c5b21cfc5eb0e7f67e2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:a663b78895bd7c095bc88340def62806526b14be46856c5b21cfc5eb0e7f67e2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:a663b78895bd7c095bc88340def62806526b14be46856c5b21cfc5eb0e7f67e2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:a663b78895bd7c095bc88340def62806526b14be46856c5b21cfc5eb0e7f67e2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:a663b78895bd7c095bc88340def62806526b14be46856c5b21cfc5eb0e7f67e2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:a663b78895bd7c095bc88340def62806526b14be46856c5b21cfc5eb0e7f67e2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:cf4e86690ccd846f37228812ef55352845f046d0a4903b63cd08e5a4a3764528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:cf4e86690ccd846f37228812ef55352845f046d0a4903b63cd08e5a4a3764528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:cf4e86690ccd846f37228812ef55352845f046d0a4903b63cd08e5a4a3764528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{\"as_checksum\":\"sha256:cf4e86690ccd846f37228812ef55352845f046d0a4903b63cd08e5a4a3764528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{\"as_checksum\":\"sha256:cf4e86690ccd846f37228812ef55352845f046d0a4903b63cd08e5a4a3764528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0360\",\"properties\":{\"as_checksum\":\"sha256:cf4e86690ccd846f37228812ef55352845f046d0a4903b63cd08e5a4a3764528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0370\",\"properties\":{\"as_checksum\":\"sha256:cf4e86690ccd846f37228812ef55352845f046d0a4903b63cd08e5a4a3764528\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0380\",\"properties\":{\"as_checksum\":\"sha256:152fbfb8444b42118e81041c743afcb9050af7cb00d1e91d739a8c41edfed426\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v070\",\"properties\":{\"as_checksum\":\"sha256:269835daee23015f\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v080\",\"properties\":{\"as_checksum\":\"sha256:269835daee23015f\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v090\",\"properties\":{\"as_checksum\":\"sha256:eff12f1f951fa68b\"}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:a-remote-located-artifact-is-not-judged-and-says-so\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"VERIFIES\",\"other_type\":\"Verification\",\"other_id\":\"ver:gate-suite\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:design-dependencies-declared\",\"properties\":{\"completeness\":\"partial\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:reconcile-built\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"SATISFIES\",\"other_type\":\"Requirement\",\"other_id\":\"req:the-export-is-serialised-rather-than-socially-enforced\",\"properties\":{\"coverage\":\"partial\",\"evidence\":\"WAS `planned` UNTIL 2026-08-11, AND THE EVIDENCE FIELD SAID SO: \\\"nothing in the script checks the lineage chain today, so this edge records WHERE the work lands rather than claiming any of it is done.\\\" That was true when written and stopped being true when `chg:lineage-check` landed. The clause exists, runs in CI on every pull request, and fired TWICE on 2026-08-11 in one day's work — on a double export across a `commit --amend`, and after a rebase where the three-way merge driver merged CONTENT correctly and could not repair the chain. `ver:the-export-chain-is-unbroken` now stands for that clause specifically. PARTIAL RATHER THAN FULL, deliberately: the requirement asks the tool to \\\"REFUSE OR SERIALISE\\\" a second export, and the gate does neither — it DETECTS a severed chain after the fact, in CI, which `dec:export-serialisation-belongs-to-the-gate` chose on purpose. A contributor can still export twice locally; they simply cannot merge it. Calling that `full` would claim the refusal half that was decided against.\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:f29f79f75c4fcd9b7c6243da78ba272b289d791f73cc4b393921f7eae711d7e0\",\"granularity\":\"atomic\",\"location\":\"tools/reflow2_check.py\",\"name\":\"reflow2_check.py\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:check",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:2026-08-23-json-rpc-medium:ifc:mcp-tools-http",
       "node_type": "Snapshot",
       "properties": {
@@ -128284,7 +128357,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f5cfc61096dab0c8b785890b50748bdd183e3f37dec7e29754cf3b94cef0d72d",
+  "prev_content_hash": "sha256:184314cb91ecfa49f48cd788215eea28b9bee108773a5796e73fa3701166939c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
