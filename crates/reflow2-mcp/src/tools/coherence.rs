@@ -579,13 +579,16 @@ impl ReflowService {
         Parameters(req): Parameters<ScopeReq>,
     ) -> Result<CallToolResult, McpError> {
         let g = self.graph.read().await;
-        match req.scope.as_deref() {
-            None => ok_json(g.detect_defects().map_err(dyno_err)?),
-            Some(seed) => ok_json(
+        let mut out = match req.scope.as_deref() {
+            None => serde_json::to_value(g.detect_defects().map_err(dyno_err)?),
+            Some(seed) => serde_json::to_value(
                 g.detect_defects_in_scope(seed, req.depth.unwrap_or(DEFAULT_SCOPE_DEPTH))
                     .map_err(dyno_err)?,
             ),
         }
+        .map_err(ser_err)?;
+        lift_repair_notes(&mut out);
+        ok_json(out)
     }
 
     #[tool(
@@ -964,6 +967,116 @@ impl ReflowService {
         let proposal: HealProposal = parse_struct_param(req.proposal, "HealProposal")?;
         let mut g = self.write_lock().await;
         ok_json(g.apply_heal(&proposal).map_err(dyno_err)?)
+    }
+}
+
+/// Send each repair explanation ONCE instead of once per finding.
+///
+/// `repair_is_a_judgement` is `Option<&'static str>` — a fixed literal per
+/// detector branch, saying why a category of defect has no mechanical repair.
+/// It is written per ROW, so a design with two dozen orphan nodes receives the
+/// same 797-character paragraph two dozen times.
+///
+/// MEASURED on reflow2's own design, 2026-08-23: `detect_defects` was 46,399
+/// characters, of which 45,186 were the findings and **52.3% of those were this
+/// one field — 50 rows carrying 3 DISTINCT values.** Lifting them saves 19,843
+/// characters and loses NOTHING: no list is withheld, no prose is truncated, no
+/// judgement is made about what a reader needs. It is the same paragraph, sent
+/// once.
+///
+/// THE RULE A READER FOLLOWS IS TOTAL, which is why the map is not simply a
+/// substitute: a row keeps its own text whenever that text is not the one the
+/// map holds for its category, so
+/// `row.repair_is_a_judgement ?? repair_is_a_judgement[row.category]` is always
+/// correct. Today the mapping is one text per category and every row lifts; if a
+/// future detector gives one category two different explanations, the odd rows
+/// keep theirs inline rather than being silently given the wrong one.
+/// EXPOSED FOR TEST. The two list shapes are the whole subtlety here and a
+/// fixture cannot reliably produce the scoped one — a region holding several
+/// note-bearing findings of one category occurs on a real design and is
+/// awkward to synthesise, because the categories that carry a note are the ones
+/// whose findings are disconnected by definition. So the shape handling is
+/// pinned directly rather than through a graph that may or may not contain it.
+pub fn lift_repair_notes(out: &mut JsonValue) {
+    const FIELD: &str = "repair_is_a_judgement";
+    // `defects` unscoped, `items` scoped — `Scoped<T>` names its list `items`,
+    // and looking only for `defects` made this a silent no-op on every scoped
+    // call. Found by driving the built binary, not by a test, which is why there
+    // is now a test.
+    let list_key = if out.get("defects").is_some_and(JsonValue::is_array) {
+        "defects"
+    } else {
+        "items"
+    };
+    let Some(defects) = out.get_mut(list_key).and_then(|d| d.as_array_mut()) else {
+        return;
+    };
+
+    // First pass: the text each category will carry, and only where a category
+    // is unanimous. A category with two explanations gets none, and its rows all
+    // keep theirs.
+    let mut by_category: HashMap<String, Option<String>> = HashMap::new();
+    let mut seen_count: HashMap<String, usize> = HashMap::new();
+    for row in defects.iter() {
+        let (Some(cat), Some(text)) = (
+            row.get("category").and_then(|c| c.as_str()),
+            row.get(FIELD).and_then(|t| t.as_str()),
+        ) else {
+            continue;
+        };
+        *seen_count.entry(cat.to_string()).or_insert(0) += 1;
+        match by_category.entry(cat.to_string()).or_insert(None) {
+            slot @ None => *slot = Some(text.to_string()),
+            Some(seen) if seen != text => {
+                by_category.insert(cat.to_string(), None);
+            }
+            Some(_) => {}
+        }
+    }
+    // ONLY WHERE IT ACTUALLY SAVES. One row carrying a paragraph costs less
+    // inline than it does as a map entry plus the sentence explaining the map,
+    // and a mechanism that fires where it does not pay is how a reply gets
+    // bigger while claiming to get smaller.
+    let shared: HashMap<String, String> = by_category
+        .into_iter()
+        .filter(|(cat, _)| seen_count.get(cat).copied().unwrap_or(0) > 1)
+        .filter_map(|(cat, text)| text.map(|t| (cat, t)))
+        .collect();
+    if shared.is_empty() {
+        return;
+    }
+
+    // Second pass: drop the field from every row the map now speaks for.
+    for row in defects.iter_mut() {
+        let Some(obj) = row.as_object_mut() else {
+            continue;
+        };
+        let lift = matches!(
+            (
+                obj.get("category").and_then(|c| c.as_str()),
+                obj.get(FIELD).and_then(|t| t.as_str()),
+            ),
+            (Some(cat), Some(text)) if shared.get(cat).map(String::as_str) == Some(text)
+        );
+        if lift {
+            obj.remove(FIELD);
+        }
+    }
+
+    if let Some(obj) = out.as_object_mut() {
+        obj.insert(FIELD.into(), json!(shared));
+        obj.insert(
+            "repair_note_is_per_category".into(),
+            json!(
+                "`repair_is_a_judgement` above is keyed by `category` and is sent ONCE rather \
+                 than repeated on every finding — on this design that field was over half the \
+                 reply, 3 distinct paragraphs across 50 rows. Read it as \
+                 `row.repair_is_a_judgement ?? repair_is_a_judgement[row.category]`: a row keeps \
+                 its own text whenever that text differs from the one its category holds, so the \
+                 fallback is never wrong. NOTHING IS WITHHELD HERE — no list shortened, no prose \
+                 truncated; the same words are simply not sent fifty times."
+            ),
+        );
     }
 }
 

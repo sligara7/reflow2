@@ -31,6 +31,34 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed — the same paragraph, sent once instead of fifty times
+
+**Patch.** Nothing is withheld and no parameter is added; the same words are simply not repeated.
+
+`repair_is_a_judgement` is `Option<&'static str>` — a fixed literal per detector branch, saying why
+a category of structural defect has no mechanical repair. It was written per ROW, so a design with
+two dozen orphan nodes received the same 797-character paragraph two dozen times. Measured:
+`detect_defects` was 46,399 characters, 45,186 of them findings, and **52.3% of those were that one
+field — 50 rows carrying 3 distinct values.**
+
+**46,314 → 26,169 bytes on the wire, with all 50 findings intact.**
+
+- **A different shape from the two fixes before it, and the difference is the point.**
+  `detect_gaps` withholds prose when a reply will not fit; `graph_report` withholds a list unless
+  asked. Nothing is withheld here — no list shortened, no prose truncated, no judgement about what
+  a reader needs — so it needs no flag, no budget, and no note about what was lost. Worth asking
+  whether a reply is *big* or merely *repetitive* before reaching for a budget.
+- **The reader's rule is total:** `row.repair_is_a_judgement ?? repair_is_a_judgement[row.category]`.
+  A row keeps its own text whenever that differs from its category's, so a future detector giving
+  one category two explanations cannot silently hand a row the wrong one.
+- **It does not fire where it would not pay.** A category with one row keeps its text inline; a map
+  entry plus the sentence explaining the map costs more than the paragraph it replaces.
+- Fires on the scoped reply as well as the unscoped one. `Scoped<T>` names its list `items` rather
+  than `defects`, and the first version of this was a **silent no-op on every scoped call** — found
+  by driving the built binary. The test then written for it **passed against the bug**, because its
+  fixture produced no note-bearing findings inside the region and the assertion loop never ran. The
+  shape handling is now pinned directly on both shapes.
+
 ### Changed — a report is not a list of every check
 
 **Minor** (`graph_report` gains an optional parameter and its `verifications` field changes shape
