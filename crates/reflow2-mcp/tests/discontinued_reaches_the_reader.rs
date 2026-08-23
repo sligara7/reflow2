@@ -67,26 +67,26 @@ async fn withdrawn() -> ReflowService {
     let s = ReflowService::in_memory().expect("in-memory service");
     j!(s.add_project(Parameters(IdName {
         id: "proj:x".into(),
-        name: "X".into()
+        name: Some("X".into()),
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:store".into(),
-        name: "Store bytes beside the design".into(),
-        description: "Built, shipped, and later withdrawn.".into(),
+        name: Some("Store bytes beside the design".into()),
+        description: Some("Built, shipped, and later withdrawn.".into()),
         status: Some("realized".into()),
         distinct_from: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:live".into(),
-        name: "Something still in use".into(),
-        description: "Never withdrawn.".into(),
+        name: Some("Something still in use".into()),
+        description: Some("Never withdrawn.".into()),
         status: Some("realized".into()),
         distinct_from: None,
     })));
     j!(s.add_decision(Parameters(DecisionReq {
         id: "dec:discontinue".into(),
-        name: "The store is discontinued".into(),
-        decision: "Built, shipped, correct, and used zero times.".into(),
+        name: Some("The store is discontinued".into()),
+        decision: Some("Built, shipped, correct, and used zero times.".into()),
         rationale: None,
         distinct_from: None,
     })));
@@ -197,15 +197,15 @@ async fn a_proposed_decision_discontinues_nothing() {
     let s = ReflowService::in_memory().expect("service");
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:maybe".into(),
-        name: "Argued about".into(),
-        description: "An agent proposed withdrawing this.".into(),
+        name: Some("Argued about".into()),
+        description: Some("An agent proposed withdrawing this.".into()),
         status: Some("realized".into()),
         distinct_from: None,
     })));
     j!(s.add_decision(Parameters(DecisionReq {
         id: "dec:proposed".into(),
-        name: "Should we withdraw it?".into(),
-        decision: "Not settled.".into(),
+        name: Some("Should we withdraw it?".into()),
+        decision: Some("Not settled.".into()),
         rationale: None,
         distinct_from: None,
     })));
@@ -236,15 +236,15 @@ async fn obsoleted_by_a_non_decision_is_not_a_discontinuation() {
     let s = ReflowService::in_memory().expect("service");
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:old".into(),
-        name: "Superseded by a newer capability".into(),
-        description: "Replaced, not withdrawn.".into(),
+        name: Some("Superseded by a newer capability".into()),
+        description: Some("Replaced, not withdrawn.".into()),
         status: Some("realized".into()),
         distinct_from: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:new".into(),
-        name: "The replacement".into(),
-        description: "Took over.".into(),
+        name: Some("The replacement".into()),
+        description: Some("Took over.".into()),
         status: Some("realized".into()),
         distinct_from: None,
     })));
@@ -275,14 +275,14 @@ async fn it_is_not_a_capability_only_field() {
     let s = ReflowService::in_memory().expect("service");
     j!(s.add_requirement(Parameters(RequirementReq {
         id: "req:gone".into(),
-        name: "A need we stopped having".into(),
-        statement: "Withdrawn by decision.".into(),
+        name: Some("A need we stopped having".into()),
+        statement: Some("Withdrawn by decision.".into()),
         distinct_from: None,
     })));
     j!(s.add_decision(Parameters(DecisionReq {
         id: "dec:drop".into(),
-        name: "We no longer need it".into(),
-        decision: "Withdrawn.".into(),
+        name: Some("We no longer need it".into()),
+        decision: Some("Withdrawn.".into()),
         rationale: None,
         distinct_from: None,
     })));

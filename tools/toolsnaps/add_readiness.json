@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Record an OBSERVED technology-readiness level (TRL or MRL, 1-9) for an enabling technology — the input fact a derived roadmap is computed from (BL-68). CONVENTION: this is an observation, not a plan. A level you EXPECT a technology to reach later is forecast_readiness, never this — recording a projection as an observation puts a fiction inside the machinery the roadmap is computed from, where it propagates. A rung outside 1-9 is refused rather than clamped.",
+  "description": "Record an OBSERVED technology-readiness level (TRL or MRL, 1-9) for an enabling technology — the input fact a derived roadmap is computed from (BL-68). CONVENTION: this is an observation, not a plan. A level you EXPECT a technology to reach later is forecast_readiness, never this — recording a projection as an observation puts a fiction inside the machinery the roadmap is computed from, where it propagates. A rung outside 1-9 is refused rather than clamped. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it again with the same id and only what you are changing — omitted fields keep their stored value, so correcting one never means re-sending a 2 KB field you did not touch.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
@@ -27,28 +27,40 @@
         "type": "string"
       },
       "kind": {
+        "default": null,
         "description": "`TRL` (technology) or `MRL` (manufacturing). Required: the two ladders\nare not interchangeable, and a technology can be demonstrable and\nunmanufacturable — which is exactly the case a roadmap must state.",
-        "type": "string"
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "level": {
+        "default": null,
         "description": "The rung, 1-9 inclusive. Refused outside that range rather than clamped:\na clamped 12 silently becomes 9 and reports a technology as mature.",
         "format": "int64",
-        "type": "integer"
+        "type": [
+          "integer",
+          "null"
+        ]
       },
       "target_id": {
-        "type": "string"
+        "default": null,
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "target_type": {
+        "default": null,
         "description": "The enabling technology this level is about — usually a Component or an\nArtifact.",
-        "type": "string"
+        "type": [
+          "string",
+          "null"
+        ]
       }
     },
     "required": [
-      "id",
-      "target_type",
-      "target_id",
-      "kind",
-      "level"
+      "id"
     ],
     "type": "object"
   },

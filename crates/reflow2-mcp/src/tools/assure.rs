@@ -62,7 +62,11 @@ impl ReflowService {
                        RUN FOUND in `findings` on set_verification_status. Measured on reflow2's \
                        own graph before those were reachable: median Verification name 76 words, \
                        longest 654, because `description` was declared and this constructor had \
-                       no parameter for it, so everyone wrote reports into the name.",
+                       no parameter for it, so everyone wrote reports into the name. \
+                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
+                       again with the same id and only what you are changing \u{2014} omitted \
+                       fields keep their stored value, so correcting one never means re-sending \
+                       a 2 KB field you did not touch.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_verification(
@@ -70,10 +74,16 @@ impl ReflowService {
         Parameters(req): Parameters<VerificationReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await;
+        let mut __rf = crate::service::RequiredFields::new(
+            &g,
+            reflow2_core::nodes::node::VERIFICATION,
+            &req.id,
+        )?;
+        let name = __rf.str("name", req.name);
         ok_json(NodeDto::from(
             g.add_verification(
                 &req.id,
-                &req.name,
+                &name,
                 req.method.as_deref(),
                 req.level.as_deref(),
                 req.description.as_deref(),

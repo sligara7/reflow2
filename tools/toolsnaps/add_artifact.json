@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Create an Artifact node — a real deliverable (file/spec/doc) that lives outside the graph, pointed to by `location`.",
+  "description": "Create an Artifact node — a real deliverable (file/spec/doc) that lives outside the graph, pointed to by `location`. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it again with the same id and only what you are changing — omitted fields keep their stored value, so correcting one never means re-sending a 2 KB field you did not touch.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
@@ -27,12 +27,15 @@
         ]
       },
       "name": {
-        "type": "string"
+        "default": null,
+        "type": [
+          "string",
+          "null"
+        ]
       }
     },
     "required": [
-      "id",
-      "name"
+      "id"
     ],
     "type": "object"
   },

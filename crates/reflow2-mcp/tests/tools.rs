@@ -73,25 +73,25 @@ async fn seeded() -> ReflowService {
     let s = ReflowService::in_memory().expect("in-memory service");
     j!(s.add_project(Parameters(IdName {
         id: "proj:sb".into(),
-        name: "Softball".into()
+        name: Some("Softball".into()),
     })));
     j!(s.add_requirement(Parameters(RequirementReq {
         id: "req:physics".into(),
-        name: "Realistic physics".into(),
-        statement: "Ball flight must be plausible.".into(),
+        name: Some("Realistic physics".into()),
+        statement: Some("Ball flight must be plausible.".into()),
         distinct_from: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:flight".into(),
-        name: "Ball flight".into(),
-        description: "Simulate ball trajectory.".into(),
+        name: Some("Ball flight".into()),
+        description: Some("Simulate ball trajectory.".into()),
         status: None,
         distinct_from: None,
     })));
     j!(s.add_component(Parameters(ComponentReq {
         id: "cmp:physics".into(),
-        name: "Physics engine".into(),
-        description: "Runs the sim.".into(),
+        name: Some("Physics engine".into()),
+        description: Some("Runs the sim.".into()),
         level: None,
         distinct_from: None,
     })));
@@ -195,14 +195,14 @@ async fn genesis_bootstraps_then_detect_hands_off() {
     // The skill's job: seed P0/P1 only (no Components), then DETECT hands off.
     j!(s.add_requirement(Parameters(RequirementReq {
         id: "req:physics".into(),
-        name: "Realistic physics".into(),
-        statement: "Ball flight must be plausible.".into(),
+        name: Some("Realistic physics".into()),
+        statement: Some("Ball flight must be plausible.".into()),
         distinct_from: None,
     })));
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:flight".into(),
-        name: "Ball flight".into(),
-        description: "Simulate ball trajectory.".into(),
+        name: Some("Ball flight".into()),
+        description: Some("Simulate ball trajectory.".into()),
         status: None,
         distinct_from: None,
     })));
@@ -230,8 +230,8 @@ async fn link_artifact_closes_the_unrealized_capability_gap() {
     for (id, name) in [("cap:flight", "Ball flight"), ("cap:score", "Scoring")] {
         j!(s.add_capability(Parameters(CapabilityReq {
             id: id.into(),
-            name: name.into(),
-            description: "…".into(),
+            name: Some(name.into()),
+            description: Some("…".into()),
             status: None,
             distinct_from: None,
         })));
@@ -352,14 +352,14 @@ async fn interface_tools_pair_both_sides_of_a_contract() {
     let s = seeded().await;
     j!(s.add_component(Parameters(ComponentReq {
         id: "cmp:ui".into(),
-        name: "Scoreboard UI".into(),
-        description: "Shows the score.".into(),
+        name: Some("Scoreboard UI".into()),
+        description: Some("Shows the score.".into()),
         level: None,
         distinct_from: None,
     })));
     j!(s.add_interface(Parameters(IdName {
         id: "ifc:state".into(),
-        name: "Game state feed".into()
+        name: Some("Game state feed".into()),
     })));
     j!(s.provides(Parameters(EdgePairReq {
         from_id: "cmp:physics".into(),
@@ -401,7 +401,7 @@ async fn a_contract_with_no_provider_surfaces_as_a_gap_over_the_surface() {
     let s = seeded().await;
     j!(s.add_interface(Parameters(IdName {
         id: "ifc:state".into(),
-        name: "Game state feed".into()
+        name: Some("Game state feed".into()),
     })));
     j!(s.consumes(Parameters(EdgePairReq {
         from_id: "cmp:physics".into(),
@@ -601,8 +601,8 @@ async fn the_surface_can_say_that_nothing_moved() {
             summary: None,
             rationale: None,
             id: "chg:fake".into(),
-            name: "not really a baseline".into(),
-            change_type: "baseline_established".into(),
+            name: Some("not really a baseline".into()),
+            change_type: Some("baseline_established".into()),
             subject: None,
             affected: None,
         }))
@@ -653,7 +653,7 @@ async fn the_write_side_can_answer_what_detect_asks_for() {
     // Answer both, using the typed tools.
     j!(s.add_verification(Parameters(VerificationReq {
         id: "ver:flight".into(),
-        name: "Ball flight tests".into(),
+        name: Some("Ball flight tests".into()),
         method: Some("test".into()),
         level: Some("unit".into()),
         description: None,
@@ -665,13 +665,13 @@ async fn the_write_side_can_answer_what_detect_asks_for() {
     })));
     j!(s.add_release(Parameters(ReleaseReq {
         id: "rel:v1".into(),
-        name: "Softball v1".into(),
+        name: Some("Softball v1".into()),
         version: Some("1.0.0".into()),
         unit_type: Some("bundle".into()),
     })));
     j!(s.add_environment(Parameters(EnvironmentReq {
         id: "env:itch".into(),
-        name: "itch.io".into(),
+        name: Some("itch.io".into()),
         env_type: Some("production".into()),
         location: None,
     })));
@@ -933,7 +933,7 @@ async fn a_rejected_edge_names_the_alternatives() {
     let s = ReflowService::in_memory().expect("in-memory service");
     j!(s.add_project(Parameters(IdName {
         id: "proj:x".into(),
-        name: "X".into()
+        name: Some("X".into()),
     })));
     let err = s
         .create_edge(Parameters(CreateEdgeReq {
@@ -997,8 +997,8 @@ async fn a_well_formed_hierarchy_reports_no_issues() {
     ] {
         j!(s.add_component(Parameters(ComponentReq {
             id: id.into(),
-            name: name.into(),
-            description: "part".into(),
+            name: Some(name.into()),
+            description: Some("part".into()),
             level: Some(level.into()),
             distinct_from: None,
         })));
@@ -1026,8 +1026,8 @@ async fn skipping_a_level_is_reported() {
     for (id, level) in [("cmp:sys", "system"), ("cmp:leaf", "component")] {
         j!(s.add_component(Parameters(ComponentReq {
             id: id.into(),
-            name: id.into(),
-            description: "part".into(),
+            name: Some(id.into()),
+            description: Some("part".into()),
             level: Some(level.into()),
             distinct_from: None,
         })));
@@ -1056,8 +1056,8 @@ async fn nesting_two_defaulted_components_is_a_mismatch_not_silence() {
     for id in ["cmp:a", "cmp:b"] {
         j!(s.add_component(Parameters(ComponentReq {
             id: id.into(),
-            name: id.into(),
-            description: "part".into(),
+            name: Some(id.into()),
+            description: Some("part".into()),
             level: None,
             distinct_from: None,
         })));
@@ -1082,12 +1082,12 @@ async fn marking_a_requirement_dropped_stops_the_nagging() {
     let s = ReflowService::in_memory().expect("in-memory service");
     j!(s.add_project(Parameters(IdName {
         id: "proj:p".into(),
-        name: "P".into()
+        name: Some("P".into()),
     })));
     j!(s.add_requirement(Parameters(RequirementReq {
         id: "req:maybe".into(),
-        name: "Maybe".into(),
-        statement: "We might not do this.".into(),
+        name: Some("Maybe".into()),
+        statement: Some("We might not do this.".into()),
         distinct_from: None,
     })));
 
@@ -1107,8 +1107,8 @@ async fn marking_a_requirement_dropped_stops_the_nagging() {
     // has to exist for the question to be meaningful at all.
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:other".into(),
-        name: "Other".into(),
-        description: "does something else".into(),
+        name: Some("Other".into()),
+        description: Some("does something else".into()),
         status: None,
         distinct_from: None,
     })));
@@ -1410,7 +1410,7 @@ async fn documents_links_a_doc_over_the_surface_and_refuses_a_ghost() {
     let s = seeded().await;
     j!(s.add_artifact(Parameters(AddArtifactReq {
         id: "art:readme".into(),
-        name: "README.md".into(),
+        name: Some("README.md".into()),
         artifact_type: Some("document".into()),
         location: Some("README.md".into()),
     })));
@@ -1643,8 +1643,8 @@ async fn compare_designs_reports_divergence_from_a_base_export() {
     // Diverge the live graph: a new design node relative to the base.
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:catch".into(),
-        name: "Catching".into(),
-        description: "Field the ball.".into(),
+        name: Some("Catching".into()),
+        description: Some("Field the ball.".into()),
         status: None,
         distinct_from: None,
     })));
@@ -1700,8 +1700,8 @@ async fn loop_status_reports_debt_and_the_write_tools_point_at_the_loop() {
     // raw-tools-only residue; the hint rides the write result itself.
     let cap = j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:shipped".into(),
-        name: "Shipped".into(),
-        description: "Claims to be built.".into(),
+        name: Some("Shipped".into()),
+        description: Some("Claims to be built.".into()),
         status: Some("realized".into()),
         distinct_from: None,
     })));
@@ -1733,8 +1733,8 @@ async fn loop_status_reports_debt_and_the_write_tools_point_at_the_loop() {
     // Structural writes point at check-health instead.
     let cmp = j!(s.add_component(Parameters(ComponentReq {
         id: "cmp:new".into(),
-        name: "New part".into(),
-        description: "Just added.".into(),
+        name: Some("New part".into()),
+        description: Some("Just added.".into()),
         level: None,
         distinct_from: None,
     })));
@@ -1765,11 +1765,11 @@ async fn loop_status_digests_the_verification_roll_instead_of_rolling_it() {
             id: id.clone(),
             // Long names are the actual bulk: these are test descriptions in
             // the real graph, hundreds of characters each.
-            name: format!(
+            name: Some(format!(
                 "Check {i} — {}",
                 "a description long enough to matter when it is repeated once per check. "
                     .repeat(4)
-            ),
+            )),
             method: Some("test".into()),
             level: Some("unit".into()),
             description: None,
@@ -1867,8 +1867,8 @@ async fn export_files_chain_by_content_hash() {
     // Changed design: the new file names its predecessor.
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:chain".into(),
-        name: "Chained".into(),
-        description: "Content moved.".into(),
+        name: Some("Chained".into()),
+        description: Some("Content moved.".into()),
         status: None,
         distinct_from: None,
     })));
@@ -1910,8 +1910,8 @@ async fn change_event_declares_what_it_changed_atomically() {
             summary: None,
             rationale: None,
             id: "chg:wind".into(),
-            name: "Add wind".into(),
-            change_type: "new_feature".into(),
+            name: Some("Add wind".into()),
+            change_type: Some("new_feature".into()),
             subject: None,
             affected: Some(vec![AffectedNodeReq {
                 node_type: "Capability".into(),
@@ -1937,8 +1937,8 @@ async fn change_event_declares_what_it_changed_atomically() {
             summary: None,
             rationale: None,
             id: "chg:wind".into(),
-            name: "Add wind".into(),
-            change_type: "new_feature".into(),
+            name: Some("Add wind".into()),
+            change_type: Some("new_feature".into()),
             subject: None,
             affected: Some(vec![AffectedNodeReq {
                 node_type: "Requirement".into(),
@@ -1954,8 +1954,8 @@ async fn change_event_declares_what_it_changed_atomically() {
         summary: None,
         rationale: None,
         id: "chg:wind".into(),
-        name: "Add wind".into(),
-        change_type: "new_feature".into(),
+        name: Some("Add wind".into()),
+        change_type: Some("new_feature".into()),
         subject: None,
         affected: Some(vec![
             AffectedNodeReq {
@@ -2005,15 +2005,15 @@ async fn temporal_resource_and_realization_tools_round_trip() {
     // --- temporal: epochs, ordering, pinning, recorded change ---
     j!(s.add_epoch(Parameters(AddEpochReq {
         id: "epoch:v1".into(),
-        name: "First cut".into(),
-        epoch_type: "baseline".into(),
-        sequence: 0,
+        name: Some("First cut".into()),
+        epoch_type: Some("baseline".into()),
+        sequence: Some(0),
     })));
     j!(s.add_epoch(Parameters(AddEpochReq {
         id: "epoch:v2".into(),
-        name: "Second cut".into(),
-        epoch_type: "revision".into(),
-        sequence: 1,
+        name: Some("Second cut".into()),
+        epoch_type: Some("revision".into()),
+        sequence: Some(1),
     })));
     j!(s.precedes(Parameters(PrecedesReq {
         earlier_epoch: "epoch:v1".into(),
@@ -2033,8 +2033,8 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         summary: None,
         rationale: None,
         id: "chg:tune".into(),
-        name: "Tune the model".into(),
-        change_type: "refactor".into(),
+        name: Some("Tune the model".into()),
+        change_type: Some("refactor".into()),
         subject: None,
         affected: None,
     })));
@@ -2057,7 +2057,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
     // --- resources ---
     j!(s.add_resource(Parameters(ResourceReq {
         id: "res:gpu".into(),
-        name: "GPU pool".into(),
+        name: Some("GPU pool".into()),
         provider: Some("cloud".into()),
     })));
     j!(s.require_resource(Parameters(RequireResourceReq {
@@ -2075,7 +2075,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
     // --- realization ---
     j!(s.add_artifact(Parameters(AddArtifactReq {
         id: "art:flight-rs".into(),
-        name: "flight.rs".into(),
+        name: Some("flight.rs".into()),
         artifact_type: Some("code".into()),
         location: Some("src/flight.rs".into()),
     })));
@@ -2123,8 +2123,8 @@ async fn temporal_resource_and_realization_tools_round_trip() {
     // --- delete_node: the survivor of a mistake, removed; result names it. ---
     j!(s.add_component(Parameters(ComponentReq {
         id: "cmp:typo".into(),
-        name: "Typo".into(),
-        description: "created by mistake".into(),
+        name: Some("Typo".into()),
+        description: Some("created by mistake".into()),
         level: None,
         distinct_from: None,
     })));
@@ -2284,8 +2284,8 @@ async fn read_side_loop_hint_fires_on_debt_then_only_on_change() {
     // re-arms the hint on the next orientation read, still naming real debt.
     j!(s.add_requirement(Parameters(RequirementReq {
         id: "req:latency".into(),
-        name: "Low latency".into(),
-        statement: "Input to render under 50ms.".into(),
+        name: Some("Low latency".into()),
+        statement: Some("Input to render under 50ms.".into()),
         distinct_from: None,
     })));
     let grown = j!(s.scan_nodes(Parameters(ScanReq {
@@ -2337,8 +2337,8 @@ async fn a_read_too_large_to_return_says_what_it_left_out() {
     for i in 0..30 {
         j!(s.add_capability(Parameters(CapabilityReq {
             id: format!("cap:{i}"),
-            name: format!("Capability {i}"),
-            description: prose.clone(),
+            name: Some(format!("Capability {i}")),
+            description: Some(prose.clone()),
             status: None,
             distinct_from: None,
         })));
@@ -2386,8 +2386,8 @@ async fn a_single_node_larger_than_the_budget_is_still_returned() {
     let s = ReflowService::in_memory().expect("in-memory service");
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:huge".into(),
-        name: "Huge".into(),
-        description: "y".repeat(60_000),
+        name: Some("Huge".into()),
+        description: Some("y".repeat(60_000)),
         status: None,
         distinct_from: None,
     })));
@@ -2406,8 +2406,8 @@ async fn brief_gives_the_shape_without_the_prose() {
     let s = ReflowService::in_memory().expect("in-memory service");
     j!(s.add_capability(Parameters(CapabilityReq {
         id: "cap:one".into(),
-        name: "The one".into(),
-        description: "z".repeat(5_000),
+        name: Some("The one".into()),
+        description: Some("z".repeat(5_000)),
         status: None,
         distinct_from: None,
     })));
@@ -2441,8 +2441,8 @@ async fn an_explicit_limit_is_reported_as_the_reason_it_stopped() {
     for i in 0..5 {
         j!(s.add_capability(Parameters(CapabilityReq {
             id: format!("cap:{i}"),
-            name: format!("Cap {i}"),
-            description: "small".into(),
+            name: Some(format!("Cap {i}")),
+            description: Some("small".into()),
             status: None,
             distinct_from: None,
         })));
@@ -2578,11 +2578,11 @@ async fn claimable() -> ReflowService {
     let s = ReflowService::in_memory().expect("in-memory service");
     j!(s.add_project(Parameters(IdName {
         id: "proj:seat".into(),
-        name: "Seat".into()
+        name: Some("Seat".into()),
     })));
     j!(s.add_contributor(Parameters(ContributorReq {
         id: "who:ann".into(),
-        name: "Ann".into(),
+        name: Some("Ann".into()),
         kind: None,
         handle: None,
         description: None,
@@ -2652,7 +2652,7 @@ async fn two_claims_from_one_session_report_one_seat() {
     let s = claimable().await;
     j!(s.add_contributor(Parameters(ContributorReq {
         id: "who:bob".into(),
-        name: "Bob".into(),
+        name: Some("Bob".into()),
         kind: None,
         handle: None,
         description: None,
@@ -2725,7 +2725,7 @@ async fn a_project_mode_can_be_chosen_after_genesis() {
     let s = ReflowService::in_memory().expect("in-memory service");
     j!(s.add_project(Parameters(IdName {
         id: "proj:m".into(),
-        name: "Modey".into()
+        name: Some("Modey".into()),
     })));
 
     let set = j!(s.set_project_mode(Parameters(ProjectModeReq {
@@ -2744,7 +2744,7 @@ async fn choosing_a_mode_preserves_everything_else_about_the_project() {
     let s = ReflowService::in_memory().expect("in-memory service");
     j!(s.add_project(Parameters(IdName {
         id: "proj:m".into(),
-        name: "Modey".into()
+        name: Some("Modey".into()),
     })));
     j!(s.set_project_mode(Parameters(ProjectModeReq {
         project_id: "proj:m".into(),
@@ -2767,7 +2767,7 @@ async fn an_unknown_mode_fails_loud_rather_than_leaving_the_old_one() {
     let s = ReflowService::in_memory().expect("in-memory service");
     j!(s.add_project(Parameters(IdName {
         id: "proj:m".into(),
-        name: "Modey".into()
+        name: Some("Modey".into()),
     })));
     j!(s.set_project_mode(Parameters(ProjectModeReq {
         project_id: "proj:m".into(),
@@ -3020,9 +3020,9 @@ async fn an_unknown_node_type_is_refused_rather_than_answered_null() {
     let s = ReflowService::in_memory().expect("in-memory service");
     j!(s.add_epoch(Parameters(AddEpochReq {
         id: "epoch:real".into(),
-        name: "a real epoch".into(),
-        epoch_type: "revision".into(),
-        sequence: 1,
+        name: Some("a real epoch".into()),
+        epoch_type: Some("revision".into()),
+        sequence: Some(1),
     })));
 
     // THE REPRODUCTION: the type name they used.
@@ -3083,8 +3083,8 @@ async fn scan_nodes_filters_by_decomposition_level() {
     ] {
         j!(s.add_component(Parameters(ComponentReq {
             id: id.into(),
-            name: id.into(),
-            description: "x".into(),
+            name: Some(id.into()),
+            description: Some("x".into()),
             level: level.map(str::to_string),
             distinct_from: None,
         })));
@@ -3133,8 +3133,8 @@ async fn a_bad_level_is_refused_rather_than_answered_empty() {
     let s = ReflowService::in_memory().expect("in-memory service");
     j!(s.add_component(Parameters(ComponentReq {
         id: "cmp:x".into(),
-        name: "x".into(),
-        description: "x".into(),
+        name: Some("x".into()),
+        description: Some("x".into()),
         level: Some("subsystem".into()),
         distinct_from: None,
     })));

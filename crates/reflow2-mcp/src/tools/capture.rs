@@ -609,7 +609,11 @@ impl ReflowService {
     // ---- Golden-thread constructors (deterministic, mutating) ----
 
     #[tool(
-        description = "Create a Project node.",
+        description = "Create a Project node. \
+                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
+                       again with the same id and only what you are changing \u{2014} omitted \
+                       fields keep their stored value, so correcting one never means re-sending \
+                       a 2 KB field you did not touch.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_project(
@@ -617,8 +621,11 @@ impl ReflowService {
         Parameters(req): Parameters<IdName>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await;
+        let mut __rf =
+            crate::service::RequiredFields::new(&g, reflow2_core::nodes::node::PROJECT, &req.id)?;
+        let name = __rf.str("name", req.name);
         ok_json(NodeDto::from(
-            g.add_project(&req.id, &req.name).map_err(dyno_err)?,
+            g.add_project(&req.id, &name).map_err(dyno_err)?,
         ))
     }
 
@@ -628,7 +635,11 @@ impl ReflowService {
                        AGAIN WITH AN EXISTING ID REVISES that node: what you pass overwrites, \
                        and every field you do NOT pass keeps its current value instead of \
                        reverting to a default — so rewording a requirement never silently \
-                       un-confirms it (BL-183).",
+                       un-confirms it (BL-183). \
+                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
+                       again with the same id and only what you are changing \u{2014} omitted \
+                       fields keep their stored value, so correcting one never means re-sending \
+                       a 2 KB field you did not touch.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_requirement(
@@ -639,16 +650,15 @@ impl ReflowService {
         let node_ty = reflow2_core::nodes::node::REQUIREMENT;
         let prior = g.get_node(node_ty, &req.id).map_err(dyno_err)?;
         let existed = prior.is_some();
+        let mut __rf = crate::service::RequiredFields::new(&g, node_ty, &req.id)?;
+        let name = __rf.str("name", req.name);
+        let statement = __rf.str("statement", req.statement);
+        __rf.finish()?;
         let node = NodeDto::from(
-            g.add_requirement(&req.id, &req.name, &req.statement)
+            g.add_requirement(&req.id, &name, &statement)
                 .map_err(dyno_err)?,
         );
-        let found = search_first(
-            &g,
-            &req.id,
-            existed,
-            &format!("{} {}", req.name, req.statement),
-        );
+        let found = search_first(&g, &req.id, existed, &format!("{name} {statement}"));
         if let Err(e) = refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id) {
             // Roll back the node we just wrote. The check needs the node in the
             // index to have an in-query baseline, so the write comes first and
@@ -708,7 +718,11 @@ impl ReflowService {
                        EXISTING ID REVISES that node: what you pass overwrites, and every field \
                        you do NOT pass keeps its current value instead of reverting to a default \
                        — so sharpening a description never silently unbuilds a verified \
-                       capability (BL-183).",
+                       capability (BL-183). \
+                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
+                       again with the same id and only what you are changing \u{2014} omitted \
+                       fields keep their stored value, so correcting one never means re-sending \
+                       a 2 KB field you did not touch.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_capability(
@@ -719,16 +733,15 @@ impl ReflowService {
         let node_ty = reflow2_core::nodes::node::CAPABILITY;
         let prior = g.get_node(node_ty, &req.id).map_err(dyno_err)?;
         let existed = prior.is_some();
+        let mut __rf = crate::service::RequiredFields::new(&g, node_ty, &req.id)?;
+        let name = __rf.str("name", req.name);
+        let description = __rf.str("description", req.description);
+        __rf.finish()?;
         let node = NodeDto::from(
-            g.add_capability(&req.id, &req.name, &req.description, req.status.as_deref())
+            g.add_capability(&req.id, &name, &description, req.status.as_deref())
                 .map_err(dyno_err)?,
         );
-        let found = search_first(
-            &g,
-            &req.id,
-            existed,
-            &format!("{} {}", req.name, req.description),
-        );
+        let found = search_first(&g, &req.id, existed, &format!("{name} {description}"));
         if let Err(e) = refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id) {
             // Roll back the node we just wrote. The check needs the node in the
             // index to have an in-query baseline, so the write comes first and
@@ -838,7 +851,11 @@ impl ReflowService {
         description = "Create a Component node. Pass `level` when the part is an assembly \
                        rather than a leaf (`subsystem`, `system`, `system_of_systems`, \
                        `enterprise`; default `component`), then use contain_component to nest \
-                       it — that pair is what gives hierarchy_issues something to check.",
+                       it — that pair is what gives hierarchy_issues something to check. \
+                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
+                       again with the same id and only what you are changing \u{2014} omitted \
+                       fields keep their stored value, so correcting one never means re-sending \
+                       a 2 KB field you did not touch.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_component(
@@ -849,16 +866,15 @@ impl ReflowService {
         let node_ty = reflow2_core::nodes::node::COMPONENT;
         let prior = g.get_node(node_ty, &req.id).map_err(dyno_err)?;
         let existed = prior.is_some();
+        let mut __rf = crate::service::RequiredFields::new(&g, node_ty, &req.id)?;
+        let name = __rf.str("name", req.name);
+        let description = __rf.str("description", req.description);
+        __rf.finish()?;
         let node = NodeDto::from(
-            g.add_component(&req.id, &req.name, &req.description, req.level.as_deref())
+            g.add_component(&req.id, &name, &description, req.level.as_deref())
                 .map_err(dyno_err)?,
         );
-        let found = search_first(
-            &g,
-            &req.id,
-            existed,
-            &format!("{} {}", req.name, req.description),
-        );
+        let found = search_first(&g, &req.id, existed, &format!("{name} {description}"));
         if let Err(e) = refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id) {
             // Roll back the node we just wrote. The check needs the node in the
             // index to have an in-query baseline, so the write comes first and
@@ -1006,7 +1022,11 @@ impl ReflowService {
                        data feed, CLI, library boundary, or physical/human connection point). \
                        Model one whenever two Components talk to each other, then pair it with \
                        `provides` and `consumes`: that pairing is what makes a change on one \
-                       side of a boundary surface the other side.",
+                       side of a boundary surface the other side. \
+                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
+                       again with the same id and only what you are changing \u{2014} omitted \
+                       fields keep their stored value, so correcting one never means re-sending \
+                       a 2 KB field you did not touch.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_interface(
@@ -1017,8 +1037,11 @@ impl ReflowService {
         let node_ty = reflow2_core::nodes::node::INTERFACE;
         let prior = g.get_node(node_ty, &req.id).map_err(dyno_err)?;
         let existed = prior.is_some();
-        let node = NodeDto::from(g.add_interface(&req.id, &req.name).map_err(dyno_err)?);
-        let found = search_first(&g, &req.id, existed, &req.name);
+        let mut __rf = crate::service::RequiredFields::new(&g, node_ty, &req.id)?;
+        let name = __rf.str("name", req.name);
+        __rf.finish()?;
+        let node = NodeDto::from(g.add_interface(&req.id, &name).map_err(dyno_err)?);
+        let found = search_first(&g, &req.id, existed, &name);
         let revision = revision_of(&g, prior.as_ref(), &node);
         with_capture_notes(
             node,
@@ -1036,7 +1059,11 @@ impl ReflowService {
                        `create_edge`, giving each a `role` property saying what the transition \
                        means ('feeds', 'forces resync') — in a process the backward edges are \
                        the point, and without a role they are indistinguishable from forward \
-                       ones. Read it back with `flow_report`.",
+                       ones. Read it back with `flow_report`. \
+                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
+                       again with the same id and only what you are changing \u{2014} omitted \
+                       fields keep their stored value, so correcting one never means re-sending \
+                       a 2 KB field you did not touch.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_flow(
@@ -1044,10 +1071,13 @@ impl ReflowService {
         Parameters(req): Parameters<AddFlowReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await;
+        let mut __rf =
+            crate::service::RequiredFields::new(&g, reflow2_core::nodes::node::FLOW, &req.id)?;
+        let name = __rf.str("name", req.name);
         ok_json(NodeDto::from(
             g.add_flow(
                 &req.id,
-                &req.name,
+                &name,
                 req.description.as_deref(),
                 req.flow_type.as_deref(),
                 req.entry_point.as_deref(),
@@ -1156,7 +1186,11 @@ impl ReflowService {
                        computed and ranked above ordinary gaps. On a kpp, `limit` is the \
                        threshold and `objective` is what success looks like. Never set kpp on \
                        your own reading of the wording: criticality is a claim about \
-                       consequence, so ask the user first (the kpp-proposal skill).",
+                       consequence, so ask the user first (the kpp-proposal skill). \
+                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
+                       again with the same id and only what you are changing \u{2014} omitted \
+                       fields keep their stored value, so correcting one never means re-sending \
+                       a 2 KB field you did not touch.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_constraint(
@@ -1167,11 +1201,15 @@ impl ReflowService {
         let node_ty = reflow2_core::nodes::node::CONSTRAINT;
         let prior = g.get_node(node_ty, &req.id).map_err(dyno_err)?;
         let existed = prior.is_some();
+        let mut __rf = crate::service::RequiredFields::new(&g, node_ty, &req.id)?;
+        let name = __rf.str("name", req.name);
+        let statement = __rf.str("statement", req.statement);
+        __rf.finish()?;
         let node = NodeDto::from(
             g.add_constraint(
                 &req.id,
-                &req.name,
-                &req.statement,
+                &name,
+                &statement,
                 req.category.as_deref(),
                 req.quantity.as_deref(),
                 req.limit,
@@ -1180,12 +1218,7 @@ impl ReflowService {
             )
             .map_err(dyno_err)?,
         );
-        let found = search_first(
-            &g,
-            &req.id,
-            existed,
-            &format!("{} {}", req.name, req.statement),
-        );
+        let found = search_first(&g, &req.id, existed, &format!("{name} {statement}"));
         let revision = revision_of(&g, prior.as_ref(), &node);
         with_capture_notes(
             node,
@@ -1360,7 +1393,11 @@ impl ReflowService {
                        where-am-i reads back to the user as \"what you decided\", so asserting it \
                        on their behalf would be the forgery dec:certainty-derived forbids for \
                        requirement status. BEHAVIOUR CHANGED 2026-07-25: this used to default to \
-                       `accepted`.",
+                       `accepted`. \
+                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
+                       again with the same id and only what you are changing \u{2014} omitted \
+                       fields keep their stored value, so correcting one never means re-sending \
+                       a 2 KB field you did not touch.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_decision(
@@ -1371,16 +1408,15 @@ impl ReflowService {
         let node_ty = reflow2_core::nodes::node::DECISION;
         let prior = g.get_node(node_ty, &req.id).map_err(dyno_err)?;
         let existed = prior.is_some();
+        let mut __rf = crate::service::RequiredFields::new(&g, node_ty, &req.id)?;
+        let name = __rf.str("name", req.name);
+        let decision = __rf.str("decision", req.decision);
+        __rf.finish()?;
         let node = NodeDto::from(
-            g.add_decision(&req.id, &req.name, &req.decision, req.rationale.as_deref())
+            g.add_decision(&req.id, &name, &decision, req.rationale.as_deref())
                 .map_err(dyno_err)?,
         );
-        let found = search_first(
-            &g,
-            &req.id,
-            existed,
-            &format!("{} {}", req.name, req.decision),
-        );
+        let found = search_first(&g, &req.id, existed, &format!("{name} {decision}"));
         if let Err(e) = refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id) {
             // Roll back the node we just wrote. The check needs the node in the
             // index to have an in-query baseline, so the write comes first and
@@ -1439,7 +1475,11 @@ impl ReflowService {
                        which is who the designed system SERVES. Create one per \
                        session for whoever is driving, then attribute their design \
                        nodes with authored_by — the structured 'who' behind \
-                       provenance's 'how'.",
+                       provenance's 'how'. \
+                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
+                       again with the same id and only what you are changing \u{2014} omitted \
+                       fields keep their stored value, so correcting one never means re-sending \
+                       a 2 KB field you did not touch.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_contributor(
@@ -1447,10 +1487,16 @@ impl ReflowService {
         Parameters(req): Parameters<ContributorReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await;
+        let mut __rf = crate::service::RequiredFields::new(
+            &g,
+            reflow2_core::nodes::node::CONTRIBUTOR,
+            &req.id,
+        )?;
+        let name = __rf.str("name", req.name);
         ok_json(NodeDto::from(
             g.add_contributor(
                 &req.id,
-                &req.name,
+                &name,
                 req.kind.as_deref(),
                 req.handle.as_deref(),
                 req.description.as_deref(),

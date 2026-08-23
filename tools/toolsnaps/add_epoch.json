@@ -2,31 +2,40 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Create a `DesignEpoch` that HAS HAPPENED — a point on the time axis you are recording, which is what an epoch has always meant here. NOTE THE STORED TYPE NAME is `DesignEpoch`, not `Epoch`: that is the string `get_node` and `scan_nodes` want. For a point that has NOT happened yet, use plan_epoch instead; planning is a deliberate act and reads better as its own verb than as a flag.",
+  "description": "Create a `DesignEpoch` that HAS HAPPENED — a point on the time axis you are recording, which is what an epoch has always meant here. NOTE THE STORED TYPE NAME is `DesignEpoch`, not `Epoch`: that is the string `get_node` and `scan_nodes` want. For a point that has NOT happened yet, use plan_epoch instead; planning is a deliberate act and reads better as its own verb than as a flag. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it again with the same id and only what you are changing — omitted fields keep their stored value, so correcting one never means re-sending a 2 KB field you did not touch.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
       "epoch_type": {
+        "default": null,
         "description": "`baseline` | `revision` | `milestone` | `incident_response` | `release_cut`.",
-        "type": "string"
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "id": {
         "type": "string"
       },
       "name": {
-        "type": "string"
+        "default": null,
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "sequence": {
+        "default": null,
         "format": "int64",
-        "type": "integer"
+        "type": [
+          "integer",
+          "null"
+        ]
       }
     },
     "required": [
-      "id",
-      "name",
-      "epoch_type",
-      "sequence"
+      "id"
     ],
     "type": "object"
   },

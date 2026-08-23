@@ -2,7 +2,7 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Record a Resource the built thing needs — a database, a queue, a secret, a GPU, power, bandwidth.",
+  "description": "Record a Resource the built thing needs — a database, a queue, a secret, a GPU, power, bandwidth. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it again with the same id and only what you are changing — omitted fields keep their stored value, so correcting one never means re-sending a 2 KB field you did not touch.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
@@ -11,7 +11,11 @@
         "type": "string"
       },
       "name": {
-        "type": "string"
+        "default": null,
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "provider": {
         "default": null,
@@ -23,8 +27,7 @@
       }
     },
     "required": [
-      "id",
-      "name"
+      "id"
     ],
     "type": "object"
   },

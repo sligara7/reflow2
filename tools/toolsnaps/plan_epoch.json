@@ -2,31 +2,40 @@
   "annotations": {
     "readOnlyHint": false
   },
-  "description": "Create an Epoch that has NOT happened yet — a claim about the future rather than a record of the past, and the forward half of the time axis (req:epochs-can-be-planned). `epoch_type` still applies: KIND and TENSE are orthogonal, so a planned MILESTONE and a planned RELEASE CUT are both sayable — which is why `planned` is its own property rather than a value folded into the type enum. A planned epoch REFUSES record_change: a snapshot captures the present, so it cannot belong to a point that has not happened. Call set_epoch_status when it arrives.",
+  "description": "Create an Epoch that has NOT happened yet — a claim about the future rather than a record of the past, and the forward half of the time axis (req:epochs-can-be-planned). `epoch_type` still applies: KIND and TENSE are orthogonal, so a planned MILESTONE and a planned RELEASE CUT are both sayable — which is why `planned` is its own property rather than a value folded into the type enum. A planned epoch REFUSES record_change: a snapshot captures the present, so it cannot belong to a point that has not happened. Call set_epoch_status when it arrives. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it again with the same id and only what you are changing — omitted fields keep their stored value, so correcting one never means re-sending a 2 KB field you did not touch.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
       "epoch_type": {
+        "default": null,
         "description": "`baseline` | `revision` | `milestone` | `incident_response` | `release_cut`.",
-        "type": "string"
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "id": {
         "type": "string"
       },
       "name": {
-        "type": "string"
+        "default": null,
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "sequence": {
+        "default": null,
         "format": "int64",
-        "type": "integer"
+        "type": [
+          "integer",
+          "null"
+        ]
       }
     },
     "required": [
-      "id",
-      "name",
-      "epoch_type",
-      "sequence"
+      "id"
     ],
     "type": "object"
   },

@@ -58,8 +58,8 @@ async fn svc() -> ReflowService {
 fn req(id: &str, name: &str, statement: &str) -> RequirementReq {
     RequirementReq {
         id: id.into(),
-        name: name.into(),
-        statement: statement.into(),
+        name: Some(name.into()),
+        statement: Some(statement.into()),
         distinct_from: None,
     }
 }

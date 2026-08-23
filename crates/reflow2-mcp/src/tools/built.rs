@@ -265,7 +265,11 @@ impl ReflowService {
 
     #[tool(
         description = "Create an Artifact node — a real deliverable (file/spec/doc) that \
-                          lives outside the graph, pointed to by `location`.",
+                          lives outside the graph, pointed to by `location`. \
+                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
+                       again with the same id and only what you are changing \u{2014} omitted \
+                       fields keep their stored value, so correcting one never means re-sending \
+                       a 2 KB field you did not touch.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_artifact(
@@ -273,10 +277,13 @@ impl ReflowService {
         Parameters(req): Parameters<AddArtifactReq>,
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await;
+        let mut __rf =
+            crate::service::RequiredFields::new(&g, reflow2_core::nodes::node::ARTIFACT, &req.id)?;
+        let name = __rf.str("name", req.name);
         ok_json(NodeDto::from(
             g.add_artifact(
                 &req.id,
-                &req.name,
+                &name,
                 req.artifact_type.as_deref(),
                 req.location.as_deref(),
             )

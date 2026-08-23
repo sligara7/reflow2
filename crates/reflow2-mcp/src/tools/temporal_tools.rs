@@ -198,17 +198,30 @@ impl ReflowService {
                        STORED TYPE NAME is `DesignEpoch`, not `Epoch`: that is the string \
                        `get_node` and `scan_nodes` want. For a point that has NOT happened yet, \
                        use plan_epoch instead; planning is a deliberate act and reads better as \
-                       its own verb than as a flag.",
+                       its own verb than as a flag. \
+                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
+                       again with the same id and only what you are changing \u{2014} omitted \
+                       fields keep their stored value, so correcting one never means re-sending \
+                       a 2 KB field you did not touch.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_epoch(
         &self,
         Parameters(req): Parameters<AddEpochReq>,
     ) -> Result<CallToolResult, McpError> {
-        let epoch_type: EpochType = parse_enum(&req.epoch_type, "epoch type")?;
         let mut g = self.write_lock().await;
+        let ty = reflow2_core::nodes::node::DESIGN_EPOCH;
+        let mut __rf = crate::service::RequiredFields::new(&g, ty, &req.id)?;
+        let epoch_type_s = __rf.str("epoch_type", req.epoch_type);
+        let name = __rf.str("name", req.name);
+        let sequence = __rf.i64("sequence", req.sequence);
+        // Collect every field before refusing, so a caller learns all of them
+        // at once. Parsing the enum comes AFTER, or a missing name would be
+        // masked by an unparseable type.
+        __rf.finish()?;
+        let epoch_type: EpochType = parse_enum(&epoch_type_s, "epoch type")?;
         ok_json(NodeDto::from(
-            g.add_epoch(&req.id, &req.name, epoch_type, req.sequence)
+            g.add_epoch(&req.id, &name, epoch_type, sequence)
                 .map_err(dyno_err)?,
         ))
     }
@@ -221,17 +234,30 @@ impl ReflowService {
                        sayable — which is why `planned` is its own property rather than a value \
                        folded into the type enum. A planned epoch REFUSES record_change: a \
                        snapshot captures the present, so it cannot belong to a point that has not \
-                       happened. Call set_epoch_status when it arrives.",
+                       happened. Call set_epoch_status when it arrives. \
+                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
+                       again with the same id and only what you are changing \u{2014} omitted \
+                       fields keep their stored value, so correcting one never means re-sending \
+                       a 2 KB field you did not touch.",
         annotations(read_only_hint = false)
     )]
     pub async fn plan_epoch(
         &self,
         Parameters(req): Parameters<AddEpochReq>,
     ) -> Result<CallToolResult, McpError> {
-        let epoch_type: EpochType = parse_enum(&req.epoch_type, "epoch type")?;
         let mut g = self.write_lock().await;
+        let ty = reflow2_core::nodes::node::DESIGN_EPOCH;
+        let mut __rf = crate::service::RequiredFields::new(&g, ty, &req.id)?;
+        let epoch_type_s = __rf.str("epoch_type", req.epoch_type);
+        let name = __rf.str("name", req.name);
+        let sequence = __rf.i64("sequence", req.sequence);
+        // Collect every field before refusing, so a caller learns all of them
+        // at once. Parsing the enum comes AFTER, or a missing name would be
+        // masked by an unparseable type.
+        __rf.finish()?;
+        let epoch_type: EpochType = parse_enum(&epoch_type_s, "epoch type")?;
         ok_json(NodeDto::from(
-            g.plan_epoch(&req.id, &req.name, epoch_type, req.sequence)
+            g.plan_epoch(&req.id, &name, epoch_type, sequence)
                 .map_err(dyno_err)?,
         ))
     }
@@ -274,14 +300,28 @@ impl ReflowService {
                        TEXT GOES IN `summary` (what changed — indexed and searchable) and \
                        `rationale` (why, and the lesson). THERE IS NO `description` FIELD: \
                        reaching for one is the commonest mistake here, and it is refused \
-                       rather than stored, so write the two that exist.",
+                       rather than stored, so write the two that exist. \
+                       CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it \
+                       again with the same id and only what you are changing \u{2014} omitted \
+                       fields keep their stored value, so correcting one never means re-sending \
+                       a 2 KB field you did not touch.",
         annotations(read_only_hint = false)
     )]
     pub async fn add_change_event(
         &self,
         Parameters(req): Parameters<AddChangeEventReq>,
     ) -> Result<CallToolResult, McpError> {
-        let change_type: ChangeType = parse_enum(&req.change_type, "change type")?;
+        let g0 = self.write_lock().await;
+        let mut __rf = crate::service::RequiredFields::new(
+            &g0,
+            reflow2_core::nodes::node::CHANGE_EVENT,
+            &req.id,
+        )?;
+        let ct_s = __rf.str("change_type", req.change_type);
+        let name = __rf.str("name", req.name);
+        __rf.finish()?;
+        drop(g0);
+        let change_type: ChangeType = parse_enum(&ct_s, "change type")?;
         reject_reserved_change_type(change_type)?;
         let subject = req
             .subject
@@ -325,7 +365,7 @@ impl ReflowService {
         let event = g
             .add_change_event(
                 &req.id,
-                &req.name,
+                &name,
                 change_type,
                 subject,
                 req.summary.as_deref(),
