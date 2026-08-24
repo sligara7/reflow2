@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:157646c28f7cb321fc596fc0c1b0b2cc43210e4490b7fb33c004f39b70be81f2",
+  "content_hash": "sha256:c32af2f52cfdbaf5d238c97226af5da1c1972ce83bd0137436a938068775a588",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -9184,6 +9184,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:a-stale-finding-is-closed-by-a-claim-not-a-computation",
+      "properties": {
+        "acted_at": "2026-08-24",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:a-tied-merge-breaks-by-degree-not-by-alphabet",
       "properties": {
         "acted_at": "2026-08-10",
@@ -13189,6 +13198,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "dec:idea-how-does-the-graph-learn-what-a-session-invalidated",
+      "properties": {
+        "basis": "causal",
+        "evidence": "This settles the parent brainstorm's option C for BOTH carriers it named. The parent measured the problem twice on TemporalFacts and asked for 'an edge from a ChangeEvent to the finding it ANSWERS'; dev_storyflow hit the identical gap on a Verification in a different project and proposed INVALIDATES_RUN. One relation covers both, so the endpoints stayed open. The parent's options A (a stale_measurement detector), B (capture-session asks) and E (the stop hook counts) are UNTOUCHED and still open.",
+        "validation_status": "validated"
+      },
+      "to_id": "dec:a-stale-finding-is-closed-by-a-claim-not-a-computation"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:alex-grok-0240-feedback-triaged-2026-08-16",
       "properties": {
         "basis": "observed",
@@ -15670,6 +15689,114 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-repair-can-say-what-it-invalidated",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-repair-can-say-what-it-invalidated",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-repair-can-say-what-it-invalidated",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-repair-can-say-what-it-invalidated",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-repair-can-say-what-it-invalidated",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-assure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-repair-can-say-what-it-invalidated",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-repair-can-say-what-it-invalidated",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-repair-can-say-what-it-invalidated",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-repair-can-say-what-it-invalidated",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:where-am-i-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-repair-can-say-what-it-invalidated",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:a-repair-can-say-what-it-invalidated"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-repair-can-say-what-it-invalidated",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:a-stale-finding-is-closed-by-a-claim-not-a-computation"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-repair-can-say-what-it-invalidated",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:a-dated-observation-does-not-read-as-standing-doctrine"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:a-reply-is-not-sent-twice",
       "properties": {
         "accepted_baseline": true,
@@ -16264,6 +16391,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-16280a243dc9b8ee",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:change-event-text-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-16e876f2b2eee105",
       "properties": {
         "accepted_baseline": true,
@@ -16687,6 +16823,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-5797039bbb62a5bc",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-580ca8a73dc7a322",
       "properties": {
         "accepted_baseline": true,
@@ -16756,6 +16901,15 @@
         "action": "modified"
       },
       "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-68873af158e9a5c0",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:artifact"
     },
     {
       "edge_type": "CHANGED",
@@ -17011,6 +17165,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-8a254d0a58850fe0",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-8a485159aeb4cc93",
       "properties": {
         "accepted_baseline": true,
@@ -17035,6 +17198,15 @@
         "action": "modified"
       },
       "to_id": "art:dockerfile"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-8cef54856c069f19",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:changelog-test"
     },
     {
       "edge_type": "CHANGED",
@@ -17557,6 +17729,15 @@
         "action": "modified"
       },
       "to_id": "art:verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-e2259a02a46e04d5",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary"
     },
     {
       "edge_type": "CHANGED",
@@ -18646,6 +18827,15 @@
         "action": "modified"
       },
       "to_id": "art:migrate-backlog"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-4cf11336de05700f",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:upgrading-v0400"
     },
     {
       "edge_type": "CHANGED",
@@ -33148,6 +33338,14 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:a-repair-can-say-what-it-invalidated",
+      "properties": {
+        "note": "The capability exists in this shape — a claim with a reader, not an inferred bucket — because this decision chose that shape on Anthony's word."
+      },
+      "to_id": "dec:a-stale-finding-is-closed-by-a-claim-not-a-computation"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:a-sweep-names-its-own-scope-and-the-category-names-what-it-computes",
       "properties": {},
       "to_id": "rule:fix-it-properly-while-it-is-still-cheap"
@@ -40974,6 +41172,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:a-stale-finding-is-closed-by-a-claim-not-a-computation",
+      "properties": {},
+      "to_id": "fact:only-8-percent-of-hand-written-change-events-carried-a-date"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "dec:exploratory-staging",
       "properties": {},
       "to_id": "fact:a-distinctness-note-had-to-wear-a-dependency-edge"
@@ -41055,6 +41259,12 @@
       "from_id": "req:declared-vocabulary-is-reachable-from-the-surface",
       "properties": {},
       "to_id": "fact:note-was-instances-five-and-six-of-unreachable-declared-vocabulary"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "req:declared-vocabulary-is-reachable-from-the-surface",
+      "properties": {},
+      "to_id": "fact:only-8-percent-of-hand-written-change-events-carried-a-date"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -92680,6 +92890,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:a-repair-can-say-what-it-invalidated",
+      "properties": {},
+      "to_id": "req:a-dated-observation-does-not-read-as-standing-doctrine"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:a-revising-write-says-whether-the-state-survived",
       "properties": {},
       "to_id": "req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue"
@@ -98424,7 +98640,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7ba76e31fce39525425a2c8ae8189f9d250b978e9f87702c1f8441ac6c8239c9",
+        "checksum": "sha256:cc0c1029d216c0f1a4d241ffe25f08e52ac707d3285552488b3112bf8f54ccb7",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/artifact.rs",
         "name": "artifact.rs",
@@ -98541,7 +98757,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:53aaabc0fddd3caa0924cb0ae6bee1cd8e77fd1e2eafe243b376dcc2562adf2a",
+        "checksum": "sha256:14cb6d8e21e7323133b1bbb9958a9981a424b9b7ffcda2d7fd428c01e23d04fd",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/change_event_carries_its_own_text.rs",
         "name": "tests/change_event_carries_its_own_text.rs",
@@ -98554,7 +98770,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:075283faf5c7028373ef537f97ef83474930d7ecb1b729bd7b5b051277182061",
+        "checksum": "sha256:98470594cf7626068c4781278dbcc07f66c6ba812a2943b3c1835420e798e50f",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/changelog.rs",
         "name": "tests/changelog.rs",
@@ -99605,7 +99821,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:06ed1c6b930148f1673b6a771f03679b60a30af3c3d12972a46a6f9559b563c8",
+        "checksum": "sha256:11814f976a9da3877bd5ffce05a2dde8cebc2bea2bbeb2cc9f6f38dc46cdec1a",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
@@ -99972,7 +100188,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8e4f33a498b947afbb2dc018fa708017a8b25ceedfb88f9729037cd43f9f1bf7",
+        "checksum": "sha256:023f6f0eacb68f14e9753fb44a55693352306d14d352ae03f831967bfaa41b54",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/schema.rs",
         "name": "crates/reflow2-core/src/schema.rs",
@@ -100125,7 +100341,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:fe8a8780bde1db57788a3b12ef566bd4fb25eb5f62ac8056cd42184a9f4844e7",
+        "checksum": "sha256:748db566db8103cf8dad6832a37f6d330bb321630cb280be4d058d56df8e2b2c",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/verify.yaml",
@@ -100267,7 +100483,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b3be0ff608436c38f027798d8840926e53dcec1ef233e19ec938730b9d3091b7",
+        "checksum": "sha256:dd0a4a12637707366085d638ada3219906f471f8058fbfd5bd6c0a2547729a1d",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -100354,7 +100570,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cc22a200230d9368baa879e34a5f23f38b002b92369b8778babfa8eed55e311f",
+        "checksum": "sha256:868d16eef06dc9190123e56ad2019d84276d2b15fdb3b1b1662189d4df440dd6",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -100542,7 +100758,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1b46a4d365b289a7bb7b5d8a9ec4edb952a63ecf88e35bdd69560bdf61b9e4d2",
+        "checksum": "sha256:e927a903ac5e1a716c4a4e7a86d97a5c127af3ac075d7f4d50e9e83c4e8f39ed",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "crates/reflow2-core/src/temporal.rs",
@@ -100844,7 +101060,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ae1db46142ce6d5660cb8364668e3a6e18676d22a5c307b0ca7082de6eb43900",
+        "checksum": "sha256:d07f76e62dc3225bc0aa8582c6ca5b86c845d0983f85bb943aee8c7a045e2d40",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/assure.rs",
         "name": "tools/assure.rs",
@@ -100896,7 +101112,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:88606ad2905be7b827da0ab96ced0e9a0700af609d72c9cf6d9e9896e1db00a7",
+        "checksum": "sha256:3383df2a22ffd3c64f97f0ce596631fbd1b911b95ff92fa920159eb7cdc4f4a5",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -100970,7 +101186,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:2890f5398f56043c31d0522d9b6c76f83fe763eedf3c4bffb7bf4922dc1b8f38",
+        "checksum": "sha256:36129c9411222bd508defc7027a68a6c4ebce59acd0289b3e443767259b9f8ef",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -101126,6 +101342,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
+        "checksum": "sha256:2b31db5690be20d1a4de6e8be6726b6fd93e196de5d462ab4963e8fa94dc4b5b",
         "location": "docs/upgrading-to-v0.40.0.md",
         "name": "docs/upgrading-to-v0.40.0.md",
         "status": "realized"
@@ -101149,7 +101366,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9b11f9d4c7ef0fa12132c0dc3f4ae7f49f7ead1b244ec7d0060477fe19237301",
+        "checksum": "sha256:9d45ce67665442dcb4d22758e5c91e42d021e54bffc03cc628a61ff3e71816f4",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/verify.rs",
         "name": "verify.rs",
@@ -101162,7 +101379,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e13e2c9e226dc7a331e31d2a2e983d0eeedc84675936b32e83c8d60c90e003c5",
+        "checksum": "sha256:d04c33fe04bf369729b47f69a6cddb739ff4377ec6dc6224cd71e38cdc313957",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/vocabulary.rs",
         "name": "crates/reflow2-core/src/vocabulary.rs",
@@ -101208,7 +101425,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:74adb819732277a637afc95b3563543eeb8f309dc7bf5c36985b5b1a1baa6e04",
+        "checksum": "sha256:7c7cca9c24de4f4c6adc6577fa8b998840139e3d8f75f4f496ca0562c8fb7257",
         "location": "getting-started/skills/where-am-i/SKILL.md",
         "name": "where-am-i/SKILL.md — orientation, and the step that asks who the reader is",
         "status": "realized"
@@ -101422,6 +101639,16 @@
         "name": "A release that is out and records shipping nothing stops the build, and a cut ends by reading it",
         "provenance": "authored",
         "status": "verified"
+      }
+    },
+    {
+      "node_id": "cap:a-repair-can-say-what-it-invalidated",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The record that did the work names the finding it answered (`INVALIDATES`, `* -> *`, carrying `note` and `at`), and every surface that quotes a verdict reads it back.\n\nWRITE: `invalidates`. READ: `invalidated_findings`, plus `loop_status.verifications` (per-row `invalidated_by` / `rerun_owed` / a sentence, and a top-level `rerun_owed` summary) and `graph_report` from the same code. The `where-am-i` skill now gathers `Constraint` — where repairs are commonly written up — and calls `invalidated_findings` before quoting any failing verdict.\n\n⭐ THE READER SHIPPED WITH THE EDGE, deliberately. A marker nothing consults is a comment, a failure this project has now found in `enforced`, in `SUPERSEDES` and in `OBSOLETES` itself.\n\n⭐ IT REPORTS AND NEVER JUDGES. The claim says the last RESULT is stale; it never says the check now passes, never touches the target's `status`, and never removes the check from `attention`. `rerun_owed` is three-valued and null means one side is undated so nobody can say.\n\nWHAT IT DOES NOT DO: nothing infers staleness. A finding with no claim against it is reported as having none, which is a real answer rather than a silence.",
+        "name": "A repair can say what it invalidated, and the reader says whether a re-run is owed",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -103965,6 +104192,18 @@
       }
     },
     {
+      "node_id": "chg:a-repair-can-say-what-it-invalidated",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-24",
+        "name": "INVALIDATES lands, with its reader",
+        "rationale": "A finding survives the work that answered it and goes on proposing work already done. Measured cost, from dev_storyflow 2026-08-23: a session read a `failing` check dated that same day and reported its two defects to a user as the live state of the system; both had been repaired hours earlier on Constraint nodes, the user acted on the report, and the session's first act was to discover the work was done.\n\nTHE DESIGN TURNS ON ONE RESTRAINT: the claim says the RESULT is stale and nothing more. Not `RESOLVES`, no status change, and the check is NOT removed from `attention` — silencing it would swap one wrong reading for another. `rerun_owed` is three-valued so an undated claim reports as unanswerable rather than as \"already covered\".\n\nAND ONE MEASUREMENT DECIDED CLAIM-OVER-COMPUTATION: inferring staleness needs a change ordered against `last_run_at`, and only 8% of hand-written ChangeEvents carried a date because the constructor had no parameter for one. The cheap option was not cheap; it was unbuildable honestly. Fixing `detected_at` is what makes the computed bucket possible LATER, and it ships stamp-invisible alongside the edge that moves the stamp on purpose.\n\nTHIS EVENT IS THE FIRST HAND-WRITTEN ONE ABLE TO CARRY ITS OWN DATE.",
+        "subject": "system",
+        "summary": "A new edge type `INVALIDATES` (`* -> *`, props `note` and `at`) lets the record that did the work name the finding it answered, with `invalidates` to write it and `invalidated_findings` to read it. `loop_status.verifications` annotates each attention row with `invalidated_by`, `rerun_owed` and a sentence, plus a top-level summary; `graph_report` gets the same from shared code; `where-am-i` now gathers `Constraint` and calls `invalidated_findings` before quoting a failing verdict. `add_change_event` gains `detected_at` — declared, written 84% of the time by the reconcile paths, and unreachable from the ordinary path, which is why only 8% of hand-written events carried a date. Stamp moves 63 -> 64 edge types; `docs/upgrading-to-v0.40.0.md` updated."
+      }
+    },
+    {
       "node_id": "chg:a-reply-is-not-sent-twice",
       "node_type": "ChangeEvent",
       "properties": {
@@ -104254,6 +104493,15 @@
       "properties": {
         "change_type": "refactor",
         "name": "Mechanical only: two governed_by call sites take the new trailing note argument as None.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-16280a243dc9b8ee",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "Mechanical: four call sites take the new trailing argument. What the test asserts is unchanged.",
         "subject": "system"
       }
     },
@@ -104691,6 +104939,15 @@
       }
     },
     {
+      "node_id": "chg:accept-5797039bbb62a5bc",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "Mechanical: the pinned edge-type count moves 63 -> 64. One of four places that number is pinned.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-580ca8a73dc7a322",
       "node_type": "ChangeEvent",
       "properties": {
@@ -104760,6 +105017,15 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-08-01",
         "name": "cap:tool-carries-convention: three tools gained their missing convention sentence — set_verification_status (planned is not confirmation), record_change (record it BEFORE you make it), export_graph (export once between commits, the lineage link is built from the file already there)."
+      }
+    },
+    {
+      "node_id": "chg:accept-68873af158e9a5c0",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "Mechanical: two internal add_change_event call sites take the new trailing detected_at argument. Behaviour unchanged.",
+        "subject": "system"
       }
     },
     {
@@ -105020,6 +105286,15 @@
       }
     },
     {
+      "node_id": "chg:accept-8a254d0a58850fe0",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "NON_TOOL_TERMS gains failing, last_run_at and rerun_owed — field and status names where-am-i must now say out loud. The gate refused the skill edit until they were declared, which is the gate working.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-8a485159aeb4cc93",
       "node_type": "ChangeEvent",
       "properties": {
@@ -105045,6 +105320,15 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-08-15",
         "name": "Accepted a new baseline: the change carries no design meaning"
+      }
+    },
+    {
+      "node_id": "chg:accept-8cef54856c069f19",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "Mechanical: one call site takes the new trailing argument.",
+        "subject": "system"
       }
     },
     {
@@ -105579,6 +105863,15 @@
         "change_type": "defect_fix",
         "detected_at": "2026-08-22",
         "name": "DOC COMMENT ONLY — no behaviour moved, so the design HOLDS; the code was always right and only its description of itself was stale. `verifies()` carried `/// target_type is required because the schema allows any target`, true until 2026-08-08 when `to: \"*\"` became an enumeration precisely so `unverified_enforced_rule` could be asked. Admitting Interface makes it doubly wrong: a reader taking it at face value would conclude no schema edit was needed for that change at all. Replaced with the true reason (the target type is not inferable from the id) and a pointer to schema/verify.yaml as the authority, where the list now carries the reasoning for every type on it and for Project being deliberately off it. Recorded as `defect_fix` rather than `refactor` because nothing was restructured — a false statement was corrected. There is no `documentation` change type; the legal list has no room for \"the code was right and the comment lied\", which is worth noticing given how this project keeps finding records that disagree with what they describe.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-e2259a02a46e04d5",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "name": "Mechanical: the pinned edge-type count moves 63 -> 64.",
         "subject": "system"
       }
     },
@@ -106140,6 +106433,15 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-07",
         "name": "First checksum for a file that has never had one, so nothing moved and there is nothing to take a position on. The file is expected to be stable: it is a one-shot migration that has already run, kept for the CLASSIFY mapping rather than for re-execution — running it again against a deleted docs/backlog.md yields an empty document."
+      }
+    },
+    {
+      "node_id": "chg:baseline-4cf11336de05700f",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "name": "FIRST baseline. The doc was registered without a checksum, so nothing moved — there was no prior value to move from. Refused as design_updated, correctly: accepting a change against a baseline nobody recorded would claim an observation nobody made.",
+        "subject": "record"
       }
     },
     {
@@ -110510,6 +110812,16 @@
         "decision": "✅ **DECIDED 2026-08-14 ON ANTHONY'S WORD, WITH A SCOPE CONDITION: BUILD EXACTLY ONE SLICE FIRST — CENTRALITY OVER THE `reasoning` PROJECTION — AND DO NOT SHIP THE GENERAL SURFACE UNTIL THAT ONE HAS PROVED USEFUL.**\n\nThe shape below is accepted. The sequencing is the ruling: the highest-value slice was already named inside this node, and `dec:orientation-is-computed-not-written` already records the missing capability in its own words — *\"WHICH FEW DECISIONS SHAPE EVERYTHING ELSE... neither what-next nor where-am-i answers it today, and it is what a newcomer actually needs\"* — and says it should be a COMPUTATION rather than another paragraph. **That computation is one call away and has never been made.**\n\n⚠️ **THE TWO TRAPS TRAVEL WITH THE FIRST SLICE, NOT WITH THE GENERAL SURFACE**, so neither is deferred by narrowing scope: the exclusion list is part of the projection (the first hand run returned the ten most influential \"decisions\" as all `decision:ack:` review records; excluding them took the edge set 867 → 255), and the result is a READING, never a defect. Emitting defects from a broad projection is BL-42's exact shape, where one detector became 20 of 31 defects and had to be cut back.\n\n⚠️ STILL NOT SETTLED BY THIS, and deliberately left to the first slice to answer in practice: whether this is a new served tool, an extension of `graph_report`, or an argument on existing detectors; whether a projection is a node type or a static list in code; and whether centrality should be betweenness (already imported) or reachability (what was computed by hand) — `dec:idea-is-betweenness-the-right-centrality` asks that and this does not answer it.\n\n═══════════════ THE ACCEPTED SHAPE, AS PROPOSED ═══════════════\n\nAnthony's framing 2026-08-10, and it is correct: graph algorithms run on any set of nodes and edges, so the analyses should be available across the design rather than wired one-per-detector. Measured basis in `fact:graph-analysis-covers-a-third-of-the-edge-types` — 23 of 35 populated edge types and 31% of edges get no graph analysis at all, including the entire golden thread and the delivery plan.\n\nTHE SHAPE: a PROJECTION is a named edge set plus its exclusions. Given one, run the standard battery — strongly-connected components and cycles, connected components, centrality, communities and modularity, articulation points, toposort depth — and REPORT IT AS MEASUREMENT, NEVER AS A VERDICT. `flow.rs` already uses exactly that language for its own cycles (\"reported, never judged\") and `dec:views-are-projections` already says every view is a projection, so this adds a surface rather than a concept.\n\nFIVE STANDARD PROJECTIONS, each already exercised by hand on 2026-08-10: golden thread (SATISFIES+REALIZES+VERIFIES+ALLOCATED_TO), reasoning (GOVERNED_BY+OBSOLETES+CAUSES+ANTICIPATES), the plan (PRECEDES+SCHEDULED_FOR), structure (the existing DEPENDS_ON + contract-derived set, unchanged), and risk (RISKS+BLOCKS+CONTRADICTS+VIOLATES+MASKS).\n\nTHE EXCLUSION LIST IS PART OF THE PROJECTION, NOT A CAVEAT. `structure.rs` already excludes review records and `heal.rs` already names ARTIFACT_BOOKKEEPING (INCLUDES, CHANGED, YIELDED, AT_EPOCH). Those exclusions exist as private constants inside detectors; a projection surface has to lift them into the projection definition or every general run gives a confident wrong answer.\n\nMEASUREMENT AND JUDGEMENT STAY SEPARATE. A battery result is a reading. A finding becomes a DEFECT only where somebody has decided what that finding MEANS for that projection — a cycle in DEPENDS_ON is a defect, a cycle in CAUSES+OBSOLETES turned out to be an ordinary time sequence.\n\nWHAT IS EXPLICITLY NOT PROPOSED: running every algorithm over every edge type and raising what it finds. That is the naive reading of \"run it on all edges\" and it fails twice over — once on exclusions, once on meaning.",
         "name": "DECIDED — a named edge-set projection gets the standard graph battery as MEASUREMENT; build ONE slice first (centrality over the reasoning projection) before the general surface",
         "rationale": "Anthony asked for this to be captured after measuring the coverage gap himself in conversation — his assumption that the ops are edge-agnostic was right, and the measurement confirmed the wiring is what limits them.\n\nRecorded as `proposed` with him as approver rather than accepted, because the shape has three unsettled sub-questions and because the last time this project shipped a broadly-firing structural detector it cost a cut-back (BL-42). The counter-argument is therefore recorded INSIDE the decision rather than left for a reviewer to supply.\n\nThe evidence deliberately includes the failed first run. A proposal for a general analysis surface that did not mention that its own first trial returned garbage would be arguing from the successful half of one experiment.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:a-stale-finding-is-closed-by-a-claim-not-a-computation",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED on Anthony's word, 2026-08-24, choosing between three costed options: \"An edge: a claim\". A record that did the work says so, with `INVALIDATES` (`* -> *`, carrying `note` and `at`), rather than a detector inferring staleness from dates.\n\nWHAT THE ALTERNATIVE WAS AND WHY IT LOST — and it lost on a MEASUREMENT, not on taste. The cheaper option was a computed bucket: `loop_status.verifications.stale`, a failing check whose verified nodes changed since its last run. It needs no discipline, which is the strongest argument any option here had. It is also unbuildable honestly: the inference has to order a change against `last_run_at`, and of 439 hand-written ChangeEvents only 37 (8%) carried a date, against 84% of the 192 written by the reconcile paths. The difference was not care — `add_change_event` had no `detected_at` parameter, so the ordinary path could not date anything. A bucket built on that would have over- or under-reported and been unable to say which.\n\n⭐ THE EDGE IS GENERAL AND THAT IS THE POINT. dev_storyflow proposed `INVALIDATES_RUN` for Constraint -> Verification. The same missing relation was measured independently on this project and on Anthony's other machine, both times on a TemporalFact rather than a Verification — see `dec:idea-how-does-the-graph-learn-what-a-session-invalidated`, whose option C asked for \"an edge from a ChangeEvent to the finding it ANSWERS\". Two projects, three sightings, two node types, one relation. So the `_RUN` suffix came off and both endpoints stayed open.\n\n⭐⭐ IT CLAIMS THE RESULT IS STALE AND NOTHING MORE, which is why it is not called `RESOLVES` — the first name tried. A repair does not make a check pass; it makes the last RESULT untrustworthy, and only a re-run can say what is true now. `RESOLVES` would have reflow2 asserting an outcome nobody measured, which is `dec:non-goal-reflow2-does-not-judge-whether-a-check-is-meaningful` one step along. Three consequences follow and all three are load-bearing: the edge never touches the target's `status`; the check is NOT dropped from `loop_status.verifications.attention`, because silencing it would swap one wrong reading for another and would be the truncation `parks` was careful not to become; and `rerun_owed` is THREE-VALUED, with null meaning one side is undated and nobody can say — never collapsed to false.\n\nWHAT THIS DOES NOT SETTLE. The computed bucket is deferred, not refused: `add_change_event` now takes `detected_at`, so the ordering it needs becomes possible as dates accumulate. Whether to build it then is open, and the parent brainstorm's options A, B and E are untouched.",
+        "name": "A finding is closed by a CLAIM, not by an inferred staleness",
+        "rationale": "Prompted by dev_storyflow's 2026-08-23 report, which cost a real user a real instruction: a session read a `failing` check dated that same day and reported its two defects as the live state of the system, when both had been repaired hours earlier and written up on two Constraint nodes. `describe_schema(from: Constraint, to: Verification)` returned ZERO exact matches; the reporter drew `CONTRADICTS` with `alignment: opposing` and called it \"obviously a stand-in\".\n\nThe prior decision on this ground was READ BEFORE DECIDING AND DOES NOT COVER THIS CASE. `dec:verification-freshness-not-a-gap` (accepted, Anthony, 2026-07-26) ruled that a check older than its code is a freshness FACT rather than a gap, because it is a STANDING PROPERTY that \"would fire on every legitimate refactor as readily as on a real hole\". This is a different question: a repair landing against a FAILING check is an EVENT, it fires once, and it fires only where there is both a failure and a repair. So this settles new ground rather than reversing a settled decision — and it honours that decision's reasoning by making the result a REPORT beside the check rather than a new nag.",
         "status": "accepted"
       }
     },
@@ -128472,6 +128784,17 @@
       }
     },
     {
+      "node_id": "fact:only-8-percent-of-hand-written-change-events-carried-a-date",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "property",
+        "statement": "MEASURED 2026-08-24 on the committed export, and it is what decided claim-over-computation.\n\n    ChangeEvents                                    631\n      written by the RECONCILE paths                192   carrying detected_at: 161  (84%)\n      written by hand via add_change_event          439   carrying detected_at:  37  (8%)\n\nTHE DIFFERENCE WAS NOT CARE. `detected_at` was declared on ChangeEvent and written internally by fielded.rs, drift.rs, verify.rs and artifact.rs — which pass it through their own options structs — while `AddChangeEventReq` had no parameter for it at all. Authors could not date a change through the constructor every skill points at. This is INSTANCE 7 of the pattern in `req:declared-vocabulary-is-reachable-from-the-surface`, and unlike instances 1-6 it was load-bearing rather than merely lossy: ordering a change against a Verification's `last_run_at` is the whole of a computed staleness detector, so the missing parameter is why that detector could not be built honestly and why the design chose a CLAIM instead.\n\nFIXED THE SAME DAY — `add_change_event` now takes `detected_at`. The percentage above is therefore a measurement of the PAST and should be re-taken before anyone argues from it: it will drift upward as dated events accumulate, and the computed bucket becomes buildable at some coverage nobody has yet named. Naming that threshold is open.\n\nBOUND, stated rather than hidden: the 8% figure counts events whose id does not start with `chg:accept-` or `chg:drift`, which is a proxy for hand-written and will misclassify any hand-written event that happens to use those prefixes.",
+        "subject_id": "dec:a-stale-finding-is-closed-by-a-claim-not-a-computation",
+        "valid_from": "2026-08-24"
+      }
+    },
+    {
       "node_id": "fact:orphan-decision-is-silenced-by-an-edge-that-does-not-reach-it",
       "node_type": "TemporalFact",
       "properties": {
@@ -131861,7 +132184,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e61f83f2c62610c0c01fd03a6f9a59934dd3c76325a4767424f7a7dc0a792dde",
+  "prev_content_hash": "sha256:157646c28f7cb321fc596fc0c1b0b2cc43210e4490b7fb33c004f39b70be81f2",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -131900,6 +132223,7 @@
       "IMPOSES",
       "INCLUDES",
       "INTERACTS_WITH",
+      "INVALIDATES",
       "MASKS",
       "MITIGATES",
       "OBSERVED_IN",
@@ -131928,7 +132252,7 @@
       "VIOLATES_RULE",
       "YIELDED"
     ],
-    "edge_types": 63,
+    "edge_types": 64,
     "node_type_names": [
       "Actor",
       "Anchor",
