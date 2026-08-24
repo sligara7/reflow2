@@ -18,11 +18,11 @@
 
 use std::collections::{BTreeSet, HashMap, HashSet};
 
-use dynograph_core::DynoError;
-use dynograph_graph::{
+use crate::graphalg::{
     Graph, GraphBuilder, betweenness_centrality, connected_components, cut_structure, find_cycle,
     leiden, strongly_connected_components,
 };
+use dynograph_core::DynoError;
 
 use crate::graph::DesignGraph;
 use crate::nodes::is_traceability_edge;

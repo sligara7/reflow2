@@ -78,6 +78,7 @@ pub mod search;
 // module header for what was taken, what was left, and why an absorbed file
 // does not widen the public surface.
 mod fuzzy;
+mod graphalg;
 mod stats;
 pub mod structure;
 pub mod surprises;
