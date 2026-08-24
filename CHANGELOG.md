@@ -31,6 +31,68 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed — four places the tool surface knew something and would not say it
+
+**Minor** (two tools gain a param; two replies gain a field). **No schema change** — `note` was
+already declared on both edge types, which is the whole point of the first item. The stamp does not
+move: still 29 node types / 63 edge types / `schema_version` 1, and no upgrade doc is owed by these
+four.
+
+Four reports from dev_storyflow's 2026-08-23 sessions, each verified against the code before it was
+taken. What they have in common is not a subsystem — it is that **reflow2 held the information and
+the surface withheld it**, so a session had to reconstruct by hand what the process already knew.
+
+- **`constrains` and `governed_by` accept `note`.** Both edge types declared it in
+  `schema/*.yaml`; neither typed constructor could reach it, and both structs carry
+  `deny_unknown_fields`, so the error listed a shorter allowlist with no hint that a longer one
+  existed. `describe_schema` advertised a field the typed write path refused. dev_storyflow wanted
+  the note twice in one session and both times fell back to raw `create_edge`, which works and
+  abandons the constructor's validation for the whole call — and an agent that does not think to
+  run `describe_schema` simply drops the reasoning instead. **This is the trap `governed_by`'s own
+  doc comment already documents at length** for `ruling`, hit again one field along: *a declared
+  field nobody can reach is a declared field nobody writes to.*
+
+- **A `deferred` requirement gets its own question instead of one it has already answered.**
+  `unsatisfied_requirement` asked *"is it covered, deferred, or dropped?"* of requirements whose
+  `status` said `deferred`. Measured on the whole class rather than sampled: of 28 open gaps of
+  this kind, 14 were `accepted`, **8 were `deferred`**, 6 `proposed` — a 29% noise rate on one
+  class, against `acknowledge_gap`'s own argument that a list which can never reach zero gets
+  skimmed. **It is not silenced.** Adding `deferred` to the `dropped`/`met` skip was the obvious
+  fix and is the wrong one: those two are FINISHED and this one is POSTPONED, so dropping the row
+  would make live intent go quiet (`req:no-idea-goes-quiet`), and the served instructions name
+  `dropped` and `met` as the stoppers in as many words. The gap now asks whether the parking still
+  holds, at reduced severity, and `evidence` names the status. The gap id is a hash of source +
+  affected ids, so **existing acknowledgements survive**.
+
+- **`rephrase_degraded` says WHY, and unmatched answers come back.** The flag was honest and
+  actionless: *the backend is down*, *you sent no answer* and *your answer did not match the prompt
+  it was for* looked identical. The error was available at the point of failure and discarded one
+  line later by an `Err(_)`; it is now bound and returned as `degrade_reason`. Separately,
+  `AgentBackend::unused_answers` — documented as the way to surface stale answers "rather than
+  dropping them silently" — **had no caller anywhere in `reflow2-mcp`**; `gap_to_prompt` and
+  `gaps_to_prompts` now return `unused_answers`. The measured case: 4 of 5 prompts degraded because
+  the gap objects had been TRIMMED FOR READABILITY between the two passes. An answer is keyed by a
+  hash of the prompt text, the prompt text is built from the gap's own title and description, so a
+  cosmetic edit re-keys every answer — and every one of those four would have come back as unused
+  on the first read. Both tool descriptions now say to replay the gap unchanged, and the backend
+  error names the cause.
+
+- **`graph_report_markdown` cuts long gap prose, and says it did.** Titles at 20 words, descriptions
+  at 40, with a line saying how many were cut and that `detect_gaps` carries the full text. "Top
+  gaps (look here first)" is the FIRST thing the `where-am-i` skill reads, and three of five top
+  gaps were single bullets carrying a ~500-word report each — twice over, once as the title and
+  again as the description. `loop_status` already truncates Verification names at 25 words and
+  announces it; this is that treatment one report along, and the same session that praised it there
+  named this as the place that should borrow it.
+
+⭐ **AND ONE REPORT IN THE SAME BATCH WAS ALREADY FIXED, WHICH IS THE MORE USEFUL FINDING.**
+dev_storyflow reported `detect_gaps` returning 328,654 characters with "no `limit`, no `offset`, no
+`brief`". It has had `budget_chars` (default 30,000) and a three-tier degrade since #303, merged at
+01:29 the same day — about eighteen hours before the session that filed it. The report is stale, and
+the reason it is stale is a defect the same entry names in its own environment note: *"`.reflow2/kit-version.json`
+absent — could not read a version."* **An agent that cannot name the version it is running spends
+its credibility on bugs that are already closed**, and no amount of budgeting fixes that.
+
 ### Added — relationships between records stop being wildcard leftovers
 
 **Minor, and it MOVES THE SCHEMA STAMP: 61 → 63 edge types.** `docs/upgrading-to-v0.40.0.md` is

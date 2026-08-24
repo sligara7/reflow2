@@ -1138,6 +1138,7 @@ impl DesignGraph {
                     node::DECISION,
                     &decision_id,
                     None,
+                    None,
                 )?;
             }
         }

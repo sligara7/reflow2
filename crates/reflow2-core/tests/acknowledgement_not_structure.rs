@@ -160,6 +160,7 @@ fn an_ordinary_decision_still_counts_as_structure() {
         node::DECISION,
         "dec:real",
         None,
+        None,
     )
     .unwrap();
     g.governed_by(
@@ -167,6 +168,7 @@ fn an_ordinary_decision_still_counts_as_structure() {
         "cap:main",
         node::DECISION,
         "dec:real",
+        None,
         None,
     )
     .unwrap();

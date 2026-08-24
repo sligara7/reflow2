@@ -167,6 +167,7 @@ fn an_accepted_decision_over_what_a_kpp_binds_is_surfaced_for_review() {
         node::DECISION,
         "dec:steel",
         None,
+        None,
     )
     .unwrap();
 
@@ -200,6 +201,7 @@ fn a_proposed_decision_is_not_flagged() {
         "cmp:body",
         node::DECISION,
         "dec:maybe",
+        None,
         None,
     )
     .unwrap();

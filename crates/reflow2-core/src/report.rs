@@ -24,6 +24,28 @@ use crate::surprises::SurprisingConnection;
 /// How many items each highlight list caps at (the rest are counted, not shown).
 const TOP_N: usize = 5;
 
+/// Word budget for a gap TITLE in the markdown roll-up.
+///
+/// Matches `loop_status`'s 25-word Verification cut in spirit; a title is the
+/// shorter of the two fields and gets the shorter budget.
+const GAP_TITLE_WORDS: usize = 20;
+
+/// Word budget for a gap DESCRIPTION in the markdown roll-up.
+const GAP_PROSE_WORDS: usize = 40;
+
+/// Cut `text` to `max_words`, returning the (possibly shortened) text and
+/// whether anything was dropped.
+///
+/// The bool is the load-bearing half: a caller that cannot tell it truncated
+/// cannot announce it, and an unannounced cut reads as the whole text.
+fn clamp_words(text: &str, max_words: usize) -> (String, bool) {
+    let words: Vec<&str> = text.split_whitespace().collect();
+    if words.len() <= max_words {
+        return (text.to_string(), false);
+    }
+    (format!("{} …", words[..max_words].join(" ")), true)
+}
+
 /// The `status` × `provenance` → certainty mapping, on a node already in
 /// hand. Absent properties take their schema defaults (`proposed`,
 /// `authored`), so a bare requirement reads as asserted, never as confirmed.
@@ -1433,15 +1455,41 @@ impl GraphReport {
         // Top gaps.
         if !self.top_gaps.is_empty() {
             let _ = writeln!(m, "## Top gaps (look here first)\n");
+            // CUT LONG GAP PROSE, AND SAY SO — the truncation `loop_status`
+            // already had, one report along.
+            //
+            // dev_storyflow, 2026-08-23: "Top gaps (look here first)" is the
+            // FIRST thing the where-am-i skill reads, and three of its five top
+            // gaps were single bullets carrying a ~500-word report each, twice
+            // over — once as the title and again as the description — because a
+            // gap inherits the wording of the node it fired on. The section
+            // meant to orient a session was the most expensive thing in the
+            // reply. The same session praised `loop_status` for cutting
+            // Verification names at 25 words AND announcing it, and named this
+            // report as the place that should borrow it.
+            //
+            // Announcing is not politeness: a silently cut sentence reads as
+            // the whole sentence, which is
+            // `req:a-report-says-what-it-swept-and-whether-its-checks-ran` one
+            // layer over. The full text stays one `detect_gaps` away.
+            let mut cut = 0usize;
             for g in &self.top_gaps {
-                let _ = writeln!(
-                    m,
-                    "- **[{:.2}]** {} — {}",
-                    g.severity, g.title, g.description
-                );
+                let (title, t_cut) = clamp_words(&g.title, GAP_TITLE_WORDS);
+                let (description, d_cut) = clamp_words(&g.description, GAP_PROSE_WORDS);
+                if t_cut || d_cut {
+                    cut += 1;
+                }
+                let _ = writeln!(m, "- **[{:.2}]** {} — {}", g.severity, title, description);
             }
             if self.gaps_truncated > 0 {
                 let _ = writeln!(m, "- _…and {} more._", self.gaps_truncated);
+            }
+            if cut > 0 {
+                let _ = writeln!(
+                    m,
+                    "\n_{cut} gap(s) above are CUT SHORT — titles at {GAP_TITLE_WORDS} words, \
+                     prose at {GAP_PROSE_WORDS}. `detect_gaps` carries the full text._"
+                );
             }
             let _ = writeln!(m);
         }

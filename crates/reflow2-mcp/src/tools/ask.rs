@@ -59,7 +59,13 @@ impl ReflowService {
                        to get one prompt per gap. ANSWERS ARE GROUPED PER GAP, so prompt ids \
                        cannot collide across gaps — each gap is replayed against its own answers \
                        and never sees another's. A MIXED call (some gaps answered, some not) is \
-                       refused rather than half-served. The questions are recorded all or none.",
+                       refused rather than half-served. The questions are recorded all or none. \
+                       \u{26a0} REPLAY EACH GAP OBJECT UNCHANGED between the two passes. An answer is \
+                       matched by an id hashed from the prompt text, which is built from the \
+                       gap's own title and description, so trimming either for readability \
+                       re-keys every answer and silently degrades the phrasing to raw detector \
+                       jargon. Unmatched answers come back in `unused_answers`, and \
+                       `degrade_reason` on the prompt says what went wrong.",
         annotations(read_only_hint = false)
     )]
     pub async fn gaps_to_prompts(
@@ -109,6 +115,7 @@ impl ReflowService {
 
         // Serve pass. Each gap gets a backend built from ITS OWN answers.
         let mut prompts = Vec::with_capacity(gaps.len());
+        let mut unused_per_gap = Vec::with_capacity(gaps.len());
         for (gap, supplied) in gaps.iter().zip(req.gaps.iter()) {
             let answers = supplied.answers.iter().map(|a| AgentAnswer {
                 id: a.id.clone(),
@@ -116,6 +123,10 @@ impl ReflowService {
             });
             let backend = AgentBackend::from_answers(answers);
             prompts.push(gap.to_prompt(&backend));
+            // Per gap, because each gap is replayed against its own answers —
+            // see `unused_answers` in the singular form for why this is the
+            // cheapest desync signal available.
+            unused_per_gap.push(backend.unused_answers());
         }
 
         // Record all of them or none — the same bar the other bulk forms hold.
@@ -143,11 +154,27 @@ impl ReflowService {
             .iter()
             .zip(prompts.iter())
             .zip(recorded.written.iter())
-            .map(|((gap, prompt), question_id)| {
-                json!({ "gap_id": gap.id, "prompt": prompt, "question_id": question_id })
+            .zip(unused_per_gap.iter())
+            .map(|(((gap, prompt), question_id), unused)| {
+                let mut row =
+                    json!({ "gap_id": gap.id, "prompt": prompt, "question_id": question_id });
+                if !unused.is_empty() {
+                    row["unused_answers"] = json!(unused);
+                }
+                row
             })
             .collect();
-        ok_json(json!({ "status": "ok", "gaps": items }))
+        let stranded: usize = unused_per_gap.iter().map(Vec::len).sum();
+        let mut reply = json!({ "status": "ok", "gaps": items });
+        if stranded > 0 {
+            reply["unused_answers_note"] = json!(format!(
+                "{stranded} answer(s) across this batch were never requested. An answer is \
+                 matched by an id hashed from the prompt text, and that text is built from each \
+                 gap's own title and description — so an edited gap re-keys every answer it \
+                 carries. Replay the gap objects from the prepare pass unchanged."
+            ));
+        }
+        ok_json(reply)
     }
 
     #[tool(
@@ -161,7 +188,13 @@ impl ReflowService {
                        Read who you are talking to (their `Contributor` description) and match \
                        that domain; a `plain` question is not automatically one in their \
                        vocabulary, and swapping vocabulary is not simplifying — a systems \
-                       engineer wants `interface` and `verification` kept.",
+                       engineer wants `interface` and `verification` kept. \
+                       \u{26a0} REPLAY THE GAP OBJECT UNCHANGED between the two passes. An answer is \
+                       matched by an id hashed from the prompt text, which is built from the \
+                       gap's own title and description, so trimming either for readability \
+                       re-keys every answer and silently degrades the phrasing to raw detector \
+                       jargon. Unmatched answers come back in `unused_answers`, and \
+                       `degrade_reason` on the prompt says what went wrong.",
         annotations(read_only_hint = false)
     )]
     pub async fn gap_to_prompt(
@@ -188,6 +221,14 @@ impl ReflowService {
         });
         let backend = AgentBackend::from_answers(answers);
         let prompt = gap.to_prompt(&backend);
+        // AN ANSWER NOBODY ASKED FOR IS THE CHEAPEST DESYNC SIGNAL THERE IS,
+        // and it was computed and thrown away. `unused_answers` is already
+        // documented on the backend as the way to surface stale answers
+        // "rather than dropping them silently" — it just had no caller. When a
+        // replayed gap has been edited between the passes, EVERY answer lands
+        // here, which is the one-read diagnosis dev_storyflow had to reach by
+        // diffing two calls by hand on 2026-08-23.
+        let unused = backend.unused_answers();
 
         // Record that this was asked, and in what words. Until BL-4 this tool
         // was the only one that never touched the graph: it phrased a question,
@@ -210,7 +251,20 @@ impl ReflowService {
             )
             .map_err(dyno_err)?;
 
-        ok_json(json!({ "status": "ok", "prompt": prompt, "question_id": question_id }))
+        let mut reply = json!({
+            "status": "ok", "prompt": prompt, "question_id": question_id,
+        });
+        if !unused.is_empty() {
+            reply["unused_answers"] = json!(unused);
+            reply["unused_answers_note"] = json!(format!(
+                "{} answer(s) you supplied were never requested by this gap. An answer is \
+                 matched by an id hashed from the prompt text, and that text is built from the \
+                 gap's own title and description — so an edited gap re-keys every answer. \
+                 Replay the gap object from the prepare pass unchanged.",
+                unused.len()
+            ));
+        }
+        ok_json(reply)
     }
 
     #[tool(

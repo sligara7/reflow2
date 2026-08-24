@@ -202,8 +202,15 @@ fn a_well_formed_design_reports_no_orphan_decisions() {
     )
     .unwrap();
     g.set_decision_status("dec:real", "accepted").unwrap();
-    g.governed_by(node::CAPABILITY, "cap:a", node::DECISION, "dec:real", None)
-        .unwrap();
+    g.governed_by(
+        node::CAPABILITY,
+        "cap:a",
+        node::DECISION,
+        "dec:real",
+        None,
+        None,
+    )
+    .unwrap();
 
     let ids = orphan_ids(&g);
     assert!(

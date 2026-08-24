@@ -219,6 +219,7 @@ fn a_derived_requirement_is_labelled_and_hangs_off_its_decision() {
         node::DECISION,
         "dec:powertrain",
         None,
+        None,
     )
     .unwrap();
 

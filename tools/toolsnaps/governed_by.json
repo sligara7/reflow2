@@ -13,6 +13,14 @@
       "from_type": {
         "type": "string"
       },
+      "note": {
+        "default": null,
+        "description": "WHY this node is governed by that ruling — the reasoning a later reader\nneeds and the one this call could not carry until now.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "ruling": {
         "default": null,
         "description": "What KIND of governance this is. Omit — the ordinary case — and the\ntarget simply shapes the source. Pass `parks` to record that the\nruling declares this node's UNATTACHED or UNSATISFIED state CORRECT AND\nDELIBERATE: structural detectors then report it as parked and COUNT it\nin `detect_defects`'s `swept.parked`, instead of filing it as a defect\nor going quiet about it. The ruling must be an ACCEPTED Decision — a\n`proposed` one is somebody thinking out loud, and a musing must not\nsuppress a finding.",

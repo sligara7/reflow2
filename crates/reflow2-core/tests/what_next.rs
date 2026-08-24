@@ -87,6 +87,7 @@ fn a_marked_decision_is_never_ranked_however_it_would_score() {
         node::DECISION,
         "dec:marked",
         None,
+        None,
     )
     .unwrap();
     g.governed_by(
@@ -94,6 +95,7 @@ fn a_marked_decision_is_never_ranked_however_it_would_score() {
         "req:b",
         node::DECISION,
         "dec:marked",
+        None,
         None,
     )
     .unwrap();
@@ -127,6 +129,7 @@ fn the_score_is_additive_over_governed_scheduled_and_contradicted() {
         node::DECISION,
         "dec:governs-one",
         None,
+        None,
     )
     .unwrap();
 
@@ -137,6 +140,7 @@ fn the_score_is_additive_over_governed_scheduled_and_contradicted() {
         "req:sched",
         node::DECISION,
         "dec:blocks-plan",
+        None,
         None,
     )
     .unwrap();
@@ -265,6 +269,7 @@ fn review_records_are_excluded_as_decisions_and_as_governed_sources() {
         node::DECISION,
         "dec:real",
         None,
+        None,
     )
     .unwrap();
 
@@ -358,8 +363,15 @@ fn a_decision_governing_only_retired_work_does_not_shape_anything() {
         let r = format!("req:dropped-{i}");
         g.add_requirement(&r, "Dropped", "no").unwrap();
         g.set_requirement_status(&r, "dropped").unwrap();
-        g.governed_by(node::REQUIREMENT, &r, node::DECISION, "dec:pruning", None)
-            .unwrap();
+        g.governed_by(
+            node::REQUIREMENT,
+            &r,
+            node::DECISION,
+            "dec:pruning",
+            None,
+            None,
+        )
+        .unwrap();
     }
     // A genuinely shaping decision with a SMALLER raw degree.
     g.add_decision(
@@ -373,8 +385,15 @@ fn a_decision_governing_only_retired_work_does_not_shape_anything() {
     for i in 0..3 {
         let c = format!("cmp:part-{i}");
         g.add_component(&c, "Part", "a part", None).unwrap();
-        g.governed_by(node::COMPONENT, &c, node::DECISION, "dec:shapes", None)
-            .unwrap();
+        g.governed_by(
+            node::COMPONENT,
+            &c,
+            node::DECISION,
+            "dec:shapes",
+            None,
+            None,
+        )
+        .unwrap();
     }
 
     let w = g.what_next(4).unwrap();
@@ -403,8 +422,15 @@ fn retired_governed_nodes_are_reported_rather_than_hidden() {
     g.add_requirement("req:gone", "Gone", "no").unwrap();
     g.set_requirement_status("req:gone", "dropped").unwrap();
     for r in ["req:live", "req:gone"] {
-        g.governed_by(node::REQUIREMENT, r, node::DECISION, "dec:mixed", None)
-            .unwrap();
+        g.governed_by(
+            node::REQUIREMENT,
+            r,
+            node::DECISION,
+            "dec:mixed",
+            None,
+            None,
+        )
+        .unwrap();
     }
 
     let s = &g.what_next(4).unwrap().shaping[0];
@@ -430,7 +456,7 @@ fn breadth_of_governed_types_is_reported_but_never_ranks() {
     for i in 0..4 {
         let c = format!("cmp:deep-{i}");
         g.add_component(&c, "C", "c", None).unwrap();
-        g.governed_by(node::COMPONENT, &c, node::DECISION, "dec:deep", None)
+        g.governed_by(node::COMPONENT, &c, node::DECISION, "dec:deep", None, None)
             .unwrap();
     }
     // Broad but shallow — two types, fewer nodes.
@@ -445,10 +471,18 @@ fn breadth_of_governed_types_is_reported_but_never_ranks() {
         node::DECISION,
         "dec:broad",
         None,
+        None,
     )
     .unwrap();
-    g.governed_by(node::CAPABILITY, "cap:b", node::DECISION, "dec:broad", None)
-        .unwrap();
+    g.governed_by(
+        node::CAPABILITY,
+        "cap:b",
+        node::DECISION,
+        "dec:broad",
+        None,
+        None,
+    )
+    .unwrap();
 
     let w = g.what_next(4).unwrap();
     assert_eq!(
@@ -477,6 +511,7 @@ fn the_shaping_band_holds_settled_decisions_not_open_ones() {
         "req:x",
         node::DECISION,
         "dec:still-open",
+        None,
         None,
     )
     .unwrap();

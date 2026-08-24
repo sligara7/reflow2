@@ -35,6 +35,14 @@
           "null"
         ]
       },
+      "note": {
+        "default": null,
+        "description": "WHY this Constraint binds this target — the sentence a later reader\nneeds and the one this call could not carry until now.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "target_id": {
         "type": "string"
       },

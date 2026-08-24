@@ -302,6 +302,7 @@ fn a_decision_can_be_recorded_and_linked_to_what_it_governs() {
         node::DECISION,
         "dec:store",
         None,
+        None,
     )
     .expect("governed_by");
 
@@ -336,6 +337,7 @@ fn a_decision_reaches_what_it_governs_when_it_changes() {
         "cmp:engine",
         node::DECISION,
         "dec:store",
+        None,
         None,
     )
     .expect("governed_by");
