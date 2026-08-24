@@ -31,6 +31,36 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added — the graph asks what a session made FALSE, and the edge that had never once been drawn now gets asked for
+
+**Minor.** New capability and one new served tool (`unclaimed_findings`); no schema change, stamp unmoved at 29 node / 64 edge types.
+
+`req:the-graph-can-say-what-has-already-been-done` — Anthony's ask that *"reflow2 needs to be able to accurately show where it is (and that means knowing what it's done)"* — had **nothing satisfying it**, and `dec:idea-how-does-the-graph-learn-what-a-session-invalidated` held six costed options with none chosen. It now has two capabilities: `cap:arrival-delta` for PLANNED work and this one for OBSERVED findings, which is the asymmetry the requirement itself names.
+
+**🛑 The measurement that reframed the question: option C was already built, and had never once been used.** `INVALIDATES` shipped in v0.39.0 *with* its reader, deliberately, so the marker would not become a comment nobody consults. Measured a day later, tool served the whole time:
+
+    INVALIDATES edges in the graph:  0
+
+Not one, by anybody. The open question was never *which of six mechanisms* — five of them were ways to make the sixth get used, and the sixth already existed.
+
+**⭐⭐ Why, precisely — and this is bigger than the feature.** A design's vocabulary reaches real work only with **three legs**: a typed TOOL, an INSTRUCTION that names it, and a COMPUTATION THAT NOTICES ITS ABSENCE. The tool was served. Exactly one skill mentioned it (`where-am-i`) and only the *read* side. Nothing noticed that no edge existed. **A vocabulary can be reachable, documented in its own node, wired to a reader, and still dead — and nothing in the loop reports a zero-use edge.**
+
+So this builds the two missing legs rather than a seventh mechanism:
+
+- **`unclaimed_findings`** — given the ChangeEvent ids a session recorded, the OPEN observations their changed subjects carry that nobody has claimed. It reads the **`subject_id` property as well as the subject edges**, which is most of the coverage: 151 of 270 open observations are reachable by edge (56%), 261 once the property is read (**97%**). The first draft read edges only and would have answered barely half the question while looking exactly like one that answered all of it.
+- **The instruction** — `capture-session` test 7 and `impact-check` step 4 name the tool and the moment. Test 7's "same-session only" limit is corrected: the computation reaches observations a session never read, which was the missing and more expensive half.
+- **The delivery** — the Stop hook's async probe asks it and **rides along** on a nudge already firing, or is carried to the next SessionStart.
+
+**⭐ Ask, don't block** (Anthony's word). The ask never arms an interruption of its own; it only appends to a message already going out. A brand-new trigger keyed on a computation nobody has field-tested is exactly what becomes wallpaper. 🛑 The honest cost, stated rather than glossed: a non-blocking Stop message reaches the **transcript**, not the agent, so the two paths that genuinely reach one are the ride-along and the next SessionStart.
+
+**Every row is a candidate, never a verdict.** Nothing infers that an observation is false — only that the thing it describes has moved and nobody has said either way. TemporalFacts only, never Verifications, and deliberately **not a gap source**: that is what keeps it from reversing `dec:verification-freshness-not-a-gap`, which rules a stale-looking *check* a standing property that would fire on every legitimate refactor.
+
+**⚠️ A number in this work was wrong in the flattering direction before it was right.** The "78% of events return nothing, median 1" figure that justified the session-scoped design was measured against the edge-only reader. Widening reach to 97% necessarily lengthened the shortlists. Honest figures, re-measured against what shipped: **71% silent, median 1, mean 4.3, p90 13, max 40** — the tail driven by hub subjects (`proj:reflow2` alone carries 25 open observations). *A measurement taken against a narrower implementation than the one that shipped is not evidence about the one that shipped.* It was caught by running the tool on real data, not by any unit test.
+
+**And it found something on its first real use.** Run against this design's own committed export, it surfaced `fact:defect-a-verification-has-nowhere-to-put-its-evidence-so-the-name-became-the-report` — stale for eight days. Both its claims were verifiably answered (`description` and `findings` both exist and were used the same day; its median-name measurement re-measured to zero names above 60 words), so it was closed with **the first `INVALIDATES` edge ever drawn on this graph**. Its sibling `fact:defect-add-verification-cannot-reach-its-own-fields` was deliberately **left open** — `description` became reachable but `location` did not, and a partially superseded finding is not closed.
+
+`ver:the-graph-asks-what-a-session-made-false` passing — 10 core cases plus `tools/test_loop_nudge.py` at 91 (was 80). Open gaps on this design: **1 → 0**.
+
 ### Added — the Stop hook stops guessing from a tool tally and asks the graph
 
 **Minor.** New capability, no schema change; stamp unmoved at 29 node / 64 edge types. New kit

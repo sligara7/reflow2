@@ -171,7 +171,8 @@ pub use temporal::{
 };
 pub use verify::{
     CapabilityVerification, InvalidatedFinding, InvalidationClaim, ObservedVerification,
-    VerificationDriftReport, VerificationFinding, VerifyReconcileOptions,
+    UnclaimedFinding, UnclaimedFindings, VerificationDriftReport, VerificationFinding,
+    VerifyReconcileOptions,
 };
 pub use vocabulary::{
     Coverage, DomainCoverage, EdgeQuery, EdgeTypeMatch, EdgeTypeSpec, EndpointMatch,

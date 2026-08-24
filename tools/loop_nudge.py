@@ -272,6 +272,12 @@ def blank_state() -> dict:
             # that wrote and then ran loop_status has `writes == 0` and looks
             # identical to one that only ever read.
             "wrote": 0,
+            # The ChangeEvent ids this session recorded, so the probe can ask
+            # what they RETIRED (`unclaimed_findings`). Ids rather than a count:
+            # the question is answerable only against the specific events, and
+            # this hook is the only place that sees them go past. Bounded — see
+            # CHANGE_ID_CAP.
+            "change_ids": [],
             # Whether this tally was rebuilt after an unreadable one. A restart
             # keeps the mechanism working; this flag is what stops the restart
             # being mistaken for evidence. See `update_state`.
@@ -324,6 +330,8 @@ def parse_state(text: str) -> dict | None:
             # holds for the same reason.
             "skills": int(raw.get("skills", 0)),
             "wrote": int(raw.get("wrote", 0)),
+            "change_ids": [str(c) for c in raw.get("change_ids", [])
+                           if isinstance(c, (str, int))][:CHANGE_ID_CAP],
             "reset": bool(raw.get("reset", False)),
             "nudged": bool(raw.get("nudged", False)),
         }
@@ -454,6 +462,13 @@ def update_state(session_id: str, mutate) -> None:
                 # it just cannot make anyone read it before writing the code.
                 "skills": int(state.get("skills", 0)),
                 "wrote": int(state.get("wrote", 0)),
+                # THE WRITE SIDE OF `change_ids`. It was added to blank_state
+                # and parse_state first and NOT here, and every read came back
+                # empty while every test that only counted still passed — the
+                # serialiser is an explicit field list, so a field added to the
+                # shape and not to this dict is silently dropped on every write.
+                "change_ids": [str(c) for c in state.get("change_ids", [])
+                               ][-CHANGE_ID_CAP:],
                 "reset": bool(state.get("reset", False)),
                 "nudged": bool(state.get("nudged", False)),
             }))
@@ -646,6 +661,13 @@ def match_shape(state: dict) -> str | None:
 # conversation held and nobody wrote down. It complements the capture-session
 # skill; it does not replace it, and `req:skill-use-survives-a-long-session`
 # stays unmet.
+
+# How many ChangeEvent ids one session's tally will carry. A bulk session can
+# record dozens, and the question they answer is answered just as well by the
+# most recent handful — while an unbounded list would grow a state file the hook
+# rewrites on every tool call. The cap is stated in the probe's answer rather
+# than applied silently.
+CHANGE_ID_CAP = 25
 
 PROBE_SCRIPT = Path(__file__).resolve().parent / "graph_probe.py"
 
@@ -880,9 +902,15 @@ def last_unreported_verdict(current_session: str) -> str | None:
             continue
         if not isinstance(data, dict) or data.get("reported"):
             continue
-        found = verdict_from(data)
-        if not found:
+        # BOTH unheard answers, joined: the delta ("you raised debt") and the
+        # retired-ask ("you may have made these false"). They are different
+        # questions with the same delivery problem — a session that ended before
+        # its probe landed heard neither — so they surface together rather than
+        # one of them being silently dropped for arriving second.
+        parts = [x for x in (verdict_from(data), retired_ask(data)) if x]
+        if not parts:
             continue
+        found = " ".join(parts)
         data["reported"] = True
         try:
             tmp = path.with_suffix(f".{os.getpid()}.tmp")
@@ -895,6 +923,64 @@ def last_unreported_verdict(current_session: str) -> str | None:
             continue
         verdict = found
     return verdict
+
+
+
+def retired_ask(data: dict | None = None, session_id: str | None = None) -> str | None:
+    """The shortlist of observations this session's work may have made FALSE.
+
+    ⭐ IT ASKS AND NEVER BLOCKS — Anthony's word, 2026-08-24, and the restraint
+    is deliberate rather than timid. Every other branch in this file arms an
+    interruption; this one only ever RIDES ALONG on a message already being
+    sent, or is carried to the next SessionStart. A brand-new trigger keyed on
+    a computation nobody has field-tested is exactly the thing that should not
+    get to stop a session, and it can be upgraded once the shortlist has been
+    seen to be right.
+
+    🛑 THE HONEST CONSEQUENCE, stated because it decides how much this is worth:
+    a Stop hook that does not block reaches the TRANSCRIPT, not the agent. The
+    two paths that genuinely reach an agent are the ride-along (when some other
+    branch is already blocking) and the next SessionStart, where a hook's stdout
+    does enter context. If this needs to reach an agent mid-session every time,
+    blocking is the only mechanism that does it.
+    """
+    if data is None:
+        data = read_probe(session_id or "")
+    found = data.get("unclaimed")
+    if not isinstance(found, dict):
+        return None
+    rows = found.get("candidates") or []
+    if not rows:
+        return None
+    named = []
+    for row in rows[:3]:
+        if not isinstance(row, dict):
+            continue
+        label = str(row.get("name") or row.get("finding_id") or "").strip()
+        since = row.get("valid_from")
+        named.append(f"{label}" + (f" (taken {since})" if since else ""))
+    if not named:
+        return None
+    more = found.get("count", len(rows)) - len(named)
+    tail = f", and {more} more" if more > 0 else ""
+    return (
+        f"WHAT DID THIS SESSION MAKE FALSE? The graph says your changes touched "
+        f"{found.get('count')} open observation(s) nobody has closed: "
+        + "; ".join(named) + tail + ". Each is a CANDIDATE, not a verdict — "
+        f"close only what your work actually retired, with `invalidates`, and "
+        f"never by overwriting what you are closing. Re-check with "
+        f"`unclaimed_findings`."
+    )
+
+
+def ride_along(session_id: str, reason: str) -> str:
+    """Append the retired-observations ask to a message already going out.
+
+    FREE BY CONSTRUCTION: it adds no interruption, because it only ever speaks
+    where one was happening anyway. That is the whole of "ask, don't block".
+    """
+    ask = retired_ask(session_id=session_id)
+    return f"{reason} {ask}" if ask else reason
 
 
 def main() -> int:
@@ -941,7 +1027,15 @@ def main() -> int:
         if "reflow2" in tool and "__" in tool:
             op = tool.rsplit("__", 1)[-1]
 
-            def touch(state: dict, op: str = op) -> None:
+            # A ChangeEvent's id travels in the call's own input, which is the
+            # only place it appears — the result is not given to a PostToolUse
+            # hook in a shape this can rely on.
+            change_id = ""
+            ti = event.get("tool_input")
+            if isinstance(ti, dict) and isinstance(ti.get("id"), str):
+                change_id = ti["id"]
+
+            def touch(state: dict, op: str = op, change_id: str = change_id) -> None:
                 state["touched"] = True
                 if op in LOOP_OPS:
                     state["writes"] = 0
@@ -956,6 +1050,14 @@ def main() -> int:
                 # intent.
                 if op in CHANGE_OPS:
                     state["changes"] += 1
+                    # THE ID, not just the count. `unclaimed_findings` can only
+                    # answer against the specific events, and this hook is the
+                    # one place that sees them written.
+                    if change_id:
+                        ids = state.setdefault("change_ids", [])
+                        if change_id not in ids:
+                            ids.append(change_id)
+                            del ids[:-CHANGE_ID_CAP]
                 if op in PROPAGATE_OPS:
                     state["propagates"] += 1
                 if op in ARTIFACT_OPS:
@@ -1028,7 +1130,8 @@ def main() -> int:
                 return 0
             print(json.dumps({
                 "decision": "block",
-                "reason": (
+                "reason": ride_along(
+                    session,
                     f"reflow2: {n} graph write(s) this session and no loop check. "
                     f"{detail} Bookkeeping is not the loop. (This nudge fires "
                     f"once; stopping again proceeds.)"
@@ -1081,7 +1184,8 @@ def main() -> int:
                 return 0
             print(json.dumps({
                 "decision": "block",
-                "reason": (
+                "reason": ride_along(
+                    session,
                     f"reflow2: {state['edits']} file(s) edited and "
                     f"{state['changes']} change(s) recorded this session, and "
                     f"propagate_change was never called — so the ChangeEvent is "
@@ -1159,7 +1263,8 @@ def main() -> int:
                 return 0
             print(json.dumps({
                 "decision": "block",
-                "reason": (
+                "reason": ride_along(
+                    session,
                     f"reflow2: {state['edits']} file(s) edited this session and "
                     f"no skill was ever loaded. The skills carry this project's "
                     f"conventions, and they are SERVED, not installed — "
@@ -1199,7 +1304,8 @@ def main() -> int:
                 return 0
             print(json.dumps({
                 "decision": "block",
-                "reason": (
+                "reason": ride_along(
+                    session,
                     f"reflow2: this session ADDED design debt and left it — "
                     f"{verdict} CONFIRM WITH loop_status before acting: that "
                     f"reading is as old as it says, and a session still in "

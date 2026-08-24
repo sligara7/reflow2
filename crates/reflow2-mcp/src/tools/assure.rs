@@ -279,6 +279,49 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "\u{2b50} THE QUESTION NOTHING ELSE IN THE LOOP ASKS: what did this \
+                       session make FALSE? Every other mechanism ADDS \u{2014} capture adds \
+                       nodes, record_change adds an event, loop_status counts what is OWED. \
+                       This is the only one that looks for what your work RETIRED. Pass the \
+                       ChangeEvent ids you just recorded; it returns the OPEN observations \
+                       (TemporalFacts) their changed subjects carry that nobody has claimed \
+                       yet, so you can close the ones your work made false with `invalidates`. \
+                       \u{1f6d1} EVERY ROW IS A CANDIDATE, NEVER A VERDICT: it says the thing \
+                       an observation describes has moved and nobody has said either way; the \
+                       judgement is yours. IT ASKS A SESSION-SIZED QUESTION ON PURPOSE \
+                       \u{2014} design-wide there are hundreds of open observations and a list \
+                       that long is wallpaper; scoped to the events you wrote, most return \
+                       NOTHING and the median when one is touched is 1. Verifications are \
+                       deliberately excluded \u{2014} a stale-looking CHECK is a standing \
+                       property that fires on every refactor, and that is settled the other way \
+                       (`dec:verification-freshness-not-a-gap`); a TemporalFact is a DATED \
+                       OBSERVATION, asserted once, re-derived by nothing. READ \
+                       `subjects_examined`: zero means your work touched no anchored ground, \
+                       which is a different fact from 'nothing was retired' and must not be \
+                       read as it. THE COST OF NOT HAVING THIS, measured: `INVALIDATES` shipped \
+                       with its reader and a day later ZERO edges had ever been drawn \u{2014} \
+                       reachable, and unused, because nothing noticed the absence.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn unclaimed_findings(
+        &self,
+        Parameters(req): Parameters<UnclaimedFindingsReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        let ids: Vec<&str> = req.change_event_ids.iter().map(String::as_str).collect();
+        let out = g.unclaimed_findings_near(&ids).map_err(dyno_err)?;
+        self.ok_read(
+            &g,
+            serde_json::json!({
+                "count": out.candidates.len(),
+                "candidates": out.candidates,
+                "subjects_examined": out.subjects_examined,
+                "unknown_events": out.unknown_events,
+            }),
+        )
+    }
+
+    #[tool(
         description = "Compare what a real test run REPORTED against what each Verification \
                        records — the P4 reconcile, last of the three feedback loops (BL-30): \
                        reconcile_artifacts asks about the code, this about the outcomes, \

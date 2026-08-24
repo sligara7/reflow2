@@ -1283,5 +1283,168 @@ class AsksTheGraph(unittest.TestCase):
                          "no shared server is a normal state, not a failure")
 
 
+class AsksWhatWasMadeFalse(unittest.TestCase):
+    """The retired-observations ask — `unclaimed_findings` reaching the session.
+
+    THE CASE THIS SUITE IS JUDGED ON is `test_it_never_arms_a_nudge_by_itself`.
+    Anthony chose ask-don't-block deliberately: this trigger is keyed on a
+    computation nobody has field-tested, and a brand-new trigger that can stop a
+    session is exactly the thing that becomes wallpaper. Every other assertion
+    here would pass on an implementation that blocked; that one would not.
+    """
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory(prefix="loop-nudge-retired-")
+        self.project = pathlib.Path(self._tmp.name)
+        (self.project / ".reflow2").mkdir()
+        self.nudge_dir = self.project / ".reflow2" / "loop-nudge"
+        self.nudge_dir.mkdir()
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def probe(self, session="s1", candidates=None, count=None, **extra):
+        rec = {"session_id": session, "taken_at": 2000.0, "counts_taken_at": 2000.0}
+        if candidates is not None:
+            rec["unclaimed"] = {
+                "count": len(candidates) if count is None else count,
+                "candidates": candidates,
+                "subjects_examined": 1,
+                "asked_about": 1,
+            }
+        rec.update(extra)
+        (self.nudge_dir / f"{session}.probe.json").write_text(json.dumps(rec))
+
+    def tally(self, session="s1", **fields):
+        state = {"writes": 0, "edits": 0, "touched": True, "changes": 0,
+                 "propagates": 0, "artifacts": 0, "captures": 0, "gap_pass": 0,
+                 "renderings": 0, "skills": 1, "wrote": 4, "reset": False,
+                 "nudged": False, "change_ids": []}
+        state.update(fields)
+        (self.nudge_dir / f"{session}.json").write_text(json.dumps(state))
+
+    def stop_out(self, session="s1"):
+        r = run_hook(self.project, stop(session))
+        self.assertEqual(r.returncode, 0)
+        return json.loads(r.stdout) if r.stdout.strip() else None
+
+    ONE = [{"finding_id": "fact:service-is-slow",
+            "name": "the service is slow", "valid_from": "2026-08-21"}]
+
+    # ---- the restraint -----------------------------------------------------
+
+    def test_it_never_arms_a_nudge_by_itself(self):
+        """ASK, DON'T BLOCK — Anthony 2026-08-24.
+
+        A clean tally trips no counting branch. The shortlist must not turn that
+        silence into an interruption, however good the shortlist is.
+        """
+        self.tally()
+        self.probe(candidates=self.ONE)
+        self.assertIsNone(self.stop_out(),
+                          "the ask must never be the reason a session is stopped")
+
+    def test_it_rides_along_on_a_nudge_already_firing(self):
+        """Free by construction: it speaks only where one was happening anyway."""
+        self.tally(writes=3, wrote=3)          # arms the original write nudge
+        self.probe(candidates=self.ONE)
+        out = self.stop_out()
+        self.assertIsNotNone(out)
+        self.assertIn("graph write", out["reason"], "the host message survives")
+        self.assertIn("MAKE FALSE", out["reason"])
+        self.assertIn("the service is slow", out["reason"])
+        self.assertIn("2026-08-21", out["reason"], "when it was taken travels with it")
+
+    def test_it_says_candidate_and_names_the_tool_that_closes_one(self):
+        # A shortlist with no remedy is an accusation, and one presented as a
+        # verdict invites closing something still true — the expensive mistake.
+        self.tally(writes=1, wrote=1)
+        self.probe(candidates=self.ONE)
+        reason = self.stop_out()["reason"]
+        self.assertIn("CANDIDATE", reason)
+        self.assertIn("invalidates", reason)
+        self.assertIn("never by overwriting", reason,
+                      "closing preserves — the rule the first closure ever made broke")
+
+    # ---- silence, where silence is right ------------------------------------
+
+    def test_an_empty_shortlist_adds_nothing_to_a_firing_nudge(self):
+        self.tally(writes=2, wrote=2)
+        self.probe(candidates=[])
+        reason = self.stop_out()["reason"]
+        self.assertIn("graph write", reason)
+        self.assertNotIn("MAKE FALSE", reason)
+
+    def test_no_probe_answer_at_all_is_silent(self):
+        self.tally(writes=2, wrote=2)
+        self.probe()                      # probe ran, never asked the question
+        self.assertNotIn("MAKE FALSE", self.stop_out()["reason"])
+
+    def test_a_long_shortlist_names_three_and_counts_the_rest(self):
+        rows = [{"finding_id": f"fact:{i}", "name": f"finding {i}"} for i in range(9)]
+        self.tally(writes=1, wrote=1)
+        self.probe(candidates=rows, count=9)
+        reason = self.stop_out()["reason"]
+        self.assertIn("finding 0", reason)
+        self.assertIn("and 6 more", reason,
+                      "what was left out is counted, never silently dropped")
+
+    # ---- the ids the question needs ----------------------------------------
+
+    def test_a_recorded_change_contributes_its_id(self):
+        """`unclaimed_findings` can only answer against specific events, and this
+        hook is the one place that sees them written."""
+        run_hook(self.project, {"hook_event_name": "PostToolUse",
+                                "session_id": "s1",
+                                "tool_name": "mcp__reflow2__add_change_event",
+                                "tool_input": {"id": "chg:one"}})
+        run_hook(self.project, {"hook_event_name": "PostToolUse",
+                                "session_id": "s1",
+                                "tool_name": "mcp__reflow2__record_change",
+                                "tool_input": {"id": "chg:two"}})
+        state = json.loads((self.nudge_dir / "s1.json").read_text())
+        self.assertEqual(state["change_ids"], ["chg:one", "chg:two"])
+
+    def test_the_same_event_written_twice_is_carried_once(self):
+        for _ in range(3):
+            run_hook(self.project, {"hook_event_name": "PostToolUse",
+                                    "session_id": "s1",
+                                    "tool_name": "mcp__reflow2__add_change_event",
+                                    "tool_input": {"id": "chg:same"}})
+        state = json.loads((self.nudge_dir / "s1.json").read_text())
+        self.assertEqual(state["change_ids"], ["chg:same"],
+                         "revising an event is one event, not three")
+
+    def test_a_write_with_no_id_still_counts_as_a_change(self):
+        run_hook(self.project, {"hook_event_name": "PostToolUse",
+                                "session_id": "s1",
+                                "tool_name": "mcp__reflow2__add_change_event"})
+        state = json.loads((self.nudge_dir / "s1.json").read_text())
+        self.assertEqual(state["changes"], 1, "the count is unaffected")
+        self.assertEqual(state["change_ids"], [])
+
+    def test_the_id_list_is_bounded(self):
+        for i in range(40):
+            run_hook(self.project, {"hook_event_name": "PostToolUse",
+                                    "session_id": "s1",
+                                    "tool_name": "mcp__reflow2__add_change_event",
+                                    "tool_input": {"id": f"chg:{i}"}})
+        ids = json.loads((self.nudge_dir / "s1.json").read_text())["change_ids"]
+        self.assertEqual(len(ids), 25, "a bulk session must not grow the tally forever")
+        self.assertEqual(ids[-1], "chg:39", "the newest are the ones kept")
+
+    # ---- the late delivery --------------------------------------------------
+
+    def test_an_ask_the_last_session_never_heard_surfaces_at_session_start(self):
+        self.probe(session="old", candidates=self.ONE)
+        r = run_hook(self.project, {"hook_event_name": "SessionStart",
+                                    "session_id": "new"})
+        self.assertIn("MAKE FALSE", r.stdout)
+        self.assertIn("session before this one", r.stdout)
+        again = run_hook(self.project, {"hook_event_name": "SessionStart",
+                                        "session_id": "newer"})
+        self.assertNotIn("MAKE FALSE", again.stdout, "and exactly once")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

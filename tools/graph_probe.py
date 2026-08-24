@@ -196,6 +196,21 @@ def write_atomically(path: Path, payload: dict) -> None:
     os.replace(tmp, path)
 
 
+def read_change_ids(session_id: str) -> list:
+    """The ChangeEvent ids the hook's tally recorded for this session.
+
+    Read from the tally rather than passed on the command line so the probe
+    always asks about the session's CURRENT set — a probe spawned two turns ago
+    would otherwise ask about a stale one, and the answer would look current.
+    """
+    try:
+        raw = json.loads((state_dir() / f"{safe_name(session_id)}.json").read_text())
+    except (OSError, ValueError):
+        return []
+    ids = raw.get("change_ids") if isinstance(raw, dict) else None
+    return [str(c) for c in ids][:64] if isinstance(ids, list) else []
+
+
 def main() -> int:
     session = sys.argv[1] if len(sys.argv) > 1 else "unknown"
     path = probe_file(session)
@@ -218,6 +233,27 @@ def main() -> int:
             record["counts_taken_at"] = started
             record["clean"] = bool(status.get("clean"))
             record["next"] = [str(n) for n in (status.get("next") or [])][:8]
+            # THE SECOND QUESTION, and the only one in the loop that asks what
+            # a session made FALSE rather than what it owes. Cheap and bounded:
+            # it costs one adjacency walk per recorded event, and an empty id
+            # list skips it entirely.
+            change_ids = read_change_ids(session)
+            if change_ids:
+                try:
+                    asked = call(url, "unclaimed_findings",
+                                 {"change_event_ids": change_ids})
+                    record["unclaimed"] = {
+                        "count": asked.get("count", 0),
+                        "candidates": (asked.get("candidates") or [])[:6],
+                        "subjects_examined": asked.get("subjects_examined", 0),
+                        "asked_about": len(change_ids),
+                    }
+                except (urllib.error.URLError, urllib.error.HTTPError, OSError,
+                        ValueError, RuntimeError) as e:
+                    # NAMED, not swallowed. The loop_status half of this probe
+                    # may have succeeded, and a silently missing second answer
+                    # would read as "nothing was retired".
+                    record["unclaimed_error"] = f"{type(e).__name__}: {e}"[:200]
             served = status.get("served_by")
             if isinstance(served, dict):
                 # Carried because a `stale: true` here means every COMPUTED
@@ -242,7 +278,7 @@ def main() -> int:
         record["counts"] = existing["counts"]
         record["counts_taken_at"] = existing.get("counts_taken_at",
                                                  existing.get("taken_at"))
-        for carried in ("clean", "next", "served_by"):
+        for carried in ("clean", "next", "served_by", "unclaimed"):
             if carried in existing:
                 record[carried] = existing[carried]
 
