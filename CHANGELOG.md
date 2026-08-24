@@ -31,6 +31,48 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Fixed — the orientation call stops re-reading a hundred megabytes of stale records
+
+**Patch.** No schema change; `sync_status` gains one reply field. Stamp unmoved at 29 node / 64
+edge types.
+
+`cap:loop-status` calls `loop_status` **ONE CHEAP CALL**, and the served instructions tell every
+session to run it. Measured over the shared server on reflow2's own graph (3,083 nodes / 13,188
+edges): **40.5 seconds**. Two independent causes.
+
+**① A reader that asked a graph-wide question to produce a row-level answer.** `invalidated_findings`
+(new last release) asked `incoming()` of every Verification and every TemporalFact, and each of
+those walks the whole edge set — **483 nodes × a full-graph scan, 39s, to return 1.2 KB saying
+nothing was claimed.** The rollups only annotate rows they are already showing (the checks that are
+NOT passing — **one**, here), so they now ask about exactly those ids. The exhaustive form stays for
+the standalone tool, where a caller asked for it deliberately. ⭐ **The fix is not a faster scan, it
+is asking a smaller question.**
+
+**② The list of synced records was unbounded.** This seat had **16 targets totalling 102 MB** — the
+committed export, a backup, and **fourteen one-off probe dumps written by past sessions**, three of
+them belonging to a different project — and re-read and re-parsed all of it every time. A roll now
+opens the **6 most recently modified** and reports the rest in `not_checked`, naming them and saying
+how to bring one back to the front. Ordered by the target file's own mtime, because the record
+somebody is actually collaborating on is the one that moved recently.
+
+⭐⭐ **THE RULE THIS SHIPPED WITH IS THE SECOND ONE TRIED, AND THE FIRST ONE'S FAILURE IS THE MORE
+USEFUL RECORD.** The first attempt refused to track anything under the OS temp directory, reasoning
+that scratch is not a SHARED record — which is what
+`req:a-seat-learns-the-record-moved-before-it-writes` exists for. **Fifteen tests in
+`the_record_moved_and_the_session_is_told` failed, and every one of them was right.** A hermetic
+test puts a genuine shared record in a temp dir; so does a CI workspace and so does a container. One
+of those tests is named *"the case the whole thing exists for — your brother pushed, you pulled."*
+The rule looked correct against the paths on one machine and would have silenced the feature for
+anyone whose workspace sits under `/tmp`. **The defect was never WHERE the records live — it is that
+the list only ever grows**, so the bound is on COUNT and needs no assumption about anybody's
+filesystem.
+
+⭐⭐ **AND CAUSE ① SHIPPED PAST TEN PASSING TESTS**, because every one ran on an in-memory graph small
+enough that 483 scans were instant. Correctness was verified; cost was never measured once.
+AGENTS.md already says it — *"compiling is not the finish line, and neither is a green unit test"* —
+and what caught it was not a gate but a user asking for something else. **A rollup that walks the
+graph needs a measurement at real scale before it merges, not a passing assertion on twelve nodes.**
+
 ### Added — a repair can say what it invalidated, so a finding stops proposing work already done
 
 **Minor, and it MOVES THE SCHEDULE STAMP AGAIN: 63 → 64 edge types.** `docs/upgrading-to-v0.40.0.md`

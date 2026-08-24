@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:c32af2f52cfdbaf5d238c97226af5da1c1972ce83bd0137436a938068775a588",
+  "content_hash": "sha256:69af93d88f74b39e540c9bfe4a01e2499247ada6cf2210bea343c816e28a33af",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -27576,6 +27576,51 @@
         "action": "added"
       },
       "to_id": "cap:optimize-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-orientation-call-stops-rereading-stale-records",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:sync-debt"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-orientation-call-stops-rereading-stale-records",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-orientation-call-stops-rereading-stale-records",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-orientation-call-stops-rereading-stale-records",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:a-repair-can-say-what-it-invalidated"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-orientation-call-stops-rereading-stale-records",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:the-record-moved-is-surfaced"
     },
     {
       "edge_type": "CHANGED",
@@ -100745,7 +100790,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b2da4bd085cf70897b13e63d46b44c90eb44988d0488c2a83b019c16b8361286",
+        "checksum": "sha256:9d1d436090d03e4910d98fd89225efb7a13a7d23d95a06193cf0d97f68075603",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/sync_debt.rs",
         "name": "sync_debt.rs",
@@ -101112,7 +101157,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3383df2a22ffd3c64f97f0ce596631fbd1b911b95ff92fa920159eb7cdc4f4a5",
+        "checksum": "sha256:e73085793060fb6cea7ea4deac42e39d8505a1e8e571a58c22dfbe01532e0370",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -101366,7 +101411,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9d45ce67665442dcb4d22758e5c91e42d021e54bffc03cc628a61ff3e71816f4",
+        "checksum": "sha256:4a88076ba222bad36b580234210e0e5266efe1f5c0c0791e2defe51078d5982f",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/verify.rs",
         "name": "verify.rs",
@@ -109048,6 +109093,18 @@
         "name": "The optimize skill ships, with its n=2 stated in its own text",
         "rationale": "Anthony asked for it after the procedure had been run twice by hand - once on the test suite (the schema parse cached, 41.3 ms -> 266 us, suite 191.8 s -> 96.5 s) and once on the product surface (the 26-48 s cold start, measured and deliberately left unfixed for want of a budget). He chose (c) then (a): run it again first, then write the skill.\n\nBoth runs are what the skill is made of, and its honest-limits section says so - steps 4, 6 and 7 each caught a real mistake, while steps 1, 2 and 3 are discipline generalised from two cases. skill_lint pins all ten clauses INCLUDING the n=2 admission, because every one of them is a clause a hurrying reader would happily drop: writing the budget first feels like ceremony when you can already see the fix, stopping under budget feels like leaving value on the table, and asserting structure instead of a duration is more work than a threshold.\n\nThe skill also contradicts the framing it was asked under, on purpose: it does NOT wait for black boxes to be identified, because both runs succeeded with no contract on the module.",
         "summary": "A 21st served skill: optimise one module against a budget written down before the code changes."
+      }
+    },
+    {
+      "node_id": "chg:the-orientation-call-stops-rereading-stale-records",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "performance_optimization",
+        "detected_at": "2026-08-24",
+        "name": "loop_status stops re-reading a hundred megabytes",
+        "rationale": "⭐⭐ THE RULE THAT SHIPPED IS THE SECOND ONE TRIED, AND THE FIRST ONE'S FAILURE IS THE MORE USEFUL RECORD. The first attempt at ② refused to track anything under the OS temp directory, reasoning that scratch is not a SHARED record — which is what `req:a-seat-learns-the-record-moved-before-it-writes` exists for. FIFTEEN TESTS IN `the_record_moved_and_the_session_is_told` FAILED AND EVERY ONE WAS RIGHT: a hermetic test puts a genuine shared record in a temp dir, and so does a CI workspace and so does a container. One of them is named \"the case the whole thing exists for — your brother pushed, you pulled\". The rule fit every path on one machine and would have silenced the feature for everyone whose workspace sits under /tmp. The defect was never WHERE records live; it is that the list only grows. So the bound is on COUNT and assumes nothing about anybody's filesystem — and it is SLOWER than the wrong rule (23.6s rather than 14.3s) because it keeps six targets rather than two. That is the correct trade.\n\n⭐⭐ AND CAUSE ① SHIPPED PAST TEN PASSING TESTS, because every one ran on an in-memory graph small enough that 483 scans were instant. Correctness was verified and cost was never measured once. AGENTS.md already says it — \"compiling is not the finish line, and neither is a green unit test\" — and what caught this was not a gate but a user asking for something else. A rollup that walks the graph needs a measurement at real scale before it merges.\n\n🛑 A THIRD ERROR, RECORDED BECAUSE IT SHAPED THE WORK: the 40s was first attributed to cause ① on nothing but two similar numbers, and a fix was recommended on that basis. Scoping ① left `loop_status` unmoved; the cost was ②. Two numbers agreeing is not causation, and the attribution should have been measured before it was stated.",
+        "subject": "system",
+        "summary": "`loop_status` measured 40.5s over the shared server on this graph (3,083 nodes / 13,188 edges) — the call `cap:loop-status` promises is ONE CHEAP CALL and every session is told to run. Two independent causes, both fixed. ① `invalidated_findings` asked `incoming()` of every Verification and TemporalFact, and each walks the whole edge set: 483 nodes x a full-graph scan, 39s, to return 1.2 KB saying nothing was claimed. The rollups now ask only about the rows they annotate (`invalidated_verifications`); the exhaustive form stays for the standalone tool. ② The list of synced records was unbounded — 16 targets totalling 102 MB, fourteen of them one-off probe dumps from past sessions, three belonging to another project, all re-read every time. A roll now opens the 6 most recently modified and reports the rest in `not_checked`. MEASURED AFTER: `loop_status` 23.6s, `sync_status` 28.3s -> 11.8s."
       }
     },
     {
@@ -132184,7 +132241,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:157646c28f7cb321fc596fc0c1b0b2cc43210e4490b7fb33c004f39b70be81f2",
+  "prev_content_hash": "sha256:c32af2f52cfdbaf5d238c97226af5da1c1972ce83bd0137436a938068775a588",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -450,9 +450,58 @@ impl DesignGraph {
     /// exactly as a `parks` ruling leaves a parked node counted rather than
     /// hidden. Silencing it would be the truncation the marker exists to end.
     pub fn invalidated_findings(&self) -> Result<Vec<InvalidatedFinding>, DynoError> {
-        let mut out = Vec::new();
+        let mut ids = Vec::new();
         for finding_type in [node::VERIFICATION, node::TEMPORAL_FACT] {
             for n in self.scan_nodes(finding_type)? {
+                ids.push((finding_type, n));
+            }
+        }
+        self.invalidated_among(ids)
+    }
+
+    /// The same answer for a NAMED set of findings — and the one every rollup
+    /// should call.
+    ///
+    /// 🛑 WHY THIS EXISTS, AND IT IS A REGRESSION THIS CODE CAUSED. The first
+    /// version of [`Self::invalidated_findings`] asked `incoming()` about every
+    /// Verification and every TemporalFact. `scan_incoming_edges` walks the
+    /// whole edge set, so that is one full-graph scan PER NODE: measured
+    /// 2026-08-24 on reflow2's own graph, 483 findings over 13,188 edges cost
+    /// **40.5 seconds** — to return 1.2 KB saying nothing was claimed. It
+    /// shipped inside `loop_status`, which `cap:loop-status` calls ONE CHEAP
+    /// CALL and which every session is told to run, so the orientation read
+    /// went from ~10s to ~40s and the cause was the reader, not the graph.
+    ///
+    /// ⭐ THE FIX IS NOT A FASTER SCAN, IT IS ASKING A SMALLER QUESTION. A
+    /// rollup only annotates rows it is already showing — the `attention` list,
+    /// which is the checks that are NOT passing, and is 1 on this graph against
+    /// 203 Verifications. Passing those ids turns 483 scans into `len(rows)`.
+    /// The exhaustive form stays for the standalone tool, where a caller asked
+    /// for it deliberately and can afford it.
+    /// Claims against a NAMED set of Verifications — what a rollup should ask.
+    ///
+    /// Costs one adjacency scan per id rather than one per node in the graph.
+    /// Give it the rows you are about to show and nothing else.
+    pub fn invalidated_verifications(
+        &self,
+        verification_ids: &[&str],
+    ) -> Result<Vec<InvalidatedFinding>, DynoError> {
+        let mut found = Vec::new();
+        for id in verification_ids {
+            if let Some(n) = self.get_node(node::VERIFICATION, id)? {
+                found.push((node::VERIFICATION, n));
+            }
+        }
+        self.invalidated_among(found)
+    }
+
+    fn invalidated_among(
+        &self,
+        findings: Vec<(&str, crate::StoredNode)>,
+    ) -> Result<Vec<InvalidatedFinding>, DynoError> {
+        let mut out = Vec::new();
+        {
+            for (finding_type, n) in findings {
                 let claims = self.incoming(&n.node_id, Some(edge::INVALIDATES))?;
                 if claims.is_empty() {
                     continue;
