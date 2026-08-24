@@ -540,15 +540,6 @@ version = "0.12.0"
 source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.12.0#b5a9f7416eb00fa99b36923cbbe3045fb7f22012"
 
 [[package]]
-name = "dynograph-resolution"
-version = "0.12.0"
-source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.12.0#b5a9f7416eb00fa99b36923cbbe3045fb7f22012"
-dependencies = [
- "dynograph-core",
- "dynograph-vector",
-]
-
-[[package]]
 name = "dynograph-storage"
 version = "0.12.0"
 source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.12.0#b5a9f7416eb00fa99b36923cbbe3045fb7f22012"
@@ -569,14 +560,6 @@ source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.12.0#b
 dependencies = [
  "tantivy",
  "thiserror",
-]
-
-[[package]]
-name = "dynograph-vector"
-version = "0.12.0"
-source = "git+https://github.com/sligara7/dynograph-foundation.git?tag=v0.12.0#b5a9f7416eb00fa99b36923cbbe3045fb7f22012"
-dependencies = [
- "rand",
 ]
 
 [[package]]
@@ -1330,7 +1313,6 @@ version = "0.39.0"
 dependencies = [
  "dynograph-core",
  "dynograph-graph",
- "dynograph-resolution",
  "dynograph-storage",
  "serde",
  "serde_json",

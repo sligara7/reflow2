@@ -31,8 +31,14 @@ dynograph-storage = { git = "https://github.com/sligara7/dynograph-foundation.gi
 # Pure, dependency-free graph-theory algorithms (components, cuts, centrality,
 # Leiden communities) — powers HEAL's structural detectors + the allocation analysis.
 dynograph-graph = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.12.0" }
-# Fuzzy string matching (jaro_winkler / token_sort_ratio) for INGEST cross-id dedup.
-dynograph-resolution = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.12.0" }
+# dynograph-resolution was HERE until 2026-08-24. Absorbed: reflow2 called
+# `token_sort_ratio` and nothing else, so it and its closure (jaro,
+# jaro_winkler, jaro_winkler_prepared, sort_tokens) now live in
+# `reflow2-core/src/fuzzy.rs` with a provenance header. `resolver.rs` — 911 of
+# the crate's 1,211 lines, an EntityResolver reflow2 never called — was left.
+# Increment 2 of dec:absorb-the-foundation-subset-and-end-the-dependency.
+# ⭐ THIS ALSO REMOVES dynograph-vector FROM THE BUILD: resolution was the last
+# path to it after increment 1 took it out of this file. Two crates, not one.
 # dynograph-vector was HERE until 2026-08-24. Absorbed: reflow2 called `mean`
 # and `linear_regression_slope` and nothing else, so those two functions now live
 # in `reflow2-core/src/stats.rs` with a provenance header naming the tag they
@@ -85,6 +91,21 @@ debug = "line-tables-only"
 # copies of the reflow2_mcp test binary alone); sweeping the stale duplicates
 # recovered 225 GiB against these settings' ~25%. Sweep first when the disk is
 # tight; these settings only slow the refill.
+#
+# 🛑 AND HERE IS THE COMMAND, because the note above says WHAT to do and not
+# HOW, and that gap cost a session a failed test run on 2026-08-24 — the disk
+# hit 100% with 43 MB free, 263 GiB of it in 484,912 artifacts, 159,247 of them
+# belonging to these two crates. Every `cargo test --workspace` mints another
+# ~290 MB copy of the reflow2_mcp test binary and nothing removes the last one.
+#
+#     rm -rf target/debug/incremental                # free, pure cache, 22 GB
+#     cargo clean -p reflow2-core -p reflow2-mcp     # 263 GiB, ~2 min
+#
+# THE `-p` FLAGS ARE THE WHOLE POINT. A bare `cargo clean` reclaims the same
+# space AND destroys the cached librocksdb-sys C++ build — a ~19-minute rebuild
+# bought for nothing, because the bulk is NOT RocksDB (its artifact is 856 MB,
+# 0.3% of the problem). Scoped, only our own two crates recompile.
+# Measured: fact:the-target-dir-reached-263-gib-of-this-projects-own-test-binaries
 split-debuginfo = "unpacked"
 
 # Tests are the bulk of the artifacts, and they inherit dev rather than reading

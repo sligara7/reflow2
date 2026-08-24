@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:9335e6c3627c6e2056c7697dc8bacc1f87fd8529c94c52dc2d0c0f945a5ea3c6",
+  "content_hash": "sha256:105aa1bc92708399992fbb1afd859c25acdbb11bf9f126486b2001e28407d251",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -764,6 +764,14 @@
       "from_id": "fact:defect-write-response-describes-the-write-not-the-state",
       "properties": {},
       "to_id": "cap:shared-sessions"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:every-cost-number-today-was-a-debug-build-and-the-live-store-is-7x-its-content",
+      "properties": {
+        "note": "Qualifies the '22.6s, repeatably' this decision rests on: that figure was a DEBUG binary, over the shared HTTP daemon, on a live store carrying 7.4x the bytes of its own content. The decision STANDS — release-on-fresh-store is still 4.5s and a Stop hook cannot block that long — but the number measures a whole setup, not the call."
+      },
+      "to_id": "dec:the-stop-hook-asks-the-graph-asynchronously"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2875,6 +2883,14 @@
         "evidence": "Both ideas notice the SAME discarded material: what a pre-capture search surfaced, and how relevant each hit was, is read once and thrown away. The 2026-08-10 idea proposed keeping it as a weighted importance signal; this one proposes keeping it as an edge. The earlier one had already seen that the search result carries information worth persisting — it differs on what to do with it, not on the observation. Drawn 2026-08-21."
       },
       "to_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-where-does-the-10k-work-actually-land",
+      "properties": {
+        "evidence": "That node already recorded, while asking a scaling question, that \"the byte store is already swappable\" and that what is welded is one design = one directory = one engine. It observed the property this question depends on before anyone asked to use it — so the earlier idea saw this one coming, and its finding is why this is a cheap experiment rather than a rewrite."
+      },
+      "to_id": "dec:idea-a-byte-backend-that-compiles-in-seconds"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -9611,6 +9627,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-byte-backend-that-compiles-in-seconds",
+      "properties": {
+        "acted_at": "2026-08-24",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-capability-is-a-set-of-functions-and-a-black-box-delivers-functions",
       "properties": {
         "acted_at": "2026-08-23",
@@ -16298,6 +16323,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:absorb-resolution-fuzzy",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-resolution-fuzzy",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-resolution-fuzzy",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:seam"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:absorb-vector-stats",
       "properties": {
         "accepted_baseline": false,
@@ -18878,6 +18930,15 @@
         "action": "modified"
       },
       "to_id": "art:usgov-genesis-feedback-2026-08-15"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-25a00405f8d9201e",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:fuzzy"
     },
     {
       "edge_type": "CHANGED",
@@ -30934,6 +30995,15 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "fact:the-target-dir-reached-263-gib-of-this-projects-own-test-binaries",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "alignment: this WEAKENS one of that brainstorm's arguments rather than opposing the idea. The node lists RocksDB's disk footprint as an uncontested cost of keeping it (one cached librocksdb-sys dir at 1.7 GB). Measured here, RocksDB's artifact is 856 MB against 263 GiB of reflow2's own duplicated test binaries — 0.3% of the problem. A backend swap would not have prevented this failure, so the disk argument should not carry weight in that decision."
+      },
+      "to_id": "dec:idea-a-byte-backend-that-compiles-in-seconds"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "req:a-vocabulary-distinction-proves-it-is-read",
       "properties": {
         "alignment": "supporting",
@@ -31790,6 +31860,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:central-host"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-a-byte-backend-that-compiles-in-seconds",
+      "properties": {
+        "evidence": "`KvBackend` lives in dynograph-foundation, not reflow2, so until the absorption's increment 5 brings dynograph-storage in-tree, swapping the byte store means changing another repository — which dec:idea-dynograph-crates-independent-in-code-coupled-in-release says reflow2's design has no standing to decide. Absorb first, then swap. The dependency also runs the other way in scope: if SQLite (option F) were taken it would subsume tantivy too, so increment 5 would absorb less than currently planned.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:absorb-the-foundation-subset-and-end-the-dependency"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -91153,6 +91233,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:fuzzy",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:ingest"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:genesis",
       "properties": {
         "completeness": "complete"
@@ -100077,6 +100166,17 @@
       }
     },
     {
+      "node_id": "art:fuzzy",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:82db721a91d72a4e6dd454ce65e24e37e107b01e47d9de7a41a8c929e08979d4",
+        "location": "crates/reflow2-core/src/fuzzy.rs",
+        "name": "fuzzy.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:genesis",
       "node_type": "Artifact",
       "properties": {
@@ -100268,7 +100368,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8024f573056617d2e8792a7642a78f1c4f3715c7dd936b5b9014ab5b9883ae2f",
+        "checksum": "sha256:d1d5b39145234c832fe34a34fed4a6540ceb7565a8fa9a17fb2e2149671a92f2",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/ingest.rs",
         "name": "ingest.rs",
@@ -101084,7 +101184,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e96c9c4c07a384fc845aa360edc7f505d90ecbecc8e38b08dd65e65b56cf1470",
+        "checksum": "sha256:3ed68ac9e6f791ca21c69da873d87349e4d12a60099677006da7ef3dd675fb2d",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/seam.rs",
         "name": "seam.rs",
@@ -105064,6 +105164,18 @@
       }
     },
     {
+      "node_id": "chg:absorb-resolution-fuzzy",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-24",
+        "name": "Increment 2 of the absorption — the fuzzy matcher comes in-tree, and dynograph-vector finally leaves the build graph with it",
+        "rationale": "Placed second because `fuzzy.rs` was verified standalone before the plan was written — no internal crate dependencies at all — so like increment 1 it cannot fail in an interesting way. Both cheap increments run before anything hard, which is the whole shape of the plan.\n\n⭐ THE PROVENANCE RULE HOLDS: repo, tag, commit, file, what was taken and what was deliberately left, in a header on the absorbed code. The recorded objection to absorbing is that vendoring turns a visible dependency into an invisible one, and the pin's written history has no successor once the code is in-tree; the header is that successor.\n\n⚠️ WHAT TO WATCH ON THE NEXT ONE: increments 1 and 2 were both self-contained arithmetic with no external crates and one or two call sites. Increment 3 (graph algorithms, 1,844 lines, a Leiden implementation) is the first that carries real intellectual content, and increments 4 and 5 carry 62 files of churn and a RocksDB engine. **Nothing learned from these two should be read as evidence that the rest are easy.**",
+        "subject": "system",
+        "summary": "Second increment of `dec:absorb-the-foundation-subset-and-end-the-dependency`. `token_sort_ratio` and its closure — `jaro`, `jaro_winkler`, `jaro_winkler_prepared`, `sort_tokens` — are absorbed from `dynograph-resolution`'s `fuzzy.rs` at tag v0.12.0 (`0bb3bca`), with their tests. `seam.rs` and `ingest.rs` import locally, and `dynograph-resolution` is removed from reflow2's dependencies.\n\nTAKEN: the four functions behind `token_sort_ratio`, and eleven of the twelve tests.\n\nNOT TAKEN: `PreparedName` and its `score` method (`pub(crate)`, built for the resolver's many-candidates loop, which reflow2 never runs), the test that exercises it, and the whole of `resolver.rs` — 911 of the crate's 1,211 lines, an EntityResolver reflow2 has never called.\n\n⭐ THIS IS THE INCREMENT THAT MAKES INCREMENT 1'S CAVEAT COME TRUE. `dynograph-vector` left reflow2's manifest in increment 1 but stayed in the build graph, because `dynograph-resolution` declared it. Removing resolution removes the last path to it, so **two crates leave the build here, not one** — and the caveat written into increment 1 is what predicted it."
+      }
+    },
+    {
       "node_id": "chg:absorb-vector-stats",
       "node_type": "ChangeEvent",
       "properties": {
@@ -107132,6 +107244,16 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-15",
         "name": "First baseline. Copied verbatim from ~/project/usgov/feedback.md so the location resolves for anyone reading the nodes it produced; the source project is a separate repo and was not modified."
+      }
+    },
+    {
+      "node_id": "chg:baseline-25a00405f8d9201e",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-24",
+        "name": "First baseline — a new file. Absorbed from dynograph-resolution's fuzzy.rs at v0.12.0 (0bb3bca): token_sort_ratio and its closure (jaro, jaro_winkler, jaro_winkler_prepared, sort_tokens) plus eleven of twelve tests. PreparedName and resolver.rs were left. Private to the crate, like stats.rs, so absorbing does not widen a surface ifc:core-api already records as unenumerable.",
+        "subject": "record"
       }
     },
     {
@@ -112397,6 +112519,16 @@
       "properties": {
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-20: *\"just as reflow2 checks that a capability had a requirement, I feel like that a defined black box should have an interface... reflow2 should define black boxes (part of the functional allocation to a system) and define/enforce interface contracts (MOSA I don't think would be possible without contracts).\"* He named the exceptions himself: designs with no black boxes at all, boundaries where a contract is deliberately not enforced, and a single black box with nothing to interface with.\n\nSEARCHED FIRST, at his instruction. Read: `dec:mosa-conformance`, `req:key-interfaces` (accepted), `req:modularity-computed` (accepted), `cap:key-interfaces`, `ver:key-interfaces`, `req:interface-spec-complete`, `fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it`, `dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses`, and the three interface detectors in detect.rs. **MUCH OF THIS IS ALREADY SETTLED AND BUILT** — what follows is only what is not.\n\n═══════════════════════════════════════════════\n✅ WHAT MOSA ALREADY PRODUCED HERE, so it is not re-litigated\n\n`dec:mosa-conformance` (2026-07-25) found exactly two things missing and BOTH WERE PROMOTED THE SAME DAY on his word and are now ACCEPTED: `req:key-interfaces` — the design says which boundaries are published — and `req:modularity-computed` — severability is computed, not asserted by the diagram. `Interface.designation` (internal / published / required / both) IS the key-interface marker MOSA needed, and it is built and tested (`cap:key-interfaces`, `ver:key-interfaces`, 8 cases).\n\nSo the vocabulary half of his instinct is DONE. What is missing is checks.\n\n═══════════════════════════════════════════════\n📐 THE ANALOGY IS EXACT, AND MEASURED 2026-08-20 ON THIS DESIGN\n\n  a Capability with no Requirement   → `unmotivated_capability` FIRES\n  a Component with no Interface      → NOTHING FIRES\n\n  56 Components\n    14  carry any PROVIDES or CONSUMES\n    42  carry none\n      · 24 of those are in a DEPENDS_ON pair, so `undeclared_seam` sees them —\n        but AGGREGATED into ONE project-scoped gap at severity 0.45\n      · 18 are NEITHER coupled NOR interfaced: **nothing in reflow2 sees them at all**\n\nThose 18 are the finding. They are black boxes in name only — no boundary, no coupling, nothing to sever along — and every instrument reports clean over them.\n\n═══════════════════════════════════════════════\n🛑 AND THE SECOND HOLE IS WORSE, BECAUSE IT IS ON THE PUBLISHED BOUNDARIES\n\n`req:interface-spec-complete` is ACCEPTED intent — a published contract must carry what two systems have to AGREE on, in terms a computation can compare. **NOTHING CHECKS IT.** Measured on this design:\n\n  4 interfaces designated `published`\n  3 of the 4 have unset contract fields:\n     ifc:core-api        7 of 9 unset\n     ifc:graph-export    6 of 9 unset\n     ifc:mcp-tools-http  1 of 9 unset\n\nreflow2 publishes a boundary whose medium, paradigm, payload format, auth and error model are all `unspecified`, and calls the design green. That is MOSA step 4 — DEFINE INTERFACES — unenforced on the tool's own published surface.\n\n═══════════════════════════════════════════════\n📋 MOSA'S FIVE STEPS, AGAINST WHAT REFLOW2 HAS — vocabulary vs check\n\n  1 PLAN                    Flow/process modelling exists          check: n/a\n  2 MODULARIZE              modularity computed                    check: FIXED 2026-08-20\n                                                                   (it read 1.00 over nothing;\n                                                                    now NOT MEASURABLE, honestly)\n  3 IDENTIFY INTERFACES     `designation` built and tested         check: NONE — nothing says\n                                                                   you never identified any\n  4 DEFINE INTERFACES       10 structured fields, `set_interface_spec`  check: NONE — 3 of 4\n                                                                   published are incomplete\n  5 STANDARDIZE INTERFACES  DesignRule with `enforced` (17 rules,  check: NONE binding a rule\n                            6 enforced)                            to an interface as a standard\n\nFOUR OF FIVE HAVE THE VOCABULARY AND NO CHECK. That is the three-legs pattern (`fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it`) landing on the interface layer specifically: typed tool yes, instruction yes, DETECTOR THAT NOTICES ABSENCE no.\n\n═══════════════════════════════════════════════\nIDEAS\n\n**A. `uninterfaced_component` — a black box with no boundary at all.** The exact sibling of `unmotivated_capability`. Catches the 18 nothing currently sees.\n   ⚠️ Noise: 42 of 56 on this design. Aggregate like `undeclared_seam` does, or per-component? Aggregation is what made the 73 uncontracted pairs read as one 0.45 note nobody acted on for months — so the aggregation that controls noise is also what buried the last finding of this shape.\n\n**B. `incomplete_published_contract` — a boundary designated `published` with the agreement axes unset.** Directly satisfies `req:interface-spec-complete`, which is accepted and unimplemented. Narrow by construction: it fires only on what the design has already CHOSEN to publish, so it cannot nag a design that has not started.\n   ⭐ Cheapest of these, most defensible, and it is the MOSA step that makes severability mean anything.\n\n**C. Let a ruling declare the exceptions.** His three cases — no black boxes yet, contract deliberately unenforced, a single box — are DELIBERATE STATES, and `governed_by(..., ruling: \"parks\")` already exists for exactly that. It would need extending to these detectors, which is the same reachability problem `parks` already has.\n\n**D. Self-limit rather than enumerate exceptions.** Precedent from 2026-08-20: `level_spine_disagreement` compares against the highest level PRESENT, so a flat design reports nothing and no ladder depth is prescribed. The same move here — fire only where the design has ALREADY used interfaces somewhere — handles \"no black boxes yet\" and \"single box\" without anyone declaring an exception.\n   ⚠️ But it also means a design that never draws a single interface is never asked about it, which is `dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses` — open, and the harder half.\n\n═══════════════════════════════════════════════\n⭐⭐ ONE PUSHBACK ON HIS OWN EXCEPTION, offered because it may sharpen the rule\n\nHe asks whether a design could have no black boxes, and treats \"a single black box with nothing to interface with\" as an exception. IN SE TERMS IT MAY NOT BE ONE. A system is defined by its boundary — that is what makes it a system rather than a region of the universe. A single black box still has an interface: to its ENVIRONMENT. reflow2 already supports this (an Interface may sit between a Component and an ACTOR, not only between two Components), so the vocabulary is there.\n\nIf that holds, the rule is stronger and simpler than he proposed: **every black box has at least one interface — to a sibling or to the environment — and a box with none has not been bounded yet.** The genuine exceptions then are not about EXISTENCE but about ENFORCEMENT: how complete the contract must be, and whether both sides are held to it.\n\n⚠️ COUNTER, recorded beside it: that is an SE-domain claim, and `req:design-anything` keeps the vocabulary neutral. Whether \"every element has a boundary\" is a universal truth or a systems-engineering convention is exactly the kind of thing this project refuses to assume on a user's behalf.\n\n═══════════════════════════════════════════════\n⚠️ HONEST BOUNDS\n\n· Every number here is from reflow2's own graph. Whether 42-of-56 is typical of a user's project is unknown — and by the standing rule, what this means for an arbitrary project is the question that matters, not what it means here.\n· Nothing is costed. B looks small; A's noise question is unresolved and is the one that decides whether it helps or joins the 80 unsurfaced gaps.\n· `dec:mosa-conformance` stays OPEN on its own narrower question — whether to ship a MOSA-BRANDED report — and nothing here decides that. Its own answer leans: a view over computations that exist, never schema, because adopting one domain's language is what reflow2 has refused since the beginning.",
         "name": "OPEN — should a Component with no interface be a finding, the way a Capability with no Requirement already is? And should a PUBLISHED contract have to be complete?",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-a-byte-backend-that-compiles-in-seconds",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-24: *\"what else is out there besides rocksdb that perfectly meets what reflow2 needs, but is much faster to compile than rocksdb?\"*\n\n═══════════════════════════════════════════════\n📐 WHAT A REPLACEMENT ACTUALLY HAS TO DO — read from the code, not assumed\n\nThe seam is far narrower than \"replace RocksDB\" sounds. `KvBackend` (dynograph-storage/src/backend.rs) is **six byte-level primitives** over six named column families:\n\n    get(cf, key) -> Option<Arc<[u8]>>      put(cf, key, value)\n    delete(cf, key)                        prefix_scan(cf, prefix) -> Vec<(k,v)>\n    prefix_delete(cf, prefix)              commit_batch(ops)\n\n`ifc:kv-backend`'s own spec says everything schema-aware — validation, the reverse index, the read cache, the write-buffer overlay, the full-text sidecar — sits ABOVE this trait, and that **ordered prefix iteration is the one structural assumption**.\n\n⭐⭐ AND IT ALREADY HAS TWO IMPLEMENTATIONS. Besides RocksDB there is an in-memory HashMap backend in the same file. **The swap this question asks about is already demonstrated once**, which makes this an unusually cheap thing to try — and is the sharpest difference from `dec:idea-swap-dynograph-foundation-as-the-substitutability-demo`, which was REJECTED for costing as much as the real thing. That node measured 48 files importing `dynograph_core`; this touches ONE file behind a six-function trait. **Its cost argument does not reach this question.**\n\n⭐ THE FIT NOBODY HAS EXPLOITED: reflow2 is SINGLE-WRITER by design — the whole graph is held under a single-writer lock. RocksDB is a concurrent LSM built for many writers. An engine whose model IS single-writer/multi-reader is not a compromise here; it is a closer match than what is there.\n\n═══════════════════════════════════════════════\n🛑 THE PREMISE, MEASURED BEFORE ANSWERING — and it is only half true\n\nRecorded because the question names compile time as the reason, and the reason is worth checking:\n\n    release build of reflow2-mcp (~19 min)  — recompiled RocksDB: 0 times\n    workspace test run #1 (~10 min)         — recompiled RocksDB: 0 times\n    workspace test run #2 (~10 min)         — recompiled RocksDB: 0 times\n\nEvery long wait on 2026-08-24 was recompiling **reflow2-core and reflow2-mcp**, because they were being edited. RocksDB was cached throughout — reflow2's own Cargo.toml already calls it \"a one-time, cached cost\", and that holds.\n\n⇒ **THE ANSWER MUST NAME WHICH COMPILE IT SPEEDS UP.** A cold first build, a CI cache miss, a new contributor's first `cargo build`, and a profile switch each pay the RocksDB cost in full — those are real and recurring. Day-to-day iteration does not, and a swap justified on day-to-day iteration would be justified on a cost that is not being paid.\n\n⚠️ THE DISK COST IS UNCONTESTED THOUGH, and is a separate argument: one cached `librocksdb-sys` build directory measures **1.7 GB**. That compounds `[profile.dev]`'s own note about cargo having no GC.\n\n═══════════════════════════════════════════════\nIDEAS, UNRANKED, each with what it costs\n\n**A. redb — pure Rust, ACID, ordered B-tree, single-writer/multi-reader.**\n   ⭐ Named tables map to column families; ordered iteration is native; zero C or C++, so it compiles in seconds. Its concurrency model is EXACTLY reflow2's.\n   ⚠️ Younger and less battle-tested than RocksDB; single file rather than a directory of SSTs, which changes what backup and the `.reflow2/graph` layout mean.\n\n**B. fjall — pure Rust LSM, partitions ≈ column families.**\n   ⭐ The closest SEMANTIC match: same shape as what is there, so the port is the most mechanical of the options.\n   ⚠️ Also young — and being an LSM it inherits the compaction question that surfaced the same day (a live store at 7.4× the bytes of its content). Choosing it keeps that problem rather than dissolving it.\n\n**C. LMDB via `heed` — small C, memory-mapped, single-writer/multi-reader.**\n   ⭐ Decades of production use, named databases ≈ column families, ordered cursors, and it is SMALL — it compiles in seconds despite being C, so \"it is C\" and \"it is slow to build\" are not the same objection.\n   ⚠️ The map size must be declared up front and grown deliberately; a write that outgrows it fails rather than expanding. Still a C dependency, which the pure-Rust options remove outright.\n\n**D. libmdbx via `mdbx-rs` — LMDB's successor.**\n   ⭐ Keeps C's virtues and fixes the map-size ergonomics that are LMDB's sharpest edge.\n   ⚠️ A smaller community than any of the above; the bus factor is a real consideration for a store that holds the only copy of a design.\n\n**E. sled — pure Rust, ordered, embedded.**\n   ⚠️ Named for completeness rather than as a candidate: it has been pre-1.0 for years with a rewrite signalled. A design store is the wrong place to take that bet.\n\n**F. SQLite via `rusqlite` (bundled) — and it could collapse TWO dependencies.**\n   ⭐⭐ The interesting one, because SQLite's FTS5 could replace **tantivy** as well — the 847-line `dynograph-text` crate that increment 5 of the absorption would otherwise bring in. One dependency instead of two, and the most battle-tested storage engine in existence.\n   ⚠️ A relational engine wearing a KV trait is a mismatch in spirit, and prefix scans become index scans; performance would have to be measured rather than assumed. Bundled SQLite is still a C compile, though a far smaller one.\n\n**G. KEEP RocksDB AND ATTACK THE COST THAT IS ACTUALLY PAID.** sccache or a prebuilt artifact for cold/CI builds; or feature-gate it out of the builds that do not need it (`--no-default-features` already runs the core suite without it).\n   ⭐ The honest status quo, and the only option that needs no port. It is also what the measurement above argues for if the pain is day-to-day iteration rather than cold builds.\n   ⚠️ It does nothing for the disk cost, nothing for the C++ toolchain requirement, and nothing for a contributor's first build.\n\n═══════════════════════════════════════════════\n📌 WHAT NOBODY HAS COSTED, so the list is not read as an estimate\n\nNo measurement exists of a COLD build's RocksDB share (the number that would justify A-F), of any candidate's compile time in this tree, or of any candidate's read latency on a 3,100-node design. The seam's narrowness makes a spike genuinely cheap — one file, six functions, and an existing in-memory implementation to copy the shape from — so **the honest next step is to build one behind the trait and measure, rather than to choose from this list on paper.**\n\n⚠️ AND A BOUND ON THE WHOLE QUESTION: `KvBackend` lives in dynograph-foundation, not reflow2. Until the absorption's increment 5 lands, changing it means changing somebody else's repository — which `dec:idea-dynograph-crates-independent-in-code-coupled-in-release` says reflow2's design has no standing to decide. **Absorb first, then swap** is the ordering that keeps this inside reflow2's own walls.",
+        "name": "OPEN — is there a byte store that meets the six-function KvBackend seam as well as RocksDB does, and compiles in seconds rather than minutes?",
+        "rationale": "Recorded via the brainstorm skill at `proposed`. Anthony thinking out loud, 2026-08-24, immediately after the RocksDB DEBUG_LEVEL exchange. Nothing here is intent and nothing is planned.\n\nThe premise was measured before the options were listed — not to argue the question down, but because it changes what a good answer has to be. \"Faster to compile\" is true of every option here for a COLD build and true of none of them for the iteration loop that was actually slow today.\n\nDEDUP: read three near-matches in full. `dec:idea-swap-dynograph-foundation-as-the-substitutability-demo` is REJECTED and asks about reimplementing the whole foundation — its cost argument (48 files import dynograph_core) does not reach a six-function trait with an existing second implementation. `dec:absorb-the-foundation-subset-and-end-the-dependency` decides WHAT to absorb, not what the bytes land on. `dec:idea-where-does-the-10k-work-actually-land` already records that \"the byte store is already swappable\" and asks a scaling question instead.",
         "status": "proposed"
       }
     },
@@ -125291,10 +125423,10 @@
       "node_id": "dep:dynograph-foundation",
       "node_type": "Resource",
       "properties": {
-        "components": "dynograph-core,dynograph-storage,dynograph-graph,dynograph-resolution",
+        "components": "dynograph-core,dynograph-storage,dynograph-graph",
         "declared_in": "Cargo.toml",
         "dependency_graph_id": "dynograph-foundation",
-        "description": "Derived from reflow2's own Cargo.toml, not hand-written.\n\n🛑 **`dynograph-vector` LEFT THIS LIST 2026-08-24** — increment 1 of `dec:absorb-the-foundation-subset-and-end-the-dependency` (`chg:absorb-vector-stats`). reflow2 called `mean` and `linear_regression_slope` and nothing else, so those two functions were absorbed into `crates/reflow2-core/src/stats.rs` with a header naming the tag, commit and file they came from. 436 of that crate's 2,377 lines were ever reachable; two functions of nine were ever called.\n\n⚠️ **IT IS STILL IN THE BUILD GRAPH AND THIS RECORD MUST NOT IMPLY OTHERWISE.** `dynograph-resolution` declares `dynograph-vector` as a dependency of its own, so cargo keeps building it until increment 2 lands. Verified with `cargo tree -p reflow2-core -i dynograph-vector`, not assumed. **One line out of Cargo.toml is not one crate out of the build.**\n\n⭐ `graph_id` SET 2026-08-24, and it had been null: dynograph-foundation HAS its own reflow2 design (`describe_designs`, which opens nothing — origin `adopted`, minted by 0.16.0, a committed 179-node export and a published surface carrying 15 Interfaces). A sibling decision node still asserts it has none; that premise was true when written and is false now.\n\nHISTORY KEPT: bumped v0.11.0 → v0.12.0 on 2026-07-28 for a stated reason rather than as housekeeping — v0.12.0 closes a type leak reflow2 was structurally exposed to (`search_fulltext` returned `dynograph_text::TextHit`, from a crate reflow2 never names and reaches only through an optional feature) and makes the `rocksdb` and `fulltext` feature NAMES a committed contract upstream. Verified before the tag existed by building this consumer against the provider's unreleased tree. MIGRATION CHECKED, not assumed: `keys.rs` and `backend.rs` are untouched between the tags, so a graph written by v0.11.0 reads identically.",
+        "description": "Derived from reflow2's own Cargo.toml, not hand-written.\n\n🛑 **THREE OF SIX CRATES ARE NOW GONE.** `dynograph-vector` left 2026-08-24 (increment 1, `chg:absorb-vector-stats`); `dynograph-resolution` left the same day (increment 2, `chg:absorb-resolution-fuzzy`) — and removing resolution took vector out of the BUILD GRAPH too, since resolution was the last path to it after increment 1 removed the direct line. Verified with `cargo tree`, not assumed: `dynograph-vector` and `dynograph-resolution` now appear zero times.\n\n⭐ INCREMENT 1 PREDICTED THIS IN WRITING and it came true exactly: \"One line out of Cargo.toml is not one crate out of the build.\" That caveat is now discharged.\n\nWHAT WAS ABSORBED, and what was left:\n  • `mean` + `linear_regression_slope` → `reflow2-core/src/stats.rs`. Left: 7 of 9 functions, `hnsw.rs` (1,165 lines), `distance.rs` (776).\n  • `token_sort_ratio` + its closure → `reflow2-core/src/fuzzy.rs`. Left: `PreparedName`, and `resolver.rs` (911 lines — an EntityResolver reflow2 never called).\nEach carries a header naming repo, tag, commit, file, what was taken and what was deliberately left.\n\nREMAINING: `dynograph-core`, `dynograph-graph`, `dynograph-storage` — plus `dynograph-text`, reached transitively through storage's `fulltext` feature and never named here. Increments 3, 4 and 5 of `dec:absorb-the-foundation-subset-and-end-the-dependency` take them; only the last one ends the dependency.\n\nHISTORY KEPT: bumped v0.11.0 → v0.12.0 on 2026-07-28 for a stated reason rather than as housekeeping — v0.12.0 closes a type leak reflow2 was structurally exposed to (`search_fulltext` returned `dynograph_text::TextHit`, from a crate reflow2 never names and reaches only through an optional feature) and makes the `rocksdb` and `fulltext` feature NAMES a committed contract upstream. Verified before the tag existed by building this consumer against the provider's unreleased tree. MIGRATION CHECKED, not assumed: `keys.rs` and `backend.rs` are untouched between the tags, so a graph written by v0.11.0 reads identically.",
         "features": "rocksdb,fulltext",
         "name": "dynograph-foundation",
         "provider": "https://github.com/sligara7/dynograph-foundation.git",
@@ -129538,6 +129670,17 @@
       }
     },
     {
+      "node_id": "fact:every-cost-number-today-was-a-debug-build-and-the-live-store-is-7x-its-content",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "name": "The build profile is worth 2.2x on loop_status, and the live store carries 7.4x the bytes of its own content — two separate costs, and today's earlier numbers named neither",
+        "statement": "MEASURED 2026-08-24 after Anthony pointed out that RocksDB compiles with assertions on unless DEBUG_LEVEL=0. He was right that it matters, and checking it found a second thing nobody was looking for.\n\n⭐ WHAT PROMPTED IT: every performance number recorded EARLIER THE SAME DAY — including the 22.6s for `loop_status` that `dec:the-stop-hook-asks-the-graph-asynchronously` rests on — was taken against `target/debug/reflow2-mcp`, and NONE of them said so. A prior session had been careful about exactly this (`fact:the-orientation-reads-cost-ten-seconds-and-the-store-is-not-why` states 'MEASURED on real RocksDB with a RELEASE binary'), so the project already knew it mattered.\n\n═══ THE CONTROLLED COMPARISON ═══\n\nBoth binaries built from the SAME commit the same afternoon (debug 14:02, release 14:21). Both read the SAME freshly-imported store, seeded once. Profile is the only variable:\n\n    call            release   debug    ratio\n    loop_status       4.5s     9.9s     2.2x\n    detect_gaps      0.98s     1.97s    2.0x\n    claim_report     0.00s     0.00s      --\n\n⇒ **THE BUILD PROFILE IS WORTH ABOUT 2.2x ON THIS CALL.** Real, and users run the release binary while every number quoted today came from debug.\n\n═══ 🛑 AND THE BIGGER SURPRISE, WHICH IS NOT THE PROFILE ═══\n\nBoth of those are FAR below the 22.6s measured this morning. That gap must not be attributed to the profile, because THREE things differ between the two measurements and only one was controlled:\n\n  1. BUILD PROFILE — measured: 2.2x.\n  2. STORE PHYSICAL STATE — the live store is **89 MB across 25 SST files**; a fresh store holding the SAME 3,111 nodes from the same export is **12 MB with 0 SSTs**. Identical logical content, **7.4x the bytes**, from months of accumulated overwrites and uncompacted levels.\n  3. TRANSPORT — this morning went over the shared HTTP daemon; this went over stdio, direct.\n\n⚠️ **(2) IS A SIZE MEASUREMENT, NOT A LATENCY ONE.** 7.4x the bytes is correlated with the slowdown and is a plausible cause; nothing here proves it drives the latency. Saying it does would be the same error this project has already paid for once — two numbers agreeing is not causation, and that lesson was recorded THIS MORNING.\n\n═══ WHAT SURVIVES, AND WHAT NEEDS QUALIFYING ═══\n\n✅ `dec:the-stop-hook-asks-the-graph-asynchronously` STANDS. Even at the most favourable figure here — 4.5s, release binary, fresh store, direct transport — a Stop hook that blocks that long is unacceptable, and the path the hook actually runs on is demonstrably slower than that.\n\n🛑 BUT ITS STATED NUMBER IS UNDER-QUALIFIED. '22.6s, repeatably' is TRUE as measured — live graph, shared HTTP daemon, debug binary — and reads as a property of the call. **A number is a measurement of a whole setup, not of the code**, and a later reader comparing it against a release build on a fresh store will conclude the earlier work was wrong when it was only differently situated.\n\n═══ ⭐ THE LEAD WORTH FOLLOWING, and it is cheaper than anything discussed today ═══\n\nIf the store's physical state does drive the latency, a COMPACTION of the live store is a far cheaper win than any code change considered today — and nothing in reflow2 currently reports that its own store has grown to several times the size of its content. That is unmeasured and is stated here as a lead rather than a finding.",
+        "subject_id": "cap:loop-status",
+        "valid_from": "2026-08-24"
+      }
+    },
+    {
       "node_id": "fact:every-reply-was-sent-twice",
       "node_type": "TemporalFact",
       "properties": {
@@ -130330,6 +130473,17 @@
         "statement": "READ 2026-08-21 in /home/ajs7/project/dynograph-foundation, at Anthony's invitation (\"dynograph-foundation is also my project... we can also review it\"). READ ONLY — nothing was written to that repo.\n\nITS DESIGN SAYS: `ifc:kv-backend`, designation **published**, named \"KvBackend trait (storage seam)\", spec \"The narrow seam underneath StorageEngine. All schema-aware behaviour — validation, the reverse index, the read cache, the write-buffer overlay, the full-text sidecar — sits ABOVE this trait; everything that touches bytes goes through it\", operations \"six byte-level primitives over six named column families, plus ordered prefix iteration\".\n\nITS CODE SAYS: `pub(crate) trait KvBackend: Send + Sync` (crates/dynograph-storage/src/backend.rs:210). Two implementations, `MemoryBackend` and `RocksBackend`. No public re-export found.\n\n⇒ THE SEAM IS REAL AND IT IS NOT REACHABLE. Swappable from INSIDE dynograph-foundation, not from outside it. A new backend — object storage, a networked KV, something sharded — is a change to that repo, not something reflow2 or flo2 could supply. That is fine while one person owns all three and is worth knowing before anyone plans otherwise.\n\n⭐ WHY THIS ONE MATTERS MORE THAN AN ORDINARY VISIBILITY MISMATCH. `fact:the-diamond-meets-at-dynographs-internals-not-its-interface` established that reflow2 and storyflow consume DISJOINT surfaces over one shared implementation, and that \"neither consumer's graph can see that layer at all\". `ifc:kv-backend` is the ONE node in any of these designs that names that layer. So the single place the shared substrate is modelled is also the place where the design and the code disagree about whether anyone may build on it.\n\n⭐ AND IT IS THE SEAM THE 10k QUESTION TURNS ON. `dec:idea-where-does-the-10k-work-actually-land` records the reading that a hosted byte store is a new `impl KvBackend` needing no reflow2 change, because `StorageEngine` holds `Box<dyn KvBackend>` and does not change type. That reading is correct about the SHAPE and depends on this visibility: today only dynograph-foundation can supply one.\n\n📌 ALSO OBSERVED IN THE SAME READ, unprompted and relevant to flo2's architecture: dynograph-foundation already has the hosted-service shape, and it is real in code rather than aspirational. `ifc:rest-v1` is specified 9/9 — 80 operations at /v1, bearer JWT when configured. `ifc:auth-provider` is a PUBLIC trait (`pub use auth::{AuthProvider, BearerJwt, Identity, NoAuth}` in dynograph-service), described as \"an EXTENSION POINT\", with an integration test asserting a JWT is rejected without a token and accepted with one. There are `dynograph-service` and `dynograph-client` crates, plus `ifc:ops-probes` at 8/9 and a Unix-socket transport. flo2's tracker states \"reflow2 has NO AUTHENTICATION and is not getting any — AuthN and authZ are flo2's, at the layer in front\", which is true of reflow2 and NOT true of the layer beneath it.\n\n⚠️ NOT ESTABLISHED, and deliberately not assumed: whether reflow2 could usefully run as a CLIENT of a dynograph-service rather than embedding StorageEngine. It would not be a `KvBackend` swap — that trait is byte-level and synchronous, and putting HTTP under it per operation would be worse, not better. It would be a swap at the graph-operations level, roughly where `ifc:graph-read` sits. Offered as a shape nobody has costed, not as a recommendation.\n\n⚠️ BOUND: dynograph-foundation's committed export was written by reflow2 0.16.0 on 2026-07-27 and its working tree is at v0.12.0. The design may lag its own code; only the two facts above were checked against source.",
         "subject_id": "dep:dynograph-foundation",
         "valid_from": "2026-08-21"
+      }
+    },
+    {
+      "node_id": "fact:the-target-dir-reached-263-gib-of-this-projects-own-test-binaries",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "name": "cargo's missing GC filled the disk to 100%: 263 GiB in 484,912 artifacts, almost all duplicate copies of reflow2's OWN two crates — and the surgical sweep keeps RocksDB cached",
+        "statement": "MEASURED 2026-08-24, when a `cargo test --workspace` failed with `No space left on device (os error 28)` and Anthony's desktop reported 756.8 MB free. It arrived sideways — nobody was looking at disk; increment 2 of the foundation absorption was being verified.\n\n═══ WHAT WAS THERE ═══\n\n    filesystem            468 G total, 428 G used, 17 G free (97%)  — briefly 43 MB\n    target/debug          267 G\n      └ deps             263 G across 472,078 artifacts\n      └ incremental       22 G\n    reflow2_core|reflow2_mcp artifacts       159,247\n    ONE reflow2_mcp test binary                 290 MB\n    liblibrocksdb_sys.rlib                      856 MB  (the single largest dep)\n\n⇒ **THE BULK IS NOT DEPENDENCIES. IT IS THIS PROJECT'S OWN TWO CRATES, over and over.** Every `cargo test --workspace` mints another generation of ~290 MB test binaries and nothing ever removes the previous one. Four workspace runs in one session is a meaningful fraction of a terabyte.\n\n═══ ⭐ THE SWEEP, AND WHICH COMMAND MATTERS ═══\n\n    cargo clean -p reflow2-core -p reflow2-mcp\n    → Removed 484,912 files, 263.1 GiB\n    → target/debug 267 G → 6.1 G ; disk 97% → 38% used, 277 G free\n    → liblibrocksdb_sys.rlib STILL CACHED (896,538,384 bytes, verified after)\n\n🛑 **THE `-p` FLAGS ARE THE WHOLE POINT.** A bare `cargo clean` reclaims the same space and ALSO destroys the cached RocksDB C++ build — a ~19-minute rebuild bought for nothing, since the 263 GiB is not RocksDB. Scoped to the two crates, only reflow2's own code recompiles, which was going to happen anyway. `rm -rf target/debug/incremental` is the free first move: pure cache, always safe, 22 GB here.\n\n═══ IT WAS ALREADY DIAGNOSED, AND HAD GROWN ~87× SINCE ═══\n\n`[profile.dev]` in the workspace Cargo.toml already carries the finding: *\"cargo has no GC. target/debug/deps held 1,824 artifacts under 104 distinct names (43 copies of the reflow2_mcp test binary alone); sweeping the stale duplicates recovered 225 GiB. Sweep first when the disk is tight; these settings only slow the refill.\"*\n\nThat comment is still true and is NOT superseded — it describes an earlier sweep. What is new: **1,824 artifacts became 159,247 for these two crates**, and the comment says WHAT happened without naming the command that does it safely. That gap is what cost this session a failed test run.\n\n⚠️ NOT MEASURED, so the number is not read wider than it is: how fast it refills per workspace run. Four runs happened between the previous healthy state and the wall, but nothing sampled the growth in between, so \"a few runs fills a disk\" is an inference from two endpoints rather than a rate.\n\n═══ WHERE THIS BEARS ON AN OPEN QUESTION ═══\n\n`dec:idea-a-byte-backend-that-compiles-in-seconds` records that RocksDB's DISK cost is uncontested even though its COMPILE cost turned out not to be what made this session slow (measured: zero RocksDB recompiles across three long builds). This measurement sharpens both halves — RocksDB's 856 MB artifact is real but is 0.3% of what actually filled the disk. **A backend swap would not have prevented this.**",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-24"
       }
     },
     {
@@ -133158,7 +133312,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:0e974eaf39670171187b2e3ee9def7e8915f45de434d4965a637b35234d37448",
+  "prev_content_hash": "sha256:9335e6c3627c6e2056c7697dc8bacc1f87fd8529c94c52dc2d0c0f945a5ea3c6",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -74,8 +74,10 @@ pub mod schema;
 pub mod scope;
 pub mod seam;
 pub mod search;
-// Absorbed from dynograph-vector at v0.12.0 — private on purpose; see the
-// module header for why an absorbed file does not widen the public surface.
+// Absorbed from dynograph-foundation at v0.12.0 — private on purpose; see each
+// module header for what was taken, what was left, and why an absorbed file
+// does not widen the public surface.
+mod fuzzy;
 mod stats;
 pub mod structure;
 pub mod surprises;
