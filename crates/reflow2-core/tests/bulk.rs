@@ -255,6 +255,7 @@ fn each_accepted_checksum_keeps_its_own_disposition() {
         None,
         None,
         None,
+        None,
     )
     .unwrap();
 

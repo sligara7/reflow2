@@ -1,0 +1,11 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Every finding some record CLAIMS to have answered, and whether a re-run is owed (the read half of `invalidates`). One row per Verification or TemporalFact carrying an inbound INVALIDATES edge, with who claimed it, when, and why. `rerun_owed` is THREE-VALUED and the third value is the point: true = the repair postdates the last run, false = the run already reflects it, and NULL = one side carries no date, so nobody can say — never read null as false. Findings here keep their own recorded status untouched: this says a verdict is STALE, never that it turned.",
+  "inputSchema": {
+    "properties": {},
+    "type": "object"
+  },
+  "name": "invalidated_findings"
+}

@@ -340,7 +340,7 @@ mod tests {
         // REFUSE a graph it cannot read rather than fault on one edge at a
         // time. A count pinned here is what forces the author of the next edge
         // type to notice they owe an upgrade note.
-        assert_eq!(schema.edge_types.len(), 63, "expected 63 edge types");
+        assert_eq!(schema.edge_types.len(), 64, "expected 64 edge types");
     }
 
     #[test]

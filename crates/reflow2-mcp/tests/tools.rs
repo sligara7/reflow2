@@ -598,6 +598,7 @@ async fn the_surface_can_say_that_nothing_moved() {
     // or the ledger's count of first baselines would measure nothing.
     assert!(
         s.add_change_event(Parameters(AddChangeEventReq {
+            detected_at: None,
             summary: None,
             rationale: None,
             id: "chg:fake".into(),
@@ -605,9 +606,9 @@ async fn the_surface_can_say_that_nothing_moved() {
             change_type: Some("baseline_established".into()),
             subject: None,
             affected: None,
-        }))
-        .await
-        .is_err(),
+        }),)
+            .await
+            .is_err(),
         "`baseline_established` is reserved for set_artifact_checksum"
     );
 }
@@ -781,7 +782,7 @@ async fn describe_schema_returns_the_whole_vocabulary() {
         // places on purpose: the schema loader, describe_vocabulary, and here
         // at the SERVED surface. An edge type that existed but was not
         // discoverable through the tool would be vocabulary nobody could reach.
-        63,
+        64,
         "every edge type is discoverable"
     );
 }
@@ -1915,6 +1916,7 @@ async fn change_event_declares_what_it_changed_atomically() {
     // written — no event, no partial edge set.
     let refused = s
         .add_change_event(Parameters(AddChangeEventReq {
+            detected_at: None,
             summary: None,
             rationale: None,
             id: "chg:wind".into(),
@@ -1942,6 +1944,7 @@ async fn change_event_declares_what_it_changed_atomically() {
     // A bogus action is refused the same way.
     let bad_action = s
         .add_change_event(Parameters(AddChangeEventReq {
+            detected_at: None,
             summary: None,
             rationale: None,
             id: "chg:wind".into(),
@@ -1959,6 +1962,7 @@ async fn change_event_declares_what_it_changed_atomically() {
 
     // The valid call draws the CHANGED edges in the same write.
     let res = j!(s.add_change_event(Parameters(AddChangeEventReq {
+        detected_at: None,
         summary: None,
         rationale: None,
         id: "chg:wind".into(),
@@ -1977,7 +1981,7 @@ async fn change_event_declares_what_it_changed_atomically() {
                 action: None,
             },
         ]),
-    })));
+    }),));
     assert_eq!(res["event"]["node_id"], "chg:wind");
     let changed = res["changed"].as_array().expect("changed list");
     assert_eq!(changed.len(), 2);
@@ -2038,6 +2042,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
     );
 
     j!(s.add_change_event(Parameters(AddChangeEventReq {
+        detected_at: None,
         summary: None,
         rationale: None,
         id: "chg:tune".into(),
@@ -2045,7 +2050,7 @@ async fn temporal_resource_and_realization_tools_round_trip() {
         change_type: Some("refactor".into()),
         subject: None,
         affected: None,
-    })));
+    }),));
     // record_change snapshots the prior state before applying — the axis-Z write.
     let rec = j!(s.record_change(Parameters(RecordChangeReq {
         epoch_id: "epoch:v2".into(),

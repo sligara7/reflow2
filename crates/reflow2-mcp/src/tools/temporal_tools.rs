@@ -370,6 +370,7 @@ impl ReflowService {
                 subject,
                 req.summary.as_deref(),
                 req.rationale.as_deref(),
+                req.detected_at.as_deref(),
             )
             .map_err(dyno_err)?;
         let mut changed = Vec::new();

@@ -401,6 +401,152 @@ impl DesignGraph {
                 .set_opt("calibrated_at", calibrated_at),
         )
     }
+
+    /// `record INVALIDATES finding` — the work that answered a finding says so,
+    /// so the finding stops proposing work already done.
+    ///
+    /// Draw it from whatever recorded the work (a Constraint carrying a repair,
+    /// a ChangeEvent, a Decision) to whatever recorded the finding (a
+    /// Verification whose last run found it, a TemporalFact that measured it).
+    ///
+    /// ⭐ IT CLAIMS THE RESULT IS STALE AND NOTHING MORE. A repair does not make
+    /// a check pass; only a re-run can say what is true now. That is why the
+    /// edge is not called `RESOLVES`, and why nothing here touches the target's
+    /// `status` — `set_verification_status` remains the only thing that moves a
+    /// verdict, and it moves it on evidence.
+    ///
+    /// `at` is the date the invalidating work landed. Pass it whenever you have
+    /// it: [`Self::invalidated_findings`] compares it against the target's own
+    /// `last_run_at` to tell a re-run OWED from one already TAKEN, and with no
+    /// date it reports the claim as undated rather than assuming it is fresh.
+    pub fn invalidates(
+        &mut self,
+        from_type: &str,
+        from_id: &str,
+        finding_type: &str,
+        finding_id: &str,
+        note: Option<&str>,
+        at: Option<&str>,
+    ) -> Result<StoredEdge, DynoError> {
+        self.create_edge(
+            edge::INVALIDATES,
+            from_type,
+            from_id,
+            finding_type,
+            finding_id,
+            Props::new().set_opt("note", note).set_opt("at", at),
+        )
+    }
+
+    /// Every finding some record claims to have invalidated, with whether a
+    /// re-run is owed.
+    ///
+    /// THE READER THAT MAKES THE EDGE WORTH DRAWING. A marker nothing consults
+    /// is a comment — the failure this project has now found in `enforced`, in
+    /// `SUPERSEDES`, and in `OBSOLETES` — so this ships with the edge rather
+    /// than after it.
+    ///
+    /// It REPORTS and never judges: a finding here stays visible and counted,
+    /// exactly as a `parks` ruling leaves a parked node counted rather than
+    /// hidden. Silencing it would be the truncation the marker exists to end.
+    pub fn invalidated_findings(&self) -> Result<Vec<InvalidatedFinding>, DynoError> {
+        let mut out = Vec::new();
+        for finding_type in [node::VERIFICATION, node::TEMPORAL_FACT] {
+            for n in self.scan_nodes(finding_type)? {
+                let claims = self.incoming(&n.node_id, Some(edge::INVALIDATES))?;
+                if claims.is_empty() {
+                    continue;
+                }
+                let last_run_at = n
+                    .properties
+                    .get("last_run_at")
+                    .and_then(dynograph_core::Value::as_str)
+                    .map(str::to_string);
+                let mut by = Vec::new();
+                let mut newest: Option<String> = None;
+                let mut undated = 0usize;
+                for e in &claims {
+                    let at = e
+                        .properties
+                        .get("at")
+                        .and_then(dynograph_core::Value::as_str)
+                        .map(str::to_string);
+                    match &at {
+                        Some(a) => {
+                            if newest.as_deref().is_none_or(|n| a.as_str() > n) {
+                                newest = Some(a.clone());
+                            }
+                        }
+                        None => undated += 1,
+                    }
+                    by.push(InvalidationClaim {
+                        claimed_by: e.from_id.clone(),
+                        at,
+                        note: e
+                            .properties
+                            .get("note")
+                            .and_then(dynograph_core::Value::as_str)
+                            .map(str::to_string),
+                    });
+                }
+                // UNDATED IS REPORTED, NEVER GUESSED. With no date on either
+                // side the honest answer is that nobody can say whether the run
+                // already reflects the repair — not that it does.
+                let rerun_owed = match (&newest, &last_run_at) {
+                    (Some(a), Some(r)) => Some(a.as_str() > r.as_str()),
+                    _ => None,
+                };
+                by.sort_by(|a, b| a.claimed_by.cmp(&b.claimed_by));
+                out.push(InvalidatedFinding {
+                    finding_id: n.node_id.clone(),
+                    finding_type: finding_type.to_string(),
+                    status: n
+                        .properties
+                        .get("status")
+                        .and_then(dynograph_core::Value::as_str)
+                        .map(str::to_string),
+                    last_run_at,
+                    rerun_owed,
+                    undated_claims: undated,
+                    claimed_by: by,
+                });
+            }
+        }
+        out.sort_by(|a, b| a.finding_id.cmp(&b.finding_id));
+        Ok(out)
+    }
+}
+
+/// One record's claim that a finding is stale.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct InvalidationClaim {
+    /// The record that says so — a Constraint, a ChangeEvent, a Decision.
+    pub claimed_by: String,
+    /// When the invalidating work landed, where the caller said. `None` means
+    /// nobody dated it, which is reported rather than treated as recent.
+    pub at: Option<String>,
+    /// Why it invalidates the finding — what a later reader needs to judge it.
+    pub note: Option<String>,
+}
+
+/// A finding at least one record claims to have answered.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct InvalidatedFinding {
+    pub finding_id: String,
+    pub finding_type: String,
+    /// The finding's own recorded status, UNCHANGED by the claim. A `failing`
+    /// check stays `failing` here: this says the verdict is stale, never that
+    /// it has turned.
+    pub status: Option<String>,
+    pub last_run_at: Option<String>,
+    /// `Some(true)` = invalidating work lands AFTER the last run, so a re-run is
+    /// owed. `Some(false)` = the run already post-dates the work. **`None` =
+    /// one side carries no date and nobody can say** — never read as `false`.
+    pub rerun_owed: Option<bool>,
+    /// How many claims carry no date, so the reader can see what the verdict
+    /// above rests on.
+    pub undated_claims: usize,
+    pub claimed_by: Vec<InvalidationClaim>,
 }
 
 // ---- The P4 reconcile (BL-30's M half) -------------------------------------

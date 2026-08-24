@@ -297,3 +297,66 @@ schema:
       properties:
         note: { type: string, description: "What was fitted, and how — the part a later reader needs to judge whether the fit still stands." }
         calibrated_at: { type: string, description: "When the fit was made, if recorded. The core takes no clock and never asks the system the time." }
+
+    INVALIDATES:
+      # ⭐ WHY THIS EXISTS: a finding survives the work that answered it, and
+      # goes on proposing work already done.
+      #
+      # dev_storyflow, 2026-08-23, and it cost a real user a real instruction:
+      # `where-am-i` read a Verification with status `failing` and `last_run_at`
+      # of that same day, and reported its two defects to the user as the live
+      # state of the system. BOTH HAD BEEN FIXED HOURS EARLIER by the previous
+      # session, recorded properly on two Constraint nodes with commit shas. The
+      # graph was right and every node was right; the COMPOSITION was wrong,
+      # because nothing joined the repair to the check that found it. The user
+      # acted on the report, and the first thing the session did was discover
+      # the work was already done.
+      #
+      # `describe_schema(from: Constraint, to: Verification)` returned ZERO
+      # exact matches. The nearest honest assertion available was CONTRADICTS
+      # with `alignment: opposing`, which the reporter drew and called "obviously
+      # a stand-in" — "these two claims conflict" is not "this repair invalidates
+      # that run", and a defect detector reads it as a design inconsistency
+      # rather than as a re-run owed.
+      #
+      # ⭐⭐ WHY `INVALIDATES` AND NOT `RESOLVES`, WHICH WAS THE FIRST NAME
+      # TRIED. A repair does NOT make a check pass. It makes the last RESULT
+      # untrustworthy, and only a re-run can say what is true now. `RESOLVES`
+      # would have reflow2 asserting an outcome nobody measured, which is
+      # `dec:non-goal-reflow2-does-not-judge-whether-a-check-is-meaningful` one
+      # step along. This edge claims exactly one thing: the result below is
+      # stale. What replaces it is a run's business.
+      #
+      # ⭐ AND IT IS DELIBERATELY GENERAL, `* -> *`. The reporter proposed
+      # `INVALIDATES_RUN` for Constraint -> Verification. The same missing
+      # relation was measured independently on this project six days earlier and
+      # on Anthony's other machine, both times on a TemporalFact rather than a
+      # Verification: `dec:idea-how-does-the-graph-learn-what-a-session-invalidated`
+      # option C asked for "an edge from a ChangeEvent to the finding it
+      # ANSWERS". Two projects, three sightings, two node types, one relation —
+      # so the `_RUN` suffix comes off and the endpoints stay open. A design's
+      # findings live wherever that design put them.
+      #
+      # 🛑 IT IS A CLAIM, NEVER AN INFERENCE, and that is what made it the
+      # answer rather than a computed staleness bucket. Inferring staleness
+      # needs to order a change against `last_run_at`, and MEASURED 2026-08-24:
+      # of 439 hand-written ChangeEvents only 37 (8%) carry `detected_at`,
+      # because `add_change_event` had no parameter for it. The inference was
+      # unbuildable honestly; the claim needs no clock at all.
+      from: "*"
+      to: "*"
+      extraction_hint: >
+        Source RECORD makes a target FINDING stale — a repair against the check
+        that found it, a change against the observation that measured it. It
+        says the finding's result can no longer be read as current; it does NOT
+        say what is true instead, which only a re-run or a re-measurement can.
+        Draw it from whatever recorded the work (a Constraint, a ChangeEvent, a
+        Decision) to whatever recorded the finding (a Verification, a
+        TemporalFact).
+      properties:
+        note:
+          type: string
+          description: "WHY this record invalidates that finding — the sentence a later reader needs in order to judge whether the claim still stands. This is the half that makes the edge auditable rather than merely present."
+        at:
+          type: string
+          description: "WHEN the invalidating work landed, as a plain date. Compared against the target's own `last_run_at` so a re-run owed can be told from one already taken — the ONLY ordering this edge needs, and both sides are caller-supplied. The core takes no clock and never asks the system the time; an undated claim is REPORTED as undated, never assumed fresh."

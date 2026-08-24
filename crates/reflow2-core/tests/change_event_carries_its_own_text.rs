@@ -42,6 +42,7 @@ fn the_constructor_records_why_without_a_second_write() {
             "Pinned to 0.20 and added a close-frame assertion so the timing is checked \
               rather than tolerated.",
         ),
+        None,
     )
     .expect("one call must be enough");
 
@@ -70,6 +71,7 @@ fn text_is_optional_and_absence_writes_nothing() {
         None,
         None,
         None,
+        None,
     )
     .expect("no text is a true answer");
 
@@ -91,6 +93,7 @@ fn a_later_call_that_omits_the_text_does_not_erase_it() {
         None,
         Some("what changed"),
         Some("why it changed"),
+        None,
     )
     .expect("first write");
 
@@ -98,6 +101,7 @@ fn a_later_call_that_omits_the_text_does_not_erase_it() {
         "chg:keep",
         "renamed",
         ChangeType::Refactor,
+        None,
         None,
         None,
         None,

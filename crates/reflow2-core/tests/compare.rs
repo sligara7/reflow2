@@ -36,6 +36,7 @@ fn seed(g: &mut DesignGraph) {
         None,
         None,
         None,
+        None,
     )
     .expect("change event");
 }
