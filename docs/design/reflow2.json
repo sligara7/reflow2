@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:69af93d88f74b39e540c9bfe4a01e2499247ada6cf2210bea343c816e28a33af",
+  "content_hash": "sha256:e505f807926a1fefa455e96e1d519724dd25f4900819e8c69009f5cf2f4c8ab7",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1044,6 +1044,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-repair-can-say-what-it-invalidated",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:verify"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -2436,6 +2444,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:provenance"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:stop-nudge-asks-the-graph",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:nudge"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -11344,6 +11360,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-stop-hook-asks-the-graph-asynchronously",
+      "properties": {
+        "acted_at": "2026-08-24",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:the-telemetry-kpp-question-waits-for-flo2",
       "properties": {
         "acted_at": "2026-08-09",
@@ -11685,6 +11710,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:a961bfe399679dbf",
+      "properties": {
+        "acted_at": "2026-08-24",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:b2209f9f6cdaa2f5",
       "properties": {
         "acted_at": "2026-08-23",
@@ -11823,6 +11857,15 @@
       "from_id": "decision:ack:dd6bbd09915b0ff0",
       "properties": {
         "acted_at": "2026-08-23",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:ed8660a4500b431b",
+      "properties": {
+        "acted_at": "2026-08-24",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -19001,6 +19044,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:baseline-dc5be23c700ad7ed",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-repair-can-say-what-it-invalidated"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:baseline-e1aa7514ebda2b48",
       "properties": {
         "accepted_baseline": true,
@@ -19025,6 +19077,15 @@
         "action": "modified"
       },
       "to_id": "art:test-mirror-refresh"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-f890e3c1f1325279",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph-probe"
     },
     {
       "edge_type": "CHANGED",
@@ -26355,6 +26416,69 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:stop-hook-asks-the-graph",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:kit-instructions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:stop-hook-asks-the-graph",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:stop-hook-asks-the-graph",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:release-workflow"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:stop-hook-asks-the-graph",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:stop-hook-asks-the-graph",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:skill-triggers"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:stop-hook-asks-the-graph",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:stop-nudge-asks-the-graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:stop-hook-asks-the-graph",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "dec:the-stop-hook-asks-the-graph-asynchronously"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:storyflow-feedback-review-20260808",
       "properties": {
         "accepted_baseline": false,
@@ -27702,6 +27826,24 @@
         "action": "modified"
       },
       "to_id": "rule:fix-it-properly-while-it-is-still-cheap"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-repair-capability-gets-its-thread",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:a-repair-can-say-what-it-invalidated"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-repair-capability-gets-its-thread",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:verify"
     },
     {
       "edge_type": "CHANGED",
@@ -29107,6 +29249,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "ifc:graph-read"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:nudge",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:mcp-tools-http"
     },
     {
       "edge_type": "CONSUMES",
@@ -33733,6 +33883,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:brainstorm",
+      "properties": {},
+      "to_id": "decision:ack:a961bfe399679dbf"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:budget",
       "properties": {},
       "to_id": "decision:ack:07bb37be6d5cd129"
@@ -33820,6 +33976,12 @@
       "from_id": "cap:capture-registers-its-source",
       "properties": {},
       "to_id": "dec:idea-should-a-requirement-trace-back-to-its-demand-signal"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:capture-registers-its-source",
+      "properties": {},
+      "to_id": "decision:ack:a961bfe399679dbf"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -35089,6 +35251,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:governance-proposal",
+      "properties": {},
+      "to_id": "decision:ack:a961bfe399679dbf"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:granularity-observation",
       "properties": {},
       "to_id": "dec:maturity-restructuring-delta"
@@ -36115,6 +36283,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:optimize-skill",
+      "properties": {},
+      "to_id": "decision:ack:a961bfe399679dbf"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:ownership-is-durable",
       "properties": {
         "note": "The decision that built it, and that records what was deliberately NOT built: the ownership-orphan detector."
@@ -36132,6 +36306,12 @@
       "from_id": "cap:parallel-work",
       "properties": {},
       "to_id": "decision:ack:7a268920fdfe0ba7"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:parallel-work",
+      "properties": {},
+      "to_id": "decision:ack:a961bfe399679dbf"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -37497,6 +37677,24 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:the-agent-asks-who-it-is-talking-to",
+      "properties": {},
+      "to_id": "decision:ack:a961bfe399679dbf"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:the-foundation-is-one-subsystem-not-two-halves",
+      "properties": {},
+      "to_id": "decision:ack:ed8660a4500b431b"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:the-loop-holds-the-invitation",
+      "properties": {},
+      "to_id": "decision:ack:a961bfe399679dbf"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:the-record-moved-is-surfaced",
       "properties": {},
       "to_id": "dec:idea-the-graph-notices-the-record-moved-without-being-asked"
@@ -38016,6 +38214,12 @@
       "from_id": "cmp:skills",
       "properties": {},
       "to_id": "decision:ack:7a268920fdfe0ba7"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:skills",
+      "properties": {},
+      "to_id": "decision:ack:a961bfe399679dbf"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -41363,6 +41567,22 @@
         "note": "The first IMPLEMENTS edge in this design, drawn on the check that proves the edge works - dogfooded rather than declared. All seven cases live in this file, so `covers: whole` is exact."
       },
       "to_id": "ver:record-to-record-relations-are-modelled"
+    },
+    {
+      "edge_type": "IMPLEMENTS",
+      "from_id": "art:test-a-repair-can-say-what-it-invalidated",
+      "properties": {
+        "covers": "whole"
+      },
+      "to_id": "ver:a-repair-can-say-what-it-invalidated"
+    },
+    {
+      "edge_type": "IMPLEMENTS",
+      "from_id": "art:test-loop-nudge",
+      "properties": {
+        "covers": "whole"
+      },
+      "to_id": "ver:stop-nudge-asks-the-graph"
     },
     {
       "edge_type": "INCLUDES",
@@ -90798,6 +91018,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:graph-probe",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:stop-nudge-asks-the-graph"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:graph-read",
       "properties": {
         "completeness": "complete",
@@ -91070,6 +91299,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:loop-nudge",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:stop-nudge-asks-the-graph"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:machine-install",
       "properties": {
         "completeness": "complete"
@@ -91182,6 +91420,15 @@
         "conformance": "verified"
       },
       "to_id": "cap:a-component-can-be-moved-not-just-given-another-parent"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:nodes",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-repair-can-say-what-it-invalidated"
     },
     {
       "edge_type": "REALIZES",
@@ -91776,6 +92023,15 @@
       "edge_type": "REALIZES",
       "from_id": "art:service",
       "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-repair-can-say-what-it-invalidated"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:service",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cap:read-loop-hint"
@@ -92045,6 +92301,15 @@
         "conformance": "verified"
       },
       "to_id": "cap:a-change-event-is-written-complete-in-one-call"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:temporal",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-repair-can-say-what-it-invalidated"
     },
     {
       "edge_type": "REALIZES",
@@ -92330,6 +92595,15 @@
         "conformance": "unchecked"
       },
       "to_id": "cmp:tools-ask"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-assure",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-repair-can-say-what-it-invalidated"
     },
     {
       "edge_type": "REALIZES",
@@ -92688,6 +92962,15 @@
         "conformance": "unchecked"
       },
       "to_id": "cap:a-check-records-what-it-found-separately-from-what-it-is"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:verify",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-repair-can-say-what-it-invalidated"
     },
     {
       "edge_type": "REALIZES",
@@ -94099,6 +94382,12 @@
       "from_id": "cap:stamp",
       "properties": {},
       "to_id": "req:survives-upgrade"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:stop-nudge-asks-the-graph",
+      "properties": {},
+      "to_id": "req:skill-use-survives-a-long-session"
     },
     {
       "edge_type": "SATISFIES",
@@ -95705,6 +95994,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-repair-can-say-what-it-invalidated",
+      "properties": {},
+      "to_id": "cap:a-repair-can-say-what-it-invalidated"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-reply-is-sent-once",
       "properties": {},
       "to_id": "cap:bounded-reads"
@@ -96692,6 +96987,12 @@
       "from_id": "ver:stateless-seat",
       "properties": {},
       "to_id": "req:seat-per-client"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:stop-nudge-asks-the-graph",
+      "properties": {},
+      "to_id": "cap:stop-nudge-asks-the-graph"
     },
     {
       "edge_type": "VERIFIES",
@@ -99532,6 +99833,17 @@
       }
     },
     {
+      "node_id": "art:graph-probe",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:282a002484a8338f7e7a3c56e6d6476d52728ce3b510e7f44c52fe96800d38d4",
+        "location": "tools/graph_probe.py",
+        "name": "graph_probe.py",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:graph-read",
       "node_type": "Artifact",
       "properties": {
@@ -99675,7 +99987,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:c5c52b1a6a96bd8d6ffae28b2250920c02731cacada309e9f9e453d07f52fb74",
+        "checksum": "sha256:dc976b3a70dfae5fc0ca6fcee2ed77f7498db62408808ce2449b2eb894e27a51",
         "granularity": "atomic",
         "location": "getting-started/AGENTS.md",
         "name": "getting-started/AGENTS.md",
@@ -99740,7 +100052,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:337e0f5d99a3abf98407f6c471c5d902b1850fd35bdf7c826d09261cedc27528",
+        "checksum": "sha256:6e00a706c3573ed2303f8acd64aa0b033b5e74396296e2610dc47b2637afbdb9",
         "granularity": "atomic",
         "location": "tools/loop_nudge.py",
         "name": "loop_nudge.py",
@@ -100126,7 +100438,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:079bd2025a17eeadc09a98cdfdf658b2cc78180bd06b11bb59fff5a410d011cc",
+        "checksum": "sha256:f9c4ad1100c2c5a822525a410e77389fc1579cf387b403b4258849cacc858bf2",
         "granularity": "atomic",
         "location": ".github/workflows/release.yml",
         "name": "release.yml",
@@ -100812,6 +101124,17 @@
       }
     },
     {
+      "node_id": "art:test-a-repair-can-say-what-it-invalidated",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:6770214bea12c53e80f106d2aba19e08171bd4cf7d0aea7d4dc95dfc12b29337",
+        "location": "crates/reflow2-core/tests/a_repair_can_say_what_it_invalidated.rs",
+        "name": "a_repair_can_say_what_it_invalidated.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:test-a-session-with-no-seed-can-find-one",
       "node_type": "Artifact",
       "properties": {
@@ -100916,7 +101239,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4d3313a3988968e436920662419a02f89fcc46d443d09ecd19d018bfe78dc688",
+        "checksum": "sha256:31ecda936996d2bd41306e5af62c518e946c0fb93b81dd986d01185150c3eb23",
         "granularity": "atomic",
         "location": "tools/test_loop_nudge.py",
         "name": "test_loop_nudge.py",
@@ -101693,7 +102016,7 @@
         "description": "The record that did the work names the finding it answered (`INVALIDATES`, `* -> *`, carrying `note` and `at`), and every surface that quotes a verdict reads it back.\n\nWRITE: `invalidates`. READ: `invalidated_findings`, plus `loop_status.verifications` (per-row `invalidated_by` / `rerun_owed` / a sentence, and a top-level `rerun_owed` summary) and `graph_report` from the same code. The `where-am-i` skill now gathers `Constraint` — where repairs are commonly written up — and calls `invalidated_findings` before quoting any failing verdict.\n\n⭐ THE READER SHIPPED WITH THE EDGE, deliberately. A marker nothing consults is a comment, a failure this project has now found in `enforced`, in `SUPERSEDES` and in `OBSOLETES` itself.\n\n⭐ IT REPORTS AND NEVER JUDGES. The claim says the last RESULT is stale; it never says the check now passes, never touches the target's `status`, and never removes the check from `attention`. `rerun_owed` is three-valued and null means one side is undated so nobody can say.\n\nWHAT IT DOES NOT DO: nothing infers staleness. A finding with no claim against it is reported as having none, which is a real answer rather than a silence.",
         "name": "A repair can say what it invalidated, and the reader says whether a re-run is owed",
         "provenance": "authored",
-        "status": "realized"
+        "status": "verified"
       }
     },
     {
@@ -103713,6 +104036,16 @@
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:stop-nudge-asks-the-graph",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Every branch of the loop nudge to date reasons from the session's own op TALLY — writes since a loop check, edits, ChangeEvents recorded, skills loaded. That is a proxy for design debt, and it is blind in the direction that matters: a session that does the loop's motions correctly (write, then loop_status) trips nothing, whatever it actually left behind in the graph.\n\nThis capability adds the branch that asks the GRAPH. A detached probe calls `loop_status` over the shared server's stateless MCP surface, records a BASELINE at SessionStart, and compares later probes against it. The nudge fires only on a count this session RAISED — never on a level, because the standing debt is weeks old and a level fires forever.\n\nIt speaks LAST, where the counting branches are silent, and shares their once-per-session budget: the session that already got a counting nudge does not get a second interruption.\n\nDEGRADATION IS SILENT AND DELIBERATE. No `.reflow2/graph.server.json` (no shared server), an unreachable server, or a probe that never returns all leave the nudge saying nothing. A hook that guesses when it cannot read is worse than one that does not speak.\n\n⚠ THE READING CAN BE STALE, AND THAT IS THE PRICE OF THE ASYNC SHAPE. The verdict is whatever the last probe found — held at up to a couple of minutes by the debounce, and longer where no probe has been spawned since. A session genuinely in flight RAISES counts and then SETTLES them: capture intent and the gaps appear, wire the thread and they close. Observed on the session that built this, where unsurfaced gaps read 7 → 10 while the new nodes were unwired and finished at 6. So the message states the reading's AGE and tells the agent to confirm with `loop_status` before acting. Waiting for a fresh probe at stop time is the 23-second block the whole design exists to avoid.\n\nWHAT IT CANNOT DO, stated because the gap is real: the graph cannot see the transcript, so this reports what the DESIGN says changed, never what the conversation held and failed to write down. It complements the capture-session skill; it does not replace it.\n\n(The Decision this implements is `dec:the-stop-hook-asks-the-graph-asynchronously`; that node holds the cost measurement and the roads not taken, this one holds what the mechanism does.)",
+        "name": "The Stop nudge asks the graph what this session left, instead of counting the session's own tool calls",
+        "provenance": "authored",
+        "status": "verified"
       }
     },
     {
@@ -106662,6 +106995,16 @@
       }
     },
     {
+      "node_id": "chg:baseline-dc5be23c700ad7ed",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-24",
+        "name": "First baseline. The file is unchanged since PR #321 shipped it — only the design's knowledge of it is new, which is why chg:the-repair-capability-gets-its-thread carries subject=record.",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-e1aa7514ebda2b48",
       "node_type": "ChangeEvent",
       "properties": {
@@ -106687,6 +107030,16 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-12",
         "name": "First baseline — new in this change."
+      }
+    },
+    {
+      "node_id": "chg:baseline-f890e3c1f1325279",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-24",
+        "name": "First baseline — a new file, so nothing moved. The detached graph probe for cap:stop-nudge-asks-the-graph.",
+        "subject": "record"
       }
     },
     {
@@ -108781,6 +109134,17 @@
       }
     },
     {
+      "node_id": "chg:stop-hook-asks-the-graph",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "The Stop hook stops guessing from a tool tally and asks the graph — asynchronously, because the answer costs 22.6 seconds",
+        "rationale": "The lesson is in the two numbers. The blocker on option C of dec:idea-a-capture-session-skill-the-user-types was read for months as a capability limit — the hook cannot reach the graph — and it was actually a latency limit: the hook reaches the graph fine, and `loop_status` takes 22.6 seconds. Those need opposite fixes, and the stale comment in the file pointed at the wrong one. What guards against a repeat: the comment now names the measurement rather than the mechanism, so the next session that reads it is told what would have to change (the cost) rather than what cannot be done.",
+        "subject": "system",
+        "summary": "Adds a detached graph probe to the loop nudge: `tools/graph_probe.py` calls `loop_status` over the shared server's stateless MCP HTTP surface and writes its answer to a per-session file; `tools/loop_nudge.py` spawns it without waiting and reports the answer at a LATER Stop, or at the next SessionStart when the session ended first. Fires on a DELTA against a session-start baseline, never on a level. Also corrects the file's standing comment that the hook \"cannot read the graph — the session's own server holds the single-writer lock\", which was true before the shared server and is now false."
+      }
+    },
+    {
       "node_id": "chg:storyflow-feedback-review-20260808",
       "node_type": "ChangeEvent",
       "properties": {
@@ -109154,6 +109518,17 @@
       "properties": {
         "change_type": "scope_change",
         "name": "The rule conflated an ENDURING philosophy with a corollary that expires at 1.0, and said the whole thing should be revisited then — Anthony corrected it: the philosophy endures"
+      }
+    },
+    {
+      "node_id": "chg:the-repair-capability-gets-its-thread",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "resync",
+        "name": "The repair-tracking capability finally gets the thread it shipped without — three gaps, one missed step",
+        "rationale": "Anthony's word 2026-08-24, after being walked through the six open gaps: these three need no decision because nothing is being decided — existing things are being pointed at each other.\n\n⭐ THE LESSON IS ABOUT WHERE THE WORK STOPPED, and it is not \"somebody forgot\". PR #321 did the harder half well: it shipped the reader alongside the edge precisely so the marker would not become a comment nobody consults. Then the design's own record of that work was left half-drawn, so `loop_status` reported for weeks that a built, tested capability had no check — while a dedicated 10-case suite sat green on disk. **The design was more pessimistic than reality, and that erodes trust in the report exactly as fast as false optimism does.**\n\nWHAT GUARDS AGAINST A REPEAT: the Stop hook shipped in PR #324 the same day is the mechanism — it asks the graph what a session RAISED and speaks at the stop. A session that adds a capability and leaves it unwired now raises `unverified_capability` / `unallocated_capability` counts against its own session-start baseline and gets told before it finishes, rather than leaving it for a walkthrough weeks later.",
+        "subject": "record",
+        "summary": "`cap:a-repair-can-say-what-it-invalidated` shipped in PR #321 as `realized` and was never wired into the golden thread: no VERIFIES, no ALLOCATED_TO, no REALIZES. That produced three of the six open gaps and the standing \"1 capability claiming built with no check\". This connects what already existed — the capability is allocated to `cmp:verify` (where `invalidated_findings` lives), the five artifacts that implement it are linked, and `crates/reflow2-core/tests/a_repair_can_say_what_it_invalidated.rs` is registered and pointed at a new Verification.\n\nSUBJECT IS `record`, NOT `system`: not one line of behaviour changed. Ten tests that already existed and already passed were simply never visible to the design."
       }
     },
     {
@@ -113910,6 +114285,16 @@
       }
     },
     {
+      "node_id": "dec:the-stop-hook-asks-the-graph-asynchronously",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED 2026-08-24 by Anthony, in his words: \"I'm leaning to the async shape option.\"\n\nThis settles the half `dec:idea-a-capture-session-skill-the-user-types` left open. That decision chose option A (a skill the user types) as a FIRST STEP and named option C — a hook deciding WHEN — as the destination. It decided WHO triggers capture. This decides the SHAPE of the hook that C needs, which was left open on a cost the earlier decision never measured.\n\n═══ THE CONSTRAINT THAT FORCED THE CHOICE ═══\n\nThe shared server answers stateless MCP over the URL in `.reflow2/graph.server.json`, so the hook CAN read the graph. (The comment in `loop_nudge.py` saying it cannot — \"the session's own server holds the single-writer lock\" — was written before the shared server existed and is now false.) But measured live on this design: `loop_status` is 22.6s, repeatably, and `since_export: true` takes it to 37.5s. A Stop hook that blocks for 23 seconds is worse than no hook.\n\nTwo shapes were on the table:\n  • A CHEAPER CALL — ask something the server answers fast (`claim_report` is 0.04s). Rejected: the cheap calls do not answer the question. Nothing under a second says what a session left uncaptured.\n  • THE ASYNC SHAPE — ask at one stop, answer at a later one. CHOSEN.\n\n═══ WHAT THIS DECIDES ═══\n\nThe Stop hook SPAWNS a detached probe and returns immediately, never waiting. The probe's answer lands in a per-session file. A LATER Stop in the same session reads it and speaks. A session stops once per TURN, not once per session, so on any session longer than a couple of turns the answer arrives while the agent is still alive and can act on it. When a session ends before its answer lands, the next SessionStart reports it instead — which is the fallback, not the design.\n\n═══ THE TRIGGER IS A DELTA, NOT A LEVEL — and this is the load-bearing restraint ═══\n\nThe graph's standing debt on this design is 7 unsurfaced gaps and 60 structural defects, and both have stood for weeks. A nudge that fires on a LEVEL would fire on every session forever and would be a nag rather than a trigger — the fire-on-correct-work failure `ver:skill-triggers` names.\n\nSo the probe records a BASELINE at SessionStart and fires only where a later probe shows a count this session RAISED. \"This session took open gaps from 7 to 10 and never put the three new ones to the user\" is a fact about the session. \"There are 10 open gaps\" is not.\n\n═══ WHAT THIS DOES NOT DECIDE ═══\n  • It does not amend `req:skill-use-survives-a-long-session`. That requirement still says the user must never be the trigger, and this is the first mechanism that does not make him one — but the capture-session skill it complements is still typed by hand.\n  • It does not make the graph able to see the transcript. The hook asks what the GRAPH says changed, never what the conversation held.\n  • `since_export` is deliberately NOT in the probe: 15 extra seconds for a signal the delta already carries.",
+        "name": "DECIDED — the Stop hook asks the graph ASYNCHRONOUSLY: it fires the question at one stop and reports the answer at a later one",
+        "rationale": "Recorded as its own node rather than folded into dec:idea-a-capture-session-skill-the-user-types because the two answer different questions: that one settles WHO triggers capture (the user, as a first step), this settles HOW the hook half can ask at all. The cost measurement is the whole argument and would otherwise be lost — the obvious reading, \"a hook cannot read the graph\", was true when the comment was written and is false now, while the real obstacle is 22.6 seconds, a different problem with a different answer. A later session that rediscovers the HTTP mechanism and concludes the hook can simply call loop_status will ship a 23-second block.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:the-stranded-server-correction-stands",
       "node_type": "Decision",
       "properties": {
@@ -115150,6 +115535,16 @@
       }
     },
     {
+      "node_id": "decision:ack:a961bfe399679dbf",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:a961bfe399679dbf.",
+        "name": "Reviewed: gap:a961bfe399679dbf",
+        "rationale": "Anthony's word, 2026-08-24: accept the component-granularity check once, and add a per-skill check later only where a specific skill earns its own proof.\n\nTHE GAP OFFERED EXACTLY THIS as one of its two ways on (\"accept component granularity here once\"), and it is the right one here. The coverage is real, not absent — cmp:skills has a PASSING check, one hop away, and these nine capabilities sit under it.\n\nWHY DEEPENING WOULD BE CEREMONY RATHER THAN ASSURANCE. A skill is text served to an agent. What a check can actually assert about one — that it is well-formed, that it is reachable, that its trigger conditions are stated — is precisely what the component-level check already asserts across all of them, and asserting it nine more times in nine more places multiplies maintenance without adding evidence. Nine checks that all prove the same property are one check with extra bookkeeping.\n\n⭐ THIS IS AN OVER-ENGINEERING CALL AND WAS MADE AS ONE. Anthony's standing concern is designs that get overcomplicated where a simple solution will do. A blanket rule that every capability needs its own verification produces exactly that, and the granularity detector exists to ASK rather than to demand — which is why it offers both roads instead of failing.\n\nWHAT WOULD REOPEN IT: a skill whose behaviour is more than well-formed text — one that computes something, or whose output a person acts on directly — deserves its own proof. The review expires if these capabilities change, so this is accepted for what they are TODAY, not forever.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:ac64f6e79aa8a17d",
       "node_type": "Decision",
       "properties": {
@@ -115626,6 +116021,16 @@
         "decision": "Accepted the gap gap:ec1f9f94c89d2f67.",
         "name": "Reviewed: gap:ec1f9f94c89d2f67",
         "rationale": "Approved for build by Anthony on 2026-07-30 but not yet built, so there is nothing to verify. The capability is `planned` and its verification will be written with it. This is deliberately NOT a judgement that the capability needs no check — it needs one, and the check is owed at build time. Recorded so the open list keeps meaning `needs a decision` rather than `needs typing`; the decision here has been made and it is `build it`. NOTE THE EXPIRY THIS DEPENDS ON: this acknowledgement should stop holding the moment the capability moves off `planned`, and the sibling requirement req:review-expires-when-what-it-judged-changes exists precisely because that expiry is currently keyed on the affected node SET rather than its CONTENT — so this note may outlive its own truth until cap:review-expires-on-content is built.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:ed8660a4500b431b",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:ed8660a4500b431b.",
+        "name": "Reviewed: gap:ed8660a4500b431b",
+        "rationale": "Anthony's word, 2026-08-24, after being walked through the six open gaps: the work is DONE and the gap is the detector applying a code-shaped rule to a model-only change.\n\nVERIFIED BEFORE ACKNOWLEDGING, not taken on the status field: the committed export was read directly, and all five kernel components — cmp:nodes, cmp:schema, cmp:identity, cmp:graph, cmp:provenance — are now contained by ONE subsystem. The bisection that produced the sys:store ↔ sys:vocabulary cycle is gone.\n\nWHY NO ARTIFACT WILL EVER REALIZE THIS. The capability's own text says it: \"PURE MODEL BOOKKEEPING — not one line of Rust changes.\" Its `delivery` is `model`. The deliverable WAS the decomposition, and the decomposition is what changed. `unrealized_capability` asks \"what actually gets built for it?\" and the honest answer is \"nothing is built; the model is the product.\" Pointing some Rust file at it to close the gap would be worse than leaving it open — it would assert that a file implements a containment decision.\n\n⭐ THE GENERAL FORM, worth more than this one acknowledgement: a capability whose delivery is `model` cannot satisfy an artifact-shaped check. If this recurs often enough to be noise, the detector should read `delivery` rather than every model change needing a hand-written acknowledgement.\n\nALSO SETTLED IN PASSING: the capability's text carried an open sub-question — whether sys:store still deserved that name once it meant \"the foundation everything is built on\". The subsystem is now named `sys:foundation`, so the naming call was made in the direction the note anticipated.",
         "status": "accepted"
       }
     },
@@ -129886,6 +130291,20 @@
       }
     },
     {
+      "node_id": "ver:a-repair-can-say-what-it-invalidated",
+      "node_type": "Verification",
+      "properties": {
+        "description": "`cargo test -p reflow2-core --test a_repair_can_say_what_it_invalidated` — 10 cases.\n\nThe suite existed from PR #321 and was simply never visible to the design; this Verification is the record catching up, not new coverage.\n\nWHAT IT PINS, and all three of the capability's restraints are in here — these are the ones a later \"simplification\" would reach for first:\n  • `invalidating_a_check_never_moves_its_status` — the claim says the last RESULT is stale, never that the check now passes. The edge is not RESOLVES and must never become it.\n  • `a_finding_with_no_claim_is_not_reported` — nothing is inferred. A finding nobody claimed against is reported as having none, which is a real answer rather than a silence.\n  • `an_undated_claim_says_nobody_can_tell_rather_than_no` — `rerun_owed` is THREE-valued; null means one side is undated. Collapsing it to false would turn \"nobody can say\" into \"nothing is owed\", which is the reassuring answer and the wrong one.\n\nAlso covered: the claim is read back with whether a re-run is owed; a run postdating the repair owes nothing; the edge never enlarges a blast radius; recording a repair does not suppress unrelated gaps; a hand-written change can carry its date; and the same edge closes a stale temporal fact.",
+        "findings": "`cargo test -p reflow2-core --test a_repair_can_say_what_it_invalidated` — **10 passed, 0 failed**, 0.05s. Run unpiped, exit code captured on its own line and read from the background task's OWN output rather than from a log read mid-run (both traps this repo has been burned by).\n\nRUN BEFORE THE VERIFICATION WAS MARKED, not after. The suite was known to exist and known to have shipped green in PR #321, and neither of those is evidence about today — a check recorded as passing on the strength of its history is the forgery this field exists to prevent.\n\nAll ten green: a_hand_written_change_can_carry_its_date, a_finding_with_no_claim_is_not_reported, a_repair_can_name_the_check_it_answered, a_run_that_postdates_the_repair_owes_nothing, an_undated_claim_says_nobody_can_tell_rather_than_no, invalidating_a_check_never_moves_its_status, invalidates_never_enlarges_a_blast_radius, the_claim_is_read_back_with_whether_a_rerun_is_owed, recording_a_repair_does_not_suppress_unrelated_gaps, the_same_edge_closes_a_stale_temporal_fact.",
+        "kind": "verification",
+        "last_run_at": "2026-08-24",
+        "level": "integration",
+        "method": "test",
+        "name": "A repair's claim is read back, and it never moves what it invalidated",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-reply-is-sent-once",
       "node_type": "Verification",
       "properties": {
@@ -131788,6 +132207,20 @@
       }
     },
     {
+      "node_id": "ver:stop-nudge-asks-the-graph",
+      "node_type": "Verification",
+      "properties": {
+        "description": "`python3 tools/test_loop_nudge.py` — the `AsksTheGraph` case set (~20 cases inside the file's 79).\n\nTHE CASE THIS EXISTS FOR is `test_a_level_never_fires`. Every other case in the set would pass on an implementation that nudged whenever the design carried debt — and that implementation would speak in every session forever, which is the fire-on-correct-work failure `ver:skill-triggers` names and the one BL-23 and BL-42 both name. The delta is the feature; the counts are only how it is computed. reflow2's own design has carried 7 unsurfaced gaps and 60 structural defects for weeks, so a level-keyed nudge is not a hypothetical.\n\nWHAT ELSE IS PINNED, each because getting it wrong is silent rather than loud:\n  • No baseline, one reading, a fallen count, a class missing from one side, an unreadable file, no probe at all — every one is silence, not a guess.\n  • `structural_defects` is NOT a trigger class. HEAL's count moves on edits nobody made to it, so a delta there would report a session for something it did not do.\n  • Every class the probe MEASURES has a sentence the nudge can SAY, asserted as a set equality across two processes that share no module.\n  • It never adds a second interruption: `claim_nudge` is one flag for the whole session, so a session already being nudged is not nudged twice.\n  • THE HOOK RETURNS IMMEDIATELY. Asserted in wall-clock against a real spawn at a closed port. `loop_status` is 22.6s; if this ever blocks on the probe, the feature has become the thing the async shape was chosen to avoid.\n  • A failed probe does not erase the last good reading, and a carried reading keeps its OWN age.\n  • The RELEASE WORKFLOW stages `graph_probe.py`. `spawn_probe` is silent when the script is not beside it — correct for an older kit, and indistinguishable from a graph with nothing to say — so a sibling added here and not to the kit would ship a hook whose graph branch never runs and never says why.",
+        "findings": "`python3 tools/test_loop_nudge.py` — 80 tests, 0 failures, ~21s, run unpiped with the exit code captured on its own line (`| tail` reports tail's status, and this repo has been burned by that three times).\n\nBeyond the suite, the branch was exercised END TO END against the live shared server, on this session's own real numbers rather than fixtures: a baseline of 7 unsurfaced gaps measured before any design write, `graph_probe.py` run for real (23.3s, stateless MCP over `.reflow2/graph.server.json`), and the hook then emitting\n\n    reflow2: this session ADDED design debt and left it — the graph itself says\n    so — measured by loop_status against the live graph 23s ago, not counted\n    from your tool calls: open gap(s) nobody has put to the user 7 → 10 (+3) —\n    run detect-and-ask.\n\nThe three gaps were the ones this session genuinely created. It found its own author.\n\n⭐ AND THEN THE SAME RUN FOUND THE FEATURE'S REAL LIMIT, which no fixture would have. Those three gaps did not survive: wiring SATISFIES / ALLOCATED_TO / VERIFIES closed them, and a CONSUMES edge closed a fourth that had been standing, so the session ENDED at 6 — below where it started. A verdict collected from a mid-session reading can therefore name debt already settled. Not fixable by waiting (that is the 23-second block the design exists to avoid), so the message states the reading's AGE and directs the agent to confirm with `loop_status`. Pinned by `test_it_tells_the_agent_to_confirm_because_the_reading_can_be_stale`.\n\nONE ASSERTION WAS WRONG ON THE FIRST RUN and the correction is worth keeping: `test_it_never_adds_a_second_nudge_to_an_interrupted_session` asserted that the counting nudge's text does NOT contain \"detect-and-ask\" — but the generic write nudge already names that skill, so the assertion was testing the other branch's wording rather than which branch spoke. Re-keyed on the graph branch's own words (\"not counted from your tool calls\"). A test that fails for a reason other than the one it is named for is not evidence.",
+        "kind": "verification",
+        "last_run_at": "2026-08-24",
+        "level": "integration",
+        "method": "test",
+        "name": "The graph nudge fires on a DELTA and never on a level",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:store",
       "node_type": "Verification",
       "properties": {
@@ -132241,7 +132674,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:c32af2f52cfdbaf5d238c97226af5da1c1972ce83bd0137436a938068775a588",
+  "prev_content_hash": "sha256:69af93d88f74b39e540c9bfe4a01e2499247ada6cf2210bea343c816e28a33af",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
