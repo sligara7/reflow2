@@ -112,9 +112,30 @@ schema:
         action: { type: enum, values: [created, updated, merged] }
 
     SUPERSEDES:
-      from: Fragment
-      to: Fragment
-      extraction_hint: A revised Fragment replaces an earlier version.
+      # WIDENED 2026-08-23 to accept Verification -> Verification. A check
+      # consolidated into a broader one had no way to say so: this edge was
+      # refused for the pair whose NAME describes it exactly, and the honest
+      # fallback (`EVOLVES_INTO`, a double wildcard) cannot be told apart from
+      # "these two happen to be linked". Filed by dragon Boss 2026-08-22 after
+      # folding two one-off probes into one table-driven check.
+      #
+      # ⚠️ ENUMERATED `from`/`to` IS A CROSS PRODUCT, NOT A PAIR LIST — so this
+      # also admits Fragment -> Verification and Verification -> Fragment, which
+      # are meaningless. The schema has no way to express "these pairs only",
+      # and stating that here is cheaper than pretending it does. Both nonsense
+      # combinations are writable and neither is read by anything.
+      #
+      # 🛑 THIS WIDENING IS INVISIBLE TO THE SCHEMA STAMP, which counts edge
+      # TYPE NAMES and SUPERSEDES already existed. An older binary opens such a
+      # graph without complaint and then faults on the specific edge at import.
+      # It ships alongside two NEW edge types deliberately, so the stamp move
+      # they force is what protects this change too.
+      from: [Fragment, Verification]
+      to: [Fragment, Verification]
+      extraction_hint: >
+        A revised Fragment replaces an earlier version; a Verification replaces
+        a narrower check it absorbed. Pair the target's status with
+        `superseded` so a retired check stops reporting live coverage.
       properties:
         diff_summary: { type: string }
 

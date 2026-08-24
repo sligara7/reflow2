@@ -84,6 +84,12 @@ NON_TOOL_TERMS = {
     # step that said "pick a region" without saying which field carries the
     # seed would leave the reader back where the requirement found them.
     "seed_id",
+    # `valid_to` is a TemporalFact PROPERTY, and naming it is the whole point of
+    # capture-session's test 7: a session that retired a finding has to be told
+    # WHERE to close it, and "close the fact" without naming the field leaves
+    # the reader exactly where the measurement found them — 274 measured facts
+    # and 7 carrying this field, because nothing ever pointed at it.
+    "valid_to",
     # pair_designs buckets, seam_report verdicts, Interface.designation values
     # and spec enum values (2026-08-13) — the link-projects skill names what it
     # tells you to READ in each report, and which designation to correct. None

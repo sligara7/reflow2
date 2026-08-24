@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:4c6ad431dfd10206e7a169baeec4db17bec6d4d1f86fb6dd8a20246ea232c354",
+  "content_hash": "sha256:e61f83f2c62610c0c01fd03a6f9a59934dd3c76325a4767424f7a7dc0a792dde",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2201,6 +2201,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:record-to-record-relations-are-modelled",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:recover-from-tests",
       "properties": {
         "weight_basis": "estimated"
@@ -2823,6 +2831,14 @@
     },
     {
       "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-search-first-fires-without-being-remembered",
+      "properties": {
+        "evidence": "The sibling saw this coming from the other side, on 2026-08-12. It measured six saves in one session and found FOUR OF SIX PREVENTED WORK RATHER THAN NODES, calling that \"the more expensive thing\" and noting the value sits on the unguarded READ path. That is exactly the cost this node measures: an agent proposes work already done. Searching-before-proposing and closing-what-you-invalidated are two different fixes for one symptom, so the earlier node anticipated this one without naming it. Drawn from the older node TO this one."
+      },
+      "to_id": "dec:idea-how-does-the-graph-learn-what-a-session-invalidated"
+    },
+    {
+      "edge_type": "ANTICIPATES",
       "from_id": "dec:idea-what-gets-searched-repeatedly-is-becoming-important",
       "properties": {
         "confidence": 0.8,
@@ -2844,11 +2860,27 @@
     },
     {
       "edge_type": "ANTICIPATES",
+      "from_id": "fact:a-piped-gate-reports-the-pipes-exit-code-not-the-gates",
+      "properties": {
+        "evidence": "The earlier fact recorded mechanism 1 of the five on its own. It saw the shape coming and named it precisely — and was then hit twice more in this session AFTER being on the record, which is the part that makes the census worth taking: knowing about one instance did not prevent the same shape arriving through four other doors. Drawn from the earlier fact TO this one."
+      },
+      "to_id": "fact:five-silent-failures-in-one-session-all-one-shape"
+    },
+    {
+      "edge_type": "ANTICIPATES",
       "from_id": "fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet",
       "properties": {
         "evidence": "That measurement ends by naming exactly this as the question it leaves to the owner — 'which level should carry contracts' — so the earlier fact saw this idea coming and this idea is the answer to it. Drawn FROM the fact TO this decision."
       },
       "to_id": "dec:idea-a-contract-is-declared-at-the-lowest-level-and-rolled-up"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:dynograph-v0130-measured-clean-and-the-pin-is-parked",
+      "properties": {
+        "evidence": "The earlier measurement saw this coming. On 2026-08-19 it established across four independent grounds that v0.13.0's diff over ALL SIX crates reflow2 touches was EMPTY — the release changed only `dynograph-client` and `dynograph-service`, neither of which reflow2 depends on — and the confirmation still cost a session and a full workspace build, with the pin bump parked to this day. That episode IS the cost of coupling release to repository rather than to crate, observed four days before anyone asked the question. Drawn from the fact TO the question: the observation came first."
+      },
+      "to_id": "dec:idea-dynograph-crates-independent-in-code-coupled-in-release"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -2865,6 +2897,14 @@
         "evidence": "That measurement found ZERO of eight subsystems providing an interface, with every interface provided by a leaf component one level down - subsystems as groupings rather than black boxes. Four subsystems have since gained a PROVIDES edge, so the count aged; the finding did not, because none of the four carries a contract. It predicted the shape of today's answer before the edges existed."
       },
       "to_id": "dec:idea-what-would-a-provided-contract-buy-substitution-derived-tests-or-a-mock"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:the-live-graph-does-not-branch-so-two-open-prs-collide",
+      "properties": {
+        "evidence": "The earlier observation saw the same shape one layer down. It found that one RocksDB store serves every git branch, so two branches share a live graph — and its sharpest note is that `parallel-work`'s trigger conditions are framed by PEOPLE, so the solo maintainer with two branches, who hits the identical collision, is the reader the skill excludes. Same failure family: the machinery for keeping two lines of work apart exists, and what neither the store nor the skill carries is whether a line of work is FINISHED."
+      },
+      "to_id": "req:the-graph-can-say-what-has-already-been-done"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -5747,6 +5787,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:dynograph-absorption-deferred-and-costed",
+      "properties": {},
+      "to_id": "epoch:2026-08-23-dynograph-absorption-deferred"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:dynograph-stays-its-own-repo-for-now",
+      "properties": {},
+      "to_id": "epoch:2026-08-23-dynograph-absorption-deferred"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:edges-need-both-ends-audited",
       "properties": {},
       "to_id": "epoch:v0250"
@@ -6341,6 +6393,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:record-to-record-relations-are-modelled",
+      "properties": {},
+      "to_id": "epoch:2026-08-23-record-to-record-vocabulary"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:recover-from-tests",
       "properties": {},
       "to_id": "epoch:bl95-coverage"
@@ -6770,6 +6828,12 @@
       "from_id": "chg:the-export-round-trip-injected-defaults",
       "properties": {},
       "to_id": "epoch:v0290"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-first-finding-closed-under-test-seven",
+      "properties": {},
+      "to_id": "epoch:2026-08-23-record-to-record-vocabulary"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -7709,6 +7773,18 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:2026-08-23-dynograph-absorption-deferred:dec:idea-cannibalize-dynograph-foundation-into-reflow2",
+      "properties": {},
+      "to_id": "epoch:2026-08-23-dynograph-absorption-deferred"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:2026-08-23-dynograph-absorption-deferred:dec:idea-dynograph-crates-independent-in-code-coupled-in-release",
+      "properties": {},
+      "to_id": "epoch:2026-08-23-dynograph-absorption-deferred"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:2026-08-23-gate-names-what-you-touched:art:check",
       "properties": {},
       "to_id": "epoch:2026-08-23-gate-names-what-you-touched"
@@ -7718,6 +7794,18 @@
       "from_id": "snap:epoch:2026-08-23-json-rpc-medium:ifc:mcp-tools-http",
       "properties": {},
       "to_id": "epoch:2026-08-23-json-rpc-medium"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:2026-08-23-record-to-record-vocabulary:art:schema-verify",
+      "properties": {},
+      "to_id": "epoch:2026-08-23-record-to-record-vocabulary"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:2026-08-23-record-to-record-vocabulary:fact:the-orientation-reads-cost-ten-seconds-and-the-store-is-not-why",
+      "properties": {},
+      "to_id": "epoch:2026-08-23-record-to-record-vocabulary"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -9790,6 +9878,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-cannibalize-dynograph-foundation-into-reflow2",
+      "properties": {
+        "acted_at": "2026-08-23",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-compose-both-chains-as-one-stress-test",
       "properties": {
         "acted_at": "2026-08-21",
@@ -10005,6 +10102,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-dynograph-crates-independent-in-code-coupled-in-release",
+      "properties": {
+        "acted_at": "2026-08-23",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-embeddings-adoption",
       "properties": {
         "acted_at": "2026-08-01",
@@ -10098,6 +10204,15 @@
       "from_id": "dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses",
       "properties": {
         "acted_at": "2026-08-18T05:00:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-how-does-the-graph-learn-what-a-session-invalidated",
+      "properties": {
+        "acted_at": "2026-08-23",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -11735,6 +11850,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "fact:five-silent-failures-in-one-session-all-one-shape",
+      "properties": {
+        "acted_at": "2026-08-23",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "fact:precedes-is-unused-in-storyflow-and-flowless-here",
       "properties": {
         "acted_at": "2026-08-09",
@@ -12643,6 +12767,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:the-graph-can-say-what-has-already-been-done",
+      "properties": {
+        "acted_at": "2026-08-23",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:the-kind-of-system-is-established-before-its-parts-are-captured",
       "properties": {
         "acted_at": "2026-08-14",
@@ -13037,6 +13170,16 @@
         "validation_status": "validated"
       },
       "to_id": "dec:idea-a-planned-increment-is-named-by-content-not-by-number"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "dec:idea-cannibalize-dynograph-foundation-into-reflow2",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "Taking this forces that question closed by construction rather than by argument: absorb the foundation and it IS a ninth subsystem, because there is no supplier left to be. That is simultaneously the strongest point in favour of absorbing (it dissolves an open modelling question instead of settling it on paper) and the strongest reason to answer the prior question FIRST, since doing it in this order decides by doing.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-is-the-foundation-a-subsystem-or-a-supplier"
     },
     {
       "edge_type": "CAUSES",
@@ -16079,6 +16222,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-0db1a1a6fa82c0d5",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:record-to-record-relations-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-11773dab9729328c",
       "properties": {
         "accepted_baseline": true,
@@ -16862,6 +17014,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-90d8baec7c63fba7",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-921b8978971ae293",
       "properties": {
         "accepted_baseline": true,
@@ -17552,6 +17713,15 @@
         "action": "modified"
       },
       "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-f6e8e9dc8360b03b",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
     },
     {
       "edge_type": "CHANGED",
@@ -21930,6 +22100,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:dynograph-absorption-deferred-and-costed",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-cannibalize-dynograph-foundation-into-reflow2"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:dynograph-stays-its-own-repo-for-now",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-dynograph-crates-independent-in-code-coupled-in-release"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:edges-need-both-ends-audited",
       "properties": {
         "accepted_baseline": false,
@@ -24432,6 +24620,105 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:record-to-record-relations-are-modelled",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:capture-session-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:record-to-record-relations-are-modelled",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:record-to-record-relations-are-modelled",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:record-to-record-relations-are-modelled",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:record-to-record-relations-are-modelled",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:record-to-record-relations-are-modelled",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:record-to-record-relations-are-modelled",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-build"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:record-to-record-relations-are-modelled",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:record-to-record-relations-are-modelled",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:record-to-record-relations-are-modelled",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:record-to-record-relations-are-modelled",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:recover-from-tests",
       "properties": {
         "accepted_baseline": false,
@@ -26436,6 +26723,24 @@
         "action": "modified"
       },
       "to_id": "art:export-via-binary"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-first-finding-closed-under-test-seven",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:capture-session-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-first-finding-closed-under-test-seven",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "fact:the-orientation-reads-cost-ten-seconds-and-the-store-is-not-why"
     },
     {
       "edge_type": "CHANGED",
@@ -29743,6 +30048,15 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-dynograph-crates-independent-in-code-coupled-in-release",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "Opposite answers on one axis, raised in the same breath. Absorbing DISSOLVES the boundary by pulling the code in; making the crates independently releasable SHARPENS the boundary and keeps it. Taken far enough, each makes the other pointless — there is nothing to release independently once it is vendored, and little reason to vendor once you can pin exactly what you want. ⚠️ NOT STRICTLY EXCLUSIVE, and the overlap is worth naming: option E here (reflow2 absorbs the three loose functions) IS option C there. So the design will have to pick a DIRECTION rather than a disjoint branch."
+      },
+      "to_id": "dec:idea-cannibalize-dynograph-foundation-into-reflow2"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "dec:idea-field-evidence-is-a-prioritisation-input",
       "properties": {
         "alignment": "opposing",
@@ -29750,6 +30064,15 @@
         "evidence": "The pruning decision dropped req:friction-has-a-severity-bar and req:friction-has-a-baseline as 'backlog hygiene dressed as product requirements — the answer to unconverted friction reports is to act on them, not to model them'. This idea proposes modelling field evidence as a prioritisation input: the same move at a different altitude. Confidence 0.6 rather than 1.0 because the two are arguably about different subjects — the dropped pair measured REFLOW2'S OWN usability, this is about any user's design reading its own test reports. Recorded as opposing so the tension is visible and nobody re-litigates the prune by accident."
       },
       "to_id": "dec:proposed-requirements-pruned"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-how-does-the-graph-learn-what-a-session-invalidated",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "THE INSTANCE, not merely an example. That fact asserts \"NOTHING WAS OPTIMISED\" and \"that ratio is the next measurement and it has not been taken\", and PR #290 made both false — 56 SPOF candidates at 878ms each became 5.08ms for all 56, detect_structural_defects 44.5s -> 4.43s, open_questions 11.7s -> 2.95s. An agent read it as current in this very session and Anthony corrected it. Recorded as a CONTRADICTS edge rather than by closing the fact, because closing it is the very act this decision is about, and doing it unasked would settle the question by doing."
+      },
+      "to_id": "fact:the-orientation-reads-cost-ten-seconds-and-the-store-is-not-why"
     },
     {
       "edge_type": "CONTRADICTS",
@@ -30849,6 +31172,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-how-does-the-graph-learn-what-a-session-invalidated",
+      "properties": {
+        "evidence": "Options C, D and E are all instances of this proposed-and-unbuilt requirement: a discipline that applies mid-task belongs at the TOOL that triggers it, not in a catalogue read once. If it is never accepted, only options A (a detector), B (a skill edit) and F (nothing) remain reachable — so what this question can be answered WITH depends on that one landing first.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-is-allocation-running-ahead-of-the-seams",
       "properties": {
         "note": "whether allocation runs ahead of seams depends on which graph allocation was drawn on",
@@ -31769,6 +32102,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "req:the-graph-can-say-what-has-already-been-done",
+      "properties": {
+        "evidence": "The requirement says WHAT must be true; that decision holds the six candidate HOWs with their costs and settles none of them. Recorded as a dependency rather than merged because the split is load-bearing: a requirement that named a mechanism would settle by stating, and Anthony has chosen none of the six. Drawn from the requirement TO the decision — this need cannot be met until that question is answered.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-how-does-the-graph-learn-what-a-session-invalidated"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "req:the-store-is-reachable-from-a-session",
       "properties": {
         "evidence": "The store exists and is tested; this is the half that makes it usable by the agent and user that requirement is written for.",
@@ -32548,6 +32891,14 @@
     },
     {
       "edge_type": "DOCUMENTS",
+      "from_id": "art:upgrading-v0400",
+      "properties": {
+        "doc_kind": "upgrade_note"
+      },
+      "to_id": "proj:reflow2"
+    },
+    {
+      "edge_type": "DOCUMENTS",
       "from_id": "art:usgov-genesis-feedback-2026-08-15",
       "properties": {
         "doc_kind": "design_doc"
@@ -32569,6 +32920,14 @@
         "evidence": "Anthony asked the same question a day apart - 2026-08-20 'if we can modularize reflow2 and know which functions that each module is supposed to perform, we can then do more encompassing testing (what are the edge cases, what are the failure modes)', and 2026-08-21 'more exhaustive tests for each subsystem'. The earlier node named the mechanism; this one carries the measurement of how far off it is - 3 of 192 capabilities state their shape. Same thought, grown up."
       },
       "to_id": "dec:idea-can-exhaustive-per-subsystem-tests-be-derived-rather-than-imagined"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-swap-dynograph-foundation-as-the-substitutability-demo",
+      "properties": {
+        "evidence": "The older thought, grown up. Both ask what to do about the dynograph dependency, and the 2026-08-20 version was REJECTED on a cost argument — \"a demo that costs as much as the real thing is not a demo\" — because REPLACING means reimplementing. Absorbing keeps the same code and pays relocation cost instead, so the objection that killed the earlier idea does not reach this one. Drawn from the rejected node TO this one: the direction records that the question survived its own rejection in a cheaper form."
+      },
+      "to_id": "dec:idea-cannibalize-dynograph-foundation-into-reflow2"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -39018,6 +39377,12 @@
       "edge_type": "HAS_SNAPSHOT",
       "from_id": "art:schema-verify",
       "properties": {},
+      "to_id": "snap:epoch:2026-08-23-record-to-record-vocabulary:art:schema-verify"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:schema-verify",
+      "properties": {},
       "to_id": "snap:epoch:a-contract-can-carry-evidence:art:schema-verify"
     },
     {
@@ -39496,6 +39861,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-cannibalize-dynograph-foundation-into-reflow2",
+      "properties": {},
+      "to_id": "snap:epoch:2026-08-23-dynograph-absorption-deferred:dec:idea-cannibalize-dynograph-foundation-into-reflow2"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list",
       "properties": {},
       "to_id": "snap:epoch:the-co-change-experiment-is-run:dec:idea-do-ideas-form-a-graph-or-only-a-list"
@@ -39511,6 +39882,12 @@
       "from_id": "dec:idea-does-a-capability-need-a-cancelled-state",
       "properties": {},
       "to_id": "snap:epoch:the-vocabulary-says-where-abandonment-lives:dec:idea-does-a-capability-need-a-cancelled-state"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-dynograph-crates-independent-in-code-coupled-in-release",
+      "properties": {},
+      "to_id": "snap:epoch:2026-08-23-dynograph-absorption-deferred:dec:idea-dynograph-crates-independent-in-code-coupled-in-release"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -39667,6 +40044,12 @@
       "from_id": "fact:defect-typed-tool-parameter-names-are-inconsistent",
       "properties": {},
       "to_id": "snap:epoch:usgov-genesis-feedback-triaged:fact:defect-typed-tool-parameter-names-are-inconsistent"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "fact:the-orientation-reads-cost-ten-seconds-and-the-store-is-not-why",
+      "properties": {},
+      "to_id": "snap:epoch:2026-08-23-record-to-record-vocabulary:fact:the-orientation-reads-cost-ten-seconds-and-the-store-is-not-why"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -40581,6 +40964,15 @@
       "from_id": "sys:store",
       "properties": {},
       "to_id": "fact:bl-218"
+    },
+    {
+      "edge_type": "IMPLEMENTS",
+      "from_id": "art:record-to-record-relations-test",
+      "properties": {
+        "covers": "whole",
+        "note": "The first IMPLEMENTS edge in this design, drawn on the check that proves the edge works - dogfooded rather than declared. All seven cases live in this file, so `covers: whole` is exact."
+      },
+      "to_id": "ver:record-to-record-relations-are-modelled"
     },
     {
       "edge_type": "INCLUDES",
@@ -88314,12 +88706,28 @@
     },
     {
       "edge_type": "MITIGATES",
+      "from_id": "fact:the-diamond-meets-at-dynographs-internals-not-its-interface",
+      "properties": {
+        "evidence": "Answers the obvious hazard before anyone spends time on it. \"Does removing the dependency break storyflow, which also uses dynograph?\" — no: that fact measured storyflow consuming dynograph as a REST API over HTTP while reflow2 consumes it as a Rust library API. Disjoint surfaces over one shared implementation, so dropping the Rust surface cannot touch storyflow's endpoints. Drawn from the fact TO this idea: the measurement is what removes the risk."
+      },
+      "to_id": "dec:idea-cannibalize-dynograph-foundation-into-reflow2"
+    },
+    {
+      "edge_type": "MITIGATES",
       "from_id": "req:detecting-is-not-asking",
       "properties": {
         "confidence": 0.85,
         "evidence": "This idea carries a real hazard: the brainstorm skill's step 2 forbids running detect-and-ask over brainstormed nodes, because asking a user to firm up what they deliberately left soft teaches them that thinking out loud has a cost. A naive detector IS that. req:detecting-is-not-asking (2026-08-19) answers it by splitting the two acts — detection unconditional, invitation held for a boundary — so the leg can be built without taxing the thinking. Neither node mentioned the other before this edge."
       },
       "to_id": "dec:idea-what-notices-an-idea-that-connects-to-nothing"
+    },
+    {
+      "edge_type": "MITIGATES",
+      "from_id": "rule:success-is-read-from-the-authoritative-object",
+      "properties": {
+        "evidence": "The rule is the only thing that caught any of the five, and it caught all of them: the PR body read back, the branch checked after creation, the background task's own output read rather than the log it was still writing. Drawn from the RULE to this fact — the rule is what answers the hazard the five instances describe, and this census is the cost of not following it, counted."
+      },
+      "to_id": "fact:five-silent-failures-in-one-session-all-one-shape"
     },
     {
       "edge_type": "OBSOLETES",
@@ -90558,6 +90966,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:record-to-record-relations-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:record-to-record-relations-are-modelled"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:regions-rs",
       "properties": {
         "completeness": "complete",
@@ -91953,6 +92370,14 @@
     },
     {
       "edge_type": "RISKS",
+      "from_id": "cap:parallel-work",
+      "properties": {
+        "evidence": "Parallel work is what turns this from an annoyance into the cost Anthony actually named. Isolation and claims stop two people COLLIDING while they work; neither tells user B that user A already FINISHED. So the more successfully two people work in parallel, the more exposed they are to duplicating a completed task — and the result is two independent implementations, which the design-record merge driver cannot reconcile because the divergence is in code, not in the graph. Drawn from the capability TO the requirement: the hazard rides on the capability succeeding."
+      },
+      "to_id": "req:the-graph-can-say-what-has-already-been-done"
+    },
+    {
+      "edge_type": "RISKS",
       "from_id": "dec:idea-a-nested-part-has-an-address-not-only-a-parent",
       "properties": {
         "evidence": "Option (b), a STORED dotted id, encodes a part's position into its identity — and that capability exists precisely so parts can be moved. Every use of it would make a stored address wrong. The idea as written threatens a capability shipped three days earlier."
@@ -93068,6 +93493,12 @@
       "from_id": "cap:reconcile-verified",
       "properties": {},
       "to_id": "req:released-eq-designed"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:record-to-record-relations-are-modelled",
+      "properties": {},
+      "to_id": "req:a-record-can-say-what-runs-it-what-complements-it-and-what-replaced-it"
     },
     {
       "edge_type": "SATISFIES",
@@ -95661,6 +96092,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:record-to-record-relations-are-modelled",
+      "properties": {},
+      "to_id": "cap:record-to-record-relations-are-modelled"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:release-without-epoch",
       "properties": {},
       "to_id": "cap:release-pinned-to-time"
@@ -96962,6 +97399,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:record-to-record-relations-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:record-to-record-relations-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:regions-rs",
       "properties": {
         "action": "created"
@@ -97948,7 +98393,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:a9698e861f183c96a564e22ceab750a9a5d336831b2b63c0c65e233c9ce43fc3",
+        "checksum": "sha256:38740896d256541df1542d90675980b4032a631f61fb6c707f34a801a7427637",
         "granularity": "atomic",
         "location": "getting-started/skills/capture-session/SKILL.md",
         "name": "getting-started/skills/capture-session/SKILL.md",
@@ -98348,7 +98793,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:0d2a77fde29e53ee229535c17b868ced71cfc7ca9c76fe89b1370ec08cf3df5a",
+        "checksum": "sha256:38dfab2ab498db81b3860b856aa8884e4f4604131305e8a9856d3ad4e164d5d3",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -98706,7 +99151,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d96dd706db3632149066681374b1e7fbf1e8994d81914c624b48e0ba80b7daa2",
+        "checksum": "sha256:2ba06eac6b69e6835d5d9548170eb80f45695e66ec4e07e6cf9d3fd848fc1b84",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
@@ -99025,7 +99470,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:56bba795c42b5490fc50d743deb50f51c2b989dc60bc3dda1465a24afe390b72",
+        "checksum": "sha256:06ed1c6b930148f1673b6a771f03679b60a30af3c3d12972a46a6f9559b563c8",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
@@ -99235,6 +99680,17 @@
       }
     },
     {
+      "node_id": "art:record-to-record-relations-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:a61fa5294a57f780a019929ecc4268e44cc349111d7d377aeaaeb6fccda6b27b",
+        "location": "crates/reflow2-core/tests/record_to_record_relations.rs",
+        "name": "record_to_record_relations.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:regions-rs",
       "node_type": "Artifact",
       "properties": {
@@ -99333,7 +99789,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:217e69f28fe29e31e3cd88f37513fcacb5e8882a242d2e17877c6bb814c06bf0",
+        "checksum": "sha256:69d80b4e4cb846b1f25c8026fe97aa6c103a0d9a77db461a1750b4a0f49409ec",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
@@ -99381,7 +99837,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:359d429829c3f59ccb4173b98b99dde17261700b8e674fb3fa73182085a94b1e",
+        "checksum": "sha256:8e4f33a498b947afbb2dc018fa708017a8b25ceedfb88f9729037cd43f9f1bf7",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/schema.rs",
         "name": "crates/reflow2-core/src/schema.rs",
@@ -99394,7 +99850,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:2c9f47a63f9390766d363ca439ee03137eaf6001dc146d672b745e024feb43f5",
+        "checksum": "sha256:e73d0a2ede62cedaedfa673afb7f6ceb41c7dc7e8e211b92997e916bafd17790",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/build.yaml",
@@ -99408,7 +99864,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:3c14debf63e30806550295d9645fa4c3d47da88e722c020053f66c07b52f36bb",
+        "checksum": "sha256:7ac8663a3a4181e1795391f282823bfc06d9d5abeab0b902f4ef7ae7860404c5",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/core.yaml",
@@ -99534,7 +99990,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:ffe70350f93e9d7011450a7d749c308ffc3791ccc679ccb0a2faee2f958ae668",
+        "checksum": "sha256:fe8a8780bde1db57788a3b12ef566bd4fb25eb5f62ac8056cd42184a9f4844e7",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/verify.yaml",
@@ -99763,7 +100219,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:48838d243f078f4e86dc443c5737f8816fcc89a0af908ad0d04cca4117488367",
+        "checksum": "sha256:cc22a200230d9368baa879e34a5f23f38b002b92369b8778babfa8eed55e311f",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -100305,7 +100761,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1e552dcb925f591a7c654d5f160ce4ad07b8d0b4e8b1d3a123f4280ee4968a34",
+        "checksum": "sha256:88606ad2905be7b827da0ab96ced0e9a0700af609d72c9cf6d9e9896e1db00a7",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -100531,6 +100987,16 @@
       }
     },
     {
+      "node_id": "art:upgrading-v0400",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "location": "docs/upgrading-to-v0.40.0.md",
+        "name": "docs/upgrading-to-v0.40.0.md",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:usgov-genesis-feedback-2026-08-15",
       "node_type": "Artifact",
       "properties": {
@@ -100561,7 +101027,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:aff8e71109d50f4f84de1b69395b6b84358257d9ffc23af5ef71274706afc1f1",
+        "checksum": "sha256:e13e2c9e226dc7a331e31d2a2e983d0eeedc84675936b32e83c8d60c90e003c5",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/vocabulary.rs",
         "name": "crates/reflow2-core/src/vocabulary.rs",
@@ -102498,6 +102964,16 @@
       }
     },
     {
+      "node_id": "cap:record-to-record-relations-are-modelled",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Three additions to the vocabulary, each a MODELLED fit rather than a widened wildcard, and each with a computation that reads it.\n\n· **`IMPLEMENTS`, Artifact → Verification** — \"this file is the executable form of that check\". New edge type. Lets `never_run` split *nobody ran it* from *it has no executable form at all*.\n· **`COMPLEMENTS`, DesignRule → DesignRule** — \"these two stand beside each other and must not be merged\". New edge type. Read by `possible_duplicate`/HEAL, which then refrain.\n· **`SUPERSEDES` accepts Verification → Verification**, and `Verification.status` gains `superseded` — a retired check stops reporting a stale `passing` or a misleading `skipped`.\n\n⚠️ TWO OF THESE MOVE THE SCHEMA STAMP AND ONE DOES NOT, AND THAT IS THE INTERESTING PART. `GraphStamp::current` counts `schema.edge_types.keys()` — TYPE NAMES ONLY. So the two new edge types take it 61 → 63 and owe an upgrade note, while widening `SUPERSEDES`'s endpoints and adding an enum value are INVISIBLE to it. Measured from `provenance.rs`, not assumed.\n\n⭐ WHICH INVERTS THE USUAL INSTINCT: moving the stamp is the SAFE kind of change, because an old binary refuses the graph and `unreadable_by` names the type and says whether to migrate or update. A widened endpoint or a new enum value passes the stamp check, opens fine, and then faults on one specific edge at import — the stamp-blindness pattern this design has now recorded four times. Shipping the invisible changes ALONGSIDE a stamp-moving one is deliberate: the stamp catches what they cannot.",
+        "name": "A file can be named as the executable form of a check, two rules can be declared complementary, and a replaced check can say so",
+        "provenance": "authored",
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "cap:recover-from-tests",
       "node_type": "Capability",
       "properties": {
@@ -103611,6 +104087,16 @@
       }
     },
     {
+      "node_id": "chg:accept-0db1a1a6fa82c0d5",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-23",
+        "name": "rustfmt re-wrapped two `add_verification` calls onto multiple lines. Formatting only; the seven cases and their assertions are unchanged.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-11773dab9729328c",
       "node_type": "ChangeEvent",
       "properties": {
@@ -104408,6 +104894,16 @@
       }
     },
     {
+      "node_id": "chg:accept-90d8baec7c63fba7",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-23",
+        "name": "rustfmt reordered two `use` lines after the COMPLEMENTS guard added an import. Formatting only; no design meaning and no behaviour change. Caught by CI's `cargo fmt --check`, which is a gate this session had not run locally.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-921b8978971ae293",
       "node_type": "ChangeEvent",
       "properties": {
@@ -105052,6 +105548,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-20",
         "name": "`item_is_delivered` calls the new predicate instead of matching on verify's enum, so temporal no longer references crate::verify at all. The delivered/not-delivered answer is byte-identical; only the coupling is gone.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-f6e8e9dc8360b03b",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "detected_at": "2026-08-23",
+        "name": "`valid_to` added to NON_TOOL_TERMS. It is a TemporalFact PROPERTY that capture-session now names deliberately — telling a session WHERE to close a finding — and the lint was correctly reading it as an unknown tool. No lint behaviour changed; the term list learned one field name.",
         "subject": "system"
       }
     },
@@ -106566,6 +107072,24 @@
       }
     },
     {
+      "node_id": "chg:dynograph-absorption-deferred-and-costed",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "Anthony defers absorbing dynograph-foundation, and the line-count costing the idea said was missing is recorded",
+        "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:dynograph-stays-its-own-repo-for-now",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "name": "\"Leave dynograph-foundation as its own repo for now\" takes the repo-split option off the table without settling the releasability question",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:edges-need-both-ends-audited",
       "node_type": "ChangeEvent",
       "properties": {
@@ -107332,6 +107856,15 @@
       }
     },
     {
+      "node_id": "chg:record-to-record-relations-are-modelled",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "name": "Two new edge types, a widened SUPERSEDES and a superseded status — each wired to the computation that reads it",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:recover-from-tests",
       "node_type": "ChangeEvent",
       "properties": {
@@ -107862,6 +108395,15 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "DEFECT, found and fixed 2026-08-12: tools/export_via_binary.py MATERIALIZED 182 property values nobody chose, and shipped them in a release. It imports the source document into a FRESH temp graph, and import runs every node through schema validation, which INSERTS any declared property the node omits (dynograph schema.rs). So 91 Artifacts that honestly carried no `granularity`/`volatility` came back out asserting `atomic`/`stable`. Measured across the record: 81 of 172 artifacts carried granularity through PR #155 (exported via the live server), then 172 of 172 in v0.28.0 and PR #157, both exported through this tool. THIS IS fact:bl-198's DEFECT REINTRODUCED BY THE TOOL BUILT TO FIX THE STAMP, and its cost arrived exactly as BL-198 predicted: compare_designs against the live graph reported 91 phantom changes, the same instrument that has twice produced a false data-loss claim here. NOTHING WAS LOST — the live store was always correct; the RECORD over-asserted. AND THE TOOL CANNOT REPAIR ITS OWN DAMAGE: after the round trip nothing can tell an injected value from a chosen one, which is BL-198's whole point. So the fix is two-part. (1) The record is re-exported DIRECTLY from the real store with the new binary, which gives the correct stamp AND changes no property — the temp graph was only ever needed because the running server held the lock, so freeing the lock removes the need for the round trip entirely. (2) The tool now DIFFS what it wrote against its source and reports every (node_type, property) it materialized, refusing to be silent about it; it cannot undo the injection, so it names it and tells the caller to export directly instead."
+      }
+    },
+    {
+      "node_id": "chg:the-first-finding-closed-under-test-seven",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "resync",
+        "name": "The 2026-08-21 orientation-cost measurement is closed — the first finding retired under capture-session's test 7",
+        "subject": "record"
       }
     },
     {
@@ -110890,6 +111432,16 @@
       }
     },
     {
+      "node_id": "dec:idea-cannibalize-dynograph-foundation-into-reflow2",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-23: *\"should we ever just completely bring in dynograph-foundation into reflow2? we can cannibalize it and only take what we need/want and no longer have it as an external dependency?\"*\n\n═══════════════════════════════════════════════\n⭐⭐ WHY THIS IS NOT THE QUESTION HE ALREADY SAID NO TO\n\n`dec:idea-swap-dynograph-foundation-as-the-substitutability-demo` is **REJECTED** — his words, 2026-08-20: *\"I don't want to really swap out dynograph-foundation (it works and putting a lot of effort into this is probably not worth it if we aren't going to really swap it out).\"* The reason recorded there is general: **a demo that costs as much as the real thing is not a demo.**\n\nTHAT OBJECTION DOES NOT REACH THIS IDEA, AND THE DIFFERENCE IS THE WHOLE POINT. Swapping means REIMPLEMENTING the functionality behind a contract. Cannibalising means KEEPING THE SAME CODE and moving it in-tree. The rejected option pays full replacement cost; this one pays relocation cost. They are answers to the same underlying question — what to do about the dynograph dependency — and only one of them was priced.\n\n═══════════════════════════════════════════════\n📐 THE MEASUREMENT THAT MATTERS HERE IS NOT THE ONE THE REJECTED NODE MADE\n\nThat node measured FILES IMPORTING each crate — 48 / 21 / 3 / 2 / 1 — and concluded that `dynograph_core` at 48 files \"is not a module, it is the type vocabulary\", so replacing it is a rewrite wearing substitution's name. **That is correct for REPLACEMENT and irrelevant to ABSORPTION**: blast radius measures how much would have to change if the types changed, and vendoring changes no types at all.\n\nTHE RELEVANT NUMBER IS THE IMPORTED SURFACE. Measured at HEAD 2026-08-23 from every `use dynograph_*` in `crates/` — **about 21 named items across five crates**:\n\n  dynograph_core      DynoError · Value · Schema · PropertyDef · PropertyType ·\n                      NodeTypeDef · EdgeTypeDef · EdgeEndpoint            (8)\n  dynograph_storage   StoredNode · StoredEdge · StorageEngine · Value      (4)\n  dynograph_graph     GraphBuilder · leiden · strongly_connected_components ·\n                      connected_components · find_cycle · cut_structure    (6)\n  dynograph_resolution  token_sort_ratio                                   (1)\n  dynograph_vector      mean · linear_regression_slope                     (2)\n\n⚠️ BOUND, STATED RATHER THAN GLOSSED: this counts what is NAMED at an import site. It is a measure of the API SURFACE CONSUMED, not of the code volume behind it — `StorageEngine` is one name in front of a RocksDB-backed store, and `leiden` is one name in front of a community-detection implementation. It is a lower bound on work and an upper bound on interface.\n\n⭐ TWO CORRECTIONS TO THE REJECTED NODE'S STATED RISKS, found by looking at what is actually imported rather than at which files import it:\n\n· It warned *\"vector search and HNSW are not trivial to reimplement well\"*. **reflow2 does not use HNSW, or vector search, at all.** It imports `mean` and `linear_regression_slope` — arithmetic, in one file (`dimensions.rs`). Whatever the case against absorbing `dynograph_vector`, it is not that one.\n· `dynograph_resolution` is one function, `token_sort_ratio` — fuzzy string matching, two import sites.\n\nAND ONE RISK IT DID NOT NAME: `dynograph_graph` is where the real intellectual content sits — **leiden community detection, SCC, cycle finding, connected components, cut structure**. Six names, and the ones you would least want to reimplement. Under ABSORPTION that inverts into an argument FOR: you keep the implementation, so difficulty-to-rewrite stops being a cost and becomes the reason the code is worth having in-tree.\n\n═══════════════════════════════════════════════\n✅ THE OBVIOUS RISK THAT IS ALREADY ANSWERED\n\n\"Does this break storyflow, which also depends on dynograph?\" — No. `fact:the-diamond-meets-at-dynographs-internals-not-its-interface` measured it: storyflow consumes dynograph as a **REST API over HTTP**; reflow2 consumes it as a **Rust library API**. Disjoint surfaces over one shared implementation. reflow2 dropping the Rust surface cannot touch storyflow's endpoints.\n\n═══════════════════════════════════════════════\nIDEAS, UNRANKED, each with what it costs\n\n**A. ABSORB EVERYTHING — vendor all five crates in, delete what is unimported, drop the git dependency.** What the question literally asks. Ends the upgrade treadmill, the tag pins, and the `[patch]` dance in `Cargo.toml`; makes reflow2 a single tree with no external source.\n   ⚠️ You inherit maintenance of a RocksDB storage engine and a Leiden implementation forever, and you lose the upstream's fixes silently rather than by a pin bump you can read. **Vendoring converts a visible dependency into an invisible one** — the version pin at `reflow2.toml:11` currently carries a written reason for every bump, and that record has no successor once the code is in-tree.\n\n**B. ABSORB THE THREE SMALL ONES ONLY — graph, resolution, vector (9 of the 21 items) — and keep core+storage as the external dependency.** The three that are algorithms rather than substrate.\n   ⚠️ Honest counter, and it is the same one the rejected node made about its option C: **the dependency stays, so the treadmill stays.** The saving is partial and must not be sold as removal. What it does buy is that the two crates you would most struggle to justify rewriting are the ones you stop being able to lose.\n\n**C. ABSORB ONLY WHAT IS TINY AND OWNED-BY-ACCIDENT — `token_sort_ratio` (1), `mean` and `linear_regression_slope` (2).** Three functions, almost certainly a few dozen lines, that reflow2 could own outright with no maintenance story worth the name.\n   ⭐ Highest ratio of dependency-surface-removed to risk-taken. Removes two entire crates from the manifest.\n   ⚠️ And it is nearly cosmetic: `dynograph-core` and `dynograph-storage` are what the dependency actually IS. Two fewer lines in `Cargo.toml` is not independence.\n\n**D. DO NOTHING — it works, it is maintained, and the pin has a reason written on every bump.** The status quo, and what his own standing anti-over-engineering position argues for by default.\n   ⚠️ The counter: the reason for absorbing is not technical, it is about what reflow2 IS. A design brain whose substrate is somebody else's repository has a supply chain; one that owns its tree does not. Whether that matters is a judgement about the product, not about the code.\n\n**E. SETTLE THE PRIOR QUESTION FIRST — `dec:idea-is-the-foundation-a-subsystem-or-a-supplier`, still open.** Is dynograph a NINTH SUBSYSTEM of reflow2, or a supplier reached across required interfaces?\n   ⭐ **This idea would answer that question by construction rather than by argument.** Absorb it and it is a subsystem; there is no supplier left to be. That may be the strongest thing in favour of A — it dissolves an open modelling question instead of settling it on paper — and equally the strongest reason to answer the prior question first, since doing it in this order decides by doing.\n\n═══════════════════════════════════════════════\n📌 WHAT NOBODY HAS COSTED, so the list is not read as an estimate\n\nNo measurement exists of the LINE COUNT behind those 21 names, of what the five crates carry that reflow2 never touches, or of how much of `dynograph-storage` is RocksDB glue versus reflow2-specific. \"21 imported items\" is an interface measurement and says nothing about how big the tree is that would move. **The cheap next step, if any of this is pursued, is to measure the code volume behind each crate and how much of it is dead from reflow2's point of view** — which is exactly the \"only take what we need/want\" half of his question, and the half that currently has no number attached to it at all.",
+        "name": "OPEN — should reflow2 absorb dynograph-foundation outright, keeping only the ~21 items it actually imports, and stop having an external dependency at all?",
+        "rationale": "Recorded via the brainstorm skill at `proposed`. Anthony thinking out loud, 2026-08-23, immediately after the v0.39.0 cut.\n\n═══════════════════════════════════════════════\n⏸️ DEFERRED BY ANTHONY, 2026-08-23, THE SAME DAY IT WAS RAISED — and DEFERRED is not REJECTED.\n\nHis words: *\"okay, let's leave dynograph-foundation as its own repo for now. defer absorbing into reflow2.\"*\n\n**Status stays `proposed` deliberately.** Nothing was settled, so nothing should read as settled — but this node is now in a different state from one nobody has opened: the question was put to him with a costing and a recommendation, and he chose to wait. A later reader must be able to tell \"considered and deferred\" from \"never looked at\", which is the same distinction `review_relations`' note half exists to preserve.\n\n⭐ **THE RECOMMENDATION HE DEFERRED, recorded so the deferral has something to be a deferral OF.** Put to him: absorb `dynograph-resolution` and `dynograph-vector` only (option C), leave `core`, `storage` and `graph` alone. He took none of it for now.\n\n═══════════════════════════════════════════════\n✅ THE COSTING THE TEXT BELOW SAYS IS MISSING — IT IS NO LONGER MISSING\n\nMeasured 2026-08-23 against `../dynograph-foundation` at the checked-out tree. The \"📌 WHAT NOBODY HAS COSTED\" section below is superseded by this and is kept only because it states correctly what was unknown when the options were written.\n\n**SIZE OF THE FIVE CRATES reflow2 TAKES — 14,384 lines of `src`:**\n\n  dynograph-storage     5,023      dynograph-graph       3,832\n  dynograph-vector      2,377      dynograph-core        1,941\n  dynograph-resolution  1,211\n\n**reflow2's own tree is 53,005 lines** (reflow2-core 38,300 + reflow2-mcp 14,705). ⇒ **Absorbing all five adds 27% to the tree**, and makes reflow2 the permanent owner of a RocksDB storage engine and a Leiden implementation.\n\n⭐⭐ **AND THE DEAD-WEIGHT MEASUREMENT, which is the \"only take what we need\" half of the question answered:**\n\n  dynograph-vector      2,377 total · reflow2 uses `stats.rs` (402)  → 83% unused\n                        (`hnsw.rs` 1,165 + `distance.rs` 776 are never called)\n  dynograph-resolution  1,211 total · reflow2 uses `fuzzy.rs` (260)  → 79% unused\n                        (`resolver.rs` 911, an EntityResolver reflow2 never calls)\n\n⇒ For those two crates reflow2 needs **662 of 3,588 lines — 18%**. That is the only place in the set where \"cannibalize and take only what we need\" is literally true and measurable, and it is why option C was the recommendation.\n\n⚠️ **NOT MEASURED, so the numbers are not read wider than they are:** how much of `core`, `storage` and `graph` is dead from reflow2's point of view. Those three were not broken down, because the recommendation did not turn on it.\n\n═══════════════════════════════════════════════\n📌 THE DISTINCTION THAT CAME OUT OF THE DISCUSSION, and it outlives the deferral\n\n**Two problems look like one here and have different answers.** (a) DEAD WEIGHT — ~2,900 lines of an HNSW index and an entity resolver reflow2 never calls. (b) THE DEPENDENCY ITSELF — the pin, the treadmill, the confirmation sessions (`fact:dynograph-v0130-measured-clean-and-the-pin-is-parked`).\n\n**Option C solves (a) and does nothing for (b).** Whoever picks this up should say which one they are solving before choosing an option; answering the wrong one cheaply is the failure mode available here.\n\n⭐ **WHAT WOULD REOPEN THIS, stated so the deferral has a trigger rather than needing to be remembered:** the pin-confirmation cost recurring several more times, or reflow2 ever needing to CHANGE foundation behaviour rather than only call it. Neither has happened.\n\n═══════════════════════════════════════════════\nDEDUP: the guard surfaced `dec:idea-swap-dynograph-foundation-as-the-substitutability-demo` and `dec:idea-is-the-foundation-a-subsystem-or-a-supplier`; both were read in full and judged DIFFERENT. The first is REJECTED and asks about REPLACING the foundation with a new implementation — a cost this idea does not incur, because absorbing keeps the code. The second asks what the foundation IS; this asks what to DO with it, and would answer that one by construction rather than by argument.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-compose-both-chains-as-one-stress-test",
       "node_type": "Decision",
       "properties": {
@@ -111140,6 +111692,16 @@
       }
     },
     {
+      "node_id": "dec:idea-dynograph-crates-independent-in-code-coupled-in-release",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-23: *\"the other idea was just making dynograph-foundation a set of semi independent crates that you just pick what you like from? this is really a dynograph-foundation issue, I'm asking it here\"*\n\n═══════════════════════════════════════════════\n⭐⭐ THE FIRST HALF IS ALREADY TRUE, MEASURED AT HEAD 2026-08-23\n\ndynograph-foundation holds **TEN crates**: `client`, `cluster`, `core`, `game`, `graph`, `resolution`, `service`, `storage`, `text`, `vector`.\n\n**reflow2 already picks five of them** — `core`, `storage`, `graph`, `resolution`, `vector` — and declines `client`, `cluster`, `game` and `service` outright. `text` is not taken directly at all; it is reached only through `dynograph-storage`'s optional `fulltext` feature. And `storage` is taken with `default-features = false`, with `rocksdb` and `fulltext` opted into by name in `crates/reflow2-core/Cargo.toml`.\n\n⭐ So \"a set of semi-independent crates you pick what you like from\" IS WHAT IT ALREADY IS, at the crate level and at the feature level. `dynograph-game` and `dynograph-service` existing while reflow2 has never heard of them is the proposal already working — and `service` is almost certainly the REST surface storyflow consumes, which makes `fact:the-diamond-meets-at-dynographs-internals-not-its-interface` visible in the file layout.\n\n═══════════════════════════════════════════════\n📐 THE RESIDUAL: INDEPENDENT IN CODE, COUPLED IN RELEASE\n\nAll five are pinned in reflow2's `Cargo.toml` as:\n\n    { git = \"https://github.com/sligara7/dynograph-foundation.git\", tag = \"v0.12.0\" }\n\n**One repo, one tag, five crates.** You can pick WHICH CRATES you take; you cannot pick WHICH VERSION of each. They are not published to crates.io — the workspace comment says so — which is also why the `[patch.\"https://…\"]` block exists, commented out, for local cross-repo development.\n\n⭐⭐ **AND THERE IS A WORKED EXAMPLE ALREADY IN THE GRAPH.** `fact:dynograph-v0130-measured-clean-and-the-pin-is-parked` records that v0.13.0's `git diff v0.12.0 v0.13.0` over ALL SIX crates reflow2 touches is **EMPTY** — the entire release changed only `dynograph-client` and `dynograph-service`, neither of which reflow2 depends on. **A release that provably could not affect reflow2 still cost a session to confirm**, across four independent grounds and a full `cargo test --workspace`, and the pin bump is still PARKED awaiting Anthony's word.\n\n⇒ That is precisely the cost of coupling release to repository rather than to crate, stated in a real measurement rather than as an argument. **The question is not \"should they be separate crates\" — they are. It is \"should they be separately RELEASABLE\".** A much smaller question than the idea sounds like, and a different one from absorbing anything.\n\n═══════════════════════════════════════════════\nIDEAS, UNRANKED, each with what it costs\n\n**A. LEAVE IT — one repo, one tag, pick your crates.** The status quo, and already most of what was asked for.\n   ⭐ The monolithic tag is not only a cost: the five crates are always mutually consistent, and reflow2 has never had to reason about a version matrix. `reflow2.toml`'s pin carries a written reason for every bump (v0.11.0 → v0.12.0 closed a type leak) — and ONE pin is what makes that note writable at all.\n   ⚠️ A consumer who wants one crate takes the release cadence of all ten, and pays a confirmation session for releases that cannot touch it.\n\n**B. VERSION THE CRATES INDEPENDENTLY WITHIN THE REPO** — per-crate versions or tags under one repository.\n   ⚠️ Independent versions mean a compatibility matrix somebody maintains and tests. `dynograph-storage` re-exports `dynograph_core::Value` — reflow2 imports `dynograph_storage::Value` in two places — so core and storage are not independently versionable in any real sense without a stated compatibility contract between them.\n\n**C. PUBLISH TO crates.io.** Turns \"pick what you like\" from a git-tag arrangement into the ordinary Rust one, and removes the `[patch]` dance.\n   ⚠️ Publishing is a commitment: names are permanent, yanks are loud, and a pre-1.0 foundation currently free to move acquires an audience. Same shape as `designation: published` on an Interface — publishing is a promise, not a distribution mechanism.\n\n**D. SPLIT THE REPO** — one repository per crate, or per cluster.\n   ⚠️ The heaviest option, and it multiplies the release ceremony reflow2 has just spent a session documenting. Ten repos with ten release cuts to keep coherent is a worse problem than one tag.\n\n**E. CHANGE NOTHING UPSTREAM; LET reflow2 STOP TAKING WHAT IT BARELY USES.** `dynograph_resolution` is one function and `dynograph_vector` is two — both absorbable by reflow2 (option C of `dec:idea-cannibalize-dynograph-foundation-into-reflow2`) with no upstream change at all.\n   ⭐ The only option here reflow2 can act on unilaterally, in its own repo, without a decision about somebody else's project.\n\n═══════════════════════════════════════════════\n📌 THE HONEST BOUND, and it is about ownership rather than engineering\n\n**Nothing here has been discussed with dynograph-foundation as a project, and reflow2's design has no standing to decide it.** Four of the ten crates exist for consumers reflow2 knows nothing about — `game` and `cluster` are not reflow2's business, and a change made to suit reflow2's consumption pattern could be wrong for whoever uses those. The only options reflow2 can weigh honestly on its own are **A** (accept it) and **E** (take less).\n\n**AND THE SEPARATE FINDING WORTH KEEPING WHATEVER IS DECIDED:** this node lives in reflow2's graph while being about another system, and only its prose says so. That is the gap, not the workaround.",
+        "name": "OPEN — dynograph-foundation's crates are already pickable; should they become independently RELEASABLE, so a consumer can pin one without pinning all five?",
+        "rationale": "Recorded via the brainstorm skill at `proposed`. Anthony, 2026-08-23, raising a second option beside the absorb idea.\n\n═══════════════════════════════════════════════\n⏸️ PARTIALLY ANSWERED, 2026-08-23, AND THE PART THAT WAS NOT ANSWERED MATTERS MORE.\n\nHis words, in the same breath as deferring the absorption: *\"okay, let's leave dynograph-foundation as its own repo for now. defer absorbing into reflow2.\"*\n\n**WHAT THAT SETTLES: option D (split the repo) is off, and option A (leave it) stands FOR NOW.** \"As its own repo\" is explicit.\n\n🛑 **WHAT IT DOES NOT SETTLE, stated so the deferral is not read wider than it is:** options **B** (version the crates independently within the repo) and **C** (publish to crates.io) were never put to him and he said nothing about either. Staying \"its own repo\" is compatible with both — per-crate tags and a crates.io release both live inside one repository. So the RELEASABILITY question this node is named for is **still open**, and the status stays `proposed` for that reason rather than by neglect.\n\n⚠️ AND IT REMAINS NOT REFLOW2'S TO DECIDE. The ownership bound in the decision text is unchanged: four of the ten crates serve consumers reflow2 knows nothing about, and only options A and E can be weighed honestly from here.\n\n⭐ THE OPTION THAT SURVIVED INTACT IS **E** — reflow2 absorbing `token_sort_ratio`, `mean` and `linear_regression_slope` and taking less. It needs no upstream decision at all. It was put to him as the recommendation on the sibling node and DEFERRED there too, so it is waiting, not dead.\n\n═══════════════════════════════════════════════\n🛑 THIS DECISION GOVERNS ANOTHER REPOSITORY. Its subject is `dynograph-foundation`, not reflow2. It is recorded in reflow2's graph because that is where he asked it, because dynograph-foundation has no reflow2 design of its own — and because NOTHING IN THE SCHEMA RECORDS WHICH REPO A DECISION GOVERNS, so only this prose says so. That gap was filed independently by a dev_storyflow session on 2026-08-17 (item ④): a design question about another repo has nowhere of its own to live. **No work is to be done in that repository on the strength of this node.**\n\nDEDUP: read four near-matches in full. Distinct from `dec:idea-cannibalize-dynograph-foundation-into-reflow2` (what the CONSUMER does) because this asks what the SUPPLIER should be; from the rejected swap idea (reimplementation); from `dec:idea-is-the-foundation-a-subsystem-or-a-supplier` (what it IS in reflow2's model); and from `fact:dynograph-v0130-measured-clean-and-the-pin-is-parked`, which is a measured observation about one release rather than a question about release structure — though it turned out to be this node's sharpest supporting evidence, so it is cited rather than restated.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-embeddings-adoption",
       "node_type": "Decision",
       "properties": {
@@ -111256,6 +111818,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-18, correcting the framing of a day's work: 'most of why I do any of this isn't for the sake of reflow2. it is for users who are developing a project using reflow2... we are just applying reflow2 back on itself here, but that is not the main concern. it is that reflow2 does SE for the projects that it is used on.'\n\nDISTINCT FROM THE TWO FACTS IT RESTS ON: they MEASURE (three legs; 18 candidates). This asks WHAT TO DO, and the options below conflict with each other and with settled decisions, which is why it needs a decision rather than another measurement.\n\nTHE MEASURED SHAPE is in `fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it`: vocabulary reaches a user's design only when a TYPED TOOL writes it, an INSTRUCTION says when, and a DETECTOR notices its absence. Capability.inputs/outputs has none of the three; SPECIFIES is instructed but has no tool; DECOMPOSES has all three and still cannot fire, because the detector keys on the edge being PRESENT.\n\nOPTIONS, unranked, each with its objection:\n\n(a) ADD THE MISSING LEGS CASE BY CASE — a parameter on add_capability, a `specifies` tool, an absence-detector per edge type. Concrete and shippable. OBJECTION: it is whack-a-mole, and it scales with the SCHEMA rather than with the design — three cases were found by hand this week with 18 candidates and 42 edge items behind them.\n\n(b) A DETECTOR FOR UNUSED VOCABULARY ITSELF — 'this design has never used X, and here is the tool that writes it.' One rule covering every case, present and future. OBJECTION: on a young design EVERYTHING is unused, so it fires on the whole schema at genesis and is skimmed by week two — the failure `v0.2.0-what-we-dont-know.md` names as sharpest ('a gap list you skim is worse than no gap list'). It needs a maturity threshold, and a threshold is a judgement.\n\n(c) ASK AT THE RIGHT MOMENT rather than standing as a finding. When an agent adds a Capability, ask what goes in and what comes out — the black-box question, at the one moment the user is thinking about that capability. OBJECTION: this IS `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue`, proposed and unbuilt, and it is the same trigger problem this project has confirmed three times.\n\n(d) DERIVE RATHER THAN ASK. A capability's inputs and outputs are partly computable — what it CONSUMES and PROVIDES is already edge vocabulary. OBJECTION: `dec:report-dont-judge`. Deriving a functional signature and storing it asserts something nobody said, and the point of the property is the designer's statement of intent.\n\n(e) LET THE SCHEMA SHRINK. If nothing writes it and nobody misses it, the vocabulary is speculative. OBJECTION, decisive against doing this blindly: three of the four known unreachable fields were WANTED and got a parameter, and `req:declared-vocabulary-is-reachable-from-the-surface` explicitly forbids reading unreachable as deletable.",
         "name": "OPEN — how does an arbitrary project using reflow2 ever acquire the vocabulary nobody thought to ask it for?",
         "rationale": "Recorded via the brainstorm skill: ideas enter as ideas, nothing is promoted, objections sit beside the options.\n\nWHY THIS IS NOT THE REACHABILITY REQUIREMENT AGAIN. That asks whether a declared field CAN be written. This asks whether a user's project ever WILL — a question about skills, tool descriptions and detectors rather than about parameters, and the one Anthony says actually matters. A field with a parameter that nothing ever prompts for is reachable and still empty in every design.\n\nAN AGENT'S READING, as a finding and not an answer: (c) looks strongest because it puts the question where the user is already thinking, and (b) looks most dangerous because a list nobody reads is worse than none. But (c) depends on a requirement proposed and unbuilt since before this, so the honest first move may be to accept THAT rather than design around it.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-how-does-the-graph-learn-what-a-session-invalidated",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-23: *\"one thing I've noticed a bit is updating progress of development and testing of the graph … I had been using the /capture-session as sort of a way to make sure the graph is being updated, but things are getting through.\"*\n\n═══════════════════════════════════════════════\n⭐⭐ THE SHAPE, AND IT IS NOT A DISCIPLINE PROBLEM: **CAPTURE IS ADDITIVE. NOTHING ANYWHERE ASKS WHAT A SESSION MADE FALSE.**\n\nEvery mechanism in the loop adds: capture-intent adds nodes, `record_change` adds an event, capture-session adds what the conversation held, `loop_status` counts what is OWED. Not one asks *which existing assertion did this work just retire?* So a finding that motivated a fix survives the fix, and goes on proposing work already done.\n\n═══════════════════════════════════════════════\n📐 MEASURED ON THIS DESIGN, 2026-08-23\n\n    TemporalFacts                                    274\n      basis = measured                               274   (all of them)\n      carrying a valid_to                              7   ⇐ 2.6%\n      OPEN (no valid_to)                             267\n        ...whose SUBJECT has since been CHANGED      200   ⇐ 74%\n\n**The field that closes a fact already exists and is 97% unused.** `valid_to` is declared on TemporalFact, reachable, and essentially never written.\n\n⚠️ BOUND: \"has since been CHANGED\" is NOT ordered against `valid_from`. A ChangeEvent carries no date of its own — it is placed by AT_EPOCH — so 200 is an UPPER BOUND on staleness candidates, not a count of stale facts. Sharpening it needs epoch sequence compared against `valid_from`, which was not done here.\n\n═══════════════════════════════════════════════\n🛑 TWO SIGHTINGS, AND THE FIRST HAPPENED IN THE SESSION THAT RECORDED THIS\n\n(1) **THIS SESSION, CAUGHT BY ANTHONY.** Asked where else to optimise, the agent read `fact:the-orientation-reads-cost-ten-seconds-and-the-store-is-not-why` and quoted its numbers as current — `open_questions` at 11.7s, `detect_defects` the hot spot — with the fact's own words *\"NOTHING WAS OPTIMISED\"* and *\"that ratio is the next measurement and it has not been taken.\"* **All three were false.** PR #290 had taken the measurement AND fixed it: 56 SPOF candidates at 878ms each became 5.08ms for all 56, `detect_structural_defects` 44.5s → 4.43s, `open_questions` 11.7s → **2.95s**. His reply: *\"I think we already determined candidate 3.\"* He was right; the graph said otherwise. `cmp:service`, that fact's subject, has been CHANGED **nine** times since.\n\n(2) **A DIFFERENT PROJECT, ON HIS OTHER MACHINE.** An agent proposed work, he accepted, and on investigating it reported the work was already done. Same shape, different graph, no shared code — which makes this a property of the MODEL rather than of one session's carelessness.\n\n⭐ AND THE SIBLING NODE SAW THIS COMING FROM THE OTHER SIDE. `dec:idea-search-first-fires-without-being-remembered` measured six saves in one session and found **four of six prevented WORK rather than nodes**, calling that \"the more expensive thing\". Searching-before-proposing and closing-what-you-invalidated are two different fixes for one symptom: *an agent proposes work that is already done.*\n\n═══════════════════════════════════════════════\nIDEAS, UNRANKED, each with what it costs\n\n**A. A DETECTOR — `stale_measurement`.** A `basis: measured` TemporalFact with no `valid_to` whose subject has been CHANGED since `valid_from`.\n   ⭐ Needs no discipline, which is the whole argument — every other option asks somebody to remember something at the moment they are least likely to.\n   ⚠️ **200 findings on day one is a failure mode this project has already lived through**: per-idea, the unreviewed-ideas detector would have fired 115 times the day it shipped and the category was filtered by week's end. This must be ONE aggregate finding at low severity — or it becomes wallpaper, which is dev_storyflow's reason ① for abandoning reflow2 altogether.\n   ⚠️ The ordering stays a proxy until ChangeEvents can be placed in time against `valid_from`.\n\n**B. capture-session ASKS THE INVALIDATION QUESTION.** It captures what a session produced; it could also ask what the session made false.\n   ⭐ Cheapest by far — a skill edit, no schema, no code. And it is what Anthony was already using this skill to try to achieve.\n   ⚠️ It is PULL, and this is precisely the sibling node's finding: the discipline exists in writing and decays anyway. Where the question SHOULD live; not where it will reliably happen.\n\n**C. AN EDGE: ChangeEvent → the finding it ANSWERS.**\n   ⭐⭐ **THIS REVERSES A DECISION TAKEN EARLIER THE SAME DAY, AND THE REVERSAL IS THE MOST USEFUL THING HERE.** `ChangeEvent → Decision` was one of five vocabulary candidates and was DECLINED — by this agent, in this session, hours earlier — on the ground that *\"I cannot name a computation that would read it.\"* **Option A is that computation.** A detector reading ANSWERS edges is EXACT where a subject-changed heuristic is a proxy. The decline was correct on the evidence then available and is wrong now; what changed is that a reader appeared.\n   ⚠️ Still a new edge type: moves the stamp, owes an upgrade note, worth nothing until something draws it.\n\n**D. ASK AT THE MOMENT OF THE CHANGE.** `record_change` takes an optional \"this answers X\".\n   ⭐ The one moment the author certainly knows; by session end they have forgotten. And it is the sibling node's own option (a)/(b) shape — put the discipline on the TOOL, not in a catalogue.\n   ⚠️ Another field on the busiest write in the loop, and dev_storyflow reported write-time friction is exactly what trains agents to route around typed tools.\n\n**E. THE STOP HOOK COUNTS IT.** \"You recorded N ChangeEvents and closed 0 findings.\"\n   ⚠️ `loop_nudge.py` CANNOT READ THE GRAPH — the session's server holds the single-writer lock — so it keys only on the op tally, and `valid_to` goes through a generic `create_node` indistinguishable from any other write. Implementable only if closing a finding gets its own NAMED op, which is an argument for C and D over E.\n\n**F. DO NOTHING — a TemporalFact is a dated observation and staleness is the reader's job.**\n   ⭐ The honest defence of the status quo: the type is explicitly temporal, `valid_from` says when it was true, and 274 never-expiring facts cost nothing until somebody reads one as current.\n   ⚠️ **And that is exactly what happened, twice, today.** The cost is not theoretical and is not paid by the graph — it is paid by the person who accepts a proposal for work already done.\n\n═══════════════════════════════════════════════\n📌 WHAT THIS IS NOT\n\nIt is NOT about agents failing to use skills — that is `req:skill-use-survives-a-long-session`, accepted, with three observations of its own. A session that used every skill perfectly would still leave this gap. The two failures compound and are independent.",
+        "name": "OPEN — capture is ADDITIVE and nothing asks what a session made FALSE. 267 measured facts stand open; 200 describe a node that has since moved",
+        "rationale": "Recorded via the brainstorm skill at `proposed`. Anthony, 2026-08-23, from two independent sightings — one in this session, one on his other machine. Nothing here is intent and nothing is planned.\n\nDEDUP: read six near-matches in full.\n· ⭐ `dec:idea-search-first-fires-without-being-remembered` is the SIBLING and the closest of the six. Same shape — a discipline that is written down and still depends on somebody remembering it — and plausibly the same parent, `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue` (proposed, unbuilt), of which this would be a SECOND instance. **But it is a different discipline: that one prevents a duplicate on the way IN, this one closes a finding on the way OUT.** Its own sharpest measurement — *\"four of six saves prevented WORK, not nodes\"* — is the same symptom this node measures from the other side, which is why it is linked rather than merged.\n· `req:skill-use-survives-a-long-session` and `fact:an-agent-stopped-reaching-...` are about agents not REACHING for the loop. **A session that used every skill perfectly would still leave this gap, because no skill asks the invalidation question.**\n· `req:a-fix-says-whether-it-corrected-the-cause` (ACCEPTED) asks whether a repair reached the CAUSE — a property of the fix. This asks whether it RETIRED THE FINDING — a relation between two records.\n· `dec:the-patch-record-binds-forward-not-backward` settles that 472 existing changes are not reclassified; the same courtesy would be owed to the 267 open facts.\n· `dec:idea-how-do-triage-findings-become-plannable-work` asks how a finding becomes SCHEDULABLE; this asks how it becomes CLOSED.",
         "status": "proposed"
       }
     },
@@ -114667,6 +115239,16 @@
       }
     },
     {
+      "node_id": "epoch:2026-08-23-dynograph-absorption-deferred",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The dynograph absorption question is put to Anthony and deferred; the costing that was missing is recorded",
+        "sequence": 382,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:2026-08-23-gate-names-what-you-touched",
       "node_type": "DesignEpoch",
       "properties": {
@@ -114683,6 +115265,16 @@
         "epoch_type": "revision",
         "name": "The medium vocabulary gains json_rpc, and the HTTP tool surface can finally name itself",
         "sequence": 379,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:2026-08-23-record-to-record-vocabulary",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "Record-to-record relations become modelled, and capture-session gains the question that closes a finding",
+        "sequence": 383,
         "status": "arrived"
       }
     },
@@ -118090,6 +118682,16 @@
       }
     },
     {
+      "node_id": "frag:art:record-to-record-relations-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered record_to_record_relations.rs"
+      }
+    },
+    {
       "node_id": "frag:art:regions-rs",
       "node_type": "Fragment",
       "properties": {
@@ -120737,6 +121339,18 @@
       }
     },
     {
+      "node_id": "req:a-record-can-say-what-runs-it-what-complements-it-and-what-replaced-it",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "Relationships BETWEEN records are first-class, not wildcard leftovers — a check can name the file that runs it, a rule can name the rule it stands beside, and a retired check can say it was replaced",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-08-23, choosing the scope after the three candidates were measured against `dec:edge-orthogonality`.\n\nTHE CLASS, named by dev_storyflow across three independent reports before anyone looked for a pattern: **relationships between RECORDS are thinner in reflow2's vocabulary than relationships to Requirements.** The golden thread — Requirement ← Capability ← Component ← Artifact — is richly modelled. Verification-to-Artifact, rule-to-rule and check-to-check are not, and each time a session reached for one it found only a `*` wildcard or a refusal.\n\nTHREE INSTANCES, each with the computation that will read it — which is the filter `dec:edge-orthogonality` sets and the reason two further candidates were left out:\n\n1. **A check has no way to name the file that RUNS it.** `describe_schema {from: Artifact, to: Verification}` answers honestly that no edge type names both. `REALIZES` is wrong (the script does not implement the capability, it interrogates it), `DOCUMENTS` is wrong (it is executable, not a doc), `CALIBRATED_AGAINST` is wrong (nothing was fitted to its output). Filed by dragon Boss 2026-08-19, who left the edge out rather than assert a wrong one — the honest choice, and it left the check an orphan Artifact. ⇒ READ BY: `loop_status.verifications.never_run`, which today cannot distinguish *a check nobody has run* from *a check with no executable form at all*. Two very different debts, one number.\n\n2. **Two DesignRules that deliberately stand beside each other cannot say so.** `DUPLICATES` is actively wrong and invites a merge that would destroy the distinction; `SUPERSEDES` is wrong (neither replaces the other); `DEPENDS_ON` is wrong (each stands alone). The reporter used `CONTRADICTS alignment=supporting` and wrote a paragraph begging future readers not to merge them. ⇒ READ BY: the `possible_duplicate` heuristic and HEAL, which would then REFRAIN. This is the only one of the three that prevents a destructive act rather than enabling an expressive one — today a prose paragraph is the only thing standing between two complementary rules and a merge.\n\n3. **A superseded check goes on reporting a stale status.** `SUPERSEDES` is refused between two Verifications, and `Verification.status` has no `superseded` value; the reporter used `EVOLVES_INTO` through a wildcard and `skipped`, which means something else. ⇒ READ BY: `loop_status.verifications.by_status` and `graph_report`, which count a retired check as `skipped` or, worse, as still `passing`.\n\n⭐ WHAT MAKES THIS DIFFERENT FROM EXPRESSIVENESS FOR ITS OWN SAKE, and it is why two other candidates were declined: `ChangeEvent → Decision` and a \"which repo does this decision govern\" property were both raised the same day, both from real friction, and NEITHER has a computation that would read it. They are deferred rather than built, because vocabulary nothing reads is exactly the defect `req:a-vocabulary-distinction-proves-it-is-read` exists to catch, and adding it while that requirement is open would be filing the defect and committing it in one motion.\n\n⚠️ THE CONSTRAINT ON HOW THIS IS BUILT, carried over from `VERIFIES`'s own schema comment: **enumerate endpoints, do not reach for `*`.** A wildcard would ACCEPT these pairs — nothing was ever broken — but it would not MODEL them, so `describe_schema` would go on ranking them as merely tolerated and no detector would treat them as real. The wildcard is also what stopped a reporter asserting a wrong edge, and that distinction must survive: what is added must be a modelled fit, not a widened loophole.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:a-recorded-risk-reaches-someone",
       "node_type": "Requirement",
       "properties": {
@@ -122920,6 +123534,18 @@
       }
     },
     {
+      "node_id": "req:the-graph-can-say-what-has-already-been-done",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "reflow2 can accurately say where it is, which means knowing what it has already DONE — because on a shared design the cost of not knowing is two people building the same thing twice",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-08-23, in two statements. The first is the requirement:\n\n> *\"reflow2 needs to be able to accurately show where it is (and that means knowing what it's done).\"*\n\nThe second is why it is not a tidiness concern, and it raised the priority:\n\n> *\"if multiple people are working on a project from different machines and if reflow2 is not able to accurately mark progress, one user may finish a task (or make some progress) and another user may repeat completing that same thing - only to find out that it was completed already. now you have 2 solutions developed from 2 different users. that's a pretty big deal to me.\"*\n\n⭐ **THE ESCALATION IS THE POINT.** For one person, a stale graph costs time and the user catches it. For two people on two machines it costs a **DIVERGENT IMPLEMENTATION** — and that is not a graph merge, it is two working solutions to one problem that somebody now has to choose between and throw one away. reflow2's own three-way merge driver reconciles the DESIGN RECORD; nothing reconciles two independently written implementations, and nothing should have to.\n\n═══════════════════════════════════════════════\n📐 WHAT IS ALREADY COVERED, MEASURED 2026-08-23 rather than assumed\n\n✅ **COLLISION WHILE WORKING.** `claim_region` / `claim_report` / `cap:cluster-claims`, and `parallel-work`'s isolated worktree. Advisory by design — a claim never blocks a write — but it answers \"is someone in here right now?\".\n\n✅ **PLANNED WORK, DELIVERED.** `arrival_delta` returns `delivered` / `deferred` / `discontinued` / `outstanding`, and **`delivered` is DERIVED FROM THE GOLDEN THREAD, never stored** — deliberately, so there is no second source of truth able to disagree. Verified on `epoch:instruments-stop-overstating`: five scheduled items, five `delivered`, `missed_obligations: []`, `ready_to_cut: true`. **This half works, and it is the model for the rest.**\n\n✅ **THE SHARED RECORD MOVING.** `sync_status` reports `behind` and names the nodes a graph has not seen, so a machine can learn the record moved under it.\n\n═══════════════════════════════════════════════\n🛑 WHAT IS NOT COVERED, AND IT IS EXACTLY HIS SCENARIO\n\n❌ **AN OBSERVED FINDING BEING RETIRED.** 274 TemporalFacts, all `basis: measured`, **7 carrying a `valid_to`** — 2.6%. 200 of the 267 open ones describe a node that has since been CHANGED. A finding that motivated a fix survives the fix. User B reads it, believes it, and redoes the work.\n\n❌ **THE THREE \"WHO\" AXES SAY EVERYTHING EXCEPT DONE.** `AUTHORED_BY` = who wrote it. `CLAIMS` = who is in it right now. `OWNED_BY` = whose ground it is. **None says it is finished**, and \"finished\" is derivable only for work that was PLANNED into an increment.\n\n❌ **CROSS-MACHINE CLAIM LIVENESS IS `unknown` BY CONSTRUCTION.** A claim made on another machine cannot be checked against a live process, so it reads `unknown` — never `free`, which is the honest choice, and also not an answer to \"did they finish?\".\n\n⇒ **THE ASYMMETRY IS THE REQUIREMENT.** reflow2 can say what was PLANNED and delivered because delivery is COMPUTED. It cannot say what was OBSERVED and superseded, because an observation is ASSERTED once and nothing ever revisits it. A measurement cannot be derived the way delivery can — nobody can compute whether a timing taken on 2026-08-21 is still true — so the mechanism must differ even though the need is identical.\n\n═══════════════════════════════════════════════\n📌 WHAT THIS REQUIRES, stated as a property rather than as a design\n\nThat a reader — a person or an agent, on any machine — can tell **what this design has already achieved** from the design itself, without asking someone. Specifically: that a finding which has been acted on is distinguishable from one that has not, and that the distinction survives being carried between machines through the committed export.\n\n⚠️ **HOW is deliberately not settled here.** `dec:idea-how-does-the-graph-learn-what-a-session-invalidated` holds six options with their costs, and this requirement does not choose among them. Two half-measures already exist and neither is sufficient alone: `capture-session`'s test 7 (added 2026-08-23) catches the case where the session that invalidates a finding also closes it, and misses the far commoner case where a different session, days later, does the invalidating; a detector would reach that case and cannot know whether a candidate is genuinely stale.\n\n⚠️ **BOUND: the multi-user cost is REASONED, not observed.** Anthony describes it as a risk he cares about, and the single-user version of it happened twice on 2026-08-23 — once in the session that recorded this, once on his other machine. **Nobody has yet watched two people build the same thing twice on this design.** The reasoning is that a mechanism which fails for one reader fails worse for two, and that is an argument, not a measurement.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:the-kind-of-system-is-established-before-its-parts-are-captured",
       "node_type": "Requirement",
       "properties": {
@@ -123251,6 +123877,26 @@
       }
     },
     {
+      "node_id": "snap:epoch:2026-08-23-dynograph-absorption-deferred:dec:idea-cannibalize-dynograph-foundation-into-reflow2",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CONTRADICTS\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-dynograph-crates-independent-in-code-coupled-in-release\",\"properties\":{\"alignment\":\"opposing\",\"evidence\":\"Opposite answers on one axis, raised in the same breath. Absorbing DISSOLVES the boundary by pulling the code in; making the crates independently releasable SHARPENS the boundary and keeps it. Taken far enough, each makes the other pointless — there is nothing to release independently once it is vendored, and little reason to vendor once you can pin exactly what you want. ⚠️ NOT STRICTLY EXCLUSIVE, and the overlap is worth naming: option E here (reflow2 absorbs the three loose functions) IS option C there. So the design will have to pick a DIRECTION rather than a disjoint branch.\"}},{\"direction\":\"in\",\"edge_type\":\"EVOLVES_INTO\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-swap-dynograph-foundation-as-the-substitutability-demo\",\"properties\":{\"evidence\":\"The older thought, grown up. Both ask what to do about the dynograph dependency, and the 2026-08-20 version was REJECTED on a cost argument — \\\"a demo that costs as much as the real thing is not a demo\\\" — because REPLACING means reimplementing. Absorbing keeps the same code and pays relocation cost instead, so the objection that killed the earlier idea does not reach this one. Drawn from the rejected node TO this one: the direction records that the question survived its own rejection in a cheaper form.\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-23\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"CAUSES\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-is-the-foundation-a-subsystem-or-a-supplier\",\"properties\":{\"basis\":\"correlational\",\"evidence\":\"Taking this forces that question closed by construction rather than by argument: absorb the foundation and it IS a ninth subsystem, because there is no supplier left to be. That is simultaneously the strongest point in favour of absorbing (it dissolves an open modelling question instead of settling it on paper) and the strongest reason to answer the prior question FIRST, since doing it in this order decides by doing.\",\"validation_status\":\"unvalidated\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-23: *\\\"should we ever just completely bring in dynograph-foundation into reflow2? we can cannibalize it and only take what we need/want and no longer have it as an external dependency?\\\"*\\n\\n═══════════════════════════════════════════════\\n⭐⭐ WHY THIS IS NOT THE QUESTION HE ALREADY SAID NO TO\\n\\n`dec:idea-swap-dynograph-foundation-as-the-substitutability-demo` is **REJECTED** — his words, 2026-08-20: *\\\"I don't want to really swap out dynograph-foundation (it works and putting a lot of effort into this is probably not worth it if we aren't going to really swap it out).\\\"* The reason recorded there is general: **a demo that costs as much as the real thing is not a demo.**\\n\\nTHAT OBJECTION DOES NOT REACH THIS IDEA, AND THE DIFFERENCE IS THE WHOLE POINT. Swapping means REIMPLEMENTING the functionality behind a contract. Cannibalising means KEEPING THE SAME CODE and moving it in-tree. The rejected option pays full replacement cost; this one pays relocation cost. They are answers to the same underlying question — what to do about the dynograph dependency — and only one of them was priced.\\n\\n═══════════════════════════════════════════════\\n📐 THE MEASUREMENT THAT MATTERS HERE IS NOT THE ONE THE REJECTED NODE MADE\\n\\nThat node measured FILES IMPORTING each crate — 48 / 21 / 3 / 2 / 1 — and concluded that `dynograph_core` at 48 files \\\"is not a module, it is the type vocabulary\\\", so replacing it is a rewrite wearing substitution's name. **That is correct for REPLACEMENT and irrelevant to ABSORPTION**: blast radius measures how much would have to change if the types changed, and vendoring changes no types at all.\\n\\nTHE RELEVANT NUMBER IS THE IMPORTED SURFACE. Measured at HEAD 2026-08-23 from every `use dynograph_*` in `crates/` — **about 21 named items across five crates**:\\n\\n  dynograph_core      DynoError · Value · Schema · PropertyDef · PropertyType ·\\n                      NodeTypeDef · EdgeTypeDef · EdgeEndpoint            (8)\\n  dynograph_storage   StoredNode · StoredEdge · StorageEngine · Value      (4)\\n  dynograph_graph     GraphBuilder · leiden · strongly_connected_components ·\\n                      connected_components · find_cycle · cut_structure    (6)\\n  dynograph_resolution  token_sort_ratio                                   (1)\\n  dynograph_vector      mean · linear_regression_slope                     (2)\\n\\n⚠️ BOUND, STATED RATHER THAN GLOSSED: this counts what is NAMED at an import site. It is a measure of the API SURFACE CONSUMED, not of the code volume behind it — `StorageEngine` is one name in front of a RocksDB-backed store, and `leiden` is one name in front of a community-detection implementation. It is a lower bound on work and an upper bound on interface.\\n\\n⭐ TWO CORRECTIONS TO THE REJECTED NODE'S STATED RISKS, found by looking at what is actually imported rather than at which files import it:\\n\\n· It warned *\\\"vector search and HNSW are not trivial to reimplement well\\\"*. **reflow2 does not use HNSW, or vector search, at all.** It imports `mean` and `linear_regression_slope` — arithmetic, in one file (`dimensions.rs`). Whatever the case against absorbing `dynograph_vector`, it is not that one.\\n· `dynograph_resolution` is one function, `token_sort_ratio` — fuzzy string matching, two import sites.\\n\\nAND ONE RISK IT DID NOT NAME: `dynograph_graph` is where the real intellectual content sits — **leiden community detection, SCC, cycle finding, connected components, cut structure**. Six names, and the ones you would least want to reimplement. Under ABSORPTION that inverts into an argument FOR: you keep the implementation, so difficulty-to-rewrite stops being a cost and becomes the reason the code is worth having in-tree.\\n\\n═══════════════════════════════════════════════\\n✅ THE OBVIOUS RISK THAT IS ALREADY ANSWERED\\n\\n\\\"Does this break storyflow, which also depends on dynograph?\\\" — No. `fact:the-diamond-meets-at-dynographs-internals-not-its-interface` measured it: storyflow consumes dynograph as a **REST API over HTTP**; reflow2 consumes it as a **Rust library API**. Disjoint surfaces over one shared implementation. reflow2 dropping the Rust surface cannot touch storyflow's endpoints.\\n\\n═══════════════════════════════════════════════\\nIDEAS, UNRANKED, each with what it costs\\n\\n**A. ABSORB EVERYTHING — vendor all five crates in, delete what is unimported, drop the git dependency.** What the question literally asks. Ends the upgrade treadmill, the tag pins, and the `[patch]` dance in `Cargo.toml`; makes reflow2 a single tree with no external source.\\n   ⚠️ You inherit maintenance of a RocksDB storage engine and a Leiden implementation forever, and you lose the upstream's fixes silently rather than by a pin bump you can read. **Vendoring converts a visible dependency into an invisible one** — the version pin at `reflow2.toml:11` currently carries a written reason for every bump, and that record has no successor once the code is in-tree.\\n\\n**B. ABSORB THE THREE SMALL ONES ONLY — graph, resolution, vector (9 of the 21 items) — and keep core+storage as the external dependency.** The three that are algorithms rather than substrate.\\n   ⚠️ Honest counter, and it is the same one the rejected node made about its option C: **the dependency stays, so the treadmill stays.** The saving is partial and must not be sold as removal. What it does buy is that the two crates you would most struggle to justify rewriting are the ones you stop being able to lose.\\n\\n**C. ABSORB ONLY WHAT IS TINY AND OWNED-BY-ACCIDENT — `token_sort_ratio` (1), `mean` and `linear_regression_slope` (2).** Three functions, almost certainly a few dozen lines, that reflow2 could own outright with no maintenance story worth the name.\\n   ⭐ Highest ratio of dependency-surface-removed to risk-taken. Removes two entire crates from the manifest.\\n   ⚠️ And it is nearly cosmetic: `dynograph-core` and `dynograph-storage` are what the dependency actually IS. Two fewer lines in `Cargo.toml` is not independence.\\n\\n**D. DO NOTHING — it works, it is maintained, and the pin has a reason written on every bump.** The status quo, and what his own standing anti-over-engineering position argues for by default.\\n   ⚠️ The counter: the reason for absorbing is not technical, it is about what reflow2 IS. A design brain whose substrate is somebody else's repository has a supply chain; one that owns its tree does not. Whether that matters is a judgement about the product, not about the code.\\n\\n**E. SETTLE THE PRIOR QUESTION FIRST — `dec:idea-is-the-foundation-a-subsystem-or-a-supplier`, still open.** Is dynograph a NINTH SUBSYSTEM of reflow2, or a supplier reached across required interfaces?\\n   ⭐ **This idea would answer that question by construction rather than by argument.** Absorb it and it is a subsystem; there is no supplier left to be. That may be the strongest thing in favour of A — it dissolves an open modelling question instead of settling it on paper — and equally the strongest reason to answer the prior question first, since doing it in this order decides by doing.\\n\\n═══════════════════════════════════════════════\\n📌 WHAT NOBODY HAS COSTED, so the list is not read as an estimate\\n\\nNo measurement exists of the LINE COUNT behind those 21 names, of what the five crates carry that reflow2 never touches, or of how much of `dynograph-storage` is RocksDB glue versus reflow2-specific. \\\"21 imported items\\\" is an interface measurement and says nothing about how big the tree is that would move. **The cheap next step, if any of this is pursued, is to measure the code volume behind each crate and how much of it is dead from reflow2's point of view** — which is exactly the \\\"only take what we need/want\\\" half of his question, and the half that currently has no number attached to it at all.\",\"name\":\"OPEN — should reflow2 absorb dynograph-foundation outright, keeping only the ~21 items it actually imports, and stop having an external dependency at all?\",\"rationale\":\"Recorded via the brainstorm skill at `proposed`. Anthony thinking out loud, 2026-08-23, immediately after the v0.39.0 cut. Nothing here is intent and nothing is planned.\\n\\nDEDUP: the guard surfaced `dec:idea-swap-dynograph-foundation-as-the-substitutability-demo` and `dec:idea-is-the-foundation-a-subsystem-or-a-supplier`; both were read in full and judged DIFFERENT. The first is REJECTED and asks about REPLACING the foundation with a new implementation — a cost this idea does not incur, because absorbing keeps the code. The second asks what the foundation IS; this asks what to DO with it, and would answer that one by construction rather than by argument.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-cannibalize-dynograph-foundation-into-reflow2",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:2026-08-23-dynograph-absorption-deferred:dec:idea-dynograph-crates-independent-in-code-coupled-in-release",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-23\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"CONTRADICTS\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-cannibalize-dynograph-foundation-into-reflow2\",\"properties\":{\"alignment\":\"opposing\",\"evidence\":\"Opposite answers on one axis, raised in the same breath. Absorbing DISSOLVES the boundary by pulling the code in; making the crates independently releasable SHARPENS the boundary and keeps it. Taken far enough, each makes the other pointless — there is nothing to release independently once it is vendored, and little reason to vendor once you can pin exactly what you want. ⚠️ NOT STRICTLY EXCLUSIVE, and the overlap is worth naming: option E here (reflow2 absorbs the three loose functions) IS option C there. So the design will have to pick a DIRECTION rather than a disjoint branch.\"}}]",
+        "state": "{\"decision\":\"RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-23: *\\\"the other idea was just making dynograph-foundation a set of semi independent crates that you just pick what you like from? this is really a dynograph-foundation issue, I'm asking it here\\\"*\\n\\n═══════════════════════════════════════════════\\n⭐⭐ THE FIRST HALF IS ALREADY TRUE, MEASURED AT HEAD 2026-08-23\\n\\ndynograph-foundation holds **TEN crates**: `client`, `cluster`, `core`, `game`, `graph`, `resolution`, `service`, `storage`, `text`, `vector`.\\n\\n**reflow2 already picks five of them** — `core`, `storage`, `graph`, `resolution`, `vector` — and declines `client`, `cluster`, `game` and `service` outright. `text` is not taken directly at all; it is reached only through `dynograph-storage`'s optional `fulltext` feature. And `storage` is taken with `default-features = false`, with `rocksdb` and `fulltext` opted into by name in `crates/reflow2-core/Cargo.toml`.\\n\\n⭐ So \\\"a set of semi-independent crates you pick what you like from\\\" IS WHAT IT ALREADY IS, at the crate level and at the feature level. `dynograph-game` and `dynograph-service` existing while reflow2 has never heard of them is the proposal already working — and `service` is almost certainly the REST surface storyflow consumes, which makes `fact:the-diamond-meets-at-dynographs-internals-not-its-interface` visible in the file layout.\\n\\n═══════════════════════════════════════════════\\n📐 THE RESIDUAL: INDEPENDENT IN CODE, COUPLED IN RELEASE\\n\\nAll five are pinned in reflow2's `Cargo.toml` as:\\n\\n    { git = \\\"https://github.com/sligara7/dynograph-foundation.git\\\", tag = \\\"v0.12.0\\\" }\\n\\n**One repo, one tag, five crates.** You can pick WHICH CRATES you take; you cannot pick WHICH VERSION of each. They are not published to crates.io — the workspace comment says so — which is also why the `[patch.\\\"https://…\\\"]` block exists, commented out, for local cross-repo development.\\n\\n⭐⭐ **AND THERE IS A WORKED EXAMPLE ALREADY IN THE GRAPH.** `fact:dynograph-v0130-measured-clean-and-the-pin-is-parked` records that v0.13.0's `git diff v0.12.0 v0.13.0` over ALL SIX crates reflow2 touches is **EMPTY** — the entire release changed only `dynograph-client` and `dynograph-service`, neither of which reflow2 depends on. **A release that provably could not affect reflow2 still cost a session to confirm**, across four independent grounds and a full `cargo test --workspace`, and the pin bump is still PARKED awaiting Anthony's word.\\n\\n⇒ That is precisely the cost of coupling release to repository rather than to crate, stated in a real measurement rather than as an argument. **The question is not \\\"should they be separate crates\\\" — they are. It is \\\"should they be separately RELEASABLE\\\".** A much smaller question than the idea sounds like, and a different one from absorbing anything.\\n\\n═══════════════════════════════════════════════\\nIDEAS, UNRANKED, each with what it costs\\n\\n**A. LEAVE IT — one repo, one tag, pick your crates.** The status quo, and already most of what was asked for.\\n   ⭐ The monolithic tag is not only a cost: the five crates are always mutually consistent, and reflow2 has never had to reason about a version matrix. `reflow2.toml`'s pin carries a written reason for every bump (v0.11.0 → v0.12.0 closed a type leak) — and ONE pin is what makes that note writable at all.\\n   ⚠️ A consumer who wants one crate takes the release cadence of all ten, and pays a confirmation session for releases that cannot touch it.\\n\\n**B. VERSION THE CRATES INDEPENDENTLY WITHIN THE REPO** — per-crate versions or tags under one repository.\\n   ⚠️ Independent versions mean a compatibility matrix somebody maintains and tests. `dynograph-storage` re-exports `dynograph_core::Value` — reflow2 imports `dynograph_storage::Value` in two places — so core and storage are not independently versionable in any real sense without a stated compatibility contract between them.\\n\\n**C. PUBLISH TO crates.io.** Turns \\\"pick what you like\\\" from a git-tag arrangement into the ordinary Rust one, and removes the `[patch]` dance.\\n   ⚠️ Publishing is a commitment: names are permanent, yanks are loud, and a pre-1.0 foundation currently free to move acquires an audience. Same shape as `designation: published` on an Interface — publishing is a promise, not a distribution mechanism.\\n\\n**D. SPLIT THE REPO** — one repository per crate, or per cluster.\\n   ⚠️ The heaviest option, and it multiplies the release ceremony reflow2 has just spent a session documenting. Ten repos with ten release cuts to keep coherent is a worse problem than one tag.\\n\\n**E. CHANGE NOTHING UPSTREAM; LET reflow2 STOP TAKING WHAT IT BARELY USES.** `dynograph_resolution` is one function and `dynograph_vector` is two — both absorbable by reflow2 (option C of `dec:idea-cannibalize-dynograph-foundation-into-reflow2`) with no upstream change at all.\\n   ⭐ The only option here reflow2 can act on unilaterally, in its own repo, without a decision about somebody else's project.\\n\\n═══════════════════════════════════════════════\\n📌 THE HONEST BOUND, and it is about ownership rather than engineering\\n\\n**Nothing here has been discussed with dynograph-foundation as a project, and reflow2's design has no standing to decide it.** Four of the ten crates exist for consumers reflow2 knows nothing about — `game` and `cluster` are not reflow2's business, and a change made to suit reflow2's consumption pattern could be wrong for whoever uses those. The only options reflow2 can weigh honestly on its own are **A** (accept it) and **E** (take less).\\n\\n**AND THE SEPARATE FINDING WORTH KEEPING WHATEVER IS DECIDED:** this node lives in reflow2's graph while being about another system, and only its prose says so. That is the gap, not the workaround.\",\"name\":\"OPEN — dynograph-foundation's crates are already pickable; should they become independently RELEASABLE, so a consumer can pin one without pinning all five?\",\"rationale\":\"Recorded via the brainstorm skill at `proposed`. Anthony, 2026-08-23, raising a second option beside the absorb idea. Nothing is intent and nothing is planned.\\n\\n🛑 THIS DECISION GOVERNS ANOTHER REPOSITORY. Its subject is `dynograph-foundation`, not reflow2. It is recorded in reflow2's graph because that is where he asked it, because dynograph-foundation has no reflow2 design of its own — and because NOTHING IN THE SCHEMA RECORDS WHICH REPO A DECISION GOVERNS, so only this prose says so. That gap was filed independently by a dev_storyflow session on 2026-08-17 (item ④): a design question about another repo has nowhere of its own to live. **No work is to be done in that repository on the strength of this node.**\\n\\nDEDUP: read four near-matches in full. Distinct from `dec:idea-cannibalize-dynograph-foundation-into-reflow2` (what the CONSUMER does) because this asks what the SUPPLIER should be; from the rejected swap idea (reimplementation); from `dec:idea-is-the-foundation-a-subsystem-or-a-supplier` (what it IS in reflow2's model); and from `fact:dynograph-v0130-measured-clean-and-the-pin-is-parked`, which is a measured observation about one release rather than a question about release structure — though it turned out to be this node's sharpest supporting evidence, so it is cited rather than restated.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-dynograph-crates-independent-in-code-coupled-in-release",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:2026-08-23-gate-names-what-you-touched:art:check",
       "node_type": "Snapshot",
       "properties": {
@@ -123268,6 +123914,26 @@
         "state": "{\"auth\":\"none\",\"designation\":\"published\",\"endpoint\":\"The address given to `--http`, or the one a `--serve-shared` daemon announces. A SINGLE MCP endpoint, not a resource tree — every operation is a named tool reached through `tools/call`. `--http-allow-host` restricts which Host headers are accepted; that is a host allowlist, NOT authentication.\",\"error_model\":\"Identical to `ifc:mcp-tools`: JSON-RPC 2.0 `error` responses for transport-level failures, and a normal result carrying `isError: true` with the explanation in the first content block for tool-level ones. A caller that checks only for `error` will read a refused write as a success.\",\"medium\":\"unspecified\",\"name\":\"MCP tool surface (streamable HTTP transport)\",\"operations\":\"Identical to the stdio transport, because it is the same protocol: `initialize`, the `notifications/initialized` notification, `tools/list`, and `tools/call`. The transport differs; the contract above it does not.\",\"paradigm\":\"synchronous\",\"payload_format\":\"json\",\"payload_schema\":\"Identical to `ifc:mcp-tools`: `tools/list` returns each tool's `inputSchema` as JSON Schema generated from the Rust request types, so the field-level contract travels with the surface and cannot drift from the build.\",\"provenance\":\"authored\",\"spec\":\"SPLIT OUT OF `ifc:mcp-tools` ON 2026-08-13, ON ANTHONY'S WORD. One Interface had been describing two boundaries — its own `endpoint` said so: *\\\"a stdio pipe to a launched process, OR the address given to `--http`\\\"*. Everything above the transport is identical, because it is the same protocol; what differs is that this one can be reached remotely, can sit behind a gateway, and can terminate TLS, and the stdio one can do none of those.\\n\\n🛑 `medium` IS DELIBERATELY `unspecified` AND THAT IS THE HONEST ANSWER, NOT AN OVERSIGHT. The enum offers REST / gRPC / event / graphql / cli / library / data / mechanical / electrical / human, and **none of them names MCP over streamable HTTP**. `REST` is wrong: this is not resource-oriented, it is a SINGLE endpoint carrying JSON-RPC 2.0, and every operation is a named tool rather than a verb on a resource. `cli` belongs to the other half. `gRPC` is a different protocol.\\n\\n⭐ THE SPLIT QUARANTINED THE PROBLEM RATHER THAN SOLVING IT. Before, one wrong value (`REST`) covered both transports; now the stdio half is correctly `cli` and the missing vocabulary is isolated to this node alone. Adding `json_rpc` to the enum remains the open option — declined for now because enum values are NOT counted by the version stamp (it counts node and edge TYPES), so a new value is a compatibility event nothing can detect, which is the stamp-blindness pattern this design has already recorded four instances of.\\n\\n⚠️ THE COST OF LEAVING IT UNSPECIFIED, stated because it is real: `medium` is a pairing-key axis, and `unspecified` reads as UNKNOWN and never as agreement. **So this boundary cannot pair with anything until the vocabulary question is settled** — including with flo2, whose `ifc:reflow2-design-api` says `REST`. That is a true report of the situation rather than a failure of the check: nobody can honestly say what medium this is.\\n\\n📌 THIS IS THE HALF flo2 ACTUALLY MEANS. Its spec reads *\\\"MCP carried over HTTP, as reflow2 already serves with --http / --serve-shared\\\"*, so the correspondence a user would assert is flo2's `ifc:reflow2-design-api` ↔ THIS node, not the stdio one. The `transport_security` disagreement measured on 2026-08-13 (ours `none`, theirs `tls`) therefore lands here, and lands SHARPER: on a stdio pipe there is no transport to secure and the mismatch could be waved away as a segment artefact, but this boundary really is plain HTTP with no TLS while flo2 says `tls`. **Reading (b) — a real assumption gap — is now the more likely of the two.** Resolving it still needs flo2's side.\\n\\n✅ `auth: none` and `transport_security: none` are facts: no authentication and no TLS anywhere in `crates/`. `--http-allow-host` is a Host-header allowlist. Terminating TLS and authenticating is `ifc:authenticating-gateway`'s job — a REQUIRED boundary whose name reads \\\"reflow2 has no authentication and is not getting any\\\".\",\"transport_security\":\"none\"}",
         "target_id": "ifc:mcp-tools-http",
         "target_type": "Interface"
+      }
+    },
+    {
+      "node_id": "snap:epoch:2026-08-23-record-to-record-vocabulary:art:schema-verify",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:31bc6ca6b00b389dced1dd7ad29164bd2be7b080d6c8a948be99ad57430cf980\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:31bc6ca6b00b389dced1dd7ad29164bd2be7b080d6c8a948be99ad57430cf980\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:31bc6ca6b00b389dced1dd7ad29164bd2be7b080d6c8a948be99ad57430cf980\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:31bc6ca6b00b389dced1dd7ad29164bd2be7b080d6c8a948be99ad57430cf980\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:1418c86a6303e07bc4ad46637cd321420d11e337e8a0d447338e5de316c9d990\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:1418c86a6303e07bc4ad46637cd321420d11e337e8a0d447338e5de316c9d990\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:1418c86a6303e07bc4ad46637cd321420d11e337e8a0d447338e5de316c9d990\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:1418c86a6303e07bc4ad46637cd321420d11e337e8a0d447338e5de316c9d990\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:1418c86a6303e07bc4ad46637cd321420d11e337e8a0d447338e5de316c9d990\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:1418c86a6303e07bc4ad46637cd321420d11e337e8a0d447338e5de316c9d990\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:1418c86a6303e07bc4ad46637cd321420d11e337e8a0d447338e5de316c9d990\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:9f5e06e9d9d3ad4da457aea1a582d56b2cf8a683b30beef2f2eb163415ebbee9\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:9f5e06e9d9d3ad4da457aea1a582d56b2cf8a683b30beef2f2eb163415ebbee9\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:9f5e06e9d9d3ad4da457aea1a582d56b2cf8a683b30beef2f2eb163415ebbee9\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{\"as_checksum\":\"sha256:25729faa169eb7a9c99b59afcd9f9e26b8d61c1dec903e1428a3cfec30a4f78b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{\"as_checksum\":\"sha256:25729faa169eb7a9c99b59afcd9f9e26b8d61c1dec903e1428a3cfec30a4f78b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0360\",\"properties\":{\"as_checksum\":\"sha256:25729faa169eb7a9c99b59afcd9f9e26b8d61c1dec903e1428a3cfec30a4f78b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0370\",\"properties\":{\"as_checksum\":\"sha256:25729faa169eb7a9c99b59afcd9f9e26b8d61c1dec903e1428a3cfec30a4f78b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0380\",\"properties\":{\"as_checksum\":\"sha256:25729faa169eb7a9c99b59afcd9f9e26b8d61c1dec903e1428a3cfec30a4f78b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0390\",\"properties\":{\"as_checksum\":\"sha256:ffe70350f93e9d7011450a7d749c308ffc3791ccc679ccb0a2faee2f958ae668\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:schema\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:core-api\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"out\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:graph-export\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"out\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:mcp-tools\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"out\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:mcp-tools-http\",\"properties\":{\"format\":\"json_schema\"}}]",
+        "state": "{\"artifact_type\":\"spec\",\"checksum\":\"sha256:ffe70350f93e9d7011450a7d749c308ffc3791ccc679ccb0a2faee2f958ae668\",\"granularity\":\"atomic\",\"last_confirmed_at\":\"2026-08-02\",\"location\":\"schema/verify.yaml\",\"name\":\"verify.yaml\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:schema-verify",
+        "target_type": "Artifact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:2026-08-23-record-to-record-vocabulary:fact:the-orientation-reads-cost-ten-seconds-and-the-store-is-not-why",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CONTRADICTS\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-how-does-the-graph-learn-what-a-session-invalidated\",\"properties\":{\"alignment\":\"opposing\",\"evidence\":\"THE INSTANCE, not merely an example. That fact asserts \\\"NOTHING WAS OPTIMISED\\\" and \\\"that ratio is the next measurement and it has not been taken\\\", and PR #290 made both false — 56 SPOF candidates at 878ms each became 5.08ms for all 56, detect_structural_defects 44.5s -> 4.43s, open_questions 11.7s -> 2.95s. An agent read it as current in this very session and Anthony corrected it. Recorded as a CONTRADICTS edge rather than by closing the fact, because closing it is the very act this decision is about, and doing it unasked would settle the question by doing.\"}}]",
+        "state": "{\"basis\":\"measured\",\"confidence\":1.0,\"fact_type\":\"measurement\",\"name\":\"MEASURED on real RocksDB with a RELEASE binary: the two calls documented as cheap orientation reads cost ~11.5s each, and ~10s of that is detect_defects riding along on a reply nobody asked it of\",\"statement\":\"MEASURED 2026-08-21 through the REAL MCP tool surface, driven over stdio against a REAL RocksDB store built from reflow2's own committed export (2862 nodes, 12139 edges, 8 MB on disk). Both build profiles, because users run release binaries and developers run debug.\\n\\n                      debug      RELEASE\\n  get_node            0.01s       0.00s\\n  scan_nodes          0.11s       0.01s\\n  export_graph        3.10s       0.36s\\n  detect_gaps         3.11s       0.51s\\n  detect_defects     40.8s       10.3s     <== the hot spot\\n  loop_status        47.5s       11.4s\\n  open_questions     50.6s       11.7s     <== the FIRST call of every session\\n  graph_report    45–92s       10.9–22.4s\\n\\n⭐ THE FINDING: `detect_defects` COSTS ~10s AND RIDES ALONG ON CALLS THAT NEVER ASKED FOR IT. `loop_status` reports a structural-defect count so it pays; `open_questions` pays it through the `loop_hint` attached to its reply. `open_questions` does its own work in about half a second and costs 11.7. So the two calls this project's own instructions call the cheap orientation reads — the SessionStart hook, the server instructions and the Stop hook all push an agent at them — are the two most expensive calls on the surface, and neither is expensive because of what it was asked to do.\\n\\n🛑 AND IT CORRECTS A STANDING BELIEF. \\\"The first store read of a session costs 26–48s\\\" has been carried as a known cost and read as the STORE being slow. It is not the store: `get_node` is sub-millisecond and `scan_nodes` is 10ms on the real backend. The cost is a whole-design sweep bolted onto an orientation reply.\\n\\n=== TWO HYPOTHESES FALSIFIED FIRST, both cheap, both recorded so nobody re-runs them ===\\n\\n(1) THAT THE SYNC CHECK WAS READING AND HASHING EVERY KNOWN EXPORT FILE. `sync_debt` does exactly that per path in `last_synced` — read, full serde_json parse, SHA-256, verify — and this design has ~15 such paths, several at 7.5 MB. FALSIFIED: a probe store with `last_synced` EMPTY still took 46.5s.\\n(2) THAT `export_graph` INSIDE THE DEBT COMPUTATION WAS THE COST. FALSIFIED: 3.1s debug, 0.36s release.\\n\\nThe cause was found by timing each tool in an ISOLATED fresh process, which also ruled out ordering and cache effects — `detect_gaps` measured 3.11 / 3.06 / 3.11 while `open_questions` measured 50.59 / 50.44 / 50.86.\\n\\n=== WHAT IS NOT ESTABLISHED ===\\n\\nWHY `detect_defects` costs 20x what `detect_gaps` costs over the same graph. Both sweep the whole design; nothing here looks inside either. That ratio is the next measurement and it has not been taken.\\n\\nNOTHING WAS OPTIMISED. Anthony's call — \\\"we can optimize another day\\\". The likely fix is to REMOVE the work rather than speed it up: do not compute a defect sweep for a reply nobody asked it of, which would take `open_questions` from ~11.7s to ~0.6s on the call every session makes first. Recorded as a target, not a plan; the optimize skill wants a derived budget written before any change and none has been.\\n\\n⚠️ BOUND: one machine, one design, one shape of design. The RATIOS are the transferable part; the absolute seconds are not.\",\"subject_id\":\"cmp:service\",\"valid_from\":\"2026-08-21\",\"valid_to\":\"\"}",
+        "target_id": "fact:the-orientation-reads-cost-ten-seconds-and-the-store-is-not-why",
+        "target_type": "TemporalFact"
       }
     },
     {
@@ -127485,6 +128151,17 @@
       }
     },
     {
+      "node_id": "fact:five-silent-failures-in-one-session-all-one-shape",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "observation",
+        "statement": "**FIVE DISTINCT MECHANISMS BY WHICH A FAILED OPERATION REPORTED SUCCESS, IN ONE SESSION, 2026-08-23.** Counted because one instance reads as carelessness and five reads as a property of the tooling.\n\n1. **`| tail` DESTROYS `$?`.** `python3 gate.py | tail -6; echo EXIT=$?` prints tail's status. A FAILING intent-authority gate printed `EXIT=0`. Already on the record as `fact:a-piped-gate-reports-the-pipes-exit-code-not-the-gates`; hit twice more this session after being known.\n2. **`gh pr checks` EXITS NON-ZERO WHEN A CHECK IS FAILING OR PENDING.** Used as `s=$(gh pr checks N ...) || { sleep; continue; }`, every poll was discarded. **TWO CI monitors ran to completion having never emitted a single event**, and both reported \"ended without producing output\" — indistinguishable from \"nothing happened\". Fixed with `|| true`.\n3. **A `&&` CHAIN SKIPPED A BRANCH CREATION.** `git pull --rebase && git checkout -b <name>` — the pull failed on unstaged changes, so the branch was never created, and the next commit landed on local `main`. Caught only when `git push` refused an unknown refspec.\n4. **A TEST LOG READ MID-RUN, REPORTED AS FINAL.** \"125 suites, 1312 passed, 0 failed\" was read off a still-growing file. The true result was `TEST_EXIT=101` — **150 suites, 1400 passed, 1 failed**. The background task printed the real answer and it was never read; the harness notification said \"exit code 0\", which is the WRAPPER's exit. The false number reached a commit message and a PR body.\n5. **`gh pr edit` PRINTS A GraphQL ERROR AND EXITS 0.** The Projects-classic deprecation makes the call fail while reporting success. Two attempts to correct the PR body silently did nothing; caught by reading the body back. Worked around with `gh api -X PATCH`.\n\n⭐ **WHAT THEY SHARE, AND IT IS NOT \"SHELL IS HARD\":** in every case the FAILURE PRODUCED SILENCE RATHER THAN NOISE, and silence is what success looks like. Three of the five were shell-level; two were a tool exiting 0 on a real error. **Nothing catches these except reading the authoritative object afterwards** — which is `rule:success-is-read-from-the-authoritative-object` verbatim, and this is five more instances of the rule earning its keep in a single day.\n\n📌 THE CHEAP HABITS THAT WOULD HAVE CAUGHT ALL FIVE, in order of how much they cost to adopt: redirect a gate to a file and capture `$?` on its own line; never use a command's exit status inside `||` when that status encodes DATA rather than failure; verify a branch exists after creating it; read a background task's OWN output rather than the log it is still writing; and read back anything you wrote through an API before believing it landed.\n\n⚠️ BOUND: one session, one agent, one machine. Whether five is a normal rate is unknown — nothing has ever counted this before, which is itself the reason the number is worth writing down.",
+        "subject_id": "rule:success-is-read-from-the-authoritative-object",
+        "valid_from": "2026-08-23"
+      }
+    },
+    {
       "node_id": "fact:gap-to-prompt-tells-the-agent-to-strip-the-vocabulary-its-own-description-says-to-keep",
       "node_type": "TemporalFact",
       "properties": {
@@ -128044,9 +128721,10 @@
         "confidence": 1.0,
         "fact_type": "measurement",
         "name": "MEASURED on real RocksDB with a RELEASE binary: the two calls documented as cheap orientation reads cost ~11.5s each, and ~10s of that is detect_defects riding along on a reply nobody asked it of",
-        "statement": "MEASURED 2026-08-21 through the REAL MCP tool surface, driven over stdio against a REAL RocksDB store built from reflow2's own committed export (2862 nodes, 12139 edges, 8 MB on disk). Both build profiles, because users run release binaries and developers run debug.\n\n                      debug      RELEASE\n  get_node            0.01s       0.00s\n  scan_nodes          0.11s       0.01s\n  export_graph        3.10s       0.36s\n  detect_gaps         3.11s       0.51s\n  detect_defects     40.8s       10.3s     <== the hot spot\n  loop_status        47.5s       11.4s\n  open_questions     50.6s       11.7s     <== the FIRST call of every session\n  graph_report    45–92s       10.9–22.4s\n\n⭐ THE FINDING: `detect_defects` COSTS ~10s AND RIDES ALONG ON CALLS THAT NEVER ASKED FOR IT. `loop_status` reports a structural-defect count so it pays; `open_questions` pays it through the `loop_hint` attached to its reply. `open_questions` does its own work in about half a second and costs 11.7. So the two calls this project's own instructions call the cheap orientation reads — the SessionStart hook, the server instructions and the Stop hook all push an agent at them — are the two most expensive calls on the surface, and neither is expensive because of what it was asked to do.\n\n🛑 AND IT CORRECTS A STANDING BELIEF. \"The first store read of a session costs 26–48s\" has been carried as a known cost and read as the STORE being slow. It is not the store: `get_node` is sub-millisecond and `scan_nodes` is 10ms on the real backend. The cost is a whole-design sweep bolted onto an orientation reply.\n\n=== TWO HYPOTHESES FALSIFIED FIRST, both cheap, both recorded so nobody re-runs them ===\n\n(1) THAT THE SYNC CHECK WAS READING AND HASHING EVERY KNOWN EXPORT FILE. `sync_debt` does exactly that per path in `last_synced` — read, full serde_json parse, SHA-256, verify — and this design has ~15 such paths, several at 7.5 MB. FALSIFIED: a probe store with `last_synced` EMPTY still took 46.5s.\n(2) THAT `export_graph` INSIDE THE DEBT COMPUTATION WAS THE COST. FALSIFIED: 3.1s debug, 0.36s release.\n\nThe cause was found by timing each tool in an ISOLATED fresh process, which also ruled out ordering and cache effects — `detect_gaps` measured 3.11 / 3.06 / 3.11 while `open_questions` measured 50.59 / 50.44 / 50.86.\n\n=== WHAT IS NOT ESTABLISHED ===\n\nWHY `detect_defects` costs 20x what `detect_gaps` costs over the same graph. Both sweep the whole design; nothing here looks inside either. That ratio is the next measurement and it has not been taken.\n\nNOTHING WAS OPTIMISED. Anthony's call — \"we can optimize another day\". The likely fix is to REMOVE the work rather than speed it up: do not compute a defect sweep for a reply nobody asked it of, which would take `open_questions` from ~11.7s to ~0.6s on the call every session makes first. Recorded as a target, not a plan; the optimize skill wants a derived budget written before any change and none has been.\n\n⚠️ BOUND: one machine, one design, one shape of design. The RATIOS are the transferable part; the absolute seconds are not.",
+        "statement": "🛑 **CLOSED 2026-08-23 — THE MEASUREMENT BELOW IS HISTORY. Read it as taken on 2026-08-21 and since superseded. It is kept in full because the METHOD is worth more than the numbers.**\n\nWHAT RETIRED IT: PR #290, `chg:the-spof-sweep-stops-rebuilding-its-graph`. The single-point-of-failure sweep was rebuilding TWO full operational networks per candidate. After: **56 candidates at 878ms each became 5.08ms for all 56; `detect_structural_defects` 44.5s → 4.43s; `open_questions` — the first call of every session — 11.7s → 2.95s**, with the answer unchanged at 54 defects and 13 structural issues.\n\n⇒ THREE CLAIMS BELOW WERE FALSE from the day #290 merged: *\"NOTHING WAS OPTIMISED\"*, *\"that ratio is the next measurement and it has not been taken\"*, and the 11.7s figure for `open_questions`. The 20x `detect_defects`/`detect_gaps` ratio WAS investigated and WAS fixed.\n\n⭐⭐ **THIS NODE IS WHY `req:the-graph-can-say-what-has-already-been-done` EXISTS.** On 2026-08-23 an agent asked where else to optimise, read this fact, and quoted all three false claims back as current. Anthony corrected it — *\"I think we already determined candidate 3\"* — and he was right while the graph was wrong. He then generalised the cost: on a shared design, one person finishing a task and another repeating it produces **two solutions from two users**, which is not a graph merge.\n\n📌 THE FIRST FINDING CLOSED UNDER `capture-session`'s test 7, added the same day and exercised here for the first time. Two things went wrong in the closing and both are worth keeping: the closure was FIRST written by REPLACING this statement, destroying the measurement it was closing — caught by the tool's own \"no snapshot holds the prior value\" warning, restored, snapshotted via `record_change`, and re-applied. **Closing a finding must PRESERVE it: a closed measurement is evidence, an erased one is a hole.** That is the failure mode test 7 will keep producing until the skill says so.\n\n═══════════════ THE MEASUREMENT AS TAKEN, 2026-08-21 ═══════════════\n\nMEASURED through the REAL MCP tool surface, driven over stdio against a REAL RocksDB store built from reflow2's own committed export (2862 nodes, 12139 edges, 8 MB on disk). Both build profiles, because users run release binaries and developers run debug.\n\n                      debug      RELEASE\n  get_node            0.01s       0.00s\n  scan_nodes          0.11s       0.01s\n  export_graph        3.10s       0.36s\n  detect_gaps         3.11s       0.51s\n  detect_defects     40.8s       10.3s     <== the hot spot\n  loop_status        47.5s       11.4s\n  open_questions     50.6s       11.7s     <== the FIRST call of every session\n  graph_report    45–92s       10.9–22.4s\n\n⭐ THE FINDING: `detect_defects` COSTS ~10s AND RIDES ALONG ON CALLS THAT NEVER ASKED FOR IT. `loop_status` reports a structural-defect count so it pays; `open_questions` pays it through the `loop_hint` attached to its reply. `open_questions` does its own work in about half a second and cost 11.7. So the two calls this project's own instructions call the cheap orientation reads were the two most expensive on the surface, and neither was expensive because of what it was asked to do.\n\n🛑 AND IT CORRECTED A STANDING BELIEF. \"The first store read of a session costs 26–48s\" had been carried as a known cost and read as the STORE being slow. It was not the store: `get_node` is sub-millisecond and `scan_nodes` 10ms on the real backend. The cost was a whole-design sweep bolted onto an orientation reply.\n\nTWO HYPOTHESES FALSIFIED FIRST, both cheap, both recorded so nobody re-runs them:\n(1) THAT THE SYNC CHECK WAS READING AND HASHING EVERY KNOWN EXPORT FILE. `sync_debt` does exactly that per path in `last_synced`, and this design has ~15 such paths, several at 7.5 MB. FALSIFIED: a probe store with `last_synced` EMPTY still took 46.5s.\n(2) THAT `export_graph` INSIDE THE DEBT COMPUTATION WAS THE COST. FALSIFIED: 3.1s debug, 0.36s release.\n\nThe cause was found by timing each tool in an ISOLATED fresh process, which also ruled out ordering and cache effects — `detect_gaps` measured 3.11 / 3.06 / 3.11 while `open_questions` measured 50.59 / 50.44 / 50.86.\n\n⚠️ BOUND AS STATED THEN: one machine, one design, one shape of design. The RATIOS were the transferable part; the absolute seconds were not — and the ratios are what moved.",
         "subject_id": "cmp:service",
-        "valid_from": "2026-08-21"
+        "valid_from": "2026-08-21",
+        "valid_to": "2026-08-23"
       }
     },
     {
@@ -130162,6 +130840,20 @@
       }
     },
     {
+      "node_id": "ver:record-to-record-relations-are-modelled",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Seven cases in `crates/reflow2-core/tests/record_to_record_relations.rs`.\n\nWHAT IT PINS, and the shape is deliberate: each case asserts on the COMPUTATION that reads the new vocabulary, not on the edge being writable. `dec:edge-orthogonality` says a distinction earns its keep only if something reads it, and a test that merely wrote an edge would prove the opposite of what is claimed.\n\n· IMPLEMENTS — two checks, one with a script and one without, come back with different `has_executable_form`. That is the split `never_run` could not make.\n· IMPLEMENTS is a MODELLED fit, not a tolerated wildcard — asserted by checking the endpoints REJECT an unrelated type, since a wildcard accepts everything. Widening it to `*` later fails here rather than silently.\n· COMPLEMENTS — HEAL refuses to propose a merge for a pair declared complementary.\n· ⭐ AND THE SAME PAIR WITHOUT THE EDGE IS PROPOSED FOR MERGE. This is the case that makes the guard mean something: if HEAL declined to merge two DesignRules for some unrelated reason, the guard above would pass vacuously and prove nothing. Same graph, one edge removed, opposite answer.\n· superseded — a check flipped from `passing` to `superseded` stops counting as live coverage.\n· SUPERSEDES accepts a Verification pair, which it refused before.\n· The widening did not strand the original Fragment pair — checked rather than assumed, because narrowing an endpoint list is what makes already-written edges unimportable, and this schema records that trap on VERIFIES.",
+        "findings": "7 of 7 cases pass. Full workspace suite green alongside them: 125 suites, 1312 passed, 0 failed.\n\n⭐ TWO GUARDS CAUGHT THIS CHANGE BEFORE THE SUITE DID, and both were right. `schema::tests::all_domains_merge_and_validate` and `vocabulary::tests::vocabulary_covers_the_whole_schema` both pin the edge-type count at 61 and failed at 63. That is the mechanism working: a pinned count is what forces whoever adds an edge type to notice they moved the stamp and owe an upgrade note. Both updated to 63 with the reason recorded beside them.\n\n🛑 AND THE REASON THEY WERE MISSED FIRST TIME IS WORTH KEEPING: `cargo test -p reflow2-core --test record_to_record_relations` passed while the LIB tests failed. Running one test target is not running the suite, and a green single-target run reads exactly like a green suite.\n\nTHE CASE THAT MAKES THE COMPLEMENTS GUARD MEAN ANYTHING is `without_the_edge_the_same_pair_is_proposed_for_merge`: the same two DesignRules, one edge removed, ARE proposed for merge. Without it the guard could pass vacuously — HEAL declining to merge for some unrelated reason would look identical to the guard working.",
+        "kind": "verification",
+        "last_run_at": "2026-08-23",
+        "level": "unit",
+        "method": "test",
+        "name": "Each new record-to-record edge is read by a computation, and the merge guard is proven non-inert",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:release-without-epoch",
       "node_type": "Verification",
       "properties": {
@@ -130964,7 +131656,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:90e30c2f97923fe80041217afb5dcb11177d1aac46b2d1e347d1bbfdefc9928c",
+  "prev_content_hash": "sha256:4c6ad431dfd10206e7a169baeec4db17bec6d4d1f86fb6dd8a20246ea232c354",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
@@ -130980,6 +131672,7 @@
       "CAUSES",
       "CHANGED",
       "CLAIMS",
+      "COMPLEMENTS",
       "COMPLIES_WITH",
       "CONSTRAINS",
       "CONSUMES",
@@ -130998,6 +131691,7 @@
       "HAS_READINESS",
       "HAS_SNAPSHOT",
       "HAS_TEMPORAL_FACT",
+      "IMPLEMENTS",
       "IMPOSES",
       "INCLUDES",
       "INTERACTS_WITH",
@@ -131029,7 +131723,7 @@
       "VIOLATES_RULE",
       "YIELDED"
     ],
-    "edge_types": 61,
+    "edge_types": 63,
     "node_type_names": [
       "Actor",
       "Anchor",

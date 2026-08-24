@@ -34,6 +34,7 @@ use std::collections::{BTreeMap, BTreeSet, HashMap};
 use dynograph_core::{DynoError, Value};
 use dynograph_storage::StoredEdge;
 
+use crate::detect::ordered_pair;
 use crate::graph::DesignGraph;
 use crate::nodes::fnv1a;
 use crate::nodes::{edge, node};
@@ -591,7 +592,11 @@ fn issue_id(category: HealCategory, affected: &[String]) -> String {
 /// re-deriving what HEAL would propose and matching against it, so if the two
 /// computed the operation separately they could drift, and a drift would make
 /// apply refuse legitimate proposals — or worse, sanction ones HEAL never made.
-fn merge_op_for(issue: &HealIssue, index: &HashMap<String, String>) -> Result<HealOp, String> {
+fn merge_op_for(
+    issue: &HealIssue,
+    index: &HashMap<String, String>,
+    complementary: &BTreeSet<(String, String)>,
+) -> Result<HealOp, String> {
     let (keep, remove) = (&issue.affected_ids[0], &issue.affected_ids[1]);
     // `x DUPLICATES x` is schema-valid (`* -> *`) and used to build a merge
     // whose re-pointing skips every edge ("already on the survivor") and whose
@@ -618,12 +623,49 @@ fn merge_op_for(issue: &HealIssue, index: &HashMap<String, String>) -> Result<He
             "cannot merge across node types ({keep_type} and {remove_type}) — a DUPLICATES edge joins two different kinds of thing"
         ));
     }
+    // 🛑 A PAIR DECLARED `COMPLEMENTS` MUST NEVER BE MERGED, AND THIS IS THE
+    // ONLY PLACE THAT CAN STOP IT. Two rules that deliberately stand beside
+    // each other read as near-duplicates to anything comparing text — one binds
+    // what you may CLAIM, its neighbour what must be TRUE whether or not anyone
+    // claims anything — and merging them destroys the distinction irreversibly.
+    //
+    // Before this edge existed the only protection was a paragraph somebody
+    // wrote on a `CONTRADICTS alignment=supporting` edge, asking future readers
+    // not to merge. dragon Boss filed that workaround on 2026-08-22 and named
+    // it as a workaround: "that note is a workaround carried by prose, which is
+    // exactly what the graph is supposed to replace."
+    //
+    // ⭐ IT GUARDS THE DESTRUCTIVE CALL RATHER THAN THE SUGGESTION. A detector
+    // that merely declined to PROPOSE the merge would leave a hand-drawn
+    // DUPLICATES edge able to license the deletion through apply. Both paths
+    // derive through this function, which is why the check lives here.
+    let pair = ordered_pair(keep, remove);
+    if complementary.contains(&pair) {
+        return Err(format!(
+            "'{keep}' and '{remove}' are declared COMPLEMENTS — they stand beside each other on \
+             purpose and merging would destroy the distinction that edge exists to protect. If \
+             they really are the same thing, delete the COMPLEMENTS edge first and say why"
+        ));
+    }
     Ok(HealOp::Merge {
         keep_type: keep_type.clone(),
         keep_id: keep.clone(),
         remove_type: remove_type.clone(),
         remove_id: remove.clone(),
     })
+}
+
+/// Every pair joined by a `COMPLEMENTS` edge, ordered so a lookup does not
+/// depend on which way the edge was drawn.
+fn complementary_pairs(
+    g: &DesignGraph,
+    index: &HashMap<String, String>,
+) -> Result<BTreeSet<(String, String)>, DynoError> {
+    let mut out = BTreeSet::new();
+    for e in g.all_edges_of_type(edge::COMPLEMENTS, index)? {
+        out.insert(ordered_pair(&e.from_id, &e.to_id));
+    }
+    Ok(out)
 }
 
 /// Fill each issue's `hubs`: the nodes it shares with OTHER findings of the
@@ -1967,6 +2009,7 @@ impl DesignGraph {
     /// only — nothing is mutated (discipline 1).
     pub fn propose_heal(&self, options: HealOptions) -> Result<HealProposal, DynoError> {
         let index = self.node_type_index()?;
+        let complementary = complementary_pairs(self, &index)?;
         // A LABEL, NOT A SCOPE. One Project can be named without ambiguity;
         // more than one cannot, because this tool takes no target and the
         // caller therefore chose none. Falling to the first alphabetically is
@@ -2003,7 +2046,7 @@ impl DesignGraph {
                 // The one content-free structural repair.
                 HealCategory::Duplicate => {
                     merge_candidates_considered += 1;
-                    match merge_op_for(&issue, &index) {
+                    match merge_op_for(&issue, &index, &complementary) {
                         Ok(op) => {
                             let HealOp::Merge {
                                 keep_id, remove_id, ..
@@ -2253,10 +2296,11 @@ impl DesignGraph {
     /// asks whether an operation is legitimate at all.
     fn sanctioned_operations(&self) -> Result<Vec<HealOperation>, DynoError> {
         let index = self.node_type_index()?;
+        let complementary = complementary_pairs(self, &index)?;
         let mut ops = Vec::new();
         for issue in self.open_defects()? {
             if issue.category == HealCategory::Duplicate
-                && let Ok(op) = merge_op_for(&issue, &index)
+                && let Ok(op) = merge_op_for(&issue, &index, &complementary)
             {
                 ops.push(HealOperation {
                     issue_id: issue.id.clone(),

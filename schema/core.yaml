@@ -290,6 +290,43 @@ schema:
       properties:
         note: { type: string }
 
+    COMPLEMENTS:
+      from: DesignRule
+      to: DesignRule
+      extraction_hint: >
+        Two rules that deliberately stand BESIDE each other and must never be
+        merged — they cover adjacent ground for different reasons. Not
+        DUPLICATES (which invites exactly the merge this forbids), not
+        SUPERSEDES (neither replaces the other), not DEPENDS_ON (each stands
+        alone without the other).
+      # WHY THIS EXISTS. dragon Boss, 2026-08-22, added a governance rule that
+      # sits deliberately beside an existing one — one binds what you may CLAIM,
+      # the other what must be TRUE whether or not anyone claims anything. That
+      # relationship is the single most important thing for a future reader, and
+      # the schema had nowhere to put it. What was available: DUPLICATES
+      # (actively wrong), SUPERSEDES (wrong), DEPENDS_ON (wrong), or
+      # CONTRADICTS with alignment=supporting — documented as corroboration of
+      # the SAME assertion, which is not what complementary means. They took the
+      # last and wrote a long note begging future readers not to merge the two.
+      #
+      # ⭐ THE POINT IS THAT IT PREVENTS A DESTRUCTIVE ACT, not that it is more
+      # expressive. `possible_duplicate` looks at same-category DesignRules with
+      # overlapping vocabulary and is reasonably likely to propose merging two
+      # complementary rules. Nothing structural stops it today — only a human
+      # reading a paragraph. This is what a detector can read and REFRAIN on.
+      #
+      # ⚠️ NARROW ON PURPOSE, and narrow is the reversible direction. Requirements
+      # and Constraints plausibly want this too, but widening an enumeration later
+      # is safe while NARROWING one strands every edge already written under the
+      # broader form — the trap VERIFIES's own comment records. Start where the
+      # evidence is.
+      properties:
+        # Why they must not be merged, in a sentence. Required in spirit: an
+        # edge asserting "do not merge" with no reason is one a later reader
+        # cannot check, and this edge exists precisely to be obeyed by a
+        # heuristic that would otherwise act.
+        evidence: { type: string }
+
     CONSTRAINS:
       # SOURCE ENUMERATED, TARGET DELIBERATELY LEFT WILDCARD.
       #

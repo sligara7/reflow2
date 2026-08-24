@@ -317,10 +317,20 @@ def run(binary: str, graph_path: str) -> int:
     vocab = s.call("describe_schema", {})
     c.ok("every node type is discoverable", len(vocab.get("node_types", [])) == 29,
          len(vocab.get("node_types", [])))
+    # 63 since IMPLEMENTS + COMPLEMENTS (2026-08-23, record-to-record relations);
     # 61 since OWNED_BY (2026-08-09, the third "who" axis); 60 since GATED_ON +
     # HAS_READINESS (2026-08-02, BL-68); 58 before that, since
     # CALIBRATED_AGAINST (2026-08-01, req:a-fit-is-not-a-test).
-    c.ok("every edge type is discoverable", len(vocab.get("edge_types", [])) == 61,
+    #
+    # ⚠️ THE FOURTH PLACE THIS COUNT IS PINNED, and adding an edge type on
+    # 2026-08-23 found all four ONE AT A TIME, each from a different gate:
+    # schema.rs (the loader), vocabulary.rs (describe_vocabulary), the Rust
+    # served-surface test, and here — over REAL stdio, which is the only one
+    # that proves a live server actually serves it. Four is not obviously wrong
+    # (each asks a different question) but nothing names the set, so the fourth
+    # is always a surprise. If you are adding an edge type: grep for the old
+    # count before you push.
+    c.ok("every edge type is discoverable", len(vocab.get("edge_types", [])) == 63,
          len(vocab.get("edge_types", [])))
 
     exact = s.call("describe_schema", {"from": "Capability", "to": "Component"})

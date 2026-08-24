@@ -4640,7 +4640,13 @@ impl DesignGraph {
 /// Order two ids so a pair has one identity regardless of which side it was
 /// found from — the gap id hashes them, so `(a, b)` and `(b, a)` must not be
 /// two different gaps about the same fact.
-fn ordered_pair(a: &str, b: &str) -> (String, String) {
+/// `pub(crate)` since 2026-08-23: HEAL's COMPLEMENTS guard has to ask whether
+/// a merge pair is the same pair a COMPLEMENTS edge names, and pair identity is
+/// exactly what that turns on — two implementations of "order these two ids"
+/// could disagree about whether `(a, b)` and `(b, a)` are one pair, which for
+/// this guard is the difference between refusing a destructive merge and
+/// sanctioning it. Same reasoning `all_edges_of_type` was widened under.
+pub(crate) fn ordered_pair(a: &str, b: &str) -> (String, String) {
     if a <= b {
         (a.to_string(), b.to_string())
     } else {

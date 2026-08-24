@@ -1152,8 +1152,27 @@ fn verification_digest(
     for v in all {
         *by_status.entry(v.status.as_str()).or_insert(0) += 1;
     }
-    let attention: Vec<_> = all.iter().filter(|v| v.status != "passing").collect();
+    // 🛑 `superseded` IS NOT ATTENTION. A retired check is not a quiet failure;
+    // it is a check somebody deliberately replaced, and surfacing it beside the
+    // failing ones would make the loud-first list quieter by diluting it. This
+    // filter said `!= "passing"` and would have swept every superseded check in
+    // the moment the status value shipped — the enum value and its reader had
+    // to land together or the addition would have made a report WORSE.
+    let attention: Vec<_> = all
+        .iter()
+        .filter(|v| v.status != "passing" && v.status != "superseded")
+        .collect();
     let never_run = all.iter().filter(|v| v.last_run_at.is_none()).count();
+
+    // ⭐ THE SPLIT `never_run` COULD NOT MAKE UNTIL `IMPLEMENTS` EXISTED. A check
+    // nobody has run and a check with NOTHING TO RUN were one number, and they
+    // are different debts: the first is scheduling, the second means the check
+    // exists only as a sentence. Retired checks are excluded from both — a
+    // superseded check owes nobody an executable form.
+    let no_executable_form = all
+        .iter()
+        .filter(|v| !v.has_executable_form && v.status != "superseded")
+        .count();
 
     // TRUNCATE THE NAME, AND SAY SO. dev_storyflow, 2026-08-08: `loop_status`
     // is documented as "one cheap call" and is cheap to CALL and expensive to
@@ -1202,6 +1221,7 @@ fn verification_digest(
         "total": all.len(),
         "by_status": by_status,
         "never_run": never_run,
+        "no_executable_form": no_executable_form,
         "attention": attention,
         "omitted": all.len() - attention.len(),
         "full_list": "graph_report {\"include_verifications\": true} — every check with its \
