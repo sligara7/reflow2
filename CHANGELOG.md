@@ -31,6 +31,102 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added — the Stop hook stops guessing from a tool tally and asks the graph
+
+**Minor.** New capability, no schema change; stamp unmoved at 29 node / 64 edge types. New kit
+file `tools/graph_probe.py` — the release workflow stages it, and a test asserts that it does.
+
+`dec:idea-a-capture-session-skill-the-user-types` chose a skill the user types as a **first step**
+and named option C — a hook that decides *when* — as the destination. C never got built, and the
+reason written down was that a hook **cannot read the graph**: "the session's own server holds the
+single-writer lock." That was true before the shared server and has been false for a while. The
+shared server answers stateless MCP over the URL in `.reflow2/graph.server.json`, and a hook can
+read the graph perfectly well.
+
+**The real obstacle was a number, and it is worth more than the fix.** Measured live on reflow2's
+own design:
+
+| call | wall clock |
+|---|---|
+| `loop_status` | **22.6s** (repeatably) |
+| `loop_status` with `since_export` | 37.5s |
+| `claim_report` | 0.04s |
+
+A Stop hook that blocks for 23 seconds is worse than no hook, and nothing under a second answers
+the question. ⇒ **A capability limit and a cost limit read the same in a comment and take opposite
+fixes.** The old note pointed every reader at the wrong one for months.
+
+**The async shape** (`dec:the-stop-hook-asks-the-graph-asynchronously`, Anthony's word): the hook
+**spawns** `graph_probe.py` detached and returns immediately, never waiting. A session stops once
+per *turn*, so the answer lands while the agent is still alive to act on it; a session that ends
+first has its verdict reported at the next SessionStart, attributed to the session that caused it.
+
+**⭐ The trigger is a DELTA, not a level, and that is the whole restraint.** reflow2's own design
+carries 7 unsurfaced gaps and 60 structural defects, both standing for weeks. Keyed on the level
+this would speak in every session forever and be a nag — the fire-on-correct-work failure
+`ver:skill-triggers` exists to prevent. Keyed on a delta against a baseline taken at SessionStart,
+it says *"this session took open gaps from 7 to 10 and never put the three new ones to the user"*,
+which is a fact about the session. **No baseline means no nudge**: a delta needs two readings, and
+one is not two. `structural_defects` is deliberately not a trigger class — HEAL's count moves on
+edits nobody made to it.
+
+It speaks **last**, only where every counting branch stayed silent — which is precisely the session
+that did the loop's motions correctly and so tripped nothing — and it shares their once-per-session
+budget, so no session is interrupted twice.
+
+Silent by design where it cannot know: no shared server, an unreachable one, or a probe that never
+returns all leave it saying nothing. `ver:stop-nudge-asks-the-graph` is passing (80 tests, up from
+55), and the branch was proven end to end against the live server on this session's own numbers —
+it reported the three gaps this session had just created.
+
+**⭐ And then the same run found the feature's real limit, which no fixture would have.** Those three
+gaps did not survive: wiring the thread closed them, and a `CONSUMES` edge closed a fourth that had
+been standing, so the session **ended at 6 — below where it started**. A verdict collected from a
+mid-session reading can therefore name debt already settled. Not fixable by waiting (that is the
+23-second block this design exists to avoid), so the message states the reading's **age** and
+directs the agent to confirm with `loop_status`.
+
+### Fixed — the repair-tracking capability finally gets the thread it shipped without
+
+**Patch.** Design record only; not one line of behaviour changed, and `chg:the-repair-capability-gets-its-thread`
+carries `subject: record` to say so.
+
+`cap:a-repair-can-say-what-it-invalidated` shipped in v0.39.0 as `realized` and was never wired into
+the golden thread — no verification, no owning component, nothing recorded as building it. That
+produced **three of the six open gaps** and the standing *"1 capability claiming built with no
+check"*, while a dedicated 10-case suite sat green on disk the whole time.
+
+Now allocated to `cmp:verify` (where `invalidated_findings` lives), with `REALIZES` from the five
+files that implement it, and `crates/reflow2-core/tests/a_repair_can_say_what_it_invalidated.rs`
+registered and pointed at `ver:a-repair-can-say-what-it-invalidated` — **run before being marked**,
+10 passed / 0 failed. The capability moves `realized` → `verified`.
+
+⭐ **The lesson is not "somebody forgot."** #321 did the harder half well: it shipped the reader
+alongside the edge precisely so the marker would not become a comment nobody consults. What it left
+half-drawn was the design's own account of the work, so the graph was **more pessimistic than
+reality** — which erodes trust in the report exactly as fast as false optimism does. The Stop hook
+above is the guard: a session that leaves a capability unwired now raises those counts against its
+own baseline and is told before it finishes.
+
+Two gaps acknowledged with reasons on the record, both Anthony's word:
+
+- **The foundation subsystem** — verified done before acknowledging (all five kernel components sit
+  under one subsystem, now `sys:foundation`). The gap fired because nothing *builds* it, and nothing
+  ever will: its delivery is `model` and the deliverable was the decomposition. ⭐ The general form
+  is worth more than the case — **a capability whose delivery is `model` cannot satisfy an
+  artifact-shaped check**, and if this recurs the detector should read that field rather than
+  needing a hand-written acknowledgement each time.
+- **Nine skills verified only at component granularity** — accepted once, as an over-engineering
+  call. Nine checks that all prove the same property are one check with extra bookkeeping. What
+  would reopen it is recorded: a skill that computes something, or whose output a person acts on
+  directly, earns its own proof.
+
+**One gap is left standing deliberately**: `req:the-graph-can-say-what-has-already-been-done` still
+has nothing satisfying it. The mechanism question is open
+(`dec:idea-how-does-the-graph-learn-what-a-session-invalidated`, six options, none chosen), and
+pointing a nearby capability at it to reach zero would make the design claim to deliver something it
+does not. Open gaps went **6 → 1**.
+
 ### Fixed — the orientation call stops re-reading a hundred megabytes of stale records
 
 **Patch.** No schema change; `sync_status` gains one reply field. Stamp unmoved at 29 node / 64

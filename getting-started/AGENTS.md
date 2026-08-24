@@ -95,9 +95,14 @@ loads it and it takes precedence over the served one of the same name.
    each tool call it counts reflow2 graph writes (a `loop_status` / `detect_gaps` /
    `detect_defects` call resets the count); and when a session tries to finish with writes
    nobody checked, it blocks the stop **once** with what to do (`loop_status`, then
-   detect-and-ask / check-health if debt is named). It never blocks twice, and it never reads
-   the graph — the shared server holds the store open; the hook counts events and
-   the graph answers what is owed.
+   detect-and-ask / check-health if debt is named). It never blocks twice.
+
+   It also **asks the graph what your session left**, where a shared server is running. That
+   question costs about 23 seconds, so it is never asked inline: the hook spawns
+   `tools/graph_probe.py` (its own sibling — nothing to configure) and reads the answer at a
+   later stop. It speaks only about a count **your session raised** — "open gaps went 7 → 10,
+   run detect-and-ask" — never about debt that was already standing, and it stays silent where
+   there is no server to ask.
 
    For Claude Code, wire all three into the project's `.claude/settings.json` (adjust the kit
    path if yours differs):

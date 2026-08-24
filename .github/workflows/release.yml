@@ -106,6 +106,11 @@ jobs:
           cp tools/reflow2_install.py kit-stage/reflow2-kit/tools/
           cp tools/reflow2_check.py kit-stage/reflow2-kit/tools/
           cp tools/loop_nudge.py kit-stage/reflow2-kit/tools/
+          # loop_nudge.py resolves this as a SIBLING and stays silent when it is
+          # absent, so a kit missing it would ship a hook whose graph branch
+          # never runs and never says why. tools/test_loop_nudge.py asserts this
+          # line exists for exactly that reason.
+          cp tools/graph_probe.py kit-stage/reflow2-kit/tools/
           cp -r getting-started kit-stage/reflow2-kit/
           printf '{"reflow2_version": "%s", "commit": "%s", "committed_at": "%s", "source": "release-tarball"}\n' \
             "$VERSION" "$COMMIT" "$COMMITTED_AT" > kit-stage/reflow2-kit/KIT_VERSION.json

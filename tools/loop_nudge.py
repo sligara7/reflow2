@@ -31,7 +31,10 @@ One script, three events, read from the hook's stdin JSON:
     called → "the ChangeEvent is bookkeeping; run impact-check" (BL-163), or
   - the session never touched reflow2 at all and edited enough files → "the
     graph was never consulted; start with loop_status, impact-check before
-    further edits, link-artifacts after".
+    further edits, link-artifacts after", or
+  - the GRAPH says this session raised a debt count and left it there → "open
+    gaps went 7 → 10; run detect-and-ask" (`cap:stop-nudge-asks-the-graph`).
+    This one is not counted from the tally at all — see the block below.
   A second stop (`stop_hook_active`) always proceeds — a nudge that can loop
   forever is a hostage-taker, not a trigger. The cases are mutually exclusive:
   any graph write means reflow2 was touched, so the bypass case cannot also be
@@ -42,11 +45,21 @@ One script, three events, read from the hook's stdin JSON:
   after editing the code satisfies "a ChangeEvent exists" while being exactly
   the bookkeeping-after the hook's own message says is not the loop.
 
-Deliberately does NOT read the graph: the session's own MCP server holds the
-single-writer lock, and the committed export can be a session stale. The hook
-counts events and points at `loop_status`; the *graph* answers what is owed —
-which also means the hook cannot know which edited files are design-relevant, so
-the bypass backstop stays blunt (a count threshold, once-only) on purpose.
+🛑 THE GRAPH IS NOW READ, AND THIS PARAGRAPH USED TO SAY IT COULD NOT BE. The
+old text — "the session's own MCP server holds the single-writer lock" — was
+true before the shared server and is false now: the shared server answers
+stateless MCP over the URL in `.reflow2/graph.server.json`, and a read costs
+nothing but TIME. Correcting it matters more than the feature it blocked,
+because for months the obstacle was read as a CAPABILITY limit when it was a
+LATENCY limit, and those take opposite fixes. Measured: `loop_status` is 22.6s.
+So the read happens in a DETACHED process (`tools/graph_probe.py`) whose answer
+a later stop collects — never inline, because a Stop hook that blocks for 23
+seconds is worse than no hook. `dec:the-stop-hook-asks-the-graph-asynchronously`.
+
+Everything ELSE here still counts events rather than asking, and one limit of
+that survives untouched: the hook cannot know which edited files are
+design-relevant, so the bypass backstop stays blunt (a count threshold,
+once-only) on purpose.
 State is one small JSON per session under `.reflow2/loop-nudge/` (gitignored
 with the rest of `.reflow2/`). A hook must never break a session: any failure
 here warns on stderr and exits 0.
@@ -93,14 +106,24 @@ EDIT_TOOLS = {"Edit", "Write", "MultiEdit", "NotebookEdit"}
 # loop_status" into every situation alike.
 #
 # THE HARD CONSTRAINT, and it shaped the design: this script runs on every tool
-# call and CANNOT READ THE GRAPH — the session's own server holds the
-# single-writer lock, and `design_present()` is deliberately a directory test
-# for that reason. So a shape is only implementable if it is visible in the
-# session's own op tally. That rules out the spec's "an artifact checksum drift
-# names link-artifacts" as literally written: drift is a fact about the graph
-# versus the disk, and nothing here can see either. What IS visible is the
-# progression — a change recorded but as-built never touched — which is the
-# same situation one step earlier, and is what the third shape keys on.
+# call, so a SHAPE has to be free. It is therefore only implementable if it is
+# visible in the session's own op tally, and `design_present()` is deliberately
+# a directory test rather than a query. That rules out the spec's "an artifact
+# checksum drift names link-artifacts" as literally written: drift is a fact
+# about the graph versus the disk, and nothing on this path can see either.
+# What IS visible is the progression — a change recorded but as-built never
+# touched — which is the same situation one step earlier, and is what the third
+# shape keys on.
+#
+# 🛑 THE REASON CHANGED AND THE OLD ONE IS WORTH NAMING. This comment used to
+# say the script "CANNOT READ THE GRAPH — the session's own server holds the
+# single-writer lock". That stopped being true when the shared server landed,
+# and the correction is not a footnote: for months the obstacle was read as a
+# capability limit when it was a COST limit. The graph is readable; a read is
+# 22.6 seconds, which is free on a detached process and ruinous on a hook that
+# runs per tool call. So the shapes below still reason from the tally — not
+# because they may not ask, but because THEY cannot afford to — and the asking
+# happens once per stop, detached, in `graph_probe.py`.
 
 # EVERY SET BELOW MUST NAME THE BULK FORM BESIDE THE SINGULAR ONE. BL-153
 # shipped `create_nodes`, `create_edges`, `set_artifact_checksums`,
@@ -569,6 +592,311 @@ def match_shape(state: dict) -> str | None:
     return None
 
 
+# ---- cap:stop-nudge-asks-the-graph: the branch that ASKS rather than counts --
+#
+# Everything above this line reasons from the session's own op TALLY. That is a
+# proxy for design debt and it is blind in the one direction that matters: a
+# session which goes through the loop's motions correctly — write, then
+# `loop_status` — trips no counting branch, whatever it actually left in the
+# graph. The tally can see that the motions happened. It cannot see what they
+# left behind.
+#
+# So this asks. `dec:the-stop-hook-asks-the-graph-asynchronously`, Anthony
+# 2026-08-24, and the shape is forced by one measurement rather than by taste:
+#
+#     loop_status                     22.6s   (repeatably, on reflow2's own graph)
+#     loop_status since_export=true   37.5s
+#     claim_report                     0.04s
+#
+# A Stop hook that blocks for 23 seconds is worse than no hook, and nothing
+# under a second answers the question. Hence: SPAWN and return, collect at a
+# later stop. A session stops once per TURN, so on anything longer than a couple
+# of exchanges the answer arrives while the agent can still act on it; when the
+# session ends first, SessionStart reports it instead. That fallback is the
+# degraded case, not the design.
+#
+# ⭐⭐ THE TRIGGER IS A DELTA, NOT A LEVEL, and this is the whole restraint.
+# reflow2's own design carries 7 unsurfaced gaps and 60 structural defects, both
+# standing for weeks. Fired on a level this would speak in every session forever
+# and be a nag — the fire-on-correct-work failure `ver:skill-triggers` exists to
+# prevent, and the one BL-23 and BL-42 both name. Fired on a delta against a
+# baseline taken at SessionStart, it says "this session took open gaps from 7 to
+# 10 and never put the three new ones to the user", which is a fact about the
+# session. NO BASELINE MEANS NO NUDGE: a delta needs two readings, and a session
+# whose first probe never landed has one.
+#
+# 🛑 `structural_defects` IS DELIBERATELY NOT A TRIGGER CLASS — see `COUNTS` in
+# graph_probe.py. HEAL's count moves on edits nobody made to it, so a delta
+# there would report a session for something it did not do.
+#
+# ⚠ THE READING CAN BE STALE, AND THE ONLY HONEST FIX IS TO SAY SO. The answer
+# is whatever the last probe found, which the debounce holds at up to a couple
+# of minutes old and longer if no probe has been spawned since. A session
+# genuinely IN FLIGHT raises counts and then settles them — capture intent, and
+# the gaps appear; wire the thread, and they close — so a verdict collected from
+# a mid-session reading can name debt that is already gone. Observed on the very
+# session that built this: gaps read 7 → 10 while the new nodes were unwired and
+# finished at 6. The message therefore states the reading's AGE and tells the
+# agent to confirm with `loop_status`, which is the one call that answers now.
+# Waiting for a fresh probe at stop time is the 23-second block this whole
+# design exists to avoid, so staleness is the cost that was accepted.
+#
+# WHAT IT STILL CANNOT DO, stated rather than implied: the graph cannot see the
+# transcript. This reports what the DESIGN says changed, never the reasoning the
+# conversation held and nobody wrote down. It complements the capture-session
+# skill; it does not replace it, and `req:skill-use-survives-a-long-session`
+# stays unmet.
+
+PROBE_SCRIPT = Path(__file__).resolve().parent / "graph_probe.py"
+
+# How long a probe may be in flight before the hook assumes it died and lets
+# another start. Generously above the ~23s measured call, because the cost of
+# guessing too soon is two probes hammering the shared server and the cost of
+# guessing too late is one quiet session.
+PROBE_STALE_LOCK_S = 300
+
+# Minimum gap between probe STARTS. Turns come faster than this, and re-asking a
+# 23-second question every turn would load the server that is also serving the
+# session doing the work.
+PROBE_MIN_INTERVAL_S = 120
+
+# The debt classes that get a sentence, in the order a nudge should mention
+# them: what the design does not yet KNOW first, what it has not yet CHECKED
+# after. THE KEYS MIRROR `COUNTS` IN graph_probe.py — two stdlib-only scripts in
+# two processes, so there is no shared module to hold them, and a key added
+# there without a sentence here measures something the nudge cannot say.
+COUNT_ADVICE = (
+    ("unsurfaced_gaps",
+     "open gap(s) nobody has put to the user",
+     "run detect-and-ask"),
+    ("unanswered_questions",
+     "question(s) put to the user and still waiting",
+     "follow them up — open_questions carries the wording they saw"),
+    ("unwritten_answers",
+     "answer(s) the user gave that nothing has written into the design",
+     "write them in, or acknowledge the gap"),
+    ("undispositioned_drift",
+     "artifact(s) whose file no longer matches what the design recorded",
+     "run link-artifacts and give each drift its OWN disposition"),
+    ("unproven_capabilities",
+     "capability(ies) claiming realized/verified with no passing check",
+     "add or run their Verification"),
+    ("unexamined_claims",
+     "built capability(ies) nobody has checked against reality",
+     "check them, or record why not"),
+    ("unsettled_assigned_decisions",
+     "Decision(s) a named person was asked to settle",
+     "put them to that person"),
+)
+
+
+def probe_file(session_id: str) -> Path:
+    return state_dir() / (state_file(session_id).stem + ".probe.json")
+
+
+def probe_lock(session_id: str) -> Path:
+    return state_dir() / (state_file(session_id).stem + ".probe.lock")
+
+
+def read_probe(session_id: str) -> dict:
+    """The last probe's answer, or an empty dict.
+
+    Unreadable reads as absent, which is the quiet direction — every claim this
+    feature makes is a positive one ("the count went up"), and a count nobody
+    could read supports none of them.
+    """
+    try:
+        data = json.loads(probe_file(session_id).read_text())
+    except (OSError, ValueError):
+        return {}
+    return data if isinstance(data, dict) else {}
+
+
+def probe_in_flight(session_id: str, now: float) -> bool:
+    """Is a probe already running for this session?
+
+    The probe removes its own lock on the way out, so a lock that is still here
+    and still young means one is working. An OLD lock means a probe was killed
+    before it could clean up — treated as gone rather than as running, because
+    a stuck lock would silence the feature permanently and a duplicate probe
+    costs one wasted read.
+    """
+    try:
+        lock = json.loads(probe_lock(session_id).read_text())
+        started = lock.get("started")
+    except (OSError, ValueError):
+        return False
+    if not isinstance(started, (int, float)):
+        return False
+    return (now - started) < PROBE_STALE_LOCK_S
+
+
+def spawn_probe(session_id: str, reason: str) -> None:
+    """Start the detached probe, or decline for a stated reason. NEVER waits.
+
+    Every early return here is a case where asking would cost more than the
+    answer is worth; none of them is an error, and none of them warns.
+    """
+    if not PROBE_SCRIPT.exists():
+        return  # a kit install that did not carry the probe — silent by design
+    if not Path(".reflow2/graph.server.json").exists():
+        return  # served over stdio: there is no URL to ask, and that is normal
+    data = read_probe(session_id)
+    if data.get("unavailable"):
+        return  # already established there is nothing to ask; do not re-ask
+    now = time.time()
+    last = data.get("taken_at")
+    if isinstance(last, (int, float)) and (now - last) < PROBE_MIN_INTERVAL_S:
+        return
+    if probe_in_flight(session_id, now):
+        return
+    try:
+        import subprocess
+        state_dir().mkdir(parents=True, exist_ok=True)
+        probe_lock(session_id).write_text(
+            json.dumps({"started": now, "reason": reason})
+        )
+        # start_new_session so it outlives this hook process, and DEVNULL on
+        # every stream because the hook's stdout is a CONTRACT — Claude Code
+        # parses it as the hook's decision, and a stray line from a child would
+        # be read as one.
+        subprocess.Popen(
+            [sys.executable, str(PROBE_SCRIPT), session_id],
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            start_new_session=True,
+        )
+    except (OSError, ValueError, ImportError) as e:
+        warn(f"could not start the graph probe ({e})")
+
+
+def graph_verdict(session_id: str) -> str | None:
+    """What the graph says THIS session raised. See [`verdict_from`]."""
+    return verdict_from(read_probe(session_id))
+
+
+def verdict_from(data: dict) -> str | None:
+    """What a probe file says its session RAISED, or None if it says nothing.
+
+    None covers every case where the answer would not be supportable: no probe,
+    no baseline, one reading only, an unreadable file, or a probe whose counts
+    went nowhere. Silence is the correct output for all of them.
+
+    Takes the DATA rather than a session id because the same computation has to
+    run over another session's file at SessionStart, and a version that could
+    only reach the current session's would have been quietly copied.
+    """
+    counts = data.get("counts")
+    baseline = data.get("baseline")
+    if not isinstance(counts, dict) or not isinstance(baseline, dict):
+        return None
+    base = baseline.get("counts")
+    base_at = baseline.get("taken_at")
+    taken = data.get("counts_taken_at")
+    if not isinstance(base, dict):
+        return None
+    if not isinstance(taken, (int, float)) or not isinstance(base_at, (int, float)):
+        return None
+    # The first probe IS its own baseline, so it can only ever report a delta of
+    # zero. Refusing it explicitly keeps that from depending on the arithmetic
+    # below happening to come out empty.
+    if taken <= base_at:
+        return None
+
+    risen = []
+    for key, noun, remedy in COUNT_ADVICE:
+        now_value, was = counts.get(key), base.get(key)
+        # Both sides must be present. A class the server did not report on one
+        # of the two readings is a class nobody measured twice — usually a
+        # server upgraded mid-session — and treating the absent side as zero
+        # would manufacture a delta out of a version change.
+        if isinstance(now_value, int) and isinstance(was, int) and now_value > was:
+            risen.append(f"{noun} {was} → {now_value} (+{now_value - was}) — {remedy}")
+    if not risen:
+        return None
+
+    age = int(max(0, time.time() - taken))
+    caveat = ""
+    served = data.get("served_by")
+    if isinstance(served, dict) and served.get("stale"):
+        # The trap `fact:an-agent-that-cannot-name-its-version-reports-fixed-bugs`
+        # names, one layer over: every COMPUTED rollup in that answer came from
+        # a binary no longer on disk. The nudge still fires — the counts are the
+        # best reading there is — but it must not present them as current.
+        caveat = (
+            " ⚠ The server reports its own binary as STALE, so these computed "
+            "counts came from code no longer on disk; refresh it with "
+            "`reflow2-mcp --graph-path <path> --stop-shared` before acting on "
+            "the numbers."
+        )
+    return (
+        f"the graph itself says so — measured by loop_status against the live "
+        f"graph {age}s ago, not counted from your tool calls: "
+        + "; ".join(risen) + "." + caveat
+    )
+
+
+# How many probe files a SessionStart will look at, and how long one is kept.
+# The directory holds one file per session and would otherwise grow forever.
+PROBE_SCAN_LIMIT = 12
+PROBE_KEEP_S = 14 * 24 * 3600
+
+
+def last_unreported_verdict(current_session: str) -> str | None:
+    """A verdict an EARLIER session earned and never heard.
+
+    The async shape's admitted cost: a session whose last stop happens before
+    its probe lands never gets told. This is where that answer surfaces —
+    late, in the next session, attributed to the session that caused it. It is
+    the fallback, not the design, and the wording at the call site says so.
+
+    Marks the file reported before returning, because the alternative is
+    repeating one session's debt at the start of every session after it.
+    """
+    current = probe_file(current_session)
+    try:
+        files = sorted(
+            (f for f in state_dir().glob("*.probe.json") if f != current),
+            key=lambda f: f.stat().st_mtime, reverse=True,
+        )
+    except OSError:
+        return None
+
+    now = time.time()
+    verdict = None
+    for index, path in enumerate(files):
+        try:
+            if now - path.stat().st_mtime > PROBE_KEEP_S:
+                path.unlink()
+                continue
+        except OSError:
+            continue
+        if verdict is not None or index >= PROBE_SCAN_LIMIT:
+            continue  # keep pruning, stop reading
+        try:
+            data = json.loads(path.read_text())
+        except (OSError, ValueError):
+            continue
+        if not isinstance(data, dict) or data.get("reported"):
+            continue
+        found = verdict_from(data)
+        if not found:
+            continue
+        data["reported"] = True
+        try:
+            tmp = path.with_suffix(f".{os.getpid()}.tmp")
+            tmp.write_text(json.dumps(data, indent=1))
+            os.replace(tmp, path)
+        except OSError:
+            # Could not mark it. Say nothing rather than say it every session
+            # from here on — an unstoppable reminder is the hostage-taking this
+            # file's once-only rule exists to prevent.
+            continue
+        verdict = found
+    return verdict
+
+
 def main() -> int:
     try:
         event = json.load(sys.stdin)
@@ -586,6 +914,24 @@ def main() -> int:
 
     if kind == "SessionStart":
         print(SESSION_START_TEXT)
+        # The BASELINE. Everything the graph branch later claims is measured
+        # against this reading, so it has to be taken before the session has
+        # done anything — which is the one moment a hook is guaranteed to run
+        # and the agent is guaranteed not to have written yet.
+        #
+        # THE HONEST LIMIT: the probe takes ~23s, so a session whose first turn
+        # writes to the graph inside that window has those writes folded into
+        # its own baseline. There is no clock on a node to fix this with. The
+        # error is one-directional — the nudge UNDER-reports, never over-reports
+        # — which is the right direction for a thing that interrupts people.
+        spawn_probe(session, "session-start baseline")
+        # A verdict the previous session earned and never heard: it stopped for
+        # the last time before its probe landed. Named as the previous session's
+        # so nobody reads it as a fact about this one.
+        stale_verdict = last_unreported_verdict(session)
+        if stale_verdict:
+            print(f"reflow2: the session before this one left debt behind — "
+                  f"{stale_verdict}")
         return 0
 
     if kind == "PostToolUse":
@@ -646,6 +992,15 @@ def main() -> int:
         if event.get("stop_hook_active"):
             return 0  # already nudged once — never hold the session hostage
         state = read_state(session)
+
+        # ASK FIRST, READ LATER, and ask BEFORE any branch below can return.
+        # The question takes ~23 seconds to answer and nothing here waits for
+        # it; putting the spawn above the branches means a session that trips a
+        # counting nudge still has its graph answer in flight for the stop after
+        # it. Only sessions that DID something are asked about — a read-only
+        # session has left nothing for the graph to report.
+        if state.get("wrote", 0) > 0 or state.get("edits", 0) > 0:
+            spawn_probe(session, "stop")
 
         # Graph writes finished without a loop check (the original nudge).
         n = state["writes"]
@@ -815,6 +1170,42 @@ def main() -> int:
                     f"says) and check the work against it. Reading it afterwards "
                     f"still catches what it would have prevented. (This nudge "
                     f"fires once; stopping again proceeds.)"
+                ),
+            }))
+            return 0
+
+        # cap:stop-nudge-asks-the-graph — LAST, and it speaks only where every
+        # counting branch stayed silent.
+        #
+        # THAT PLACEMENT IS THE POINT, not an ordering convenience. The session
+        # this reaches is the one that did the loop's motions correctly and so
+        # tripped nothing above: wrote, then checked; edited, then propagated.
+        # The tally has nothing left to say about it. The graph does.
+        #
+        # IT ADDS NO SECOND INTERRUPTION. `claim_nudge` is one flag for the
+        # whole session across every branch, so a session already being
+        # interrupted is not interrupted twice — this can only speak into what
+        # would otherwise have been silence, which is the same counterweight
+        # `cap:skill-loads-are-counted` carries and for the same reason.
+        #
+        # It sits below the `reset` guard with the other negative claims by
+        # position, though it does not need to: its claim is positive and comes
+        # from the probe file rather than from the tally, so a rebuilt tally
+        # cannot make it lie. It stays here because the branch it must not
+        # pre-empt is above it.
+        verdict = graph_verdict(session)
+        if verdict:
+            if not claim_nudge(session):
+                return 0
+            print(json.dumps({
+                "decision": "block",
+                "reason": (
+                    f"reflow2: this session ADDED design debt and left it — "
+                    f"{verdict} CONFIRM WITH loop_status before acting: that "
+                    f"reading is as old as it says, and a session still in "
+                    f"flight settles some of what it raises. Then settle it or "
+                    f"say why it stands; bookkeeping is not the loop. (This "
+                    f"nudge fires once; stopping again proceeds.)"
                 ),
             }))
         return 0

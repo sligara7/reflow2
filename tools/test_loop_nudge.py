@@ -15,6 +15,7 @@ import pathlib
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 
 SCRIPT = pathlib.Path(__file__).resolve().parent / "loop_nudge.py"
@@ -877,6 +878,409 @@ class SkillLoadsAreCounted(unittest.TestCase):
         self.assertNotIn("SKILL_OPS", blob)
         self.assertNotIn('"skills"', blob,
                          "no skill count may be readable by anything that computes debt")
+
+
+class AsksTheGraph(unittest.TestCase):
+    """cap:stop-nudge-asks-the-graph — the branch that reads the graph instead
+    of the session's tool tally.
+
+    THE CASE THIS SUITE EXISTS FOR is `test_a_level_never_fires`. Every other
+    case here would pass on an implementation that nudged whenever the design
+    carried debt — and that implementation would speak in every session forever,
+    which is the fire-on-correct-work failure `ver:skill-triggers` names. The
+    delta is the feature; the counts are just how it is computed.
+
+    The probe files are hand-written rather than produced by a live probe: the
+    unit under test is the POLICY (what deserves an interruption), and coupling
+    it to a 23-second call would make the suite untestable and would test the
+    server instead. `test_the_probe_is_spawned_and_nothing_waits_for_it` covers
+    the seam between the two.
+    """
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory(prefix="loop-nudge-graph-")
+        self.project = pathlib.Path(self._tmp.name)
+        (self.project / ".reflow2").mkdir()
+        self.nudge_dir = self.project / ".reflow2" / "loop-nudge"
+        self.nudge_dir.mkdir()
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def write_probe(self, session="s1", baseline=None, counts=None, **extra):
+        """A probe file as graph_probe.py would leave it.
+
+        `taken_at` is deliberately AFTER the baseline's: a probe that is its own
+        baseline is a single reading and must not produce a delta, which is its
+        own case below.
+        """
+        record = {"session_id": session, "taken_at": 2000.0,
+                  "counts_taken_at": 2000.0}
+        if counts is not None:
+            record["counts"] = counts
+        if baseline is not None:
+            record["baseline"] = {"taken_at": 1000.0, "counts": baseline}
+        record.update(extra)
+        (self.nudge_dir / f"{session}.probe.json").write_text(json.dumps(record))
+        return record
+
+    def tally(self, session="s1", **fields):
+        """A session tally that trips NO counting branch.
+
+        Every graph-branch case needs this: the branch speaks last, so a tally
+        that armed any earlier nudge would test the ordering rather than the
+        feature. `writes: 0` (checked), `edits: 0` (nothing on disk) and
+        `touched` is the shape of a session that did the loop correctly — which
+        is exactly the session this branch exists to reach.
+        """
+        state = {"writes": 0, "edits": 0, "touched": True, "changes": 0,
+                 "propagates": 0, "artifacts": 0, "captures": 0, "gap_pass": 0,
+                 "renderings": 0, "skills": 1, "wrote": 4, "reset": False,
+                 "nudged": False}
+        state.update(fields)
+        (self.nudge_dir / f"{session}.json").write_text(json.dumps(state))
+
+    def blocked(self, session="s1"):
+        r = run_hook(self.project, stop(session))
+        self.assertEqual(r.returncode, 0)
+        return json.loads(r.stdout) if r.stdout.strip() else None
+
+    # ---- the trigger --------------------------------------------------------
+
+    def test_a_rise_since_the_baseline_fires_and_names_both_numbers(self):
+        self.tally()
+        self.write_probe(baseline={"unsurfaced_gaps": 7},
+                         counts={"unsurfaced_gaps": 10})
+        out = self.blocked()
+        self.assertIsNotNone(out, "a count this session raised must be reported")
+        self.assertEqual(out["decision"], "block")
+        # BOTH numbers, not just the delta: "3 new gaps" leaves the reader
+        # unable to tell a session that doubled the debt from one that added
+        # three to a hundred.
+        self.assertIn("7", out["reason"])
+        self.assertIn("10", out["reason"])
+        self.assertIn("detect-and-ask", out["reason"])
+
+    def test_a_level_never_fires(self):
+        """THE CASE THE FEATURE IS JUDGED ON.
+
+        reflow2's own design has carried 7 unsurfaced gaps and 60 structural
+        defects for weeks. A nudge keyed on the LEVEL would fire in every
+        session forever and be a nag rather than a trigger. Standing debt is
+        not this session's doing and this branch must not claim it is.
+        """
+        self.tally()
+        self.write_probe(baseline={"unsurfaced_gaps": 7, "unproven_capabilities": 1},
+                         counts={"unsurfaced_gaps": 7, "unproven_capabilities": 1})
+        self.assertIsNone(self.blocked(), "standing debt is not this session's")
+
+    def test_a_count_that_fell_is_not_a_delta(self):
+        self.tally()
+        self.write_probe(baseline={"unsurfaced_gaps": 10},
+                         counts={"unsurfaced_gaps": 4})
+        self.assertIsNone(self.blocked(), "settling debt must never be nudged")
+
+    def test_structural_defects_are_not_a_trigger_class(self):
+        """HEAL's count moves on edits nobody made to it, so a delta there
+        would report a session for something it did not do. Deliberately
+        absent from COUNTS in graph_probe.py and from COUNT_ADVICE here."""
+        self.tally()
+        self.write_probe(baseline={"structural_defects": 60},
+                         counts={"structural_defects": 91})
+        self.assertIsNone(self.blocked())
+
+    def test_every_advertised_class_can_actually_fire(self):
+        """A positive control over the whole table.
+
+        COUNT_ADVICE and graph_probe.COUNTS are two lists of the same keys in
+        two processes with no shared module between them. A key measured there
+        with no sentence here is silent debt; this is what notices.
+        """
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("ln", SCRIPT)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        probe_spec = importlib.util.spec_from_file_location(
+            "gp", SCRIPT.parent / "graph_probe.py")
+        probe = importlib.util.module_from_spec(probe_spec)
+        probe_spec.loader.exec_module(probe)
+
+        advised = [key for key, _, _ in module.COUNT_ADVICE]
+        self.assertEqual(sorted(advised), sorted(probe.COUNTS),
+                         "every measured class needs a sentence, and vice versa")
+        for key in advised:
+            with self.subTest(key=key):
+                self.tally(session=key)
+                self.write_probe(session=key, baseline={key: 1}, counts={key: 2})
+                out = self.blocked(session=key)
+                self.assertIsNotNone(out, f"{key} is measured but cannot speak")
+
+    # ---- the cases where it must say nothing --------------------------------
+
+    def test_no_baseline_means_no_nudge(self):
+        """A delta needs two readings. A session whose SessionStart probe never
+        landed has one, and one reading cannot support a claim about what the
+        session changed — the same rule the `reset` guard applies to the tally.
+        """
+        self.tally()
+        self.write_probe(counts={"unsurfaced_gaps": 99})
+        self.assertIsNone(self.blocked())
+
+    def test_a_probe_that_is_its_own_baseline_says_nothing(self):
+        self.tally()
+        (self.nudge_dir / "s1.probe.json").write_text(json.dumps({
+            "taken_at": 1000.0, "counts_taken_at": 1000.0,
+            "counts": {"unsurfaced_gaps": 7},
+            "baseline": {"taken_at": 1000.0, "counts": {"unsurfaced_gaps": 7}},
+        }))
+        self.assertIsNone(self.blocked())
+
+    def test_a_class_missing_from_one_reading_is_not_a_delta(self):
+        """The shape of a server upgraded mid-session: a class the older build
+        never computed is absent, not zero. Reading absence as zero would
+        manufacture a delta out of a version change and blame the session."""
+        self.tally()
+        self.write_probe(baseline={}, counts={"unwritten_answers": 3})
+        self.assertIsNone(self.blocked())
+
+    def test_an_unreadable_probe_is_silent(self):
+        self.tally()
+        (self.nudge_dir / "s1.probe.json").write_text("{not json")
+        self.assertIsNone(self.blocked())
+
+    def test_no_probe_at_all_is_silent(self):
+        self.tally()
+        self.assertIsNone(self.blocked())
+
+    def test_a_project_with_no_shared_server_never_spawns_a_probe(self):
+        """The ordinary stdio project. There is no URL to ask, that is normal,
+        and it must cost nothing and say nothing."""
+        self.tally(writes=0, edits=2, wrote=2)
+        r = run_hook(self.project, stop())
+        self.assertEqual(r.stdout, "")
+        self.assertFalse(list(self.nudge_dir.glob("*.probe.*")),
+                         "no server config means no probe and no lock file")
+
+    # ---- it must not become a second interruption ---------------------------
+
+    def test_it_never_adds_a_second_nudge_to_an_interrupted_session(self):
+        """`claim_nudge` is one flag for the whole session across every branch.
+        A session already being interrupted is not interrupted twice — this can
+        only speak into what would otherwise have been silence."""
+        self.tally(writes=3, wrote=3)          # arms the original write nudge
+        self.write_probe(baseline={"unsurfaced_gaps": 7},
+                         counts={"unsurfaced_gaps": 10})
+        first = self.blocked()
+        self.assertIsNotNone(first)
+        self.assertIn("graph write", first["reason"],
+                      "the counting branch speaks first")
+        # Keyed on the graph branch's OWN words, not on "detect-and-ask" — the
+        # generic write nudge already names that skill, so asserting its absence
+        # tested the wording of the other branch rather than which branch spoke.
+        self.assertNotIn("not counted from your tool calls", first["reason"])
+        # And the graph branch does not then get its own turn.
+        self.assertIsNone(self.blocked(), "one interruption per session, still")
+
+    def test_a_second_stop_in_the_same_cycle_proceeds(self):
+        self.tally()
+        self.write_probe(baseline={"unsurfaced_gaps": 7},
+                         counts={"unsurfaced_gaps": 10})
+        r = run_hook(self.project, stop(active=True))
+        self.assertEqual(r.stdout, "", "a nudge that can loop is a hostage-taker")
+
+    # ---- what it says -------------------------------------------------------
+
+    def test_a_stale_server_binary_is_declared_beside_the_numbers(self):
+        """`served_by.stale` means every COMPUTED count in that answer came
+        from a binary no longer on disk. The nudge still fires — those are the
+        best numbers there are — but it must not present them as current."""
+        self.tally()
+        self.write_probe(baseline={"unsurfaced_gaps": 7},
+                         counts={"unsurfaced_gaps": 10},
+                         served_by={"stale": True, "reflow2_version": "0.39.0"})
+        out = self.blocked()
+        self.assertIn("STALE", out["reason"])
+        self.assertIn("--stop-shared", out["reason"],
+                      "a warning with no remedy is half a warning")
+
+    def test_it_says_the_number_came_from_the_graph_not_the_tally(self):
+        """The whole point of the branch, and the agent cannot act on it
+        correctly without knowing which kind of claim it is."""
+        self.tally()
+        self.write_probe(baseline={"unsurfaced_gaps": 7},
+                         counts={"unsurfaced_gaps": 10})
+        reason = self.blocked()["reason"]
+        self.assertIn("loop_status", reason)
+        self.assertIn("not counted from your tool calls", reason)
+
+    def test_it_tells_the_agent_to_confirm_because_the_reading_can_be_stale(self):
+        """The answer is whatever the last probe found, and a session still in
+        flight settles some of what it raises — observed on the session that
+        built this, where gaps read 7 → 10 mid-work and finished at 6. Waiting
+        for a fresh probe is the 23-second block the async shape exists to
+        avoid, so the reading states its age and points at the call that
+        answers now. A nudge that cannot be checked is an accusation."""
+        self.tally()
+        self.write_probe(baseline={"unsurfaced_gaps": 7},
+                         counts={"unsurfaced_gaps": 10})
+        reason = self.blocked()["reason"]
+        self.assertIn("CONFIRM WITH loop_status", reason)
+        self.assertIn("s ago", reason, "the reading must state its own age")
+
+    # ---- the cross-session fallback -----------------------------------------
+
+    def test_a_verdict_the_last_session_never_heard_surfaces_at_session_start(self):
+        self.write_probe(session="old", baseline={"unsurfaced_gaps": 7},
+                         counts={"unsurfaced_gaps": 10})
+        r = run_hook(self.project, {"hook_event_name": "SessionStart",
+                                    "session_id": "new"})
+        self.assertEqual(r.returncode, 0)
+        self.assertIn("session before this one", r.stdout)
+        self.assertIn("10", r.stdout)
+        # ...and exactly once. An unstoppable reminder is the hostage-taking
+        # the once-only rule exists to prevent, one session further out.
+        again = run_hook(self.project, {"hook_event_name": "SessionStart",
+                                        "session_id": "newer"})
+        self.assertNotIn("session before this one", again.stdout)
+
+    def test_session_start_still_prints_the_orientation_with_no_probe(self):
+        r = run_hook(self.project, {"hook_event_name": "SessionStart",
+                                    "session_id": "s1"})
+        self.assertIn("Orient first", r.stdout)
+        self.assertNotIn("session before this one", r.stdout)
+
+    # ---- the seam between the hook and the probe ----------------------------
+
+    def test_the_probe_is_spawned_and_nothing_waits_for_it(self):
+        """The one case that crosses the process boundary.
+
+        A closed port is used deliberately: the probe fails fast, so the test
+        stays hermetic and quick while still exercising the real spawn, the
+        real lock file, and the real failure path. What is asserted is the
+        contract that made the async shape necessary — the HOOK RETURNS
+        IMMEDIATELY. `loop_status` is 22.6 seconds; if this ever blocks on the
+        probe, the feature has become the thing it was designed not to be.
+        """
+        (self.project / ".reflow2" / "graph.server.json").write_text(
+            json.dumps({"url": "http://127.0.0.1:1/"}))
+        self.tally(writes=0, edits=1, wrote=1)
+        started = time.time()
+        r = run_hook(self.project, stop())
+        elapsed = time.time() - started
+        self.assertEqual(r.returncode, 0)
+        self.assertEqual(r.stdout, "", "a spawn is not a verdict")
+        self.assertLess(elapsed, 5.0,
+                        "the Stop hook must never wait on the graph")
+        # The probe really ran, really failed, and really said so.
+        probe = self.nudge_dir / "s1.probe.json"
+        for _ in range(100):
+            if probe.exists():
+                break
+            time.sleep(0.1)
+        self.assertTrue(probe.exists(), "the detached probe never wrote its file")
+        data = json.loads(probe.read_text())
+        self.assertIn("error", data, "a failed probe records the failure")
+        self.assertNotIn("counts", data)
+        self.assertFalse((self.nudge_dir / "s1.probe.lock").exists(),
+                         "the probe clears its own lock on the way out")
+        # And a failed probe is silent, not a guess.
+        self.assertIsNone(self.blocked())
+
+    def test_a_read_only_session_is_never_asked_about(self):
+        """Asking costs a 23-second call on the same server the session is
+        using. A session that wrote nothing and edited nothing has left nothing
+        for the graph to report."""
+        (self.project / ".reflow2" / "graph.server.json").write_text(
+            json.dumps({"url": "http://127.0.0.1:1/"}))
+        self.tally(writes=0, edits=0, wrote=0, touched=True)
+        run_hook(self.project, stop())
+        self.assertFalse((self.nudge_dir / "s1.probe.lock").exists())
+        self.assertFalse((self.nudge_dir / "s1.probe.json").exists())
+
+    def test_a_probe_in_flight_is_not_started_twice(self):
+        (self.project / ".reflow2" / "graph.server.json").write_text(
+            json.dumps({"url": "http://127.0.0.1:1/"}))
+        self.tally(writes=0, edits=1, wrote=1)
+        (self.nudge_dir / "s1.probe.lock").write_text(
+            json.dumps({"started": time.time(), "reason": "held"}))
+        run_hook(self.project, stop())
+        self.assertFalse((self.nudge_dir / "s1.probe.json").exists(),
+                         "a probe already in flight must not be duplicated")
+
+    def test_a_recent_answer_is_not_re_asked(self):
+        (self.project / ".reflow2" / "graph.server.json").write_text(
+            json.dumps({"url": "http://127.0.0.1:1/"}))
+        self.tally(writes=0, edits=1, wrote=1)
+        (self.nudge_dir / "s1.probe.json").write_text(json.dumps({
+            "taken_at": time.time(), "counts": {"unsurfaced_gaps": 7},
+        }))
+        run_hook(self.project, stop())
+        self.assertFalse((self.nudge_dir / "s1.probe.lock").exists(),
+                         "the debounce must hold between turns")
+
+    def test_a_failed_probe_does_not_erase_the_last_good_reading(self):
+        """Each probe run builds a fresh record, so without the carry-forward a
+        server that went away mid-session would take the session's only
+        comparable measurement with it — and the nudge would fall silent about
+        debt already measured rather than report it as of when it was seen."""
+        (self.project / ".reflow2" / "graph.server.json").write_text(
+            json.dumps({"url": "http://127.0.0.1:1/"}))
+        good = {"session_id": "s1", "taken_at": 1500.0, "counts_taken_at": 1500.0,
+                "counts": {"unsurfaced_gaps": 10}, "clean": False,
+                "baseline": {"taken_at": 1000.0,
+                             "counts": {"unsurfaced_gaps": 7}}}
+        (self.nudge_dir / "s1.probe.json").write_text(json.dumps(good))
+        r = subprocess.run(
+            [sys.executable, str(SCRIPT.parent / "graph_probe.py"), "s1"],
+            capture_output=True, text=True, cwd=self.project, timeout=60)
+        self.assertEqual(r.returncode, 0)
+        data = json.loads((self.nudge_dir / "s1.probe.json").read_text())
+        self.assertIn("error", data)
+        self.assertEqual(data["counts"], {"unsurfaced_gaps": 10})
+        self.assertEqual(data["counts_taken_at"], 1500.0,
+                         "a carried reading keeps its OWN age, or the nudge "
+                         "would report a preserved number as a fresh one")
+        self.assertEqual(data["baseline"]["counts"], {"unsurfaced_gaps": 7},
+                         "the baseline is written once and never overwritten")
+
+    def test_the_kit_ships_every_script_the_hook_depends_on(self):
+        """The silent-absence trap, gated.
+
+        `spawn_probe` returns quietly when the probe script is not beside it —
+        correct behaviour for a kit that predates the feature, and indis-
+        tinguishable from a graph with nothing to report. The release workflow
+        stages the kit with one `cp` per tool, so a sibling added here and not
+        there ships a hook whose graph branch never runs and never says why:
+        the same shape as a detector reporting zero because it had nothing to
+        run on.
+
+        Asserted against the workflow rather than against a built tarball
+        because that is where the omission would happen, and it fails at the
+        commit rather than at the release.
+        """
+        workflow = (SCRIPT.parent.parent / ".github" / "workflows"
+                    / "release.yml")
+        self.assertTrue(workflow.exists(), "positive control: the workflow must be findable")
+        staged = workflow.read_text()
+        self.assertIn("cp tools/loop_nudge.py", staged,
+                      "positive control: this is how the kit stages a tool")
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("ln", SCRIPT)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        self.assertIn(f"cp tools/{module.PROBE_SCRIPT.name}", staged,
+                      f"the kit does not ship {module.PROBE_SCRIPT.name}, so the "
+                      f"graph branch would be silently absent for every consumer")
+
+    def test_the_probe_reports_a_missing_server_as_unavailable_not_as_failure(self):
+        r = subprocess.run(
+            [sys.executable, str(SCRIPT.parent / "graph_probe.py"), "s1"],
+            capture_output=True, text=True, cwd=self.project, timeout=60)
+        self.assertEqual(r.returncode, 0)
+        data = json.loads((self.nudge_dir / "s1.probe.json").read_text())
+        self.assertIn("unavailable", data)
+        self.assertNotIn("error", data,
+                         "no shared server is a normal state, not a failure")
 
 
 if __name__ == "__main__":
