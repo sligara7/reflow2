@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e505f807926a1fefa455e96e1d519724dd25f4900819e8c69009f5cf2f4c8ab7",
+  "content_hash": "sha256:0e974eaf39670171187b2e3ee9def7e8915f45de434d4965a637b35234d37448",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2548,6 +2548,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "sys:foundation"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-graph-asks-what-a-session-made-false",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:verify"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -11324,6 +11332,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-graph-asks-what-a-session-made-false",
+      "properties": {
+        "acted_at": "2026-08-24",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:the-graph-read-contract-stays-internal",
       "properties": {
         "acted_at": "2026-08-21",
@@ -16542,6 +16559,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-23088482226a1cba",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-nothing-asks-what-a-session-made-false"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-27f611941c80b9ae",
       "properties": {
         "accepted_baseline": true,
@@ -17340,6 +17366,15 @@
         "action": "modified"
       },
       "to_id": "art:latent"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-9a8f6ad0f6490c32",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
     },
     {
       "edge_type": "CHANGED",
@@ -18936,6 +18971,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:baseline-6b447feb08aea566",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:impact-check-skill"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:baseline-6e18694e930b3491",
       "properties": {
         "accepted_baseline": true,
@@ -19050,6 +19094,15 @@
         "action": "modified"
       },
       "to_id": "art:test-a-repair-can-say-what-it-invalidated"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-e0aa97eb03234ff6",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-nothing-asks-what-a-session-made-false"
     },
     {
       "edge_type": "CHANGED",
@@ -27331,6 +27384,123 @@
         "action": "added"
       },
       "to_id": "req:the-git-exchange-path-is-defended-not-only-documented"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-graph-asks-what-a-session-made-false",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:capture-session-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-graph-asks-what-a-session-made-false",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph-probe"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-graph-asks-what-a-session-made-false",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-graph-asks-what-a-session-made-false",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-graph-asks-what-a-session-made-false",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-graph-asks-what-a-session-made-false",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-graph-asks-what-a-session-made-false",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-assure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-graph-asks-what-a-session-made-false",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-graph-asks-what-a-session-made-false",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:a-repair-can-say-what-it-invalidated"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-graph-asks-what-a-session-made-false",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:the-graph-asks-what-a-session-made-false"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-graph-asks-what-a-session-made-false",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-graph-asks-what-a-session-made-false",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-graph-asks-what-a-session-made-false",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:the-graph-can-say-what-has-already-been-done"
     },
     {
       "edge_type": "CHANGED",
@@ -41583,6 +41753,14 @@
         "covers": "whole"
       },
       "to_id": "ver:stop-nudge-asks-the-graph"
+    },
+    {
+      "edge_type": "IMPLEMENTS",
+      "from_id": "art:test-nothing-asks-what-a-session-made-false",
+      "properties": {
+        "covers": "whole"
+      },
+      "to_id": "ver:the-graph-asks-what-a-session-made-false"
     },
     {
       "edge_type": "INCLUDES",
@@ -89315,6 +89493,15 @@
       "to_id": "ifc:mcp-tools"
     },
     {
+      "edge_type": "INVALIDATES",
+      "from_id": "fact:a-name-is-not-a-report",
+      "properties": {
+        "at": "2026-08-23",
+        "note": "Retired by the 2026-08-23 verification-text work, verified 2026-08-24 rather than assumed. BOTH of this finding's claims are answered: (1) 'a Verification has nowhere to put its evidence' is false — `description` (what the check IS) and `findings` (what a RUN FOUND) both exist and were both used on this design today; (2) 'median name 79.5 words' was re-measured by fact:a-name-is-not-a-report as 173 of 199 checks at 0-25 words and ZERO above 60. Closed as a CLAIM, not a computation: the finding keeps its status, its method and its numbers, which outlive the figures. Its sibling fact:defect-add-verification-cannot-reach-its-own-fields is deliberately LEFT OPEN — `description` became reachable but `location` did not, and a PARTIALLY superseded finding is not closed."
+      },
+      "to_id": "fact:defect-a-verification-has-nowhere-to-put-its-evidence-so-the-name-became-the-report"
+    },
+    {
       "edge_type": "MITIGATES",
       "from_id": "fact:the-diamond-meets-at-dynographs-internals-not-its-interface",
       "properties": {
@@ -90295,6 +90482,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:capture-session-skill",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "reviewed"
+      },
+      "to_id": "cap:the-graph-asks-what-a-session-made-false"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:change-event-text-test",
       "properties": {
         "completeness": "complete",
@@ -91027,6 +91223,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:graph-probe",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-graph-asks-what-a-session-made-false"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:graph-read",
       "properties": {
         "completeness": "complete",
@@ -91178,6 +91383,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:impact-check-skill",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "reviewed"
+      },
+      "to_id": "cap:the-graph-asks-what-a-session-made-false"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:ingest",
       "properties": {
         "completeness": "complete"
@@ -91305,6 +91519,15 @@
         "conformance": "verified"
       },
       "to_id": "cap:stop-nudge-asks-the-graph"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:loop-nudge",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-graph-asks-what-a-session-made-false"
     },
     {
       "edge_type": "REALIZES",
@@ -92609,6 +92832,15 @@
       "edge_type": "REALIZES",
       "from_id": "art:tools-assure",
       "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-graph-asks-what-a-session-made-false"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:tools-assure",
+      "properties": {
         "completeness": "partial"
       },
       "to_id": "cmp:service"
@@ -92976,6 +93208,15 @@
       "edge_type": "REALIZES",
       "from_id": "art:verify",
       "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-graph-asks-what-a-session-made-false"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:verify",
+      "properties": {
         "completeness": "complete"
       },
       "to_id": "cmp:verify"
@@ -93293,6 +93534,12 @@
       "from_id": "cap:arrival-delta",
       "properties": {},
       "to_id": "req:plans-move-honestly"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:arrival-delta",
+      "properties": {},
+      "to_id": "req:the-graph-can-say-what-has-already-been-done"
     },
     {
       "edge_type": "SATISFIES",
@@ -94451,6 +94698,12 @@
         "rationale": "Makes one of the two declared boundaries actually severable. The requirement also asks for encapsulation and cohesion, which this does not touch."
       },
       "to_id": "req:modularity-computed"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:the-graph-asks-what-a-session-made-false",
+      "properties": {},
+      "to_id": "req:the-graph-can-say-what-has-already-been-done"
     },
     {
       "edge_type": "SATISFIES",
@@ -97068,6 +97321,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-graph-asks-what-a-session-made-false",
+      "properties": {},
+      "to_id": "cap:the-graph-asks-what-a-session-made-false"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-harness-registry-is-confirmed-by-the-harnesses",
       "properties": {},
       "to_id": "cap:init-asks-which-harness"
@@ -99090,7 +99349,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:38740896d256541df1542d90675980b4032a631f61fb6c707f34a801a7427637",
+        "checksum": "sha256:79da3d475bd65ae9172e3bf6d08afbf6c003409fa113230338ebcd354161f33d",
         "granularity": "atomic",
         "location": "getting-started/skills/capture-session/SKILL.md",
         "name": "getting-started/skills/capture-session/SKILL.md",
@@ -99837,7 +100096,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:282a002484a8338f7e7a3c56e6d6476d52728ce3b510e7f44c52fe96800d38d4",
+        "checksum": "sha256:e3fc4c9ff468a60601de359670718ddd2abb503fd00cd63df3488592aa049231",
         "location": "tools/graph_probe.py",
         "name": "graph_probe.py",
         "status": "realized"
@@ -99915,6 +100174,17 @@
         "name": "ility.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:impact-check-skill",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:166978819d9f154d3cc010132fba1629578ffa2ab7e2a7702ab90dd852b6f676",
+        "location": "getting-started/skills/impact-check/SKILL.md",
+        "name": "impact-check/SKILL.md",
+        "status": "realized"
       }
     },
     {
@@ -100052,7 +100322,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6e00a706c3573ed2303f8acd64aa0b033b5e74396296e2610dc47b2637afbdb9",
+        "checksum": "sha256:63cb1f09f969be33ab14fbd837eff877e28b7f432953985e7eeba10b32bf0f31",
         "granularity": "atomic",
         "location": "tools/loop_nudge.py",
         "name": "loop_nudge.py",
@@ -100840,7 +101110,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:dd0a4a12637707366085d638ada3219906f471f8058fbfd5bd6c0a2547729a1d",
+        "checksum": "sha256:082572903cd614c46ff076188ff8145769f89eab2e41757d4dfeef9213bee36a",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -100927,7 +101197,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:868d16eef06dc9190123e56ad2019d84276d2b15fdb3b1b1662189d4df440dd6",
+        "checksum": "sha256:5285d312c88444d33fc10500515244fb8311f6a50502eb77c4b518f5ea80ea3a",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -101239,7 +101509,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:31ecda936996d2bd41306e5af62c518e946c0fb93b81dd986d01185150c3eb23",
+        "checksum": "sha256:aa56730094653f62900b367ec4a25d0df0c6f728bdcd6580dabc42ef2adbd372",
         "granularity": "atomic",
         "location": "tools/test_loop_nudge.py",
         "name": "test_loop_nudge.py",
@@ -101271,6 +101541,17 @@
         "name": "no_per_design_process_globals.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:test-nothing-asks-what-a-session-made-false",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:d267e70a75442d8bed9720830c0db470daabc3f8bda5442551d6cb5f57c6c874",
+        "location": "crates/reflow2-core/tests/nothing_asks_what_a_session_made_false.rs",
+        "name": "nothing_asks_what_a_session_made_false.rs",
+        "status": "realized"
       }
     },
     {
@@ -101428,7 +101709,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d07f76e62dc3225bc0aa8582c6ca5b86c845d0983f85bb943aee8c7a045e2d40",
+        "checksum": "sha256:5e89fd06337e97a14e11e43812799aac7b0b13f7e1fcc3fbd3706a1e621bb53f",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/assure.rs",
         "name": "tools/assure.rs",
@@ -101734,7 +102015,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4a88076ba222bad36b580234210e0e5266efe1f5c0c0791e2defe51078d5982f",
+        "checksum": "sha256:e77a434829b174776b1aa27dee4c3d4ccc0e6480733a2bed1ebdda01a8c6b746",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/verify.rs",
         "name": "verify.rs",
@@ -104139,6 +104420,16 @@
       }
     },
     {
+      "node_id": "cap:the-graph-asks-what-a-session-made-false",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The complement of `cap:a-repair-can-say-what-it-invalidated`, and the reason that one sat unused. That capability lets a record SAY it answered a finding. This one makes the saying happen: it computes which open observations a session's work touched that nobody has claimed, tells the skills to ask, and puts the question in front of the session that did the work.\n\nWHY IT IS A SEPARATE CAPABILITY. #321 shipped the edge WITH its reader, deliberately, so the marker would not become a comment nobody consults — and a day later, with the tool served the whole time, **zero edges had ever been drawn.** A vocabulary reaches real work only with three legs: a typed TOOL, an INSTRUCTION that names it, and a COMPUTATION THAT NOTICES ITS ABSENCE. #321 built the first. This is the other two, and they are a different thing to build, test and get wrong.\n\nWHAT IT IS:\n  • `unclaimed_findings` — given the ChangeEvent ids a session recorded, the OPEN TemporalFacts their changed subjects carry that nothing has claimed. Reads the `subject_id` PROPERTY as well as the subject edges, which is most of the coverage: 151 of 270 open observations are reachable by edge (56%), 261 once the property is read (97%).\n  • `capture-session` test 7 and `impact-check` step 4 name the tool and the moment.\n  • The Stop hook's async probe asks it and RIDES ALONG on a nudge already firing, or is carried to the next SessionStart.\n\n⭐ ASK, DON'T BLOCK — Anthony 2026-08-24. It never arms an interruption of its own; it only appends to a message already going out. A brand-new trigger keyed on a computation nobody has field-tested is exactly what becomes wallpaper. 🛑 The honest cost: a non-blocking Stop message reaches the TRANSCRIPT, not the agent, so the two paths that genuinely reach one are the ride-along and the next SessionStart.\n\n🛑 EVERY ROW IS A CANDIDATE AND NEVER A VERDICT. Nothing infers that an observation is false — only that the thing it describes has moved and nobody has said either way. The judgement is the author's.\n\n🛑 TEMPORAL FACTS ONLY, NEVER VERIFICATIONS, and it is NOT a gap source. That is what keeps it from reversing `dec:verification-freshness-not-a-gap`: a stale-looking CHECK is a standing property that fires on every refactor; a TemporalFact is a dated OBSERVATION, asserted once, re-derived by nothing.\n\nMEASURED BOUNDS, stated rather than glossed: 71% of this design's 639 ChangeEvents touch no open observation at all and the median when one is touched is 1 — but mean 4.3, p90 13, max 40, because hub subjects carry many observations each (`proj:reflow2` alone has 25). Work that records no ChangeEvent, or one with no CHANGED edges, is unreachable, as are the 9 observations whose `subject_id` names a node that does not exist.",
+        "name": "The graph asks what a session made FALSE, so a finding that has been acted on stops proposing work already done",
+        "provenance": "authored",
+        "status": "verified"
+      }
+    },
+    {
       "node_id": "cap:the-loop-holds-the-invitation",
       "node_type": "Capability",
       "properties": {
@@ -104988,6 +105279,16 @@
       }
     },
     {
+      "node_id": "chg:accept-23088482226a1cba",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-24",
+        "name": "One assertion rewritten to satisfy `clippy::unnecessary_get_then_check` — `get(\"valid_to\").is_none()` became `!contains_key(\"valid_to\")`. Identical meaning, identical result; the design did not move. Caught by the CI clippy gate BEFORE pushing, which is where it should be caught.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-27f611941c80b9ae",
       "node_type": "ChangeEvent",
       "properties": {
@@ -105801,6 +106102,16 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-07-28",
         "name": "First registration — the file was written for cap:latent-surface in the same session that recorded it."
+      }
+    },
+    {
+      "node_id": "chg:accept-9a8f6ad0f6490c32",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-24",
+        "name": "`UnclaimedFindingsReq` gains `#[serde(deny_unknown_fields)]`, which every other request struct already carries — without it the served schema said `additionalProperties: true` and the tool would have silently accepted a mistyped parameter. The design did not move; the new tool simply had to obey the rule the surface already has (BL-57). CAUGHT BY CI, NOT LOCALLY: `tools/smoke_mcp.py` asserts it across the whole surface and I had not run it before pushing.",
+        "subject": "system"
       }
     },
     {
@@ -106880,6 +107191,16 @@
       }
     },
     {
+      "node_id": "chg:baseline-6b447feb08aea566",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-24",
+        "name": "First baseline. The skill was never a registered Artifact — one of the nine of twenty with no drift signal at all (fact:nine-of-twenty-skills-are-edited-without-a-drift-signal) — and it was edited in this change, so it is registered now rather than left silent.",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-6e18694e930b3491",
       "node_type": "ChangeEvent",
       "properties": {
@@ -107001,6 +107322,16 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-24",
         "name": "First baseline. The file is unchanged since PR #321 shipped it — only the design's knowledge of it is new, which is why chg:the-repair-capability-gets-its-thread carries subject=record.",
+        "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:baseline-e0aa97eb03234ff6",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-24",
+        "name": "First baseline — a new file, so nothing moved. Ten cases on the computation.",
         "subject": "record"
       }
     },
@@ -109348,6 +109679,18 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Options B and D built — the installer registers the merge driver in every clone, and a moved record reaches an ordinary read instead of waiting to be asked"
+      }
+    },
+    {
+      "node_id": "chg:the-graph-asks-what-a-session-made-false",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-24",
+        "name": "The two missing legs — the edge that had never once been drawn now gets asked for",
+        "rationale": "🛑 THE MEASUREMENT THAT REFRAMED THE WORK: `INVALIDATES` shipped in #321 WITH its reader, deliberately, so the marker would not become a comment nobody consults — and a day later, tool served the whole time, **zero edges had ever been drawn.** The open question was never \"which of six mechanisms\": five were ways to make the sixth get used, and the sixth already existed.\n\n⭐⭐ THE GENERAL LESSON, bigger than this feature: a vocabulary reaches real work only with THREE LEGS — a typed TOOL, an INSTRUCTION that names it, and a COMPUTATION THAT NOTICES ITS ABSENCE. #321 built the first and wired the READ side into one skill. Nothing told anyone to WRITE one, and nothing noticed that none existed. **A vocabulary can be reachable, documented, wired to a reader, and still dead — and nothing in the loop reports a zero-use edge.**\n\n⚠️ AND A NUMBER IN THIS WORK WAS WRONG IN THE FLATTERING DIRECTION BEFORE IT WAS RIGHT. The \"median shortlist is 1, 78% silent\" figure that justified the session-scoped design was measured against an EDGE-ONLY reader — 56% of observations. Reading `subject_id` too raised reach to 97% and necessarily lengthened the lists; honest figures are 71% silent, median 1, mean 4.3, p90 13, max 40. **A measurement taken against a narrower implementation than the one that shipped is not evidence about the one that shipped**, and the first draft of the computation would have answered barely half the question while looking exactly like one that answered all of it.",
+        "subject": "system",
+        "summary": "Adds `unclaimed_findings` (core `VerifyOps::unclaimed_findings_near` + served tool): given the ChangeEvent ids a session recorded, the OPEN TemporalFacts their changed subjects carry that nothing has claimed. Names the tool in `capture-session` test 7 and `impact-check` step 4. The Stop hook's async probe asks it and RIDES ALONG on a nudge already firing, or carries it to the next SessionStart — it never arms an interruption of its own.\n\nCloses the last open gap: `req:the-graph-can-say-what-has-already-been-done` now has two capabilities satisfying it — this one for OBSERVED findings and `cap:arrival-delta` for PLANNED work, which is the asymmetry the requirement itself names."
       }
     },
     {
@@ -114212,6 +114555,16 @@
         "decision": "ACCEPTED by Anthony, 2026-08-17. All three parts, with part (3) settled narrowly.\n\n(1) `DEFAULT_SCOPE_DEPTH` becomes 2. At 3 the scoped detectors do not narrow: measured over all 56 Components of reflow2's own design, each returns 50-60 of the 83 gaps (median 55) and a region of 595-903 nodes. At 2 the same sweep returns 2-27 (median 4) over regions of 267-601. See `fact:defect-a-scoped-detector-at-its-default-depth-returns-two-thirds-of-the-design`.\n\nWHY 2 AND NOT 1, which is the part the measurement alone does not settle. The golden thread runs Requirement -> Capability -> Component -> Artifact -> Verification. From a Component its capabilities are one hop; the requirements they satisfy and the checks that verify them are two. So depth 2 is exactly one component's own thread. Depth 1 stops short of the requirements, so a team would stop being told when its own capability satisfies nothing. Depth 3 reaches the neighbours' threads, which is the program again.\n\n(2) The docstring that justifies 3 is corrected. It argues the third hop is needed to reach 'a contained child component's capabilities' — but `scope_region` puts the whole containment closure into the seed set BEFORE taking the radius, so those capabilities are one hop from an owned node, not three. The reason given for the default is not a reason the code needs. This part needed nobody's permission and was always going to be done.\n\n(3) `detect_gaps`' description stops claiming its region is 'the same computation claim_region uses ... so \"my area\" means one thing everywhere'. SETTLED AS: DELETE THE SENTENCE. The alternative — actually reconciling `scope_region` and `claimed_region` — is NOT taken here and is NOT to be bundled in: it changes what a claim covers, which is what two people believe they have each taken responsibility for. That deserves its own decision, and `scope.rs` already records it as possibly a defect in the claims layer.",
         "name": "The default scope depth drops from 3 to 2, and the two definitions of \"a region\" stop being described as one",
         "rationale": "ACCEPTED ON ANTHONY'S WORD after a plain-English walkthrough of all three parts with a recommendation on each.\n\nWHAT WAS REJECTED. Leaving the default at 3 and telling callers to pass a depth: the measurement says the default is what almost everyone gets, and a tool whose out-of-the-box answer is 'two thirds of the design, called your part' fails the epoch this sits in. Also rejected: making `design_regions` quietly use a different depth from the scoped detectors, which would have hidden the defect behind a second opinion instead of naming it. Also rejected, and this is part (3): reconciling the two region computations as a rider on a default change.\n\nHIS STANDING GROUND, restated the same day and applying directly here: 'I'm more interested in doing things right. If that requires redoing work, so be it - I prefer quality. So if adding SPECIFIES is right, then we have our answer regardless of the amount of work that it includes.' The cost of a correct change is not an argument against it before 1.0. See `rule:fix-it-properly-while-it-is-still-cheap`.\n\nCOST OF HAVING DECIDED LATER, kept on the record because the standing rule asks for it: every session that scoped between the measurement and this ruling was told its part held two thirds of the design's gaps, and any judgement made on that number — 'my area is the messy one' — was made on a figure that was the same for every area.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:the-graph-asks-what-a-session-made-false",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED 2026-08-24 by Anthony, choosing \"ask, don't block\" after being walked through the finding below. This settles the HOW that `dec:idea-how-does-the-graph-learn-what-a-session-invalidated` left open with six costed options and none chosen.\n\n═══ THE FINDING THAT REFRAMED THE QUESTION ═══\n\n🛑 **OPTION C WAS ALREADY BUILT, AND HAD NEVER ONCE BEEN USED.** `INVALIDATES` — \"the record that did the work names the finding it answered\" — shipped in PR #321 on 2026-08-23 WITH its reader, deliberately, so the marker would not become a comment nobody consults. Measured 2026-08-24, one day later, with the tool served the whole time:\n\n    INVALIDATES edges in the graph:  0\n\nNot one, by anybody. So the open question was never \"which of six mechanisms\" — five of them were ways to make the SIXTH get used, and the sixth already existed.\n\n⭐⭐ **WHY, PRECISELY.** A design's vocabulary reaches real work only with THREE LEGS — a typed TOOL, an INSTRUCTION that names it, and a COMPUTATION THAT NOTICES ITS ABSENCE. Measured:\n  • TOOL — ✅ `invalidates`, served since 07:32 that day.\n  • INSTRUCTION — ❌ exactly one skill mentioned it (`where-am-i`) and only the READ side. Not capture-session, not impact-check, not revise-design, not AGENTS.md.\n  • ABSENCE DETECTOR — ❌ nothing anywhere.\n\nTwo of three legs missing is a complete explanation for zero uses, and it needs no theory about discipline.\n\n═══ WHAT THIS DECIDES ═══\n\nBUILD THE TWO MISSING LEGS. Add no seventh mechanism.\n  • **The computation:** `unclaimed_findings` — given the ChangeEvent ids a session recorded, the OPEN observations their changed subjects carry that nobody has claimed.\n  • **The instruction:** `capture-session` test 7 and `impact-check` step 4 name the tool and the moment.\n  • **The delivery:** the Stop hook's async probe asks it and RIDES ALONG on a nudge already firing, or is carried to the next SessionStart.\n\n═══ ASK, DON'T BLOCK — Anthony's word, and the restraint is the design ═══\n\nThe ask NEVER arms an interruption of its own. It only ever appends to a message already being sent. His reasoning as offered and accepted: a brand-new trigger keyed on a computation nobody has field-tested is exactly the thing that becomes wallpaper, and it can be upgraded once the shortlist has been seen to be right.\n\n🛑 THE HONEST COST OF THAT CHOICE, stated rather than glossed: a Stop hook that does not block reaches the TRANSCRIPT, not the agent. The two paths that genuinely reach an agent are the ride-along and the next SessionStart. If this must reach an agent mid-session every time, blocking is the only mechanism that does.\n\n═══ WHY A SESSION-SIZED QUESTION, AND THE NUMBER THAT DECIDED IT ═══\n\nOption A's recorded objection was fatal and correct: 200 findings on day one is wallpaper, and a consumer abandoned reflow2 over exactly that. Scoped to the events one session wrote, measured over all 639 ChangeEvents on this design: **71% touch no open observation at all; the median when one is touched is 1.**\n\n⚠️ AND THE FIRST VERSION OF THAT NUMBER WAS WRONG IN THE FLATTERING DIRECTION — 78%, measured before the computation read `subject_id`, i.e. against the 56% of observations reachable by edge alone. Widening the reach to 97% necessarily lengthened the shortlists. Honest figures: 71% silent, median 1, mean 4.3, p90 13, max 40. **A measurement taken against a narrower implementation than the one that shipped is not evidence about the one that shipped.**\n\n═══ WHAT IT MUST NOT BECOME ═══\n\n🛑 IT DOES NOT REVERSE `dec:verification-freshness-not-a-gap` (accepted 2026-07-26, read before this was written). That rules a stale-looking CHECK a STANDING PROPERTY which would fire on every legitimate refactor. So: TemporalFacts only, never Verifications — a dated OBSERVATION is asserted once and re-derived by nothing — and this is deliberately NOT a gap source. It answers when asked and appears in no list that must reach zero.\n\n═══ OPTIONS NOT TAKEN ═══\nD (a \"this answers X\" field on `record_change`) — DECLINED. At write time nobody can know which of 270 observations they touched without searching; the computation does it afterwards for free, and the busiest write in the loop keeps its shape.\nF (do nothing) — REFUTED by two sightings plus `fact:twelve-records-that-still-read-confident`.\nB — kept, as the manual path, now pointed at the computation instead of at `search_design`.",
+        "name": "DECIDED — build the two MISSING LEGS, not a seventh mechanism: the edge already existed and had never once been drawn",
+        "rationale": "Recorded as its own node because it answers a different question from the brainstorm it settles: that one asked WHICH mechanism, and the measurement showed the mechanism already existed and was inert. The reframing is the part worth keeping — five of six options were ways to make the sixth get used.\n\n⭐ THE GENERAL LESSON, and it is bigger than this feature: shipping a typed tool WITH its reader was not enough, and #321 did that carefully and on purpose. What was missing was anything that noticed the tool was never used. A vocabulary can be reachable, documented in its own node, wired to a reader, and still dead — and nothing in the loop reports a zero-use edge. That is worth checking for every edge type this design has added.",
         "status": "accepted"
       }
     },
@@ -132353,6 +132706,20 @@
       }
     },
     {
+      "node_id": "ver:the-graph-asks-what-a-session-made-false",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Two suites, one capability.\n\n`cargo test -p reflow2-core --test nothing_asks_what_a_session_made_false` — 10 cases on the computation.\n`python3 tools/test_loop_nudge.py` — the `AsksWhatWasMadeFalse` case set inside the file's 91.\n\nTHE CASE THE HOOK HALF IS JUDGED ON is `test_it_never_arms_a_nudge_by_itself`. Anthony chose ask-don't-block deliberately, and every other assertion in that set would pass on an implementation that blocked. That one would not.\n\nWHAT THE COMPUTATION PINS, each because getting it wrong is silent rather than loud:\n  • A closed observation, an already-claimed one, a Verification, and an unanchored one are each excluded — separately, so a single over-broad filter cannot pass by accident.\n  • `a_check_is_never_raised_as_a_candidate` is what keeps this from reversing `dec:verification-freshness-not-a-gap`.\n  • `work_that_touched_nothing_anchored_says_so_rather_than_saying_nothing` — `subjects_examined: 0` distinguishes \"nothing to check\" from \"checked, all clear\". A short list and a blind one look identical without it.\n  • `an_event_id_that_names_nothing_is_reported_not_skipped` — a typo would otherwise return an empty shortlist, the most reassuring answer available.\n  • `it_reaches_an_observation_anchored_the_other_way_round` — both `HAS_TEMPORAL_FACT` and `ABOUT_ENTITY` are in live use, and reading one would halve coverage while looking like it worked.\n  • `it_is_a_candidate_and_never_a_verdict` — asking closes nothing.\n\nWHAT THE DELIVERY HALF PINS: the ride-along preserves the host message; an empty shortlist adds nothing; a long one names three and COUNTS the rest; ChangeEvent ids are captured from the call's own input, deduplicated, and bounded at 25; and an ask the last session never heard surfaces once at the next SessionStart.\n\nBEYOND THE SUITES — exercised end to end on real data through the built binary over stdio, against the whole committed export (3,096 nodes / 13,231 edges) rather than a fixture, because the bug this family exists to prevent only appears at scale.",
+        "findings": "`cargo test -p reflow2-core --test nothing_asks_what_a_session_made_false` — **10 passed, 0 failed**, 0.07s.\n`python3 tools/test_loop_nudge.py` — **91 passed, 0 failed** (was 80), ~25s.\nBoth run unpiped with the exit code captured on its own line.\n\n⭐ EXERCISED END TO END ON REAL DATA, through the built binary over stdio against the whole committed export (3,096 nodes / 13,231 edges) rather than a fixture — because the class of bug this family exists to prevent only appears at scale, and a rollup that walks the graph has shipped past ten green tests on twelve-node fixtures before on this project. Results: `chg:stop-hook-asks-the-graph` → 1 candidate from 7 subjects; `chg:the-repair-capability-gets-its-thread` → 6 from 2; `chg:bl89` → 40 from 8; a typo'd id → `unknown_events` named and `count: 0`. Warm calls 0.03–0.04s.\n\n🛑 AND THAT RUN IS WHAT CAUGHT THE MEASUREMENT ERROR, which no unit test would have. The counts came back far higher than the design note predicted, because the note's \"78% silent, median 1\" was measured against an EDGE-ONLY reader covering 56% of observations, while the shipped computation reads `subject_id` too and covers 97%. Re-measured against the real implementation: **71% silent, median 1, mean 4.3, p90 13, max 40.** The conclusion survived; the number did not. Every doc comment, the tool description, the skill and the test's own header were corrected to the honest figures.\n\n⚠️ NOT COVERED BY EITHER SUITE, and stated rather than implied: nobody has yet watched a session be shown a shortlist and act on it. Both suites prove the computation and the plumbing; whether the shortlist is USEFUL is a field question, and the ask-don't-block choice exists precisely so that question can be answered before the trigger is allowed to interrupt anyone.",
+        "kind": "verification",
+        "last_run_at": "2026-08-24",
+        "level": "integration",
+        "method": "test",
+        "name": "The ask surfaces what was touched, judges nothing, and never blocks",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-harness-registry-is-confirmed-by-the-harnesses",
       "node_type": "Verification",
       "properties": {
@@ -132674,7 +133041,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:69af93d88f74b39e540c9bfe4a01e2499247ada6cf2210bea343c816e28a33af",
+  "prev_content_hash": "sha256:e505f807926a1fefa455e96e1d519724dd25f4900819e8c69009f5cf2f4c8ab7",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

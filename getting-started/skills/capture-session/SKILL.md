@@ -57,15 +57,18 @@ be — do not capture it.
 ## Test 7 is different, and it exists because the other six caused the problem
 
 The first six ADD. So does every other mechanism in the loop: capture-intent adds nodes,
-`record_change` adds an event, `loop_status` counts what is OWED. **Nothing anywhere asks what a
-session made false**, so a finding that motivated a fix survives the fix and goes on proposing work
-that is already done.
+`record_change` adds an event, `loop_status` counts what is OWED. **Nothing anywhere ASKED what a
+session made false**, so a finding that motivated a fix survived the fix and went on proposing work
+that is already done. `unclaimed_findings` is the computation that now asks; this test is where you
+act on its answer.
 
 **Test 2 is how it happens.** *"Did somebody measure something? … a number in the graph is evidence
 a later session can check."* That is right, and it is exactly how a measurement gets written and
 never closed. Measured on reflow2's own design, 2026-08-23: **274 TemporalFacts, every one
 `basis: measured`, and 7 carrying a `valid_to`.** The field that closes a fact exists and is 97%
-unused. 200 of the 267 open ones describe a node that has since changed.
+unused. 200 of the 267 open ones describe a node that has since changed. **Re-measured 2026-08-24,
+and the shape had not moved: 278 facts, 8 closed, 270 open.** A year of discipline would not have
+fixed this, because nothing was asking.
 
 **It is not hypothetical and it is not rare.** In the session that added this test, an agent read a
 2026-08-21 measurement — *"NOTHING WAS OPTIMISED"*, *"that ratio is the next measurement and it has
@@ -73,16 +76,33 @@ not been taken"* — and quoted its numbers as current. Both claims had been fal
 days earlier, which took the measurement AND fixed it: `open_questions` 11.7s → 2.95s. The user
 caught it, not the graph. The same shape was reported independently on a different project.
 
-**How to find the candidates**, since "what did I invalidate?" is not answerable by staring:
+**How to find the candidates — ASK, do not stare.** `unclaimed_findings` takes the ChangeEvent ids
+this session recorded and returns the open observations their changed subjects carry that nobody
+has claimed. That is the list. Work it, and close what your work actually made false with
+`invalidates`.
 
-- For each change this session recorded, **`search_design` for findings about that subject.** The
-  work you just did names its own candidates.
-- A `Verification` you re-ran, a number you re-measured, a defect you fixed — each one probably has
-  an older node asserting the state you just changed.
-- ⚠️ **Cross-session staleness is out of reach here and say so rather than implying coverage.** The
-  fact above was invalidated by a *different session, days later*. This test catches the case where
-  the session that breaks a finding is the session that closes it. Nothing in this skill reaches
-  the rest.
+    unclaimed_findings {"change_event_ids": ["chg:the-events-you-just-wrote"]}
+
+- **Every row is a candidate, never a verdict.** It says the thing an observation describes has
+  moved and nobody has said either way. Whether the observation is now false is your judgement,
+  and the two paragraphs below govern it.
+- **Read `subjects_examined`.** Zero means your work touched no anchored ground, which is a
+  different fact from "nothing was retired" and must not be read as it.
+- **It asks a session-sized question on purpose.** Design-wide this design carries 270 open
+  observations, and a list that long is wallpaper nobody reads. Scoped to the events you wrote,
+  71% of events return nothing at all and the median when one is touched is 1. ⚠️ The tail is
+  real — mean 4.3, p90 13, max 40 — because a few hub subjects carry many observations each
+  (`proj:reflow2` alone has 25). A long list means you touched a hub, not that you broke 40 things.
+- If it returns nothing and you still suspect something went stale, `search_design` for findings
+  about the subject you changed — the computation reaches what is anchored, not what is not.
+
+⚠️ **WHAT THIS NOW REACHES, AND WHAT IT STILL DOES NOT.** The limit used to be that the session
+breaking a finding had to already KNOW the finding existed — so it caught the same-session case and
+nothing else. The computation removes that: the breaking session is told about observations it
+never read, days after they were written, which is the commoner and more expensive half. What
+remains out of reach is work that records **no ChangeEvent**, or one with **no CHANGED edges** to
+what it touched, or an observation whose `subject_id` names a node that does not exist. Record the
+change and name what it touched, or nothing can ask on your behalf.
 
 🛑 **DO NOT CLOSE WHAT YOU DID NOT VERIFY.** "I think that got fixed" is not grounds. A merged
 change with numbers is. Closing a finding that is still true is worse than leaving a stale one
@@ -164,11 +184,11 @@ confident sentence that turns out to be reconstructed is worse than nothing.
 - **A skill still has to be reached for.** If you notice the user asking for this in their own
   words session after session, that is worth reporting — the **report-friction** skill is for
   exactly that.
-- **Test 7 covers the same-session case only, and that is the smaller half.** A finding is usually
-  invalidated by a session that never reads it. Closing the cross-session case needs something that
-  computes staleness rather than something that asks — open in reflow2's own design as
-  `dec:idea-how-does-the-graph-learn-what-a-session-invalidated`. **Do not read test 7 as that
-  question being answered.**
+- **Test 7 no longer covers only the same-session case, but it is not complete either.**
+  `unclaimed_findings` computes the candidates from what your changes touched, so a session is told
+  about observations it never read — which was the missing half. It still cannot reach work that
+  recorded no ChangeEvent, and it never judges: it hands you a shortlist and the closing is yours.
+  **Do not read a quiet answer as "nothing went stale"** — read `subjects_examined` first.
 
 ## Before moving on
 

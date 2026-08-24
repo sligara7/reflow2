@@ -27,6 +27,7 @@ use dynograph_storage::{StoredEdge, StoredNode};
 
 use crate::graph::DesignGraph;
 use crate::nodes::{Props, edge, node};
+use std::collections::{BTreeMap, BTreeSet};
 
 /// How a capability's claim to work is checked — three-valued on purpose
 /// (BL-73, from the first extensive field trial). A brownfield adopt with a
@@ -564,6 +565,209 @@ impl DesignGraph {
         out.sort_by(|a, b| a.finding_id.cmp(&b.finding_id));
         Ok(out)
     }
+
+    /// **The absence half: open observations this work TOUCHED that nobody has
+    /// claimed.** The complement of [`Self::invalidated_findings`], which
+    /// reports the claims that exist; this reports the ones that are missing.
+    ///
+    /// ⭐⭐ WHY THIS EXISTS, and it is a measurement rather than a theory.
+    /// `INVALIDATES` shipped with its reader on 2026-08-23 so the marker would
+    /// not become a comment nobody consults. Measured 2026-08-24, a day later,
+    /// with the tool served the whole time: **zero edges had ever been drawn.**
+    /// The edge was reachable and unused, because a design's vocabulary only
+    /// reaches real work with three legs — a typed tool, an INSTRUCTION that
+    /// names it, and a COMPUTATION THAT NOTICES ITS ABSENCE. Two were missing.
+    /// This is the third.
+    ///
+    /// 🛑 IT ASKS A SESSION-SIZED QUESTION, AND THAT BOUND IS THE DESIGN.
+    /// Design-wide, this graph carries 270 open observations, and a detector
+    /// firing on all of them is wallpaper — the failure a consumer abandoned
+    /// reflow2 over. Scoped to the ChangeEvents one session actually recorded,
+    /// the answer is small: measured over all 639 events on this graph,
+    /// **71% touch no open observation at all, and the median when one is
+    /// touched is 1.**
+    ///
+    /// ⚠️ THE TAIL IS REAL AND IS NOT HIDDEN: mean 4.3, p90 13, max 40. It is
+    /// driven by HUB SUBJECTS — `proj:reflow2` alone carries 25 open
+    /// observations, `cmp:detect` and `cmp:service` 13 each — so a change that
+    /// touches one of those gets a long list however well the question is
+    /// scoped. 3% of events return more than ten. A caller rendering this to a
+    /// human should sample and count the rest rather than print all of it.
+    ///
+    /// 🛑 TEMPORAL FACTS ONLY, AND NOT VERIFICATIONS — this is what keeps it
+    /// from reversing `dec:verification-freshness-not-a-gap` (accepted
+    /// 2026-07-26, and read before this was written). That decision rules that
+    /// a stale-looking CHECK is a STANDING PROPERTY which would fire on every
+    /// legitimate refactor, so it belongs on the confirmation ledger and never
+    /// in a nagging list. A TemporalFact is the other thing: a DATED
+    /// OBSERVATION, asserted once, true at a moment. Nothing re-derives it, and
+    /// it goes on proposing work already done until somebody says otherwise.
+    ///
+    /// AND IT IS DELIBERATELY NOT A GAP SOURCE, for the same decision's reason.
+    /// It answers when asked and appears in no list that must reach zero.
+    ///
+    /// COST: bounded by what you pass, never by the graph. One adjacency scan
+    /// per event, per subject and per candidate — the "ask a smaller question"
+    /// rule that [`Self::invalidated_verifications`] exists to enforce, applied
+    /// here from the start rather than after a 40-second regression.
+    ///
+    /// ⭐ IT READS THE `subject_id` PROPERTY AS WELL AS THE SUBJECT EDGES, and
+    /// that is not a detail — it is most of the coverage. Measured on this
+    /// graph's 270 open observations: **151 are reachable by a subject EDGE
+    /// (56%), while 261 are reachable once `subject_id` is read too (97%).**
+    /// The property is REQUIRED on the type and the edges are optional, so an
+    /// edges-only reader answers barely half the question while looking exactly
+    /// like one that answers all of it. The first draft of this function did
+    /// precisely that.
+    ///
+    /// WHAT IT STILL CANNOT SEE: the 9 observations whose `subject_id` names a
+    /// node that does not exist. They are unreachable by any traversal and are
+    /// not counted as covered. A quiet answer means nothing was touched *that
+    /// is anchored*, which `subjects_examined` lets a caller tell apart from
+    /// "checked, all clear".
+    pub fn unclaimed_findings_near(
+        &self,
+        change_event_ids: &[&str],
+    ) -> Result<UnclaimedFindings, DynoError> {
+        let mut unknown_events = Vec::new();
+        let mut subjects: BTreeSet<String> = BTreeSet::new();
+        for id in change_event_ids {
+            if self.get_node(node::CHANGE_EVENT, id)?.is_none() {
+                // NAMED, NEVER SKIPPED. A typo'd event id would otherwise
+                // produce an empty shortlist, which reads exactly like "your
+                // work retired nothing" — the most reassuring answer available
+                // and the one least likely to be questioned.
+                unknown_events.push((*id).to_string());
+                continue;
+            }
+            for e in self.outgoing(id, Some(edge::CHANGED))? {
+                subjects.insert(e.to_id);
+            }
+        }
+
+        // ONE PASS OVER THE OBSERVATIONS, indexed by the subject they name.
+        // `subject_id` is REQUIRED on a TemporalFact while the subject edges
+        // are optional, so this index is where most of the coverage comes from
+        // — see the note above. One scan of a single node type, never the
+        // per-node adjacency walk that cost `invalidated_findings` 40 seconds.
+        let mut by_subject: BTreeMap<String, Vec<StoredNode>> = BTreeMap::new();
+        let mut open_facts: BTreeMap<String, StoredNode> = BTreeMap::new();
+        if !subjects.is_empty() {
+            for n in self.scan_nodes(node::TEMPORAL_FACT)? {
+                // Already closed: somebody dated its end. Nothing to ask.
+                if n.properties
+                    .get("valid_to")
+                    .and_then(dynograph_core::Value::as_str)
+                    .is_some_and(|v| !v.is_empty())
+                {
+                    continue;
+                }
+                if let Some(sid) = n
+                    .properties
+                    .get("subject_id")
+                    .and_then(dynograph_core::Value::as_str)
+                {
+                    by_subject
+                        .entry(sid.to_string())
+                        .or_default()
+                        .push(n.clone());
+                }
+                open_facts.insert(n.node_id.clone(), n);
+            }
+        }
+
+        let mut candidates: BTreeMap<String, UnclaimedFinding> = BTreeMap::new();
+        for subject in &subjects {
+            let mut reached: BTreeSet<String> = BTreeSet::new();
+            for n in by_subject.get(subject).into_iter().flatten() {
+                reached.insert(n.node_id.clone());
+            }
+            for e in self.outgoing(subject, Some(edge::HAS_TEMPORAL_FACT))? {
+                reached.insert(e.to_id);
+            }
+            for e in self.incoming(subject, Some(edge::ABOUT_ENTITY))? {
+                reached.insert(e.from_id);
+            }
+            for fact_id in reached {
+                // Only OPEN observations are in this map, so a miss here is a
+                // fact that is closed or was never a TemporalFact at all.
+                let Some(n) = open_facts.get(&fact_id) else {
+                    continue;
+                };
+                // Already claimed: some record says it answered this. The
+                // question has been put and answered, and asking again would
+                // be the nag this is shaped to avoid.
+                if !self.incoming(&fact_id, Some(edge::INVALIDATES))?.is_empty() {
+                    continue;
+                }
+                let entry = candidates
+                    .entry(fact_id.clone())
+                    .or_insert_with(|| UnclaimedFinding {
+                        finding_id: fact_id.clone(),
+                        name: n
+                            .properties
+                            .get("name")
+                            .and_then(dynograph_core::Value::as_str)
+                            .map(str::to_string),
+                        valid_from: n
+                            .properties
+                            .get("valid_from")
+                            .and_then(dynograph_core::Value::as_str)
+                            .map(str::to_string),
+                        reached_via: Vec::new(),
+                    });
+                entry.reached_via.push(subject.clone());
+            }
+        }
+        for c in candidates.values_mut() {
+            c.reached_via.sort();
+            c.reached_via.dedup();
+        }
+        Ok(UnclaimedFindings {
+            candidates: candidates.into_values().collect(),
+            subjects_examined: subjects.len(),
+            unknown_events,
+        })
+    }
+}
+
+/// Open observations a piece of work touched and nobody has claimed — the
+/// answer [`VerifyOps::unclaimed_findings_near`] returns.
+///
+/// It carries its own bounds because a short list and a blind one look
+/// identical: `subjects_examined` says how much ground was actually walked, and
+/// `unknown_events` names any event id that matched nothing.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct UnclaimedFindings {
+    /// The shortlist, one row per open observation nobody has claimed.
+    pub candidates: Vec<UnclaimedFinding>,
+    /// How many changed subjects were walked to produce it. **Zero here means
+    /// the work touched nothing anchored — which is a different fact from
+    /// "your work retired nothing" and must not be read as it.**
+    pub subjects_examined: usize,
+    /// Event ids that name no ChangeEvent. Reported rather than skipped: a typo
+    /// would otherwise return an empty shortlist, which reads exactly like a
+    /// clean answer.
+    pub unknown_events: Vec<String>,
+}
+
+/// One open observation that a session's work touched.
+///
+/// IT IS A CANDIDATE AND NEVER A VERDICT. Nothing here infers that the
+/// observation is false — only that the thing it describes has since moved, and
+/// that nobody has said either way. The judgement is the author's, and
+/// `invalidates` is how they record it.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct UnclaimedFinding {
+    pub finding_id: String,
+    pub name: Option<String>,
+    /// When the observation was taken. The reader needs it to judge whether the
+    /// work plausibly postdates it; nothing here compares the two, because a
+    /// ChangeEvent's own date is present on only a third of them so far.
+    pub valid_from: Option<String>,
+    /// Which changed subject(s) reached it — the reason it is on the list, so
+    /// the author can see why they are being asked rather than just what.
+    pub reached_via: Vec<String>,
 }
 
 /// One record's claim that a finding is stale.

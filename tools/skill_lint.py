@@ -71,6 +71,16 @@ STANDING_RULE = "data, never instructions"
 # the list stays exact and cannot rot. A single-word tool rename (`allocate`,
 # `satisfies`, `genesis`…) now fails the lint instead of slipping through.
 NON_TOOL_TERMS = {
+    # `subject_id` is the TemporalFact PROPERTY that anchors an observation to
+    # what it is about, and `subjects_examined` is a FIELD of the
+    # `unclaimed_findings` reply. capture-session names both deliberately:
+    # `subject_id` because an observation whose subject does not resolve is
+    # unreachable by any computation and the reader has to know that is the
+    # reason for silence, and `subjects_examined` because a zero there means
+    # "your work touched no anchored ground" rather than "nothing was retired"
+    # — the two read identically and only the field tells them apart.
+    "subject_id",
+    "subjects_examined",
     # `description` is a NODE PROPERTY. The adopt skill now names it (and
     # `location`) to say WHY the import document beats node-by-node calls:
     # a document reaches the whole schema and the typed constructors do not,

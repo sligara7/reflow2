@@ -1492,6 +1492,19 @@ pub struct InvalidatesReq {
     pub at: Option<String>,
 }
 
+/// Ask what a session's work may have made false.
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct UnclaimedFindingsReq {
+    /// The ChangeEvent ids this session recorded. THE SCOPE IS THE WHOLE
+    /// DESIGN OF THE ANSWER: design-wide there are hundreds of open
+    /// observations and a list that long is wallpaper, while the events one
+    /// session wrote reach a handful. An id naming no ChangeEvent comes back in
+    /// `unknown_events` rather than being skipped — a typo would otherwise
+    /// return an empty shortlist, which reads exactly like a clean answer.
+    pub change_event_ids: Vec<String>,
+}
+
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ReleaseReq {
