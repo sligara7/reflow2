@@ -14,8 +14,8 @@
 //! learn about worlds. Collapsing the winner (merge into the baseline) and
 //! retiring the losers reuse `merge_designs` / `retire-from-design`.
 
-use dynograph_core::{DynoError, Value};
-use dynograph_storage::StoredNode;
+use crate::foundation::core::{DynoError, Value};
+use crate::foundation::store::StoredNode;
 use serde::Serialize;
 
 use crate::compare::{DiffSummary, compare_designs};

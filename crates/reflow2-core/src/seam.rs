@@ -41,9 +41,9 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
+use crate::foundation::core::DynoError;
+use crate::foundation::core::Value;
 use crate::fuzzy::token_sort_ratio;
-use dynograph_core::DynoError;
-use dynograph_core::Value;
 
 use crate::export::GraphExport;
 use crate::graph::DesignGraph;

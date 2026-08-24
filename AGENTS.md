@@ -46,8 +46,8 @@ Everything runs from the repo root. The core crate is `crates/reflow2-core`.
 
 ```bash
 # Build / test — for dev iteration ALWAYS scope to the core with -p AND pass
-# --no-default-features: that combination uses dynograph-storage's in-memory
-# backend and skips the RocksDB C++ compile (~10 min). Runs in well under a second.
+# --no-default-features: that combination uses the in-memory backend and skips
+# the RocksDB C++ compile (~10 min). Runs in well under a second.
 #
 # -p reflow2-core is load-bearing, not tidiness. Without it the workspace also
 # builds reflow2-mcp, which depends on reflow2-core with `features = ["rocksdb"]`
@@ -402,12 +402,19 @@ not the centre.
 
 ### The store and schema (the foundation)
 
-- The graph store is **[dynograph-foundation](https://github.com/sligara7/dynograph-foundation)**,
-  consumed as library crates **by git tag** (see the workspace `Cargo.toml` for the pinned tag;
-  `v0.12.0` at time of writing): `dynograph-core` (schema + `Value`), `dynograph-storage`
-  (`default-features = false` so RocksDB is opt-in; the core runs on the in-memory backend),
-  `dynograph-graph` (pure graph-theory algorithms). To iterate against an unreleased foundation
-  locally, uncomment the `[patch]` block in the root `Cargo.toml` — do not commit it uncommented.
+- The graph store is **in this tree**, at `src/foundation/` — the schema and `Value`
+  vocabulary (`foundation/core/`), the RocksDB-backed store (`foundation/store/`), and the
+  full-text index (`foundation/text.rs`). RocksDB is opt-in behind reflow2-core's own
+  `rocksdb` feature, so the core runs on the in-memory backend for dev and tests.
+  Graph-theory algorithms live beside it in `src/graphalg/`.
+- It came from **[dynograph-foundation](https://github.com/sligara7/dynograph-foundation)**
+  and was **absorbed from it at `v0.12.0`** — reflow2 no longer links anything from that
+  repository (`dec:absorb-the-foundation-subset-and-end-the-dependency`, 2026-08-24).
+  **Every absorbed module carries a provenance header naming the tag, files and commits it
+  took**, because the recorded objection to absorbing anything is that vendoring turns a
+  visible dependency into an invisible one — the pin carried a written reason for every bump
+  and in-tree code has no successor to that record. Those headers are that successor, and
+  `tools/check_doc_versions.py` reads the tag out of them rather than out of prose.
 - The **schema is the vocabulary** (29 node types, 60 edge types across 11 `schema/*.yaml`
   domains): the node/edge names are load-bearing. `src/schema.rs` embeds all ten YAML files
   via `include_str!` and merges them with `Schema::from_multiple_yamls` — the same files
@@ -416,7 +423,7 @@ not the centre.
 
 ### The design graph handle
 
-`src/graph.rs` — `DesignGraph` wraps a `dynograph_storage::StorageEngine` scoped to one
+`src/graph.rs` — `DesignGraph` wraps a `foundation::store::StorageEngine` scoped to one
 logical graph id. It is the single handle everything else hangs off: generic
 schema-validated CRUD (`create_node`/`get_node`/`create_edge`/`outgoing`/`incoming`/
 `scan_nodes`/`delete_*`), typed golden-thread constructors (`add_project`,
@@ -433,7 +440,7 @@ files):
 | **HEAL** (fix structure the machine can) | `src/heal.rs` (+ `src/structure.rs`) | `detect_defects`, `propose_heal`, `apply_heal` |
 | **LLM seam** | `src/llm.rs` | `LlmBackend` trait, `MockLlmBackend`, `complete_json` |
 
-`src/structure.rs` builds a `dynograph-graph` view (the "design network" — design nodes
+`src/structure.rs` builds a `graphalg` view (the "design network" — design nodes
 joined by *traceability* edges) for HEAL's topology detectors.
 
 ### Load-bearing invariants (do not regress these)
@@ -501,20 +508,25 @@ joined by *traceability* edges) for HEAL's topology detectors.
 - **Structural topology detectors are selective.** A design's golden thread is tree-shaped,
   where every internal node is a naive articulation point — so `single_point_of_failure`
   only fires when a node separates ≥2 real subsystems (see `structure.rs`).
-- **Do not bump the dynograph-foundation pin as housekeeping.** The five foundation crates are
-  pinned by git tag in the workspace `Cargo.toml`. Moving that tag forces a full
-  `librocksdb-sys` C++ rebuild (~10 min) on **every** machine that pulls — yours, your
-  collaborators', and every consumer project. Bump it only when a reflow2 change actually needs
-  something the new tag provides, and say which capability in the commit message. "Latest is
-  probably better" is not a reason; a routine reflow2 update should cost a consumer nothing but a
-  text refresh.
-- **A foundation bump is a data-migration question, not just a version change.** Nothing is
-  stamped on the graph directory — not a schema version, not a foundation tag — and validation
-  runs on write, never on read. So a storage-format change (`keys.rs`, value serialization) could
-  misread an existing store with nothing to detect it, and an additive schema change leaves
-  mixed-vintage nodes rather than backfilling (the foundation's own `engine/tests.rs:1325` pins
-  that behaviour: defaults apply on create, not retroactively). Before any bump, ask what happens
-  to a graph written by the previous version. See **BL-19**.
+- **Do not bump the `rocksdb` pin as housekeeping.** The foundation pin this rule used to
+  name is gone (absorbed, 2026-08-24), but its reason outlived it and now attaches to the
+  storage dependency itself: moving `rocksdb` forces a full `librocksdb-sys` C++ rebuild
+  (~10 min) on **every** machine that pulls — yours, your collaborators', and every consumer
+  project. Bump it only when a reflow2 change actually needs something the new version
+  provides, and say which capability in the commit message. "Latest is probably better" is not
+  a reason; a routine reflow2 update should cost a consumer nothing but a text refresh.
+  ⚠️ `rocksdb` sits at 0.24, the historically-unmaintained wrapper, **deliberately** — see
+  `dec:absorb-rocksdb-024-unchanged-then-switch-separately`. The move to the maintained
+  `rust-rocksdb` gets its own PR so the migration has one variable.
+- **A storage-format change is a data-migration question, not just a code change — and
+  absorbing the store made it EASIER to make one by accident.** Nothing is stamped on the graph
+  directory — not a schema version, not a foundation tag — and validation runs on write, never
+  on read. So a change to `foundation/store/keys.rs` or value serialization could misread an
+  existing store with nothing to detect it, and an additive schema change leaves mixed-vintage
+  nodes rather than backfilling (`foundation/store/engine/tests.rs` pins that behaviour:
+  defaults apply on create, not retroactively). This used to be gated by the friction of
+  bumping someone else's pin; now it is an ordinary edit in this repo. Before touching either,
+  ask what happens to a graph written by the previous version. See **BL-19**.
 - **Deterministic ids.** Gap/heal issue ids are a stable FNV-1a hash of
   `source + sorted affected ids` (not `std` `DefaultHasher`) so they're reproducible for
   dedup/caching.
@@ -622,12 +634,12 @@ Still unbuilt (see "What's deliberately not here yet" above and the coverage mat
 LLM provider backends (deferred — unneeded agent-native), SME, generative HEAL content, and the
 embedding seam. The `ingest` MCP handshake (SP-3b) shipped in v0.16.0.
 
-- `schema/*.yaml` — 11 composable [dynograph-foundation](https://github.com/sligara7/dynograph-foundation)
-  schema domains (29 node types, 60 edge types). This is the foundation everything builds on.
+- `schema/*.yaml` — 11 composable schema domains (29 node types, 60 edge types), in the
+  format defined by `src/foundation/core/schema.rs`. This is the foundation everything builds on.
 - `docs/*.md` — the vision, design, and process specifications; `docs/overview.md` maps them.
 - `getting-started/` — the consumer kit installed into a project being designed (never a build
   file). `tools/reflow2_init.py` installs it; `install.sh` fetches the released binaries.
-- `tools/validate_schema.py` — validates the schema against dynograph-core's rules.
+- `tools/validate_schema.py` — validates the schema against `foundation/core`'s rules.
 
 ## Where to look
 
@@ -662,8 +674,8 @@ reading order (Vision → Design → Process → Heritage). Then:
    **no silent fallbacks / no silent drops**: surface failures and skipped items loudly;
    never let data loss or an unstated assumption pass as success.
 5. **References are the author's own** under `github.com/sligara7`. The only third-party
-   pieces are dependencies (dynograph-foundation's RocksDB/Tantivy/HNSW/serde; LLM
-   providers like OpenRouter) — never conceptual content.
+   pieces are dependencies (RocksDB/Tantivy/serde, declared directly since the foundation
+   was absorbed; LLM providers like OpenRouter) — never conceptual content.
 6. **Don't touch the sibling source repos** (`../../storyflow`, etc.) — mine them for
    ideas, but all new work lands here.
 7. **A self-host finding owes a served fix.** reflow2 designing itself is a test harness, not
@@ -749,7 +761,9 @@ reflow2 (a single Rust core, no fleet). They **override speed — timing bends t
   rigor, creative linking, system-of-systems.
 - **reflow (v3)** → the phase spine, as-designed/as-built/as-fielded fidelity views,
   framework packs, root-cause change classification.
-- **dynograph-foundation** → the schema-driven graph store (RocksDB + HNSW + BM25 +
-  fuzzy/vector resolution) reflow2 targets.
+- **dynograph-foundation** → the schema-driven graph store (RocksDB + BM25 + fuzzy
+  matching). The subset reflow2 actually called was absorbed into this tree at `v0.12.0`;
+  what reflow2 never called (HNSW/vector resolution, pagerank, the entity resolver) stayed
+  behind.
 
 > **reflow2 is installed here.** The design graph is this project's memory — read [REFLOW2.md](REFLOW2.md) and consult it before writing or changing code.

@@ -37,8 +37,8 @@
 //! the way a reviser would, and asserts the design still knows what it knew.
 //! **Written before the fix**: every one of them failed first.
 
-use dynograph_core::Value;
 use reflow2_core::DesignGraph;
+use reflow2_core::Value;
 use reflow2_core::nodes::node;
 
 fn graph() -> DesignGraph {

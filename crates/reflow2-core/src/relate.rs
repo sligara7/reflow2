@@ -34,7 +34,7 @@
 //! brainstorm skill forbids. A fabricated relation is worse than a missing one,
 //! because anything that searches by neighbourhood repeats it forever.
 
-use dynograph_core::DynoError;
+use crate::foundation::core::DynoError;
 use serde::Serialize;
 
 use crate::graph::DesignGraph;
@@ -290,7 +290,7 @@ impl DesignGraph {
             if dec
                 .properties
                 .get("status")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 != Some("proposed")
             {
                 continue;

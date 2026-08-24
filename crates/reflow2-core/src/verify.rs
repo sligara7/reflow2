@@ -22,8 +22,8 @@
 //! as-fielded method, distinct from inspecting an artifact or running a
 //! contrived example — had no value at all.
 
-use dynograph_core::DynoError;
-use dynograph_storage::{StoredEdge, StoredNode};
+use crate::foundation::core::DynoError;
+use crate::foundation::store::{StoredEdge, StoredNode};
 
 use crate::graph::DesignGraph;
 use crate::nodes::{Props, edge, node};
@@ -62,7 +62,7 @@ impl DesignGraph {
                 .and_then(|v| {
                     v.properties
                         .get("status")
-                        .and_then(dynograph_core::Value::as_str)
+                        .and_then(crate::foundation::core::Value::as_str)
                         .map(|s| s == "passing")
                 })
                 .unwrap_or(false);
@@ -510,7 +510,7 @@ impl DesignGraph {
                 let last_run_at = n
                     .properties
                     .get("last_run_at")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                     .map(str::to_string);
                 let mut by = Vec::new();
                 let mut newest: Option<String> = None;
@@ -519,7 +519,7 @@ impl DesignGraph {
                     let at = e
                         .properties
                         .get("at")
-                        .and_then(dynograph_core::Value::as_str)
+                        .and_then(crate::foundation::core::Value::as_str)
                         .map(str::to_string);
                     match &at {
                         Some(a) => {
@@ -535,7 +535,7 @@ impl DesignGraph {
                         note: e
                             .properties
                             .get("note")
-                            .and_then(dynograph_core::Value::as_str)
+                            .and_then(crate::foundation::core::Value::as_str)
                             .map(str::to_string),
                     });
                 }
@@ -553,7 +553,7 @@ impl DesignGraph {
                     status: n
                         .properties
                         .get("status")
-                        .and_then(dynograph_core::Value::as_str)
+                        .and_then(crate::foundation::core::Value::as_str)
                         .map(str::to_string),
                     last_run_at,
                     rerun_owed,
@@ -657,7 +657,7 @@ impl DesignGraph {
                 // Already closed: somebody dated its end. Nothing to ask.
                 if n.properties
                     .get("valid_to")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                     .is_some_and(|v| !v.is_empty())
                 {
                     continue;
@@ -665,7 +665,7 @@ impl DesignGraph {
                 if let Some(sid) = n
                     .properties
                     .get("subject_id")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                 {
                     by_subject
                         .entry(sid.to_string())
@@ -707,12 +707,12 @@ impl DesignGraph {
                         name: n
                             .properties
                             .get("name")
-                            .and_then(dynograph_core::Value::as_str)
+                            .and_then(crate::foundation::core::Value::as_str)
                             .map(str::to_string),
                         valid_from: n
                             .properties
                             .get("valid_from")
-                            .and_then(dynograph_core::Value::as_str)
+                            .and_then(crate::foundation::core::Value::as_str)
                             .map(str::to_string),
                         reached_via: Vec::new(),
                     });
@@ -909,7 +909,7 @@ impl DesignGraph {
             let declared = ver
                 .properties
                 .get("status")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 .unwrap_or("planned")
                 .to_string();
             if agrees(&declared, &obs.outcome) {
@@ -952,7 +952,7 @@ impl DesignGraph {
                 let status = ver
                     .properties
                     .get("status")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                     .unwrap_or("planned");
                 // Only run-outcome claims can be contradicted by a run that
                 // did not include them; planned/skipped/blocked are not
@@ -975,12 +975,12 @@ impl DesignGraph {
             let is_status = ev
                 .properties
                 .get("drift_type")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 == Some("status_mismatch");
             let resolved = ev
                 .properties
                 .get("resolved")
-                .and_then(dynograph_core::Value::as_bool)
+                .and_then(crate::foundation::core::Value::as_bool)
                 .unwrap_or(false);
             if !is_status || resolved || current.contains(&ev.node_id) {
                 continue;
@@ -1215,7 +1215,7 @@ impl DesignGraph {
                 let passing = v
                     .properties
                     .get("status")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                     .is_some_and(|s| s == "passing");
                 if !passing {
                     continue;
@@ -1277,7 +1277,7 @@ impl DesignGraph {
                     let simulation = env
                         .properties
                         .get("env_type")
-                        .and_then(dynograph_core::Value::as_str)
+                        .and_then(crate::foundation::core::Value::as_str)
                         .is_some_and(|t| t == "simulation");
                     if simulation && !simulated.contains(&env.node_id) {
                         simulated.push(env.node_id.clone());
@@ -1312,7 +1312,7 @@ impl DesignGraph {
                 capability_name: cap
                     .properties
                     .get("name")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                     .unwrap_or(&cap.node_id)
                     .to_string(),
                 proven_in,
@@ -1364,12 +1364,12 @@ impl DesignGraph {
 /// each name is trimmed, so `"seed, , order"` is two parameters rather than
 /// three. An absent property and an empty string are the same thing — unstated.
 fn scope_list(
-    props: &std::collections::HashMap<String, dynograph_core::Value>,
+    props: &std::collections::HashMap<String, crate::foundation::core::Value>,
     key: &str,
 ) -> Vec<String> {
     props
         .get(key)
-        .and_then(dynograph_core::Value::as_str)
+        .and_then(crate::foundation::core::Value::as_str)
         .map(|s| {
             s.split(',')
                 .map(str::trim)

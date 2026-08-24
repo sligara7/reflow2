@@ -43,7 +43,7 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
-use dynograph_core::{DynoError, Value};
+use crate::foundation::core::{DynoError, Value};
 
 use crate::graph::DesignGraph;
 use crate::nodes::{Props, edge, node};
@@ -121,6 +121,13 @@ pub struct DependencyFinding {
 pub struct DependencyReport {
     pub declared: Vec<DependencyDeclaration>,
     pub findings: Vec<DependencyFinding>,
+    /// Declarations an accepted Decision has WITHDRAWN, skipped by the
+    /// `unobserved` check rather than reported as stale. Named rather than
+    /// dropped: a dependency that ended is design history and stays readable,
+    /// but it must not keep failing a gate for not being in a build it was
+    /// deliberately removed from.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub retired_declarations: Vec<String>,
     /// Said plainly whichever way it comes out — "nothing declared" and
     /// "nothing to declare" must never look alike.
     pub note: String,
@@ -278,19 +285,43 @@ impl DesignGraph {
                 }
             }
         }
+        let mut retired = Vec::new();
         for d in &declared {
-            if !observed_names.contains(d.name.as_str()) {
-                findings.push(DependencyFinding {
-                    kind: "unobserved",
-                    dependency: d.name.clone(),
-                    detail: format!(
-                        "'{}' is declared at {} and the build does not take it — either the \
-                         declaration is stale or the observation is incomplete; both are worth \
-                         knowing and neither is assumed",
-                        d.name, d.version
-                    ),
-                });
+            if observed_names.contains(d.name.as_str()) {
+                continue;
             }
+            // A RETIRED DECLARATION IS NOT A STALE ONE, and reporting it as
+            // `unobserved` forever is how a correct retirement becomes a
+            // permanently red gate. `is_discontinued` is the design's existing
+            // answer to "has an accepted Decision withdrawn this?" — the same
+            // test `get_node` reports and the defect detectors already use.
+            //
+            // 🛑 THIS WAS FOUND BY DOGFOODING AND IT IS A CLASS, NOT A ONE-OFF.
+            // reflow2 absorbed dynograph-foundation on 2026-08-24, retired
+            // `dep:dynograph-foundation` correctly — deprecation ChangeEvent,
+            // snapshot, OBSOLETES from the accepted Decision — and the gate went
+            // on failing, because this reader never asked. The design already
+            // records that `is_discontinued` is honoured at only a handful of
+            // sites; this was another of them.
+            //
+            // IT IS STILL REPORTED, not silenced: `retired_declarations` says
+            // which ones were skipped and why, because a declaration vanishing
+            // from a report with no trace is the silent-success failure this
+            // project spends most of its guards on.
+            if self.is_discontinued(&d.id)? {
+                retired.push(d.name.clone());
+                continue;
+            }
+            findings.push(DependencyFinding {
+                kind: "unobserved",
+                dependency: d.name.clone(),
+                detail: format!(
+                    "'{}' is declared at {} and the build does not take it — either the \
+                     declaration is stale or the observation is incomplete; both are worth \
+                     knowing and neither is assumed",
+                    d.name, d.version
+                ),
+            });
         }
 
         let note = if declared.is_empty() {
@@ -313,6 +344,7 @@ impl DesignGraph {
         Ok(DependencyReport {
             declared,
             findings,
+            retired_declarations: retired,
             note,
         })
     }

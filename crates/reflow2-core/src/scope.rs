@@ -63,7 +63,7 @@
 
 use std::collections::BTreeSet;
 
-use dynograph_core::DynoError;
+use crate::foundation::core::DynoError;
 
 use crate::detect::{GapCandidate, GapRow, GapScope, NARROW_THE_SCOPE, ReplyBudget, budget_gaps};
 use crate::graph::DesignGraph;

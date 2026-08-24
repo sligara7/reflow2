@@ -53,7 +53,7 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
-use dynograph_core::{DynoError, Value};
+use crate::foundation::core::{DynoError, Value};
 
 use crate::graph::DesignGraph;
 use crate::graph_read::GraphRead;

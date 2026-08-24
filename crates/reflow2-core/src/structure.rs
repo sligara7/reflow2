@@ -18,11 +18,11 @@
 
 use std::collections::{BTreeSet, HashMap, HashSet};
 
+use crate::foundation::core::DynoError;
 use crate::graphalg::{
     Graph, GraphBuilder, betweenness_centrality, connected_components, cut_structure, find_cycle,
     leiden, strongly_connected_components,
 };
-use dynograph_core::DynoError;
 
 use crate::graph::DesignGraph;
 use crate::nodes::is_traceability_edge;
@@ -564,7 +564,7 @@ impl DesignGraph {
                             .and_then(|n| {
                                 n.properties
                                     .get("medium")
-                                    .and_then(dynograph_core::Value::as_str)
+                                    .and_then(crate::foundation::core::Value::as_str)
                                     .map(is_foundation_medium)
                             })
                             .unwrap_or(false)
@@ -645,7 +645,7 @@ impl DesignGraph {
                 .and_then(|i| {
                     i.properties
                         .get("medium")
-                        .and_then(dynograph_core::Value::as_str)
+                        .and_then(crate::foundation::core::Value::as_str)
                         .map(is_foundation_medium)
                 })
                 .unwrap_or(false);
@@ -670,7 +670,7 @@ impl DesignGraph {
             .and_then(|i| {
                 i.properties
                     .get("medium")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                     .map(is_foundation_medium)
             })
             .unwrap_or(false))

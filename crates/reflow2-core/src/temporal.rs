@@ -16,8 +16,8 @@
 
 use std::collections::{BTreeMap, HashMap};
 
-use dynograph_core::{DynoError, Value};
-use dynograph_storage::{StoredEdge, StoredNode};
+use crate::foundation::core::{DynoError, Value};
+use crate::foundation::store::{StoredEdge, StoredNode};
 
 use crate::graph::DesignGraph;
 use crate::nodes::{Props, edge, node};
@@ -575,7 +575,7 @@ impl DesignGraph {
             .and_then(|e| {
                 e.properties
                     .get("status")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                     .map(|s| s == "planned")
             })
             .unwrap_or(false))

@@ -48,7 +48,7 @@
 
 use std::collections::BTreeMap;
 
-use dynograph_core::DynoError;
+use crate::foundation::core::DynoError;
 
 use crate::export::GraphExport;
 use crate::graph::DesignGraph;

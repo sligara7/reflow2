@@ -47,8 +47,8 @@
 //! per item, and only the round trip is collapsed. `set_artifact_checksums`
 //! makes 244 accepts cost one call and still 244 decisions.
 
-use dynograph_core::{DynoError, Value};
-use dynograph_storage::{StoredEdge, StoredNode};
+use crate::foundation::core::{DynoError, Value};
+use crate::foundation::store::{StoredEdge, StoredNode};
 
 use crate::artifact::DriftDisposition;
 use crate::graph::DesignGraph;

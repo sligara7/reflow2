@@ -16,9 +16,9 @@
 //!
 //! [`DimensionObservation`]: crate::nodes::node::DIMENSION_OBSERVATION
 
+use crate::foundation::core::{DynoError, Value};
+use crate::foundation::store::StoredNode;
 use crate::stats::{linear_regression_slope, mean};
-use dynograph_core::{DynoError, Value};
-use dynograph_storage::StoredNode;
 
 use crate::graph::DesignGraph;
 use crate::nodes::{Props, edge, node};

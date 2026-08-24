@@ -31,7 +31,7 @@
 //! [`DriftReport::propagation_seeds`] carries exactly those seed ids, ready to
 //! hand to [`propagate_from`](DesignGraph::propagate_from).
 
-use dynograph_core::DynoError;
+use crate::foundation::core::DynoError;
 
 use crate::graph::DesignGraph;
 use crate::nodes::{Props, edge, node};

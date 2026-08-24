@@ -6,11 +6,17 @@ rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
 authors.workspace = true
-description = "Reflow 2.0 deterministic core — schema-driven design graph over dynograph-foundation"
+description = "Reflow 2.0 deterministic core — a schema-driven design graph, foundation included"
 
 [dependencies]
-dynograph-core = { workspace = true }
-dynograph-storage = { workspace = true }
+rmp-serde = { workspace = true }
+tracing = { workspace = true }
+lru = { workspace = true }
+serde_yaml = { workspace = true }
+uuid = { workspace = true }
+thiserror = { workspace = true }
+rocksdb = { workspace = true, optional = true }
+tantivy = { workspace = true, optional = true }
 serde = { version = "1", features = ["derive"] }
 # Snapshots store a node's property bag as a JSON string (temporal.yaml's
 # `Snapshot.state`); `Value` is serde-serializable (untagged), so this renders
@@ -27,11 +33,17 @@ default = []
 # the librocksdb-sys C++ compile stays opt-in; the in-memory backend needs no
 # feature. When off, `DesignGraph::open_rocksdb` fails loud (foundation
 # contract), rather than silently falling back to memory.
-rocksdb = ["dynograph-storage/rocksdb"]
+rocksdb = ["dep:rocksdb"]
 # BM25 full-text search over the schema's `fulltext:` properties (Tantivy via
 # dynograph-text — pure Rust, no C++, but a real dependency tree, so it stays
 # off the sub-second core iteration path). The engine mirrors node writes into
 # the index automatically; the schema has carried the `fulltext:` flags since
 # it was written. When off, `DesignGraph::search_design` fails loud rather
 # than silently returning nothing.
-fulltext = ["dynograph-storage/fulltext"]
+fulltext = ["dep:tantivy"]
+
+[dev-dependencies]
+# Absorbed with dynograph-storage: keys.rs carries proptest round-trip tests
+# and the engine tests write to real temp dirs.
+proptest = "1"
+tempfile = "3"

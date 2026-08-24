@@ -31,8 +31,8 @@
 
 use std::collections::{BTreeMap, BTreeSet, HashMap};
 
-use dynograph_core::{DynoError, Value};
-use dynograph_storage::StoredEdge;
+use crate::foundation::core::{DynoError, Value};
+use crate::foundation::store::StoredEdge;
 
 use crate::detect::ordered_pair;
 use crate::graph::DesignGraph;
@@ -793,7 +793,7 @@ impl DesignGraph {
                 stored
                     .as_ref()
                     .and_then(|n| n.properties.get("provenance"))
-                    .and_then(dynograph_core::Value::as_str),
+                    .and_then(crate::foundation::core::Value::as_str),
             ))
         };
         let (rank_a, rank_b) = (rank_of(a)?, rank_of(b)?);
@@ -816,7 +816,7 @@ impl DesignGraph {
             .scan_nodes(node::PROJECT)?
             .first()
             .and_then(|p| p.properties.get("mode"))
-            .and_then(dynograph_core::Value::as_str)
+            .and_then(crate::foundation::core::Value::as_str)
             .unwrap_or("flexible")
             .to_string())
     }
@@ -2253,8 +2253,12 @@ impl DesignGraph {
                 continue;
             }
             if BY_VALUE.contains(&key.as_str()) {
-                let lost = lost.and_then(dynograph_core::Value::as_str).unwrap_or("-");
-                let kept = kept.and_then(dynograph_core::Value::as_str).unwrap_or("-");
+                let lost = lost
+                    .and_then(crate::foundation::core::Value::as_str)
+                    .unwrap_or("-");
+                let kept = kept
+                    .and_then(crate::foundation::core::Value::as_str)
+                    .unwrap_or("-");
                 valued.push(format!("{key} '{lost}' -> '{kept}'"));
             } else {
                 named.push(key.clone());
@@ -2278,7 +2282,7 @@ impl DesignGraph {
             provenance_rank(
                 n.properties
                     .get("provenance")
-                    .and_then(dynograph_core::Value::as_str),
+                    .and_then(crate::foundation::core::Value::as_str),
             )
         };
         if rank_of(&keep) == rank_of(&doomed) {

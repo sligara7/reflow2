@@ -39,7 +39,7 @@
 
 use std::path::{Path, PathBuf};
 
-use dynograph_core::DynoError;
+use crate::foundation::core::DynoError;
 use serde::{Deserialize, Serialize};
 
 /// How a design came by its name — recorded because the two cases have very

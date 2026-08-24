@@ -27,8 +27,8 @@
 //! Deterministic and LLM-free: results are sorted by name, so repeated calls
 //! are byte-identical (the schema's backing `HashMap`s have no stable order).
 
-use dynograph_core::{DynoError, EdgeEndpoint, EdgeTypeDef, NodeTypeDef, PropertyDef};
-use dynograph_storage::Value;
+use crate::foundation::core::Value;
+use crate::foundation::core::{DynoError, EdgeEndpoint, EdgeTypeDef, NodeTypeDef, PropertyDef};
 
 use crate::nodes::node;
 use serde::Serialize;
@@ -180,10 +180,11 @@ fn endpoint_types(endpoint: &EdgeEndpoint) -> Vec<String> {
             let mut ts = ts.clone();
             ts.sort();
             ts
-        }
-        // `EdgeEndpoint` is `#[non_exhaustive]`; a variant added upstream must
-        // not silently read as "matches nothing".
-        other => vec![format!("<unsupported endpoint: {other:?}>")],
+        } // NO WILDCARD ARM. This read `other => "<unsupported endpoint>"` because
+          // `EdgeEndpoint` was #[non_exhaustive] in another crate — note the old
+          // comment said "a variant added UPSTREAM", and after 2026-08-24 there is
+          // no upstream. The match is exhaustive now, so a new variant is a
+          // compile error here instead of a string a reader has to notice.
     }
 }
 

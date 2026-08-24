@@ -20,7 +20,7 @@
 
 use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet, VecDeque};
 
-use dynograph_core::DynoError;
+use crate::foundation::core::DynoError;
 
 use crate::graph::DesignGraph;
 use crate::nodes::structural_rule;

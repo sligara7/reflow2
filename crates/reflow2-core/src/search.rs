@@ -15,7 +15,7 @@
 //! exists and is run once at server start: stale silence is worse than the
 //! cost of one bounded rebuild.
 
-use dynograph_core::DynoError;
+use crate::foundation::core::DynoError;
 
 use crate::graph::DesignGraph;
 
@@ -81,7 +81,7 @@ impl DesignGraph {
                     name: node
                         .properties
                         .get("name")
-                        .and_then(dynograph_core::Value::as_str)
+                        .and_then(crate::foundation::core::Value::as_str)
                         .unwrap_or_default()
                         .to_string(),
                     age: crate::dates::claim_age(&node.properties, &today),

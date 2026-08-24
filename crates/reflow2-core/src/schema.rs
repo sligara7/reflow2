@@ -8,7 +8,7 @@
 //! `tools/validate_schema.py` checks; here they load through the real
 //! dynograph-core path (`Schema::from_multiple_yamls` → merge → validate).
 
-use dynograph_core::{DynoError, Schema};
+use crate::foundation::core::{DynoError, Schema};
 
 /// The 11 schema domains, as `(name, yaml)`, embedded at compile time.
 ///
@@ -94,7 +94,7 @@ pub struct DeclaredDefault {
 ///
 /// **The schema declared 81 defaults and nothing read a single one of them**
 /// (measured 2026-08-10, `fact:the-schema-declares-81-defaults-and-nothing-reads-them`).
-/// `dynograph_core::PropertySpec` has no `default` field, so the key parses to
+/// `crate::foundation::core::PropertySpec` has no `default` field, so the key parses to
 /// nobody and is silently dropped; nothing in this crate mentioned the word; and
 /// `describe_schema` surfaced `required` and `values` but never a default. They
 /// were documentation wearing the costume of behaviour — the declared-but-unread

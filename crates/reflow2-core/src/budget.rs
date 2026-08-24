@@ -24,8 +24,8 @@
 
 use std::collections::BTreeMap;
 
-use dynograph_core::{DynoError, Value};
-use dynograph_storage::{StoredEdge, StoredNode};
+use crate::foundation::core::{DynoError, Value};
+use crate::foundation::store::{StoredEdge, StoredNode};
 
 use crate::graph::DesignGraph;
 use crate::nodes::{Props, edge, node};

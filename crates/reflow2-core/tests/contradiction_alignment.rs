@@ -16,8 +16,8 @@
 
 use std::collections::HashMap;
 
-use dynograph_core::Value;
 use reflow2_core::DesignGraph;
+use reflow2_core::Value;
 
 fn two_decisions() -> DesignGraph {
     let mut g = DesignGraph::open_in_memory().expect("in-memory graph");

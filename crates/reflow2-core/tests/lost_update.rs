@@ -145,11 +145,11 @@ fn a_write_against_a_node_somebody_deleted_is_refused_rather_than_recreating_it(
 #[test]
 fn the_content_hash_is_stable_across_property_ordering() {
     let mut a = std::collections::HashMap::new();
-    a.insert("z".to_string(), dynograph_core::Value::from("last"));
-    a.insert("a".to_string(), dynograph_core::Value::from("first"));
+    a.insert("z".to_string(), reflow2_core::Value::from("last"));
+    a.insert("a".to_string(), reflow2_core::Value::from("first"));
     let mut b = std::collections::HashMap::new();
-    b.insert("a".to_string(), dynograph_core::Value::from("first"));
-    b.insert("z".to_string(), dynograph_core::Value::from("last"));
+    b.insert("a".to_string(), reflow2_core::Value::from("first"));
+    b.insert("z".to_string(), reflow2_core::Value::from("last"));
 
     assert_eq!(node_content_hash(&a), node_content_hash(&b));
 }

@@ -21,8 +21,8 @@
 //! productive next question ("how should this be structured?"). Genesis itself only
 //! plants the Project + Epoch; the report tells the agent what to seed next.
 
-use dynograph_core::DynoError;
-use dynograph_storage::StoredNode;
+use crate::foundation::core::DynoError;
+use crate::foundation::store::StoredNode;
 
 use crate::graph::DesignGraph;
 use crate::nodes::{Props, node};

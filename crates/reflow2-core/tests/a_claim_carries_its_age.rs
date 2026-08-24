@@ -11,7 +11,7 @@
 //! clock would pass today and fail in a fortnight, which is the one failure
 //! mode a module about staleness must not have.
 
-use dynograph_core::Value;
+use reflow2_core::Value;
 use reflow2_core::dates::{ClaimAge, claim_age, days_between, parse_day};
 use std::collections::HashMap;
 

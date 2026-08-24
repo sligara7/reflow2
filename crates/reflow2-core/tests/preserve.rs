@@ -18,7 +18,7 @@
 //! cross-component dependency as a function change and make the check useless
 //! for the design it was built for — reflow2's own, which carries 51 of them.
 
-use dynograph_core::Value;
+use reflow2_core::Value;
 use reflow2_core::compare::compare_designs;
 use reflow2_core::nodes::{edge, node};
 use reflow2_core::preserve::preserve_rule;

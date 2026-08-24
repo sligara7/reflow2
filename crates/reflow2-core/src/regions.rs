@@ -65,8 +65,8 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
-use dynograph_core::DynoError;
-use dynograph_storage::Value;
+use crate::foundation::core::DynoError;
+use crate::foundation::core::Value;
 
 use crate::graph::DesignGraph;
 use crate::nodes::node;

@@ -21,7 +21,7 @@
 //! answered — is a true, per-node, actionable gap and DETECT raises it
 //! (`unresolved_drift` in `detect.rs`).
 
-use dynograph_core::DynoError;
+use crate::foundation::core::DynoError;
 
 use crate::graph::DesignGraph;
 use crate::graph_read::GraphRead;
@@ -248,7 +248,7 @@ pub fn confirmation_ledger(g: &dyn GraphRead) -> Result<ConfirmationLedger, Dyno
                 && let Some(at) = node
                     .properties
                     .get("last_confirmed_at")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
             {
                 confirmations += 1;
                 if last_confirmed_at.as_deref().is_none_or(|prev| at > prev) {
@@ -263,7 +263,7 @@ pub fn confirmation_ledger(g: &dyn GraphRead) -> Result<ConfirmationLedger, Dyno
                 let resolved = ev
                     .properties
                     .get("resolved")
-                    .and_then(dynograph_core::Value::as_bool)
+                    .and_then(crate::foundation::core::Value::as_bool)
                     .unwrap_or(false);
                 if !resolved {
                     unresolved += 1;
@@ -275,7 +275,7 @@ pub fn confirmation_ledger(g: &dyn GraphRead) -> Result<ConfirmationLedger, Dyno
                 let is_claim = e
                     .properties
                     .get("accepted_baseline")
-                    .and_then(dynograph_core::Value::as_bool)
+                    .and_then(crate::foundation::core::Value::as_bool)
                     .unwrap_or(false);
                 if !is_claim {
                     continue;
@@ -291,7 +291,7 @@ pub fn confirmation_ledger(g: &dyn GraphRead) -> Result<ConfirmationLedger, Dyno
                 let is_first_baseline = ev
                     .properties
                     .get("change_type")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                     == Some(crate::temporal::ChangeType::BaselineEstablished.as_str());
                 if is_first_baseline {
                     baseline_claims += 1;
@@ -323,7 +323,7 @@ pub fn confirmation_ledger(g: &dyn GraphRead) -> Result<ConfirmationLedger, Dyno
                 if let Some(at) = ev
                     .properties
                     .get("detected_at")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                 {
                     // ISO-8601 strings order lexically; the caller supplies
                     // them (the core takes no clock).
@@ -347,7 +347,7 @@ pub fn confirmation_ledger(g: &dyn GraphRead) -> Result<ConfirmationLedger, Dyno
             };
             if v.properties
                 .get("status")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 != Some("passing")
             {
                 continue;
@@ -355,7 +355,7 @@ pub fn confirmation_ledger(g: &dyn GraphRead) -> Result<ConfirmationLedger, Dyno
             if let Some(at) = v
                 .properties
                 .get("last_run_at")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
             {
                 // ISO-8601 orders lexically; the caller supplies it (the
                 // core takes no clock), exactly as last_claim_at above.
@@ -396,7 +396,7 @@ pub fn confirmation_ledger(g: &dyn GraphRead) -> Result<ConfirmationLedger, Dyno
             capability_name: cap
                 .properties
                 .get("name")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 .unwrap_or(&cap.node_id)
                 .to_string(),
             state,

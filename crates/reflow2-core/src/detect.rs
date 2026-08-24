@@ -39,7 +39,7 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
-use dynograph_core::{DynoError, Value};
+use crate::foundation::core::{DynoError, Value};
 
 use crate::dimensions::DriftDirection;
 use crate::graph::DesignGraph;
@@ -1496,7 +1496,7 @@ impl DesignGraph {
                 let answer = existing
                     .as_ref()
                     .and_then(|n| n.properties.get("answer"))
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                     .unwrap_or_default()
                     .to_string();
                 props.set("status", "answered").set("answer", answer)
@@ -1631,7 +1631,7 @@ impl DesignGraph {
             let get = |k: &str| {
                 n.properties
                     .get(k)
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                     .unwrap_or_default()
                     .to_string()
             };
@@ -1656,7 +1656,7 @@ impl DesignGraph {
                 rephrase_degraded: n
                     .properties
                     .get("rephrase_degraded")
-                    .and_then(dynograph_core::Value::as_bool)
+                    .and_then(crate::foundation::core::Value::as_bool)
                     .unwrap_or(false),
                 answer: get("answer"),
                 status,
@@ -2021,7 +2021,7 @@ impl DesignGraph {
             let status = req
                 .properties
                 .get("status")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 .unwrap_or("proposed");
             if status == "dropped" || status == "met" {
                 continue;
@@ -2058,7 +2058,7 @@ impl DesignGraph {
                 let priority = req
                     .properties
                     .get("priority")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                     .unwrap_or("medium");
                 // A `deferred` REQUIREMENT ALREADY ANSWERS THE ORDINARY
                 // QUESTION, AND THE ANSWER IS ON THE NODE.
@@ -2207,7 +2207,7 @@ impl DesignGraph {
             if src
                 .properties
                 .get("status")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 == Some("accepted")
             {
                 return Ok(true);
@@ -2244,7 +2244,7 @@ impl DesignGraph {
                 let inferred = cap
                     .properties
                     .get("provenance")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                     == Some("inferred");
                 gaps.push(GapCandidate {
                     id: gap_id(
@@ -2594,7 +2594,7 @@ impl DesignGraph {
             let required_from_outside = iface
                 .properties
                 .get("designation")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 == Some("required");
 
             if required_from_outside {
@@ -2917,7 +2917,7 @@ impl DesignGraph {
                 .and_then(|c| {
                     c.properties
                         .get("status")
-                        .and_then(dynograph_core::Value::as_str)
+                        .and_then(crate::foundation::core::Value::as_str)
                         .map(|s| s == "realized" || s == "verified")
                 })
                 .unwrap_or(false);
@@ -2967,7 +2967,7 @@ impl DesignGraph {
             let status = ver
                 .properties
                 .get("status")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 .unwrap_or("planned");
             if status != "failing" {
                 continue;
@@ -3019,7 +3019,7 @@ impl DesignGraph {
             let last_run = ver
                 .properties
                 .get("last_run_at")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 .filter(|s| !s.is_empty());
             let when = match last_run {
                 Some(t) => format!(" when it last ran, at {t}"),
@@ -3071,7 +3071,7 @@ impl DesignGraph {
             let resolved = ev
                 .properties
                 .get("resolved")
-                .and_then(dynograph_core::Value::as_bool)
+                .and_then(crate::foundation::core::Value::as_bool)
                 .unwrap_or(false);
             if resolved {
                 continue;
@@ -3084,7 +3084,7 @@ impl DesignGraph {
             let summary = ev
                 .properties
                 .get("summary")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 .unwrap_or("reality diverged from the design");
             // The answer differs by which reality diverged: build-side drift
             // is answered by the two-sided accept; fielded drift (BL-9) by
@@ -3093,7 +3093,7 @@ impl DesignGraph {
             let drift_type = ev
                 .properties
                 .get("drift_type")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 .unwrap_or("");
             let advice = if drift_type.starts_with("deployment_") {
                 "the fielded state and the declaration disagree and nobody has said which is right. Fix the declaration (deploy_to with the true status) or fix the deployment, then reconcile_deployment again."
@@ -3247,7 +3247,7 @@ impl DesignGraph {
                 && rel
                     .properties
                     .get("status")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                     == Some("planned")
             {
                 continue;
@@ -3431,7 +3431,7 @@ impl DesignGraph {
             if cap
                 .properties
                 .get("status")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 != Some("verified")
             {
                 continue;
@@ -3472,7 +3472,7 @@ impl DesignGraph {
             if req
                 .properties
                 .get("status")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 != Some("met")
             {
                 continue;
@@ -3711,7 +3711,7 @@ impl DesignGraph {
             let not_started = n
                 .properties
                 .get("status")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 == Some("planned");
             if not_started && self.incoming(&n.node_id, Some(edge::REALIZES))?.is_empty() {
                 continue;
@@ -3901,7 +3901,7 @@ impl DesignGraph {
             if dec
                 .properties
                 .get("status")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 != Some("proposed")
             {
                 continue;
@@ -3955,7 +3955,7 @@ impl DesignGraph {
             if dec
                 .properties
                 .get("status")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 == Some("proposed")
             {
                 proposed += 1;
@@ -4091,7 +4091,7 @@ impl DesignGraph {
                 matches!(
                     n.properties
                         .get("designation")
-                        .and_then(dynograph_core::Value::as_str),
+                        .and_then(crate::foundation::core::Value::as_str),
                     Some("published" | "both")
                 )
             })
@@ -4171,7 +4171,7 @@ impl DesignGraph {
                         n.node_id,
                         n.properties
                             .get("designation")
-                            .and_then(dynograph_core::Value::as_str)
+                            .and_then(crate::foundation::core::Value::as_str)
                             .unwrap_or("published"),
                     )
                 } else {
@@ -4223,7 +4223,7 @@ impl DesignGraph {
             if !matches!(
                 n.properties
                     .get("designation")
-                    .and_then(dynograph_core::Value::as_str),
+                    .and_then(crate::foundation::core::Value::as_str),
                 Some("published" | "both")
             ) {
                 continue;
@@ -4234,7 +4234,7 @@ impl DesignGraph {
                     match n
                         .properties
                         .get(*field)
-                        .and_then(dynograph_core::Value::as_str)
+                        .and_then(crate::foundation::core::Value::as_str)
                     {
                         None | Some("") => true,
                         // 🛑 `unspecified` IS UNSET, AND MISSING THIS WOULD HAVE
@@ -4360,7 +4360,7 @@ impl DesignGraph {
             if let Some(a) = art
                 .properties
                 .get("audience")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
             {
                 audience_of.insert(art.node_id.clone(), a.to_string());
             }
@@ -4404,7 +4404,7 @@ impl DesignGraph {
             let status = req
                 .properties
                 .get("status")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 .unwrap_or("proposed");
             if matches!(status, "dropped" | "deferred") {
                 continue;
@@ -4432,7 +4432,7 @@ impl DesignGraph {
             let name = req
                 .properties
                 .get("name")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 .unwrap_or(&req.node_id)
                 .to_string();
             gaps.push(GapCandidate {
@@ -4493,7 +4493,7 @@ impl DesignGraph {
                 if ver
                     .properties
                     .get("status")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                     != Some("passing")
                 {
                     continue;
@@ -4501,7 +4501,7 @@ impl DesignGraph {
                 match ver
                     .properties
                     .get("kind")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                 {
                     Some("validation") => has_validation = true,
                     _ => has_verification = true, // default kind is verification
@@ -4565,7 +4565,7 @@ impl DesignGraph {
         for c in self.scan_nodes(node::CONSTRAINT)? {
             if c.properties
                 .get("category")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 != Some("kpp")
             {
                 continue;
@@ -4655,7 +4655,7 @@ impl DesignGraph {
                         && dec
                             .properties
                             .get("status")
-                            .and_then(dynograph_core::Value::as_str)
+                            .and_then(crate::foundation::core::Value::as_str)
                             == Some("accepted")
                     {
                         reaching.push(dec_id);
@@ -4714,10 +4714,10 @@ pub(crate) fn ordered_pair(a: &str, b: &str) -> (String, String) {
     }
 }
 
-fn node_name(n: &dynograph_storage::StoredNode) -> String {
+fn node_name(n: &crate::foundation::store::StoredNode) -> String {
     n.properties
         .get("name")
-        .and_then(dynograph_core::Value::as_str)
+        .and_then(crate::foundation::core::Value::as_str)
         .unwrap_or(&n.node_id)
         .to_string()
 }

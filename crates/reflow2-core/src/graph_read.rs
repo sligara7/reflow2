@@ -61,8 +61,8 @@
 //! and edge types: it must produce these. That limit on substitutability was
 //! inherited, not chosen.
 
-use dynograph_core::DynoError;
-use dynograph_storage::{StoredEdge, StoredNode};
+use crate::foundation::core::DynoError;
+use crate::foundation::store::{StoredEdge, StoredNode};
 
 /// Read-only access to one design's nodes and edges.
 ///
@@ -169,7 +169,7 @@ impl ReadCounts {
 ///
 /// ```no_run
 /// # use reflow2_core::graph_read::{CountingRead, GraphRead};
-/// # fn demo(g: &dyn GraphRead) -> Result<(), dynograph_core::DynoError> {
+/// # fn demo(g: &dyn GraphRead) -> Result<(), reflow2_core::DynoError> {
 /// let counted = CountingRead::new(g);
 /// let _ = reflow2_core::granularity::granularity_report(&counted)?;
 /// assert!(counted.counts().total() > 0);

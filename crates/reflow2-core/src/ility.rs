@@ -61,7 +61,7 @@
 
 use std::collections::BTreeMap;
 
-use dynograph_core::{DynoError, Value};
+use crate::foundation::core::{DynoError, Value};
 use serde::Serialize;
 
 use crate::graph::DesignGraph;

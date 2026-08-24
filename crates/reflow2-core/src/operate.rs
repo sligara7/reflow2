@@ -19,8 +19,8 @@
 //! `REQUIRES_RESOURCE.criticality` distinguishes a nice-to-have from a hard
 //! dependency. Both are optional and omitted rather than defaulted when absent.
 
-use dynograph_core::DynoError;
-use dynograph_storage::{StoredEdge, StoredNode};
+use crate::foundation::core::DynoError;
+use crate::foundation::store::{StoredEdge, StoredNode};
 
 use crate::graph::DesignGraph;
 use crate::nodes::{Props, edge, node};
@@ -193,7 +193,7 @@ impl DesignGraph {
                 let frozen = e
                     .properties
                     .get("as_checksum")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                     .map(str::to_string);
                 artifacts.push((e.to_id, frozen));
             } else {
@@ -237,7 +237,7 @@ impl DesignGraph {
             let status = e
                 .properties
                 .get("status")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 .map(str::to_string);
             deployed_to.push((e.to_id, status));
         }
@@ -248,7 +248,7 @@ impl DesignGraph {
             release_name: rel
                 .properties
                 .get("name")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 .unwrap_or(release_id)
                 .to_string(),
             artifacts,
@@ -368,7 +368,7 @@ impl DesignGraph {
                 let frozen = e
                     .properties
                     .get("as_checksum")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                     .map(str::to_string);
                 (e.to_id, frozen)
             })
@@ -409,7 +409,7 @@ impl DesignGraph {
             let checksum = if is_artifact {
                 n.properties
                     .get("checksum")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                     .map(str::to_string)
             } else {
                 None
