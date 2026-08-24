@@ -21,7 +21,7 @@
 
 use std::collections::HashMap;
 
-use dynograph_core::DynoError;
+use crate::foundation::core::DynoError;
 
 use crate::graph::DesignGraph;
 

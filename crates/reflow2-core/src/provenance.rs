@@ -25,7 +25,7 @@
 use std::collections::BTreeSet;
 use std::path::{Path, PathBuf};
 
-use dynograph_core::{DynoError, Schema};
+use crate::foundation::core::{DynoError, Schema};
 use serde::{Deserialize, Serialize};
 
 /// Node types this reflow2 once had and has since retired. A graph that carries

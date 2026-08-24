@@ -315,8 +315,8 @@ fn states_do_not_bleed_between_capabilities() {
 // wide enough for the easy case.
 
 mod no_store {
-    use dynograph_core::{DynoError, Value};
-    use dynograph_storage::{StoredEdge, StoredNode};
+    use reflow2_core::foundation::core::{DynoError, Value};
+    use reflow2_core::foundation::store::{StoredEdge, StoredNode};
     use reflow2_core::graph_read::GraphRead;
     use std::collections::HashMap;
 

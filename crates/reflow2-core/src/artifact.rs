@@ -21,8 +21,8 @@
 //! `checksum` recorded at link time. Comparing that baseline against observed
 //! reality is [`crate::drift`] (SP-6b).
 
-use dynograph_core::DynoError;
-use dynograph_storage::{StoredEdge, StoredNode};
+use crate::foundation::core::DynoError;
+use crate::foundation::store::{StoredEdge, StoredNode};
 
 use crate::graph::DesignGraph;
 use crate::nodes::{Props, edge, node};
@@ -453,7 +453,7 @@ impl DesignGraph {
             let already = ev
                 .properties
                 .get("resolved")
-                .and_then(dynograph_core::Value::as_bool)
+                .and_then(crate::foundation::core::Value::as_bool)
                 .unwrap_or(false);
             if already {
                 continue;
@@ -808,7 +808,7 @@ impl DesignGraph {
                 let value = e
                     .properties
                     .get("conformance")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                     .filter(|s| !s.is_empty())
                     .unwrap_or("unchecked");
                 match value {

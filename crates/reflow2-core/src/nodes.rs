@@ -270,7 +270,7 @@ pub mod edge {
 
 use std::collections::HashMap;
 
-use dynograph_core::Value;
+use crate::foundation::core::Value;
 
 /// Ergonomic builder for a node/edge property map.
 ///

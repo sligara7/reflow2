@@ -21,9 +21,9 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
+use crate::foundation::core::{DynoError, Value};
+use crate::foundation::store::{StoredEdge, StoredNode};
 use crate::graphalg::{GraphBuilder, find_cycle, strongly_connected_components};
-use dynograph_core::{DynoError, Value};
-use dynograph_storage::{StoredEdge, StoredNode};
 
 use crate::graph::DesignGraph;
 use crate::nodes::{Props, edge, node};

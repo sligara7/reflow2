@@ -129,13 +129,13 @@ impl ClaimAge {
 /// sayable — collapsing them would make a malformed date indistinguishable from
 /// no date at all.
 pub fn claim_age(
-    props: &std::collections::HashMap<String, dynograph_core::Value>,
+    props: &std::collections::HashMap<String, crate::foundation::core::Value>,
     today: &str,
 ) -> ClaimAge {
     let get = |k: &str| -> Option<String> {
         props
             .get(k)
-            .and_then(dynograph_core::Value::as_str)
+            .and_then(crate::foundation::core::Value::as_str)
             .filter(|s| !s.is_empty())
             .map(str::to_string)
     };

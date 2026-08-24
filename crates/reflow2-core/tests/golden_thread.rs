@@ -142,7 +142,7 @@ fn integer_literal_is_accepted_for_a_float_property() {
         .expect("an integer literal on a float property must be accepted");
     assert_eq!(
         e.properties.get("confidence"),
-        Some(&dynograph_core::Value::Float(1.0)),
+        Some(&reflow2_core::Value::Float(1.0)),
         "widened losslessly and stored as the schema's float"
     );
 
@@ -184,7 +184,7 @@ fn a_large_integer_is_not_lossily_widened_to_a_float() {
         .expect("a small integer widens to a float");
     assert_eq!(
         ok.properties.get("data_volume"),
-        Some(&dynograph_core::Value::Float(1000.0))
+        Some(&reflow2_core::Value::Float(1000.0))
     );
 
     // i64::MAX cannot be represented exactly as f64 — it must not be widened,

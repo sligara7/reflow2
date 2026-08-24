@@ -50,22 +50,42 @@ def reflow2_version() -> str:
 
 
 def foundation_tag() -> str:
-    """The dynograph-foundation git tag the workspace pins.
+    """The dynograph-foundation tag the absorbed code was taken FROM.
 
-    Every foundation crate must sit on ONE tag. Five separate pins that drifted
-    apart would be a real defect in its own right, so disagreement is reported
-    here rather than silently resolved by taking the first.
+    Until 2026-08-24 this read a git-tag pin out of the workspace `Cargo.toml`.
+    `dec:absorb-the-foundation-subset-and-end-the-dependency` removed the last
+    pin, so that question has no answer any more — but the FACT it protected
+    survives the move, because the decision requires every absorbed module to
+    carry a provenance header naming the tag and files it took. That header is
+    now the source of truth, and it is still read from the tree rather than from
+    prose, which is the property that made this check worth having.
+
+    Every absorbed module must name ONE tag, for the same reason five pins had
+    to agree: modules taken from different vintages of the same repository is a
+    real defect, so disagreement is reported rather than resolved by taking the
+    first. **Finding no header at all is also a failure** — that is the objection
+    the decision recorded against absorbing anything (vendoring turns a visible
+    dependency into an invisible one), and a silently-passing check here is
+    exactly how the header would rot away unnoticed.
     """
-    text = (REPO / "Cargo.toml").read_text()
-    tags = set(re.findall(r'dynograph-[a-z]+ = \{[^}]*tag = "(v[^"]+)"', text))
+    headers = sorted((REPO / "crates/reflow2-core/src").rglob("*.rs"))
+    tags: dict[str, list[str]] = {}
+    for path in headers:
+        for tag in re.findall(r"^//! tag\s+(v[0-9]+\.[0-9]+\.[0-9]+)\s*$", path.read_text(), re.M):
+            tags.setdefault(tag, []).append(str(path.relative_to(REPO)))
     if not tags:
-        sys.exit("FAIL: could not find any dynograph-foundation tag pin in Cargo.toml")
-    if len(tags) > 1:
         sys.exit(
-            "FAIL: the foundation crates are pinned to DIFFERENT tags "
-            f"({', '.join(sorted(tags))}) — they must move together"
+            "FAIL: no absorbed-code provenance header names a dynograph-foundation "
+            "tag. dec:absorb-the-foundation-subset-and-end-the-dependency REQUIRES "
+            "one in every absorbed module — see crates/reflow2-core/src/foundation/mod.rs"
         )
-    return tags.pop()
+    if len(tags) > 1:
+        detail = "; ".join(f"{t}: {', '.join(f)}" for t, f in sorted(tags.items()))
+        sys.exit(
+            "FAIL: absorbed modules name DIFFERENT foundation tags "
+            f"({detail}) — code taken from mixed vintages of one repository"
+        )
+    return next(iter(tags))
 
 
 # --------------------------------------------------------------------------
@@ -79,8 +99,8 @@ def claims(reflow2: str, foundation: str) -> list[tuple[str, str, str, str]]:
     return [
         (
             "AGENTS.md",
-            "foundation pin prose",
-            r"`(v[0-9]+\.[0-9]+\.[0-9]+)` at time of writing",
+            "foundation provenance prose",
+            r"absorbed from it at `(v[0-9]+\.[0-9]+\.[0-9]+)`",
             foundation,
         ),
         (
@@ -101,7 +121,7 @@ def claims(reflow2: str, foundation: str) -> list[tuple[str, str, str, str]]:
 def main() -> int:
     reflow2 = reflow2_version()
     foundation = foundation_tag()
-    print(f"reflow2 {reflow2} · dynograph-foundation {foundation}\n")
+    print(f"reflow2 {reflow2} · absorbed from dynograph-foundation {foundation}\n")
 
     failures: list[str] = []
     for filename, label, pattern, expected in claims(reflow2, foundation):

@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b2a1c1c0d0d8f4f01e5d15b571a6ac5d9c9048432c3a36a9fb67c48715655180",
+  "content_hash": "sha256:f229798abbf1aa549ac3ffc28de26a258ae89b51ffc0880c04e027766e93446c",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2359,6 +2359,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:search",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:text-index"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:search-first-at-the-tool",
       "properties": {
         "weight_basis": "estimated"
@@ -2468,6 +2476,22 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:nudge"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:store",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:byte-store"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:store",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:foundation-vocabulary"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -2877,11 +2901,51 @@
     },
     {
       "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-embeddings-adoption",
+      "properties": {
+        "evidence": "Recorded 2026-08-01 asking whether reflow2 should adopt embeddings and the HNSW index or stay lexical. It anticipated the same choice this capability made in the small: increment 1 dropped `hnsw.rs` and `distance.rs` (1,941 lines) on the ground that reflow2 calls neither, which is the 'stay lexical' answer taken by construction rather than by decision. ⚠️ The idea remains OPEN and this does not settle it — but a later reader should know the code it would need is no longer in the tree."
+      },
+      "to_id": "cap:graph-algorithms"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-missing-edge-prediction",
+      "properties": {
+        "evidence": "Same 2026-08-01 review. Proposing MISSING edges from neighbourhood overlap is the design's shape being read for what is ABSENT rather than present — the requirement's claim taken one step further than any detector goes today. ⚠️ Needs `link_prediction.rs` (218 lines), left upstream by increment 3."
+      },
+      "to_id": "req:graph-theory-undergirds-the-design-brain"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-other-centralities",
+      "properties": {
+        "evidence": "Written 2026-08-01 in the dynograph-foundation review, three weeks before this requirement existed, and it is an instance of exactly what the requirement asks: read the design's shape with more than one centrality. It saw the requirement coming. ⚠️ AND THE ABSORPTION CHANGED ITS COST — increment 3 left `centrality.rs`, `closeness.rs`, `eigenvector.rs` and `clustering.rs` (590 lines) upstream, so acting on it is now a retrieval from tag v0.12.0 rather than a call to code already linked."
+      },
+      "to_id": "req:graph-theory-undergirds-the-design-brain"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-relevance-ranking",
+      "properties": {
+        "evidence": "Same 2026-08-01 review. It observes that `propagate.rs` ranks a blast radius by GLOBAL betweenness — 'is this node important in general' — rather than by relevance to the change, which is the requirement's distinction between reading the shape and reading it for a purpose. Betweenness WAS absorbed; the alternative ranking it argues for would want `pagerank.rs` (291 lines), left upstream."
+      },
+      "to_id": "req:graph-theory-undergirds-the-design-brain"
+    },
+    {
+      "edge_type": "ANTICIPATES",
       "from_id": "dec:idea-search-first-fires-without-being-remembered",
       "properties": {
         "evidence": "The sibling saw this coming from the other side, on 2026-08-12. It measured six saves in one session and found FOUR OF SIX PREVENTED WORK RATHER THAN NODES, calling that \"the more expensive thing\" and noting the value sits on the unguarded READ path. That is exactly the cost this node measures: an agent proposes work already done. Searching-before-proposing and closing-what-you-invalidated are two different fixes for one symptom, so the earlier node anticipated this one without naming it. Drawn from the older node TO this one."
       },
       "to_id": "dec:idea-how-does-the-graph-learn-what-a-session-invalidated"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-severability-cut",
+      "properties": {
+        "evidence": "Same 2026-08-01 review, and the sharpest instance: it observes that `cut_structure` (absorbed, in use) answers 'what is a single point of failure' and NOT 'how separable are these two parts', which needs a minimum edge cut. That gap is precisely what this requirement says the design should be able to see. ⚠️ Needs `maxflow.rs` (248 lines) — left upstream by increment 3, on the verified ground that `cut_structure` does not depend on it."
+      },
+      "to_id": "req:graph-theory-undergirds-the-design-brain"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -4146,6 +4210,12 @@
       "from_id": "chg:a-write-says-what-it-did-not-recognise",
       "properties": {},
       "to_id": "epoch:v0330"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {},
+      "to_id": "epoch:the-absorption"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -6024,6 +6094,12 @@
       "from_id": "chg:import-cluster",
       "properties": {},
       "to_id": "epoch:v0220"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:increments-4-and-5-are-one-increment",
+      "properties": {},
+      "to_id": "epoch:the-absorption"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -8637,6 +8713,48 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-absorption:dec:absorb-the-foundation-subset-and-end-the-dependency",
+      "properties": {},
+      "to_id": "epoch:the-absorption"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-absorption:dep:dynograph-foundation",
+      "properties": {},
+      "to_id": "epoch:the-absorption"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-absorption:ifc:req-dyno-core-api",
+      "properties": {},
+      "to_id": "epoch:the-absorption"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-absorption:ifc:req-dyno-graph-api",
+      "properties": {},
+      "to_id": "epoch:the-absorption"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-absorption:ifc:req-dyno-resolution-api",
+      "properties": {},
+      "to_id": "epoch:the-absorption"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-absorption:ifc:req-dyno-storage-api",
+      "properties": {},
+      "to_id": "epoch:the-absorption"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-absorption:ifc:req-dyno-vector-api",
+      "properties": {},
+      "to_id": "epoch:the-absorption"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:the-ask-elicits-a-lens-not-a-name:art:where-am-i-skill",
       "properties": {},
       "to_id": "epoch:the-ask-elicits-a-lens-not-a-name"
@@ -9256,6 +9374,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:absorb-rocksdb-024-unchanged-then-switch-separately",
+      "properties": {
+        "acted_at": "2026-08-24",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -10510,6 +10637,15 @@
       "from_id": "dec:idea-one-owner-many-projects",
       "properties": {
         "acted_at": "2026-08-05",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-one-place-to-bump-a-dependency",
+      "properties": {
+        "acted_at": "2026-08-24",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -13267,6 +13403,14 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "BLOCKS",
+      "from_id": "cap:graph-algorithms",
+      "properties": {
+        "evidence": "Not a veto — a raised threshold, and BLOCKS is the closest true relation the vocabulary offers. Before 2026-08-24 `max_flow_min_cut` was linked and callable, so this idea was 'use a function we already have'. This capability absorbed only what reflow2 calls and left `maxflow.rs` (248 lines) upstream, so acting on the idea now means retrieving a file from tag v0.12.0 first. The same holds for `dec:idea-other-centralities`, `dec:idea-missing-edge-prediction` and `dec:idea-relevance-ranking`; this edge is drawn on the sharpest instance rather than four times over, because relatedness is not similarity."
+      },
+      "to_id": "dec:idea-severability-cut"
     },
     {
       "edge_type": "BLOCKS",
@@ -16340,6 +16484,555 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:alternatives"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:budget"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:bulk"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:claim-age-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:claims"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:compare"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:compose"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:confirm"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:consumption"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:contradiction-alignment-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:corpus"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:coverage"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dates"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:depends"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:depends-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dimensions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:drift"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:fielded"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:flow"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:genesis"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:granularity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph-read"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:identity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ility"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:maturity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:merge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:nodes"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:operate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:preserve"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:propagate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:readiness"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:regions-rs"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:relate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:scope"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:seam"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:seam-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:search"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:surprises"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:vocabulary"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "removed"
+      },
+      "to_id": "dep:dynograph-foundation"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "removed"
+      },
+      "to_id": "ifc:req-dyno-core-api"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "removed"
+      },
+      "to_id": "ifc:req-dyno-graph-api"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "removed"
+      },
+      "to_id": "ifc:req-dyno-resolution-api"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "removed"
+      },
+      "to_id": "ifc:req-dyno-storage-api"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "removed"
+      },
+      "to_id": "ifc:req-dyno-vector-api"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:absorb-graph-algorithms",
       "properties": {
         "accepted_baseline": true,
@@ -17579,6 +18272,15 @@
         "action": "modified"
       },
       "to_id": "art:provenance"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-a380be9465b5d228",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:depends-test"
     },
     {
       "edge_type": "CHANGED",
@@ -23340,6 +24042,15 @@
         "action": "modified"
       },
       "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:increments-4-and-5-are-one-increment",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:absorb-the-foundation-subset-and-end-the-dependency"
     },
     {
       "edge_type": "CHANGED",
@@ -30635,7 +31346,19 @@
       "edge_type": "CONTAINS",
       "from_id": "sys:foundation",
       "properties": {},
+      "to_id": "cmp:byte-store"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:foundation",
+      "properties": {},
       "to_id": "cmp:dates"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:foundation",
+      "properties": {},
+      "to_id": "cmp:foundation-vocabulary"
     },
     {
       "edge_type": "CONTAINS",
@@ -30672,6 +31395,12 @@
       "from_id": "sys:foundation",
       "properties": {},
       "to_id": "cmp:schema"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:foundation",
+      "properties": {},
+      "to_id": "cmp:text-index"
     },
     {
       "edge_type": "CONTAINS",
@@ -31850,6 +32579,16 @@
         "weight_basis": "evidence"
       },
       "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:absorb-rocksdb-024-unchanged-then-switch-separately",
+      "properties": {
+        "evidence": "That decision defers the rocksdb → rust-rocksdb switch to its own later PR. Whoever does it has to know WHERE the pin lives, and today the answer differs by crate: `rocksdb` reached the workspace table only on 2026-08-24, while `rmcp` — the other crate Anthony named in the same breath — is still crate-local. The switch is a one-line change only if this question has been answered first.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-one-place-to-bump-a-dependency"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -40695,6 +41434,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:absorb-the-foundation-subset-and-end-the-dependency",
+      "properties": {},
+      "to_id": "snap:epoch:the-absorption:dec:absorb-the-foundation-subset-and-end-the-dependency"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "dec:anchor-retire-or-implement",
       "properties": {},
       "to_id": "snap:epoch:reflow-workflow-review:dec:anchor-retire-or-implement"
@@ -40947,6 +41692,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dep:dynograph-foundation",
+      "properties": {},
+      "to_id": "snap:epoch:the-absorption:dep:dynograph-foundation"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "epoch:the-philosophy-is-in-the-product",
       "properties": {},
       "to_id": "snap:epoch:the-discipline-arrives-at-the-tool:epoch:the-philosophy-is-in-the-product"
@@ -41004,6 +41755,36 @@
       "from_id": "ifc:mcp-tools-http",
       "properties": {},
       "to_id": "snap:epoch:2026-08-23-json-rpc-medium:ifc:mcp-tools-http"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "ifc:req-dyno-core-api",
+      "properties": {},
+      "to_id": "snap:epoch:the-absorption:ifc:req-dyno-core-api"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "ifc:req-dyno-graph-api",
+      "properties": {},
+      "to_id": "snap:epoch:the-absorption:ifc:req-dyno-graph-api"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "ifc:req-dyno-resolution-api",
+      "properties": {},
+      "to_id": "snap:epoch:the-absorption:ifc:req-dyno-resolution-api"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "ifc:req-dyno-storage-api",
+      "properties": {},
+      "to_id": "snap:epoch:the-absorption:ifc:req-dyno-storage-api"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "ifc:req-dyno-vector-api",
+      "properties": {},
+      "to_id": "snap:epoch:the-absorption:ifc:req-dyno-vector-api"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -89696,6 +90477,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:absorb-core-storage-text",
+      "properties": {
+        "at": "2026-08-24T21:45:00Z",
+        "note": "The question this observation answered no longer has a subject. It rested on \"reflow2 pins v0.12.0 by git tag across all six crates, so nothing changes until somebody moves the pin\", and left the bump PARKED awaiting Anthony's word. Increment 4 removed the last pin: cargo tree, Cargo.lock, the manifests and the source all name dynograph zero times, so no tag of that repository — v0.13.0 or any later one — can affect reflow2, and there is no pin left to move. The parked decision is retired rather than declined.\n\nWHAT THIS DOES NOT RETIRE, kept deliberately: the measurement itself was sound and its two method lessons outlive it — a linker \"Bus error\" that was really a 100% full disk, and `grep -c` on a binary silently finding nothing without `-a`. Both are instances of rule:success-is-read-from-the-authoritative-object and are recorded there and in fact:the-target-dir-reached-263-gib-of-this-projects-own-test-binaries. The disk warning still stands: no gate watches free space and the design graph lives on the same disk."
+      },
+      "to_id": "fact:dynograph-v0130-measured-clean-and-the-pin-is-parked"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "fact:a-name-is-not-a-report",
       "properties": {
         "at": "2026-08-23",
@@ -89727,6 +90517,54 @@
         "evidence": "The rule is the only thing that caught any of the five, and it caught all of them: the PR body read back, the branch checked after creation, the background task's own output read rather than the log it was still writing. Drawn from the RULE to this fact — the rule is what answers the hazard the five instances describe, and this census is the cost of not following it, counted."
       },
       "to_id": "fact:five-silent-failures-in-one-session-all-one-shape"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:absorb-the-foundation-subset-and-end-the-dependency",
+      "properties": {
+        "note": "reflow2 stopped linking dynograph-foundation on 2026-08-24. The declaration is RETIRED, not deleted: it recorded a real pin for the whole life of the dependency, and its note carries the reasoning for every version bump — the v0.11.0 to v0.12.0 move for a TextHit type leak especially. That history is the successor the absorption's own objection said in-tree code would lack. The gate's `unobserved` finding was CORRECT and is the retirement's trigger, not a defect."
+      },
+      "to_id": "dep:dynograph-foundation"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:absorb-the-foundation-subset-and-end-the-dependency",
+      "properties": {
+        "note": "The absorption ended the supplier relationship this required interface described. RETIRED, NOT DELETED: it was true for the whole life of the dependency, and half the surviving design is shaped by having consumed it across a boundary. Final state preserved at snap:epoch:the-absorption:ifc:req-dyno-core-api."
+      },
+      "to_id": "ifc:req-dyno-core-api"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:absorb-the-foundation-subset-and-end-the-dependency",
+      "properties": {
+        "note": "The absorption ended the supplier relationship this required interface described. RETIRED, NOT DELETED: it was true for the whole life of the dependency, and half the surviving design is shaped by having consumed it across a boundary. Final state preserved at snap:epoch:the-absorption:ifc:req-dyno-graph-api."
+      },
+      "to_id": "ifc:req-dyno-graph-api"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:absorb-the-foundation-subset-and-end-the-dependency",
+      "properties": {
+        "note": "The absorption ended the supplier relationship this required interface described. RETIRED, NOT DELETED: it was true for the whole life of the dependency, and half the surviving design is shaped by having consumed it across a boundary. Final state preserved at snap:epoch:the-absorption:ifc:req-dyno-resolution-api."
+      },
+      "to_id": "ifc:req-dyno-resolution-api"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:absorb-the-foundation-subset-and-end-the-dependency",
+      "properties": {
+        "note": "The absorption ended the supplier relationship this required interface described. RETIRED, NOT DELETED: it was true for the whole life of the dependency, and half the surviving design is shaped by having consumed it across a boundary. Final state preserved at snap:epoch:the-absorption:ifc:req-dyno-storage-api."
+      },
+      "to_id": "ifc:req-dyno-storage-api"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:absorb-the-foundation-subset-and-end-the-dependency",
+      "properties": {
+        "note": "The absorption ended the supplier relationship this required interface described. RETIRED, NOT DELETED: it was true for the whole life of the dependency, and half the surviving design is shaped by having consumed it across a boundary. Final state preserved at snap:epoch:the-absorption:ifc:req-dyno-vector-api."
+      },
+      "to_id": "ifc:req-dyno-vector-api"
     },
     {
       "edge_type": "OBSOLETES",
@@ -91298,6 +92136,15 @@
         "completeness": "complete"
       },
       "to_id": "cmp:flow"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:foundation",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:store"
     },
     {
       "edge_type": "REALIZES",
@@ -99454,7 +100301,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:520097ace0f857bc9ce6bbf99745bddc034e089cd342eb0b70fca829f6421bb7",
+        "checksum": "sha256:90fead751389dc192e7481c81a696d68c3829182f10d75d318ba196341aab2e0",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/allocate.rs",
         "name": "allocate.rs",
@@ -99467,7 +100314,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6b8cc9bacb9c7ae2091a70c89d6371d5ade0e1370c5c863e16f33f99f8a0039d",
+        "checksum": "sha256:e44fdd4b47a76ea23f150d1ccb3cd531507ac5abab9c77296a2ce0ffd3612812",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/alternatives.rs",
         "name": "alternatives.rs",
@@ -99480,7 +100327,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cc0c1029d216c0f1a4d241ffe25f08e52ac707d3285552488b3112bf8f54ccb7",
+        "checksum": "sha256:23659a28f3790b6fe4d58731eac5cad7acb75524695b627f005942f6365059ff",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/artifact.rs",
         "name": "artifact.rs",
@@ -99532,7 +100379,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5d35f50b676049dba61b52addcf574042d13baefafcff538ecd2d6612b87ba71",
+        "checksum": "sha256:7eb081d6f71f3cd68b87cf4e8083321ec39830a76971f96d9dcb4542b21aab78",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/budget.rs",
         "name": "budget.rs",
@@ -99558,7 +100405,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e9ee5de2425cd151146a8c137ed10751c411de98e03acb3d889e6b1ffe35f85c",
+        "checksum": "sha256:40812be0ea28e617ef517ce4d864893b0f979f5bbd32268a6a98af50d589a059",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/bulk.rs",
         "name": "bulk.rs",
@@ -99697,7 +100544,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b8d4e975533b670e09be74d288144194ad388c69ed987738929f48cfc8b8d011",
+        "checksum": "sha256:dccfaf23ecae26729bfff2673b75432f2b13d766053f8b5fe2f2447e44cab6ed",
         "location": "crates/reflow2-core/tests/a_claim_carries_its_age.rs",
         "name": "a_claim_carries_its_age.rs",
         "status": "realized"
@@ -99719,7 +100566,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5a933a36f2ff5606df032f929c969218e54fc9d142c8629a7743243d7e3fa241",
+        "checksum": "sha256:3aea7e282a765bdd12ee8f6a1de65f216a22178d0bfaae9fc25b648d4f98e108",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/claims.rs",
         "name": "claims.rs",
@@ -99756,7 +100603,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cdc3f210cff2c471ba525017ae919335102c2df44a13f1c59e48a8ca1e2ad7ee",
+        "checksum": "sha256:61c3eca67e1f7d3a79922ae9654c7cad0d3f675c116aa7dc522b1fcc907774ca",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/compare.rs",
         "name": "compare.rs",
@@ -99769,7 +100616,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:21f0cb3c189f4e8f4295e1d67788061e2ec7f91f018010ff992ef51bd0a1c377",
+        "checksum": "sha256:ef10b15ba2af84eeb56e84fb4717c00a0c17b22b2a44d7288ad92520b86d3bc3",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/compose.rs",
         "name": "compose.rs",
@@ -99795,7 +100642,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:509b37c237f11e19352ff798b61889799c3485ed5172eb7e7ed18f6fc67a9762",
+        "checksum": "sha256:5944fe9d654192200fd5aaf50df9bb7bea7873f3e767d276e145f53a0a8b1066",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/confirm.rs",
         "name": "confirm.rs",
@@ -99832,7 +100679,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e2efa0a05f6a46929a0f4634871281407af7b196061300cf9fdf63f9a06a6050",
+        "checksum": "sha256:0bdc96bb6e30b497e094a5174dd1bd12d68c430b4e0be1b059593cf67ef94b1a",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/consumption.rs",
         "name": "consumption.rs",
@@ -99845,7 +100692,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5c4c6e7a717189396689405566ed54b8e67f10821b593d22b99ea37053450f1b",
+        "checksum": "sha256:d29d2facff7819d1f1a94cbae48688683edd4ddcc6399a50890e9fb4ca132bc6",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/contradiction_alignment.rs",
         "name": "tests/contradiction_alignment.rs",
@@ -99858,7 +100705,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9f9496cd532968cb39dc7461c83f488e856e97b00a4a438f2f25914ee044760d",
+        "checksum": "sha256:fdfcd5ae491237075b2db61066191b9d6d80f687f2167f4c987be4e9c34f41bb",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/corpus.rs",
         "name": "corpus.rs — the corpus run: one epoch, one Fragment per document, the ambiguous band asked once",
@@ -99871,7 +100718,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:94c373a4b7b515af4bab89e1c80faef636b022999a9434b4674c1737a458cf7c",
+        "checksum": "sha256:4ed612fcf25d35996c67781ce9e8fb6194d2170279f0c41153c1b2671dcaca77",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/coverage.rs",
         "name": "coverage.rs",
@@ -99910,7 +100757,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b125b0aa1c36046cefe30e62298b0ec03ff7e8ff0c107820d1c8fafde6c9f36c",
+        "checksum": "sha256:34f6a9f1eb7384f3a8630eabee41731e22e8f5c6a7658e289e7b0cd583bf0ffd",
         "location": "crates/reflow2-core/src/dates.rs",
         "name": "dates.rs",
         "status": "realized"
@@ -99958,7 +100805,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:45cd6ca68f900aa040d2c075a7dc08311afd8acf8e94bd266f101e4fe1ee8ae7",
+        "checksum": "sha256:4494c050ea5ec664b3786a35c9301f29e5e5dd4b077cde57392b70fc93420bc3",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/depends.rs",
         "name": "depends.rs",
@@ -99971,7 +100818,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f2a9a6d42ce95561436f9ae64e64cef57bd11d90d2c5e6d5bb50825da3d2aee6",
+        "checksum": "sha256:92c8a160242bcc63261ed2047d93094a2877f98e0fd109cb9eee424e366a8c4d",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/depends.rs",
         "name": "tests/depends.rs",
@@ -99984,7 +100831,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f5f35f91499b75bee80bfd66e8c2554565d90f37987c00c70c179ce755127ede",
+        "checksum": "sha256:ad1d71c9a3cc22ba3564277928563a7066c41c14790823b8f05f654827a976c9",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -100019,7 +100866,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:de3750bf50af51a44c2cf11d68e2a4dae9a11facdd52f7bf4d1487978c58cdac",
+        "checksum": "sha256:f862aec1084c4bf761af311d45d4f12cb5f878ba9db6dcbcf3cd4cd340c7cfb2",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/dimensions.rs",
         "name": "dimensions.rs",
@@ -100110,7 +100957,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d03decfe05f40310f62a43ac0f6a81993dba777adb056040a1f0564b64d76f2c",
+        "checksum": "sha256:9f7fed9119d5ce435171c1d5ae1ea66d0737f0cfa230a48dc2ff13675fa29fbd",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/drift.rs",
         "name": "drift.rs",
@@ -100188,7 +101035,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:80709df69bd60b7a5d2a4de8e1ccb80ebac37baf705fd24c9d2e7b3195d89b90",
+        "checksum": "sha256:a6cbbba3a5189697e62d33b051fafc04660c6a50b3346bd7823504158f5ed847",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/export.rs",
         "name": "export.rs",
@@ -100214,7 +101061,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cfdf82f1a6497595",
+        "checksum": "sha256:8c3c78378baf76139a8f8ccd64c4947fca6edb5ce70aad1712f0397daeb0e78f",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/fielded.rs",
         "name": "fielded.rs",
@@ -100240,12 +101087,22 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a6a7221a87d8292d2c61527e566e86816424f56ffa38b149238472a175ef5fb6",
+        "checksum": "sha256:470f2ba28f3b2e512b1f02567c670e02004ef35e7417b666f3e03a3266ba83d5",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/flow.rs",
         "name": "flow.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:foundation",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "location": "crates/reflow2-core/src/foundation/mod.rs",
+        "name": "foundation/mod.rs",
+        "status": "realized"
       }
     },
     {
@@ -100264,7 +101121,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8196df94f5775161",
+        "checksum": "sha256:68c48652acb1584c35f5dc9a56e2ed9acaa080eec63a1cd2ec2417eabc58da99",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/genesis.rs",
         "name": "genesis.rs",
@@ -100316,7 +101173,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8a2758d249e024cebdfdf5b8b44c189f996a59498823a3ab7bd0c52b17cbf011",
+        "checksum": "sha256:5655660611869f181b62586abb5d0b6ae70effc628d15d481f60cb1eee2a8948",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/granularity.rs",
         "name": "granularity.rs",
@@ -100329,7 +101186,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4d2f82b5045fb0d2d6a155c99f0aa6a5004bb789aab29accb0606553f15ff8a8",
+        "checksum": "sha256:4c72143838d93c63c840585eddb6597d7c641d6c68383c4206a79bc8a5b49168",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "crates/reflow2-core/src/graph.rs",
@@ -100353,7 +101210,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:05d063016d1fb7924b09aa4475789311e193e2f05f7568f8c58cf284bbfed18f",
+        "checksum": "sha256:ec717f40c6706439a724e4ad6cbfd321bae85a11817964af783d74eeaa025087",
         "location": "crates/reflow2-core/src/graph_read.rs",
         "name": "graph_read.rs",
         "status": "realized"
@@ -100375,7 +101232,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:26ac05760de0fdd1db7adf12cd0fff4bdc5b0fe2bf6160faf3a9bfdfff030657",
+        "checksum": "sha256:47c7ba73efcc547e3e977fd40b7585e2314c1d116c9ea9d732082be5dcb3542b",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
@@ -100388,7 +101245,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5edf2f7e755547e3e9e91017d7c652f451fd764daf38f52b7c7a7486247cf320",
+        "checksum": "sha256:81e2da21b81698f5b7bbc6dbed1605fd81c767ee37e0c5ff563112389f589662",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/hierarchy.rs",
         "name": "hierarchy.rs",
@@ -100412,7 +101269,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b2040f682b99860815459e4b4c34150019ff02f40821f9dd9e75fadfda5bf29a",
+        "checksum": "sha256:76cb6cbceb60bed1cc48f592d6b601d9f867678f589864e23b8028bffed04e9b",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/identity.rs",
         "name": "identity.rs",
@@ -100425,7 +101282,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c9470d7c1a4175e93eebdd6ebfca422a28d87b566af445c610102cbbee03dca5",
+        "checksum": "sha256:b6014988f1b2d3f977c20d455aac66b35494a764eac0ad58195d1712ce81bcf3",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/ility.rs",
         "name": "ility.rs",
@@ -100462,7 +101319,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d1d5b39145234c832fe34a34fed4a6540ceb7565a8fa9a17fb2e2149671a92f2",
+        "checksum": "sha256:246acaadc9a84ebfb91e052266422217bc001251dff9f8d0917c555b835bb85f",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/ingest.rs",
         "name": "ingest.rs",
@@ -100618,7 +101475,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:54ba771c18b1afc5eac61926c48f4429e6cde44621c8e12f51ef0e78cd2fc22c",
+        "checksum": "sha256:aaa12309461d664654dfffca2324056ed42e4b49f5bb32f1b5d1bcfc4d2dc103",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/maturity.rs",
         "name": "maturity.rs",
@@ -100642,7 +101499,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:075bab31f3c131b6",
+        "checksum": "sha256:7fb957179e32074a5b714477bb9b7df9f45d6f7af9018e2a5a09c49333bc48de",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/merge.rs",
         "name": "merge.rs",
@@ -100705,7 +101562,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:11814f976a9da3877bd5ffce05a2dde8cebc2bea2bbeb2cc9f6f38dc46cdec1a",
+        "checksum": "sha256:ae9b83da90a4581cc35cab89c6bc200b885ccb620999086571fecd36cb6d5122",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/nodes.rs",
         "name": "nodes.rs",
@@ -100731,7 +101588,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e95e6f4c2658ebd1c7afa6e23385256e51272860a0cb56e2046d4c1b581881d0",
+        "checksum": "sha256:327d2ec62fcba33b2b88898f6100fd09ecd29f03a484b1a6c9b460a25699cf64",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/operate.rs",
         "name": "operate.rs",
@@ -100829,7 +101686,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:59b6e751c18dfc67d4546b6d6d70e1305b64864d3890d8cf786320687c9b84d4",
+        "checksum": "sha256:73ec802a327e6d6dfac0e4651359a44077b654cc4d313cd4b97622e6cdfaea0e",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/preserve.rs",
         "name": "preserve.rs",
@@ -100842,7 +101699,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:26dde99a1df42e6f",
+        "checksum": "sha256:9f59229affbb7901e9cbeaa0190579da2d72005a08bdaae05e74b6bef5a06157",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/propagate.rs",
         "name": "propagate.rs",
@@ -100855,7 +101712,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b3cd0321b5dcda802926f3247ab45b6c1bbfc7bbd60ed38d2d95da29a3d6caf0",
+        "checksum": "sha256:3b1c23d871f4d8c10ca815531facdf200255db57881ff15b896f77d5983e65e0",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/provenance.rs",
         "name": "provenance.rs",
@@ -100892,7 +101749,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f01d1b8a9f04a3efd4efe0fa05d12f9d1b330e4c4f16b9f1781ae6e645a38fa5",
+        "checksum": "sha256:0fb8d5a09aae243e12ca8805081dd4bef30816d6f61b5ee97d5950977d753a4e",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "crates/reflow2-core/src/readiness.rs",
@@ -100930,7 +101787,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c44aeed44068400f04ccba69c3fd47d2a4b4999a036ed08494bf13f166fa2194",
+        "checksum": "sha256:7f3d5ab127e36ac15de0c7781b1e6b5554879cbca77198f3def12972900b3586",
         "location": "crates/reflow2-core/src/regions.rs",
         "name": "crates/reflow2-core/src/regions.rs",
         "status": "realized"
@@ -100954,7 +101811,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e5df94c2d131f986ae7ec7928aff7437d9d1cb3491bda804bd85dccd4783f60f",
+        "checksum": "sha256:11f593d4a6a01ff23b707d1a580a1e23cc0dc7ee811e6ab58ed9c39caa27e9d9",
         "location": "crates/reflow2-core/src/relate.rs",
         "name": "relate.rs",
         "status": "realized"
@@ -101024,7 +101881,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8b406438e64d3efa99ce332b32f0da2fe7de95fa37a57da61565d18671d2e240",
+        "checksum": "sha256:02f80a8cef281099f584803caeae4e61c51fc73f1cca6e2441e8b1453822f05a",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
@@ -101072,7 +101929,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:023f6f0eacb68f14e9753fb44a55693352306d14d352ae03f831967bfaa41b54",
+        "checksum": "sha256:d7ba140f573fe6ef3a5dfe0cd2e651610791a2bc635483c64b0c7dce10f6ed39",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/schema.rs",
         "name": "crates/reflow2-core/src/schema.rs",
@@ -101239,7 +102096,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:76d488152b0b41598e09aed8589bb5df0484d00382033b76bde3070ff5c638f8",
+        "checksum": "sha256:e30223c114e69ae086e68d175a12835caec5a36c350c390f6f97da71906a1856",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/scope.rs",
         "name": "crates/reflow2-core/src/scope.rs",
@@ -101278,7 +102135,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3ed68ac9e6f791ca21c69da873d87349e4d12a60099677006da7ef3dd675fb2d",
+        "checksum": "sha256:693efbf6acfc8a4952bb44383d38b772b4f6901579612c97fb07170c71a03fe8",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/seam.rs",
         "name": "seam.rs",
@@ -101302,7 +102159,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:efb2faf35ec4cc6ed3df5a61f8fdf2af77aded2a6eb29ddabf2394dfc7ed195d",
+        "checksum": "sha256:de223cb188288e14d9e9836d0131cfc044c0a640b4dc50e7d626947e5d4cdbf2",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/seam.rs",
         "name": "tests/seam.rs",
@@ -101315,7 +102172,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a5f270c3646365f78d5c4b6004d1cf0f27285768017ccccce1983176318db40f",
+        "checksum": "sha256:2311c6b8dd5f06f519a6425fafb5b8a79f1ebd24140847bfd20ddcd6f8f861bd",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/search.rs",
         "name": "search.rs",
@@ -101577,7 +102434,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ee40cb2693440e642900616bd4b3d210ec73a4dac01fe5f1dda3a545216cfb73",
+        "checksum": "sha256:1b27052dff8f08e63679801b3a1b96f003d1e68d54f9c2352c0387d5746c7748",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/structure.rs",
         "name": "structure.rs",
@@ -101603,7 +102460,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b1cec4ec107ef2b1",
+        "checksum": "sha256:8344d5c803961e9e9c25814e17995e021797fbdbc48969c4d4875e2e5e976777",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/surprises.rs",
         "name": "surprises.rs",
@@ -101653,7 +102510,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e927a903ac5e1a716c4a4e7a86d97a5c127af3ac075d7f4d50e9e83c4e8f39ed",
+        "checksum": "sha256:0312c8e62f8bd002c78fbfbe7561d76e977ce431f0c47f992bee9f5362f4d417",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/temporal.rs",
         "name": "crates/reflow2-core/src/temporal.rs",
@@ -102283,7 +103140,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e77a434829b174776b1aa27dee4c3d4ccc0e6480733a2bed1ebdda01a8c6b746",
+        "checksum": "sha256:e61345f4214bae7ffcc72bde334e7c815149846565e8b37227b2b5228b4cdeab",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/verify.rs",
         "name": "verify.rs",
@@ -102296,7 +103153,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d04c33fe04bf369729b47f69a6cddb739ff4377ec6dc6224cd71e38cdc313957",
+        "checksum": "sha256:67d0a380ffdef3b8ce203c5e5960abb5477a226b37094e116ca1de3358e8295b",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/vocabulary.rs",
         "name": "crates/reflow2-core/src/vocabulary.rs",
@@ -105268,6 +106125,18 @@
       }
     },
     {
+      "node_id": "chg:absorb-core-storage-text",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "deprecation",
+        "detected_at": "2026-08-24",
+        "name": "Retire dep:dynograph-foundation — the dependency it declares no longer exists",
+        "rationale": "🛑 A DISCIPLINE SLIP, RECORDED RATHER THAN QUIETLY FIXED: this ChangeEvent was written AFTER the code, unlike increments 1-3 where it preceded the edit. The impact-check skill says record first, and the reason is not ceremony — the blast radius is meant to be the work list, and computing it afterwards means it described work already done. Nothing was harmed here because the plan node already carried the scope, but the ordering was wrong and saying so is cheaper than pretending otherwise.\n\n⭐⭐ THE FINDING WORTH MORE THAN THE MIGRATION — absorbing a `#[non_exhaustive]` type converts a RUNTIME FALLBACK into a COMPILE-TIME GUARANTEE. Two wildcard match arms became unreachable: `keys.rs` had `_ => None` and `vocabulary.rs` had `other => \"<unsupported endpoint>\"`. Both existed ONLY because the enums lived in another crate — `#[non_exhaustive]` has no effect inside the defining crate. `vocabulary.rs`'s own comment said *\"a variant added UPSTREAM must not silently read as matches-nothing\"*, and after today there IS no upstream. Both arms were removed, so a new `Value` or `EdgeEndpoint` variant is now a build error instead of a string a reader has to notice. **Nothing in the plan predicted this, and it is a genuine improvement rather than a cost.**\n\n🛑 THREE MECHANICAL TRAPS, EACH CHEAP AND EACH INVISIBLE TO THE GATE THAT SHOULD HAVE CAUGHT IT:\n① INTEGRATION TESTS ARE SEPARATE CRATES. The blanket rewrite turned `dynograph_core::Value` into `crate::foundation::core::Value` everywhere — right inside the lib, wrong in `tests/*.rs` where `crate::` is the test binary. 12 files needed `reflow2_core::` instead.\n② `props!` IS `#[macro_export]`, so it lives at the CRATE ROOT, not in the module it is written in. `crate::props`, never `crate::foundation::core::props`.\n③ **`--no-default-features` CLIPPY DOES NOT COMPILE FEATURE-GATED FILES.** The identical `props!` error sat in `fulltext_tests.rs` behind `#[cfg(feature = \"fulltext\")]` and passed that gate THREE TIMES, surfacing only when the workspace suite enabled the feature. Same shape as increment 2's `#[cfg(test)]` defect: **a gate trusted for coverage it structurally cannot provide.** CI runs both forms and would have caught it; the local habit of reading the narrow gate as the wide one is the actual defect.",
+        "subject": "system",
+        "summary": "The final increment of `dec:absorb-the-foundation-subset-and-end-the-dependency`. `dynograph-core`, `dynograph-storage` and `dynograph-text` are absorbed at tag v0.12.0 into `crates/reflow2-core/src/foundation/` — 7,869 lines across core/ (schema, value, error), store/ (backend, cache, keys, engine/*) and text.rs — with their tests. 62 files were rewritten, plus 12 out-of-crate test files.\n\n**THE DEPENDENCY IS GONE, VERIFIED THREE WAYS:** `cargo tree -p reflow2-core` and `-p reflow2-mcp` both report zero dynograph crates; `Cargo.lock` holds zero; no manifest names one. The only mention left was a stale crate DESCRIPTION (\"...over dynograph-foundation\"), now corrected.\n\nThe seven external crates that came with it are declared in reflow2's own `[workspace.dependencies]` for the first time: `rocksdb`, `tantivy`, `rmp-serde`, `lru`, `serde_yaml`, `uuid`, `thiserror`, plus `tracing` which nothing had declared. `rocksdb` stays at **0.24 verbatim** per `dec:absorb-rocksdb-024-unchanged-then-switch-separately`.\n\n⭐ THIS MODULE IS PUBLIC WHERE THE OTHER THREE ABSORPTIONS ARE NOT. `stats`, `fuzzy` and `graphalg` are `pub(crate)` on the ground that `ifc:core-api` records 277 public functions growing by default. That argument does not reach here: `lib.rs` already re-exported `DynoError`, `Schema`, `Value`, `StoredNode` and `StoredEdge`, and `reflow2-mcp` names `DynoError` 35 times and `StoredNode` 21 times. Making them private would be a breaking change dressed as tidiness."
+      }
+    },
+    {
       "node_id": "chg:absorb-graph-algorithms",
       "node_type": "ChangeEvent",
       "properties": {
@@ -106482,6 +107351,16 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-07-23",
         "name": "Live-store catch-up: same as art:graph — committed export already carried this checksum (a28d0a4); live store was behind because that session's server was down. Refusal-message fix (dc9bf96, BL-86) restores intended behaviour — no design meaning."
+      }
+    },
+    {
+      "node_id": "chg:accept-a380be9465b5d228",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-24T21:45:00Z",
+        "name": "One test function renamed from a_declaration_retired_by_a_PROPOSED_decision_still_reports to ..._a_proposed_decision_... . The test's assertions, subject and meaning are untouched: it still pins that is_discontinued requires the withdrawing Decision to be ACCEPTED, so a proposed removal keeps reporting. The rename is a clippy non_snake_case fix — `cargo clippy -p reflow2-core --no-default-features --all-targets -- -D warnings` refused to compile the test target, and the narrower clippy invocation run in the prior session did not reach it. Nothing the design says about dependency reconciliation moved.",
+        "subject": "system"
       }
     },
     {
@@ -108864,6 +109743,18 @@
       }
     },
     {
+      "node_id": "chg:increments-4-and-5-are-one-increment",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-24",
+        "name": "Snapshot the five-increment plan before correcting its \"stop after any of\" claim",
+        "rationale": "⭐ THE PLAN'S OWN SELLING POINT IS WHAT FAILED, AND THAT IS WHY THIS IS RECORDED RATHER THAN QUIETLY DONE. \"Stop after any of\" was the argument for the ordering — it is what made the plan safe to approve, and it is repeated in three PR bodies. A reader who takes it at face value at increment 4 will start a step they cannot finish or ship.\n\n🛑 HOW IT WAS MISSED WHEN THE PLAN WAS COSTED. The scoping measured each crate's SIZE and each crate's IMPORT COUNT, and it measured the dependency direction between crates (storage depends on core, which is why core was ordered first). What it never asked is whether the two share TYPES ACROSS THE BOUNDARY — a re-export is invisible to a line count and to a dependency arrow alike. **A dependency graph tells you what needs what to build; it does not tell you what breaks if you take one and not the other.**\n\n⭐ AND IT WAS FOUND BY SCOUTING BEFORE WRITING CODE, which is the only reason it cost nothing. The increment-4 scout ran the multiline-aware import scan — the one whose absence caused the increment-3 error — and it surfaced two sites importing `Value` through `dynograph_storage` rather than `dynograph_core`. Two files out of eighty-six. **The signal was two lines wide and it invalidated a five-step plan.**\n\nWHAT DOES NOT CHANGE: increments 1-3 shipped and are genuinely independent; three of six crates are gone and no new external crate entered the tree. The stopping point the plan named after increment 3 is real and was reached.",
+        "subject": "record",
+        "summary": "`dec:absorb-the-foundation-subset-and-end-the-dependency` promises \"five increments, each independently shippable, stop after any of\". **That is true for 1, 2 and 3 and FALSE for 4 and 5.** They are one increment, and the plan is corrected to say so.\n\nMEASURED, not reasoned: `dynograph-storage/src/lib.rs:32` re-exports `pub use dynograph_core::{DynoError, Schema, Value}`, and `StoredNode.properties` is `HashMap<String, Value>` of that same type. So absorbing `dynograph-core` while `dynograph-storage` remains an external dependency gives reflow2 TWO distinct types called `Value` and TWO called `DynoError` — the in-tree ones, and the ones every `StorageEngine` call keeps returning. 48 reflow2 files name `DynoError`, 33 name `Value`. Nothing would compile.\n\nNO ORDERING AVOIDS IT. Storage cannot go first: it DEPENDS ON core. Keeping the absorbed core unused until storage lands is not absorbing anything. The only honest options were to merge the two or to stop after increment 3.\n\nCOMBINED SCOPE: ~5,516 lines (core 1,941 + storage 2,728 non-test + text 847), ~86 importing files, and it brings **rocksdb** and **tantivy** into reflow2's own manifest along with rmp-serde, lru, serde_yaml, uuid and thiserror."
+      }
+    },
+    {
       "node_id": "chg:ingest-handshake",
       "node_type": "ChangeEvent",
       "properties": {
@@ -110674,6 +111565,17 @@
       }
     },
     {
+      "node_id": "cmp:byte-store",
+      "node_type": "Component",
+      "properties": {
+        "level": "component",
+        "name": "byte-store",
+        "provenance": "authored",
+        "purpose": "The RocksDB-backed graph store: schema-validated node and edge persistence, six column families for nodes/edges/adjacency/indexes, MessagePack values, graph isolation (many graph_ids in one instance), batch writes, iterator scans, a read cache and a write-buffer overlay.\n\nAbsorbed from `dynograph-storage` at v0.12.0 on 2026-08-24 (increment 4 of `dec:absorb-the-foundation-subset-and-end-the-dependency`) into `crates/reflow2-core/src/foundation/store/`. Carries the crate's own tests (2,187 lines of them).\n\n⭐ IT CONTAINS THE `KvBackend` SEAM — six byte-level primitives (`get`, `put`, `delete`, `prefix_scan`, `prefix_delete`, `commit_batch`) over six named column families, with ordered prefix iteration as the one structural assumption. Two implementations exist: RocksDB and an in-memory HashMap.\n\n🛑 THAT SEAM IS `pub(crate)` UPSTREAM AND STILL IS, which is exactly why the redb spike in `dec:idea-a-byte-backend-that-compiles-in-seconds` was IMPOSSIBLE to write before this increment: nothing outside the defining crate could implement the trait. It is now inside reflow2, so the spike Anthony asked for became writable the moment this landed. `fact:the-storage-seam-is-published-in-design-and-private-in-code` measured that gap; this is the increment that makes it reflow2's own to close.\n\nEXTERNAL DEPENDENCIES IT BROUGHT: `rocksdb` (0.24, absorbed verbatim — see `dec:absorb-rocksdb-024-unchanged-then-switch-separately`), `rmp-serde`, `lru`, `tracing`.",
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "cmp:claims",
       "node_type": "Component",
       "properties": {
@@ -110918,6 +111820,17 @@
         "purpose": "The flow module.",
         "status": "planned",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:foundation-vocabulary",
+      "node_type": "Component",
+      "properties": {
+        "level": "component",
+        "name": "foundation-vocabulary",
+        "provenance": "authored",
+        "purpose": "`Schema`, `Value`, `DynoError` and the property/node/edge type definitions — the types every other module in reflow2 speaks. A schema is a runtime description of what nodes and edges may exist, what properties they carry, and how entity resolution works; it is what drives validation on every write.\n\nAbsorbed from `dynograph-core` at v0.12.0 on 2026-08-24 into `crates/reflow2-core/src/foundation/core/` — 1,941 lines, of which `schema.rs` is 1,752.\n\n⚠️ DISTINCT FROM `cmp:schema`, and the names are close enough to be worth stating: `cmp:schema` is reflow2's OWN schema module (`src/schema.rs`) — the eleven `schema/*.yaml` files and the design's node and edge types. This is the ENGINE those declarations are validated by. The same name collision that forced `cmp:graph-algorithms` in increment 3 applies here, which is why this is not called `cmp:schema-core` or folded into the existing node.\n\n🛑 THIS IS THE ONE CRATE WITH ZERO DEAD WEIGHT. Every other absorption left the majority behind — 82% of vector, 75% of resolution, 42% of graph. reflow2 imports eight of core's names and needs all four of its files. \"Only take what we need\" happened to mean \"take all of it\", and that is a measurement rather than a concession.\n\n⭐ IT IS ALSO WHY INCREMENTS 4 AND 5 COULD NOT BE SPLIT. `dynograph-storage` re-exported `DynoError`, `Schema` and `Value` from here, and `StoredNode.properties` is a `HashMap<String, Value>` of this very type — so taking this in-tree while storage stayed external would have given reflow2 two of each. See `chg:increments-4-and-5-are-one-increment`.\n\nPUBLIC, unlike `stats`/`fuzzy`/`graphalg`: these types were already in reflow2-core's public API before the absorption and `reflow2-mcp` names them constantly. EXTERNAL DEPENDENCIES BROUGHT: `serde_yaml`, `uuid`, `thiserror`.",
+        "status": "planned"
       }
     },
     {
@@ -111464,6 +112377,17 @@
       }
     },
     {
+      "node_id": "cmp:text-index",
+      "node_type": "Component",
+      "properties": {
+        "level": "component",
+        "name": "text-index",
+        "provenance": "authored",
+        "purpose": "The tantivy-backed full-text index behind `search_design` — BM25 keyword search over every property the schema marks `fulltext`.\n\nAbsorbed from `dynograph-text` at v0.12.0 on 2026-08-24 into `crates/reflow2-core/src/foundation/text.rs` — 847 lines, reached only through the `fulltext` feature.\n\n🛑 IT WAS INVISIBLE TO EVERY EARLIER COSTING OF THE ABSORPTION. reflow2 never named `dynograph-text` in any manifest: it arrived transitively through `dynograph-storage`'s optional `fulltext` feature, which reflow2 enables. Three separate scopings of this work counted five crates; there were six. **A dependency reached only through a feature flag is absent from the dependency list a reader would check**, and it brought `tantivy` with it.\n\n⚠️ AND IT IS THE ONE PIECE WITH A KNOWN HISTORY OF LEAKING. The v0.11.0 → v0.12.0 pin bump was made precisely because `search_fulltext` returned `dynograph_text::TextHit` — a type from a crate reflow2 never named, reachable only through an optional feature. In-tree that class of leak stops being possible: there is no boundary left for a type to cross unnoticed.\n\n(Distinct from `dep:dynograph-foundation`, the Resource recording the external dependency this ENDS, and from reflow2's own search module, which is the caller rather than the index.)",
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "cmp:tools-ask",
       "node_type": "Component",
       "properties": {
@@ -111966,11 +112890,21 @@
       }
     },
     {
+      "node_id": "dec:absorb-rocksdb-024-unchanged-then-switch-separately",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED 2026-08-24 by Anthony: *\"keep rocksdb 0.24 as-is. We can switch to rust-rocksdb in a future session that creates a PR for this switch.\"*\n\n═══ WHAT HE SPOTTED, AND IT IS RIGHT ═══\n\nThere are TWO separate crates wrapping the same C++ engine, with independent version numbering:\n\n    crate            declared      resolved            latest\n    rocksdb          \"0.24\"        0.24.0              0.25.0     ← in use, historically unmaintained\n    rust-rocksdb     --            --                  0.52.0     ← active, community-standard\n    librocksdb-sys   --            0.17.3+10.4.2       --\n    tantivy          --            0.26.1              --\n\nreflow2 uses `rocksdb`, pinned at `dynograph-foundation/Cargo.toml:60`, one minor behind its own latest and on the less-maintained of the two. `rust-rocksdb` tracks current stable C++ RocksDB releases and carries the fuller feature set (transactions, backups, column families).\n\n⚠️ **THE TWO VERSION NUMBERS ARE NOT COMPARABLE.** 0.24 vs 0.52 is not \"28 versions behind\" — they are different crates that never shared a numbering line. Reading them as one series would overstate the gap.\n\n═══ WHY THIS BECOMES REFLOW2'S DECISION NOW ═══\n\nIncrement 4 of `dec:absorb-the-foundation-subset-and-end-the-dependency` absorbs `dynograph-storage`, which means reflow2 declares this dependency in its OWN manifest for the first time. \"Which rocksdb crate, at which version\" stops being dynograph's call and becomes reflow2's, on that branch, that day.\n\n═══ WHAT WAS DECIDED, AND THE REASONING ═══\n\n**Absorb `rocksdb = \"0.24\"` verbatim.** The migration stays purely mechanical: the same crate, the same version, the same API, so nothing about the 86-file absorption can fail for a reason other than the absorption.\n\n**Then switch to `rust-rocksdb` in a separate PR**, with its own test run and its own revert.\n\n⭐ THIS IS THE SAME PRINCIPLE THAT SPLIT THE ABSORPTION INTO INCREMENTS: one variable at a time, so a failure has one cause. Bumping even to `rocksdb` 0.25 inside this increment would mean a breakage had two candidate explanations, and the increment is already the largest by a wide margin — ~5,516 lines across ~86 files, bringing rocksdb and tantivy into the manifest together.\n\n🛑 AND THE COST OF THE ALTERNATIVE IS NOT HYPOTHETICAL HERE. This project has already paid for attributing one effect to the wrong cause today: a 40-second regression was blamed on the wrong code because two numbers happened to agree. Mixing a dependency swap into a migration is the same shape, set up in advance.\n\n═══ ROADS NOT TAKEN ═══\n• **Bump to `rocksdb` 0.25 during the absorption** — smallest possible change, same crate. Declined for the two-causes reason; it buys one minor version at the price of an ambiguous failure.\n• **Switch to `rust-rocksdb` 0.52 during the absorption** — the maintained crate, but an API change stacked on top of the largest migration in the plan.\n\n📌 STILL PARKED, and deliberately: `dec:idea-a-byte-backend-that-compiles-in-seconds` (redb, fjall, LMDB, SQLite). Anthony, same exchange: *\"I know we brainstormed switching to redb, but I'm still not convinced that is the right move - so that one stays parked for a time.\"* **Parked is not rejected**, and the spike he asked for stays owed. Note the ordering that makes it possible at all: the `KvBackend` trait is `pub(crate)` inside dynograph-storage, so no spike can be written from reflow2 until increment 4 lands.",
+        "name": "DECIDED — absorb the `rocksdb` 0.24 pin exactly as it is, and switch to the maintained `rust-rocksdb` in its own later PR",
+        "rationale": "Recorded because the decision is small and the reasoning is the whole of it: absorbing verbatim is not laziness, it is keeping the number of variables at one.\n\n⭐ THE FINDING IS ANTHONY'S AND IT WAS NOT VISIBLE FROM INSIDE THE PLAN. The absorption scoping measured lines, files, closures and type boundaries — and never asked whether the external crate being inherited was the right one. **A migration that faithfully carries a dependency forward will faithfully carry a bad choice of dependency forward too**, and nothing in the costing would have said so.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:absorb-the-foundation-subset-and-end-the-dependency",
       "node_type": "Decision",
       "properties": {
-        "decision": "DECIDED 2026-08-24 by Anthony: *\"I kind of don't want to be dependent upon dynograph-foundation anymore\"* and *\"by absorbing, I don't mean all dynograph-foundation crates - I mean only the ones that are needed in reflow2.\"*\n\nThis CHOOSES among the options `dec:idea-cannibalize-dynograph-foundation-into-reflow2` costed and left open. That node stays as the record of the options; this one records the choice and the plan.\n\n═══ WHY THE EARLIER RECOMMENDATION IS NO LONGER THE RIGHT ONE ═══\n\nThe brainstorm states the trap plainly: **\"Two problems look like one here and have different answers. (a) DEAD WEIGHT ... (b) THE DEPENDENCY ITSELF ... Option C solves (a) and does nothing for (b).\"** Option C was recommended and deferred. Anthony has now said which he is solving: **(b)**. C removes two crates from the manifest and leaves the dependency where it is. This is trimmed option A.\n\n⭐ ITS REOPENING TRIGGERS WERE NOT WHAT REOPENED IT. The node named two — the pin-confirmation cost recurring, or reflow2 needing to CHANGE foundation behaviour. **Neither happened.** What reopened it is a third thing that node had already written as option D's counter: *\"the reason for absorbing is not technical, it is about what reflow2 IS.\"* **A deferral's stated triggers are not the only way back in**, and a reader who treats them as exhaustive will hold a decision closed against its owner.\n\n═══ IT STAYS INSIDE THE OWNERSHIP BOUND ═══\n\n`dec:idea-dynograph-crates-independent-in-code-coupled-in-release` sets a bound this decision must respect: *\"reflow2's design has no standing to decide [dynograph's structure] ... the only options reflow2 can weigh honestly on its own are A (accept it) and E (take less).\"* **This is E, taken to its end.** Every step happens in reflow2's own repository, needs no upstream change, and decides nothing about dynograph-foundation's release structure, its other four crates, or its other consumers. That question stays open and stays theirs.\n\n═══ THE MEASUREMENT THAT DID NOT EXIST BEFORE ═══\n\nThe brainstorm measured whole crates and said what it had not measured: how much of core, storage and graph is dead from reflow2's view. Measured 2026-08-24 at v0.12.0 (`b5a9f74`), file by file, from every `use dynograph_*` in reflow2 and the internal closure of what those names reach:\n\n    crate                 needed    total    dead\n    dynograph-core         1,941    1,941      0%   the whole type vocabulary\n    dynograph-storage      2,728    2,836      4%   (+2,187 lines of its own tests)\n    dynograph-text           847      847      0%   ⇐ NOT IN ANY EARLIER COUNT\n    dynograph-graph        1,844    3,832     52%\n    dynograph-resolution     300    1,211     75%\n    dynograph-vector         436    2,377     82%\n    ─────────────────────────────────────────────\n    TOTAL                 ~8,100   ~13,000    ~40%\n\n⇒ **+15% to reflow2's 53,005-line tree, not the +27% the all-crates figure implied.**\n\n🛑 **SIX CRATES, NOT FIVE.** `dynograph-storage` depends on `dynograph-text` for the `fulltext` feature, and reflow2 USES fulltext (`#[cfg(feature = \"fulltext\")]`, `search.rs`). 847 lines, and it brings **tantivy 0.26**. The sibling node knew `text` was reached through the feature; no COSTING of the absorption ever counted it. A scope that missed it would have discovered it mid-migration.\n\nOTHER EXTERNAL CRATES INHERITED, none previously listed: `rmp-serde`, `lru`, `rand`, `serde_yaml`, `uuid`, `thiserror`, `tantivy`.\n\nIMPORT CHURN: **63 reflow2 files** name a `dynograph_*` path, 62 of them `dynograph_core`. Mechanical, and broad.\n\n═══ WHAT REFLOW2 WOULD OWN FOREVER — the real cost, and it is not line count ═══\n\n  ~2,700 lines of RocksDB storage engine (backend, keys, cache, engine/*)\n    847 lines of tantivy-backed full-text index\n    695 lines of Leiden community detection\n  1,752 lines of schema engine (core/schema.rs)\n\n═══ ONE RECORDED OBJECTION WEAKENS, ONE STANDS ═══\n\n⭐ WEAKER — *\"you lose the upstream's fixes silently.\"* **Upstream is Anthony's own repository.** No vendor, no third party. And storyflow keeps dynograph-foundation alive through its REST surface, which `fact:the-diamond-meets-at-dynographs-internals-not-its-interface` measured as disjoint from reflow2's Rust-library surface. The repo does not die and storyflow is untouched; reflow2 stops linking it, that is all.\n\n🛑 STANDS — *\"Vendoring converts a visible dependency into an invisible one.\"* The pin carries a written reason for every bump; the v0.11→v0.12 note recording a `TextHit` type leak is real history with no successor once the code is in-tree. MITIGATION, required rather than optional: each increment records a ChangeEvent naming the exact TAG absorbed and the FILES taken.\n\n═══ THE PLAN — five increments, each shippable, stop after any ═══\n\n  1. VECTOR → `stats.rs` (436 lines, 1 importing file). Drops hnsw.rs + distance.rs.\n  2. RESOLUTION → `fuzzy.rs` (300 lines, 3 files). Verified standalone — no internal deps.\n  3. GRAPH → graph/error/communities/scc/components/cycles/cuts (1,844 lines, 3 files).\n     ⭐ ZERO external dependencies. Drops ~2,000 lines of pagerank, maxflow, betweenness,\n     eigenvector, link-prediction, shortest-path and paths reflow2 never calls.\n  4. CORE → the whole crate (1,941 lines, 62 importing files). Big mechanical churn, no new risk.\n  5. STORAGE + TEXT (3,575 lines, 24 files). Brings rocksdb and tantivy. THE REAL ONE.\n\n⭐ AFTER 1-3: 2,580 lines moved, 7 files of churn, NO new external crates, three of six crates gone. A genuine stopping point for somebody who changes their mind.\n\n🛑 ONLY STEP 5 ENDS THE DEPENDENCY. Steps 1-4 shrink it. \"We absorbed the foundation\" said after step 4 would be false, and this ordering makes that easy to say wrongly.\n\n═══ WHAT THIS DECIDES BY CONSTRUCTION, AND WHAT IT CANCELS ═══\n\n`dec:idea-is-the-foundation-a-subsystem-or-a-supplier` is answered by construction on completion: no supplier left to be. The five `ifc:req-dyno-*` interfaces are then RETIRED on the record — they were true — not deleted.\n\n🛑 CANCELS mirroring dynograph's published surface into reflow2, dropped on Anthony's word the same day it was proposed: absorbing removes the seam a mirror would describe, so the two are ALTERNATIVES. The flo2 → reflow2 mirror is unaffected. Also moot: the v0.13.0 pin parked since 2026-08-19.",
-        "name": "DECIDED — absorb only what reflow2 needs from dynograph-foundation and end the dependency, in five increments you can stop after any of",
+        "decision": "DECIDED 2026-08-24 by Anthony: *\"I kind of don't want to be dependent upon dynograph-foundation anymore\"* and *\"by absorbing, I don't mean all dynograph-foundation crates - I mean only the ones that are needed in reflow2.\"*\n\nThis CHOOSES among the options `dec:idea-cannibalize-dynograph-foundation-into-reflow2` costed and left open. That node stays as the record of the options; this one records the choice and the plan.\n\n═══ 🛑 THE PLAN WAS CORRECTED 2026-08-24 — IT WAS FIVE INCREMENTS AND IT IS FOUR ═══\n\n**As first written this decision promised \"five increments, each independently shippable, stop after any of\". That was true for 1, 2 and 3 and FALSE for 4 and 5.** The prior text is preserved at `snap:epoch:the-absorption:dec:absorb-the-foundation-subset-and-end-the-dependency`; the correction is `chg:increments-4-and-5-are-one-increment`.\n\nWHY: `dynograph-storage/src/lib.rs:32` re-exports `pub use dynograph_core::{DynoError, Schema, Value}`, and `StoredNode.properties` is `HashMap<String, Value>` of that same type. Absorbing core while storage stays external gives reflow2 TWO distinct types called `Value` and TWO called `DynoError` — the in-tree ones, and the ones every `StorageEngine` call keeps returning. 48 files name `DynoError`, 33 name `Value`. Nothing compiles. No ordering avoids it: storage DEPENDS ON core, so it cannot go first.\n\n⭐ HOW THE COSTING MISSED IT: it measured each crate's SIZE, each crate's IMPORT COUNT, and the dependency DIRECTION between crates. It never asked whether two crates share TYPES ACROSS the boundary. **A dependency graph tells you what needs what to build; it does not tell you what breaks if you take one and not the other.** Found by scouting before writing code — two import sites out of eighty-six, and the signal was two lines wide.\n\n═══ WHY THE EARLIER RECOMMENDATION IS NO LONGER THE RIGHT ONE ═══\n\nThe brainstorm states the trap plainly: **\"Two problems look like one here and have different answers. (a) DEAD WEIGHT ... (b) THE DEPENDENCY ITSELF ... Option C solves (a) and does nothing for (b).\"** Option C was recommended and deferred. Anthony has now said which he is solving: **(b)**. C removes two crates from the manifest and leaves the dependency where it is. This is trimmed option A.\n\n⭐ ITS REOPENING TRIGGERS WERE NOT WHAT REOPENED IT. The node named two — the pin-confirmation cost recurring, or reflow2 needing to CHANGE foundation behaviour. **Neither happened.** What reopened it is a third thing that node had already written as option D's counter: *\"the reason for absorbing is not technical, it is about what reflow2 IS.\"* **A deferral's stated triggers are not the only way back in**, and a reader who treats them as exhaustive will hold a decision closed against its owner.\n\n═══ IT STAYS INSIDE THE OWNERSHIP BOUND ═══\n\n`dec:idea-dynograph-crates-independent-in-code-coupled-in-release` sets a bound this decision must respect: *\"reflow2's design has no standing to decide [dynograph's structure] ... the only options reflow2 can weigh honestly on its own are A (accept it) and E (take less).\"* **This is E, taken to its end.** Every step happens in reflow2's own repository, needs no upstream change, and decides nothing about dynograph-foundation's release structure, its other four crates, or its other consumers. That question stays open and stays theirs.\n\n═══ THE MEASUREMENT THAT DID NOT EXIST BEFORE ═══\n\nMeasured 2026-08-24 at v0.12.0 (`b5a9f74`), file by file, from every `use dynograph_*` in reflow2 and the internal closure of what those names reach:\n\n    crate                 needed    total    dead\n    dynograph-core         1,941    1,941      0%   the whole type vocabulary\n    dynograph-storage      2,728    2,836      4%   (+2,187 lines of its own tests)\n    dynograph-text           847      847      0%   ⇐ NOT IN ANY EARLIER COUNT\n    dynograph-graph        2,219    3,832     42%   ⇐ corrected from 1,844/52%\n    dynograph-resolution     300    1,211     75%\n    dynograph-vector         436    2,377     82%\n\n⇒ **about +15% to reflow2's 53,005-line tree, not the +27% the all-crates figure implied.**\n\n🛑 **SIX CRATES, NOT FIVE.** `dynograph-storage` depends on `dynograph-text` for the `fulltext` feature, and reflow2 USES fulltext. 847 lines, and it brings **tantivy 0.26**. No COSTING of the absorption ever counted it.\n\nOTHER EXTERNAL CRATES INHERITED: `rmp-serde`, `lru`, `rand`, `serde_yaml`, `uuid`, `thiserror`, `tantivy`.\n\n═══ WHAT REFLOW2 WOULD OWN FOREVER — the real cost, and it is not line count ═══\n\n  ~2,700 lines of RocksDB storage engine (backend, keys, cache, engine/*)\n    847 lines of tantivy-backed full-text index\n    695 lines of Leiden community detection\n  1,752 lines of schema engine (core/schema.rs)\n\n═══ ONE RECORDED OBJECTION WEAKENS, ONE STANDS ═══\n\n⭐ WEAKER — *\"you lose the upstream's fixes silently.\"* **Upstream is Anthony's own repository.** No vendor, no third party. And storyflow keeps dynograph-foundation alive through its REST surface, which `fact:the-diamond-meets-at-dynographs-internals-not-its-interface` measured as disjoint from reflow2's Rust-library surface. The repo does not die and storyflow is untouched; reflow2 stops linking it, that is all.\n\n🛑 STANDS — *\"Vendoring converts a visible dependency into an invisible one.\"* The pin carries a written reason for every bump; the v0.11→v0.12 note recording a `TextHit` type leak is real history with no successor once the code is in-tree. MITIGATION, required rather than optional: each increment records a ChangeEvent naming the exact TAG absorbed and the FILES taken, and each absorbed module carries a header saying the same.\n\n═══ THE PLAN — FOUR increments ═══\n\n  ✅ 1. VECTOR → `stats.rs` (436 lines, 1 importing file). SHIPPED, PR #326.\n  ✅ 2. RESOLUTION → `fuzzy.rs` (300 lines, 3 files). SHIPPED, PR #327 — and it took\n        dynograph-vector out of the BUILD GRAPH with it, discharging increment 1's caveat.\n  ✅ 3. GRAPH → `graphalg/` (2,219 lines, 3 files). SHIPPED, PR #328.\n        ⭐ ZERO new external dependencies. Dropped 1,613 lines in nine files.\n  ⬜ 4. CORE + STORAGE + TEXT, TOGETHER AND NOT SEPARABLE (~5,516 lines, ~86 files).\n        Brings rocksdb and tantivy. **THIS IS THE ONE THAT ENDS THE DEPENDENCY.**\n\n⭐ AFTER 1-3 — reached 2026-08-24: three of six crates gone, ~2,955 lines moved, 7 files of\nchurn, and NO new external crate in the tree. **This is a genuine stopping point and it is the\nLAST one.** Step 4 has no interior stopping point at all, which is precisely what the original\nplan got wrong.\n\n🛑 STEPS 1-3 SHRANK THE DEPENDENCY; ONLY STEP 4 ENDS IT. \"We absorbed the foundation\" said before\nstep 4 lands would be false.\n\n═══ WHAT THIS DECIDES BY CONSTRUCTION, AND WHAT IT CANCELS ═══\n\n`dec:idea-is-the-foundation-a-subsystem-or-a-supplier` is answered by construction on completion: no supplier left to be. The five `ifc:req-dyno-*` interfaces are then RETIRED on the record — they were true — not deleted.\n\n🛑 CANCELS mirroring dynograph's published surface into reflow2, dropped on Anthony's word the same day it was proposed: absorbing removes the seam a mirror would describe, so the two are ALTERNATIVES. The flo2 → reflow2 mirror is unaffected. Also moot: the v0.13.0 pin parked since 2026-08-19.",
+        "name": "DECIDED — absorb only what reflow2 needs from dynograph-foundation and end the dependency, in FOUR increments: three you can stop after, and a fourth that cannot be split",
         "rationale": "Recorded as its own node rather than by editing the brainstorm, because that node's value is the OPTIONS and their costs and it should keep reading as where the thinking happened.\n\n⭐ THE MEASUREMENT LESSON, and it is the second time in one day: the earlier costing measured whole crates and stated honestly what it had not measured. Measuring the missing part changed the headline from +27% to +15% AND found a sixth crate (`dynograph-text`, and tantivy behind it) that no costing of this idea mentions. **A number that answers a narrower question than the one being asked is not evidence about the wider one** — the same shape as the edge-only shortlist measurement corrected earlier today, one level up.\n\n🛑 A STALE PREMISE FOUND WHILE READING THE SIBLINGS, and it is not corrected here because correcting another node's text is a separate act: `dec:idea-dynograph-crates-independent-in-code-coupled-in-release` states that this decision is recorded in reflow2's graph \"because dynograph-foundation has no reflow2 design of its own\". **It has one.** Verified 2026-08-24 with `describe_designs`, which opens nothing: graph_id `dynograph-foundation`, origin `adopted`, minted by 0.16.0, with a committed 179-node export and a `docs/published-surface.json` carrying 15 published Interfaces. The premise was true when written and is false now.",
         "status": "accepted"
       }
@@ -113720,6 +114654,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-05, in his own words: \"one idea that I've come across is that I work many inter-related projects. it seems like a reflow2 project/graph is limited to one git repo. curious if we should remove this constraint? then I can use the reflow2 graph in one project (project_x) and still use it to guide a closely related project (say project_y). the benefit of this is that a set of projects done in this manner can all influence each other. another option is to build the reflow2 graph in the parent folder of a bunch of interrelated projects. for instance, all my individual projects are in a folder called git_projects - maybe this is the appropriate place to build the graph versus within each project.\"\n\n⭐ FIRST, THE PREMISE DOES NOT HOLD, AND THAT MATTERS BEFORE ANY OPTION IS WEIGHED. There is NO CONSTRAINT TO REMOVE. `--graph-path` is an ordinary CLI argument; this repo's `.mcp.json` passes `./.reflow2/graph` and that is a CONVENTION, not a binding. Verified the same day by creating graphs at arbitrary filesystem paths outside any repository during the corpus trial. `dec:install-once-per-machine` already states the position: \"reflow2 installs once per machine; the in-repo half is optional and only for repos you share.\" So the question is not CAN the graph live elsewhere — it can, today, with no change — but WHERE IT SHOULD, which is a design question about authority rather than a limitation to lift.\n\nSECOND, THE PLACEMENT RULE IS ALREADY DECIDED AND IT DISPOSES OF ONE OPTION OUTRIGHT. `dec:nested-graphs` (ACCEPTED, Anthony, 2026-07-25): \"A design is its own graph when something at that level is separately OWNED, separately RELEASED, or separately SHARED — and a subtree of one graph otherwise. THE HIERARCHY DOES NOT DECIDE; AUTHORITY DOES.\" A `git_projects/` parent folder is a filesystem convention with no authority attached, so under the accepted rule it is NOT a reason to put a graph there. If those projects share a graph it must be because they share an owner, a release train or a recipient — never because they share a directory.\n\n⭐ THIRD, AND THIS IS WHY THE QUESTION IS GENUINELY OPEN RATHER THAN ALREADY ANSWERED: THE RULE WAS WRITTEN FOR FEDERATION BETWEEN OWNERS, AND ANTHONY'S CASE IS ONE OWNER WITH MANY RELEASE TRAINS. The discriminator is a three-way OR — owned, released, OR shared — so \"separately released\" alone sends his projects to separate graphs. But every cost the rule cites for a seam (a coordinate, an evidence roll-up, a freshness check) is a cost of crossing an AUTHORITY boundary, and there is no authority boundary here. He is paying federation's price to solve a filing problem. The rule is not wrong; his case sits on a seam in it that multi-org federation never presented.\n\nOPTIONS, NONE CHOSEN. (a) ONE GRAPH FOR THE FAMILY, levels inside it. The accepted rule already blesses this \"for everything inside one ownership boundary\" and `cap:scoped-analysis` delivers per-level reading, so nothing new is needed. Counter, from the rule's own text: what one graph cannot give is separate write locks, separate release trains, or a way to share ONE project without shipping the others — and his projects DO release separately, which is exactly the case (a) was said not to cover. (b) A GRAPH PER PROJECT, MIRRORED. What the accepted rule prescribes, and the linking half is BUILT (`cap:mirror-surface`, `cap:publish-surface`). Counter: `dec:linked-repos-poc` names the blocker — \"reflow2 structures roughly one and a half of the six characteristics an interface spec needs and puts the rest in one free-text string, so today two graphs can be linked and still not be comparable\" — and reflow2's own `maturity_report` puts SEAMS at 0 of 73, so the mechanism this option rests on is the least-exercised thing in the design. (c) A GRAPH IN THE PARENT FOLDER. Ruled out by `dec:nested-graphs` as stated, but worth keeping visible because it is what Anthony reached for and the reason it fails is not obvious: a folder is where things SIT, not who decides them. (d) ONE GRAPH FOR INTENT, SEPARATE GRAPHS FOR BUILD. Not previously considered: the shared thing across his projects is what he is trying to achieve, and the separate thing is what each repo ships. Counter: reflow2 has no vocabulary for a design that holds only intent and no build, and `req:accreted-intent-becomes-a-design` is the closest thing — which is about a corpus, not a standing hub. (e) DO NOTHING; the constraint he wanted removed does not exist, and he can point `--graph-path` wherever he likes today. Counter: that answers the mechanism and ignores the question, which is what SHOULD be one design.\n\nWHAT MUST NOT BE RE-DERIVED WHEN THIS IS PICKED UP: `dec:nested-graphs` and its four stated obligations (the coordinate, the roll-up, freshness, the seam), `dec:linked-repos-poc` and its dependency on `req:interface-spec-complete`, `req:design-composes` and `req:composed-analysis` (both accepted), and `cap:mirror-surface`/`cap:publish-surface`/`cap:composed-analysis` (all built). The LINKING half exists; the COMPARING half does not.\n\nNOT CHECKED, and it bears directly on (b): whether `mirror_surface` and `compose_and_analyse` have ever been run on two real designs. `dec:linked-repos-poc` is one of the two parked Decisions that `detect_defects` has been reporting as governing nothing all session, which suggests not.",
         "name": "OPEN — where does the graph live when ONE PERSON works many interrelated projects, which is the case dec:nested-graphs' rule was not written for?",
         "rationale": "Captured under the brainstorm skill at Anthony's request, and the search he asked for was run first — he said \"I know we've discussed linking projects in the past, so there should already be some discussion on this,\" and he was right. Recording what already exists BEFORE recording the new question is the whole point of the exercise, and this project has spent a session establishing that the expensive failure is re-deriving what is written down.\n\nThe premise correction is on the node rather than left in conversation because it is the most perishable part: \"the graph is limited to one git repo\" is a reasonable thing to believe from the outside, it is false, and nothing in the repo says so plainly. If that correction lives only in a chat it will be believed again.\n\nDeliberately NOT registered as formal alternatives — that would make this a fork the loop starts asking him to choose between, which is exactly what a brainstorm should not do. Kept separate from dec:idea-intent-crosses-designs because that one asks what may cross a boundary and this one asks where the boundary is; one node holding both could only ever be half-answered.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-one-place-to-bump-a-dependency",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-24: *\"can we track all external dependencies in one file somewhere in reflow2? then every other file that needs an external dependency points to this as the master? ... Then when a new version of rust-rocksdb or rust-sdk (rmcp) or any other package comes out, we just have to update it in one location.\"*\n\n═══════════════════════════════════════════════\n⭐ THE MECHANISM HE DESCRIBED ALREADY EXISTS — IT IS CARGO'S `[workspace.dependencies]`\n\nThe root `Cargo.toml` holds the version table; a crate writes `foo = { workspace = true }` instead of a version. Bump once, every crate follows. So the ANSWER to the question as asked is \"yes, and it is built in.\"\n\n🛑 **BUT THE MEASUREMENT SAYS IT IS BARELY USED, AND THAT IS THE REAL FINDING.** Counted 2026-08-24:\n\n    [workspace.dependencies]                     8 crates\n    reflow2-core   deps        8 workspace-ref   3 CRATE-LOCAL (serde, serde_json, sha2)\n    reflow2-core   dev-deps    0 workspace-ref   2 CRATE-LOCAL (proptest, tempfile)\n    reflow2-mcp    deps        0 workspace-ref  15 CRATE-LOCAL\n\n⇒ **20 crate-local pins against 8 shared, and `reflow2-mcp` uses the table ZERO times.** Every dependency he named is crate-local: `rmcp` at `reflow2-mcp/Cargo.toml:24`, and `rocksdb` only reached the table today.\n\n⚠️ **THE TABLE ONLY BECAME NON-TRIVIAL TODAY, AS A SIDE EFFECT.** Before the foundation absorption it held the two dynograph git pins and nothing else. The eight entries in it now are the crates the absorption brought in — they are there because that work needed somewhere to put them, not because anyone chose the pattern.\n\n🛑 **FOUR CRATES ARE PINNED IN TWO PLACES INDEPENDENTLY** — `serde`, `serde_json`, `sha2` in both crates, and `tracing` now in the workspace table AND crate-local in `reflow2-mcp`. They agree today. Nothing makes them agree tomorrow, and nothing reports it if they stop: cargo resolves compatible ranges silently, so the first symptom of a drift is behavioural, not a build error.\n\n═══════════════════════════════════════════════\nIDEAS, UNRANKED, each with what it costs\n\n**A. MOVE EVERYTHING TO THE TABLE.** All 20 pins become `{ workspace = true }`.\n   ⭐ Exactly what he asked for, and the four duplicate pins collapse to one each.\n   ⚠️ It is also 20 lines of churn for a two-crate workspace where 15 of the 20 belong to ONE crate and no other crate will ever want them. A table of things only one consumer uses is a table of indirection.\n\n**B. MOVE ONLY WHAT IS SHARED OR EXTERNALLY COUPLED.** The four duplicated pins, plus `rmcp` — the MCP SDK, the one dependency whose version is a protocol commitment rather than an implementation detail.\n   ⭐ Smallest change that removes the real hazard: two places to bump one crate.\n   ⚠️ Leaves a rule that has to be remembered — \"shared ones go in the table\" is a judgement nobody checks.\n\n**C. LEAVE IT.** Crate-local pins are legitimate where one crate is the only consumer, and `reflow2-mcp` genuinely is for 15 of its 15.\n   ⭐ The honest defence: a two-crate workspace is not where this bites. It bites at five.\n   ⚠️ It does nothing about the four double pins, which are the part that is already wrong.\n\n**D. DETECT IT RATHER THAN DECIDE IT.** A check that fails when one crate name is pinned in two places with two literals, or when a crate-local pin duplicates a table entry.\n   ⭐ The only option that survives someone forgetting — and this project's own history says a rule with no detector decays. `tools/check_kit_manifest.py` and `check_doc_versions.py` are precedents for exactly this shape of gate.\n   ⚠️ A gate for a two-crate workspace may be more machinery than the problem.\n\n═══════════════════════════════════════════════\n📌 WHAT IS NOT IN DOUBT\n\n`rust-sdk` **IS** `rmcp` — the repository publishes that crate; they are not two things. `reflow2-mcp/Cargo.toml:61` already says so, which is why the commented-out `[patch]` block points at a local `rust-sdk` checkout.\n\n📌 AND WHAT NOBODY HAS COSTED: whether any of the 20 pins currently resolve to different versions across the two crates. The four duplicates were compared as WRITTEN, not as RESOLVED — `Cargo.lock` would say, and nobody has read it for this.",
+        "name": "OPEN — reflow2 has a workspace dependency table and one of its two crates never uses it: 20 crate-local pins against 8 shared, and four crates pinned twice",
+        "rationale": "Recorded via the brainstorm skill at `proposed`. Anthony thinking out loud, 2026-08-24, immediately after the rocksdb-version exchange. Nothing here is intent and nothing is planned.\n\n⭐ THE QUESTION HAD A FACTUAL ANSWER AND A REAL FINDING UNDERNEATH IT, and answering only the first would have been the mistake. \"Can we track dependencies in one file?\" is answered by \"Cargo already does that\" — and stopping there would have left 20 crate-local pins and four double-pinned crates unexamined. **A question that turns out to be already-solved is worth measuring anyway, because the answer is only true if the mechanism is used.**\n\n🛑 IT WAS ALSO NEARLY LOST. The factual half was given in conversation and no node was written; it survives only because Anthony asked, two exchanges later, whether the ideas he had raised were being linked. That is the same failure `unreviewed_ideas` counts, one level up: not an idea recorded and unlinked, but an idea answered and never recorded at all.",
         "status": "proposed"
       }
     },
@@ -117982,6 +118926,16 @@
         "epoch_type": "revision",
         "name": "Published-surface export (2026-07-25, post-v0.11.0)",
         "sequence": 140,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:the-absorption",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The foundation absorption — reflow2 takes what it needs from dynograph-foundation and stops depending on it (2026-08-24)",
+        "sequence": 182,
         "status": "arrived"
       }
     },
@@ -126934,6 +127888,76 @@
       }
     },
     {
+      "node_id": "snap:epoch:the-absorption:dec:absorb-the-foundation-subset-and-end-the-dependency",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-a-byte-backend-that-compiles-in-seconds\",\"properties\":{\"evidence\":\"`KvBackend` lives in dynograph-foundation, not reflow2, so until the absorption's increment 5 brings dynograph-storage in-tree, swapping the byte store means changing another repository — which dec:idea-dynograph-crates-independent-in-code-coupled-in-release says reflow2's design has no standing to decide. Absorb first, then swap. The dependency also runs the other way in scope: if SQLite (option F) were taken it would subsume tantivy too, so increment 5 would absorb less than currently planned.\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-24\",\"role\":\"approver\"}}]",
+        "state": "{\"decision\":\"DECIDED 2026-08-24 by Anthony: *\\\"I kind of don't want to be dependent upon dynograph-foundation anymore\\\"* and *\\\"by absorbing, I don't mean all dynograph-foundation crates - I mean only the ones that are needed in reflow2.\\\"*\\n\\nThis CHOOSES among the options `dec:idea-cannibalize-dynograph-foundation-into-reflow2` costed and left open. That node stays as the record of the options; this one records the choice and the plan.\\n\\n═══ WHY THE EARLIER RECOMMENDATION IS NO LONGER THE RIGHT ONE ═══\\n\\nThe brainstorm states the trap plainly: **\\\"Two problems look like one here and have different answers. (a) DEAD WEIGHT ... (b) THE DEPENDENCY ITSELF ... Option C solves (a) and does nothing for (b).\\\"** Option C was recommended and deferred. Anthony has now said which he is solving: **(b)**. C removes two crates from the manifest and leaves the dependency where it is. This is trimmed option A.\\n\\n⭐ ITS REOPENING TRIGGERS WERE NOT WHAT REOPENED IT. The node named two — the pin-confirmation cost recurring, or reflow2 needing to CHANGE foundation behaviour. **Neither happened.** What reopened it is a third thing that node had already written as option D's counter: *\\\"the reason for absorbing is not technical, it is about what reflow2 IS.\\\"* **A deferral's stated triggers are not the only way back in**, and a reader who treats them as exhaustive will hold a decision closed against its owner.\\n\\n═══ IT STAYS INSIDE THE OWNERSHIP BOUND ═══\\n\\n`dec:idea-dynograph-crates-independent-in-code-coupled-in-release` sets a bound this decision must respect: *\\\"reflow2's design has no standing to decide [dynograph's structure] ... the only options reflow2 can weigh honestly on its own are A (accept it) and E (take less).\\\"* **This is E, taken to its end.** Every step happens in reflow2's own repository, needs no upstream change, and decides nothing about dynograph-foundation's release structure, its other four crates, or its other consumers. That question stays open and stays theirs.\\n\\n═══ THE MEASUREMENT THAT DID NOT EXIST BEFORE ═══\\n\\nThe brainstorm measured whole crates and said what it had not measured: how much of core, storage and graph is dead from reflow2's view. Measured 2026-08-24 at v0.12.0 (`b5a9f74`), file by file, from every `use dynograph_*` in reflow2 and the internal closure of what those names reach:\\n\\n    crate                 needed    total    dead\\n    dynograph-core         1,941    1,941      0%   the whole type vocabulary\\n    dynograph-storage      2,728    2,836      4%   (+2,187 lines of its own tests)\\n    dynograph-text           847      847      0%   ⇐ NOT IN ANY EARLIER COUNT\\n    dynograph-graph        1,844    3,832     52%\\n    dynograph-resolution     300    1,211     75%\\n    dynograph-vector         436    2,377     82%\\n    ─────────────────────────────────────────────\\n    TOTAL                 ~8,100   ~13,000    ~40%\\n\\n⇒ **+15% to reflow2's 53,005-line tree, not the +27% the all-crates figure implied.**\\n\\n🛑 **SIX CRATES, NOT FIVE.** `dynograph-storage` depends on `dynograph-text` for the `fulltext` feature, and reflow2 USES fulltext (`#[cfg(feature = \\\"fulltext\\\")]`, `search.rs`). 847 lines, and it brings **tantivy 0.26**. The sibling node knew `text` was reached through the feature; no COSTING of the absorption ever counted it. A scope that missed it would have discovered it mid-migration.\\n\\nOTHER EXTERNAL CRATES INHERITED, none previously listed: `rmp-serde`, `lru`, `rand`, `serde_yaml`, `uuid`, `thiserror`, `tantivy`.\\n\\nIMPORT CHURN: **63 reflow2 files** name a `dynograph_*` path, 62 of them `dynograph_core`. Mechanical, and broad.\\n\\n═══ WHAT REFLOW2 WOULD OWN FOREVER — the real cost, and it is not line count ═══\\n\\n  ~2,700 lines of RocksDB storage engine (backend, keys, cache, engine/*)\\n    847 lines of tantivy-backed full-text index\\n    695 lines of Leiden community detection\\n  1,752 lines of schema engine (core/schema.rs)\\n\\n═══ ONE RECORDED OBJECTION WEAKENS, ONE STANDS ═══\\n\\n⭐ WEAKER — *\\\"you lose the upstream's fixes silently.\\\"* **Upstream is Anthony's own repository.** No vendor, no third party. And storyflow keeps dynograph-foundation alive through its REST surface, which `fact:the-diamond-meets-at-dynographs-internals-not-its-interface` measured as disjoint from reflow2's Rust-library surface. The repo does not die and storyflow is untouched; reflow2 stops linking it, that is all.\\n\\n🛑 STANDS — *\\\"Vendoring converts a visible dependency into an invisible one.\\\"* The pin carries a written reason for every bump; the v0.11→v0.12 note recording a `TextHit` type leak is real history with no successor once the code is in-tree. MITIGATION, required rather than optional: each increment records a ChangeEvent naming the exact TAG absorbed and the FILES taken.\\n\\n═══ THE PLAN — five increments, each shippable, stop after any ═══\\n\\n  1. VECTOR → `stats.rs` (436 lines, 1 importing file). Drops hnsw.rs + distance.rs.\\n  2. RESOLUTION → `fuzzy.rs` (300 lines, 3 files). Verified standalone — no internal deps.\\n  3. GRAPH → graph/error/communities/scc/components/cycles/cuts (1,844 lines, 3 files).\\n     ⭐ ZERO external dependencies. Drops ~2,000 lines of pagerank, maxflow, betweenness,\\n     eigenvector, link-prediction, shortest-path and paths reflow2 never calls.\\n  4. CORE → the whole crate (1,941 lines, 62 importing files). Big mechanical churn, no new risk.\\n  5. STORAGE + TEXT (3,575 lines, 24 files). Brings rocksdb and tantivy. THE REAL ONE.\\n\\n⭐ AFTER 1-3: 2,580 lines moved, 7 files of churn, NO new external crates, three of six crates gone. A genuine stopping point for somebody who changes their mind.\\n\\n🛑 ONLY STEP 5 ENDS THE DEPENDENCY. Steps 1-4 shrink it. \\\"We absorbed the foundation\\\" said after step 4 would be false, and this ordering makes that easy to say wrongly.\\n\\n═══ WHAT THIS DECIDES BY CONSTRUCTION, AND WHAT IT CANCELS ═══\\n\\n`dec:idea-is-the-foundation-a-subsystem-or-a-supplier` is answered by construction on completion: no supplier left to be. The five `ifc:req-dyno-*` interfaces are then RETIRED on the record — they were true — not deleted.\\n\\n🛑 CANCELS mirroring dynograph's published surface into reflow2, dropped on Anthony's word the same day it was proposed: absorbing removes the seam a mirror would describe, so the two are ALTERNATIVES. The flo2 → reflow2 mirror is unaffected. Also moot: the v0.13.0 pin parked since 2026-08-19.\",\"name\":\"DECIDED — absorb only what reflow2 needs from dynograph-foundation and end the dependency, in five increments you can stop after any of\",\"rationale\":\"Recorded as its own node rather than by editing the brainstorm, because that node's value is the OPTIONS and their costs and it should keep reading as where the thinking happened.\\n\\n⭐ THE MEASUREMENT LESSON, and it is the second time in one day: the earlier costing measured whole crates and stated honestly what it had not measured. Measuring the missing part changed the headline from +27% to +15% AND found a sixth crate (`dynograph-text`, and tantivy behind it) that no costing of this idea mentions. **A number that answers a narrower question than the one being asked is not evidence about the wider one** — the same shape as the edge-only shortlist measurement corrected earlier today, one level up.\\n\\n🛑 A STALE PREMISE FOUND WHILE READING THE SIBLINGS, and it is not corrected here because correcting another node's text is a separate act: `dec:idea-dynograph-crates-independent-in-code-coupled-in-release` states that this decision is recorded in reflow2's graph \\\"because dynograph-foundation has no reflow2 design of its own\\\". **It has one.** Verified 2026-08-24 with `describe_designs`, which opens nothing: graph_id `dynograph-foundation`, origin `adopted`, minted by 0.16.0, with a committed 179-node export and a `docs/published-surface.json` carrying 15 published Interfaces. The premise was true when written and is false now.\",\"status\":\"accepted\"}",
+        "target_id": "dec:absorb-the-foundation-subset-and-end-the-dependency",
+        "target_type": "Decision"
+      }
+    },
+    {
+      "node_id": "snap:epoch:the-absorption:dep:dynograph-foundation",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"REQUIRES_RESOURCE\",\"other_type\":\"Project\",\"other_id\":\"proj:reflow2\",\"properties\":{\"criticality\":\"required\"}}]",
+        "state": "{\"components\":\"dynograph-core,dynograph-storage\",\"declared_in\":\"Cargo.toml\",\"dependency_graph_id\":\"dynograph-foundation\",\"description\":\"Derived from reflow2's own Cargo.toml, not hand-written.\\n\\n🛑 **THREE CRATES GONE, TWO NAMED HERE, ONE REACHED TRANSITIVELY.** `dynograph-vector` and `dynograph-resolution` left 2026-08-24 (increments 1 and 2); `dynograph-graph` left the same day (increment 3, `chg:absorb-graph-algorithms`). Verified with `cargo tree` at each step rather than inferred from the manifest. What remains: `dynograph-core` and `dynograph-storage` here by name, plus `dynograph-text` pulled in by storage's `fulltext` feature and never named in any manifest — 847 lines and tantivy behind it, and no earlier costing of the absorption counted it.\\n\\nWHAT WAS ABSORBED, and what was deliberately left:\\n  • `mean` + `linear_regression_slope` → `reflow2-core/src/stats.rs`. Left: 7 of 9 functions, `hnsw.rs`, `distance.rs`.\\n  • `token_sort_ratio` + closure → `reflow2-core/src/fuzzy.rs`. Left: `PreparedName`, `resolver.rs` (911 lines).\\n  • 8 graph names + closure → `reflow2-core/src/graphalg/`. 2,219 of 3,832 lines; left 1,613 in nine files.\\nEach carries a header naming repo, tag, commit, files, what was taken and what was left.\\n\\n⭐ THE ONE CLOSURE RESULT WORTH KEEPING: `cut_structure` does NOT need `max_flow_min_cut`. Articulation points and bridges come from a DFS lowlink walk, so 248 lines stayed behind that the intuition \\\"cuts need flow\\\" would have dragged in.\\n\\n🛑 AND THE ONE MISTAKE WORTH KEEPING: the first closure for increment 3 was wrong because the grep that found reflow2's import sites matched only single-line `use dynograph_graph::X;` and missed the MULTILINE block in `structure.rs`, which imports `betweenness_centrality`. That put two needed files (`betweenness.rs`, `paths.rs`, 375 lines) in the not-taken list. **The same blind spot had been caught in the dependency scan minutes earlier and fixed in only one of the two greps.**\\n\\nREMAINING WORK: increments 4 (`dynograph-core`, 1,941 lines, 62 importing files) and 5 (`dynograph-storage` + `dynograph-text`, 3,575 lines, brings rocksdb and tantivy). **Only increment 5 ends the dependency.**\\n\\nHISTORY KEPT: bumped v0.11.0 → v0.12.0 on 2026-07-28 for a stated reason rather than as housekeeping — v0.12.0 closes a type leak reflow2 was structurally exposed to (`search_fulltext` returned `dynograph_text::TextHit`, from a crate reflow2 never names and reaches only through an optional feature) and makes the `rocksdb` and `fulltext` feature NAMES a committed contract upstream. Verified before the tag existed by building this consumer against the provider's unreleased tree. MIGRATION CHECKED, not assumed: `keys.rs` and `backend.rs` are untouched between the tags, so a graph written by v0.11.0 reads identically.\",\"features\":\"rocksdb,fulltext\",\"name\":\"dynograph-foundation\",\"provider\":\"https://github.com/sligara7/dynograph-foundation.git\",\"resource_type\":\"design-dependency\",\"version\":\"v0.12.0\"}",
+        "target_id": "dep:dynograph-foundation",
+        "target_type": "Resource"
+      }
+    },
+    {
+      "node_id": "snap:epoch:the-absorption:ifc:req-dyno-core-api",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CONSUMES\",\"other_type\":\"Component\",\"other_id\":\"cmp:graph\",\"properties\":{\"weight\":0.9,\"weight_basis\":\"evidence\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-09\",\"role\":\"author\"}}]",
+        "state": "{\"auth\":\"unspecified\",\"designation\":\"required\",\"medium\":\"library\",\"name\":\"Core model types (Schema, Value, DynoError)\",\"paradigm\":\"synchronous\",\"payload_format\":\"unspecified\",\"provenance\":\"authored\",\"spec\":\"REQUIRED FROM dynograph-foundation. reflow2 links `dynograph-core`, pinned by git tag v0.12.0.\\n\\nNAMED TO MATCH THE PUBLISHER DELIBERATELY, and that is a finding rather than a convenience. The first attempt declared ONE umbrella interface for the whole dynograph dependency; pairing returned NINE candidates and ZERO pairs, because a pair needs a name match at or above 85/100 and an umbrella scores 62-78 against nine crisp names. Two causes, and the first was ours: THEY DECOMPOSED AND WE LUMPED. reflow2 links five named crates that map 1:1 onto five of their published interfaces, so the honest model is five requirements at their granularity.\\n\\nTHE SECOND CAUSE IS WORTH REPORTING UPSTREAM: pairing matches on NAME similarity, so a long explanatory name systematically undershoots the bar while a short parallel one clears it. That rewards naming an interface for the contract rather than describing it — defensible — but it means the seam is only as good as two teams independently choosing similar words, and nothing says so.\",\"transport_security\":\"unspecified\"}",
+        "target_id": "ifc:req-dyno-core-api",
+        "target_type": "Interface"
+      }
+    },
+    {
+      "node_id": "snap:epoch:the-absorption:ifc:req-dyno-graph-api",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CONSUMES\",\"other_type\":\"Component\",\"other_id\":\"cmp:allocate\",\"properties\":{\"dependency_type\":\"function_call\",\"weight\":0.8,\"weight_basis\":\"evidence\"}},{\"direction\":\"in\",\"edge_type\":\"CONSUMES\",\"other_type\":\"Component\",\"other_id\":\"cmp:flow\",\"properties\":{\"dependency_type\":\"function_call\",\"weight\":0.8,\"weight_basis\":\"evidence\"}},{\"direction\":\"in\",\"edge_type\":\"CONSUMES\",\"other_type\":\"Component\",\"other_id\":\"cmp:structure\",\"properties\":{\"dependency_type\":\"function_call\",\"weight\":0.8,\"weight_basis\":\"evidence\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-09\",\"role\":\"author\"}}]",
+        "state": "{\"auth\":\"unspecified\",\"designation\":\"required\",\"medium\":\"library\",\"name\":\"Graph algorithms API\",\"paradigm\":\"synchronous\",\"payload_format\":\"unspecified\",\"provenance\":\"authored\",\"spec\":\"REQUIRED FROM dynograph-foundation. reflow2 links `dynograph-graph`, pinned at v0.12.0. Traversal and the community/centrality work that propagate_change, disconnected_community and the modularity score rest on — so a change here reaches HEAL and the allocation report, not just the store.\",\"transport_security\":\"unspecified\"}",
+        "target_id": "ifc:req-dyno-graph-api",
+        "target_type": "Interface"
+      }
+    },
+    {
+      "node_id": "snap:epoch:the-absorption:ifc:req-dyno-resolution-api",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CONSUMES\",\"other_type\":\"Component\",\"other_id\":\"cmp:ingest\",\"properties\":{\"dependency_type\":\"function_call\",\"weight\":0.7,\"weight_basis\":\"evidence\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-09\",\"role\":\"author\"}}]",
+        "state": "{\"auth\":\"unspecified\",\"designation\":\"required\",\"medium\":\"library\",\"name\":\"EntityResolver API\",\"paradigm\":\"synchronous\",\"payload_format\":\"unspecified\",\"provenance\":\"authored\",\"spec\":\"REQUIRED FROM dynograph-foundation. reflow2 links `dynograph-resolution`, pinned at v0.12.0. Entity resolution is what the duplicate detector and the corpus-ingest identity work sit on — the same machinery dec:auto-merge-at-90-destroys-sibling-names constrained, and the same path dev_storyflow's merge-survivor findings landed in.\",\"transport_security\":\"unspecified\"}",
+        "target_id": "ifc:req-dyno-resolution-api",
+        "target_type": "Interface"
+      }
+    },
+    {
+      "node_id": "snap:epoch:the-absorption:ifc:req-dyno-storage-api",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CONSUMES\",\"other_type\":\"Component\",\"other_id\":\"sys:store\",\"properties\":{\"weight\":0.9,\"weight_basis\":\"evidence\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-09\",\"role\":\"author\"}}]",
+        "state": "{\"auth\":\"unspecified\",\"designation\":\"required\",\"medium\":\"library\",\"name\":\"StorageEngine Rust API\",\"paradigm\":\"synchronous\",\"payload_format\":\"unspecified\",\"provenance\":\"authored\",\"spec\":\"REQUIRED FROM dynograph-foundation. reflow2 links `dynograph-storage` (default-features off), pinned at v0.12.0. This is the RocksDB-backed store beneath every DesignGraph write, and it is what makes ifc:exclusive-local-store a real requirement rather than a preference — the single-writer guarantee is that engine's exclusive lock.\",\"transport_security\":\"unspecified\"}",
+        "target_id": "ifc:req-dyno-storage-api",
+        "target_type": "Interface"
+      }
+    },
+    {
+      "node_id": "snap:epoch:the-absorption:ifc:req-dyno-vector-api",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"CONSUMES\",\"other_type\":\"Component\",\"other_id\":\"cmp:dimensions\",\"properties\":{\"dependency_type\":\"function_call\",\"optional\":true,\"weight\":0.4,\"weight_basis\":\"evidence\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-09\",\"role\":\"author\"}}]",
+        "state": "{\"auth\":\"unspecified\",\"designation\":\"required\",\"medium\":\"library\",\"name\":\"Vector, HNSW and statistics API\",\"paradigm\":\"synchronous\",\"payload_format\":\"unspecified\",\"provenance\":\"authored\",\"spec\":\"REQUIRED FROM dynograph-foundation. reflow2 links `dynograph-vector`, pinned at v0.12.0.\\n\\n⚠️ DECLARED BECAUSE IT IS LINKED, NOT BECAUSE IT IS USED HEAVILY. reflow2's search is lexical BM25 today and dec:idea-embeddings-adoption is still open about whether embeddings and HNSW get adopted at all. So this is a real compile-time dependency whose runtime use is thin — exactly the kind of thing req:the-design-says-what-was-built-and-never-used was captured to surface, and worth revisiting if that detector ever lands.\",\"transport_security\":\"unspecified\"}",
+        "target_id": "ifc:req-dyno-vector-api",
+        "target_type": "Interface"
+      }
+    },
+    {
       "node_id": "snap:epoch:the-ask-elicits-a-lens-not-a-name:art:where-am-i-skill",
       "node_type": "Snapshot",
       "properties": {
@@ -133461,7 +134485,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:105aa1bc92708399992fbb1afd859c25acdbb11bf9f126486b2001e28407d251",
+  "prev_content_hash": "sha256:b2a1c1c0d0d8f4f01e5d15b571a6ac5d9c9048432c3a36a9fb67c48715655180",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

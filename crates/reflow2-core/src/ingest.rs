@@ -53,9 +53,9 @@
 
 use std::collections::HashMap;
 
+use crate::foundation::core::{DynoError, Value};
+use crate::foundation::store::StoredNode;
 use crate::fuzzy::token_sort_ratio;
-use dynograph_core::{DynoError, Value};
-use dynograph_storage::StoredNode;
 use serde::Deserialize;
 
 use crate::agent::{AgentAnswer, AgentBackend, AgentPrompt, PartialBackend};

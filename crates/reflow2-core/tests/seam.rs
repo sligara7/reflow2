@@ -8,7 +8,7 @@
 
 use std::collections::HashMap;
 
-use dynograph_core::Value;
+use reflow2_core::Value;
 use reflow2_core::{DesignGraph, GraphExport, Verdict};
 
 /// Build an Interface carrying exactly the properties a case needs. Uses

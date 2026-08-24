@@ -61,7 +61,7 @@ use std::collections::BTreeMap;
 
 use serde::Serialize;
 
-use dynograph_core::DynoError;
+use crate::foundation::core::DynoError;
 
 use crate::compare::{
     ChangedEdge, ChangedNode, DesignDiff, LIVE_GRAPH_LABEL, NodeRef, PropertyDivergence,

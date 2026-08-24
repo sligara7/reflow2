@@ -22,7 +22,7 @@
 //! authority on the fielded side, the same way the two-sided accept is on the
 //! built side (BL-33/BL-35). Deciding which side was wrong stays human.
 
-use dynograph_core::{DynoError, Value};
+use crate::foundation::core::{DynoError, Value};
 
 use crate::graph::DesignGraph;
 use crate::nodes::{Props, edge, node};

@@ -31,6 +31,31 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed — the foundation absorption completes: reflow2 no longer depends on dynograph-foundation
+
+**Minor.** No schema change. New components `cmp:foundation-vocabulary`, `cmp:byte-store`, `cmp:text-index` under `sys:foundation`; five `required` Interfaces retired on the record.
+
+The final increment of `dec:absorb-the-foundation-subset-and-end-the-dependency`. `dynograph-core`, `dynograph-storage` and `dynograph-text` are absorbed at **v0.12.0** into `crates/reflow2-core/src/foundation/` — **7,869 lines** with their tests — and 62 files plus 12 out-of-crate test files were rewritten.
+
+**The dependency is gone, verified three ways:** `cargo tree` reports zero dynograph crates for both `reflow2-core` and `reflow2-mcp`; `Cargo.lock` holds zero; no manifest names one. The only survivor was a stale crate *description* ("…over dynograph-foundation"), now corrected.
+
+Seven external crates enter reflow2's own `[workspace.dependencies]` for the first time — `rocksdb`, `tantivy`, `rmp-serde`, `lru`, `serde_yaml`, `uuid`, `thiserror` — plus `tracing`, which nothing had declared. **`rocksdb` stays at 0.24, absorbed verbatim** (`dec:absorb-rocksdb-024-unchanged-then-switch-separately`): the maintained crate is `rust-rocksdb`, and switching is deliberately a separate PR so a failure in an 86-file migration has one cause.
+
+**⭐⭐ The finding worth more than the migration: absorbing a `#[non_exhaustive]` type converts a runtime fallback into a compile-time guarantee.** Two wildcard match arms became unreachable — `keys.rs` had `_ => None`, `vocabulary.rs` had `other => "<unsupported endpoint>"`. Both existed *only* because the enums lived in another crate; the attribute has no effect inside the defining crate. `vocabulary.rs`'s own comment said *"a variant added **upstream**"* — and there is no upstream now. Both were removed, so a new `Value` or `EdgeEndpoint` variant is a **build error** instead of a string someone has to notice. Nothing in the plan predicted this.
+
+**🛑 The plan was wrong, and the correction is on the record.** It promised *"five increments, each independently shippable, stop after any of"* — true for 1–3, **false for 4 and 5**. `dynograph-storage` re-exported `DynoError`, `Schema` and `Value` from core, and `StoredNode.properties` is a `HashMap<String, Value>` of that type: absorbing core while storage stayed external would give reflow2 two of each, with 48 files naming one and 33 the other. No ordering avoids it — storage *depends on* core. See `chg:increments-4-and-5-are-one-increment`; the prior plan is preserved in a snapshot. ⭐ **A dependency graph tells you what needs what to build; it does not tell you what breaks if you take one and not the other.**
+
+**Three mechanical traps, each invisible to the gate that should have caught it:**
+- **Integration tests are separate crates** — the blanket rewrite was right inside the lib and wrong in `tests/*.rs`, where `crate::` is the test binary. 12 files needed `reflow2_core::`.
+- **`props!` is `#[macro_export]`**, so it lives at the crate root, not the module it is written in.
+- **`--no-default-features` clippy does not compile feature-gated files.** The identical `props!` error sat behind `#[cfg(feature = "fulltext")]` and passed that gate **three times**. Same shape as increment 2's `#[cfg(test)]` defect: a gate trusted for coverage it structurally cannot provide.
+
+**Five required Interfaces retired, not deleted.** `ifc:req-dyno-{core,storage,graph,resolution,vector}-api` were real for the whole life of the dependency, and half the surviving design is shaped by having consumed them across a boundary. Each carries a `deprecation` ChangeEvent, a snapshot of its final state and edges, and an `OBSOLETES` edge from the accepted Decision — so they read `discontinued: true` while their `spec` still says what the boundary was.
+
+**This module is public where the other three absorptions are not.** `stats`, `fuzzy` and `graphalg` are `pub(crate)` because `ifc:core-api` records 277 public functions growing by default. That argument does not reach here: `lib.rs` already re-exported these types and `reflow2-mcp` names `DynoError` 35 times. Making them private would be a breaking change dressed as tidiness.
+
+**No new capability or requirement was owed.** `cap:store` and `cap:search` already existed with requirements behind them (`req:persistence`, `req:deterministic-core`, `req:no-silent-fallback`, `req:agent-native`); the absorbed code now realizes them directly instead of a supplier doing it. Only increment 3 genuinely lacked a requirement.
+
 ### Changed — increment 3 of the foundation absorption: the graph algorithms come in-tree
 
 **Patch.** No schema change, no surface change. New component `cmp:graph-algorithms` under `sys:foundation`; new requirement `req:graph-theory-undergirds-the-design-brain`, **accepted** on Anthony's word.

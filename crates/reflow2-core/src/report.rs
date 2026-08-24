@@ -12,7 +12,7 @@
 
 use std::fmt::Write as _;
 
-use dynograph_core::DynoError;
+use crate::foundation::core::DynoError;
 
 use crate::allocate::AllocationReport;
 use crate::detect::GapCandidate;
@@ -51,18 +51,22 @@ fn clamp_words(text: &str, max_words: usize) -> (String, bool) {
 /// `authored`), so a bare requirement reads as asserted, never as confirmed.
 /// One string property, or `fallback` when absent — the schema default, so an
 /// unset field is read the way the schema says it would be.
-fn prop_str<'a>(n: &'a dynograph_storage::StoredNode, key: &str, fallback: &'a str) -> &'a str {
+fn prop_str<'a>(
+    n: &'a crate::foundation::store::StoredNode,
+    key: &str,
+    fallback: &'a str,
+) -> &'a str {
     n.properties
         .get(key)
-        .and_then(dynograph_core::Value::as_str)
+        .and_then(crate::foundation::core::Value::as_str)
         .unwrap_or(fallback)
 }
 
-fn certainty_of(req: &dynograph_storage::StoredNode) -> RequirementCertainty {
+fn certainty_of(req: &crate::foundation::store::StoredNode) -> RequirementCertainty {
     let status = req
         .properties
         .get("status")
-        .and_then(dynograph_core::Value::as_str)
+        .and_then(crate::foundation::core::Value::as_str)
         .unwrap_or("proposed");
     match status {
         "accepted" | "met" => RequirementCertainty::UserConfirmed,
@@ -71,7 +75,7 @@ fn certainty_of(req: &dynograph_storage::StoredNode) -> RequirementCertainty {
             let provenance = req
                 .properties
                 .get("provenance")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 .unwrap_or("authored");
             match provenance {
                 "inferred" | "reconciled" | "healed" => RequirementCertainty::Recovered,
@@ -659,7 +663,7 @@ impl DesignGraph {
                 last_run_at: v
                     .properties
                     .get("last_run_at")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                     .filter(|t| !t.is_empty())
                     .map(str::to_string),
                 verifies,
@@ -781,7 +785,7 @@ impl DesignGraph {
             let proposed = dec
                 .properties
                 .get("status")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 == Some("proposed");
             if !proposed {
                 continue;
@@ -790,7 +794,7 @@ impl DesignGraph {
                 if edge
                     .properties
                     .get("role")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                     != Some("approver")
                 {
                     continue;
@@ -805,7 +809,7 @@ impl DesignGraph {
                     name: dec
                         .properties
                         .get("name")
-                        .and_then(dynograph_core::Value::as_str)
+                        .and_then(crate::foundation::core::Value::as_str)
                         .unwrap_or_default()
                         .to_string(),
                     approver_id: edge.to_id.clone(),
@@ -824,7 +828,7 @@ impl DesignGraph {
             let claims_built = cap
                 .properties
                 .get("status")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 .map(|s| s == "realized" || s == "verified")
                 .unwrap_or(false);
             if claims_built
@@ -841,7 +845,7 @@ impl DesignGraph {
             .filter(|d| {
                 !d.properties
                     .get("resolved")
-                    .and_then(dynograph_core::Value::as_bool)
+                    .and_then(crate::foundation::core::Value::as_bool)
                     .unwrap_or(false)
             })
             .count();
@@ -1845,12 +1849,12 @@ impl DesignGraph {
             let status = dec
                 .properties
                 .get("status")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 .unwrap_or_default();
             let name = dec
                 .properties
                 .get("name")
-                .and_then(dynograph_core::Value::as_str)
+                .and_then(crate::foundation::core::Value::as_str)
                 .unwrap_or_default()
                 .to_string();
             match status {
@@ -1877,7 +1881,7 @@ impl DesignGraph {
             for e in self.outgoing(id, Some(edge::AUTHORED_BY))? {
                 if e.properties
                     .get("role")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                     == Some("approver")
                 {
                     approver = Some(e.to_id.clone());
@@ -1920,7 +1924,7 @@ impl DesignGraph {
                 // a structural defect.
                 if e.properties
                     .get("alignment")
-                    .and_then(dynograph_core::Value::as_str)
+                    .and_then(crate::foundation::core::Value::as_str)
                     == Some("supporting")
                 {
                     continue;
@@ -2006,7 +2010,7 @@ impl DesignGraph {
                     .and_then(|s| {
                         s.properties
                             .get("status")
-                            .and_then(dynograph_core::Value::as_str)
+                            .and_then(crate::foundation::core::Value::as_str)
                             .map(str::to_string)
                     })
                     .unwrap_or_default();

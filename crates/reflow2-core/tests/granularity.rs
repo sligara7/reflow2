@@ -338,8 +338,8 @@ fn several_coarse_artifacts_mask_each_other() {
 // of. `granularity` is the pilot: it now takes `&dyn GraphRead`, so what
 // follows is the same report, computed over a design made of two vectors.
 
-use dynograph_core::{DynoError, Value};
-use dynograph_storage::{StoredEdge, StoredNode};
+use reflow2_core::foundation::core::{DynoError, Value};
+use reflow2_core::foundation::store::{StoredEdge, StoredNode};
 use reflow2_core::graph_read::{CountingRead, GraphRead};
 use reflow2_core::nodes::node;
 use std::collections::HashMap;

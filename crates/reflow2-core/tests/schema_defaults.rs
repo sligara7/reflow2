@@ -3,7 +3,7 @@
 //! Measured 2026-08-10 while starting BL-198: **the schema declared 81 defaults
 //! and nothing read a single one of them**
 //! (`fact:the-schema-declares-81-defaults-and-nothing-reads-them`).
-//! `dynograph_core::PropertySpec` has no `default` field, so the key parsed to
+//! `reflow2_core::foundation::core::PropertySpec` has no `default` field, so the key parsed to
 //! nobody and was silently dropped; `schema.rs` never mentioned the word; and
 //! `describe_schema` surfaced `required` and `values` but never a default. They
 //! were documentation wearing the costume of behaviour.
@@ -158,7 +158,7 @@ fn the_descriptive_enums_nobody_chooses_are_no_longer_injected() {
     assert_eq!(
         r.properties
             .get("lineage")
-            .and_then(dynograph_core::Value::as_str),
+            .and_then(reflow2_core::Value::as_str),
         Some("original"),
         "lineage stays injected: `original` is a claim, not an absence"
     );
@@ -194,7 +194,7 @@ fn a_meaningful_initial_state_is_still_injected() {
     assert_eq!(
         r.properties
             .get("status")
-            .and_then(dynograph_core::Value::as_str),
+            .and_then(reflow2_core::Value::as_str),
         Some("proposed"),
         "a requirement lands at `proposed` and the certainty doctrine reads it — \
          this default is a statement, not an injection"
@@ -224,7 +224,7 @@ fn a_value_the_caller_chooses_is_still_stored() {
     assert_eq!(
         c.properties
             .get("tier")
-            .and_then(dynograph_core::Value::as_str),
+            .and_then(reflow2_core::Value::as_str),
         Some("strategic"),
         "presence now means somebody chose it"
     );

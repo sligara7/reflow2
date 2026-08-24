@@ -14,7 +14,7 @@
 
 use std::collections::HashMap;
 
-use dynograph_core::Value;
+use reflow2_core::Value;
 use reflow2_core::graph::DesignGraph;
 use reflow2_core::nodes::{Props, node};
 use reflow2_core::temporal::{ChangeAction, ChangeRecord, ChangeType, EpochType};

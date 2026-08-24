@@ -56,7 +56,7 @@
 
 use std::collections::{BTreeSet, HashMap, HashSet};
 
-use dynograph_core::{DynoError, Value};
+use crate::foundation::core::{DynoError, Value};
 use serde::Serialize;
 
 use crate::graph::DesignGraph;
@@ -142,7 +142,7 @@ const BANDS: &[(&str, &str)] = &[
 ];
 
 /// A node's string property, or `None`.
-fn prop<'a>(n: &'a dynograph_storage::StoredNode, key: &str) -> Option<&'a str> {
+fn prop<'a>(n: &'a crate::foundation::store::StoredNode, key: &str) -> Option<&'a str> {
     n.properties.get(key).and_then(Value::as_str)
 }
 

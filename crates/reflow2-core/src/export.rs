@@ -30,8 +30,8 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
-use dynograph_core::{DynoError, Value};
-use dynograph_storage::{StoredEdge, StoredNode};
+use crate::foundation::core::{DynoError, Value};
+use crate::foundation::store::{StoredEdge, StoredNode};
 use serde::{Deserialize, Serialize};
 
 use crate::graph::DesignGraph;

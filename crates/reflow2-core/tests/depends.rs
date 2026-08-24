@@ -106,6 +106,88 @@ fn a_declaration_the_build_no_longer_takes_is_reported() {
 }
 
 #[test]
+fn a_declaration_an_accepted_decision_retired_is_skipped_and_named() {
+    // THE OPPOSITE OF THE TEST ABOVE, and the distinction is the whole point:
+    // a STALE declaration and a RETIRED one look identical to a reconciler that
+    // only asks "is it in the build?". One is a promise about something you no
+    // longer use; the other is design history about something you deliberately
+    // stopped using.
+    //
+    // Found by dogfooding on 2026-08-24: reflow2 absorbed dynograph-foundation,
+    // retired `dep:dynograph-foundation` correctly — deprecation ChangeEvent,
+    // snapshot, OBSOLETES from the accepted Decision — and the design gate went
+    // on failing `unobserved` anyway, because this reader never asked whether
+    // the declaration had been withdrawn. A correct retirement had become a
+    // permanently red gate.
+    let mut g = graph();
+    g.declare_dependency(&decl()).unwrap();
+    g.add_decision(
+        "dec:absorbed",
+        "The dependency was absorbed",
+        "The code is in-tree; nothing links the crate any more.",
+        None,
+    )
+    .unwrap();
+    // A Decision lands `proposed`; only the owner's word moves it, and
+    // `is_discontinued` reads that status rather than the mere existence of an
+    // OBSOLETES edge. Writing this test the short way — passing "accepted" to
+    // `add_decision` — set the RATIONALE instead, because the fourth parameter
+    // is rationale, and the assertion failed on exactly the rule it needed.
+    g.set_decision_status("dec:absorbed", "accepted").unwrap();
+    g.create_edge(
+        "OBSOLETES",
+        "Decision",
+        "dec:absorbed",
+        "Resource",
+        "dep:dynograph-foundation",
+        reflow2_core::nodes::Props::new(),
+    )
+    .unwrap();
+
+    let report = g.reconcile_dependencies(&[]).unwrap();
+    assert!(
+        report.findings.is_empty(),
+        "a withdrawn declaration must not report as stale: {:?}",
+        report.findings
+    );
+    // SKIPPED IS NOT SILENCED. A declaration that vanishes from the report with
+    // no trace is the silent-success failure this project guards against
+    // everywhere else, so the reader says which ones it stepped over.
+    assert_eq!(report.retired_declarations, vec!["dynograph-foundation"]);
+    // And it is still DECLARED — retiring records an ending, it does not erase.
+    assert_eq!(report.declared.len(), 1);
+}
+
+#[test]
+fn a_declaration_retired_by_a_proposed_decision_still_reports() {
+    // `is_discontinued` requires the withdrawing Decision to be ACCEPTED.
+    // Somebody proposing a removal is not the same as the owner agreeing to it,
+    // and the gate must keep asking until they do.
+    let mut g = graph();
+    g.declare_dependency(&decl()).unwrap();
+    g.add_decision("dec:maybe", "Maybe drop it", "Thinking about it.", None)
+        .unwrap();
+    g.create_edge(
+        "OBSOLETES",
+        "Decision",
+        "dec:maybe",
+        "Resource",
+        "dep:dynograph-foundation",
+        reflow2_core::nodes::Props::new(),
+    )
+    .unwrap();
+
+    let report = g.reconcile_dependencies(&[]).unwrap();
+    assert_eq!(
+        report.findings.len(),
+        1,
+        "a proposal does not retire anything"
+    );
+    assert_eq!(report.findings[0].kind, "unobserved");
+    assert!(report.retired_declarations.is_empty());
+}
+
+#[test]
 fn a_feature_forwarded_by_name_but_never_declared_is_reported() {
     // Feature names are contract whether or not the provider thinks so — a
     // rename is a downstream build break no API diff would mention. This is the

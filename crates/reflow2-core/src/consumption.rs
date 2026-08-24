@@ -42,7 +42,7 @@
 //! Pure arithmetic over edges already in the graph — no file I/O, no LLM, and
 //! deterministic: the same design always yields the byte-identical report.
 
-use dynograph_core::{DynoError, Value};
+use crate::foundation::core::{DynoError, Value};
 use serde::Serialize;
 
 use crate::graph::DesignGraph;

@@ -46,7 +46,7 @@
 
 use std::collections::HashSet;
 
-use dynograph_core::DynoError;
+use crate::foundation::core::DynoError;
 
 use crate::agent::{AgentAnswer, AgentPrompt, PartialBackend};
 use crate::graph::DesignGraph;

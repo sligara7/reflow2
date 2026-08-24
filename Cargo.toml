@@ -5,10 +5,13 @@
 # operations. Consumer surfaces (MCP/CLI/hosted) and LLM-reasoning ops plug in
 # later, exactly as the predecessor `integrated_reflow` (`../ir2`) did.
 #
-# Foundation crates are pulled from `dynograph-foundation` by git tag. They are
-# not published to crates.io. `dynograph-storage` is taken with
-# default-features=false so the RocksDB C++ build (and its ~10-min compile) is
-# opt-in per crate — the core runs on the in-memory backend for dev/tests.
+# Foundation crates WERE pulled from `dynograph-foundation` by git tag, until
+# 2026-08-24. NOTHING IS PULLED FROM THAT REPOSITORY ANY MORE: the subset reflow2
+# actually called was absorbed into `reflow2-core/src/` under provenance headers
+# (dec:absorb-the-foundation-subset-and-end-the-dependency). What survived the
+# move is the shape that made the dependency bearable — the RocksDB C++ build
+# (and its ~10-min compile) stays opt-in behind reflow2-core's own `rocksdb`
+# feature, so the core still runs on the in-memory backend for dev/tests.
 
 [workspace]
 resolver = "2"
@@ -26,8 +29,28 @@ authors = ["Anthony Sligar <sligara7@gmail.com>"]
 repository = "https://github.com/sligara7/reflow2"
 
 [workspace.dependencies]
-dynograph-core = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.12.0" }
-dynograph-storage = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.12.0", default-features = false }
+# dynograph-core and dynograph-storage were HERE until 2026-08-24, and
+# dynograph-text came with storage's `fulltext` feature without ever being
+# named. All three are now in `reflow2-core/src/foundation/` with a provenance
+# header. Increment 4 of dec:absorb-the-foundation-subset-and-end-the-dependency
+# — the one that ENDS the dependency. reflow2 no longer links anything from
+# that repository.
+#
+# THE CRATES THEY BROUGHT WITH THEM, now declared here directly:
+rmp-serde = "1"
+tracing = "0.1"
+lru = "0.18"
+serde_yaml = "0.9"
+uuid = { version = "1", features = ["v4", "serde"] }
+thiserror = "2"
+tantivy = "0.26"
+# ⚠️ ABSORBED VERBATIM AT 0.24, WHICH IS A DECISION AND NOT AN OVERSIGHT.
+# `rocksdb` is the historically-unmaintained wrapper; `rust-rocksdb` (0.52) is
+# the maintained one and is where this should end up. Switching is deliberately
+# NOT part of this change — dec:absorb-rocksdb-024-unchanged-then-switch-separately
+# keeps the 86-file migration to ONE variable, so a failure has one cause. The
+# switch gets its own PR.
+rocksdb = "0.24"
 # dynograph-graph was HERE until 2026-08-24. Absorbed: reflow2 imported eight
 # names — Graph, GraphBuilder, betweenness_centrality, connected_components,
 # cut_structure, find_cycle, leiden, strongly_connected_components — whose
@@ -52,13 +75,12 @@ dynograph-storage = { git = "https://github.com/sligara7/dynograph-foundation.gi
 # builds it until increment 2 lands. One line out of here is not one crate out
 # of the build, and saying otherwise would be the flattering reading.
 
-# For local cross-repo dev against an unreleased foundation, uncomment and point
-# each crate at ../dynograph-foundation/crates/*. Do not commit uncommented.
-# [patch."https://github.com/sligara7/dynograph-foundation.git"]
-# dynograph-core = { path = "../dynograph-foundation/crates/dynograph-core" }
-# dynograph-storage = { path = "../dynograph-foundation/crates/dynograph-storage" }
-# dynograph-graph = { path = "../dynograph-foundation/crates/dynograph-graph" }
-# dynograph-resolution = { path = "../dynograph-foundation/crates/dynograph-resolution" }
+# THE `[patch]` BLOCK FOR `dynograph-foundation` WAS HERE AND IS RETIRED. It let a
+# session point the foundation crates at a local checkout for cross-repo dev.
+# Nothing in this workspace depends on that source now, so uncommenting it would
+# redirect nothing — cargo would report the patch as unused. Developing reflow2
+# against an unreleased foundation is no longer a thing this workspace can do,
+# because the code it would have patched is in-tree.
 
 # ── Build-artifact size, and why this is set ────────────────────────────────
 #

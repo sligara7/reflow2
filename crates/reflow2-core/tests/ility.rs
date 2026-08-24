@@ -61,12 +61,12 @@ fn assert_score(g: &mut DesignGraph, id: &str, target: &str, dimension: &str, sc
         node::DIMENSION_ASSESSMENT,
         id,
         [
-            ("target_id".to_string(), dynograph_core::Value::from(target)),
+            ("target_id".to_string(), reflow2_core::Value::from(target)),
             (
                 "dimension".to_string(),
-                dynograph_core::Value::from(dimension),
+                reflow2_core::Value::from(dimension),
             ),
-            ("score".to_string(), dynograph_core::Value::from(score)),
+            ("score".to_string(), reflow2_core::Value::from(score)),
         ],
     )
     .expect("assessment");

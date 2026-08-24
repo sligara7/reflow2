@@ -25,7 +25,7 @@
 
 use std::collections::{HashMap, HashSet};
 
-use dynograph_core::{DynoError, Value};
+use crate::foundation::core::{DynoError, Value};
 
 use crate::graph::DesignGraph;
 use crate::nodes::{edge, node};

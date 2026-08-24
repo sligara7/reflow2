@@ -77,6 +77,10 @@ pub mod search;
 // Absorbed from dynograph-foundation at v0.12.0 — private on purpose; see each
 // module header for what was taken, what was left, and why an absorbed file
 // does not widen the public surface.
+// Absorbed from dynograph-foundation at v0.12.0. `foundation` is PUBLIC where
+// the other three are not — its types were already in this crate's public API
+// before the absorption; see its module header.
+pub mod foundation;
 mod fuzzy;
 mod graphalg;
 mod stats;
@@ -186,7 +190,11 @@ pub use vocabulary::{
     vocabulary_park_decision_id,
 };
 
-// Re-export the foundation types that appear in this crate's public API, so
-// callers don't need a direct dependency on dynograph-core / -storage.
-pub use dynograph_core::{DynoError, Schema, Value};
-pub use dynograph_storage::{StoredEdge, StoredNode};
+// The foundation types that appear in this crate's public API. Until
+// 2026-08-24 these were re-exported FROM dynograph-core / -storage so callers
+// did not need a direct dependency on them; they are now reflow2's own, and the
+// re-export stays because `reflow2-mcp` names `DynoError` 35 times and
+// `StoredNode` 21 times — removing it would be a breaking change dressed as
+// tidiness. See `crate::foundation` for the provenance.
+pub use crate::foundation::core::{DynoError, Schema, Value};
+pub use crate::foundation::store::{StoredEdge, StoredNode};

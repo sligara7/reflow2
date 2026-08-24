@@ -10,8 +10,8 @@
 //! bad node type, a missing required property, or an edge with the wrong
 //! endpoints fails loud here (rule 4 in AGENTS.md: no silent fallbacks).
 
-use dynograph_core::{DynoError, PropertyDef, PropertyType, Schema, Value};
-use dynograph_storage::{StorageEngine, StoredEdge, StoredNode};
+use crate::foundation::core::{DynoError, PropertyDef, PropertyType, Schema, Value};
+use crate::foundation::store::{StorageEngine, StoredEdge, StoredNode};
 
 use crate::nodes::{Props, edge, node};
 

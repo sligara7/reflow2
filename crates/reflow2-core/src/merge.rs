@@ -31,7 +31,7 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::fmt;
 
-use dynograph_core::{DynoError, Value};
+use crate::foundation::core::{DynoError, Value};
 use serde::Serialize;
 
 use crate::export::{ExportedEdge, ExportedNode, GraphExport, Props};
