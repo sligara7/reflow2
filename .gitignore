@@ -2,7 +2,13 @@ __pycache__/
 *.pyc
 
 # Rust
-/target
+# Any cargo target dir, at any depth — NOT just the workspace root.
+#
+# It was `/target` until 2026-08-24, which ignores the root one only. A test
+# that wrote fixtures under `crates/reflow2-core/target/` therefore had them
+# picked up by `git add -A` and merged to main in #322. Cargo puts a target dir
+# wherever it is invoked, so the pattern has to be depth-agnostic.
+target/
 
 # Self-host: reflow2's own graph is a RocksDB directory, and the agent MCP
 # configs (.mcp.json, opencode.json, .vscode/mcp.json) carry absolute paths to a
