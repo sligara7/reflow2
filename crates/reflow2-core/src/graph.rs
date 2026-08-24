@@ -1483,6 +1483,16 @@ impl DesignGraph {
     /// one pattern in a day (after `description`, `SUPERSEDES`, and the
     /// `revision` block missing from `create_node`). A declared field nobody
     /// can reach is a declared field nobody writes to.
+    ///
+    /// ⭐ AND `note` IS THE SAME TRAP, CAUGHT ONE FIELD LATER. The schema
+    /// declared `note` on GOVERNED_BY the whole time; this constructor could
+    /// not reach it, so `describe_schema` advertised a field the typed write
+    /// path refused. dev_storyflow hit it on 2026-08-23, wanted the note twice
+    /// in one session, and both times fell back to raw `create_edge` — which
+    /// works and abandons this path's validation for the whole call. The note
+    /// is the part a later reader actually needs: WHY this ruling binds this
+    /// node. An agent less inclined to run `describe_schema` simply drops the
+    /// reasoning, which is the silent half of the failure.
     pub fn governed_by(
         &mut self,
         from_type: &str,
@@ -1490,6 +1500,7 @@ impl DesignGraph {
         to_type: &str,
         to_id: &str,
         ruling: Option<&str>,
+        note: Option<&str>,
     ) -> Result<StoredEdge, DynoError> {
         self.create_edge(
             edge::GOVERNED_BY,
@@ -1497,7 +1508,7 @@ impl DesignGraph {
             from_id,
             to_type,
             to_id,
-            Props::new().set_opt("ruling", ruling),
+            Props::new().set_opt("ruling", ruling).set_opt("note", note),
         )
     }
 

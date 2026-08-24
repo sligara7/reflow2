@@ -41,6 +41,7 @@ fn a_fully_stated_budget_reaches_a_verdict() {
         Some(40.0),
         Some("measured"),
         None,
+        None,
     )
     .expect("edge");
     g.constrains(
@@ -50,10 +51,19 @@ fn a_fully_stated_budget_reaches_a_verdict() {
         Some(35.0),
         Some("evidence"),
         None,
+        None,
     )
     .expect("edge");
-    g.constrains("con:mass", "Component", "cmp:solar", Some(20.0), None, None)
-        .expect("edge");
+    g.constrains(
+        "con:mass",
+        "Component",
+        "cmp:solar",
+        Some(20.0),
+        None,
+        None,
+        None,
+    )
+    .expect("edge");
     let r = g.budget_report("con:mass").expect("report");
     assert_eq!(r.total, 95.0);
     assert_eq!(r.verdict, BudgetVerdict::Within);
@@ -67,13 +77,22 @@ fn a_fully_stated_budget_reaches_a_verdict() {
 #[test]
 fn exceeding_the_limit_is_said_plainly() {
     let mut g = mass_budget(Some(50.0));
-    g.constrains("con:mass", "Component", "cmp:bus", Some(40.0), None, None)
-        .expect("edge");
+    g.constrains(
+        "con:mass",
+        "Component",
+        "cmp:bus",
+        Some(40.0),
+        None,
+        None,
+        None,
+    )
+    .expect("edge");
     g.constrains(
         "con:mass",
         "Component",
         "cmp:payload",
         Some(35.0),
+        None,
         None,
         None,
     )
@@ -89,10 +108,26 @@ fn exceeding_the_limit_is_said_plainly() {
 #[test]
 fn an_unstated_contribution_is_reported_never_zeroed() {
     let mut g = mass_budget(Some(100.0));
-    g.constrains("con:mass", "Component", "cmp:bus", Some(40.0), None, None)
-        .expect("edge");
-    g.constrains("con:mass", "Component", "cmp:payload", None, None, None)
-        .expect("edge");
+    g.constrains(
+        "con:mass",
+        "Component",
+        "cmp:bus",
+        Some(40.0),
+        None,
+        None,
+        None,
+    )
+    .expect("edge");
+    g.constrains(
+        "con:mass",
+        "Component",
+        "cmp:payload",
+        None,
+        None,
+        None,
+        None,
+    )
+    .expect("edge");
     let r = g.budget_report("con:mass").expect("report");
     assert_eq!(r.verdict, BudgetVerdict::Incomplete);
     assert_eq!(r.unstated, vec!["cmp:payload"]);
@@ -105,8 +140,16 @@ fn an_unstated_contribution_is_reported_never_zeroed() {
 #[test]
 fn a_budget_with_no_limit_is_ungated_not_passing() {
     let mut g = mass_budget(None);
-    g.constrains("con:mass", "Component", "cmp:bus", Some(40.0), None, None)
-        .expect("edge");
+    g.constrains(
+        "con:mass",
+        "Component",
+        "cmp:bus",
+        Some(40.0),
+        None,
+        None,
+        None,
+    )
+    .expect("edge");
     let r = g.budget_report("con:mass").expect("report");
     assert_eq!(r.verdict, BudgetVerdict::Ungated);
 }
@@ -133,6 +176,7 @@ fn a_minimum_budget_gates_the_other_side() {
         "Component",
         "cmp:array",
         Some(450.0),
+        None,
         None,
         None,
     )
@@ -171,7 +215,7 @@ fn the_worst_dependency_path_is_accumulated() {
         ("cmp:d", 30.0),
     ] {
         g.add_component(id, id, "a stage", None).expect("cmp");
-        g.constrains("con:lat", "Component", id, Some(ms), None, None)
+        g.constrains("con:lat", "Component", id, Some(ms), None, None, None)
             .expect("edge");
     }
     for (from, to) in [("cmp:a", "cmp:b"), ("cmp:b", "cmp:c"), ("cmp:a", "cmp:d")] {
@@ -198,13 +242,22 @@ fn the_worst_dependency_path_is_accumulated() {
 #[test]
 fn contributors_with_no_dependency_edges_get_the_total_only() {
     let mut g = mass_budget(Some(100.0));
-    g.constrains("con:mass", "Component", "cmp:bus", Some(40.0), None, None)
-        .expect("edge");
+    g.constrains(
+        "con:mass",
+        "Component",
+        "cmp:bus",
+        Some(40.0),
+        None,
+        None,
+        None,
+    )
+    .expect("edge");
     g.constrains(
         "con:mass",
         "Component",
         "cmp:payload",
         Some(35.0),
+        None,
         None,
         None,
     )
@@ -221,13 +274,22 @@ fn contributors_with_no_dependency_edges_get_the_total_only() {
 #[test]
 fn a_cycle_among_contributors_refuses_a_path_claim() {
     let mut g = mass_budget(Some(100.0));
-    g.constrains("con:mass", "Component", "cmp:bus", Some(40.0), None, None)
-        .expect("edge");
+    g.constrains(
+        "con:mass",
+        "Component",
+        "cmp:bus",
+        Some(40.0),
+        None,
+        None,
+        None,
+    )
+    .expect("edge");
     g.constrains(
         "con:mass",
         "Component",
         "cmp:payload",
         Some(35.0),
+        None,
         None,
         None,
     )
@@ -272,11 +334,20 @@ fn a_provable_overrun_beats_the_incomplete_caveat() {
         Some(120.0),
         Some("measured"),
         None,
+        None,
     )
     .unwrap();
     // cmp:payload's contribution is left UNSTATED.
-    g.constrains("con:mass", "Component", "cmp:payload", None, None, None)
-        .unwrap();
+    g.constrains(
+        "con:mass",
+        "Component",
+        "cmp:payload",
+        None,
+        None,
+        None,
+        None,
+    )
+    .unwrap();
 
     let report = g.budget_report("con:mass").unwrap();
     assert_eq!(
@@ -302,6 +373,7 @@ fn a_non_finite_contribution_is_refused_at_the_write_seam() {
             "cmp:bus",
             Some(f64::NAN),
             None,
+            None,
             None
         )
         .is_err(),
@@ -313,6 +385,7 @@ fn a_non_finite_contribution_is_refused_at_the_write_seam() {
             "Component",
             "cmp:bus",
             Some(f64::INFINITY),
+            None,
             None,
             None,
         )
@@ -347,6 +420,7 @@ fn an_undated_measurement_is_reported() {
         Some(40.0),
         Some("measured"),
         None,
+        None,
     )
     .unwrap();
     g.constrains(
@@ -356,6 +430,7 @@ fn an_undated_measurement_is_reported() {
         Some(20.0),
         Some("measured"),
         Some("2026-08-16"),
+        None,
     )
     .unwrap();
 
@@ -381,6 +456,7 @@ fn an_undated_estimate_is_not_reported() {
         Some(40.0),
         Some("estimated"),
         None,
+        None,
     )
     .unwrap();
     g.constrains(
@@ -388,6 +464,7 @@ fn an_undated_estimate_is_not_reported() {
         "Component",
         "cmp:payload",
         Some(20.0),
+        None,
         None,
         None,
     )
@@ -414,6 +491,7 @@ fn an_undated_measurement_still_counts_toward_the_verdict() {
         Some(40.0),
         Some("measured"),
         None,
+        None,
     )
     .unwrap();
     g.constrains(
@@ -422,6 +500,7 @@ fn an_undated_measurement_still_counts_toward_the_verdict() {
         "cmp:payload",
         Some(20.0),
         Some("measured"),
+        None,
         None,
     )
     .unwrap();
@@ -444,6 +523,7 @@ fn the_date_is_readable_on_the_contributor() {
         Some(40.0),
         Some("measured"),
         Some("2026-08-16"),
+        None,
     )
     .unwrap();
 

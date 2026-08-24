@@ -292,7 +292,12 @@ impl LlmBackend for AgentBackend {
             }
             None => Err(LlmError::Backend(format!(
                 "no ambient-agent answer for prompt id {id}: prepare/serve desync \
-                 (the op issued a prompt the agent was not asked to fill)"
+                 (the op issued a prompt the agent was not asked to fill). The \
+                 commonest cause is EDITING THE PAYLOAD BETWEEN THE TWO PASSES: \
+                 the id is a hash of the prompt text, the prompt text is built \
+                 from the gap's own title and description, so trimming either \
+                 one re-keys every answer you are sending back. Replay the \
+                 object from the prepare pass unchanged."
             ))),
         }
     }

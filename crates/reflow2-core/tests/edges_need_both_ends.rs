@@ -129,7 +129,7 @@ fn helpers() -> Vec<(&'static str, Box<dyn Fn(&mut DesignGraph) -> bool>)> {
         (
             "governed_by",
             Box::new(|g: &mut DesignGraph| {
-                g.governed_by(node::CAPABILITY, "cap:c", node::DECISION, GHOST, None)
+                g.governed_by(node::CAPABILITY, "cap:c", node::DECISION, GHOST, None, None)
                     .is_err()
             }),
         ),
@@ -187,7 +187,7 @@ fn helpers() -> Vec<(&'static str, Box<dyn Fn(&mut DesignGraph) -> bool>)> {
         (
             "constrains",
             Box::new(|g: &mut DesignGraph| {
-                g.constrains("con:c", node::CAPABILITY, GHOST, None, None, None)
+                g.constrains("con:c", node::CAPABILITY, GHOST, None, None, None, None)
                     .is_err()
             }),
         ),

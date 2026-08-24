@@ -1333,6 +1333,7 @@ impl ReflowService {
                 req.contribution,
                 req.basis.as_deref(),
                 req.measured_at.as_deref(),
+                req.note.as_deref(),
             )
             .map_err(dyno_err)?,
         ))
@@ -1463,6 +1464,7 @@ impl ReflowService {
                 &req.to_type,
                 &req.to_id,
                 req.ruling.as_deref(),
+                req.note.as_deref(),
             )
             .map_err(dyno_err)?,
         ))

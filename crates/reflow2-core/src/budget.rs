@@ -73,7 +73,16 @@ impl DesignGraph {
     /// the budget (in the Constraint's quantity unit). `from_type` is fixed:
     /// budgets hang off Constraints; `target_type` is free because anything
     /// can spend (a Component's mass, an Interface's latency, a Resource's
-    /// cost). `basis` says how the number was obtained.
+    /// cost). `basis` says how the number was obtained, and `note` says WHY
+    /// this Constraint binds this target.
+    ///
+    /// ⭐ `note` WAS DECLARED ON THE EDGE AND UNREACHABLE FROM HERE until
+    /// 2026-08-23 — the same trap [`governed_by`](Self::governed_by) documents
+    /// at length, hit by dev_storyflow on both constructors in one session.
+    /// `describe_schema` listed the field, this path rejected it with a
+    /// shorter allowlist and no hint that a longer one existed, and the
+    /// fallback was raw `create_edge` with the validation given up.
+    #[allow(clippy::too_many_arguments)]
     pub fn constrains(
         &mut self,
         constraint_id: &str,
@@ -82,6 +91,7 @@ impl DesignGraph {
         contribution: Option<f64>,
         basis: Option<&str>,
         measured_at: Option<&str>,
+        note: Option<&str>,
     ) -> Result<StoredEdge, DynoError> {
         // Reject a non-finite contribution at the write seam (BL-58). A NaN
         // poisons the total (every comparison against it is false) and panics
@@ -105,7 +115,8 @@ impl DesignGraph {
             Props::new()
                 .set_opt("contribution", contribution)
                 .set_opt("basis", basis)
-                .set_opt("measured_at", measured_at),
+                .set_opt("measured_at", measured_at)
+                .set_opt("note", note),
         )
     }
 }

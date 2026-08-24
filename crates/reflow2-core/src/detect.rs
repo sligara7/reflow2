@@ -1178,6 +1178,15 @@ pub struct GapPrompt {
     /// text — surfaced, never silently shipped as if polished (discipline
     /// GS-16). The candidate is never dropped.
     pub rephrase_degraded: bool,
+    /// WHY it degraded, when it did. The flag alone says a fallback happened
+    /// and leaves the caller with no way to act on it: "the backend is down",
+    /// "you sent no answer" and "your answer did not match the prompt it was
+    /// for" are very different problems and looked identical until 2026-08-23,
+    /// when dev_storyflow got 4 of 5 prompts degraded and had to find the cause
+    /// by diffing its own two calls. The error was always available at the
+    /// point of failure and was being discarded one line later.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub degrade_reason: Option<String>,
 }
 
 impl GapCandidate {
@@ -1227,13 +1236,20 @@ impl GapCandidate {
                 hints: Vec::new(),
                 candidate_id: self.id.clone(),
                 rephrase_degraded: false,
+                degrade_reason: None,
             },
-            Err(_) => GapPrompt {
+            // THE ERROR IS THE DIAGNOSTIC, AND IT USED TO BE DROPPED HERE.
+            // `AgentBackend` already returns a message naming the prompt id and
+            // saying "prepare/serve desync"; binding it instead of `_` is the
+            // whole fix, and it is what turns a flag a caller can only observe
+            // into one a caller can act on.
+            Err(e) => GapPrompt {
                 context_setter: self.title.clone(),
                 question: self.description.clone(),
                 hints: Vec::new(),
                 candidate_id: self.id.clone(),
                 rephrase_degraded: true,
+                degrade_reason: Some(e.to_string()),
             },
         }
     }
@@ -1406,7 +1422,7 @@ impl DesignGraph {
             // benign error to swallow here — a failure is a real storage/schema
             // fault and must surface, not leave the Decision unlinked from what
             // it governs (BL-58).
-            self.governed_by(&node_type, target, node::DECISION, &decision_id, None)?;
+            self.governed_by(&node_type, target, node::DECISION, &decision_id, None, None)?;
         }
         if let Some(who) = approver {
             let mut props = crate::nodes::Props::new().set("role", "approver");
@@ -2044,6 +2060,51 @@ impl DesignGraph {
                     .get("priority")
                     .and_then(dynograph_core::Value::as_str)
                     .unwrap_or("medium");
+                // A `deferred` REQUIREMENT ALREADY ANSWERS THE ORDINARY
+                // QUESTION, AND THE ANSWER IS ON THE NODE.
+                //
+                // The generic wording asks "is it covered, deferred, or
+                // dropped?" of a requirement whose `status` says `deferred`.
+                // dev_storyflow measured the whole class on 2026-08-23 rather
+                // than sampling it: of 28 open `unsatisfied_requirement` gaps,
+                // 8 were `deferred` - a 29% noise rate on one class, against
+                // the argument `acknowledge_gap`'s own description makes, that
+                // a list which can never reach zero gets skimmed.
+                //
+                // IT IS NOT SILENCED, and that is the deliberate half. Adding
+                // `deferred` to the `dropped`/`met` skip above was the obvious
+                // fix and is the wrong one: those two are FINISHED (abandoned,
+                // or delivered) and this one is POSTPONED. Parking is a
+                // decision that expires - nobody defers a requirement forever -
+                // so dropping the row would make live intent go quiet, which is
+                // `req:no-idea-goes-quiet` exactly. The served instructions also
+                // say in as many words that `dropped` and `met` are what stop
+                // this report, so that skip list is a published line rather than
+                // an oversight.
+                //
+                // So the gap STAYS and asks the question that is actually open.
+                // The id is a hash of source + affected ids and does not move,
+                // so an existing acknowledgement survives this change.
+                let (severity, title, description) = if status == "deferred" {
+                    (
+                        (0.25 + priority_bump(priority) / 2.0).min(1.0),
+                        format!("Requirement “{name}” is parked — is it still?"),
+                        format!(
+                            "The requirement “{name}” is DEFERRED and nothing delivers it. \
+                             That is consistent rather than contradictory — the parking is why \
+                             nothing satisfies it. The open question is whether the parking still \
+                             holds: is it still deferred, or is it time to schedule it?"
+                        ),
+                    )
+                } else {
+                    (
+                        (0.5 + priority_bump(priority)).min(1.0),
+                        format!("Nothing satisfies requirement “{name}”"),
+                        format!(
+                            "The requirement “{name}” has no capability delivering it — is it covered, deferred, or dropped?"
+                        ),
+                    )
+                };
                 gaps.push(GapCandidate {
                     id: gap_id(
                         GapSource::UnsatisfiedRequirement,
@@ -2051,15 +2112,14 @@ impl DesignGraph {
                     ),
                     gap_source: GapSource::UnsatisfiedRequirement,
                     scope: GapScope::Project,
-                    severity: (0.5 + priority_bump(priority)).min(1.0),
-                    title: format!("Nothing satisfies requirement “{name}”"),
-                    description: format!(
-                        "The requirement “{name}” has no capability delivering it — is it covered, deferred, or dropped?"
-                    ),
+                    severity,
+                    title,
+                    description,
                     affected_ids: vec![req.node_id.clone()],
                     suggested_depth: if priority == "critical" { 3 } else { 2 },
                     evidence: format!(
-                        "Requirement '{}' (priority={priority}) has 0 incoming SATISFIES; project has {} capability(ies).",
+                        "Requirement '{}' (status={status}, priority={priority}) has 0 incoming \
+                         SATISFIES; project has {} capability(ies).",
                         req.node_id, pop.capabilities
                     ),
                 });

@@ -1885,6 +1885,10 @@ pub struct ConstrainsReq {
     /// no date.
     #[serde(default)]
     pub measured_at: Option<String>,
+    /// WHY this Constraint binds this target — the sentence a later reader
+    /// needs and the one this call could not carry until now.
+    #[serde(default)]
+    pub note: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
@@ -2035,6 +2039,10 @@ pub struct GovernedByReq {
     /// suppress a finding.
     #[serde(default)]
     pub ruling: Option<String>,
+    /// WHY this node is governed by that ruling — the reasoning a later reader
+    /// needs and the one this call could not carry until now.
+    #[serde(default)]
+    pub note: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]
