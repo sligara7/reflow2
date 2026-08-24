@@ -31,6 +31,23 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed — increment 2 of the foundation absorption: the fuzzy matcher comes in-tree, and two crates leave the build
+
+**Patch.** No schema change, no surface change.
+
+`token_sort_ratio` and its closure — `jaro`, `jaro_winkler`, `jaro_winkler_prepared`, `sort_tokens` — are absorbed into a new private `reflow2-core` module from `dynograph-resolution`'s `fuzzy.rs` at **v0.12.0 (`0bb3bca`)**, with eleven of its twelve tests. `seam.rs` and `ingest.rs` — the two call sites in the whole tree — import locally, and `dynograph-resolution` leaves `Cargo.toml`.
+
+**Not taken:** `PreparedName` and its `score` method (built for the resolver's score-one-against-many loop, which reflow2 never runs), the test exercising it, and all of `resolver.rs` — **911 of the crate's 1,211 lines**, an `EntityResolver` reflow2 has never called.
+
+**⭐ Increment 1's caveat is discharged, exactly as written.** That increment said *"one line out of `Cargo.toml` is not one crate out of the build"* — `dynograph-vector` had left the manifest but stayed in the build graph because `dynograph-resolution` declared it. Removing resolution removes the last path, so **two crates leave here, not one**. Verified with `cargo tree`: both now appear zero times.
+
+Three of six crates are gone. Remaining: `dynograph-core`, `dynograph-graph`, `dynograph-storage`, plus `dynograph-text` reached transitively through storage's `fulltext` feature. **Only increment 5 ends the dependency**; 3 and 4 shrink it.
+
+**Two things this increment is worth remembering for:**
+
+- **Clippy caught a defect the test run structurally could not.** The extraction dropped `#[cfg(test)]`, so the test module was compiling into the library — and all 11 tests passed anyway, which is exactly why the test run was blind to it and `-D warnings` was not. The extraction's own assertions checked for *content* (functions present, `PreparedName` absent) and not for *attributes*.
+- **Two rustdoc links needed rewriting, not deleting.** `jaro_winkler` and `sort_tokens` both linked to `PreparedName`, which is not coming across. Left alone they are broken intra-doc links; deleted, the reason the helper existed is lost. They became prose, and the module header says so.
+
 ### Changed — increment 1 of the foundation absorption: two statistics functions come in-tree
 
 **Patch.** No schema change, no surface change; one crate leaves reflow2's direct dependencies.

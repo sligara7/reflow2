@@ -53,8 +53,8 @@
 
 use std::collections::HashMap;
 
+use crate::fuzzy::token_sort_ratio;
 use dynograph_core::{DynoError, Value};
-use dynograph_resolution::token_sort_ratio;
 use dynograph_storage::StoredNode;
 use serde::Deserialize;
 
