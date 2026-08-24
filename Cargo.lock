@@ -1332,7 +1332,6 @@ dependencies = [
  "dynograph-graph",
  "dynograph-resolution",
  "dynograph-storage",
- "dynograph-vector",
  "serde",
  "serde_json",
  "sha2",

@@ -31,6 +31,27 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed — increment 1 of the foundation absorption: two statistics functions come in-tree
+
+**Patch.** No schema change, no surface change; one crate leaves reflow2's direct dependencies.
+
+First increment of `dec:absorb-the-foundation-subset-and-end-the-dependency` — Anthony, 2026-08-24: *"I kind of don't want to be dependent upon dynograph-foundation anymore"*, and *"by absorbing, I don't mean all dynograph-foundation crates — I mean only the ones that are needed."*
+
+`mean` and `linear_regression_slope` are absorbed into a new private `reflow2-core` module from `dynograph-vector`'s `stats.rs` at **v0.12.0 (`19b6760`)**, with their seven tests, verbatim. `dimensions.rs` — the only consumer in the tree — imports locally, and `dynograph-vector` leaves `Cargo.toml`.
+
+**Taken:** two functions of nine. **Not taken:** `pearson_correlation`, `variance`, `std_dev`, `percentile`, `median`, `softmax`, `spearman_rank_correlation`, and the whole of `hnsw.rs` (1,165 lines) and `distance.rs` (776). reflow2 calls none of them — measured, it used 436 of that crate's 2,377 lines and called two functions.
+
+**⚠️ One line out of `Cargo.toml` is not one crate out of the build**, and the record says so in three places rather than implying otherwise. `dynograph-resolution` declares `dynograph-vector` itself, so cargo keeps building it until increment 2. Verified with `cargo tree -p reflow2-core -i dynograph-vector`, not assumed.
+
+**Provenance is a requirement of this work, not a courtesy.** The recorded objection to absorbing anything is that *vendoring converts a visible dependency into an invisible one*: the pin carried a written reason for every bump, and in-tree code has no successor to that record. So the absorbed module carries a header naming repo, tag, commit, file, what was taken and what was deliberately left — and every increment will.
+
+**Two decisions settled alongside it**, both from questions Anthony asked mid-increment:
+
+- **Absorbed code is distributed BY FUNCTION** into the components that use it; no `sys:absorbed-foundation` is created, because a subsystem for absorbed code would rebuild in the model the boundary the absorption removes. ⭐ This resolves `dec:idea-is-the-foundation-a-subsystem-or-a-supplier` — open since 2026-08-17 — on its own terms: option B was rejected because *"a subsystem you do not build, cannot change, and release separately is not a subsystem"*, and absorption removes all three objections at once. The node stays open until the last increment, because the supplier still exists.
+- **Writing the requirement is part of increments 3–5, not cleanup after them.** Those behaviours are modelled today as `required` interfaces — a legitimate way to have no requirement, since reflow2 claims to *need* them rather than to *do* them. Absorption deletes that framing, and `unmotivated_capability` would then fire. Increment 1 is clean: `stats.rs` sits beneath `cap:dimensions`, which already satisfies `req:coherence`.
+
+Also: `dep:dynograph-foundation` gains its `graph_id`, which had been null — dynograph-foundation has had its own reflow2 design all along.
+
 ### Added — the graph asks what a session made FALSE, and the edge that had never once been drawn now gets asked for
 
 **Minor.** New capability and one new served tool (`unclaimed_findings`); no schema change, stamp unmoved at 29 node / 64 edge types.
