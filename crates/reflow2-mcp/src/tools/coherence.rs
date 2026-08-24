@@ -230,7 +230,21 @@ impl ReflowService {
         // Findings some record CLAIMS to have answered. Read here rather than
         // in the core digest so both surfaces get it from one place, exactly as
         // the recency roll is shared.
-        let invalidated = g.invalidated_findings().map_err(dyno_err)?;
+        // 🛑 SCOPED TO THE ROWS THE DIGEST WILL SHOW, and that is a fix rather
+        // than an optimisation. The exhaustive form asks `incoming()` about
+        // every Verification and TemporalFact, and each of those walks the whole
+        // edge set — measured 2026-08-24 at 39s on this graph, inside the call
+        // `cap:loop-status` promises is CHEAP. The digest only annotates checks
+        // that are NOT passing, so those are the only ids worth asking about.
+        let attention_ids: Vec<&str> = status
+            .verifications
+            .iter()
+            .filter(|v| v.status != "passing" && v.status != "superseded")
+            .map(|v| v.verification_id.as_str())
+            .collect();
+        let invalidated = g
+            .invalidated_verifications(&attention_ids)
+            .map_err(dyno_err)?;
         if let Some(obj) = payload.as_object_mut() {
             obj.insert(
                 "verifications".into(),
@@ -559,8 +573,16 @@ impl ReflowService {
         report["verifications"] = if req.include_verifications {
             serde_json::to_value(&roll).map_err(ser_err)?
         } else {
-            verification_digest(&roll, &g.invalidated_findings().map_err(dyno_err)?)
-                .map_err(ser_err)?
+            verification_digest(&roll, &{
+                // Same scoping as loop_status, and for the same measured reason.
+                let ids: Vec<&str> = roll
+                    .iter()
+                    .filter(|v| v.status != "passing" && v.status != "superseded")
+                    .map(|v| v.verification_id.as_str())
+                    .collect();
+                g.invalidated_verifications(&ids).map_err(dyno_err)?
+            })
+            .map_err(ser_err)?
         };
         report["served_by"] = served_by();
         self.ok_read(&g, report)
@@ -974,11 +996,20 @@ impl ReflowService {
         };
         let live_nodes = g.count_all_nodes().unwrap_or(0);
         let debts = crate::sync_debt::sync_debt(graph_path, live_nodes, &|| g.export_graph().ok());
-        ok_json(json!({
+        let mut out = json!({
             "sync": debts,
             "behind": debts.iter().filter(|d| d.is_actionable()).map(|d| d.message()).collect::<Vec<_>>(),
             "checked": debts.len(),
-        }))
+        });
+        // Say what this roll did NOT open. A roll that quietly checks fewer
+        // records than the seat knows about reads as "all clear" while the one
+        // that moved sits unopened.
+        if let Some(skipped) = crate::sync_debt::not_checked(graph_path)
+            && let Some(obj) = out.as_object_mut()
+        {
+            obj.insert("not_checked".into(), json!(skipped));
+        }
+        ok_json(out)
     }
 
     #[tool(

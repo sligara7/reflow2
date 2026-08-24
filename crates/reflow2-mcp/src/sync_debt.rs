@@ -205,6 +205,89 @@ impl SyncDebt {
 /// known before any comparison is needed. So the export is built only if some
 /// record has actually moved, and never on the path every ordinary session
 /// takes. It is called at most once however many targets are stale.
+/// How many synced records one roll will actually open.
+///
+/// 📐 MEASURED, 2026-08-24, and this is why a bound exists at all. reflow2's own
+/// seat had accumulated **16 targets totalling 102 MB** — the committed export,
+/// a backup, and **fourteen one-off probe dumps written by past sessions**,
+/// three of them belonging to a different project. Every `loop_status` re-read
+/// and re-parsed all of it: `sync_status` measured **28.3s**, inside the call
+/// `cap:loop-status` promises is CHEAP and every session is told to run.
+///
+/// ⭐ THE DEFECT IS UNBOUNDED ACCUMULATION, NOT WHERE THE FILES LIVE. The first
+/// attempt at this fix refused to track anything under the OS temp directory,
+/// on the reasoning that a scratch file is not a SHARED record. **Fifteen tests
+/// in `the_record_moved_and_the_session_is_told` failed and were right to**: a
+/// hermetic test puts a genuine shared record in a temp dir, and so does a CI
+/// workspace and a container. One of them is named *"the case the whole thing
+/// exists for — your brother pushed, you pulled"*. A rule that silences the
+/// feature's own reason for existing is the wrong rule, however convenient the
+/// paths on this machine made it look.
+const MAX_RECORDS_CHECKED: usize = 6;
+
+/// Records this roll did not open, with why.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct SyncNotChecked {
+    pub count: usize,
+    pub paths: Vec<String>,
+    pub note: String,
+}
+
+/// Order the targets a roll should open, freshest first, and say what is left.
+///
+/// Freshest by the TARGET FILE's own mtime — an observation of a file, not a
+/// clock the core invented — because the record somebody is actually
+/// collaborating on is the one that moved most recently, and a probe dump from
+/// five sessions ago is exactly what should fall off the end.
+fn ordered_targets(state: &reflow2_core::provenance::SyncState) -> (Vec<String>, Vec<String>) {
+    let mut all: Vec<(std::time::SystemTime, String)> = state
+        .last_synced
+        .keys()
+        .map(|p| {
+            let m = std::fs::metadata(p)
+                .and_then(|m| m.modified())
+                .unwrap_or(std::time::UNIX_EPOCH);
+            (m, p.clone())
+        })
+        .collect();
+    // Freshest first; ties by path so the answer is deterministic.
+    all.sort_by(|a, b| b.0.cmp(&a.0).then_with(|| a.1.cmp(&b.1)));
+    let mut checked: Vec<String> = Vec::new();
+    let mut skipped: Vec<String> = Vec::new();
+    for (i, (_, path)) in all.into_iter().enumerate() {
+        if i < MAX_RECORDS_CHECKED {
+            checked.push(path);
+        } else {
+            skipped.push(path);
+        }
+    }
+    checked.sort();
+    (checked, skipped)
+}
+
+/// The targets a roll left unopened — for a caller that must say so out loud.
+pub fn not_checked(graph_path: &str) -> Option<SyncNotChecked> {
+    let state = reflow2_core::provenance::read_sync_state(graph_path);
+    let (_, skipped) = ordered_targets(&state);
+    if skipped.is_empty() {
+        return None;
+    }
+    Some(SyncNotChecked {
+        count: skipped.len(),
+        note: format!(
+            "{} record(s) this seat has synced with were NOT opened by this roll. A roll opens the \
+             {MAX_RECORDS_CHECKED} most recently modified, because every one costs a full document \
+             read and this list only ever grows — one seat had 16 targets totalling 102 MB, mostly \
+             one-off exports from past sessions. If one of these is a record you actually \
+             collaborate on, touch it or re-export to it and it returns to the front. Named here \
+             rather than dropped: a roll that quietly checks fewer than it knows about is the \
+             silent truncation this project refuses.",
+            skipped.len()
+        ),
+        paths: skipped,
+    })
+}
+
 pub fn sync_debt(
     graph_path: &str,
     live_nodes: usize,
@@ -212,9 +295,14 @@ pub fn sync_debt(
 ) -> Vec<SyncDebt> {
     let mut built: Option<Option<GraphExport>> = None;
     let state = reflow2_core::provenance::read_sync_state(graph_path);
+    let (checked, _) = ordered_targets(&state);
     let mut out = Vec::new();
 
-    for (path, expected) in &state.last_synced {
+    for (path, expected) in state
+        .last_synced
+        .iter()
+        .filter(|(p, _)| checked.contains(p))
+    {
         let target = std::path::Path::new(path);
         if !target.exists() {
             out.push(bare(
