@@ -28,9 +28,14 @@ repository = "https://github.com/sligara7/reflow2"
 [workspace.dependencies]
 dynograph-core = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.12.0" }
 dynograph-storage = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.12.0", default-features = false }
-# Pure, dependency-free graph-theory algorithms (components, cuts, centrality,
-# Leiden communities) — powers HEAL's structural detectors + the allocation analysis.
-dynograph-graph = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.12.0" }
+# dynograph-graph was HERE until 2026-08-24. Absorbed: reflow2 imported eight
+# names — Graph, GraphBuilder, betweenness_centrality, connected_components,
+# cut_structure, find_cycle, leiden, strongly_connected_components — whose
+# transitive closure is 2,219 of the crate's 3,832 lines. They now live in
+# `reflow2-core/src/graphalg/` with a provenance header. Left behind: 1,613
+# lines in nine files (centrality, closeness, clustering, eigenvector,
+# link_prediction, maxflow, pagerank, shortest_path, toposort).
+# Increment 3 of dec:absorb-the-foundation-subset-and-end-the-dependency.
 # dynograph-resolution was HERE until 2026-08-24. Absorbed: reflow2 called
 # `token_sort_ratio` and nothing else, so it and its closure (jaro,
 # jaro_winkler, jaro_winkler_prepared, sort_tokens) now live in

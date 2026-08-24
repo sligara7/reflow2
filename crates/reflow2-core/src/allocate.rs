@@ -24,8 +24,8 @@
 
 use std::collections::{BTreeMap, HashMap, HashSet};
 
+use crate::graphalg::{GraphBuilder, connected_components, cut_structure, leiden};
 use dynograph_core::{DynoError, Value};
-use dynograph_graph::{GraphBuilder, connected_components, cut_structure, leiden};
 
 use crate::graph::DesignGraph;
 use crate::nodes::{edge, node};

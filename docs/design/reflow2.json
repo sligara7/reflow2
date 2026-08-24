@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:105aa1bc92708399992fbb1afd859c25acdbb11bf9f126486b2001e28407d251",
+  "content_hash": "sha256:b2a1c1c0d0d8f4f01e5d15b571a6ac5d9c9048432c3a36a9fb67c48715655180",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1732,6 +1732,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:graph-algorithms",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:graph-algorithms"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -12634,6 +12642,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "req:graph-theory-undergirds-the-design-brain",
+      "properties": {
+        "acted_at": "2026-08-24",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "req:hosted-state-outlives-the-image",
       "properties": {
         "acted_at": "2026-08-05T23:10:00Z",
@@ -16323,6 +16340,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:absorb-graph-algorithms",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:allocate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-graph-algorithms",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-graph-algorithms",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:flow"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-graph-algorithms",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:structure"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:absorb-resolution-fuzzy",
       "properties": {
         "accepted_baseline": false,
@@ -19218,6 +19271,15 @@
         "action": "modified"
       },
       "to_id": "art:test-nothing-asks-what-a-session-made-false"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-e0f130c30f9f7376",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graphalg"
     },
     {
       "edge_type": "CHANGED",
@@ -30580,6 +30642,12 @@
       "from_id": "sys:foundation",
       "properties": {},
       "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:foundation",
+      "properties": {},
+      "to_id": "cmp:graph-algorithms"
     },
     {
       "edge_type": "CONTAINS",
@@ -91393,6 +91461,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:graphalg",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:graph-algorithms"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:heal",
       "properties": {
         "conformance": "unchecked"
@@ -94130,6 +94207,12 @@
       "from_id": "cap:granularity-observation",
       "properties": {},
       "to_id": "req:build-granularity-is-visible"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:graph-algorithms",
+      "properties": {},
+      "to_id": "req:graph-theory-undergirds-the-design-brain"
     },
     {
       "edge_type": "SATISFIES",
@@ -99371,7 +99454,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:21a8d661174e77cdc24d1335e769b59e1b4c6c3c7cb4fecc5dd54c8981f0e4a7",
+        "checksum": "sha256:520097ace0f857bc9ce6bbf99745bddc034e089cd342eb0b70fca829f6421bb7",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/allocate.rs",
         "name": "allocate.rs",
@@ -100157,7 +100240,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f6abe031170cd8123c44b3f87248b9841f9b31117d78d8325769fea6a34a5d8e",
+        "checksum": "sha256:a6a7221a87d8292d2c61527e566e86816424f56ffa38b149238472a175ef5fb6",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/flow.rs",
         "name": "flow.rs",
@@ -100273,6 +100356,17 @@
         "checksum": "sha256:05d063016d1fb7924b09aa4475789311e193e2f05f7568f8c58cf284bbfed18f",
         "location": "crates/reflow2-core/src/graph_read.rs",
         "name": "graph_read.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:graphalg",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:1abdd5814c7558dd42b5b3206a22eed0022cea26c3752b15333459d73482b592",
+        "location": "crates/reflow2-core/src/graphalg/mod.rs",
+        "name": "graphalg/mod.rs",
         "status": "realized"
       }
     },
@@ -101483,7 +101577,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:19643a1528b63a8b91517a129d70db7a4291a1c56c7777819b81d4924497a924",
+        "checksum": "sha256:ee40cb2693440e642900616bd4b3d210ec73a4dac01fe5f1dda3a545216cfb73",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/structure.rs",
         "name": "structure.rs",
@@ -103533,6 +103627,16 @@
       }
     },
     {
+      "node_id": "cap:graph-algorithms",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The algorithms the structural detectors run on, in-tree rather than obtained across a required interface: `GraphBuilder`, Leiden community detection, Tarjan SCC, connected components, directed cycle detection, articulation points and bridges (DFS lowlink), and Brandes betweenness centrality.\n\nConsumed by `cmp:structure` and `cmp:allocate` (`sys:coherence-loop`) and `cmp:flow` (`sys:vocabulary`) — three consumers across two subsystems, which is why the component sits in `sys:foundation`.\n\n⭐ EXACT, NOT APPROXIMATE, and that is a real property rather than an implementation note: upstream chose it on the ground that consumer graphs are 10^2-10^3 nodes, so there are no streaming or sampled variants. A design large enough to need them would need a different answer, and this capability does not provide one.\n\n🛑 WHAT IT DELIBERATELY DOES NOT COVER: pagerank, eigenvector and closeness centrality, clustering coefficient, link prediction, max-flow/min-cut, shortest path, topological sort, degree centrality. 1,613 lines left upstream because nothing in reflow2 asks those questions. `cut_structure` in particular does NOT need max-flow — articulation points come from a DFS lowlink walk — which is the one closure result worth stating, because the intuition that \"cuts need flow\" would have dragged 248 lines in.\n\n⚖️ Carries `#![allow(dead_code)]` on eight unused items, kept so the files stay byte-comparable with upstream. Anthony's call, 2026-08-24: trim later if still unused, not on the day it arrived.\n\n(Distinct from `chg:absorb-graph-algorithms`, which records the MOVE and its measurements; this records what reflow2 can now do. The ChangeEvent is history, this is capability.)",
+        "name": "reflow2 owns the graph theory it analyses designs with",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "cap:graph-registry",
       "node_type": "Capability",
       "properties": {
@@ -105161,6 +105265,18 @@
       "properties": {
         "change_type": "defect_fix",
         "name": "create_node names the properties the schema does not declare, without refusing them — third theme of the triage-fixes increment"
+      }
+    },
+    {
+      "node_id": "chg:absorb-graph-algorithms",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-24",
+        "name": "Increment 3 of the absorption — the graph algorithms come in-tree, and this is the first increment carrying real intellectual content",
+        "rationale": "This is the first increment where the plan's own warning applies. Increments 1 and 2 were self-contained arithmetic with no external crates and one or two call sites; this carries a Leiden community-detection implementation, a DFS lowlink cut walk, and Tarjan SCC — the code you would least want to reimplement, which under ABSORPTION inverts into the argument FOR: difficulty-to-rewrite stops being a cost and becomes the reason the code is worth owning.\n\n⭐ THE CLOSURE WAS COMPUTED, NOT ESTIMATED, and the method matters because the first attempt at it was wrong. An earlier pass grepped `crate::[a-z_]+` and missed `use crate::{a, b}` forms, and separately truncated the crate's file list at 12 — so it reported 7 unneeded files when there are 11, and 3,832 lines split differently. Re-run over every file with both import shapes, the split is 1,844 needed / 1,988 dropped. **A closure measured with a pattern that cannot see one of the two syntaxes is not a closure.**\n\n🛑 THE CONDITION FROM `dec:absorbed-code-is-distributed-by-function` APPLIES HERE FOR THE FIRST TIME: absorbing behaviour that was modelled as a `required` interface deletes the framing that explained why reflow2 had no requirement for it. `ifc:req-dyno-graph-api` says \"reflow2 NEEDS graph algorithms from outside\"; once they are in-tree, nothing says why reflow2 detects communities with Leiden. Anthony stated the reason himself on 2026-08-17 — *\"I wanted graph theory to undergird everything ... graph theory was important to my concept of reflow2\"* — and it has never been written as a requirement. It is captured now, at `proposed`, because a requirement is his word and not session residue.",
+        "subject": "system",
+        "summary": "Third increment of `dec:absorb-the-foundation-subset-and-end-the-dependency`. The closure behind the six names reflow2 imports — `GraphBuilder`, `leiden`, `strongly_connected_components`, `connected_components`, `find_cycle`, `cut_structure` — is absorbed from `dynograph-graph` at tag v0.12.0 into a new `reflow2-core` module, with its tests. `allocate.rs`, `flow.rs` and `structure.rs` import locally, and `dynograph-graph` is removed from reflow2's dependencies.\n\nTAKEN, 1,844 lines in 8 files, verified as the transitive closure rather than guessed: `error.rs` (62), `graph.rs` (334), `components.rs` (134), `scc.rs` (169), `cycles.rs` (154), `cuts.rs` (223), `communities.rs` (695), `lib.rs` (73).\n\nNOT TAKEN, 1,988 lines in 11 files — **51% of the crate**: betweenness, centrality, closeness, clustering, eigenvector, link_prediction, maxflow, pagerank, paths, shortest_path, toposort. reflow2 calls none of them.\n\n⭐ `cuts.rs` DOES NOT NEED `maxflow.rs`, which is the one result worth checking rather than assuming: articulation points and bridges are computed by a DFS lowlink walk, not by a min-cut, so `max_flow_min_cut` (248 lines) stays behind. A closure taken on the intuition that \"cuts need flow\" would have dragged it in.\n\nThe absorbed code lands in a NEW component `cmp:graph-algorithms`, under `sys:foundation` — Anthony's name, chosen because reflow2 already has a `cmp:graph` for its own graph module and the two are different things. That collision was found before the code moved, not during."
       }
     },
     {
@@ -107550,6 +107666,16 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-24",
         "name": "First baseline — a new file, so nothing moved. Ten cases on the computation.",
+        "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:baseline-e0f130c30f9f7376",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-24",
+        "name": "First baseline. The module ROOT only — it carries the provenance header and the re-exports. ⚠️ ITS NINE SIBLINGS ARE NOT INDIVIDUALLY REGISTERED, so they carry no drift signal of their own; the gate's `unmodelled source` note is what reports them. That is a deliberate trade against nine more artifact nodes, and it is stated rather than left to be discovered.",
         "subject": "record"
       }
     },
@@ -110831,6 +110957,17 @@
         "purpose": "The graph module.",
         "status": "planned",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:graph-algorithms",
+      "node_type": "Component",
+      "properties": {
+        "level": "component",
+        "name": "graph-algorithms",
+        "provenance": "authored",
+        "purpose": "Domain-neutral graph theory over a dense in-memory graph: `GraphBuilder`, Leiden community detection, Tarjan strongly-connected components, connected components, directed cycle detection, articulation points and bridges, and Brandes betweenness centrality. Exact rather than approximate — design graphs are 10^2–10^3 nodes.\n\nAbsorbed from `dynograph-graph` at v0.12.0 on 2026-08-24 (increment 3 of `dec:absorb-the-foundation-subset-and-end-the-dependency`). 2,219 of the crate's 3,832 lines; 1,613 left behind in nine files reflow2 never calls.\n\n⭐ THE NAME IS ANTHONY'S, AND THE COLLISION IT AVOIDS IS REAL IN BOTH THE MODEL AND THE CODE. reflow2 already has `cmp:graph` for its own graph module, and dynograph-foundation's design has a `cmp:graph` of its own — one of three id collisions found while scoping a mirror that was then dropped. In the code the same clash bites harder: every absorbed file said `crate::graph` meaning ITS graph module, which in reflow2 resolves to `DesignGraph`. The imports were rewritten to `crate::graphalg::` for that reason.\n\nWHO USES IT: `cmp:structure` and `cmp:allocate` (both in `sys:coherence-loop`) and `cmp:flow` (in `sys:vocabulary`) — which is why it sits in `sys:foundation` rather than inside any one of them. It undergirds more than one subsystem, which is exactly the placement `dec:absorbed-code-is-distributed-by-function` calls for.\n\n⚖️ IT CARRIES `#![allow(dead_code)]`, deliberately. Eight items are unused from reflow2's point of view — two error variants, three policy variants, two accessors, a helper. They stay because the files are kept VERBATIM so they remain diffable against upstream, which is what the provenance requirement actually rests on. Anthony, 2026-08-24: *\"don't trim now - if we decide it isn't necessary, then we can trim in the future.\"*",
+        "status": "planned"
       }
     },
     {
@@ -124132,6 +124269,18 @@
       }
     },
     {
+      "node_id": "req:graph-theory-undergirds-the-design-brain",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "Graph theory undergirds reflow2 — the design's shape is analysed with real algorithms, owned in-tree, not obtained",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "Anthony, 2026-08-17, thinking out loud about the subsystem decomposition — his words, and they had never been written as a requirement until 2026-08-24:\n\n> *\"I wanted graph theory to undergird everything (that's why I designed reflow2 to use dynograph-foundation). graph theory was important to my concept of reflow2.\"*\n\n⭐ **WHY IT WAS WRITTEN THEN, AND NOT BEFORE.** Until 2026-08-24 this need was expressed structurally rather than as intent: five Interfaces at `designation: required`, of which `ifc:req-dyno-graph-api` said *reflow2 NEEDS graph algorithms from outside*. **A required interface is a legitimate way to have no requirement** — the design was not claiming to DO the thing, it was claiming to NEED it, and the supplier's own design carried the why.\n\nAbsorbing the algorithms deletes that framing. Once `leiden`, `cut_structure`, `strongly_connected_components` and the rest sit in `cmp:graph-algorithms`, nothing in the design says why reflow2 detects communities at all, and `unmotivated_capability` would be right to fire. `dec:absorbed-code-is-distributed-by-function` made writing this a CONDITION of increments 3-5 rather than cleanup after them, precisely so the gap never opens.\n\n═══ WHAT THIS REQUIRES ═══\n\nThat reflow2 reads a design's SHAPE, not only its text — that structural facts a reader cannot see by reading nodes one at a time are computed and reported. Concretely, what the shape is asked today: are there cycles in the dependency spine; which parts form communities that barely talk to each other; which single parts, if removed, disconnect the rest; which nodes are unreachable from the thread; which parts sit on the most paths between others.\n\nAnd that the algorithms doing it are OWNED, not obtained. A design brain whose central analysis is borrowed can have that analysis withdrawn, versioned away, or changed under it — and reflow2's whole claim is that it can say what it knows and why.\n\n═══ 🛑 WHAT THIS IS NOT, so it is not read wider than it is ═══\n\n• NOT a requirement for graph algorithms in general. Nine files were deliberately left upstream — pagerank, eigenvector, closeness, clustering, link prediction, max-flow, shortest path, toposort, degree centrality — because nothing in reflow2 asks those questions. **Owning what you use is the requirement; owning a library is not.**\n• NOT a claim that the current set is complete. It is what the detectors ask today.\n• NOT a performance or scale requirement. The absorbed implementations are EXACT rather than approximate on the stated ground that design graphs are 10^2-10^3 nodes; if a design ever outgrows that, this requirement does not say what should happen.\n\n═══ DISTINCT FROM ITS NEAR NEIGHBOURS ═══\n\n`dec:absorbed-code-is-distributed-by-function` decides WHERE absorbed code lives and made this capture a condition; it does not say why reflow2 wants graph theory. `req:coherence` (\"design stays coherent across its lifecycle\") is the OUTCOME the detectors serve — this is about the analysis underneath them being real and owned, and a design could satisfy coherence with no graph theory at all. `dec:idea-is-the-foundation-a-subsystem-or-a-supplier` quotes the same sentence but asks where the system boundary sits.\n\n═══ ✅ ACCEPTED BY ANTHONY, 2026-08-24 — and the route here is worth keeping ═══\n\nIt was captured at `proposed` and moved to `accepted` on his explicit word (\"accept the proposed requirement\"), with his approver edge, minutes apart.\n\n**The two-step was not ceremony.** He stated this as MOTIVATION inside a brainstorm about subsystem placement a week earlier, not as intent — and promoting a musing to an accepted requirement on his behalf is the forgery `dec:certainty-derived` forbids. The distance between \"he said it\" and \"he meant it as a requirement\" is exactly what the `proposed` status exists to hold, and it cost one question to close honestly.\n\n⭐ IT ALSO SAT UNWRITTEN FOR A WEEK. The sentence was in the graph the whole time, inside a brainstorm node, doing nothing. What surfaced it was not a search but a CONSEQUENCE: absorbing the code removed the structure that had been standing in for the requirement. **Intent stated as motivation is invisible to every detector until something makes its absence load-bearing.**",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:hosted-state-outlives-the-image",
       "node_type": "Requirement",
       "properties": {
@@ -125423,10 +125572,10 @@
       "node_id": "dep:dynograph-foundation",
       "node_type": "Resource",
       "properties": {
-        "components": "dynograph-core,dynograph-storage,dynograph-graph",
+        "components": "dynograph-core,dynograph-storage",
         "declared_in": "Cargo.toml",
         "dependency_graph_id": "dynograph-foundation",
-        "description": "Derived from reflow2's own Cargo.toml, not hand-written.\n\n🛑 **THREE OF SIX CRATES ARE NOW GONE.** `dynograph-vector` left 2026-08-24 (increment 1, `chg:absorb-vector-stats`); `dynograph-resolution` left the same day (increment 2, `chg:absorb-resolution-fuzzy`) — and removing resolution took vector out of the BUILD GRAPH too, since resolution was the last path to it after increment 1 removed the direct line. Verified with `cargo tree`, not assumed: `dynograph-vector` and `dynograph-resolution` now appear zero times.\n\n⭐ INCREMENT 1 PREDICTED THIS IN WRITING and it came true exactly: \"One line out of Cargo.toml is not one crate out of the build.\" That caveat is now discharged.\n\nWHAT WAS ABSORBED, and what was left:\n  • `mean` + `linear_regression_slope` → `reflow2-core/src/stats.rs`. Left: 7 of 9 functions, `hnsw.rs` (1,165 lines), `distance.rs` (776).\n  • `token_sort_ratio` + its closure → `reflow2-core/src/fuzzy.rs`. Left: `PreparedName`, and `resolver.rs` (911 lines — an EntityResolver reflow2 never called).\nEach carries a header naming repo, tag, commit, file, what was taken and what was deliberately left.\n\nREMAINING: `dynograph-core`, `dynograph-graph`, `dynograph-storage` — plus `dynograph-text`, reached transitively through storage's `fulltext` feature and never named here. Increments 3, 4 and 5 of `dec:absorb-the-foundation-subset-and-end-the-dependency` take them; only the last one ends the dependency.\n\nHISTORY KEPT: bumped v0.11.0 → v0.12.0 on 2026-07-28 for a stated reason rather than as housekeeping — v0.12.0 closes a type leak reflow2 was structurally exposed to (`search_fulltext` returned `dynograph_text::TextHit`, from a crate reflow2 never names and reaches only through an optional feature) and makes the `rocksdb` and `fulltext` feature NAMES a committed contract upstream. Verified before the tag existed by building this consumer against the provider's unreleased tree. MIGRATION CHECKED, not assumed: `keys.rs` and `backend.rs` are untouched between the tags, so a graph written by v0.11.0 reads identically.",
+        "description": "Derived from reflow2's own Cargo.toml, not hand-written.\n\n🛑 **THREE CRATES GONE, TWO NAMED HERE, ONE REACHED TRANSITIVELY.** `dynograph-vector` and `dynograph-resolution` left 2026-08-24 (increments 1 and 2); `dynograph-graph` left the same day (increment 3, `chg:absorb-graph-algorithms`). Verified with `cargo tree` at each step rather than inferred from the manifest. What remains: `dynograph-core` and `dynograph-storage` here by name, plus `dynograph-text` pulled in by storage's `fulltext` feature and never named in any manifest — 847 lines and tantivy behind it, and no earlier costing of the absorption counted it.\n\nWHAT WAS ABSORBED, and what was deliberately left:\n  • `mean` + `linear_regression_slope` → `reflow2-core/src/stats.rs`. Left: 7 of 9 functions, `hnsw.rs`, `distance.rs`.\n  • `token_sort_ratio` + closure → `reflow2-core/src/fuzzy.rs`. Left: `PreparedName`, `resolver.rs` (911 lines).\n  • 8 graph names + closure → `reflow2-core/src/graphalg/`. 2,219 of 3,832 lines; left 1,613 in nine files.\nEach carries a header naming repo, tag, commit, files, what was taken and what was left.\n\n⭐ THE ONE CLOSURE RESULT WORTH KEEPING: `cut_structure` does NOT need `max_flow_min_cut`. Articulation points and bridges come from a DFS lowlink walk, so 248 lines stayed behind that the intuition \"cuts need flow\" would have dragged in.\n\n🛑 AND THE ONE MISTAKE WORTH KEEPING: the first closure for increment 3 was wrong because the grep that found reflow2's import sites matched only single-line `use dynograph_graph::X;` and missed the MULTILINE block in `structure.rs`, which imports `betweenness_centrality`. That put two needed files (`betweenness.rs`, `paths.rs`, 375 lines) in the not-taken list. **The same blind spot had been caught in the dependency scan minutes earlier and fixed in only one of the two greps.**\n\nREMAINING WORK: increments 4 (`dynograph-core`, 1,941 lines, 62 importing files) and 5 (`dynograph-storage` + `dynograph-text`, 3,575 lines, brings rocksdb and tantivy). **Only increment 5 ends the dependency.**\n\nHISTORY KEPT: bumped v0.11.0 → v0.12.0 on 2026-07-28 for a stated reason rather than as housekeeping — v0.12.0 closes a type leak reflow2 was structurally exposed to (`search_fulltext` returned `dynograph_text::TextHit`, from a crate reflow2 never names and reaches only through an optional feature) and makes the `rocksdb` and `fulltext` feature NAMES a committed contract upstream. Verified before the tag existed by building this consumer against the provider's unreleased tree. MIGRATION CHECKED, not assumed: `keys.rs` and `backend.rs` are untouched between the tags, so a graph written by v0.11.0 reads identically.",
         "features": "rocksdb,fulltext",
         "name": "dynograph-foundation",
         "provider": "https://github.com/sligara7/dynograph-foundation.git",
@@ -133312,7 +133461,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:9335e6c3627c6e2056c7697dc8bacc1f87fd8529c94c52dc2d0c0f945a5ea3c6",
+  "prev_content_hash": "sha256:105aa1bc92708399992fbb1afd859c25acdbb11bf9f126486b2001e28407d251",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

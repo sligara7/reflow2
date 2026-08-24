@@ -31,6 +31,26 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Changed — increment 3 of the foundation absorption: the graph algorithms come in-tree
+
+**Patch.** No schema change, no surface change. New component `cmp:graph-algorithms` under `sys:foundation`; new requirement `req:graph-theory-undergirds-the-design-brain`, **accepted** on Anthony's word.
+
+The closure behind the eight names reflow2 imports — `Graph`, `GraphBuilder`, `betweenness_centrality`, `connected_components`, `cut_structure`, `find_cycle`, `leiden`, `strongly_connected_components` — is absorbed from `dynograph-graph` at **v0.12.0** into `reflow2-core/src/graphalg/`, with its tests. `structure.rs`, `flow.rs` and `allocate.rs` import locally, and `dynograph-graph` leaves `Cargo.toml`.
+
+**2,219 of 3,832 lines. 1,613 left behind** in nine files reflow2 never calls: pagerank, eigenvector, closeness, clustering, link prediction, max-flow, shortest path, toposort, degree centrality.
+
+**⭐ `cut_structure` does NOT need `max_flow_min_cut`** — articulation points and bridges come from a DFS lowlink walk, so 248 lines stayed behind that the intuition *"cuts need flow"* would have dragged in. That is the one closure result worth checking rather than assuming.
+
+**🛑 And the first closure was WRONG, in the same hour a warning about exactly this was written.** The grep that found reflow2's import sites matched only single-line `use dynograph_graph::X;` and missed the **multiline** block in `structure.rs`, which imports `betweenness_centrality`. That put two needed files — `betweenness.rs` and `paths.rs`, 375 lines — in the not-taken list. The same blind spot had been caught in the *dependency* scan minutes earlier and fixed in only one of the two greps. **Fixing a pattern's blind spot in one place does not fix it in the other.**
+
+**The `cmp:graph` collision was real in the code, not just the model.** Every absorbed file said `crate::graph` meaning *its* graph module, which in reflow2 resolves to `DesignGraph`; and `super::` breaks inside nested `#[cfg(test)]` modules. Imports were rewritten to the unambiguous `crate::graphalg::`.
+
+**⚖️ Eight unused items keep `#![allow(dead_code)]`, deliberately** — two error variants, three policy variants, two accessors, a helper. The files are kept **verbatim** so they stay diffable against upstream, which is what the provenance requirement rests on. Anthony, 2026-08-24: *"don't trim now — if we decide it isn't necessary, then we can trim in the future."* "Only take what we need" was already applied at the file level.
+
+**A requirement that had gone unwritten for a week.** Absorbing the algorithms deletes the `required`-interface framing that legitimately explained why reflow2 had no requirement for them — a required interface says *"we NEED this"*, not *"we DO this"*. `req:graph-theory-undergirds-the-design-brain` captures Anthony's own 2026-08-17 words (*"I wanted graph theory to undergird everything"*), at `proposed` first and `accepted` on his explicit say-so. ⭐ Nothing would have surfaced it: no search found it, a **consequence** did.
+
+Three of six crates gone. Remaining: `dynograph-core`, `dynograph-storage`, plus `dynograph-text` transitively. **Only increment 5 ends the dependency.**
+
 ### Changed — increment 2 of the foundation absorption: the fuzzy matcher comes in-tree, and two crates leave the build
 
 **Patch.** No schema change, no surface change.
