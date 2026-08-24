@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:0e974eaf39670171187b2e3ee9def7e8915f45de434d4965a637b35234d37448",
+  "content_hash": "sha256:9335e6c3627c6e2056c7697dc8bacc1f87fd8529c94c52dc2d0c0f945a5ea3c6",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -9235,6 +9235,24 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:absorb-the-foundation-subset-and-end-the-dependency",
+      "properties": {
+        "acted_at": "2026-08-24",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:absorbed-code-is-distributed-by-function",
+      "properties": {
+        "acted_at": "2026-08-24",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:agent-navigates-content",
       "properties": {
         "acted_at": "2026-07-31",
@@ -16280,6 +16298,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:absorb-vector-stats",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-vector-stats",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:dimensions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:absorb-vector-stats",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:dimensions"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-0017ff064f290927",
       "properties": {
         "accepted_baseline": true,
@@ -19013,6 +19058,15 @@
         "action": "modified"
       },
       "to_id": "art:detect-and-ask-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-942ecf6024c25fbb",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:stats"
     },
     {
       "edge_type": "CHANGED",
@@ -92426,6 +92480,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:stats",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:dimensions"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:storyflow-resolution-study",
       "properties": {
         "completeness": "complete"
@@ -99784,7 +99847,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:59ef210d5f8576a9f07b321dc546b653056ab4ecda17e0ec9269ed87a52c27dc",
+        "checksum": "sha256:de3750bf50af51a44c2cf11d68e2a4dae9a11facdd52f7bf4d1487978c58cdac",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/dimensions.rs",
         "name": "dimensions.rs",
@@ -101279,6 +101342,17 @@
         "name": "stateless_seat_probe.py",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:stats",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:f44dda5865c39d5f8d301b33192096405930956e0a0adaf487a6eedead6e36f0",
+        "location": "crates/reflow2-core/src/stats.rs",
+        "name": "stats.rs",
+        "status": "realized"
       }
     },
     {
@@ -104990,6 +105064,18 @@
       }
     },
     {
+      "node_id": "chg:absorb-vector-stats",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-24",
+        "name": "Increment 1 of the absorption — the two statistics functions come in-tree and dynograph-vector leaves reflow2's manifest",
+        "rationale": "The cheapest increment first, deliberately, so the pattern is proven on something reversible before anything hard is touched. `stats.rs` has ZERO external imports — pure stdlib arithmetic — and one consumer, so nothing about this step can go wrong in an interesting way. That is the point of doing it first.\n\n⭐ PROVENANCE IS A REQUIREMENT OF THIS DECISION, NOT A NICETY. The recorded objection to absorbing is that vendoring converts a visible dependency into an invisible one: the pin at `reflow2.toml` carries a written reason for every bump, and once code is in-tree that record has no successor. So every increment names the exact TAG and the exact FILES, in the ChangeEvent and in a header on the absorbed code itself. A later reader must be able to find what this came from.\n\n⚠️ AND WHAT THIS INCREMENT DOES NOT DO, stated because the manifest will look like it does: `dynograph-vector` leaves reflow2's DIRECT dependencies, but `dynograph-resolution` declares it as a dependency of its own, so cargo keeps building it until increment 2 lands. **One line out of Cargo.toml is not one crate out of the build.**",
+        "subject": "system",
+        "summary": "First increment of `dec:absorb-the-foundation-subset-and-end-the-dependency`. `mean` and `linear_regression_slope` are absorbed into a new `reflow2-core` module from `dynograph-vector`'s `stats.rs` at tag v0.12.0 (`19b6760`), with their upstream tests. `dimensions.rs` — the only consumer — imports locally, and `dynograph-vector` is removed from reflow2's direct dependencies.\n\nTAKEN, NAMED EXACTLY: `linear_regression_slope` and `mean` from `crates/dynograph-vector/src/stats.rs`, plus the six `linreg_*` tests and `mean_basic_and_empty`.\n\nNOT TAKEN: the other seven public functions in that file — `pearson_correlation`, `variance`, `std_dev`, `percentile`, `median`, `softmax`, `spearman_rank_correlation` — and the whole of `hnsw.rs` (1,165 lines) and `distance.rs` (776). reflow2 calls none of them. Taking them would be exactly the dead weight this decision exists to avoid."
+      }
+    },
+    {
       "node_id": "chg:accept-0017ff064f290927",
       "node_type": "ChangeEvent",
       "properties": {
@@ -107236,6 +107322,16 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-19",
         "name": "First baseline. detect-and-ask had NO Artifact node until 2026-08-19 — the second such hole found this week after art:where-am-i-skill, in a repo where every other skill has carried one since the kit was modelled. A hole in the self-model, not a change to accept.",
+        "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:baseline-942ecf6024c25fbb",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-24",
+        "name": "First baseline — a new file, so nothing moved. Absorbed from dynograph-vector's stats.rs at v0.12.0 (19b6760): `linear_regression_slope`, `mean`, and their seven tests, verbatim. Private to the crate on purpose: ifc:core-api already records 277 public functions growing by default, and absorbing code is not a reason to widen a surface already recorded as too wide.",
         "subject": "record"
       }
     },
@@ -111607,6 +111703,26 @@
         "decision": "PROPOSED RESOLUTION of the standing contradiction between `dec:merge-survivor-provenance` and the two facts that contradict it (`fact:apply-heal-would-have-destroyed-the-wrong-contributor`, `fact:defect-merge-survivor-ignores-priority-and-status`). AWAITING ANTHONY'S WORD — recorded at `proposed` with him as approver, so the loop reports it as owed rather than letting it read as settled.\n\nDO NOT RE-OPEN THE PROVENANCE RANKING. It is correct and it is not what fails. The failure is entirely in the TIEBREAK beneath it: provenance ranks authored > planned > imported > reconciled > inferred > healed, and in practice both sides of a real collision are hand-authored, so the rank TIES and `a <= b` on the node id decides. Twice observed, twice choosing the worse node — `req:backend_as_product` (medium, accepted) over `req:graph_is_the_content_bible` (critical, proposed) at dev_storyflow 2026-08-08, and `ctr:anthony` (8 edges, no description) over `who:ajs` (161 edges, full description) here on 2026-08-09.\n\nTHE ARGUMENT THAT UNBLOCKS THIS, and it is the whole point of the node: DEGREE IS NOT A POLICY. The reason the rule was deliberately left alone is recorded in `fact:defect-merge-survivor-ignores-priority-and-status`: ranking priority above status, or the reverse, asserts a claim about what matters more in a design, and `dec:readiness-is-an-observation-the-threshold-is-the-judgement` says reflow2 must not default that — it is the user's. THAT REASONING IS SOUND AND IS NOT BEING OVERTURNED. But \"destroy fewer edges\" is not a claim about what design content matters; it is a property of the MERGE OPERATION. And the thing it would replace — alphabetical id order — is arbitrary by construction. Substituting a non-arbitrary tiebreak for an arbitrary one asserts no policy at all, which is exactly why this can be done while the priority/status question stays the user's.\n\nFOUR PARTS, SMALLEST FIRST.\n\n(1) WHERE PROVENANCE TIES, BREAK BY DEGREE — keep the node whose deletion destroys less of the design. Degree is already computed and 161 against 8 is not close.\n\n(2) WHERE DEGREE ALSO TIES, REFUSE RATHER THAN PICK. A merge that genuinely cannot distinguish should ask. `dec:ask-not-repair` already holds this shape for the suspicion half; this extends it to the survivor half. A refusal that names both candidates is strictly more useful than a coin toss that names neither.\n\n(3) KEEP PRIORITY AND STATUS OUT OF THE RULE, PUT THEM IN THE DISCLOSURE. \"You are deleting a critical, still-unconfirmed node in favour of a medium, accepted one\" is INFORMATION, not a policy, and the machinery to say it already exists — `chg:a-merge-proposal-discloses-what-it-would-destroy` built `would_destroy` and the alphabet-chose-the-victim line in August. This adds a sentence to an existing disclosure rather than a rule to an existing ranking.\n\n(4) THE SCORING HALF IS SEPARATE AND PROBABLY WORTH MORE. Similarity is prose-only, unweighted by shared referents, which is what let two requirements sharing no requirement, surface or actor score 81-85. Fixing the survivor rule makes a bad merge less destructive; fixing scoring stops the pair reaching a merge at all. Recorded here so the two halves are not confused, NOT claimed by this decision.\n\nWHAT THIS DOES NOT DO, stated because the defect count will not move and somebody will look for it: recording this does not clear `heal:0fc0362a90ff913b` or `heal:7456a4d260ca45ce`. The contradiction detector fires on every CONTRADICTS edge whose alignment is not `supporting` and NEVER LOOKS FOR A RESOLVING DECISION, despite its own doc comment and its `suggested_fix_type: generate_decision` saying otherwise. The honest closure path is that when the tiebreak actually changes, the two facts become historical observations about the OLD rule and their CONTRADICTS edges should be retired as part of that change — not silenced now.\n\nEVIDENCE GAP, stated rather than papered over: degree is KNOWN to decide the contributor case correctly (161 v 8). Whether it separates dev_storyflow's pair is UNVERIFIED — that is their graph and it was not read. If their two nodes have similar degree, part (1) helps less than this decision implies and part (4) carries more of the weight.",
         "name": "PROPOSED — when provenance ties, the merge survivor is the node whose deletion destroys less, and a genuine tie refuses instead of picking",
         "rationale": "Written at Anthony's request on 2026-08-10 after he asked for the merge-survivor pair in plain English and then for the recommendation to be recorded. The recommendation is mine; the decision is his to make, which is why this is `proposed` with an approver edge rather than accepted.\n\nThe load-bearing move is separating the tiebreak from the ranking. Reading `fact:defect-merge-survivor-ignores-priority-and-status` first is what made that possible — it states plainly that the rule was NOT re-opened on purpose, and names the principle. Without that, the obvious proposal is \"consult priority and status\", which walks straight into the judgement reflow2 refuses to default and would have been rejected for a good reason. The finding that the blocked path and the open path are different paths came from reading why it was blocked.\n\nDeliberately does not claim the scoring half, and deliberately records the unverified half of its own evidence.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:absorb-the-foundation-subset-and-end-the-dependency",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED 2026-08-24 by Anthony: *\"I kind of don't want to be dependent upon dynograph-foundation anymore\"* and *\"by absorbing, I don't mean all dynograph-foundation crates - I mean only the ones that are needed in reflow2.\"*\n\nThis CHOOSES among the options `dec:idea-cannibalize-dynograph-foundation-into-reflow2` costed and left open. That node stays as the record of the options; this one records the choice and the plan.\n\n═══ WHY THE EARLIER RECOMMENDATION IS NO LONGER THE RIGHT ONE ═══\n\nThe brainstorm states the trap plainly: **\"Two problems look like one here and have different answers. (a) DEAD WEIGHT ... (b) THE DEPENDENCY ITSELF ... Option C solves (a) and does nothing for (b).\"** Option C was recommended and deferred. Anthony has now said which he is solving: **(b)**. C removes two crates from the manifest and leaves the dependency where it is. This is trimmed option A.\n\n⭐ ITS REOPENING TRIGGERS WERE NOT WHAT REOPENED IT. The node named two — the pin-confirmation cost recurring, or reflow2 needing to CHANGE foundation behaviour. **Neither happened.** What reopened it is a third thing that node had already written as option D's counter: *\"the reason for absorbing is not technical, it is about what reflow2 IS.\"* **A deferral's stated triggers are not the only way back in**, and a reader who treats them as exhaustive will hold a decision closed against its owner.\n\n═══ IT STAYS INSIDE THE OWNERSHIP BOUND ═══\n\n`dec:idea-dynograph-crates-independent-in-code-coupled-in-release` sets a bound this decision must respect: *\"reflow2's design has no standing to decide [dynograph's structure] ... the only options reflow2 can weigh honestly on its own are A (accept it) and E (take less).\"* **This is E, taken to its end.** Every step happens in reflow2's own repository, needs no upstream change, and decides nothing about dynograph-foundation's release structure, its other four crates, or its other consumers. That question stays open and stays theirs.\n\n═══ THE MEASUREMENT THAT DID NOT EXIST BEFORE ═══\n\nThe brainstorm measured whole crates and said what it had not measured: how much of core, storage and graph is dead from reflow2's view. Measured 2026-08-24 at v0.12.0 (`b5a9f74`), file by file, from every `use dynograph_*` in reflow2 and the internal closure of what those names reach:\n\n    crate                 needed    total    dead\n    dynograph-core         1,941    1,941      0%   the whole type vocabulary\n    dynograph-storage      2,728    2,836      4%   (+2,187 lines of its own tests)\n    dynograph-text           847      847      0%   ⇐ NOT IN ANY EARLIER COUNT\n    dynograph-graph        1,844    3,832     52%\n    dynograph-resolution     300    1,211     75%\n    dynograph-vector         436    2,377     82%\n    ─────────────────────────────────────────────\n    TOTAL                 ~8,100   ~13,000    ~40%\n\n⇒ **+15% to reflow2's 53,005-line tree, not the +27% the all-crates figure implied.**\n\n🛑 **SIX CRATES, NOT FIVE.** `dynograph-storage` depends on `dynograph-text` for the `fulltext` feature, and reflow2 USES fulltext (`#[cfg(feature = \"fulltext\")]`, `search.rs`). 847 lines, and it brings **tantivy 0.26**. The sibling node knew `text` was reached through the feature; no COSTING of the absorption ever counted it. A scope that missed it would have discovered it mid-migration.\n\nOTHER EXTERNAL CRATES INHERITED, none previously listed: `rmp-serde`, `lru`, `rand`, `serde_yaml`, `uuid`, `thiserror`, `tantivy`.\n\nIMPORT CHURN: **63 reflow2 files** name a `dynograph_*` path, 62 of them `dynograph_core`. Mechanical, and broad.\n\n═══ WHAT REFLOW2 WOULD OWN FOREVER — the real cost, and it is not line count ═══\n\n  ~2,700 lines of RocksDB storage engine (backend, keys, cache, engine/*)\n    847 lines of tantivy-backed full-text index\n    695 lines of Leiden community detection\n  1,752 lines of schema engine (core/schema.rs)\n\n═══ ONE RECORDED OBJECTION WEAKENS, ONE STANDS ═══\n\n⭐ WEAKER — *\"you lose the upstream's fixes silently.\"* **Upstream is Anthony's own repository.** No vendor, no third party. And storyflow keeps dynograph-foundation alive through its REST surface, which `fact:the-diamond-meets-at-dynographs-internals-not-its-interface` measured as disjoint from reflow2's Rust-library surface. The repo does not die and storyflow is untouched; reflow2 stops linking it, that is all.\n\n🛑 STANDS — *\"Vendoring converts a visible dependency into an invisible one.\"* The pin carries a written reason for every bump; the v0.11→v0.12 note recording a `TextHit` type leak is real history with no successor once the code is in-tree. MITIGATION, required rather than optional: each increment records a ChangeEvent naming the exact TAG absorbed and the FILES taken.\n\n═══ THE PLAN — five increments, each shippable, stop after any ═══\n\n  1. VECTOR → `stats.rs` (436 lines, 1 importing file). Drops hnsw.rs + distance.rs.\n  2. RESOLUTION → `fuzzy.rs` (300 lines, 3 files). Verified standalone — no internal deps.\n  3. GRAPH → graph/error/communities/scc/components/cycles/cuts (1,844 lines, 3 files).\n     ⭐ ZERO external dependencies. Drops ~2,000 lines of pagerank, maxflow, betweenness,\n     eigenvector, link-prediction, shortest-path and paths reflow2 never calls.\n  4. CORE → the whole crate (1,941 lines, 62 importing files). Big mechanical churn, no new risk.\n  5. STORAGE + TEXT (3,575 lines, 24 files). Brings rocksdb and tantivy. THE REAL ONE.\n\n⭐ AFTER 1-3: 2,580 lines moved, 7 files of churn, NO new external crates, three of six crates gone. A genuine stopping point for somebody who changes their mind.\n\n🛑 ONLY STEP 5 ENDS THE DEPENDENCY. Steps 1-4 shrink it. \"We absorbed the foundation\" said after step 4 would be false, and this ordering makes that easy to say wrongly.\n\n═══ WHAT THIS DECIDES BY CONSTRUCTION, AND WHAT IT CANCELS ═══\n\n`dec:idea-is-the-foundation-a-subsystem-or-a-supplier` is answered by construction on completion: no supplier left to be. The five `ifc:req-dyno-*` interfaces are then RETIRED on the record — they were true — not deleted.\n\n🛑 CANCELS mirroring dynograph's published surface into reflow2, dropped on Anthony's word the same day it was proposed: absorbing removes the seam a mirror would describe, so the two are ALTERNATIVES. The flo2 → reflow2 mirror is unaffected. Also moot: the v0.13.0 pin parked since 2026-08-19.",
+        "name": "DECIDED — absorb only what reflow2 needs from dynograph-foundation and end the dependency, in five increments you can stop after any of",
+        "rationale": "Recorded as its own node rather than by editing the brainstorm, because that node's value is the OPTIONS and their costs and it should keep reading as where the thinking happened.\n\n⭐ THE MEASUREMENT LESSON, and it is the second time in one day: the earlier costing measured whole crates and stated honestly what it had not measured. Measuring the missing part changed the headline from +27% to +15% AND found a sixth crate (`dynograph-text`, and tantivy behind it) that no costing of this idea mentions. **A number that answers a narrower question than the one being asked is not evidence about the wider one** — the same shape as the edge-only shortlist measurement corrected earlier today, one level up.\n\n🛑 A STALE PREMISE FOUND WHILE READING THE SIBLINGS, and it is not corrected here because correcting another node's text is a separate act: `dec:idea-dynograph-crates-independent-in-code-coupled-in-release` states that this decision is recorded in reflow2's graph \"because dynograph-foundation has no reflow2 design of its own\". **It has one.** Verified 2026-08-24 with `describe_designs`, which opens nothing: graph_id `dynograph-foundation`, origin `adopted`, minted by 0.16.0, with a committed 179-node export and a `docs/published-surface.json` carrying 15 published Interfaces. The premise was true when written and is false now.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:absorbed-code-is-distributed-by-function",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED 2026-08-24 by Anthony — *\"go with (c), distribute by function\"* — after asking the question that forced it: **\"are these components being taken from dynograph-foundation being added to an existing subsystem or a new subsystem?\"**\n\nEach absorbed piece joins the component that USES it. `dynograph-core`'s types land in `sys:foundation` beside `cmp:schema` and `cmp:nodes` because that is what they are; the graph algorithms join the graph component; the storage engine joins `sys:store`. **No `sys:absorbed-foundation` is created.**\n\n═══ WHY NOT A DEDICATED SUBSYSTEM ═══\n\nIt was the obvious alternative and it is the wrong one: a subsystem for absorbed code would **rebuild in the model the very boundary the absorption removes**. The point of absorbing is that there is no supplier any more. Keeping a labelled block of \"their code\" preserves a seam that has stopped existing, and every later reader would have to be told it means \"historically foreign\" rather than \"architecturally separate\".\n\nProvenance does not need a subsystem to survive. It lives in the file headers (tag, commit, file, what was taken, what was not) and in each increment's ChangeEvent, so **\"what came from outside?\" stays answerable without a structural marker**.\n\n═══ ⭐⭐ THIS RESOLVES `dec:idea-is-the-foundation-a-subsystem-or-a-supplier`, AND BY HIS OWN EARLIER ARGUMENT ═══\n\nThat node has been open since 2026-08-17 with three options: A leave it a supplier (what the design says today), B add it as a ninth black box, C complete the supplier treatment.\n\n**The answer is none of them, because absorption dissolves the question.** And the way it dissolves is the interesting part:\n\nOption B was rejected on a specific ground — *\"a subsystem you do not build, cannot change, and release separately is not a subsystem — modelling it as one asserts ownership reflow2 does not have.\"* **Absorption removes all three objections at once.** After it, reflow2 DOES build it, CAN change it, and does NOT release it separately. The objection was never to the idea; it was to the ownership, and the ownership is what changed.\n\nAnd his motivation on that node is the strongest argument for distributing rather than fencing: *\"I wanted graph theory to undergird everything ... graph theory was important to my concept of reflow2.\"* **Something that undergirds everything is not a box beside everything.** Option (c) puts it where he said it belonged a week before this decision was taken.\n\n⚠️ Option C's finding SURVIVES and is not closed by this: the design's picture of its supplier is partial — `dynograph-text` is consumed transitively with no interface node, and \"what does the foundation offer that we do not take?\" is unanswerable from the graph. For the crates being absorbed that stops mattering. For anything left external it still does.\n\n═══ 🛑 THE CONDITION ON INCREMENTS 3-5, from his other question ═══\n\nHe also asked: *\"I'd imagine in adding these, we are building capabilities/functions that have no requirements in reflow2?\"* **Correct, and it is a real hazard from increment 3 onward.**\n\nToday those behaviours are modelled as `ifc:req-dyno-*` at `designation: required` — which is a legitimate way to have no requirement: reflow2 is not claiming to DO the thing, it is claiming to NEED it. Absorption deletes that framing. Nothing would then say why reflow2 stores in RocksDB or detects communities with Leiden.\n\n⇒ **WRITING THE REQUIREMENT IS PART OF THE INCREMENT, NOT CLEANUP AFTER IT.** reflow2 has a detector for exactly this (`unmotivated_capability`), so the design will say so rather than anyone having to remember — but a gap raised after the code lands is a gap raised late.\n\n⭐ INCREMENT 1 IS CLEAN AND THAT IS WHY IT WENT FIRST: `stats.rs` is implementation beneath `cap:dimensions`, which already SATISFIES `req:coherence`. No new capability, no new requirement owed. It also got NO component of its own — 35 lines of arithmetic do not earn one, and minting `cmp:stats` would be the over-engineering this project watches for.\n\n═══ ⚠️ THE SNAG THIS ORDER WALKS INTO ═══\n\n`cmp:graph` exists in BOTH designs for different things — reflow2's graph module and dynograph's graph crate. It is one of the three id collisions that would have blocked the mirror. **Increment 3 needs a distinct component name for the absorbed algorithms**, decided before the code moves rather than discovered while moving it.",
+        "name": "DECIDED — absorbed foundation code is distributed BY FUNCTION into the components that use it, and no \"absorbed\" subsystem is created",
+        "rationale": "Recorded separately from the absorption plan because it answers a MODELLING question rather than a scoping one, and because it settles a decision open for a week on grounds that node could not have reached: it weighed where the boundary should sit while the supplier existed, and this changes whether there is a supplier.\n\n⭐ THE PATTERN WORTH KEEPING: an option rejected for a reason can become correct when the reason stops holding, and nothing re-examines it automatically. Option B was rejected because reflow2 did not own the code. Nobody would have re-read that node on the day the ownership changed — it surfaced only because Anthony asked where the absorbed components go. **A rejection carries its ground; when the ground moves the rejection is worth re-reading, and no mechanism does that.**",
         "status": "accepted"
       }
     },
@@ -125175,9 +125291,10 @@
       "node_id": "dep:dynograph-foundation",
       "node_type": "Resource",
       "properties": {
-        "components": "dynograph-core,dynograph-storage,dynograph-graph,dynograph-resolution,dynograph-vector",
+        "components": "dynograph-core,dynograph-storage,dynograph-graph,dynograph-resolution",
         "declared_in": "Cargo.toml",
-        "description": "Derived from reflow2's own Cargo.toml, not hand-written. Bumped v0.11.0 -> v0.12.0 on 2026-07-28 for a stated reason rather than as housekeeping (AGENTS.md forbids the latter): v0.12.0 closes a type leak reflow2 was structurally exposed to — `search_fulltext` returned `dynograph_text::TextHit`, from a crate reflow2 never names and reaches only through an optional feature — and it makes the `rocksdb` and `fulltext` feature NAMES a committed contract upstream, which is exactly the reliance this declaration records. Verified before the tag existed by building this consumer against the provider's unreleased tree. MIGRATION CHECKED, not assumed: `keys.rs` and `backend.rs` are untouched between the tags, so a graph written by v0.11.0 reads identically.",
+        "dependency_graph_id": "dynograph-foundation",
+        "description": "Derived from reflow2's own Cargo.toml, not hand-written.\n\n🛑 **`dynograph-vector` LEFT THIS LIST 2026-08-24** — increment 1 of `dec:absorb-the-foundation-subset-and-end-the-dependency` (`chg:absorb-vector-stats`). reflow2 called `mean` and `linear_regression_slope` and nothing else, so those two functions were absorbed into `crates/reflow2-core/src/stats.rs` with a header naming the tag, commit and file they came from. 436 of that crate's 2,377 lines were ever reachable; two functions of nine were ever called.\n\n⚠️ **IT IS STILL IN THE BUILD GRAPH AND THIS RECORD MUST NOT IMPLY OTHERWISE.** `dynograph-resolution` declares `dynograph-vector` as a dependency of its own, so cargo keeps building it until increment 2 lands. Verified with `cargo tree -p reflow2-core -i dynograph-vector`, not assumed. **One line out of Cargo.toml is not one crate out of the build.**\n\n⭐ `graph_id` SET 2026-08-24, and it had been null: dynograph-foundation HAS its own reflow2 design (`describe_designs`, which opens nothing — origin `adopted`, minted by 0.16.0, a committed 179-node export and a published surface carrying 15 Interfaces). A sibling decision node still asserts it has none; that premise was true when written and is false now.\n\nHISTORY KEPT: bumped v0.11.0 → v0.12.0 on 2026-07-28 for a stated reason rather than as housekeeping — v0.12.0 closes a type leak reflow2 was structurally exposed to (`search_fulltext` returned `dynograph_text::TextHit`, from a crate reflow2 never names and reaches only through an optional feature) and makes the `rocksdb` and `fulltext` feature NAMES a committed contract upstream. Verified before the tag existed by building this consumer against the provider's unreleased tree. MIGRATION CHECKED, not assumed: `keys.rs` and `backend.rs` are untouched between the tags, so a graph written by v0.11.0 reads identically.",
         "features": "rocksdb,fulltext",
         "name": "dynograph-foundation",
         "provider": "https://github.com/sligara7/dynograph-foundation.git",
@@ -133041,7 +133158,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e505f807926a1fefa455e96e1d519724dd25f4900819e8c69009f5cf2f4c8ab7",
+  "prev_content_hash": "sha256:0e974eaf39670171187b2e3ee9def7e8915f45de434d4965a637b35234d37448",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

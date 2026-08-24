@@ -33,9 +33,13 @@ dynograph-storage = { git = "https://github.com/sligara7/dynograph-foundation.gi
 dynograph-graph = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.12.0" }
 # Fuzzy string matching (jaro_winkler / token_sort_ratio) for INGEST cross-id dedup.
 dynograph-resolution = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.12.0" }
-# Pure vector + statistics math (mean, linear_regression_slope, …) for the depth
-# axis: DimensionObservation rollup + per-epoch quality drift. Embeddings-optional.
-dynograph-vector = { git = "https://github.com/sligara7/dynograph-foundation.git", tag = "v0.12.0" }
+# dynograph-vector was HERE until 2026-08-24. Absorbed: reflow2 called `mean`
+# and `linear_regression_slope` and nothing else, so those two functions now live
+# in `reflow2-core/src/stats.rs` with a provenance header naming the tag they
+# came from. Increment 1 of dec:absorb-the-foundation-subset-and-end-the-dependency.
+# NOTE: dynograph-resolution declares dynograph-vector itself, so cargo still
+# builds it until increment 2 lands. One line out of here is not one crate out
+# of the build, and saying otherwise would be the flattering reading.
 
 # For local cross-repo dev against an unreleased foundation, uncomment and point
 # each crate at ../dynograph-foundation/crates/*. Do not commit uncommented.
