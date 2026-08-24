@@ -27,8 +27,16 @@ fn graph() -> DesignGraph {
 }
 
 fn event(g: &mut DesignGraph, id: &str, subject: Option<ChangeSubject>) {
-    g.add_change_event(id, "a change", ChangeType::Resync, subject, None, None)
-        .expect("event");
+    g.add_change_event(
+        id,
+        "a change",
+        ChangeType::Resync,
+        subject,
+        None,
+        None,
+        None,
+    )
+    .expect("event");
 }
 
 fn axis_gap(g: &DesignGraph) -> Option<reflow2_core::detect::GapCandidate> {

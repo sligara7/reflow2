@@ -31,6 +31,65 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added — a repair can say what it invalidated, so a finding stops proposing work already done
+
+**Minor, and it MOVES THE SCHEDULE STAMP AGAIN: 63 → 64 edge types.** `docs/upgrading-to-v0.40.0.md`
+is owed and updated. Node types unchanged at 29; `schema_version` still 1. Additive — a v0.39.0
+export imports unchanged.
+
+**The failure, and it cost a real user a real instruction.** A session ran `where-am-i`, read
+`ver:the_shardblade_walk` with status `failing` and `last_run_at` of that same day, and reported its
+two defects as the live state of the system. **Both had been fixed hours earlier**, recorded
+properly on two Constraint nodes with commit shas. The user replied "fix the forge scaling and chase
+the 401" — acting on the report — and the first thing the session then did was discover the work was
+already done. The graph was right and every node was right; **the composition was wrong**, because
+nothing joined the repair to the check that found it. `describe_schema(from: Constraint, to:
+Verification)` returned **zero exact matches**, and the nearest honest assertion available was
+`CONTRADICTS` with `alignment: opposing` — which a defect detector reads as a design inconsistency
+rather than as a re-run owed.
+
+- **`INVALIDATES` (`* → *`)** — *this record makes that finding stale*. Endpoints open on purpose:
+  the same relation closes a `failing` Verification and a superseded `TemporalFact`, which is how
+  this project measured the identical problem independently six days earlier
+  (`dec:idea-how-does-the-graph-learn-what-a-session-invalidated`, whose option C asked for exactly
+  this edge from the other side). Two projects, three sightings, two node types, one relation.
+- **`invalidates` and `invalidated_findings`** — the write and the read. A marker nothing consults
+  is a comment, a failure already found in `enforced`, in `SUPERSEDES` and in `OBSOLETES`, so the
+  reader ships with the edge rather than after it.
+- **`loop_status.verifications`** annotates each attention row with `invalidated_by`, `rerun_owed`
+  and a sentence, plus a top-level `rerun_owed` summary. `graph_report` gets it from the same code.
+- **`where-am-i` now gathers `Constraint` and calls `invalidated_findings`** before quoting any
+  failing verdict. On the reporting graph the repairs lived on Constraints, and the skill's gather
+  list did not include them — so the orientation pass structurally could not see that the work was
+  done.
+
+⭐⭐ **WHY `INVALIDATES` AND NOT `RESOLVES`, WHICH WAS THE FIRST NAME TRIED.** A repair does not make
+a check pass. It makes the last RESULT untrustworthy, and only a re-run can say what is true now.
+`RESOLVES` would have reflow2 asserting an outcome nobody measured — `dec:non-goal-reflow2-does-not-judge-whether-a-check-is-meaningful`
+one step along. So the edge claims exactly one thing, it never touches the target's `status`, and
+**the check is NOT dropped from `attention`**: silencing it would swap one wrong reading for another
+and would be the silent truncation `parks` was careful not to become.
+
+⭐ **AND IT IS A CLAIM, NEVER AN INFERENCE — which is what a measurement decided.** The cheaper
+option was a computed staleness bucket, and it is unbuildable honestly: inferring staleness means
+ordering a change against a check's `last_run_at`, and of **439 hand-written ChangeEvents only 37
+(8%) carried a date**, against **84% of the 192 written by the reconcile paths**. The difference was
+not care — `add_change_event` had no `detected_at` parameter, so the ordinary path could not date
+anything. **`add_change_event` now takes `detected_at`** (instance 7 of the unreachable-declared-vocabulary
+pattern, and invisible to the stamp, so it ships alongside the edge that moves it deliberately).
+
+`rerun_owed` is **three-valued**: `true` (repair postdates the run), `false` (run already reflects
+it), **`null` (one side undated — nobody can say)**. Null is never collapsed to false, which would
+read as "already covered".
+
+### Fixed — two small things found while building the above
+
+- `nodes.rs` had the doc comments on `SUPERSEDES` and `IMPLEMENTS` **swapped** — the "file IS the
+  executable form of a check" paragraph sat above `SUPERSEDES`.
+- `skill_lint`'s `NON_TOOL_TERMS` gains `failing`, `last_run_at` and `rerun_owed`, the field and
+  status names `where-am-i` must now say out loud.
+
+
 ### Fixed — four places the tool surface knew something and would not say it
 
 **Minor** (two tools gain a param; two replies gain a field). **No schema change** — `note` was

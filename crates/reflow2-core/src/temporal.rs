@@ -1317,6 +1317,22 @@ impl DesignGraph {
     /// because the constructor took none of the text the skills tell you to
     /// write. A flag that fires on every legitimate write teaches callers to
     /// ignore it, which is the opposite of what `undeclared` is for.
+    /// `detected_at` is WHEN the change landed, and it was unreachable from
+    /// here until 2026-08-24.
+    ///
+    /// ⭐ THE FIELD WAS DECLARED, WRITTEN, AND UNREACHABLE FROM THE ORDINARY
+    /// PATH — the same trap `governed_by` documents for `ruling` and
+    /// `constrains` for `note`. MEASURED before the fix: of 631 ChangeEvents,
+    /// the 192 written by the RECONCILE paths (which pass it internally) carried
+    /// a date 84% of the time, while of the 439 written by hand through
+    /// `add_change_event` only 37 — 8% — did. Not because authors
+    /// did not want dates: because the constructor every skill points at had no
+    /// parameter for one.
+    ///
+    /// It is load-bearing rather than decorative: ordering a change against a
+    /// check's `last_run_at` is what would let staleness be COMPUTED instead of
+    /// claimed, and 8% coverage is why `INVALIDATES` is a claim today.
+    #[allow(clippy::too_many_arguments)]
     pub fn add_change_event(
         &mut self,
         id: &str,
@@ -1325,6 +1341,7 @@ impl DesignGraph {
         subject: Option<ChangeSubject>,
         summary: Option<&str>,
         rationale: Option<&str>,
+        detected_at: Option<&str>,
     ) -> Result<StoredNode, DynoError> {
         self.upsert_node(
             node::CHANGE_EVENT,
@@ -1334,7 +1351,8 @@ impl DesignGraph {
                 .set("change_type", change_type.as_str())
                 .set_opt("subject", subject.map(ChangeSubject::as_str))
                 .set_opt("summary", summary)
-                .set_opt("rationale", rationale),
+                .set_opt("rationale", rationale)
+                .set_opt("detected_at", detected_at),
         )
     }
 
@@ -1415,6 +1433,10 @@ impl DesignGraph {
             rec.change_type,
             rec.subject,
             None,
+            None,
+            // `record_change` pins the event to an EPOCH, which is this path's
+            // way of placing it in time; it carries no calendar date of its own
+            // to pass on, and inventing one would be a claim nobody made.
             None,
         )?;
         self.pin_at_epoch(node::CHANGE_EVENT, rec.change_event_id, rec.epoch_id)?;

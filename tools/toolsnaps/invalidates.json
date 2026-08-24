@@ -1,0 +1,50 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Say that work you just did ANSWERED a finding, so the finding stops proposing work already done (INVALIDATES). Draw it from whatever recorded the work — the Constraint carrying the repair, the ChangeEvent, the Decision — to whatever recorded the finding: a Verification whose last run found it, or a TemporalFact that measured it. ⭐ IT CLAIMS THE RESULT IS STALE AND NOTHING MORE. A repair does not make a check pass; only a re-run can say what is true now, so this NEVER touches the target's status and the check stays listed and counted in `loop_status`. What changes is that the row now says a claim stands against the verdict. PASS `at`: it is compared against the target's own `last_run_at` to tell a re-run OWED from one already TAKEN, and an undated claim is reported as undated rather than assumed fresh. THE COST OF NOT HAVING THIS, measured: a session read a `failing` check dated that same day and reported its defects to the user as the live state of the system — both had been repaired hours earlier and recorded on other nodes, and nothing joined the two.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "at": {
+        "default": null,
+        "description": "WHEN the invalidating work landed. Compared against the finding's own\n`last_run_at` to tell a re-run OWED from one already TAKEN — the only\nordering this needs, and both sides are supplied by callers because the\ncore takes no clock. Omitted is REPORTED as undated, never assumed\nfresh: `rerun_owed` comes back null rather than false.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "finding_id": {
+        "type": "string"
+      },
+      "finding_type": {
+        "description": "Node type of the FINDING now stale — `Verification` (a run that found\nit) or `TemporalFact` (a measurement that recorded it).",
+        "type": "string"
+      },
+      "from_id": {
+        "type": "string"
+      },
+      "from_type": {
+        "description": "Node type of the RECORD that did the work — `Constraint` (a repair\nwritten up), `ChangeEvent`, `Decision`, whatever your design used.",
+        "type": "string"
+      },
+      "note": {
+        "default": null,
+        "description": "WHY this record invalidates that finding — the sentence a later reader\nneeds to judge whether the claim still stands. Skipping it leaves an\nassertion nobody can check or overturn.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "from_type",
+      "from_id",
+      "finding_type",
+      "finding_id"
+    ],
+    "type": "object"
+  },
+  "name": "invalidates"
+}

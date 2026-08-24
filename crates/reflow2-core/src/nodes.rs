@@ -204,13 +204,29 @@ pub mod edge {
     pub const OBSOLETES: &str = "OBSOLETES";
     /// `* → *` — two nodes cover the same ground (candidates to merge).
     pub const DUPLICATES: &str = "DUPLICATES";
-    /// A file IS the executable form of a check (Artifact -> Verification).
-    /// Read by the verification digest, which uses its ABSENCE to tell a check
-    /// nobody has run from a check with nothing to run.
     /// An earlier form is replaced: a revised Fragment, or a narrower check a
     /// broader one absorbed. Widened to Verification pairs 2026-08-23.
     pub const SUPERSEDES: &str = "SUPERSEDES";
+    /// A file IS the executable form of a check (Artifact -> Verification).
+    /// Read by the verification digest, which uses its ABSENCE to tell a check
+    /// nobody has run from a check with nothing to run.
     pub const IMPLEMENTS: &str = "IMPLEMENTS";
+    /// `* -> *` — a source RECORD makes a target FINDING stale: a repair against
+    /// the check that found it, a change against the observation that measured
+    /// it. Says the result can no longer be read as current; deliberately does
+    /// NOT say what is true instead, because only a re-run can.
+    ///
+    /// A CLAIM, NEVER AN INFERENCE. Deciding staleness by computation needs to
+    /// order a change against `last_run_at`, and only 8% of hand-written
+    /// ChangeEvents carry a date — so the inference was unbuildable honestly
+    /// while the claim needs no clock at all.
+    ///
+    /// DELIBERATELY NOT IN [`structural_rule`], so it never enlarges a blast
+    /// radius. It is a statement ABOUT two records, like AUTHORED_BY and
+    /// OWNED_BY, not a path along which a change propagates: a repair reaching
+    /// into every check it invalidated would make repairs into hubs and put
+    /// findings in the impact set of work that answered them.
+    pub const INVALIDATES: &str = "INVALIDATES";
     /// Two DesignRules that deliberately stand beside each other and must never
     /// be merged. Read by `possible_duplicate`, which REFRAINS when it is drawn.
     pub const COMPLEMENTS: &str = "COMPLEMENTS";

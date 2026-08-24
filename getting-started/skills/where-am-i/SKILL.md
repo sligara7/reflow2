@@ -30,6 +30,19 @@ you. The standing rule is in AGENTS.md.
   questions this is the part that turns a list into a starting point; on a small one it is cheap
   and says so.
 - `scan_nodes` for `Requirement` / `Component` / `Interface` — the shape of the design.
+- `scan_nodes` for `Constraint` — the limits and rules the design must respect, **and, on many
+  designs, where repairs get written up.** This entry was missing until 2026-08-24 and its
+  absence cost a real user a real instruction: a session read a Verification with status
+  `failing` and `last_run_at` of that same day, and reported its two defects as the live state
+  of the system. Both had been fixed hours earlier, recorded on two Constraint nodes with commit
+  shas — invisible to this pass, because Constraints were not in this list. The user acted on the
+  report, and the first thing the session then did was discover the work was already done.
+- `invalidated_findings` — every check or measurement that some record CLAIMS to have answered,
+  and whether a re-run is owed. **Read it before quoting any `failing` verdict as current.** A
+  status is a measurement at an instant, not a standing property, and this is the one call that
+  says whether somebody has since done the work it was complaining about. `rerun_owed` is
+  three-valued: null means a date is missing on one side and nobody can say — never read null
+  as "no".
 - `scan_nodes` for `Contributor` — who is in this design, and whether the person you are
   talking to has a recorded `description` of who they are. See **Who you are talking to**.
 

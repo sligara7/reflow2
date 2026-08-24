@@ -54,6 +54,14 @@
           "null"
         ]
       },
+      "detected_at": {
+        "default": null,
+        "description": "WHEN the change landed, as a plain date. Pass it — it is what lets a\nchange be ORDERED against a check's `last_run_at`, which is the\ndifference between staleness that can be computed and staleness that has\nto be claimed.\n\nIt was declared on the node and unreachable from here until 2026-08-24.\nMeasured at the time: the reconcile paths, which could set it, dated 84%\nof their events; hand-written ones, which could not, dated 8%.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "id": {
         "type": "string"
       },

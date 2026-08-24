@@ -632,6 +632,7 @@ fn gated_on_is_a_traceability_edge_so_slipping_readiness_reaches_the_roadmap() {
         None,
         None,
         None,
+        None,
     )
     .unwrap();
     g.changed(

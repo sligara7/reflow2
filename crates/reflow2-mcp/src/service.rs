@@ -1469,6 +1469,31 @@ pub struct CalibratedAgainstReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct InvalidatesReq {
+    /// Node type of the RECORD that did the work — `Constraint` (a repair
+    /// written up), `ChangeEvent`, `Decision`, whatever your design used.
+    pub from_type: String,
+    pub from_id: String,
+    /// Node type of the FINDING now stale — `Verification` (a run that found
+    /// it) or `TemporalFact` (a measurement that recorded it).
+    pub finding_type: String,
+    pub finding_id: String,
+    /// WHY this record invalidates that finding — the sentence a later reader
+    /// needs to judge whether the claim still stands. Skipping it leaves an
+    /// assertion nobody can check or overturn.
+    #[serde(default)]
+    pub note: Option<String>,
+    /// WHEN the invalidating work landed. Compared against the finding's own
+    /// `last_run_at` to tell a re-run OWED from one already TAKEN — the only
+    /// ordering this needs, and both sides are supplied by callers because the
+    /// core takes no clock. Omitted is REPORTED as undated, never assumed
+    /// fresh: `rerun_owed` comes back null rather than false.
+    #[serde(default)]
+    pub at: Option<String>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct ReleaseReq {
     pub id: String,
     #[serde(default)]
@@ -2958,6 +2983,16 @@ pub struct AddChangeEventReq {
     /// refused before anything is written if one does not.
     #[serde(default)]
     pub affected: Option<Vec<AffectedNodeReq>>,
+    /// WHEN the change landed, as a plain date. Pass it — it is what lets a
+    /// change be ORDERED against a check's `last_run_at`, which is the
+    /// difference between staleness that can be computed and staleness that has
+    /// to be claimed.
+    ///
+    /// It was declared on the node and unreachable from here until 2026-08-24.
+    /// Measured at the time: the reconcile paths, which could set it, dated 84%
+    /// of their events; hand-written ones, which could not, dated 8%.
+    #[serde(default)]
+    pub detected_at: Option<String>,
 }
 
 /// One node an event changed, for `add_change_event`'s `affected` list.

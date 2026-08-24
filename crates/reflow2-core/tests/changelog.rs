@@ -177,6 +177,7 @@ fn a_change_no_rule_covers_is_reported_unfiled_rather_than_dropped() {
         None,
         None,
         None,
+        None,
     )
     .unwrap();
     g.pin_at_epoch(node::CHANGE_EVENT, "chg:odd", "epoch:two")

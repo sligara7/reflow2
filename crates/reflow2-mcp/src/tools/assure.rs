@@ -222,6 +222,63 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Say that work you just did ANSWERED a finding, so the finding stops \
+                       proposing work already done (INVALIDATES). Draw it from whatever \
+                       recorded the work \u{2014} the Constraint carrying the repair, the \
+                       ChangeEvent, the Decision \u{2014} to whatever recorded the finding: a \
+                       Verification whose last run found it, or a TemporalFact that measured \
+                       it. \u{2b50} IT CLAIMS THE RESULT IS STALE AND NOTHING MORE. A repair \
+                       does not make a check pass; only a re-run can say what is true now, so \
+                       this NEVER touches the target's status and the check stays listed and \
+                       counted in `loop_status`. What changes is that the row now says a claim \
+                       stands against the verdict. PASS `at`: it is compared against the \
+                       target's own `last_run_at` to tell a re-run OWED from one already \
+                       TAKEN, and an undated claim is reported as undated rather than assumed \
+                       fresh. THE COST OF NOT HAVING THIS, measured: a session read a `failing` \
+                       check dated that same day and reported its defects to the user as the \
+                       live state of the system \u{2014} both had been repaired hours earlier \
+                       and recorded on other nodes, and nothing joined the two.",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn invalidates(
+        &self,
+        Parameters(req): Parameters<InvalidatesReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        ok_json(EdgeDto::from(
+            g.invalidates(
+                &req.from_type,
+                &req.from_id,
+                &req.finding_type,
+                &req.finding_id,
+                req.note.as_deref(),
+                req.at.as_deref(),
+            )
+            .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
+        description = "Every finding some record CLAIMS to have answered, and whether a re-run \
+                       is owed (the read half of `invalidates`). One row per Verification or \
+                       TemporalFact carrying an inbound INVALIDATES edge, with who claimed it, \
+                       when, and why. `rerun_owed` is THREE-VALUED and the third value is the \
+                       point: true = the repair postdates the last run, false = the run already \
+                       reflects it, and NULL = one side carries no date, so nobody can say \
+                       \u{2014} never read null as false. Findings here keep their own recorded \
+                       status untouched: this says a verdict is STALE, never that it turned.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn invalidated_findings(&self) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        let out = g.invalidated_findings().map_err(dyno_err)?;
+        self.ok_read(
+            &g,
+            serde_json::json!({ "count": out.len(), "findings": out }),
+        )
+    }
+
+    #[tool(
         description = "Compare what a real test run REPORTED against what each Verification \
                        records — the P4 reconcile, last of the three feedback loops (BL-30): \
                        reconcile_artifacts asks about the code, this about the outcomes, \

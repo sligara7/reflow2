@@ -38,6 +38,7 @@ fn a_defect_fix_is_expressible_without_inventing_a_failed_test() {
         Some(ChangeSubject::System),
         None,
         None,
+        None,
     )
     .expect("a defect against accepted intent must be recordable as itself");
 
@@ -54,6 +55,7 @@ fn the_record_axis_can_say_the_thing_did_not_change() {
         "corroboration merged into an existing defect; nothing about the system moved",
         ChangeType::Resync,
         Some(ChangeSubject::Record),
+        None,
         None,
         None,
     )
@@ -82,6 +84,7 @@ fn an_unstated_axis_stays_unstated() {
         None,
         None,
         None,
+        None,
     )
     .expect("event");
 
@@ -107,6 +110,7 @@ fn one_change_type_appears_on_both_axes() {
         Some(ChangeSubject::Record),
         None,
         None,
+        None,
     )
     .expect("event");
     g.add_change_event(
@@ -114,6 +118,7 @@ fn one_change_type_appears_on_both_axes() {
         "system side",
         ChangeType::Resync,
         Some(ChangeSubject::System),
+        None,
         None,
         None,
     )

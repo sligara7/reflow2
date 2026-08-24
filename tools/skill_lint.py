@@ -90,6 +90,19 @@ NON_TOOL_TERMS = {
     # the reader exactly where the measurement found them — 274 measured facts
     # and 7 carrying this field, because nothing ever pointed at it.
     "valid_to",
+    # `failing`, `last_run_at` and `rerun_owed` are a Verification STATUS VALUE,
+    # a Verification PROPERTY, and a field of an `invalidated_findings` row.
+    # where-am-i names all three deliberately: the skill's whole new paragraph
+    # exists because a session quoted a `failing` verdict dated that same day as
+    # the live state of a system whose defects had been repaired hours earlier.
+    # Telling a reader to "check whether the check is stale" without naming the
+    # status it is stale in, the field that dates it, or the field that answers
+    # the question leaves them exactly where the failure found them. `rerun_owed`
+    # is named a second time to say it is THREE-VALUED, which is the part a
+    # reader gets wrong.
+    "failing",
+    "last_run_at",
+    "rerun_owed",
     # pair_designs buckets, seam_report verdicts, Interface.designation values
     # and spec enum values (2026-08-13) — the link-projects skill names what it
     # tells you to READ in each report, and which designation to correct. None

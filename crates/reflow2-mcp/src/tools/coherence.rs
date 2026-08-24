@@ -227,10 +227,14 @@ impl ReflowService {
         // Digest here, never at the core: `graph_report` still serves the full
         // list, and both still come from `verification_recency`, so the two
         // surfaces cannot drift apart (the invariant report.rs states).
+        // Findings some record CLAIMS to have answered. Read here rather than
+        // in the core digest so both surfaces get it from one place, exactly as
+        // the recency roll is shared.
+        let invalidated = g.invalidated_findings().map_err(dyno_err)?;
         if let Some(obj) = payload.as_object_mut() {
             obj.insert(
                 "verifications".into(),
-                verification_digest(&status.verifications).map_err(ser_err)?,
+                verification_digest(&status.verifications, &invalidated).map_err(ser_err)?,
             );
         }
         // ⚠️ DELIBERATELY NOT IN THE SERVED DESCRIPTION, and this is not an
@@ -555,7 +559,8 @@ impl ReflowService {
         report["verifications"] = if req.include_verifications {
             serde_json::to_value(&roll).map_err(ser_err)?
         } else {
-            verification_digest(&roll).map_err(ser_err)?
+            verification_digest(&roll, &g.invalidated_findings().map_err(dyno_err)?)
+                .map_err(ser_err)?
         };
         report["served_by"] = served_by();
         self.ok_read(&g, report)
@@ -1147,6 +1152,7 @@ pub fn lift_repair_notes(out: &mut JsonValue) {
 /// invisible in a status tally alone.
 fn verification_digest(
     all: &[reflow2_core::report::VerificationRecency],
+    invalidated: &[reflow2_core::InvalidatedFinding],
 ) -> Result<serde_json::Value, serde_json::Error> {
     let mut by_status: std::collections::BTreeMap<&str, usize> = std::collections::BTreeMap::new();
     for v in all {
@@ -1163,6 +1169,28 @@ fn verification_digest(
         .filter(|v| v.status != "passing" && v.status != "superseded")
         .collect();
     let never_run = all.iter().filter(|v| v.last_run_at.is_none()).count();
+
+    // ⭐ A REPAIR CAN NOW SAY IT ANSWERED A CHECK, AND THIS IS WHERE THAT IS
+    // READ. dev_storyflow, 2026-08-23: `where-am-i` reported a `failing` check's
+    // two defects to a user as the live state of the system; both had been fixed
+    // hours earlier and recorded on Constraint nodes. Every node was right and
+    // the COMPOSITION was wrong, because nothing joined the repair to the check.
+    //
+    // 🛑 THE CHECK IS NOT REMOVED FROM `attention`, and that is the whole design.
+    // A repair does not make a check pass — only a re-run can say what is true
+    // now — so silencing it here would replace one wrong reading with another,
+    // and it would be the silent truncation `parks` was careful not to become.
+    // It stays listed, and it gains a sentence saying a claim stands against it.
+    let claimed: std::collections::BTreeMap<&str, &reflow2_core::InvalidatedFinding> = invalidated
+        .iter()
+        .filter(|f| f.finding_type == "Verification")
+        .map(|f| (f.finding_id.as_str(), f))
+        .collect();
+    let rerun_owed = claimed
+        .values()
+        .filter(|f| f.rerun_owed == Some(true))
+        .count();
+    let undated = claimed.values().filter(|f| f.rerun_owed.is_none()).count();
 
     // ⭐ THE SPLIT `never_run` COULD NOT MAKE UNTIL `IMPLEMENTS` EXISTED. A check
     // nobody has run and a check with NOTHING TO RUN were one number, and they
@@ -1212,6 +1240,33 @@ fn verification_digest(
                     obj.insert("name_truncated".into(), json!(true));
                     obj.insert("name_words".into(), json!(full_words));
                 }
+                // The verdict below is stale if somebody claimed it. Said ON the
+                // row, because the row is what a reader quotes.
+                if let Some(f) = obj
+                    .get("verification_id")
+                    .and_then(|v| v.as_str())
+                    .and_then(|id| claimed.get(id))
+                {
+                    obj.insert("invalidated_by".into(), json!(f.claimed_by));
+                    obj.insert("rerun_owed".into(), json!(f.rerun_owed));
+                    obj.insert(
+                        "invalidation_note".into(),
+                        json!(match f.rerun_owed {
+                            Some(true) =>
+                                "A repair claims to have answered this. THE VERDICT \
+                                           BELOW PREDATES IT — re-run before quoting it as \
+                                           current.",
+                            Some(false) =>
+                                "A repair claims to have answered this, and the last \
+                                            run POSTDATES it, so this verdict already reflects \
+                                            the repair.",
+                            None =>
+                                "A repair claims to have answered this, but one side carries \
+                                     no date, so whether the last run already reflects it cannot \
+                                     be told. Re-run, or date the claim.",
+                        }),
+                    );
+                }
             }
             Ok(item)
         })
@@ -1229,6 +1284,22 @@ fn verification_digest(
                       same reason this digest exists, so a bare `graph_report` no longer returns \
                       it.",
     });
+    if !claimed.is_empty()
+        && let Some(obj) = out.as_object_mut()
+    {
+        obj.insert("invalidation_claims".into(), json!(claimed.len()));
+        obj.insert(
+            "rerun_owed".into(),
+            json!(format!(
+                "{} check(s) carry a repair claiming to have answered them: {rerun_owed} where the \
+                 claim POSTDATES the last run (re-run owed), {undated} where a date is missing on \
+                 one side so nobody can say. They are still listed in `attention` and still \
+                 counted — a claim says a verdict is STALE, never that it has turned, and only a \
+                 run can say what is true now.",
+                claimed.len()
+            )),
+        );
+    }
     if truncated_count > 0
         && let Some(obj) = out.as_object_mut()
     {
