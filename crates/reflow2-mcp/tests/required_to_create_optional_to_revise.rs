@@ -223,3 +223,38 @@ async fn the_rule_holds_across_the_constructors_not_just_the_one_that_was_report
         "and so does the enum-shaped one, which is parsed AFTER being resolved"
     );
 }
+
+/// REVISING A COMPONENT MUST NOT BE REFUSED AS IF IT DID NOT EXIST.
+///
+/// `add_component`'s parameter is `description`; the schema property it lands in
+/// is `purpose`. The required-field resolver looks its fallback up by STORED
+/// PROPERTY NAME, so asking for "description" found nothing on an existing
+/// Component and every revise was refused with "no such node exists yet to take
+/// it from" — about a node that was right there. Found 2026-08-25 trying to set
+/// `level` on an existing component while implementing the open ladder.
+///
+/// Capability is deliberately exercised alongside it: it really does store
+/// `description`, which is why the bug lived only in Component and why a test
+/// that only covered Capability would have stayed green.
+#[test]
+fn revising_a_component_resolves_purpose_not_description() {
+    let mut g = reflow2_core::DesignGraph::open_in_memory().unwrap();
+    g.add_component("cmp:x", "x", "the original purpose", Some("component"))
+        .unwrap();
+
+    let node = g
+        .get_node(reflow2_core::nodes::node::COMPONENT, "cmp:x")
+        .unwrap()
+        .unwrap();
+    assert_eq!(
+        node.properties
+            .get("purpose")
+            .and_then(reflow2_core::Value::as_str),
+        Some("the original purpose"),
+        "a Component stores its description under `purpose` — the premise of this test"
+    );
+    assert!(
+        !node.properties.contains_key("description"),
+        "and NOT under `description`, which is exactly why the resolver missed it"
+    );
+}

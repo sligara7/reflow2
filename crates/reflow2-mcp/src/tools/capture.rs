@@ -868,7 +868,16 @@ impl ReflowService {
         let existed = prior.is_some();
         let mut __rf = crate::service::RequiredFields::new(&g, node_ty, &req.id)?;
         let name = __rf.str("name", req.name);
-        let description = __rf.str("description", req.description);
+        // `purpose`, NOT `description`. The tool parameter is called
+        // `description` and the schema property it lands in is `purpose`, and
+        // this resolver looks the fallback up by STORED PROPERTY NAME. Asking
+        // for "description" here found nothing on an existing Component, so
+        // EVERY revise of a Component was refused with "no such node exists yet
+        // to take it from" — a confidently wrong error about a node that was
+        // sitting right there. Measured 2026-08-25 by trying to set `level` on
+        // cmp:rocksdb-backend. Capability is unaffected: it really does store
+        // `description`, which is why this survived.
+        let description = __rf.str("purpose", req.description);
         __rf.finish()?;
         let node = NodeDto::from(
             g.add_component(&req.id, &name, &description, req.level.as_deref())

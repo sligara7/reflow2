@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:d96528cfeb3ef0af4a5f5d506347adc2340be193b9c6b5b1adc565a2b06dc077",
+  "content_hash": "sha256:727c2dd798109bfce43f342970d1a17a8819293b7fe7dfa51d083fd699382e39",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -13596,6 +13596,17 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "dec:the-decomposition-ladder-is-open-not-a-fixed-enum",
+      "properties": {
+        "basis": "causal",
+        "confidence": 0.85,
+        "evidence": "MECHANISM, not resemblance: that rule quantifies over levels — a contract is declared at 'the LOWEST level that actually defines it' — and this decision changes what levels exist. Today 'lowest' has a hard floor at `component`, rank 0. With an open ladder 'lowest' becomes whatever the design's own ladder bottoms out at, so the same rule ranges over a different, per-design set. Nothing about the rule's text changes and its meaning does. Marked `hypothesis` because nothing is implemented: no ladder is open yet, so the consequence is stated so it CAN be tested rather than claimed as observed. ⭐ Tonight already shows the rule working under the closed ladder: ifc:kv-backend was declared on cmp:byte-store and the two backends — all at `component` — and NOT on sys:foundation above them, which is why `fact:the-eight-subsystems-are-groupings-not-black-boxes` reading '0 of 8 subsystems provide an interface' as a defect was a misreading of this rule.",
+        "validation_status": "hypothesis"
+      },
+      "to_id": "dec:idea-a-contract-is-declared-at-the-lowest-level-and-rolled-up"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "fact:alex-grok-0240-feedback-triaged-2026-08-16",
       "properties": {
         "basis": "observed",
@@ -17317,6 +17328,15 @@
         "action": "modified"
       },
       "to_id": "art:enforced-rule-detector-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-0500fc47eb120e13",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
     },
     {
       "edge_type": "CHANGED",
@@ -28085,6 +28105,78 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-decomposition-ladder-is-open",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-decomposition-ladder-is-open",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:hierarchy"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-decomposition-ladder-is-open",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-decomposition-ladder-is-open",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-decomposition-ladder-is-open",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:byte-store"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-decomposition-ladder-is-open",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:memory-backend"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-decomposition-ladder-is-open",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:rocksdb-backend"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-decomposition-ladder-is-open",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "proj:reflow2"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-design-interview-precedes-the-capture",
       "properties": {
         "accepted_baseline": true,
@@ -30700,6 +30792,18 @@
     },
     {
       "edge_type": "CONTAINS",
+      "from_id": "cmp:byte-store",
+      "properties": {},
+      "to_id": "cmp:memory-backend"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "cmp:byte-store",
+      "properties": {},
+      "to_id": "cmp:rocksdb-backend"
+    },
+    {
+      "edge_type": "CONTAINS",
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "cap:bounded-reads"
@@ -31542,12 +31646,6 @@
       "edge_type": "CONTAINS",
       "from_id": "sys:foundation",
       "properties": {},
-      "to_id": "cmp:memory-backend"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:foundation",
-      "properties": {},
       "to_id": "cmp:nodes"
     },
     {
@@ -31555,12 +31653,6 @@
       "from_id": "sys:foundation",
       "properties": {},
       "to_id": "cmp:provenance"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:foundation",
-      "properties": {},
-      "to_id": "cmp:rocksdb-backend"
     },
     {
       "edge_type": "CONTAINS",
@@ -32937,6 +33029,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "req:recursive-black-box-decomposition"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-a-view-can-slice-by-altitude-not-only-by-aspect",
+      "properties": {
+        "evidence": "A view that slices by ALTITUDE needs to know what the altitudes ARE, and this decision is what settles that. It is the precise dependency: the altitude view is the missing half of the lowest-level-contract rule (that rule is accepted, its roll-up view is not built), and an open ladder means the rungs it projects onto are per-design rather than a fixed five. ⚠️ AND IT IS NOT ONLY A VIEW: `seam_coverage` ALREADY takes an altitude argument and answers differently per rung — 72/8/64 at module, 11/11/0 at subsystem — so at least one shipped tool keys on the ladder today. That dependency is NOT in the five unsettled items listed on the ladder decision and belongs there.",
+        "optional": false,
+        "weight_basis": "evidence"
+      },
+      "to_id": "dec:the-decomposition-ladder-is-open-not-a-fixed-enum"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -101248,7 +101350,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ad1d71c9a3cc22ba3564277928563a7066c41c14790823b8f05f654827a976c9",
+        "checksum": "sha256:c159a629023153b5f7fca6a82c91830fd8f831824ee8b798ad7107c5fc6d4af6",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -101662,7 +101764,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:81e2da21b81698f5b7bbc6dbed1605fd81c767ee37e0c5ff563112389f589662",
+        "checksum": "sha256:e98b26a8551e5249083d159ead2ff0701ddb9129c1f967b86a3df9aa4ba560e4",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/hierarchy.rs",
         "name": "hierarchy.rs",
@@ -102373,7 +102475,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:7ac8663a3a4181e1795391f282823bfc06d9d5abeab0b902f4ef7ae7860404c5",
+        "checksum": "sha256:7e30aab123b6030242a20fc64e5ea309500bfd2ff303680ab156ad1300094f23",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/core.yaml",
@@ -102471,7 +102573,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:dc894895cff69b007bc663a933c27ce0140389291e30be34ec032fcff8abb2ac",
+        "checksum": "sha256:f622915d3351e49c5752edbf8223ccd25eaba63c2acfca9456c6efa1235abdf5",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/structure.yaml",
@@ -103277,7 +103379,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:67ce26b971e86693aca01e3ff3519327059548b594ea2ec9541c4586984da31e",
+        "checksum": "sha256:c5f4122d35b35880284bd5fabb889227508d99f0725c9b5d6bdb7913a5e9d401",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -106652,6 +106754,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-17",
         "name": "Call sites updated for the new parameters; assertions unchanged.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-0500fc47eb120e13",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-25",
+        "name": "`design_holds` and NOT `design_updated`, deliberately — this file changed for a reason the other four did not share, and folding it in would have written a fiction into the ledger.\n\nTHE DESIGN WAS RIGHT AND THE CODE WAS WRONG, which is the definition of `defect_fix`. `structure.yaml` has always said a Component stores its descriptive text as `purpose`. `add_component`'s required-field resolver asked for a stored property called `description`, so the lookup missed on every existing Component and EVERY REVISE WAS REFUSED with \"no such node exists yet to take it from\" — about a node that `get_node` returned a moment later. Nothing in the design moved; the code now reads the property the schema always declared.\n\nThe other four artifacts in this same drift batch ARE `design_updated` against `chg:the-decomposition-ladder-is-open`, because there the design genuinely moved: a new `Project.decomposition_levels` property, `Component.level` changing from enum to string, a new `unknown_level` finding, and `Level` becoming `Ladder`.\n\nAlso added here: a regression test that asserts the PREMISE rather than the symptom — a Component has `purpose` and has no `description`. `Capability` is unaffected because it really does store `description`, which is why this survived and why a test covering only Capability would have stayed green.",
         "subject": "system"
       }
     },
@@ -111230,6 +111342,18 @@
       }
     },
     {
+      "node_id": "chg:the-decomposition-ladder-is-open",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-25",
+        "name": "The open ladder is built; reflow2 declares a `part` rung and the backends nest where they live",
+        "rationale": "⭐ THE COMPILER CAUGHT WHAT REVIEW WOULD HAVE MISSED. Adding the `UnknownLevel` variant broke three exhaustive matches in `detect.rs` — source, severity and title. That is the `#[non_exhaustive]` finding from the absorption paying off: the enum is reflow2's own now, so a new variant is a BUILD ERROR rather than a wildcard arm silently swallowing it.\n\n⭐ THE FIRST MODELLING ATTEMPT WAS WRONG AND THE CHECK CAUGHT IT, twice over. Nesting the implementations inside `cmp:byte-store` under the CLOSED ladder gave two `level_mismatch` findings, which is what exposed the floor in the first place; and promoting `byte-store` to `subsystem` would only have pushed the mismatch up into `sys:foundation`. The fix was not a workaround but the feature.\n\n🛑 AND IT SURFACED A REAL DEFECT IN A DIFFERENT COMPONENT, fixed in the same change. `add_component`'s required-field resolver looked its fallback up by STORED PROPERTY NAME and asked for `description` — but a Component stores that text as `purpose`. So the lookup always missed on an existing Component and **EVERY REVISE OF A COMPONENT WAS REFUSED with \"no such node exists yet to take it from\"**, about a node sitting right there. Found by trying to set `level` on `cmp:rocksdb-backend`; the node came straight back from `get_node` a moment later, which is what made the error's confidence visible as wrong. `Capability` is unaffected because it really does store `description` — which is why the bug survived and why a test covering only Capability would have stayed green. Regression test added that asserts the premise itself: a Component has `purpose` and has no `description`.\n\n⚠️ WHAT IS DELIBERATELY NOT DONE: `Component.level` is now a plain string, so the schema no longer rejects a typo at write time. That validation moves from the schema to `hierarchy_issues`, which REPORTS rather than refuses. This is the report-don't-judge posture and it is a real trade — a bad level now lands in the graph and is surfaced, instead of being blocked. `seam_coverage`'s `altitude` argument already takes a level string and was left alone; it compares names and never ranks, so an open ladder does not change it.",
+        "subject": "system",
+        "summary": "Implements `dec:the-decomposition-ladder-is-open-not-a-fixed-enum`.\n\n`Component.level` was a closed enum with `component` at rank 0 — a hard FLOOR, so a part of a component could not be expressed at all. It is now a plain string naming a rung on THIS design's ladder, declared as `Project.decomposition_levels` (a `list:string`, ordered bottom-first). Absent means the built-in `DEFAULT_RUNGS` — the same five names in the same order — so nothing that predates this moves and no data migrates.\n\n`hierarchy.rs::Level` (an enum with a `rank()` match arm) becomes `Ladder`, a struct over the declared rungs. **`Ladder::rank()` returns `None` for a name that is not on the ladder — never `Some(0)`.** The old `Level::from_key` mapped anything unrecognised to `Component`, so a typo silently became the finest rung and every containment above it read as a mismatch nobody could explain. That silent fallback is gone, and the ordering now has exactly ONE home instead of being declared in both the YAML and the Rust.\n\nNew finding `unknown_level` replaces the validation the enum used to give: an off-ladder level is reported BY NAME, and every level-arithmetic check skips that component rather than ranking it. It surfaces as a gap at severity 0.55.\n\nDEMONSTRATED ON THIS DESIGN, end to end through the MCP surface: `proj:reflow2` now declares `[part, component, subsystem, system, system_of_systems, enterprise]`, and `cmp:rocksdb-backend` / `cmp:memory-backend` moved from `sys:foundation` to `cmp:byte-store` at the new `part` rung — where they actually live, in one file. `move_component` returned `level_note: null` (exactly one rung apart) and `hierarchy_issues` is 0 across the whole design.\n\nSix new hierarchy tests, including a four-deep non-software ladder (organelle ▸ cell ▸ tissue ▸ organ ▸ organism) that nests cleanly and still catches a skipped rung — proving rank comes from POSITION, not from any name reflow2 knows.\n\nCore 1,458 / 0 (was 1,452), workspace 1,766 / 0 (was 1,760)."
+      }
+    },
+    {
       "node_id": "chg:the-design-interview-precedes-the-capture",
       "node_type": "ChangeEvent",
       "properties": {
@@ -112471,7 +112595,7 @@
       "node_id": "cmp:memory-backend",
       "node_type": "Component",
       "properties": {
-        "level": "component",
+        "level": "part",
         "name": "memory-backend",
         "provenance": "authored",
         "purpose": "The volatile `KvBackend` implementation: six `BTreeMap`s, one per column family. No durability, no cross-key atomicity beyond the single-threaded `commit_batch` loop.\n\n`crates/reflow2-core/src/foundation/store/backend.rs` (`MemoryBackend`). Reached through `DesignGraph::open_in_memory`, and it needs no cargo feature — `reflow2-core`'s `default = []` means this is the backend you get unless somebody asks for the other one.\n\n⭐ IT IS NOT A TEST DOUBLE, WHICH IS THE THING MOST LIKELY TO BE ASSUMED ABOUT IT. Measured 2026-08-25: **1,452 core tests pass on it with no RocksDB and no full-text index** — schema validation, the golden thread, adjacency traversal, every detector, HEAL, propagation, the graph algorithms. It serves the same `KvBackend` trait through the same code path, so what passes here is not a weaker claim than what passes on RocksDB; it is the same claim minus durability.\n\n⭐ `BTreeMap` AND NOT `HashMap`, AND THAT IS A CONTRACT NOT A TASTE (`chg:the-memory-backend-keeps-its-keys-ordered`, #331). The trait requires ORDERED prefix iteration. A hash map meant iterating the whole column family, filtering, and sorting — O(n log n) per scan. Measured: `export_graph` calls `outgoing()` once per node, so exporting reflow2's own design was ~42M key comparisons and 1,137 ms; as a range query it is 236 ms. The trade is real — inserts went O(1) to O(log n), import ~8% slower — and the round trip is 37% better.\n\n⇒ THIS IS THE COMPONENT THE NO-DATABASE QUESTION TURNS ON. If `dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability` resolves toward the document as the enduring artifact, this becomes the only backend and `cmp:rocksdb-backend` is what gets retired.\n\nMODELLED 2026-08-25 alongside its sibling; neither had a node before. Kept distinct from `chg:the-memory-backend-keeps-its-keys-ordered`, which is the CHANGE that altered this component, not the component itself.",
@@ -112663,7 +112787,7 @@
       "node_id": "cmp:rocksdb-backend",
       "node_type": "Component",
       "properties": {
-        "level": "component",
+        "level": "part",
         "name": "rocksdb-backend",
         "provenance": "authored",
         "purpose": "The durable `KvBackend` implementation: RocksDB over six named column families, one column family per key space, with the engine's exclusive write lock coming from RocksDB's own directory lock.\n\n`crates/reflow2-core/src/foundation/store/backend.rs` (`RocksBackend`). Reached only through `DesignGraph::open_rocksdb`.\n\n🛑 IT IS OPT-IN AND ALWAYS HAS BEEN. `reflow2-core` declares `default = []`; only `reflow2-mcp` enables `features = [\"rocksdb\", \"fulltext\"]`. Measured 2026-08-25: 1,452 of the core's tests pass with this component absent entirely. Without the feature `open_rocksdb` fails loud rather than falling back, which is `req:no-silent-fallback` applied to a missing backend.\n\n⚠️ EXTERNAL DEPENDENCY, DELIBERATELY PINNED WHERE IT IS: `rocksdb` 0.24 — the historically-unmaintained wrapper. `rust-rocksdb` 0.52 is the maintained one; the numbers are NOT comparable (different crates, independent numbering). `dec:absorb-rocksdb-024-unchanged-then-switch-separately` keeps that 86-file migration to one variable.\n\n⚖️ WHAT IT COSTS, measured: a ~19-minute `librocksdb-sys` C++ compile on a clean build, and the bulk of a target directory that reached 263 GiB. What it buys: durability across a process restart and larger-than-RAM working sets. `dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability` is the open question about whether that trade is worth it.\n\nMODELLED 2026-08-25, and it did not exist as a node until then — which is why \"can we retire RocksDB?\" had no answer: the design had nothing to point at.",
@@ -123119,6 +123243,14 @@
       "node_id": "proj:reflow2",
       "node_type": "Project",
       "properties": {
+        "decomposition_levels": [
+          "part",
+          "component",
+          "subsystem",
+          "system",
+          "system_of_systems",
+          "enterprise"
+        ],
         "domain": "software",
         "mode": "rigid",
         "name": "Reflow 2.0",
@@ -135143,7 +135275,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:615e7f296c46627a170af05a6b524e68a0105a5bd56d236bac1e91e8849ced94",
+  "prev_content_hash": "sha256:d96528cfeb3ef0af4a5f5d506347adc2340be193b9c6b5b1adc565a2b06dc077",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
