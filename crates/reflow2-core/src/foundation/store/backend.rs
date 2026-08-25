@@ -15,7 +15,7 @@
 //! every backend must honour — it is what the adjacency and index scans
 //! are built on.
 
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 #[cfg(feature = "rocksdb")]
 use std::path::Path;
 use std::sync::Arc;
@@ -224,33 +224,45 @@ pub(crate) trait KvBackend: Send + Sync {
 // In-memory backend (testing)
 // =============================================================================
 
-/// Six `HashMap`s, one per column family. Test-oriented: no durability,
+/// Six `BTreeMap`s, one per column family. Test-oriented: no durability,
 /// no cross-key atomicity guarantees beyond the single-threaded
 /// `commit_batch` loop (which is enough for the engine's own tests).
+/// `BTreeMap` AND NOT `HashMap`, WHICH IS A PERFORMANCE CONTRACT AND NOT A TASTE.
+/// The trait requires ORDERED prefix iteration. With a hash map that meant
+/// iterating the WHOLE column family, filtering by prefix, and sorting the
+/// result — O(n log n) per scan, on a backend whose whole point is to be the
+/// fast path.
+///
+/// MEASURED 2026-08-25: `export_graph` calls `outgoing()` once per node, so
+/// exporting reflow2's own design was 3,149 scans over a 13,414-entry adjacency
+/// map — ~42M key comparisons, and 1,137 ms of a 1,168 ms save (the JSON
+/// encoding it exists to produce was 31 ms of that). An ordered map answers the
+/// same question as a range: O(log n + k), and the sort disappears because the
+/// keys already come out in order.
 pub(crate) struct MemoryBackend {
-    nodes: HashMap<Vec<u8>, Vec<u8>>,
-    edges: HashMap<Vec<u8>, Vec<u8>>,
-    adj_out: HashMap<Vec<u8>, Vec<u8>>,
-    adj_in: HashMap<Vec<u8>, Vec<u8>>,
-    node_idx: HashMap<Vec<u8>, Vec<u8>>,
-    embeddings: HashMap<Vec<u8>, Vec<u8>>,
+    nodes: BTreeMap<Vec<u8>, Vec<u8>>,
+    edges: BTreeMap<Vec<u8>, Vec<u8>>,
+    adj_out: BTreeMap<Vec<u8>, Vec<u8>>,
+    adj_in: BTreeMap<Vec<u8>, Vec<u8>>,
+    node_idx: BTreeMap<Vec<u8>, Vec<u8>>,
+    embeddings: BTreeMap<Vec<u8>, Vec<u8>>,
 }
 
 impl MemoryBackend {
     pub(crate) fn new() -> Self {
         Self {
-            nodes: HashMap::new(),
-            edges: HashMap::new(),
-            adj_out: HashMap::new(),
-            adj_in: HashMap::new(),
-            node_idx: HashMap::new(),
-            embeddings: HashMap::new(),
+            nodes: BTreeMap::new(),
+            edges: BTreeMap::new(),
+            adj_out: BTreeMap::new(),
+            adj_in: BTreeMap::new(),
+            node_idx: BTreeMap::new(),
+            embeddings: BTreeMap::new(),
         }
     }
 
     /// Pick the map for `cf`, erroring on an unknown CF. Shared by every
     /// op so the six-way `match cf` shape isn't repeated.
-    fn store(&self, cf: &str) -> Result<&HashMap<Vec<u8>, Vec<u8>>, DynoError> {
+    fn store(&self, cf: &str) -> Result<&BTreeMap<Vec<u8>, Vec<u8>>, DynoError> {
         match cf {
             CF_NODES => Ok(&self.nodes),
             CF_EDGES => Ok(&self.edges),
@@ -262,7 +274,7 @@ impl MemoryBackend {
         }
     }
 
-    fn store_mut(&mut self, cf: &str) -> Result<&mut HashMap<Vec<u8>, Vec<u8>>, DynoError> {
+    fn store_mut(&mut self, cf: &str) -> Result<&mut BTreeMap<Vec<u8>, Vec<u8>>, DynoError> {
         match cf {
             CF_NODES => Ok(&mut self.nodes),
             CF_EDGES => Ok(&mut self.edges),
@@ -298,20 +310,19 @@ impl KvBackend for MemoryBackend {
         reason = "raw KV pairs straight out of the store; an alias would only obscure"
     )]
     fn prefix_scan(&self, cf: &str, prefix: &[u8]) -> Result<Vec<(Vec<u8>, Vec<u8>)>, DynoError> {
-        let mut results: Vec<(Vec<u8>, Vec<u8>)> = self
+        // A RANGE, not a filtered full pass. `BTreeMap` keeps keys in
+        // lexicographic order — the same order RocksDB's default byte-wise
+        // comparator gives — so seeking to `prefix` and taking while the prefix
+        // still matches visits only the matching keys, and they arrive already
+        // ordered. That satisfies the trait's ordered-prefix-scan contract by
+        // construction rather than by sorting afterwards, which is what the
+        // hash-map version had to do (see the note on the struct).
+        let results: Vec<(Vec<u8>, Vec<u8>)> = self
             .store(cf)?
-            .iter()
-            .filter(|(k, _)| k.starts_with(prefix))
+            .range(prefix.to_vec()..)
+            .take_while(|(k, _)| k.starts_with(prefix))
             .map(|(k, v)| (k.clone(), v.clone()))
             .collect();
-        // Sort by key so the in-memory backend honours the trait's
-        // ordered-prefix-scan contract. `HashMap` iteration is otherwise
-        // arbitrary, which would diverge from RocksDB's lexicographic SST
-        // ordering — and the in-memory backend is the default *test*
-        // backend, so it must be a faithful stand-in for production order.
-        // `Vec<u8>`'s `Ord` is lexicographic, matching RocksDB's default
-        // byte-wise comparator.
-        results.sort_by(|(a, _), (b, _)| a.cmp(b));
         Ok(results)
     }
 
