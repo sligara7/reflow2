@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:29d103c800e92549d10bc2de710c4eb4724a5566d7390bc1b6129daac910cea8",
+  "content_hash": "sha256:a68f76ee3fc4b08310c5bb8d0090b4caac10f6b1f6b1f1ed64301e245cd24232",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -10697,6 +10697,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-linking-half-ideas-needs-a-task-that-can-be-run",
+      "properties": {
+        "acted_at": "2026-08-25",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-many-graphs-one-store",
       "properties": {
         "acted_at": "2026-08-05",
@@ -12382,6 +12391,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "fact:the-server-already-sees-sessions-end-and-a-disciplined-session-still-ran-5-hours-unexported",
+      "properties": {
+        "acted_at": "2026-08-25",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "ifc:ambient-agent",
       "properties": {
         "acted_at": "2026-08-09",
@@ -13635,6 +13653,14 @@
         "evidence": "One standing makes the other unanswerable in its own terms. 'Which embedded engine compiles fastest' presumes an embedded engine is needed; if the measured answer here is that a store buys only durability and crash-safety, the redb-vs-rocksdb comparison is being run on the wrong axis. Blocks rather than obsoletes: the engine question becomes live again the moment this one settles in favour of keeping a store."
       },
       "to_id": "dec:idea-a-byte-backend-that-compiles-in-seconds"
+    },
+    {
+      "edge_type": "BLOCKS",
+      "from_id": "dec:idea-linking-half-ideas-needs-a-task-that-can-be-run",
+      "properties": {
+        "evidence": "That node asks whether ideas form a graph, and its own measurement (145 ideas, 12 edges) is evidence FROM a corpus nobody has linked. Until the backlog is worked or deliberately declined, any answer to it is measuring the absence of a task rather than the nature of ideas — so this standing unresolved keeps that one unanswerable on its own terms."
+      },
+      "to_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list"
     },
     {
       "edge_type": "BLOCKS",
@@ -33582,6 +33608,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:idea-the-ility-chooses-the-allocation-graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-linking-half-ideas-needs-a-task-that-can-be-run",
+      "properties": {
+        "evidence": "That node's detector is BUILT and firing at 110 of 183, which is what makes this question askable at all — without the count there is no backlog to work and no way to tell whether working it helps. This starts where that one finished.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-what-notices-an-idea-that-connects-to-nothing"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -115950,6 +115986,16 @@
       }
     },
     {
+      "node_id": "dec:idea-linking-half-ideas-needs-a-task-that-can-be-run",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT A PROPOSAL. Anthony, 2026-08-25, on being shown what half-idea linking does and does not do: *\"this is a good reason to add it... It is just a simple task that I want to run after we get done with the removal of rocksdb discovery task.\"* **QUEUED BEHIND THE STORE QUESTION on his explicit word.**\n\nDISTINCT FROM the three nodes the guard surfaced, and the line is clean. `dec:idea-do-ideas-form-a-graph-or-only-a-list` asks WHETHER ideas should form a graph. `dec:idea-what-notices-an-idea-that-connects-to-nothing` asks WHAT DETECTS the absence — and it is BUILT (`unreviewed_ideas`, firing at 110 of 183). `dec:idea-should-an-idea-be-linked-to-the-intent-that-scopes-it` asks about idea→INTENT edges. **This asks a fourth thing: given that the vocabulary, the instruction and the detector all exist and 110 ideas are still unlinked, what closes the gap between detecting and doing?**\n\n═══ WHAT EXISTS, checked rather than assumed ═══\n\n  ✅ `review_relations` — draws relations with evidence, or records the no-relation note\n  ✅ `Decision.no_relation_note` — so \"considered, genuinely unrelated\" ≠ \"never opened\"\n  ✅ `unreviewed_ideas` — the detector, currently 110 of 183\n  ✅ brainstorm skill step 4 — instructs linking AT CAPTURE TIME\n\nAll three legs are fitted. **That is what makes this interesting rather than routine: the three-legs model predicts this should be working, and it is not.**\n\n═══ 🛑 THE THREE GAPS, and only the first is obvious ═══\n\n**1. THE BACKLOG IS UNWORKED.** 110 ideas. In the session that measured this, four were linked BY HAND while doing something else. At that rate the backlog outlives the project.\n\n**2. ⭐⭐ NOTHING SUGGESTS CANDIDATES — and this is the real one.** The brainstorm skill says to judge *\"the near-matches you already have… do not run a fresh sweep\"*, which is correct AT CAPTURE, when a duplicate-guard search is in hand. **It gives a session working the BACKLOG nothing at all**, because there is no search in hand — the idea was written weeks ago. Measured twice in one day: the agent reasoned about functional allocation without reaching the ility node that had ANTICIPATED its error, and discussed the store without reaching the node that answers it. **Both were recovered by the USER's memory, not by the graph.** A person should not be the index.\n\n**3. `unreviewed_ideas` NAMES THE UNLINKED BUT NOT THE LIKELY NEIGHBOURS.** It answers \"which ideas connect to nothing\" — a list of 110 — where the actionable question is \"which of these belong together\". The design already holds the machinery to answer it: `search_design` is BM25 over the same text, and `surprising_connections` mines cross-community coupling.\n\n═══ SHAPES, none chosen ═══\n\n**A. A RUNNABLE TASK / SKILL** — takes N unlinked ideas, runs `search_design` on each to propose candidates, puts them to the user, draws what they confirm and writes `no_relation_note` for the rest.\n ⚠️ It must NEVER draw an edge to clear the finding: *\"a false neighbour is worse than a missing one, because anything that searches by neighbourhood repeats it.\"* Suggestion is the machine's half; judgement stays the user's.\n\n**B. WIDEN THE DETECTOR** to name likely neighbours beside each unlinked idea, so the answer arrives with its candidates.\n ⚠️ Risks a detector that recommends, which this project keeps separate from one that reports.\n\n**C. AT-CAPTURE ONLY, AND ACCEPT THE BACKLOG** — new ideas link, the 110 stay as they are.\n ⚠️ Concedes that the reasoning already recorded stays unreachable, which is the cost actually being paid.\n\n📌 THE PREREQUISITE HE SET: this runs AFTER the store/rocksdb question. Not because they interact, but because he said so.",
+        "name": "OPEN — half-idea linking has all three legs and still leaves 110 unlinked, because nothing SUGGESTS candidates and nothing works the backlog. Does it need a runnable task?",
+        "rationale": "Recorded under the brainstorm skill as an idea, not intent, and linked on creation — the discipline this node is about.\n\nWritten because the user asked for it explicitly and queued it, so the queue position is part of the record: an idea with a stated prerequisite that lives only in conversation is an idea that gets started at the wrong time.\n\nKept as its own node rather than folded into the three near-matches because those ask whether/what-detects/what-scope, and all three can be answered while 110 ideas stay unlinked. This asks what actually closes that gap, which is the only one of the four that changes what a session DOES.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-many-graphs-one-store",
       "node_type": "Decision",
       "properties": {
@@ -130312,6 +130358,19 @@
       }
     },
     {
+      "node_id": "fact:auto-export-really-does-sever-the-lineage-and-a-separate-path-dissolves-it",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "name": "REPRODUCED: two exports between commits sever the lineage chain and turn the design gate RED — the collision is real, not an artifact of committing. And the hypothesis that 'no commit, no push' avoids it is FALSIFIED, because the chain is built from the FILE, not from git",
+        "statement": "MEASURED 2026-08-25 at main `8ba3198`, deliberately falsifying an agent hypothesis rather than confirming it.\n\n═══ THE HYPOTHESIS THAT WAS WRONG ═══\n\nThe agent proposed that `dec:idea-does-the-graph-write-itself-through-to-the-repo-on-every-change`'s unresolved collision might be ILLUSORY, reasoning: the proposal is *\"no commit, no push\"*, `dec:export-once-per-PR` is a rule about COMMITS, and a working-tree file that is never committed cannot violate a rule about commits.\n\n❌ **FALSIFIED.** The chain is built from **the file already at the target path**, not from git. Writing that file twice between commits chains the second export through an intermediate that will never enter history — whether or not anything is committed in between.\n\n═══ THE REPRODUCTION ═══\n\nOne graph write, export, one more graph write (a single AUTHORED_BY edge), export again — then run the gate against the working file:\n\n    committed hash   sha256:29d103c800e9...\n    working prev     sha256:00255feac6d8...   <- the intermediate, never committed\n    working hash     sha256:7b4e7b2c4ee1...\n\n    FAIL  LINEAGE  'docs/design/reflow2.json' does not link to the export it\n                   replaced: it records 00255fea... where 29d103c8... is expected.\n    reflow2 check: FAILED — 1 finding(s), 10 note(s).\n\nThis is exactly cause (2) named in `reflow2_check`'s own message: *\"The design was exported MORE THAN ONCE since the last commit, chaining through an intermediate that will never be committed.\"* ⇒ **AUTO-EXPORT ON EVERY CHANGE, WRITING TO THE COMMITTED PATH, TURNS THE DESIGN GATE RED ON EVERY BRANCH.** The blocker is real and it is not about discipline; it is arithmetic on a hash chain.\n\nThe documented fix works and was confirmed: `git checkout <path>` then export ONCE — the gate returns to OK.\n\n═══ ⭐⭐ AND THE SAME EXPERIMENT NAMES THE WAY OUT ═══\n\nThe chain breaks only because the durability write and the archival write TARGET THE SAME PATH. They are different acts with different audiences — one is \"do not lose this\", the other is \"this is the record of the branch\" — and nothing requires them to share a file.\n\n**Auto-export to a SEPARATE path** (`.reflow2/<graph>.autosave.json`, gitignored) and the collision disappears entirely: the committed export keeps its one-per-PR chain untouched, while the durable copy is refreshed as often as anybody likes. Measured cost of a save: **265 ms**. No change to the lineage rule, no git awareness in the core, and `dec:export-once-per-pr` stays exactly as written.\n\n⚠️ WHAT THIS DOES NOT SETTLE: whether a gitignored autosave is a good enough durable copy to hang the inversion on — it is not in version control, so it survives a crash but not a lost working tree. That is the same question `dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy` asks, and this only removes the lineage objection from it.\n\n⚠️ BOUNDS: one design, one path, one machine, debug binary. The gate was exercised in its pre-commit form (working file vs HEAD); the CI form (HEAD vs HEAD~1) was not separately reproduced, though `_export_pair` states both use one rule.",
+        "subject_id": "dec:idea-does-the-graph-write-itself-through-to-the-repo-on-every-change",
+        "valid_from": "2026-08-25"
+      }
+    },
+    {
       "node_id": "fact:bl-105",
       "node_type": "TemporalFact",
       "properties": {
@@ -133280,6 +133339,19 @@
       }
     },
     {
+      "node_id": "fact:the-server-already-sees-sessions-end-and-a-disciplined-session-still-ran-5-hours-unexported",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "name": "Road 3's hard part is ALREADY BUILT: release_seat fires from SeatLease's Drop, so the shared server observes a client disconnecting, crashing or being killed — and it deliberately writes nothing. Meanwhile a disciplined session ran 299 minutes between committed exports",
+        "statement": "MEASURED 2026-08-25 at main `8ba3198`, running the two experiments the user asked for against the store-inversion blockers.\n\n═══ ROAD 3 IS NOT RESEARCH. THE OBSERVATION MECHANISM EXISTS AND RUNS TODAY. ═══\n\n`dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy` lists as its road 3: *\"THE SERVER OWNS IT, NOT THE SESSION... the server is the only component that observes a session ENDING without being the session.\"* It is right, and the observing half is already written:\n\n    identity.rs:625  impl Drop for SeatLease { fn drop(&mut self) { release_seat(&self.seat); } }\n\n`release_seat`'s own doc: *\"Called from the handler's Drop, so a client that disconnects, crashes or is killed releases its seat without having to say anything.\"* RAII, so it does not depend on an orderly shutdown or on any harness — which is precisely the objection that killed the Stop-hook answer (*\"the guarantee cannot live in the harness, because the harness is the thing that might not come back\"*).\n\nThe server also already knows HOW MANY are attached (`attached_seat_count`) and distinguishes three liveness states, refusing to guess for a seat it handed out but never leased (`Unknown`, never read as free).\n\n🛑 **AND IT DELIBERATELY DOES NOTHING WITH IT.** `release_seat`'s doc continues: *\"Nothing is written to the graph — the CLAIM stays exactly where it was, and only its liveness changes.\"* ⇒ **The gap between what exists and road 3 is not detection. It is one action on an event that already fires.**\n\n⚠️ BOUND: `Drop` does not run if the SERVER ITSELF is SIGKILLed. That is a strictly smaller exposure than today's, because the server outliving any one session is the premise of the road, and session death is far commoner than daemon death. It is not zero, and a periodic export (road 2) is what would cover it.\n\n═══ THE EXPOSURE, MEASURED ON A SESSION THAT WAS TRYING ═══\n\nFive exporting commits across 562 minutes of one working session, taken from git:\n\n    gaps between committed exports:  36 min | 186 min | 299 min | 41 min\n    longest window with the durable copy stale:  299 MINUTES (~5 HOURS)\n    design delta over the session:  +15 nodes, +37 edges, ~10 property-only edits\n\n⭐⭐ **THIS IS THE NUMBER THE BLOCKER NEEDED, AND IT IS NOT A NEGLIGENCE NUMBER.** The session exported at every PR boundary, ran the design gate each time, and was actively disciplined about the export-once-per-PR rule. It STILL spent five unbroken hours with the committed document behind the live graph. Under today's model that costs a session's work; under the inversion the same five hours is THE DESIGN.\n\n📌 AND THE KNOB IS ESSENTIALLY FREE. Save is measured at **265 ms** (`dec:the-rust-rocksdb-switch-is-parked-until-the-store-question-settles`). A debounced or on-idle export at any cadence a person would notice costs a quarter of a second against a five-hour window. **The trade is not cost against safety; it is 265 ms against five hours.**\n\n⚠️ BOUNDS: one session, one machine, one person, one design. Gaps are between COMMITTED exports — the working tree was written more often than that, so this measures the durable-copy exposure rather than every write.",
+        "subject_id": "dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy",
+        "valid_from": "2026-08-25"
+      }
+    },
+    {
       "node_id": "fact:the-stale-daemon-cost-five-merged-prs-twice",
       "node_type": "TemporalFact",
       "properties": {
@@ -136195,7 +136267,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:6e18dfe08bb56a0ba7668eb5b897d14059d72dededf47eb3389a96b6f195e287",
+  "prev_content_hash": "sha256:29d103c800e92549d10bc2de710c4eb4724a5566d7390bc1b6129daac910cea8",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
