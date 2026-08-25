@@ -35,9 +35,27 @@ fn early_graph_gets_project_level_phase_nudges_not_per_node_floods() {
     assert!(!srcs.contains(&GapSource::UnrealizedCapability));
     assert!(!srcs.contains(&GapSource::UnsatisfiedRequirement)); // req:a IS satisfied
 
-    // Phase-coverage gaps are project/phase scoped.
+    // Every gap here is a PROJECT-LEVEL NUDGE, which is this test's whole
+    // point — one question about the design, never one per node.
+    //
+    // Asserted as "names no nodes" rather than as `scope == Phase`, which is
+    // what it said until `quality_target_unstated` landed: that gap is a
+    // project-posture question (GapScope::Project) and named no nodes, so it
+    // satisfied the intent and failed the letter. The letter was an incidental
+    // property of which detectors happened to fire this early, never a designed
+    // invariant — and a test that pins an accident blocks correct work.
     for gap in &gaps {
-        assert_eq!(gap.scope, GapScope::Phase);
+        assert!(
+            gap.affected_ids.is_empty(),
+            "{:?} named nodes on a concept-only graph — that is a per-node flood",
+            gap.gap_source
+        );
+        assert!(
+            matches!(gap.scope, GapScope::Phase | GapScope::Project),
+            "{:?} is scoped {:?}, which is neither project- nor phase-level",
+            gap.gap_source,
+            gap.scope
+        );
     }
 }
 
@@ -229,6 +247,36 @@ fn complete_thread_yields_no_traceability_gaps() {
     )
     .unwrap();
 
+    // …and it has said what it is built FOR, for the same reason as the rule
+    // above, one detector later: `quality_target_unstated` fired here the day
+    // it landed, and a thread that claims to be COMPLETE has made that trade.
+    // ACCEPTED, and GOVERNING something — an accepted Decision that governs
+    // nothing is itself a structural defect, and a quality target nothing
+    // points at is a preference rather than an architecture driver.
+    g.create_node(
+        node::DECISION,
+        "dec:built-for-reliability",
+        Props::new()
+            .set("name", "Built for reliability")
+            .set(
+                "decision",
+                "This thread is judged on not losing work, so parts are grouped to avoid a \
+                 single part everything depends on.",
+            )
+            .set("status", "accepted")
+            .set("quality_target", "reliability"),
+    )
+    .unwrap();
+    g.governed_by(
+        node::COMPONENT,
+        "cmp:a",
+        node::DECISION,
+        "dec:built-for-reliability",
+        None,
+        Some("The component's shape follows from the reliability trade."),
+    )
+    .unwrap();
+
     let gaps = g.detect_gaps().unwrap();
     let srcs = sources(&gaps);
     // No traceability gaps at all.
@@ -388,9 +436,21 @@ fn a_named_gap_outranks_a_phase_nudge_that_scores_higher() {
         "the anchored gap must come first, got {:?}",
         sources(&gaps)
     );
+    // Compared against the nudge this test is actually about, rather than
+    // against `gaps.last()`. The tail was a proxy for "the high-scoring phase
+    // nudge" and stopped being one when `quality_target_unstated` (0.55, below
+    // this gap's 0.60) landed at the end of the list — the assertion broke
+    // while the property it tests held perfectly.
+    let concept = gaps
+        .iter()
+        .find(|g| g.gap_source == GapSource::ConceptWithoutDesign)
+        .expect("the phase nudge this test is about must fire");
     assert!(
-        first.severity < gaps.last().unwrap().severity,
-        "and it must win despite scoring lower — that is the whole point"
+        first.severity < concept.severity,
+        "the anchored gap must win despite scoring lower — that is the whole \
+         point: {} vs {}",
+        first.severity,
+        concept.severity
     );
     assert!(
         sources(&gaps).contains(&GapSource::ConceptWithoutDesign),

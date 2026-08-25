@@ -45,7 +45,7 @@ jobs:
         with:
           shared-key: ci-core
       - name: Core tests (in-memory backend)
-        run: cargo test -p reflow2-core --no-default-features
+        run: cargo test -p reflow2-core --no-default-features --no-fail-fast
       - name: Clippy (core)
         run: cargo clippy -p reflow2-core --no-default-features --all-targets -- -D warnings
       - name: Format
@@ -88,7 +88,7 @@ jobs:
         with:
           shared-key: ci-full
       - name: Workspace tests (both crates)
-        run: cargo test --workspace
+        run: cargo test --workspace --no-fail-fast
       - name: Clippy (mcp)
         run: cargo clippy -p reflow2-mcp --all-targets -- -D warnings
       - name: Build the served binary

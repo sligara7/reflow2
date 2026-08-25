@@ -44,6 +44,38 @@ there are dependency edges, whoever calls them.
    - **Do NOT create Components (P2) yet.** Leaving structure unspecified is deliberate: the
      first DETECT round will surface `concept_without_design`, which is the right next question
      ("how should this be structured?"). Answer it *with the user*, not by guessing.
+   - **ASK WHAT THE SYSTEM IS FOR — the quality attribute — and record it with
+     `set_quality_target` on a Decision you then accept.** This is cheap here and expensive
+     later, which is the whole reason it belongs at genesis: *"if you don't ask upfront, these
+     cost a lot in having to rework services after they've been already developed"* (Anthony,
+     2026-08-08). Asking now does **not** violate the rule that allocation waits for the last
+     responsible moment — that governs when you *allocate*, this governs when you *learn what
+     the system is for*, and they are different questions.
+
+     **Ask it in their words, with the trade-off visible**, because the answer decides which
+     grouping is right and the four pull apart:
+
+     > *"Before we shape this — what is this system really FOR? If it has to keep working when a
+     > part fails, that's a different shape than if it has to be fast, or easy to change, or
+     > locked down. Which one would you sacrifice the others for?"*
+
+     | if they say | the structure wants |
+     |---|---|
+     | **reliability** | no single part everything depends on — and may deliberately put the same function in two places |
+     | **performance** | the least chatter across boundaries |
+     | **maintainability** | the things that change together living together |
+     | **security** | boundaries following trust and data classification, not coupling |
+
+     🛑 **"I don't know yet" is a real answer, and it has a shape.** Record a **proposed**
+     Decision naming the candidate they lean toward, and leave it proposed. The gap then reports
+     *"still being weighed"* rather than *"unstated"*, at a lower severity, and comes back until
+     they settle it. **Never `acknowledge_gap` a deferral** — that finding is aggregate-keyed, so
+     accepting it once silences it permanently and for every capability added afterwards, which
+     is the opposite of deferring.
+
+     ⚠️ **Do not infer the answer from the brief.** A system described as "fast" may still be one
+     where a lost reading is unrecoverable. This is a trade-off only the user can make, and
+     guessing it silently picks a structure they never chose.
 
 3. **Capture deployment/consumer context as Requirements.** This is easy to forget and expensive
    to discover late. Explicitly ask the user (or record what you already know) as

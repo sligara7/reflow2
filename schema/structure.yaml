@@ -130,6 +130,29 @@ schema:
         # Deliberately a NOTE and not a boolean: what was searched and what was
         # nearest is the part a later reader can overturn. A bare `true` would
         # say the review happened and nothing about whether it was any good.
+        # WHAT THE DESIGN IS FOR, on the quality axis — decided 2026-08-25
+        # (dec:the-ility-target-is-a-governing-decision-asked-at-genesis).
+        #
+        # THE DISTINCTION THAT EARNS IT A PROPERTY: DimensionAssessment records
+        # a SCORE on an axis — what the system IS. This records what it is FOR.
+        # Nothing held the second, and giving DimensionAssessment a second
+        # meaning is the overload that made `Interface.designation` ambiguous.
+        # Measured the day this was added: 0 DimensionAssessment and 0
+        # DimensionObservation nodes exist, so the axis vocabulary was fully
+        # defined and had never once been used.
+        #
+        # ⚠️ NO DEFAULT, AND THAT IS THE WHOLE POINT. Absence must read as
+        # "nobody was asked", because a detector over the absence is the only
+        # thing that notices genesis skipping the question. A default would also
+        # be materialised onto every existing Decision when an export is read
+        # back — the failure `Capability.delivery` records, where a design whose
+        # export does not restore to itself is a backup that would not restore.
+        # Additive and unbackfilled on purpose: old graphs simply carry none.
+        #
+        # Same nine values as DimensionAssessment deliberately, so a later
+        # ility_report can compare what was TARGETED against what it COMPUTES,
+        # rather than two vocabularies that never meet.
+        quality_target: { type: enum, values: [reliability, performance, maintainability, security, scalability, observability, testability, coupling, maturity], indexed: true, description: "Set when this Decision states the quality attribute the design is BUILT FOR — the answer to \"what is this system for?\". It is a TARGET, not a score: DimensionAssessment records what the system IS on an axis, this records what it is aiming at. It matters because the attribute decides WHICH GRAPH an allocation is computed on and the four disagree — performance wants least chatter across boundaries, reliability wants no articulation point and may deliberately DUPLICATE a function, maintainability wants what-changes-together-to-live-together, security wants boundaries following trust rather than coupling. Allocating without this answer silently picks performance (dec:idea-the-ility-chooses-the-allocation-graph, whose co-change experiment measured 71% of reflow2's own strongest maintainability signal crossing its functional boundaries). ABSENT MEANS NOBODY WAS ASKED, never `none` — there is no default, so `quality_target_unstated` can tell an unanswered design from an answered one. Asked at GENESIS rather than at allocation: asking is cheap and shapes everything downstream, allocating is expensive and still waits for the last responsible moment (dec:idea-allocation-waits-for-the-last-responsible-moment), and the two are different questions." }
         no_relation_note: { type: string, fulltext: true, description: "Set when the relations of this node were reviewed and none was honest — what was searched, what was nearest, why nothing was drawn. Its PRESENCE is what separates a considered idea from an unopened one." }
       embedding_field: decision
       resolution: { strategy: fuzzy_then_vector, fuzzy_threshold: 80 }

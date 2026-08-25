@@ -3190,6 +3190,22 @@ pub struct SetDecisionStatusReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct SetQualityTargetReq {
+    /// The Decision that STATES what the design is built for.
+    pub decision_id: String,
+    /// The quality axis this design is aiming at — `reliability` /
+    /// `performance` / `maintainability` / `security` / `scalability` /
+    /// `observability` / `testability` / `coupling` / `maturity`.
+    ///
+    /// THERE IS NO WAY TO SAY "none", and that is deliberate: absence means
+    /// nobody was asked, which is a different fact from a design that weighed
+    /// the question and chose one. `quality_target_unstated` reads exactly that
+    /// difference, and a `none` value would erase it.
+    pub quality_target: String,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct RegisterAlternativeReq {
     /// The proposed Decision this alternative is a fork of.
     pub decision_id: String,

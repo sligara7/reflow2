@@ -264,12 +264,22 @@ the config git falls back to a text merge of a 600KB JSON file — safe, but you
 **Never resolve a design conflict with `--ours`/`--theirs`**: for code that drops a hunk, for a
 design it drops a node someone wrote and nothing will tell you it is gone.
 
+> **`--no-fail-fast` is not optional and not a nicety.** `cargo test` ABORTS EVERY REMAINING TEST
+> BINARY the moment one fails, and this workspace has ~155 of them behind a ~13-minute run. So a
+> change with three independent failures costs three full cycles — you fix one, wait, discover the
+> next, wait again — and on CI that is three push-and-wait rounds for information one run already
+> had. **Measured 2026-08-25 while adding one detector**: successive runs reached 31, then 47, then
+> 114 suites, surfacing exactly one new failure each time; all four were in `reflow2-core` and one
+> `--no-fail-fast` run would have shown all of them at once. The cost is that a RED run now takes
+> full wall-clock instead of stopping early, which is the right trade: a red run is already a
+> failure, and what you want from it is every fact it has, not the first one.
+
 **A change is done when all of these are clean** — the everyday subset, with the flags CI
 actually uses. **Both `-D warnings`, because that is what turns a local warning into a red build:**
 
 ```bash
-cargo test --workspace                                   # both crates
-cargo test -p reflow2-core --no-default-features         # the in-memory backend, on its own
+cargo test --workspace --no-fail-fast                    # both crates
+cargo test -p reflow2-core --no-default-features --no-fail-fast   # the in-memory backend, alone
 cargo clippy -p reflow2-core --no-default-features --all-targets -- -D warnings
 cargo clippy -p reflow2-mcp --all-targets -- -D warnings
 cargo fmt --check

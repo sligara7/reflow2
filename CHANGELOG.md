@@ -31,6 +31,26 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added — a design can say what it is FOR, and is asked at genesis if it hasn't
+
+**Minor — schema change.** New optional `Decision.quality_target` (the nine axes of `DimensionAssessment.dimension`), new `set_quality_target` tool, new `quality_target_unstated` gap. Genesis asks the question; `detect-and-ask` carries its repair row.
+
+Implements `dec:the-ility-target-is-a-governing-decision-asked-at-genesis`.
+
+**The attribute a system is built for decides *which grouping is right*, and the four disagree** — performance wants least chatter across boundaries, reliability wants no articulation point and may deliberately **duplicate** a function across parts, maintainability wants what-changes-together-lives-together, security wants boundaries following trust rather than coupling. **Allocating without the answer silently picks performance** (`dec:idea-the-ility-chooses-the-allocation-graph`, 2026-08-08, whose co-change experiment measured **71%** of reflow2's own strongest maintainability signal crossing its functional boundaries).
+
+**⭐ The distinction that earns a property rather than reusing one.** `DimensionAssessment` records a **score** on an axis — what the system *is*. This records what it is **for**. Nothing held the second, and giving `DimensionAssessment` a second meaning is the overload that made `Interface.designation` ambiguous. Measured when this was added: **0 `DimensionAssessment` and 0 `DimensionObservation` nodes exist** — the nine-axis vocabulary was fully defined and had never once been used.
+
+**⭐⭐ Three states, not two, and the middle one is the point.** A user may not know at genesis, so *"I don't know yet"* is a first-class answer: a **proposed** Decision naming the candidate they lean toward. The finding then reads *"still being weighed"* at severity 0.40 rather than *"unstated"* at 0.55, and keeps coming back until it is settled. Collapsing a deferral into silence is exactly the failure `Decision.no_relation_note` exists to prevent on this same node type — *prose cannot be told apart from silence*.
+
+**🛑 And a deferral must never be `acknowledge_gap`-ed.** That finding is aggregate-keyed, so one acceptance silences it permanently and for every capability added afterwards — the trap measured the same day on `unreviewed_ideas` and held open at `dec:idea-an-aggregate-acknowledgement-never-expires`. The finding text and the skill both say so.
+
+**No migration.** The property is optional with **no default** — deliberately, because absence must read as *"nobody was asked"* for the detector to work at all, and because a default would be materialised onto every existing Decision when an export is read back (the failure `Capability.delivery` records: *a design whose export does not restore to itself is a backup that would not restore*). Old graphs simply carry none.
+
+**Asked at genesis, not at allocation** — and this does **not** contradict `dec:idea-allocation-waits-for-the-last-responsible-moment`. That governs when you *allocate*; this governs when you *learn what the system is for*. Asking is cheap and shapes everything downstream; allocating is expensive and still waits.
+
+`crates/reflow2-core/tests/a_design_says_what_it_is_for.rs` (8 cases; the load-bearing one is that weighing-without-settling reads differently from never-asking, at a lower severity and a different title).
+
 ### Added — `unallocated_component`: structure with no function in it is now asked about
 
 **Minor.** No schema change. New gap source `unallocated_component`; new `cap:unallocated-component-detector` / `req:structure-with-no-function-is-asked-about`.
