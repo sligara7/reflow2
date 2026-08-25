@@ -31,6 +31,28 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+### Added — `unallocated_component`: structure with no function in it is now asked about
+
+**Minor.** No schema change. New gap source `unallocated_component`; new `cap:unallocated-component-detector` / `req:structure-with-no-function-is-asked-about`.
+
+**The two existing allocation detectors were gated in opposite directions, and a design could sit in the space between them reporting clean.** `concept_without_design` fires only at ZERO components and goes silent forever once a design grows one. `unallocated_capability` is gated the other way and stays quiet until a component exists. Between them they cover *a capability with no home* and *a design with no structure* — and neither covers **structure with no function**.
+
+Measured on reflow2's own design: **33 of its 95 components are leaf boxes owning no capability at all** (85 leaves, so 33 of 85 that the rule ranges over). Every detector reported clean.
+
+**⭐ The leaf filter is the finding, not a tidy-up.** A parent grouping is allocated THROUGH its children — `sys:agent-surface` holding no capability directly is correct modelling. Counting parents would file every well-formed hierarchy as a defect: 40 components against 33 on the same design. It also composes honestly with the adopt nesting step added the same day (#335) — recovering a hierarchy MOVES components off this list by giving them children, because a box that groups other boxes has a job.
+
+**One aggregate rollup, and the losing side is recorded in the code.** Per-component keying is the more honest key for the answer people actually give — *"this box is a namespace, not a functional part"* is a claim about ONE box — and it loses to BL-73 at 33 findings raised at once, because a per-node flood is acknowledged in bulk without being read. Aggregate keying also means the standing judgement survives somebody adding a component, which is the trap `unvalidated_capability` fell into and was re-acknowledged twenty times for.
+
+The finding distinguishes **never started** (nothing allocated anywhere — the deferred allocation step never picked back up) from **partial**, because those are acted on differently. It is silent when the design has no capabilities: there is then no allocation to have performed, and that phase is `concept_without_design`'s ground.
+
+**⭐⭐ The finding asks what the system is FOR before naming any method.** The quality attribute a system is built for decides *which grouping is right*, and the four disagree: performance wants least cross-boundary chatter, reliability wants no articulation point and may deliberately duplicate a function, maintainability wants co-change, security wants boundaries following trust rather than coupling. **Allocating without asking silently picks performance** (`dec:idea-the-ility-chooses-the-allocation-graph`, 2026-08-08, whose co-change experiment measured 71% of reflow2's own strongest maintainability signal crossing its functional boundaries). The first draft of this finding named `propose_allocation` as *the* method and made exactly that mistake; it now names it as the performance answer specifically, and warns that it clusters capability-to-capability `DEPENDS_ON` — **1 edge across 210 capabilities** on reflow2's own graph, so it returns one cluster per capability.
+
+**⭐⭐ It shipped with its instruction, which is the whole point.** `propose_allocation` (clusters capabilities by coupling — doctrinal functional allocation, mechanised) and `evaluate_allocation` were served, correct, and named in **no skill** — the exact shape of `fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it`. So the `detect-and-ask` repair table gained a row naming both, in all three skill mirrors, in the same change. A detector that noticed the absence without telling anyone what to do about it would have reproduced the failure it was built to fix.
+
+**This settles `dec:idea-does-the-deferred-structuring-step-need-a-skill-of-its-own` at option E** (make the absence visible first; decide about a skill later) over A/B/C. ⚠️ **E's own premise was half wrong and checking it is what produced the measurement:** E read *"nothing notices that a design has capabilities and no components, or components with no allocation"* — the first half was already covered by `concept_without_design`, and only the second half was real. **What is still open: whether the allocation step needs a skill of its own.** The detector makes the absence countable across real designs, and that evidence does not exist yet.
+
+`crates/reflow2-core/tests/structure_with_no_function_is_asked_about.rs` (9 cases; the counterweights — a parent is not a finding, an exemption does not extend to its empty children, a design with nothing to allocate is not asked — carry more weight than the positives).
+
 ### Changed — the foundation absorption completes: reflow2 no longer depends on dynograph-foundation
 
 **Minor.** No schema change. New components `cmp:foundation-vocabulary`, `cmp:byte-store`, `cmp:text-index` under `sys:foundation`; five `required` Interfaces retired on the record.

@@ -9,8 +9,8 @@
 //! Deterministic detector groups:
 //!
 //! - **Traceability** — a node is missing a golden-thread link it should have
-//!   (`unsatisfied_requirement`, `unallocated_capability`, `unrealized_capability`,
-//!   `unverified_capability`).
+//!   (`unsatisfied_requirement`, `unallocated_capability`, `unallocated_component`,
+//!   `unrealized_capability`, `unverified_capability`).
 //! - **Phase-coverage** — a whole lifecycle phase is absent
 //!   (`concept_without_design`, `design_without_build`, `build_without_verification`,
 //!   `no_deploy_operate`) — the doc's headline "you've done X but not Y".
@@ -92,6 +92,42 @@ pub enum GapSource {
     PossibleDuplicate,
     /// A Capability is not `ALLOCATED_TO` any Component.
     UnallocatedCapability,
+    /// LEAF Components that no Capability is `ALLOCATED_TO` — boxes with no
+    /// function in them. The mirror of [`UnallocatedCapability`], and the half
+    /// of the allocation question nothing asked until 2026-08-25.
+    ///
+    /// # Why the existing pair left a hole
+    ///
+    /// `concept_without_design` fires only at ZERO components and goes silent
+    /// forever once a design grows one. `unallocated_capability` is gated the
+    /// other way — it stays quiet until a component exists. Between them they
+    /// cover a capability with no home and a design with no structure, and
+    /// NEITHER covers structure with no function: on reflow2's own design 33 of
+    /// 95 components were leaf boxes owning no capability at all, and every
+    /// detector reported clean.
+    ///
+    /// That is the absence `dec:idea-does-the-deferred-structuring-step-need-a-skill-of-its-own`
+    /// resolved to make visible. Genesis correctly DEFERS structure — "do not
+    /// create Components yet, answer that with the user" — and then nothing
+    /// picked the question back up, while `propose_allocation` and
+    /// `evaluate_allocation` sat served and named in no skill. A typed tool
+    /// with no instruction and no detector-that-notices-absence reaches no
+    /// user's design, however good it is
+    /// (`fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it`).
+    ///
+    /// # LEAF-ONLY, and the filter is the finding
+    ///
+    /// A parent grouping is allocated THROUGH its children: `sys:agent-surface`
+    /// owning no capability directly is correct modelling, not a hole. Counting
+    /// it would turn every well-formed hierarchy into a finding — and the
+    /// measurement is not marginal, it is 40 components against 33.
+    ///
+    /// So this fires on components with no outgoing `CONTAINS` to another
+    /// Component. Note the interaction with the adopt nesting step added the
+    /// same day: recovering a hierarchy MOVES components off this list by
+    /// giving them children, which is honest — a box that now groups other
+    /// boxes has a job.
+    UnallocatedComponent,
     /// A Capability has no `Artifact` `REALIZES`-ing it.
     UnrealizedCapability,
     /// A `Verification` whose status says the thing it checks does not work.
@@ -582,6 +618,7 @@ impl GapSource {
             GapSource::UnmotivatedCapability => "unmotivated_capability",
             GapSource::PossibleDuplicate => "possible_duplicate",
             GapSource::UnallocatedCapability => "unallocated_capability",
+            GapSource::UnallocatedComponent => "unallocated_component",
             GapSource::UnrealizedCapability => "unrealized_capability",
             // Load-bearing: this string is hashed into the gap id, which keys
             // the acknowledgement Decision. Renaming it expires every existing
@@ -671,6 +708,36 @@ impl GapSource {
             // anywhere else, because ChangeEvents are the fastest-growing node
             // type in any active design.
             GapSource::ChangeAxisUnstated => true,
+            // AGGREGATE, and the call was close enough to record the losing
+            // side. Per-component keying would be the more honest key for the
+            // answer people will actually give — "cmp:bulk is a namespace, not
+            // a functional part" is a claim about ONE box — but reflow2's own
+            // design raises 33 of these at once, and BL-73 is the standing
+            // lesson that a per-node flood is read as noise and acknowledged in
+            // bulk without being read. The question this asks is posture: HAS
+            // ANYBODY ALLOCATED FUNCTION TO THIS STRUCTURE. Asked once, it
+            // survives somebody adding a component, which per-node keying would
+            // expire on every write.
+            //
+            // 🛑 AND THE COST OF THAT CHOICE IS NOW MEASURED, ON THIS DESIGN,
+            // which is why it is written here rather than left as a trade-off
+            // a reader has to rediscover. `unreviewed_ideas` is aggregate for
+            // the same reason, was accepted ONCE on 2026-08-23 at "110 of 181
+            // open ideas connect to nothing" — a correct judgement — and the
+            // acceptance then silenced it permanently, for every idea written
+            // since. Two days later a session reasoning about functional
+            // allocation never reached the node that had ANTICIPATED its
+            // central error, and the user had to be the index.
+            //
+            // This finding is backlog-shaped exactly like that one (33 of 85
+            // leaf components here), so one acknowledgement would silence it
+            // the same way. The unexplored middle — an acceptance carrying the
+            // population it was accepted AT, re-asked when that moves — is
+            // held open at `dec:idea-an-aggregate-acknowledgement-never-expires`
+            // with three options and no answer. Aggregate stands until that is
+            // settled, because the alternative is the 33-alarm flood; it is not
+            // the same thing as the trade-off being free.
+            GapSource::UnallocatedComponent => true,
             // PER-REQUIREMENT, not aggregate, and the split matters: accepting
             // "this need is served by our own tooling on purpose" is a claim
             // about ONE need, and must not also accept the next requirement
@@ -1826,6 +1893,7 @@ impl DesignGraph {
         self.detect_possible_duplicates(&pop, &mut gaps)?;
         self.detect_suspected_duplicate_edges(&mut gaps)?;
         self.detect_unallocated_capabilities(&pop, &mut gaps)?;
+        self.detect_unallocated_components(&pop, &mut gaps)?;
         self.detect_unrealized_capabilities(&pop, &mut gaps)?;
         self.detect_unverified_capabilities(&pop, &mut gaps)?;
         self.detect_unverified_enforced_rules(&pop, &mut gaps)?;
@@ -2561,6 +2629,144 @@ impl DesignGraph {
                 });
             }
         }
+        Ok(())
+    }
+
+    /// Leaf Components no Capability is allocated to — structure with no
+    /// function in it. See [`GapSource::UnallocatedComponent`] for why the
+    /// existing pair of allocation detectors left this uncovered, and why the
+    /// leaf filter is load-bearing rather than a tidy-up.
+    fn detect_unallocated_components(
+        &self,
+        pop: &Population,
+        gaps: &mut Vec<GapCandidate>,
+    ) -> Result<(), DynoError> {
+        // NOTHING TO RUN ON MUST NOT READ AS CLEAN. With no capabilities there
+        // is no allocation to have performed, and asking "which function does
+        // this box hold?" of a design that has not said what it does yet is the
+        // wrong question at the wrong phase — `concept_without_design` and
+        // `design_without_intent` own that ground. This is the ordinary
+        // phase-gating the other detectors do, not a silent pass.
+        if pop.components == 0 || pop.capabilities == 0 {
+            return Ok(());
+        }
+
+        let mut unallocated: Vec<String> = Vec::new();
+        let mut leaves = 0usize;
+        // Tracked over EVERY component, parents included, because the claim it
+        // supports is about the whole design. Deriving "nothing is allocated"
+        // from "every leaf is empty" instead would be a different statement
+        // wearing the same words: a design that allocated only to parents has
+        // empty leaves and has plainly done the step.
+        let mut any_allocation = false;
+        for cmp in self.scan_nodes(node::COMPONENT)? {
+            // A parent is allocated THROUGH its children, so only leaves are
+            // asked. `CONTAINS` runs parent -> child and is also how a Project
+            // holds its top-level parts, so the child must be checked for being
+            // a Component: a component contained BY a project is still a leaf.
+            let mut has_child_component = false;
+            for e in self.outgoing(&cmp.node_id, Some(edge::CONTAINS))? {
+                if self.get_node(node::COMPONENT, &e.to_id)?.is_some() {
+                    has_child_component = true;
+                    break;
+                }
+            }
+            if has_child_component {
+                if !self
+                    .incoming(&cmp.node_id, Some(edge::ALLOCATED_TO))?
+                    .is_empty()
+                {
+                    any_allocation = true;
+                }
+                continue;
+            }
+            leaves += 1;
+            if self
+                .incoming(&cmp.node_id, Some(edge::ALLOCATED_TO))?
+                .is_empty()
+            {
+                unallocated.push(cmp.node_id.clone());
+            } else {
+                any_allocation = true;
+            }
+        }
+
+        if unallocated.is_empty() {
+            return Ok(());
+        }
+
+        unallocated.sort();
+        let n = unallocated.len();
+        // Whether the step was never done at all, or done and left partial, is
+        // the difference between "run propose_allocation" and "finish what you
+        // started" — and the user can act on those differently, so the finding
+        // says which.
+        let never_started = !any_allocation;
+        let names: Vec<String> = unallocated
+            .iter()
+            .take(5)
+            .map(|id| self.component_label(id))
+            .collect();
+        let sample = names.join(", ");
+        let and_more = if n > 5 {
+            format!(", and {} more", n - 5)
+        } else {
+            String::new()
+        };
+
+        gaps.push(GapCandidate {
+            id: gap_id(GapSource::UnallocatedComponent, &unallocated),
+            gap_source: GapSource::UnallocatedComponent,
+            scope: GapScope::Component,
+            // The mirror of `unallocated_capability` (0.50) and deliberately a
+            // shade below it: a capability with no home is a promise nobody
+            // owns, while an empty box may honestly be a namespace somebody
+            // has not got to yet.
+            severity: 0.45,
+            title: if never_started {
+                format!(
+                    "Nothing in this design is allocated to anything — the allocation step looks undone ({n} parts)"
+                )
+            } else {
+                format!("{n} of {leaves} parts hold no function — “{sample}”{and_more}")
+            },
+            description: format!(
+                "{n} leaf component(s) have no capability allocated to them, so the design says \
+                 these parts exist but not what any of them is FOR. {}ASK WHAT THIS SYSTEM IS FOR \
+                 BEFORE ALLOCATING: the quality attribute it is built for decides which grouping \
+                 is right, and they disagree — performance wants least chatter across boundaries, \
+                 reliability wants no single part everything depends on and may deliberately put \
+                 the same function in two places, maintainability wants what changes together to \
+                 live together, security wants boundaries following trust rather than coupling. \
+                 Allocating without asking silently picks performance. Then allocate what the \
+                 answer implies, or acknowledge this once if these boxes are namespaces rather \
+                 than functional parts. `propose_allocation` mechanises the PERFORMANCE answer \
+                 only, and clusters capability-to-capability `DEPENDS_ON`, which most designs \
+                 have never declared — check it has edges to work with before trusting it, and \
+                 `evaluate_allocation` reports `modularity: null` when it has nothing to run on.",
+                if never_started {
+                    "Nothing in this design is allocated at all, which usually means the step was \
+                     deferred and never picked back up. "
+                } else {
+                    ""
+                }
+            ),
+            affected_ids: unallocated.clone(),
+            suggested_depth: 2,
+            evidence: format!(
+                "{n} of {leaves} leaf Component(s) carry 0 incoming ALLOCATED_TO ({} total \
+                 component(s), {} capability(ies)). Parents are excluded: a component holding \
+                 child components is allocated through them. Sample: {}.",
+                pop.components,
+                pop.capabilities,
+                unallocated
+                    .iter()
+                    .take(5)
+                    .cloned()
+                    .collect::<Vec<_>>()
+                    .join(", ")
+            ),
+        });
         Ok(())
     }
 
