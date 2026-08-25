@@ -209,6 +209,21 @@ fn the_finding_names_the_tool_that_answers_it() {
         "the finding must name the method, got: {}",
         gap.description
     );
+    // AND IT MUST NOT PRESENT THAT TOOL AS *THE* METHOD. The quality attribute
+    // a system is built for decides which grouping is right, and the four
+    // disagree — a clustering answer silently picks performance
+    // (`dec:idea-the-ility-chooses-the-allocation-graph`, which measured this
+    // and predicted the mistake this finding first made).
+    assert!(
+        gap.description.contains("BEFORE ALLOCATING"),
+        "the ility question must come before the method, got: {}",
+        gap.description
+    );
+    assert!(
+        gap.description.contains("silently picks performance"),
+        "and the finding must say what happens if it is skipped, got: {}",
+        gap.description
+    );
     assert!(
         gap.description.contains("acknowledge"),
         "and the honest way out, for a design whose boxes really are namespaces"

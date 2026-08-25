@@ -718,6 +718,25 @@ impl GapSource {
             // ANYBODY ALLOCATED FUNCTION TO THIS STRUCTURE. Asked once, it
             // survives somebody adding a component, which per-node keying would
             // expire on every write.
+            //
+            // 🛑 AND THE COST OF THAT CHOICE IS NOW MEASURED, ON THIS DESIGN,
+            // which is why it is written here rather than left as a trade-off
+            // a reader has to rediscover. `unreviewed_ideas` is aggregate for
+            // the same reason, was accepted ONCE on 2026-08-23 at "110 of 181
+            // open ideas connect to nothing" — a correct judgement — and the
+            // acceptance then silenced it permanently, for every idea written
+            // since. Two days later a session reasoning about functional
+            // allocation never reached the node that had ANTICIPATED its
+            // central error, and the user had to be the index.
+            //
+            // This finding is backlog-shaped exactly like that one (33 of 85
+            // leaf components here), so one acknowledgement would silence it
+            // the same way. The unexplored middle — an acceptance carrying the
+            // population it was accepted AT, re-asked when that moves — is
+            // held open at `dec:idea-an-aggregate-acknowledgement-never-expires`
+            // with three options and no answer. Aggregate stands until that is
+            // settled, because the alternative is the 33-alarm flood; it is not
+            // the same thing as the trade-off being free.
             GapSource::UnallocatedComponent => true,
             // PER-REQUIREMENT, not aggregate, and the split matters: accepting
             // "this need is served by our own tooling on purpose" is a claim
@@ -2713,12 +2732,18 @@ impl DesignGraph {
             },
             description: format!(
                 "{n} leaf component(s) have no capability allocated to them, so the design says \
-                 these parts exist but not what any of them is FOR. {}Either allocate the \
-                 capabilities these parts hold — `propose_allocation` groups them by coupling and \
-                 proposes an allocation for you to accept or overrule, and `evaluate_allocation` \
-                 scores the result — or acknowledge this once if these boxes are namespaces \
-                 rather than functional parts. Structure that no function reached is the half of \
-                 allocation nothing used to check.",
+                 these parts exist but not what any of them is FOR. {}ASK WHAT THIS SYSTEM IS FOR \
+                 BEFORE ALLOCATING: the quality attribute it is built for decides which grouping \
+                 is right, and they disagree — performance wants least chatter across boundaries, \
+                 reliability wants no single part everything depends on and may deliberately put \
+                 the same function in two places, maintainability wants what changes together to \
+                 live together, security wants boundaries following trust rather than coupling. \
+                 Allocating without asking silently picks performance. Then allocate what the \
+                 answer implies, or acknowledge this once if these boxes are namespaces rather \
+                 than functional parts. `propose_allocation` mechanises the PERFORMANCE answer \
+                 only, and clusters capability-to-capability `DEPENDS_ON`, which most designs \
+                 have never declared — check it has edges to work with before trusting it, and \
+                 `evaluate_allocation` reports `modularity: null` when it has nothing to run on.",
                 if never_started {
                     "Nothing in this design is allocated at all, which usually means the step was \
                      deferred and never picked back up. "
