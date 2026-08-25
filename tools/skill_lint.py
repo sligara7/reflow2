@@ -353,6 +353,7 @@ NON_TOOL_TERMS = {
     "target_type",
     "truncated_beyond_depth",
     "unallocated_capability",
+    "unallocated_component",
     "undocumented_addition",
     "unknown_seeds",
     "unmotivated_capability",
