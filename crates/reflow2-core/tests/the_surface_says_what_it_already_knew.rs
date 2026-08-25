@@ -297,6 +297,32 @@ fn the_markdown_top_gaps_section_cuts_long_prose_and_announces_it() {
 fn a_short_gap_is_not_announced_as_truncated() {
     let mut g = DesignGraph::open_in_memory().unwrap();
     one_unsatisfied_requirement(&mut g, "accepted");
+    // This design says what it is BUILT FOR, which is what makes it "ordinary"
+    // now. `quality_target_unstated` fires on any design that has not, and its
+    // prose is far past the 40-word roll-up budget — so without this the
+    // truncation notice is always present and the counterweight below could
+    // never fail. Settled and governing something, because an accepted Decision
+    // that governs nothing is a structural defect in its own right.
+    g.add_decision(
+        "dec:built-for-testability",
+        "Built for testability",
+        "Every part must be checkable on its own.",
+        None,
+    )
+    .unwrap();
+    g.set_quality_target("dec:built-for-testability", "testability")
+        .unwrap();
+    g.set_decision_status("dec:built-for-testability", "accepted")
+        .unwrap();
+    g.governed_by(
+        node::CAPABILITY,
+        "cap:unrelated",
+        node::DECISION,
+        "dec:built-for-testability",
+        None,
+        Some("Shaped by the testability trade."),
+    )
+    .unwrap();
     let md = g.graph_report().unwrap().to_markdown();
     if let Some(top) = md.split("## Top gaps (look here first)").nth(1) {
         assert!(

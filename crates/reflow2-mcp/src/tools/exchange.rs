@@ -636,6 +636,37 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "Declare that this Decision states the quality attribute the design is \
+                       BUILT FOR — the answer to \"what is this system for?\". A TARGET, not a \
+                       score: DimensionAssessment records what a system IS on an axis, this \
+                       records what it is aiming at. ⭐ IT MATTERS BECAUSE THE ATTRIBUTE DECIDES \
+                       WHICH GROUPING IS RIGHT, and the four disagree — performance wants least \
+                       chatter across boundaries, reliability wants no articulation point and may \
+                       deliberately DUPLICATE a function across parts, maintainability wants \
+                       what-changes-together-to-live-together, security wants boundaries \
+                       following trust rather than coupling. Allocating without this answer \
+                       silently picks performance. ASK IT EARLY: asking is cheap and shapes \
+                       everything downstream, while the cost of asking late is reworking \
+                       services already built — which is why genesis asks it and allocation, \
+                       correctly, still waits for the last responsible moment. 🛑 THERE IS NO \
+                       `none`: absence means nobody was asked, a different fact from a design \
+                       that weighed it and chose, and `quality_target_unstated` reads exactly \
+                       that difference. Every other property is preserved; link what the choice \
+                       shapes with governed_by.",
+        annotations(read_only_hint = false, destructive_hint = false)
+    )]
+    pub async fn set_quality_target(
+        &self,
+        Parameters(req): Parameters<SetQualityTargetReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let mut g = self.write_lock().await;
+        ok_json(NodeDto::from(
+            g.set_quality_target(&req.decision_id, &req.quality_target)
+                .map_err(dyno_err)?,
+        ))
+    }
+
+    #[tool(
         description = "Register an alternative under a proposed decision point (BL-70): a \
                        lightweight Artifact pointer that names where the alternative's design \
                        export lives (branch-by-file), GOVERNED_BY the Decision and CONTRADICTS its \

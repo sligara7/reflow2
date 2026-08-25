@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:d40deb7ab803d1e50a09771aade624232546f0a1f40a52bb47e19704bd61263a",
+  "content_hash": "sha256:6e18dfe08bb56a0ba7668eb5b897d14059d72dededf47eb3389a96b6f195e287",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2172,6 +2172,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:export"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:quality-target-is-stated-or-asked-for",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:detect"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -11566,6 +11574,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:reflow2-is-built-for-observability",
+      "properties": {
+        "acted_at": "2026-08-25",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:reflow2s-own-feedback-documents-are-removed-once-captured",
       "properties": {
         "acted_at": "2026-08-15",
@@ -11682,6 +11699,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-gate-runs-every-test-binary-before-reporting",
+      "properties": {
+        "acted_at": "2026-08-25",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:the-graph-asks-what-a-session-made-false",
       "properties": {
         "acted_at": "2026-08-24",
@@ -11694,6 +11720,15 @@
       "from_id": "dec:the-graph-read-contract-stays-internal",
       "properties": {
         "acted_at": "2026-08-21",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-ility-target-is-a-governing-decision-asked-at-genesis",
+      "properties": {
+        "acted_at": "2026-08-25",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -13914,6 +13949,105 @@
         "validation_status": "unvalidated"
       },
       "to_id": "dec:idea-a-gap-can-be-scheduled-into-an-increment-like-any-other-work"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:quality-target-2026-08-25",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:alternatives"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:quality-target-2026-08-25",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:quality-target-2026-08-25",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect-and-ask-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:quality-target-2026-08-25",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:genesis-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:quality-target-2026-08-25",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:quality-target-2026-08-25",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:quality-target-2026-08-25",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:quality-target-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:quality-target-is-stated-or-asked-for"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:quality-target-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:quality-target-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:the-ility-target-is-a-governing-decision-asked-at-genesis"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:quality-target-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:a-design-says-what-it-is-for"
     },
     {
       "edge_type": "CHANGED",
@@ -18720,6 +18854,15 @@
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-bc72adc4502de70f",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
     },
     {
       "edge_type": "CHANGED",
@@ -32225,6 +32368,15 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "dec:reflow2-is-built-for-observability",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "Not a conflict of intent but a conflict of FACT this design now has to face: that node's four-graphs argument says the target chooses the allocation graph, and reflow2's own decomposition is functional rather than instrument-optimal. Declaring observability asserts a target the current structure only partly serves — sys:coherence-loop is correctly separated from the store, but 33 leaf components hold no function at all and two subsystems exceed span of control. Recorded so the disagreement is visible rather than resolved by assertion."
+      },
+      "to_id": "dec:idea-the-ility-chooses-the-allocation-graph"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "dec:the-content-store-is-discontinued",
       "properties": {
         "alignment": "supporting",
@@ -33583,6 +33735,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:reflow2-is-built-for-observability",
+      "properties": {
+        "evidence": "That decision is what made this one recordable at all: it settled that a quality target lives on a governing Decision rather than on a Constraint or an overloaded DimensionAssessment, and that the question is asked early. This is the first design to answer it — reflow2's own.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:the-ility-target-is-a-governing-decision-asked-at-genesis"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:release-trigger-needs-a-required-item",
       "properties": {
         "evidence": "This refines the trigger dec:release-trigger states; it is meaningless without it and cannot be read on its own.",
@@ -33599,6 +33761,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:the-ility-target-is-a-governing-decision-asked-at-genesis",
+      "properties": {
+        "evidence": "This settles WHERE the answer to that node's question is recorded and WHEN it is asked. It is only worth anything if that node's premise holds — that the quality attribute a system is built for decides which graph you allocate on, which its co-change experiment measured at 71% disagreement with the current functional decomposition.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-the-ility-chooses-the-allocation-graph"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -38340,6 +38512,14 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:quality-target-is-stated-or-asked-for",
+      "properties": {
+        "note": "This capability IS that decision built. The decision chose a governing Decision over a Constraint or an overloaded DimensionAssessment, and chose genesis over allocation-time; both choices are visible here — the target lives on a Decision node, and the genesis skill is where the question is asked. If the decision is ever revisited, this is what would have to move."
+      },
+      "to_id": "dec:the-ility-target-is-a-governing-decision-asked-at-genesis"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:questions",
       "properties": {},
       "to_id": "decision:ack:07bb37be6d5cd129"
@@ -41507,6 +41687,14 @@
       "from_id": "sys:coherence-loop",
       "properties": {},
       "to_id": "dec:bl83a-functional-decomposition"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "sys:coherence-loop",
+      "properties": {
+        "note": "This subsystem exists as a SEPARATE instrument from the store it reads, which is what observability-driven allocation wants: a part that reports on another part must not be able to quietly flatter it. Its detectors carry the same obligation the target imposes — each must be able to say it could not tell, rather than reporting clean over ground it never covered."
+      },
+      "to_id": "dec:reflow2-is-built-for-observability"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -91363,6 +91551,14 @@
     },
     {
       "edge_type": "MITIGATES",
+      "from_id": "dec:the-ility-target-is-a-governing-decision-asked-at-genesis",
+      "properties": {
+        "evidence": "That node's open half is unanswerable while any allocation method silently picks performance. Fixing the FIRST step — asking what the system is for, and giving the answer a home — removes the hazard without settling whether the method needs a skill, so the remaining question becomes about the method alone rather than about the method and its unstated premise together."
+      },
+      "to_id": "dec:idea-does-the-deferred-structuring-step-need-a-skill-of-its-own"
+    },
+    {
+      "edge_type": "MITIGATES",
       "from_id": "fact:the-diamond-meets-at-dynographs-internals-not-its-interface",
       "properties": {
         "evidence": "Answers the obvious hazard before anyone spends time on it. \"Does removing the dependency break storyflow, which also uses dynograph?\" — no: that fact measured storyflow consuming dynograph as a REST API over HTTP while reflow2 consumes it as a Rust library API. Disjoint surfaces over one shared implementation, so dropping the Rust surface cannot touch storyflow's endpoints. Drawn from the fact TO this idea: the measurement is what removes the risk."
@@ -96388,6 +96584,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:quality-target-is-stated-or-asked-for",
+      "properties": {},
+      "to_id": "req:a-design-says-what-it-is-for"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:questions",
       "properties": {},
       "to_id": "req:no-se-knowledge"
@@ -98174,6 +98376,12 @@
       "from_id": "ver:a-deliberate-state-is-counted",
       "properties": {},
       "to_id": "cap:a-ruling-parks-a-node-and-parked-nodes-are-counted"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-design-says-what-it-is-for",
+      "properties": {},
+      "to_id": "cap:quality-target-is-stated-or-asked-for"
     },
     {
       "edge_type": "VERIFIES",
@@ -101264,7 +101472,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e44fdd4b47a76ea23f150d1ccb3cd531507ac5abab9c77296a2ce0ffd3612812",
+        "checksum": "sha256:56af14025270ab8dfbf519b77152789523658acf3a8e50ad8cfa208d3da6ca09",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/alternatives.rs",
         "name": "alternatives.rs",
@@ -101781,7 +101989,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8fceeae818da7c74861cc5f91023121f42dbcabde06505147438c3eb5e652c0a",
+        "checksum": "sha256:8c06c4966b0d2a34ee1b3fc35f44ee8af26b584820ba649749c09bd74a37caa1",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -101794,7 +102002,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:fcf2b422af10f7716b6690cbae27a2645dacf8a9ae0ab03ed890e92dfed3ec5d",
+        "checksum": "sha256:db420230a07934367ea1c8fa8a5a6285a4e8b05274253ebfb0846eee55b8d51e",
         "location": "getting-started/skills/detect-and-ask/SKILL.md",
         "name": "detect-and-ask/SKILL.md — the ask half of the loop, and now the rule for when NOT to ask",
         "status": "realized"
@@ -102084,7 +102292,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:730e59e9cca3bdf7d6c19b02a4c21ce6e3fa1b4564adf6d202b72ba2fdc19b9f",
+        "checksum": "sha256:60c9815b8bad39cb3ecf2c150aa31c37ee717abdcba526e6f57d4579ef30bc2b",
         "granularity": "atomic",
         "location": "getting-started/skills/genesis/SKILL.md",
         "name": "genesis/SKILL.md",
@@ -103004,7 +103212,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:f622915d3351e49c5752edbf8223ccd25eaba63c2acfca9456c6efa1235abdf5",
+        "checksum": "sha256:d88999bd98b6d7c87e0b250ba0a31318b764b79e0fcdcafb37ba667eef7942c7",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/structure.yaml",
@@ -103174,7 +103382,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:082572903cd614c46ff076188ff8145769f89eab2e41757d4dfeef9213bee36a",
+        "checksum": "sha256:47ad9bcee6cd28f5cba3569ca1c1ab42ad973f0e6d67a69a2220911cd5c46fe7",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -103261,7 +103469,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:ef923d22c0596fb96cbc9efd24b2dc0f38503d7d13edd57ad358089a37d45588",
+        "checksum": "sha256:f2fa112a698c20edff2e56d2abbbcba996ccd4f1e942cd3d41f2ca4e563a1f08",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -103849,7 +104057,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f6720b2e49607c8ae69b578db4ec19ce65e9ec9e2be8e13c3bc16ee0d795229e",
+        "checksum": "sha256:f75a8d2cec85b0fcd3eaa737251ad1ed16fbf28e76859e3bc3f25dcf00b0307b",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
@@ -105982,6 +106190,16 @@
       }
     },
     {
+      "node_id": "cap:quality-target-is-stated-or-asked-for",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`Decision.quality_target` (the nine axes of DimensionAssessment.dimension, no default), the `set_quality_target` tool that writes it while preserving every other property, and the `quality_target_unstated` gap that reports its absence.\n\nTHREE STATES, NOT TWO. An ACCEPTED Decision carrying a target settles the question and the finding goes quiet. A PROPOSED one carrying a target is somebody LEANING — weighed but not committed — and the finding reads \"still being weighed\" at severity 0.40 instead of \"unstated\" at 0.55. Nothing at all means nobody was asked. Superseded and rejected targets are history, not a position.\n\nThe finding names `set_quality_target` as the answer and names `acknowledge_gap` as the WRONG move, because the gap is aggregate-keyed and accepting it once would silence a deferral permanently.\n\nGated on the design having said what it DOES: silent at 0 capabilities and 0 requirements, which is `design_without_intent`'s ground.",
+        "name": "Record what a design is built for, and report when nothing says",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "cap:questions",
       "node_type": "Capability",
       "properties": {
@@ -106712,6 +106930,18 @@
         "name": "A deliverable declares who it is for, and a need nothing consumer-facing delivers is reported",
         "provenance": "authored",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "ce:quality-target-2026-08-25",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-25",
+        "name": "A design can say what it is for",
+        "rationale": "Builds `dec:the-ility-target-is-a-governing-decision-asked-at-genesis`, which Anthony settled 2026-08-25 against three rejected homes.\n\nWHY A PROPERTY AND NOT A REUSE. `DimensionAssessment` records a SCORE on an axis — what a system IS. This records what it is FOR. Overloading the first with the second is what made `Interface.designation` ambiguous, where an unclassified boundary and a deliberately internal one became indistinguishable. Measured the same day: 0 DimensionAssessment and 0 DimensionObservation nodes exist, so the nine-axis vocabulary had been fully defined and never once used — the vocabulary was never the missing piece.\n\n⭐⭐ THREE STATES, AND THE THIRD CAME FROM THE USER MID-BUILD. Anthony, after the detector was already written: \"a user may not know at genesis, so should be able to defer (becomes a gap until the user determines??)\". The first half was already true — the gap fires until an accepted target exists — but the second half exposed a real flaw: a design that WEIGHED the question and a design nobody ASKED were reported identically. That is the failure `Decision.no_relation_note` exists to prevent on this same node type, and the fix is the same shape: a proposed target now reads \"still being weighed\" at severity 0.40 rather than \"unstated\" at 0.55.\n\n🛑 AND THE OBVIOUS WAY TO DEFER WOULD HAVE BEEN THE WORST ONE. `acknowledge_gap` on an aggregate finding silences it permanently and for every capability added afterwards — the trap measured hours earlier on `unreviewed_ideas` and held open at `dec:idea-an-aggregate-acknowledgement-never-expires`. A deferral closed that way never comes back, which is the opposite of deferring. The finding text, the genesis skill and the repair row all say so, and a test pins it.\n\nNO MIGRATION, DELIBERATELY. The property is optional with no default: absence must read as \"nobody was asked\" for the detector to work, and a default would be materialised onto every existing Decision when an export is read back — the failure `Capability.delivery` records, where a design whose export does not restore to itself is a backup that would not restore. Old graphs simply carry none.\n\nWHAT THIS DOES NOT SETTLE: whether the allocation step needs a skill. It builds the FIRST STEP of one and leaves the method open, because only maintainability is runnable today, performance needs coupling data almost no design declares, and reliability and security have no substrate at all.",
+        "subject": "system",
+        "summary": "Added `Decision.quality_target` (nine axes, no default), the `set_quality_target` tool, and the `quality_target_unstated` gap with three states. Genesis asks the question; detect-and-ask carries the repair row; all three skill mirrors updated. Eight tests in tests/a_design_says_what_it_is_for.rs. One new toolsnap golden, nothing else on the surface moved."
       }
     },
     {
@@ -108465,6 +108695,16 @@
         "change_type": "documentation",
         "detected_at": "2026-08-23",
         "name": "Version string moved 0.38.0 -> 0.39.0 for the v0.39.0 cut. The design meaning of a cut lives in the Release node and its epoch, not in a version string, so nothing this file declares about DEPENDENCIES changed. Accepted BEFORE the manifest is frozen, deliberately: `release_includes_all` freezes each artifact's CURRENT checksum, so freezing first would have recorded that v0.39.0 shipped the pre-bump file, and the fix afterwards is two steps instead of one.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-bc72adc4502de70f",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "detected_at": "2026-08-25",
+        "name": "One known-term added so the linter does not read the new gap kind as an unserved tool name. The lint's own rules are unchanged — bookkeeping that keeps an existing gate accurate, carrying no design meaning.",
         "subject": "system"
       }
     },
@@ -116806,6 +117046,17 @@
       }
     },
     {
+      "node_id": "dec:reflow2-is-built-for-observability",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Anthony, 2026-08-25, answering `quality_target_unstated` on reflow2's own design and pointing at the project's own elevator-speech summary as the source.\n\n═══ THE SENTENCE THE ANSWER COMES FROM ═══\n\n*\"It reports rather than judges, and it refuses to guess. It will tell you a boundary is undeclared; it won't invent the contract. It will tell you a part holds no function; it won't decide what belongs there. Absence is recorded as absence — 'nobody was asked' never gets rounded up to 'answered.'\"*\n\nThat is a claim about one thing: **whether the state of the design can be correctly determined from what reflow2 says about it.** That is observability, in its precise sense — not logging, but the property that outputs do not misrepresent internal state.\n\n═══ WHY THIS AXIS AND NOT ANOTHER ═══\n\nThe cardinal sin in this project is a **green gate over ground it never covered**, and the whole vocabulary is built to prevent it: `loop_status` REFUSES an unknown contributor rather than answering \"nothing is owed to you\"; `evaluate_allocation` reports `modularity: null` instead of the meaningless 1.00 it used to; `Decision.no_relation_note` exists because prose cannot be told apart from silence; `Capability.delivery` and `Decision.quality_target` carry NO DEFAULT so absence reads as \"nobody said\"; `detect_gaps` says what it withheld; `scan_nodes` reports `omitted`. Every one of those is the same trade being made the same way, and none of them buys speed, safety or scale.\n\n⚠️ MAINTAINABILITY WAS THE RUNNER-UP AND THE MEASUREMENT ARGUES AGAINST IT. The product exists so a design survives change, which sounds like maintainability — but that axis wants what changes together to live together, and reflow2's own co-change experiment (2026-08-21) measured **71% of its strongest co-change signal crossing its subsystem boundaries**. Its decomposition is functional (`dec:bl83a-functional-decomposition`), not co-change-optimal. Claiming maintainability would assert a target its own structure demonstrably does not serve.\n\nPERFORMANCE, SCALABILITY AND SECURITY are not close. It is a single-user design tool over one graph per project; latency is not what anyone judges it on, and the design holds ONE weighted coupling edge in 211 capabilities — nobody has ever optimised chatter here.\n\n═══ WHAT THIS SHAPES ═══\n\nObservability-driven allocation wants the INSTRUMENT SEPARATED FROM THE SUBJECT, so a part can report on another part without being able to quietly flatter it — and that is already the shape: detection (`sys:coherence-loop`) is a separate subsystem from the store it reads, and reporting is separate from the graph it summarises. The rule this makes binding on future work: **a part that reports on something must be able to say it could not tell**, and any new detector owes an answer for the case where it had nothing to run on.\n\n📌 RECORDED WITH ITS PROVENANCE BECAUSE THE AXIS CALL WAS THE AGENT'S READING of the user's own summary, not the user's word for word. He supplied the source and directed that it be recorded; the choice among nine axes is argued above and is overturnable with a single `set_quality_target` call.",
+        "name": "DECIDED — reflow2 is built for OBSERVABILITY: its answers must never misrepresent what it knows",
+        "quality_target": "observability",
+        "rationale": "The first answer to `quality_target_unstated` on reflow2's own design, five hours after the detector that asks it was built — `rule:the-self-host-always-trails-what-it-teaches`, closed in the same session for once.\n\nRecorded as an accepted Decision rather than left proposed because the owner supplied the source and asked for it to be populated. The reasoning for the specific axis is written out in full precisely because it was a judgement made from his summary rather than a word he said, so overturning it costs one call and loses nothing.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:reflow2s-own-feedback-documents-are-removed-once-captured",
       "node_type": "Decision",
       "properties": {
@@ -117070,6 +117321,16 @@
       }
     },
     {
+      "node_id": "dec:the-gate-runs-every-test-binary-before-reporting",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "`cargo test` ABORTS EVERY REMAINING TEST BINARY the moment one fails. This workspace has ~155 of them behind a ~13-minute run, so a change carrying N independent failures cost N FULL CYCLES — fix one, wait, discover the next, wait again. `--no-fail-fast` appeared nowhere: not in AGENTS.md's gate block, not in `ci.yml`. Both now carry it, on both the workspace and core-only gates.\n\n═══ MEASURED, ON THE CHANGE THAT FOUND IT ═══\n\nAdding ONE detector (`quality_target_unstated`, 2026-08-25) took four suite runs. Successive runs reached **31, then 47, then 114 suites** before aborting, surfacing exactly ONE new failure each time:\n\n  run 1  coherence_loop — a \"complete design\" fixture that had not said what it is for\n  run 2  detect.rs ×3   — two fixtures, one over-specific assertion\n  run 3  the_surface_says_what_it_already_knew — a truncation counterweight\n  run 4  clean\n\n**ALL FIVE WERE IN `reflow2-core`, AND ONE `--no-fail-fast` RUN OF THE CHEAP CORE GATE FOUND THE LAST OF THEM IN SECONDS** — 128 suites, every one executed, the single failure named. That is the same gate that, without the flag, would have stopped at the first.\n\n⭐ THE COST IS REAL AND IT IS THE RIGHT TRADE: a RED run now takes full wall-clock instead of stopping early. But a red run is already a failure, and what anybody wants from it is every fact it holds. A GREEN run is unaffected — it was always going to execute everything.\n\n📌 IT WAS COSTING CI THE SAME WAY, UNSEEN. Every red build was one push-and-wait round per independent failure, and nobody had measured it because each round looked like an ordinary fix.\n\n═══ THE SECOND, SMALLER CAUSE, RECORDED BESIDE IT ═══\n\nThe session also skipped its own documented discipline: AGENTS.md says to iterate on `cargo test -p reflow2-core --no-default-features` (seconds) and treat the workspace run as a PRE-PUSH gate. It went from a single new test file straight to the workspace. That turned each iteration into 13 minutes instead of 30 seconds.\n\n🛑 BUT THAT ALONE WOULD NOT HAVE FIXED IT, WHICH IS WHY THE FLAG IS THE ROOT CAUSE AND THE DISCIPLINE IS NOT: the cheap gate fail-fasts too. Following the discipline perfectly would still have revealed one failure per run — faster rounds, the same number of them. Only the flag collapses N rounds into one.\n\n`tools/skill_lint.py` asserts AGENTS.md's gate block and `ci.yml` match FLAG FOR FLAG, so the two cannot drift apart again without turning the build red.",
+        "name": "DECIDED — the build gate passes `--no-fail-fast`: a red run must yield every fact it has, not the first one",
+        "rationale": "Recorded as a Decision rather than left as a commit message because the reasoning is what stops it being reverted by someone who sees a red CI run take longer and reads that as a regression. The trade is deliberate: red runs get slower, and they get complete.\n\nKept as one node with the discipline failure recorded BESIDE the mechanism rather than instead of it. Blaming the session's shortcut would have produced a resolution nobody can act on (\"be more careful\") and left the flag missing; naming the flag alone would have lost the true observation that the documented iteration loop was skipped. Both are true and only one is fixable in code.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:the-graph-asks-what-a-session-made-false",
       "node_type": "Decision",
       "properties": {
@@ -117086,6 +117347,16 @@
         "decision": "`ifc:graph-read` keeps designation `internal`. It is a real modular boundary — modules are swapped, tested and measured across it — but it is NOT a contract this design offers to anyone else.\n\nTHE TEST THAT DECIDED IT, and it is the test to re-apply rather than the answer to re-quote: is anybody outside this project's control writing code against these five functions? Anthony, 2026-08-21: \"nobody writing code against those five functions.\"\n\nTHE STRUCTURAL FACTS BEHIND THAT ANSWER, checked rather than assumed:\n  — `reflow2-core` is not published as a crate; it is not on crates.io.\n  — its only dependant is `reflow2-mcp`, by local path, inside the same workspace.\n  — users receive released binaries and speak MCP. They never link the library, so they could not call `GraphRead` if they wanted to.\n\nMODULAR IS NOT THE SAME AS PUBLISHED, and conflating them is what this decision refuses. A modular system holds many internal boundaries and publishes the few where somebody else is meant to supply the part. Publishing every boundary means nothing can change without a control board; publishing none means nobody can compete to supply anything. The graph read API is how reflow2's own analysis reads its own store — not a part a second supplier is wanted for.\n\nWHAT PUBLISHING WOULD HAVE COST: the boundary would enter the surface reflow2 shows other designs, other projects' tooling would pair against it, and adding a sixth operation would become a breaking change to a recorded promise instead of an ordinary edit.\n\nWHAT WOULD REOPEN THIS — two triggers, either sufficient:\n  (1) `reflow2-core` is published as a crate for others to build on.\n  (2) an implementation is wanted from somebody other than this project — a different store, a hosted backend.\nNeither holds today, and the designation is one call to change if one starts to.\n\n📌 NOT SETTLED HERE: `ifc:core-api` is marked `published` and fails the same test — a Rust library API, in the same undistributed crate, covering the whole 274-function surface rather than a specified subset. That is a larger question about what this project has already committed to, and it is open.",
         "name": "DECIDED — the graph read contract stays internal, because nobody outside can call it",
         "rationale": "ANTHONY'S WORD, 2026-08-21, answering the deciding question directly: nobody is writing code against those five functions.\n\nRECORDED RATHER THAN LEFT AS A DEFAULT. `internal` is what an Interface is until someone says otherwise, so the designation alone cannot distinguish \"considered and declined\" from \"nobody ever looked\" — the same two-states-look-identical problem this whole week has been about. Without this node a later reader finds a carefully specified contract sitting at the default value and cannot tell which it is.\n\nTHE HONEST HISTORY: it was set to `published` first, on the reasoning that reflow2's own tooling calls `published` the MOSA modular-system-interface distinction and Anthony's goal is modularity. That was reverted before anyone was asked, because publishing is a commitment and the tool says so plainly — and asserting a commitment on the owner's behalf is exactly what `rule:design-intent-moves-only-on-the-owners-word` forbids. The reversal was the right act; this decision is the part that was owed after it.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:the-ility-target-is-a-governing-decision-asked-at-genesis",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Anthony, 2026-08-25, choosing between four homes and three timings.\n\n═══ WHERE IT LIVES: a Decision that GOVERNS ═══\n\n\"We are building for reliability, because a lost reading cannot be recovered\" is a choice with a rationale that shapes other nodes — which is an ADR, not a measurement. Decisions already GOVERN, so allocation, components and seams can each point at it; `what_next` already reads accepted Decisions; and nothing new is invented.\n\nREJECTED, with the reasons: a **Constraint** (the KPP shape) treats the primary ility as a hard limit, but the design holds exactly ONE Constraint node and this would lean the answer on the least-exercised vocabulary in the project. **DimensionAssessment** was the cheapest in vocabulary terms and is the trap: its declared meaning is a SCORE of what IS, and giving it a second meaning — a TARGET — is the overload that made `Interface.designation` ambiguous, where an unclassified boundary and a deliberately internal one became indistinguishable.\n\n⭐ THE DISTINCTION THAT DECIDED IT: an assessment says what the system IS on an axis; a target says what it is FOR. Nothing held the second. Measured the same day: **0 DimensionAssessment and 0 DimensionObservation nodes exist** — the nine-axis enum has been fully defined, attachable to any node, and never once used.\n\n═══ WHEN IT IS ASKED: at genesis, upfront ═══\n\nAnthony, 2026-08-08: *\"if you don't ask upfront, these cost a lot in having to rework services after they've been already developed.\"*\n\n🛑 AND THIS DOES NOT CONTRADICT `dec:idea-allocation-waits-for-the-last-responsible-moment`, which is the objection to answer. That decision governs when you ALLOCATE. This governs when you learn what the system is FOR. **Asking is cheap and shapes everything downstream; allocating is expensive and can still wait.** Conflating the two would either force premature structure or lose the answer that structure needs.\n\n═══ WHY IT NEEDS A PLACE OF ITS OWN, AND THE PRECEDENT ═══\n\nThe answer must be findable by a detector, or nothing notices when genesis skips the question — the failure this project has now measured three times in one month. `Decision.no_relation_note` was added to this same node type for exactly this reason, and its schema comment states the principle: *\"prose cannot be told apart from silence, so the judgement gets a place of its own.\"* A primary ility recorded only in prose is in the same position.\n\n📌 WHAT THIS DOES NOT SETTLE: whether the allocation step needs a skill of its own. It settles the FIRST STEP of one — the question that must precede any method — and leaves the method open at `dec:idea-does-the-deferred-structuring-step-need-a-skill-of-its-own`. Of the four ility branches only maintainability is runnable today (co-change, no instrumentation); performance needs coupling data almost no design declares; reliability and security have no substrate at all.",
+        "name": "DECIDED — what a system is FOR is recorded as a governing Decision, and asked at genesis rather than at allocation",
+        "rationale": "Settled by the user against recorded alternatives, so the losing options and their reasons are kept — a later reader asking \"why not DimensionAssessment, it already exists?\" finds the overload argument rather than re-deriving it.\n\nRecorded as a Decision rather than a Requirement because it is a choice about how this design records something, not a statement of what the system must do. The thing it decides — that an ility target is itself a governing Decision — is the same kind of node, which is deliberate: the mechanism and the record of choosing it are consistent.",
         "status": "accepted"
       }
     },
@@ -125036,6 +125307,18 @@
         "provenance": "authored",
         "statement": "Where two parts of a design depend on each other, the design must be able to record WHAT PASSES BETWEEN THEM — what crosses, in which direction, over what — and a coupling with no such record must be reachable as a question rather than left silent.\n\nTHE CONTRACT IS RECORDED AT THE LOWEST LEVEL THAT ACTUALLY DEFINES IT, and higher levels answer by projection. Asking \"is there an interface between A and B?\" at any altitude must be answerable, and the answer must name where the contract really lives rather than asserting one between the boxes that were asked about.\n\nANTHONY, 2026-08-23, IN HIS WORDS: \"defining contracts for the components is a key part of my vision for reflow2\" — said of the product, and confirmed as product intent when asked directly rather than inferred from the remark.\n\nDISTINCT FROM `dec:idea-a-contract-is-declared-at-the-lowest-level-and-rolled-up`, which stays `proposed` and is the QUESTION about reflow2's own model: which level should carry its contracts, and whether DEPENDS_ON between two impl blocks of one struct is a dependency worth recording. This is the PRODUCT requirement — what reflow2 must let any project do. The two can be answered independently, and the design one may yet be answered \"leave it at module level\" without touching this at all.\n\nWHY IT IS ABOUT THE PRODUCT AND NOT HOUSEKEEPING ON THIS DESIGN: reflow2 is a tool for other projects, and the test of any vocabulary is whether it reaches a user's design, where real crate, service and organisational boundaries exist. reflow2's own 64 uncontracted module pairs were the first exercise of it and a poor one — measured 2026-08-23, all 64 sit inside a single crate and most are impl blocks of one struct, so they were never the seams this is about.\n\nIT CAN FAIL INDEPENDENTLY of anything built for it: a design that records couplings and contracts in vocabularies that never meet violates it however either is implemented — exactly the state `fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet` measured, and what `cap:a-contract-answers-at-the-altitude-you-asked` began to answer.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "req:a-design-says-what-it-is-for",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A design records the quality attribute it is built for, and is asked if it has not",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A design SHALL be able to record which quality attribute it is built FOR, and SHALL be asked when it has not.\n\nWHY IT IS INTENT AND NOT A NICETY: the attribute decides WHICH GROUPING IS RIGHT, and the four disagree. Performance wants the least chatter across boundaries. Reliability wants no single part everything depends on, and may deliberately put the same function in two places — the opposite of maximal modularity. Maintainability wants what changes together to live together, which is a different edge set entirely. Security wants boundaries following trust and data classification, which is constrained partitioning rather than clustering. A design that allocates without answering silently optimises for performance.\n\nIT IS A TARGET, NOT A SCORE. `DimensionAssessment` records what a system IS on an axis; nothing recorded what it is FOR. Measured 2026-08-25: 0 DimensionAssessment and 0 DimensionObservation nodes exist, so the nine-axis vocabulary had been fully defined and never once used.\n\nABSENCE MUST READ AS \"NOBODY WAS ASKED\". The property carries no default, because a detector over the absence is the only thing that notices the question being skipped — and because a default would be materialised onto every existing Decision when an export is read back.\n\nNOT KNOWING YET IS A FIRST-CLASS ANSWER. A design that weighed the question and has not committed SHALL be distinguishable from one nobody asked, and SHALL keep being asked until it settles. The two must never be reported identically, and a deferral must not be closeable by an acknowledgement that never expires.\n\nASKED EARLY, ALLOCATED LATE. The question is asked at genesis because asking is cheap and the cost of asking late is reworking services already built; the allocation it informs still waits for the last responsible moment. These are different questions and only one of them is deferred.",
+        "status": "proposed"
       }
     },
     {
@@ -133289,6 +133572,20 @@
       }
     },
     {
+      "node_id": "ver:a-design-says-what-it-is-for",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Eight cases over `quality_target_unstated` and `set_quality_target`, in `crates/reflow2-core/tests/a_design_says_what_it_is_for.rs`.\n\nTHE LOAD-BEARING CASE IS THE MIDDLE STATE: `weighing_it_without_settling_reads_differently_from_never_asking` asserts a different title AND a strictly lower severity than the never-asked case. Without it a deferral and a silence are the same finding, which is the failure `Decision.no_relation_note` exists to prevent on this node type.\n\nAlso pinned: an accepted target ends the question; a REJECTED target is history and not a position (so it does not read as somebody leaning); a design that has not said what it DOES is not asked what it is FOR; the refusal on an unknown axis names both what was passed and what would have worked; setting the target preserves the decision's text, rationale and status; and the finding names `acknowledge_gap` as the WRONG way to defer, because it is aggregate-keyed and would silence the question permanently.",
+        "findings": "8 passed / 0 failed on the final tree. Whole workspace alongside it: `cargo test --workspace --no-fail-fast` exit 0, 156 result lines against 151 test files, 1786 passed, 0 failed; core-only 128 suites / 1477 / 0.\n\n⚠️ FIVE EXISTING TESTS FAILED BEFORE THIS PASSED, AND EVERY ONE WAS A REAL HOLE RATHER THAN FIXTURE NOISE. Three designs asserted to be COMPLETE had never said what they were built for — the same precedent `build_without_governance` set in those same files. reflow2 then caught, twice and on its own, that an accepted Decision GOVERNING NOTHING is a structural defect: a quality target nothing points at is a preference, not an architecture driver, so each fixture now links what the trade shaped. One assertion was over-specific (`scope == Phase` where it meant \"names no nodes\") and one used `gaps.last()` as a proxy for a named gap; both now assert what they mean rather than what they happened to observe.\n\n🛑 AND FINDING THOSE FIVE TOOK FOUR SUITE RUNS, WHICH IS THE LARGER FINDING. `cargo test` aborts every remaining test binary on the first failure, so successive runs reached 31, then 47, then 114 suites, surfacing exactly one new failure each. All five were in `reflow2-core`, and one `--no-fail-fast` run of the CHEAP core gate found the last of them in seconds with all 128 suites executed. Both gates in AGENTS.md and ci.yml now carry the flag (`dec:the-gate-runs-every-test-binary-before-reporting`).",
+        "kind": "verification",
+        "last_run_at": "2026-08-25",
+        "level": "unit",
+        "method": "test",
+        "name": "a_design_says_what_it_is_for.rs",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-finding-describes-the-walk-that-produced-it",
       "node_type": "Verification",
       "properties": {
@@ -135898,7 +136195,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f9163724cf657b27616d9b001038ee59064037f69a2eed8bfa0dcc93e56c08c5",
+  "prev_content_hash": "sha256:d40deb7ab803d1e50a09771aade624232546f0a1f40a52bb47e19704bd61263a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

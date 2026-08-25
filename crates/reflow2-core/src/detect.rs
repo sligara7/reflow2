@@ -92,6 +92,34 @@ pub enum GapSource {
     PossibleDuplicate,
     /// A Capability is not `ALLOCATED_TO` any Component.
     UnallocatedCapability,
+    /// The design has never said what it is FOR on the quality axis — no
+    /// accepted Decision carries a `quality_target`.
+    ///
+    /// # Why an unanswered design must not read like an answered one
+    ///
+    /// The quality attribute a system is built for decides WHICH GRAPH an
+    /// allocation is computed on, and the four disagree: performance wants
+    /// least chatter across boundaries, reliability wants no articulation point
+    /// and may deliberately DUPLICATE a function, maintainability wants
+    /// what-changes-together-lives-together, security wants boundaries
+    /// following trust rather than coupling. Allocating without the answer
+    /// silently picks performance
+    /// (`dec:idea-the-ility-chooses-the-allocation-graph`, whose co-change
+    /// experiment measured 71% of reflow2's own strongest maintainability
+    /// signal crossing its functional boundaries).
+    ///
+    /// `Decision.quality_target` has NO DEFAULT precisely so this can fire:
+    /// absence means nobody was asked, which is a different fact from a design
+    /// that considered the question and chose performance.
+    ///
+    /// # Why it is asked once and early
+    ///
+    /// ONE aggregate finding about the project's posture, never one per node —
+    /// there is only one question. It is gated on a design having said what it
+    /// DOES (capabilities), because asking what a system is for before it says
+    /// what it does is the wrong question at the wrong phase, and
+    /// `design_without_intent` owns that ground.
+    QualityTargetUnstated,
     /// LEAF Components that no Capability is `ALLOCATED_TO` — boxes with no
     /// function in them. The mirror of [`UnallocatedCapability`], and the half
     /// of the allocation question nothing asked until 2026-08-25.
@@ -618,6 +646,7 @@ impl GapSource {
             GapSource::UnmotivatedCapability => "unmotivated_capability",
             GapSource::PossibleDuplicate => "possible_duplicate",
             GapSource::UnallocatedCapability => "unallocated_capability",
+            GapSource::QualityTargetUnstated => "quality_target_unstated",
             GapSource::UnallocatedComponent => "unallocated_component",
             GapSource::UnrealizedCapability => "unrealized_capability",
             // Load-bearing: this string is hashed into the gap id, which keys
@@ -737,6 +766,13 @@ impl GapSource {
             // with three options and no answer. Aggregate stands until that is
             // settled, because the alternative is the 33-alarm flood; it is not
             // the same thing as the trade-off being free.
+            // AGGREGATE and uncontroversially so, unlike its neighbour: there
+            // is exactly ONE question here ("what is this design for?"), so
+            // per-node keying has nothing to key on. The judgement being
+            // accepted is "this design does not commit to one axis", which is a
+            // claim about the project and must survive somebody adding a
+            // capability.
+            GapSource::QualityTargetUnstated => true,
             GapSource::UnallocatedComponent => true,
             // PER-REQUIREMENT, not aggregate, and the split matters: accepting
             // "this need is served by our own tooling on purpose" is a claim
@@ -1894,6 +1930,7 @@ impl DesignGraph {
         self.detect_suspected_duplicate_edges(&mut gaps)?;
         self.detect_unallocated_capabilities(&pop, &mut gaps)?;
         self.detect_unallocated_components(&pop, &mut gaps)?;
+        self.detect_quality_target_unstated(&pop, &mut gaps)?;
         self.detect_unrealized_capabilities(&pop, &mut gaps)?;
         self.detect_unverified_capabilities(&pop, &mut gaps)?;
         self.detect_unverified_enforced_rules(&pop, &mut gaps)?;
@@ -2765,6 +2802,116 @@ impl DesignGraph {
                     .cloned()
                     .collect::<Vec<_>>()
                     .join(", ")
+            ),
+        });
+        Ok(())
+    }
+
+    /// The design has never said what it is FOR on the quality axis.
+    /// See [`GapSource::QualityTargetUnstated`] for why an unanswered design
+    /// must not read like one that considered the question.
+    fn detect_quality_target_unstated(
+        &self,
+        pop: &Population,
+        gaps: &mut Vec<GapCandidate>,
+    ) -> Result<(), DynoError> {
+        // Gated on the design having said what it DOES. Asking what a system is
+        // for before it says what it does is the wrong question at the wrong
+        // phase, and `design_without_intent` owns that ground.
+        if pop.capabilities == 0 && pop.requirements == 0 {
+            return Ok(());
+        }
+
+        // THREE STATES, NOT TWO, and the middle one is the point (Anthony,
+        // 2026-08-25: "a user may not know at genesis, so should be able to
+        // defer"). A design that WEIGHED the question and has not committed is
+        // not the same as one nobody ever asked, and collapsing them is the
+        // failure `Decision.no_relation_note` exists to prevent on this very
+        // node type: prose cannot be told apart from silence.
+        let mut settled = false;
+        let mut leaning: Vec<String> = Vec::new();
+        for dec in self.scan_nodes(node::DECISION)? {
+            let Some(t) = dec
+                .properties
+                .get("quality_target")
+                .and_then(crate::foundation::core::Value::as_str)
+            else {
+                continue;
+            };
+            match dec
+                .properties
+                .get("status")
+                .and_then(crate::foundation::core::Value::as_str)
+            {
+                Some("accepted") => settled = true,
+                // superseded / rejected targets are history, not a position.
+                Some("proposed") => leaning.push(format!("{} ({})", dec.node_id, t)),
+                _ => {}
+            }
+        }
+        if settled {
+            return Ok(());
+        }
+        leaning.sort();
+        let deferred = !leaning.is_empty();
+
+        gaps.push(GapCandidate {
+            id: gap_id(GapSource::QualityTargetUnstated, &[]),
+            gap_source: GapSource::QualityTargetUnstated,
+            scope: GapScope::Project,
+            // Upstream of a structural choice that is expensive to undo: the
+            // cost of not asking is reworking services after they are built. A
+            // DEFERRAL scores lower — the question reached somebody and they
+            // have not landed it, which is less urgent than nobody raising it.
+            severity: if deferred { 0.40 } else { 0.55 },
+            title: if deferred {
+                format!(
+                    "What this design is FOR is still being weighed — {} candidate(s) proposed, none settled",
+                    leaning.len()
+                )
+            } else {
+                "Nothing says what this design is FOR — the quality attribute is unstated"
+                    .to_string()
+            },
+            description: format!(
+                "{}The four pull apart: performance wants the least chatter across boundaries; \
+                 reliability wants no single part everything depends on, and may deliberately put \
+                 the same function in two places; maintainability wants the things that change \
+                 together to live together; security wants boundaries that follow trust and data \
+                 classification rather than coupling. Grouping the parts without answering this \
+                 silently optimises for performance. Record the answer with `set_quality_target` \
+                 on the decision that says so, accept that decision, and link what it shapes with \
+                 `governed_by`. \u{1f6d1} NOT KNOWING YET IS A FINE ANSWER, and the way to record \
+                 it is a PROPOSED decision naming the candidate you lean toward — never \
+                 `acknowledge_gap`, which silences this permanently and for every capability \
+                 added afterwards, so a deferral accepted that way never comes back.",
+                if deferred {
+                    "This design has weighed which quality attribute it is built for and has not \
+                     settled on one, so the question is still open and the structure it shapes is \
+                     still unanchored. "
+                } else {
+                    "No accepted decision records which quality attribute this system is built \
+                     for, and the answer changes how it should be structured. Ask it EARLY — \
+                     asking is cheap, and the cost of asking late is reworking services that are \
+                     already built. "
+                }
+            ),
+            affected_ids: Vec::new(),
+            suggested_depth: 3,
+            evidence: format!(
+                "0 accepted Decision(s) carry a `quality_target`; {} proposed one(s) do{}. \
+                 Project has {} capability(ies) and {} requirement(s). The property has NO \
+                 DEFAULT, so absence counts designs nobody asked rather than designs that \
+                 answered; a proposed target counts as WEIGHED BUT NOT SETTLED, which is why this \
+                 reads differently from silence.",
+                leaning.len(),
+                if leaning.is_empty() {
+                    String::new()
+                } else {
+                    format!(" ({})", leaning.join(", "))
+                },
+                pop.capabilities,
+                pop.requirements
             ),
         });
         Ok(())

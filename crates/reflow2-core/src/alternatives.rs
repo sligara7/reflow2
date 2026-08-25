@@ -107,6 +107,23 @@ pub fn analyze_alternatives(
 
 const DECISION_STATUSES: [&str; 4] = ["proposed", "accepted", "superseded", "rejected"];
 
+/// The quality axes a design can declare itself built FOR.
+///
+/// Deliberately the SAME nine values as `DimensionAssessment.dimension`, so a
+/// later `ility_report` can compare what was TARGETED against what it COMPUTES
+/// instead of two vocabularies that never meet.
+const QUALITY_TARGETS: [&str; 9] = [
+    "reliability",
+    "performance",
+    "maintainability",
+    "security",
+    "scalability",
+    "observability",
+    "testability",
+    "coupling",
+    "maturity",
+];
+
 /// A pointer to one alternative design under a decision point — an `Artifact`
 /// (branch-by-file), naming where its export lives.
 #[derive(Debug, Clone, PartialEq, Serialize)]
@@ -163,6 +180,52 @@ impl DesignGraph {
         let mut props = Props::new().set("status", status);
         for (k, v) in &existing.properties {
             if k != "status" {
+                props = props.set(k, v.clone());
+            }
+        }
+        self.create_node(node::DECISION, decision_id, props)
+    }
+
+    /// Declare that this Decision states the quality attribute the design is
+    /// BUILT FOR — the answer to "what is this system for?".
+    ///
+    /// A TARGET, not a score. `DimensionAssessment` records what a system IS on
+    /// an axis; this records what it is aiming at, and nothing held the second
+    /// until 2026-08-25 (`dec:the-ility-target-is-a-governing-decision-asked-at-genesis`).
+    ///
+    /// It matters because the attribute decides WHICH GRAPH an allocation is
+    /// computed on, and the four disagree — so allocating without it silently
+    /// picks performance (`dec:idea-the-ility-chooses-the-allocation-graph`).
+    ///
+    /// There is no way to set this to "none": absence means nobody was asked,
+    /// which is what `quality_target_unstated` reads.
+    pub fn set_quality_target(
+        &mut self,
+        decision_id: &str,
+        quality_target: &str,
+    ) -> Result<StoredNode, DynoError> {
+        if !QUALITY_TARGETS.contains(&quality_target) {
+            return Err(DynoError::Validation {
+                node_type: node::DECISION.into(),
+                property: "quality_target".into(),
+                message: format!(
+                    "'{quality_target}' is not a quality axis (one of {})",
+                    QUALITY_TARGETS.join(", ")
+                ),
+            });
+        }
+        let Some(existing) = self.get_node(node::DECISION, decision_id)? else {
+            return Err(DynoError::NodeNotFound {
+                node_type: node::DECISION.into(),
+                node_id: decision_id.into(),
+            });
+        };
+        // Every other property is preserved, exactly as `set_decision_status`
+        // does: declaring what a decision is FOR must never quietly rewrite
+        // what it SAYS.
+        let mut props = Props::new().set("quality_target", quality_target);
+        for (k, v) in &existing.properties {
+            if k != "quality_target" {
                 props = props.set(k, v.clone());
             }
         }

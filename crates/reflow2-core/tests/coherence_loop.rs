@@ -140,6 +140,47 @@ fn baseline() -> DesignGraph {
     )
     .unwrap();
 
+    // And it says what it is BUILT FOR, for exactly the reason `rule:house-style`
+    // above was added one detector earlier: this fixture claims to be a
+    // COMPLETE thread, and `quality_target_unstated` fired on it the day it
+    // landed. A design that has weighed latency against everything else has
+    // made that trade — recording none of it is a genuine hole, not fixture
+    // noise. ACCEPTED rather than proposed on purpose: a proposed target is
+    // somebody leaning, which the detector correctly still reports as open.
+    g.create_node(
+        node::DECISION,
+        "dec:built-for-performance",
+        Props::new()
+            .set("name", "Built for performance")
+            .set(
+                "decision",
+                "The read path is what this system is judged on, so parts are grouped to \
+                 minimise chatter across boundaries.",
+            )
+            .set("status", "accepted")
+            .set("quality_target", "performance"),
+    )
+    .unwrap();
+
+    // …and it GOVERNS the part it shaped, which is the whole meaning of
+    // recording the target as a Decision rather than as a score. reflow2 caught
+    // this itself the moment the decision was added: an accepted Decision that
+    // governs nothing "shapes no part of the design, cannot appear in any
+    // impact analysis". A quality target nothing points at is a preference, not
+    // an architecture driver.
+    g.governed_by(
+        node::COMPONENT,
+        "cmp:cache",
+        node::DECISION,
+        "dec:built-for-performance",
+        // `ruling` stays None: this decision SHAPES the component, it does not
+        // park it. `parks` would assert the component's unattached state is
+        // correct, which is a different claim entirely.
+        None,
+        Some("The cache exists because the read path is judged on latency."),
+    )
+    .unwrap();
+
     g.add_epoch("epoch:v1", "v1 baseline", EpochType::Baseline, 1)
         .unwrap();
     // …and the baseline is pinned AT it. Added 2026-08-16 for the same reason

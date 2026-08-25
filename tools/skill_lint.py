@@ -354,6 +354,7 @@ NON_TOOL_TERMS = {
     "truncated_beyond_depth",
     "unallocated_capability",
     "unallocated_component",
+    "quality_target_unstated",
     "undocumented_addition",
     "unknown_seeds",
     "unmotivated_capability",
