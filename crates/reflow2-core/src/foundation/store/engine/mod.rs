@@ -1,5 +1,6 @@
 //! Storage engine — supports in-memory (testing) and RocksDB (production).
 
+use std::collections::BTreeMap;
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 
@@ -50,7 +51,7 @@ pub struct StorageEngine {
     /// When `Some`, all writes (put / delete / prefix-delete) buffer
     /// here instead of hitting the backend. `commit_batch` flushes
     /// atomically; `discard_batch` drops them.
-    write_buffer: Option<Vec<BufferedOp>>,
+    write_buffer: Option<WriteBuffer>,
     /// Optional sidecar full-text index (only with the `fulltext` feature).
     /// `Some` only when the schema declares at least one `fulltext` property —
     /// otherwise there's nothing to mirror and we skip the writer arena. RocksDB
@@ -69,6 +70,136 @@ mod scan;
 
 #[cfg(feature = "fulltext")]
 pub use fulltext::FulltextHit;
+
+/// The write buffer, with an index over its own ops.
+///
+/// # Why this is not just a `Vec`
+///
+/// It was a `Vec`, and every buffered read was `buffer.iter().rev().find_map(..)`
+/// — a linear scan of the whole buffer per lookup. That is invisible at small
+/// batch sizes and quadratic at large ones, because the buffer grows while the
+/// reads keep coming.
+///
+/// MEASURED 2026-08-24 before this change, importing reflow2's own design
+/// (3,140 nodes / 13,390 edges) on the in-memory backend with no full-text
+/// index: **8,398 ms in `import_graph`, 95% of a total hydrate of 8,828 ms**.
+/// `create_edge` checks that both endpoints exist, so each edge costs two
+/// buffered `get`s; the nodes are all written before the edges, so each of
+/// those reverse scans walked nearly the entire buffer. That is
+/// 2 x 13,390 x ~23,000 = ~616M comparisons, and 8,398 ms / 616M = ~13.6 ns
+/// each — which is what a branch plus a slice compare costs, so the arithmetic
+/// and the stopwatch agree.
+///
+/// # What the index has to preserve
+///
+/// `ops` stays the ordered log, because ordering is the semantics: the backend
+/// applies it in order, and a late `Put` must resurrect a key an earlier
+/// `PrefixDelete` tombstoned. So the index stores POSITIONS into `ops` and
+/// every lookup resolves by comparing positions — it never reorders anything.
+///
+/// - `latest` maps an exact `(cf, key)` to the position of the most recent
+///   `Put`/`Delete` for it. A `BTreeMap` rather than a `HashMap` because the
+///   same index has to serve `prefix_scan`: an ordered map answers "every
+///   buffered key under this prefix" as a range, which a hash map cannot.
+/// - `prefix_deletes` keeps `PrefixDelete` positions separately, because they
+///   match by prefix rather than by key and cannot be keyed exactly. There are
+///   normally none at all — `prefix_delete` is `clear_graph`-shaped work — so
+///   the common path never looks at them.
+#[derive(Default)]
+pub(crate) struct WriteBuffer {
+    ops: Vec<BufferedOp>,
+    latest: BTreeMap<(CfId, Vec<u8>), usize>,
+    prefix_deletes: Vec<(usize, CfId, Vec<u8>)>,
+}
+
+impl WriteBuffer {
+    fn push(&mut self, op: BufferedOp) {
+        let at = self.ops.len();
+        match &op {
+            BufferedOp::Put { cf, key, .. } | BufferedOp::Delete { cf, key } => {
+                self.latest.insert((*cf, key.clone()), at);
+            }
+            BufferedOp::PrefixDelete { cf, prefix } => {
+                self.prefix_deletes.push((at, *cf, prefix.clone()));
+            }
+        }
+        self.ops.push(op);
+    }
+
+    fn is_empty(&self) -> bool {
+        self.ops.is_empty()
+    }
+
+    fn len(&self) -> usize {
+        self.ops.len()
+    }
+
+    fn ops(&self) -> &[BufferedOp] {
+        &self.ops
+    }
+
+    fn into_ops(self) -> Vec<BufferedOp> {
+        self.ops
+    }
+
+    /// Position of the newest `PrefixDelete` covering this key, if any.
+    /// Scans only the prefix-delete list, which is empty in the common case.
+    fn covering_prefix_delete(&self, cf_id: CfId, key: &[u8]) -> Option<usize> {
+        self.prefix_deletes
+            .iter()
+            .rev()
+            .find(|(_, cf, prefix)| *cf == cf_id && key.starts_with(prefix))
+            .map(|(at, _, _)| *at)
+    }
+
+    /// What this buffer says about `(cf, key)` — the indexed replacement for
+    /// the old reverse linear scan, and semantically identical to it: whichever
+    /// of the exact-key op and the covering prefix-delete came LATER wins.
+    fn effect_for(&self, cf_id: CfId, key: &[u8]) -> Option<BufferedEffect<'_>> {
+        let exact = self.latest.get(&(cf_id, key.to_vec())).copied();
+        let covering = if self.prefix_deletes.is_empty() {
+            None
+        } else {
+            self.covering_prefix_delete(cf_id, key)
+        };
+        let at = match (exact, covering) {
+            (None, None) => return None,
+            (Some(e), None) => e,
+            (None, Some(c)) => c,
+            (Some(e), Some(c)) => e.max(c),
+        };
+        match &self.ops[at] {
+            BufferedOp::Put { value, .. } => Some(BufferedEffect::Put(value.as_slice())),
+            BufferedOp::Delete { .. } | BufferedOp::PrefixDelete { .. } => {
+                Some(BufferedEffect::Tombstoned)
+            }
+        }
+    }
+
+    /// Positions of every buffered op that bears on a scan of `prefix`, in
+    /// insertion order. Exact-key ops come from a range over `latest`; the
+    /// prefix-deletes are checked for overlap in EITHER direction (a sub-range
+    /// delete, or a clear that swallows the whole scan), matching what the
+    /// previous linear implementation did.
+    fn scan_positions(&self, cf_id: CfId, prefix: &[u8]) -> Vec<usize> {
+        let mut hits: Vec<usize> = self
+            .latest
+            .range((cf_id, prefix.to_vec())..)
+            .take_while(|((cf, key), _)| *cf == cf_id && key.starts_with(prefix))
+            .map(|(_, at)| *at)
+            .collect();
+        hits.extend(
+            self.prefix_deletes
+                .iter()
+                .filter(|(_, cf, p)| {
+                    *cf == cf_id && (p.starts_with(prefix) || prefix.starts_with(p.as_slice()))
+                })
+                .map(|(at, _, _)| *at),
+        );
+        hits.sort_unstable();
+        hits
+    }
+}
 
 impl StorageEngine {
     /// Create an in-memory storage engine (for testing).
@@ -279,7 +410,7 @@ impl StorageEngine {
         // on disk yet, so caching it would risk a stale view on discard.
         if let (Some(buffer), Some(cf_id)) = (self.write_buffer.as_ref(), CfId::from_str(cf))
             && !buffer.is_empty()
-            && let Some(effect) = buffer.iter().rev().find_map(|op| op.affecting(cf_id, key))
+            && let Some(effect) = buffer.effect_for(cf_id, key)
         {
             return Ok(match effect {
                 BufferedEffect::Put(v) => Some(Arc::<[u8]>::from(v)),
@@ -347,37 +478,22 @@ impl StorageEngine {
         // CF + prefix range — the common case for reads outside a batch.
         if let (Some(buffer), Some(cf_id)) = (self.write_buffer.as_ref(), CfId::from_str(cf))
             && !buffer.is_empty()
-            && Self::buffer_touches_scan(buffer, cf_id, prefix)
         {
-            return Ok(Self::overlay_buffer_on_scan(
-                backend_results,
-                buffer,
-                cf_id,
-                prefix,
-            ));
+            // Indexed pre-flight: the positions of exactly the ops bearing on
+            // this range, instead of a walk over the whole buffer. Empty means
+            // nothing buffered touches the scan, which is the common case.
+            let positions = buffer.scan_positions(cf_id, prefix);
+            if !positions.is_empty() {
+                return Ok(Self::overlay_buffer_on_scan(
+                    backend_results,
+                    buffer,
+                    &positions,
+                    prefix,
+                ));
+            }
         }
 
         Ok(backend_results)
-    }
-
-    /// Cheap pre-flight: does any buffered op affect this scan range?
-    /// A `PrefixDelete` matches if its prefix overlaps `prefix` in either
-    /// direction (sub-range delete OR superset clear); `Put`/`Delete`
-    /// match if their key starts with `prefix`.
-    fn buffer_touches_scan(buffer: &[BufferedOp], cf_id: CfId, prefix: &[u8]) -> bool {
-        buffer.iter().any(|op| {
-            if op.cf() != cf_id {
-                return false;
-            }
-            match op {
-                BufferedOp::Put { key, .. } | BufferedOp::Delete { key, .. } => {
-                    key.starts_with(prefix)
-                }
-                BufferedOp::PrefixDelete { prefix: p, .. } => {
-                    p.starts_with(prefix) || prefix.starts_with(p)
-                }
-            }
-        })
     }
 
     /// Apply buffered ops to a backend scan result in insertion order.
@@ -386,18 +502,17 @@ impl StorageEngine {
     /// `HashMap` (not `BTreeMap`): callers don't depend on key order.
     fn overlay_buffer_on_scan(
         backend_results: Vec<(Vec<u8>, Vec<u8>)>,
-        buffer: &[BufferedOp],
-        cf_id: CfId,
+        buffer: &WriteBuffer,
+        positions: &[usize],
         prefix: &[u8],
     ) -> Vec<(Vec<u8>, Vec<u8>)> {
         use std::collections::HashMap;
 
         let mut by_key: HashMap<Vec<u8>, Vec<u8>> = backend_results.into_iter().collect();
 
-        for op in buffer {
-            if op.cf() != cf_id {
-                continue;
-            }
+        // `positions` is already sorted ascending, so this still applies the
+        // ops in insertion order — the property the resurrection corner needs.
+        for op in positions.iter().map(|at| &buffer.ops()[*at]) {
             match op {
                 BufferedOp::Put { key, value, .. } if key.starts_with(prefix) => {
                     by_key.insert(key.clone(), value.clone());

@@ -30,7 +30,7 @@ impl StorageEngine {
         {
             tracing::error!("full-text commit at begin_batch failed: {e}");
         }
-        self.write_buffer = Some(Vec::new());
+        self.write_buffer = Some(WriteBuffer::default());
     }
 
     /// Returns true if write batching is currently active.
@@ -57,7 +57,7 @@ impl StorageEngine {
         // post-batch + cache-miss — never stale data.
         {
             let mut cache = self.read_cache.lock().expect("read_cache lock poisoned");
-            for op in &buffer {
+            for op in buffer.ops() {
                 match op {
                     BufferedOp::Put { key, .. } | BufferedOp::Delete { key, .. } => {
                         cache.invalidate(key);
@@ -73,7 +73,7 @@ impl StorageEngine {
         // all-or-nothing semantics (RocksDB `WriteBatch`; the in-memory
         // backend an in-order loop) and the `PrefixDelete`-supersedes-
         // earlier-puts ordering.
-        self.backend.commit_batch(buffer)?;
+        self.backend.commit_batch(buffer.into_ops())?;
 
         // Make this batch's buffered full-text writes visible now that the
         // authoritative backend write has landed. Reached only when count > 0
