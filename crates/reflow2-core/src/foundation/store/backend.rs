@@ -97,7 +97,11 @@ fn cf_options(cf_name: &str) -> Options {
 }
 
 /// Column family identifier — avoids String allocations in the write buffer.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+///
+/// `Ord` is derived so `(CfId, key)` can index the write buffer in a
+/// `BTreeMap`: the ordering is arbitrary but total, which is all a map key
+/// needs, and the prefix ranges that index serves are taken within one CF.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub(crate) enum CfId {
     Nodes,
     Edges,
@@ -166,25 +170,6 @@ impl BufferedOp {
     pub(crate) fn cf(&self) -> CfId {
         match self {
             Self::Put { cf, .. } | Self::Delete { cf, .. } | Self::PrefixDelete { cf, .. } => *cf,
-        }
-    }
-
-    /// Returns `Some` if this op affects `(cf_id, key)`. Used by both
-    /// `get` (reverse-walk: first match wins) and `overlay_buffer_on_scan`
-    /// (forward-walk: each match overwrites the prior overlay state).
-    pub(crate) fn affecting(&self, cf_id: CfId, key: &[u8]) -> Option<BufferedEffect<'_>> {
-        if self.cf() != cf_id {
-            return None;
-        }
-        match self {
-            Self::Put { key: k, value, .. } if k.as_slice() == key => {
-                Some(BufferedEffect::Put(value.as_slice()))
-            }
-            Self::Delete { key: k, .. } if k.as_slice() == key => Some(BufferedEffect::Tombstoned),
-            Self::PrefixDelete { prefix, .. } if key.starts_with(prefix) => {
-                Some(BufferedEffect::Tombstoned)
-            }
-            _ => None,
         }
     }
 }

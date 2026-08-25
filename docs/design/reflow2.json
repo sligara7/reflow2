@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:f229798abbf1aa549ac3ffc28de26a258ae89b51ffc0880c04e027766e93446c",
+  "content_hash": "sha256:75c5b2857de7735b345d983b495bae4ef44f3a1aa5824249006e3fa057fb3105",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2949,6 +2949,14 @@
     },
     {
       "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-the-loop-nudge-exists-for-one-harness-only",
+      "properties": {
+        "evidence": "The earlier one saw this coming. It is ACCEPTED and records that the loop nudge's mechanism is .claude/settings.json, so it exists for one harness only. Every safeguard reflow2 has for 'did this session export?' rides that hook, which means the guarantee asked for here cannot be built where the existing ones live — and flo2's users would not be in Claude Code at all."
+      },
+      "to_id": "dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy"
+    },
+    {
+      "edge_type": "ANTICIPATES",
       "from_id": "dec:idea-what-gets-searched-repeatedly-is-becoming-important",
       "properties": {
         "confidence": 0.8,
@@ -2963,6 +2971,22 @@
         "evidence": "That node already recorded, while asking a scaling question, that \"the byte store is already swappable\" and that what is welded is one design = one directory = one engine. It observed the property this question depends on before anyone asked to use it — so the earlier idea saw this one coming, and its finding is why this is a cheap experiment rather than a rewrite."
       },
       "to_id": "dec:idea-a-byte-backend-that-compiles-in-seconds"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-where-does-the-10k-work-actually-land",
+      "properties": {
+        "evidence": "The earlier one saw this coming and named the mechanism. It established that the byte store is already swappable behind KvBackend and that reflow2 holds StorageEngine, which does not change type — which is exactly why MemoryBackend can serve every graph operation today. It framed that as headroom for a hosted backend; the same fact also licenses removing the persistent store entirely, which it did not consider."
+      },
+      "to_id": "dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-where-does-the-10k-work-actually-land",
+      "properties": {
+        "evidence": "The earlier one saw this coming. It measured that the ceiling at 10k is not RocksDB's throughput but the number of OPEN INSTANCES, since reflow2 welds one design = one directory = one StorageEngine, and it named the unaddressed engineering question as 'make opening a design cheap'. A per-session derived store is an answer aimed at exactly that question."
+      },
+      "to_id": "dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -10292,6 +10316,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability",
+      "properties": {
+        "acted_at": "2026-08-24T23:00:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-does-reflow2-ship-design-principles-to-every-project",
       "properties": {
         "acted_at": "2026-08-17",
@@ -10974,6 +11007,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth",
+      "properties": {
+        "acted_at": "2026-08-24T22:50:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-trial-driven-choice-skill",
       "properties": {
         "acted_at": "2026-08-04",
@@ -11004,6 +11046,15 @@
       "from_id": "dec:idea-what-gets-searched-repeatedly-is-becoming-important",
       "properties": {
         "acted_at": "2026-08-10",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy",
+      "properties": {
+        "acted_at": "2026-08-24T22:50:00Z",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -13414,6 +13465,14 @@
     },
     {
       "edge_type": "BLOCKS",
+      "from_id": "dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability",
+      "properties": {
+        "evidence": "One standing makes the other unanswerable in its own terms. 'Which embedded engine compiles fastest' presumes an embedded engine is needed; if the measured answer here is that a store buys only durability and crash-safety, the redb-vs-rocksdb comparison is being run on the wrong axis. Blocks rather than obsoletes: the engine question becomes live again the moment this one settles in favour of keeping a store."
+      },
+      "to_id": "dec:idea-a-byte-backend-that-compiles-in-seconds"
+    },
+    {
+      "edge_type": "BLOCKS",
       "from_id": "req:kit-reaches-the-agent",
       "properties": {
         "evidence": "The install reported success while leaving the kit invisible to the harness in the target repo. dynograph-foundation, 2026-07-28."
@@ -13438,6 +13497,17 @@
         "validation_status": "validated"
       },
       "to_id": "dec:idea-a-skill-may-assert-the-defaults-it-relies-on"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "dec:absorb-the-foundation-subset-and-end-the-dependency",
+      "properties": {
+        "basis": "causal",
+        "confidence": 0.9,
+        "evidence": "The lint fired on crates/reflow2-core/src/foundation/store/engine/mod.rs:605 — a file that was in another repository until this decision, and is now reflow2's to lint. The decision also requires the absorbed files to stay byte-diffable against v0.12.0, so the finding had to be ALLOWED rather than fixed. Mechanism, not correlation: absorbing 7,913 lines under a verbatim-preservation requirement converts every future compiler lint over that code from a cleanup into a provenance decision. That standing cost was not named when the absorption was scoped.",
+        "validation_status": "validated"
+      },
+      "to_id": "fact:a-gate-is-only-as-wide-as-the-toolchain-that-runs-it"
     },
     {
       "edge_type": "CAUSES",
@@ -30073,6 +30143,15 @@
       "to_id": "req:work-says-whether-it-reaches-a-consumer"
     },
     {
+      "edge_type": "CHANGED",
+      "from_id": "chg:write-buffer-gets-an-index-and-hydrate-drops-tenfold",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:byte-store"
+    },
+    {
       "edge_type": "CONSTRAINS",
       "from_id": "con:a-sweep-builds-its-network-a-fixed-number-of-times",
       "properties": {
@@ -31693,12 +31772,31 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "Corroboration, not conflict (alignment is supporting): the 2026-08-09 node's FIFTH ROAD states this same shape — object storage holds the export as the source of truth, a node hydrates a RocksDB+tantivy cache on demand, eviction is free because the cache is derived. Anthony reached it again independently on 2026-08-24 from a compile-speed question rather than a hosting question. Two derivations from different premises landing on one shape is evidence about the shape."
+      },
+      "to_id": "dec:idea-a-hosted-tier-of-many-single-writer-tenants"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "dec:the-content-store-is-discontinued",
       "properties": {
         "alignment": "supporting",
         "evidence": "First real instance: cap:content-store is built, withdrawn, and has no terminal status to say so. The ChangeEvent carrying change_type `deprecation` is the only marker, which is exactly the gap Alex reported and Anthony reached from the other side."
       },
       "to_id": "dec:idea-does-a-capability-need-a-cancelled-state"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "fact:a-gate-is-only-as-wide-as-the-toolchain-that-runs-it",
+      "properties": {
+        "alignment": "supporting",
+        "confidence": 0.9,
+        "evidence": "One shape, two layers. Both are a check NARROWER than the green it reports, and in both the narrowing is invisible from the result: the first because the gate's width is set by a compiler version nobody records, the second because a suite's width is set by which lines it actually executes. Neither is reachable by reading the gate list more carefully, which is what separates them from the habit-shaped instances of the same family."
+      },
+      "to_id": "fact:a-gates-own-suite-stayed-green-through-a-rewrite-of-the-half-it-never-covered"
     },
     {
       "edge_type": "CONTRADICTS",
@@ -31779,6 +31877,16 @@
         "evidence": "That fact is the server being unable to answer the staleness question; this is the answer being priced out of reach. req:the-server-is-the-authority-on-its-own-currency subsumes both."
       },
       "to_id": "fact:defect-a-running-server-cannot-say-it-is-stale"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "fact:hydrate-cost-is-superlinear-in-edges-and-the-byte-store-is-not-the-bottleneck",
+      "properties": {
+        "alignment": "opposing",
+        "confidence": 0.9,
+        "evidence": "That idea compares embedded engines on the assumption that the engine is what costs. Measured with NO engine at all — in-memory backend, no RocksDB, no tantivy — hydrate is still 8.8s at 3,140 nodes, with 95% of it inside import_graph and only 4% in JSON parsing. Whichever engine wins that comparison, it cannot move the number that matters, so the premise the comparison rests on is contradicted rather than merely unsupported."
+      },
+      "to_id": "dec:idea-a-byte-backend-that-compiles-in-seconds"
     },
     {
       "edge_type": "CONTRADICTS",
@@ -32751,6 +32859,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability",
+      "properties": {
+        "evidence": "Only worth anything if that one lands first. Dropping the byte store means giving up RocksDB's WAL, so durability and crash-safety have to come from somewhere else before this is answerable at all — the export-guarantee question IS that somewhere else, and its answer sets how much loss this trade actually costs.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-does-serving-flo2-cost-the-local-case",
       "properties": {
         "evidence": "Whether serving flo2 costs the local case depends on WHICH LAYER absorbs the scaling work. If it lands in dynograph-foundation as a new `impl KvBackend`, reflow2's shape does not move and the local case is barely at risk. If it lands in reflow2 by loosening \"one design = one directory = one engine\", the local case is exactly what is being changed. So the cost question cannot be answered before the layer question.",
@@ -32838,6 +32956,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:idea-allocation-waits-for-the-last-responsible-moment"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth",
+      "properties": {
+        "evidence": "The inversion is only worth taking if this lands first. Making reflow2.json the enduring artifact turns an unexported session from an annoyance into loss of the design itself, so the durability mechanism is a precondition of the storage model rather than a follow-on to it. Direction is deliberate: the inversion depends on the guarantee, not the other way round — the guarantee is worth building on its own, because the export is already the only copy that survives losing the graph directory.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -34531,6 +34659,14 @@
         "evidence": "Anthony asked the same thing on 2026-08-20 - a defined black box should have an interface, MOSA is not possible without contracts. This node is that question with the per-subsystem measurement attached (0 of 10 publish a contract; required 9/9 specified, internal 0/4) and a THIRD return added that the earlier node does not name: mockable test doubles."
       },
       "to_id": "dec:idea-what-would-a-provided-contract-buy-substitution-derived-tests-or-a-mock"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-a-byte-backend-that-compiles-in-seconds",
+      "properties": {
+        "evidence": "The older thought, grown up. That node asks which embedded engine to pick on compile-speed grounds, and its own premise note says 'faster to compile' is true for a cold build and false for the iteration loop. This one changes what the question IS: if the store is a derived per-session cache, compile speed and durability stop being traded against each other, and picking wrong costs a re-hydrate rather than a migration."
+      },
+      "to_id": "dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -42118,6 +42254,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cmp:byte-store",
+      "properties": {},
+      "to_id": "fact:hydrate-cost-is-superlinear-in-edges-and-the-byte-store-is-not-the-bottleneck"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cmp:compare",
       "properties": {},
       "to_id": "fact:defect-whether-a-project-link-is-real-cannot-be-asked"
@@ -42586,6 +42728,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:export-hash-chain",
+      "properties": {},
+      "to_id": "fact:export-import-export-is-lossless-but-not-a-fixed-point-until-one-normalising-pass"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "dec:export-once-per-pr",
       "properties": {},
       "to_id": "fact:defect-lineage-message-omits-its-own-decision"
@@ -42595,6 +42743,12 @@
       "from_id": "dec:idea-a-change-upstream-reaches-the-sibling-that-never-asked",
       "properties": {},
       "to_id": "fact:the-diamond-meets-at-dynographs-internals-not-its-interface"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-a-hosted-tier-of-many-single-writer-tenants",
+      "properties": {},
+      "to_id": "fact:hydrate-cost-is-superlinear-in-edges-and-the-byte-store-is-not-the-bottleneck"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -42692,6 +42846,12 @@
       "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "rule:success-is-read-from-the-authoritative-object",
       "properties": {},
+      "to_id": "fact:a-gates-own-suite-stayed-green-through-a-rewrite-of-the-half-it-never-covered"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "rule:success-is-read-from-the-authoritative-object",
+      "properties": {},
       "to_id": "fact:both-defects-were-found-by-disbelieving-a-reassuring-answer"
     },
     {
@@ -42711,6 +42871,18 @@
       "from_id": "sys:store",
       "properties": {},
       "to_id": "fact:bl-218"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "ver:skill-lint",
+      "properties": {},
+      "to_id": "fact:a-gate-is-only-as-wide-as-the-toolchain-that-runs-it"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "ver:the-graph-asks-what-a-session-made-false",
+      "properties": {},
+      "to_id": "fact:unclaimed-findings-cannot-join-a-change-to-a-finding-hung-off-a-different-node"
     },
     {
       "edge_type": "IMPLEMENTS",
@@ -90486,12 +90658,29 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:write-buffer-gets-an-index-and-hydrate-drops-tenfold",
+      "properties": {
+        "at": "2026-08-24",
+        "note": "RE-MEASURED THE SAME DAY, ON THE SAME DOCUMENT, AFTER THE CAUSE IT DIAGNOSED WAS FIXED. Its table is now the BEFORE column: total to queryable 8,828 ms -> 909 ms, import 8,398 ms -> 705 ms, on 3,140 nodes / 13,390 edges, release, in-memory backend, no full-text index.\n\nWHICH PART MOVED: the numbers, and the superlinearity. The O(E^1.7) shape was caused by a linear scan of the write buffer on every buffered read, which is gone — the buffer carries a BTreeMap index over its own ops now, so a lookup is a range/point query rather than a walk.\n\nWHICH PART STILL STANDS, and is the reason this is an INVALIDATES rather than a closure: the observation's HEADLINE was that the byte store is not the bottleneck, measured with no byte store present at all. That is not only still true, it is more firmly true — the remaining 705 ms is serialization, schema validation and puts, none of it storage. Its bounds also still stand: the full-text index was off, so every figure on both sides of this comparison is a lower bound for a hydrate that must answer search_design.\n\n⚠️ AND ITS DIAGNOSIS OF THE MECHANISM WAS WRONG, which the node should not be read for. It attributed the superlinearity to adjacency lists being read-modify-write per edge insert. Reading the code killed that: adj_out_key includes the target id, so every edge is its own key — three puts, no reads. The cost was on the READ side. chg:write-buffer-gets-an-index-and-hydrate-drops-tenfold carries the correct account.\n\n🛑 NOT FOUND BY unclaimed_findings, and worth knowing why: that computation reached subjects_examined=1 (cmp:byte-store, what the ChangeEvent touched) and returned nothing, because this observation's subject_id is a Decision. The change and the finding hang off different nodes, so nothing joined them. Closed by judgement instead — an empty shortlist is not evidence that nothing went stale."
+      },
+      "to_id": "fact:hydrate-cost-is-superlinear-in-edges-and-the-byte-store-is-not-the-bottleneck"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "fact:a-name-is-not-a-report",
       "properties": {
         "at": "2026-08-23",
         "note": "Retired by the 2026-08-23 verification-text work, verified 2026-08-24 rather than assumed. BOTH of this finding's claims are answered: (1) 'a Verification has nowhere to put its evidence' is false — `description` (what the check IS) and `findings` (what a RUN FOUND) both exist and were both used on this design today; (2) 'median name 79.5 words' was re-measured by fact:a-name-is-not-a-report as 173 of 199 checks at 0-25 words and ZERO above 60. Closed as a CLAIM, not a computation: the finding keeps its status, its method and its numbers, which outlive the figures. Its sibling fact:defect-add-verification-cannot-reach-its-own-fields is deliberately LEFT OPEN — `description` became reachable but `location` did not, and a PARTIALLY superseded finding is not closed."
       },
       "to_id": "fact:defect-a-verification-has-nowhere-to-put-its-evidence-so-the-name-became-the-report"
+    },
+    {
+      "edge_type": "MITIGATES",
+      "from_id": "dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy",
+      "properties": {
+        "evidence": "One is a hazard, the other answers it. That 2026-08-15 observation records a real export that was skipped because the written instructions implied a stop that was not needed — a correct-looking reading of a correct-looking procedure, not negligence. It is the measured instance of the failure this question exists to close, and it is why 'write the procedure more carefully' is not one of the roads listed."
+      },
+      "to_id": "fact:defect-the-export-was-skipped-because-the-instructions-imply-a-stop-that-is-not-needed"
     },
     {
       "edge_type": "MITIGATES",
@@ -94382,6 +94571,16 @@
         "severity": "medium"
       },
       "to_id": "req:deterministic-core"
+    },
+    {
+      "edge_type": "RISKS",
+      "from_id": "fact:export-import-export-is-lossless-but-not-a-fixed-point-until-one-normalising-pass",
+      "properties": {
+        "confidence": 0.9,
+        "evidence": "Document-as-truth rests on hydrate being faithful. This measures that it IS — 3,140/3,140 nodes and 13,167/13,390 edges unchanged, the 223 differences all one materialised default, converging to a fixed point on the second pass. So the risk it names is bounded and one-time rather than fatal: a single normalising migration, not compounding drift. It is filed as a risk rather than a clearance because the same measurement did NOT test whether accumulated store state outside the design survives the trip, which is the way this model would fail late.",
+        "severity": "medium"
+      },
+      "to_id": "dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability"
     },
     {
       "edge_type": "SATISFIES",
@@ -111487,6 +111686,18 @@
       }
     },
     {
+      "node_id": "chg:write-buffer-gets-an-index-and-hydrate-drops-tenfold",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "performance_optimization",
+        "detected_at": "2026-08-24",
+        "name": "The batch write buffer gets an index; hydrate 8.83s → 0.91s",
+        "rationale": "THE CAUSE WAS FOUND BY ARITHMETIC BEFORE IT WAS FOUND BY A PROFILER, and the arithmetic is why the diagnosis was trustworthy. Buffer at end of import ~44,000 ops; average during the edge loop ~23,000; two endpoint checks per edge gives 2 x 13,390 x 23,000 = ~616M comparisons. Divided into the measured 8,398 ms that is ~13.6 ns per comparison — exactly what a branch plus a slice compare costs. The model also predicted the 2,000-node point at 0.99 s against 1.14 s measured, so it was checked at two scales before any code changed.\n\n⭐ THE FIRST HYPOTHESIS WAS WRONG AND SAYING SO IS THE LESSON. The obvious guess was \"adjacency lists are read-modify-write per edge insert\". Reading the code killed it: `adj_out_key(graph_id, from_id, edge_type, to_id)` includes the target id, so every edge is its OWN key — three puts, no reads. The real cost was on the READ side, in a helper nobody would look at when thinking about write performance. **A performance guess that names a plausible mechanism is worth exactly nothing until the code is read.**\n\n⚠️ WHAT WAS DELIBERATELY NOT DONE: `import_graph` already builds a map of every node id in the document, so it could have skipped the endpoint existence check entirely and got a similar speedup. Rejected — that weakens a store invariant (`create_edge` refuses dangling edges, and the comment above it records the defect that motivated the refusal) to work around a lookup bug, and it would have fixed exactly one caller while leaving every other batch reader slow.\n\nVERIFIED: 1,452 core tests pass, including the two corners this could have broken — `buffer_aware_get_late_put_resurrects_after_prefix_delete` and `batch_prefix_delete_visible_within_batch`. clippy `--all-targets -D warnings` and fmt clean. clippy also caught the now-dead `BufferedOp::affecting`, the linear-scan helper this replaced, which was removed.",
+        "subject": "system",
+        "summary": "`StorageEngine`'s write buffer was a bare `Vec<BufferedOp>`, and every buffered read did `buffer.iter().rev().find_map(|op| op.affecting(cf, key))` — a linear scan of the entire buffer, per lookup. `DesignGraph::create_edge` checks that both endpoints exist, so importing a design costs two buffered reads per edge while the buffer keeps growing, which is quadratic.\n\nThe buffer is now a `WriteBuffer` struct: the ordered `Vec` is kept (the backend applies it in order, and a late Put must resurrect a key an earlier PrefixDelete tombstoned), with a `BTreeMap<(CfId, Vec<u8>), usize>` mapping an exact key to the POSITION of its latest Put/Delete, plus a separate small list of PrefixDelete positions. Lookups resolve by comparing positions, so ordering semantics are unchanged. `BTreeMap` rather than `HashMap` because the same index also serves `prefix_scan`, whose pre-flight (`buffer_touches_scan`, now deleted) was a second linear walk — it is answered by a range query now, and the overlay applies only the ops that actually bear on the range, still in insertion order.\n\nMEASURED on reflow2's own design (3,140 nodes / 13,390 edges), release, in-memory backend, no full-text index:\n\n    TOTAL to queryable   8,828 ms  ->    909 ms   (9.7x)\n    of which import      8,398 ms  ->    705 ms  (11.9x)\n\nEvery batch reader benefits, not just import: the bulk tools, `apply_heal` and merge application all read through the same buffered path."
+      }
+    },
+    {
       "node_id": "cmp:agent",
       "node_type": "Component",
       "properties": {
@@ -114250,6 +114461,16 @@
       }
     },
     {
+      "node_id": "dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-24, going one level under his own redb question: *\"a more fundamental question after this line of thinking, but what does having a db (whether that be rocksdb or redb or other) give us versus just using the reflow2 json file as what endures? does having a db allow us to do things we wouldn't otherwise have?\"* Nothing here is intent and nothing is planned.\n\n⭐⭐ THE QUESTION IS UPSTREAM OF BOTH EARLIER ONES, AND THAT IS WHY IT IS SEPARATE. `dec:idea-a-byte-backend-that-compiles-in-seconds` asks WHICH engine. `dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth` asks WHAT IS DURABLE and still assumes a per-session store. This asks whether an embedded key-value store earns its place AT ALL. All three can be answered independently and the answer to this one changes whether the other two matter.\n\n⭐⭐ MEASURED 2026-08-24, AND THE BUILD HAS ALREADY ANSWERED THE LOUDEST HALF. `crates/reflow2-core/Cargo.toml` declares **`default = []`** — `rocksdb` and `fulltext` are BOTH optional and BOTH off by default; only `reflow2-mcp` turns them on (`features = [\"rocksdb\", \"fulltext\"]`). Consequence, measured by running it: **`cargo test -p reflow2-core --no-default-features` passes 1,452 tests with NO database and NO search index**, against 1,760 for the whole workspace with both features on and the MCP surface included. ⇒ **The design-graph operations do not depend on a byte store.** Schema validation, the golden thread, adjacency traversal, the detectors, HEAL, propagation, the graph algorithms — all of it runs on `MemoryBackend` (`foundation/store/backend.rs:245`), which is the same `KvBackend` trait with a `BTreeMap` behind it.\n\nWHAT A STORE ACTUALLY BUYS, then — a short list, and it is shorter than it looks:\n1. **DURABILITY WITHOUT A WHOLE-DOCUMENT REWRITE.** One changed node writes one key, not 8.4 MB. This is the real one and it is the ONLY one that is hard to replicate.\n2. **CRASH CONSISTENCY.** RocksDB's WAL means a killed process loses the last write, not the file. A half-written JSON document is corrupt — recoverable only by write-to-temp-and-rename, which is atomic but gives all-or-nothing at whatever cadence you write.\n3. **LARGER THAN RAM.** Irrelevant at reflow2's own size: 3,142 nodes = 8.4 MB export, and it is the biggest design anybody has.\n\nWHAT PEOPLE ASSUME IT BUYS AND IT DOES NOT — the part worth writing down:\n- **Query power.** reflow2 asks graph questions — neighbours, traversals, type scans. Those come from `graph_id`-namespaced keys and an adjacency index (`keys::adj_out_key`), and `MemoryBackend` serves them by the same code path. There is no query planner and no SQL to lose.\n- **SEARCH.** `fulltext` is its OWN feature, tantivy, independent of the KV store. `search_design` needs an INDEX, not a database, and an index is derived — rebuildable on hydrate from the document.\n- **MULTI-SESSION CONCURRENCY.** That is the shared SERVER (a process holding one writer), not the store. Sessions share a graph because they share a process, and that stays true whatever the bytes sit on.\n\n⇒ THE SHAPE THE ANSWER SEEMS TO TAKE, offered as a finding and not a conclusion: for one person on one laptop, an embedded store buys **durability and crash-safety and nothing else**, and the alternative is not redb — it is `MemoryBackend` plus the document at boundaries, which reflow2 ALREADY SUPPORTS FOR EVERYTHING EXCEPT PERSISTENCE. Every graph operation is proven on it by 1,452 passing tests.\n\n⚠️ THE COST OF BEING WRONG, recorded beside the idea rather than used to argue it down. The trade is **bounded loss vs no loss.** RocksDB's durability is real engineering and hard to reproduce honestly; write-temp-and-rename gives atomicity but loses everything since the last write. Anyone taking this road is choosing a weaker durability story deliberately, and `dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy` is where that half is argued.\n\n🛑 WHAT IS UNMEASURED AND DECIDES IT: hydrate time. Parsing 8.4 MB of JSON, building the adjacency index and building the tantivy index, to first query. Nobody has taken it. Today's 2.4-second figure is an EXISTING store opening with its index already on disk — the cheap half, and not this number.\n\n📌 THE OVER-ENGINEERING READING, in his own terms. What RocksDB currently costs this project, measured: a ~19-minute librocksdb-sys C++ compile on every clean build, the bulk of a target directory that reached 263 GiB, a pin on the historically-unmaintained `rocksdb` 0.24 with a migration to `rust-rocksdb` still owed, and 86 files of absorbed store code now in reflow2's tree to maintain. That is the price of durability for an 8 MB document. Whether it is worth paying is exactly the question he asked, and it has never been asked in that form before.",
+        "name": "OPEN — what does ANY embedded store buy over the export document alone? Measured: 1,452 of the core's tests already pass with no database and no index, because `default = []`",
+        "rationale": "Captured under the brainstorm skill: recorded as an idea, nothing promoted, nothing settled.\n\nKept separate from the two ideas it sits above, both read in full before splitting: one asks WHICH engine, one asks WHAT IS DURABLE while still assuming a per-session engine. This asks whether an embedded key-value store earns its place at all — and unlike the other two it is already half-answered by the build, since `default = []` means 1,452 core tests run without one today.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-does-reflow2-ship-design-principles-to-every-project",
       "node_type": "Decision",
       "properties": {
@@ -115056,6 +115277,16 @@
       }
     },
     {
+      "node_id": "dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony thinking out loud 2026-08-24, reconsidering redb after raising it the same day. Nothing here is intent and nothing is planned.\n\nHIS WORDS: *\"I was thinking about going to redb, but after thinking about it, I'm starting to think about scalability, particularly if my brother and I move forward with flo2... let's say flo2 has 10000+ users (either collaborating on the same project OR each having their own project)... While the redb and others may compile faster, I'm concerned that they won't scale like rocksdb can. rocksdb was built to support huge amounts of data, so I'm thinking about sticking with it. That being said, there are alternate ways to do things. Maybe we stand up a redb db just for a session and the reflow.json file becomes the enduring thing between each session (may have to make safeguards to ensure that the reflow2 graph is exported at the conclusion of each session). There could be multiple iterations of this that get around using the db as the enduring/persistent storage of the graph and instead switching to making the reflow2.json object file the enduring piece?\"*\n\n⭐⭐ THE SHARP PART, AND IT IS HIS: HIS TWO WORRIES DISSOLVE EACH OTHER RATHER THAN TRADING OFF. The redb question was \"which store compiles faster\"; the scale question is \"which store survives 10k tenants\". Those look like a straight trade until the store stops being durable. **If the store is a per-session cache derived from the export, then neither property is being chosen at the same altitude any more:** durability and scale move to the export/object layer, and the embedded engine is judged only on hydrate-and-query speed for ONE design — which is small. reflow2's own design is the largest one anybody has, and it is 3,142 nodes / 8.4 MB. A store that \"does not scale like RocksDB\" is not being asked to.\n\n🛑 AND HE HAS ARRIVED HERE BEFORE, FROM A DIFFERENT DIRECTION — WHICH IS EVIDENCE, NOT DUPLICATION. `dec:idea-a-hosted-tier-of-many-single-writer-tenants` (2026-08-09) already records this as its FIFTH ROAD, in almost the same words: *\"OBJECT STORAGE HOLDS THE EXPORT AS THE SOURCE OF TRUTH, a node HYDRATES a RocksDB+tantivy cache on demand, and eviction is free because the cache is derived... reflow2 already has the primitive: the export is deterministic, sorted, content-hashed and self-contained — that IS a per-tenant blob, and the store is already derived rather than authoritative.\"* Two independent derivations two weeks apart, from a hosting question and from a compile-speed question, landing on one shape. READ IN FULL AND JUDGED DISTINCT rather than merged (`distinct_from`), because the reasons differ and both matter.\n\nWHAT IS NEW HERE, over the 2026-08-09 record — the grounds on which it was kept separate:\n1. **THE GRANULARITY IS THE SESSION, NOT THE TENANT.** The fifth road hydrates per tenant on demand, as part of a hosted tier. This proposes the store's lifetime be a SESSION — the same mechanism aimed at a smaller unit, and it applies to the LOCAL single-user case where there is no tenancy at all. That matters because **it is testable today, on one laptop, with no flo2 and no hosting decision.** The fifth road cannot be tried until somebody builds a tier.\n2. **IT MAKES THE BACKEND CHOICE REVERSIBLE RATHER THAN CORRECT.** If the store is derived, picking wrong costs a re-hydrate, not a migration. `dec:absorb-rocksdb-024-unchanged-then-switch-separately` and the redb question both get cheaper, and the rust-rocksdb switch stops being a one-way door.\n3. **IT NAMES THE SAFEGUARD AS PART OF THE IDEA** — recorded separately, because \"what is the enduring artifact\" and \"what makes the enduring artifact reliable\" are answered by different work.\n\n⚠️ THE COUNTER-ARGUMENT, RECORDED BESIDE THE IDEA RATHER THAN USED TO ARGUE IT DOWN. The prior node measured the thing that bites: **~9x inflation from export to store** (its figures: 1,828 nodes = 3.8 MB export = 33 MB store, RocksDB plus the tantivy index), and it flagged that `shared.rs` budgets **30 seconds for a cold open**. If hydrate-and-index is seconds rather than milliseconds, \"a store per session\" turns every session start into that cost — and the local single-user case, the one that works well today, pays it for a benefit only the hosted case collects. **That is the risk this idea has to clear, and it is measurable rather than arguable.**\n\n📌 ONE DATA POINT TAKEN TODAY, AND WHAT IT IS NOT. Opening reflow2's own 3,142-node RocksDB store cold, to a served MCP `initialize`, measured **2.4 seconds** (2026-08-24, after `--stop-shared`). ⚠️ THAT IS NOT THE HYDRATE NUMBER: it opens an EXISTING store with its tantivy index already built, which is the cheap half. The measurement the prior node asks for — import an 8.4 MB export to first query, index included — has still not been taken, and it is the one that decides this.\n\n🛑 WHAT NOBODY HAS CHECKED, and it is the way this fails LATE rather than early: whether a session hydrated from an export can still answer the questions that depend on ACCUMULATED STORE STATE rather than on the design — the confirmation ledger's dates, drift baselines, `write_gen`, the sidecar identity files (`.id.json`, `.sync.json`). The export is self-contained about the DESIGN; that it is self-contained about everything a running seat believes is a DIFFERENT claim, and nobody has tested it.\n\nRECORDED AS A QUESTION, NOT A CONCLUSION. Nothing here says the weld should be loosened; it says the trade Anthony thought he was facing may not be one.",
+        "name": "OPEN — if the store is a per-session DERIVED cache and reflow2.json is the enduring artifact, does the byte-backend question dissolve rather than get answered?",
+        "rationale": "Captured under the brainstorm skill: recorded as an idea, nothing promoted, nothing settled.\n\nKept separate from `dec:idea-a-byte-backend-that-compiles-in-seconds` (which asks which engine, on compile-speed grounds) and — after reading it in full — from `dec:idea-a-hosted-tier-of-many-single-writer-tenants` (which asks what a HOSTED TIER looks like at 1k/100k/1M and what must not be foreclosed). This asks a third thing settleable without either: WHAT IS THE ENDURING ARTIFACT — the store or the export? It is answerable on one laptop with no hosting tier and no tenancy, and the answer changes how much the other two cost.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-trial-driven-choice-skill",
       "node_type": "Decision",
       "properties": {
@@ -115112,6 +115343,16 @@
         "decision": "PROPOSED IDEA, not a commitment: give the agent a lookup from a FILE (or symbol) to the Decisions, Requirements and Constraints that govern it — \"what does the design already say about the code I am about to change?\" — resolved by traversal rather than by keyword search.",
         "name": "IDEA — an agent about to edit a file can ask what the design already decided about it, without guessing search terms",
         "rationale": "RECORDED UNDER ANTHONY'S 2026-08-08 TEST PROTOCOL: run a task as if reflow2 did not exist, then run it leaning on reflow2, compare, and propose what would have helped. His stated aim, quoted so it is not lost: he is NOT trying to change how the agent functions, but to make available skills/tools that make the agent's job easier and better. This idea is scoped to that.\\n\\nTHE EVIDENCE IS TWO FIXES DONE THE SAME DAY, WITH DIFFERENT AMOUNTS OF REFLOW2.\\n\\n(1) THE DUPLICATES/MERGE FIX — reflow2 CHANGED THE OUTCOME, and the whole difference was one call. dev_storyflow reported merge candidates scoring 81-85 on unrelated nodes. Read as a code problem, the obvious fix is 'the scorer is bad, raise the threshold' — a plausible, shippable, WRONG fix. A `search_design` for 'duplicate merge similarity' returned `dec:ask-not-repair` as the top hit, and that decision reframed the entire task: possible_duplicate is a DETECT gap, HEAL merges only on a human-drawn edge, a heuristic must not drive it. The bug was not a bad threshold; it was an ACCEPTED DECISION DEFEATED BY THE BUILD, and the correct fix (mark the edge's basis, re-route suspicions to the gap layer) is not reachable from the code alone. Without reflow2 this session ships a threshold bump and the design stays quietly violated.\\n\\n(2) THE CLAIM-LIVENESS FIX — reflow2 helped at the FRAMING and not at all at the SOLUTION. The graph supplied the finding that mattered (`cap:claim-liveness` was status `verified` while its central claim was false under `--shared`) and `propagate_change` named exactly what to touch, including three Verifications that would be invalidated. But the fix itself — an RAII seat lease, and then a two-set registry after the first design proved unsafe — came entirely from reading code and from a FAILING TEST. No reflow2 detector had anything to say about it. Worth stating plainly rather than overclaiming: the two-set flaw was caught by `cargo test`, not by the design brain.\\n\\nTHE GENERALISATION, and it is the actionable part: REFLOW2'S LEVERAGE IS AT PROBLEM FRAMING AND BLAST RADIUS, NOT AT SOLUTION DESIGN. That is not a weakness — it is where a design brain SHOULD have leverage, and it argues for investing there rather than trying to help write the patch.\\n\\nSO WHAT IS MISSING, CONCRETELY: in case (1) the decision was found because a lucky choice of search words hit it. `search_design` is BM25 over node text, so the agent must already suspect what it is looking for. AN AGENT ABOUT TO EDIT `crates/reflow2-core/src/heal.rs` SHOULD BE ABLE TO ASK WHAT GOVERNS THAT FILE AND BE TOLD `dec:ask-not-repair`, WITHOUT KNOWING THE WORD 'DUPLICATE'. The graph already holds every hop needed: `art:heal` REALIZES `cap:heal`, which is GOVERNED_BY the decisions that constrain it, SATISFIES the requirements behind it, and is VERIFIED by the checks that would break. That is a traversal from a path to its governing intent, and today there is no tool for it — `propagate_change` is the closest but needs a recorded ChangeEvent and answers 'what does this touch', not 'what was already decided here'.\\n\\nWHY THIS FITS THE STATED AIM: it changes nothing about how the agent works. It is a lookup the agent chooses to make at the moment it is already opening a file, and it answers the one question a stateless agent cannot answer for itself and does not know to ask.\\n\\nCANDIDATE SHAPES, none chosen: (a) a `governs` tool taking a path or symbol, returning Decisions/Requirements/Constraints/Verifications reachable from the Artifact at that location, ranked by hop distance; (b) the same as a skill that runs before an edit, the read-side sibling of impact-check; (c) cheapest of all and worth pricing first — have `link_artifact`/`reconcile_artifacts` responses already carry the governing decisions for the artifact named, since the traversal is the same and the agent is already there.\\n\\nOPEN QUESTIONS THIS DOES NOT SETTLE: whether path-level granularity is enough (a 1,700-line file may be governed by decisions relevant to only one of its functions); whether an unregistered file — one with no Artifact — should answer 'nothing governs this' or 'this file is not in the design', which are very different statements and the second is the honest one; and whether ranking by hop distance is meaningful or merely plausible.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-24, raising it inside the ephemeral-store idea: *\"may have to make safeguards to ensure that the reflow2 graph is exported at the conclusion of each session\"*. Nothing here is intent and nothing is planned.\n\nWHY THIS IS ITS OWN QUESTION rather than a clause of `dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth` — read in full and judged distinct: that one asks WHAT the enduring artifact is; this asks WHAT MAKES IT RELIABLE. They are answered by different work — one is a storage-model decision, the other is a durability mechanism — and this half is worth something even if the inversion is never taken, because **the export is ALREADY the only copy that survives losing the graph directory.** `loop_status` says exactly that on every call today.\n\n⭐ THE ASYMMETRY THAT MAKES THIS SHARP. Today an unexported session loses THE SESSION'S WORK and the store still holds the design. Under the inversion, an unexported session loses THE DESIGN. **The same failure changes from an annoyance into data loss, and nothing about the mechanism changes with it.** That is why he flagged it in the same breath as the idea rather than afterwards.\n\n🛑 IT HAS ALREADY HAPPENED, WHICH TAKES THIS OUT OF THE HYPOTHETICAL. `fact:defect-the-export-was-skipped-because-the-instructions-imply-a-stop-that-is-not-needed` (2026-08-15) records an export that was skipped, for a reason nobody would have predicted: the written instructions implied a stop that was not needed. Not negligence — a correct-looking reading of a correct-looking procedure.\n\nEVERY MECHANISM REFLOW2 HAS TODAY IS A NUDGE, AND A NUDGE IS NOT A GUARANTEE:\n- The **Stop hook** (`loop_nudge.py`) blocks a finish with unchecked writes — **ONCE**, by its own design, and never twice.\n- `loop_status` REPORTS unexported nodes. Reporting is not writing.\n- ⚠️ **And the hook is one-harness-only.** `dec:idea-the-loop-nudge-exists-for-one-harness-only` is ACCEPTED: the mechanism is `.claude/settings.json`. A durability guarantee that exists only inside Claude Code is not a durability guarantee — and flo2's users would not be in Claude Code at all.\n\n⇒ **THE GUARANTEE CANNOT LIVE IN THE HARNESS, BECAUSE THE HARNESS IS THE THING THAT MIGHT NOT COME BACK.** A session ends by crashing, by a killed terminal, by a closed laptop, by a container being reaped. None of those run a Stop hook. Anything depending on an orderly shutdown answers a different question from the one that matters.\n\nROADS, none chosen, listed so the ones not taken keep their reasoning:\n1. **EXPORT ON EVERY WRITE (write-through).** Strongest guarantee, and the hosted-tier node already recorded the objection: *\"the export being whole-document is correct for an archival action and fatal on a per-change path\"*. Dead unless the export becomes incremental.\n2. **PERIODIC / DEBOUNCED EXPORT.** Bounded loss instead of no loss. Cheap, harness-independent, and it turns \"did the session export?\" into \"how much did we lose?\" — a question with a knob on it.\n3. **THE SERVER OWNS IT, NOT THE SESSION.** The shared server already outlives any one session and already knows when a design goes idle; eviction and export become the same event. ⭐ This is the road that fits what already exists — the server is the only component that observes a session ENDING without being the session.\n4. **DECLINE THE INVERSION** — the store stays authoritative, the export stays archival. Costs nothing, keeps the 9x inflation and the open-instance ceiling.\n5. **A WAL/JOURNAL BESIDE THE BLOB**, replayed on hydrate. Ordinary database engineering, and it re-implements part of what RocksDB already does — named here so nobody proposes it as though it were new.\n\n⚠️ AN OBJECTION TO THE WHOLE FRAME, recorded beside the idea rather than used to argue it down: **RocksDB already solves durability, and solves it well.** Moving the durable copy to a JSON document chooses a weaker durability story on purpose, in exchange for cheap hydration and cheap eviction. That trade may be right for a hosted tier; it is not obviously right for one person on one laptop, where the store has never lost anything.\n\nRECORDED AS A QUESTION, NOT A CONCLUSION.",
+        "name": "OPEN — if reflow2.json becomes the enduring artifact, what GUARANTEES it is written? Every mechanism reflow2 has today nudges, and a nudge that is skipped once has already been measured",
+        "rationale": "Captured under the brainstorm skill: recorded as an idea, nothing promoted, nothing settled.\n\nSplit from `dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth` deliberately, and the split recorded with `distinct_from` after reading it: one node holding \"what is durable\" and \"what makes it durable\" could only ever be half-answered. This half stands alone because the export is ALREADY the only copy surviving loss of `.reflow2/graph`, so the guarantee question is live today and waits on no storage-model change.",
         "status": "proposed"
       }
     },
@@ -128531,6 +128772,32 @@
       }
     },
     {
+      "node_id": "fact:a-gate-is-only-as-wide-as-the-toolchain-that-runs-it",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "method_defect",
+        "name": "Every clippy gate passed locally and BOTH CI jobs failed on the same lint — the flags were identical and the COMPILER was the narrow gate, which is the one axis skill_lint's gate-list cross-check structurally cannot see",
+        "statement": "MEASURED 2026-08-24 landing increment 4 (PR #329). All six local gates were run and reported green — fmt, clippy on both crates with `--all-targets -- -D warnings`, the core and workspace test suites, eleven python gates and the design gate. Both CI jobs then failed, on one lint:\n\n    error: using `chunks_exact` with a constant chunk size\n      --> crates/reflow2-core/src/foundation/store/engine/mod.rs:605:29\n      = note: `-D clippy::chunks-exact-to-as-chunks` implied by `-D warnings`\n\nCOMMAND IDENTICAL, FLAGS IDENTICAL. Local was rustc/clippy **1.94.0**; CI runs `dtolnay/rust-toolchain@stable`, which is **1.98.0**, and 1.98 added `chunks_exact_to_as_chunks`. The lint did not exist on the developer machine, so no local invocation of any width could have produced it.\n\n⭐ WHY THIS IS NOT BL-159 AGAIN, THOUGH IT LOOKS EXACTLY LIKE IT. BL-159 was the same SYMPTOM — documented gate followed exactly, build still red — and its cause was a FLAGS difference (`-p reflow2-core` clippy lacking `-D warnings`). `skill_lint.py` now cross-checks AGENTS.md's gate block against `ci.yml` for coverage, identity and fidelity, and it closed that hole properly. **It cannot close this one.** Both records it compares are TEXT IN THIS REPOSITORY, and the toolchain version is in NEITHER: `@stable` names a moving target, so AGENTS.md can name the exact command with the exact flags, skill_lint can confirm all four checks, and the gate is still narrower locally than in CI. The cross-check is complete over what is written down and blind to what resolves at run time.\n\nFIXED AT THE CAUSE rather than by chasing the symptom: `rustup update stable` (1.94.0 → 1.98.0), then the whole sweep re-run, which found exactly ONE more finding and no others. Fixing the reported line alone would have left the machine two minor versions behind and the next lint would have arrived the same way.\n\n⚠️ THE FINDING WAS THEN ALLOWED, NOT FIXED. clippy is right that `as_chunks::<4>()` is better, and `dec:absorb-the-foundation-subset-and-end-the-dependency` requires the absorbed files to stay byte-diffable against dynograph-foundation v0.12.0 — the same ground as `graphalg`'s `#![allow(dead_code)]`, where Anthony said \"don't trim now - if we decide it isn't necessary, then we can trim in the future.\" The allow carries that reasoning at the call site. **Absorbed code makes every future lint bump a provenance decision, not a cleanup**, and that cost was not named when the absorption was scoped.\n\n⭐⭐ THE SHAPE THIS BELONGS TO. This is the FIFTH instance in two days of a narrow gate read as a wide one: `#[cfg(test)]` invisible to the test run; feature-gated files invisible to `--no-default-features` clippy; doctests invisible to build and clippy; a non-snake-case test name invisible without `--all-targets`; and now a lint invisible to an older compiler. The first four are a local HABIT and can be fixed by remembering. **This one cannot** — no amount of care with flags reaches it, because the gate's width is set by a binary nobody versioned in the record. Recorded here rather than as advice: the only defence that worked was CI running the wide form, and the only durable fix is keeping the local toolchain pinned to what CI resolves.\n\n📌 OPERATIONAL CONSEQUENCE, worth knowing before the next session: the toolchain update means the next cargo command pays a full rebuild including the ~19-minute librocksdb-sys C++ compile.",
+        "subject_id": "ver:skill-lint",
+        "valid_from": "2026-08-24"
+      }
+    },
+    {
+      "node_id": "fact:a-gates-own-suite-stayed-green-through-a-rewrite-of-the-half-it-never-covered",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "method_defect",
+        "name": "check_doc_versions' hermetic suite passed before, during and after its fact-reading function was replaced wholesale — it only ever exercised the claim-matching half, so a green suite said nothing about the half that changed",
+        "statement": "MEASURED 2026-08-24. `tools/check_doc_versions.py` has two halves. `foundation_tag()` READS THE FACT every doc claim is measured against, out of the tree. `claims()` MATCHES prose against that fact. Its hermetic suite `tools/test_check_doc_versions.py` had three tests, all on the second half: the repo as it stands passes, a stale claim is caught, and rewording the prose fails loudly rather than disabling the check.\n\nIncrement 4 deleted the thing `foundation_tag()` read — the `dynograph-*` git-tag pin in the workspace `Cargo.toml` — so the gate went red, correctly, with `FAIL: could not find any dynograph-foundation tag pin`. The function was then REPLACED WHOLESALE: it now reads `^//! tag      vX.Y.Z` out of the provenance headers the absorption decision requires every absorbed module to carry, with new failure modes for no-header-anywhere and for modules naming different tags.\n\n🛑 **THE SUITE PASSED 3/3 BEFORE THE REWRITE, AND 3/3 AFTER IT, AND NEVER ONCE TOUCHED THE FUNCTION.** `grep -n 'foundation_tag\\|tag = \"v\\|provenance' tools/test_check_doc_versions.py` returned NOTHING. A green suite was reported for a rewritten function it did not reach, and the green was true and worthless in the same breath.\n\n⭐ WHY THIS ONE IS WORTH KEEPING. The near-miss is not \"a function was untested\" — that is ordinary. It is that **the suite's green was read as evidence about the change**, in a session that had already been caught twice that day reading a narrow gate as a wide one. The check that caught it was not a tool: it was asking, before trusting the pass, WHICH LINES THE SUITE ACTUALLY EXECUTES. That is the same habit `rule:success-is-read-from-the-authoritative-object` names — the value you read is not the value you think you are reading — applied to a test suite rather than to an exit code.\n\nCLOSED BY ADDING WHAT WAS MISSING, not by noting it: three tests now pin that the provenance headers are where the tag comes from, that losing every header FAILS rather than passing empty, and that modules absorbed from different vintages are caught — the successor to the old \"five pins that drifted apart\" check. Suite is 6/6. The two failure-mode tests mutate the real source files and restore them in a `finally`; restoration was verified by grep afterwards, because a test that corrupts provenance headers on a crash would be worse than the gap it closes.\n\n⚠️ GENERALISES, AND IS NOT MEASURED BEYOND THIS ONE CASE: reflow2 has eleven python gates, most with a paired hermetic suite, and NOTHING checks whether a suite reaches the whole of the gate it guards. Whether the others have the same shape is unknown — stated as an open question, not as a finding.",
+        "subject_id": "rule:success-is-read-from-the-authoritative-object",
+        "valid_from": "2026-08-24"
+      }
+    },
+    {
       "node_id": "fact:a-materialised-default-defeats-a-completeness-check",
       "node_type": "TemporalFact",
       "properties": {
@@ -130866,6 +131133,19 @@
       }
     },
     {
+      "node_id": "fact:export-import-export-is-lossless-but-not-a-fixed-point-until-one-normalising-pass",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "method_defect",
+        "name": "A full export→import→export round trip preserves 3,140/3,140 nodes and changes 223 edges — all one property, REALIZES.conformance null→unchecked — and CONVERGES on the second pass, so the committed export is not in the normal form its own importer produces",
+        "statement": "MEASURED 2026-08-24 on the committed export at main `1ef45e5`, using the debug `reflow2-mcp` CLI end to end: `--import` the committed document into an empty store, `--export` it back out, and `--diff` the two.\n\nRESULT:\n\n    nodes_unchanged   3140 of 3140      design_added/removed/changed  0 / 0 / 0\n    edges_unchanged  13167 of 13390     edges_added/removed             0 / 0\n    edges_changed      223  — EVERY ONE of them the SAME property:\n                             REALIZES.conformance   null -> \"unchecked\"\n\n⭐ IT IS SEMANTICALLY LOSSLESS. Nothing is dropped and nothing changes meaning: `unchecked` is the documented default `link_artifact` gives `conformance`, so the importer is materialising a default the exporter had omitted. No node, no edge, no design content is lost in a round trip.\n\n⭐⭐ AND IT CONVERGES — TESTED, NOT ASSUMED. Importing the ROUND-TRIPPED document and exporting again produced a file BYTE-IDENTICAL to it. So this is a ONE-TIME NORMALISATION and then a fixed point, not a drift that compounds. That distinction is the whole finding: a compounding drift would make hydrate-from-document unusable, and a one-time normalisation makes it a migration.\n\nTHE SPLIT IS HISTORICAL, AND MEASURED: of 360 `REALIZES` edges in the committed export, **137 already carry `conformance` and 223 do not**. The 223 are the ones written before the property existed; the importer fills them in. So the count is not a coincidence — it is exactly the legacy set.\n\n🛑 WHY THIS MATTERS TODAY, INDEPENDENT OF ANY STORAGE-MODEL CHANGE. **The committed export is not in the normal form its own importer produces.** `dec:export-hash-chain` makes the export's content hash carry lineage and tamper evidence, and `compare_designs`, the git merge driver and the drift gate all read that document. So anyone who imports a colleague's export and re-exports — a restore, a machine move, a merge-driver path, a hosted hydrate — produces a **223-edge phantom diff that means nothing**, and a content hash that says the design changed when it did not. That is the same CLASS as the phantom drifts caused by the graph not branching with git, from a different cause.\n\n⚠️ THE FIX HAS TWO DIRECTIONS AND THEY MUST AGREE, which is why this is recorded rather than patched: either the EXPORTER stops omitting the default, or the IMPORTER stops materialising it. `dec:idea-a-hosted-tier-of-many-single-writer-tenants` already names the second direction as BL-198 (\"stop serializing defaults\"), and flags it as a SCALING decision rather than tidiness because blob size is hydrate time. Whichever way it goes, the two sides currently disagree and the round trip is where it shows.\n\n📌 BOUNDS, so this is not read wider than it was measured: one document, one direction, debug binary, RocksDB backend with fulltext on. It says nothing about hydrate SPEED (measured separately) and nothing about whether accumulated store state outside the design — confirmation dates, drift baselines, `write_gen`, the `.id.json`/`.sync.json` sidecars — survives the trip. Those were NOT tested here, and they remain the open risk in any move to document-as-truth.",
+        "subject_id": "dec:export-hash-chain",
+        "valid_from": "2026-08-24"
+      }
+    },
+    {
       "node_id": "fact:external-agent-side-report-2026-08-11",
       "node_type": "TemporalFact",
       "properties": {
@@ -130936,6 +131216,19 @@
         "statement": "MEASURED 2026-08-10 by reading which edge constants each analysis module actually spans (structure.rs, flow.rs, budget.rs, hierarchy.rs, heal.rs, surprises.rs, allocate.rs, propagate.rs) and joining that against edge counts in the live export.\n\n    populated edge types                               35   (of 61 declared — 26 are never used at all)\n    types reached by ANY graph analysis                12\n    types reached by NONE                              23   = 2,293 of 7,446 edges, 31%\n\nTHE GOLDEN THREAD IS IN THE UNANALYSED SET. GOVERNED_BY (867), REALIZES (199), SATISFIES (175), VERIFIES (139) — the core traceability of the whole design — have never been cycle-checked, never had centrality run on them, never been community-detected. Nor has PRECEDES (47), which IS the delivery plan. Meanwhile DEPENDS_ON (173 edges) carries FOUR separate analyses (structure, budget, hierarchy, allocate).\n\nTHE CAUSE IS WIRING, NOT CAPABILITY. Every algorithm needed is already imported from dynograph and already runs: betweenness_centrality, leiden, cut_structure, connected_components, find_cycle, strongly_connected_components. Each is nailed to one purpose-specific edge subset at its call site. Graph algorithms are edge-type agnostic; the wiring is not. Anthony's own earlier tool (/home/ajs7/reflow/tools/system_of_systems_graph.py) took the opposite shape — ONE graph built from all edges, then nx.simple_cycles and degree analysis over it — and he ran it as a routine sanity check on nearly every graph.\n\nWHAT THE MISSING ANALYSES ACTUALLY FOUND WHEN RUN BY HAND, so the gap is not reported as hypothetical:\n\n    GOLDEN THREAD  SATISFIES+REALIZES+VERIFIES+ALLOCATED_TO   677 edges   0 cycles\n    REASONING      GOVERNED_BY+OBSOLETES+CAUSES+ANTICIPATES   893 edges   1 cycle\n    THE PLAN       PRECEDES+SCHEDULED_FOR                      70 edges   0 cycles\n    TIME/HISTORY   HAS_SNAPSHOT+AT_EPOCH+VALID_FROM+VALID_TO  646 edges   0 cycles\n    RISK           RISKS+BLOCKS+CONTRADICTS+VIOLATES+MASKS     35 edges   0 cycles\n\nThe single cycle is dec:an-unplanned-cut-slips-every-later-increment-by-one CAUSES dec:idea-a-planned-increment-is-named-by-content-not-by-number, which OBSOLETES it back — a TIME SEQUENCE rendered as a loop by a projection with no clock, not faulty reasoning. SO THE DESIGN IS STRUCTURALLY CLEAN EVERYWHERE NOBODY WAS LOOKING, which is a result worth having and could not previously be obtained.\n\nAND A SECOND READING THE DESIGN ALREADY ASKED FOR. dec:orientation-is-computed-not-written names the genuinely missing thing as \"WHICH FEW DECISIONS SHAPE EVERYTHING ELSE — neither what-next nor where-am-i answers it today, and it is what a newcomer actually needs\". Centrality over GOVERNED_BY is that computation and had never been run. Run: the top governors are rule:no-foreclosure, the owner's-word authority rule, a-graph-per-ownership-boundary, systems-are-functional-not-the-file-tree, and the-LLM-speaks-the-graph-remembers-the-human-decides. THE SHAPE MATTERS MORE THAN THE LIST: influence is FLAT, not concentrated — max reach 13, the top five carry 16% of the edges, and 66 of 120 governed nodes are governed by exactly one thing. There is no small set of load-bearing roots. That is evidence against the design being a deep decision tree: a tree has a trunk and this does not.\n\nTHE EXCLUSIONS ARE LOAD-BEARING AND THAT WAS PROVEN THE EXPENSIVE WAY. The first centrality run returned garbage — the ten most influential \"decisions\" were all decision:ack: review records, which structure.rs already excludes from the design network (ver:acknowledgement-not-structure). Excluding them took GOVERNED_BY from 867 edges to 255: TWO THIRDS OF THAT EDGE TYPE IS BOOKKEEPING. A naive run-everything-on-everything gives a confident wrong answer on the first attempt, so any general surface must carry the exclusion list as part of each projection's definition rather than as a caveat.",
         "subject_id": "cmp:structure",
         "valid_from": "2026-08-10"
+      }
+    },
+    {
+      "node_id": "fact:hydrate-cost-is-superlinear-in-edges-and-the-byte-store-is-not-the-bottleneck",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "name": "Hydrate from document to first query, measured across five design sizes with NO database and NO index: 1,000 nodes = 270 ms, 3,140 nodes = 8.8 s. Cost is superlinear in EDGES (~627 µs/edge at the top vs 143 at the bottom) and 95% of it is import_graph, not JSON parsing and not the store",
+        "statement": "THE MEASUREMENT `dec:idea-a-hosted-tier-of-many-single-writer-tenants` ASKED FOR ON 2026-08-09 — *\"the one measurement worth taking now, while nothing depends on the answer: hydrate-and-index time as a function of design size (200 / 2k / 20k nodes, import to first query)\"*. Taken 2026-08-24, at Anthony's instruction, on reflow2's own design at main `1ef45e5`.\n\nMETHOD: `cargo test --release -p reflow2-core --no-default-features` — **release build, in-memory backend, NO RocksDB and NO tantivy**. Parse the export, open a `DesignGraph`, `import_graph`, then a typed scan as the first real query. Sub-sampled documents take the first N nodes and only the edges whose BOTH endpoints survive.\n\n    nodes   edges    parse    import    TOTAL to queryable    µs/edge\n      200       0    6.0ms     6.8ms         27.7 ms             —\n      500     409   22.9ms    58.7ms         93.8 ms            143\n     1000    1247   47.0ms   205.3ms        270.0 ms            165\n     2000    4318  127.8ms  1136.7ms       1279.6 ms            263\n     3140   13390  385.6ms  8397.6ms       8827.9 ms            627\n\n⭐⭐ THE HEADLINE, AND IT REDIRECTS THE WHOLE QUESTION: **THE BYTE STORE IS NOT THE BOTTLENECK, BECAUSE THERE IS NO BYTE STORE IN THIS MEASUREMENT.** No RocksDB, no redb, no disk — and the top-end hydrate is still 8.8 seconds. JSON parsing is 386 ms of it (4%); opening the graph is 34 ms; the first query is 11 ms. **`import_graph` is 8,398 ms — 95% of the total.** Choosing a different embedded engine cannot move this number, and neither can dropping the engine entirely.\n\n⭐ THE COST IS SUPERLINEAR IN EDGES, NOT IN NODES. Per-edge cost RISES from 143 µs to 627 µs as the graph grows — a 4.4x degradation. Between the last two points, edges grow 3.1x and time grows 7.4x, an exponent near 1.8; between the middle two, near 1.5. Consistent with adjacency lists being read-modify-write on every edge insert, so each edge into a high-degree node rewrites that node's whole list, and average degree climbs with density (3,140 nodes carry 13,390 edges, and hub nodes like `proj:reflow2` carry far more than the 8.5 average). **That is an implementation property of the import path, not a fact about storage architecture, and it is optimisable — batching adjacency writes is the obvious first move.**\n\n⇒ WHAT IT MEANS FOR DOCUMENT-AS-TRUTH, stated at the altitude the decision needs: **a typical design hydrates comfortably.** 1,000 nodes in 270 ms and 500 in 94 ms are both far inside the \"under a second and it is routine engineering\" bar the 2026-08-09 node set. reflow2's OWN design is the pathological case, and it is pathological because it is the biggest and densest design that exists anywhere — no tenant of a hosted tier would look like it. So the model is viable today for the sizes it would actually serve, AND it degrades badly enough with growth that the import path would need work before anybody leaned on it.\n\n🛑 BOUNDS — THIS IS A LOWER BOUND, NOT THE FULL COST. **The full-text index was OFF.** A real hydrate that must answer `search_design` also has to build the tantivy index, which is not in any number above. The 200-node row has ZERO edges (an artifact of sub-sampling by node prefix) so it measures node-only import and must not be read as a 200-node design. Single machine, single run per size, no warm-up, debug of the OS page cache uncontrolled. The 20k-node point the original request asked for was not taken — no design that large exists to sample.\n\n📌 FOR CONTRAST, the same hydrate INTO RocksDB with fulltext ON, debug build: 96–134 s, producing a 12–13 MB store. Not comparable to the table above (different build profile and different feature set) and recorded only so nobody mistakes one for the other.",
+        "subject_id": "dec:idea-a-hosted-tier-of-many-single-writer-tenants",
+        "valid_from": "2026-08-24"
       }
     },
     {
@@ -131785,6 +132078,19 @@
         "statement": "READ FROM SOURCE 2026-08-10, not inferred: two HEAL rules fire UNCONDITIONALLY on an edge type while their message names a condition the code never evaluates.\n\n    heal.rs:971  unresolved_setup   iterates every ANTICIPATES edge and emits\n                                    \"'X' anticipates 'Y' but nothing follows through\"\n                                    — there is no follow-through test anywhere in the loop.\n    heal.rs:906  contradiction      iterates every CONTRADICTS edge (unless alignment=supporting)\n                                    and suggests `generate_decision`, while the rule's own doc\n                                    comment at heal.rs:47 describes it as \"two nodes joined by\n                                    CONTRADICTS with NO RESOLVING DECISION\". Nothing looks for one.\n\nTHE CONSEQUENCE IS THE SAME IN BOTH CASES AND IT IS NOT NOISE: THE SUGGESTED FIX PROVABLY DOES NOT CLEAR THE FINDING. Write the resolving Decision the contradiction rule asks for and the contradiction still fires. Build the thing an ANTICIPATES edge anticipates and the unresolved_setup still fires. The only ways out are deleting the edge or acknowledging the defect — so a design is PUNISHED FOR RECORDING THE RELATIONSHIP, and the cheapest way to a clean report is to stop recording anticipation and contradiction at all.\n\nOBSERVED LIVE, WHICH IS HOW IT WAS FOUND. Recording `dec:merge-survivor-provenance` ANTICIPATES `dec:a-tied-merge-breaks-by-degree-not-by-alphabet` — an honest edge, since the older decision's own rationale says \"consider ranking unset below authored in a future revision\" — took detect_defects from 7 to 8 immediately, and no amount of building will take it back to 7.\n\nTHIS EXACT CLASS IS ALREADY FIXED ONCE IN THE SAME FUNCTION, sixty lines above. heal.rs:892-905 documents the CONTRADICTS/alignment=supporting bug: the loop read the edge TYPE and never the PROPERTY, so every correctly-modelled corroboration came back as a structural defect, and `dec:commands-are-the-exception` QUALIFYING `dec:skills-served` turned the graph red. Its recorded lesson is verbatim: \"A property the detector ignores is a property that lies.\" The same sentence applies to a CONDITION the detector never computes — and the damage named there applies here too: the only ways out were to acknowledge a defect that is not one, or to stop recording the relationship.\n\nWHAT A FIX WOULD HAVE TO DECIDE, because neither is obvious and this is not a repair proposal. For unresolved_setup: what COUNTS as follow-through — the anticipated node existing at all (trivially true, the edge points at it), reaching `accepted`, gaining a SATISFIES/REALIZES chain, or arriving in an epoch. For contradiction: what counts as RESOLVING — a Decision edged to both endpoints, or one edged to either, and whether a `proposed` Decision resolves anything. Both questions are real design questions and answering them wrongly converts an over-firing rule into an under-firing one, which is worse.\n\nDELIBERATELY NOT DONE: the ANTICIPATES edge was NOT deleted to restore the count to 7. The edge is true, and removing a true relationship to satisfy a detector that fires unconditionally is the gaming this project warns against everywhere else. The defect belongs to the rule, not to the edge.",
         "subject_id": "cmp:heal",
         "valid_from": "2026-08-10"
+      }
+    },
+    {
+      "node_id": "fact:unclaimed-findings-cannot-join-a-change-to-a-finding-hung-off-a-different-node",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "method_defect",
+        "name": "A session re-measured a finding it had written hours earlier and unclaimed_findings returned NOTHING — the ChangeEvent's CHANGED target was a Component and the observation's subject_id was a Decision, so the two never met",
+        "statement": "MEASURED 2026-08-24, two days after `unclaimed_findings` shipped (#325).\n\nWHAT HAPPENED: the session measured hydrate cost, wrote `fact:hydrate-cost-is-superlinear-in-edges-and-the-byte-store-is-not-the-bottleneck`, then FIXED the cause and re-measured (8,828 ms -> 909 ms). It recorded `chg:write-buffer-gets-an-index-and-hydrate-drops-tenfold` with a CHANGED edge to `cmp:byte-store`, then asked the question the tool exists to answer.\n\n    unclaimed_findings {\"change_event_ids\": [\"chg:write-buffer-gets-an-index-and-hydrate-drops-tenfold\"]}\n    -> {\"candidates\": [], \"count\": 0, \"subjects_examined\": 1}\n\n**Nothing.** And the stale finding was one the SAME SESSION had written three hours earlier, about the exact code the change repaired.\n\n🛑 THE MECHANISM: the tool walks from a ChangeEvent's CHANGED subjects to the observations THOSE subjects carry. The change touched `cmp:byte-store` (the component whose code moved). The observation hangs off `dec:idea-a-hosted-tier-of-many-single-writer-tenants` (the decision whose open question the measurement answered). **Both anchorings are correct and defensible, and they are different nodes, so the join never happens.** No typo, no missing ChangeEvent, no missing CHANGED edge — every documented precondition was met.\n\n⭐ WHY THIS IS A DIFFERENT LIMIT FROM THE ONES ALREADY WRITTEN DOWN. The tool's own documentation names three: work that records no ChangeEvent, one with no CHANGED edges, and an observation whose `subject_id` names a node that does not exist. This is a fourth and it is the commonest shape of all, because **a measurement is naturally filed against the QUESTION it answers, while a change is naturally filed against the CODE it altered.** Those are almost never the same node. The better a session is at anchoring each thing where its reader will find it, the less likely the two ever meet.\n\n⭐ AND `subjects_examined: 1` IS WHAT SAVED IT. The tool's own guidance — *\"READ `subjects_examined`: zero means your work touched no anchored ground, which is a different fact from 'nothing was retired'\"* — is what prompted the check rather than accepting the empty list. But 1 is not 0, so even that signal read as \"asked properly, found nothing\". **The finding was closed by human judgement, not by the mechanism**, which is the same failure mode the mechanism was built to end.\n\n⚠️ NOT PROPOSING A FIX, because the obvious ones both have costs worth thinking about: widening the walk to relation edges (ANTICIPATES / HAS_TEMPORAL_FACT / CONTRADICTS) would reach this case and would also re-inflate the shortlist toward the wallpaper the session-sized scoping exists to avoid; and asking the WRITER of an observation to also anchor it to the code would push work onto the moment a measurement is taken, which is where discipline is already thinnest.\n\n📌 BOUNDS: one instance, one design, one session. It is not known how often the two anchorings coincide in practice — that is countable across the graph's existing ChangeEvent/TemporalFact pairs and was not counted here.",
+        "subject_id": "ver:the-graph-asks-what-a-session-made-false",
+        "valid_from": "2026-08-24"
       }
     },
     {
@@ -134485,7 +134791,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b2a1c1c0d0d8f4f01e5d15b571a6ac5d9c9048432c3a36a9fb67c48715655180",
+  "prev_content_hash": "sha256:f229798abbf1aa549ac3ffc28de26a258ae89b51ffc0880c04e027766e93446c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
