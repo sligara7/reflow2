@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:75c5b2857de7735b345d983b495bae4ef44f3a1aa5824249006e3fa057fb3105",
+  "content_hash": "sha256:f6a5759b243b46c5944e7440f95d5674fe7074ea1bd4867bbadf9b512189624a",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -10337,6 +10337,15 @@
       "from_id": "dec:idea-does-serving-flo2-cost-the-local-case",
       "properties": {
         "acted_at": "2026-08-21",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-does-the-graph-write-itself-through-to-the-repo-on-every-change",
+      "properties": {
+        "acted_at": "2026-08-25T01:30:00Z",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -31717,6 +31726,15 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-does-the-graph-write-itself-through-to-the-repo-on-every-change",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "Both cannot hold as written, and the design will have to pick. That decision is ACCEPTED and says exactly one commit on a branch may write docs/design/reflow2.json and it should be the last, because prev_content_hash chains each export to the one it replaced and squash-merge collapses a longer chain. Auto-exporting on every graph change writes that file hundreds of times per session, so the chain advances continuously and 'one export, last' stops being enforceable by construction rather than by forgetting."
+      },
+      "to_id": "dec:export-once-per-pr"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "dec:idea-dynograph-crates-independent-in-code-coupled-in-release",
       "properties": {
         "alignment": "opposing",
@@ -34683,6 +34701,14 @@
         "evidence": "The older thought, grown up. Both ask what to do about the dynograph dependency, and the 2026-08-20 version was REJECTED on a cost argument — \"a demo that costs as much as the real thing is not a demo\" — because REPLACING means reimplementing. Absorbing keeps the same code and pays relocation cost instead, so the objection that killed the earlier idea does not reach this one. Drawn from the rejected node TO this one: the direction records that the question survived its own rejection in a cheaper form."
       },
       "to_id": "dec:idea-cannibalize-dynograph-foundation-into-reflow2"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy",
+      "properties": {
+        "evidence": "The older thought, grown up. That node listed 'export on every write' as road 1 and recorded it as dead, on the ground that a whole-document write is fatal on a per-change path. A full export measured 1,168 ms when that was written and 265 ms after #330 and the BTreeMap backend change, so the road reopens on a number rather than on an argument — and it reopens with a new distinction the original road did not have: write to the working tree, not to git history."
+      },
+      "to_id": "dec:idea-does-the-graph-write-itself-through-to-the-repo-on-every-change"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -42761,6 +42787,18 @@
       "from_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list",
       "properties": {},
       "to_id": "fact:a-distinctness-note-had-to-wear-a-dependency-edge"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability",
+      "properties": {},
+      "to_id": "fact:a-database-free-session-costs-11s-to-load-and-12s-to-save"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability",
+      "properties": {},
+      "to_id": "fact:a-hydrated-seat-keeps-every-confirmation-date-and-loses-only-its-sync-state"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -90676,6 +90714,15 @@
     },
     {
       "edge_type": "MITIGATES",
+      "from_id": "chg:write-buffer-gets-an-index-and-hydrate-drops-tenfold",
+      "properties": {
+        "confidence": 0.9,
+        "evidence": "The hazard this idea carried was hydrate cost: with the store gone, every session pays a rebuild, and that was 8,828 ms when the question was first recorded — enough to make the idea unusable for a design this size. The write-buffer index removed the cause (a linearly-scanned Vec, not storage), and load to fully searchable is now 1,098 ms with the full-text index built in RAM. The change did not decide the question; it removed the objection that would have decided it the other way."
+      },
+      "to_id": "dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability"
+    },
+    {
+      "edge_type": "MITIGATES",
       "from_id": "dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy",
       "properties": {
         "evidence": "One is a hazard, the other answers it. That 2026-08-15 observation records a real export that was skipped because the written instructions implied a stop that was not needed — a correct-looking reading of a correct-looking procedure, not negligence. It is the measured instance of the failure this question exists to close, and it is why 'write the procedure more carefully' is not one of the roads listed."
@@ -94565,12 +94612,30 @@
     },
     {
       "edge_type": "RISKS",
+      "from_id": "dec:idea-does-the-graph-write-itself-through-to-the-repo-on-every-change",
+      "properties": {
+        "evidence": "One is a hazard to the other. That requirement's overwrite refusal compares an export file's current hash against what this seat believes it last wrote there — a guard designed for an occasional deliberate act. Under continuous export with two sessions on one design, every write by one seat invalidates the other's belief, so a check meant to fire rarely runs on a hot path and would either refuse constantly or be turned off."
+      },
+      "to_id": "req:stale-seat-knows"
+    },
+    {
+      "edge_type": "RISKS",
       "from_id": "dec:idea-embeddings-adoption",
       "properties": {
         "evidence": "CONDITIONAL, and the edge exists mainly so the tension is findable: this decision is still `proposed`, so nothing is risked today. Answering it YES is what would bear on req:deterministic-core, because an ANN index is approximate by construction and embeddings need a model. Recorded 2026-08-04 because the node had NO design edges at all — its only edge was AUTHORED_BY, so propagate_from reported 0 impacted and no detector could see it (the BL-162 shape: a Decision that governs nothing is invisible). The scope is narrower than the blanket reading: the risk is real for search_design and anything feeding a gate, and materially weaker for ingest resolution, whose output under dec:ask-not-repair is a merge_candidate a human rules on rather than a verdict.",
         "severity": "medium"
       },
       "to_id": "req:deterministic-core"
+    },
+    {
+      "edge_type": "RISKS",
+      "from_id": "fact:a-hydrated-seat-keeps-every-confirmation-date-and-loses-only-its-sync-state",
+      "properties": {
+        "confidence": 0.9,
+        "evidence": "That requirement rests on last_synced: the export-overwrite refusal compares a file's current content hash against what this graph believes it last wrote there. A seat hydrated from the document starts with an EMPTY last_synced map (measured: sync_status returns checked:0 against the live seat's 6 entries), so on its first export it has no baseline to refuse against. The risk is specific to a document-as-truth model and does not exist today, and it is narrow: the map is path -> content hash and could be carried in the document, kept beside it, or recomputed.",
+        "severity": "medium"
+      },
+      "to_id": "req:stale-seat-knows"
     },
     {
       "edge_type": "RISKS",
@@ -114491,6 +114556,16 @@
       }
     },
     {
+      "node_id": "dec:idea-does-the-graph-write-itself-through-to-the-repo-on-every-change",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-25, following the no-database line of thinking. Nothing here is intent and nothing is planned.\n\nHIS WORDS: *\"if we remove a db and go strictly with in-memory, then exporting the graph becomes a necessary step. curious if we at every instance the reflow2 graph is changed, that the graph is automatically exported to the git repo (don't have to do a git commit/push with every export).\"*\n\n⭐ THE DISTINCTION HE DREW IS THE LOAD-BEARING ONE, and it is easy to miss: **write to the WORKING TREE, not to git history.** Those are different acts. The file landing in the repo gives durability — it survives the process dying, it is on a disk somebody backs up, and it is where every existing reader (`reflow2_check.py`, `compare_designs`, the merge driver) already looks. Committing it is a separate, human, deliberate act. Nothing about continuous export requires continuous history.\n\n⭐⭐ THE OBJECTION THAT KILLED THIS ROAD IS MEASURED AWAY, TODAY. `dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy` listed \"export on every write\" FIRST and recorded it as **dead**, on the hosted-tier node's ground that a whole-document write is \"correct for an archival action and fatal on a per-change path\". That was true when a full export cost seconds. Measured 2026-08-25 after two fixes (#330 and the `BTreeMap` backend change):\n\n    build export doc   1,137 ms  ->  236 ms\n    serialize to JSON     31 ms  ->   29 ms\n    TOTAL full export  1,168 ms  ->  265 ms\n\n**A whole-document export of the largest design in existence is a quarter of a second.** A typical design would be a small fraction of that. The road was closed on a number that is no longer the number.\n\n🛑 BUT IT COLLIDES HEAD-ON WITH AN ACCEPTED DECISION, AND THAT IS THE REAL QUESTION HERE. `dec:export-once-per-pr` is ACCEPTED and says: *\"A branch may hold as many commits as it likes; exactly ONE of them may write docs/design/reflow2.json, and it should be the last.\"* Its reason is the lineage chain — `prev_content_hash` links each export to the one it replaced, and squash-merge collapses multiple exports into a chain nobody can follow. **Auto-exporting on every graph change writes that file hundreds of times per session.** The chain would advance on every write, and the \"one export, last\" discipline becomes unenforceable by construction rather than by forgetting.\n\nThat is not a reason to reject the idea. It is the thing the idea has to answer, and there are shapes that answer it:\n- **The lineage chain could advance only on COMMIT rather than on write** — the chain's purpose is to relate committed records, not in-flight ones.\n- **Two files**: a continuously-written durability file (gitignored) and the committed export written once, deliberately. Durability and the record stop competing.\n- **Auto-export could write, and the chain could be recomputed at commit time** from the file already there.\nNone of these is chosen; they are named so the collision is not mistaken for a dead end.\n\n⚠️ THE OTHER COSTS, recorded beside the idea rather than used to argue it down:\n1. **A permanently dirty working tree.** `docs/design/reflow2.json` would show in every `git status` and `git diff` from the first graph write onward. That is noise on every unrelated piece of work, and it makes an accidental commit of half-finished design state easy — the file is always staged-able and never obviously \"ready\".\n2. **Latency on every tool call.** 265 ms added to `add_requirement`, `create_edge`, every write. Not fatal, and not free; a debounce or an idle-flush buys most of the durability for a fraction of the writes.\n3. **`req:stale-seat-knows` fires on a hot path.** The overwrite refusal compares the file's hash against what this seat believes it last wrote. With two sessions on one design auto-exporting, each write by one seat makes the other's belief stale, and a guard designed for an occasional deliberate act now runs continuously.\n4. **It changes what a session's diff MEANS.** Today `git diff docs/design/reflow2.json` shows what a session decided to record. Under continuous export it shows everything that happened, including the thinking that was later retracted.\n\nRECORDED AS A QUESTION, NOT A CONCLUSION. The measurement reopens a road that was closed for a good reason that has expired; what it does not do is settle the git-discipline question that road runs into.",
+        "name": "OPEN — with no database, should every graph change auto-export to the working tree (no commit, no push)? The cost objection is now measured away; the collision with export-once-per-PR is not",
+        "rationale": "Captured under the brainstorm skill: recorded as an idea, nothing promoted, nothing settled.\n\nKept separate from the two ideas it sits between, both read in full first. `dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy` asks WHAT MECHANISM makes the document reliable and lists five roads; this takes one of those roads — the one it recorded as dead — and asks whether a measurement that has since changed reopens it, which is a different question with a different answer. `dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability` asks whether the store should exist at all. This one is specifically about the INTERACTION between continuous export and git discipline, and it can be settled without either of the others — the collision with `dec:export-once-per-pr` is live today for anyone exporting more than once per branch.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-does-unmotivated-severity-key-on-built-not-provenance",
       "node_type": "Decision",
       "properties": {
@@ -128748,6 +128823,19 @@
       }
     },
     {
+      "node_id": "fact:a-database-free-session-costs-11s-to-load-and-12s-to-save",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "name": "With NO persistent database and the full-text index built in RAM, reflow2's own design loads to fully searchable in 1,098 ms and saves in 1,168 ms — and the dominant remaining cost is build_export_doc on the WRITE side, which nobody has looked at",
+        "statement": "MEASURED 2026-08-25 at main `39dbf6d`, immediately after the write-buffer index landed (#330). Release build, **in-memory backend, tantivy `create_in_ram`, no RocksDB, nothing on disk**. reflow2's own design: 3,149 nodes / 13,414 edges / 8.10 MB document.\n\n    LOAD (session start)                        SAVE (session end)\n      parse JSON            196.1 ms              build export doc   1,137.3 ms\n      open graph             10.0 ms              serialize to JSON     31.0 ms  (7.13 MB)\n      import + index        890.6 ms              ---------------------------------\n      first search_design     1.4 ms              TOTAL save         1,168.3 ms\n      ---------------------------------\n      TOTAL to searchable 1,098.1 ms\n\n⭐⭐ THE OBJECTION THAT BLOCKED THIS IDEA IS GONE. When the question was first recorded, hydrate was 8,828 ms and the honest read was \"viable for typical designs, a research project for this one\". The write-buffer index took import from 8,398 ms to ~890 ms INCLUDING the full-text build, and the whole load is now **1.1 seconds for the biggest, densest design that exists**. Nothing about the storage architecture changed to achieve that — it was a `Vec` being linearly scanned.\n\n⭐ THE FULL-TEXT INDEX IS CHEAP, WHICH NOBODY KNEW. Every earlier figure in this line of work had `fulltext` OFF and was explicitly labelled a lower bound. Measured with it ON, building the entire tantivy index from scratch in RAM costs roughly **190–280 ms** on top of the graph import, and the first `search_design` after it returns 10 hits in **1.4 ms**. The index does NOT have to be persisted to be affordable — it is genuinely derived, and rebuilding it per session is a rounding error against a session's length.\n\n⭐ AND THE DOMINANT COST MOVED TO A PLACE NOBODY HAS LOOKED. `export_graph`'s document build is **1,137 ms**, while serializing the result is 31 ms. So the save side is now 36x more expensive than the JSON encoding it exists to produce, and it is the single largest cost in the whole model — larger than the entire load path. It is the same SHAPE as the import defect just fixed (an internal read pattern, not I/O), and it has never been profiled. **If this model is taken, that is the next measurement, and it is very likely another `Vec` somewhere.**\n\n⇒ WHAT THE ROUND TRIP ACTUALLY COSTS A SESSION: ~1.1 s in, ~1.2 s out, **~2.3 s total**, once, for a design larger than any real tenant would hold. Against a session measured in minutes or hours that is not a performance question any more. It is now purely a DURABILITY question, which is the trade `dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy` holds.\n\n🛑 STILL UNMEASURED, AND EACH COULD STILL SINK IT:\n1. **Accumulated store state.** Confirmation-ledger dates, drift baselines, `write_gen`, the `.id.json` / `.sync.json` sidecars. `fact:export-import-export-is-lossless-but-not-a-fixed-point-until-one-normalising-pass` proved the DESIGN round-trips (3,140/3,140 nodes); it proved nothing about what a running seat believes. This is the way the model fails LATE.\n2. **Crash durability.** RAM dies with the process. The trade is bounded loss vs no loss and it is a judgement, not a measurement.\n3. **The shared server.** Several sessions share one graph through one process today. In-RAM state does not change that — the process IS the state — but nothing has tested what a server restart means when there is no store to reopen.\n\n📌 BOUNDS: one machine, one design, one run per figure, release build, OS page cache uncontrolled. No sub-sampled curve was taken with fulltext on, so the SHAPE of the index cost against design size is unknown — only this one point.",
+        "subject_id": "dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability",
+        "valid_from": "2026-08-25"
+      }
+    },
+    {
       "node_id": "fact:a-distinctness-note-had-to-wear-a-dependency-edge",
       "node_type": "TemporalFact",
       "properties": {
@@ -128795,6 +128883,19 @@
         "statement": "MEASURED 2026-08-24. `tools/check_doc_versions.py` has two halves. `foundation_tag()` READS THE FACT every doc claim is measured against, out of the tree. `claims()` MATCHES prose against that fact. Its hermetic suite `tools/test_check_doc_versions.py` had three tests, all on the second half: the repo as it stands passes, a stale claim is caught, and rewording the prose fails loudly rather than disabling the check.\n\nIncrement 4 deleted the thing `foundation_tag()` read — the `dynograph-*` git-tag pin in the workspace `Cargo.toml` — so the gate went red, correctly, with `FAIL: could not find any dynograph-foundation tag pin`. The function was then REPLACED WHOLESALE: it now reads `^//! tag      vX.Y.Z` out of the provenance headers the absorption decision requires every absorbed module to carry, with new failure modes for no-header-anywhere and for modules naming different tags.\n\n🛑 **THE SUITE PASSED 3/3 BEFORE THE REWRITE, AND 3/3 AFTER IT, AND NEVER ONCE TOUCHED THE FUNCTION.** `grep -n 'foundation_tag\\|tag = \"v\\|provenance' tools/test_check_doc_versions.py` returned NOTHING. A green suite was reported for a rewritten function it did not reach, and the green was true and worthless in the same breath.\n\n⭐ WHY THIS ONE IS WORTH KEEPING. The near-miss is not \"a function was untested\" — that is ordinary. It is that **the suite's green was read as evidence about the change**, in a session that had already been caught twice that day reading a narrow gate as a wide one. The check that caught it was not a tool: it was asking, before trusting the pass, WHICH LINES THE SUITE ACTUALLY EXECUTES. That is the same habit `rule:success-is-read-from-the-authoritative-object` names — the value you read is not the value you think you are reading — applied to a test suite rather than to an exit code.\n\nCLOSED BY ADDING WHAT WAS MISSING, not by noting it: three tests now pin that the provenance headers are where the tag comes from, that losing every header FAILS rather than passing empty, and that modules absorbed from different vintages are caught — the successor to the old \"five pins that drifted apart\" check. Suite is 6/6. The two failure-mode tests mutate the real source files and restore them in a `finally`; restoration was verified by grep afterwards, because a test that corrupts provenance headers on a crash would be worse than the gap it closes.\n\n⚠️ GENERALISES, AND IS NOT MEASURED BEYOND THIS ONE CASE: reflow2 has eleven python gates, most with a paired hermetic suite, and NOTHING checks whether a suite reaches the whole of the gate it guards. Whether the others have the same shape is unknown — stated as an open question, not as a finding.",
         "subject_id": "rule:success-is-read-from-the-authoritative-object",
         "valid_from": "2026-08-24"
+      }
+    },
+    {
+      "node_id": "fact:a-hydrated-seat-keeps-every-confirmation-date-and-loses-only-its-sync-state",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "name": "Store-state round-trip test: all 208 confirmation-ledger claims survive hydration field-for-field, ZERO differences. The only real loss is last_synced — the seat forgets every export it has synced with, and sync_status then answers with the same empty result it uses to mean 'never synced'",
+        "statement": "THE TEST `dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability` NAMED AS \"the way this model fails LATE\", run 2026-08-25 at main `39dbf6d`. Question: does what a RUNNING SEAT BELIEVES — as opposed to the design itself — survive being rebuilt from the export document?\n\nMETHOD: import the committed export into an empty store, then run the same tools against the hydrated store and the live one and diff the answers field by field.\n\n⭐⭐ THE CONFIRMATION LEDGER SURVIVES COMPLETELY. **208 capability claims on both sides, the same capability ids, and ZERO differing fields across all of them.**\n\n    claims 208 | confirmed 208 | drifting 0 | unexamined 0\n    stale_verification 112 | unknown_verification_freshness 90     (identical both sides)\n\nEvery per-capability field matched: `last_claim_at`, `last_confirmed_at`, `last_verified_at`, `drift_events`, `unresolved_drift_events`, `design_holds_claims`, `design_updated_claims`, `baseline_claims`, `confirmations`, `design_edits`, `state`, `verification_freshness`. **The dates, the drift history and the accept ledger are all NODES AND EDGES, so the document carries them.** The fear that a hydrated session would silently forget when it last checked something is measured and false.\n\n🛑 WHAT IS ACTUALLY LOST, AND IT IS ONE THING: `last_synced`. It lives in `.reflow2/<graph>.sync.json`, a sidecar file BESIDE the store, not in the store and not in the document. The live seat holds six entries mapping export paths to content hashes; the hydrated seat holds none:\n\n    live       sync_status -> 6 entries, each in_step with its file\n    hydrated   sync_status -> {\"behind\": [], \"checked\": 0, \"sync\": []}\n\n⚠️ AND THE FAILURE IS QUIET BY THE TOOL'S OWN ACCOUNT. `sync_status` documents that *\"AN EMPTY ANSWER MEANS THIS SEAT HAS NEVER SYNCED WITH ANY FILE — never that all is well\"*. A hydrated seat produces exactly that answer while having a full design loaded, so the reading \"this seat is new\" is TRUE of its sync state and FALSE of everything else. What rests on it: `req:stale-seat-knows` and the export-overwrite refusal, which compares a file's current hash against what this graph believes it last wrote. With an empty map there is nothing to compare, so the guard against silently deleting a colleague's work has no baseline on the first export after a hydrate.\n\n⭐ THE GAP IS NARROW AND FIXABLE, WHICH IS THE USEFUL PART. `last_synced` is a small map of path -> content hash. Making it endure is a choice between carrying it in the document, keeping the sidecar file beside the document, or recomputing it by hashing the files a seat knows about. None of those is architecture; all are bookkeeping. **The model does not fail late on accumulated state — it fails on ONE map, and that map is three lines of JSON.**\n\n📌 SECOND, SMALLER GAP, THEORETICAL TODAY: `CF_EMBEDDINGS` is a real column family and `GraphExport` has no embeddings field, so vectors would not survive a hydrate. Measured: nothing outside `engine/tests.rs` calls `set_embedding`, so the store holds none today. It becomes real the moment `dec:idea-embeddings-adoption` lands, and it is worth knowing BEFORE that rather than after.\n\n✅ REGENERATED CORRECTLY, so not gaps: `<graph>.id.json` (the empty store adopts the document's name via `adopt_on_import`) and `<graph>.meta.json` (derived from the schema).\n\n📌 BOUNDS: one design, one direction, one machine, debug binary. Two tools compared (`confirmation_ledger`, `sync_status`) plus the sidecar files on disk — NOT an exhaustive sweep of everything a seat can believe. `write_gen` was not separately exercised.",
+        "subject_id": "dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability",
+        "valid_from": "2026-08-25"
       }
     },
     {
@@ -134791,7 +134892,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f229798abbf1aa549ac3ffc28de26a258ae89b51ffc0880c04e027766e93446c",
+  "prev_content_hash": "sha256:75c5b2857de7735b345d983b495bae4ef44f3a1aa5824249006e3fa057fb3105",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
