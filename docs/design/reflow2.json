@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:f6a5759b243b46c5944e7440f95d5674fe7074ea1bd4867bbadf9b512189624a",
+  "content_hash": "sha256:615e7f296c46627a170af05a6b524e68a0105a5bd56d236bac1e91e8849ced94",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -11624,6 +11624,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-rust-rocksdb-switch-is-parked-until-the-store-question-settles",
+      "properties": {
+        "acted_at": "2026-08-25T01:50:00Z",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:the-stop-hook-asks-the-graph-asynchronously",
       "properties": {
         "acted_at": "2026-08-24",
@@ -13476,9 +13485,27 @@
       "edge_type": "BLOCKS",
       "from_id": "dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability",
       "properties": {
+        "confidence": 0.9,
+        "evidence": "The open question stalls the accepted work, and the sequencing is the whole of it. That decision owes a switch from `rocksdb` 0.24 to `rust-rocksdb` in its own PR — an 86-file migration whose entire subject is the RocksDB backend. If the storage question resolves toward the export document as the enduring artifact, `cmp:rocksdb-backend` is retired and that migration is work done and then deleted. Blocked rather than rejected: the switch stays correct and stays owed if RocksDB stays."
+      },
+      "to_id": "dec:absorb-rocksdb-024-unchanged-then-switch-separately"
+    },
+    {
+      "edge_type": "BLOCKS",
+      "from_id": "dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability",
+      "properties": {
         "evidence": "One standing makes the other unanswerable in its own terms. 'Which embedded engine compiles fastest' presumes an embedded engine is needed; if the measured answer here is that a store buys only durability and crash-safety, the redb-vs-rocksdb comparison is being run on the wrong axis. Blocks rather than obsoletes: the engine question becomes live again the moment this one settles in favour of keeping a store."
       },
       "to_id": "dec:idea-a-byte-backend-that-compiles-in-seconds"
+    },
+    {
+      "edge_type": "BLOCKS",
+      "from_id": "dec:the-rust-rocksdb-switch-is-parked-until-the-store-question-settles",
+      "properties": {
+        "confidence": 1.0,
+        "evidence": "This is the park itself, drawn as an edge so it is computable rather than only readable: an ACCEPTED decision now stalls the work the other accepted decision owes. Anthony's word, 2026-08-25. It stalls only the SWITCH half — the absorb-verbatim half was completed in #329 — and it lifts the moment the store question settles either way."
+      },
+      "to_id": "dec:absorb-rocksdb-024-unchanged-then-switch-separately"
     },
     {
       "edge_type": "BLOCKS",
@@ -28786,6 +28813,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-memory-backend-keeps-its-keys-ordered",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:byte-store"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-no-documents-rule-gains-its-reasoning-and-its-exception",
       "properties": {
         "accepted_baseline": false,
@@ -30269,6 +30305,14 @@
     },
     {
       "edge_type": "CONSUMES",
+      "from_id": "cmp:byte-store",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:kv-backend"
+    },
+    {
+      "edge_type": "CONSUMES",
       "from_id": "cmp:compare",
       "properties": {
         "weight_basis": "estimated"
@@ -31470,6 +31514,12 @@
       "edge_type": "CONTAINS",
       "from_id": "sys:foundation",
       "properties": {},
+      "to_id": "cmp:memory-backend"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:foundation",
+      "properties": {},
       "to_id": "cmp:nodes"
     },
     {
@@ -31477,6 +31527,12 @@
       "from_id": "sys:foundation",
       "properties": {},
       "to_id": "cmp:provenance"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:foundation",
+      "properties": {},
+      "to_id": "cmp:rocksdb-backend"
     },
     {
       "edge_type": "CONTAINS",
@@ -31905,6 +31961,16 @@
         "evidence": "That idea compares embedded engines on the assumption that the engine is what costs. Measured with NO engine at all — in-memory backend, no RocksDB, no tantivy — hydrate is still 8.8s at 3,140 nodes, with 95% of it inside import_graph and only 4% in JSON parsing. Whichever engine wins that comparison, it cannot move the number that matters, so the premise the comparison rests on is contradicted rather than merely unsupported."
       },
       "to_id": "dec:idea-a-byte-backend-that-compiles-in-seconds"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "fact:the-revising-write-warning-fired-correctly-and-the-overwrite-happened-anyway",
+      "properties": {
+        "alignment": "supporting",
+        "confidence": 0.85,
+        "evidence": "Corroboration across two different mechanisms, same underlying shape: a discipline that is written down, correct, and read by the agent still fails at the moment it applies. One is a warning read hours before it was ignored; the other is a computation that answers correctly and cannot reach the case it was built for. Both were caught by a human noticing, not by the mechanism, and both are direct evidence for the open question of how an agent comes to use reflow2's disciplines without being prompted."
+      },
+      "to_id": "fact:unclaimed-findings-cannot-join-a-change-to-a-finding-hung-off-a-different-node"
     },
     {
       "edge_type": "CONTRADICTS",
@@ -39418,6 +39484,14 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:rocksdb-backend",
+      "properties": {
+        "note": "Anyone arriving at this component intending to swap its crate meets the park here, on the component itself, rather than having to find it on a decision two hops away. The park is about THIS component's dependency and nothing else."
+      },
+      "to_id": "dec:the-rust-rocksdb-switch-is-parked-until-the-store-question-settles"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:sanitize",
       "properties": {},
       "to_id": "decision:ack:dd3647889c878492"
@@ -42220,6 +42294,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:a-revising-write-says-whether-the-state-survived",
+      "properties": {},
+      "to_id": "fact:the-revising-write-warning-fired-correctly-and-the-overwrite-happened-anyway"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:an-unconnected-idea-is-visible-as-one",
       "properties": {},
       "to_id": "fact:the-review-relations-redo-was-a-no-op-once-somebody-read-the-code"
@@ -42277,6 +42357,12 @@
       "from_id": "cmp:budget",
       "properties": {},
       "to_id": "fact:defect-a-measured-contribution-carries-no-date-so-it-is-believed-forever"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cmp:byte-store",
+      "properties": {},
+      "to_id": "fact:a-database-free-session-costs-11s-to-load-and-12s-to-save"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -90696,6 +90782,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:the-memory-backend-keeps-its-keys-ordered",
+      "properties": {
+        "at": "2026-08-25",
+        "note": "RE-MEASURED HOURS LATER, ON THE SAME DESIGN, AFTER THE COST IT NAMED WAS FIXED. Its SAVE column is no longer current:\n\n    build export doc   1,137.3 ms -> 236.5 ms\n    TOTAL session save 1,168.3 ms -> 265.3 ms\n\nWHICH PART MOVED, precisely — this is a PARTIAL supersession and the node is NOT closed: only the write side. Its load figures still stand within noise (1,098 ms then, 1,156 ms after; the ~8% import regression from BTreeMap inserts is inside that). Its two headline findings BOTH survive and one is strengthened: the full-text index is cheap and derived, and the byte store is not the bottleneck — the remaining save cost is not storage either.\n\n⭐ AND ITS OWN PREDICTION CAME TRUE. That fact called out `build_export_doc` at 1,137 ms as \"the dominant cost moved to a place nobody has looked... the same SHAPE as the import defect just fixed... very likely another `Vec` somewhere.\" It was a HashMap, and the shape was exactly right: a linear scan standing in for an indexed lookup. The node earned its keep by naming the next measurement, which is what a good measurement does.\n\n🛑 SECOND INSTANCE OF A KNOWN BLIND SPOT, AND IT WAS PREDICTED IN ADVANCE. `unclaimed_findings` on this ChangeEvent returned nothing with subjects_examined=1, exactly as `fact:unclaimed-findings-cannot-join-a-change-to-a-finding-hung-off-a-different-node` said it would: the change is anchored to `cmp:byte-store` (the code) and this observation to a Decision (the question it answered), so the join never happens. Closed by judgement again. A HAS_TEMPORAL_FACT edge from cmp:byte-store has now been drawn so the next change to that component reaches it."
+      },
+      "to_id": "fact:a-database-free-session-costs-11s-to-load-and-12s-to-save"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:write-buffer-gets-an-index-and-hydrate-drops-tenfold",
       "properties": {
         "at": "2026-08-24",
@@ -91539,11 +91634,27 @@
     },
     {
       "edge_type": "PROVIDES",
+      "from_id": "cmp:memory-backend",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:kv-backend"
+    },
+    {
+      "edge_type": "PROVIDES",
       "from_id": "cmp:registry",
       "properties": {
         "weight_basis": "estimated"
       },
       "to_id": "ifc:session-graph-selector"
+    },
+    {
+      "edge_type": "PROVIDES",
+      "from_id": "cmp:rocksdb-backend",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:kv-backend"
     },
     {
       "edge_type": "PROVIDES",
@@ -111276,6 +111387,18 @@
       }
     },
     {
+      "node_id": "chg:the-memory-backend-keeps-its-keys-ordered",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "performance_optimization",
+        "detected_at": "2026-08-25",
+        "name": "MemoryBackend moves HashMap → BTreeMap; export build 1,137ms → 236ms",
+        "rationale": "⚖️ THE TRADE IS REAL AND WAS PUT IN THE COMMIT RATHER THAN OMITTED. `BTreeMap` insert is O(log n) where `HashMap` was O(1), and import measured 890.6 ms -> 966.8 ms, about 8% SLOWER. It is worth it on the round trip — a session's load+save goes 2,266 ms -> 1,421 ms, 37% better — but a report carrying only the 4.8x would have been selecting the evidence.\n\n🛑 SCOPE, WHICH MATTERS AND IS EASY TO OVERSTATE: THIS DOES NOT MAKE TODAY'S REFLOW2 FASTER. Production runs on RocksDB, whose prefix iterator is already a range scan. What it speeds up is (a) the 1,452-test core suite, which runs entirely on `MemoryBackend`, and (b) the database-free session model under discussion in `dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability`, where the memory backend IS the store.\n\n⭐⭐ THIRD DEFECT OF ONE SHAPE IN ONE FILE, AND THAT IS THE FINDING — not three coincidences. A linear scan standing in where an indexed lookup belongs: twice in the write buffer (#330 — the buffered `get`, and the `prefix_scan` pre-flight) and once here in the backing store. All three were invisible at test scale and quadratic at design scale, because the cost is a product of two things that are both small in a unit test and both large in a real design.\n\n⭐ AND ALL THREE WERE FOUND THE SAME WAY: read the code, count the operations, check the arithmetic against the stopwatch BEFORE changing anything. 42M comparisons at ~25 ns predicts ~1.06 s against 1,137 ms measured. The method is transferable and the habit is the transferable part — the first hypothesis in #330 was wrong (adjacency read-modify-write) and reading the code killed it before any code was written.",
+        "subject": "system",
+        "summary": "Merged as #331. `MemoryBackend` held each column family in a `HashMap`, but `KvBackend` requires ORDERED prefix iteration — so `prefix_scan` iterated the whole column family, filtered by prefix, and sorted the result: O(n log n) per scan, on the backend whose entire purpose is to be the fast path. `export_graph` calls `outgoing()` once per node, so exporting reflow2's own design was 3,149 scans over a 13,414-entry adjacency map, ~42M key comparisons.\n\nSix `BTreeMap`s now, and `prefix_scan` is a range query — seek to the prefix, take while it matches. `BTreeMap` orders keys lexicographically, the same order RocksDB's default byte-wise comparator gives, so the trait's ordered-scan contract is satisfied BY CONSTRUCTION and the sort was deleted rather than optimised.\n\nMEASURED (release, in-memory backend, fulltext on, 3,149 nodes / 13,414 edges):\n\n    build export doc   1,137.3 ms -> 236.5 ms   (4.8x)\n    serialize to JSON     31.0 ms ->  28.8 ms\n    TOTAL session save 1,168.3 ms -> 265.3 ms   (4.4x)\n\nWorkspace 1760 / 0, core 1452 / 0, both clippy gates, fmt, twelve python gates and the design gate green; CI green on both jobs."
+      }
+    },
+    {
       "node_id": "chg:the-no-documents-rule-gains-its-reasoning-and-its-exception",
       "node_type": "ChangeEvent",
       "properties": {
@@ -112303,6 +112426,17 @@
       }
     },
     {
+      "node_id": "cmp:memory-backend",
+      "node_type": "Component",
+      "properties": {
+        "level": "component",
+        "name": "memory-backend",
+        "provenance": "authored",
+        "purpose": "The volatile `KvBackend` implementation: six `BTreeMap`s, one per column family. No durability, no cross-key atomicity beyond the single-threaded `commit_batch` loop.\n\n`crates/reflow2-core/src/foundation/store/backend.rs` (`MemoryBackend`). Reached through `DesignGraph::open_in_memory`, and it needs no cargo feature — `reflow2-core`'s `default = []` means this is the backend you get unless somebody asks for the other one.\n\n⭐ IT IS NOT A TEST DOUBLE, WHICH IS THE THING MOST LIKELY TO BE ASSUMED ABOUT IT. Measured 2026-08-25: **1,452 core tests pass on it with no RocksDB and no full-text index** — schema validation, the golden thread, adjacency traversal, every detector, HEAL, propagation, the graph algorithms. It serves the same `KvBackend` trait through the same code path, so what passes here is not a weaker claim than what passes on RocksDB; it is the same claim minus durability.\n\n⭐ `BTreeMap` AND NOT `HashMap`, AND THAT IS A CONTRACT NOT A TASTE (`chg:the-memory-backend-keeps-its-keys-ordered`, #331). The trait requires ORDERED prefix iteration. A hash map meant iterating the whole column family, filtering, and sorting — O(n log n) per scan. Measured: `export_graph` calls `outgoing()` once per node, so exporting reflow2's own design was ~42M key comparisons and 1,137 ms; as a range query it is 236 ms. The trade is real — inserts went O(1) to O(log n), import ~8% slower — and the round trip is 37% better.\n\n⇒ THIS IS THE COMPONENT THE NO-DATABASE QUESTION TURNS ON. If `dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability` resolves toward the document as the enduring artifact, this becomes the only backend and `cmp:rocksdb-backend` is what gets retired.\n\nMODELLED 2026-08-25 alongside its sibling; neither had a node before. Kept distinct from `chg:the-memory-backend-keeps-its-keys-ordered`, which is the CHANGE that altered this component, not the component itself.",
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "cmp:merge",
       "node_type": "Component",
       "properties": {
@@ -112481,6 +112615,17 @@
         "purpose": "The report module.",
         "status": "planned",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:rocksdb-backend",
+      "node_type": "Component",
+      "properties": {
+        "level": "component",
+        "name": "rocksdb-backend",
+        "provenance": "authored",
+        "purpose": "The durable `KvBackend` implementation: RocksDB over six named column families, one column family per key space, with the engine's exclusive write lock coming from RocksDB's own directory lock.\n\n`crates/reflow2-core/src/foundation/store/backend.rs` (`RocksBackend`). Reached only through `DesignGraph::open_rocksdb`.\n\n🛑 IT IS OPT-IN AND ALWAYS HAS BEEN. `reflow2-core` declares `default = []`; only `reflow2-mcp` enables `features = [\"rocksdb\", \"fulltext\"]`. Measured 2026-08-25: 1,452 of the core's tests pass with this component absent entirely. Without the feature `open_rocksdb` fails loud rather than falling back, which is `req:no-silent-fallback` applied to a missing backend.\n\n⚠️ EXTERNAL DEPENDENCY, DELIBERATELY PINNED WHERE IT IS: `rocksdb` 0.24 — the historically-unmaintained wrapper. `rust-rocksdb` 0.52 is the maintained one; the numbers are NOT comparable (different crates, independent numbering). `dec:absorb-rocksdb-024-unchanged-then-switch-separately` keeps that 86-file migration to one variable.\n\n⚖️ WHAT IT COSTS, measured: a ~19-minute `librocksdb-sys` C++ compile on a clean build, and the bulk of a target directory that reached 263 GiB. What it buys: durability across a process restart and larger-than-RAM working sets. `dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability` is the open question about whether that trade is worth it.\n\nMODELLED 2026-08-25, and it did not exist as a node until then — which is why \"can we retire RocksDB?\" had no answer: the design had nothing to point at.",
+        "status": "planned"
       }
     },
     {
@@ -114559,7 +114704,7 @@
       "node_id": "dec:idea-does-the-graph-write-itself-through-to-the-repo-on-every-change",
       "node_type": "Decision",
       "properties": {
-        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-25, following the no-database line of thinking. Nothing here is intent and nothing is planned.\n\nHIS WORDS: *\"if we remove a db and go strictly with in-memory, then exporting the graph becomes a necessary step. curious if we at every instance the reflow2 graph is changed, that the graph is automatically exported to the git repo (don't have to do a git commit/push with every export).\"*\n\n⭐ THE DISTINCTION HE DREW IS THE LOAD-BEARING ONE, and it is easy to miss: **write to the WORKING TREE, not to git history.** Those are different acts. The file landing in the repo gives durability — it survives the process dying, it is on a disk somebody backs up, and it is where every existing reader (`reflow2_check.py`, `compare_designs`, the merge driver) already looks. Committing it is a separate, human, deliberate act. Nothing about continuous export requires continuous history.\n\n⭐⭐ THE OBJECTION THAT KILLED THIS ROAD IS MEASURED AWAY, TODAY. `dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy` listed \"export on every write\" FIRST and recorded it as **dead**, on the hosted-tier node's ground that a whole-document write is \"correct for an archival action and fatal on a per-change path\". That was true when a full export cost seconds. Measured 2026-08-25 after two fixes (#330 and the `BTreeMap` backend change):\n\n    build export doc   1,137 ms  ->  236 ms\n    serialize to JSON     31 ms  ->   29 ms\n    TOTAL full export  1,168 ms  ->  265 ms\n\n**A whole-document export of the largest design in existence is a quarter of a second.** A typical design would be a small fraction of that. The road was closed on a number that is no longer the number.\n\n🛑 BUT IT COLLIDES HEAD-ON WITH AN ACCEPTED DECISION, AND THAT IS THE REAL QUESTION HERE. `dec:export-once-per-pr` is ACCEPTED and says: *\"A branch may hold as many commits as it likes; exactly ONE of them may write docs/design/reflow2.json, and it should be the last.\"* Its reason is the lineage chain — `prev_content_hash` links each export to the one it replaced, and squash-merge collapses multiple exports into a chain nobody can follow. **Auto-exporting on every graph change writes that file hundreds of times per session.** The chain would advance on every write, and the \"one export, last\" discipline becomes unenforceable by construction rather than by forgetting.\n\nThat is not a reason to reject the idea. It is the thing the idea has to answer, and there are shapes that answer it:\n- **The lineage chain could advance only on COMMIT rather than on write** — the chain's purpose is to relate committed records, not in-flight ones.\n- **Two files**: a continuously-written durability file (gitignored) and the committed export written once, deliberately. Durability and the record stop competing.\n- **Auto-export could write, and the chain could be recomputed at commit time** from the file already there.\nNone of these is chosen; they are named so the collision is not mistaken for a dead end.\n\n⚠️ THE OTHER COSTS, recorded beside the idea rather than used to argue it down:\n1. **A permanently dirty working tree.** `docs/design/reflow2.json` would show in every `git status` and `git diff` from the first graph write onward. That is noise on every unrelated piece of work, and it makes an accidental commit of half-finished design state easy — the file is always staged-able and never obviously \"ready\".\n2. **Latency on every tool call.** 265 ms added to `add_requirement`, `create_edge`, every write. Not fatal, and not free; a debounce or an idle-flush buys most of the durability for a fraction of the writes.\n3. **`req:stale-seat-knows` fires on a hot path.** The overwrite refusal compares the file's hash against what this seat believes it last wrote. With two sessions on one design auto-exporting, each write by one seat makes the other's belief stale, and a guard designed for an occasional deliberate act now runs continuously.\n4. **It changes what a session's diff MEANS.** Today `git diff docs/design/reflow2.json` shows what a session decided to record. Under continuous export it shows everything that happened, including the thinking that was later retracted.\n\nRECORDED AS A QUESTION, NOT A CONCLUSION. The measurement reopens a road that was closed for a good reason that has expired; what it does not do is settle the git-discipline question that road runs into.",
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-25, following the no-database line of thinking. Nothing here is intent and nothing is planned.\n\nHIS WORDS: *\"if we remove a db and go strictly with in-memory, then exporting the graph becomes a necessary step. curious if we at every instance the reflow2 graph is changed, that the graph is automatically exported to the git repo (don't have to do a git commit/push with every export).\"*\n\n⭐ THE DISTINCTION HE DREW IS THE LOAD-BEARING ONE, and it is easy to miss: **write to the WORKING TREE, not to git history.** Those are different acts. The file landing in the repo gives durability — it survives the process dying, it is on a disk somebody backs up, and it is where every existing reader (`reflow2_check.py`, `compare_designs`, the merge driver) already looks. Committing it is a separate, human, deliberate act. Nothing about continuous export requires continuous history.\n\n⭐⭐ THE OBJECTION THAT KILLED THIS ROAD IS MEASURED AWAY, TODAY. `dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy` listed \"export on every write\" FIRST and recorded it as **dead**, on the hosted-tier node's ground that a whole-document write is \"correct for an archival action and fatal on a per-change path\". That was true when a full export cost seconds. Measured 2026-08-25 after two fixes (#330 and #331):\n\n    build export doc   1,137 ms  ->  236 ms\n    serialize to JSON     31 ms  ->   29 ms\n    TOTAL full export  1,168 ms  ->  265 ms\n\n**A whole-document export of the largest design in existence is a quarter of a second.** A typical design would be a small fraction of that. The road was closed on a number that is no longer the number.\n\n🛑 BUT IT COLLIDES HEAD-ON WITH AN ACCEPTED DECISION. `dec:export-once-per-pr` is ACCEPTED: *\"A branch may hold as many commits as it likes; exactly ONE of them may write docs/design/reflow2.json, and it should be the last.\"* Its reason is the lineage chain — `prev_content_hash` links each export to the one it replaced, and squash-merge collapses the branch to one commit, so intermediate links point at content no commit contains and the chain becomes unfollowable. **Auto-exporting on every graph change writes that file hundreds of times per session**, so the discipline stops being enforceable by construction rather than by forgetting.\n\n═══════════════════════════════════════════════════════════════════════\n⭐ THE ROAD RECOMMENDED, 2026-08-25 — **TWO FILES**, and it is an AGENT'S\nFINDING, NOT A DECISION. Anthony asked for the recommendation on the record;\nrecording it does not settle it, and the node stays `proposed`.\n═══════════════════════════════════════════════════════════════════════\n\n**Separate the thing that keeps you safe from the thing that goes in git.**\n\n- A **LIVE FILE** — written continuously (or debounced), **gitignored**, in `.reflow2/`. Pure durability. Nothing chains it, nobody diffs it, it never appears in `git status`. It needs no new format: it is the same export document.\n- The **COMMITTED EXPORT** — `docs/design/reflow2.json`, written once, deliberately, exactly as today. The RECORD: the lineage chain, what a PR carries, what a reviewer reads.\n\nIT ANSWERS ALL FOUR OBJECTIONS AT ONCE, which is why it is preferred over debounce-alone or chain-at-commit:\n1. The lineage chain stays meaningful, because only deliberate exports chain. `dec:export-once-per-pr` survives UNCHANGED rather than being amended — the collision disappears instead of being negotiated.\n2. The working tree stays clean, so half-finished design state cannot be committed by accident.\n3. `req:stale-seat-knows` keeps guarding an occasional deliberate act instead of running on a hot path.\n4. `git diff docs/design/reflow2.json` keeps meaning *\"what this session decided to record\"* rather than everything that happened including what was retracted.\n\n⭐⭐ AND THE DURABILITY ARGUMENT INVERTS ON INSPECTION — the strongest reason for the road, found while writing this up. **Today's setup already has the gap this is accused of introducing.** reflow2 keeps two copies: the RocksDB store and the export. The store protects against the PROCESS dying; it does NOT protect against the directory dying, and `loop_status` says so on every call — *\"The file is the only copy that survives losing the graph directory.\"* So the copy that survives real loss is the export, **and today it is written only when somebody remembers**. Measured on this very session: nine nodes sat unexported for hours.\n\n    protects against:        process crash   disk/machine loss   written\n    today   RocksDB store         yes              NO            continuously\n    today   export file           yes              yes           WHEN SOMEBODY REMEMBERS\n    two-file  live file           yes              yes           continuously\n    two-file  committed export    yes              yes           deliberately\n\n⇒ Anthony's reading is right, and stronger than he put it: this is not a trade of durability for convenience. **The two-file shape CLOSES a durability gap that exists today.** What is given up is only the window between one live-file write and the next — one change, or a few seconds under a debounce, which is the resilience an editor or a browser tab gives and nobody calls those unreliable. His own framing: *\"most things are not that resilient to crashes, so I would expect that reflow2 keeps the same level of resilience as most other services.\"*\n\n⚠️ WHAT THE RECOMMENDATION DOES NOT COVER, stated so it is not read as settled:\n- **265 ms is THIS design's number, the largest in existence.** Per-change export at that size adds a quarter-second to every write. Debounce — write on idle, or at most every N seconds — rather than literally per change, and MEASURE a typical-sized design before assuming the figure generalises. (Two performance predictions were wrong today before being measured; the habit is the finding.)\n- **Where the live file lives when there is no repo.** A hosted tenant at flo2 has no working tree; the same shape needs an object-store answer, which `dec:idea-a-hosted-tier-of-many-single-writer-tenants` holds.\n- **`last_synced` still has to endure.** `fact:a-hydrated-seat-keeps-every-confirmation-date-and-loses-only-its-sync-state` measured that a hydrated seat loses exactly this one map; a live file carries the design, not the sidecar, so that remains a separate loose end.\n\nROADS NOT TAKEN, kept with their reasoning:\n- **Export on every write, one file.** Simplest, and it is what breaks `dec:export-once-per-pr` outright plus all four objections above.\n- **Advance the lineage chain on COMMIT rather than on write.** Coherent — the chain's purpose is to relate committed records — but it puts the chain's correctness in git's hands rather than reflow2's, and reflow2 cannot see a commit.\n- **Recompute the chain at commit time** from whatever file is there. Same objection, plus it needs a hook nobody has.\n- **Do nothing; keep the store authoritative.** Costs nothing and keeps the manual-export durability gap the table above measures.\n\nRECORDED AS A QUESTION WITH A RECOMMENDED ROAD, NOT AS A CONCLUSION.",
         "name": "OPEN — with no database, should every graph change auto-export to the working tree (no commit, no push)? The cost objection is now measured away; the collision with export-once-per-PR is not",
         "rationale": "Captured under the brainstorm skill: recorded as an idea, nothing promoted, nothing settled.\n\nKept separate from the two ideas it sits between, both read in full first. `dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy` asks WHAT MECHANISM makes the document reliable and lists five roads; this takes one of those roads — the one it recorded as dead — and asks whether a measurement that has since changed reopens it, which is a different question with a different answer. `dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability` asks whether the store should exist at all. This one is specifically about the INTERACTION between continuous export and git discipline, and it can be settled without either of the others — the collision with `dec:export-once-per-pr` is live today for anyone exporting more than once per branch.",
         "status": "proposed"
@@ -116269,6 +116414,16 @@
         "decision": "DECIDED 2026-08-12, Anthony's word, on the question the registry raised the moment it existed: WHO MAY LIST WHICH DESIGNS.\n\n⚠️ THIS IS A DIFFERENT QUESTION FROM THE ONE ALREADY ANSWERED, and conflating them is the trap. `req:a-session-cannot-address-another-design` and `ver:a-session-cannot-name-another-design` settle ADDRESSING — can a session open a design it was not given? (No: refused by name, and a path is not an alternative route in.) This settles EXISTENCE — may a session learn a design is there at all? **A design can be perfectly isolated and still leak the list**, and for a hosted service the customer list is often the most sensitive thing it holds.\n\nTHE TWO CASES PULL OPPOSITE WAYS, AND BOTH ARE REAL.\n- ONE OWNER, MANY PROJECTS. Anthony holds reflow2, flo2, dynograph-foundation, dev_storyflow. He WANTS a session to list them and pick, and asked for exactly that on 2026-08-05: \"can a reflow2 tool be to simply return all graph_ids to the agent and the agent then can choose whichever graph_id the user specifies?\" — captured inside the ACCEPTED `req:a-session-chooses-its-design`.\n- MANY TENANTS, ONE SERVER. flo2's hosted case. A session working on one customer's project must not learn that another customer EXISTS.\n\nDECIDED: **THE REGISTRY'S ROOT IS THE TENANT BOUNDARY.** `Registry::discover(root)` reads what is under that root and nothing else; `graph_ids()` stays unfiltered and lists exactly that. An operator serving many tenants gives each its own root. Isolation is then a property of WHAT IS THERE rather than of a check on who is asking.\n\nWHY, and the first reason is the one that rules out the alternative on principle rather than on effort:\n\n1. **REFLOW2 HAS NO AUTHENTICATION AND IS NOT GETTING ANY.** Stated in the design and printed on the container image label: \"NO AUTHENTICATION — deploy on a private network behind a gateway that authenticates.\" A filtered listing REQUIRES knowing who is asking, so building one means reflow2 growing an identity system it has explicitly refused. That is not a cost, it is a contradiction.\n2. **IT IS FREE.** The root is already a parameter of `Registry::discover`. This is a deployment shape, not code.\n3. **IT IS THE BOUNDARY THAT ALREADY WORKS.** `a_real_design_outside_the_root_is_refused_like_any_other` proves a design genuinely present elsewhere on the machine is refused IDENTICALLY to one invented. The root is already the isolation boundary; making it the tenant boundary is the same mechanism, not a new one.\n4. ⭐ **IT IS ALREADY THE RECOMMENDED ANSWER TO A DIFFERENT QUESTION.** flo2's blast-radius section holds \"(a) Partition. Shard graphs across several reflow2 processes so a crash loses a subset\" and adds \"this is why it belongs with #1 — it is a property of the registry's routing, not a layer above it\", with the warning that designing them apart means designing the first one twice. **Partitioning gives tenant isolation and blast-radius containment from ONE decision.**\n\nWHAT WAS REJECTED, and why, so nobody re-proposes it:\n- A FILTERED LISTING (one registry, trimmed per caller). Rejected on (1): it needs identity reflow2 does not have and will not acquire.\n- NO LISTING AT ALL (you may only attach to an id you were handed). Safe, and it breaks `req:a-session-chooses-its-design` — which is ACCEPTED and whose whole first half is discovering what exists before choosing.\n- LIST EVERYTHING AND TRUST THE OPERATOR TO SCOPE IT. This is what shipped, and it is what this decision RATIFIES rather than changes — but only once the root is NAMED as the boundary. Undecided, the same code reads as an oversight; decided, it is the mechanism.\n\nWHAT IT COSTS, honestly: a root (and likely a process) per tenant is more resource-hungry than one shared server, and it pushes \"which tenant is this?\" up to flo2's gateway. That is where it already belongs — flo2's own boundary list says \"Authentication and authorization, entirely\" is flo2's job, and its only obligation on reflow2 is that a session bound to one graph cannot address another, which is now tested.\n\n⇒ WHAT THIS SETTLES FOR THE TRANSPORT (`cap:select-graph-by-id`, still `in_progress`): **the registry routes WITHIN a root and never across one.** A selection surface — the preferred HTTP path prefix `/g/<graph_id>/` — resolves against the root that server was given, and there is no cross-root operation to design. The security property is decided BEFORE the surface is built rather than retrofitted onto it, which is what flo2's tracker warns about: \"a handler that reaches the wrong graph corrupts a design rather than erroring, so this wants property tests, not examples.\"\n\n📌 NOT SETTLED HERE: whether one PROCESS may hold several roots. `dec:one-process-many-stores` (accepted, conditional) is about a process holding N stores; this is about what one REGISTRY offers. If a process ever serves two roots, the per-root boundary still holds and the routing question is separate.",
         "name": "The registry ROOT is the tenant boundary — listing stays unfiltered, and reflow2 still authenticates nothing",
         "rationale": "Anthony chose this over a filtered listing and over refusing to list at all, after the registry made the question live rather than theoretical. The load-bearing reason is that a filter would require reflow2 to know who is asking — an identity system the design has twice refused in writing — whereas the root is already a parameter, is already the isolation boundary the registry tests prove, and is the same partitioning that flo2's blast-radius section independently recommends. One decision covers tenant isolation and blast radius, which is what that section asked for when it said to decide them together rather than twice.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:the-rust-rocksdb-switch-is-parked-until-the-store-question-settles",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "PARKED ON ANTHONY'S EXPLICIT WORD, 2026-08-25: *\"park the rust-rocksdb migration with its reason.\"* **PARKED IS NOT REJECTED.** `dec:absorb-rocksdb-024-unchanged-then-switch-separately` stays `accepted`, its reasoning stays correct, and the switch stays owed if RocksDB stays.\n\nTHE REASON, IN ONE LINE: **it is an 86-file migration whose entire subject is the component that may be about to be retired.**\n\nWHAT CHANGED SINCE THAT DECISION WAS MADE, ONE DAY EARLIER. On 2026-08-24 the switch was straightforwardly next: absorb `rocksdb` 0.24 verbatim, then swap the crate in its own PR with one variable and one revert. Nothing in that reasoning was wrong. What arrived a day later is a question that sits UNDER it — `dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability`, asking whether an embedded key-value store earns its place at all. Three of that question's five blockers have since been measured away:\n\n    load to fully searchable, no database at all      1,156 ms\n    save (build export doc + serialize)                 265 ms\n    confirmation-ledger claims surviving hydration    208 / 208, ZERO differing fields\n    core tests passing with no store and no index         1,452\n\n⇒ IF THAT QUESTION RESOLVES TOWARD THE DOCUMENT AS THE ENDURING ARTIFACT, `cmp:rocksdb-backend` is what gets retired — and the migration becomes work done and then deleted. Doing it first de-risks nothing; it spends the effort on the branch most likely to be cut.\n\n⭐ THE ORDERING IS THE POINT, AND IT IS THE SAME PRINCIPLE THE PARKED DECISION ITSELF ARGUES. That decision exists because mixing a dependency swap into a migration gives a failure two candidate causes. The same discipline one level up says: do not migrate a component while its existence is an open question. **One variable at a time applies to WHETHER a thing exists, not only to how it is changed.**\n\n🛑 THE FAILURE MODE THIS GUARDS AGAINST IS SPECIFIC AND LIKELY. The migration reads as tidy housekeeping — an unmaintained crate, a maintained replacement, and a version number that looks far behind (it is not: `rocksdb` 0.24 and `rust-rocksdb` 0.52 are different crates on independent numbering, and reading them as one series overstates the gap). AGENTS.md already warns against bumping the pin as housekeeping, but that warning explains the ~19-minute COMPILE cost, not this one. A session that reads the accepted decision and nothing else will correctly conclude the switch is owed and start it. **This node exists so that session meets the park.**\n\n⚠️ WHAT UNPARKS IT: `dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability` settling, either way.\n- **RocksDB stays** → the switch is owed exactly as written, and this decision should be `superseded`.\n- **RocksDB goes** → the switch is retired along with `cmp:rocksdb-backend`, and the parked decision is superseded rather than completed.\n\n📌 A DIFFERENT PARK, NOT TO BE CONFUSED WITH THIS ONE: `dec:idea-a-byte-backend-that-compiles-in-seconds` (redb, fjall, LMDB, SQLite) is parked on Anthony's word of 2026-08-24 — *\"still parked for a time\"*. That one asks WHICH embedded engine. This one asks whether to move between two wrappers of the SAME engine. The question blocking both asks whether an embedded engine is needed at all.\n\n📌 MODELLING NOTE, recorded because the vocabulary corrected the first attempt: this was first written as a TemporalFact and REFUSED — `basis` accepts only `measured` or `forecast`, and a park is neither. It is a choice somebody made, so it is a Decision. The schema pointed at the right node type rather than accepting a wrong one.\n\nKEPT DISTINCT, after reading both: `dec:absorb-rocksdb-024-unchanged-then-switch-separately` is the decision to make the switch and it is unchanged by this — parking is a separate act, by a separate person, at a separate time, and folding it in would erase that. `cmp:rocksdb-backend` is the thing the switch would alter, not a statement about when to alter it.",
+        "name": "PARKED — do not start the rust-rocksdb migration until the store question settles; it is an 86-file change to the one component that may be retired",
+        "rationale": "Recorded as its own Decision rather than by editing the parked one, deliberately: editing that node's text would mean re-sending the whole `decision` field and destroying its pre-image, which is the hazard `fact:the-revising-write-warning-fired-correctly-and-the-overwrite-happened-anyway` measured twice today.\n\nKept ACCEPTED rather than proposed because Anthony gave it in his own words as an instruction, not as a musing — asserting it would be forgery only if he had not said it.",
         "status": "accepted"
       }
     },
@@ -122700,6 +122855,24 @@
         "paradigm": "synchronous",
         "payload_format": "none",
         "payload_schema": "Values crossing the boundary are `dynograph_storage::{StoredNode, StoredEdge}` and `dynograph_core::Value`, passed as owned Rust values in-process — no serialization, which is why `payload_format` is `none` rather than a wire format.\n\n  StoredNode { graph_id: String, node_type: String, node_id: String, properties: HashMap<String, Value> }\n  StoredEdge { .. from_id / to_id / edge_type / properties }\n\n⚠️ THIS CONTRACT INHERITS ANOTHER. Those types belong to dynograph-foundation, recorded here as `ifc:req-dyno-storage-api` (designation `required` — reflow2 consumes it and does not own it). So an alternative implementation of this boundary is free to store bytes however it likes, but is NOT free to invent its own node and edge types: it must produce these. That is a real constraint on substitutability and it is inherited, not chosen.",
+        "provenance": "authored",
+        "transport_security": "none"
+      }
+    },
+    {
+      "node_id": "ifc:kv-backend",
+      "node_type": "Interface",
+      "properties": {
+        "auth": "none",
+        "designation": "internal",
+        "endpoint": "crates/reflow2-core/src/foundation/store/backend.rs — `pub(crate) trait KvBackend: Send + Sync`",
+        "error_model": "`DynoError`. An unknown column family is refused rather than created. NO SILENT FALLBACK: with the `rocksdb` feature off, `open_rocksdb` fails loud instead of quietly returning the in-memory backend, so a caller can never believe it has durability it does not have.",
+        "medium": "library",
+        "name": "KvBackend trait — the byte seam under StorageEngine",
+        "operations": "Six byte-level primitives over six named column families: get(cf, key) -> Option<bytes>; put(cf, key, value); delete(cf, key); prefix_scan(cf, prefix) -> ordered (key, value) pairs; prefix_delete(cf, prefix); commit_batch(ops) applying Put / Delete / PrefixDelete atomically and IN ORDER.",
+        "paradigm": "synchronous",
+        "payload_format": "binary",
+        "payload_schema": "Opaque bytes on both sides. The seam is deliberately schema-blind: every schema-aware behaviour — validation, the reverse index, the read cache, the write-buffer overlay, the full-text sidecar — sits ABOVE this trait in StorageEngine, and everything that touches bytes goes through it. Keys are built by `foundation/store/keys.rs` and namespaced by graph_id, which is what lets many graphs share one instance.",
         "provenance": "authored",
         "transport_security": "none"
       }
@@ -131934,6 +132107,19 @@
       }
     },
     {
+      "node_id": "fact:the-revising-write-warning-fired-correctly-and-the-overwrite-happened-anyway",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "method_defect",
+        "name": "Second recorded instance of a revising write destroying its own pre-image — committed by an agent that had READ the warning about the first instance, in the same session, hours earlier. The capability worked exactly as designed; it reports, it does not prevent",
+        "statement": "MEASURED 2026-08-25. Adding a road to a brainstormed Decision meant re-sending its whole `decision` field, because constructors merge by overwrite. The reply said so:\n\n    \"This call REPLACED 1 property on a node that already existed, AND NO\n     SNAPSHOT HOLDS THE PRIOR VALUE OF `decision` — checked, not assumed.\n     For that field, the value in `replaced` above is the only copy in\n     existence and this reply is the only place it appears.\"\n\n⭐ THE CAPABILITY DID ITS JOB PERFECTLY, AND THAT IS THE POINT. `cap:a-revising-write-says-whether-the-state-survived` computes whether the replaced state is preserved rather than restating the rule at everyone, and it reported the destruction accurately, named the exact field, confirmed it had CHECKED for a snapshot rather than assumed, handed back the only surviving copy, and prescribed the undo. Nothing is broken here. **Its name is `says whether the state survived`, not `prevents` — it is a reporting mechanism and it reported.**\n\n🛑 WHAT MAKES THIS WORTH RECORDING IS WHO DID IT AND WHEN. The `capture-session` skill carries a paragraph about the FIRST instance: *\"the first finding ever closed under test 7 was closed WRONG, minutes after the test shipped: the closure was written by overwriting the statement, destroying the measurement it was closing... The pull toward replacing is strong because a closure reads like a correction.\"* The agent that committed this second instance had **read that paragraph in this same session, hours earlier**, and had followed it correctly at the time — deliberately choosing `invalidates` over overwriting on two separate findings, and choosing to anchor a new measurement as its own node rather than revise a decision, EXPLICITLY to avoid this trap. Then it overwrote anyway, for a different reason (adding an option to a brainstorm, which does not read like a closure at all).\n\n⭐⭐ SO THE WARNING'S OWN FRAMING IS TOO NARROW, AND THAT IS THE FINDING. It explains the pull as *\"a closure reads like a correction\"*. This instance was not a closure and had no correction in it — it was an ADDITION to a brainstorm, the most innocent-looking edit there is. **The hazard is not closures; it is any edit to a field that already holds prose, because the only way to add a paragraph is to re-send the whole field.** An instruction that warns about one shape leaves the others unguarded, and the reader who has just complied with it feels safest.\n\n⚠️ NO FIX PROPOSED, and the obvious ones are worth naming with their costs: an append-only field or a patch argument would remove the hazard and complicate every writer; auto-snapshotting before a destructive merge would preserve the pre-image and put a write on every revise; refusing the merge without an explicit acknowledgement would stop it and add a round trip to ordinary editing. `dec:idea-should-record-change-refuse-a-snapshot-of-state-that-already-moved` already holds a neighbouring question.\n\n📌 NOT SEVERE IN THIS CASE, stated so the record is not read as worse than it was: the replaced text and its replacement were both written by the same agent minutes apart, the new text was verified to be a superset of the old in substance, and the pre-image survives in the session transcript. The finding is the PATTERN, not the damage.\n\n📌 BOUNDS: two instances total, both on reflow2's own graph, both by an agent rather than a person. Whether a human editor hits it as often is unknown and uncounted.",
+        "subject_id": "cap:a-revising-write-says-whether-the-state-survived",
+        "valid_from": "2026-08-25"
+      }
+    },
+    {
       "node_id": "fact:the-root-cause-was-on-the-record-and-a-session-re-derived-it-anyway",
       "node_type": "TemporalFact",
       "properties": {
@@ -134892,7 +135078,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:75c5b2857de7735b345d983b495bae4ef44f3a1aa5824249006e3fa057fb3105",
+  "prev_content_hash": "sha256:f6a5759b243b46c5944e7440f95d5674fe7074ea1bd4867bbadf9b512189624a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
