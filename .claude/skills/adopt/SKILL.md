@@ -46,6 +46,34 @@ recorded.
 - **Structure from imports and calls — never from prose.** Inferring component identity from
   comments manufactured a phantom external system in one trial; stale naming outlives stale
   code.
+- **Recover the HIERARCHY the artifact has — it is there, and until 2026-08-25 this step was
+  missing entirely.** Nest what you record with `contain_component`, and give each part a `level`
+  naming a rung on the design's ladder (`Project.decomposition_levels`; absent means the default
+  `component ▸ subsystem ▸ system ▸ system_of_systems ▸ enterprise`). A real system tells you its
+  own tiers: services are roughly subsystems, the scripts inside one are roughly components, the
+  classes and functions inside those are the tier below. Take the nesting the artifact already
+  shows; do not invent one.
+
+  **THE COST OF SKIPPING IT WAS MEASURED, AND IT WAS TOTAL.** Every design this skill had ever
+  produced came out FLAT — dev_storyflow 101 components with ZERO containing another, mapwright
+  15 with zero, music_graph 25 with two — because these instructions never once said to nest.
+  The subjects were not flat; the instruction was absent. Re-run on reflow2 itself with only this
+  step added, the same artifact yielded four rungs, `hierarchy_issues` 0, and no parent over the
+  3–7 span-of-control bound, while the hand-built functional design of the same system exceeded
+  it in four places.
+
+  **FLAT IS AN HONEST ANSWER WHEN THE ARTIFACT IS FLAT** — say so rather than manufacturing tiers
+  to look thorough. And check the result: `hierarchy_issues` reports a `level` that is not a rung
+  on the ladder, a parent that is not exactly one rung above its child, and a box in two boxes.
+
+  ⚠️ **WHAT NESTING CANNOT RECOVER, so it is not mistaken for the whole job.** A FUNCTIONAL
+  carving comes from the product's PURPOSE and cuts across the artifact's own boundaries, so
+  inspection cannot produce it (`dec:bl83a-functional-decomposition`). Measured twice on reflow2:
+  by directory, 86 core modules sit loose in one place with no grouping to find; by imports, the
+  dependency graph is a STAR — three hubs at fan-in 49/42/41 and 45% of modules importing only
+  those — so clustering yields hubs and leaves, never the eight functional subsystems a person
+  derived from what the product is FOR. Recover the module view honestly and leave the functional
+  view to the user; genesis is where that one comes from.
 - **Granularity is the scale answer, and node count tracks distinct contracts and capabilities —
   not lines of code.** What a coarse-but-honest model costs in nodes is set by how many *distinct
   things the system does and exposes*, not how big it is: a 110k-LOC system landed at ~78 nodes,

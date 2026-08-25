@@ -81,6 +81,12 @@ NON_TOOL_TERMS = {
     # — the two read identically and only the field tells them apart.
     "subject_id",
     "subjects_examined",
+    # `level` is the Component PROPERTY naming a rung on the design's
+    # decomposition ladder, not a tool. adopt names it in the nesting step added
+    # 2026-08-25: recovering a hierarchy means setting `level` as well as drawing
+    # CONTAINS, and a skill that said "nest it" without naming the field would
+    # leave the rung unset and every containment reading as a level_mismatch.
+    "level",
     # `description` is a NODE PROPERTY. The adopt skill now names it (and
     # `location`) to say WHY the import document beats node-by-node calls:
     # a document reaches the whole schema and the typed constructors do not,

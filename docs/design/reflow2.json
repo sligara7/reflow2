@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:727c2dd798109bfce43f342970d1a17a8819293b7fe7dfa51d083fd699382e39",
+  "content_hash": "sha256:f9163724cf657b27616d9b001038ee59064037f69a2eed8bfa0dcc93e56c08c5",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3034,6 +3034,14 @@
     },
     {
       "edge_type": "ANTICIPATES",
+      "from_id": "fact:the-black-box-tier-has-two-answers-that-disagree",
+      "properties": {
+        "evidence": "The earlier one saw this coming. That 2026-08-18 measurement found the two ways of asking for the top tier returning different sets — 8 subsystems by declared level, 2 leaves by spine position — which is precisely the symptom of storing something that could be derived. It is the evidence this question reasons from, and its 4%-populated-spine figure is the number that currently argues FOR what shipped rather than against it."
+      },
+      "to_id": "dec:idea-is-a-declared-rung-name-the-right-shape-for-decomposition-depth"
+    },
+    {
+      "edge_type": "ANTICIPATES",
       "from_id": "fact:the-eight-subsystems-are-groupings-not-black-boxes",
       "properties": {
         "evidence": "That measurement found ZERO of eight subsystems providing an interface, with every interface provided by a leaf component one level down - subsystems as groupings rather than black boxes. Four subsystems have since gained a PROVIDES edge, so the count aged; the finding did not, because none of the four carries a contract. It predicted the shape of today's answer before the edges existed."
@@ -3068,6 +3076,14 @@
       "edge_type": "ANTICIPATES",
       "from_id": "fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it",
       "properties": {
+        "evidence": "The earlier one saw this coming, from the other side. That finding measured that vocabulary reaches a user's design only with a typed tool, an instruction, and a detector that notices absence. This is the inverse failure: the instruction EXISTS and claims the case, but costs more than the thing being captured, so the vocabulary still never gets written. Reach is not only about whether a leg is present — an instruction heavy enough to be skipped is a leg that does not bear weight."
+      },
+      "to_id": "dec:idea-is-there-a-lightweight-task-capture-below-the-increment-grain"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it",
+      "properties": {
         "evidence": "A skill is the INSTRUCTION leg and nothing else. The tool leg exists here (add_constraint, budget_report) and the detector leg does not - nothing notices a project optimising with no budget, or a Constraint nobody ever measured against. The three-legs fact predicts that an instruction shipped alone leaves the vocabulary empty in every project, which is exactly what option (b) is for."
       },
       "to_id": "dec:idea-should-optimize-be-a-served-skill-any-project-can-run"
@@ -3086,6 +3102,14 @@
       "from_id": "req:complementary-pairing",
       "properties": {},
       "to_id": "req:seam-incompatibility"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "req:recursive-black-box-decomposition",
+      "properties": {
+        "evidence": "The earlier one saw this coming. That accepted requirement asks for nesting 'as deep as the design needs' — and 'as the design needs' is precisely the quantity span of control computes, rather than the open-ended invitation it has been read as. Its own measurement already flagged 'DEPTH IS TWO, not as deep as the design needs' as the shortfall; a fan-out rule is what would say how deep is actually needed instead of leaving it to judgement."
+      },
+      "to_id": "dec:idea-depth-is-derived-from-fan-out-not-declared-by-a-ladder"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -10173,6 +10197,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-depth-is-derived-from-fan-out-not-declared-by-a-ladder",
+      "properties": {
+        "acted_at": "2026-08-25T12:30:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-detect-ownership-orphans",
       "properties": {
         "acted_at": "2026-08-09",
@@ -10337,6 +10370,15 @@
       "from_id": "dec:idea-does-serving-flo2-cost-the-local-case",
       "properties": {
         "acted_at": "2026-08-21",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-does-the-deferred-structuring-step-need-a-skill-of-its-own",
+      "properties": {
+        "acted_at": "2026-08-25T13:45:00Z",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -10550,6 +10592,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-is-a-declared-rung-name-the-right-shape-for-decomposition-depth",
+      "properties": {
+        "acted_at": "2026-08-25T12:00:00Z",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-is-reflow2-itself-a-cp-store-behind-an-ap-record",
       "properties": {
         "acted_at": "2026-08-12",
@@ -10589,6 +10640,15 @@
       "from_id": "dec:idea-is-there-a-feedback-intake-skill-and-is-it-a-router",
       "properties": {
         "acted_at": "2026-08-15",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-is-there-a-lightweight-task-capture-below-the-increment-grain",
+      "properties": {
+        "acted_at": "2026-08-25T14:00:00Z",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -11046,6 +11106,15 @@
       "from_id": "dec:idea-verification-is-planned-with-the-requirement",
       "properties": {
         "acted_at": "2026-08-11",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-what-does-se-doctrine-actually-prescribe-upfront-and-what-of-it-does-reflow2-have",
+      "properties": {
+        "acted_at": "2026-08-25T13:00:00Z",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -13593,6 +13662,16 @@
         "validation_status": "validated"
       },
       "to_id": "dec:a-stale-finding-is-closed-by-a-claim-not-a-computation"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "dec:idea-what-does-se-doctrine-actually-prescribe-upfront-and-what-of-it-does-reflow2-have",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "Taking one forced the other. Walking the doctrinal sequence step by step is what located the hole: steps 4-5 (functional analysis, then allocation) are where structure comes from, reflow2 owns the machinery for step 5 in propose_allocation, and no skill mentions it. Without that walk the gap reads as 'genesis is incomplete'; with it, the gap has a name, a doctrinal position, and an existing tool sitting unused at exactly that position.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-does-the-deferred-structuring-step-need-a-skill-of-its-own"
     },
     {
       "edge_type": "CAUSES",
@@ -19182,6 +19261,33 @@
         "action": "added"
       },
       "to_id": "ver:acknowledgement-not-structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:adopt-recovers-the-hierarchy-it-was-never-told-to-look-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:adopt-recovers-the-hierarchy-it-was-never-told-to-look-for",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:adopt-recovers-the-hierarchy-it-was-never-told-to-look-for",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:adopt"
     },
     {
       "edge_type": "CHANGED",
@@ -31830,6 +31936,15 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-depth-is-derived-from-fan-out-not-declared-by-a-ladder",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "Opposing at the premise, not at the answer. That node compares five CARRIERS for depth and every one of them has the user declaring it — a rung name, a derived spine position, a rung node, a relative rule, or both reconciled. This says the NUMBER of layers need not be chosen at all: span of control makes it a consequence of how many parts exist. If that holds, the carrier question shrinks from a design decision to a rendering detail, so the two cannot both be the right frame."
+      },
+      "to_id": "dec:idea-is-a-declared-rung-name-the-right-shape-for-decomposition-depth"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "dec:idea-detect-ownership-orphans",
       "properties": {
         "alignment": "supporting",
@@ -31939,6 +32054,15 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-is-a-declared-rung-name-the-right-shape-for-decomposition-depth",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "Opposing, and worth stating rather than smoothing over: that capability's whole premise is asking by DECLARED level 'instead of deriving it from the containment spine', and option B here proposes exactly the derivation it rejected. The disagreement is narrower than it looks — its rejection rests on a measurement of an INCOMPLETE spine (14 components with no parent), not on depth being a bad definition of level — but it is a real conflict about which of two sources is authoritative, and the design will have to pick if B is ever taken."
+      },
+      "to_id": "cap:ask-for-one-rung-of-the-decomposition"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "dec:idea-is-session-context-already-in-the-graph",
       "properties": {
         "alignment": "supporting",
@@ -31957,6 +32081,15 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-is-there-a-lightweight-task-capture-below-the-increment-grain",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "Opposing on scope, not on intent. That capability's own description claims exactly this case — 'use when you catch yourself keeping a to-do list in the conversation' — so on paper the ground is taken. In practice the skill is 106 lines, 12 steps, and reaches add_epoch / add_release / gate_on / arrival_delta / detect_gaps / loop_status plus TRL thresholds. Either the claim in its description is too wide, or a fast path is owed; both cannot stand as they are, and the design will have to pick."
+      },
+      "to_id": "cap:plan-increments"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "dec:idea-ownership-is-the-third-who-axis",
       "properties": {
         "alignment": "supporting",
@@ -31972,6 +32105,16 @@
         "evidence": "Corroboration, not conflict (alignment is supporting): the 2026-08-09 node's FIFTH ROAD states this same shape — object storage holds the export as the source of truth, a node hydrates a RocksDB+tantivy cache on demand, eviction is free because the cache is derived. Anthony reached it again independently on 2026-08-24 from a compile-speed question rather than a hosting question. Two derivations from different premises landing on one shape is evidence about the shape."
       },
       "to_id": "dec:idea-a-hosted-tier-of-many-single-writer-tenants"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-what-does-se-doctrine-actually-prescribe-upfront-and-what-of-it-does-reflow2-have",
+      "properties": {
+        "alignment": "supporting",
+        "confidence": 0.9,
+        "evidence": "Corroboration reached from the opposite direction. That audit read the claim 'reflow2 does SE' against ISO/IEC/IEEE 15288 and found broad vocabulary, real process on the guided paths, and thin enforcement. This walks the UPFRONT sequence step by step and lands in the same place from the other end: the vocabulary for steps 3-10 is nearly all present and several pieces are well-modelled, while steps 1-2 (mission analysis and ConOps) have no home at all, and the step-5 generator that already exists (propose_allocation) is a tool nobody is instructed to run. Two independent readings agreeing on 'the vocabulary is there and the reach is not' is stronger evidence than either alone."
+      },
+      "to_id": "dec:idea-audit-the-claim-that-reflow2-does-systems-engineering"
     },
     {
       "edge_type": "CONTRADICTS",
@@ -32001,6 +32144,16 @@
         "evidence": "Corroboration rather than conflict, and the pair is the general shape: BOTH say a branch-local green says nothing about the merge base. The older fact measured it on the LOCAL gate (HEAD vs HEAD~1, so a stacked branch has no merge base to check against); this one measures the same blindness one level up, where the branch is internally coherent and the SUBTRACTION against main is what nothing checks. 2026-08-16 added a third instance on the same theme: #194's base branch was another PR's branch rather than main, so its green CI had been testing the wrong base entirely, `gh` reported MERGEABLE until that base was merged and deleted, and retargeting the base to main did NOT re-trigger CI — a force-push was needed. `SUPPLEMENTS` would be the better word; no edge type models TemporalFact to TemporalFact, so this uses the corroboration form rather than asserting a relation the schema does not carry."
       },
       "to_id": "fact:the-local-lineage-gate-cannot-see-a-stacked-export"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "fact:adopt-recovers-depth-cleanly-and-cannot-recover-the-functional-carving",
+      "properties": {
+        "alignment": "supporting",
+        "confidence": 1.0,
+        "evidence": "The pair completes an argument neither half makes alone. That fact established the ABSENCE — adopt's instructions never mention nesting, and every design it produced came out flat. This establishes the COUNTERFACTUAL by doing the omitted step on the same subject: four rungs, hierarchy_issues 0, span of control clean everywhere. Together they show the flatness was never a property of the systems being adopted or of what users need; it was a missing instruction, and supplying it costs nothing but the asking."
+      },
+      "to_id": "fact:adopt-never-builds-a-hierarchy-so-every-adopted-design-comes-out-flat"
     },
     {
       "edge_type": "CONTRADICTS",
@@ -32071,6 +32224,16 @@
         "evidence": "That fact is the server being unable to answer the staleness question; this is the answer being priced out of reach. req:the-server-is-the-authority-on-its-own-currency subsumes both."
       },
       "to_id": "fact:defect-a-running-server-cannot-say-it-is-stale"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "fact:four-frame-corrections-in-one-session-all-the-same-shape",
+      "properties": {
+        "alignment": "supporting",
+        "confidence": 0.9,
+        "evidence": "Corroboration, and together they are the strongest evidence yet for the open question of how an agent comes to use reflow2's disciplines unprompted. Both record a failure that a written, correct, ALREADY-READ discipline did not prevent, and that a person caught instead of a mechanism: one an overwrite warning read hours before it was ignored, the other four sound measurements answering the wrong population. Neither is a knowledge gap — in both cases the right rule was known and available at the moment it was needed."
+      },
+      "to_id": "fact:the-revising-write-warning-fired-correctly-and-the-overwrite-happened-anyway"
     },
     {
       "edge_type": "CONTRADICTS",
@@ -34921,6 +35084,14 @@
         "evidence": "The older thought grown up. The 2026-08-06 PoC composed three designs in a LINE (dynograph-foundation -> reflow2 -> flo2) and proved the mechanism. This is the same idea with the second arm attached, so the shared upstream sits in the middle of a DIAMOND rather than at the end of a chain — which exercises something the line could not: whether the tooling can see two consumers of one dependency at all. Direction is deliberate: the PoC came first and this is its successor, not the reverse."
       },
       "to_id": "dec:idea-compose-both-chains-as-one-stress-test"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:the-decomposition-ladder-is-open-not-a-fixed-enum",
+      "properties": {
+        "evidence": "The older thought, grown up. That decision settled THAT the ladder opens and was taken before any implementation existed; this asks whether the carrier chosen to open it — a declared rung NAME per component — is the right shape, and it can only be asked now because there is something concrete to criticise. Its sharpest point is that the shipped design asserts ONE LADDER PER DESIGN, which is the same domain-uniformity assumption the parent decision rejected, moved up one level."
+      },
+      "to_id": "dec:idea-is-a-declared-rung-name-the-right-shape-for-decomposition-depth"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -42430,6 +42601,18 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:adopt",
+      "properties": {},
+      "to_id": "fact:adopt-never-builds-a-hierarchy-so-every-adopted-design-comes-out-flat"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:adopt",
+      "properties": {},
+      "to_id": "fact:adopt-recovers-depth-cleanly-and-cannot-recover-the-functional-carving"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:an-unconnected-idea-is-visible-as-one",
       "properties": {},
       "to_id": "fact:the-review-relations-redo-was-a-no-op-once-somebody-read-the-code"
@@ -43042,6 +43225,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it",
+      "properties": {},
+      "to_id": "fact:four-frame-corrections-in-one-session-all-the-same-shape"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "proj:reflow2",
       "properties": {},
       "to_id": "fact:a-pr-export-goes-stale-behind-a-green-mergeable-badge"
@@ -43081,6 +43270,12 @@
       "from_id": "req:defaults-do-not-assert",
       "properties": {},
       "to_id": "fact:a-materialised-default-defeats-a-completeness-check"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "req:recursive-black-box-decomposition",
+      "properties": {},
+      "to_id": "fact:no-uncontaminated-sample-of-a-well-decomposed-design-exists-yet"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -90944,6 +91139,15 @@
       "to_id": "fact:defect-a-verification-has-nowhere-to-put-its-evidence-so-the-name-became-the-report"
     },
     {
+      "edge_type": "INVALIDATES",
+      "from_id": "fact:adopt-never-builds-a-hierarchy-so-every-adopted-design-comes-out-flat",
+      "properties": {
+        "at": "2026-08-25",
+        "note": "SHARPENS ITS CENTRAL CLAIM RATHER THAN OVERTURNING IT, and the node stays open. That fact concluded the depth measurements were uninterpretable because every sample grew organically. TRUE, and incomplete: the flat ones are flat for a NAMEABLE reason that has nothing to do with organic growth — adopt's instructions never mention nesting, so a design it produced could not have been deep however deliberate its subject was. The contamination is not only 'no SE was done upfront'; for four of the seven it is 'the skill that built the model never asked for a hierarchy'.\n\nWHAT STILL STANDS: no design shaped by SE upfront with reflow2 exists, flo2 remains the sole deliberately-shaped sample at n=1, and Conway's Law still means a conformant-looking boundary is not evidence that SE happened. What moves is that the genesis/adopt split now explains the BIMODALITY in the data — flo2 deep, everything adopt-produced flat — which that node treated as unexplained variance."
+      },
+      "to_id": "fact:no-uncontaminated-sample-of-a-well-decomposed-design-exists-yet"
+    },
+    {
       "edge_type": "MITIGATES",
       "from_id": "chg:write-buffer-gets-an-index-and-hydrate-drops-tenfold",
       "properties": {
@@ -90951,6 +91155,30 @@
         "evidence": "The hazard this idea carried was hydrate cost: with the store gone, every session pays a rebuild, and that was 8,828 ms when the question was first recorded — enough to make the idea unusable for a design this size. The write-buffer index removed the cause (a linearly-scanned Vec, not storage), and load to fully searchable is now 1,098 ms with the full-text index built in RAM. The change did not decide the question; it removed the objection that would have decided it the other way."
       },
       "to_id": "dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability"
+    },
+    {
+      "edge_type": "MITIGATES",
+      "from_id": "dec:idea-depth-is-derived-from-fan-out-not-declared-by-a-ladder",
+      "properties": {
+        "evidence": "One is a hazard, the other answers it. That measurement found declared level and spine position returning different sets, with no way to say which is right. A fan-out rule gives an INDEPENDENT third signal that is neither: 101 components under one parent is a finding whether or not anyone declared a level, and it is the same finding under either reading. It does not resolve which source is authoritative — it removes the need to pick one in order to say something useful."
+      },
+      "to_id": "fact:the-black-box-tier-has-two-answers-that-disagree"
+    },
+    {
+      "edge_type": "MITIGATES",
+      "from_id": "dec:idea-does-the-deferred-structuring-step-need-a-skill-of-its-own",
+      "properties": {
+        "evidence": "One is a hazard, the other answers it. That finding measured that vocabulary reaches a user's design only with a typed tool AND an instruction AND a detector that notices absence. propose_allocation is a typed tool with neither of the other two legs, so it reaches nobody. Every option here supplies at least one missing leg, and option E supplies the detector first — which is the leg that makes the loop ask rather than wait to be told."
+      },
+      "to_id": "fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it"
+    },
+    {
+      "edge_type": "MITIGATES",
+      "from_id": "dec:idea-what-does-se-doctrine-actually-prescribe-upfront-and-what-of-it-does-reflow2-have",
+      "properties": {
+        "evidence": "One is a hazard, the other answers it. That requirement asks for nesting 'as deep as the design needs' and its own measurement flags 'DEPTH IS TWO, not as deep as the design needs' as the shortfall — with no method for deciding how deep is needed. The doctrinal sequence supplies exactly that method: functions first, allocation groups them, structure falls out, span of control checks it. It also names the machinery reflow2 already has for it, propose_allocation, which nothing currently instructs anyone to run."
+      },
+      "to_id": "req:recursive-black-box-decomposition"
     },
     {
       "edge_type": "MITIGATES",
@@ -91068,6 +91296,14 @@
         "confidence": 1.0
       },
       "to_id": "dec:an-unplanned-cut-slips-every-later-increment-by-one"
+    },
+    {
+      "edge_type": "OBSOLETES",
+      "from_id": "dec:idea-what-does-se-doctrine-actually-prescribe-upfront-and-what-of-it-does-reflow2-have",
+      "properties": {
+        "evidence": "Retires its framing, not its measurement. That node proposed computing the NUMBER OF LAYERS from a 3-7 span-of-control bound, treating the count as the generator of depth. Doctrine puts span of control downstream: structure is derived from grouping FUNCTIONS by cohesion and coupling, and 3-7 is the sanity check on the result. Twenty children means the functional grouping lacked an intermediate cohesion level, not that a rung is owed. Its fan-out measurements stand and remain useful as a check; its causal story does not."
+      },
+      "to_id": "dec:idea-depth-is-derived-from-fan-out-not-declared-by-a-ladder"
     },
     {
       "edge_type": "OBSOLETES",
@@ -94901,6 +95137,16 @@
         "severity": "medium"
       },
       "to_id": "dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability"
+    },
+    {
+      "edge_type": "RISKS",
+      "from_id": "fact:no-uncontaminated-sample-of-a-well-decomposed-design-exists-yet",
+      "properties": {
+        "confidence": 0.85,
+        "evidence": "That idea proposes computing required depth from a 3-7 span-of-control bound. This is the hazard it runs into: the only systems available to calibrate that bound against are organically grown, and Conway's Law — rule 3 of the very same doctrine — predicts organic growth will LOOK conformant at some boundaries without any SE having occurred. So a threshold tuned on this evidence would be fitted to what accretion produces rather than to what good decomposition needs. It does not refute the idea; it says the number cannot be calibrated from anything currently in reach, which is a reason to REPORT fan-out rather than ship a threshold.",
+        "severity": "medium"
+      },
+      "to_id": "dec:idea-depth-is-derived-from-fan-out-not-declared-by-a-ladder"
     },
     {
       "edge_type": "SATISFIES",
@@ -100781,7 +101027,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:14385c12b76516b9a8a8903216243912fcf602be1869d703c25af468a18a1e44",
+        "checksum": "sha256:ce5ad2d156c47395f4c343cc68af0b3d81b9cef26cb4791ef9cee592d3e0e3c8",
         "granularity": "atomic",
         "location": "getting-started/skills/adopt/SKILL.md",
         "name": "adopt/SKILL.md",
@@ -102830,7 +103076,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5285d312c88444d33fc10500515244fb8311f6a50502eb77c4b518f5ea80ea3a",
+        "checksum": "sha256:9349f89feeb61be47f13213a4dee10bdbbde87c0793535585e9801536e7f9ef3",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -108533,6 +108779,18 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "BL-124: exclude review records from the design network. An acknowledgement Decision is wired GOVERNED_BY into everything it acknowledges, so it joined the island it acknowledged and made disconnected_community permanently unclosable. Fixed at design_network() rather than at the defect-id hash because it has three consumers. MEASURED on reflow2's own graph: 125 review records carrying 610 edges; four of the eight most central nodes were acknowledgements and are now none, with real components rising (rel:v0170 +75%, cmp:detect +41%); and surprising_connections went 16 to 32 — the bookkeeping edges were SUPPRESSING half the real surprises by tying communities together, which is the opposite of the predicted pollution."
+      }
+    },
+    {
+      "node_id": "chg:adopt-recovers-the-hierarchy-it-was-never-told-to-look-for",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-25",
+        "name": "adopt gains a nesting step in Phase 1",
+        "rationale": "⭐ THE CHANGE IS ONE BULLET AND THE EVIDENCE FOR IT TOOK A DAY. The flatness had already been measured across seven designs and read TWICE as a fact about users — first as \"real designs are two rungs deep so nobody needs depth\", then as \"the sample is contaminated so nothing can be concluded\". Both readings were wrong in the same direction: they treated an instruction's absence as evidence about the world. Anthony's framing is what turned it — *\"the hierarchy is there\"* — and a trial run on reflow2 itself produced the counterfactual in one pass.\n\n🛑 WHAT WAS DELIBERATELY NOT DONE: no code changed. `contain_component`, `level` and `hierarchy_issues` all already existed and all already worked; the only thing missing was an instruction to use them. A defect whose fix is a paragraph is worth naming as such, because the temptation on finding a gap this size is to build something.\n\n⚠️ AND THE STEP DOES NOT MAKE DEPTH A TARGET. It says recover what is there and say so when there is nothing. `dec:idea-breadth-and-depth-are-measured-and-the-balance-is-asked-about` records Anthony's own counter-argument — prefer-composition-over-inheritance, deep hierarchies are rigid — and it stands. Today's trial shows depth is RECOVERABLE and that the recovered shape passes span of control; it does not show depth is better, and those are different claims.\n\n📌 THE SYMMETRY IS STILL BROKEN AT THE OTHER END. adopt now recovers the structure an artifact HAS. genesis correctly DEFERS the structure a design NEEDS and nothing derives it — `propose_allocation` exists, is served, and appears in no skill. `dec:idea-does-the-deferred-structuring-step-need-a-skill-of-its-own` holds that question with five options and no answer.",
+        "subject": "system",
+        "summary": "Phase 1 of the adopt skill gains a step it never had: RECOVER THE HIERARCHY THE ARTIFACT HAS. Nest with `contain_component`, set `level` naming a rung on the design's ladder, take the nesting the artifact already shows rather than inventing one.\n\nThe bullet carries its own evidence: every design adopt had ever produced came out FLAT — dev_storyflow 101 components with zero containing another, mapwright 15 with zero, music_graph 25 with two — because the instructions never once said to nest. Re-run on reflow2 itself with only this step added, the same artifact yielded four rungs, `hierarchy_issues` 0, and no parent over the 3–7 span-of-control bound, while the hand-built functional design of the same system exceeds it in four places.\n\nIt also states two limits so the step is not mistaken for the whole job: FLAT IS AN HONEST ANSWER when the artifact is flat, and nesting cannot recover the FUNCTIONAL carving — measured twice on reflow2 (86 core modules loose in one directory; a star-shaped import graph with three hubs at fan-in 49/42/41 and 45% of modules importing only those). That half comes from purpose, with the user, and belongs to genesis.\n\n`skill_lint` caught three things and named the fix for each: `level` is a node PROPERTY not a served tool (added to NON_TOOL_TERMS with its reason), and the `.claude/skills` and `.grok/skills` mirrors were stale (re-copied). Skills are compiled into the binary by build.rs, so `cargo build -p reflow2-mcp` is what makes the change actually serve."
       }
     },
     {
@@ -114667,6 +114925,16 @@
       }
     },
     {
+      "node_id": "dec:idea-depth-is-derived-from-fan-out-not-declared-by-a-ladder",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-25, correcting the evidence base and supplying the doctrine. Nothing here is planned and #334 stands.\n\n═══ HIS METHODOLOGICAL CORRECTION, WHICH IS RIGHT AND MATTERS ═══\n\n*\"most of these are after the fact. meaning, they were developed before reflow2 really started defining rungs. they might have been done differently if reflow2 defined rungs when these designs were first started.\"*\n\n**THE SAMPLE IS CONTAMINATED.** Every design measured — flo2, qbench, dynograph-foundation, dev_storyflow, mapwright, music_graph, reflow2's own — was built while reflow2 offered no ladder concept, no instruction mentioning `level`, and no detector for depth. They are evidence of what happens with NO GUIDANCE, not evidence of what a guided user would produce. Any conclusion of the form \"users only go two rungs deep, so depth does not matter\" is unsupported, and one was drawn from them earlier today and is withdrawn here.\n\n*\"maybe better to use real world examples or case studies than our own, which were all done prior to a complete reflow2.\"*\n\n═══ THE DOCTRINE HE SUPPLIED — LAYERS ARE SET UPFRONT, BY RULE ═══\n\n**You do not guess the number of layers.**\n1. **COGNITIVE LIMIT / SPAN OF CONTROL — 3 to 7 children per parent.** Twenty components under one subsystem cannot have their interfaces managed by a human. Add a layer.\n2. **INDEPENDENT LIFECYCLES** — a part with its own upgrade cycle, testing process or supplier belongs in its own layer.\n3. **CONWAY'S LAW** — layers tend to match team structure; three engineering teams usually means three main subsystems.\n4. **STOP** when going deeper adds no value for tracking requirements, managing risk, or assigning work.\nStandard breakdown: SoS ▸ System ▸ Subsystem ▸ Component ▸ Part/Material.\n\n⭐⭐ THE INVERSION, AND IT IS THE WHOLE IDEA: **SPAN OF CONTROL MAKES DEPTH A CONSEQUENCE, NOT A CHOICE.** If a parent may hold 3–7 children, then the number of layers a design NEEDS falls out of how many parts it has. Nobody declares it and nobody has to know a vocabulary. That is a third answer to the ladder question that neither the closed enum nor the open ladder considered: reflow2 could COMPUTE the depth a design requires and say so, instead of asking the user to name rungs.\n\n═══ AND IT IS TESTABLE ON CONTAMINATED DATA, BECAUSE IT IS STRUCTURAL ═══\n\nSpan of control is a property of the graph, not a preference, so the contamination does not block it. MEASURED 2026-08-25, children per parent on the CONTAINS spine:\n\n    design                 fan-out per parent          parents over 7\n    flo2 (concept)         6, 2, 2, 1, 1               0  ✓\n    qbench                 5, 3                        0  ✓\n    dynograph-foundation   4, 4, 3, 2                  0  ✓\n    dev_storyflow          18, 11, 1, 1                2  (worst: storyflow = 18)\n    reflow2 (own)          28, 25, 13, 10, 6, 4, 2, 2  4  (worst: coherence-loop = 28)\n\n⭐ THE SMALL, DELIBERATELY-SHAPED DESIGNS ALREADY OBEY THE RULE WITHOUT BEING TOLD. flo2, qbench and dynograph-foundation are inside 3–7 everywhere. The two that violate it are the two grown by accretion over months — and **reflow2's OWN design is the worst offender in the sample, at 28 children under `sys:coherence-loop`, four times the limit.** That is a good reason to keep using it as a litmus test and a bad reason to treat it as an exemplar.\n\n⭐ IT ALSO EXPLAINS THE FLATNESS FOUND EARLIER WITHOUT NEEDING A PREFERENCE. dev_storyflow has 84–101 components with ZERO nesting; the earlier reading was \"users do not need depth\". Under this doctrine that is not a preference, it is a **defect with a number attached**: 101 children under one Project is 14x the upper bound, and the design needs roughly two more layers. The rule turns a shrug into a finding.\n\n═══ WHAT REFLOW2 COULD DO WITH IT ═══\n\n- **A `span_of_control` detector.** Cheap, deterministic, and it fires on the graph reflow2 already has. NOT already built: `evaluate_allocation`'s `god_components` looks for ARTICULATION POINTS in the capability-coupling graph — a different axis entirely, and it would not have caught any of the five rows above.\n- **A derived answer to \"how many layers do I need?\"** — computed from part count and fan-out, offered rather than demanded.\n- ⚠️ AND THE HONEST OBJECTION, recorded beside it: 3–7 is a HUMAN cognitive bound, and reflow2's stated posture is `dec:report-dont-judge`. Shipping 7 as a threshold would embed a rule of thumb as if it were a law, which is exactly the over-modelling this project refuses elsewhere. Reporting the FAN-OUT and letting the reader judge is the version that survives that objection; a hard threshold is the version that does not.\n- Rules 2 and 3 are NOT computable from the graph today. Independent lifecycles would need release/supplier data reflow2 does not hold, and Conway's Law would need team structure — `OWNED_BY` exists and could carry it, which is the nearest hook.\n\n═══ THE EVIDENCE THAT WOULD ACTUALLY SETTLE IT ═══\n\nReal-world case studies rather than this workshop's own output. Candidates, none pursued: published INCOSE/NASA systems-engineering case studies with documented WBS depth; open architecture documents (an aircraft, a spacecraft bus, a telescope control system); and the one closest to hand — **NSLS-II's bluesky stack, which Anthony works on and which is a real ~10-year-old system nobody at this workshop designed.** That last one is the only sample available that is both real and uncontaminated by reflow2.",
+        "name": "OPEN — span of control (3–7 children per parent) makes the NUMBER OF LAYERS a computed consequence rather than a declared choice; and every design measured so far predates reflow2 having rungs at all",
+        "rationale": "Captured under the brainstorm skill: recorded as an idea, nothing promoted, nothing settled.\n\nKept separate from `dec:idea-is-a-declared-rung-name-the-right-shape-for-decomposition-depth` (which compares five carriers for depth, all of which DECLARE it) and from `dec:the-decomposition-ladder-is-open-not-a-fixed-enum` (which decided the ladder opens). This proposes that depth need not be declared at all — that span of control makes the number of layers a computed consequence of part count. That is a different kind of answer from any of the five shapes, which is why it is its own node rather than a sixth bullet on that one.\n\nIt also carries Anthony's correction to the evidence base, which invalidates a conclusion drawn earlier today from the same measurements.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-detect-ownership-orphans",
       "node_type": "Decision",
       "properties": {
@@ -114863,6 +115131,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony thinking out loud, 2026-08-21, before any flo2-driven change is made. Nothing here is intent and nothing is settled.\n\nHIS CONCERN, in his words: \"my concern is that by making the changes to reflow2 required by flo2, that it wouldn't be able to support its original use case (which is how we are currently using it now). that's why I was thinking we need to consider this early because I would hate to break the current use case because we made a whole bunch of changes to make reflow2 work for flo2.\"\n\n⭐ IDEA A — THE LOCAL CASE IS DEFENDED BY INTENT BUT NOT BY A GUARD, AND THAT IS THE GAP. Three things already stand between flo2's work and a broken local path: `req:persistence` (accepted — the design lives at ./.reflow2/graph inside the repo, travelling with it), `req:invocation` (accepted — an MCP server over stdio), and `dec:one-process-many-stores`' own instruction that \"the overwhelmingly common case is one project, one directory, --graph-path, and it must keep working exactly as it does\", with the framing \"single-graph mode is multi-graph mode with a registry of one, pre-populated at startup and with selection defaulted — NOT a second code path\". That framing is the right shape and it is a DESIGN PRINCIPLE, not a check. Nothing today fails when it stops being true. The cheap answer to a regression worry is a guard, not a promise.\n\n⭐ IDEA B — HIS STATED SCALE MAY EXCEED WHAT THE ACCEPTED DECISION COVERS. flo2 is a web app at flo2.io, collaborative (many people on the SAME project at once) and expecting on the order of 10,000 simultaneously logged-in users across DIFFERENT projects. `dec:one-process-many-stores` accepts N open RocksDB stores in one process, each carrying its own block cache, file handles and tantivy index, and names resource exhaustion as an accepted risk requiring \"a cap on simultaneously open graphs, with a clear error at the cap rather than silent thrashing\". 10,000 open stores in one process is not that shape. At that number the answer is partitioning across many processes — which is item #8, blast radius, which flo2's own tracker says to decide BEFORE designing the registry because \"retrofitting it onto a registry designed for one process is a rewrite of the piece everything else is gated on\". The decision was accepted without a number attached; the number changes which question is being answered.\n\n⭐ IDEA C — AND THAT MAY CUT THE OTHER WAY, WHICH IS THE HOPEFUL VERSION. A sharded shape — many processes, each holding few graphs — is CLOSER to today's local behaviour than one fat process holding everything. If the answer at 10k is partitioning, the invasiveness to the local path may go DOWN rather than up, because each process keeps roughly the shape it has now. Recorded as a possibility, not a claim; nobody has designed it.\n\n⭐ IDEA D — THE COLLABORATIVE AXIS MAY ALREADY BE MET AND IS WORTH NOT REBUILDING. \"Many people on the same project at once\" is `req:sessions-share-a-graph` (accepted) delivered by `cap:shared-sessions` (VERIFIED — \"several sessions work one design at once, through one server\"). Single-writer is not relaxed by any of this: one process holds the lock, many sessions speak to it. So flo2's collaboration requirement may need nothing new, and the genuinely unbuilt axis is the many-PROJECTS one.\n\nWHAT IS NOT IN DOUBT, so it does not get re-litigated here: whether flo2 gets its own fork. `dec:one-process-many-stores` answers that — one reflow2, N single-writer stores, the directory stays the unit of a design — and it explicitly rejected many-designs-in-one-store. The open questions above are about SHAPE and PROOF, not about forking.\n\n🛑 A SEPARATE DEFECT NOTICED WHILE READING, not part of this question: `dec:one-process-many-stores` carries `status: accepted` and a name beginning \"ACCEPTED 2026-08-06 (conditional)\", while its own body opens \"PROPOSED, NOT SETTLED.\" The status moved and the text did not. A reader can honestly conclude either. Left alone — whether it is settled is Anthony's to say.\n\nDISTINCT FROM the three nodes the guard surfaced. `dec:one-process-many-stores` decides the SHAPE of hosting and assumes it is worth doing; this asks what it COSTS the existing case and whether a stated scale still fits. `req:many-people-and-many-projects-compose` requires the two axes to hold together; this asks what would PROVE a third thing — the local path — still holds while they do. `dec:the-registry-root-is-the-tenant-boundary` settles where the tenant line falls inside the registry; this asks whether a registry of that shape survives 10k.",
         "name": "OPEN — what would PROVE that building for flo2 has not broken the local single-project case, and does 10k tenants even fit the accepted shape?",
         "rationale": "Captured under the brainstorm skill: recorded as ideas so nothing is lost and nothing is claimed as intent. Anthony raised it deliberately EARLY — before the flo2-driven changes are made rather than after — which is the whole point of recording it now.\n\nThe four ideas are kept apart because they have different answers: A wants a check written, B wants a number decided, C is a possibility nobody has explored, and D may need nothing at all. Collapsing them into one node would make it answerable only in halves.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-does-the-deferred-structuring-step-need-a-skill-of-its-own",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-25, immediately after deciding the adopt nesting step: *\"as we defer the functional allocation step in genesis skill (not done at genesis phase), do we need some /system-depth or /functional-allocation skill that the user can use?\"*\n\n═══ THE GAP IS REAL AND IT IS PRECISELY LOCATED ═══\n\n**Genesis is RIGHT to defer.** Its line 44 reads: *\"Do NOT create Components (P2) yet. Leaving structure unspecified is deliberate: the first DETECT round will surface `concept_without_design`, which is the right next question ('how should this be structured?'). Answer it WITH THE USER, not by guessing.\"* That is doctrine's function-before-form, correctly sequenced, and it is more disciplined than adopt was until today.\n\n🛑 **AND THEN NOTHING PICKS THE QUESTION UP.** The gap fires, the user is asked \"how should this be structured?\", and reflow2 offers no method to answer it with. Measured: no served skill mentions functional decomposition, allocation, or `propose_allocation`. So the one step doctrine says produces the architecture is the one step with no guidance attached.\n\n⭐⭐ THE MACHINERY ALREADY EXISTS AND NOTHING POINTS AT IT. `propose_allocation` clusters capabilities by weighted coupling into groups — that IS doctrinal step 5, mechanised — and `evaluate_allocation` scores the result for modularity, god components and misplaced capabilities. Both are served tools. Neither appears in any skill. **This is the three-legs failure again** (`fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it`): a typed tool with no instruction and no detector-that-notices-absence reaches no user's design, however good it is.\n\n═══ THE OPTIONS, none chosen ═══\n\n**A. A NEW SKILL — `/allocate` or `/functional-allocation`.** Triggered by `concept_without_design`, or by the user asking \"how should this be structured?\". It would: decompose capabilities into finer functions where they are compound; run `propose_allocation`; put the proposed grouping to the user rather than applying it; create Components from what they accept; nest them and set `level`; then `evaluate_allocation` and span-of-control as the sanity check.\n ⚠️ Cost: reflow2 has 23 skills and `fact:nine-of-twenty-skills-are-edited-without-a-drift-signal` already measures that the set is hard to keep coherent. A 24th needs to earn its place.\n\n**B. EXTEND GENESIS.** Genesis already owns the deferral, so it could own the return. Cheapest, and it keeps one skill per phase.\n ⚠️ Cost: genesis is the FIRST skill anyone runs and its whole discipline is *stop before structure*. Folding the structuring step back in risks the very thing the deferral protects — a user doing it in one breath, guessing at boxes while the capabilities are still wet.\n\n**C. EXTEND `detect-and-ask`.** The gap already routes there. It is where `concept_without_design` is phrased and put to the user, so the method could live beside the question.\n ⚠️ Cost: that skill is deliberately generic over ALL gaps; giving one gap a bespoke multi-step procedure makes it two skills wearing one name.\n\n**D. NO SKILL — put it in the TOOL DESCRIPTION.** `propose_allocation`'s served description could carry the method, since an agent reading the tool list would meet it at the moment of use.\n ⚠️ Cost: it is only met by an agent that already thought to look for an allocation tool, which is exactly the agent that did not need telling.\n\n**E. A DETECTOR FIRST, SKILL LATER.** Nothing currently notices that a design has capabilities and no components, or components with no allocation. Make the ABSENCE visible, then decide whether the answer needs a skill or a paragraph.\n ⭐ This is the cheapest thing that could not be wrong, and it matches the project's own posture: the loop should ASK rather than wait to be told.\n\n═══ WHAT THE NAME SHOULD NOT BE ═══\n\nAnthony offered `/system-depth` and `/functional-allocation`. **DEPTH IS THE WRONG NAME** and today's work is why: depth is a CONSEQUENCE of allocation, not a thing to go and get. A skill called `/system-depth` would invite the error this session made four times — treating the number of layers as a target rather than as an output that span of control checks afterwards. If it exists, it is about ALLOCATION, and the depth falls out.\n\n📌 AND IT WOULD CLOSE THE SYMMETRY. As of today adopt recovers the structure an artifact HAS (the nesting step, added 2026-08-25). Genesis defers the structure a design NEEDS and nothing derives it. One direction is now instructed and the other is not.",
+        "name": "OPEN — genesis DEFERS structure deliberately and correctly, then hands the user a question with no method. Does the functional-decomposition-and-allocation step need a skill of its own?",
+        "rationale": "Captured under the brainstorm skill: recorded as an idea, nothing promoted, nothing settled.\n\nKept separate from `dec:idea-what-does-se-doctrine-actually-prescribe-upfront-and-what-of-it-does-reflow2-have` (which establishes WHAT doctrine prescribes and which pieces reflow2 owns) and from `dec:idea-does-reflow2-enforce-an-se-process-or-only-supply-the-vocabulary` (which asks whether a design can SHOW it followed a process). This asks a narrower, buildable thing: the one deferred step has no home, and the question is which of five places it should live in — a decision that can be taken without settling either of those.",
         "status": "proposed"
       }
     },
@@ -115107,6 +115385,16 @@
       }
     },
     {
+      "node_id": "dec:idea-is-a-declared-rung-name-the-right-shape-for-decomposition-depth",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-25, hours after the open ladder shipped in #334: *\"looking at this from a fresh perspective; how should this have been done or what is the most correct way?\"* Nothing here retracts #334 and nothing is planned.\n\nWHAT SHIPPED, so the alternatives are judged against something concrete: `Component.level` is a STRING naming a rung; `Project.decomposition_levels` is a `list:string` ordered bottom-first; rank is `position()` in that list, computed at read time and never stored; an off-ladder name ranks `None` and is reported as `unknown_level`.\n\n═══════════════════════════════════════════════════════════════\n🛑 THE STRONGEST CRITICISM OF WHAT SHIPPED, AND IT IS THE SAME\nMISTAKE ONE LEVEL UP\n═══════════════════════════════════════════════════════════════\n\nThe fixed enum was rejected because **\"atomic\" shifts by domain** — a microprocessor chip for aerospace, a code module for software. **The shipped design asserts ONE LADDER PER DESIGN**, which is that same assertion moved up a rung rather than removed. A system-of-systems spanning an airframe and its flight software has TWO natural ladders, and `Project.decomposition_levels` forces them to share one. `req:recursive-black-box-decomposition` explicitly reaches \"from code projects to biology projects\" — a design that spans both is exactly where this bites.\n\n⇒ Per-SUBTREE ladders, not per-design, may be the correct shape. Nothing in #334 forecloses it (the ladder is read through one function, `decomposition_ladder()`), but nothing anticipates it either.\n\n═══════════════════════════════════════════════════════════════\nTHE FIVE SHAPES, WITH WHAT EACH COSTS\n═══════════════════════════════════════════════════════════════\n\n**A. DECLARED RUNG NAME (what shipped).** Legible in diffs and messages; no migration (93 components untouched); insertable without renumbering stored data. Costs: a string can be misspelled and the schema no longer catches it; list POSITION is implicit ordering, so inserting a rung silently renumbers every rank; one ladder per design.\n\n**B. DERIVE DEPTH FROM THE SPINE — drop `level` entirely.** Depth = distance from the root of `CONTAINS`. No ladder to declare, no typos, unlimited depth free, and `level_spine_disagreement` becomes IMPOSSIBLE rather than detected.\n⚠️ ALREADY CONSIDERED AND REJECTED, and the reason must be read precisely. `cap:ask-for-one-rung-of-the-decomposition` records: deriving the top tier from the spine \"returns leaves nobody wired to a parent — measured on this design: 8 subsystems by declared level, 2 leaves by spine position.\"\n⭐ BUT THAT MEASUREMENT IS ABOUT AN INCOMPLETE SPINE, NOT ABOUT DERIVING BEING WRONG. The derived answer was wrong because 14 components had no parent, not because depth is a bad definition of level. **The two failure modes are different and the design pays for one of them today:** derive fails on an unwired spine; declare fails when declaration and spine disagree, which is why `level_spine_disagreement` had to be built at all. Choosing declare bought a detector.\nCosts of B that stand regardless: a node not yet wired has NO level, so \"this is a subsystem\" cannot be claimed before it is placed; and the NAMES carry meaning a reader wants — \"subsystem\" not \"depth 2\".\n\n**C. RUNGS AS FIRST-CLASS NODES.** `cmp:x` points at `lvl:subsystem`; rungs order by `PRECEDES` edges. Typos become impossible (edge endpoints are validated), ordering is explicit rather than list position, insertion is a new node plus two edges with nothing renumbered, a rung can carry its OWN description — and Anthony's four stopping rules could attach to the rung they govern instead of living in a fact nobody traverses. Costs: a new node type, an edge per component, heavier queries, and it is the most machinery for a property that is one word.\n\n**D. RELATIVE ONLY — no names, just \"a parent is exactly one below its child\".** Simplest possible; works at any depth. Loses \"show me every subsystem\" entirely, which `cap:ask-for-one-rung-of-the-decomposition` was built to provide and which is a real question people ask.\n\n**E. DECLARE AND DERIVE, AND MAKE THE DISAGREEMENT THE PRODUCT.** Keep the declared name AND compute spine depth, then report where they diverge — which is half-built already as `level_spine_disagreement`. This treats the two answers as independent evidence rather than picking a winner. Costs: two things to keep, and it only pays off on a design whose spine is complete enough for the derived answer to mean anything.\n\n═══════════════════════════════════════════════════════════════\nWHAT WOULD ACTUALLY DECIDE IT\n═══════════════════════════════════════════════════════════════\n\nNot argument — a measurement nobody has: **how complete is the containment spine on a real design?** `fact:the-black-box-tier-has-two-answers-that-disagree` measured 121 of 2,526 nodes (4%) carrying a CONTAINS parent, and 14 components as roots. If the spine were complete, B costs nothing and removes a whole defect class. While it is 4% populated, B is unusable and A is the only thing that works. **So the right shape depends on a number that moves, and today's number argues for what shipped.**\n\n📌 A SMALLER THING WORTH RECORDING: `list:string` had existed in the schema validator and been used by NO schema file — `Project.decomposition_levels` is its first real use. That is untested territory reached without noticing, and it is the kind of thing that is fine until it is not.\n\nKEPT DISTINCT from `fact:the-black-box-tier-has-two-answers-that-disagree` after reading it: that is the 2026-08-18 MEASUREMENT of the two answers disagreeing, and it is the evidence this reasons FROM. This is the design question that measurement raises and does not answer — which of five shapes should carry depth at all.",
+        "name": "OPEN — was the open ladder built the right way? A declared rung NAME per component was one of at least five shapes, and the one that shipped still asserts ONE ladder per design",
+        "rationale": "Captured under the brainstorm skill: recorded as an idea, nothing promoted, nothing settled, and #334 stands.\n\nKept separate from `dec:the-decomposition-ladder-is-open-not-a-fixed-enum` (which decided THAT the ladder opens, and is accepted and implemented) and from `cap:ask-for-one-rung-of-the-decomposition` (the built capability whose declare-over-derive choice this re-examines). This asks a third thing neither answers: given that the ladder is open, is a declared rung NAME the right carrier for depth at all — asked with the implementation in hand rather than before it, which is why it can criticise something concrete instead of speculating.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-is-allocation-running-ahead-of-the-seams",
       "node_type": "Decision",
       "properties": {
@@ -115162,6 +115450,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony's idea, 2026-08-15, in his words: \"maybe reflow2 needs a /feedback skill to insert feedback into the graph. we have a few capture type skills already and we've used a brainstorm at times, and we have mass ingest. the thing with feedback is you don't know if it is an idea or test results or maybe it's a word by your boss on something — my point being, the feedback skill needs to determine intent/content to properly address. like I said, we have a lot of already existing skills, so this probably isn't a create-from-scratch effort, but a question of how to quickly capture external feedback in the graph.\"\n\nDELIBERATELY DISTINCT FROM THE THREE NODES THE GUARD NAMED, all of which are about feedback LEAVING: `dec:idea-agent-to-agent-feedback-is-a-formal-channel` (should agents write reports for other agents), `req:agent-authored-feedback-is-reproducible-and-never-leaves-unasked` (nothing leaves without the human's word), `fact:second-user-report-2026-08-11` (one such report's content). THIS IS THE OPPOSITE DIRECTION — somebody else's report arriving, and what it becomes once it is here. Nothing in the design covers intake.\n\n⭐ EVIDENCE FROM DOING IT BY HAND, TWICE, TODAY. This session processed two external feedback documents — a Grok session's 14 items and a US-government genesis session's 4 — and INVENTED THE SAME ROUTING BOTH TIMES with nothing to consult: verify each claim against the running build; `search_design` for an existing node before writing; defects to `TemporalFact` per `dec:defects-are-temporal-facts`; open questions to `proposed` Decisions; ideas via brainstorm; provenance via Fragments and `YIELDED`. That is knowledge re-derived per session — the exact failure `fact:defect-a-pre-served-skills-install-is-stranded` names as reflow2's own reason to exist. It is also the shape that produced `link-projects`: a process performed ad hoc, noticed, and made a served skill.\n\n⭐⭐ THE SHARPENING, AND IT IS NOT WHAT THE QUESTION ASSUMES. He frames the discriminator as CONTENT — idea vs test result vs boss's word. Measured against what actually happened, the harder discriminator is AUTHORITY. The same sentence routes differently depending on who said it: \"this should be civil-date, not UTC\" from a user is an observation; from the design's owner it MOVES A STATUS. Moving a status is precisely what an agent may not do on its own (`dec:certainty-derived`). reflow2 already models this — `Contributor`, and `AUTHORED_BY` with `role: author | reviewer | approver` — and NOTHING READS IT AT INTAKE. A skill routing on content alone would take a boss's ruling and file it as somebody's opinion.\n\n⭐⭐ AND THE FIRST STEP IS NOT RECORDING, IT IS VERIFYING. Of the 18 items processed today, FOUR were wrong as stated: `get_instructions` truncating (it was the client's cap), the export needing the server stopped (it does not), `Constraint` requiring numeric fields (it does not — and that error had already cost that project eleven permanently-open gaps), and a claim of mine that `VIOLATES` was read by nothing. A skill whose first move is \"record what they said\" would have written four false facts into the graph, each carrying a real source's authority. NO EXISTING CAPTURE SKILL HAS A VERIFY STEP, because `capture-intent` takes the user's words AS intent by definition — right for intent, wrong for a report about a system that can be checked.\n\nTHE OPTIONS:\n\n(a) A NEW `feedback` SKILL THAT ROUTES — a triage front door: verify what is checkable, search for the node that already holds it, then hand off to `capture-intent` (new intent), `brainstorm` (an idea), `governance-proposal` (a rule), `revise-design` (a change to something recorded), `reconcile_verification` (a test result), or a `TemporalFact` (a defect found by use). CHEAPEST TO DESCRIBE, and it matches his read that this is composition rather than new machinery. COUNTER: a router that only routes leaves the two hard steps — verify, and read authority — to judgement, which is exactly where today's four errors would have come from.\n\n(b) A SKILL THAT DOES THE WHOLE JOB: verify → attribute authority → search → record → link provenance → report what was refuted. STRONGEST, and it captures what was actually derived twice. COUNTER: it duplicates chunks of four existing skills, and this project has been bitten before by instructions drifting out of step with the tools they describe.\n\n(c) NO NEW SKILL; EXTEND `capture-intent` with a triage section. No 21st skill, and capture-intent is already the front door people reach for. COUNTER: capture-intent's contract is that the user's words ARE intent; bolting \"first check whether they are true\" onto that changes what the skill IS.\n\n(d) DO NOTHING — the mapping table in `capture-intent` plus judgement covers it. COUNTER, measured: judgement produced the right answer twice today at considerable cost in re-derivation, and the same judgement also produced four claims that survived only because they were checked.\n\n⚠️ COST THAT MUST BE WEIGHED: twenty skills already ship, and eleven had no slash command until recently. A 21st has to earn its place against the context every session pays.\n\n⚠️ AND IT INHERITS AN UNRESOLVED PROBLEM: feedback usually arrives AS A DOCUMENT, and `rule:design-information-lives-in-the-graph-not-in-documents` is now enforced while `Fragment.content_ref` is explicitly a pointer \"rather than inlining\" the text. Until that is scoped, a feedback skill cannot say where a report's un-distilled remainder goes.\n\nNOT ESTABLISHED: whether feedback volume justifies a skill at all — three external reports in eight days is either a trend or a coincidence.",
         "name": "IDEA — external feedback arrives undifferentiated: an idea, a test result, or the boss's word. Should reflow2 have a `feedback` skill that determines what it is and routes to the skills that already exist?",
         "rationale": "Recorded via the brainstorm skill: one Decision per open question, at `proposed`, options with counters beside them, nothing promoted. Started as a new node rather than merged after the guard named three near matches — all three concern feedback LEAVING the project, and this is intake, which is the opposite direction and shares only the word. The two sharpenings — that authority rather than content is the harder discriminator, and that verification precedes recording — are findings from this session's measured work, stated as findings rather than as answers.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-is-there-a-lightweight-task-capture-below-the-increment-grain",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-25, from real work rather than from thinking about reflow2: *\"as I'm working through one of the projects at work, sometimes, I just want to say, we need to do this task next. it isn't really a brainstorm or capture-session or capture-intent type activity... Jakub said let's finish up the tests for the scripts and add a tutorial on how to use the new scripts. I feel like it really isn't a brainstorming task or a requirement, just a simple — I need to do these things (like a checklist).\"*\n\n⭐ HIS CONTEXT MATTERS AND COMPLICATES IT: *\"I have a tutorial, a project, a simulated beamline and some other inter-related work.\"* The tasks arrive across several INTER-RELATED efforts, not inside one design. Which graph a cross-project checklist lives in is a question none of the options below answers cleanly.\n\n═══ WHAT ALREADY CLAIMS THIS GROUND ═══\n\n**`plan-increments` says this is its job, in as many words.** Its description: *\"Also use when you catch yourself keeping a to-do list in the conversation: that is a delivery plan, and it belongs in the graph where everyone can see it.\"* That is Anthony's case, named.\n\n🛑 **BUT THE WEIGHT IS WRONG.** The skill is 106 lines, 12 numbered steps, and reaches `add_epoch`, `add_release`, `gate_on`, `arrival_delta`, `detect_gaps`, `loop_status`, plus readiness modality and TRL thresholds. That is a DELIVERY-PLANNING RITUAL — right for \"what ships in v2\", absurd for two things a colleague said in a corridor. **The gap is not vocabulary, it is CEREMONY.** A capture that costs more than the thing captured does not get used, and the to-do list stays in the conversation exactly as it does today.\n\n**There is no `Task` node type**, checked. Work is carried at increment grain: `DesignEpoch` (with `status: planned`), `Release`, and capabilities scheduled into them.\n\n═══ THE OPTIONS, none chosen ═══\n\n**A. A `/task` or `/todo` SKILL, deliberately tiny.** Two or three lines of instruction, one node per item, no ceremony. Earns its place only if it stays small.\n ⚠️ Cost: a 24th skill, and `fact:nine-of-twenty-skills-are-edited-without-a-drift-signal` says the set is already hard to keep coherent.\n\n**B. A `Task` NODE TYPE.** Honest about what it is; sortable, statusable, assignable.\n 🛑 Cost, and it is the serious one: **this is the road to being a tracker.** reflow2's whole claim is that it holds WHY, and Jira/Linear/GitHub Issues hold WHAT-NEXT far better. A Task type invites status fields, assignees, due dates and priority — and every one of those is a thing reflow2 would then be bad at. Anthony's own anti-over-engineering instinct is the strongest argument against this option.\n\n**C. ⭐ TASKS ARE ALREADY SAYABLE AS ABSENCES AND STATUSES — no new vocabulary at all.** Test his own example: *\"finish up the tests for the scripts\"* is a `Verification` at `status: planned` against the component; *\"add a tutorial on how to use the new scripts\"* is an `Artifact` that does not exist yet, or a `Capability` at `planned`. **Both are already expressible, and both then show up in `loop_status` and the gap detectors as real design debt rather than as a private list.** A task, on this reading, is not a new kind of thing — it is a design node that ought to exist and does not, or one whose status ought to move.\n ⚠️ Cost: it demands a translation step at the exact moment the user wants to dump three sentences and move on. If the translation is not near-free, this is option A with extra thinking.\n\n**D. LOWER THE CEREMONY OF `plan-increments` INSTEAD.** Give it a fast path for \"just record these, do not plan a release\".\n ⚠️ Cost: a skill with two modes is two skills sharing a name, which `detect-and-ask` is already accused of elsewhere.\n\n**E. DO NOTHING — say plainly that this belongs in the user's tracker.** reflow2 holds design, not work.\n ⚠️ Cost: it is a real answer and it contradicts `plan-increments` existing at all, plus `dec:backlog-is-retired` which deliberately moved backlog rows INTO the graph. Taking this option means retracting ground the project already took.\n\n═══ THE TEST THAT WOULD DECIDE IT ═══\n\nTake his actual sentence — *\"finish up the tests for the scripts and add a tutorial on how to use the new scripts\"* — and try to record it under option C on a real project graph, timed. If it is two tool calls and no thinking, C wins and nothing new is needed. If it takes a paragraph of judgement about which node type each half is, the ceremony objection applies to C as much as to `plan-increments`, and A becomes the honest answer.\n\n📌 NOT A REQUIREMENT AND NOT INTENT, which is his own framing and worth preserving: he is not asking reflow2 to DO anything new, he is reporting that a thing he does every day has no cheap home.",
+        "name": "OPEN — \"these are the things I need to do next\" has no cheap home: plan-increments claims the ground but is a full delivery ritual, and a Task node type would turn a design brain into a tracker",
+        "rationale": "Captured under the brainstorm skill: recorded as an idea, nothing promoted, nothing settled.\n\nKept separate from `cap:plan-increments` (the built capability that claims this ground at increment grain) and from `dec:idea-lining-work-up-in-increments-should-be-the-default-not-a-skill-you-remember` (which asks whether increment planning should fire automatically rather than be remembered). This asks whether there is a grain BELOW an increment that has no home at all — a question that survives whichever way that one is settled, because making a heavy skill automatic does not make it light.\n\nRaised from live work at NSLS-II rather than from reflow2's own development, which is the evidence class this project has least of.",
         "status": "proposed"
       }
     },
@@ -115709,6 +116007,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Nothing here is intent. Anthony, 2026-08-11, and he was explicit that this is NOT a reflow2-repo question: \"this isn't just a 'do it for reflow2' type task. this is a more general philosophy that test planning should be before implementation (maybe even in the design stages of a reflow2 project)... reflow2 guides a user through systems engineering processes, implementation, testing and fielding/production — I'm saying reflow2 should define a design tests philosophy prior to development of the design.\"\n\n⭐⭐ MEASURED ON REFLOW2'S OWN DESIGN, 2026-08-11, AND IT IS ONE-SIDED:\n\n  verification detectors                                      6\n    build_without_verification, unverified_capability, unverified_artifact,\n    component_granularity_verification, failing_verification, build_without_governance\n  of those, asking a REQUIREMENT how it will be verified      0\n\n  live requirements                                         142\n    with a Verification pointed AT the requirement             2\n    stating a need with no stated way to know it is met       140\n\nEVERY detector fires in the same direction: you BUILT this, where is the check? Nothing anywhere asks: you STATED this need, how will you know it is met? So reflow2 today discovers the test question at the moment it is most expensive to answer and most likely to be answered by looking at the code.\n\n⭐ THE V-MODEL FRAMING, because it names the shape precisely. reflow2 models the descending arm (intent → allocation → build) and the ascending arm (verify → operate) — that is what the seven maturity bands measure. What it does not model is the CROSS-LINKS: in the V, the acceptance test is written when the requirement is written, and the integration test when the architecture is drawn. reflow2 has both arms and no rungs.\n\n📌 THE SIBLING QUESTION IS ALREADY OPEN AND THIS ONE MAKES IT MATTER MORE. `dec:bl-185` (Anthony, 2026-08-03) asks how the graph can tell a test written FROM THE REQUIREMENT from one written to match the code — \"a passing check written from the requirement and a passing check written to match the implementation are the same node, same status, same everything.\" That is the RECORDING question. This is the PROCESS one. If verification were planned at requirement time, \"written from the requirement\" would be the normal case rather than something the graph has to detect after the fact — so answering this one shrinks that one.\n\nWHAT ALREADY EXISTS, so nothing is built twice: `Verification` carries method and level and can already point at a Requirement (two do). `set_evidence_scope` records what a check PINNED versus SWEPT, and `evidence_report` reads it. `req:evidence-says-what-it-covered` is ACCEPTED. So the vocabulary for a planned check is there — a Verification at `planned` status IS a test plan. Nothing asks for one.\n\nIDEAS, unranked:\n(a) A DETECTOR: an accepted Requirement with no Verification pointed at it is a gap — \"how will you know this is met?\". Symmetric with `unsatisfied_requirement`, which already asks \"what delivers this?\". Cheapest, and it is the one that changes what gets built.\n(b) A SKILL STEP: capture-intent ends by asking, for each requirement, how it would be checked — recorded as a `planned` Verification. No detector, no gap pressure, and it fires only when the skill loads, which `req:skill-use-survives-a-long-session` says is not enough.\n(c) A STATED PHILOSOPHY the project chooses, captured as a DesignRule via governance-proposal, with the consequence asked rather than assumed. This is what Anthony literally said — \"reflow2 should DEFINE a design tests philosophy\" — and it is per-project, which matters because the answer differs between a demonstrator and a fielded system.\n(d) Nothing. The build-side detectors already catch an unverified capability before it ships, and adding a requirement-side one doubles the gap surface.\n\n⚠️⚠️ THE STRONGEST OBJECTION, AND IT IS THIS PROJECT'S OWN MOST-REPEATED TRAP. A detector demanding a verification plan for every accepted requirement would fire on 140 of 142 here ON DAY ONE — and on every young design, and on every ADOPT, where a recovered requirement never had a test plan and could not have. That is exactly the shape of `unexpected_coupling` (retired for firing on correct work), of the short-text false positive found by CI hours ago, and of BL-179's punish-correct-work trap. Whatever is built must distinguish \"nobody has planned this yet\" from \"this cannot be planned\", which is `req:a-rule-says-whether-it-can-be-checked-at-all` (ACCEPTED, unbuilt) pointed at requirements instead of rules.\n\n⚠️ SECOND: `req:no-se-knowledge` is accepted — the user must never need systems engineering. \"How will you verify this?\" is an SE question in SE words. It would have to arrive the way every other gap does, as a plain question the user can answer without knowing what a verification method is.\n\n⚠️ THIRD, and it is the honest limit on the whole idea: planning a test early does not make it a GOOD test. Anthony's own criteria — valid, isolated, repeatable, focused, fast; happy path, edge cases, error conditions, contract-not-implementation — are properties of the test's CONTENT, and `dec:idea-who-judges-requirement-text-quality` already found that reflow2 checks structure and never text. A `planned` Verification with an empty method satisfies a detector and proves nothing, which would be a marker nothing reads in a new place.",
         "name": "OPEN — should reflow2 guide a project to plan HOW a need will be verified when the need is stated, rather than only asking for a check once something is built?",
         "rationale": "Measured one-sidedness: all six verification detectors ask the build for a check, none asks a requirement how it will be known to be met, and 140 of 142 live requirements have no verification pointed at them. That is the V-model with both arms and no rungs. Anthony is proposing this as product philosophy rather than repo hygiene, which passes his own pruning test — it would change what reflow2 asks every project, not how this project manages itself. The blocker is precision: the naive detector fires on every young design and every adopt, which is the punish-correct-work trap this project has already retired one detector for.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-what-does-se-doctrine-actually-prescribe-upfront-and-what-of-it-does-reflow2-have",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-25, redirecting away from measuring artifacts: *\"this is more a systems engineering 101 type discussion... it should be, how do properly trained SE professionals design SE upfront? what does the doctrine say we should do?\"*\n\n═══ THE CANONICAL UPFRONT SEQUENCE (15288 technical processes 1–6; NASA SP-2016-6105; INCOSE HB) ═══\n\n1. **MISSION / BUSINESS ANALYSIS** — the problem in the stakeholder's terms. No solution language.\n2. **ConOps / OpsCon** — how the thing will be USED. Operational modes, day-in-the-life scenarios, who does what to it. ⭐ This is where SE STARTS and where untrained teams skip straight to features.\n3. **STAKEHOLDER NEEDS → SYSTEM REQUIREMENTS** — verifiable, traceable, and **each one gets its verification method chosen at the same moment it is written**.\n4. **FUNCTIONAL ANALYSIS** — what functions must be performed, and in what sequence. Functional flow block diagrams. **Still no boxes.**\n5. **FUNCTIONAL ALLOCATION** — group functions and assign them to logical elements.\n6. **PHYSICAL ARCHITECTURE** — the actual elements, chosen through trade studies against stated criteria.\n7. **INTERFACE DEFINITION** — every boundary gets an ICD; an N² chart is walked so none is missed.\n8. **BUDGETS AND MARGINS** allocated top-down — mass, power, latency, cost.\n9. **RECURSE ONE LEVEL** — repeat 3–8 for each subsystem.\n10. **REVIEWS AS GATES** — SRR ▸ SFR ▸ PDR ▸ CDR, each baselining what came before.\n\n═══ THE THREE THINGS THAT ACTUALLY SEPARATE PROFESSIONALS FROM COMPETENT AMATEURS ═══\n\n**(a) FUNCTION BEFORE FORM.** Decompose what the system DOES before what it IS. Structure is the OUTPUT of grouping functions by cohesion and coupling — it is not chosen and then populated.\n**(b) VERIFICATION PLANNED WITH THE REQUIREMENT**, not after the build. \"How would we prove this?\" is part of writing it, and a requirement nobody can say how to verify is not finished.\n**(c) BREADTH-FIRST AND COMPLETE AT EACH LEVEL** before going deeper. One level fully decomposed and fully interfaced beats a deep spike down one branch.\n\n⭐⭐ THE CORRECTION THIS MAKES TO EVERYTHING DISCUSSED TODAY: **SPAN OF CONTROL IS A CHECK, NOT A GENERATOR.** 3–7 does not tell you how to decompose; it tells you whether the decomposition you DERIVED from functional allocation came out sane. If grouping the functions leaves twenty children under one parent, the finding is that the grouping lacks an intermediate cohesion level or the functions were not actually cohesive — not that a rung should be inserted to satisfy a number. The whole ladder investigation approached depth as a thing to DECLARE or COMPUTE FROM COUNTS, and doctrine says it is a CONSEQUENCE of allocation.\n\n═══ WHAT REFLOW2 ALREADY HAS, CHECKED AGAINST THE LIST RATHER THAN ASSUMED ═══\n\n- **Functions** → `Capability`. **Elements** → `Component`. **Functional allocation** → `ALLOCATED_TO`.\n- ⭐ **THE GENERATOR EXISTS.** `propose_allocation` clusters capabilities by weighted coupling into groups — that IS step 5, mechanised. `evaluate_allocation` scores modularity and finds misplaced capabilities. reflow2 can already derive structure from function, and the ladder work never touched it.\n- **Requirements flow-down** → `Requirement.lineage` = original / decomposed / derived, and the decomposed-vs-derived distinction is a real doctrinal one most tools collapse.\n- **Trade studies** → `register_alternative` + `analyze_alternatives`, with the Decision carrying why the losers lost.\n- **ICDs** → `Interface` + `PROVIDES`/`CONSUMES` on both sides; `seam_coverage` is the N²-chart question asked at an altitude.\n- **Budgets and margins** → `Constraint` with `quantity` / `limit` / `direction` and `constrains` carrying each spender's contribution; `budget_report` refuses to sum a partial set.\n- **Review gates** → `QualityGate` with `phase` (P0–P5) and `criteria`.\n- **V&V** → `Verification` with `kind` = verification / validation — built right vs right thing, correctly separated.\n- **Functional sequence** → `Flow` + `part_of_flow` + `TRIGGERS` with roles.\n- **Technology readiness** → `ReadinessAssessment` (TRL/MRL), `GATED_ON` carrying the threshold.\n\n═══ WHAT DOCTRINE HAS AND REFLOW2 DOES NOT ═══\n\n🛑 **NO ConOps VOCABULARY.** Checked: nothing in the schema or any served skill mentions concept of operations, operational scenario, or operational mode. `Flow` + `Actor` could carry one and nothing says so. **This is step 2 — the step doctrine puts FIRST and the one untrained teams skip.** reflow2 is aimed squarely at teams who skip it, and offers them no place to put it.\n\n🛑 **NO Risk NODE TYPE.** A `RISKS` edge exists, but risk management is its own 15288 process and a register needs likelihood, impact, mitigation, owner and status. There is nowhere to record \"this could go wrong, here is how likely and how bad, here is who owns it\".\n\n⚠️ AND A THIRD, WEAKER ONE: doctrine's reviews BASELINE the design — after PDR the design is under configuration control and changes need disposition. `QualityGate` records pass/fail; `DesignEpoch` and `Snapshot` hold history. Whether those compose into a baseline anybody can be held to is not obvious and was not checked.\n\n═══ THE HONEST SHAPE OF THE GAP ═══\n\nreflow2's VOCABULARY covers the doctrinal spine better than expected — the pieces for steps 3–10 are nearly all present, several of them well-modelled. What is thin is the same thing measured on 2026-08-18 for other vocabulary: whether any of it REACHES a user's design. Steps 1–2 have no home at all, and the generator in step 5 (`propose_allocation`) is a tool nobody is instructed to run.",
+        "name": "OPEN — SE 101: the doctrinal upfront sequence says structure is DERIVED from functional allocation, not chosen; reflow2 already owns most of that machinery, and the ladder work approached it from the wrong end",
+        "rationale": "Captured under the brainstorm skill: recorded as an idea, nothing promoted, nothing settled.\n\nKept separate from `dec:idea-depth-is-derived-from-fan-out-not-declared-by-a-ladder` (which proposes computing depth from a span-of-control count, and which this reframes as a CHECK rather than a generator) and from `dec:idea-audit-the-claim-that-reflow2-does-systems-engineering` (which audits the claim against 15288 for enforcement and coverage). This asks the prior question: what does doctrine actually prescribe for the UPFRONT phase, and which of those steps has a home in reflow2 at all — which is where the ConOps and Risk absences show up, and neither of those nodes reaches them.",
         "status": "proposed"
       }
     },
@@ -129375,6 +129683,19 @@
       }
     },
     {
+      "node_id": "fact:adopt-never-builds-a-hierarchy-so-every-adopted-design-comes-out-flat",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "name": "adopt's instructions never mention nesting — no contain_component, no depth guidance — and every design it produced is FLAT: dev_storyflow 101 components with ZERO containing another, mapwright 15 with zero. The hierarchy is observable in the source and adopt does not recover it",
+        "statement": "MEASURED 2026-08-25, closing a line of investigation that had been reading the symptom as a user preference.\n\nANTHONY'S FRAMING, which is what made the measurement possible: *\"if I gave you the adopt task for storyflow, you should be able to see all the services (roughly equal to a subsystem). then inspect inside each service to see all the different scripts (getting into components) and then probably into the individual function and classes to determine the sub-component level and so on. **the hierarchy is there.**\"*\n\n── WHAT ADOPT ACTUALLY INSTRUCTS ──\n`getting-started/skills/adopt/SKILL.md` grepped for every hierarchy word: **`contain_component` ZERO times. `nest` zero. `parent` zero. `subsystem` zero. `depth` zero.** `hierarchy_issues` appears ONCE, as a detector to run afterwards — so the skill checks a spine it never tells anyone to build. `level` appears once, in unrelated prose about test levels.\n\n── WHAT ADOPT PRODUCED, measured across four designs ──\n\n    design            components   containing another component\n    dev_storyflow (ajs77)   101          0\n    dev_storyflow (local)    84          0\n    mapwright                15          0\n    music_graph              25          2\n\n⇒ **EVERY ADOPTED DESIGN IS FLAT.** dev_storyflow puts 101 components directly under the Project — and 10 of them declare `subsystem` or `system`, so the design CLAIMS a hierarchy that structurally does not exist. Contrast flo2, the only design in the sample shaped by genesis rather than adopt: 12 components, depth 3, fan-out 6/2/2/1/1, zero span-of-control violations.\n\n⭐⭐ THE FLATNESS IS A SKILL DEFECT, NOT A USER PREFERENCE, AND THAT INVERTS AN EARLIER READING. Measurements taken hours before were read as \"real designs are two rungs deep, so nobody needs depth\" — with the caveat that it might be the absence of instruction. It is the absence of instruction: the systems adopt was pointed at HAVE observable hierarchies (storyflow's services ▸ scripts ▸ functions/classes), and adopt walks past them.\n\n── WHY THIS IS A GAP IN ADOPT AND NOT A FAILURE OF THE IDEA ──\n`dec:bl83a-functional-decomposition` (ACCEPTED 2026-07-23, derived with the user) already drew the line Anthony redrew today: *\"A functional carving comes from the product's PURPOSE (a genesis input), not the code, and cuts across crate boundaries, so **adopt on the code can only re-derive the module view.**\"* That is right and it is NOT an excuse for flatness. The module view is itself hierarchical — package ▸ module ▸ class — and recovering it is exactly what adopt is for. Adopt cannot produce the FUNCTIONAL carving; it can and should produce the STRUCTURAL one.\n\n📌 AND A SECOND, RELATED GAP MEASURED EARLIER AND STILL OPEN: of 178 `ALLOCATED_TO` edges on reflow2's own design, **177 point at a leaf MODULE and exactly ONE at a subsystem**; `DECOMPOSES` is zero. Doctrine allocates functions at EACH level as it decomposes — functions to the system, then to subsystems, then to components. reflow2 records allocation at one level only, and the per-subsystem function counts are computed by walking CONTAINS rather than being stated. Anthony's own description of the process — *\"you allocate functions to a system, then within a system allocate functions into subsystems or components and so on\"* — is not recordable today.\n\n⚠️ BOUNDS: four adopted designs, all produced by the same person with the same agent, so this measures how THIS adopt is followed rather than how it must be. The skill text is the stronger evidence — an instruction that is absent cannot be followed inconsistently. Nothing here says what the right depth for storyflow is; it says adopt never asked.",
+        "subject_id": "cap:adopt",
+        "valid_from": "2026-08-25"
+      }
+    },
+    {
       "node_id": "fact:adopt-ran-on-reflow2-and-the-mechanical-contract-recovery-collapsed",
       "node_type": "TemporalFact",
       "properties": {
@@ -129385,6 +129706,19 @@
         "subject_id": "dec:idea-run-adopt-on-reflow2-itself-as-a-ground-truth-test",
         "valid_from": "2026-08-20",
         "value": "{\"run\":\"2026-08-20\",\"option\":\"b - contracts only, no requirements recovered\",\"probe_graph_id\":\"818eb25bd9c0f823\",\"recovered\":{\"nodes\":153,\"edges\":411,\"components\":69,\"interfaces\":14,\"consumes\":91},\"real_graph\":{\"components\":56,\"interfaces\":15,\"consumes\":17},\"proposal_collapsed\":true,\"why\":\"95 of 95 dynograph_core references are types (Value 76, DynoError 18, PropertySpec 1); zero behavioural calls\",\"behavioural_consumers\":{\"dynograph_core\":0,\"dynograph_storage\":1,\"dynograph_graph\":3,\"dynograph_vector\":1,\"dynograph_resolution\":2},\"hand_authored_set_was_right\":true,\"cycles_found\":3,\"cycles_fixed\":3,\"false_positive_cycles\":1,\"comment_edges_removed\":26,\"comment_share_of_model\":0.15,\"modules_without_a_component\":21,\"files_naming_design_ids\":207,\"blind_subject_possible\":false}"
+      }
+    },
+    {
+      "node_id": "fact:adopt-recovers-depth-cleanly-and-cannot-recover-the-functional-carving",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "name": "Adopt trial on reflow2: depth IS recoverable — 4 rungs, hierarchy_issues 0, span of control clean everywhere — while the hand-built functional design violates span of control in 4 places. The functional carving is unrecoverable, confirmed twice",
+        "statement": "RUN 2026-08-25 at Anthony's instruction, into a SCRATCH graph; the live design was untouched throughout (3,162 nodes before and after). No repo copy was needed — adopt reads source and writes a graph, so only the GRAPH must be separate, which `--graph-path` gives.\n\n── PHASE 1, TWICE, AT TWO GRANULARITIES ──\nFirst by directory (29 nodes), then at CONTRACT granularity per the skill's own rule (94 nodes — 1 Project, 81 Components, 6 Interfaces, 3 Verifications, 3 Artifacts; 182 DEPENDS_ON from imports). The skill calibrates reflow2 at ~100 nodes; the contract-granularity pass landed at 94 without that number being aimed at.\n\nScope DERIVED, not listed (`dec:coverage-scope-is-declared`): 625 of 697 tracked files, two named exclusions — the design graph itself (a design cannot be its own subject) and harness config.\n\n⭐⭐ THE ANSWER TO THE QUESTION ASKED: **DEPTH IS RECOVERABLE, AND ADOPT SIMPLY NEVER ASKS FOR IT.**\n\n    ADOPT trial (recovered)        81 comps  depth {1:1, 2:5, 3:73, 4:2}   hierarchy_issues 0   span-of-control 0 over 7 ✓\n    live design (dec:bl83a)        95 comps  depth {1:13, 2:80, 3:2}       hierarchy_issues 0   span-of-control 4 OVER 7\n                                                                            (coherence-loop 28, agent-surface 25, reflow2 13, foundation 10)\n\nNo capability was added to adopt — the nesting step it omits was simply performed. `system ▸ subsystem ▸ component ▸ part` fell out of the artifact, and the recovered design obeys span of control EVERYWHERE while the deliberately-built functional one violates it in four places. **The structure derived by inspection is better-shaped than the one derived by hand**, and this is the first time reflow2's own decomposition has been checked against that rule.\n\n📌 It is also the first non-toy use of the open ladder (#334): `part` is a rung that did not exist the previous day, and the trial's Project declares `[part, component, subsystem, system]`.\n\n── AND `dec:bl83a` IS CONFIRMED EMPIRICALLY, BY TWO INDEPENDENT ROUTES ──\nThat decision (accepted 2026-07-23) says *\"a functional carving comes from the product's PURPOSE... so adopt on the code can only re-derive the module view.\"* Both routes agree:\n1. **BY DIRECTORY** — 86 of reflow2-core's modules sit loose in one directory. The filesystem has no grouping for them.\n2. **BY IMPORTS** — the dependency graph is STAR-SHAPED, not hierarchical. Fan-in: `foundation` 49, `graph` 42, `nodes` 41, then a long tail; **45% of core modules import ONLY those three hubs and nothing else.** Clustering that yields three hubs and a hundred leaves, never the eight functional subsystems.\n\n⭐ AND THE STAR TOPOLOGY HAS A NAME. `impl DesignGraph` spans **44 of 57 top-level core modules (77%)**, and `graph.rs` alone carries **54 pub fns**. The coupling is star-shaped because nearly every operation is a method on one struct. That is a god-object finding about reflow2's own code that no previous pass surfaced, and it is exactly the class of structural finding adopt exists to produce.\n\n🛑 A DETECTOR THAT IS BLIND TO ADOPT'S OWN OUTPUT. `evaluate_allocation` returned **all zeros** — `components: 0`, `modularity: null`, `unweighted_dependencies: 0` — on a design holding 81 components and 182 dependency edges. Cause read from source: it starts at `current_allocation_map()` (capability → component), so with no Capabilities every downstream number is zero. **Adopt Phase 1 produces structure without capabilities, and Phase 2 of the same skill instructs you to run a tool that must return zeros on it.** Related to but distinct from `fact:defect-allocation-health-is-green-over-an-empty-structure`: that one is about a green score over sparse data; this is a total blind spot over data of the wrong SHAPE.\n\n── PHASE 4 DISCIPLINE APPLIED, AND IT CAUGHT MY OWN METHOD ──\n`detect_defects` reported 20 findings, all `dead_end`. Held to the skill's test — *true of the system, or an error in the model?* — **most are MODEL ERROR.** `main.rs`, `shared.rs` and `nudge.rs` each declare modules with `mod` and use `use crate::` ZERO times, and my extraction only matched `use crate::`. So module DECLARATIONS were never turned into edges, and a binary entry point reads as unconnected. The finding is about the scan, not about reflow2.\n\n⚠️ WHAT THIS TRIAL IS NOT. Phase 3 was deliberately skipped — **no Requirement was inferred from the code that would satisfy it**, which is the skill's one inviolable discipline. No dynamic phase (tests not run into `reconcile_verification`), no `coverage_report` sweep, checksums on three artifacts only. Interfaces were authored from knowledge of the system rather than extracted, so they are the weakest part of the model. This answers \"can depth be recovered\" and nothing more.",
+        "subject_id": "cap:adopt",
+        "valid_from": "2026-08-25"
       }
     },
     {
@@ -131653,6 +131987,19 @@
       }
     },
     {
+      "node_id": "fact:four-frame-corrections-in-one-session-all-the-same-shape",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "method_defect",
+        "name": "An agent chasing 'how deep should a decomposition go' answered it from the wrong population FOUR times in one session; every correction came from Anthony, none from a mechanism, and each measurement was individually sound",
+        "statement": "COUNTED 2026-08-25 across one session, because four instances of one shape is a pattern rather than four mistakes.\n\nTHE QUESTION: how deep should a design's decomposition go, and what should carry depth. Four answers were produced. **Every measurement behind them was arithmetically correct. Every one answered a question about the wrong population, and Anthony caught all four.**\n\n**1. REFLOW2'S OWN STATISTICS USED TO DECIDE FOR USERS.** Concluded \"at 4% spine population, deriving depth is unusable and declaring is the only thing that works.\" He: *\"we can use reflow2 as a litmus test for what is right, but I want to do what is right for people using reflow2 on their own projects.\"*\n⇒ On re-measurement the 4% was wrong TWICE OVER: the denominator counted ChangeEvents and TemporalFacts that were never meant to be in a decomposition spine, and the figure was stale. **The real number is 100% of components.** The conclusion built on it was backwards.\n\n**2. A CONTAMINATED SAMPLE READ AS EVIDENCE.** Measured seven reflow2 designs, concluded \"real designs are two rungs deep, so the floor was reflow2's problem, not a user's.\" He: *\"most of these are after the fact... they were developed before reflow2 really started defining rungs.\"*\n⇒ Evidence of what happens with NO guidance, presented as evidence of what users need.\n\n**3. ORGANIC STRUCTURE READ AS DESIGNED STRUCTURE.** Measured the bluesky stack, chosen precisely as an outside case, and reported \"five core repos, inside 3–7, and independent lifecycles draw the same cut — two rules agreeing.\" He: *\"the bluesky stack has grown somewhat organically... it was never designed from a systems engineering perspective.\"*\n⇒ **Conway's Law — rule 3 of the same doctrine — PREDICTS that split with no SE at all.** Two of the four rules cannot tell a designed system from a grown one, because one of them is about growth. The agreement was not corroboration.\n\n**4. ARTIFACTS MEASURED INSTEAD OF DOCTRINE CONSULTED.** Four rounds of measurement before anyone asked what the discipline actually prescribes. He: *\"this is more a systems engineering 101 type discussion... what does the doctrine say we should do?\"*\n⇒ Doctrine answers it directly and differently: structure is DERIVED from functional allocation, and span of control is a CHECK on the result, not a generator of it. **The machinery already existed — `propose_allocation` clusters capabilities by coupling — and four rounds of measuring never touched it.**\n\n⭐⭐ THE SHAPE, WHICH IS THE POINT: every instance is REASONING FROM AN AVAILABLE POPULATION RATHER THAN THE RELEVANT ONE. reflow2's graph was available, so it stood in for users' graphs. Existing designs were available, so they stood in for well-made designs. A file tree was available, so it stood in for a decomposition. Measurement was available, so it stood in for doctrine. **The failure is never in the arithmetic; it is in the silent substitution of the sample you can reach for the sample you need.**\n\n🛑 AND NOT ONE OF THE FOUR WAS CAUGHT BY A MECHANISM. Not by a detector, not by a gate, not by a tool refusing an argument. All four were caught by the person, in conversation, by knowing the domain. `coverage_report` exists to ask \"what could this check not have seen\" and was never reached for, because nothing about a confident measurement suggests asking.\n\n📌 WHY IT IS FILED HERE: this is the same shape as the three-legs finding at a different layer. That one measured that vocabulary never reaches a user's project unless a tool, an instruction and a detector all exist. This measures that ANALYSIS never reaches a user's project either — an agent with a graph in front of it will characterise that graph and present the result as general. The population is a third thing that has to be chosen deliberately, and nothing in reflow2 asks which one you are standing in.\n\n📌 BOUNDS: one session, one agent, one domain expert correcting. Whether the same shape appears without a domain expert in the room is exactly what cannot be measured from inside it — and is the reason this is worth recording rather than absorbing.",
+        "subject_id": "fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it",
+        "valid_from": "2026-08-25"
+      }
+    },
+    {
       "node_id": "fact:gap-to-prompt-tells-the-agent-to-strip-the-vocabulary-its-own-description-says-to-keep",
       "node_type": "TemporalFact",
       "properties": {
@@ -131768,6 +132115,19 @@
         "statement": "**ONLY 11 OF REFLOW2'S 20 SERVED SKILLS ARE REGISTERED AS ARTIFACTS, SO NINE CAN BE EDITED WITH NO DRIFT SIGNAL AT ALL.** Found sideways on 2026-08-14 while editing two skills: one produced a `DRIFT` finding and the other produced silence, and the silence was not a pass.\n\nREPRODUCTION (committed export at `c18a4a1`, then re-measured after the edits):\n```\nskills on disk ....................... 20\nregistered as Artifacts .............. 11\nunwatched ............................  9\n```\nUNWATCHED: `ci-gate`, `detect-and-ask`, `genesis`, `impact-check`, `link-artifacts`, `report-friction`, `retire-from-design`, `revise-design`, `where-am-i`.\n\n⭐ HOW IT SURFACED, WHICH IS THE POINT. Two served skills were edited the same hour — `ci-gate` (three documented omissions) and `parallel-work` (a contradiction with the lineage rule). `reflow2_check` reported **exactly one** finding: `DRIFT art:parallel-work-skill`. **`ci-gate` changed materially and the gate said nothing**, because no Artifact points at it. Had only `ci-gate` been edited, the gate would have reported OK and the change would have gone in unwatched.\n\n🛑 **THIS IS TODAY'S GENERAL FINDING ARRIVING UNPROMPTED FOR THE FIFTH TIME** (`dec:idea-silence-is-reported-not-inferred`): *reflow2 cannot distinguish \"nothing is wrong\" from \"I could not see it.\"* Here, **\"nothing drifted\" and \"nothing is watched\" are the same answer**, and the answer looks like health. The prior four instances that day: `unrealized_capability` suppressed by `realized_via_component`; the loop-nudge state `absent` meaning two different things; `loop_status` sync reporting `in_step` against an uncommitted graph; and `hierarchy_issues` returning 0 against 14 unparented components.\n\n⚠️ TWO ENTRIES ON THE UNWATCHED LIST ARE POINTED:\n  · **`link-artifacts`** — the skill whose entire job is registering artifacts and keeping as-designed honest against as-built — is itself unregistered.\n  · **`report-friction`** — the skill for reporting reflow2's own problems — is unregistered, so a change to how friction gets reported leaves no trace.\n\n✅ THE INSTRUMENT THAT WOULD CATCH THIS ALREADY EXISTS AND WAS NEVER POINTED HERE. `coverage_report` is built for exactly this class — its own contract says *\"every other detector reasons about nodes ALREADY in the graph, so without this a design covering 30% of a system reports the same 0 open gaps as one covering all of it.\"* It answers only as wide as the sweep it is handed, and **nobody has ever swept `getting-started/skills/`**. This is not a missing capability; it is a built capability never aimed at the tree it was built for.\n\n📌 WHAT THIS DOES NOT ESTABLISH: whether the 9 are unregistered by oversight or by a deliberate choice nobody wrote down — the 11 that ARE registered have no obvious property in common (they span `adopt`, `brainstorm`, `capture-intent`, `capture-session`, `check-health`, `governance-proposal`, `kpp-proposal`, `parallel-work`, `plan-increments`, `ingest-corpus`, `link-projects`), which weakens the deliberate reading but does not kill it. **Also unchecked: whether the same registration hole exists for `tools/`, `crates/` or `docs/`** — only the skills tree was counted, and the honest generalisation of this finding is that nobody knows the coverage of any of them.",
         "subject_id": "proj:reflow2",
         "valid_from": "2026-08-14"
+      }
+    },
+    {
+      "node_id": "fact:no-uncontaminated-sample-of-a-well-decomposed-design-exists-yet",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "method_defect",
+        "name": "Every design available to measure grew organically — ours predate reflow2 having rungs, and the bluesky stack was never designed by SE at all — so nothing in reach can say what a WELL-DECOMPOSED design looks like. flo2 is the only deliberately-shaped one, n=1",
+        "statement": "MEASURED AND THEN REFRAMED, 2026-08-25. The question being chased was empirical: how deep should a decomposition go, and what carries depth? Two rounds of measurement were taken and BOTH turn out to answer a different question than the one asked.\n\nROUND 1 — SEVEN REFLOW2 DESIGNS (flo2, qbench, dynograph-foundation, dev_storyflow x2, mapwright, music_graph, reflow2's own). Anthony's correction: *\"most of these are after the fact... they were developed before reflow2 really started defining rungs. they might have been done differently if reflow2 defined rungs when these designs were first started.\"* CONTAMINATED — evidence of what happens with NO guidance.\n\nROUND 2 — THE BLUESKY STACK, chosen precisely because nobody here designed it. Measured from public trees: bluesky 42 source modules / top package fan-out 22; ophyd 43 / 24; databroker 59 / 27; event-model 29 / 10; tiled 207 / 28 with 8 packages over seven. Every core repo exceeds the 3–7 span-of-control bound at its top package by 3–4x.\n\n🛑 AND THE READING GIVEN OF THAT MEASUREMENT WAS WRONG, WHICH IS THE POINT OF THIS NODE. It was reported as \"the stack obeys the doctrine perfectly at the SYSTEM level — five core repos, inside 3–7, and independent lifecycles draw the same cut, two rules agreeing.\" Anthony: *\"the bluesky stack has grown somewhat organically and iteratively. probably if we'd used systems engineering upfront, it would have been designed differently... it was never designed from a systems engineering perspective\"* — offered explicitly as hypothesis, not fact.\n\n⭐ THE CORRECTION IS SHARPER THAN \"THAT WAS A COINCIDENCE\", AND IT HAS A NAME. **CONWAY'S LAW — rule 3 of the same doctrine — PREDICTS a five-way split without anyone doing systems engineering.** Structure mirrors the communication structure that produced it. So finding a five-repo boundary inside 3–7 is NOT evidence that SE happened; it is equally consistent with the split being organisational and the doctrine merely DESCRIBING what organic growth produces. **Two of the four rules cannot distinguish a designed system from a grown one, because one of them is about growth.**\n\n⇒ THE CONSEQUENCE FOR EVERY MEASUREMENT TAKEN TODAY: an organically-grown system tells you what organic growth produces. It cannot tell you what a well-decomposed design looks like, because no such design is in the sample. **THE EVIDENCE CLASS DOES NOT EXIST YET** — not because it was not looked for, but because designs shaped by SE upfront, with reflow2, have not been built.\n\n⭐⭐ THE ONE EXCEPTION, AND IT IS n=1. **flo2** is the only design measured that was shaped deliberately and EARLY — still in concept phase, 12 components. It is also the only one that satisfies the doctrine on every axis measured: depth 3 (the deepest per-component ratio in the sample), fan-out 6/2/2/1/1 with ZERO parents over seven, and 7 interfaces for 12 components. The smallest and youngest design is the best-decomposed one. That is either the strongest available evidence that shaping early works, or a sample of one — and it is honestly both.\n\n📌 WHY THIS MATTERS BEYOND THE LADDER QUESTION. Anthony: *\"that is kind of one of the main goals of reflow2 in doing systems engineering upfront and properly (particularly for users that don't do systems engineering — bluesky stack was a bunch of scientists that made something work, which got it momentum, and then added to, and so on).\"* The bluesky stack is not a counter-example to reflow2; **it is the target case.** It is also his real operating context — NSLS-II, a ~10-year-old stack being evolved on the fly — so it belongs in the design as a BROWNFIELD adopt subject, not as an exemplar to imitate.\n\n⚠️ BOUNDS, and they are wide. The bluesky figures are file-tree structure from public GitHub metadata, NOT a design decomposition — and the distinction is the other half of round 2: a Python package holding 22 modules is a namespace managed by tooling, whereas a design node's children are things a person must reason about together, which is what span of control actually bounds. Nothing here was cloned, run, or read beyond public trees. The claim that flo2 is well-decomposed rests on structural measures only; nobody has asked whether its decomposition is USEFUL.",
+        "subject_id": "req:recursive-black-box-decomposition",
+        "valid_from": "2026-08-25"
       }
     },
     {
@@ -135275,7 +135635,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:d96528cfeb3ef0af4a5f5d506347adc2340be193b9c6b5b1adc565a2b06dc077",
+  "prev_content_hash": "sha256:727c2dd798109bfce43f342970d1a17a8819293b7fe7dfa51d083fd699382e39",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
