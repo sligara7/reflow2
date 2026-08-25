@@ -30,50 +30,90 @@ use crate::foundation::core::{DynoError, Value};
 use crate::graph::DesignGraph;
 use crate::nodes::{edge, node};
 
-/// A decomposition level — mirrors `structure.yaml`'s `Component.level` enum,
-/// ordered low → high.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
-#[serde(rename_all = "snake_case")]
-pub enum Level {
-    Component,
-    Subsystem,
-    System,
-    SystemOfSystems,
-    Enterprise,
+/// THIS DESIGN'S DECOMPOSITION LADDER — the rungs, ordered bottom-first.
+///
+/// # Why this is not an enum any more
+///
+/// It was: `component ▸ subsystem ▸ system ▸ system_of_systems ▸ enterprise`,
+/// with `rank()` a match arm. That made `component` a HARD FLOOR — there was no
+/// value to give a part of a component, so `cmp:byte-store CONTAINS
+/// cmp:memory-backend` could not be expressed at all and came back as a
+/// `level_mismatch`. `req:recursive-black-box-decomposition` (accepted, 2026-08-07)
+/// asks for nesting "as deep as the design needs, from code projects to biology
+/// projects", so the closed enum made an accepted requirement UNSATISFIABLE rather
+/// than merely unfinished.
+///
+/// ⭐ AND THE FIX IS NOT ONE MORE RUNG. The canonical SE ladder adds `assembly`
+/// between subsystem and component, which would have fixed the case above. It was
+/// declined because **"atomic" shifts by domain**: the atomic unit is a
+/// microprocessor chip for aerospace and a single code module for software. A
+/// ladder of fixed names asserts every domain bottoms out at the same conceptual
+/// depth (`dec:the-decomposition-ladder-is-open-not-a-fixed-enum`).
+///
+/// # The one home for the ordering
+///
+/// 🛑 THE LADDER USED TO BE DECLARED TWICE — `schema/structure.yaml`'s enum and
+/// this file's `Level` — with nothing checking they agreed, and `from_key`
+/// mapping anything unrecognised to `Component`. A rung added to the YAML and
+/// forgotten here would have silently ranked 0, which is a silent fallback in a
+/// project holding `req:no-silent-fallback` at critical priority. Ordering is now
+/// DATA with exactly one home: `Project.decomposition_levels`, or [`DEFAULT_RUNGS`]
+/// when a design has not said. [`Ladder::rank`] returns `None` for a name that is
+/// not on the ladder — never `Some(0)` — and the callers report it.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+pub struct Ladder {
+    rungs: Vec<String>,
 }
 
-impl Level {
-    /// The exact schema enum string.
-    pub fn as_str(self) -> &'static str {
-        match self {
-            Level::Component => "component",
-            Level::Subsystem => "subsystem",
-            Level::System => "system",
-            Level::SystemOfSystems => "system_of_systems",
-            Level::Enterprise => "enterprise",
+/// The ladder a design gets when it has not declared one. These are exactly the
+/// five values the old enum carried, in the old order, so every design that
+/// predates the open ladder behaves as it always did and no data migrates.
+pub const DEFAULT_RUNGS: [&str; 5] = [
+    "component",
+    "subsystem",
+    "system",
+    "system_of_systems",
+    "enterprise",
+];
+
+impl Default for Ladder {
+    fn default() -> Self {
+        Ladder {
+            rungs: DEFAULT_RUNGS.iter().map(|s| (*s).to_string()).collect(),
+        }
+    }
+}
+
+impl Ladder {
+    /// Build from an explicit ordered list, bottom-first. Empty falls back to the
+    /// default rather than producing a ladder on which nothing can be ranked —
+    /// a design that declares no rungs has not chosen a different ladder, it has
+    /// said nothing.
+    pub fn from_rungs(rungs: Vec<String>) -> Ladder {
+        if rungs.is_empty() {
+            Ladder::default()
+        } else {
+            Ladder { rungs }
         }
     }
 
-    /// Parse a stored level string; unknown → `component` (the schema default).
-    pub fn from_key(s: &str) -> Level {
-        match s {
-            "subsystem" => Level::Subsystem,
-            "system" => Level::System,
-            "system_of_systems" => Level::SystemOfSystems,
-            "enterprise" => Level::Enterprise,
-            _ => Level::Component,
-        }
+    /// The rungs, bottom-first.
+    pub fn rungs(&self) -> &[String] {
+        &self.rungs
     }
 
-    /// Ordinal rank (component = 0 … enterprise = 4).
-    pub fn rank(self) -> i32 {
-        match self {
-            Level::Component => 0,
-            Level::Subsystem => 1,
-            Level::System => 2,
-            Level::SystemOfSystems => 3,
-            Level::Enterprise => 4,
-        }
+    /// Position on the ladder, 0 = finest.
+    ///
+    /// `None` means THIS NAME IS NOT ON THIS LADDER, which is a different fact
+    /// from "it is the bottom rung" and must never be collapsed into it — that
+    /// collapse is exactly what the old `from_key` did.
+    pub fn rank(&self, level: &str) -> Option<usize> {
+        self.rungs.iter().position(|r| r == level)
+    }
+
+    /// The finest rung. Used where the old code said `Level::Component`.
+    pub fn bottom(&self) -> &str {
+        &self.rungs[0]
     }
 }
 
@@ -116,6 +156,11 @@ pub enum HierarchyIssueKind {
     /// the tools lead you to — a Project holding a few subsystems — reported one
     /// orphan per subsystem, which is how reflow2's own design produced two.
     OrphanLevel,
+    /// A Component whose `level` is not a rung on this design's ladder. Replaces
+    /// the validation the closed enum used to give: the schema cannot know a
+    /// per-design ladder, so an off-ladder level is REPORTED rather than
+    /// silently ranked at the bottom (`req:no-silent-fallback`).
+    UnknownLevel,
     /// A Component contained by MORE THAN ONE parent — a box in two boxes.
     ///
     /// The spine is a tree. Two parents make "which box is this in?" a question
@@ -143,6 +188,7 @@ impl HierarchyIssueKind {
             HierarchyIssueKind::MissingIntermediateLevel => "missing_intermediate_level",
             HierarchyIssueKind::LevelMismatch => "level_mismatch",
             HierarchyIssueKind::OrphanLevel => "orphan_level",
+            HierarchyIssueKind::UnknownLevel => "unknown_level",
             HierarchyIssueKind::MultipleParents => "multiple_parents",
             HierarchyIssueKind::LevelSpineDisagreement => "level_spine_disagreement",
         }
@@ -169,15 +215,40 @@ pub struct HierarchyIssue {
 impl DesignGraph {
     /// Build the id → level map for every Component (level defaults to
     /// `component`, applied by the schema on create).
-    fn component_levels(&self) -> Result<HashMap<String, Level>, DynoError> {
+    /// This design's ladder, read from the Project node. A design with several
+    /// Projects (a mirror sits alongside your own) takes the first that declares
+    /// one, sorted by id so the answer is deterministic; a mirror carrying its
+    /// own ladder must not silently redefine yours, and that case is not yet
+    /// distinguished — see the module docs.
+    pub fn decomposition_ladder(&self) -> Result<Ladder, DynoError> {
+        let mut projects = self.scan_nodes(node::PROJECT)?;
+        projects.sort_by(|a, b| a.node_id.cmp(&b.node_id));
+        for p in projects {
+            if let Some(Value::List(items)) = p.properties.get("decomposition_levels") {
+                let rungs: Vec<String> = items
+                    .iter()
+                    .filter_map(|v| v.as_str().map(str::to_string))
+                    .collect();
+                if !rungs.is_empty() {
+                    return Ok(Ladder::from_rungs(rungs));
+                }
+            }
+        }
+        Ok(Ladder::default())
+    }
+
+    /// Each Component's declared level, as written. Unranked here on purpose:
+    /// ranking needs the ladder, and a name that is not on it must stay
+    /// distinguishable from the bottom rung.
+    fn component_levels(&self) -> Result<HashMap<String, String>, DynoError> {
         let mut levels = HashMap::new();
         for c in self.scan_nodes(node::COMPONENT)? {
             let lvl = c
                 .properties
                 .get("level")
                 .and_then(Value::as_str)
-                .map(Level::from_key)
-                .unwrap_or(Level::Component);
+                .unwrap_or(DEFAULT_RUNGS[0])
+                .to_string();
             levels.insert(c.node_id, lvl);
         }
         Ok(levels)
@@ -186,16 +257,49 @@ impl DesignGraph {
     /// Detect axis-Y decomposition defects. See the module docs.
     pub fn hierarchy_issues(&self) -> Result<Vec<HierarchyIssue>, DynoError> {
         let levels = self.component_levels()?;
+        let ladder = self.decomposition_ladder()?;
         let mut issues = Vec::new();
 
+        // A level that is not on this design's ladder cannot be ranked, so it is
+        // reported and then SKIPPED by every arithmetic check below rather than
+        // being ranked at the bottom. Ranking it would resurrect exactly the
+        // silent fallback the open ladder exists to remove: an off-ladder name
+        // would read as the finest rung and every containment above it would
+        // come back as a mismatch nobody could explain.
+        let mut ranked: HashMap<&str, usize> = HashMap::new();
+        for (id, lvl) in &levels {
+            match ladder.rank(lvl) {
+                Some(r) => {
+                    ranked.insert(id.as_str(), r);
+                }
+                None => issues.push(HierarchyIssue {
+                    kind: HierarchyIssueKind::UnknownLevel,
+                    components: vec![id.clone()],
+                    relation: None,
+                    message: format!(
+                        "'{}' declares level '{}', which is not a rung on this design's \
+                         ladder ({}). Add it to Project.decomposition_levels, or correct \
+                         the component.",
+                        id,
+                        lvl,
+                        ladder.rungs().join(" ▸ ")
+                    ),
+                }),
+            }
+        }
+
         // Edge-based defects: CONTAINS (parent→child) and DEPENDS_ON (peer).
-        for (id, &lvl) in &levels {
+        for (id, lvl) in &levels {
+            let Some(&lvl_rank) = ranked.get(id.as_str()) else {
+                continue; // off-ladder: already reported as unknown_level
+            };
             // CONTAINS: parent should be exactly one level above the child.
             for e in self.outgoing(id, Some(edge::CONTAINS))? {
-                let Some(&child) = levels.get(&e.to_id) else {
+                let Some(&child_rank) = ranked.get(e.to_id.as_str()) else {
                     continue; // only component→component containment is the spine
                 };
-                let diff = lvl.rank() - child.rank();
+                let child = &levels[&e.to_id];
+                let diff = lvl_rank as i64 - child_rank as i64;
                 if diff >= 2 {
                     issues.push(HierarchyIssue {
                         kind: HierarchyIssueKind::MissingIntermediateLevel,
@@ -203,7 +307,7 @@ impl DesignGraph {
                         relation: Some("contains"),
                         message: format!(
                             "'{}' ({}) directly contains '{}' ({}) — {} intermediate level(s) skipped",
-                            e.from_id, lvl.as_str(), e.to_id, child.as_str(), diff - 1
+                            e.from_id, lvl, e.to_id, child, diff - 1
                         ),
                     });
                 } else if diff <= 0 {
@@ -213,27 +317,25 @@ impl DesignGraph {
                         relation: Some("contains"),
                         message: format!(
                             "'{}' ({}) contains '{}' ({}) but a parent must be above its child",
-                            e.from_id,
-                            lvl.as_str(),
-                            e.to_id,
-                            child.as_str()
+                            e.from_id, lvl, e.to_id, child
                         ),
                     });
                 }
             }
             // DEPENDS_ON: peers ≥2 levels apart mean a missing intermediate.
             for e in self.outgoing(id, Some(edge::DEPENDS_ON))? {
-                let Some(&other) = levels.get(&e.to_id) else {
+                let Some(&other_rank) = ranked.get(e.to_id.as_str()) else {
                     continue;
                 };
-                if (lvl.rank() - other.rank()).abs() >= 2 {
+                let other = &levels[&e.to_id];
+                if (lvl_rank as i64 - other_rank as i64).abs() >= 2 {
                     issues.push(HierarchyIssue {
                         kind: HierarchyIssueKind::MissingIntermediateLevel,
                         components: vec![e.from_id.clone(), e.to_id.clone()],
                         relation: Some("depends_on"),
                         message: format!(
                             "'{}' ({}) depends directly on '{}' ({}) across ≥2 levels — a missing intermediate",
-                            e.from_id, lvl.as_str(), e.to_id, other.as_str()
+                            e.from_id, lvl, e.to_id, other
                         ),
                     });
                 }
@@ -254,20 +356,27 @@ impl DesignGraph {
             .map(|n| n.node_id)
             .collect();
 
-        for (id, &lvl) in &levels {
-            if lvl.rank() < Level::Subsystem.rank() {
-                continue; // a bare component with no parent/child is normal
+        for (id, lvl) in &levels {
+            let Some(&lvl_rank) = ranked.get(id.as_str()) else {
+                continue; // off-ladder: already reported as unknown_level
+            };
+            // The FINEST rung is exempt: a leaf with no parent and no child is
+            // ordinary, not floating. This used to read `< Level::Subsystem`,
+            // which hardcoded the second rung of a fixed ladder; on an open
+            // ladder the same intent is "anything above the bottom".
+            if lvl_rank == 0 {
+                continue;
             }
             let has_higher_parent = self.incoming(id, Some(edge::CONTAINS))?.iter().any(|e| {
                 projects.contains(&e.from_id)
-                    || levels
-                        .get(&e.from_id)
-                        .is_some_and(|p| p.rank() > lvl.rank())
+                    || ranked
+                        .get(e.from_id.as_str())
+                        .is_some_and(|&p| p > lvl_rank)
             });
             let has_lower_child = self
                 .outgoing(id, Some(edge::CONTAINS))?
                 .iter()
-                .any(|e| levels.get(&e.to_id).is_some_and(|c| c.rank() < lvl.rank()));
+                .any(|e| ranked.get(e.to_id.as_str()).is_some_and(|&c| c < lvl_rank));
             if !has_higher_parent && !has_lower_child {
                 issues.push(HierarchyIssue {
                     kind: HierarchyIssueKind::OrphanLevel,
@@ -276,8 +385,7 @@ impl DesignGraph {
                     message: format!(
                         "'{}' ({}) is not contained by anything above it and contains \
                          nothing below it",
-                        id,
-                        lvl.as_str()
+                        id, lvl
                     ),
                 });
             }
@@ -322,9 +430,13 @@ impl DesignGraph {
         // level actually PRESENT, so a flat design where every part is
         // `component` reports nothing. Nothing here prescribes a ladder depth —
         // that would be the over-modelling this project refuses.
-        if let Some(&top) = levels.values().max_by_key(|l| l.rank()) {
-            for (id, &lvl) in &levels {
-                if lvl.rank() >= top.rank() {
+        if let Some(top_rank) = ranked.values().copied().max() {
+            let top = ladder.rungs()[top_rank].clone();
+            for (id, lvl) in &levels {
+                let Some(&lvl_rank) = ranked.get(id.as_str()) else {
+                    continue; // off-ladder: already reported as unknown_level
+                };
+                if lvl_rank >= top_rank {
                     continue; // legitimately a root
                 }
                 let has_parent = self
@@ -341,9 +453,7 @@ impl DesignGraph {
                              nothing contains it, while '{}' exists above it. Asking for the \
                              top tier by declared level and by spine position give different \
                              answers, and this node is why",
-                            id,
-                            lvl.as_str(),
-                            top.as_str()
+                            id, lvl, top
                         ),
                     });
                 }
@@ -443,22 +553,45 @@ impl DesignGraph {
 
         let child_level = self.component_level(child_id)?;
         let parent_level = self.component_level(new_parent_id)?;
-        let level_note = match parent_level.rank() - child_level.rank() {
-            1 => None,
-            0 => Some(format!(
-                "'{new_parent_id}' and '{child_id}' are both at level '{}', so this containment                  is a level_mismatch — a parent should sit exactly one level above its child.                  Set the levels with add_component; hierarchy_issues is the authority.",
-                child_level.as_str()
-            )),
-            d if d < 0 => Some(format!(
-                "'{new_parent_id}' (level '{}') sits BELOW '{child_id}' (level '{}') — the                  containment is inverted and hierarchy_issues will report level_mismatch.",
-                parent_level.as_str(),
-                child_level.as_str()
-            )),
-            _ => Some(format!(
-                "'{new_parent_id}' (level '{}') is more than one level above '{child_id}' (level                  '{}') — hierarchy_issues will report missing_intermediate_level.",
-                parent_level.as_str(),
-                child_level.as_str()
-            )),
+        // Rank both ends on THIS design's ladder. Either being off-ladder is a
+        // real answer and not a diff of 0: the move still happens, and the note
+        // says why no level advice could be given rather than inventing one.
+        let ladder = self.decomposition_ladder()?;
+        let level_note = match (ladder.rank(&parent_level), ladder.rank(&child_level)) {
+            (Some(p), Some(c)) => match p as i64 - c as i64 {
+                1 => None,
+                0 => Some(format!(
+                    "'{new_parent_id}' and '{child_id}' are both at level '{child_level}', so \
+                     this containment is a level_mismatch — a parent should sit exactly one \
+                     rung above its child. Set the levels with add_component; hierarchy_issues \
+                     is the authority."
+                )),
+                d if d < 0 => Some(format!(
+                    "'{new_parent_id}' (level '{parent_level}') sits BELOW '{child_id}' (level \
+                     '{child_level}') — the containment is inverted and hierarchy_issues will \
+                     report level_mismatch."
+                )),
+                _ => Some(format!(
+                    "'{new_parent_id}' (level '{parent_level}') is more than one rung above \
+                     '{child_id}' (level '{child_level}') — hierarchy_issues will report \
+                     missing_intermediate_level."
+                )),
+            },
+            (parent_rank, child_rank) => {
+                let off: Vec<&str> = [
+                    (parent_rank.is_none()).then_some(parent_level.as_str()),
+                    (child_rank.is_none()).then_some(child_level.as_str()),
+                ]
+                .into_iter()
+                .flatten()
+                .collect();
+                Some(format!(
+                    "no level advice: {} is not a rung on this design's ladder ({}). The move \
+                     was made; hierarchy_issues reports this as unknown_level.",
+                    off.join(" and "),
+                    ladder.rungs().join(" ▸ ")
+                ))
+            }
         };
 
         // Fires on ANY detachment, not only when the child has never been
@@ -493,14 +626,14 @@ impl DesignGraph {
     }
 
     /// A Component's declared level, defaulting the way the schema does.
-    fn component_level(&self, id: &str) -> Result<Level, DynoError> {
+    fn component_level(&self, id: &str) -> Result<String, DynoError> {
         Ok(self
             .get_node(node::COMPONENT, id)?
             .and_then(|n| {
                 n.properties
                     .get("level")
-                    .and_then(|v| v.as_str().map(Level::from_key))
+                    .and_then(|v| v.as_str().map(str::to_string))
             })
-            .unwrap_or(Level::Component))
+            .unwrap_or_else(|| DEFAULT_RUNGS[0].to_string()))
     }
 }

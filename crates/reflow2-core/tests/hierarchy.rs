@@ -288,3 +288,153 @@ fn both_new_kinds_surface_as_gaps() {
         "{sources:?}"
     );
 }
+
+// ── The OPEN ladder (dec:the-decomposition-ladder-is-open-not-a-fixed-enum) ──
+//
+// The closed enum made `component` a hard FLOOR: a part of a component could not
+// be expressed at all. These pin that a design may declare its own rungs, that a
+// design which declares none behaves exactly as it always did, and that a level
+// which is not on the ladder is REPORTED rather than silently ranked at the
+// bottom — the silent fallback the old `from_key` had.
+
+/// A Project declaring an explicit ladder, ordered bottom-first.
+fn project_with_ladder(g: &mut DesignGraph, id: &str, rungs: &[&str]) {
+    use reflow2_core::foundation::core::Value;
+    let list = Value::List(rungs.iter().map(|r| Value::from(*r)).collect());
+    g.create_node(
+        node::PROJECT,
+        id,
+        Props::new()
+            .set("name", id)
+            .set("decomposition_levels", list),
+    )
+    .unwrap();
+}
+
+#[test]
+fn a_design_can_declare_rungs_below_component_and_nest_there() {
+    // THE CASE THAT EXPOSED THE FLOOR: two KvBackend implementations are parts
+    // of the byte-store component. Under the closed enum this was unrepresentable
+    // and came back as level_mismatch; with a ladder that has a rung beneath
+    // `component`, it is ordinary containment.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    project_with_ladder(&mut g, "proj:p", &["part", "component", "subsystem"]);
+    comp(&mut g, "cmp:store", "component");
+    comp(&mut g, "cmp:impl", "part");
+    g.contain_component("cmp:store", "cmp:impl").unwrap();
+
+    assert!(
+        kinds(&g).is_empty(),
+        "a part nested in a component is clean on a ladder that has both: {:?}",
+        g.hierarchy_issues().unwrap()
+    );
+}
+
+#[test]
+fn the_same_nesting_is_a_mismatch_on_the_default_ladder() {
+    // The other half of the pair: without a declared ladder, `component` is still
+    // the bottom rung and component-in-component is still wrong. Nothing that
+    // predates the open ladder moves.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    comp(&mut g, "cmp:store", "component");
+    comp(&mut g, "cmp:impl", "component");
+    g.contain_component("cmp:store", "cmp:impl").unwrap();
+
+    assert_eq!(kinds(&g), [HierarchyIssueKind::LevelMismatch]);
+}
+
+#[test]
+fn a_level_that_is_not_on_the_ladder_is_reported_not_ranked_at_the_bottom() {
+    // THE SILENT FALLBACK THIS REPLACES: `Level::from_key` mapped any unknown
+    // string to `Component`, so a typo ranked 0 and every containment above it
+    // read as a mismatch nobody could explain. Now the name itself is the
+    // finding, and the arithmetic checks skip the node rather than guess.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    project_with_ladder(&mut g, "proj:p", &["component", "subsystem"]);
+    comp(&mut g, "cmp:sub", "subsystem");
+    comp(&mut g, "cmp:typo", "compnent"); // misspelled
+    g.contain_component("cmp:sub", "cmp:typo").unwrap();
+
+    let issues = g.hierarchy_issues().unwrap();
+    let unknown: Vec<_> = issues
+        .iter()
+        .filter(|i| i.kind == HierarchyIssueKind::UnknownLevel)
+        .collect();
+    assert_eq!(unknown.len(), 1, "got {issues:?}");
+    assert_eq!(unknown[0].components, ["cmp:typo"]);
+    assert!(
+        unknown[0].message.contains("compnent") && unknown[0].message.contains("component"),
+        "the message must name the offending level AND the ladder: {}",
+        unknown[0].message
+    );
+    assert!(
+        !issues
+            .iter()
+            .any(|i| i.kind == HierarchyIssueKind::LevelMismatch),
+        "an unrankable level must not also produce level arithmetic: {issues:?}"
+    );
+}
+
+#[test]
+fn an_unknown_level_surfaces_as_a_gap() {
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    comp(&mut g, "cmp:x", "not_a_rung");
+    let gaps = g.detect_gaps().unwrap();
+    assert!(
+        gaps.iter()
+            .any(|gp| gp.gap_source == GapSource::UnknownLevel),
+        "detect_gaps must surface it: {:?}",
+        gaps.iter().map(|gp| gp.gap_source).collect::<Vec<_>>()
+    );
+}
+
+#[test]
+fn a_deep_ladder_ranks_by_position_not_by_name() {
+    // Five rungs of a domain that is not software at all. What matters is the
+    // POSITION in the declared list; none of these names exist in the default.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    project_with_ladder(
+        &mut g,
+        "proj:p",
+        &["organelle", "cell", "tissue", "organ", "organism"],
+    );
+    comp(&mut g, "cmp:organism", "organism");
+    comp(&mut g, "cmp:organ", "organ");
+    comp(&mut g, "cmp:tissue", "tissue");
+    comp(&mut g, "cmp:cell", "cell");
+    g.contain_component("cmp:organism", "cmp:organ").unwrap();
+    g.contain_component("cmp:organ", "cmp:tissue").unwrap();
+    g.contain_component("cmp:tissue", "cmp:cell").unwrap();
+
+    assert!(
+        kinds(&g).is_empty(),
+        "a four-deep non-software ladder is clean: {:?}",
+        g.hierarchy_issues().unwrap()
+    );
+
+    // And skipping a rung is still caught, on the user's own ladder.
+    comp(&mut g, "cmp:organelle", "organelle");
+    g.contain_component("cmp:organ", "cmp:organelle").unwrap();
+    assert!(
+        kinds(&g).contains(&HierarchyIssueKind::MissingIntermediateLevel),
+        "organ ▸ organelle skips tissue and cell: {:?}",
+        g.hierarchy_issues().unwrap()
+    );
+}
+
+#[test]
+fn an_empty_declared_ladder_falls_back_rather_than_ranking_nothing() {
+    // Declaring no rungs is not choosing a different ladder — it is saying
+    // nothing. Falling back keeps every existing level rankable.
+    let mut g = DesignGraph::open_in_memory().unwrap();
+    project_with_ladder(&mut g, "proj:p", &[]);
+    comp(&mut g, "cmp:sys", "system");
+    comp(&mut g, "cmp:sub", "subsystem");
+    g.contain_component("cmp:sys", "cmp:sub").unwrap();
+
+    assert!(
+        kinds(&g).is_empty(),
+        "the default ladder still applies: {:?}",
+        g.hierarchy_issues().unwrap()
+    );
+}

@@ -137,7 +137,7 @@ pub use heal::{
     HealProposal, HealReport, HealSeverity, HealStrategy, ReviewedDefect, SkippedOperation,
     SweepScope,
 };
-pub use hierarchy::{HierarchyIssue, HierarchyIssueKind, Level};
+pub use hierarchy::{DEFAULT_RUNGS, HierarchyIssue, HierarchyIssueKind, Ladder};
 pub use ility::{AssertedScore, IlityEvidence, IlityReport, IlitySignal};
 pub use ingest::{
     DroppedEdge, FuzzyMerge, IngestOptions, IngestReport, IngestStatus, IngestStep, MatchKind,

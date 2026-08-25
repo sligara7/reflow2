@@ -285,6 +285,10 @@ pub enum GapSource {
     /// A Component at the root of the spine declaring a level something else
     /// claims to be above, so "the top tier" has two disagreeing answers.
     LevelSpineDisagreement,
+    /// A Component declares a `level` that is not a rung on this design's ladder.
+    /// Replaces the validation the closed `level` enum used to give, now that
+    /// the ladder is per-design (`dec:the-decomposition-ladder-is-open-not-a-fixed-enum`).
+    UnknownLevel,
     // Decision points (axis of design space — BL-70)
     /// A *proposed* Decision holding ≥2 registered alternatives — an open fork
     /// the design has not chosen between. The "missing teeth" BL-70 named:
@@ -604,6 +608,7 @@ impl GapSource {
             GapSource::OrphanLevel => "orphan_level",
             GapSource::MultipleParents => "multiple_parents",
             GapSource::LevelSpineDisagreement => "level_spine_disagreement",
+            GapSource::UnknownLevel => "unknown_level",
             GapSource::UndecidedDecisionPoint => "undecided_decision_point",
             GapSource::UnreviewedIdeas => "unreviewed_ideas",
             GapSource::UnvalidatedCapability => "unvalidated_capability",
@@ -731,6 +736,7 @@ impl GapSource {
             | GapSource::OrphanLevel
             | GapSource::MultipleParents
             | GapSource::LevelSpineDisagreement
+            | GapSource::UnknownLevel
             | GapSource::UndecidedDecisionPoint
             | GapSource::KppUnbound
             | GapSource::KppBreached
@@ -3844,6 +3850,7 @@ impl DesignGraph {
                 HierarchyIssueKind::OrphanLevel => GapSource::OrphanLevel,
                 HierarchyIssueKind::MultipleParents => GapSource::MultipleParents,
                 HierarchyIssueKind::LevelSpineDisagreement => GapSource::LevelSpineDisagreement,
+                HierarchyIssueKind::UnknownLevel => GapSource::UnknownLevel,
             };
             // Missing-intermediate is the highest-value Y defect; rank it up.
             let severity = match issue.kind {
@@ -3854,6 +3861,10 @@ impl DesignGraph {
                 // so it outranks the floating-level finding.
                 HierarchyIssueKind::MultipleParents => 0.65,
                 HierarchyIssueKind::LevelSpineDisagreement => 0.5,
+                // Nothing downstream can rank this component at all, so every
+                // other level check silently skips it — a quiet hole in the
+                // decomposition rather than a wrong answer in it.
+                HierarchyIssueKind::UnknownLevel => 0.55,
             };
             let title = match issue.kind {
                 HierarchyIssueKind::MissingIntermediateLevel => "Missing intermediate level",
@@ -3863,6 +3874,7 @@ impl DesignGraph {
                 HierarchyIssueKind::LevelSpineDisagreement => {
                     "Declared level disagrees with spine position"
                 }
+                HierarchyIssueKind::UnknownLevel => "Level is not on this design's ladder",
             };
             // Fold the producing edge into the id so a CONTAINS and a
             // DEPENDS_ON missing-intermediate over the same pair get DISTINCT
