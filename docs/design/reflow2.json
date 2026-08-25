@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:615e7f296c46627a170af05a6b524e68a0105a5bd56d236bac1e91e8849ced94",
+  "content_hash": "sha256:d96528cfeb3ef0af4a5f5d506347adc2340be193b9c6b5b1adc565a2b06dc077",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -11571,6 +11571,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-decomposition-ladder-is-open-not-a-fixed-enum",
+      "properties": {
+        "acted_at": "2026-08-25T02:05:00Z",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:the-default-scope-depth-should-be-two",
       "properties": {
         "role": "approver"
@@ -13509,6 +13518,15 @@
     },
     {
       "edge_type": "BLOCKS",
+      "from_id": "fact:the-level-ladder-has-a-hard-floor-at-component-and-no-assembly-rung",
+      "properties": {
+        "confidence": 1.0,
+        "evidence": "The requirement's own words are \"nested as deep as the design needs\", and the closed `level` enum makes the downward half of that unsatisfiable rather than merely unpopulated: there is no value to give a part of a component, so the containment is refused by hierarchy_issues. Measured 2026-08-25 by attempting it. This is the vocabulary blocking an accepted requirement, which is different from the requirement simply being unfinished."
+      },
+      "to_id": "req:recursive-black-box-decomposition"
+    },
+    {
+      "edge_type": "BLOCKS",
       "from_id": "req:kit-reaches-the-agent",
       "properties": {
         "evidence": "The install reported success while leaving the kit invisible to the harness in the target repo. dynograph-foundation, 2026-07-28."
@@ -13751,6 +13769,16 @@
         "validation_status": "validated"
       },
       "to_id": "dec:idea-a-finding-carries-its-bounds"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:the-level-ladder-has-a-hard-floor-at-component-and-no-assembly-rung",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "Taking one forced the other. Hitting the floor while modelling the KvBackend implementations produced two level_mismatch findings and the realisation that `component` is rank 0 with nothing below it; that measurement is what put the fork to Anthony, and he chose open. Mechanism, not correlation: the decision would not exist without the measurement, and the measurement carries the research that decided which fork to take.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:the-decomposition-ladder-is-open-not-a-fixed-enum"
     },
     {
       "edge_type": "CAUSES",
@@ -42951,6 +42979,12 @@
       "from_id": "req:defaults-do-not-assert",
       "properties": {},
       "to_id": "fact:a-materialised-default-defeats-a-completeness-check"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "req:recursive-black-box-decomposition",
+      "properties": {},
+      "to_id": "fact:the-level-ladder-has-a-hard-floor-at-component-and-no-assembly-rung"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -90826,6 +90860,14 @@
     },
     {
       "edge_type": "MITIGATES",
+      "from_id": "dec:the-decomposition-ladder-is-open-not-a-fixed-enum",
+      "properties": {
+        "evidence": "One is a hazard, the other answers it. That accepted requirement asks for nesting 'as deep as the design needs, from code projects to biology projects', and the closed enum makes the downward half unsatisfiable rather than merely unpopulated. An open ladder is the change that makes the requirement satisfiable at all. It does not satisfy it — the interface half and the beyond-two-levels exercise are still owed."
+      },
+      "to_id": "req:recursive-black-box-decomposition"
+    },
+    {
+      "edge_type": "MITIGATES",
       "from_id": "fact:the-diamond-meets-at-dynographs-internals-not-its-interface",
       "properties": {
         "evidence": "Answers the obvious hazard before anyone spends time on it. \"Does removing the dependency break storyflow, which also uses dynograph?\" — no: that fact measured storyflow consuming dynograph as a REST API over HTTP while reflow2 consumes it as a Rust library API. Disjoint surfaces over one shared implementation, so dropping the Rust surface cannot touch storyflow's endpoints. Drawn from the fact TO this idea: the measurement is what removes the risk."
@@ -116339,6 +116381,16 @@
       }
     },
     {
+      "node_id": "dec:the-decomposition-ladder-is-open-not-a-fixed-enum",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "DECIDED 2026-08-25 by Anthony, in one line: *\"make the ladder open.\"* Asked as a straight fork — add `assembly` as a sixth enum value, or make the ladder user-defined — and he took the second.\n\n═══ WHAT IS BEING REPLACED ═══\n\n`schema/structure.yaml:18` declares `Component.level` as a CLOSED enum: `[component, subsystem, system, system_of_systems, enterprise]`, default `component`. `crates/reflow2-core/src/hierarchy.rs` mirrors it as `enum Level` with `as_str`, `from_key` and `rank()` (component = 0 … enterprise = 4). `hierarchy_issues` compares the ranks either side of a `CONTAINS` and reports `level_mismatch` when a parent is not exactly one rung above its child.\n\n⇒ **`component` IS A HARD FLOOR.** There is no value to give a part of a component, so that containment cannot be expressed at all. Measured 2026-08-25 by hitting it — `fact:the-level-ladder-has-a-hard-floor-at-component-and-no-assembly-rung`, which is the EVIDENCE; this node is the DECISION taken because of it.\n\n═══ WHY OPEN AND NOT ONE MORE RUNG ═══\n\nAnthony's research gives the canonical four-tier hierarchy — System / Subsystem / **Assembly** / Component — and reflow2 is missing the third. Adding `assembly` would have fixed the case that exposed this and cost almost nothing.\n\n⭐⭐ IT WAS DECLINED BECAUSE OF THE STRONGER POINT IN HIS OWN RESEARCH: **\"atomic\" SHIFTS BY DOMAIN.** In his table the atomic unit is a microprocessor chip for aerospace and a single code module for software. A ladder with fixed named rungs asserts that every domain bottoms out at the same conceptual depth, and his examples show they do not. One more enum value would move the floor down one and leave the assertion in place.\n\nIt also matches ORIGINAL intent rather than adding to it. `req:recursive-black-box-decomposition` (accepted, his words, 2026-08-07) already says *\"this continues down further and further as the design needs... from code projects to biology projects.\"* The closed enum is what makes the downward half of that unsatisfiable.\n\n═══ WHAT THIS MUST NOT INHERIT ═══\n\n🛑 THE LADDER IS DECLARED TWICE AND NOTHING CHECKS THEY AGREE — `schema/structure.yaml` and `hierarchy.rs::Level`. `from_key` maps any unrecognised string to `Component`, so a rung added to the YAML and forgotten in Rust silently ranks 0 and every containment involving it reads as a mismatch. **A silent fallback, in a project holding `req:no-silent-fallback` at critical priority**, and the same two-places-one-truth shape the absorption found in `#[non_exhaustive]` match arms. An open ladder makes this worse if carried forward, because the rungs stop being a compile-time set at all: the ordering has to become DATA with exactly one home.\n\n═══ WHAT IS NOT SETTLED, AND MUST NOT BE ASSUMED ═══\n\nThe decision is that the ladder is open. HOW is not decided, and these are the real questions:\n- **Where do the rungs live?** Per-design nodes, a property on the Project, or a document — and what happens to a design that never declares any.\n- **Do the five current names survive as a default ladder?** 93 components carry them today; whatever ships must not invalidate them or force a migration on anyone.\n- **Does `hierarchy_issues` still demand exactly-one-rung steps?** With user-defined rungs, \"one level at a time\" is a claim about the user's ladder, not about a universal one.\n- **What replaces `rank()`** now that ordering is data rather than a match arm.\n- **What else keys on the enum** — `scan_nodes(level=…)`, `move_component`, the level-spine-disagreement detector, the granularity guidance.\n\n📌 THE STOPPING RULES ARE REFERENCE, NOT MECHANISM. Anthony's four rules for how deep to go — procurement black box, LRU/maintenance, single discipline or owner, verification cost — are recorded on the evidence fact. Nothing in reflow2 says how deep is deep enough, and an open ladder makes that question sharper rather than answering it. Rule 1 lands on a known gap: nothing distinguishes a component that was BOUGHT from one that was BUILT.\n\n⚠️ NOTHING WAS IMPLEMENTED. Decided at the end of a long session, immediately before Anthony went to bed. No code, no schema change, no branch.\n\nKEPT DISTINCT from `fact:the-level-ladder-has-a-hard-floor-at-component-and-no-assembly-rung` after reading it: that is a dated MEASUREMENT of the floor and carries the research and the stopping rules. This is the CHOICE made in response, with the road not taken and its reasoning. Folding a decision into an observation would lose which one is evidence and which one is a commitment.",
+        "name": "DECIDED — the decomposition ladder becomes OPEN: a design defines its own rungs, as many as it needs, instead of choosing from five fixed names",
+        "rationale": "Recorded as its own accepted Decision rather than as a note on the requirement, because it is a CHOICE between two named options that was actually made, and the road not taken has reasoning worth keeping: adding `assembly` was cheaper, sufficient for the case that exposed the problem, and rejected on the domain-shifting-atomicity argument rather than on cost.\n\nACCEPTED rather than proposed because Anthony gave it as an instruction in his own words, not as a musing.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:the-default-scope-depth-should-be-two",
       "node_type": "Decision",
       "properties": {
@@ -131952,6 +132004,19 @@
       }
     },
     {
+      "node_id": "fact:the-level-ladder-has-a-hard-floor-at-component-and-no-assembly-rung",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "name": "The schema DOES bound decomposition downward — `component` is a hard floor and there is no `assembly` rung — correcting this requirement's own 2026-08-07 line that 'the schema does not bound this; the population does'",
+        "statement": "MEASURED 2026-08-25, by hitting it. Modelling the two `KvBackend` implementations as parts of `cmp:byte-store` — where they physically live, in one file — produced:\n\n    hierarchy_issues -> 2 x level_mismatch\n    'cmp:byte-store' (component) contains 'cmp:memory-backend' (component)\n     but a parent must be above its child\n\n🛑 THIS CORRECTS A LINE IN THIS REQUIREMENT'S OWN MEASUREMENT. Its 2026-08-07 text reads: *\"DEPTH IS TWO, not 'as deep as the design needs'. ... nothing above system-of-systems and nothing below component. **The schema does not bound this; the population does.**\"* The second half is TRUE UPWARD and FALSE DOWNWARD. `schema/structure.yaml:18` declares `level` as a closed enum — `[component, subsystem, system, system_of_systems, enterprise]` — and `component` is rank 0 in `hierarchy.rs::Level::rank()`. **There is no value to give a part of a component, so the containment cannot be expressed at all**, and promoting the parent to `subsystem` only moves the mismatch up into `sys:foundation`. The population is not what stopped it here; the vocabulary did.\n\n⚠️ AND THE LADDER IS DECLARED TWICE, WHICH IS THE HAZARD ANY FIX MUST NOT INHERIT. `schema/structure.yaml` holds the enum; `crates/reflow2-core/src/hierarchy.rs` holds `Level` with `as_str`, `from_key` and `rank`. Nothing checks they agree, and `from_key` maps ANY unrecognised string to `Component` — so a rung added to the YAML and forgotten in Rust silently ranks 0 and every containment involving it reads as a mismatch. That is a silent fallback in a project holding `req:no-silent-fallback` at critical priority, and it is the same two-places-one-truth shape the absorption found in `#[non_exhaustive]` match arms.\n\n⭐⭐ ANTHONY'S RESEARCH, 2026-08-25, WHICH NAMES THE MISSING RUNG AND WHY A FIXED LADDER CANNOT WORK. The canonical SE hierarchy is four tiers, and reflow2 is missing the third:\n\n    tier          aerospace example          software example\n    System        commercial airliner        e-commerce platform\n    Subsystem     avionics / flight control  payment processing\n    ASSEMBLY      autopilot computer         microservice / API gateway     <- ABSENT\n    Component     microprocessor chip (LRU)  single code module / class\n\n⭐ THE DECISIVE POINT IS NOT THE MISSING RUNG, IT IS THAT **\"ATOMIC\" SHIFTS BY DOMAIN.** In his table the atomic unit is a microprocessor chip for aerospace and a code module for software. A ladder with fixed named rungs asserts that every domain bottoms out at the same conceptual depth, and his examples show they do not. That is the argument for an OPEN ladder rather than one more enum value.\n\nHIS FOUR STOPPING RULES, recorded as reference because they are the answer to \"how deep is deep enough\" and nothing in reflow2 says it:\n1. **BLACK BOX PROCUREMENT** — if you buy it from a vendor as a complete unit, stop. An airliner's engine is atomic to the airframer; you do not decompose the turbine.\n2. **MAINTENANCE / LRU** — stop where a technician pulls one part out and puts a new one in. A DIMM is an LRU; the transistors on it are not.\n3. **SINGLE DISCIPLINE / SINGLE OWNER** — stop when a box can be handed to one discipline or one small team. A braking subsystem is cross-disciplinary; a bracket is pure mechanical, a driver module pure software.\n4. **VERIFICATION COST** — every decomposition creates an item that must be tested, documented and tracked. Stop when verifying the parts costs more than the risk of testing them together.\n\n📌 RULE 1 IS ALREADY A KNOWN GAP HERE, and this is where it lands: `anthony-thinks-about-over-engineering` records that **nothing in reflow2 distinguishes a component that was BOUGHT from one that was BUILT**. That distinction is exactly what rule 1 turns on — a bought box is atomic by procurement, whatever its internal complexity.\n\n📌 BOUNDS: measured on one containment attempt in one design. The upward half of the ladder was not re-tested and the requirement's claim about it stands. No fix is proposed here — whether the answer is one more enum value (`assembly`) or an open user-defined ladder is a live question, and the second is what Anthony asked for in his own words: *\"should be allowed to go as many rungs down as the user needs.\"*",
+        "subject_id": "req:recursive-black-box-decomposition",
+        "valid_from": "2026-08-25"
+      }
+    },
+    {
       "node_id": "fact:the-levied-requirement-blocker-cleared-and-the-workaround-recurred",
       "node_type": "TemporalFact",
       "properties": {
@@ -135078,7 +135143,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:f6a5759b243b46c5944e7440f95d5674fe7074ea1bd4867bbadf9b512189624a",
+  "prev_content_hash": "sha256:615e7f296c46627a170af05a6b524e68a0105a5bd56d236bac1e91e8849ced94",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
