@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:f9163724cf657b27616d9b001038ee59064037f69a2eed8bfa0dcc93e56c08c5",
+  "content_hash": "sha256:d40deb7ab803d1e50a09771aade624232546f0a1f40a52bb47e19704bd61263a",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2711,6 +2711,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:unallocated-component-detector",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:undeclared-seam-is-named",
       "properties": {
         "weight_basis": "estimated"
@@ -2946,6 +2954,14 @@
         "evidence": "Same 2026-08-01 review, and the sharpest instance: it observes that `cut_structure` (absorbed, in use) answers 'what is a single point of failure' and NOT 'how separable are these two parts', which needs a minimum edge cut. That gap is precisely what this requirement says the design should be able to see. ⚠️ Needs `maxflow.rs` (248 lines) — left upstream by increment 3, on the verified ground that `cut_structure` does not depend on it."
       },
       "to_id": "req:graph-theory-undergirds-the-design-brain"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-the-ility-chooses-the-allocation-graph",
+      "properties": {
+        "evidence": "Written 2026-08-08, seventeen days before the later node, and it predicted that node's central error in as many words: 'any single run-Leiden-and-allocate answer silently picks performance'. The later node proposes exactly that — five options, four of which describe a skill whose first step is propose_allocation — without reaching this argument. A 2026-08-25 session settled it at option E and only met this node because the user remembered it, which is the concrete cost of the two never being linked."
+      },
+      "to_id": "dec:idea-does-the-deferred-structuring-step-need-a-skill-of-its-own"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -10378,8 +10394,8 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-does-the-deferred-structuring-step-need-a-skill-of-its-own",
       "properties": {
-        "acted_at": "2026-08-25T13:45:00Z",
-        "role": "author"
+        "acted_at": "2026-08-25",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -10863,6 +10879,15 @@
       "from_id": "dec:idea-should-a-requirement-trace-back-to-its-demand-signal",
       "properties": {
         "acted_at": "2026-08-11",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-an-idea-be-linked-to-the-intent-that-scopes-it",
+      "properties": {
+        "acted_at": "2026-08-25",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -13645,6 +13670,16 @@
     },
     {
       "edge_type": "CAUSES",
+      "from_id": "dec:idea-an-aggregate-acknowledgement-never-expires",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The permanent silencing of `unreviewed_ideas` on 2026-08-23 is WHY that node stayed unreachable from the allocation reasoning it belongs to. On 2026-08-25 a session settled the allocation-skill question without ever meeting it, and only reached it because the user remembered it existed. This is the mechanism; that node is the node it cost.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "dec:idea-the-ility-chooses-the-allocation-graph"
+    },
+    {
+      "edge_type": "CAUSES",
       "from_id": "dec:idea-cannibalize-dynograph-foundation-into-reflow2",
       "properties": {
         "basis": "correlational",
@@ -13879,6 +13914,60 @@
         "validation_status": "unvalidated"
       },
       "to_id": "dec:idea-a-gap-can-be-scheduled-into-an-increment-like-any-other-work"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:unallocated-component-detector-2026-08-25",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:unallocated-component-detector-2026-08-25",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect-and-ask-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:unallocated-component-detector-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:unallocated-component-detector"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:unallocated-component-detector-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:unallocated-component-detector-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-does-the-deferred-structuring-step-need-a-skill-of-its-own"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:unallocated-component-detector-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:structure-with-no-function-is-asked-about"
     },
     {
       "edge_type": "CHANGED",
@@ -18253,6 +18342,15 @@
         "action": "modified"
       },
       "to_id": "art:artifact"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-83bce6c451949852",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
     },
     {
       "edge_type": "CHANGED",
@@ -32099,6 +32197,15 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-should-an-idea-be-linked-to-the-intent-that-scopes-it",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "Option A here — every idea links to its scoping rule — would make an idea that connects to nothing structurally impossible, and would therefore empty out that node's detector by construction rather than by anyone having done the thinking. Both cannot hold as stated: either the connect-to-nothing finding is meaningful, or a universal scoping edge removes it. Recorded so whichever is chosen has to face the other."
+      },
+      "to_id": "dec:idea-what-notices-an-idea-that-connects-to-nothing"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth",
       "properties": {
         "alignment": "opposing",
@@ -33266,6 +33373,26 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-does-the-deferred-structuring-step-need-a-skill-of-its-own",
+      "properties": {
+        "evidence": "That decision settles WHEN allocation happens (deferred to the last responsible moment, per-capability, and never allocating is a legitimate terminal state). A skill for the allocation step has to fire at that moment or it is prescribing a step the design has already decided to defer — so what the skill is triggered BY is fixed by that node, not by this one.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-allocation-waits-for-the-last-responsible-moment"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-does-the-deferred-structuring-step-need-a-skill-of-its-own",
+      "properties": {
+        "evidence": "Settled at option E, but the OPEN half — whether the allocation step needs a skill, and what that skill would teach — cannot be answered before that node is. Options A/B/C all describe a method whose first step is propose_allocation, which that node shows is the PERFORMANCE graph specifically; reliability wants no articulation points and may duplicate a function, maintainability wants co-change, security wants constrained partitioning. Until the ility question is answered, any allocation skill silently picks one.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-the-ility-chooses-the-allocation-graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-every-project-shapes-its-own-git-governance",
       "properties": {
         "note": "The general case rests on the specific one. reflow2's own git rules are the worked example: if reflow2 cannot wire its OWN export and branch policy into its OWN governance layer, prompting every consumer to shape theirs would be shipping a shape that has never been shown to hold. Do the self-host case first, then generalise.",
@@ -33316,6 +33443,26 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-should-an-idea-be-linked-to-the-intent-that-scopes-it",
+      "properties": {
+        "evidence": "Option D here fails for exactly the reason that node documents: prose is not queryable, so nothing notices the scoping step being skipped, and a detector that WOULD notice is the kind whose one acknowledgement then silences it forever. Whichever option wins, its enforcement inherits that unsettled keying question.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-an-aggregate-acknowledgement-never-expires"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-should-an-idea-be-linked-to-the-intent-that-scopes-it",
+      "properties": {
+        "evidence": "That node asks whether ideas link to each OTHER; this asks whether they link to the INTENT that bounds them. If ideas turn out to be only a list, an idea-to-requirement edge is the only linking that would exist and this question becomes the whole of it — so what is worth building here is decided by what that one settles first.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-should-optimize-be-a-served-skill-any-project-can-run",
       "properties": {
         "evidence": "The whole argument that the skill has content rests on one observation from one run: the budget refused a 14.8x speedup as not-yet-done at 2.79ms, and released the work at 266us. That Constraint IS the evidence. If it turns out to be the only budget anyone ever writes, the skill is instructing people to do something nobody does, and this node should be revisited against that.",
@@ -33323,6 +33470,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "con:graph-construction-is-setup-not-work"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-the-ility-chooses-the-allocation-graph",
+      "properties": {
+        "evidence": "This idea allocates FUNCTIONS to systems, and that node establishes reflow2 has no Function type — a Capability is the nearest unit and may be a set of functions across several parts. Whichever graph an ility selects, it is built over whatever the unit of allocation turns out to be, so this cannot be built until that is settled.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-a-capability-is-a-set-of-functions-and-a-black-box-delivers-functions"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -39380,6 +39537,14 @@
       "from_id": "cap:tool-search",
       "properties": {},
       "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:unallocated-component-detector",
+      "properties": {
+        "note": "This detector IS option E — the choice was \"make the absence visible first, decide about a skill later\", and the absence it makes visible is structure no function has been allocated to. If that decision is ever revisited (A, B or C — a skill of its own, or the method folded into genesis or detect-and-ask), this is the node that was built instead, and the counts it produces are the evidence that should settle it."
+      },
+      "to_id": "dec:idea-does-the-deferred-structuring-step-need-a-skill-of-its-own"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -95103,6 +95268,14 @@
     },
     {
       "edge_type": "RISKS",
+      "from_id": "dec:idea-an-aggregate-acknowledgement-never-expires",
+      "properties": {
+        "evidence": "That capability is aggregate-keyed on the same anti-flood argument and is backlog-shaped (33 of 85 leaf components on reflow2's own design), so a single acknowledgement would silence it permanently in exactly the way `unreviewed_ideas` was silenced. The hazard is identical and was noticed only after it shipped."
+      },
+      "to_id": "cap:unallocated-component-detector"
+    },
+    {
+      "edge_type": "RISKS",
       "from_id": "dec:idea-does-the-graph-write-itself-through-to-the-repo-on-every-change",
       "properties": {
         "evidence": "One is a hazard to the other. That requirement's overwrite refusal compares an export file's current hash against what this seat believes it last wrote there — a guard designed for an occasional deliberate act. Under continuous export with two sessions on one design, every write by one seat invalidates the other's belief, so a check meant to fire rarely runs on a hot path and would either refuse constantly or be turned off."
@@ -96632,6 +96805,12 @@
       "from_id": "cap:tool-search",
       "properties": {},
       "to_id": "req:agent-native"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:unallocated-component-detector",
+      "properties": {},
+      "to_id": "req:structure-with-no-function-is-asked-about"
     },
     {
       "edge_type": "SATISFIES",
@@ -99288,6 +99467,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:unallocated-component-detector",
+      "properties": {},
+      "to_id": "cap:unallocated-component-detector"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:undeclared-seam-is-named",
       "properties": {},
       "to_id": "cap:undeclared-seam-is-named"
@@ -101596,7 +101781,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c159a629023153b5f7fca6a82c91830fd8f831824ee8b798ad7107c5fc6d4af6",
+        "checksum": "sha256:8fceeae818da7c74861cc5f91023121f42dbcabde06505147438c3eb5e652c0a",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -101609,7 +101794,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:06472b2b9f5849361f4ec35f5064c371a1309684d98b5b68f55c218cbcaa2346",
+        "checksum": "sha256:fcf2b422af10f7716b6690cbae27a2645dacf8a9ae0ab03ed890e92dfed3ec5d",
         "location": "getting-started/skills/detect-and-ask/SKILL.md",
         "name": "detect-and-ask/SKILL.md — the ask half of the loop, and now the rule for when NOT to ask",
         "status": "realized"
@@ -103076,7 +103261,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9349f89feeb61be47f13213a4dee10bdbbde87c0793535585e9801536e7f9ef3",
+        "checksum": "sha256:ef923d22c0596fb96cbc9efd24b2dc0f38503d7d13edd57ad358089a37d45588",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -106451,6 +106636,16 @@
       }
     },
     {
+      "node_id": "cap:unallocated-component-detector",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The `unallocated_component` gap: leaf Components carrying zero incoming ALLOCATED_TO, reported as ONE aggregate rollup rather than one alarm per box.\n\nExcludes any component holding a child Component — a parent is allocated through its children. Silent when the design has no capabilities, because there is then no allocation to have performed and that phase belongs to `concept_without_design`. Distinguishes NEVER STARTED (nothing allocated anywhere — the deferred allocation step never picked back up) from PARTIAL, because those are acted on differently. Aggregate-keyed so the standing judgement \"our boxes are namespaces, not functional parts\" survives somebody adding a component.\n\nThe mirror of `unallocated_capability`, and the visible half of the answer to `dec:idea-does-the-deferred-structuring-step-need-a-skill-of-its-own`.",
+        "name": "Report leaf components no capability is allocated to",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "cap:undeclared-seam-is-named",
       "node_type": "Capability",
       "properties": {
@@ -106517,6 +106712,18 @@
         "name": "A deliverable declares who it is for, and a need nothing consumer-facing delivers is reported",
         "provenance": "authored",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "ce:unallocated-component-detector-2026-08-25",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-25",
+        "name": "The allocation question gets its second half",
+        "rationale": "THE RESOLUTION OF `dec:idea-does-the-deferred-structuring-step-need-a-skill-of-its-own`, option E: make the absence visible first, decide about a skill later. Anthony chose it 2026-08-25 over three alternatives (a new /allocate skill, extending genesis, extending detect-and-ask).\n\n⚠️ OPTION E'S PREMISE WAS HALF WRONG AND THE CORRECTION IS THE FINDING. E read \"nothing notices that a design has capabilities and no components, OR components with no allocation.\" The first half was already covered — that is `concept_without_design`. Only the second half was real, and it was larger than the option implied: 33 of reflow2's own 95 components are leaf boxes owning no capability, with every detector reporting clean. Checking a stated premise before building on it is what turned a half-true option into a measured one.\n\nWHY LEAF-ONLY IS THE FINDING AND NOT A DETAIL. A parent is allocated through its children, so counting parents would file every well-formed hierarchy as a defect — 40 against 33 on the same design. Note the interaction with the adopt nesting step added the same day (#335): recovering a hierarchy MOVES components off this list by giving them children, which is honest, because a box that groups other boxes has a job.\n\nWHY AGGREGATE, WITH THE LOSING SIDE RECORDED. Per-component keying is the more honest key for the answer people actually give — \"this box is a namespace, not a functional part\" is a claim about ONE box — and it loses to BL-73 at 33 findings raised at once, because a per-node flood is acknowledged in bulk without being read.\n\nTHE THIRD LEG IS WHY THE SKILL ROW SHIPPED WITH THE DETECTOR. `propose_allocation` and `evaluate_allocation` were served, correct, and named in NO skill — the exact shape of `fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it`. A detector that notices the absence without an instruction telling anyone what to do about it would have reproduced the failure it was built to fix, so the detect-and-ask repair table gained the row in the same change.",
+        "subject": "system",
+        "summary": "Added the `unallocated_component` gap: LEAF Components no Capability is ALLOCATED_TO, one aggregate rollup, naming `propose_allocation` as the method. Registered in skill_lint's known terms, docs/gap-surfacing.md, and the detect-and-ask repair table in all three skill mirrors. Nine tests in tests/structure_with_no_function_is_asked_about.rs."
       }
     },
     {
@@ -107864,6 +108071,16 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "canonical_checksum: a bare hex digest is stored as sha256:&lt;hex&gt;, the dialect drift compares in. Restores intended behaviour — the design already said drift is a checksum comparison; it was reading identical bytes as total drift. Found by reflow2's own gate, 2026-07-25; pinned by two cases in tests/drift.rs."
+      }
+    },
+    {
+      "node_id": "chg:accept-83bce6c451949852",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "detected_at": "2026-08-25",
+        "name": "One line: `unallocated_component` added to the known-terms list so the linter does not read the new gap kind as an unserved tool name. The lint's own rules are unchanged, so the design carries no new meaning here — this is bookkeeping that keeps an existing gate accurate.",
+        "subject": "system"
       }
     },
     {
@@ -114748,6 +114965,16 @@
       }
     },
     {
+      "node_id": "dec:idea-an-aggregate-acknowledgement-never-expires",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT A PROPOSAL. Nothing here is intent. It comes from a cost that was PAID, not predicted.\n\n═══ THE MEASURED INSTANCE, 2026-08-25 ═══\n\n`unreviewed_ideas` fired correctly on 2026-08-23 with \"110 of 181 open idea(s) connect to nothing\", and Anthony accepted it: *\"A parked idea legitimately governs nothing yet, and relating them on a guess would assert reasoning nobody did.\"* THAT REASONING IS CORRECT and matches the detector's own warning that a false neighbour is worse than a missing one.\n\n🛑 BUT THE FINDING IS AGGREGATE-KEYED, so one acceptance silenced it PERMANENTLY — for every idea written since and every idea that will ever be written. Two days later, on 2026-08-25, the cost landed exactly where the gap predicted: a session reasoning about functional allocation never reached `dec:idea-the-ility-chooses-the-allocation-graph`, which had ANTICIPATED that session's central error seventeen days earlier and said so in as many words. **The user had to be the index.** He named it himself: *\"these brainstorming ideas from the past should slowly be being linked together, so that next time we have a discussion on functional allocation, I don't have to remind you.\"*\n\nMeasured the same day: 174 idea nodes, **121 of them (70%) link to no other idea at all**; only 43 idea-to-idea edges exist across the whole set.\n\n═══ WHY THE PENDULUM IS THE POINT ═══\n\n`is_aggregate` EXISTS because the opposite failed: `unvalidated_capability` was re-acknowledged about twenty times — at 33, 34, 35 … 68 capabilities — always with the same disposition, because per-node keying expired the judgement on every write. That was a real defect and aggregate keying was a real fix.\n\n⭐ SO THE TWO KNOWN STATES ARE \"EXPIRES ON EVERY WRITE\" AND \"NEVER EXPIRES\", and both have now cost something. The unexplored middle is an acceptance that carries the POPULATION IT WAS ACCEPTED AT and re-asks when that moves materially — accepted at 110 of 181, asked again at 150 of 220. Nobody has to re-judge an unchanged situation, and nobody silently inherits a judgement made about a much smaller one.\n\n═══ THE OPTIONS, none chosen ═══\n\n**A. POPULATION-DRIFT EXPIRY.** The acknowledgement records the numerator/denominator at acceptance; the gap re-fires past a threshold. Fixes all five aggregate kinds at the root.\n ⚠️ Cost: it re-opens existing acknowledgements across `unreviewed_ideas`, `undeclared_seam`, `change_axis_unstated`, `unvalidated_capability` and `no_published_boundary` at once. Threshold choice is a new knob, and a badly chosen one recreates the flood.\n\n**B. LEAVE IT, AND TREAT THE BACKLOG AS THE ANSWER.** The gap is honest; the fix is to work the 110 down with `review_relations` rather than to change the mechanism.\n ⚠️ Cost: says nothing about the NEXT aggregate acceptance, and the same trap is available to every aggregate gap including `unallocated_component`, added the same day.\n\n**C. PER-KIND CHOICE.** Some aggregates are about a PRACTICE that does not change with scale (\"we publish nothing on purpose\"); others are about a BACKLOG whose size is the whole point. Only the second kind expires.\n ⭐ This is the sharpest reading — `no_published_boundary` genuinely should never expire, and `unreviewed_ideas` genuinely should. It needs a per-variant judgement rather than one rule.\n\n📌 DIRECTLY RELEVANT TO WORK LANDING TODAY: `unallocated_component` (PR #336) is aggregate-keyed on the same anti-flood argument, and is a BACKLOG-shaped finding — 33 of 85 leaf components on reflow2's own design. Under option C it is exactly the kind that should expire. It shipped before this was noticed, which is why this node exists rather than a quiet edit.",
+        "name": "OPEN — an aggregate gap accepted once stays accepted forever, however much the population grows. Should the acceptance expire when the population moves materially?",
+        "rationale": "Recorded under the brainstorm skill so the reasoning survives without being claimed as intent, and LINKED on creation rather than left to a later sweep — which is the discipline this node is about. Anthony, 2026-08-25, on the half-ideas: they should be linked as they are written so a later discussion finds the line of reasoning instead of an orphan.\n\nKept as an open idea rather than filed as a defect because the mechanism is not wrong — aggregate keying fixed a real and worse problem, and both known settings have now cost something. What is missing is the middle, and choosing it is a judgement about each variant rather than a bug fix.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-an-artifact-whose-checksum-returns-is-an-agent-going-in-circles",
       "node_type": "Decision",
       "properties": {
@@ -115139,9 +115366,9 @@
       "node_type": "Decision",
       "properties": {
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Anthony, 2026-08-25, immediately after deciding the adopt nesting step: *\"as we defer the functional allocation step in genesis skill (not done at genesis phase), do we need some /system-depth or /functional-allocation skill that the user can use?\"*\n\n═══ THE GAP IS REAL AND IT IS PRECISELY LOCATED ═══\n\n**Genesis is RIGHT to defer.** Its line 44 reads: *\"Do NOT create Components (P2) yet. Leaving structure unspecified is deliberate: the first DETECT round will surface `concept_without_design`, which is the right next question ('how should this be structured?'). Answer it WITH THE USER, not by guessing.\"* That is doctrine's function-before-form, correctly sequenced, and it is more disciplined than adopt was until today.\n\n🛑 **AND THEN NOTHING PICKS THE QUESTION UP.** The gap fires, the user is asked \"how should this be structured?\", and reflow2 offers no method to answer it with. Measured: no served skill mentions functional decomposition, allocation, or `propose_allocation`. So the one step doctrine says produces the architecture is the one step with no guidance attached.\n\n⭐⭐ THE MACHINERY ALREADY EXISTS AND NOTHING POINTS AT IT. `propose_allocation` clusters capabilities by weighted coupling into groups — that IS doctrinal step 5, mechanised — and `evaluate_allocation` scores the result for modularity, god components and misplaced capabilities. Both are served tools. Neither appears in any skill. **This is the three-legs failure again** (`fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it`): a typed tool with no instruction and no detector-that-notices-absence reaches no user's design, however good it is.\n\n═══ THE OPTIONS, none chosen ═══\n\n**A. A NEW SKILL — `/allocate` or `/functional-allocation`.** Triggered by `concept_without_design`, or by the user asking \"how should this be structured?\". It would: decompose capabilities into finer functions where they are compound; run `propose_allocation`; put the proposed grouping to the user rather than applying it; create Components from what they accept; nest them and set `level`; then `evaluate_allocation` and span-of-control as the sanity check.\n ⚠️ Cost: reflow2 has 23 skills and `fact:nine-of-twenty-skills-are-edited-without-a-drift-signal` already measures that the set is hard to keep coherent. A 24th needs to earn its place.\n\n**B. EXTEND GENESIS.** Genesis already owns the deferral, so it could own the return. Cheapest, and it keeps one skill per phase.\n ⚠️ Cost: genesis is the FIRST skill anyone runs and its whole discipline is *stop before structure*. Folding the structuring step back in risks the very thing the deferral protects — a user doing it in one breath, guessing at boxes while the capabilities are still wet.\n\n**C. EXTEND `detect-and-ask`.** The gap already routes there. It is where `concept_without_design` is phrased and put to the user, so the method could live beside the question.\n ⚠️ Cost: that skill is deliberately generic over ALL gaps; giving one gap a bespoke multi-step procedure makes it two skills wearing one name.\n\n**D. NO SKILL — put it in the TOOL DESCRIPTION.** `propose_allocation`'s served description could carry the method, since an agent reading the tool list would meet it at the moment of use.\n ⚠️ Cost: it is only met by an agent that already thought to look for an allocation tool, which is exactly the agent that did not need telling.\n\n**E. A DETECTOR FIRST, SKILL LATER.** Nothing currently notices that a design has capabilities and no components, or components with no allocation. Make the ABSENCE visible, then decide whether the answer needs a skill or a paragraph.\n ⭐ This is the cheapest thing that could not be wrong, and it matches the project's own posture: the loop should ASK rather than wait to be told.\n\n═══ WHAT THE NAME SHOULD NOT BE ═══\n\nAnthony offered `/system-depth` and `/functional-allocation`. **DEPTH IS THE WRONG NAME** and today's work is why: depth is a CONSEQUENCE of allocation, not a thing to go and get. A skill called `/system-depth` would invite the error this session made four times — treating the number of layers as a target rather than as an output that span of control checks afterwards. If it exists, it is about ALLOCATION, and the depth falls out.\n\n📌 AND IT WOULD CLOSE THE SYMMETRY. As of today adopt recovers the structure an artifact HAS (the nesting step, added 2026-08-25). Genesis defers the structure a design NEEDS and nothing derives it. One direction is now instructed and the other is not.",
-        "name": "OPEN — genesis DEFERS structure deliberately and correctly, then hands the user a question with no method. Does the functional-decomposition-and-allocation step need a skill of its own?",
-        "rationale": "Captured under the brainstorm skill: recorded as an idea, nothing promoted, nothing settled.\n\nKept separate from `dec:idea-what-does-se-doctrine-actually-prescribe-upfront-and-what-of-it-does-reflow2-have` (which establishes WHAT doctrine prescribes and which pieces reflow2 owns) and from `dec:idea-does-reflow2-enforce-an-se-process-or-only-supply-the-vocabulary` (which asks whether a design can SHOW it followed a process). This asks a narrower, buildable thing: the one deferred step has no home, and the question is which of five places it should live in — a decision that can be taken without settling either of those.",
-        "status": "proposed"
+        "name": "SETTLED — option E: make the missing allocation VISIBLE first (`unallocated_component`), and decide about a skill later",
+        "rationale": "Captured under the brainstorm skill: recorded as an idea, nothing promoted, nothing settled.\n\nKept separate from `dec:idea-what-does-se-doctrine-actually-prescribe-upfront-and-what-of-it-does-reflow2-have` (which establishes WHAT doctrine prescribes and which pieces reflow2 owns) and from `dec:idea-does-reflow2-enforce-an-se-process-or-only-supply-the-vocabulary` (which asks whether a design can SHOW it followed a process). This asks a narrower, buildable thing: the one deferred step has no home, and the question is which of five places it should live in — a decision that can be taken without settling either of those.\n\n═══ RESOLVED 2026-08-25 — ANTHONY CHOSE E ═══\n\nOption E over A (a new `/allocate` skill), B (extend genesis) and C (extend detect-and-ask). Built the same day as `cap:unallocated-component-detector` / `req:structure-with-no-function-is-asked-about` (`ce:unallocated-component-detector-2026-08-25`). **The skill question is deferred, not answered** — E's whole point is that the absence is now measurable, so whether a skill is needed can be decided from evidence rather than from taste.\n\n⚠️ **E'S OWN PREMISE WAS HALF WRONG, AND CHECKING IT IS WHAT MADE THE FINDING.** E read *\"nothing currently notices that a design has capabilities and no components, or components with no allocation.\"* The FIRST half was already covered — that is `concept_without_design`, firing at zero components. Only the SECOND half was uncovered, and it was bigger than the option implied: **33 of reflow2's own 95 components** are leaf boxes owning no capability at all, with every detector reporting clean. A recorded option is a hypothesis, not a specification; this one was written by a session that had not measured, and building it as stated would have shipped a redundant check beside a real one.\n\n📌 **THE SYMMETRY #335 OPENED IS NOW CLOSED AT BOTH ENDS.** adopt recovers the structure an artifact HAS. Genesis still — correctly — defers the structure a design NEEDS, and the deferral now has a detector that brings the question back instead of leaving it to whoever remembers. The two interact honestly: recovering a hierarchy MOVES components off the unallocated list by giving them children, because a box that groups other boxes has a job.\n\n⭐ **THE THREE LEGS WERE ALL FITTED, WHICH IS THE REASON THIS DID NOT BECOME ANOTHER `propose_allocation`.** That tool was served, correct, and named in no skill — a typed tool with no instruction and no detector-that-notices-absence reaches no user's design (`fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it`). So the detector shipped WITH its row in the detect-and-ask repair table, naming `propose_allocation` and `evaluate_allocation` as the method. Shipping the detector alone would have reproduced the exact failure it was built to fix.\n\n🛑 **WHAT IS STILL NOT ANSWERED.** Whether the allocation step needs a skill of its own. The detector makes the absence countable across real designs; that evidence is what should settle A-vs-B-vs-C, and it does not exist yet.",
+        "status": "accepted"
       }
     },
     {
@@ -115729,6 +115956,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — 2026-08-11, from Anthony's observation that the governance work came from a real demand signal (\"it was all taken from feedback from the storyflow project... I told reflow2 to consider it and do it\"). Nothing here is intent.\n\nWHAT WAS MEASURED, and it is the reason the question exists. reflow2's own governance requirements DID come from a demand signal: `/home/ajs7/project/dev_storyflow/reflow2_feedback.md`, the GOVERNANCE-AS-DESIGN entry by api-boss, 2026-08-08. Six Requirements carry AUTHORED_BY to `who:storyflow-api-boss`, so the authorship survived. But:\n\n  · searched every node in the design for the string `reflow2_feedback` → 12 hits, NONE of them any of the six governance requirements\n  · the document is not registered as an Artifact\n  · so the origin of this work exists only in Anthony's head, and he had to tell an agent where to look\n\n⭐ THE SELF-INDICTMENT: `req:no-idea-goes-quiet` is ACCEPTED and reads \"an idea in the graph stays connected to whether it was built and to where it was written — THE USER NEVER HUNTS FOR THE SOURCE DOCUMENT AGAIN.\" reflow2's own governance capture violates an accepted reflow2 requirement, and no detector could see it.\n\n⭐ AND IT COST SOMETHING MEASURABLE, twice. The feedback entry ranked THREE asks. Only #1 reached the graph:\n  #1  model VERIFIES onto DesignRule so enforced+no-check is detectable   → BUILT (unverified_enforced_rule)\n  #2  a Role/Seat node distinct from Contributor — duties attach to the\n      SEAT, not the human                                                 → ABSENT, no such node type\n  #3  an `obligation` category on DesignRule: \"MUST do X AT MOMENT Y\"     → ABSENT; categories in use\n                                                                             are convention/methodology/None\n#3 carried the sharpest sentence in the entry — \"our doc map recorded WHO reads a file and WHAT it holds, and never WHEN — the missing axis was TIME, and no rule was being broken because no rule named a moment.\" That finding is nowhere in this design. The entry did say #1 was \"the whole idea's leverage and the rest is optional\", so building #1 first was RIGHT — but #2 and #3 were not DEFERRED, they evaporated, which is a different thing and the one nobody can see.\n\nIDEAS, unranked:\n(a) A gap for a Requirement with no incoming DOCUMENTS/Fragment/origin edge — \"what asked for this?\"\n(b) No new detector; instead make the capture skills register the source document as an Artifact by default, so the edge exists by construction rather than by discipline.\n(c) Do nothing structural, and treat the origin as prose in the requirement's own statement.\n\nCOUNTER-ARGUMENT TO (a), and it is the same trap that made `rule:a-design-is-named-by-an-id-not-a-path` advisory: at genesis NOBODY has a source document — intent arrives by someone talking. A detector demanding an origin edge would fire against the entire design on day one and the only way to green it would be to fabricate origins. That argues (b) is the honest shape and (a) is only safe if it fires on requirements whose provenance says they came from a DOCUMENT.\n\nNOTE ON WHY THE DAU FRAME FITS: of the nine DAU requirement characteristics Anthony cited, TRACEABLE is defined as connecting \"directly back to top-level strategic guidance and forward to system design specs.\" reflow2 checks FORWARD (the golden thread; unmotivated_capability fired on exactly this) and has no check at all for BACKWARD. COMPLETE failed too — 2 of 3 ranked asks are absent in any form.",
         "name": "OPEN — should a Requirement with no recorded ORIGIN be a gap? The golden thread checks forward and nothing checks backward",
         "rationale": "The demand signal existed and became requirements — the process was run. What broke was traceability backward to the source and completeness across the source's three asks. Both are invisible to every detector reflow2 has, and an accepted requirement already says they should not be.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-should-an-idea-be-linked-to-the-intent-that-scopes-it",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT A PROPOSAL. Anthony, 2026-08-25, across three messages: *\"can an idea be linked with a requirement? should an idea be linked with a requirement or should they be kept separate? for instance, I think we have a requirement that reflow2 isn't for reflow2... I feel like attaching this to every idea scopes the idea properly. secondly, I may propose an idea that is directly contradictory to an existing requirement.\"* Then: *\"could also extend to linking proposed, but unaccepted ideas to accepted ideas... I suppose this gets into the difference between what is difference between ideas (both proposed, but unaccepted and accepted ideas) and requirements?\"*\n\nDISTINCT FROM the two nodes the duplicate guard surfaced, and the line is clean: `dec:idea-do-ideas-form-a-graph-or-only-a-list` and `dec:idea-what-notices-an-idea-that-connects-to-nothing` are both about idea→IDEA linking and who notices its absence. This is about idea→INTENT — the edge from a musing to the requirement or rule that bounds it — and it turns out to have a different and verifiable answer.\n\n═══ ⭐⭐ THE ASYMMETRY, READ OUT OF THE CODE AND NOT INFERRED ═══\n\n`report.rs` builds its `accepted` set from `scan_nodes(node::DECISION)` alone, then scores `if accepted.contains(other) { contradicts += 1 }` at +2. So:\n\n  idea CONTRADICTS an accepted DECISION     → +2, surfaces in what_next's ranked band ✅\n  idea CONTRADICTS a REQUIREMENT            → edge stores, score 0, NOTHING READS IT ❌\n\n**The more serious contradiction is the unread one.** An accepted Decision records a choice; a Requirement records intent — what must be true. An idea that contradicts intent is either the intent being wrong or the idea being out of scope, and both are worth surfacing more than a clash between two choices. The design scores the lesser case and is silent on the greater.\n\n⚠️ It is not obviously a defect. `CONTRADICTS` between Decisions means \"the design is inconsistent until settled\", which is a claim about two settlements. Whether an idea-versus-intent clash is the SAME relation or a different one (proposal out of scope, vs. design self-contradiction) is exactly what is unsettled here.\n\n═══ THE THREE KINDS, since the third message asks it directly ═══\n\n  proposed Decision   a question someone is facing, or a musing. NOT intent. Raises no gap.\n  accepted Decision   a settled choice — a HOW and a WHY. Governs other nodes. Read by what_next.\n  Requirement         a WHAT MUST BE TRUE. Intent, with its own lifecycle: status, provenance,\n                      priority, lineage, and an approver on settlement.\n\nThe distinction that matters for this question: **a Decision is answerable, a Requirement is satisfiable.** Contradicting a Decision opens a question; contradicting a Requirement puts something out of bounds. Same edge type today for both.\n\n═══ THE OPTIONS, none chosen ═══\n\n**A. EVERY IDEA LINKS TO ITS SCOPING RULE.** Anthony's proposal as first stated.\n ⚠️ The brainstorm skill's own rule turned on it: *\"Two or three edges is a good outcome. Ten is a smell. Relatedness is not similarity. If everything links to everything, the neighbourhood stops carrying information.\"* An edge true of EVERY idea is a constant; a neighbourhood query on it returns the whole corpus.\n\n**B. LINK ONLY THE EXCEPTIONS — `VIOLATES` / `CONTRADICTS`.** The information is in the rare edge.\n ⭐ Needs no new vocabulary, and answers the contradiction half with the same mechanism.\n ⚠️ Does nothing for the SCOPING intent: an idea that complies carries no marker, so \"was this idea ever tested against the rule?\" stays unanswerable — the silence `no_relation_note` exists to break one level up.\n\n**C. `GOVERNED_BY`, NOT AN INFERENCE RELATION.** The structural edge already MEANS scoping, already carries a `note`, already has `ruling: parks`.\n ⭐ `REVIEW_RELATIONS` deliberately excludes `CONTAINS`/`SATISFIES` as \"structure, not commentary\"; scoping is structure, so it belongs on this side of that line.\n ⚠️ Same constant-edge objection as A if applied to every idea.\n\n**D. A CHECK AT CAPTURE, NOT AN EDGE.** The brainstorm skill asks *\"whose project does this serve?\"* and the answer goes in the idea's text.\n ⭐ Matches how the rule is actually enforced today — by a person — and matches `req:detecting-is-not-asking`.\n ⚠️ Prose is not queryable, so \"which ideas were never scoped?\" cannot be computed and nothing notices the skip. That is the failure mode measured three times this month.\n\n**E. FIX THE READER, LEAVE THE VOCABULARY.** Do nothing about scoping edges; widen `what_next` so a Decision contradicting a REQUIREMENT scores.\n ⭐ Cheapest thing that could not be wrong, and it is the half that is provably broken rather than the half that is merely undecided.\n\n📌 `rule:reflow2-is-built-for-other-projects-not-for-itself` is a **DesignRule**, not a Requirement — worth stating because Anthony recalled it as a requirement, and because DesignRules already have `GOVERNED_BY` while Requirements are reached by `SATISFIES`, which is structure a musing has no business drawing.",
+        "name": "OPEN — should an idea link to the Requirement/DesignRule that scopes it? An idea contradicting an accepted DECISION is scored; one contradicting a REQUIREMENT is silent",
+        "rationale": "Recorded under the brainstorm skill as an idea, not intent, and linked on creation.\n\nKept as ONE node across three messages because they converge on a single choice — whether the edge from a musing to the intent that bounds it should exist, and in which direction it carries information. The third message's question (what separates a proposed idea, an accepted idea and a requirement) is the reason the other two are hard, so it belongs here rather than in a node of its own.\n\nThe asymmetry in the scoring was read out of `report.rs` rather than assumed, because the whole question turns on whether these edges have a reader, and an unverified claim about that would have made every option below unjudgeable.",
         "status": "proposed"
       }
     },
@@ -118308,7 +118545,7 @@
         "decision": "Accepted the gap gap:baa3d7b03a08dedb.",
         "name": "Reviewed: gap:baa3d7b03a08dedb",
         "rationale": "Anthony, 2026-08-23: accepted. A parked idea legitimately governs nothing yet, and relating them on a guess would assert reasoning nobody did.",
-        "status": "accepted"
+        "status": "superseded"
       }
     },
     {
@@ -127075,6 +127312,18 @@
       }
     },
     {
+      "node_id": "req:structure-with-no-function-is-asked-about",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A part with no function allocated to it is asked about",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A design that records structure no function has been allocated to SHALL be told so. A leaf Component carrying no ALLOCATED_TO is a box the design says exists without saying what it is for, and until 2026-08-25 nothing in reflow2 asked about it.\n\nTHE HOLE WAS BETWEEN TWO DETECTORS GATED IN OPPOSITE DIRECTIONS. `concept_without_design` fires only at ZERO components and goes silent forever once a design grows one. `unallocated_capability` is gated the other way and stays quiet until a component exists. Between them they cover a capability with no home and a design with no structure; neither covers structure with no function. Measured on reflow2's own design: 33 of 95 components were leaf boxes owning no capability at all, and every detector reported clean.\n\nTHE RULE MUST EXEMPT PARENTS. A component holding child components is allocated THROUGH them, so asking it directly would turn every well-formed hierarchy into a finding — 40 components against 33 on the same design. Leaf-only is not a tidy-up; it is what makes the finding mean anything.\n\nIT MUST NAME THE METHOD AND NOT PERFORM IT. `propose_allocation` groups capabilities by coupling and `evaluate_allocation` scores the result; both were served, correct, and named in no skill. The finding points at them and the user accepts or overrules the proposal, because reflow2 can see THAT a box holds no function and cannot know WHICH function belongs in it.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:supporting-is-not-conflict",
       "node_type": "Requirement",
       "properties": {
@@ -135517,6 +135766,20 @@
       }
     },
     {
+      "node_id": "ver:unallocated-component-detector",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Eleven cases over the `unallocated_component` rule, in `crates/reflow2-core/tests/structure_with_no_function_is_asked_about.rs`.\n\nTHE COUNTERWEIGHTS CARRY MORE WEIGHT THAN THE POSITIVES, because every plausible way this rule goes wrong is a false positive on correct modelling: a parent is not a finding (it is allocated through its children); the parent exemption does NOT extend down to its empty children; a design with no capabilities is not asked, because there is no allocation to have performed yet; and allocating only to a parent must not be reported as never having started, since that claim is about the whole design and would be false in the one sentence its author would act on.\n\nAlso pinned: the rollup is ONE finding however many empty boxes (BL-73 anti-flood), its id does NOT move when somebody adds a component (aggregate keying, so an acknowledgement is not expired by an unrelated write), the finding names `propose_allocation` as the method, and a box beside a Flow is still asked what it holds — deliberately NOT inheriting `unallocated_capability`'s PART_OF_FLOW exemption, because \"which box performs which step?\" is a real question.",
+        "findings": "11 passed / 0 failed, on the final tree (`cargo test -p reflow2-core --no-default-features --test structure_with_no_function_is_asked_about`). The whole core suite alongside it: 127 suites, 1469 passed, 0 failed, exit 0.\n\nTWO OF THE ELEVEN EXIST BECAUSE THE FIRST DRAFT WAS WRONG, and both are recorded rather than quietly fixed. `never_started` was derived from \"every leaf is empty\", which is a different statement wearing the same words — a design that allocated only to its parents has empty leaves and has plainly done the step, and it would have been told \"nothing in this design is allocated at all\". It now tracks allocation over every component, parents included. The Flow case was undecided rather than wrong, and is now pinned as deliberate in either direction.\n\n⚠️ HOW THE FIRST GREEN ON THIS WORK WAS FALSE, recorded because the mechanism outlives this change: the first full-workspace run was piped through `grep`, so the reported exit code was grep's and not cargo's, and 60 of 150 test binaries had run when it reported success. `fact:a-piped-gate-reports-the-pipes-exit-code-not-the-gates` describes exactly this and it still caught nobody until the suite count was compared against the number of test files on disk.",
+        "kind": "verification",
+        "last_run_at": "2026-08-25",
+        "level": "unit",
+        "method": "test",
+        "name": "structure_with_no_function_is_asked_about.rs",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:undeclared-seam-is-named",
       "node_type": "Verification",
       "properties": {
@@ -135635,7 +135898,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:727c2dd798109bfce43f342970d1a17a8819293b7fe7dfa51d083fd699382e39",
+  "prev_content_hash": "sha256:f9163724cf657b27616d9b001038ee59064037f69a2eed8bfa0dcc93e56c08c5",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
