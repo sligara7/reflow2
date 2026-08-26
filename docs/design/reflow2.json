@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:52d199d228be29a9d946e448e9df831fae12a661f22fd10bd9ffcd63170b7427",
+  "content_hash": "sha256:5610e79103cfe64d4dc2c903b4a244fb5224bb0c711c8412a92faf9e86c73bab",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2972,6 +2972,22 @@
     },
     {
       "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-a-proposed-decision-asserts-nothing-so-what-may-a-structural-detector-say-about-it",
+      "properties": {
+        "evidence": "That decision's rationale states the general form in as many words — 'a rule maintained by hand with nothing checking it is a rule that silently stops being true' — and names itself the third instance of the class. It saw this general question coming while answering one instance of it."
+      },
+      "to_id": "dec:idea-a-tool-class-should-carry-a-contract-that-something-checks"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-a-skill-may-assert-the-defaults-it-relies-on",
+      "properties": {
+        "evidence": "That question asks whether a skill should assert the tool DEFAULT it depends on so the build breaks when the default moves. It is the same question one scope down: an unstated obligation between two surface elements that nothing checks. The narrower case was recorded first."
+      },
+      "to_id": "dec:idea-a-tool-class-should-carry-a-contract-that-something-checks"
+    },
+    {
+      "edge_type": "ANTICIPATES",
       "from_id": "dec:idea-detect-vocabulary-that-nothing-reaches",
       "properties": {
         "confidence": 0.85,
@@ -2986,6 +3002,14 @@
         "evidence": "Recorded 2026-08-01 asking whether reflow2 should adopt embeddings and the HNSW index or stay lexical. It anticipated the same choice this capability made in the small: increment 1 dropped `hnsw.rs` and `distance.rs` (1,941 lines) on the ground that reflow2 calls neither, which is the 'stay lexical' answer taken by construction rather than by decision. ⚠️ The idea remains OPEN and this does not settle it — but a later reader should know the code it would need is no longer in the tree."
       },
       "to_id": "cap:graph-algorithms"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-linking-half-ideas-needs-a-task-that-can-be-run",
+      "properties": {
+        "evidence": "That node states outright that half-idea linking 'has all three legs and still leaves 110 unlinked'. It is the second independent measurement of three-legs-present-and-nothing-happens, and it proposed the missing fourth thing (a runnable task) before this question generalised it."
+      },
+      "to_id": "dec:idea-have-the-three-legs-been-applied-uniformly-and-are-three-legs-enough"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -3159,6 +3183,14 @@
         "evidence": "Capability.inputs and outputs are declared in the schema, have no typed tool, no instruction and no detector - and stand at 3 of 192. The three-legs fact predicted this population before anyone counted it here, and it is why option (a) cannot begin with the declaring."
       },
       "to_id": "dec:idea-can-exhaustive-per-subsystem-tests-be-derived-rather-than-imagined"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it",
+      "properties": {
+        "evidence": "That measurement named the three legs AND recorded the DECOMPOSES case where all three were present and the vocabulary stayed empty — the exact insufficiency this question is about. It saw the limit of its own frame while establishing it."
+      },
+      "to_id": "dec:idea-have-the-three-legs-been-applied-uniformly-and-are-three-legs-enough"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -10255,6 +10287,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit",
+      "properties": {
+        "acted_at": "2026-08-26",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-gap-can-be-scheduled-into-an-increment-like-any-other-work",
       "properties": {
         "acted_at": "2026-08-20",
@@ -10354,6 +10395,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-proposed-decision-asserts-nothing-so-what-may-a-structural-detector-say-about-it",
+      "properties": {
+        "acted_at": "2026-08-26",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-satisfied-requirement-earns-a-stricter-mutability-class",
       "properties": {
         "acted_at": "2026-08-12",
@@ -10366,6 +10416,15 @@
       "from_id": "dec:idea-a-session-holds-several-graphs",
       "properties": {
         "acted_at": "2026-08-12",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-tool-class-should-carry-a-contract-that-something-checks",
+      "properties": {
+        "acted_at": "2026-08-26",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -10905,6 +10964,15 @@
       "from_id": "dec:idea-governance-management-split",
       "properties": {
         "acted_at": "2026-08-09",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-have-the-three-legs-been-applied-uniformly-and-are-three-legs-enough",
+      "properties": {
+        "acted_at": "2026-08-26",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -16980,6 +17048,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-parked-idea-asserts-nothing-and-three-detectors-now-read-that",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:contradiction-alignment-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-parked-idea-asserts-nothing-and-three-detectors-now-read-that",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-parked-idea-asserts-nothing-and-three-detectors-now-read-that",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-a-proposed-decision-asserts-nothing-so-what-may-a-structural-detector-say-about-it"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:a-proposal-describes-its-own-sweep",
       "properties": {
         "accepted_baseline": true,
@@ -17535,6 +17630,24 @@
         "action": "modified"
       },
       "to_id": "cap:select-graph-by-id"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-suppressed-finding-is-counted-rather-than-silenced",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-suppressed-finding-is-counted-rather-than-silenced",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:proposed-asserts-nothing-test"
     },
     {
       "edge_type": "CHANGED",
@@ -21144,6 +21257,15 @@
         "action": "modified"
       },
       "to_id": "art:skills-and-tools"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-37a05cf8a371ae42",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:proposed-asserts-nothing-test"
     },
     {
       "edge_type": "CHANGED",
@@ -31182,6 +31304,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:unresolved-setup-skips-on-either-side-not-both",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:unresolved-setup-skips-on-either-side-not-both",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:proposed-asserts-nothing-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:update-is-one-word",
       "properties": {
         "accepted_baseline": true,
@@ -34522,6 +34662,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:idea-a-view-can-slice-by-altitude-not-only-by-aspect"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit",
+      "properties": {
+        "evidence": "A factory can only guarantee mechanics somebody has named. Until the class contract question is answered — which axes, obliging what — there is nothing for a factory to build in, so this is worth nothing until that one lands.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-a-tool-class-should-carry-a-contract-that-something-checks"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -43201,6 +43351,14 @@
       "from_id": "ver:dependency-names-its-design",
       "properties": {},
       "to_id": "dec:idea-a-session-holds-several-graphs"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "ver:every-finding-kind-states-what-it-does-with-a-parked-idea",
+      "properties": {
+        "note": "This check IS option (d) of that decision — the gate that no finding kind ships without stating what it does with a deliberate state."
+      },
+      "to_id": "dec:idea-a-proposed-decision-asserts-nothing-so-what-may-a-structural-detector-say-about-it"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -97906,6 +98064,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:proposed-asserts-nothing-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:provenance",
       "properties": {
         "completeness": "complete"
@@ -102882,6 +103049,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:every-finding-kind-states-what-it-does-with-a-parked-idea",
+      "properties": {},
+      "to_id": "req:a-detector-reads-the-properties-that-qualify-its-own-finding"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:every-skill-has-a-command",
       "properties": {},
       "to_id": "req:kit-reaches-the-agent"
@@ -105867,7 +106040,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d29d2facff7819d1f1a94cbae48688683edd4ddcc6399a50890e9fb4ca132bc6",
+        "checksum": "sha256:94524681284a3bcd44a76a603ec790f9bf53d4fda8991b8dd0e2a8f1c87ff724",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/contradiction_alignment.rs",
         "name": "tests/contradiction_alignment.rs",
@@ -106407,7 +106580,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:47c7ba73efcc547e3e977fd40b7585e2314c1d116c9ea9d732082be5dcb3542b",
+        "checksum": "sha256:6a1f239cf6b23f1e0acd1cfe614e316503a14bc3aabcdfb971a9e4aeef024a0d",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
@@ -106892,6 +107065,17 @@
         "name": "propagate.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:proposed-asserts-nothing-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:74ca30e9135b24a6f7867c0625e9b004f095aae28ff804dfab0abb60f99a3c29",
+        "location": "crates/reflow2-core/tests/proposed_asserts_nothing.rs",
+        "name": "tests/proposed_asserts_nothing.rs",
+        "status": "realized"
       }
     },
     {
@@ -111208,6 +111392,18 @@
       }
     },
     {
+      "node_id": "chg:a-parked-idea-asserts-nothing-and-three-detectors-now-read-that",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-26",
+        "name": "Three finding kinds stop reading a brainstorm as a commitment",
+        "rationale": "THE ROOT CAUSE IS THE HAND-MAINTENANCE, NOT THE THREE CALL SITES. The principle \"a proposed Decision asserts nothing\" was already written down in FOUR places and implemented in ONE: `zero_degree_finding` grades a proposed Decision to `info` as \"a parked thought that correctly shapes nothing yet\"; schema/inference.yaml says \"ONLY AN ACCEPTED DECISION DISCONTINUES ANYTHING\"; `loop_status` stays quiet on a proposed Decision with no approver; and the `parks` ruling requires an accepted Decision, which is why parks could not reach this case. Every detector nevertheless re-derived its qualifier set by hand, so `contradiction` grew `alignment=supporting` and then `rejected`/`superseded` one incident at a time while the other two grew nothing.\n\nTHIRD INSTANCE OF ONE CLASS, AND IT WAS PREDICTED IN ADVANCE. `chg:unallocated-component-reads-the-ruling` recorded hours before the field report arrived: \"nothing checks that a NEW structural detector reads the ruling. The next one written will have the same hole for the same reason.\" F-01's replay contract, enforced field by field with nothing checking it, is the same shape. So the guard is the deliverable: `every_category_states_whether_it_reads_proposed` is an exhaustive match over `HealCategory`, and a new category cannot compile until its author has written down where it stands. Both answers are legitimate; an unconsidered category is not.\n\n⭐ THE FIRST CUT WAS WRONG AND AN EXISTING TEST CAUGHT IT. Folding `proposed` in with `rejected`/`superseded` broke `a_proposed_decision_is_not_treated_as_withdrawn`, a deliberate counterweight holding that \"a parked idea that conflicts with an accepted decision is a real thing to settle\". That test is right and was not overridden: a withdrawal is a positive act that RETIRES a conflict and skips on EITHER side, while being unclaimed skips only when NEITHER side claims anything. hxm_program's field case was proposed-vs-PROPOSED, which nothing covered; the counterweight's case is proposed-vs-ACCEPTED. Both shapes now have a test.\n\n⚠️ A SECOND WRONG ASSUMPTION, ALSO PINNED. The change was first documented as inert on existing designs by analogy with \"silence keeps its historical meaning\". False: `Decision.status` carries `default: proposed`, so silence was never reachable and every proposed Decision in every design changes behaviour. `a_decision_has_no_unlabelled_state` exists to kill that assumption for the next reader. The scope counterweight is the node TYPE — `CONTRADICTS` is declared `from: \"*\" to: \"*\"` and `Requirement.status` also defaults to `proposed`, so an untyped predicate would have silenced conflicts between the 51 requirements merely awaiting the user's word.\n\nFIRST WORKED EXAMPLE OF `rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed` DONE IN FULL: the pin was written first and OBSERVED FAILING (4 of 10, reproducing all three finding kinds, with the counterweights passing before the fix so they are not vacuous), then the fix, then green. F-01 could only claim the test passed after; this one saw it fail first.",
+        "subject": "system",
+        "summary": "`is_parked_idea` added to crates/reflow2-core/src/heal.rs — one predicate (a Decision at `status: proposed`), read by three finding kinds that previously read a brainstorm's edges as commitments. `contradiction` and `unresolved_setup` skip when BOTH endpoints are parked ideas; `unthreaded_cluster` skips an island where EVERY member is. `unresolved_setup` had no endpoint filter of any kind before this. `duplicate` and the three pure-topology rules deliberately do NOT read it. Measured on reflow2's own design: 89 -> 78 structural defects. New pin at crates/reflow2-core/tests/proposed_asserts_nothing.rs (10 tests); tests/contradiction_alignment.rs now states `accepted` on its two decisions instead of leaning silently on the schema default. Core suite 1500 passed / 0 failed across 130 binaries; fmt and clippy clean."
+      }
+    },
+    {
       "node_id": "chg:a-proposal-describes-its-own-sweep",
       "node_type": "ChangeEvent",
       "properties": {
@@ -111346,6 +111542,18 @@
       "properties": {
         "change_type": "new_feature",
         "name": "crates/reflow2-mcp/src/registry.rs — a session names a design by graph_id and the server maps id to path (cap:select-graph-by-id, second half of the accepted req:a-session-chooses-its-design). RESOLUTION HALF ONLY: no transport is wired, so cap:select-graph-by-id is in_progress and NOT realized — the spec prefers an HTTP path prefix /g/<graph_id>/ and warns an attaching tool call is worst because a reconnect silently loses it. THE TRIPWIRE DID ITS JOB: the_registry_clauses_are_not_covered_here fired the moment registry.rs appeared, exactly as designed, forcing the two clauses of ver:a-session-cannot-name-another-design to be written rather than assumed met — that verification is now passing and the tripwire is retired into a pointer that fails if the coverage is deleted. ISOLATION HOLDS BY CONSTRUCTION rather than by check: attach() always treats its argument as an ID so a path is refused as an unknown id (no path_for, no attach_path — absent rather than documented), the registry ROOT is the boundary so a real design elsewhere on the machine is refused identically, and a Binding exposes one design with no operation taking another id. 8 tests written before the module; 3 of 4 mutations killed. THE SURVIVOR IS DOCUMENTED, NOT HIDDEN: the state==Design guard provably does no work because describe_at sets graph_id Some on exactly that path — clippy flagged the same redundancy independently — so it is kept as defence and labelled as belt to the Some(id) braces. UNANSWERED AND NOW LIVE: graph_ids() lists what the OPERATOR put under the root, which is right for one owner and is NOT a multi-tenant policy (dec:idea-a-session-holds-several-graphs). The root is a parameter, so neither answer is foreclosed."
+      }
+    },
+    {
+      "node_id": "chg:a-suppressed-finding-is-counted-rather-than-silenced",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-26",
+        "name": "The sweep reports what the parked-idea rules skipped, instead of dropping it silently",
+        "rationale": "🛑 THIS FIXES A DEFECT THE PARKED-IDEA WORK ITSELF INTRODUCED, CAUGHT BEFORE IT MERGED. Making three finding kinds read `is_parked_idea` took reflow2's own design from 89 to 61 defects, and nothing anywhere said the missing findings had been suppressed. A reader seeing 61 could not tell it from a design that genuinely has 61 — which is exactly the vacuous zero `SweepScope.parked` was built to prevent, reintroduced one rule over BY THE CHANGE THAT WAS FIXING IT.\n\n`art:heal` realizes `cap:a-sweep-says-what-it-could-not-have-found`, and the sibling `parks` mechanism COUNTS parked nodes rather than silencing them. The new rule now does the same, so the two deliberate-state mechanisms behave alike instead of one reporting and one hiding.\n\n⭐ IT IS A `swept.` FIGURE, NOT A DEFECT TALLY, and that distinction is load-bearing rather than cosmetic. The complaint that started this whole thread was that a DEFECT count grew when you brainstormed, which teaches people to stop reading it. A description of what the sweep did not look at costs a brainstormer nothing and lets an auditor reconstruct the total.\n\n⚠️ THE COUNTERWEIGHT PIN IS THE ONE THAT MAKES THE FIELD TRUSTWORTHY. `a_clean_sweep_reports_nothing_suppressed` asserts the map is EMPTY when nothing was parked — without it, a wired-but-never-incremented field reads exactly like a design with no parked ideas, which is the same failure mode wearing the new field's clothes. It was written deliberately: the implementation was landed with the plumbing but WITHOUT the increments, the pin was run and went red for that reason, and only then were the three increment sites added.\n\n📌 WHERE THE NUMBERS DIFFER AND WHY, so nobody reconciles them wrongly: the 89 -> 61 delta is 28, while the suppression count on the same design reads 33. Both are right — the graph grew by three brainstormed Decisions and four relations between the two measurements, and those added suppressible findings. The reconciliation that holds at any instant is `reported + suppressed`, not a delta against an older count.",
+        "subject": "system",
+        "summary": "`SweepScope.suppressed_by_parked_idea` added — findings NOT reported because a parked idea was involved, counted by category. Measured on reflow2's own design the same day: 61 reported + 33 suppressed (contradiction 3, unresolved_setup 27, unthreaded_cluster 3), so the total reconciles instead of 33 findings vanishing. Threaded as an accumulator through `all_defects` / `open_defects_counting` / `detect_structural_defects` so the detectors count AS THEY SKIP — the count is never recomputed, because a second copy of the skip rule would drift from the first. Two new pins (14 tests total); core suite 1504 passed / 0 failed across 130 binaries; toolsnaps unchanged, since this is a result shape rather than a tool schema."
       }
     },
     {
@@ -113617,6 +113825,16 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-21",
         "name": "First baseline recorded: the artifact was registered without a checksum and nothing was compared",
+        "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:baseline-37a05cf8a371ae42",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-26",
+        "name": "First baseline — the file is new in this change, so nothing moved.",
         "subject": "record"
       }
     },
@@ -116733,6 +116951,18 @@
       }
     },
     {
+      "node_id": "chg:unresolved-setup-skips-on-either-side-not-both",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-26",
+        "name": "unresolved_setup widens to either side, after the first cut was caught punishing the brainstorm skill",
+        "rationale": "🛑 FOUND BY WALKING INTO IT, TWENTY MINUTES AFTER THE FIRST CUT SHIPPED — and by the agent, on itself, not by a user this time. Recording a brainstorm exactly as the `brainstorm` skill instructs (step 4: relate the new idea to what is already there) drew ANTICIPATES edges from an ACCEPTED Decision and from a TemporalFact to parked ideas. The sweep reported both, and the defect count went 78 -> 80 for following the instructions. That is the same complaint hxm_program filed, surviving the fix meant to answer it.\n\nWHY EITHER SIDE IS RIGHT HERE WHILE `contradiction` NEEDS BOTH, and the asymmetry falls out of what each finding CLAIMS rather than from taste. `unresolved_setup` says \"X anticipates Y but nothing follows through\" — the complaint is that Y IS UNRESOLVED. When Y is a parked idea, Y being unresolved is exactly what `proposed` MEANS: the recorded idea IS the follow-through, and demanding more is demanding that a brainstorm be finished. When X is parked, a musing anticipating something real has committed to no setup at all. A contradiction, by contrast, is real as soon as ONE side asserts something, which is why it stops at both (`a_proposed_decision_is_not_treated_as_withdrawn`).\n\n⚠️ AND A RULE KEYED ON BOTH ENDPOINTS COULD NEVER HAVE REACHED THE SECOND CASE AT ALL. A TemporalFact is not a Decision and can never be parked, so no tightening of the both-sides rule would have helped; the shape had to change. Worth keeping because it is the general lesson: a predicate scoped to one node type cannot express a rule about edges whose other end is any type.\n\n📌 THE COST SIDE, STATED RATHER THAN BURIED: 28 findings across the two cuts now disappear with nothing anywhere saying they were suppressed or why. `art:heal` realizes `cap:a-sweep-says-what-it-could-not-have-found`, and the existing `parks` mechanism COUNTS parked nodes in `swept.parked` rather than silencing them. This change does not count. Whether to add a `swept.parked_ideas` figure is put to Anthony and NOT decided here.",
+        "subject": "system",
+        "summary": "`unresolved_setup` now skips when EITHER endpoint is a parked idea, where the first cut required BOTH. `contradiction` is unchanged and still requires both — the asymmetry is deliberate and each rule states its own reasoning. Two new pins in tests/proposed_asserts_nothing.rs cover the cases the first cut missed: an ACCEPTED Decision anticipating a parked idea, and a TemporalFact anticipating one. Core suite 1502 passed / 0 failed across 130 binaries; fmt and clippy clean. Measured on reflow2's own design: 80 -> 61 structural defects, so this widening removed 19 findings where the first cut removed 11 (89 -> 78 -> 61 overall, a 31% reduction)."
+      }
+    },
+    {
       "node_id": "chg:update-is-one-word",
       "node_type": "ChangeEvent",
       "properties": {
@@ -119260,6 +119490,16 @@
       }
     },
     {
+      "node_id": "dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Anthony, 2026-08-26, in his own words:\n\n*\"can we construct skills or tools in a factory that ensures they get the required mechanics/functions? then when we need to make a 'class' change, it is fixing the factory, not the individual skill.\"*\n\n📌 DISTINCT FROM `dec:idea-a-tool-class-should-carry-a-contract-that-something-checks`, which asks WHAT a class must guarantee. This asks HOW the guarantee is delivered — by construction, or by inspection after the fact. Both answers are available for any contract, and the choice between them is the whole content here.\n\n═══ THE DISTINCTION THAT MATTERS ═══\n\n**A CHECK finds the omission after somebody made it. A FACTORY makes the omission unconstructable.** Today's fix is the first: `every_category_states_whether_it_reads_proposed` catches an unclassified category at compile time, but only after somebody wrote it. A factory would mean a finding kind cannot come into existence without answering.\n\nThis is the shape Anthony is reaching for, and the payoff he names is real: **a class change becomes one edit instead of N.** Today's change edited three call sites for one rule. The three instances this week each edited between one and three sites. Nothing has yet needed editing across all 173 tools — which is either evidence the problem is small, or evidence it has not bitten yet.\n\n═══ WHAT ALREADY EXISTS, because the answer is not \"nothing\" ═══\n\n- **`#[tool]` is already a proc macro** — construction already runs through a single point. Whether it can be made to REQUIRE annotations is a technical question nobody has asked. This is the most promising unexamined lead here.\n- **`skill_lint.py`, 1126 lines** — the inspection route, already built and already large.\n- **`HealCategory::ALL` plus two exhaustive-match tests** — the compile-time route at its smallest, and it works.\n- **The 12 tool-surface slices** — a classification that already exists and deliberately holds no function.\n\n═══ OPTIONS, none chosen ═══\n\n**(a) EXTEND THE `#[tool]` MACRO to require the annotation set.** The factory Anthony describes, in the place construction already happens. Missing annotation = compile error, no list to maintain. ⚠️ Counter: proc-macro work is unpleasant to debug, and a required field with a default is not required at all — the design would have to refuse silence, which means touching all 173 declarations once.\n\n**(b) A CONSTRUCTOR FUNCTION / TRAIT rather than a macro change.** Each tool built through a typed builder that cannot be finished incomplete. ⚠️ Counter: heavier than the macro that is already there, and the macro is the thing standing between the author and the surface.\n\n**(c) KEEP INSPECTION, MAKE IT EXHAUSTIVE.** No factory; just ensure every class has one test asserting every member answers. ⚠️ Counter: this is what the repo already does, and it is what let three instances through — each guard was written after its own incident, never before the next.\n\n**(d) NOT WORTH IT YET.** No class change has ever required editing more than three sites. ⚠️ Counter: the cost being counted is wrong — the expensive part was never the editing, it was the DISCOVERY, and each discovery came from a user hitting it in the field.\n\n═══ ⚠️ THE COUNTERWEIGHTS, and there are two real ones ═══\n\n**1. A factory guarantees the mechanics are PRESENT, never that they are RIGHT.** Every instance this week was a case where the mechanism existed and the JUDGEMENT was missing — `unallocated_component` could have read the ruling, the replay contract was written down, `proposed` was documented in four places. A factory that injects a required field produces 173 tools with a field filled in to satisfy the compiler. That is the `internal`-by-default trap the interface `designation` field already documents: *\"BECAUSE it is the default, `internal` cannot distinguish 'deliberately internal' from 'nobody classified this'.\"* **A factory can manufacture exactly that ambiguity at scale.**\n\n**2. Over-engineering, and it is his own standing concern.** *\"designs get so overcomplicated when often a simple solution will do.\"* A factory, a registry and a class taxonomy is the shape an engineer reaches for. The measured alternative is one exhaustive match per class — roughly fifteen lines, no new machinery, and it has now worked twice in the same file.\n\n⇒ Which suggests the cheapest honest test: **name a change that WOULD have required editing all 173 tools.** If one exists, the factory earns itself. If none does, option (d) is the answer and the exhaustive-match habit is enough.",
+        "name": "OPEN — should skills and tools be CONSTRUCTED through something that gives them the required mechanics, so a class change is one edit rather than N?",
+        "rationale": "Kept separate from the contract question because WHAT a class guarantees and HOW that guarantee is delivered are independently answerable — a contract can be enforced by construction or by inspection, and picking one does not settle the other.\n\nRecorded with the two counterweights at full strength because both are Anthony's own reasoning turned on his own idea: he watches for over-engineering, and he has said that a fix must reach the cause. A factory reaches the MECHANISM and not the JUDGEMENT, and every instance this week was a missing judgement beside a present mechanism. That is the strongest argument against the idea and it belongs on the node rather than in a reply he will not see again.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-a-finding-carries-its-bounds",
       "node_type": "Decision",
       "properties": {
@@ -119381,10 +119621,10 @@
       "node_id": "dec:idea-a-proposed-decision-asserts-nothing-so-what-may-a-structural-detector-say-about-it",
       "node_type": "Decision",
       "properties": {
-        "decision": "From `art:hxm-program-feedback-2026-08-26`, item F-03. **RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.**\n\n📌 Distinct from `fact:the-same-four-frictions-hit-two-independent-sessions-on-different-projects-the-same-day`, which the guard offered: that node MEASURES what happened across two sessions; this asks what `proposed` should MEAN to the structural layer, which is a design question that outlives the measurement.\n\n═══ WHAT HAPPENED ═══\n\nThe hxm_program hub followed the `brainstorm` skill exactly — ideas as `proposed` Decisions, linked with `CONTRADICTS` / `ANTICIPATES` / `DEPENDS_ON` and evidence on each edge, which is what step 4 instructs. `detect_defects` then reported:\n\n- the `CONTRADICTS` edge as a **`contradiction`** warning\n- the linked ideas as an **`unthreaded_cluster`**\n- each `ANTICIPATES` edge as **`unresolved_setup`** (*\"X anticipates Y but nothing follows through\"*)\n\n**Defects went 2 → 7 over a day of doing the prescribed thing**, and `loop_status` repeated *\"7 structural defects outstanding\"* at every hand-off.\n\n⭐ Their diagnosis is exact: *\"the skill says 'do not run detect-and-ask over brainstormed nodes', but the defect detectors have no such exemption.\"*\n\n═══ 🛑 THIS IS THE PREDICTED CLASS, ARRIVING THE DAY IT WAS PREDICTED ═══\n\nreflow2 fixed the same disease for ONE detector on 2026-08-26: `unallocated_component` counted twelve deliberately-parked tool-surface slices as holes, so recording the correct judgement degraded the instrument. `chg:unallocated-component-reads-the-ruling` recorded the class as still open in as many words: *\"nothing checks that a NEW structural detector reads the ruling. The next one written will have the same hole for the same reason.\"*\n\nF-03 is that, from a different project, on the same day.\n\n═══ ⚠️ BUT THE `parks` MECHANISM DOES NOT REACH IT, AND THAT IS THE INTERESTING PART ═══\n\n`GOVERNED_BY ruling: parks` requires an **ACCEPTED Decision** to point at — deliberately, so a deliberate state can never be asserted without a ruling that says why. Right for a tool-surface slice.\n\n**Wrong for a brainstormed idea.** An idea has no ruling to point at and should not need one: **its `proposed` status IS the statement that it asserts nothing.** Demanding a parking Decision per brainstormed idea would add exactly the ceremony the brainstorm skill exists to remove.\n\n⇒ So this is not \"apply the existing fix more widely\". It asks whether **`proposed` is itself a sweep class**, alongside parked.\n\n═══ OPTIONS, none chosen ═══\n\n**(a) Structural detectors skip relation edges on `proposed` Decisions.** Narrow: the node still exists, still counts, still searchable — only its inference-layer edges stop being read as commitments. ⚠️ Counter: `CONTRADICTS` between two proposed ideas may be genuinely worth surfacing — *\"you are holding two ideas that cannot both hold\"* is useful, and this silences it too.\n\n**(b) A `proposed` sweep class reported like `parked` — counted, never silenced.** `detect_defects` already carries `swept.parked`; add the same treatment. ⚠️ Counter: two sweep classes with different rules to learn, and it does not answer WHICH detectors should sweep.\n\n**(c) Fix it per-detector, as `unallocated_component` was.** Honest and slow. ⚠️ Counter: that is exactly how the class got here — `req:a-deliberate-state-is-not-a-defect` was implemented detector by detector and nothing noticed the gaps.\n\n**(d) ⭐ A CHECK THAT EVERY STRUCTURAL DETECTOR ANSWERS THE QUESTION.** Not a fix but a gate: no structural detector ships without stating what it does with deliberate states — parked, proposed, discontinued. ⚠️ Counter: meta-work, fixes nothing already broken, pays only on detectors not yet written. **But it is the only option that stops the next one.**\n\n📌 A SECOND-ORDER COST WORTH NAMING: the defect count is a NUMBER THE USER IS SHOWN AT EVERY HAND-OFF. reflow2's own graph reports 91 today. A count that grows when you do the right thing teaches people to stop reading it — which is how a real defect hides.",
-        "name": "OPEN — a `proposed` Decision asserts nothing, yet the structural detectors read its edges as commitments; is `proposed` itself a sweep class, which the parks ruling cannot be?",
-        "rationale": "Recorded as its own question because it asks what `proposed` MEANS to the structural layer, and that survives whatever is done about individual detectors.\n\nKept separate from the parks work deliberately: that mechanism requires an accepted ruling by design, and the point here is that a brainstormed idea should not need one. Reading F-03 as \"apply parks more widely\" would produce the ceremony the brainstorm skill was built to avoid, so the distinction is written in rather than left for a reader to notice.\n\nOption (d) is marked because it addresses the class rather than an instance — and because reflow2 recorded the same class as still-open hours before this report arrived, which is about as clear a signal as a design gets that the per-instance route is not converging.",
-        "status": "proposed"
+        "decision": "**DECIDED 2026-08-26 on Anthony's word: option (a), NARROWED, plus option (d) as the guard — and option (b)'s reporting half was added the same day.** The question this node opened — \"is `proposed` itself a sweep class?\" — is answered YES, per finding kind rather than globally.\n\n═══ WHAT WAS BUILT ═══\n\n`is_parked_idea` (crates/reflow2-core/src/heal.rs) — ONE predicate, read by every detector that needs it: a Decision whose `status` is `proposed`. Three finding kinds read it, and **each states how it COMBINES it, because the combination differs and the difference is the content**:\n\n- **`contradiction`** — skip when **BOTH** endpoints are parked ideas.\n- **`unresolved_setup`** — skip when **EITHER** endpoint is a parked idea.\n- **`unthreaded_cluster`** — skip an island where **EVERY** member is a parked idea.\n\n⭐ THE ASYMMETRY BETWEEN THE FIRST TWO IS DELIBERATE and falls out of what each finding CLAIMS, not from taste. `unresolved_setup` says *\"X anticipates Y but nothing follows through\"* — the complaint is that **Y is unresolved**, and when Y is a parked idea that is exactly what `proposed` MEANS: the recorded idea IS the follow-through. A contradiction is real as soon as **one** side asserts something, so it needs both sides parked before it goes quiet.\n\nThree kinds deliberately do NOT read it, and say so: `duplicate` (two parked thoughts can still cover the same ground, and merge is still the remedy) and the pure-topology rules `single_point_of_failure` / `dead_end` / `circular_dependency` (statements about the shape the design HAS, which a node occupies whatever its status claims). `orphan_node` already read it from the start.\n\n═══ 🛑 THIS TOOK THREE CUTS, AND EACH WAS CAUGHT BY SOMETHING DIFFERENT ═══\n\n**Cut 1** had `unresolved_setup` requiring BOTH endpoints parked. **Twenty minutes after it shipped, recording a brainstorm exactly as the `brainstorm` skill instructs** — step 4, relate the new idea to what is already there — drew ANTICIPATES edges from an ACCEPTED Decision and from a TemporalFact to parked ideas. Both fired. Defects went 78 → 80 **for following the instructions**, the same complaint hxm_program filed, surviving the fix meant to answer it. ⚠️ A rule keyed on both endpoints could never have reached the second case at all: a TemporalFact is not a Decision and can never be parked. **The shape had to change, not the threshold** — a predicate scoped to one node type cannot express a rule about edges whose other end is any type.\n\n**Cut 2** widened `unresolved_setup` to either side, and took reflow2's own design 89 → 61.\n\n**Cut 3** fixed a defect *the first two had introduced*: 33 findings were disappearing with nothing saying they had been suppressed, so a reader seeing 61 could not tell it from a design that genuinely has 61. That is the vacuous zero `SweepScope.parked` exists to prevent, reintroduced one rule over by the change that was fixing it. `SweepScope.suppressed_by_parked_idea` now counts them by category, so the total reconciles: **61 reported + 33 suppressed (contradiction 3, unresolved_setup 27, unthreaded_cluster 3)**. That is option **(b)**'s reporting half, and it makes the two deliberate-state mechanisms behave alike instead of one reporting and one hiding.\n\n═══ ⚠️ THE OPTION (a) COUNTER-ARGUMENT THIS NODE RAISED, AND WHAT HAPPENED TO IT ═══\n\nThis node's own objection to (a) was: *\"`CONTRADICTS` between two proposed ideas may be genuinely worth surfacing — 'you are holding two ideas that cannot both hold' is useful, and this silences it too.\"*\n\n**That objection stands and was overruled deliberately, not answered** — but cut 3 blunts it considerably: those contradictions are no longer invisible, they are counted as suppressed. If brainstorm-time contradictions later prove worth surfacing in full, the channel now exists and is not the DEFECT count.\n\n═══ ⭐ THE WITHDRAWN/PARKED DISTINCTION ═══\n\n**Withdrawn skips on EITHER side for `contradiction`; parked skips only when NEITHER side claims anything.**\n\nA first cut folded `proposed` in with `rejected`/`superseded` and broke `a_proposed_decision_is_not_treated_as_withdrawn` — a DELIBERATE counterweight recording that *\"a parked idea that conflicts with an accepted decision is a real thing to settle.\"* That test is RIGHT and survives: a withdrawal is a positive act that RETIRES a conflict; being unclaimed is not.\n\n═══ SCOPE — DECISION ONLY ═══\n\n`is_parked_idea` checks the node TYPE. `CONTRADICTS` is declared `from: \"*\" to: \"*\"` and `Requirement.status` ALSO defaults to `proposed`, so an untyped predicate would have silenced conflicts between requirements merely awaiting the user's word — 51 of them in reflow2's own design.\n\n═══ 🛑 NOT INERT ON EXISTING DESIGNS ═══\n\n`Decision.status` carries `default: proposed`, so there is no unlabelled Decision and silence was never reachable. Every proposed Decision in every existing design changes behaviour the moment this lands. Measured on reflow2's own design: **89 → 78 → 61 reported, with 33 now declared as suppressed rather than dropped.**\n\n────────────────────────────────────────────────────────────\n═══ 📌 THE QUESTION AS ORIGINALLY POSED — PRESERVED VERBATIM ═══\n\n*Restored deliberately. Answering this node REPLACED its text, no snapshot held the prior value, and the only copy came back in the write's own reply. A record that erases the question it answers cannot be reviewed, and `unclaimed_findings`' standing rule is to close a finding \"never by overwriting what you are closing\". Everything below is the node as it stood before 2026-08-26.*\n\nFrom `art:hxm-program-feedback-2026-08-26`, item F-03. **RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.**\n\n📌 Distinct from `fact:the-same-four-frictions-hit-two-independent-sessions-on-different-projects-the-same-day`, which the guard offered: that node MEASURES what happened across two sessions; this asks what `proposed` should MEAN to the structural layer, which is a design question that outlives the measurement.\n\nWHAT HAPPENED. The hxm_program hub followed the `brainstorm` skill exactly — ideas as `proposed` Decisions, linked with `CONTRADICTS` / `ANTICIPATES` / `DEPENDS_ON` and evidence on each edge, which is what step 4 instructs. `detect_defects` then reported the `CONTRADICTS` edge as a **`contradiction`** warning, the linked ideas as an **`unthreaded_cluster`**, and each `ANTICIPATES` edge as **`unresolved_setup`** (*\"X anticipates Y but nothing follows through\"*). **Defects went 2 → 7 over a day of doing the prescribed thing**, and `loop_status` repeated *\"7 structural defects outstanding\"* at every hand-off. ⭐ Their diagnosis is exact: *\"the skill says 'do not run detect-and-ask over brainstormed nodes', but the defect detectors have no such exemption.\"*\n\n🛑 THIS IS THE PREDICTED CLASS, ARRIVING THE DAY IT WAS PREDICTED. reflow2 fixed the same disease for ONE detector on 2026-08-26: `unallocated_component` counted twelve deliberately-parked tool-surface slices as holes, so recording the correct judgement degraded the instrument. `chg:unallocated-component-reads-the-ruling` recorded the class as still open in as many words: *\"nothing checks that a NEW structural detector reads the ruling. The next one written will have the same hole for the same reason.\"* F-03 is that, from a different project, on the same day.\n\n⚠️ BUT THE `parks` MECHANISM DOES NOT REACH IT, AND THAT IS THE INTERESTING PART. `GOVERNED_BY ruling: parks` requires an **ACCEPTED Decision** to point at — deliberately, so a deliberate state can never be asserted without a ruling that says why. Right for a tool-surface slice. **Wrong for a brainstormed idea.** An idea has no ruling to point at and should not need one: **its `proposed` status IS the statement that it asserts nothing.** Demanding a parking Decision per brainstormed idea would add exactly the ceremony the brainstorm skill exists to remove. ⇒ So this is not \"apply the existing fix more widely\". It asks whether **`proposed` is itself a sweep class**, alongside parked.\n\nOPTIONS, none chosen at the time:\n\n**(a) Structural detectors skip relation edges on `proposed` Decisions.** Narrow: the node still exists, still counts, still searchable — only its inference-layer edges stop being read as commitments. ⚠️ Counter: `CONTRADICTS` between two proposed ideas may be genuinely worth surfacing — *\"you are holding two ideas that cannot both hold\"* is useful, and this silences it too.\n\n**(b) A `proposed` sweep class reported like `parked` — counted, never silenced.** `detect_defects` already carries `swept.parked`; add the same treatment. ⚠️ Counter: two sweep classes with different rules to learn, and it does not answer WHICH detectors should sweep.\n\n**(c) Fix it per-detector, as `unallocated_component` was.** Honest and slow. ⚠️ Counter: that is exactly how the class got here — `req:a-deliberate-state-is-not-a-defect` was implemented detector by detector and nothing noticed the gaps.\n\n**(d) ⭐ A CHECK THAT EVERY STRUCTURAL DETECTOR ANSWERS THE QUESTION.** Not a fix but a gate: no structural detector ships without stating what it does with deliberate states — parked, proposed, discontinued. ⚠️ Counter: meta-work, fixes nothing already broken, pays only on detectors not yet written. **But it is the only option that stops the next one.**\n\n📌 A SECOND-ORDER COST WORTH NAMING: the defect count is a NUMBER THE USER IS SHOWN AT EVERY HAND-OFF. reflow2's own graph reports 91 today. A count that grows when you do the right thing teaches people to stop reading it — which is how a real defect hides.",
+        "name": "DECIDED — a parked idea asserts nothing, and each finding kind states whether it reads that",
+        "rationale": "Option (d) — \"a check that every structural detector answers the question\" — was marked on this node as the only option that stops the NEXT one, and it shipped as `every_category_states_whether_it_reads_proposed`: an exhaustive match over `HealCategory` in the test suite, so a new category cannot compile until its author has written down where it stands. Both answers are legitimate; an unconsidered category is not. It is the sibling of `every_category_is_listed_in_all`, which exists one rule over for the same reason.\n\nThat guard is the point of the change, not the three call sites. This is the THIRD instance of one class — `unallocated_component` never reading a parking ruling though two siblings did, F-01's replay contract enforced field by field with nothing checking it, and now this — and `chg:unallocated-component-reads-the-ruling` predicted this exact recurrence in advance: \"nothing checks that a NEW structural detector reads the ruling. The next one written will have the same hole for the same reason.\" It was found in the field the next day. A rule maintained by hand with nothing checking it is a rule that silently stops being true.\n\nThe principle was already written down in FOUR places and implemented in ONE — `zero_degree_finding`'s \"a parked thought that correctly shapes nothing yet\", the schema's \"ONLY AN ACCEPTED DECISION DISCONTINUES ANYTHING\", `loop_status`'s silence on a proposed Decision with no approver, and the parks ruling's requirement of an accepted Decision. Writing a principle down four times is not implementing it.",
+        "status": "accepted"
       }
     },
     {
@@ -119434,6 +119674,16 @@
         "decision": "UNSETTLED. The instance is fixed; the class is not. Two dev_storyflow seats independently measured that the `brainstorm` skill instructed them to call `set_decision_status(proposed)` because \"add_decision defaults to accepted\" — behaviour that changed on 2026-07-25 and is dated in add_decision's own description — so a conscientious agent made a redundant write on every brainstormed idea. PR #102 corrected the text on 2026-08-08. WHAT REMAINS OPEN IS THE SHAPE OF THE GUARD, and three were offered: (a) let a skill ASSERT the defaults it relies on, so skill_lint fails loudly at the moment the default changes rather than the text aging quietly; (b) GENERATE the sentence from the tool's actual default at build time, so it cannot disagree; (c) forbid a skill from naming a default at all and require it to state the RELATION instead — \"confirm the returned status is `proposed`\" — which stays true across any default change and needs no new machinery. THERE IS AN OBVIOUS HOME: skill_lint.py already enforces that every tool a skill NAMES is served, and is run in CI on every push; asserting a default is the same kind of contract one field deeper.",
         "name": "OPEN — when a served skill's text depends on a served tool's DEFAULT, should that dependency be asserted so the build breaks when the default moves?",
         "rationale": "Worth a decision rather than a fix note because of what the reporters said about it, which generalises past this skill: a served skill and a served tool ship from the SAME BINARY and disagreed about that binary's behaviour — the one place this class of drift should be impossible. And the skill is the half a session reads BEFORE acting, so it is the half that silently teaches the wrong model; here it taught it with emphasis (\"This call is not optional\"), which is exactly the wording that survives a skim. Their formulation is the reusable one: A RULE PINNED TO A BEHAVIOUR MUST NAME HOW TO RE-CHECK IT, NEVER JUST ITS VERDICT. Reported 2026-08-08 by dragon Boss f96eccd3 and api-boss 5d608b85, both by RUNNING it and reading the echo; api-boss stated their own bound honestly, that they did not test whether the redundant call is harmful, only that it is unnecessary.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-a-tool-class-should-carry-a-contract-that-something-checks",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Anthony, 2026-08-26, thinking out loud after the third instance of one defect class landed in a single week.\n\nHis words: *\"we do some type of classing or typing of skills/tools? like read vs write could be one kind. there are probably other types. then do some standardization of what each of those types skills/tools needs and make sure all the type has those same required attributes for its type?\"*\n\n📌 DISTINCT FROM `dec:idea-a-proposed-decision-asserts-nothing-so-what-may-a-structural-detector-say-about-it`, which the guard offered: that one is an ANSWERED question about one status and three finding kinds. This asks what a declared KIND obliges of its members in general, and it outlives that instance.\n\n═══ ⭐ THE PREMISE IS HALF-TRUE, AND THE MEASUREMENT IS THE INTERESTING PART ═══\n\nMeasured on the served surface 2026-08-26, over **173 declared tools**:\n\n| axis | declared on | |\n|---|---|---|\n| `read_only_hint` | **161** (93%) | the read/write class ALREADY EXISTS and is near-uniform |\n| `destructive_hint` | **7** (4%) | |\n| `idempotent_hint` | **1** (0.6%) | |\n| `open_world_hint` | **0** | |\n| `title` | 9 (5%) | |\n\n**And ZERO of them are checked by anything** — no Python gate, no Rust test, nothing in `toolsnap.py` reads any of these annotations. So the 93% is a HABIT, not a construction. The 12 tools declaring nothing at all are invisible to everything, and a 174th declaring nothing would be equally invisible.\n\n⇒ So the live question is not *\"should tools be classed\"* — they are. It is **whether a declared kind obliges its members to state the same things, and whether anything checks.** On today's evidence the answer to both halves is no.\n\n📌 A SECOND OBSERVATION FROM THE SAME SWEEP, offered as a lead rather than a finding: **6 tools in the `query` slice declare `read_only_hint = false`.** That may be entirely correct — a query that records a confirmation is not read-only — but the slice NAME and the read/write CLASS disagree there, and a per-class contract is exactly the thing that would make somebody say which is wrong.\n\n═══ WHY THIS ARRIVED NOW ═══\n\nAnthony: *\"for instance, you just found a whole class of issues. this isn't the first time this has occurred in this development... too many times, we've discovered more when we have peeled back the layers of the onion.\"*\n\nThree instances inside one week, each a rule maintained by hand with nothing checking it: `unallocated_component` never read a parking ruling though two siblings did; F-01's replay contract was stated in a doc comment and enforced field by field; and three defect detectors never read `proposed` though a fourth did. The fix each time was per-instance. `chg:unallocated-component-reads-the-ruling` predicted the recurrence in writing and was right within a day.\n\n═══ OPTIONS, none chosen ═══\n\n**(a) A CONTRACT PER AXIS, checked by the existing lint.** `skill_lint.py` is already 1126 lines enforcing both directions between served tools and skills, and verbatim phrases that must survive rewording. Extend it: every `#[tool]` must declare the full annotation set. ⚠️ Counter: it is another hand-maintained list in a file that is already the biggest hand-maintained list in the repo — the disease treating itself.\n\n**(b) COMPILE-TIME, the shape used twice in `heal.rs` today.** `every_category_is_listed_in_all` and the new `every_category_states_whether_it_reads_proposed` are exhaustive matches: a new variant cannot compile until its author has answered. ⚠️ Counter: works for a closed enum, and the tool surface is 173 proc-macro attributes rather than an enum. Whether the same trick reaches them is an open technical question, not a given.\n\n**(c) LEAVE READ/WRITE ALONE AND CLASS BY SOMETHING ELSE.** Read/write is near-uniform already, so the payoff is in the axes nobody fills. ⚠️ Counter: which axes? Naming them is the actual work, and this option quietly assumes it is done.\n\n**(d) DO NOTHING AND KEEP FIXING INSTANCES.** ⚠️ Counter: three in a week, each predicted by the last. But stated honestly — the per-instance fixes were cheap, correct, and each left a pin behind. The class fix is speculative until somebody shows a fourth instance it would have caught.\n\n═══ ⚠️ THE HONEST COUNTERWEIGHT, WHICH IS ANTHONY'S OWN ═══\n\nHe watches for over-engineering from the acquisitions side. A per-class contract with a registry, a factory and a validator is exactly the shape an engineer reaches for and exactly the shape he distrusts. **The cheapest thing that would have caught all three instances is probably not a taxonomy — it is one test per class saying \"every member answers this question\", which is what `heal.rs` now does twice.** That is option (b) at its smallest, and it needs no new vocabulary at all.",
+        "name": "OPEN — the tool class already exists and carries no contract: should a declared kind oblige its members to state the same things, checked?",
+        "rationale": "Recorded as its own question because it asks what a declared KIND obliges, which is separate from whether the three legs were applied uniformly (a specific contract) and from whether construction should go through a factory (a mechanism). Answering any one of those does not answer the others.\n\nThe measurement was taken BEFORE the options were written, and it moved the question: the first framing assumed tools were unclassed, and `read_only_hint` at 93% says otherwise. What is missing is not the class but the obligation and the check — the same shape as `fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it`, where a leg can be present and still deliver nothing.",
         "status": "proposed"
       }
     },
@@ -120042,6 +120292,16 @@
         "name": "OPEN — should management/governance stay inside reflow2, or split into a sister package?",
         "rationale": "Recorded as brainstorming at Anthony's request (/brainstorm, 2026-08-09). Searching the graph first changed the shape of the question three times: proj:reflow2's objective already claims concept-through-operations, so a split narrows a stated scope; dec:bl-155's never-called list turns out to be ~17/40 management tools, which is the strongest datum on either side and reads both ways; and req:thin-install + req:no-setup-per-project give the split a concrete, already-accepted cost. The storyflow fleet's trial-case report (2026-08-09, api-boss 05af57c1) supplies option D from a month of live operation. No option is recommended and none is promoted to intent.",
         "status": "superseded"
+      }
+    },
+    {
+      "node_id": "dec:idea-have-the-three-legs-been-applied-uniformly-and-are-three-legs-enough",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Anthony, 2026-08-26: *\"I believe there are '3 legs' that certain skills need — have they been applied to all skills uniformly?\"*\n\nHe is right that they exist. **The audit he is asking for has never been run.**\n\n📌 DISTINCT FROM the two nodes the guard offered, and the difference is which layer is under question. `fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it` MEASURES three vocabulary items against the frame. `dec:idea-how-does-a-users-project-acquire-vocabulary-it-never-uses` asks the OUTCOME question — how a project ever gets vocabulary nobody asked it for. **This asks about the INSTRUMENT: whether the three-leg test has been applied across the surface, and whether passing it means anything.** A frame can be correct, applied everywhere, and still not produce the outcome — which is exactly what the evidence below shows.\n\n═══ WHAT THE THREE LEGS ARE ═══\n\nFor vocabulary to appear in a USER'S design, all three must be present:\n\n1. a **TYPED TOOL** that writes it — raw `create_node`/`create_edge` does not count, since an agent must know the field exists;\n2. an **INSTRUCTION**, in a served skill or tool description, saying WHEN to write it;\n3. a **DETECTOR** that notices its ABSENCE, so the loop asks rather than waiting to be told.\n\nThat fact measured exactly THREE pieces of vocabulary. There are far more than three, and 22 served skills. **Nothing has ever swept the surface asking which vocabulary has which legs.**\n\n═══ 🛑 THE SHARPER FINDING: THREE LEGS ARE NOT SUFFICIENT, AND IT IS ALREADY MEASURED TWICE ═══\n\n**Case 1 — `DECOMPOSES`.** Typed tool ✓, instruction ✓, detector ✓ — **and the vocabulary stayed empty**, because `DecompositionCoverage` fires on a Requirement that ALREADY CARRIES an incoming DECOMPOSES edge. It checks whether an existing decomposition is covered; it cannot ask why none exists. reflow2's own graph reached **0 DECOMPOSES edges while shipping the detector for them.**\n\n**Case 2 — half-idea linking.** `dec:idea-linking-half-ideas-needs-a-task-that-can-be-run` records that it **has all three legs and still left 110 ideas unlinked**, because nothing SUGGESTS candidates and nothing works the backlog.\n\n⇒ Leg 3 has a hidden qualifier: *a detector that notices absence* is not the same as *a detector that notices ABSENCE OF THE WHOLE PRACTICE*. And both failures look like the same missing thing — no worklist, no runnable task, nobody's job.\n\n⇒ **Is there a FOURTH leg: something that makes the practice HAPPEN, rather than merely possible and observable?**\n\n═══ OPTIONS, none chosen ═══\n\n**(a) RUN THE AUDIT AS A ONE-OFF.** Sweep every vocabulary item against the three legs, produce a table. Cheap, concrete, answers his actual question. ⚠️ Counter: a table dated today rots by next week, and a hand-taken census has been the answer several times already.\n\n**(b) MAKE THE AUDIT A DETECTOR.** `vocabulary_coverage` already exists as a served tool — **whether it already computes something like this is UNCHECKED and should be looked at before anything is built.** ⚠️ Counter: possibly already built; look first.\n\n**(c) NAME AND ADD THE FOURTH LEG.** Define what turns a possible practice into a performed one. ⚠️ Counter: the most speculative option here, and \"nobody's job\" may be a management problem rather than a design one.\n\n**(d) RETIRE THE THREE-LEG FRAME as too coarse.** Two of its cases pass the test and fail in practice. ⚠️ Counter: it correctly diagnosed the other two cases, and a frame that catches most things is not worthless for missing some.\n\n═══ ⚠️ THE COUNTERWEIGHT ═══\n\nThe three legs were derived from a sample of THREE. Generalising from three cases and then auditing 22 skills against it risks measuring conformance to a frame that was never validated, instead of measuring whether vocabulary actually reaches users. **The outcome that matters is \"does a user's project acquire this\", not \"does this have three legs\".**",
+        "name": "OPEN — the three legs were named and never audited across the surface; and two measured cases had all three and still delivered nothing",
+        "rationale": "Kept separate from the tool-class question because it concerns ONE named contract that already exists, where that one asks whether kinds should carry contracts at all. This one could be answered by a sweep somebody runs this afternoon; that one cannot be answered without first deciding what the axes are.\n\nThe interesting content is not the uniformity question Anthony asked — it is that the design already holds TWO measured cases where all three legs were present and the vocabulary stayed empty. That moves the question from \"have they been applied everywhere\" to \"is the test even the right test\", and the second is worth more than the first. Recorded before checking `vocabulary_coverage`, deliberately: option (b) says look before building, and writing the question down is not the same as answering it.",
+        "status": "proposed"
       }
     },
     {
@@ -139227,6 +139487,20 @@
       }
     },
     {
+      "node_id": "ver:every-finding-kind-states-what-it-does-with-a-parked-idea",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Fourteen tests over `detect_defects` / `open_defects`, in four bands.\n\nTHE THREE FIXED KINDS, each with its counterweight: two parked ideas that contradict raise nothing, but two ACCEPTED decisions still do; an anticipation involving a parked idea raises nothing, but one between accepted decisions still does; an island of only parked ideas raises nothing, but an island holding anything asserted still does.\n\n⭐ EACH KIND STATES HOW IT COMBINES THE PREDICATE, AND THEY DIFFER. `contradiction` needs BOTH endpoints parked; `unresolved_setup` skips on EITHER; `unthreaded_cluster` needs EVERY island member. That asymmetry is pinned rather than left to a reader: `an_accepted_decision_anticipating_a_parked_idea_is_not_an_unresolved_setup` and `a_measurement_anticipating_a_parked_idea_is_not_an_unresolved_setup` hold the either-side rule, while `a_parked_idea_against_settled_design_is_still_reported` holds the both-sides rule one detector over. A single rule for all three would break one of them.\n\n⭐ THE SWEEP SAYS WHAT IT DID NOT REPORT. `a_suppressed_finding_is_counted_rather_than_silenced` asserts a skipped finding lands in `SweepScope.suppressed_by_parked_idea`, so `reported + suppressed` reconciles instead of findings vanishing. Its counterweight `a_clean_sweep_reports_nothing_suppressed` asserts the map is EMPTY when nothing was parked — that one is what makes the field trustworthy, because a wired-but-never-incremented field otherwise reads exactly like a design with no parked ideas.\n\nTHE ASSUMPTION-KILLERS, all written after a wrong cut. `a_decision_has_no_unlabelled_state` records that `Decision.status` defaults to `proposed`, so silence is unreachable and this change is NOT inert on existing designs; it fails if that schema default ever moves. `a_proposed_requirement_still_asserts` is the scope counterweight: `CONTRADICTS` is `from: \"*\" to: \"*\"` and `Requirement.status` also defaults to `proposed`, so the predicate checks the node TYPE — and the TemporalFact case above is why a type-scoped predicate cannot be the whole rule for an edge whose other end is any type.\n\n⭐ THE CLASS GUARD, which is the point. `every_category_states_whether_it_reads_proposed` is an EXHAUSTIVE match over `HealCategory`: a new category cannot compile until its author has written down whether it reads a parked idea. It asserts nothing about the ANSWER — both are legitimate — only that somebody gave one. Sibling of `every_category_is_listed_in_all`, which exists one rule over for the same reason.",
+        "findings": "14 passed / 0 failed, after THREE cuts, and every cut was OBSERVED FAILING FIRST. Cut 1: 4 of 10 red, all three finding kinds reproduced, counterweights and the class guard green beforehand so they are not vacuous. Cut 2: two new pins red before `unresolved_setup` widened to either side. Cut 3: `a_suppressed_finding_is_counted_rather_than_silenced` was run against the field wired but the increments deliberately NOT added, and went red for exactly that reason, while its counterweight `a_clean_sweep_reports_nothing_suppressed` was green throughout — which is what distinguishes a counted zero from an uncounted one. Full core suite after: 1504 passed / 0 failed across 130 binaries; `cargo fmt --check` and `clippy -D warnings` clean; all 161 toolsnaps match, since this changes a result shape rather than a tool schema. Measured on reflow2's own design through the served binary: 89 -> 78 -> 61 reported, and the sweep now declares 33 suppressed (contradiction 3, unresolved_setup 27, unthreaded_cluster 3), so reported + suppressed reconciles.",
+        "kind": "verification",
+        "last_run_at": "2026-08-26",
+        "level": "unit",
+        "method": "test",
+        "name": "A parked idea is not read as a commitment, and every finding kind states where it stands",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:every-skill-has-a-command",
       "node_type": "Verification",
       "properties": {
@@ -140854,7 +141128,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:1f16b49a1e049ae4359752fe34aed79aa87232e10b802a8f5ac71a2ff50d8cfc",
+  "prev_content_hash": "sha256:52d199d228be29a9d946e448e9df831fae12a661f22fd10bd9ffcd63170b7427",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
