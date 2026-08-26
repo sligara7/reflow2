@@ -636,6 +636,44 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "WHICH NODES MIGHT THIS ONE RELATE TO \u{2014} offered, never drawn. The missing \
+                       half of half-idea linking: `unreviewed_ideas` counts the ideas connected to \
+                       nothing, `review_relations` records the judgement, and until now NOTHING \
+                       answered the question a person working that backlog actually has \u{2014} which of \
+                       these belong together? \u{2b50} EVERY CANDIDATE CARRIES THE WALK THAT PRODUCED IT \
+                       in `because`: a shared neighbour (two nodes that both relate to a third are \
+                       related in the graph\u{2019}s own terms, whatever their words) or distinctive shared \
+                       terms (weighted by rarity ACROSS THE POOL, so words true of everything count \
+                       for nothing). A candidate whose reason cannot be stated is not offered. \
+                       \u{1f6d1} IT NEVER WRITES AND NEVER PROPOSES AN EDGE. Ranking is the machine\u{2019}s half; \
+                       drawing is yours, through `review_relations`, and a false neighbour is worse \
+                       than a missing one because anything searching by neighbourhood repeats it \
+                       forever. Nodes ALREADY related are excluded from the ranking and returned in \
+                       `already_related`, so \u{2018}not offered because already linked\u{2019} is distinguishable \
+                       from \u{2018}not offered because nothing matched\u{2019}. \u{26a0} AN EMPTY ANSWER SAYS WHICH \
+                       EMPTY IT IS \u{2014} `empty_because` separates \u{2018}nothing to compare against\u{2019}, \u{2018}this \
+                       node carries no comparable text\u{2019} and \u{2018}ranked N and none matched\u{2019}, because only \
+                       the last means the node may be genuinely new. Needs no search index and no \
+                       database, so it works in an index-less build.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn relation_candidates(
+        &self,
+        Parameters(req): Parameters<RelationCandidatesReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        ok_json(
+            g.relation_candidates(
+                &req.node_type,
+                &req.node_id,
+                req.pool_type.as_deref(),
+                req.limit.unwrap_or(5),
+            )
+            .map_err(dyno_err)?,
+        )
+    }
+
+    #[tool(
         description = "Declare that this Decision states the quality attribute the design is \
                        BUILT FOR — the answer to \"what is this system for?\". A TARGET, not a \
                        score: DimensionAssessment records what a system IS on an axis, this \

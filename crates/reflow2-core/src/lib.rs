@@ -60,6 +60,7 @@ pub mod ingest;
 pub mod llm;
 pub mod maturity;
 pub mod merge;
+pub mod neighbourhood;
 pub mod nodes;
 pub mod operate;
 pub mod preserve;

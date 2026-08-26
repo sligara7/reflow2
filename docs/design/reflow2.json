@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:3f4af2056acda7718c087cd33518df17cc1941533ce524a63eb9fc7e5dc6df91",
+  "content_hash": "sha256:fd6d1c8708fc03c5ca9204c71189c359ef3b57bb284c78e341d27065bb98ffdc",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2252,6 +2252,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:ingest"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:relation-candidates-are-offered-never-drawn",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:relate"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -14004,6 +14012,69 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "ce:half-idea-linking-closed-2026-08-25",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:half-idea-linking-closed-2026-08-25",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:half-idea-linking-closed-2026-08-25",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:half-idea-linking-closed-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:relation-candidates-are-offered-never-drawn"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:half-idea-linking-closed-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:relate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:half-idea-linking-closed-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-linking-half-ideas-needs-a-task-that-can-be-run"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:half-idea-linking-closed-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "req:an-unlinked-idea-can-be-offered-its-likely-neighbours"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "ce:quality-target-2026-08-25",
       "properties": {
         "accepted_baseline": true,
@@ -18969,6 +19040,15 @@
         "action": "modified"
       },
       "to_id": "art:skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-c2f21cb9e921eb57",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
     },
     {
       "edge_type": "CHANGED",
@@ -96755,6 +96835,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:relation-candidates-are-offered-never-drawn",
+      "properties": {},
+      "to_id": "req:an-unlinked-idea-can-be-offered-its-likely-neighbours"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:release-pinned-to-time",
       "properties": {},
       "to_id": "req:graph-indexes-snapshots"
@@ -98745,6 +98831,12 @@
       "from_id": "ver:bulk-forms",
       "properties": {},
       "to_id": "cap:bulk-forms"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:candidates-are-offered-never-drawn",
+      "properties": {},
+      "to_id": "cap:relation-candidates-are-offered-never-drawn"
     },
     {
       "edge_type": "VERIFIES",
@@ -103138,7 +103230,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:02f80a8cef281099f584803caeae4e61c51fc73f1cca6e2441e8b1453822f05a",
+        "checksum": "sha256:3d70c496485b388f908ff5768e3ae4a8d7a8ef85aee088e6b023603cac2554f2",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/report.rs",
         "name": "report.rs",
@@ -103481,7 +103573,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:47ad9bcee6cd28f5cba3569ca1c1ab42ad973f0e6d67a69a2220911cd5c46fe7",
+        "checksum": "sha256:597dba5304fa1631cc84a2283461a420618d469c17f8187b6899a57aab2f5d37",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -103568,7 +103660,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f2fa112a698c20edff2e56d2abbbcba996ccd4f1e942cd3d41f2ca4e563a1f08",
+        "checksum": "sha256:bec2ea69029e95636f5f4393c0faad930d3a2a558b28c0348c3fa3245a4b5b26",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -104156,7 +104248,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f75a8d2cec85b0fcd3eaa737251ad1ed16fbf28e76859e3bc3f25dcf00b0307b",
+        "checksum": "sha256:00517d0060736be5d06c784d03a8436269593fde125d14e5754ca3a3c209ed6f",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
@@ -106400,6 +106492,16 @@
       }
     },
     {
+      "node_id": "cap:relation-candidates-are-offered-never-drawn",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`relation_candidates` — read-only, index-free ranking of what a node might relate to, plus the `link-ideas` skill and command that drive the backlog, plus the `what_next` fix that stops an idea contradicting settled intent from scoring zero.\n\nTWO SIGNALS: a shared neighbour (both nodes relate to some third node) and distinctive shared terms (IDF-weighted across the pool, so words true of everything count for nothing). Structural presence is the PRIMARY SORT KEY, not a multiplier — an asserted edge outranks a vocabulary coincidence categorically.\n\nREFUSALS ARE THE DESIGN: it never writes and never proposes an edge; a candidate whose reason cannot be stated is dropped rather than offered; nodes already related are excluded from the ranking and returned in `already_related`; and an empty answer names which of three empties it is.\n\nLives in its own module rather than in `relate.rs`, whose docs reserve suggestion for \"the dedup guard's job and the skill's\" and forbid a machine proposing edges there.",
+        "name": "Offer an unlinked idea its likely neighbours, with the walk that produced each",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "cap:release-pinned-to-time",
       "node_type": "Capability",
       "properties": {
@@ -107029,6 +107131,18 @@
         "name": "A deliverable declares who it is for, and a need nothing consumer-facing delivers is reported",
         "provenance": "authored",
         "status": "realized"
+      }
+    },
+    {
+      "node_id": "ce:half-idea-linking-closed-2026-08-25",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-25",
+        "name": "The half-ideas get a way to be joined",
+        "rationale": "Closes the three gaps measured against half-idea linking on 2026-08-25, on Anthony's word, queued behind the store question exactly as he asked.\n\n⭐ THE INTERESTING PART IS THAT ALL THREE LEGS ALREADY EXISTED. The vocabulary (`review_relations`), the structural home (`no_relation_note`), the detector (`unreviewed_ideas`) and the instruction (brainstorm step 4) were all fitted, and 110 of 183 ideas still reached nothing. The three-legs model predicts that should work. What it does not cover is that an instruction can be correct AT ONE MOMENT and useless at another: \"judge the near-matches you already have\" is right when a duplicate-guard search is in hand, and gives a session working the BACKLOG nothing, because the idea was written weeks ago.\n\n⭐ AN ASSERTED EDGE OUTRANKS A VOCABULARY COINCIDENCE CATEGORICALLY, NOT BY A MULTIPLIER. The first cut weighted structure 3x; a test showed four shared words beating it. The fix was to make structural presence the primary sort key rather than to raise the constant until the example passed — a weight chosen to make one case come out right is taste presented as arithmetic, and this project already ranks asserted above inferred elsewhere (HEAL merges only on a human-drawn DUPLICATES edge).\n\n🛑 THE MODULE BOUNDARY WAS SET BY THE GRAPH, NOT BY PREFERENCE. `relate.rs` states in its own docs that it deliberately does not suggest, because a machine proposing edges there would manufacture the false neighbours the brainstorm skill forbids — while assigning candidate-offering to \"the dedup guard's job and the skill's\". So the suggester is a separate read-only module and drawing stays a human act.\n\n⚠️ AND IT IS DELIBERATELY NOT BUILT ON `search_design`, the obvious tool, which is gated behind `fulltext` and fails loud without it: a BM25 suggester would be absent from every index-less build and untestable by the core gate that holds 1,486 of the tests.\n\nTWO DEFECTS THE TESTS CAUGHT, both real rather than cosmetic: the background-term filter rejected every term on a small pool (any shared word is 50% of a two-node pool by arithmetic, not by being common), and text could outrank structure.\n\nTHE `what_next` HALF IS OPTION E of `dec:idea-should-an-idea-be-linked-to-the-intent-that-scopes-it` — fix the reader, leave the vocabulary. An idea contradicting an accepted Decision scored +2 and surfaced; one contradicting a Requirement stored the edge and scored ZERO, because the set was built from Decisions alone. The unread case is the more serious one. Requirements settled OUT are excluded: contradicting something already abandoned is not a live tension. The SCOPING half of that decision stays open.",
+        "subject": "system",
+        "summary": "Added `relation_candidates` (read-only, index-free, in its own module), the `link-ideas` skill and command in all three mirrors, and the `what_next` fix that scores an idea contradicting settled intent. Nine tests; one new toolsnap golden; four field terms added to skill_lint's known list."
       }
     },
     {
@@ -108856,6 +108970,16 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "Read guard instead of mutex lock; no behaviour change."
+      }
+    },
+    {
+      "node_id": "chg:accept-c2f21cb9e921eb57",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "detected_at": "2026-08-25",
+        "name": "Four result-FIELD names of `relation_candidates` added to the known-terms list so the linter does not read them as unserved tool names. The lint's own rules are unchanged — bookkeeping that keeps an existing gate accurate, carrying no design meaning.",
+        "subject": "system"
       }
     },
     {
@@ -126103,6 +126227,18 @@
       }
     },
     {
+      "node_id": "req:an-unlinked-idea-can-be-offered-its-likely-neighbours",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "An idea connected to nothing can be offered its likely neighbours — and the offer never draws the edge",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "A design SHALL be able to answer, for an idea that connects to nothing, WHICH OTHER NODES IT MIGHT BELONG WITH — and SHALL never draw the relation on the strength of that answer.\n\nDISTINCT FROM `dec:idea-linking-half-ideas-needs-a-task-that-can-be-run`, which the guard surfaced and which is its parent: that node ASKS whether the gap needs a runnable task and holds three shapes with none chosen. This is the INTENT that came out of it once the answer was built — what must hold of any such mechanism, whichever shape it took. The question stays open about shape; this is not open.\n\nWHY IT IS INTENT: detecting the absence is not closing it. `unreviewed_ideas` counts the ideas carrying neither a relation nor a note; `review_relations` records either ending; the brainstorm skill instructs linking at capture. All three legs existed and 110 of 183 open ideas still reached nothing, because the capture-time rule — \"judge the near-matches you already have, do not run a fresh sweep\" — is correct when a duplicate-guard search is in hand and gives a session working the BACKLOG nothing at all.\n\nMEASURED COST, twice in one day (2026-08-25): a session reasoned about functional allocation without reaching an idea recorded seventeen days earlier that had ANTICIPATES-ed its exact error, and discussed the storage model without reaching the node that answered it. Both were recovered by the user's memory. A person must not have to be the index.\n\nEVERY CANDIDATE SHALL CARRY THE WALK THAT PRODUCED IT. A candidate whose reason cannot be stated is not offered, because a suggestion a reader cannot check is a false neighbour waiting to be drawn.\n\nAN ASSERTED CONNECTION OUTRANKS AN INFERRED ONE. A shared neighbour is something a person wrote into the graph; shared vocabulary is incidental and two authors can reach for one metaphor. The ordering SHALL be categorical rather than a tuned weight, because a weight chosen to make one example come out right is taste presented as arithmetic.\n\nAN EMPTY ANSWER SHALL SAY WHICH EMPTY IT IS. \"Nothing to compare against\", \"this node carries no comparable text\" and \"ranked N and none matched\" are three different facts, and only the last means the idea may be genuinely new.\n\nIT SHALL NOT DEPEND ON A SEARCH INDEX. `search_design` is gated behind `fulltext` and fails loud without it, so a suggester built on it would be absent from every index-less build and untestable by the gate that holds most of the tests.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "req:analyse-at-any-level",
       "node_type": "Requirement",
       "properties": {
@@ -133435,6 +133571,19 @@
       }
     },
     {
+      "node_id": "fact:the-shared-client-forks-daemons-and-never-reaps-them",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "name": "Every `--stop-shared` leaves a zombie: the `--shared` client forks `--serve-shared` daemons and never wait()s for them. NINE defunct reflow2-mcp processes accumulated over 27 hours on one machine, the oldest 23h33m",
+        "statement": "MEASURED 2026-08-25 at main `a000bc7`, found while diagnosing interactive lag the user reported — and it turned out NOT to be the cause, which is the part worth writing down.\n\n═══ THE MECHANISM, READ OFF THE PROCESS TABLE ═══\n\n    pid 3828662  reflow2-mcp --graph-path ./.reflow2/graph --shared     ELAPSED 1-03:26:10\n      ├─ 758519   reflow2-mcp ... --serve-shared        S    RSS 299 MB   02:13:54   ← the live daemon\n      ├─ 599201   [reflow2-mcp] <defunct>               Z    RSS 0        02:46:05\n      ├─ 478637   [reflow2-mcp] <defunct>               Z    RSS 0        09:15:59\n      ├─ 291284   [reflow2-mcp] <defunct>               Z    RSS 0        10:04:39\n      ├─ 211254   [reflow2-mcp] <defunct>               Z    RSS 0        11:04:48\n      ├─ 121029   [reflow2-mcp] <defunct>               Z    RSS 0        13:47:45\n      ├─ 119935   [reflow2-mcp] <defunct>               Z    RSS 0        13:51:29\n      └─ 4129702  [reflow2-mcp] <defunct>               Z    RSS 0        23:33:48\n\n    total defunct reflow2-mcp: 9\n\nThe `--shared` process is the CLIENT the harness launches and it lives for the whole session (27 hours here). It forks a `--serve-shared` daemon when none is running. `--stop-shared` asks that daemon to exit — and **the parent never `wait()`s**, so the exited child stays in the process table as a zombie. One per restart, and the restarts are not rare: a NEW MCP TOOL is not callable until the server is bounced, so a session that adds tools bounces it repeatedly. This one did so four or five times in a day.\n\n═══ ⚠️ WHAT IT IS NOT, AND THIS IS THE POINT ═══\n\n**IT DID NOT CAUSE THE LAG, AND THE OBVIOUS READING SAYS IT DID.** Nine leaked processes with `reflow2-mcp` in the name looks exactly like a resource leak. Measured: every zombie holds **RSS 0 and 0% CPU** — a zombie is a process-table entry and nothing else. The actual cause was `cargo test --workspace --no-fail-fast -- --test-threads=2` on a **4-core** box driving load average to **5.8**; renicing it to +19 dropped that to 4.4 within seconds and it finished green at 1.99.\n\n⇒ Two defects were visible at once and only one was doing harm. Reporting the zombies as the cause would have been a confident, plausible, wrong diagnosis — and the fix would have changed nothing the user could feel.\n\n═══ WHY IT STILL MATTERS ═══\n\nA zombie costs a PID-table entry, not memory. Nine is harmless. But it is unbounded in the length of a session and one-per-bounce, and the thing that forces bounces — a new tool being uncallable until restart — is a normal part of developing reflow2 itself. A long-lived server on a busy machine accumulates them indefinitely.\n\n📌 THE FIX IS ORDINARY: `wait()` on the child after asking it to stop, or double-fork the daemon so `init` reaps it, or set `SIGCHLD` to `SIG_IGN` in the `--shared` client. None of that is architecture.\n\n⚠️ BOUNDS: one machine, one 27-hour session, Linux. The count is what THIS session produced; nothing here says how a fleet or a hosted tier behaves, and no fix has been attempted or verified.",
+        "subject_id": "cap:shared-sessions",
+        "valid_from": "2026-08-25"
+      }
+    },
+    {
       "node_id": "fact:the-stale-daemon-cost-five-merged-prs-twice",
       "node_type": "TemporalFact",
       "properties": {
@@ -134277,6 +134426,20 @@
         "level": "integration",
         "method": "test",
         "name": "A bulk write is all of it or none of it, and reports every failure at once",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:candidates-are-offered-never-drawn",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Nine cases over `relation_candidates` and the `what_next` intent-contradiction fix, in `crates/reflow2-core/tests/candidates_are_offered_never_drawn.rs`.\n\nTHE REFUSALS CARRY THE WEIGHT, because every way this feature goes wrong is a false neighbour: a word true of everything must not manufacture seven neighbours; a candidate that cannot say why it surfaced is never offered; something already related is excluded AND reported rather than silently dropped; an empty answer names which of three empties it is; and an unknown node is refused by name.\n\nTWO CASES EXIST BECAUSE THE FIRST DRAFT WAS WRONG AND THE TESTS CAUGHT IT. The background-term filter rejected EVERY term on a small pool — any shared word is 50% of a two-node pool by arithmetic rather than by being common — and shared vocabulary could outrank a shared neighbour, which was fixed by making structural presence the primary sort key rather than by tuning a multiplier.\n\nAlso pinned: an idea contradicting SETTLED intent now scores and says which kind of clash it is, while one contradicting intent the user settled OUT (`dropped`) scores zero, because contradicting something already abandoned is not a live tension.",
+        "findings": "9 passed / 0 failed. Whole workspace alongside it: `cargo test --workspace --no-fail-fast` WS_EXIT=0, 157 result lines against 152 test files, 1,795 passed, 0 failed. Core-only: 129 suites, 1,486 passed, 0 failed.\n\nTWO OF THE NINE EXIST BECAUSE THE FIRST DRAFT WAS WRONG, and both are recorded rather than quietly fixed. The background-term filter rejected EVERY term on a small pool, because any shared word is 50% of a two-node pool by arithmetic rather than by being common — the proportional rule now applies only once the pool is big enough for a proportion to mean anything. And shared vocabulary could outrank a shared neighbour, fixed by making structural presence the PRIMARY SORT KEY rather than by raising a multiplier until the example passed.\n\n⚠️ THE SUITE ALSO COST THE MACHINE SOMETHING WORTH KNOWING: on a 4-core box, `--workspace --no-fail-fast -- --test-threads=2` drove load average to 5.8 and the user reported interactive lag. Renicing the run to +19 dropped it to 4.4 within seconds and it finished green at 1.99. That is the tail of `dec:the-gate-runs-every-test-binary-before-reporting`: a run that executes every binary costs more wall-clock and more CPU than one that stops at the first failure. The trade is still right — a red run should yield every fact it has — but the pre-push gate is not free on a small machine, and renicing it is the cheap mitigation.",
+        "kind": "verification",
+        "last_run_at": "2026-08-25",
+        "level": "unit",
+        "method": "test",
+        "name": "candidates_are_offered_never_drawn.rs",
         "status": "passing"
       }
     },
@@ -136350,7 +136513,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:a68f76ee3fc4b08310c5bb8d0090b4caac10f6b1f6b1f1ed64301e245cd24232",
+  "prev_content_hash": "sha256:3f4af2056acda7718c087cd33518df17cc1941533ce524a63eb9fc7e5dc6df91",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

@@ -354,6 +354,15 @@ NON_TOOL_TERMS = {
     "truncated_beyond_depth",
     "unallocated_capability",
     "unallocated_component",
+    # Result FIELDS of `relation_candidates`, not tools. Named in link-ideas
+    # because the skill's whole discipline is reading them: `because` is the
+    # walk that produced a candidate, `already_related` is what was excluded
+    # rather than missed, and `empty_because` says WHICH empty an empty answer
+    # is. `pool_type` is one of its parameters.
+    "already_related",
+    "because",
+    "empty_because",
+    "pool_type",
     "quality_target_unstated",
     "undocumented_addition",
     "unknown_seeds",

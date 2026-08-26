@@ -1,0 +1,44 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "WHICH NODES MIGHT THIS ONE RELATE TO — offered, never drawn. The missing half of half-idea linking: `unreviewed_ideas` counts the ideas connected to nothing, `review_relations` records the judgement, and until now NOTHING answered the question a person working that backlog actually has — which of these belong together? ⭐ EVERY CANDIDATE CARRIES THE WALK THAT PRODUCED IT in `because`: a shared neighbour (two nodes that both relate to a third are related in the graph’s own terms, whatever their words) or distinctive shared terms (weighted by rarity ACROSS THE POOL, so words true of everything count for nothing). A candidate whose reason cannot be stated is not offered. 🛑 IT NEVER WRITES AND NEVER PROPOSES AN EDGE. Ranking is the machine’s half; drawing is yours, through `review_relations`, and a false neighbour is worse than a missing one because anything searching by neighbourhood repeats it forever. Nodes ALREADY related are excluded from the ranking and returned in `already_related`, so ‘not offered because already linked’ is distinguishable from ‘not offered because nothing matched’. ⚠ AN EMPTY ANSWER SAYS WHICH EMPTY IT IS — `empty_because` separates ‘nothing to compare against’, ‘this node carries no comparable text’ and ‘ranked N and none matched’, because only the last means the node may be genuinely new. Needs no search index and no database, so it works in an index-less build.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "limit": {
+        "default": null,
+        "description": "How many candidates to return (default 5). Kept small on purpose: the\nbrainstorm rule is that two or three real relations is a good outcome\nand ten is a smell.",
+        "format": "uint",
+        "minimum": 0,
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "node_id": {
+        "description": "The node to find candidates FOR — usually an idea from\n`unreviewed_ideas`.",
+        "type": "string"
+      },
+      "node_type": {
+        "description": "Its type (e.g. `Decision`).",
+        "type": "string"
+      },
+      "pool_type": {
+        "default": null,
+        "description": "What to rank it against. Omit to compare like with like (the same type\nas the subject), which is what working an idea backlog wants.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "node_id",
+      "node_type"
+    ],
+    "type": "object"
+  },
+  "name": "relation_candidates"
+}
