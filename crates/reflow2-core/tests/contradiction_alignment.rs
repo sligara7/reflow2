@@ -36,6 +36,14 @@ fn two_decisions() -> DesignGraph {
         Some("A pointer carries no version-coupled content, so a stale one is still correct."),
     )
     .unwrap();
+    // BOTH ACCEPTED, STATED RATHER THAN INHERITED. These tests are about the
+    // `alignment` PROPERTY, and they used to lean on `status` defaulting to
+    // `proposed` without ever saying so. Once two parked ideas stopped counting
+    // as a contradiction (tests/proposed_asserts_nothing.rs, 2026-08-26), that
+    // silent dependency made them pass or fail for a reason they are not about.
+    // Saying `accepted` out loud puts the subject back to alignment alone.
+    g.set_decision_status("dec:broad", "accepted").unwrap();
+    g.set_decision_status("dec:narrow", "accepted").unwrap();
     g
 }
 

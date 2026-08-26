@@ -177,6 +177,13 @@ fn defect_ack_decision_id(defect_id: &str) -> String {
 /// `in_scope`, `region_size` and a vacuity note, while `detect_defects`
 /// returned a naked `Vec`. One tool answered the same question two ways, and
 /// the half that was honest was the half fewer people call.
+/// Findings a parked-idea rule skipped, by category key.
+///
+/// A type alias rather than a bare map so the accumulator threaded through the
+/// detectors is named for what it holds: things NOT reported, which is a
+/// different claim from things found.
+pub type Suppressed = BTreeMap<&'static str, usize>;
+
 #[derive(Debug, Clone, serde::Serialize)]
 pub struct SweepScope {
     /// Every node in the graph — what the type-by-type rules considered.
@@ -207,6 +214,25 @@ pub struct SweepScope {
     /// degrading the instrument, and a later seat watching the count climb has
     /// an incentive to stop registering documents — the worse state.
     pub parked: Vec<String>,
+    /// Findings NOT REPORTED because a parked idea was involved, by category.
+    ///
+    /// ⭐ COUNTED FOR THE SAME REASON `parked` IS, AND THE OMISSION WAS CAUGHT
+    /// THE SAME WAY. When `is_parked_idea` shipped, reflow2's own design went
+    /// 89 -> 61 defects — **28 findings disappeared and nothing anywhere said
+    /// they had been suppressed**, so a reader seeing 61 could not tell it from
+    /// a design that genuinely has 61. That is precisely the vacuous zero the
+    /// `parked` field above exists to prevent, reintroduced one rule over by the
+    /// change that was fixing it.
+    ///
+    /// It is a DESCRIPTION OF THE SWEEP, not a defect tally, and the difference
+    /// is load-bearing: the complaint that started this work was that a DEFECT
+    /// count grew when you brainstormed, which teaches people to stop reading
+    /// it. A `swept.` figure that says what was not looked at costs a
+    /// brainstormer nothing and lets an auditor reconstruct the whole picture.
+    ///
+    /// Empty means nothing was suppressed — which, unlike a missing field, is a
+    /// claim somebody can check.
+    pub suppressed_by_parked_idea: BTreeMap<&'static str, usize>,
     /// Said in WORDS when the sweep could not have found anything — an empty
     /// graph. `None` when the sweep was real, so its presence is the signal.
     #[serde(skip_serializing_if = "Option::is_none", default)]
@@ -862,9 +888,16 @@ impl DesignGraph {
     /// findings take `.defects`; the scoped sibling has always answered this
     /// way, and the two now agree.
     pub fn detect_defects(&self) -> Result<DefectSweep, DynoError> {
+        // ONE SWEEP FEEDS BOTH HALVES. The suppression counts are accumulated by
+        // the detectors as they skip, never recomputed here — a second copy of
+        // the skip rule would drift from the first, which is the exact disease
+        // `is_parked_idea` was written to cure. Same reasoning as
+        // `parked_nodes` delegating to `is_parked` rather than re-deciding.
+        let mut suppressed = Suppressed::new();
+        let defects = self.open_defects_counting(&mut suppressed)?;
         Ok(DefectSweep {
-            swept: self.sweep_scope()?,
-            defects: self.open_defects()?,
+            swept: self.sweep_scope(suppressed)?,
+            defects,
         })
     }
 
@@ -872,8 +905,17 @@ impl DesignGraph {
     /// accepted. The engine's own consumers (`propose_heal`, the rollups, the
     /// scoped view) want the list without the sweep description around it.
     pub fn open_defects(&self) -> Result<Vec<HealIssue>, DynoError> {
+        self.open_defects_counting(&mut Suppressed::new())
+    }
+
+    /// [`open_defects`](Self::open_defects), also reporting what the parked-idea
+    /// rules skipped. Callers that do not care pass a scratch map.
+    fn open_defects_counting(
+        &self,
+        suppressed: &mut Suppressed,
+    ) -> Result<Vec<HealIssue>, DynoError> {
         let mut open = Vec::new();
-        for issue in self.all_defects()? {
+        for issue in self.all_defects(suppressed)? {
             if self.defect_acknowledgement(&issue.id)?.is_none() {
                 open.push(issue);
             }
@@ -941,7 +983,7 @@ impl DesignGraph {
         Ok(parked)
     }
 
-    fn sweep_scope(&self) -> Result<SweepScope, DynoError> {
+    fn sweep_scope(&self, suppressed: Suppressed) -> Result<SweepScope, DynoError> {
         let index = self.node_type_index()?;
         let nodes = index.len();
         let design_network_nodes = self.design_network()?.node_count();
@@ -990,6 +1032,7 @@ impl DesignGraph {
             nodes,
             design_network_nodes,
             parked: self.parked_nodes()?,
+            suppressed_by_parked_idea: suppressed,
             rules: HealCategory::ALL.iter().map(|c| c.as_str()).collect(),
             note: (nodes == 0).then(|| {
                 "this graph holds no nodes, so an empty result is VACUOUS rather than clean — \
@@ -1176,7 +1219,7 @@ impl DesignGraph {
     pub fn reviewed_defects(&self) -> Result<Vec<ReviewedDefect>, DynoError> {
         let mut reviewed = Vec::new();
         let mut live = std::collections::HashSet::new();
-        for issue in self.all_defects()? {
+        for issue in self.all_defects(&mut Suppressed::new())? {
             if let Some((decision_id, reason)) = self.defect_acknowledgement(&issue.id)? {
                 live.insert(issue.id.clone());
                 reviewed.push(ReviewedDefect {
@@ -1242,7 +1285,7 @@ impl DesignGraph {
     /// Detect the deterministic structural defects (the HEAL catalog subset),
     /// including ones already reviewed. [`detect_defects`](Self::detect_defects)
     /// is the filtered view callers want.
-    fn all_defects(&self) -> Result<Vec<HealIssue>, DynoError> {
+    fn all_defects(&self, suppressed: &mut Suppressed) -> Result<Vec<HealIssue>, DynoError> {
         let index = self.node_type_index()?;
         let mut issues = Vec::new();
         // Nodes whose unattached state an ACCEPTED ruling declares correct.
@@ -1557,6 +1600,32 @@ impl DesignGraph {
             if withdrawn(&e.from_id) || withdrawn(&e.to_id) {
                 continue;
             }
+            // BOTH SIDES, NOT EITHER — and the asymmetry against the rule above
+            // is the whole judgement, forced by two pieces of evidence that
+            // point opposite ways.
+            //
+            // `a_proposed_decision_is_not_treated_as_withdrawn` pins the
+            // proposed-vs-ACCEPTED case and must keep passing: "a parked idea
+            // that conflicts with an accepted decision is a real thing to
+            // settle, and treating 'not yet accepted' as 'no longer intended'
+            // would hide exactly the disagreements a brainstorm is supposed to
+            // surface." That is right, and it is the opposite conclusion from
+            // hxm_program's field report on 2026-08-26.
+            //
+            // They are not actually in conflict, because they are different
+            // shapes. The field case was proposed-vs-PROPOSED — two brainstormed
+            // ideas in tension with each other, which no test covered — and
+            // there the disagreement is not something to settle, it is the
+            // brainstorm working. Against settled design, one parked side still
+            // leaves a live question. So a withdrawal (a positive act that
+            // retires the conflict) skips on EITHER side, and being unclaimed
+            // skips only when NEITHER side claims anything.
+            if self.is_parked_idea(&index, &e.from_id) && self.is_parked_idea(&index, &e.to_id) {
+                *suppressed
+                    .entry(HealCategory::Contradiction.as_str())
+                    .or_default() += 1;
+                continue;
+            }
             let affected = vec![e.from_id.clone(), e.to_id.clone()];
             issues.push(HealIssue {
                 id: issue_id(HealCategory::Contradiction, &affected),
@@ -1616,7 +1685,42 @@ impl DesignGraph {
         }
 
         // unresolved_setup — an ANTICIPATES edge (info).
+        //
+        // This loop had NO endpoint filter of any kind, so "if we did X we would
+        // then need Y" — a thought, recorded exactly as the brainstorm skill
+        // asks — came back as a commitment with missing follow-through. An
+        // anticipation is only unresolved if somebody actually committed to the
+        // setup, and a node that asserts nothing has committed to nothing.
         for e in self.all_edges_of_type(edge::ANTICIPATES, &index)? {
+            // EITHER side — and this rule deliberately differs from the
+            // contradiction rule above, which needs BOTH. The asymmetry is not
+            // an inconsistency; it falls out of what each finding CLAIMS.
+            //
+            // This message is "X anticipates Y but nothing follows through", so
+            // the complaint is that **Y IS UNRESOLVED**. When Y is a parked
+            // idea, Y being unresolved is precisely what `proposed` MEANS — the
+            // recorded idea IS the follow-through, and demanding more is
+            // demanding that a brainstorm be finished. When X is parked, a
+            // musing that anticipates something real has committed to no setup
+            // at all. Neither direction is a dangling commitment. A
+            // contradiction, by contrast, needs only ONE side asserting
+            // something for the conflict to be real, which is why it stops at
+            // both (`a_proposed_decision_is_not_treated_as_withdrawn`).
+            //
+            // 🛑 FIRST CUT SAID `&&`, AND IT WAS CAUGHT BY WALKING INTO IT.
+            // Twenty minutes after that shipped, recording a brainstorm exactly
+            // as the skill instructs — step 4, relate the idea to what is
+            // already there — drew ANTICIPATES from an ACCEPTED Decision and
+            // from a TemporalFact to parked ideas, and defects went 78 -> 80 for
+            // following the instructions. A rule keyed on both endpoints could
+            // never reach the Fact case at all, since a Fact is not a Decision
+            // and can never be parked. Both cases are now pinned.
+            if self.is_parked_idea(&index, &e.from_id) || self.is_parked_idea(&index, &e.to_id) {
+                *suppressed
+                    .entry(HealCategory::UnresolvedSetup.as_str())
+                    .or_default() += 1;
+                continue;
+            }
             let affected = vec![e.from_id.clone(), e.to_id.clone()];
             issues.push(HealIssue {
                 id: issue_id(HealCategory::UnresolvedSetup, &affected),
@@ -1633,16 +1737,94 @@ impl DesignGraph {
             });
         }
 
-        self.detect_structural_defects(&mut issues)?;
+        self.detect_structural_defects(&mut issues, suppressed)?;
 
         annotate_hubs(&mut issues);
         issues.sort_by(|a, b| a.id.cmp(&b.id));
         Ok(issues)
     }
 
+    /// Does this node ASSERT anything right now?
+    ///
+    /// ⭐ ONE PLACE, READ BY EVERY DETECTOR THAT NEEDS IT — and that is the
+    /// point of the function, not the three statuses in it. The principle it
+    /// encodes was already written down in four places and implemented in one:
+    /// `zero_degree_finding` grades a `proposed` Decision to `info` as "a parked
+    /// thought that correctly shapes nothing yet"; `schema/inference.yaml` says
+    /// "ONLY AN ACCEPTED DECISION DISCONTINUES ANYTHING; a `proposed` withdrawal
+    /// has withdrawn nothing"; `loop_status` stays quiet on a `proposed`
+    /// Decision with no approver; and the `parks` ruling requires an ACCEPTED
+    /// Decision, which is why parks cannot reach the brainstorm case at all.
+    ///
+    /// Every detector nevertheless re-derived the qualifier set BY HAND, so
+    /// `contradiction` grew `alignment=supporting` and then
+    /// `rejected`/`superseded` one incident at a time, while `unresolved_setup`
+    /// and `unthreaded_cluster` never grew anything. That is the same class as
+    /// `unallocated_component` never reading a parking ruling though two
+    /// siblings did, and `chg:unallocated-component-reads-the-ruling` predicted
+    /// this exact recurrence: "nothing checks that a NEW structural detector
+    /// reads the ruling. The next one written will have the same hole for the
+    /// same reason." It was found in the field the next day.
+    ///
+    /// ⚠️ THIS IS `proposed` ALONE, AND IT IS NOT THE SAME TEST AS WITHDRAWN.
+    /// The first draft folded `rejected`/`superseded` in here, which broke
+    /// `a_proposed_decision_is_not_treated_as_withdrawn` — a DELIBERATE
+    /// counterweight recording that "a parked idea that conflicts with an
+    /// accepted decision is a real thing to settle". That is right, and it
+    /// survives: a withdrawal is a positive act that RETIRES a conflict, so it
+    /// skips on either side, while being unclaimed skips only when NEITHER side
+    /// claims anything. Callers spell that difference out; this predicate answers
+    /// the narrow question and lets each rule decide how to combine it.
+    ///
+    /// ⚠️ DECISION ONLY, AND THE SCOPE IS LOAD-BEARING RATHER THAN CAUTIOUS.
+    /// `CONTRADICTS` is declared `from: "*" to: "*"`, and `Requirement.status`
+    /// ALSO defaults to `proposed` — so a predicate that read `status` on any
+    /// node would silence conflicts between requirements that are merely
+    /// awaiting the user's word. Those assert something provisional that
+    /// somebody is being asked to confirm; a brainstormed Decision asserts
+    /// nothing by construction. reflow2's own design held 51 requirements in
+    /// exactly that state when this was written, so the wider predicate would
+    /// have gone quiet on real conflicts to fix a different problem. Every one
+    /// of the four precedents above is about a DECISION, and so is this.
+    ///
+    /// ⚠️ THERE IS NO UNLABELLED DECISION, so this is NOT inert on existing
+    /// designs. `status` carries `default: proposed` in the schema
+    /// (2026-07-25, `req:decision-status-not-asserted`), which means silence
+    /// was never reachable and the `alignment` fix's "an unlabelled edge keeps
+    /// its historical meaning" has no analogue here. Every `proposed` Decision
+    /// in every existing design stops producing these two findings the moment
+    /// this lands — which is the intent, and is a real behaviour change rather
+    /// than an opt-in. It is stated here because a reader will otherwise assume
+    /// the narrower blast radius, as the first draft of this function did.
+    ///
+    /// ⚠️ AND IT IS NOT UNIVERSAL ACROSS FINDINGS. Which categories read this is
+    /// a per-finding judgement, not a global filter: `duplicate` deliberately
+    /// ignores it (two parked thoughts can still cover the same ground, and
+    /// merge is still the remedy), as do the pure-topology rules.
+    /// `every_category_states_whether_it_reads_proposed` is an exhaustive match
+    /// that will not compile until a new category's author has said which side
+    /// they are on.
+    fn is_parked_idea(&self, index: &HashMap<String, String>, id: &str) -> bool {
+        index
+            .get(id)
+            .filter(|t| t.as_str() == node::DECISION)
+            .and_then(|t| self.get_node(t, id).ok().flatten())
+            .and_then(|n| {
+                n.properties
+                    .get("status")
+                    .and_then(Value::as_str)
+                    .map(|s| s == "proposed")
+            })
+            .unwrap_or(false)
+    }
+
     /// Graph-topology defects over the design network (via `dynograph-graph`):
     /// disconnected communities, selective single points of failure, dead ends.
-    fn detect_structural_defects(&self, issues: &mut Vec<HealIssue>) -> Result<(), DynoError> {
+    fn detect_structural_defects(
+        &self,
+        issues: &mut Vec<HealIssue>,
+        suppressed: &mut Suppressed,
+    ) -> Result<(), DynoError> {
         let net = self.design_network()?;
 
         // unthreaded_cluster — islands of ≥2 nodes cut off from the main
@@ -1676,7 +1858,8 @@ impl DesignGraph {
         // never mentioned" — is answered by the degree-zero rule above rather
         // than here, since a node with no edges at all is unreachable in the
         // full graph and is now reported whatever its type.
-        let total_nodes = self.node_type_index()?.len();
+        let index = self.node_type_index()?;
+        let total_nodes = index.len();
         let swept = net.node_count();
         let singletons = net
             .component_groups()
@@ -1712,6 +1895,22 @@ impl DesignGraph {
                 // boundary to the body and still fires.
                 let island_ids: BTreeSet<&str> = island.iter().map(|&i| net.id_of(i)).collect();
                 if self.island_attached_by_containment(&island_ids, &main_ids)? {
+                    continue;
+                }
+                // AN ISLAND OF PARKED THOUGHTS IS A BRAINSTORM, NOT A SEVERED
+                // LIMB. Ideas related to each other and not yet wired to the
+                // design is the SHAPE the brainstorm skill produces — so
+                // reporting it punished the skill for working (hxm_program,
+                // 2026-08-26: defects 2 -> 7 over a day of doing the right
+                // thing).
+                //
+                // EVERY member, not ANY: one asserting node makes this a real
+                // part of the design that nothing reaches, which is exactly what
+                // this rule is for. The counterweight is pinned.
+                if island_ids.iter().all(|id| self.is_parked_idea(&index, id)) {
+                    *suppressed
+                        .entry(HealCategory::UnthreadedCluster.as_str())
+                        .or_default() += 1;
                     continue;
                 }
                 let mut affected: Vec<String> =
