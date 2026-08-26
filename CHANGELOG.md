@@ -31,6 +31,31 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.40.0] — 2026-08-26
+
+### Added — allocation follows the code, and a deliberate state stops reading as a defect
+
+**Minor.** No schema change in this entry; the release's stamp moved earlier in the increment (see `docs/upgrading-to-v0.40.0.md`).
+
+`unallocated_component` reported **"33 of 85 parts hold no function"** on reflow2's own design. The headline was actionable and wrong. **31 of the 33 were real source modules** with a linked, checksummed file, and for most the module header cited BY ID the very capability the design had filed against a neighbour — `coverage.rs` names `cap:coverage` (allocated to `cmp:drift`), `regions.rs` names `cap:a-session-with-no-seed-can-find-one` (allocated to `cmp:scope`).
+
+**⭐ The measurement, and it is reusable on any design:** compare the ALLOCATION layer (`ALLOCATED_TO`) against the ARTIFACT layer (`REALIZES`), per capability. Across all 212 allocated capabilities: **59 agree, 23 DISAGREE, 130 carry no file evidence either way.** 19 of the 23 named a part the design was reporting as empty. 🛑 The 130 are **unmeasurable by this method, not clean** — reading their silence as agreement repeats the exact error.
+
+    33 → 14   19 allocations moved to the module that implements them
+    14 →  2   12 tool-surface slices ruled surface-not-implementer and parked
+     2 →  0   the two byte-store backends ruled named-by-their-contract
+
+Neighbours legitimately lost credit: **export 10→7, report 10→8, service 14→12.** That drop IS the correction.
+
+**⭐⭐ `detect_unallocated_components` now reads a parking ruling, like its two siblings already did.** It never consulted `is_parked`, though `unsatisfied_requirement` reads a ruling and `unreviewed_ideas` excludes parked nodes — so twelve slices an accepted Decision declared correctly empty kept reporting as defects, and **recording the correct judgement degraded the instrument.** That is the same failure dev_storyflow's fleet reported when defects climbed 88 → 97 across ten correct writes. It now skips parked leaves and **REPORTS THE COUNT on the evidence line**, because a design with no empty parts must not read like one whose empty parts were ruled deliberate.
+
+🛑 **Still open, recorded rather than fixed:** nothing checks that a NEW structural detector reads a ruling. The next one written will have the same hole for the same reason.
+
+📌 **And a tool gap this exposed:** no reflow2 tool compares the allocation layer against the artifact layer. `reconcile_artifacts` compares design against DISK; `compare_designs` compares design against DESIGN. Neither compares two layers of ONE design, so the analysis above was done by hand in Python over the export.
+
+`crates/reflow2-core/tests/structure_with_no_function_is_asked_about.rs` (14 cases; the three new ones are that a parked leaf is not a finding, that a **`proposed`** ruling parks nothing, and that the parked count reaches the evidence).
+
+
 ### Added — a design can say what it is FOR, and is asked at genesis if it hasn't
 
 **Minor — schema change.** New optional `Decision.quality_target` (the nine axes of `DimensionAssessment.dimension`), new `set_quality_target` tool, new `quality_target_unstated` gap. Genesis asks the question; `detect-and-ask` carries its repair row.
