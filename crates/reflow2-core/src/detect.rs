@@ -2690,6 +2690,9 @@ impl DesignGraph {
 
         let mut unallocated: Vec<String> = Vec::new();
         let mut leaves = 0usize;
+        // Leaves an accepted ruling declares CORRECTLY empty. Counted rather
+        // than merely skipped — see the parking check below.
+        let mut parked = 0usize;
         // Tracked over EVERY component, parents included, because the claim it
         // supports is about the whole design. Deriving "nothing is allocated"
         // from "every leaf is empty" instead would be a different statement
@@ -2722,6 +2725,30 @@ impl DesignGraph {
                 .incoming(&cmp.node_id, Some(edge::ALLOCATED_TO))?
                 .is_empty()
             {
+                // A RULING may declare this part correctly empty
+                // (`req:a-deliberate-state-is-not-a-defect`): a surface slice
+                // whose function belongs to the module behind it, an
+                // interchangeable implementation named by the contract it
+                // PROVIDES rather than by a function of its own.
+                //
+                // `unsatisfied_requirement` has read the ruling since that
+                // requirement landed and `unreviewed_ideas` excludes parked
+                // nodes, but THIS detector did not — so on reflow2's own design
+                // twelve slices parked by an accepted Decision kept reporting as
+                // defects, and recording the correct judgement degraded the
+                // instrument instead of improving it. Nothing silences this one
+                // incidentally: the detector looks for incoming ALLOCATED_TO, so
+                // governance is invisible to it unless it is read.
+                //
+                // COUNTED, NEVER SILENCED. The number reaches the evidence line
+                // below, because a finding that quietly shrank would be exactly
+                // the silent truncation `dec:reflow2-is-built-for-observability`
+                // forbids — the reader must be able to tell a design with no
+                // empty parts from one whose empty parts were ruled deliberate.
+                if self.is_parked(&cmp.node_id)? {
+                    parked += 1;
+                    continue;
+                }
                 unallocated.push(cmp.node_id.clone());
             } else {
                 any_allocation = true;
@@ -2793,9 +2820,18 @@ impl DesignGraph {
             evidence: format!(
                 "{n} of {leaves} leaf Component(s) carry 0 incoming ALLOCATED_TO ({} total \
                  component(s), {} capability(ies)). Parents are excluded: a component holding \
-                 child components is allocated through them. Sample: {}.",
+                 child components is allocated through them.{} Sample: {}.",
                 pop.components,
                 pop.capabilities,
+                if parked > 0 {
+                    format!(
+                        " A further {parked} empty leaf/leaves are PARKED by an accepted ruling \
+                         and are not counted above — reported here so a design whose empty parts \
+                         were ruled deliberate cannot be mistaken for one that has none."
+                    )
+                } else {
+                    String::new()
+                },
                 unallocated
                     .iter()
                     .take(5)

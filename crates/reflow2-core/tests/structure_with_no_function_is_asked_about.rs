@@ -13,6 +13,7 @@
 //! one that fired on a design with nothing to allocate would be asking a
 //! question that belongs to an earlier phase.
 
+use reflow2_core::nodes::{Props, edge, node};
 use reflow2_core::{DesignGraph, GapScope, GapSource};
 
 /// The design under test: `n` leaf components, of which the ones named in
@@ -296,6 +297,106 @@ fn allocating_only_to_parents_is_not_reported_as_never_having_started() {
     assert!(
         gap.title.contains("2 of 2 parts"),
         "it is a partial finding, not a never-started one, got: {}",
+        gap.title
+    );
+}
+
+/// Park `component` under an accepted Decision, the way a ruling reaches a
+/// structural detector: the edge carries the claim, so a deliberate state can
+/// never be asserted without a Decision that says why.
+fn park(g: &mut DesignGraph, component: &str) {
+    g.add_decision(
+        "dec:surface-holds-no-function",
+        "Surface slices hold no function of their own",
+        "A slice exposes what the module behind it implements.",
+        None,
+    )
+    .unwrap();
+    g.set_decision_status("dec:surface-holds-no-function", "accepted")
+        .unwrap();
+    g.create_edge(
+        edge::GOVERNED_BY,
+        node::COMPONENT,
+        component,
+        node::DECISION,
+        "dec:surface-holds-no-function",
+        Props::new().set("ruling", "parks"),
+    )
+    .unwrap();
+}
+
+#[test]
+fn a_leaf_parked_by_an_accepted_ruling_is_not_a_finding() {
+    // THE COUNTERWEIGHT THIS DETECTOR SHIPPED WITHOUT. `unsatisfied_requirement`
+    // has read a parking ruling since `req:a-deliberate-state-is-not-a-defect`
+    // and `unreviewed_ideas` excludes parked nodes — this one did not, so on
+    // reflow2's own design twelve tool-surface slices ruled deliberately empty
+    // by an accepted Decision kept reporting as defects. Recording the correct
+    // judgement made the instrument worse, which is the exact incentive
+    // `dec:reflow2-is-built-for-observability` exists to remove.
+    //
+    // Nothing silences this incidentally: the detector looks for incoming
+    // ALLOCATED_TO, so governance is invisible unless it is READ.
+    let mut g = design_with(&["cmp:x", "cmp:y"], &["cmp:x"]);
+    park(&mut g, "cmp:y");
+
+    assert!(
+        finding(&g).is_none(),
+        "an accepted ruling declares cmp:y correctly empty — it is not a hole"
+    );
+}
+
+#[test]
+fn a_proposed_ruling_parks_nothing() {
+    // A musing must not suppress a finding. `proposed` is somebody thinking out
+    // loud, and only the owner's word moves a Decision to `accepted` — so the
+    // status check is what keeps parking from becoming a way to silence the
+    // instrument by writing a node.
+    let mut g = design_with(&["cmp:x", "cmp:y"], &["cmp:x"]);
+    g.add_decision("dec:musing", "Maybe empty is fine", "Thinking aloud.", None)
+        .unwrap();
+    g.create_edge(
+        edge::GOVERNED_BY,
+        node::COMPONENT,
+        "cmp:y",
+        node::DECISION,
+        "dec:musing",
+        Props::new().set("ruling", "parks"),
+    )
+    .unwrap();
+
+    let gap = finding(&g).expect("a proposed decision has parked nothing");
+    assert_eq!(gap.affected_ids, ["cmp:y"]);
+}
+
+#[test]
+fn parked_leaves_are_counted_in_the_evidence_never_silently_dropped() {
+    // COUNTED, NEVER SILENCED — the half that keeps this from being silent
+    // truncation. A reader must be able to tell a design with no empty parts
+    // from one whose empty parts were ruled deliberate, and the finding is the
+    // only place that distinction can reach them.
+    let mut g = design_with(&["cmp:x", "cmp:y", "cmp:z"], &["cmp:x"]);
+    park(&mut g, "cmp:z");
+
+    let gap = finding(&g).expect("cmp:y is still an unruled hole");
+    assert_eq!(
+        gap.affected_ids,
+        ["cmp:y"],
+        "only the unruled leaf is asked"
+    );
+    assert!(
+        gap.evidence.contains("PARKED"),
+        "the parked leaf must still be reported, got: {}",
+        gap.evidence
+    );
+    assert!(
+        gap.evidence.contains("1 empty leaf"),
+        "and the count must be there, got: {}",
+        gap.evidence
+    );
+    assert!(
+        gap.title.contains("1 of 3 parts"),
+        "the leaf total still counts every leaf; only the finding shrinks, got: {}",
         gap.title
     );
 }
