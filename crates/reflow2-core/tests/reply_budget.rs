@@ -291,3 +291,60 @@ fn a_budget_smaller_than_the_empty_reply_is_not_a_panic() {
     assert_eq!(report.count, 0);
     assert!(report.items.is_empty());
 }
+
+#[test]
+fn a_budgeted_row_replays_into_the_handshake_it_was_meant_for() {
+    // THE CONTRACT THE BUDGET WAS BREAKING, reported from the field
+    // (hxm_program, 2026-08-26). `gap_to_prompt`'s docs say "REPLAY EACH GAP
+    // OBJECT UNCHANGED", and `GapCandidate::description` promises in its own
+    // comment that "a compact row handed straight back to `gap_to_prompt` has to
+    // deserialize". It could not: `suggested_depth` carried no serde default, so
+    // a budgeted reply — which is the ONLY kind a mature design gets — produced
+    // rows that were refused with `missing field 'suggested_depth'`.
+    //
+    // The two mechanisms were fighting: the budget exists so the call can be
+    // made at all on a big design, and the handshake exists so the gaps can be
+    // asked. On exactly the designs where both matter, they cancelled.
+    //
+    // This pins the ROUND TRIP rather than the field, because the field is only
+    // today's instance: any future field added without a default breaks the same
+    // contract, and this test fails when it does.
+    let g = design_with_gaps(60);
+    let report = g.detect_gaps_within(20_000).unwrap();
+    assert_eq!(
+        report.budget.detail,
+        ReplyDetail::TitlesOnly,
+        "60 gaps in 20k budgets down to titles — otherwise this test \
+         is not exercising the case it exists for"
+    );
+
+    for row in &report.items {
+        let wire = serde_json::to_string(&row.gap).expect("a row serializes");
+        let back: GapCandidate = serde_json::from_str(&wire)
+            .expect("a budgeted row must deserialize — this is the replay contract");
+        assert_eq!(back.id, row.gap.id);
+        assert!(
+            (1..=5).contains(&back.suggested_depth),
+            "a replayed row asks for a real depth, got {}",
+            back.suggested_depth
+        );
+    }
+
+    // AND THE HARDER HALF: a row whose optional fields are ABSENT from the JSON
+    // entirely, not merely empty — which is what `skip_serializing_if` produces
+    // and what a caller reconstructing a row by hand will send.
+    let minimal = serde_json::json!({
+        "id": report.items[0].gap.id,
+        "gap_source": report.items[0].gap.gap_source,
+        "scope": report.items[0].gap.scope,
+        "severity": report.items[0].gap.severity,
+        "title": report.items[0].gap.title,
+    });
+    let back: GapCandidate = serde_json::from_value(minimal)
+        .expect("id, kind, scope, severity and title are enough to replay a gap");
+    assert_eq!(
+        back.suggested_depth, 2,
+        "the default is the ordinary depth, not an invented one"
+    );
+    assert!(back.affected_ids.is_empty());
+}

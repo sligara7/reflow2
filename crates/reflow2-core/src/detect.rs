@@ -946,6 +946,15 @@ pub struct AskedRecord {
     pub answer: String,
 }
 
+/// The depth a replayed gap row asks for when a budgeted reply withheld it.
+///
+/// Every detector but one emits 2; `unsatisfied_requirement` raises it to 3 for
+/// a `critical` requirement. So a row that lost the field on the way through a
+/// budget asks for the ordinary depth rather than an invented one.
+fn default_suggested_depth() -> u8 {
+    2
+}
+
 /// A detected gap, ranked for surfacing (mirrors storyflow's `ScenarioCandidate`).
 ///
 /// The user-facing `GapPrompt` (context-setter + plain question + hints +
@@ -973,8 +982,30 @@ pub struct GapCandidate {
     #[serde(default, skip_serializing_if = "String::is_empty")]
     pub description: String,
     /// The node ids involved.
+    ///
+    /// Defaulted on the way in for the same reason as `description`: a BUDGETED
+    /// reply clears this list, so a row handed straight back must deserialize
+    /// without it.
+    #[serde(default)]
     pub affected_ids: Vec<String>,
     /// 1..5 — how deep an answer to ask for (storyflow's "heat").
+    ///
+    /// DEFAULTED, AND THE DEFAULT IS THE WHOLE POINT. This field is what broke
+    /// the replay contract this struct's own `description` comment promises —
+    /// *"a compact row handed straight back to `gap_to_prompt` has to
+    /// deserialize"*. Reported from the field (hxm_program, 2026-08-26): a
+    /// budgeted `detect_gaps` was replayed into `gaps_to_prompts` exactly as the
+    /// docs instruct (*"REPLAY EACH GAP OBJECT UNCHANGED"*) and was refused with
+    /// `invalid GapCandidate: missing field 'suggested_depth'`. **The budget
+    /// mechanism and the replay contract were fighting each other**, and the
+    /// handshake the whole detect→ask loop depends on could not complete on any
+    /// design large enough to be budgeted.
+    ///
+    /// 2 is the right default rather than a placeholder: it is what every
+    /// detector but one emits, and the exception (`unsatisfied_requirement` at
+    /// `critical` priority) raises it to 3 — so a replayed row that lost the
+    /// field asks for the ordinary depth rather than a wrong one.
+    #[serde(default = "default_suggested_depth")]
     pub suggested_depth: u8,
     /// Raw signal backing the gap, for auditing. Withheld the same way
     /// `description` is, and for the same reason.
