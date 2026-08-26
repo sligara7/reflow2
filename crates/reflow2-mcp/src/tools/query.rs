@@ -60,7 +60,7 @@ impl ReflowService {
         Parameters(req): Parameters<CreateNodeReq>,
     ) -> Result<CallToolResult, McpError> {
         let props = parse_props(req.props)?;
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         // Computed BEFORE the write, from what the caller actually sent: an
         // upsert merges, so reading the stored node afterwards would also
         // report undeclared properties somebody else wrote earlier, and blame
@@ -124,7 +124,7 @@ impl ReflowService {
                 props: parse_props(n.props)?,
             });
         }
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let report = g.create_nodes(&specs).map_err(dyno_err)?;
         bulk_result(report, NodeDto::from)
     }
@@ -153,7 +153,7 @@ impl ReflowService {
                 props: parse_props(e.props)?,
             });
         }
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let report = g.create_edges(&specs).map_err(dyno_err)?;
         bulk_result(report, EdgeDto::from)
     }
@@ -167,7 +167,7 @@ impl ReflowService {
         Parameters(req): Parameters<CreateEdgeReq>,
     ) -> Result<CallToolResult, McpError> {
         let props = parse_props(req.props)?;
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let edge = g.create_edge(
             &req.edge_type,
             &req.from_type,
@@ -543,7 +543,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<TypedIdReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let deleted = g.delete_node(&req.node_type, &req.id).map_err(dyno_err)?;
         ok_json(json!({ "deleted": deleted }))
     }
@@ -561,7 +561,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<DeleteEdgeReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         // `{deleted}` rather than the bare bool the core returns: a scalar in
         // `structuredContent` is the BL-48 defect (ok_json would wrap it as an
         // anonymous `{value}`, but the field deserves its name).

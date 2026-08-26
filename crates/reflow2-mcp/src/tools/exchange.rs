@@ -344,7 +344,7 @@ impl ReflowService {
             serde_json::from_value(JsonValue::Object(req.document)).map_err(|e| {
                 McpError::invalid_params(format!("not a reflow2 surface document: {e}"), None)
             })?;
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(
             g.mirror_surface(&doc, req.at.as_deref())
                 .map_err(dyno_err)?,
@@ -412,7 +412,7 @@ impl ReflowService {
                 ));
             }
         };
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let report = g.import_graph(&doc).map_err(dyno_err)?;
         // Absorbing a file puts this seat in step with it, which is exactly
         // what the stale-seat refusal tells people to do — so record it, or the
@@ -565,7 +565,7 @@ impl ReflowService {
             })?;
             resolutions.insert(id.clone(), parsed);
         }
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(
             g.apply_merge(&base, &theirs, &resolutions, req.use_recorded)
                 .map_err(dyno_err)?,
@@ -628,7 +628,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<SetDecisionStatusReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(NodeDto::from(
             g.set_decision_status(&req.decision_id, &req.status)
                 .map_err(dyno_err)?,
@@ -697,7 +697,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<SetQualityTargetReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(NodeDto::from(
             g.set_quality_target(&req.decision_id, &req.quality_target)
                 .map_err(dyno_err)?,
@@ -717,7 +717,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<RegisterAlternativeReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(
             g.register_alternative(&req.decision_id, &req.artifact_id, &req.name, &req.location)
                 .map_err(dyno_err)?,
@@ -751,7 +751,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<CollapseDecisionReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(
             g.collapse_decision(&req.decision_id, &req.winner_id, req.note.as_deref())
                 .map_err(dyno_err)?,

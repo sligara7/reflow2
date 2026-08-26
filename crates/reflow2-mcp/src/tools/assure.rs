@@ -73,7 +73,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<VerificationReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let mut __rf = crate::service::RequiredFields::new(
             &g,
             reflow2_core::nodes::node::VERIFICATION,
@@ -113,7 +113,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<VerificationStatusReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(NodeDto::from(
             g.set_verification_status(
                 &req.verification_id,
@@ -137,7 +137,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<VerificationKindReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(NodeDto::from(
             g.set_verification_kind(&req.verification_id, &req.kind)
                 .map_err(dyno_err)?,
@@ -152,7 +152,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<VerifiesReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.verifies(&req.verification_id, &req.target_type, &req.target_id)
                 .map_err(dyno_err)?,
@@ -176,7 +176,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<EvidenceScopeReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.set_evidence_scope(
                 &req.verification_id,
@@ -207,7 +207,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<CalibratedAgainstReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.calibrated_against(
                 &req.from_type,
@@ -244,7 +244,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<InvalidatesReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.invalidates(
                 &req.from_type,
@@ -351,7 +351,7 @@ impl ReflowService {
             exhaustive: req.exhaustive,
             detected_at: req.detected_at,
         };
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(
             g.reconcile_verification(&observed, &options)
                 .map_err(dyno_err)?,
@@ -371,7 +371,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<PerformedInReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.create_edge(
                 reflow2_core::nodes::edge::PERFORMED_IN,

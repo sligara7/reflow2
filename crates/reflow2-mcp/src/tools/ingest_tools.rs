@@ -88,7 +88,7 @@ impl ReflowService {
             epoch_id: req.epoch_id,
             ..IngestOptions::default()
         };
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(
             g.ingest_step(&req.input, &options, answers)
                 .map_err(dyno_err)?,
@@ -153,7 +153,7 @@ impl ReflowService {
             provenance: req.provenance.unwrap_or_else(|| "imported".to_string()),
             ..CorpusOptions::default()
         };
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(
             g.ingest_corpus_step(&documents, &options, answers)
                 .map_err(dyno_err)?,
