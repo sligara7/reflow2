@@ -60,7 +60,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<PrecedesReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         g.precedes(&req.earlier_epoch, &req.later_epoch)
             .map_err(dyno_err)?;
         ok_json(serde_json::json!({
@@ -78,7 +78,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<PinAtEpochReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         g.pin_at_epoch(&req.node_type, &req.node_id, &req.epoch_id)
             .map_err(dyno_err)?;
         ok_json(serde_json::json!({
@@ -116,7 +116,7 @@ impl ReflowService {
         Parameters(req): Parameters<ScheduleForReq>,
     ) -> Result<CallToolResult, McpError> {
         let modality = req.modality.as_deref().unwrap_or("expected");
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         g.schedule_for(
             &req.item_type,
             &req.item_id,
@@ -209,7 +209,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<AddEpochReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let ty = reflow2_core::nodes::node::DESIGN_EPOCH;
         let mut __rf = crate::service::RequiredFields::new(&g, ty, &req.id)?;
         let epoch_type_s = __rf.str("epoch_type", req.epoch_type);
@@ -245,7 +245,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<AddEpochReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let ty = reflow2_core::nodes::node::DESIGN_EPOCH;
         let mut __rf = crate::service::RequiredFields::new(&g, ty, &req.id)?;
         let epoch_type_s = __rf.str("epoch_type", req.epoch_type);
@@ -275,7 +275,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<EpochStatusReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(NodeDto::from(
             g.set_epoch_status(&req.epoch_id, &req.status)
                 .map_err(dyno_err)?,
@@ -311,7 +311,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<AddChangeEventReq>,
     ) -> Result<CallToolResult, McpError> {
-        let g0 = self.write_lock().await;
+        let g0 = self.write_lock().await?;
         let mut __rf = crate::service::RequiredFields::new(
             &g0,
             reflow2_core::nodes::node::CHANGE_EVENT,
@@ -329,7 +329,7 @@ impl ReflowService {
             .map(|s| parse_enum::<reflow2_core::ChangeSubject>(s, "change subject"))
             .transpose()?;
         let affected = req.affected.unwrap_or_default();
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         // Validate the whole list before writing anything: storage accepts
         // dangling edges (this check is the only one there is), and a partial
         // write — event created, third entry refused — would leave a record
@@ -426,7 +426,7 @@ impl ReflowService {
             subject,
             action,
         };
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let (prior, current) = g.record_change(rec).map_err(dyno_err)?;
         ok_json(json!({
             "prior_snapshot": prior.map(NodeDto::from),

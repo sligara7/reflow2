@@ -602,7 +602,7 @@ impl ReflowService {
             mode: req.mode,
             rescan: req.rescan,
         };
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(g.genesis(opts).map_err(dyno_err)?)
     }
 
@@ -620,7 +620,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<IdName>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let mut __rf =
             crate::service::RequiredFields::new(&g, reflow2_core::nodes::node::PROJECT, &req.id)?;
         let name = __rf.str("name", req.name);
@@ -646,7 +646,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<RequirementReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let node_ty = reflow2_core::nodes::node::REQUIREMENT;
         let prior = g.get_node(node_ty, &req.id).map_err(dyno_err)?;
         let existed = prior.is_some();
@@ -699,7 +699,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<CapabilitySignatureReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(NodeDto::from(
             g.set_capability_signature(
                 &req.capability_id,
@@ -729,7 +729,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<CapabilityReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let node_ty = reflow2_core::nodes::node::CAPABILITY;
         let prior = g.get_node(node_ty, &req.id).map_err(dyno_err)?;
         let existed = prior.is_some();
@@ -776,7 +776,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<RequirementStatusReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(NodeDto::from(
             g.set_requirement_status(&req.requirement_id, &req.status)
                 .map_err(dyno_err)?,
@@ -800,7 +800,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ProjectModeReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(NodeDto::from(
             g.set_project_mode(&req.project_id, &req.mode)
                 .map_err(dyno_err)?,
@@ -818,7 +818,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<CapabilityStatusReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(NodeDto::from(
             g.set_capability_status(&req.capability_id, &req.status)
                 .map_err(dyno_err)?,
@@ -840,7 +840,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ProvenanceReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(NodeDto::from(
             g.set_provenance(&req.node_type, &req.node_id, &req.provenance)
                 .map_err(dyno_err)?,
@@ -862,7 +862,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ComponentReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let node_ty = reflow2_core::nodes::node::COMPONENT;
         let prior = g.get_node(node_ty, &req.id).map_err(dyno_err)?;
         let existed = prior.is_some();
@@ -915,7 +915,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<EdgePairReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.contain_component(&req.from_id, &req.to_id)
                 .map_err(dyno_err)?,
@@ -945,7 +945,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<MoveComponentReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(
             g.move_component(&req.child_id, &req.new_parent_id)
                 .map_err(dyno_err)?,
@@ -960,7 +960,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<EdgePairReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.satisfies(&req.from_id, &req.to_id).map_err(dyno_err)?,
         ))
@@ -984,7 +984,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<EdgePairReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.decomposes(&req.from_id, &req.to_id).map_err(dyno_err)?,
         ))
@@ -1005,7 +1005,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<RequirementLineageReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(NodeDto::from(
             g.set_requirement_lineage(&req.requirement_id, &req.lineage)
                 .map_err(dyno_err)?,
@@ -1020,7 +1020,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<EdgePairReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.allocate(&req.from_id, &req.to_id).map_err(dyno_err)?,
         ))
@@ -1042,7 +1042,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<IdName>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let node_ty = reflow2_core::nodes::node::INTERFACE;
         let prior = g.get_node(node_ty, &req.id).map_err(dyno_err)?;
         let existed = prior.is_some();
@@ -1079,7 +1079,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<AddFlowReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let mut __rf =
             crate::service::RequiredFields::new(&g, reflow2_core::nodes::node::FLOW, &req.id)?;
         let name = __rf.str("name", req.name);
@@ -1106,7 +1106,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<PartOfFlowReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.part_of_flow(&req.capability_id, &req.flow_id, req.step_order)
                 .map_err(dyno_err)?,
@@ -1140,7 +1140,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<EdgePairReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.provides(&req.from_id, &req.to_id).map_err(dyno_err)?,
         ))
@@ -1158,7 +1158,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<EdgePairReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.consumes(&req.from_id, &req.to_id).map_err(dyno_err)?,
         ))
@@ -1172,7 +1172,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ContainsReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.contains(&req.project_id, &req.child_type, &req.child_id)
                 .map_err(dyno_err)?,
@@ -1206,7 +1206,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<AddConstraintReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let node_ty = reflow2_core::nodes::node::CONSTRAINT;
         let prior = g.get_node(node_ty, &req.id).map_err(dyno_err)?;
         let existed = prior.is_some();
@@ -1261,7 +1261,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<CapabilityDeliveryReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(NodeDto::from(
             g.set_capability_delivery(&req.capability_id, &req.delivery)
                 .map_err(dyno_err)?,
@@ -1290,7 +1290,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<InterfaceDesignationReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(NodeDto::from(
             g.set_interface_designation(&req.interface_id, &req.designation)
                 .map_err(dyno_err)?,
@@ -1314,7 +1314,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<RequirementDesignationReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(NodeDto::from(
             g.set_requirement_designation(&req.requirement_id, &req.designation)
                 .map_err(dyno_err)?,
@@ -1333,7 +1333,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ConstrainsReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.constrains(
                 &req.constraint_id,
@@ -1414,7 +1414,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<DecisionReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let node_ty = reflow2_core::nodes::node::DECISION;
         let prior = g.get_node(node_ty, &req.id).map_err(dyno_err)?;
         let existed = prior.is_some();
@@ -1465,7 +1465,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<GovernedByReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.governed_by(
                 &req.from_type,
@@ -1497,7 +1497,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ContributorReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let mut __rf = crate::service::RequiredFields::new(
             &g,
             reflow2_core::nodes::node::CONTRIBUTOR,
@@ -1530,7 +1530,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<AuthoredByReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.authored_by(
                 &req.from_type,
@@ -1565,7 +1565,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<OwnedByReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.owned_by(
                 &req.from_type,
@@ -1597,7 +1597,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<InterfaceSpecReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(NodeDto::from(
             g.set_interface_spec(
                 &req.interface_id,

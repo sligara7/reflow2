@@ -26,9 +26,28 @@ struct Cli {
     /// exactly one writer — while every client session gets its own seat.
     ///
     /// Bind to a loopback or tailnet address: there is no authentication yet,
-    /// so anything that can reach the port can write the design.
+    /// so anything that can reach the port can write the design — unless
+    /// `--read-only` is also given, which is what that flag is for.
     #[arg(long, value_name = "ADDR")]
     http: Option<String>,
+
+    /// Refuse every write. Reads, searches and reports still work; nothing can
+    /// be created, changed or deleted.
+    ///
+    /// ⭐ THIS IS WHAT MAKES A REACHABLE SURFACE SURVIVABLE BEFORE
+    /// AUTHENTICATION EXISTS (`req:the-hosted-surface-is-read-only-...`).
+    /// reflow2 has no answer to "who is calling" and `--http-allow-host` is the
+    /// only thing between a web page the user visits and their design. Read-only
+    /// splits that exposure: INTEGRITY is answered outright, since there is no
+    /// write to attribute and the caller-supplied `contributor_id` is never
+    /// accepted; CONFIDENTIALITY is NOT eliminated, only relocated to the
+    /// network, which is what binding to a tailnet is for.
+    ///
+    /// Enforced at the single point a write cannot avoid — the graph's write
+    /// guard — so it covers every tool that exists and every tool added later,
+    /// and a session minted for a new client inherits it.
+    #[arg(long)]
+    read_only: bool,
 
     /// Share this design with every other session automatically — the mode a
     /// consumer's MCP config should use.
@@ -784,20 +803,31 @@ async fn main() -> anyhow::Result<()> {
         // seat carrying this pid that we never leased reads `unknown` rather
         // than borrowing our liveness — see identity::SERVES_MANY_SESSIONS.
         reflow2_core::identity::declare_serving_many_sessions();
-        let (service, provenance) = ReflowService::new_reporting(&cli.graph_path).map_err(|e| {
-            // A daemon that loses the store-lock race is the NORMAL outcome when
-            // several sessions start at once — exactly one wins. Say so plainly
-            // in the log, because "failed to open" reads like a defect and this
-            // is the mechanism working.
-            let explained = explain_open_failure(&e.into(), &cli.graph_path);
-            eprintln!(
-                "reflow2: not becoming the shared server for {} — {explained:#}\nIf several \
+        let (service, provenance) = ReflowService::new_reporting(&cli.graph_path)
+            .map(|(svc, prov)| {
+                (
+                    if cli.read_only {
+                        svc.into_read_only()
+                    } else {
+                        svc
+                    },
+                    prov,
+                )
+            })
+            .map_err(|e| {
+                // A daemon that loses the store-lock race is the NORMAL outcome when
+                // several sessions start at once — exactly one wins. Say so plainly
+                // in the log, because "failed to open" reads like a defect and this
+                // is the mechanism working.
+                let explained = explain_open_failure(&e.into(), &cli.graph_path);
+                eprintln!(
+                    "reflow2: not becoming the shared server for {} — {explained:#}\nIf several \
                  sessions started together this is expected: the store lock picks one winner and \
                  the rest exit here. The sessions that spawned us will attach to the winner.",
-                cli.graph_path
-            );
-            explained
-        })?;
+                    cli.graph_path
+                );
+                explained
+            })?;
         if let Some(note) = provenance {
             eprintln!("reflow2: {note}");
         }
@@ -870,7 +900,16 @@ async fn main() -> anyhow::Result<()> {
     // So: serve a degraded surface that carries the reason in its handshake
     // instructions and in one unmistakably-named tool. An MCP server that starts
     // and explains itself beats one that dies before it can be asked.
-    match ReflowService::new_reporting(&cli.graph_path) {
+    match ReflowService::new_reporting(&cli.graph_path).map(|(svc, prov)| {
+        (
+            if cli.read_only {
+                svc.into_read_only()
+            } else {
+                svc
+            },
+            prov,
+        )
+    }) {
         Ok((service, provenance)) => {
             // Say it on stderr as well as the log: an operator running this by
             // hand sees stderr, and "which reflow2 wrote this graph" is exactly

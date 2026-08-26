@@ -142,7 +142,7 @@ impl ReflowService {
             })
             .collect();
 
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let recorded = g
             .record_asked_questions(&records, req.asked_at.as_deref())
             .map_err(dyno_err)?;
@@ -236,7 +236,7 @@ impl ReflowService {
         // and asked again. Persisting here rather than in a separate call means
         // the record cannot be forgotten by an agent that does not know to make
         // it.
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let question_id = g
             .record_asked_question(
                 &gap.id,
@@ -307,7 +307,7 @@ impl ReflowService {
                 ));
             }
         };
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let found = g.answer_question(id, &req.answer).map_err(dyno_err)?;
         if !found {
             // Naming what EXISTS is the whole point: the old message said only
@@ -337,7 +337,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<WithdrawQuestionReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let found = g.withdraw_question(&req.gap_id).map_err(dyno_err)?;
         ok_json(json!({ "withdrawn": found, "gap_id": req.gap_id }))
     }

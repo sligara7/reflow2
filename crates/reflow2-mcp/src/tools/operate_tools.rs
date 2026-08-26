@@ -63,7 +63,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ReleaseReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let mut __rf =
             crate::service::RequiredFields::new(&g, reflow2_core::nodes::node::RELEASE, &req.id)?;
         let name = __rf.str("name", req.name);
@@ -92,7 +92,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<EnvironmentReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let mut __rf = crate::service::RequiredFields::new(
             &g,
             reflow2_core::nodes::node::ENVIRONMENT,
@@ -123,7 +123,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ResourceReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let mut __rf =
             crate::service::RequiredFields::new(&g, reflow2_core::nodes::node::RESOURCE, &req.id)?;
         let name = __rf.str("name", req.name);
@@ -141,7 +141,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<DeployToReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.deploy_to(&req.release_id, &req.environment_id, req.status.as_deref())
                 .map_err(dyno_err)?,
@@ -161,7 +161,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ReleaseIncludesReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.release_includes(
                 &req.release_id,
@@ -191,7 +191,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ReleaseIncludesAllReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(
             g.release_includes_all(&req.release_id, &req.exclude, req.apply)
                 .map_err(dyno_err)?,
@@ -233,7 +233,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<AddReadinessReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let ty = reflow2_core::nodes::node::READINESS_ASSESSMENT;
         let mut __rf = crate::service::RequiredFields::new(&g, ty, &req.id)?;
         let kind_s = __rf.str("kind", req.kind);
@@ -275,7 +275,7 @@ impl ReflowService {
         Parameters(req): Parameters<GateOnReq>,
     ) -> Result<CallToolResult, McpError> {
         let kind = parse_readiness_kind(&req.kind)?;
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.gate_on(&ReadinessGate {
                 subject_type: &req.subject_type,
@@ -305,7 +305,7 @@ impl ReflowService {
         Parameters(req): Parameters<ForecastReadinessReq>,
     ) -> Result<CallToolResult, McpError> {
         let kind = parse_readiness_kind(&req.kind)?;
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(NodeDto::from(
             g.forecast_readiness(&ReadinessForecast {
                 id: &req.id,
@@ -376,7 +376,7 @@ impl ReflowService {
             exhaustive: req.exhaustive,
             detected_at: req.detected_at,
         };
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(
             g.reconcile_deployment(&observed, &options)
                 .map_err(dyno_err)?,
@@ -392,7 +392,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<RequireResourceReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.require_resource(
                 &req.from_type,

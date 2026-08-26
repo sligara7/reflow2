@@ -82,7 +82,7 @@ impl ReflowService {
         identity_is_per_request: bool,
     ) -> Result<CallToolResult, McpError> {
         let seat = self.seat_for_claim(req.seat.as_deref(), identity_is_per_request)?;
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(
             g.claim_region(
                 &req.contributor_id,
@@ -158,7 +158,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ReleaseClaimReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(serde_json::json!({
             "released": g.release_claim(&req.contributor_id, &req.seed_id).map_err(dyno_err)?
         }))

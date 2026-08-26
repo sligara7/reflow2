@@ -78,7 +78,7 @@ impl ReflowService {
             graph_id: req.graph_id,
             note: req.note,
         };
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         g.declare_dependency(&decl).map_err(dyno_err)?;
         ok_json(g.dependency_manifest().map_err(dyno_err)?)
     }
@@ -141,7 +141,7 @@ impl ReflowService {
             exhaustive: req.exhaustive,
             detected_at: req.detected_at,
         };
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(g.reconcile_artifacts(&observed, &opts).map_err(dyno_err)?)
     }
 
@@ -168,7 +168,7 @@ impl ReflowService {
             req.change_type.as_deref(),
             req.design_change_event_id.as_deref(),
         )?;
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let (artifact, change_event_id) = g
             .set_artifact_checksum(
                 &req.artifact_id,
@@ -211,7 +211,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<ArtifactIntentReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let artifact = g
             .set_artifact_intent(
                 &req.artifact_id,
@@ -253,7 +253,7 @@ impl ReflowService {
                 at: a.at.clone(),
             });
         }
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let report = g.set_artifact_checksums(&accepts).map_err(dyno_err)?;
         bulk_result(
             report,
@@ -276,7 +276,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<AddArtifactReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let mut __rf =
             crate::service::RequiredFields::new(&g, reflow2_core::nodes::node::ARTIFACT, &req.id)?;
         let name = __rf.str("name", req.name);
@@ -299,7 +299,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<RealizesReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.realizes(
                 &req.artifact_id,
@@ -325,7 +325,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<DocumentsReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(EdgeDto::from(
             g.documents(
                 &req.artifact_id,
@@ -361,7 +361,7 @@ impl ReflowService {
             fragment_id: req.fragment_id,
             checksum: req.checksum,
         };
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         with_loop_hint(
             g.link_artifact(opts).map_err(dyno_err)?,
             "loop: as-built moved — reconcile_artifacts confirms the design still describes \

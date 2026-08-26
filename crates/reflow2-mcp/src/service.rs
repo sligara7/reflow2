@@ -196,6 +196,17 @@ pub struct ReflowService {
     /// cheap signal that lets an orientation read skip recomputing `loop_status`
     /// when nothing has moved since it last did — the cost bound the read-side
     /// loop_hint rests on (BL-91, dec:read-hint-shape option C).
+    /// Refuse every write, so the surface can be exposed before authentication
+    /// exists (`req:the-hosted-surface-is-read-only-so-it-can-ship-before-authentication-exists`).
+    ///
+    /// ⭐ ENFORCED AT `write_lock` AND NOWHERE ELSE, which is the whole design.
+    /// A write cannot happen without the write guard, so refusing to hand one
+    /// out refuses every write that exists today and every write anybody adds
+    /// later — including one whose author never heard of read-only mode. The
+    /// alternative, checking a list of mutating tool names, is a list
+    /// maintained by hand with nothing checking it, which is the defect class
+    /// this project spent 2026-08-26 fixing three times over.
+    read_only: bool,
     write_gen: Arc<AtomicU64>,
     /// Fire-on-change memory for the read-side loop_hint: the write generation
     /// at which `loop_status` was last computed for a read, and the hint then
@@ -3360,6 +3371,7 @@ impl ReflowService {
     fn wrap_at(graph: DesignGraph, graph_path: Option<String>) -> Self {
         Self {
             graph: Arc::new(RwLock::new(graph)),
+            read_only: false,
             seat: std::sync::Arc::new(reflow2_core::identity::SeatLease::attach()),
             graph_path,
             // adding a store did not have to change every constructor.
@@ -3401,6 +3413,16 @@ impl ReflowService {
             tool_router: self.tool_router.clone(),
             graph_path: self.graph_path.clone(),
             write_gen: Arc::clone(&self.write_gen),
+            // ⭐ INHERITED, NEVER RESET, and this is the case that actually
+            // matters. `share()` mints a service per CLIENT SESSION, so a
+            // read-only server that handed each new connection a writable
+            // session would be read-only in name only — and the whole point of
+            // the mode is that it is what makes a surface with NO
+            // AUTHENTICATION survivable. Read-only is a property of the SERVER,
+            // like the graph it is serving; the seat below is a property of
+            // whoever just connected, which is why they are treated oppositely
+            // three lines apart.
+            read_only: self.read_only,
             // Fresh per session: a shared seat would report every client as the
             // same owner, and a shared hint memory would land one session's
             // nudge on whichever session read next.
@@ -3409,13 +3431,45 @@ impl ReflowService {
         }
     }
 
+    /// Turn this service read-only. Builder rather than a constructor argument
+    /// so every existing entry point keeps its signature and cannot silently
+    /// acquire a new default.
+    pub fn into_read_only(mut self) -> Self {
+        self.read_only = true;
+        self
+    }
+
+    /// Whether this service refuses writes.
+    pub fn is_read_only(&self) -> bool {
+        self.read_only
+    }
+
     /// Take the graph for a mutating handler, advancing the write generation so
     /// the read-side loop_hint knows the owed-set may have moved (BL-91). Every
     /// write site uses this in place of `self.graph.read()`; over-counting a
     /// non-mutating pass only costs one extra `loop_status`, never correctness.
-    pub(crate) async fn write_lock(&self) -> tokio::sync::RwLockWriteGuard<'_, DesignGraph> {
+    pub(crate) async fn write_lock(
+        &self,
+    ) -> Result<tokio::sync::RwLockWriteGuard<'_, DesignGraph>, McpError> {
+        if self.read_only {
+            // REFUSED LOUDLY, NAMING THE MODE AND THE REASON. A caller that
+            // cannot tell "this server refuses writes" from "this write was
+            // wrong" will retry, reword, and eventually record the failure as a
+            // design finding — the quiet-wrong-answer failure this project
+            // rejects wherever it can name it (`dec:stateless-seat-handle`
+            // makes the same call about a missing seat: a loud refusal beats a
+            // guess).
+            return Err(McpError::invalid_request(
+                "this reflow2 server is READ-ONLY and refuses every write. The design can be \
+                 read, searched and reported on; nothing can be created, changed or deleted. \
+                 That is deliberate: a read-only surface bounds the exposure to confidentiality, \
+                 which is what lets it be reached before any authentication exists. To write, \
+                 use a session against a server started without --read-only.",
+                None,
+            ));
+        }
         self.write_gen.fetch_add(1, Ordering::Relaxed);
-        self.graph.write().await
+        Ok(self.graph.write().await)
     }
 
     /// The read-side sibling of the write tools' `with_loop_hint` (BL-91,

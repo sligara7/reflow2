@@ -661,7 +661,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<AcknowledgeDefectReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let decision_id = g
             .acknowledge_defect(&req.defect_id, &req.affected_ids, &req.reason)
             .map_err(dyno_err)?;
@@ -691,7 +691,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<DefectIdReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let withdrawn = g
             .withdraw_defect_acknowledgement(&req.defect_id)
             .map_err(dyno_err)?;
@@ -793,7 +793,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<AcknowledgeGapReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let decision_id = g
             .acknowledge_gap_by(
                 &req.gap_id,
@@ -848,7 +848,7 @@ impl ReflowService {
                 reason: g.reason,
             })
             .collect();
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let report = g.acknowledge_gaps(&items).map_err(dyno_err)?;
         bulk_result(report, |decision_id| json!({ "decision_id": decision_id }))
     }
@@ -872,7 +872,7 @@ impl ReflowService {
         &self,
         Parameters(req): Parameters<GapIdReq>,
     ) -> Result<CallToolResult, McpError> {
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         let existed = g
             .withdraw_gap_acknowledgement(&req.gap_id)
             .map_err(dyno_err)?;
@@ -1054,7 +1054,7 @@ impl ReflowService {
         Parameters(req): Parameters<ApplyHealReq>,
     ) -> Result<CallToolResult, McpError> {
         let proposal: HealProposal = parse_struct_param(req.proposal, "HealProposal")?;
-        let mut g = self.write_lock().await;
+        let mut g = self.write_lock().await?;
         ok_json(g.apply_heal(&proposal).map_err(dyno_err)?)
     }
 }
