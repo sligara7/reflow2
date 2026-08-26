@@ -1867,6 +1867,33 @@ impl DesignGraph {
             }
         }
         accepted_named.sort();
+
+        // SETTLED INTENT, counted separately from settled DECISIONS — the
+        // asymmetry this closes was measured on 2026-08-25: an idea
+        // CONTRADICTS-ing an accepted Decision scored +2 and surfaced here,
+        // while one contradicting a REQUIREMENT stored the edge and scored
+        // ZERO, because this set was built from `scan_nodes(DECISION)` alone.
+        // The unread case is the more serious one: a Decision records a choice
+        // and a Requirement records intent, so contradicting intent means
+        // either the intent is wrong or the idea is out of scope, and both are
+        // worth surfacing more than a clash between two choices.
+        //
+        // `accepted` and `met` only. `deferred` and `dropped` are intent the
+        // user settled OUT, and contradicting something already abandoned is
+        // not a tension anybody needs to resolve.
+        let mut settled_intent: std::collections::HashSet<String> =
+            std::collections::HashSet::new();
+        for req in self.scan_nodes(node::REQUIREMENT)? {
+            if matches!(
+                req.properties
+                    .get("status")
+                    .and_then(crate::foundation::core::Value::as_str),
+                Some("accepted") | Some("met")
+            ) {
+                settled_intent.insert(req.node_id.clone());
+            }
+        }
+
         // Deterministic order before any ranking, so equal scores break the
         // same way on every run and two readings of an unchanged design agree.
         open.sort();
@@ -1913,6 +1940,7 @@ impl DesignGraph {
                 }
             }
             let mut contradicts = 0u32;
+            let mut contradicts_intent = 0u32;
             for e in self
                 .outgoing(id, Some(edge::CONTRADICTS))?
                 .into_iter()
@@ -1936,10 +1964,16 @@ impl DesignGraph {
                 };
                 if accepted.contains(other) {
                     contradicts += 1;
+                } else if settled_intent.contains(other) {
+                    contradicts_intent += 1;
                 }
             }
 
-            let score = governs + 2 * blocks_scheduled + 2 * contradicts;
+            // Intent weighs the same as a settled decision, deliberately: the
+            // argument for weighing it HIGHER is real, but nobody has measured
+            // which surfaces better, and inventing a heavier weight would be
+            // taste presented as arithmetic.
+            let score = governs + 2 * blocks_scheduled + 2 * contradicts + 2 * contradicts_intent;
             let mut because = Vec::new();
             if governs > 0 {
                 because.push(format!("{governs} node(s) are governed by it"));
@@ -1952,6 +1986,15 @@ impl DesignGraph {
             if contradicts > 0 {
                 because.push(format!(
                     "contradicts {contradicts} accepted decision(s) — the design is inconsistent until this is settled"
+                ));
+            }
+            // Kept as its own line rather than added to the count above: a
+            // clash with a CHOICE and a clash with INTENT are answered
+            // differently — one settles a fork, the other decides whether the
+            // requirement is wrong or the idea is out of scope.
+            if contradicts_intent > 0 {
+                because.push(format!(
+                    "contradicts {contradicts_intent} settled requirement(s) — either the requirement is wrong or this is out of scope"
                 ));
             }
             scored.push(RankedDecision {

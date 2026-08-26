@@ -3190,6 +3190,25 @@ pub struct SetDecisionStatusReq {
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct RelationCandidatesReq {
+    /// The node to find candidates FOR — usually an idea from
+    /// `unreviewed_ideas`.
+    pub node_id: String,
+    /// Its type (e.g. `Decision`).
+    pub node_type: String,
+    /// What to rank it against. Omit to compare like with like (the same type
+    /// as the subject), which is what working an idea backlog wants.
+    #[serde(default)]
+    pub pool_type: Option<String>,
+    /// How many candidates to return (default 5). Kept small on purpose: the
+    /// brainstorm rule is that two or three real relations is a good outcome
+    /// and ten is a smell.
+    #[serde(default)]
+    pub limit: Option<usize>,
+}
+
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct SetQualityTargetReq {
     /// The Decision that STATES what the design is built for.
     pub decision_id: String,
