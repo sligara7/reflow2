@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:13f8d62da54c685e19366a0294bc49454d8d803bc834ceb916f7ecdbd79a310a",
+  "content_hash": "sha256:91cf5d57030caf9668154e041fe4172c8919327fe5b5cec13ddc4dfaf50bf074",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1091,7 +1091,7 @@
       "properties": {
         "weight_basis": "estimated"
       },
-      "to_id": "cmp:scope"
+      "to_id": "cmp:regions"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1355,7 +1355,7 @@
       "properties": {
         "weight_basis": "estimated"
       },
-      "to_id": "cmp:detect"
+      "to_id": "cmp:consumption"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1363,7 +1363,7 @@
       "properties": {
         "weight_basis": "estimated"
       },
-      "to_id": "cmp:service"
+      "to_id": "cmp:bulk"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1387,7 +1387,7 @@
       "properties": {
         "weight_basis": "estimated"
       },
-      "to_id": "cmp:compare"
+      "to_id": "cmp:preserve"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1435,7 +1435,7 @@
       "properties": {
         "weight_basis": "estimated"
       },
-      "to_id": "cmp:temporal"
+      "to_id": "cmp:dates"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1483,7 +1483,7 @@
       "properties": {
         "weight_basis": "estimated"
       },
-      "to_id": "cmp:export"
+      "to_id": "cmp:seam"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1491,7 +1491,7 @@
       "properties": {
         "weight_basis": "estimated"
       },
-      "to_id": "cmp:export"
+      "to_id": "cmp:compose"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1515,7 +1515,7 @@
       "properties": {
         "weight_basis": "estimated"
       },
-      "to_id": "cmp:ingest"
+      "to_id": "cmp:corpus"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1523,7 +1523,7 @@
       "properties": {
         "weight_basis": "estimated"
       },
-      "to_id": "cmp:drift"
+      "to_id": "cmp:coverage"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1567,6 +1567,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:degraded-surface",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:proxy"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:delta-reconcile",
       "properties": {
         "weight_basis": "estimated"
@@ -1595,7 +1603,7 @@
       "properties": {
         "weight_basis": "estimated"
       },
-      "to_id": "cmp:identity"
+      "to_id": "cmp:discover"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1603,7 +1611,7 @@
       "properties": {
         "weight_basis": "estimated"
       },
-      "to_id": "cmp:export"
+      "to_id": "cmp:depends"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1731,7 +1739,7 @@
       "properties": {
         "weight_basis": "estimated"
       },
-      "to_id": "cmp:report"
+      "to_id": "cmp:granularity"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1795,7 +1803,7 @@
       "properties": {
         "weight_basis": "estimated"
       },
-      "to_id": "cmp:report"
+      "to_id": "cmp:ility"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1899,15 +1907,7 @@
       "properties": {
         "weight_basis": "estimated"
       },
-      "to_id": "cmp:nudge"
-    },
-    {
-      "edge_type": "ALLOCATED_TO",
-      "from_id": "cap:latent-surface",
-      "properties": {
-        "weight_basis": "estimated"
-      },
-      "to_id": "cmp:service"
+      "to_id": "cmp:latent"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -2363,7 +2363,7 @@
       "properties": {
         "weight_basis": "estimated"
       },
-      "to_id": "cmp:export"
+      "to_id": "cmp:seam"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -2435,7 +2435,15 @@
       "properties": {
         "weight_basis": "estimated"
       },
-      "to_id": "cmp:main"
+      "to_id": "cmp:mcp-http"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:shared-sessions",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:shared"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -2516,6 +2524,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:graph"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:store",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:nodes"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -2643,7 +2659,7 @@
       "properties": {
         "weight_basis": "estimated"
       },
-      "to_id": "cmp:sync"
+      "to_id": "cmp:sync-debt"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -9520,6 +9536,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:an-interchangeable-backend-is-named-by-its-contract-not-by-a-function",
+      "properties": {
+        "acted_at": "2026-08-26",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:arrival-delta",
       "properties": {
         "acted_at": "2026-07-30",
@@ -11818,6 +11843,15 @@
       "from_id": "dec:the-telemetry-kpp-question-waits-for-flo2",
       "properties": {
         "acted_at": "2026-08-09",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-tool-surface-slices-hold-no-function-of-their-own",
+      "properties": {
+        "acted_at": "2026-08-25",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -19832,6 +19866,177 @@
         "action": "added"
       },
       "to_id": "fact:the-decision-race-is-caller-ordering-not-read-after-write"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:allocation-follows-the-code-not-the-neighbour",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:bulk"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:allocation-follows-the-code-not-the-neighbour",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:compose"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:allocation-follows-the-code-not-the-neighbour",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:consumption"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:allocation-follows-the-code-not-the-neighbour",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:corpus"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:allocation-follows-the-code-not-the-neighbour",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:coverage"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:allocation-follows-the-code-not-the-neighbour",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:dates"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:allocation-follows-the-code-not-the-neighbour",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:depends"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:allocation-follows-the-code-not-the-neighbour",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:discover"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:allocation-follows-the-code-not-the-neighbour",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:granularity"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:allocation-follows-the-code-not-the-neighbour",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:ility"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:allocation-follows-the-code-not-the-neighbour",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:latent"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:allocation-follows-the-code-not-the-neighbour",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:mcp-http"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:allocation-follows-the-code-not-the-neighbour",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:nodes"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:allocation-follows-the-code-not-the-neighbour",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:preserve"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:allocation-follows-the-code-not-the-neighbour",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:proxy"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:allocation-follows-the-code-not-the-neighbour",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:regions"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:allocation-follows-the-code-not-the-neighbour",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:seam"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:allocation-follows-the-code-not-the-neighbour",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:shared"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:allocation-follows-the-code-not-the-neighbour",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:sync-debt"
     },
     {
       "edge_type": "CHANGED",
@@ -30419,6 +30624,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:unallocated-component-reads-the-ruling",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:unallocated-component-reads-the-ruling",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:unbounded-reads-counted",
       "properties": {
         "accepted_baseline": false,
@@ -40445,6 +40668,15 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:memory-backend",
+      "properties": {
+        "note": "An interchangeable implementation behind ifc:kv-backend; what it is for is the contract it PROVIDES, not a function of its own.",
+        "ruling": "parks"
+      },
+      "to_id": "dec:an-interchangeable-backend-is-named-by-its-contract-not-by-a-function"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cmp:merge",
       "properties": {},
       "to_id": "dec:merge-three-way"
@@ -40502,6 +40734,15 @@
       "from_id": "cmp:report",
       "properties": {},
       "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:rocksdb-backend",
+      "properties": {
+        "note": "An interchangeable implementation behind ifc:kv-backend; what it is for is the contract it PROVIDES, not a function of its own. Distinct from the ruling that parks the SWITCH between backends.",
+        "ruling": "parks"
+      },
+      "to_id": "dec:an-interchangeable-backend-is-named-by-its-contract-not-by-a-function"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -40636,6 +40877,114 @@
       "from_id": "cmp:temporal",
       "properties": {},
       "to_id": "decision:ack:f384097e7d8b01b0"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:tools-ask",
+      "properties": {
+        "note": "A tool-surface slice exposes functions its core modules implement; holding none of its own is correct.",
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-tool-surface-slices-hold-no-function-of-their-own"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:tools-assure",
+      "properties": {
+        "note": "A tool-surface slice exposes functions its core modules implement; holding none of its own is correct.",
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-tool-surface-slices-hold-no-function-of-their-own"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:tools-built",
+      "properties": {
+        "note": "A tool-surface slice exposes functions its core modules implement; holding none of its own is correct.",
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-tool-surface-slices-hold-no-function-of-their-own"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:tools-capture",
+      "properties": {
+        "note": "A tool-surface slice exposes functions its core modules implement; holding none of its own is correct.",
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-tool-surface-slices-hold-no-function-of-their-own"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:tools-claims",
+      "properties": {
+        "note": "A tool-surface slice exposes functions its core modules implement; holding none of its own is correct.",
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-tool-surface-slices-hold-no-function-of-their-own"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:tools-coherence",
+      "properties": {
+        "note": "A tool-surface slice exposes functions its core modules implement; holding none of its own is correct.",
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-tool-surface-slices-hold-no-function-of-their-own"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:tools-exchange",
+      "properties": {
+        "note": "A tool-surface slice exposes functions its core modules implement; holding none of its own is correct.",
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-tool-surface-slices-hold-no-function-of-their-own"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:tools-ingest",
+      "properties": {
+        "note": "A tool-surface slice exposes functions its core modules implement; holding none of its own is correct.",
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-tool-surface-slices-hold-no-function-of-their-own"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:tools-operate",
+      "properties": {
+        "note": "A tool-surface slice exposes functions its core modules implement; holding none of its own is correct.",
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-tool-surface-slices-hold-no-function-of-their-own"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:tools-query",
+      "properties": {
+        "note": "A tool-surface slice exposes functions its core modules implement; holding none of its own is correct.",
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-tool-surface-slices-hold-no-function-of-their-own"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:tools-skills",
+      "properties": {
+        "note": "A tool-surface slice exposes functions its core modules implement; holding none of its own is correct.",
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-tool-surface-slices-hold-no-function-of-their-own"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cmp:tools-temporal",
+      "properties": {
+        "note": "A tool-surface slice exposes functions its core modules implement; holding none of its own is correct.",
+        "ruling": "parks"
+      },
+      "to_id": "dec:the-tool-surface-slices-hold-no-function-of-their-own"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -102376,7 +102725,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8c06c4966b0d2a34ee1b3fc35f44ee8af26b584820ba649749c09bd74a37caa1",
+        "checksum": "sha256:6ca29c1c5b6387ff54f7e7efb08995b860c0a7356dd309474a4a7c0b4f419337",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/detect.rs",
         "name": "detect.rs",
@@ -109698,6 +110047,18 @@
       }
     },
     {
+      "node_id": "chg:allocation-follows-the-code-not-the-neighbour",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-25",
+        "name": "The allocation layer is corrected against the artifact layer",
+        "rationale": "THE HEADLINE WAS WRONG AND THE ARTIFACT LAYER ALREADY KNEW. `unallocated_component` reported \"33 of 85 parts hold no function\"; 31 of the 33 are real source modules with a linked, checksummed file, and for most of them the module header cites by id the very capability the design had filed elsewhere — coverage.rs names cap:coverage (allocated to cmp:drift), regions.rs names cap:a-session-with-no-seed-can-find-one (allocated to cmp:scope).\n\nThe lesson is about the CHECK, not only the design: a detector that reads one layer and reports absence, while a second layer in the same graph holds the answer, states something stronger than it measured. That is the failure `dec:reflow2-is-built-for-observability` exists to forbid — an answer that misrepresents what the design knows. The cross-layer comparison this event records was done by hand in a Python script over the export; nothing in reflow2 offers it.\n\nRecorded as `subject: record` deliberately: not one line of the system changed. Only the design's account of where its own functions live.",
+        "subject": "record",
+        "summary": "Measured every allocated Capability against the file that REALIZES it: 59 agree, 23 disagree, 130 carry no file evidence either way. 19 of the 23 disagreements name an implementing module that the design was reporting as holding NO function — the function was captured, and filed against a neighbouring module. Corrects those allocations to the module whose code implements them, on Anthony's word 2026-08-25 (move it, do not dual-allocate)."
+      }
+    },
+    {
       "node_id": "chg:allocation-subquestions-narrowed-20260808",
       "node_type": "ChangeEvent",
       "properties": {
@@ -113005,6 +113366,18 @@
       }
     },
     {
+      "node_id": "chg:unallocated-component-reads-the-ruling",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-25",
+        "name": "unallocated_component now reads a parking ruling, like its two siblings already did",
+        "rationale": "THIS REACHED THE CAUSE RATHER THAN WORKING AROUND IT (`req:a-fix-says-whether-it-corrected-the-cause`). The workaround available was `acknowledge_gap` on the whole finding, which would have silenced the two genuinely-unruled parts along with the twelve ruled ones — buying a green list by making it mean less.\n\nThe cause is that `req:a-deliberate-state-is-not-a-defect` was implemented detector by detector rather than as a rule every structural detector obeys. `unsatisfied_requirement` reads the ruling, `unreviewed_ideas` excludes parked nodes, this one did neither — and nothing noticed, because a detector that over-reports looks exactly like a design with more holes in it. Measured here: twelve tool-surface slices ruled deliberately empty by an accepted Decision kept counting as defects, so RECORDING THE CORRECT JUDGEMENT DEGRADED THE INSTRUMENT — the same failure dev_storyflow's fleet reported when defects climbed 88 to 97 across ten correct writes.\n\n⚠️ STILL OPEN, and worth a sweep rather than another one-off: nothing checks that a NEW structural detector reads the ruling. The next one written will have the same hole for the same reason.",
+        "subject": "system",
+        "summary": "`detect_unallocated_components` did not consult `is_parked`, so a leaf Component whose emptiness an ACCEPTED Decision declares correct kept reporting as a hole. It now skips parked leaves and REPORTS THE COUNT on the evidence line, so a design with no empty parts cannot be mistaken for one whose empty parts were ruled deliberate. Three tests added: a parked leaf is not a finding, a `proposed` ruling parks nothing, and the parked count reaches the evidence."
+      }
+    },
+    {
       "node_id": "chg:unbounded-reads-counted",
       "node_type": "ChangeEvent",
       "properties": {
@@ -114819,6 +115192,16 @@
         "decision": "`release_without_manifest` is raised at severity 0.85, above `reflow2_check`'s default `--gap-threshold` of 0.8, so a Release that is pinned to an epoch, deployed, and includes nothing FAILS the gate rather than appearing as a note.\n\nIt joins the band of findings that say the design asserts something untrue — failing_verification 0.80, kpp_contradicted 0.85, kpp_unbound 0.90, kpp_breached 0.95 — rather than the band below it, which holds questions waiting for a human. Its sibling `release_without_epoch` stays at 0.6 and stays a question: WHICH epoch a release belongs to is a judgement, and nothing false has been asserted by the edge's absence.\n\nA genuinely contentless release — a re-tag, a docs-only republish — remains a real state. It is red until somebody acknowledges it with a reason on the record, never red forever.\n\nDISTINCT FROM the requirement it settles a question about: that says the state shall be REPORTED, and would be satisfied by a detector of any severity. This says how loud the report is, which is a separate choice with its own cost — a red build on a contentless release — and could be reversed without touching the requirement at all.",
         "name": "DECIDED — a published release recording that it shipped nothing stops the build",
         "rationale": "ANTHONY'S CALL, 2026-08-21, asked as a direct choice between stopping the build, staying a note at 0.65, and expressing it as a DesignRule carrying enforcement. He chose to stop the build.\n\nTHE EVIDENCE PUT TO HIM, AND IT IS THE WHOLE ARGUMENT: a note was already demonstrably not enough. The v0.38.0 cut passed `reflow2_check` GREEN with 96 notes scrolling past it, and that is exactly how a tag was pushed, built, published and asset-verified over an empty manifest. A finding nobody is made to read is not a finding.\n\nTHE COST WAS STATED BEFORE HE CHOSE: a release that really did ship no new content will red-build until acknowledged, which is one call with his reason attached.\n\nWHY NOT THE DESIGNRULE ROUTE, which was offered and not taken: it is the cleaner separation of \"how bad\" from \"does CI fail\", and it would have needed checking that the rule actually reaches `reflow2_check`. Left on the table rather than refuted — if severity ever has to be tuned for a reason unrelated to CI, that is the route back.\n\nTHE NUMBER IS NOT TUNED TO THE THRESHOLD. 0.85 sits above 0.80 with room, deliberately, so raising `--gap-threshold` one notch does not silently drop the rule out of the gate — the failure mode this whole line of work exists to prevent.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:an-interchangeable-backend-is-named-by-its-contract-not-by-a-function",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Anthony, 2026-08-26, accepting a ruling the agent drafted and put to him with its alternative. The last two of the thirty-three leaf parts `unallocated_component` reported as holding no function: `cmp:memory-backend` and `cmp:rocksdb-backend`.\n\n═══ WHAT THEY ARE ═══\n\nThey are the two interchangeable implementations behind `ifc:kv-backend`, both PROVIDES, sitting under `cmp:byte-store`. Neither carries an Artifact, because neither is one file. `cap:store` — \"schema-validated graph store\" — is already allocated to `cmp:schema`, `cmp:byte-store` and `cmp:nodes`.\n\n═══ THE RULING ═══\n\n**An interchangeable implementation is named by the contract it satisfies, not by a function of its own.** Both backends already say what they are for, in the design's own vocabulary: they PROVIDE `ifc:kv-backend`. Neither adds a capability the other lacks — that is what makes them swappable, and the whole point of the interface.\n\nThe alternative was to allocate `cap:store` to both. Declined: it would put one capability on five components, at which point the WHAT→WHERE binding stops binding anything and says only \"somewhere in the storage subsystem\". Schema validation is not what a byte backend does.\n\n═══ WHOSE WORD THIS IS ═══\n\n⚠️ **THE REASONING IS THE AGENT'S; THE ACCEPTANCE IS THE OWNER'S, AND THE TWO ARE RECORDED SEPARATELY ON PURPOSE.** It was drafted on 2026-08-25 from the session's own reading, deliberately left `proposed` overnight rather than accepted on his behalf, and put to him as an open question alongside the finished work. He accepted it on 2026-08-26 without amendment.\n\nThat distinction is the same one `dec:idea-a-user-carries-a-persona-that-shapes-every-reply` says is load-bearing between a SELF-DESCRIBED and an ASSIGNED reading, and it is worth keeping here for the same reason: a later reader asking \"did he actually decide this, or did an agent decide it and nobody objected?\" gets a straight answer. He did decide it. He did not originate it.\n\n📌 `cmp:rocksdb-backend` is additionally governed by `dec:the-rust-rocksdb-switch-is-parked-until-the-store-question-settles`. That parks the SWITCH between backends; this parks the question of what either one is FOR. Different questions, both live on the same node.",
+        "name": "DECIDED — the two byte-store backends hold no function of their own: what they are for is the contract they provide",
+        "rationale": "Kept separate from the tool-surface ruling because the justification is genuinely different, and one decision covering both would let a later reader apply the wrong reason to the wrong parts. The tool slices are empty because a surface must not hold its subject's function; these two are empty because two implementations of one contract cannot differ in what they are for without ceasing to be interchangeable.\n\nRecorded as a Decision rather than left as an acknowledgement so that the judgement carries its author and its reasoning, and so a structural detector can read the ruling rather than a reviewer having to remember it.",
         "status": "accepted"
       }
     },
@@ -118027,6 +118410,16 @@
         "decision": "ASKED AND DEFERRED, 2026-08-09. Anthony was put the consequence question for `req:telemetry-carries-usage-never-design-content`: if flo2 ran at 1,000 users and one telemetry payload turned out to have carried a customer's node id or search query, would that sink the effort or would he fix it and move on? HIS ANSWER: **too early to say — flo2 isn't real yet.**\n\nTHAT IS A TRUE ANSWER AND IT IS RECORDED AS ONE. The requirement stands exactly as captured, at `proposed`, unpromoted and undowngraded. What is deferred is only whether it is INVIOLABLE — a KPP, ranked above every ordinary gap and owing a binding to the parts that could spend it.\n\nWHY IT IS RECORDED RATHER THAN SIMPLY NOT ACTED ON: the kpp-proposal skill's own instruction is to write down a non-yes, because the same signals will otherwise make the next session ask again, and *being asked the same question twice is how someone learns the tool is not listening*. This node is that record.\n\n⭐ THE DIFFERENCE BETWEEN THIS AND A DECLINE, which is the reason it is worth its own node: a DECLINE means the need is tradeable and the question is closed. A DEFERRAL means the question is LIVE and currently unanswerable — criticality is a claim about consequence, and the consequences here (customer trust, an accusation, a contract) do not exist yet because the customers do not. Nobody can honestly rate the severity of a breach against users who are hypothetical.\n\n=== THE TRIGGER, NAMED SO IT DOES NOT DEPEND ON ANYBODY REMEMBERING ===\n\nRE-ASK WHEN ANY OF THESE IS TRUE:\n- flo2 has real users who are not Anthony or Alex — the first outside tenant is the moment the consequence becomes real.\n- flo2 acquires a stated privacy posture, terms of service, or any promise made to a user about their data. A promise made externally is a commitment the design should already be holding.\n- Anyone begins BUILDING the telemetry emitter. The threshold has to exist before the thing that could breach it, or the binding is retrofitted onto a shipped surface.\n\n⚠️ AND THE ORDER MATTERS: `req:telemetry-carries-usage-never-design-content` is buildable NOW and does not wait for this. The structural guarantee it asks for — a payload schema whose every field is enum-valued or numeric, hence structurally incapable of carrying a design — is the right shape whether or not the threshold is ever declared inviolable. Deferring the KPP question must not be read as deferring the requirement.\n\n📌 WHAT IS ALSO NOT DEFERRED, because it is decidable today and independently: usage counts may justify OPTIMISING a hot tool and may NOT, alone, justify CUTTING a cold one. `dec:bl-155` already measured that reflow2 cannot tell \\\"unused\\\" from \\\"unreachable\\\", and a removal decided on counts would delete exactly the capabilities that were never surfaced.",
         "name": "DEFERRED — whether a telemetry content leak is inviolable cannot be answered until flo2 has real users, and the trigger is named rather than left to memory",
         "rationale": "Recorded per the kpp-proposal skill, which requires writing down a non-yes so the question is not re-litigated — but recorded as a DEFERRAL rather than the decline the skill's step 6 describes, because Anthony's answer was that the question is unanswerable yet rather than that the need is tradeable. The named trigger is the part that does the work: without it, \\\"too early\\\" degrades into \\\"never asked again\\\", which is the failure mode a decline at least records honestly.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:the-tool-surface-slices-hold-no-function-of-their-own",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Anthony, 2026-08-25, ruling on twelve of the thirty-three leaf parts `unallocated_component` reported as holding no function.\n\n═══ WHAT THEY ARE ═══\n\n`sub:tool-surface` holds twelve slices — ask, assure, built, capture, claims, coherence, exchange, ingest, operate, query, skills, temporal. Each is one file under `crates/reflow2-mcp/src/tools/`, and each EXPOSES over MCP a family of functions that core modules implement. `tools/temporal_tools.rs` realizes four capabilities and all four are allocated to `cmp:temporal`; `tools/skills_tools.rs` realizes two and both are allocated to `cmp:skills`.\n\n═══ THE RULING ═══\n\n**A slice's function is the capability it exposes, and that capability belongs to the module that implements it.** These twelve are therefore correctly empty: the design says what they are for by saying what they carry, not by giving each one a function of its own.\n\nTwo alternatives were put and declined:\n\n① **Give each slice its own capability** — twelve nodes of the form \"expose the temporal tool family over MCP\". Declined as over-modelling: it describes plumbing rather than product behaviour, and inflates the capability count by 6% with nothing a reader would act on.\n\n② **Allocate the exposed capability to the slice as well as the implementer** — closes the finding with no new nodes, and was declined for the reason that matters most here: it would deliberately fuse the surface with the subject. `dec:the-two-oversized-subsystems-are-split-functionally` separated Finding from Telling precisely so a part that finds a problem is not the part that decides how loudly to report it, and `dec:reflow2-is-built-for-observability` is why. Allocating an implementer's function to its own surface undoes that cut one edge at a time.\n\n═══ THE COST, STATED ═══\n\n⚠️ **This ruling did not, on its own, make the finding go quiet.** `detect_unallocated_components` did not consult a parking ruling when this was written, though `unsatisfied_requirement` and `unreviewed_ideas` both did — so twelve deliberately-empty parts kept reporting as defects. That inconsistency was fixed in the same session rather than worked around, per the standing rule that a mistake is corrected at its cause.",
+        "name": "DECIDED — the twelve tool-surface slices are surface, not implementer: they hold no function of their own",
+        "rationale": "Recorded as one decision covering all twelve because they share their method and their justification exactly — one surface, cut once by lifecycle phase, every slice standing in the same relation to the modules behind it. Twelve nodes would duplicate the reasoning and let one drift.\n\nThe alternatives are written into the decision rather than discarded because a later reader running span-of-control or allocation checks over `sub:tool-surface` will find twelve empty boxes and needs to meet the reason rather than re-derive it — the same argument that kept the tool surface at twelve members instead of splitting it to reach seven.",
         "status": "accepted"
       }
     },
@@ -133474,6 +133867,19 @@
       }
     },
     {
+      "node_id": "fact:the-allocation-layer-and-the-artifact-layer-disagreed-23-times-and-nothing-compared-them",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "statement": "⭐ TWO LAYERS OF ONE GRAPH ANSWERED THE SAME QUESTION DIFFERENTLY, AND NOTHING IN REFLOW2 ASKS THEM BOTH. The question is \"which part holds this function?\" — the allocation layer answers with ALLOCATED_TO (Capability→Component), and the artifact layer answers with REALIZES (Artifact→Capability, Artifact→Component). Measured across all 212 allocated capabilities of reflow2's own design: 59 AGREE, 23 DISAGREE, 130 carry no file evidence either way.\n\nNINETEEN OF THE TWENTY-THREE DISAGREEMENTS NAMED A COMPONENT THE DESIGN WAS REPORTING AS EMPTY. `unallocated_component` said \"33 of 85 parts hold no function\"; 31 of those 33 were real source modules with a linked, checksummed file, and for most the module HEADER cited by id the capability the design had filed against a neighbour — coverage.rs names `cap:coverage` (allocated to `cmp:drift`), regions.rs names `cap:a-session-with-no-seed-can-find-one` (allocated to `cmp:scope`), corpus.rs names `cap:corpus-ingest` (allocated to `cmp:ingest`). After correction the finding fell from 33 to 14, and to 2 once the tool-surface slices were ruled.\n\n⚠️ THE FAILURE IS THE CHECK'S, NOT ONLY THE DESIGN'S. A detector that reads one layer and reports ABSENCE, while a second layer in the same graph holds the ANSWER, states something stronger than it measured. That is precisely what `dec:reflow2-is-built-for-observability` forbids: an answer that misrepresents what the design knows. The headline was not merely imprecise — it was actionable and wrong, and a session working it top-down would have invented functions for parts that already had them.\n\n🛑 THE COMPARISON WAS DONE BY HAND, IN PYTHON, OVER THE EXPORT. Nothing in reflow2's 150+ tools offers it. `reconcile_artifacts` compares the design against the FILES ON DISK; `compare_designs` compares two AS-DESIGNED records. Neither compares two layers of ONE record against each other. Stated without reflow2 nouns, the user's version of this is: \"my design says this module does nothing, but the file underneath it implements something the design credits to the module next door — and nothing told me.\"\n\n📌 NOT ESTABLISHED: whether the 130 capabilities with no file evidence hide more of the same. They are unmeasurable by this method, not clean, and reading their silence as agreement would repeat the exact error this fact records.",
+        "subject_id": "prj:reflow2",
+        "valid_from": "2026-08-25",
+        "value": "{\"measured_on\":\"docs/design/reflow2.json + live graph, 2026-08-25\",\"method\":\"per capability, compare ALLOCATED_TO target against the component owning the artifact(s) that REALIZE it\",\"capabilities_allocated\":212,\"agree\":59,\"disagree\":23,\"no_file_evidence\":130,\"disagreements_naming_an_unallocated_part\":19,\"unallocated_component_before\":33,\"after_correcting_allocations\":14,\"after_ruling_the_tool_surface\":2,\"leaf_components\":85,\"of_the_33_that_were_real_source_modules\":31,\"tool_gap\":\"no reflow2 tool compares the allocation layer against the artifact layer; reconcile_artifacts compares design-vs-disk, compare_designs compares design-vs-design\"}"
+      }
+    },
+    {
       "node_id": "fact:the-black-box-tier-has-two-answers-that-disagree",
       "node_type": "TemporalFact",
       "properties": {
@@ -136854,7 +137260,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:fd6d1c8708fc03c5ca9204c71189c359ef3b57bb284c78e341d27065bb98ffdc",
+  "prev_content_hash": "sha256:13f8d62da54c685e19366a0294bc49454d8d803bc834ceb916f7ecdbd79a310a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
