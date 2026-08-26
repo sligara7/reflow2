@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a68f76ee3fc4b08310c5bb8d0090b4caac10f6b1f6b1f1ed64301e245cd24232",
+  "content_hash": "sha256:3f4af2056acda7718c087cd33518df17cc1941533ce524a63eb9fc7e5dc6df91",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -10974,6 +10974,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-the-export-be-compressed-or-committed-less-often",
+      "properties": {
+        "acted_at": "2026-08-25",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-silence-is-reported-not-inferred",
       "properties": {
         "acted_at": "2026-08-14",
@@ -11702,6 +11711,15 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:the-default-scope-depth-should-be-two",
       "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-export-becomes-the-durable-copy-and-rocksdb-goes-later",
+      "properties": {
+        "acted_at": "2026-08-25",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -13661,6 +13679,14 @@
         "evidence": "That node asks whether ideas form a graph, and its own measurement (145 ideas, 12 edges) is evidence FROM a corpus nobody has linked. Until the backlog is worked or deliberately declined, any answer to it is measuring the absence of a task rather than the nature of ideas — so this standing unresolved keeps that one unanswerable on its own terms."
       },
       "to_id": "dec:idea-do-ideas-form-a-graph-or-only-a-list"
+    },
+    {
+      "edge_type": "BLOCKS",
+      "from_id": "dec:the-export-becomes-the-durable-copy-and-rocksdb-goes-later",
+      "properties": {
+        "evidence": "That park unparks only when the store question settles either way, and this settles STAGE 1 only — explicitly not whether RocksDB goes. So the migration stays parked and this decision is what holds it there now, replacing the vaguer 'the store question' with a named stage 2 that has to happen first."
+      },
+      "to_id": "dec:the-rust-rocksdb-switch-is-parked-until-the-store-question-settles"
     },
     {
       "edge_type": "BLOCKS",
@@ -32375,6 +32401,15 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-should-the-export-be-compressed-or-committed-less-often",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "Option D — commit the export less often — cannot hold at the same time as a rule requiring exactly one exporting commit per PR as the reviewable record of that PR. Both cannot be true as stated, and the measurement is what makes the tension real: 550 revisions at 664 KB each is 357 MB of the 539 MB repository, and the rule is what produces the 550. Recorded so whichever is chosen has to face the other rather than quietly winning."
+      },
+      "to_id": "dec:export-once-per-pr"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth",
       "properties": {
         "alignment": "opposing",
@@ -33661,6 +33696,16 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-should-the-export-be-compressed-or-committed-less-often",
+      "properties": {
+        "evidence": "This asks about the ARCHIVAL copy while that one decides whether the export becomes the DURABLE copy, and the two answers are coupled. If durability moves to a gitignored autosave path, how often the committed copy is written becomes a free variable and option D stops fighting export-once-per-PR; if it does not, the committed copy is the only copy and committing it LESS often is unsafe. Option D is unjudgeable until that settles.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "dec:idea-the-ility-chooses-the-allocation-graph",
       "properties": {
         "evidence": "This idea allocates FUNCTIONS to systems, and that node establishes reflow2 has no Function type — a Capability is the nearest unit and may be a set of functions across several parts. Whichever graph an ility selects, it is built over whatever the unit of allocation turns out to be, so this cannot be built until that is settled.",
@@ -33797,6 +33842,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:the-export-becomes-the-durable-copy-and-rocksdb-goes-later",
+      "properties": {
+        "evidence": "That node asks what makes the enduring artifact reliable and lists five roads. This decision takes road 3 (the server owns it) plus road 2 (a debounce) and is only sound because road 3's observing half was measured to already exist. If that mechanism turns out not to fire in practice, this decision loses its foundation rather than merely its convenience.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -35457,6 +35512,14 @@
         "evidence": "The older thought, grown up. That decision settled THAT the ladder opens and was taken before any implementation existed; this asks whether the carrier chosen to open it — a declared rung NAME per component — is the right shape, and it can only be asked now because there is something concrete to criticise. Its sharpest point is that the shipped design asserts ONE LADDER PER DESIGN, which is the same domain-uniformity assumption the parent decision rejected, moved up one level."
       },
       "to_id": "dec:idea-is-a-declared-rung-name-the-right-shape-for-decomposition-depth"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:the-export-becomes-the-durable-copy-and-rocksdb-goes-later",
+      "properties": {
+        "evidence": "Direction is deliberate and reads FROM the older thought TO this one: Anthony's 2026-08-24 musing — \"maybe we stand up a db just for a session and the reflow.json file becomes the enduring thing\" — grown up into a settled staged decision once its blockers were measured. That node stays proposed and keeps the reasoning; this is what it became."
+      },
+      "to_id": "dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -116335,6 +116398,16 @@
       }
     },
     {
+      "node_id": "dec:idea-should-the-export-be-compressed-or-committed-less-often",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "RECORDED AS BRAINSTORMING, NOT A PROPOSAL. Anthony, 2026-08-25: *\"I forget how big you said the reflow2 project json file is, but I believe it was 50+ MB? I can't remember, but github has a size restriction for files that can be git pushed (I believe a hard limitation is 100 MiB). Hence, compressing the file discussion\"* — with minification, gzip/zstd/brotli and key-shortening laid out as the options.\n\n**THE INSTINCT TO LOOK WAS RIGHT AND EVERY NUMBER CAME OUT DIFFERENT FROM THE GENERIC ADVICE.** All measured 2026-08-25 at main `691b4fb`.\n\n═══ 1. THE FILE IS NOT NEAR THE LIMIT ═══\n\n    raw (pretty-printed)      8.32 MB    ← 8.3% of GitHub's 100 MiB hard limit\n    GitHub hard limit        100.00 MiB    ~12x headroom\n\nThe 50+ MB recollection is about 6x high. **There is no file-size problem to solve.**\n\n═══ 2. ⚠️ MINIFICATION BUYS 12%, NOT 40-80% — AND THE REASON GENERALISES ═══\n\n    minified (jq -c)          7.34 MB    88.2% of raw   →  1.1x\n    gzip -9                   2.11 MB    25.3%          →  3.9x\n    minified + gzip           2.06 MB    24.8%          →  4.0x\n    zstd -19                  1.27 MB    15.3%          →  6.6x\n\nThe standard \"40-80%\" figure assumes machine-generated records: short values, many repeated keys, deep structural syntax. **reflow2's export is the exact inverse.** Measured composition:\n\n    string VALUES   5.95 MB   78.5%   ← the prose\n    KEY names       0.97 MB   12.8%   ← all that key-shortening could ever touch\n\n⇒ **Key-shortening has a 12.8% ceiling and would break every reader** — the schema, the Python gates, `compare_designs`, every consumer. Converting to a header+matrix form has the same ceiling for the same reason.\n\n═══ 3. ⭐⭐ COMMITTING IT COMPRESSED WOULD MAKE THE REPOSITORY BIGGER, MEASURED ═══\n\nWhat git ACTUALLY spends on 550 revisions of this path:\n\n    revisions                    550\n    sum of logical sizes    1,729.3 MB\n    actual on-disk cost       357.0 MB   (20.64% — delta + zlib)\n    AVERAGE PER REVISION      664.6 KB\n\nCompare a per-file compressor: gzip -9 is **2.11 MB**, zstd -19 is **1.27 MB**. Git already beats both by 2-3x, because successive exports of one design are ENORMOUSLY similar and delta-compress against each other.\n\n🛑 **A COMPRESSED BLOB HAS NO EXPLOITABLE SIMILARITY TO THE PREVIOUS COMPRESSED BLOB.** Commit `.json.zst` and every revision costs its full ~1.27 MB instead of 664 KB. **The proposal that looks like it saves 85% actually costs about 2x** — and it destroys `git diff` on the one artifact whose diff a reviewer most needs to read.\n\n═══ 4. REFORMATTING IS SAFE FOR THE LINEAGE, WHICH WAS WORTH CHECKING ═══\n\n`compute_content_hash` is sha256 over the **canonical compact sorted-key JSON of `{edges, graph_id, nodes}`** — the design content, NOT the file bytes. So pretty-printing, minifying or reformatting does not move `content_hash` and cannot sever the chain. **The objection that would have killed minification outright does not apply.** (It still destroys diff readability, which is a different and larger objection.)\n\n═══ THE OPTIONS, none chosen ═══\n\n**A. DO NOTHING.** 8.3% of the file limit; `.git` is 539 MB, of which 357 MB is this path's history.\n ⚠️ Grows ~65 MB per 100 PRs. Fine for years; not free forever.\n\n**B. MINIFY BEFORE COMMIT.** 12% smaller.\n ⚠️ Turns a 136,374-line file into ONE line. Every design diff becomes \"the file changed\" — and the design diff is what a reviewer reads to see what a PR did to the model. **12% for the loss of reviewability is the worst trade on this list.**\n\n**C. COMPRESS BEFORE COMMIT (gzip/zstd/brotli).** ❌ **MEASURED WORSE**: ~2x the repository, plus no diff at all.\n\n**D. COMMIT THE EXPORT LESS OFTEN.** The repo cost is 550 revisions × 664 KB, not the file size. Export on release, or on demand, rather than once per PR.\n ⭐ The only option that attacks the measured driver. ⚠️ It collides head-on with `dec:export-once-per-pr` and with the export being the reviewable record of a PR — and it interacts with the store-inversion work, where the export becomes the DURABLE copy and wants writing MORE often, not less. Those two pull in opposite directions and that tension is the real content here.\n\n**E. ATTACK THE PROSE.** 78.5% is string values; `decision` 16.0%, `statement` 14.7%, `rationale` 6.3%, `description` 6.1% — **43% of the document in four fields.**\n ⚠️ AND THIS IMPLICATES HOW THE GRAPH IS WRITTEN, INCLUDING BY THIS AGENT: single statements of 3,000+ characters were written today. The prose is the value of the design — it is the reasoning that would otherwise be lost — so \"write less\" is not obviously right. But it IS where the bytes are, and nobody has ever asked whether the marginal paragraph earns its place.\n\n**F. HISTORY-LEVEL TOOLS** — Git LFS, shallow clones, periodic history rewrite.\n ⚠️ LFS makes the design un-diffable and un-reviewable in the web UI; rewriting history breaks every existing clone and hash reference.\n\n📌 THE FRAME THAT MAY MATTER MORE THAN ANY OPTION: this asks about the ARCHIVAL copy at the moment the project is deciding whether the export becomes the DURABLE copy (`dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth`). Measured the same day: a separate gitignored autosave path dissolves the auto-export/lineage collision. **If durability moves to a path git never sees, then how often the ARCHIVAL copy is committed becomes a free variable** — and option D stops fighting the export-once-per-PR rule.",
+        "name": "OPEN — the export is 8.3 MB, not 50; minifying buys 12%, and committing it COMPRESSED would make the repo 2-3x BIGGER. The cost is 550 committed revisions and the prose inside them, not the encoding",
+        "rationale": "Recorded under the brainstorm skill as an idea, not intent, and linked on creation.\n\nEvery figure was measured rather than taken from the general advice, and that turned out to matter three times: the file is 6x smaller than remembered, minification is 6x weaker than the standard estimate because this document is prose rather than records, and compressing before commit is not a saving at all but roughly a doubling. **A brainstorm that had reasoned from the generic numbers would have recommended exactly the wrong thing.**\n\nThe options are kept with their costs rather than ranked, because the choice turns on something not settled yet — whether the export is about to become the durable copy, which changes what the committed copy is even for.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-silence-is-reported-not-inferred",
       "node_type": "Decision",
       "properties": {
@@ -117363,6 +117436,16 @@
         "decision": "ACCEPTED by Anthony, 2026-08-17. All three parts, with part (3) settled narrowly.\n\n(1) `DEFAULT_SCOPE_DEPTH` becomes 2. At 3 the scoped detectors do not narrow: measured over all 56 Components of reflow2's own design, each returns 50-60 of the 83 gaps (median 55) and a region of 595-903 nodes. At 2 the same sweep returns 2-27 (median 4) over regions of 267-601. See `fact:defect-a-scoped-detector-at-its-default-depth-returns-two-thirds-of-the-design`.\n\nWHY 2 AND NOT 1, which is the part the measurement alone does not settle. The golden thread runs Requirement -> Capability -> Component -> Artifact -> Verification. From a Component its capabilities are one hop; the requirements they satisfy and the checks that verify them are two. So depth 2 is exactly one component's own thread. Depth 1 stops short of the requirements, so a team would stop being told when its own capability satisfies nothing. Depth 3 reaches the neighbours' threads, which is the program again.\n\n(2) The docstring that justifies 3 is corrected. It argues the third hop is needed to reach 'a contained child component's capabilities' — but `scope_region` puts the whole containment closure into the seed set BEFORE taking the radius, so those capabilities are one hop from an owned node, not three. The reason given for the default is not a reason the code needs. This part needed nobody's permission and was always going to be done.\n\n(3) `detect_gaps`' description stops claiming its region is 'the same computation claim_region uses ... so \"my area\" means one thing everywhere'. SETTLED AS: DELETE THE SENTENCE. The alternative — actually reconciling `scope_region` and `claimed_region` — is NOT taken here and is NOT to be bundled in: it changes what a claim covers, which is what two people believe they have each taken responsibility for. That deserves its own decision, and `scope.rs` already records it as possibly a defect in the claims layer.",
         "name": "The default scope depth drops from 3 to 2, and the two definitions of \"a region\" stop being described as one",
         "rationale": "ACCEPTED ON ANTHONY'S WORD after a plain-English walkthrough of all three parts with a recommendation on each.\n\nWHAT WAS REJECTED. Leaving the default at 3 and telling callers to pass a depth: the measurement says the default is what almost everyone gets, and a tool whose out-of-the-box answer is 'two thirds of the design, called your part' fails the epoch this sits in. Also rejected: making `design_regions` quietly use a different depth from the scoped detectors, which would have hidden the defect behind a second opinion instead of naming it. Also rejected, and this is part (3): reconciling the two region computations as a rider on a default change.\n\nHIS STANDING GROUND, restated the same day and applying directly here: 'I'm more interested in doing things right. If that requires redoing work, so be it - I prefer quality. So if adding SPECIFIES is right, then we have our answer regardless of the amount of work that it includes.' The cost of a correct change is not an argument against it before 1.0. See `rule:fix-it-properly-while-it-is-still-cheap`.\n\nCOST OF HAVING DECIDED LATER, kept on the record because the standing rule asks for it: every session that scoped between the measurement and this ruling was told its part held two thirds of the design's gaps, and any judgement made on that number — 'my area is the messy one' — was made on a figure that was the same for every area.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:the-export-becomes-the-durable-copy-and-rocksdb-goes-later",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Anthony, 2026-08-25, choosing to STAGE the store inversion after every blocker was measured.\n\n**STAGE 1, DECIDED NOW:** `reflow2.json` becomes the DURABLE copy. The design is auto-exported without anybody remembering to — on session end, plus a debounce — to a path git does not track.\n\n**STAGE 2, NOT DECIDED:** whether RocksDB is removed and `MemoryBackend` becomes the only backend. That stays open and gets decided on evidence from stage 1 running in daily use, not on prediction.\n\n═══ WHY STAGED RATHER THAN BOTH AT ONCE ═══\n\n⭐ **STAGE 1 IS ADDITIVE AND REVERSIBLE.** RocksDB stays while the export proves itself. If auto-export turns out to be wrong, nothing has been removed and the store is still authoritative. If it is right, stage 2 becomes a deletion of something already redundant rather than a bet.\n\n**IT IS THE PROJECT'S OWN DISCIPLINE, ONE LEVEL UP.** `dec:absorb-rocksdb-024-unchanged-then-switch-separately` exists because mixing a dependency swap into a migration gives a failure two candidate causes; `dec:the-rust-rocksdb-switch-is-parked-until-the-store-question-settles` applied the same rule to WHETHER a component exists. This applies it to the order of two decisions.\n\n═══ THE EVIDENCE THAT MADE STAGE 1 DECIDABLE ═══\n\n    core tests with no DB and no index          1,452 pass\n    load to fully searchable, no database       1,156 ms\n    save (build export doc + serialize)           265 ms\n    hydrate fidelity (confirmation ledger)      208 / 208, ZERO differing fields\n    resident memory, largest design in existence  ~21 MB (58 MB peak)\n    session-end detection                       ALREADY BUILT\n    exposure today, on a DISCIPLINED session    299 MINUTES\n\n⭐⭐ **THE OBSERVING HALF OF THE MECHANISM ALREADY EXISTS AND DOES NOTHING.** `impl Drop for SeatLease { fn drop(&mut self) { release_seat(&self.seat); } }` — RAII, so a client that disconnects, crashes or is killed is observed without an orderly shutdown and without any harness. That is precisely the objection that killed the Stop-hook answer: *\"the guarantee cannot live in the harness, because the harness is the thing that might not come back.\"* `release_seat` then writes nothing. **The gap is one action on an event that already fires.**\n\n🛑 **AND THE PATH MATTERS, MEASURED THE SAME DAY.** Auto-exporting to the COMMITTED path severs the lineage chain and turns the design gate red on every branch — reproduced, not argued (`fact:auto-export-really-does-sever-the-lineage-and-a-separate-path-dissolves-it`). The durability write and the archival write are different acts for different audiences and MUST NOT share a file. A separate gitignored path dissolves the collision entirely and leaves `dec:export-once-per-pr` exactly as written.\n\n═══ THE TRADE BEING ACCEPTED, STATED PLAINLY ═══\n\nRocksDB's WAL gives PER-WRITE durability. Write-temp-and-rename gives ALL-OR-NOTHING at the write cadence. At 265 ms per save and a few-seconds debounce the exposure is SECONDS — against a measured 299-minute window on the committed copy today. **This is a judgement about acceptable loss, not a measurement gap, and it is being made deliberately.**\n\n═══ WHAT STAGE 2 STILL OWES ═══\n\n1. **Daily-use evidence** that auto-export actually fires and the durable copy is never behind by more than the debounce.\n2. **`last_synced`** — the one thing a hydrate loses. Three lines of JSON; it must endure before the store can stop being authoritative, or `req:stale-seat-knows` has no baseline after a hydrate.\n3. **`CF_EMBEDDINGS`** has no field in `GraphExport`. Theoretical today (nothing outside tests writes vectors), real the moment `dec:idea-embeddings-adoption` lands.\n4. ⚠️ **THE MULTI-DESIGN QUESTION, WHICH IS NOT A LAPTOP QUESTION.** A server holding many designs in `MemoryBackend` holds them ALL in RAM. Irrelevant for one person; it is the whole design for a hosted tier, and eviction is not built. `dec:idea-a-hosted-tier-of-many-single-writer-tenants` is where that lives.\n\n📌 `dec:the-rust-rocksdb-switch-is-parked-until-the-store-question-settles` STAYS PARKED and its unparking condition is unchanged: this question settling either way. Stage 1 does not settle it — stage 2 does.",
+        "name": "DECIDED — the export becomes the durable copy, written automatically; removing RocksDB is a SEPARATE, later decision made on evidence",
+        "rationale": "Settled by the user against three recorded alternatives (decide both at once; decide only the mechanism; decline the inversion), so the roads not taken keep their reasoning.\n\nRecorded as ONE decision with two stages rather than as two nodes, because the staging IS the decision — splitting it would lose the reason the second is deferred, which is the only interesting part. Stage 2 gets its own node when it is actually taken.\n\nThe residual risk is written into the decision rather than beside it: per-write durability is being traded for cadence-bounded durability on purpose, and a later reader must meet that trade rather than discover it.",
         "status": "accepted"
       }
     },
@@ -136267,7 +136350,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:29d103c800e92549d10bc2de710c4eb4724a5566d7390bc1b6129daac910cea8",
+  "prev_content_hash": "sha256:a68f76ee3fc4b08310c5bb8d0090b4caac10f6b1f6b1f1ed64301e245cd24232",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
