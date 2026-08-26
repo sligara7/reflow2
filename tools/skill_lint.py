@@ -237,6 +237,16 @@ NON_TOOL_TERMS = {
     "achieved",
     "expected",
     "required",
+    # The by-hand signal's `diagnosis` field and its closed value set
+    # (req:a-session-says-what-it-did-by-hand-that-reflow2-already-serves).
+    # capture-session names them so a session picks the right one; they are
+    # values, not tools, and the distinction between tool_missing and
+    # tool_not_found is the whole point of the record.
+    "diagnosis",
+    "tool_missing",
+    "tool_not_found",
+    "tool_refused",
+    "unknown",
     "modality",
     "sequence",
     "deployed",

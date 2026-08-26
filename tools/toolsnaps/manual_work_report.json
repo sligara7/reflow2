@@ -1,0 +1,11 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Every piece of hand-rolled work this design has recorded, with the diagnosis that separates a MISSING tool from an UNFINDABLE one. Read it when deciding what to build or what to surface: a run of `tool_not_found` against a tool that exists is a discoverability repair, and a run of `tool_missing` is a feature nobody has written. Empty means nobody has reported any — which is NOT the same as nobody having done work by hand, and must not be read as it, since the signal depends on a session noticing and saying so.",
+  "inputSchema": {
+    "properties": {},
+    "type": "object"
+  },
+  "name": "manual_work_report"
+}
