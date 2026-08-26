@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:fd6d1c8708fc03c5ca9204c71189c359ef3b57bb284c78e341d27065bb98ffdc",
+  "content_hash": "sha256:13f8d62da54c685e19366a0294bc49454d8d803bc834ceb916f7ecdbd79a310a",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -11833,6 +11833,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-two-oversized-subsystems-are-split-functionally",
+      "properties": {
+        "acted_at": "2026-08-25",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:the-vocabulary-half-of-the-foundation-is-deliberately-open",
       "properties": {
         "acted_at": "2026-08-20",
@@ -14171,6 +14180,114 @@
         "action": "added"
       },
       "to_id": "req:a-design-says-what-it-is-for"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:subsystem-split-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "sub:across-designs"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:subsystem-split-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "sub:change-and-structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:subsystem-split-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "sub:evidence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:subsystem-split-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "sub:finding"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:subsystem-split-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "sub:install"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:subsystem-split-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "sub:serving"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:subsystem-split-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "sub:session-posture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:subsystem-split-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "sub:surface-shaping"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:subsystem-split-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "sub:telling"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:subsystem-split-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "sub:tool-surface"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:subsystem-split-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "sys:agent-surface"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "ce:subsystem-split-2026-08-25",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "sys:coherence-loop"
     },
     {
       "edge_type": "CHANGED",
@@ -31763,321 +31880,381 @@
     },
     {
       "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:bulk"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:discover"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:dto"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:init"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:latent"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:main"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:mcp-http"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:proxy"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:registry"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:service"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:shared"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:skills"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:sync-debt"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:tools-ask"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:tools-assure"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:tools-built"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:tools-capture"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:tools-claims"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:tools-coherence"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:tools-exchange"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:tools-ingest"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:tools-operate"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:tools-query"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:tools-skills"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:agent-surface",
-      "properties": {},
-      "to_id": "cmp:tools-temporal"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
-      "properties": {},
-      "to_id": "cmp:allocate"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
-      "properties": {},
-      "to_id": "cmp:artifact"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
-      "properties": {},
-      "to_id": "cmp:budget"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
-      "properties": {},
-      "to_id": "cmp:claims"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
+      "from_id": "sub:across-designs",
       "properties": {},
       "to_id": "cmp:compose"
     },
     {
       "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
-      "properties": {},
-      "to_id": "cmp:confirm"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
-      "properties": {},
-      "to_id": "cmp:consumption"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
-      "properties": {},
-      "to_id": "cmp:coverage"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
+      "from_id": "sub:across-designs",
       "properties": {},
       "to_id": "cmp:depends"
     },
     {
       "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
-      "properties": {},
-      "to_id": "cmp:detect"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
-      "properties": {},
-      "to_id": "cmp:dimensions"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
-      "properties": {},
-      "to_id": "cmp:drift"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
-      "properties": {},
-      "to_id": "cmp:fielded"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
-      "properties": {},
-      "to_id": "cmp:granularity"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
-      "properties": {},
-      "to_id": "cmp:heal"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
-      "properties": {},
-      "to_id": "cmp:hierarchy"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
-      "properties": {},
-      "to_id": "cmp:ility"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
-      "properties": {},
-      "to_id": "cmp:maturity"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
-      "properties": {},
-      "to_id": "cmp:operate"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
-      "properties": {},
-      "to_id": "cmp:propagate"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
-      "properties": {},
-      "to_id": "cmp:regions"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
-      "properties": {},
-      "to_id": "cmp:relate"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
-      "properties": {},
-      "to_id": "cmp:report"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
-      "properties": {},
-      "to_id": "cmp:scope"
-    },
-    {
-      "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
+      "from_id": "sub:across-designs",
       "properties": {},
       "to_id": "cmp:seam"
     },
     {
       "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
+      "from_id": "sub:change-and-structure",
+      "properties": {},
+      "to_id": "cmp:allocate"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:change-and-structure",
+      "properties": {},
+      "to_id": "cmp:budget"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:change-and-structure",
+      "properties": {},
+      "to_id": "cmp:claims"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:change-and-structure",
+      "properties": {},
+      "to_id": "cmp:propagate"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:change-and-structure",
+      "properties": {},
+      "to_id": "cmp:relate"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:change-and-structure",
       "properties": {},
       "to_id": "cmp:structure"
     },
     {
       "edge_type": "CONTAINS",
-      "from_id": "sys:coherence-loop",
+      "from_id": "sub:evidence",
+      "properties": {},
+      "to_id": "cmp:artifact"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:evidence",
+      "properties": {},
+      "to_id": "cmp:confirm"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:evidence",
+      "properties": {},
+      "to_id": "cmp:drift"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:evidence",
+      "properties": {},
+      "to_id": "cmp:fielded"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:evidence",
+      "properties": {},
+      "to_id": "cmp:operate"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:evidence",
+      "properties": {},
+      "to_id": "cmp:verify"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:finding",
+      "properties": {},
+      "to_id": "cmp:consumption"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:finding",
+      "properties": {},
+      "to_id": "cmp:coverage"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:finding",
+      "properties": {},
+      "to_id": "cmp:detect"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:finding",
+      "properties": {},
+      "to_id": "cmp:granularity"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:finding",
+      "properties": {},
+      "to_id": "cmp:heal"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:finding",
+      "properties": {},
+      "to_id": "cmp:hierarchy"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:finding",
       "properties": {},
       "to_id": "cmp:surprises"
     },
     {
       "edge_type": "CONTAINS",
+      "from_id": "sub:install",
+      "properties": {},
+      "to_id": "cmp:init"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:serving",
+      "properties": {},
+      "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:serving",
+      "properties": {},
+      "to_id": "cmp:mcp-http"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:serving",
+      "properties": {},
+      "to_id": "cmp:proxy"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:serving",
+      "properties": {},
+      "to_id": "cmp:registry"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:serving",
+      "properties": {},
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:serving",
+      "properties": {},
+      "to_id": "cmp:shared"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:session-posture",
+      "properties": {},
+      "to_id": "cmp:discover"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:session-posture",
+      "properties": {},
+      "to_id": "cmp:latent"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:session-posture",
+      "properties": {},
+      "to_id": "cmp:sync-debt"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:surface-shaping",
+      "properties": {},
+      "to_id": "cmp:bulk"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:surface-shaping",
+      "properties": {},
+      "to_id": "cmp:dto"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:surface-shaping",
+      "properties": {},
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:telling",
+      "properties": {},
+      "to_id": "cmp:dimensions"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:telling",
+      "properties": {},
+      "to_id": "cmp:ility"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:telling",
+      "properties": {},
+      "to_id": "cmp:maturity"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:telling",
+      "properties": {},
+      "to_id": "cmp:regions"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:telling",
+      "properties": {},
+      "to_id": "cmp:report"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:telling",
+      "properties": {},
+      "to_id": "cmp:scope"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:tool-surface",
+      "properties": {},
+      "to_id": "cmp:tools-ask"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:tool-surface",
+      "properties": {},
+      "to_id": "cmp:tools-assure"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:tool-surface",
+      "properties": {},
+      "to_id": "cmp:tools-built"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:tool-surface",
+      "properties": {},
+      "to_id": "cmp:tools-capture"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:tool-surface",
+      "properties": {},
+      "to_id": "cmp:tools-claims"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:tool-surface",
+      "properties": {},
+      "to_id": "cmp:tools-coherence"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:tool-surface",
+      "properties": {},
+      "to_id": "cmp:tools-exchange"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:tool-surface",
+      "properties": {},
+      "to_id": "cmp:tools-ingest"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:tool-surface",
+      "properties": {},
+      "to_id": "cmp:tools-operate"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:tool-surface",
+      "properties": {},
+      "to_id": "cmp:tools-query"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:tool-surface",
+      "properties": {},
+      "to_id": "cmp:tools-skills"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:tool-surface",
+      "properties": {},
+      "to_id": "cmp:tools-temporal"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "sub:install"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "sub:serving"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "sub:session-posture"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "sub:surface-shaping"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:agent-surface",
+      "properties": {},
+      "to_id": "sub:tool-surface"
+    },
+    {
+      "edge_type": "CONTAINS",
       "from_id": "sys:coherence-loop",
       "properties": {},
-      "to_id": "cmp:verify"
+      "to_id": "sub:across-designs"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "sub:change-and-structure"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "sub:evidence"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "sub:finding"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:coherence-loop",
+      "properties": {},
+      "to_id": "sub:telling"
     },
     {
       "edge_type": "CONTAINS",
@@ -32524,6 +32701,15 @@
         "evidence": "First real instance: cap:content-store is built, withdrawn, and has no terminal status to say so. The ChangeEvent carrying change_type `deprecation` is the only marker, which is exactly the gap Alex reported and Anthony reached from the other side."
       },
       "to_id": "dec:idea-does-a-capability-need-a-cancelled-state"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "dec:the-two-oversized-subsystems-are-split-functionally",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "PARTIAL, and drawn so the staleness is reachable FROM that fact rather than only from here. Its headline claims the hand-built functional design 'violates span of control in 4 places' (coherence-loop 28, agent-surface 25, reflow2 13, foundation 10) — true when measured that morning, and now 2, of which one is deliberate (tool-surface 12) and one out of scope (foundation 10). Everything else in that fact still stands, including its central finding that adopt cannot recover the functional carving, which is precisely why this split was made by hand. Not closed with valid_to, because valid_to asserts the WHOLE thing stopped being true."
+      },
+      "to_id": "fact:adopt-recovers-depth-cleanly-and-cannot-recover-the-functional-carving"
     },
     {
       "edge_type": "CONTRADICTS",
@@ -33942,6 +34128,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:idea-the-ility-chooses-the-allocation-graph"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:the-two-oversized-subsystems-are-split-functionally",
+      "properties": {
+        "evidence": "The quality target chose the cut. Separating Finding from Telling is instrument-from-subject, which is what observability-driven allocation wants and what that decision settled six hours earlier. Without it the grouping would have been taste, and a later session revisiting the target must know that changing it puts this decomposition back in question.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:reflow2-is-built-for-observability"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -107158,6 +107354,18 @@
       }
     },
     {
+      "node_id": "ce:subsystem-split-2026-08-25",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "detected_at": "2026-08-25",
+        "name": "The two oversized subsystems gain a functional rung",
+        "rationale": "Anthony's word, 2026-08-25, on a grouping put to him with alternatives.\n\nTHE QUALITY TARGET PICKED THE CUT, six hours after being settled. `dec:reflow2-is-built-for-observability` wants the INSTRUMENT SEPARATED FROM THE SUBJECT, and that is exactly the Finding/Telling split: a part that finds a problem must not be the part deciding how loudly to report it. Without that target the grouping would have been taste.\n\nTWO GROUPS BREAK THE BAND ON PURPOSE, argued rather than apologised for. Tool surface stays at 12 on his explicit word, because those slices are already a partition of ONE surface and splitting them to reach 7 would use span of control as a GENERATOR. Install is a subsystem of ONE because it is the only part that writes into a repository that is not reflow2's own.\n\nTHE LADDER HAD NO ROOM between subsystem and component, so either 53 modules were demoted to `part` or 2 containers promoted to `system`. Promotion preserves what every existing node means and changes 2 levels instead of 53. The cost is a mixed top tier of 8 subsystems and 2 systems, honest because these two hold 84 and 49 of 211 capabilities.\n\nTHE LEAF FILTER FROM #336 PROVED ITSELF ON A REAL CHANGE. Adding 10 grouping components left `unallocated_component` at 33 of 85 leaves rather than jumping to 43, because parents are excluded. That exclusion was a judgement measured at 40-vs-33 when it shipped; a real structural change has now shown it prevents a false alarm.\n\nMEASURED AFTERWARDS AND REPORTED HONESTLY: only 20 percent of component dependencies with both ends inside the split systems fall WITHIN a group; 80 percent cross. That does not validate the grouping by a modularity standard and was never going to. The dependency graph is a star, 57 of 72 edges reach outside the split systems, and the dominant cross-edge is Telling depending on Finding, a DIRECTED LAYER dependency that is the observability cut working rather than failing. Same disagreement the 2026-08-21 co-change experiment found at 71 percent.\n\nSURFACED RATHER THAN CREATED: `cmp:claims` and `cmp:operate` may not belong in the coherence loop, and `sys:foundation` at 10 children is still over the band.",
+        "subject": "record",
+        "summary": "Split sys:coherence-loop (28 children) and sys:agent-surface (25) into 5 functional groups each: 10 new subsystem nodes, 53 components moved with move_component, both containers promoted to `system`. 95 to 105 components; depth {1:13,2:80,3:2} became {1:13,2:37,3:55}; span-of-control violations 3 to 2; hierarchy_issues 0, multiple_parents 0."
+      }
+    },
+    {
       "node_id": "ce:unallocated-component-detector-2026-08-25",
       "node_type": "ChangeEvent",
       "properties": {
@@ -114095,11 +114303,121 @@
       }
     },
     {
+      "node_id": "sub:across-designs",
+      "node_type": "Component",
+      "properties": {
+        "level": "subsystem",
+        "name": "Across designs",
+        "provenance": "authored",
+        "purpose": "The parts that reason about MORE THAN ONE design at once: composing two without merging them, declaring and checking a dependency on another design's version, and saying when two linked designs disagree at a boundary.\n\nThe smallest group at three, and deliberately not folded into a larger one. Everything else in this system assumes a single design and can read whatever it needs; these three cannot, and each has to handle a design it does not own and cannot write. That is a different set of assumptions, and burying it inside a bigger box would hide the one boundary in the system where the other side is out of reach.",
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "sub:change-and-structure",
+      "node_type": "Component",
+      "properties": {
+        "level": "subsystem",
+        "name": "Change and structure",
+        "provenance": "authored",
+        "purpose": "What a change touches, and how the design is shaped — impact propagation and its budget, the decomposition spine, allocation of function to parts, the relations between nodes, and the coordination of who holds which region while it all moves.\n\nGrouped because they answer one question from different sides: WHAT IS CONNECTED TO WHAT, and therefore what moves when something does. Propagation reads the shape; allocation and structure write it; relate records the reasoning edges; claims says who may be writing it right now.\n\n⚠️ `cmp:claims` sits here uneasily and the discomfort is recorded rather than smoothed over: coordination of parallel work is arguably not coherence-loop machinery at all. It was placed here because it is about the design MOVING, and flagged because this split surfaced the question rather than created it.",
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "sub:evidence",
+      "node_type": "Component",
+      "properties": {
+        "level": "subsystem",
+        "name": "Evidence",
+        "provenance": "authored",
+        "purpose": "Where the design meets reality — the parts that hold what was actually checked, built, deployed or observed, and what has since moved: verifications and their outcomes, artifacts and their checksums, the confirmation ledger, drift, field observation, and the operating world.\n\nDistinct from Finding and Telling because those two reason ABOUT THE DESIGN, and these reason about the WORLD THE DESIGN CLAIMS TO DESCRIBE. That is the boundary where as-designed and as-built are allowed to disagree, and keeping it a boundary is what makes the disagreement visible instead of silently resolved.",
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "sub:finding",
+      "node_type": "Component",
+      "properties": {
+        "level": "subsystem",
+        "name": "Finding",
+        "provenance": "authored",
+        "purpose": "The detectors — the parts whose job is to NOTICE something the design cannot see in itself: gaps, structural defects, hierarchy problems, undeclared seams, granularity mismatches, coverage and consumption holes.\n\nSeparated from Telling deliberately, and that separation is the point rather than tidiness. `dec:reflow2-is-built-for-observability` says this design is built so its answers never misrepresent what it knows, and observability-driven allocation wants THE INSTRUMENT SEPARATED FROM THE SUBJECT — a part that finds a problem must not be the same part that decides how loudly to report it. Fusing detection and reporting is how a green gate over uncovered ground gets built without anybody choosing to.\n\nEvery part here owes the same obligation the target imposes: it must be able to say it COULD NOT TELL, rather than reporting clean over ground it never ran on.",
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "sub:install",
+      "node_type": "Component",
+      "properties": {
+        "level": "subsystem",
+        "name": "Install",
+        "provenance": "authored",
+        "purpose": "Getting reflow2 INTO somebody else's project: asking which harness, writing only that harness's files, and leaving a committable record.\n\n⚠️ A SUBSYSTEM OF ONE, AND KEPT THAT WAY DELIBERATELY. It is the only part of this system that WRITES INTO A REPOSITORY THAT IS NOT REFLOW2'S OWN — every other part reads a design or answers a call. Folding it into a larger box to avoid a group of one would hide the single place where the blast radius leaves this project, which is exactly the boundary `rule:reflow2-is-built-for-other-projects-not-for-itself` cares about.\n\nGroup size is a check on whether a grouping is doing work, not a quota to fill.",
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "sub:serving",
+      "node_type": "Component",
+      "properties": {
+        "level": "subsystem",
+        "name": "Serving and transport",
+        "provenance": "authored",
+        "purpose": "How the surface is actually reached: the service that answers, the process entry point, the MCP-over-HTTP primitives, the stdio-to-HTTP session proxy, the shared-mode manager, and the registry that maps a graph_id to an open design.\n\nThese are the parts that would still exist if every tool were deleted — the machinery of BEING a server, distinct from WHAT is served.",
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "sub:session-posture",
+      "node_type": "Component",
+      "properties": {
+        "level": "subsystem",
+        "name": "Session posture",
+        "provenance": "authored",
+        "purpose": "What a session knows about WHERE IT IS and WHETHER IT IS CURRENT: the latent server in a directory that has not opted in, the staleness of the shared record since this seat last looked, and saying what design lives at a path without binding to it.\n\nGrouped because all three answer a question asked BEFORE any design work — am I somewhere with a design, is what I hold current, and what is here. Each is also a place where an honest \"I cannot tell\" matters more than an answer, which is why they sit together under an observability target.",
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "sub:surface-shaping",
+      "node_type": "Component",
+      "properties": {
+        "level": "subsystem",
+        "name": "Surface shaping",
+        "provenance": "authored",
+        "purpose": "How the surface presents itself rather than what it does: the DTOs a reply is built from, the batched forms that collapse N calls into one, and the served skill catalogue with its embedded bodies.\n\nAll three shape what an agent MEETS — the shape of a reply, the shape of a call, and the instructions served alongside. None of them decides anything about a design.",
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "sub:telling",
+      "node_type": "Component",
+      "properties": {
+        "level": "subsystem",
+        "name": "Telling",
+        "provenance": "authored",
+        "purpose": "The reports — the parts whose job is to SAY where the design stands, to a person or to a gate: the snapshot, the quality axes, the maturity trajectory, the dimension readings, the regions a newcomer can orient by, and the scoping that narrows any of it honestly.\n\nThe other half of the observability cut. These parts summarise what Finding produced, and they are separate BECAUSE summarising is where a true finding becomes a misleading answer: a count without its denominator, a page presented as the whole set, a zero that meant \"nothing to run on\". Nearly every honesty rule this project has — `omitted`, `not_shown`, `budget`, `share_of_anchored`, `modularity: null` — lives in a part that belongs here.",
+        "status": "planned"
+      }
+    },
+    {
+      "node_id": "sub:tool-surface",
+      "node_type": "Component",
+      "properties": {
+        "level": "subsystem",
+        "name": "Tool surface",
+        "provenance": "authored",
+        "purpose": "The served tool surface, cut into twelve slices by lifecycle phase: capture, ingest, ask, coherence, assure, as-built, claims, exchange, query, operate, temporal and skills.\n\n⚠️ TWELVE CHILDREN, DELIBERATELY OVER THE 3-7 BAND, and the excess is the finding rather than a defect to fix. These slices are already a partition of ONE thing — a single surface, divided once by the phase of the loop each tool serves. Splitting them further to reach seven would be using span of control as a GENERATOR, which `dec:idea-the-decomposition-ladder-is-open` and the whole depth-is-a-consequence argument forbid: the band said 25 was wrong, it does not say 12 is.\n\nAnthony's call, 2026-08-25, put to him with the alternative: *\"leave it at 12 — don't invent a rung.\"*",
+        "status": "planned"
+      }
+    },
+    {
       "node_id": "sys:agent-surface",
       "node_type": "Component",
       "properties": {
         "kind": "module",
-        "level": "subsystem",
+        "level": "system",
         "name": "Agent Surface",
         "provenance": "authored",
         "purpose": "The boundary the agent lives behind: the reflow2-mcp binary spoken to over stdio, and the consumer kit that installs it.",
@@ -114112,7 +114430,7 @@
       "node_type": "Component",
       "properties": {
         "kind": "module",
-        "level": "subsystem",
+        "level": "system",
         "name": "Coherence Loop",
         "provenance": "authored",
         "purpose": "The engine: on any change, find the ripples and surface them — detect gaps, propagate impact, heal structure, reconcile against what was built, proven and deployed, and report where the design stands.",
@@ -117719,6 +118037,16 @@
         "decision": "RECORDED AS A REFRAME PLUS A MEASUREMENT, NOT AS A PROPOSAL. Anthony, 2026-08-04, stating the root question that unifies the dev_storyflow corpus and the reflow2-dogfooding threads: \"how do we transition documents to graph entities? whether that is a huge corpus of documents in dev_storyflow or getting away from using documents in reflow2, it is how do we make decisions based on graph content, not documents.\" Nothing here is settled.\n\nTHE SPLIT. (IN) documents become graph entities — ingest_step, provenance Fragments, the content store, cross-document convergence. Partly built, and every remaining piece is scheduled across epoch:v0240-planned..v0280-planned. (OUT) a person or agent DECIDES from graph content instead of from a document. Almost nothing is scheduled. The whole increment plan is capture, detection, seams and write-surface.\n\n⭐ THE MEASUREMENT, AND ALL OF IT IS FIRST-HAND FROM ONE SESSION ON 2026-08-04 RATHER THAN RECALLED. `reviewed_gaps` returned 130,922 CHARACTERS and could not be read at all — it was written to a file and queried with `jq`. That is the tool answering \"what have we already decided to accept\", which is a decision-making read, and it was unusable AS a read. It joins: `loop_status` at 72,886 characters until [BL-205] fixed it the day before, and it is the call the SessionStart hook and the server instructions both call \"the one cheap call\"; `describe_schema` on ONE node type at ~30 KB ([BL-142]); and `scan_nodes` on 241 Decisions, where the where-am-i skill's own guidance forced reading names only and confessing that exactly one had been read in full. Add the standing limit: 52 properties are `fulltext: true` and `Decision.rationale` is not one of them.\n\nTHEY ARE ALL ONE DEFECT: A READ THAT RETURNS EVERYTHING IT KNOWS INSTEAD OF WHAT WAS ASKED. The graph holds the content correctly. It cannot serve it back at the size it now holds. That is neither a vocabulary problem nor an ingest problem, which is why every framing so far has missed it — `dec:idea-backlog-belongs-in-the-graph` reasoned about what a node can HOLD, and the binding constraint is what a read can RETURN.\n\nTHE CONSEQUENCE THAT SHOULD NOT BE SOFTENED: TODAY A DOCUMENT BEATS THE GRAPH FOR MAKING A DECISION, AND IT IS A FAIR FIGHT THE GRAPH LOSES. A document can be skimmed, searched with ctrl-F, and read end to end. The graph offers 130 KB or a list of names. Reaching for the markdown is therefore RATIONAL BEHAVIOUR RESPONDING TO A REAL DIFFERENCE, not a bad habit to be disciplined out of, and no improvement to capture changes it.\n\nTHE SHAPE OF AN ANSWER, offered because the in-house precedent is already built and shipped rather than as advocacy: the transition is not documents → graph, it is DOCUMENTS → GRAPH → DERIVED DOCUMENTS. `cap:changelog-view` (\"a changelog is a derivable view of the graph's own delta\") shipped in v0.20.0 and CHANGELOG.md is generated today; `dec:views-are-projections` is accepted; `tools/render_views.py` is 44 KB of renderer producing docs/viewpoints.md and has existed since 2026-07-19. The renderer, the doctrine and the proof all exist — the backlog simply is not one of its views. This also explains why option (d) on `dec:idea-backlog-belongs-in-the-graph` kept losing: it was judged as a RIVAL to the capture options when it is the OUT half of the same answer, and that node already half-saw it (\"solves RETRIEVAL and not CAPTURE — it composes with (a)/(b) rather than competing\").\n\n⭐ THE TEST THIS YIELDS, AND IT IS ANTHONY'S OWN DELETION INSTINCT MADE SAFE. He asked: \"should I delete the documents and force us to use the reflow2 graph?\" Deletion is the right TEST and the wrong COMMITMENT. The test is: CAN YOU DELETE THIS DOCUMENT AND REGENERATE IT FROM THE GRAPH? Yes → the graph is the source and the document was a view. No → the document is still the source, and WHAT CANNOT BE REGENERATED IS PRECISELY WHAT THE GRAPH IS MISSING. Run it per document, never on the repo at once, and regenerate BEFORE deleting so nothing is ever at risk. Where each stands today, assessed 2026-08-04: CHANGELOG.md PASSES (already derived); docs/viewpoints.md PASSES; COORD.md's in-progress table passes the day `claim_region` is used for real, because the computation exists and is served (`dec:coord-board-in-graph`); docs/backlog.md FAILS, and the rows that cannot regenerate are the exact statement of what vocabulary is absent; AGENTS.md FAILS PERMANENTLY AND CORRECTLY, because an agent reads it before it knows reflow2 exists. That last row is why this is not a march toward zero documents — it is a march toward zero documents that are SOURCES, and the test says which is which instead of leaving it to taste.\n\nFOR A CORPUS THE TEST POINTS THE OTHER WAY. Source documents cannot be regenerated and must not be — `req:sources-are-kept-not-just-parsed` says so. The test applies instead to the READING: after ingest, can \"what did I want to build, and what of it exists\" be answered without opening a document? A no means the ingest landed prose rather than structure, which is exactly what the 52-fulltext-properties limit predicts for rows imported as long descriptions.\n\nWHAT IS NOT DECIDED HERE. Whether the OUT half is a v0.24.0 obligation, its own increment, or a discipline applied to every read as it is touched. Which reads to fix first, and by what rule — `reviewed_gaps` is the loudest but `scan_nodes` on a mature type may be the most consequential. Whether \"answer-shaped rather than type-shaped\" needs new tools or bounded forms of the existing ones. And whether the backlog renderer is a `render_views.py` view, a served tool, or neither.\n\n--- COUNTED 2026-08-04, SAME SESSION. The item left unverified above is now closed, and it answers the bug-list-or-increment question against the cheaper reading. ---\n\n⭐ OF 33 COLLECTION-RETURNING READ TOOLS ON THE SERVED SURFACE, EXACTLY THREE LET THE CALLER BOUND THE RESULT, AND ONLY ONE CAN PAGE. Counted over `crates/reflow2-mcp/src/tools/*.rs` (144 tool functions across 12 modules). The 33 are: alternatives_for, budget_report, changelog_view, claim_report, confirmation_ledger, content_manifest, coverage_report, describe_schema, detect_defects, detect_gaps, dimension_drifts, evidence_report, export_graph, export_surface, find_tools, flow_report, granularity_report, graph_report, graph_report_markdown, hierarchy_issues, ility_report, loop_status, maturity_report, open_questions, readiness_report, recall_resolutions, release_report, reviewed_defects, reviewed_gaps, scan_nodes, seam_report, search_design, surprising_connections. The three bounded: `scan_nodes` (limit + offset + next_offset + capped_by — the only real paging), `search_design` (limit, no offset), `find_tools` (limit with a default). The only other `limit` in the tool surface is `Constraint.limit`, a domain property, not a bound.\n\nSO IT IS AN INCREMENT, NOT A BUG LIST — the guess of \"four\" was low by an order of magnitude. TWO HONEST QUALIFIERS THAT KEEP THE NUMBER FROM BEING OVERSTATED. (i) Not all 30 are broken today: several bound themselves internally rather than by parameter — `loop_status` became a digest under [BL-205], and `graph_report_markdown` is a summary by construction. The claim is that the CALLER cannot bound them, not that all thirty are unreadable now. (ii) Because none of them share a paging mechanism, each fix is bespoke. That is the real cost, and it is the argument for treating this as one increment with a common shape rather than as thirty separate rows — which is exactly how [BL-205] was filed and fixed, alone, one tool at a time, three days ago.\n\nTHE SHAPE THIS SUGGESTS, not chosen: `scan_nodes` already solved this problem completely — `total` against `returned`, `omitted`, `next_offset`, `capped_by`, and a payload budget so a cap is never silent but never a surprise. It is an in-house pattern, tested, and adopted by exactly one tool. Generalising it is a smaller design question than inventing one.",
         "name": "OPEN — \"documents to graph entities\" is TWO problems, and the failing one is reading the graph back, not getting content into it",
         "rationale": "Recorded because the measurement is perishable in the exact way this project keeps rediscovering: \"reviewed_gaps returned 130,922 characters\" becomes \"reads felt big once\" within a session or two, and then the next reader re-derives it or, worse, does not. The numbers are first-hand from a single sitting and are written down so the next session argues from them.\n\nKept as its own node rather than appended to `dec:idea-backlog-belongs-in-the-graph` because it CONTRADICTS that node's framing rather than extending it. That node asks what a node and an edge can hold and concludes the answer turns on how much of a row becomes structure; this one says the binding constraint is downstream of that entirely — a perfectly structured graph nobody can read back is still a graph nobody decides from. Folding the correction into the node it corrects would hide it.\n\nDeliberately does NOT register alternatives, so this stays a question rather than becoming a fork the loop asks Anthony to choose between.\n\nAMENDED the same session: the item this node named as unchecked was checked, and the answer (3 of 33, one pager) moved it from a bug list to an increment. Recorded as an amendment with the prior state snapshotted rather than as a fresh node, because the unchecked and checked forms are the same claim at two confidence levels — and the fact that naming the hole is what got it filled within the hour is worth the record.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:the-two-oversized-subsystems-are-split-functionally",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Anthony, 2026-08-25, accepting a proposed functional grouping put to him with alternatives. **Applied the same day.**\n\n    BEFORE   95 components   depth {1:13, 2:80, 3:2}   span>7: 3  (coherence-loop 28, agent-surface 25, foundation 10)\n    AFTER   105 components   depth {1:13, 2:37, 3:55}  span>7: 2  (tool-surface 12 deliberate, foundation 10 out of scope)\n             hierarchy_issues 0        multiple_parents 0\n\n⚠️ **THIS PARTIALLY SUPERSEDES `fact:adopt-recovers-depth-cleanly-and-cannot-recover-the-functional-carving`**, which the duplicate guard surfaced and which is the measurement that motivated this work. Its headline reads *\"the hand-built functional design violates span of control in 4 places\"* — that was true when written this morning (coherence-loop 28, agent-surface 25, reflow2 13, foundation 10) and is **now 2**, of which one is deliberate and one out of scope. **Everything else in that fact still stands**, including its central finding that adopt cannot recover the functional carving, which is exactly why this split was done by hand.\n\n═══ sys:coherence-loop, 28 → 5 ═══\n\n    Finding              7   detect heal hierarchy surprises granularity consumption coverage\n    Telling              6   report ility maturity dimensions regions scope\n    Evidence             6   verify artifact confirm drift fielded operate\n    Change and structure 6   propagate budget structure allocate relate claims\n    Across designs       3   compose depends seam\n\n⭐⭐ **SEPARATING FINDING FROM TELLING IS THE OBSERVABILITY CUT, and it is why this grouping and not another.** `dec:reflow2-is-built-for-observability` (accepted hours earlier) says this design is built so its answers never misrepresent what it knows. Observability-driven allocation wants THE INSTRUMENT SEPARATED FROM THE SUBJECT — a part that finds a problem must not be the part that decides how loudly to report it. Fusing detection and reporting is how a green gate over uncovered ground gets built without anybody choosing to. **The quality target was not decoration; it picked the cut.**\n\nEvidence is separate from both because Finding and Telling reason ABOUT THE DESIGN while Evidence reasons about THE WORLD THE DESIGN DESCRIBES — the boundary where as-designed and as-built are allowed to disagree.\n\n═══ sys:agent-surface, 25 → 5 ═══\n\n    Tool surface         12   the twelve tools-* slices\n    Serving and transport 6   service main mcp-http proxy shared registry\n    Session posture       3   latent sync-debt discover\n    Surface shaping       3   dto bulk skills\n    Install               1   init\n\n🛑 **THE TOOL SURFACE STAYS AT 12, OVER THE BAND, ON HIS EXPLICIT WORD:** *\"leave it at 12 — don't invent a rung.\"* Those slices are already a partition of ONE surface, cut once by lifecycle phase. Splitting them to reach seven would use span of control as a GENERATOR — the error the open-ladder decision and the whole depth-is-a-consequence argument forbid. **The band said 25 was wrong. It does not say 12 is.**\n\n📌 **AND `Install` IS A SUBSYSTEM OF ONE, KEPT THAT WAY.** It is the only part that writes into a repository that is not reflow2's own; folding it into a bigger box to avoid a group of one would hide the single place where the blast radius leaves this project. Group size is a check on whether a grouping is doing work, never a quota to fill.\n\n═══ HOW THE RUNG WAS MADE, and the alternative rejected ═══\n\nThe declared ladder is `part ▸ component ▸ subsystem ▸ system ▸ …` and there is no rung between `subsystem` and `component`. Two ways to make room: DEMOTE the 53 modules to `part`, or PROMOTE the two containers to `system`. **Promotion, because it preserves what every existing node means** — the modules stay components — and changes 2 levels instead of 53.\n\n⚠️ THE COST, STATED: the top tier is now MIXED — 8 subsystems and 2 systems under the Project. That asymmetry is honest rather than accidental: these two really are bigger, holding 84 and 49 of 211 capabilities between them.\n\n🛑 **WHAT THIS DELIBERATELY IS NOT: the module hierarchy adopt recovered.** That trial's top tier was `cmp:crate-reflow2-core` and `cmp:crate-reflow2-mcp` — CRATES. Applying it would have replaced a functional carving with a structural one and overturned `dec:bl83a-functional-decomposition`. A functional over-span wants a functional answer; the module view stays evidence, never a replacement spine. (The scratch graph is gone in any case — the only stores left on disk are from 2026-08-20 and hold the flat pre-nesting version.)\n\n📌 STILL OPEN, surfaced by this split rather than created by it: `cmp:claims` (coordination of parallel work) and `cmp:operate` (deploy/environments) may not belong in the coherence loop at all. Both were placed rather than resolved, and the discomfort is written on `sub:change-and-structure`. `sys:foundation` at 10 children was out of scope and is still over the band.",
+        "name": "DECIDED — coherence-loop and agent-surface each gain a functional rung; the tool surface stays at 12 rather than inventing one",
+        "rationale": "Settled by the user against recorded alternatives on both questions — a broader three-group split and a member-by-member walkthrough for the first, a phase-split of the tool slices and a defer-agent-surface option for the second.\n\nDISTINCT FROM the adopt trial fact the guard surfaced, and the line is clean: that node MEASURED that depth is recoverable from the artifact and that the functional carving is not. This is the DECISION about what the functional rung actually is — which had to be made by hand precisely because that measurement said inspection could not produce it. The fact motivated this; it does not contain it.\n\nRecorded as one decision covering both splits because they share their method and justification: the same ladder problem, the same promotion choice, and the same rule that span of control checks a grouping rather than generating one. Two nodes would duplicate the reasoning and let one drift.\n\nThe two groups that break the band — tool surface at 12 and Install at 1 — are argued IN the decision rather than apologised for, because a later reader running span of control will find them and needs to meet the reason rather than re-derive it.",
         "status": "accepted"
       }
     },
@@ -130322,6 +130650,19 @@
       }
     },
     {
+      "node_id": "fact:a-functional-carving-does-not-match-the-coupling-and-was-never-going-to",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "name": "Third independent measurement that reflow2's FUNCTIONAL decomposition disagrees with its coupling: 80% of component dependencies cross the new subsystem groups. Expected, not a defect — a layered carving maximises cross-group edges by construction",
+        "statement": "MEASURED 2026-08-25, immediately after the coherence-loop and agent-surface splits, as a deliberate check on whether a grouping arrived at BY JUDGEMENT survives contact with the dependency data.\n\n═══ THE NUMBERS ═══\n\n    Component -> Component DEPENDS_ON edges, whole design      72\n    both ends inside the two newly split systems               15\n       WITHIN a group   3   (20%)   <- cohesion\n       ACROSS groups   12   (80%)   <- coupling\n    one or both ends elsewhere in the design                   57\n\n    top cross-group couplings\n       4  Telling  -> Finding\n       2  Finding  -> Change and structure\n       2  Telling  -> Change and structure\n       2  Telling  -> Evidence\n\n⚠️ BY A MODULARITY STANDARD THIS IS POOR COHESION, AND REPORTING IT IS THE POINT. The grouping was proposed by an agent, accepted by the user, and then measured against data that could have embarrassed it. It did. That is recorded here rather than omitted, because a design that only keeps the measurements which flatter it is not a design record.\n\n═══ ⭐⭐ AND IT WAS NEVER GOING TO VALIDATE, FOR THREE REASONS ═══\n\n**1. THE SAMPLE IS SMALL BECAUSE THE GRAPH IS A STAR.** Only 15 of 72 edges have both ends inside the split systems; 57 reach outside. The adopt trial measured why: fan-in `foundation` 49, `graph` 42, `nodes` 41, and 45% of core modules importing ONLY those three hubs. Most dependencies point at the foundation, not at siblings, so intra-system cohesion has little to be computed from.\n\n**2. THE DOMINANT CROSS-EDGE IS THE CUT WORKING.** `Telling -> Finding` at 4 edges is the reports depending on the detectors — a DIRECTED LAYER dependency, and exactly what the observability cut predicts: the instrument is separate from the presenter, and the presenter reads the instrument. **A layered carving MAXIMISES cross-group edges by construction**, and modularity metrics penalise them regardless of direction. Scoring a layered architecture on undirected modularity measures the wrong thing.\n\n**3. IT IS THE THIRD INDEPENDENT ROUTE TO ONE CONCLUSION.** The adopt trial (2026-08-25) found the functional carving unrecoverable from source, by directory and by imports. The co-change experiment (2026-08-21) found **71% of the strongest maintainability signal crossing subsystem boundaries**. This finds 80% of the dependency signal crossing the new groups. Three different signals, three different days, one conclusion: **reflow2's functional decomposition is not its coupling-optimal decomposition, and `dec:bl83a-functional-decomposition` chose that deliberately in 2026-07-23.**\n\n📌 WHAT WOULD ACTUALLY TEST THE GROUPING, and it has NOT been done: whether a change to one group forces changes in another — co-change restricted to these components, computable today from 500+ ChangeEvents. Dependency coupling tests a property the carving never claimed to optimise. **Do not read this fact as evidence the split was wrong; read it as evidence that this is the wrong instrument for judging it.**\n\n⚠️ BOUNDS: one design, one day, one direction. Edges counted are `DEPENDS_ON` between Components only — not capability coupling (which holds ONE edge across 212 capabilities and can measure nothing), and not co-change. No comparison against an alternative grouping was run, so nothing here says another carving would score better.",
+        "subject_id": "dec:bl83a-functional-decomposition",
+        "valid_from": "2026-08-25"
+      }
+    },
+    {
       "node_id": "fact:a-gate-is-only-as-wide-as-the-toolchain-that-runs-it",
       "node_type": "TemporalFact",
       "properties": {
@@ -136513,7 +136854,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:3f4af2056acda7718c087cd33518df17cc1941533ce524a63eb9fc7e5dc6df91",
+  "prev_content_hash": "sha256:fd6d1c8708fc03c5ca9204c71189c359ef3b57bb284c78e341d27065bb98ffdc",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
