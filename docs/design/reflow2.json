@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:5610e79103cfe64d4dc2c903b4a244fb5224bb0c711c8412a92faf9e86c73bab",
+  "content_hash": "sha256:ad8b744f51095e6238408b815ea0bfe98182ccda12736a30045afa57453acae3",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3002,6 +3002,14 @@
         "evidence": "Recorded 2026-08-01 asking whether reflow2 should adopt embeddings and the HNSW index or stay lexical. It anticipated the same choice this capability made in the small: increment 1 dropped `hnsw.rs` and `distance.rs` (1,941 lines) on the ground that reflow2 calls neither, which is the 'stay lexical' answer taken by construction rather than by decision. ⚠️ The idea remains OPEN and this does not settle it — but a later reader should know the code it would need is no longer in the tree."
       },
       "to_id": "cap:graph-algorithms"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-have-the-three-legs-been-applied-uniformly-and-are-three-legs-enough",
+      "properties": {
+        "evidence": "That question proposed this audit as its option (a) and predicted what it would find — that the legs were never applied uniformly, and that three legs may not be sufficient. Both came back confirmed: 58% carry all three, and five types carry all three while sitting unused."
+      },
+      "to_id": "fact:the-three-legs-audit-run-at-last-54-of-93-and-five-types-exist-only-in-the-schema"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -12871,6 +12879,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "decision:vocab:environment",
+      "properties": {
+        "acted_at": "2026-08-26",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "fact:an-agent-stopped-reaching-for-reflow2-and-a-second-one-reproduced-it-the-same-day",
       "properties": {
         "acted_at": "2026-08-23",
@@ -14015,7 +14032,7 @@
       "from_id": "rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed",
       "properties": {
         "acted_at": "2026-08-26",
-        "role": "author"
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -17162,6 +17179,132 @@
         "action": "modified"
       },
       "to_id": "ifc:mcp-tools-http"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-read-only-surface-refuses-at-the-write-guard",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-read-only-surface-refuses-at-the-write-guard",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-read-only-surface-refuses-at-the-write-guard",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-ask"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-read-only-surface-refuses-at-the-write-guard",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-assure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-read-only-surface-refuses-at-the-write-guard",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-read-only-surface-refuses-at-the-write-guard",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-read-only-surface-refuses-at-the-write-guard",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-claims"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-read-only-surface-refuses-at-the-write-guard",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-read-only-surface-refuses-at-the-write-guard",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-exchange"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-read-only-surface-refuses-at-the-write-guard",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-ingest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-read-only-surface-refuses-at-the-write-guard",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-operate"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-read-only-surface-refuses-at-the-write-guard",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-read-only-surface-refuses-at-the-write-guard",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-read-only-surface-refuses-at-the-write-guard",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:the-hosted-surface-is-read-only-so-it-can-ship-before-authentication-exists"
     },
     {
       "edge_type": "CHANGED",
@@ -21410,6 +21553,15 @@
         "action": "modified"
       },
       "to_id": "art:registry"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-90df8b6b5825da7d",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:read-only-surface-test"
     },
     {
       "edge_type": "CHANGED",
@@ -36765,6 +36917,14 @@
     },
     {
       "edge_type": "EVOLVES_INTO",
+      "from_id": "dec:idea-the-environment-compliance-layer-was-designed-and-never-built",
+      "properties": {
+        "evidence": "That node is the deliberation, opened 2026-08-11 and sharpened by the 2026-08-26 three-legs audit; this is the ruling it settled into when Anthony chose option (e). The question grew up into an answer, and the answer needs its own id because vocabulary_coverage looks the domain's park_with up by that exact string."
+      },
+      "to_id": "decision:vocab:environment"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
       "from_id": "dec:idea-what-guarantees-the-export-if-the-export-is-the-only-durable-copy",
       "properties": {
         "evidence": "The older thought, grown up. That node listed 'export on every write' as road 1 and recorded it as dead, on the ground that a whole-document write is fatal on a per-change path. A full export measured 1,168 ms when that was written and 265 ms after #330 and the BTreeMap backend change, so the road reopens on a number rather than on an argument — and it reopens with a new distinction the original road did not have: write to the working tree, not to git history."
@@ -36810,6 +36970,14 @@
         "confidence": 1.0
       },
       "to_id": "fact:the-root-cause-was-on-the-record-and-a-session-re-derived-it-anyway"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it",
+      "properties": {
+        "evidence": "That measurement NAMED the three legs and tested exactly three pieces of vocabulary against them. This is the same measurement grown to all 93 declared types. Its three cases still stand unaltered — nothing here retires them — but the frame it introduced now has a population behind it instead of a sample."
+      },
+      "to_id": "fact:the-three-legs-audit-run-at-last-54-of-93-and-five-types-exist-only-in-the-schema"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -98098,6 +98266,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:read-only-surface-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-surface-can-refuse-every-write"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:readiness",
       "properties": {
         "completeness": "complete"
@@ -98547,6 +98724,15 @@
         "conformance": "verified"
       },
       "to_id": "cap:a-repair-can-say-what-it-invalidated"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:service",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-surface-can-refuse-every-write"
     },
     {
       "edge_type": "REALIZES",
@@ -99862,6 +100048,12 @@
       "from_id": "cap:a-session-with-no-seed-can-find-one",
       "properties": {},
       "to_id": "req:a-session-with-no-seed-can-still-orient"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-surface-can-refuse-every-write",
+      "properties": {},
+      "to_id": "req:the-hosted-surface-is-read-only-so-it-can-ship-before-authentication-exists"
     },
     {
       "edge_type": "SATISFIES",
@@ -102626,6 +102818,12 @@
       "from_id": "ver:a-published-contract-says-what-two-systems-must-agree-on",
       "properties": {},
       "to_id": "cap:a-published-contract-says-what-two-systems-must-agree-on"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-read-only-surface-refuses-every-write",
+      "properties": {},
+      "to_id": "cap:a-surface-can-refuse-every-write"
     },
     {
       "edge_type": "VERIFIES",
@@ -106822,7 +107020,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cd4dc46a42ac5da44ecf6f484eb33da8774333afc7fb13a13c554c0f395a766d",
+        "checksum": "sha256:b5bf1aac74a81609adcea9e54b55b9a5689fc231bfccfd391a57057c3a9adb80",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
@@ -107113,6 +107311,17 @@
         "name": "tests/publishable_promise.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:read-only-surface-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:2bb942ef4cd7047b067c8974fb03d61864933afa166231316ce72dc05741f2b4",
+        "location": "crates/reflow2-mcp/tests/a_read_only_surface_refuses_every_write.rs",
+        "name": "tests/a_read_only_surface_refuses_every_write.rs",
+        "status": "realized"
       }
     },
     {
@@ -107595,7 +107804,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:597dba5304fa1631cc84a2283461a420618d469c17f8187b6899a57aab2f5d37",
+        "checksum": "sha256:7d7ac52d97e2944c09c05f1358d51271233d5440b9d32dc877cc940051aa0e47",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -108192,7 +108401,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:8a56401e237dd53de050c101bd5cbaa83719d2982f69be3e55624921b0a98dc6",
+        "checksum": "sha256:2003d465016bf434dcdfec835368dd8131382b43f71b019b28758478c7104e47",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/ask.rs",
         "name": "tools/ask.rs",
@@ -108205,7 +108414,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5e89fd06337e97a14e11e43812799aac7b0b13f7e1fcc3fbd3706a1e621bb53f",
+        "checksum": "sha256:7009e95a193dce6b97b0f7fd2fc611848abe2a2acec1e144cf5ab5a2e876648b",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/assure.rs",
         "name": "tools/assure.rs",
@@ -108218,7 +108427,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e4b14c79a6ea42e16617956bfc31b31567f71bb3816dc02fdb203f104ac9a6f6",
+        "checksum": "sha256:390eb4d13b68873bd33017e7992bdd1472317beb794c68f26ea71f8754c2a778",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/built.rs",
         "name": "tools/built.rs",
@@ -108231,7 +108440,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c5f4122d35b35880284bd5fabb889227508d99f0725c9b5d6bdb7913a5e9d401",
+        "checksum": "sha256:d301d99eb58acbd0f5be8d34608058a49c9b47e09face0dbb2fcae9d8860f29c",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -108244,7 +108453,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9349d575b229d76389271afb868beaacfd0aaa3be3d0723982a92cf3b119ebfb",
+        "checksum": "sha256:d9d6ebd56417c9b086e9656349c1c6c3ff0af4d13d4e17eaf03fcc422d1d2b27",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/claims_tools.rs",
         "name": "tools/claims_tools.rs",
@@ -108257,7 +108466,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e73085793060fb6cea7ea4deac42e39d8505a1e8e571a58c22dfbe01532e0370",
+        "checksum": "sha256:49fd3abf22a2863ebc9b6cac4d0c3ed51916f94c39908ce4c5be185b4295c4a8",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -108270,7 +108479,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:00517d0060736be5d06c784d03a8436269593fde125d14e5754ca3a3c209ed6f",
+        "checksum": "sha256:d1e8e17847235ddde93e07f576a5a591481413914fddece4eb5d819285792880",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/exchange.rs",
         "name": "tools/exchange.rs",
@@ -108283,7 +108492,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:e6e04f6b5a2c89e826cc363bcc011620b936d87ed503e151326291f62bc1ec40",
+        "checksum": "sha256:1f837083572d7f058cd78c289e38d1765fd1695e2191b36852f2452ad66f9378",
         "location": "crates/reflow2-mcp/src/tools/ingest_tools.rs",
         "name": "ingest_tools.rs",
         "status": "realized"
@@ -108294,7 +108503,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:5104c18c33113d5f0f62a4a70d19d31c0cfd4ef380b4d3d6948fd5c039fe5405",
+        "checksum": "sha256:837d63cabf2d194289bb4811297bcdfb2a8279e98fc4be92641c1242e054a24f",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/operate_tools.rs",
         "name": "tools/operate_tools.rs",
@@ -108307,7 +108516,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:27a4ebeac2974cd8f834beee2605fff7718893524b9c5099b31128ad23d43cf9",
+        "checksum": "sha256:6646989566ce15cec393b3b803dc2ebd902a3229fd706034840e6c3ce6314d61",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
@@ -108331,7 +108540,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:36129c9411222bd508defc7027a68a6c4ebce59acd0289b3e443767259b9f8ef",
+        "checksum": "sha256:32924d1d47e6023fd7d3093250c84f1c7e5b9673087ab1b2d3dc1ec44fdc4e50",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -108838,6 +109047,16 @@
         "inputs": "[\"depth\"]",
         "name": "A design says what parts it has, so a session holding nothing can pick where to stand",
         "outputs": "[\"regions\",\"coverage\",\"order\"]",
+        "provenance": "authored",
+        "status": "verified"
+      }
+    },
+    {
+      "node_id": "cap:a-surface-can-refuse-every-write",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`reflow2-mcp --read-only` refuses every write and still answers every read. Delivers `req:the-hosted-surface-is-read-only-so-it-can-ship-before-authentication-exists`.\n\n📌 The near-match offered was `chg:a-read-only-surface-refuses-at-the-write-guard`, which is the EVENT of building this on 2026-08-26. This is the standing CAPABILITY. The event is what happened once; the capability is what the system can do from now on, and it is the thing a requirement is satisfied BY.\n\n⭐ THE ENFORCEMENT POINT IS THE DESIGN. It refuses in `ReflowService::write_lock` — the graph's write guard, which every mutating handler must obtain and no write can avoid. So it covers all 98 write sites that exist and every write added later, including by an author who never heard of the mode.\n\nThe alternative was a list of mutating tool names, or a check keyed on the `readOnlyHint` annotation each tool declares. Both are rules maintained BY HAND with nothing checking them — the defect class this project fixed three times on 2026-08-26 (`unallocated_component` and the parking ruling; F-01's replay contract; three detectors not reading `proposed`). Choosing that form here, the same day, would have been remarkable.\n\n⭐ THE COMPILER PROVED THE SWEEP COMPLETE. Making `write_lock` fallible turned all 98 call sites into compile errors until each was updated — no list, no audit, no chance of missing one. It also found a case review would not have: `share()` is a SECOND assembly point, minting a service per CLIENT SESSION (`req:sessions-share-a-graph`), and read-only had to be INHERITED there. Reset, the mode would have held for the process and evaporated for every actual client — read-only in name only, testing green at the process level.\n\n⚠️ WHAT IT DELIVERS AND WHAT IT DOES NOT. **INTEGRITY** is answered outright: no write means nothing to attribute, so the caller-supplied `contributor_id` — an unverified claim over a network — is never accepted. **CONFIDENTIALITY** is NOT eliminated, only RELOCATED to the network, which is what binding to a tailnet is for. This is not authentication and must not be read as making authentication unnecessary; it is what lets a reachable surface ship BEFORE authentication exists.\n\n🛑 OFF BY DEFAULT. `read_only: false` in `wrap_at`, the single assembly point; the flag appears in no shipped config. `a_normal_service_still_writes` pins that an ordinary service is writable and passed both before and after the refusal landed.\n\nThe refusal is LOUD, naming the mode and the reason, so a caller can tell \"this server refuses writes\" from \"this write was wrong\" — the same call `dec:stateless-seat-handle` makes about a missing seat: a loud refusal beats a quiet wrong answer.",
+        "name": "A server can refuse every write, at the one point a write cannot avoid",
         "provenance": "authored",
         "status": "verified"
       }
@@ -111430,6 +111649,18 @@
       }
     },
     {
+      "node_id": "chg:a-read-only-surface-refuses-at-the-write-guard",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-26",
+        "name": "The hosted surface can refuse every write, enforced at the one point a write cannot avoid",
+        "rationale": "WHY THE WRITE GUARD AND NOT A LIST OF TOOL NAMES. A write cannot happen without taking the guard, so refusing to hand one out is a rule the type system enforces rather than one somebody maintains. The alternative — a list of mutating tools, or a check keyed on `readOnlyHint` — is a rule maintained by hand with nothing checking it, which is the exact defect class this project fixed three times on 2026-08-26 (`unallocated_component` and the parking ruling, F-01's replay contract, and three detectors not reading `proposed`). Choosing the hand-maintained form here, on the same day, would have been remarkable.\n\n⭐ THE COMPILER PROVED THE SWEEP COMPLETE, which is the property the factory brainstorm was reaching for. Making `write_lock` fallible turned all 98 call sites into compile errors until each was updated — no list, no audit, no chance of missing one.\n\n⭐ AND IT FOUND A CASE REVIEW WOULD NOT HAVE. `share()` is a SECOND assembly point, minting a service per CLIENT SESSION for `req:sessions-share-a-graph`. Read-only had to be INHERITED there. Had it been reset, the mode would have held for the process and evaporated for every actual client — and a client session is the only way anybody reaches a shared server, so the feature would have been read-only in name only while testing green at the process level. Pinned by `a_session_on_a_read_only_server_is_read_only_too`.\n\n⚠️ WHAT THIS DELIVERS AND WHAT IT DOES NOT. INTEGRITY is answered outright: no write means nothing to attribute, so the caller-supplied `contributor_id` — an unverified claim over a network — is never accepted. CONFIDENTIALITY is NOT eliminated, only RELOCATED to the network, which is what binding to a tailnet is for. The requirement says this in its own words and it must not be read as authentication being unnecessary, only as it not blocking the first cut.\n\n⚠️ AND IT CHANGES NOTHING FOR AN ORDINARY SESSION, verified rather than asserted. `a_normal_service_still_writes` asserts a default service is writable and passed BEFORE the refusal existed and after it. Every shipped config launches without the flag. This change event was itself written through a shared server running the new binary, which is the same demonstration a user would want.",
+        "subject": "system",
+        "summary": "`--read-only` added to reflow2-mcp, delivering `req:the-hosted-surface-is-read-only-so-it-can-ship-before-authentication-exists`. Enforced in `ReflowService::write_lock`, which every mutating handler must call to obtain the graph's write guard — so it covers all 98 existing write sites and every write added later, including by an author who never heard of the mode. OFF BY DEFAULT: `read_only: false` in `wrap_at`, the single assembly point, and the flag is absent from every shipped config. Four pins in crates/reflow2-mcp/tests/a_read_only_surface_refuses_every_write.rs. Workspace suite 1817 passed / 0 failed across 159 binaries; fmt and clippy clean."
+      }
+    },
+    {
       "node_id": "chg:a-refusal-names-its-own-fix-20260808",
       "node_type": "ChangeEvent",
       "properties": {
@@ -113987,6 +114218,16 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-12",
         "name": "First baseline — new in this change."
+      }
+    },
+    {
+      "node_id": "chg:baseline-90df8b6b5825da7d",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-26",
+        "name": "First baseline — the file is new in this change, so nothing moved.",
+        "subject": "record"
       }
     },
     {
@@ -120984,10 +121225,10 @@
       "node_id": "dec:idea-the-environment-compliance-layer-was-designed-and-never-built",
       "node_type": "Decision",
       "properties": {
-        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — surfaced 2026-08-11 reading reflow2's founding docs against the build. Nothing here is intent.\n\nMEASURED, not assumed:\n  EnvironmentRule instances in this design            0\n  QualityGate instances                               0\n  occurrences of `unchecked_compliance` in the code   0\n  occurrences of `open_violation` in the code         0\n  typed constructor for EnvironmentRule               none\n`docs/requirements-coverage.md` carries it as ⬜ three times (GS-9 compliance gaps, WS-4 the write side, WS-5 QualityGate) and its own \"Dormant schema scaffolding\" section lists Environment compliance as deferred-not-dead.\n\nTHE IDEA, from `docs/operating-environment.md` (2026-07-17): a design never exists in a vacuum. A house in Kennewick WA must meet city ordinances, county rules, state requirements, building and fire codes, seismic provisions and occupancy limits; the same house on Mars faces 0.38 g, no atmosphere, radiation shielding, pressure vessels and life support. Change the environment, change the entire constraint space. `Project OPERATES_IN Environment`; `Environment IMPOSES EnvironmentRule[]`; compliance emits `COMPLIES_WITH` or `VIOLATES_RULE`; two detectors (`unchecked_compliance`, `open_violation`) ask the human; swapping the environment is a first-class ChangeEvent that re-evaluates every compliance edge.\n\n⭐ THE DISTINCTION IT CARRIES IS ALREADY IN THE SCHEMA AND IS GOOD: three kinds of rule, kept apart. `Constraint` is SELF-IMPOSED (\"budget under $500k\"). `DesignRule` is a CHOSEN convention (\"branch before pushing\"). `EnvironmentRule` is EXTERNALLY IMPOSED — the design cannot negotiate it, only comply, seek a variance, or fail. Only the third is dictated by the world. reflow2 uses the middle one heavily (9 DesignRules, and this session settled the enforcement question on one); it has never used the third at all.\n\n⚠️ THE HONEST COUNTER, and it is strong: reflow2's own domain is SOFTWARE, where the operating environment rarely imposes an authoritative external ruleset, so dogfooding will never exercise this. Every instance would come from a consumer designing a house, a spacecraft or a regulated system — and no such consumer exists yet. Building it would mean building on the doc's argument alone, with no field evidence, which is the opposite of how everything else here has been decided. `rule:fixes-are-judged-by-the-third-party` cuts BOTH ways on this: the third party is exactly who would need it, and no third party has asked.\n\n⭐ AND IT IS ANTHONY'S ACTUAL DOMAIN. Space Force systems engineering and NSLS-II beamline work both sit in heavily-regulated operating environments with externally imposed rulesets. The one person using reflow2 is in the domain the feature was designed for and has not reached for it — which is either evidence it is not needed, or evidence that nothing surfaces it. Those are opposite readings of the same silence and nothing distinguishes them today.\n\nIDEAS, unranked:\n(a) Build the whole layer — constructors, the two detectors, the swap-the-environment ChangeEvent.\n(b) Build only the WRITE side (constructors for EnvironmentRule + OPERATES_IN/IMPOSES/COMPLIES_WITH) and no detector, so somebody can record a regulation and see whether the vocabulary fits before a detector is written for it. Contradicts the project's own standing rule that a write side should land WITH its read side (requirements-coverage's WS-4/WS-5 note says exactly this and defers both on purpose).\n(c) Retire the scaffolding — `QualityGate` and `EnvironmentRule` are two of the five node types with zero instances, and the project's own test is \"unused AND redundant → retire; unused AND not-redundant → defer\".\n(d) Ask a consumer first. Nothing here is urgent, and the deciding evidence is a real design in a regulated environment.",
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL — surfaced 2026-08-11 reading reflow2's founding docs against the build. Nothing here is intent.\n\nMEASURED, not assumed:\n  EnvironmentRule instances in this design            0\n  QualityGate instances                               0\n  occurrences of `unchecked_compliance` in the code   0\n  occurrences of `open_violation` in the code         0\n  typed constructor for EnvironmentRule               none\n`docs/requirements-coverage.md` carries it as ⬜ three times (GS-9 compliance gaps, WS-4 the write side, WS-5 QualityGate) and its own \"Dormant schema scaffolding\" section lists Environment compliance as deferred-not-dead.\n\nTHE IDEA, from `docs/operating-environment.md` (2026-07-17): a design never exists in a vacuum. A house in Kennewick WA must meet city ordinances, county rules, state requirements, building and fire codes, seismic provisions and occupancy limits; the same house on Mars faces 0.38 g, no atmosphere, radiation shielding, pressure vessels and life support. Change the environment, change the entire constraint space. `Project OPERATES_IN Environment`; `Environment IMPOSES EnvironmentRule[]`; compliance emits `COMPLIES_WITH` or `VIOLATES_RULE`; two detectors (`unchecked_compliance`, `open_violation`) ask the human; swapping the environment is a first-class ChangeEvent that re-evaluates every compliance edge.\n\n⭐ THE DISTINCTION IT CARRIES IS ALREADY IN THE SCHEMA AND IS GOOD: three kinds of rule, kept apart. `Constraint` is SELF-IMPOSED (\"budget under $500k\"). `DesignRule` is a CHOSEN convention (\"branch before pushing\"). `EnvironmentRule` is EXTERNALLY IMPOSED — the design cannot negotiate it, only comply, seek a variance, or fail. Only the third is dictated by the world. reflow2 uses the middle one heavily (9 DesignRules, and this session settled the enforcement question on one); it has never used the third at all.\n\n⚠️ THE HONEST COUNTER, and it is strong: reflow2's own domain is SOFTWARE, where the operating environment rarely imposes an authoritative external ruleset, so dogfooding will never exercise this. Every instance would come from a consumer designing a house, a spacecraft or a regulated system — and no such consumer exists yet. Building it would mean building on the doc's argument alone, with no field evidence, which is the opposite of how everything else here has been decided. `rule:fixes-are-judged-by-the-third-party` cuts BOTH ways on this: the third party is exactly who would need it, and no third party has asked.\n\n⭐ AND IT IS ANTHONY'S ACTUAL DOMAIN. Space Force systems engineering and NSLS-II beamline work both sit in heavily-regulated operating environments with externally imposed rulesets. The one person using reflow2 is in the domain the feature was designed for and has not reached for it — which is either evidence it is not needed, or evidence that nothing surfaces it. Those are opposite readings of the same silence and nothing distinguishes them today.\n\nIDEAS, unranked:\n(a) Build the whole layer — constructors, the two detectors, the swap-the-environment ChangeEvent.\n(b) Build only the WRITE side (constructors for EnvironmentRule + OPERATES_IN/IMPOSES/COMPLIES_WITH) and no detector, so somebody can record a regulation and see whether the vocabulary fits before a detector is written for it. Contradicts the project's own standing rule that a write side should land WITH its read side (requirements-coverage's WS-4/WS-5 note says exactly this and defers both on purpose).\n(c) Retire the scaffolding — `QualityGate` and `EnvironmentRule` are two of the five node types with zero instances, and the project's own test is \"unused AND redundant → retire; unused AND not-redundant → defer\".\n(d) Ask a consumer first. Nothing here is urgent, and the deciding evidence is a real design in a regulated environment.\n\n────────────────────────────────────────────────────────────\n═══ 📌 SHARPENED 2026-08-26 BY THE THREE-LEGS SURFACE AUDIT ═══\n\n*Rediscovered independently, which is itself worth recording: the audit reached this layer from the opposite direction — sweeping all 93 declared types for the three legs — and the duplicate guard caught the collision. Four of the audit's five \"exists only in the schema\" types are THIS subsystem. The 2026-08-11 reasoning above stands unaltered; three things are new.*\n\n**1. THE SPLIT IS EXACT, AND HALF OF IT SHIPPED.** The `environment` domain declares five things:\n\n| declared | tool | instances |\n|---|---|---|\n| `Environment` (node) | ✅ `add_environment` | 3 |\n| `DEPLOYED_TO` | ✅ `deploy_to` | 63 |\n| `OPERATES_IN` | ❌ none | **3** |\n| `EnvironmentRule` (node) | ❌ none | 0 |\n| `IMPOSES` | ❌ none | 0 |\n| `COMPLIES_WITH` | ❌ none | 0 |\n| `VIOLATES_RULE` | ❌ none | 0 |\n\n⇒ **reflow2 can say WHERE a system runs. It cannot say what rules that place imposes, or whether the design complies.** The 2026-08-11 note read the layer as uniformly dormant; it is not — the locating half works and the compliance half does not.\n\n**2. ⭐ THE SILENCE DILEMMA HAS MOVED, SLIGHTLY.** That note posed two opposite readings of the same silence — \"evidence it is not needed\" versus \"evidence nothing surfaces it\" — and said nothing distinguishes them. Something does now: **`OPERATES_IN` carries three edges and no tool writes it.** Some earlier session reached for that vocabulary and fell through to raw `create_edge`, which is precisely the escape hatch the three-legs rule says must not count as reachability. That is not proof of demand, but it is the first evidence on that side of the dilemma, and it came from inside this project rather than from the doc's argument.\n\n**3. A PARKING MECHANISM NOW EXISTS THAT DID NOT ON 2026-08-11.** `vocabulary_coverage` groups unused vocabulary by the schema's own domains and hands back `park_with: decision:vocab:environment` — accepting such a Decision declares the domain deliberately unused, so it stops reading as a hole in every coverage report without retiring anything. That makes a fifth option available:\n\n**(e) ⭐ PARK IT, and let a real request pull it into (a).** Cheap, honest, and the only option that is free to reverse: a parked domain a user later asks for becomes (a) with nothing undone. ⚠️ Counter: parking a specified feature is how a feature stays unbuilt forever, and this waiver lifecycle — `verified` on compliance, and `status: proposed | confirmed | rejected` on violation, where confirmed IS an accepted variance kept and documented — is better thought through than much of what does ship.\n\n📌 A SEPARATE CASE WITH THE SAME SHAPE, recorded here so it is not lost: `SUPPLEMENTS` (build domain, Fragment → Fragment) is the audit's fifth schema-only type and is NOT part of this subsystem. It links an LLM-as-SME supplementary-analysis Fragment to the source it augments, carrying `grounding: verified | extrapolated | speculative | contradicts_known` — storyflow lineage. Specified, unbuilt, unrequested; likely the same disposition, and worth splitting into its own node only if the answer differs.\n\n⚠️ AND (c) IS NOW KNOWN TO BE PARTLY DESTRUCTIVE. Retiring the scaffolding would remove `OPERATES_IN`, which has live edges in this very design. Whatever else is decided, that one is not a clean delete.",
         "name": "OPEN — should the Environment / EnvironmentRule compliance layer be built? The schema declares it, nothing writes or reads it, and it is what makes \"design a house\" concrete",
-        "rationale": "Three doc requirements, a schema layer, and a worked Kennewick-vs-Mars argument, all dating to 2026-07-17 with zero instances and zero code. The vocabulary distinction it carries — self-imposed vs chosen vs externally imposed — is sound and already in the schema. What is missing is any evidence a user wants it, including from the one user whose own domain is regulated.",
-        "status": "proposed"
+        "rationale": "Three doc requirements, a schema layer, and a worked Kennewick-vs-Mars argument, all dating to 2026-07-17 with zero instances and zero code. The vocabulary distinction it carries — self-imposed vs chosen vs externally imposed — is sound and already in the schema. What is missing is any evidence a user wants it, including from the one user whose own domain is regulated.\n\nSHARPENED 2026-08-26. The agent's recommendation, offered and not taken: **(e) park now**, on the grounds that three field reports this month (hxm_program, Alex, the storyflow fleet) mention environment compliance zero times, and parking is the only disposition that costs nothing to reverse. The counterweight is the new demand evidence — `OPERATES_IN` used three times through the escape hatch — which is thin but is the first thing to land on that side of a dilemma the original note said nothing could settle. If Anthony reads those three edges as a user reaching for the vocabulary rather than an accident of convenience, (a) or (b) is defensible and the recommendation should be overruled.\n\nKept as ONE node rather than split: the audit rediscovered this question from the opposite direction, and two nodes asking the same thing in different words is exactly what the duplicate guard exists to prevent.",
+        "status": "superseded"
       }
     },
     {
@@ -123488,8 +123729,8 @@
       "properties": {
         "decision": "Accepted the gap gap:baa3d7b03a08dedb.",
         "name": "Reviewed: gap:baa3d7b03a08dedb",
-        "rationale": "Anthony, 2026-08-23: accepted. A parked idea legitimately governs nothing yet, and relating them on a guess would assert reasoning nobody did.",
-        "status": "superseded"
+        "rationale": "Anthony's own words, 2026-08-23: **\"Accept it. A parked idea legitimately governs nothing yet.\"**\n\nWRITTEN IN 2026-08-26, THREE DAYS LATE, AND THE DELAY IS THE POINT. He answered this on 2026-08-23 and the answer never reached the design, so `open_questions` went on reporting it as `status: answered` with the gap still open, and every session since has been offered the same question he had already settled. `loop_status` carried it as \"1 answered question(s) never reached the design\" for three days. Being asked twice, worded differently, is how somebody learns the tool is not listening — and here the tool had been told and simply failed to write it down.\n\nWHY THE JUDGEMENT IS RIGHT, and it is the same principle this project settled from a different direction three days later. A `proposed` Decision asserts nothing: that is what `proposed` MEANS, and it is why `dec:idea-a-proposed-decision-asserts-nothing-so-what-may-a-structural-detector-say-about-it` (accepted 2026-08-26) now stops three finding kinds reading a brainstormed idea's edges as commitments. An unconnected parked idea is the same fact one layer up — it governs nothing because it has not been chosen, not because anyone forgot to link it. Demanding relations from every idea would add exactly the ceremony the `brainstorm` skill exists to remove.\n\n⚠️ WHAT THIS ACCEPTANCE DOES NOT SAY. It does not say linking ideas is worthless — `review_relations` exists precisely so a session CAN record a relation or an honest \"nothing was related\", and the count is still computed. It says an idea connected to nothing is not a DEFECT the loop should press the user about. `dec:idea-linking-half-ideas-needs-a-task-that-can-be-run` remains open on the separate question of whether working that backlog needs a runnable task, and this acknowledgement does not settle it.\n\n📌 THE REVIEW EXPIRES BY CONSTRUCTION if the affected set changes, which is correct here: the finding was raised at 117 of 166 ideas and stood at 110 of 192 when this was written. If the shape shifts materially the question comes back for a fresh judgement rather than staying accepted forever on a number nobody rechecked.",
+        "status": "accepted"
       }
     },
     {
@@ -124009,6 +124250,16 @@
         "decision": "Accepted the structural defect heal:f737a5cdf35a906d (single point of failure: cmp:ingest).",
         "name": "Reviewed: heal:f737a5cdf35a906d",
         "rationale": "Carries dec:sanitize-spof-accepted (2026-07-25): true and expected — cmp:sanitize is reached only through cmp:ingest, because INGEST is the only path foreign text currently enters by, so every route to the trust boundary runs through one component. `add_redundancy` is the wrong shape (a second copy of a pure text filter is duplication, not resilience). What dissolves it is the SECOND CALLER: detect-and-report on graph import. Deliberately NOT wiring cmp:export to cmp:sanitize to quiet the detector, because that edge does not exist in the code.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:vocab:environment",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "**Anthony's word, 2026-08-26: park it.** Option (e) of `dec:idea-the-environment-compliance-layer-was-designed-and-never-built`.\n\n📌 DISTINCT FROM THAT NODE BY ROLE, NOT BY WORDING, AND THE ID IS LOAD-BEARING. That one is the DELIBERATION — the open question, its five options and the argument on each. This is the RULING, and it must carry exactly this id because `vocabulary_coverage` looks the domain's `park_with` up by it. A ruling a machine reads and a deliberation a person reads are different artifacts; merging them would leave the tool with nothing to find.\n\nWHAT IS PARKED: the compliance half of the `environment` domain — the `EnvironmentRule` node type and the `IMPOSES`, `COMPLIES_WITH` and `VIOLATES_RULE` edges. Declared in `schema/environment.yaml` since 2026-07-17, zero instances, zero typed tools, zero instructions, zero detectors.\n\nWHAT IS **NOT** PARKED, and the distinction matters: the LOCATING half of the same domain is live and working — `Environment` (3 instances, written by `add_environment`) and `DEPLOYED_TO` (63 edges, written by `deploy_to`). `OPERATES_IN` sits between them: 3 live edges, no tool. **Parking is not retirement and touches none of these.**\n\n═══ WHY PARK RATHER THAN BUILD ═══\n\nThree field reports this month — hxm_program, Alex, and the storyflow fleet — mention environment compliance **zero times**. Building a fully-specified but unrequested subsystem is answering a question the schema asked rather than one a user did, which is the over-engineering failure mode this project measures itself against.\n\nParking is the only disposition that costs nothing to reverse. A parked domain a user later asks for becomes a build with nothing undone; a subsystem built unrequested cannot be un-built and adds surface every future session reads past.\n\n═══ WHY NOT RETIRE ═══\n\nRetiring was on the table as option (c) and is now known to be partly destructive: it would remove `OPERATES_IN`, which carries live edges in this design. The design is also sound — the three-way distinction between `Constraint` (self-imposed), `DesignRule` (chosen convention) and `EnvironmentRule` (externally imposed, negotiable only by variance or waiver) is good vocabulary, and the `VIOLATES_RULE` lifecycle where `confirmed` means an accepted variance kept and documented is better thought through than much of what ships.\n\n═══ ⚠️ WHAT WOULD REOPEN THIS ═══\n\n**A user asking.** Specifically: any design in a regulated operating environment where an external authority imposes a ruleset the design can only comply with, seek a variance from, or fail. Brookhaven NSLS-II and Space Force acquisition both look like that from the outside, and neither has reached for it.\n\n📌 AND ONE PIECE OF EVIDENCE POINTS THE OTHER WAY, kept at full strength because it is the only thing on that side. `OPERATES_IN` has three edges and no tool writes them — an earlier session reached for the vocabulary and fell through to raw `create_edge`, the escape hatch the three-legs rule says must not count as reachability. That is thin, it came from inside the project rather than from a user, and it was judged insufficient to justify building. If it recurs — especially from a consumer rather than from us — this parking should be revisited rather than defended.",
+        "name": "PARKED — the environment compliance vocabulary is deliberately unused until a user asks for it",
+        "rationale": "Recorded as the domain's `park_with` ruling, which is the node `vocabulary_coverage` already names for this purpose: accepting it declares the domain deliberately unused, so unused environment vocabulary stops reading as a hole in every coverage report without anything being deleted.\n\nThat is the same principle as `ruling: parks` one layer down and the same principle as `dec:idea-a-proposed-decision-asserts-nothing-...` one layer up: a deliberate state must be COUNTED and explained rather than either reported as a defect or silently hidden. All three exist because a count that grows when somebody does the right thing teaches people to stop reading it.\n\nThe agent recommended parking and Anthony took it. The counter-evidence — three `OPERATES_IN` edges written through the escape hatch — is recorded on the decision rather than dropped, because it is the one fact that would justify overturning this and it should not have to be rediscovered.",
         "status": "accepted"
       }
     },
@@ -125899,8 +126150,9 @@
       "node_type": "DesignRule",
       "properties": {
         "category": "methodology",
+        "enforced": false,
         "name": "An identified issue is ROOT-CAUSED, PINNED BY A CI TEST, then FIXED — and the root cause is written down, not just the repair",
-        "statement": "Anthony, 2026-08-26: *\"if an issue is identified, determine root cause of issue, update CI tests to catch this, and then implement fix, and test… document the root cause of the issue as part of the design rule.\"*\n\n═══ THE ORDER, AND THE ORDER IS THE RULE ═══\n\n**① ROOT-CAUSE IT.** Not the symptom, not the instance. Ask what CLASS of thing this is and what let it happen.\n**② PIN IT WITH A TEST THAT FAILS TODAY.** In CI, not locally. The test must fail against the unfixed code, or it is pinning nothing.\n**③ FIX IT AT THE CAUSE.** `rule:fix-it-properly-while-it-is-still-cheap` governs how.\n**④ TEST IT.** The pin now passes, and the run is read from the authoritative object (`rule:success-is-read-from-the-authoritative-object`).\n**⑤ WRITE THE ROOT CAUSE DOWN.** In the test's own comment and in the design — because the repair is recoverable from the diff and the CAUSE is not.\n\n⚠️ **THE STEP MOST OFTEN SKIPPED IS ②, AND SKIPPING IT IS INVISIBLE.** A fix without a failing-first test looks identical to a fix with one: both end green. The difference only appears when the class recurs, and by then nobody remembers whether it was ever pinned.\n\n═══ THE WORKED EXAMPLE THIS RULE WAS WRITTEN FROM (2026-08-26) ═══\n\n**SYMPTOM**, reported from the field by hxm_program as F-01: replaying a gap into `gaps_to_prompts` exactly as the docs instruct — *\"REPLAY EACH GAP OBJECT UNCHANGED\"* — was refused with `invalid GapCandidate: missing field 'suggested_depth'`.\n\n**FIRST-ORDER READING, AND IT WAS WRONG:** *\"the budgeted reply withheld a field.\"* True as far as it goes, and it would have led to patching the budget to keep `suggested_depth`.\n\n⭐ **ROOT CAUSE:** `GapCandidate` promises a replay contract IN ITS OWN DOC COMMENT — *\"a compact row handed straight back to `gap_to_prompt` has to deserialize\"* — and enforces it field by field. `description` and `evidence` carry `#[serde(default)]`; **`suggested_depth` and `affected_ids` do not.** So the contract held for the fields somebody remembered and broke for the ones nobody did. **The cause is not the budget and not that field — it is that a stated contract was maintained BY HAND, with nothing checking it.** Two mechanisms then cancelled on exactly the designs where both matter: the budget exists so the call can be made at all on a large design, and the handshake exists so the gaps can be asked.\n\n**THE PIN:** `a_budgeted_row_replays_into_the_handshake_it_was_meant_for` — and it pins the ROUND TRIP, not the field. Serialize every budgeted row, deserialize it back, and separately deserialize a row whose optional fields are ABSENT rather than empty. **Any future field added without a default fails it.** Pinning `suggested_depth` alone would have fixed today and left the class open.\n\n**THE FIX:** `#[serde(default)]` on `affected_ids`, `#[serde(default = \"default_suggested_depth\")]` on `suggested_depth`, defaulting to 2 — the value every detector but one emits, so a row that lost the field asks for the ordinary depth rather than an invented one.\n\n═══ ENFORCEMENT — NOT YET STATED, DELIBERATELY ═══\n\n⚠️ `enforced` is deliberately ABSENT rather than guessed. Whether shipping a fix with no failing-first test should STOP THE BUILD is a claim about consequence — review load, who gets blocked — and it is Anthony's to make. `unstated_rule_enforcement` will ask at 0.4, which is the honest outcome.\n\n📌 AND THE HARD PART IF IT EVER BECOMES ENFORCED: no detector can see whether a test failed BEFORE the fix, because CI only ever runs the merged state. The checkable half is weaker — *does this change touch code and add no test?* — and `req:a-rule-says-whether-it-can-be-checked-at-all` (ACCEPTED, unbuilt) is where that distinction belongs."
+        "statement": "Anthony, 2026-08-26: *\"if an issue is identified, determine root cause of issue, update CI tests to catch this, and then implement fix, and test… document the root cause of the issue as part of the design rule.\"*\n\n═══ THE ORDER, AND THE ORDER IS THE RULE ═══\n\n**① ROOT-CAUSE IT.** Not the symptom, not the instance. Ask what CLASS of thing this is and what let it happen.\n**② PIN IT WITH A TEST THAT FAILS TODAY.** In CI, not locally. The test must fail against the unfixed code, or it is pinning nothing.\n**③ FIX IT AT THE CAUSE.** `rule:fix-it-properly-while-it-is-still-cheap` governs how.\n**④ TEST IT.** The pin now passes, and the run is read from the authoritative object (`rule:success-is-read-from-the-authoritative-object`).\n**⑤ WRITE THE ROOT CAUSE DOWN.** In the test's own comment and in the design — because the repair is recoverable from the diff and the CAUSE is not.\n\n⚠️ **THE STEP MOST OFTEN SKIPPED IS ②, AND SKIPPING IT IS INVISIBLE.** A fix without a failing-first test looks identical to a fix with one: both end green. The difference only appears when the class recurs, and by then nobody remembers whether it was ever pinned.\n\n═══ THE WORKED EXAMPLE THIS RULE WAS WRITTEN FROM (2026-08-26) ═══\n\n**SYMPTOM**, reported from the field by hxm_program as F-01: replaying a gap into `gaps_to_prompts` exactly as the docs instruct — *\"REPLAY EACH GAP OBJECT UNCHANGED\"* — was refused with `invalid GapCandidate: missing field 'suggested_depth'`.\n\n**FIRST-ORDER READING, AND IT WAS WRONG:** *\"the budgeted reply withheld a field.\"* True as far as it goes, and it would have led to patching the budget to keep `suggested_depth`.\n\n⭐ **ROOT CAUSE:** `GapCandidate` promises a replay contract IN ITS OWN DOC COMMENT — *\"a compact row handed straight back to `gap_to_prompt` has to deserialize\"* — and enforces it field by field. `description` and `evidence` carry `#[serde(default)]`; **`suggested_depth` and `affected_ids` do not.** So the contract held for the fields somebody remembered and broke for the ones nobody did. **The cause is not the budget and not that field — it is that a stated contract was maintained BY HAND, with nothing checking it.** Two mechanisms then cancelled on exactly the designs where both matter: the budget exists so the call can be made at all on a large design, and the handshake exists so the gaps can be asked.\n\n**THE PIN:** `a_budgeted_row_replays_into_the_handshake_it_was_meant_for` — and it pins the ROUND TRIP, not the field. Serialize every budgeted row, deserialize it back, and separately deserialize a row whose optional fields are ABSENT rather than empty. **Any future field added without a default fails it.** Pinning `suggested_depth` alone would have fixed today and left the class open.\n\n**THE FIX:** `#[serde(default)]` on `affected_ids`, `#[serde(default = \"default_suggested_depth\")]` on `suggested_depth`, defaulting to 2 — the value every detector but one emits, so a row that lost the field asks for the ordinary depth rather than an invented one.\n\n═══ ⭐ ENFORCEMENT — SETTLED 2026-08-26: ADVISORY, NOT GATE-BLOCKING ═══\n\n**Anthony's word, put to him with three options and a recommendation.** `enforced: false`. Breaking this rule does NOT stop the build.\n\n**WHY, AND IT IS NOT LENIENCY.** The load-bearing half of this rule is step ②, and **nothing in a diff or a CI run can see whether a test was FAILING before the fix** — CI only ever runs the merged state. The note below predicted this before the question was asked, and the prediction held.\n\nSo an enforced version could only check something weaker — *does this change touch code and add no test?* — which passes on a test written AFTER the fix. That is the failure mode this project keeps finding and just spent a day fixing three times over: **a check that reads as enforcement while measuring something else is worse than no check**, because it converts an unanswered question into a false green.\n\n⚠️ **THE COST, STATED RATHER THAN BURIED:** advisory rules get skipped, and this rule exists precisely because F-01's own fix skipped step ②. Its author verified the pin passing and never saw it fail. The discipline now rests on sessions choosing it, and on the record saying honestly which way it went — the three fixes on 2026-08-26 each recorded that they WERE observed failing first, and that sentence is the only evidence there is.\n\n📌 **WHAT WOULD MAKE PART OF THIT CHECKABLE**, kept because the answer may change: `req:a-rule-says-whether-it-can-be-checked-at-all` (ACCEPTED, unbuilt) is where the distinction between a rule's checkable and unheckable halves belongs. And the ⑤ half IS checkable today — `req:a-fix-says-whether-it-corrected-the-cause` (ACCEPTED) asks a repair to record whether it reached the cause. Splitting enforcement across the two halves was offered as an option and NOT taken; if step ② keeps being skipped, that split is the next thing to try rather than gating the whole rule."
       }
     },
     {
@@ -138232,6 +138484,18 @@
       }
     },
     {
+      "node_id": "fact:the-three-legs-audit-run-at-last-54-of-93-and-five-types-exist-only-in-the-schema",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "measurement",
+        "name": "The three-legs audit, finally run over the surface",
+        "statement": "MEASURED 2026-08-26, answering Anthony's question — *\"I believe there are '3 legs' that certain skills need — have they been applied to all skills uniformly?\"* The audit had never been run. It has now, over the WHOLE declared vocabulary rather than the three items `fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it` sampled.\n\nSCOPE: all 64 edge types + 29 node types the schema declares = 93. For each, the three legs — (1) a TYPED TOOL that writes it, (2) an INSTRUCTION in a served skill or tool description saying WHEN, (3) a DETECTOR that notices its ABSENCE.\n\n═══ THE ANSWER: NO, NOT UNIFORMLY ═══\n\n  all three legs      54  (58%)\n  tool + instruction  8   (no detector)\n  instruction + detector 7 (no tool)\n  tool only           7\n  tool + detector     1\n  instruction only    2\n  detector only       1\n  ⭐ NO LEGS AT ALL   13  (14%)\n\n═══ 🛑 THE SHARPEST FINDING: FIVE TYPES EXIST ONLY IN THE SCHEMA ═══\n\n`COMPLIES_WITH`, `IMPOSES`, `OPERATES_IN`, `SUPPLEMENTS`, `VIOLATES_RULE` are declared in the schema and appear in ZERO Rust source files, ZERO served skills, and ZERO tool descriptions. Nothing writes them, nothing instructs them, nothing detects them, and no code even names them. `OPERATES_IN` nevertheless has 3 edges in reflow2's own graph — written through raw `create_edge`, which is precisely the escape hatch the three-legs rule says must not count as reachability.\n\nThe other eight leg-less types: `ANNOTATES` (11 edges), `ASSESSED_ON`, `CONTAINS_EPOCH`, `EnvironmentRule`, `HAS_SNAPSHOT` (188 edges), `OBSERVED_IN`, `OCCURS_DURING`, `QualityGate`. ALL THIRTEEN share one property: **zero mentions in the MCP layer, zero in any served skill, zero in any tool description.** An agent working a user's project cannot learn these exist by any route reflow2 offers.\n\n⭐ `HAS_SNAPSHOT` IS THE INSTRUCTIVE ONE. It carries 188 edges here, so it plainly WORKS — `record_change` writes it internally. But no skill and no tool description ever names it, so leg 1 is satisfied only by accident of another tool's implementation, and legs 2 and 3 are genuinely absent. Vocabulary can be heavily used and still be unreachable BY INTENT.\n\n═══ THE DECOMPOSES PATTERN, CONFIRMED AND NOT ALONE ═══\n\nFive types have ALL THREE LEGS and zero instances here: `CLAIMS`, `DECOMPOSES`, `DUPLICATES`, `MASKS`, `PRODUCES`. `DECOMPOSES` was the case that first exposed the hidden qualifier on leg 3 — a detector that checks the consistency of what EXISTS cannot ask why none exists — and the audit finds four siblings. This is direct evidence for the FOURTH-LEG hypothesis in `dec:idea-have-the-three-legs-been-applied-uniformly-and-are-three-legs-enough`: three legs present, practice still absent.\n\n═══ ⚠️ HONEST LIMITS, AND THE FIRST VERSION WAS WRONG ═══\n\nTHIS IS A MECHANICAL PROXY. A mention is not an instruction and a reference is not an absence-detector, so every YES is an UPPER BOUND: real coverage can only be worse than 58%, never better.\n\nTHE FIRST RUN PRODUCED JUNK AND WAS DISCARDED. v1 matched case-sensitively (so `DECOMPOSES` in detect.rs was missed and it reported no detector, contradicting a recorded fact) and derived leg 1 from the type NAME (so `ALLOCATED_TO` read as having no tool, when `allocate` writes it). Both bugs inflated the failure count. v2 resolves leg 1 through the core methods a served tool actually calls, and counts a tool whose DESCRIPTION enumerates the type — `review_relations` names thirteen inference relations that way, and without that rule they read as unreachable when they are not.\n\nTHE 13 LEG-LESS TYPES WERE HAND-VERIFIED against the whole repo rather than trusted from the proxy. The 54 were not.\n\n📌 `vocabulary_coverage` was checked FIRST, per the option (b) instruction to look before building. It answers a DIFFERENT question — which vocabulary ONE DESIGN has used (43/64 edge types, 23/29 node types here) — and is per-design, not per-surface. It is nevertheless a partial answer to leg 3's hidden qualifier: it is the one computation that asks 'you have never used this at all', which `fact:vocabulary-needs-three-legs` said nothing did.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-26"
+      }
+    },
+    {
       "node_id": "fact:the-tool-catalogue-was-unstable-under-its-own-growth",
       "node_type": "TemporalFact",
       "properties": {
@@ -138617,6 +138881,20 @@
         "level": "integration",
         "method": "test",
         "name": "Six probes, six mutations, and the one that caught a detector which could not have failed",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:a-read-only-surface-refuses-every-write",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Four tests over the real `ReflowService`, driving the tool methods a client calls rather than the engine beneath them.\n\n**The claim:** a read-only service REFUSES a write (`create_node`).\n\n**Three counterweights, and each catches a different way the fix could go wrong:**\n- `a_read_only_service_still_serves_reads` — a read-only surface that refused reads too would be no surface at all, and reading is the entire thing being offered.\n- `a_normal_service_still_writes` — catches the fix going too far. It asserts a DEFAULT service reports `is_read_only() == false` and writes successfully, so it goes red if read-only ever becomes a default or if `write_lock` starts refusing unconditionally. **It passed BEFORE the refusal existed and after**, which is what makes it a counterweight rather than a restatement.\n- `a_session_on_a_read_only_server_is_read_only_too` — ⭐ the case the COMPILER found, not review. `share()` mints a service per CLIENT SESSION (`req:sessions-share-a-graph`), and that is the path every connection to a shared server takes. Had read-only been reset there instead of inherited, the mode would have held for the process and evaporated for every actual client — read-only in name only, and green at the process level.\n\n⚠️ WHAT THIS DOES NOT CHECK: that reads are SAFE to expose. It checks integrity, not confidentiality. A read-only surface still hands the whole design to anyone who can reach the port, which the requirement relocates to the network rather than solving.",
+        "findings": "4 passed / 0 failed. ⭐ OBSERVED FAILING FIRST: run against the plumbing with the refusal deliberately absent, the two write cases went red (`a_read_only_service_refuses_a_write`, `a_session_on_a_read_only_server_is_read_only_too`) while both counterweights were green — which is what proves the counterweights are not restatements of the fix. Full workspace suite after: 1817 passed / 0 failed across 159 binaries, run whole rather than the core-only gate because 98 call sites moved. `cargo fmt --check` and `clippy -p reflow2-mcp -D warnings` clean.\n\n📌 DEMONSTRATED IN THE FIELD, not only in tests: the shared server serving this session was stopped and respawned from the newly-built binary (read-only compiled in, flag absent) and design writes continued normally — including the ChangeEvent recording this work. That is the check a user actually wants for a change of this shape, and it is not something the test suite can make.",
+        "kind": "verification",
+        "last_run_at": "2026-08-26",
+        "level": "integration",
+        "method": "test",
+        "name": "A read-only surface refuses writes, still serves reads, and a client session inherits the mode",
         "status": "passing"
       }
     },
@@ -141128,7 +141406,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:52d199d228be29a9d946e448e9df831fae12a661f22fd10bd9ffcd63170b7427",
+  "prev_content_hash": "sha256:5610e79103cfe64d4dc2c903b4a244fb5224bb0c711c8412a92faf9e86c73bab",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
