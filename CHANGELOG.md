@@ -31,6 +31,49 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.41.0] — 2026-08-26
+
+### Fixed — doing the right thing stops raising the alarm
+
+**Minor.** No schema change: the stamp is unmoved at 29 node types / 64 edge types / schema_version 1, diffed field by field against v0.40.0. **No upgrade doc is owed.**
+
+**hxm_program followed the `brainstorm` skill exactly and was punished for it.** Ideas recorded as `proposed` Decisions, linked with `CONTRADICTS` / `ANTICIPATES` / `DEPENDS_ON` exactly as step 4 instructs — and `detect_defects` read every one of those edges as a commitment. **Their defect count went 2 → 7 over a day of doing the prescribed thing**, repeated at every hand-off. reflow2's own session hit the same class the same day, neither knowing about the other.
+
+**A `proposed` Decision asserts nothing, and three finding kinds now read that.** One predicate, `is_parked_idea`, and each kind states how it combines it — because the combinations differ and the difference is the content:
+
+| finding | goes quiet when |
+|---|---|
+| `contradiction` | **both** endpoints are parked ideas |
+| `unresolved_setup` | **either** endpoint is one |
+| `unthreaded_cluster` | **every** island member is one |
+
+`duplicate` and the three pure-topology rules deliberately do **not** read it, and say so.
+
+    89 → 61   structural defects on reflow2's own design, with 33 declared suppressed
+
+**⭐ And the sweep now says what it did NOT report.** `SweepScope.suppressed_by_parked_idea` counts suppressions by category, so `reported + suppressed` reconciles instead of findings vanishing. Without it the fix would have re-created, one rule over, the vacuous zero that `swept.parked` exists to prevent.
+
+**The root cause was not any one detector.** The principle was already written down in FOUR places and implemented in ONE — `zero_degree_finding`'s *"a parked thought that correctly shapes nothing yet"*, the schema's *"ONLY AN ACCEPTED DECISION DISCONTINUES ANYTHING"*, `loop_status`'s silence on an unapproved proposal, and the `parks` ruling requiring an accepted Decision. Every detector re-derived its qualifier set by hand. **Writing a principle down four times is not implementing it.**
+
+So the deliverable is the guard: `every_category_states_whether_it_reads_proposed` is an exhaustive match over `HealCategory`, and a new category **cannot compile** until its author has written down where it stands. Both answers are legitimate; an unconsidered category is not.
+
+**Also fixed:** a gap replayed into `gaps_to_prompts` exactly as documented was refused with `missing field 'suggested_depth'` (hxm_program, F-01). The cause was not the field — `GapCandidate` stated a replay contract in its own doc comment and enforced it field by field, so it held for the fields somebody remembered. The pin is the **round trip**, so any future field added without a default fails it.
+
+### Added — a surface that can refuse every write, and a session that can say what it went without
+
+**`reflow2-mcp --read-only`** refuses every write and still answers every read. The transport and cross-machine reach were already built and verified; what has never existed is any answer to *who is calling*. Read-only splits that exposure and answers one half outright: **integrity** — no write means nothing to attribute, so a caller-supplied `contributor_id` is never accepted; **confidentiality** — not eliminated, *relocated* to the network, which is what a tailnet is for. It is not authentication and does not make authentication unnecessary; it is what lets a reachable surface ship before authentication exists.
+
+Enforced at `write_lock` — the one point a write cannot avoid — so it covers every write that exists and every write added later. **Off by default**, and the compiler proved the sweep complete: making the guard fallible turned all 98 call sites into errors until each was updated, and caught a second assembly point where a per-client session had to *inherit* the mode rather than reset it.
+
+**`report_manual_work` / `manual_work_report`** record the work a session did BY HAND that reflow2 already serves — the negative space. Every other measure of adoption looks at what a session *did* with reflow2, and `dec:bl-155` states the consequence: 40 of 132 tools never called, and it **cannot tell unused from unreachable**. Hand-rolled work discriminates, because it carries intent. The `diagnosis` is a closed set — `tool_missing` (build one) / `tool_not_found` (surface one) / `tool_refused` / `unknown` — and an unknown value is refused.
+
+**`/next`** fronts the `what_next` tool, which had no slash command and was reachable only inside `/where`. It reads reflow2's own four bands back and forbids the agent substituting its own ranking.
+
+### Changed
+
+The `capture-session` skill asks, at session end, what you did by hand that reflow2 should have done. The environment **compliance** vocabulary is parked — deliberately unused until a user asks, not retired; the locating half (`Environment`, `DEPLOYED_TO`, `OPERATES_IN`) is untouched and live. `rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed` is recorded **advisory**: nothing in a diff or a CI run can see whether a test failed *before* the fix, so an enforced version could only check something weaker and would read as enforcement while measuring something else.
+
+
 ## [0.40.0] — 2026-08-26
 
 ### Added — allocation follows the code, and a deliberate state stops reading as a defect
