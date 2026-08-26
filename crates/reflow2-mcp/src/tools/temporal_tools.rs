@@ -190,6 +190,75 @@ impl ReflowService {
         )
     }
 
+    #[tool(
+        description = "Record work THIS SESSION did BY HAND that reflow2 already serves, or \
+                       should — the negative space. ⭐ IT IS A STRONGER SIGNAL THAN AN ABSENT \
+                       CALL BECAUSE IT CARRIES INTENT: reflow2 can count which tools were never \
+                       called, but `dec:bl-155` measured 40 of 132 unused and states outright \
+                       that it CANNOT TELL UNUSED FROM UNREACHABLE. A session that wrote a script \
+                       to do X proves somebody wanted X badly enough to build it, which a zero in \
+                       a usage table never shows. `diagnosis` is the whole value and the set is \
+                       CLOSED — `tool_missing` (nothing does this), `tool_not_found` (something \
+                       does and you did not find it: a DISCOVERABILITY failure, a different \
+                       repair), `tool_refused` (you reached for one and it would not), `unknown` \
+                       (you cannot say, which is an honest answer and better than a wrong \
+                       bucket). Naming a `reflow2_tool` that is not served is REFUSED, because \
+                       that means the diagnosis is really `tool_missing` and a phantom would sit \
+                       in the table somebody reads to decide what to improve. The same work \
+                       reported twice is ONE record. 🛑 WHAT YOU WRITE STAYS IN THIS DESIGN: it \
+                       is free text naming your own domain, so it must never be lifted into a \
+                       telemetry payload (`req:telemetry-carries-usage-never-design-content` — \
+                       log the verb, never the object).",
+        annotations(read_only_hint = false)
+    )]
+    pub async fn report_manual_work(
+        &self,
+        Parameters(req): Parameters<ReportManualWorkReq>,
+    ) -> Result<CallToolResult, McpError> {
+        // ⭐ THE ROUTER ANSWERS FOR ITSELF. `has_route` asks the live surface
+        // whether it serves that name, so there is no second copy of the tool
+        // list to drift — which is why this check lives here and not in the
+        // core, where it would have had to be one.
+        if let Some(t) = req.reflow2_tool.as_deref()
+            && !self.tool_router.has_route(t)
+        {
+            return Err(McpError::invalid_params(
+                format!(
+                    "reflow2 serves no tool named {t:?}. If NOTHING does this, the diagnosis is \
+                     `tool_missing` and the tool name should be omitted. If something does, name \
+                     it exactly as the surface spells it — find_tools will tell you."
+                ),
+                None,
+            ));
+        }
+        let mut g = self.write_lock().await?;
+        let id = g
+            .report_manual_work(
+                &req.what,
+                &req.diagnosis,
+                req.reflow2_tool.as_deref(),
+                req.at.as_deref(),
+            )
+            .map_err(dyno_err)?;
+        ok_json(serde_json::json!({ "recorded": id }))
+    }
+
+    #[tool(
+        description = "Every piece of hand-rolled work this design has recorded, with the \
+                       diagnosis that separates a MISSING tool from an UNFINDABLE one. Read it \
+                       when deciding what to build or what to surface: a run of \
+                       `tool_not_found` against a tool that exists is a discoverability repair, \
+                       and a run of `tool_missing` is a feature nobody has written. Empty means \
+                       nobody has reported any — which is NOT the same as nobody having done work \
+                       by hand, and must not be read as it, since the signal depends on a session \
+                       noticing and saying so.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn manual_work_report(&self) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        ok_json(g.manual_work_report().map_err(dyno_err)?)
+    }
+
     // ---- Temporal / CHANGE (deterministic, mutating) ----
 
     #[tool(

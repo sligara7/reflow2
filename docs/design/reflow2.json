@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ad8b744f51095e6238408b815ea0bfe98182ccda12736a30045afa57453acae3",
+  "content_hash": "sha256:709641251b722fc0223f0484daeefb0893ceaea3f3d1c3cf2554c01831b83c75",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2985,6 +2985,14 @@
         "evidence": "That question asks whether a skill should assert the tool DEFAULT it depends on so the build breaks when the default moves. It is the same question one scope down: an unstated obligation between two surface elements that nothing checks. The narrower case was recorded first."
       },
       "to_id": "dec:idea-a-tool-class-should-carry-a-contract-that-something-checks"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-can-reflow2-see-the-work-a-session-did-by-hand",
+      "properties": {
+        "evidence": "That question proposed four ways to see hand-rolled work and this is the road taken: the CHEAPEST, asking the agent at session end. It is recorded here rather than by closing that node, because the question deliberately keeps the roads NOT taken — the transcript-side detector remains unexplored, and its larger build and unusual privacy posture are why asking was tried first. Building this does not answer it."
+      },
+      "to_id": "cap:a-session-reports-the-work-it-did-by-hand"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -17758,6 +17766,51 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-session-can-report-what-it-did-by-hand",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:capture-session-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-session-can-report-what-it-did-by-hand",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-session-can-report-what-it-did-by-hand",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-session-can-report-what-it-did-by-hand",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-session-can-report-what-it-did-by-hand",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:a-session-says-what-it-did-by-hand-that-reflow2-already-serves"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:a-session-names-its-design",
       "properties": {
         "accepted_baseline": true,
@@ -19675,6 +19728,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-9d03ab6c044e6ae6",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-9d3a919d6550b6f3",
       "properties": {
         "accepted_baseline": true,
@@ -21340,6 +21402,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:baseline-1c0073e2fa07e620",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:by-hand-names-a-real-tool-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:baseline-238b75c11ad92d98",
       "properties": {
         "accepted_baseline": true,
@@ -21628,12 +21699,30 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:baseline-b8b1e637cb6c605c",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:manual-work"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:baseline-d06eb1ad9d4aec57",
       "properties": {
         "accepted_baseline": true,
         "action": "modified"
       },
       "to_id": "art:test-surface-orphaned"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-d38dae8eb49c5c7a",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:by-hand-signal-test"
     },
     {
       "edge_type": "CHANGED",
@@ -96887,6 +96976,24 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:by-hand-names-a-real-tool-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-session-reports-the-work-it-did-by-hand"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:by-hand-signal-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-session-reports-the-work-it-did-by-hand"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:capture-intent-skill",
       "properties": {
         "completeness": "complete"
@@ -96900,6 +97007,15 @@
         "completeness": "complete"
       },
       "to_id": "cap:the-design-interview-precedes-the-capture"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:capture-session-skill",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-session-reports-the-work-it-did-by-hand"
     },
     {
       "edge_type": "REALIZES",
@@ -98016,6 +98132,15 @@
         "completeness": "complete"
       },
       "to_id": "cmp:main"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:manual-work",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-session-reports-the-work-it-did-by-hand"
     },
     {
       "edge_type": "REALIZES",
@@ -100042,6 +100167,12 @@
       "from_id": "cap:a-scoped-answer-says-whether-it-narrowed",
       "properties": {},
       "to_id": "req:a-scoped-answer-actually-narrows"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-session-reports-the-work-it-did-by-hand",
+      "properties": {},
+      "to_id": "req:a-session-says-what-it-did-by-hand-that-reflow2-already-serves"
     },
     {
       "edge_type": "SATISFIES",
@@ -102884,6 +103015,12 @@
       "from_id": "ver:a-scoped-answer-actually-narrows",
       "properties": {},
       "to_id": "cap:a-scoped-answer-says-whether-it-narrowed"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-session-can-report-and-read-back-hand-rolled-work",
+      "properties": {},
+      "to_id": "cap:a-session-reports-the-work-it-did-by-hand"
     },
     {
       "edge_type": "VERIFIES",
@@ -105960,6 +106097,28 @@
       }
     },
     {
+      "node_id": "art:by-hand-names-a-real-tool-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:c6b836d74cf80defe412d3f729468a593d410d2efd92ca7af90cd7d007bfa891",
+        "location": "crates/reflow2-mcp/tests/a_by_hand_report_names_a_real_tool.rs",
+        "name": "tests/a_by_hand_report_names_a_real_tool.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:by-hand-signal-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:efe95161ecab4c2235ae8bdd9d71436141545fd047f6049e966c4705f56a24b1",
+        "location": "crates/reflow2-core/tests/a_session_reports_what_it_did_by_hand.rs",
+        "name": "tests/a_session_reports_what_it_did_by_hand.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:capture-intent-skill",
       "node_type": "Artifact",
       "properties": {
@@ -105977,7 +106136,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:79da3d475bd65ae9172e3bf6d08afbf6c003409fa113230338ebcd354161f33d",
+        "checksum": "sha256:cba3f8d56328f2f35a0a049cf466cd74cd4f9da373db3c10d75482d30dbac909",
         "granularity": "atomic",
         "location": "getting-started/skills/capture-session/SKILL.md",
         "name": "getting-started/skills/capture-session/SKILL.md",
@@ -107029,6 +107188,17 @@
       }
     },
     {
+      "node_id": "art:manual-work",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:07d63c0f4d0b5b79a213fe28a0132913e5d207d2068d590145342d28fa91e56b",
+        "location": "crates/reflow2-core/src/manual_work.rs",
+        "name": "manual_work.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:maturity",
       "node_type": "Artifact",
       "properties": {
@@ -107804,7 +107974,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7d7ac52d97e2944c09c05f1358d51271233d5440b9d32dc877cc940051aa0e47",
+        "checksum": "sha256:943ba39eea00d06a5cf9f909ee0f2a764baf2c52da7891c7f2b85e8fa3eac392",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -107891,7 +108061,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:bec2ea69029e95636f5f4393c0faad930d3a2a558b28c0348c3fa3245a4b5b26",
+        "checksum": "sha256:cfaf7a3aa1d450cb3db7cf9519f855439c71eedf8695e53e9dec1f062c8afb44",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -108540,7 +108710,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:32924d1d47e6023fd7d3093250c84f1c7e5b9673087ab1b2d3dc1ec44fdc4e50",
+        "checksum": "sha256:7eb878fefd48bea1cda02cc0dffe8cc3d3c61f3822e0bd93bb7b99ae79e33746",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -109034,6 +109204,16 @@
         "inputs": "[\"scope\",\"depth\"]",
         "name": "A scoped read reports how much of the design it still holds, and says in words when that is most of it",
         "outputs": "[\"share_of_anchored\",\"narrowing_note\",\"in_scope\",\"out_of_scope\",\"total\"]",
+        "provenance": "authored",
+        "status": "verified"
+      }
+    },
+    {
+      "node_id": "cap:a-session-reports-the-work-it-did-by-hand",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`report_manual_work` writes it; `manual_work_report` reads it back; the `capture-session` skill asks for it at session end. Delivers `req:a-session-says-what-it-did-by-hand-that-reflow2-already-serves`.\n\n📌 DISTINCT FROM THE TWO THE GUARD OFFERED, BY ROLE. `req:a-session-says-what-it-did-by-hand-...` states WHAT MUST BE TRUE. `dec:idea-can-reflow2-see-the-work-a-session-did-by-hand` is the open QUESTION the requirement was promoted out of, and keeps the roads not taken. This is the thing that DELIVERS the requirement — what a capability is, and what a `SATISFIES` edge needs on its other end.\n\n⭐ WHY IT IS WORTH MORE THAN AN ABSENT CALL. Every other measurement reflow2 has of its own adoption looks at what a session DID with it. `dec:bl-155` measured 40 of 132 tools never called and states the consequence outright: it **cannot tell unused from unreachable**. Hand-rolled work discriminates between them because it carries INTENT — a session that wrote a script to do X proves somebody wanted X, at a moment, badly enough to build it.\n\n⭐ THE `diagnosis` IS THE WHOLE VALUE AND THE SET IS CLOSED. `tool_missing` (nothing does this — build one) · `tool_not_found` (something does and the session missed it — a DISCOVERABILITY failure, a different repair) · `tool_refused` (one was reached for and would not) · `unknown` (the session cannot say). Unknown values are REFUSED and the refusal names what would have worked. `unknown` is kept as a legitimate answer because forcing a guess corrupts the other three.\n\nNaming a `reflow2_tool` the surface does not serve is refused too — that means the diagnosis is really `tool_missing`, and a phantom would sit in the one table somebody reads to decide what to improve. That check lives at the TOOL rather than in the core, because `tool_router.has_route()` asks the live router while a core-side list would be a second copy of the tool surface maintained by hand.\n\nALL THREE LEGS SHIPPED TOGETHER, deliberately: the surface audit hours earlier found 13 declared types with no legs at all and five carrying all three and still unused. The reader is the leg whose absence kills vocabulary — `DECOMPOSES` reached zero edges while shipping a detector for them.\n\n🛑 TWO LIMITS THAT BUILDING THIS DID NOT RESOLVE. It depends on the agent having NOTICED the tool existed, which is the same blind spot it exists to see — so an empty report is NEVER evidence that nothing was hand-rolled, and `manual_work_report`'s own description says so. And `dec:how-should-reflow2-log-its-own-usage` argues a tool is the wrong shape for self-measurement at all, which is correct and here unavoidable: the server observes calls, and work done by hand happens where it cannot look.\n\n🛑 THE RECORD STAYS LOCAL. `what` is free text naming the user's own domain — exactly the field `req:telemetry-carries-usage-never-design-content` warns \"the next contributor will put something useful in\". It must never be lifted into a telemetry payload.",
+        "name": "A session records the work it did by hand, with the diagnosis that separates a missing tool from an unfindable one",
         "provenance": "authored",
         "status": "verified"
       }
@@ -111768,6 +111948,18 @@
       }
     },
     {
+      "node_id": "chg:a-session-can-report-what-it-did-by-hand",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-26",
+        "name": "The negative space becomes recordable — and readable",
+        "rationale": "ALL THREE LEGS, DELIBERATELY, because the surface audit run hours earlier (`fact:the-three-legs-audit-run-at-last-...`) found 13 declared types with NO legs at all and five carrying all three and still unused. Shipping a writer without a reader would have added to that count on the same day the count was taken. The reader is the leg that kills vocabulary when it is missing: `DECOMPOSES` reached ZERO edges while shipping a detector for them, and a record nothing reads back is a record nobody writes twice.\n\n⭐ A TEST FAILED FOR THE RIGHT REASON AND MOVED THE DESIGN. \"A report may not name a tool reflow2 does not serve\" was written into the CORE suite and failed there — the core does not know what the surface serves, and answering it there would have meant a second copy of the tool list maintained by hand, which is the defect class this project fixed three times the same day. The check moved to the tool, where `tool_router.has_route()` asks the LIVE ROUTER: nothing maintained, nothing that can drift. Both files carry a note saying why the test lives where it does, so the layering is not rediscovered later as an accident.\n\nWHY THE DIAGNOSIS IS CLOSED: it is the one field that separates \"nothing does this\" from \"something does and I did not find it\" — a feature to build versus a feature to surface. `dec:bl-155`'s central finding is that reflow2 cannot otherwise tell unused from unreachable. Free text would let that distinction rot one report at a time, so an unknown value is refused and the refusal names what would have worked. `unknown` is kept as a legitimate answer because forcing a guess corrupts the other three.\n\n🛑 TWO LIMITS RECORDED RATHER THAN SMOOTHED. First, it depends on the agent having NOTICED the tool existed, which is the same blind spot it exists to see — so an empty report is never evidence that nothing was hand-rolled, and the reader's own description says so. Second, `dec:how-should-reflow2-log-its-own-usage` argues a tool is the wrong shape at all: \"a tool must be CALLED, and the population most worth measuring is precisely the one least likely to call it.\" That is right, and here unavoidable: the server observes CALLS, and work done by hand happens where it cannot look. Asking is the only route that exists.\n\n🛑 AND THE REPORT MUST NEVER BECOME TELEMETRY. `what` is free text naming the user's own domain — precisely the field `req:telemetry-carries-usage-never-design-content` warns that \"the next contributor will put something useful in\". The prohibition is written into the module header, the tool description AND the skill, because those are the three places somebody wiring telemetry would look.",
+        "subject": "system",
+        "summary": "`report_manual_work` and `manual_work_report` added, plus a `capture-session` section asking the question at session end. Delivers `req:a-session-says-what-it-did-by-hand-that-reflow2-already-serves`. `report_manual_work` is the FIRST typed writer for a TemporalFact — a type with 304 instances here and, until now, no tool at all, so every one went through the `create_node` escape hatch. The `diagnosis` set is CLOSED and an unknown value is refused: `tool_missing` / `tool_not_found` / `tool_refused` / `unknown`. The same work reported twice is one record, since the id derives from `what`. Workspace suite 1824 passed / 0 failed across 161 binaries, reconciling exactly against 1817 + 7 new across 159 + 2 binaries; fmt, clippy, skill_lint clean; 163 toolsnaps."
+      }
+    },
+    {
       "node_id": "chg:a-session-names-its-design",
       "node_type": "ChangeEvent",
       "properties": {
@@ -113022,6 +113214,16 @@
       }
     },
     {
+      "node_id": "chg:accept-9d03ab6c044e6ae6",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "test_failure_fix",
+        "detected_at": "2026-08-26",
+        "name": "`#[serde(deny_unknown_fields)]` added to `ReportManualWorkReq`, which was missing the convention its 148 siblings in this file all follow. THE DESIGN HOLDS: the intended behaviour was always that a tool schema forbids unknown params (BL-57) — this restores it rather than changing what reflow2 means to do, so nothing in the design moved.\n\n`test_failure_fix` rather than `defect_fix` because a CHECK ACTUALLY CAUGHT IT: `smoke_mcp.py` in CI, on the assertion \"every tool schema forbids unknown params\". That distinction is provenance, and it is the one five sessions each guessed differently before these change types existed.\n\n📌 WHY IT REACHED CI. The local run covered a SUBSET of the `full` job's gates and not `smoke_mcp.py`, which is the gate that checks this — the same error class recorded an hour earlier on `ver:a-session-can-report-and-read-back-hand-rolled-work`, where a split cargo run looked equivalent to `--workspace` and was 46 tests short. A subset of a gate set is not the gate set.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-9d3a919d6550b6f3",
       "node_type": "ChangeEvent",
       "properties": {
@@ -113992,6 +114194,16 @@
       }
     },
     {
+      "node_id": "chg:baseline-1c0073e2fa07e620",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-26",
+        "name": "First baseline — new in this change.",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-238b75c11ad92d98",
       "node_type": "ChangeEvent",
       "properties": {
@@ -114299,12 +114511,32 @@
       }
     },
     {
+      "node_id": "chg:baseline-b8b1e637cb6c605c",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-26",
+        "name": "First baseline — new in this change.",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-d06eb1ad9d4aec57",
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "baseline_established",
         "detected_at": "2026-08-12",
         "name": "First baseline — new in this change."
+      }
+    },
+    {
+      "node_id": "chg:baseline-d38dae8eb49c5c7a",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-26",
+        "name": "First baseline — new in this change.",
+        "subject": "record"
       }
     },
     {
@@ -126152,7 +126384,7 @@
         "category": "methodology",
         "enforced": false,
         "name": "An identified issue is ROOT-CAUSED, PINNED BY A CI TEST, then FIXED — and the root cause is written down, not just the repair",
-        "statement": "Anthony, 2026-08-26: *\"if an issue is identified, determine root cause of issue, update CI tests to catch this, and then implement fix, and test… document the root cause of the issue as part of the design rule.\"*\n\n═══ THE ORDER, AND THE ORDER IS THE RULE ═══\n\n**① ROOT-CAUSE IT.** Not the symptom, not the instance. Ask what CLASS of thing this is and what let it happen.\n**② PIN IT WITH A TEST THAT FAILS TODAY.** In CI, not locally. The test must fail against the unfixed code, or it is pinning nothing.\n**③ FIX IT AT THE CAUSE.** `rule:fix-it-properly-while-it-is-still-cheap` governs how.\n**④ TEST IT.** The pin now passes, and the run is read from the authoritative object (`rule:success-is-read-from-the-authoritative-object`).\n**⑤ WRITE THE ROOT CAUSE DOWN.** In the test's own comment and in the design — because the repair is recoverable from the diff and the CAUSE is not.\n\n⚠️ **THE STEP MOST OFTEN SKIPPED IS ②, AND SKIPPING IT IS INVISIBLE.** A fix without a failing-first test looks identical to a fix with one: both end green. The difference only appears when the class recurs, and by then nobody remembers whether it was ever pinned.\n\n═══ THE WORKED EXAMPLE THIS RULE WAS WRITTEN FROM (2026-08-26) ═══\n\n**SYMPTOM**, reported from the field by hxm_program as F-01: replaying a gap into `gaps_to_prompts` exactly as the docs instruct — *\"REPLAY EACH GAP OBJECT UNCHANGED\"* — was refused with `invalid GapCandidate: missing field 'suggested_depth'`.\n\n**FIRST-ORDER READING, AND IT WAS WRONG:** *\"the budgeted reply withheld a field.\"* True as far as it goes, and it would have led to patching the budget to keep `suggested_depth`.\n\n⭐ **ROOT CAUSE:** `GapCandidate` promises a replay contract IN ITS OWN DOC COMMENT — *\"a compact row handed straight back to `gap_to_prompt` has to deserialize\"* — and enforces it field by field. `description` and `evidence` carry `#[serde(default)]`; **`suggested_depth` and `affected_ids` do not.** So the contract held for the fields somebody remembered and broke for the ones nobody did. **The cause is not the budget and not that field — it is that a stated contract was maintained BY HAND, with nothing checking it.** Two mechanisms then cancelled on exactly the designs where both matter: the budget exists so the call can be made at all on a large design, and the handshake exists so the gaps can be asked.\n\n**THE PIN:** `a_budgeted_row_replays_into_the_handshake_it_was_meant_for` — and it pins the ROUND TRIP, not the field. Serialize every budgeted row, deserialize it back, and separately deserialize a row whose optional fields are ABSENT rather than empty. **Any future field added without a default fails it.** Pinning `suggested_depth` alone would have fixed today and left the class open.\n\n**THE FIX:** `#[serde(default)]` on `affected_ids`, `#[serde(default = \"default_suggested_depth\")]` on `suggested_depth`, defaulting to 2 — the value every detector but one emits, so a row that lost the field asks for the ordinary depth rather than an invented one.\n\n═══ ⭐ ENFORCEMENT — SETTLED 2026-08-26: ADVISORY, NOT GATE-BLOCKING ═══\n\n**Anthony's word, put to him with three options and a recommendation.** `enforced: false`. Breaking this rule does NOT stop the build.\n\n**WHY, AND IT IS NOT LENIENCY.** The load-bearing half of this rule is step ②, and **nothing in a diff or a CI run can see whether a test was FAILING before the fix** — CI only ever runs the merged state. The note below predicted this before the question was asked, and the prediction held.\n\nSo an enforced version could only check something weaker — *does this change touch code and add no test?* — which passes on a test written AFTER the fix. That is the failure mode this project keeps finding and just spent a day fixing three times over: **a check that reads as enforcement while measuring something else is worse than no check**, because it converts an unanswered question into a false green.\n\n⚠️ **THE COST, STATED RATHER THAN BURIED:** advisory rules get skipped, and this rule exists precisely because F-01's own fix skipped step ②. Its author verified the pin passing and never saw it fail. The discipline now rests on sessions choosing it, and on the record saying honestly which way it went — the three fixes on 2026-08-26 each recorded that they WERE observed failing first, and that sentence is the only evidence there is.\n\n📌 **WHAT WOULD MAKE PART OF THIT CHECKABLE**, kept because the answer may change: `req:a-rule-says-whether-it-can-be-checked-at-all` (ACCEPTED, unbuilt) is where the distinction between a rule's checkable and unheckable halves belongs. And the ⑤ half IS checkable today — `req:a-fix-says-whether-it-corrected-the-cause` (ACCEPTED) asks a repair to record whether it reached the cause. Splitting enforcement across the two halves was offered as an option and NOT taken; if step ② keeps being skipped, that split is the next thing to try rather than gating the whole rule."
+        "statement": "Anthony, 2026-08-26: *\"if an issue is identified, determine root cause of issue, update CI tests to catch this, and then implement fix, and test… document the root cause of the issue as part of the design rule.\"*\n\n═══ THE ORDER, AND THE ORDER IS THE RULE ═══\n\n**① ROOT-CAUSE IT.** Not the symptom, not the instance. Ask what CLASS of thing this is and what let it happen.\n**② PIN IT WITH A TEST THAT FAILS TODAY.** In CI, not locally. The test must fail against the unfixed code, or it is pinning nothing.\n**③ FIX IT AT THE CAUSE.** `rule:fix-it-properly-while-it-is-still-cheap` governs how.\n**④ TEST IT.** The pin now passes, and the run is read from the authoritative object (`rule:success-is-read-from-the-authoritative-object`).\n**⑤ WRITE THE ROOT CAUSE DOWN.** In the test's own comment and in the design — because the repair is recoverable from the diff and the CAUSE is not.\n\n⚠️ **THE STEP MOST OFTEN SKIPPED IS ②, AND SKIPPING IT IS INVISIBLE.** A fix without a failing-first test looks identical to a fix with one: both end green. The difference only appears when the class recurs, and by then nobody remembers whether it was ever pinned.\n\n═══ THE WORKED EXAMPLE THIS RULE WAS WRITTEN FROM (2026-08-26) ═══\n\n**SYMPTOM**, reported from the field by hxm_program as F-01: replaying a gap into `gaps_to_prompts` exactly as the docs instruct — *\"REPLAY EACH GAP OBJECT UNCHANGED\"* — was refused with `invalid GapCandidate: missing field 'suggested_depth'`.\n\n**FIRST-ORDER READING, AND IT WAS WRONG:** *\"the budgeted reply withheld a field.\"* True as far as it goes, and it would have led to patching the budget to keep `suggested_depth`.\n\n⭐ **ROOT CAUSE:** `GapCandidate` promises a replay contract IN ITS OWN DOC COMMENT — *\"a compact row handed straight back to `gap_to_prompt` has to deserialize\"* — and enforces it field by field. `description` and `evidence` carry `#[serde(default)]`; **`suggested_depth` and `affected_ids` do not.** So the contract held for the fields somebody remembered and broke for the ones nobody did. **The cause is not the budget and not that field — it is that a stated contract was maintained BY HAND, with nothing checking it.** Two mechanisms then cancelled on exactly the designs where both matter: the budget exists so the call can be made at all on a large design, and the handshake exists so the gaps can be asked.\n\n**THE PIN:** `a_budgeted_row_replays_into_the_handshake_it_was_meant_for` — and it pins the ROUND TRIP, not the field. Serialize every budgeted row, deserialize it back, and separately deserialize a row whose optional fields are ABSENT rather than empty. **Any future field added without a default fails it.** Pinning `suggested_depth` alone would have fixed today and left the class open.\n\n**THE FIX:** `#[serde(default)]` on `affected_ids`, `#[serde(default = \"default_suggested_depth\")]` on `suggested_depth`, defaulting to 2 — the value every detector but one emits, so a row that lost the field asks for the ordinary depth rather than an invented one.\n\n═══ ⭐ ENFORCEMENT — SETTLED 2026-08-26: ADVISORY, NOT GATE-BLOCKING ═══\n\n**Anthony's word, put to him with three options and a recommendation.** `enforced: false`. Breaking this rule does NOT stop the build.\n\n**WHY, AND IT IS NOT LENIENCY.** The load-bearing half of this rule is step ②, and **nothing in a diff or a CI run can see whether a test was FAILING before the fix** — CI only ever runs the merged state. The note below predicted this before the question was asked, and the prediction held.\n\nSo an enforced version could only check something weaker — *does this change touch code and add no test?* — which passes on a test written AFTER the fix. That is the failure mode this project keeps finding and just spent a day fixing three times over: **a check that reads as enforcement while measuring something else is worse than no check**, because it converts an unanswered question into a false green.\n\n⚠️ **THE COST, STATED RATHER THAN BURIED:** advisory rules get skipped, and this rule exists precisely because F-01's own fix skipped step ②. Its author verified the pin passing and never saw it fail. The discipline now rests on sessions choosing it, and on the record saying honestly which way it went — the fixes on 2026-08-26 each recorded that they WERE observed failing first, and that sentence is the only evidence there is.\n\n📌 **WHAT WOULD MAKE PART OF THIS CHECKABLE**, kept because the answer may change: `req:a-rule-says-whether-it-can-be-checked-at-all` (ACCEPTED, unbuilt) is where the distinction between a rule's checkable and uncheckable halves belongs. And the ⑤ half IS checkable today — `req:a-fix-says-whether-it-corrected-the-cause` (ACCEPTED) asks a repair to record whether it reached the cause. Splitting enforcement across the two halves was offered as an option and NOT taken; if step ② keeps being skipped, that split is the next thing to try rather than gating the whole rule."
       }
     },
     {
@@ -139037,6 +139269,20 @@
       }
     },
     {
+      "node_id": "ver:a-session-can-report-and-read-back-hand-rolled-work",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Seven tests across two crates, and the SPLIT between them is itself the finding.\n\n**Core (4), over `DesignGraph`:** a report lands as a dated observation carrying `fact_type: manual_work`; the same work reported twice is ONE record (the id derives from `what`, so a count cannot inflate with re-tellings); an unknown `diagnosis` is REFUSED; and every report reads back through `manual_work_report` with its diagnosis and named tool intact.\n\n**MCP (3), over the real `ReflowService`:** a report naming a tool the surface does not serve is refused; one naming `search_design` is kept; one naming NO tool is kept, because `tool_missing` names nothing by design and must not require one.\n\n⭐ WHY THE SPLIT. \"Does reflow2 serve a tool by this name?\" was first written as a CORE test and failed there — the core does not know what the surface serves. Answering it there would have meant a second copy of the tool list maintained by hand, which is the defect class this project fixed three times on 2026-08-26. At the tool, `tool_router.has_route()` asks the LIVE ROUTER, so nothing is maintained and nothing can drift. Both files carry a note saying why the test lives where it does.\n\n⚠️ WHAT THIS DOES NOT CHECK, and it is the requirement's own standing objection: that a session will actually NOTICE it did something by hand. The mechanism depends on the agent having seen the tool it went without, which is the same blind spot it exists to measure. No test can reach that, and an empty `manual_work_report` is therefore never evidence that nothing was hand-rolled.",
+        "findings": "7 passed / 0 failed (core 4, MCP 3). ⭐ WRITTEN BEFORE THE BUILD AND OBSERVED FAILING: the first run could not even compile, because `report_manual_work` and `manual_work_report` did not exist. One of the five original core tests then failed for a REASON RATHER THAN A BUG — the phantom-tool check cannot live in the core, which does not know what the surface serves — and moving it to the MCP crate is how the layering got decided rather than assumed.\n\nFull workspace suite after: 1824 passed / 0 failed across 161 binaries, and the arithmetic reconciles exactly — 1817 before, plus 7 new tests, across 159 + 2 binaries. `cargo fmt --check` and `clippy -D warnings` clean on both crates; `skill_lint` all pass; `toolsnap` 163 match with the two new tools added.\n\n📌 A METHOD NOTE WORTH KEEPING. Running `-p reflow2-core` plus `-p reflow2-mcp` separately is NOT equivalent to `--workspace`: it came to 1778 across 161 binaries, 46 tests short, because `reflow2-mcp` depends on core with `features = [\"rocksdb\"]` and a workspace build unifies that onto core while a solo run does not. Two binaries carried the whole difference (`reflow2_core` unittests 239 -> 201, `search` 9 -> 1). AGENTS.md documents the feature-unification fact; that it makes the split run a WEAKER check is the part that was not obvious and was nearly reported as equivalent.",
+        "kind": "verification",
+        "last_run_at": "2026-08-26",
+        "level": "integration",
+        "method": "test",
+        "name": "A by-hand report is dated, deduplicated, refuses a bad diagnosis or a phantom tool, and reads back",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-session-cannot-name-another-design",
       "node_type": "Verification",
       "properties": {
@@ -141406,7 +141652,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:5610e79103cfe64d4dc2c903b4a244fb5224bb0c711c8412a92faf9e86c73bab",
+  "prev_content_hash": "sha256:ad8b744f51095e6238408b815ea0bfe98182ccda12736a30045afa57453acae3",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

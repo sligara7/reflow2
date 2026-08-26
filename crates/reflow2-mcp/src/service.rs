@@ -2019,6 +2019,22 @@ pub struct ScheduleForReq {
     #[serde(default)]
     pub recorded_at: Option<String>,
 }
+/// Arguments for [`report_manual_work`](ReflowService::report_manual_work).
+#[derive(Debug, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct ReportManualWorkReq {
+    /// The SHAPE of the work, in your own words — what you built and what it did.
+    pub what: String,
+    /// WHY it was hand-rolled: `tool_missing` / `tool_not_found` / `tool_refused` / `unknown`.
+    pub diagnosis: String,
+    /// The served tool that should have done it, where you can name one. Refused
+    /// if reflow2 does not serve it.
+    #[serde(default)]
+    pub reflow2_tool: Option<String>,
+    /// The date, as a plain string. reflow2 takes no clock, so the caller supplies it.
+    #[serde(default)]
+    pub at: Option<String>,
+}
 
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]

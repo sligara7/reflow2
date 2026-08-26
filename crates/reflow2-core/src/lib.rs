@@ -58,6 +58,7 @@ pub mod identity;
 pub mod ility;
 pub mod ingest;
 pub mod llm;
+pub mod manual_work;
 pub mod maturity;
 pub mod merge;
 pub mod neighbourhood;

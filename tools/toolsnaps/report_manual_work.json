@@ -1,0 +1,42 @@
+{
+  "annotations": {
+    "readOnlyHint": false
+  },
+  "description": "Record work THIS SESSION did BY HAND that reflow2 already serves, or should — the negative space. ⭐ IT IS A STRONGER SIGNAL THAN AN ABSENT CALL BECAUSE IT CARRIES INTENT: reflow2 can count which tools were never called, but `dec:bl-155` measured 40 of 132 unused and states outright that it CANNOT TELL UNUSED FROM UNREACHABLE. A session that wrote a script to do X proves somebody wanted X badly enough to build it, which a zero in a usage table never shows. `diagnosis` is the whole value and the set is CLOSED — `tool_missing` (nothing does this), `tool_not_found` (something does and you did not find it: a DISCOVERABILITY failure, a different repair), `tool_refused` (you reached for one and it would not), `unknown` (you cannot say, which is an honest answer and better than a wrong bucket). Naming a `reflow2_tool` that is not served is REFUSED, because that means the diagnosis is really `tool_missing` and a phantom would sit in the table somebody reads to decide what to improve. The same work reported twice is ONE record. 🛑 WHAT YOU WRITE STAYS IN THIS DESIGN: it is free text naming your own domain, so it must never be lifted into a telemetry payload (`req:telemetry-carries-usage-never-design-content` — log the verb, never the object).",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "properties": {
+      "at": {
+        "default": null,
+        "description": "The date, as a plain string. reflow2 takes no clock, so the caller supplies it.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "diagnosis": {
+        "description": "WHY it was hand-rolled: `tool_missing` / `tool_not_found` / `tool_refused` / `unknown`.",
+        "type": "string"
+      },
+      "reflow2_tool": {
+        "default": null,
+        "description": "The served tool that should have done it, where you can name one. Refused\nif reflow2 does not serve it.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "what": {
+        "description": "The SHAPE of the work, in your own words — what you built and what it did.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "what",
+      "diagnosis"
+    ],
+    "type": "object"
+  },
+  "name": "report_manual_work"
+}

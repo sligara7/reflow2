@@ -190,6 +190,49 @@ confident sentence that turns out to be reconstructed is worse than nothing.
   recorded no ChangeEvent, and it never judges: it hands you a shortlist and the closing is yours.
   **Do not read a quiet answer as "nothing went stale"** — read `subjects_examined` first.
 
+## Say what you did BY HAND that reflow2 already serves
+
+**Ask yourself this before you finish, and record the answer with `report_manual_work`.**
+Did you write a script, run a query, or work something out by hand that a reflow2 tool
+does — or should do?
+
+⭐ **THIS IS THE ONE SIGNAL THAT TELLS AN UNFINDABLE TOOL FROM AN UNWANTED ONE.** Every other
+measurement of reflow2's own adoption looks at what a session DID with it, and all of them share a
+blind spot: `dec:bl-155` measured 40 of 132 tools never called and states outright that it **cannot
+tell unused from unreachable**. Hand-rolled work separates them, because it carries INTENT — you
+building a script proves somebody wanted that, at a moment, badly enough to build it. A zero in a
+usage table never shows that.
+
+It has already produced two of this project's central findings, both times by an agent noticing
+unprompted: comparing the allocation layer against the artifact layer (no tool does it —
+`reconcile_artifacts` compares design against DISK, `compare_designs` compares design against
+DESIGN, and neither compares two layers of ONE design), and *"does my declared decomposition match
+the real coupling?"*.
+
+**The `diagnosis` is the whole value, so choose it honestly:**
+
+| | what it means | what it asks for |
+| --- | --- | --- |
+| `tool_missing` | nothing reflow2 serves does this | somebody should build it |
+| `tool_not_found` | something DOES and you did not find it | somebody should surface it |
+| `tool_refused` | you reached for one and it would not | somebody should look at why |
+| `unknown` | you cannot say which | nothing yet, and that is fine |
+
+`unknown` is a real answer. Forcing a guess corrupts the other three, and the point of the record
+is to be true rather than tidy.
+
+🛑 **WRITE THE SHAPE OF THE WORK, NOT ITS CONTENT.** *"wrote a script comparing two layers of the
+design"* — not the script, not the query, not the node ids it touched. A report stays in this
+design and must never reach a telemetry payload
+(`req:telemetry-carries-usage-never-design-content` — log the verb, never the object).
+
+⚠️ **THE HONEST LIMIT, AND IT IS NOT SMALL:** this depends on you having NOTICED the tool existed.
+It measures what you were aware enough to miss, which is the same blind spot it exists to see.
+Recording nothing is therefore never evidence that nothing was hand-rolled — and
+`manual_work_report` says so when it comes back empty. `find_tools` before you conclude
+`tool_missing`; the difference between that and `tool_not_found` is a different piece of work for
+whoever reads it.
+
 ## Before moving on
 
 `loop_status`. Capturing is a real capture: new nodes owe the loop a gap pass, and a decision
