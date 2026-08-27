@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:21ab7fddf856e311dbd4e5449a39739b8d072981c5d8a9553c4b94ca46cc8f14",
+  "content_hash": "sha256:adb29704d14d92203ed63e089aa81a8a166af243e23149ed878c4b729b8426b5",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1127,11 +1127,27 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-session-reports-the-work-it-did-by-hand",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:manual-work"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:a-session-with-no-seed-can-find-one",
       "properties": {
         "weight_basis": "estimated"
       },
       "to_id": "cmp:regions"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-surface-can-refuse-every-write",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:service"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -2996,6 +3012,14 @@
     },
     {
       "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-a-top-level-graph-holds-what-the-component-graphs-share",
+      "properties": {
+        "evidence": "That node recorded a graph-per-tier linked vertically and deferred the FORM. This is that form arriving as a concrete proposal — a file per sub-repo held by the parent — with the currency problem the deferral never had to face."
+      },
+      "to_id": "dec:idea-the-hub-holds-a-copy-per-sub-repo-and-copies-go-stale"
+    },
+    {
+      "edge_type": "ANTICIPATES",
       "from_id": "dec:idea-can-reflow2-see-the-work-a-session-did-by-hand",
       "properties": {
         "evidence": "That question proposed four ways to see hand-rolled work and this is the road taken: the CHEAPEST, asking the agent at session end. It is recorded here rather than by closing that node, because the question deliberately keeps the roads NOT taken — the transcript-side detector remains unexplored, and its larger build and unusual privacy posture are why asking was tried first. Building this does not answer it."
@@ -3291,6 +3315,12 @@
     },
     {
       "edge_type": "ASKS_ABOUT",
+      "from_id": "question:1148eb83214a370e",
+      "properties": {},
+      "to_id": "cap:a-session-reports-the-work-it-did-by-hand"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
       "from_id": "question:159ab608b850e46d",
       "properties": {},
       "to_id": "req:agent-artifacts-are-captured"
@@ -3402,6 +3432,12 @@
       "from_id": "question:52b1ed1377382961",
       "properties": {},
       "to_id": "req:plans-move-honestly"
+    },
+    {
+      "edge_type": "ASKS_ABOUT",
+      "from_id": "question:59b48f3aced25835",
+      "properties": {},
+      "to_id": "cap:a-surface-can-refuse-every-write"
     },
     {
       "edge_type": "ASKS_ABOUT",
@@ -11721,6 +11757,15 @@
       "properties": {
         "acted_at": "2026-08-26",
         "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-hub-holds-a-copy-per-sub-repo-and-copies-go-stale",
+      "properties": {
+        "acted_at": "2026-08-26",
+        "role": "author"
       },
       "to_id": "who:ajs"
     },
@@ -30631,6 +30676,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-last-two-unallocated-capabilities-get-owners",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:a-session-reports-the-work-it-did-by-hand"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-last-two-unallocated-capabilities-get-owners",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:a-surface-can-refuse-every-write"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-last-two-unallocated-capabilities-get-owners",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cmp:manual-work"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-last-two-unallocated-capabilities-get-owners",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-latent-surface-notices-a-design-arrived",
       "properties": {
         "accepted_baseline": true,
@@ -33713,6 +33794,12 @@
       "edge_type": "CONTAINS",
       "from_id": "sys:time-history",
       "properties": {},
+      "to_id": "cmp:manual-work"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sys:time-history",
+      "properties": {},
       "to_id": "cmp:merge"
     },
     {
@@ -35365,6 +35452,16 @@
         "weight_basis": "estimated"
       },
       "to_id": "dec:idea-is-there-a-lightweight-task-capture-below-the-increment-grain"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-the-hub-holds-a-copy-per-sub-repo-and-copies-go-stale",
+      "properties": {
+        "evidence": "Where a sub-project's design lives and what keeps it current is only worth answering once there is a hub relation to hold it. Settle what a hub IS first; custody of the children's records is the second question, not the first.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-a-hub-owns-designs-it-does-not-absorb-and-that-is-a-third-relation"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -100949,6 +101046,14 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:manual-work",
+      "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:manual-work"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:maturity",
       "properties": {
         "completeness": "complete"
@@ -119895,6 +120000,18 @@
       }
     },
     {
+      "node_id": "chg:the-last-two-unallocated-capabilities-get-owners",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-26",
+        "name": "The two unallocated capabilities are given owning parts",
+        "rationale": "BOTH ANSWERS COME FROM THE SAME RULING, applied deliberately rather than by taste: `chg:allocation-follows-the-code-not-the-neighbour` (2026-08-25) — allocate to the module whose code implements the function, move it, do not dual-allocate.\n\nWHY `cmp:service` AND NOT `cmp:main`. The refusal is not the flag. `--read-only` is parsed in `main.rs`, but the enforcement is `ReflowService::write_lock`, which every mutating handler must obtain and no write can avoid; making it fallible turned all 98 write sites into compile errors until each was handled, and it caught `share()` as a SECOND assembly point that had to inherit the mode or read-only would have held for the process and evaporated for every actual client. Allocating to the entry point would file the function against the switch rather than the guard, and would point somewhere the refusal is not if the mode ever becomes settable another way. `art:service` already REALIZED both `cmp:service` and this capability, so the two layers now agree instead of only one of them holding the answer — the cross-layer check that change event was created by.\n\nWHY A NEW PART RATHER THAN `cmp:temporal`. `manual_work.rs` is a real source module with a linked, checksummed artifact and no part of its own — the same shape as the 31 modules the 2026-08-25 sweep found. Crediting it to `cmp:temporal` because both write TemporalFacts is exactly the neighbour-misfiling that sweep corrected in 19 places, and it would have been a fresh instance of the class the day after the correction. `cmp:tools-temporal`, where the two tools are declared, is excluded by `dec:the-tool-surface-slices-hold-no-function-of-their-own`. Filing it by purpose under `sub:session-posture` was offered and declined for the same reason.\n\nWHAT THIS DOES NOT SETTLE, and it was named when the choice was put: whether reflow2 should keep minting a part per module at all. Every leaf here is a module, so \"which part owns this function\" and \"which file implements it\" have collapsed into one question — which makes allocation cheap to get right and makes the allocation layer a second copy of the file tree. `dec:bl83a-functional-decomposition` holds the line at the SYSTEM level (functional, not the file tree) and says nothing about the leaves. That is a decomposition-grain decision nobody has made.\n\nThe containment `sys:time-history CONTAINS cmp:manual-work` skips the subsystem rung, which `hierarchy_issues` will read as a missing intermediate level. Done knowingly: all six existing children of `sys:time-history` sit the same way, so this matches its siblings rather than inventing a subsystem for one module. If that rung is ever added it should be added for all seven at once.",
+        "subject": "record",
+        "summary": "The design's only two open gaps were both `unallocated_capability`, on the two capabilities that landed in #350 and #351. Both are now owned, on Anthony's word 2026-08-26. \"A server can refuse every write\" → `cmp:service`, where `ReflowService::write_lock` enforces it. \"A session records the work it did by hand\" → `cmp:manual-work`, a NEW part created for `crates/reflow2-core/src/manual_work.rs`, contained by `sys:time-history` alongside `cmp:temporal`, with `art:manual-work` REALIZES it so the artifact layer and the allocation layer agree."
+      }
+    },
+    {
       "node_id": "chg:the-latent-surface-notices-a-design-arrived",
       "node_type": "ChangeEvent",
       "properties": {
@@ -120991,6 +121108,19 @@
         "name": "main",
         "provenance": "authored",
         "purpose": "The main module.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cmp:manual-work",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "manual-work",
+        "provenance": "authored",
+        "purpose": "The work a session did BY HAND that reflow2 already serves — the negative space. Records one piece of hand-rolled work with a closed-set diagnosis (`tool_missing` / `tool_not_found` / `tool_refused` / `unknown`) and reads the collection back, so a MISSING tool is distinguishable from an UNFINDABLE one. Implemented in `crates/reflow2-core/src/manual_work.rs`; the record is written as a TemporalFact, stays local, and must never be lifted into telemetry (`req:telemetry-carries-usage-never-design-content`).\n\nGIVEN A PART OF ITS OWN on Anthony's word 2026-08-26, under the ruling recorded as `chg:allocation-follows-the-code-not-the-neighbour` (2026-08-25, 'move it, do not dual-allocate'): the module is real, checksummed and linked by `art:manual-work`, so the cheap alternative — crediting the function to `cmp:temporal` next door because both write TemporalFacts — is precisely the misfiling class that change spent a session correcting in 19 places. Allocating instead to `cmp:tools-temporal`, where `report_manual_work` and `manual_work_report` are declared, was rejected against `dec:the-tool-surface-slices-hold-no-function-of-their-own`. Filing it by PURPOSE under `sub:session-posture` was also offered and declined: that is the by-purpose habit the same ruling corrects against, and it would split a core module from its siblings in core.",
         "status": "planned",
         "tier": "operational"
       }
@@ -123770,9 +123900,9 @@
       "node_id": "dec:idea-intent-crosses-designs",
       "node_type": "Decision",
       "properties": {
-        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Surfaced 2026-08-05 by Anthony's multi-project question.\n\n⚠️ CORRECTED WITHIN THE HOUR, AND THE CORRECTION IS THE USEFUL PART. This node first claimed \"everything reflow2 has built for crossing a design boundary shares CONTRACTS... NOTHING CARRIES A DECISION OR A REQUIREMENT ACROSS.\" THAT IS WRONG ABOUT REQUIREMENTS, and it was wrong for the ordinary reason — the claim was made from the capability's one-line description (\"the contracts others may rely on, and nothing internal\") rather than from the code. Reading `export_surface` shows a second, deliberate half: `published_promises()`, behind `req:publishable-promise` (ACCEPTED — \"a published surface must be able to carry a behavioural promise, not only structure\"). Its own comment says why: \"a structural surface says what the boundaries ARE and cannot say what any of them undertakes to DO — 'fails loud rather than falling back', 'ordering is preserved' — because a behavioural commitment lives in a Requirement and every Requirement was withheld. FOUND BY A REAL TRIAL, where the promise ended up asserted in a comment in the CONSUMER's build file, on the wrong side of the seam.\"\n\nSO THE ACTUAL STATE, verified in `crates/reflow2-core/src/export.rs`: a published surface carries INTERFACES designated `published`, the artifacts that SPECIFY or REALIZE them, REQUIREMENTS the owner designated `published`, and the Project so a recipient knows whose surface it is. Everything else is withheld AND COUNTED. Opt-in throughout — designation is a deliberate act, never a default.\n\n⭐ SO THE REAL GAP IS NARROWER AND SHARPER THAN FIRST WRITTEN: WHAT CANNOT CROSS IS THE **DECISION** — the reasoning. A consumer can learn WHAT this design promises and WHERE its boundaries are. It cannot learn WHY. \"We settled that outdoor units send cumulative totals, so a lost reading heals itself\" is exactly the thing a sibling project should inherit, and there is no way to publish it.\n\nAND THE MECHANISM FOR THE PARENT DIRECTION ALREADY EXISTS: `cap:derived-completion` is VERIFIED, and `dec:nested-graphs`' second obligation names it — \"a parent's view of a composed child must derive from the child's own evidence or a requirement satisfied inside the child fires unsatisfied in the parent forever\". So a program-level design holding intent that child designs satisfy is ANTICIPATED and BUILT, not missing.\n\nOPTIONS, NONE CHOSEN. (a) NOTHING MORE CROSSES — interfaces and designated promises are the boundary, and reasoning stays private by design. Defensible and cheapest; the counter is that a sibling project then re-derives a ruling its neighbour already made, which is this project's most expensive recurring failure. (b) DECISIONS BECOME DESIGNATABLE, the same opt-in shape requirements already have. Small and consistent — the machinery, the designation vocabulary and the withheld-and-counted reporting all exist. Counter, and it is the hard one nobody has answered: IS A MIRRORED DECISION BINDING ON THE MIRRORING DESIGN, OR ONLY VISIBLE TO IT? A Decision that governs nothing on the far side is a note; one that governs is an authority claim across a boundary the whole rule exists to draw. (c) A STANDING \"HOUSE RULES\" DESIGN every project mirrors — one design holding what its author carries everywhere. Fits `dec:nested-graphs` cleanly because that design IS separately owned and shared. Counter: nothing models a design with no build, and it overlaps option (d) on `dec:idea-one-owner-many-projects`. (d) DO NOT SOLVE IT IN THE GRAPH. Counter: \"the person remembers\" is what `req:no-idea-goes-quiet` (accepted the same day) exists to reject.\n\n⚠️ THE PREREQUISITE THAT BOUNDS ALL OF IT, unchanged by the correction: reflow2's own `maturity_report` puts SEAMS at 0 OF 73. Not one coupling in this design runs through a declared Interface. So `publish-surface` and `mirror-surface` are `verified` by their own tests and have NEVER been exercised on the design that ships them — the same shape that hid [BL-176] for eleven releases and produced [BL-213] this morning. `dec:linked-repos-poc` is the trial that would fix that, and it has been parked since 2026-07-27.\n\nTHE METHOD NOTE, because this is the second time today: I asserted an absence from a capability's DESCRIPTION and the code said otherwise. The description was not wrong — \"nothing internal\" is true of what it withholds — it simply was not the whole surface. READ THE EXPORT, NOT THE SUMMARY.",
-        "name": "OPEN — a published surface already carries designated REQUIREMENTS; should DECISIONS cross a design boundary too?",
-        "rationale": "Corrected an hour after it was written, on the same day, because the first version asserted an absence it had not checked — and an absence is exactly the kind of claim that hardens into folklore. The correction is kept in the node rather than silently replacing the text so the failure mode stays visible: I read a capability's one-line description and reported it as the whole mechanism.\n\nKept separate from `dec:idea-one-owner-many-projects` because that node asks WHERE the boundary goes and this asks WHAT MAY CROSS IT.\n\nThe remaining question genuinely narrowed rather than closed: requirements already cross, so the open part is Decisions, and the hard sub-question — binding or merely visible — is now the thing worth Anthony's word rather than the broad \"should intent cross\".",
+        "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Surfaced 2026-08-05 by Anthony's multi-project question.\n\n⚠️ CORRECTED WITHIN THE HOUR, AND THE CORRECTION IS THE USEFUL PART. This node first claimed \"everything reflow2 has built for crossing a design boundary shares CONTRACTS... NOTHING CARRIES A DECISION OR A REQUIREMENT ACROSS.\" THAT IS WRONG ABOUT REQUIREMENTS, and it was wrong for the ordinary reason — the claim was made from the capability's one-line description rather than from the code. Reading `export_surface` shows a second, deliberate half: `published_promises()`, behind `req:publishable-promise` (ACCEPTED).\n\nSO THE ACTUAL STATE, verified in `crates/reflow2-core/src/export.rs`: a published surface carries INTERFACES designated `published`, the artifacts that SPECIFY or REALIZE them, REQUIREMENTS the owner designated `published`, and the Project. Everything else is withheld AND COUNTED. Opt-in throughout.\n\n⭐ SO THE REAL GAP IS NARROWER AND SHARPER THAN FIRST WRITTEN: WHAT CANNOT CROSS IS THE **DECISION** — the reasoning. A consumer can learn WHAT this design promises and WHERE its boundaries are. It cannot learn WHY.\n\nAND THE MECHANISM FOR THE PARENT DIRECTION ALREADY EXISTS: `cap:derived-completion` is VERIFIED, and `dec:nested-graphs`' second obligation names it — \"a parent's view of a composed child must derive from the child's own evidence\".\n\nOPTIONS, NONE CHOSEN. (a) NOTHING MORE CROSSES. Defensible and cheapest; the counter is that a sibling re-derives a ruling its neighbour already made. (b) DECISIONS BECOME DESIGNATABLE, the same opt-in shape requirements already have. Small and consistent. Counter, and it is the hard one nobody has answered: IS A MIRRORED DECISION BINDING ON THE MIRRORING DESIGN, OR ONLY VISIBLE TO IT? (c) A STANDING \"HOUSE RULES\" DESIGN every project mirrors. (d) DO NOT SOLVE IT IN THE GRAPH.\n\n⚠️ THE PREREQUISITE THAT BOUNDS ALL OF IT: reflow2's own `maturity_report` puts SEAMS at 8 of 72. `publish-surface` and `mirror-surface` are `verified` by their own tests and have barely been exercised on the design that ships them.\n\nTHE METHOD NOTE: I asserted an absence from a capability's DESCRIPTION and the code said otherwise. READ THE EXPORT, NOT THE SUMMARY.\n\n────────────────────────────────────────────────────────────\n═══ 📌 SHARPENED 2026-08-26 — THE HUB ASKS THIS DOWNWARD, AND THAT ANSWERS (b)'S HARD HALF ═══\n\nAnthony, continuing the hub thread: *\"a 'hub' or 'project-brain' repo where leaders/managers can make decisions in and then all the sub-projects inherit those. It kind of allows leaders to work at one level (decision making), while workers operate more in the sub-projects.\"*\n\n⭐ **AND HE NAMES THE INVERSION HIMSELF, WHICH IS THE CONTRIBUTION:** *\"this is somewhat inverse to the hub concept of where all the sub-projects in a hub funnel UP to the hub; whereas what I'm describing here is that the hub funnels DOWN into the sub-projects.\"*\n\n**That is a different feature from the one `dec:idea-a-hub-owns-designs-it-does-not-absorb-...` describes.** That node's four wants — cross-design realization, sync notification, verification roll-up, last-export-date — all flow UPWARD: status and evidence collecting at the hub. This flows DOWNWARD: **authority distributing from the hub.** Same topology, opposite direction, and they need not be built together or at all.\n\n🛑 **AND IT SETTLES, OR AT LEAST TAKES A SIDE ON, THE QUESTION OPTION (b) COULD NOT ANSWER.** That option's counter was *\"IS A MIRRORED DECISION BINDING ON THE MIRRORING DESIGN, OR ONLY VISIBLE TO IT?\"* — asked because a Decision that governs nothing on the far side is a note, and one that governs is an authority claim across the boundary the whole rule exists to draw.\n\n**\"Leaders decide and sub-projects inherit\" is the BINDING reading, said out loud.** It is not a mirrored note; it is governance. That makes the objection sharper rather than softer:\n\n- **A binding cross-design Decision means one design's `GOVERNED_BY` edges point at another design's node.** Nothing in the schema forbids it and nothing supports it — the `parks` ruling, the enforcement flag and `check_intent_authority` all assume the governing Decision is in the same graph, owned by the same person.\n- **`check_intent_authority` is the ENFORCED rule** — intent moves only on the owner's word. **Whose word governs a child that inherited a decision it never approved?** The hub owner's, presumably — which is exactly the authority claim, and exactly what makes it a real feature rather than a convenience.\n- ⚠️ **And the tracker objection returns in a new costume.** Upward roll-up looks like PPM reporting; downward governance looks like PPM *control*. That is not obviously better, and the existing hub node's counter — *\"every step toward being good at that is a step toward being worse at holding WHY\"* — applies to both directions.\n\n⭐ **THE COUNTER-COUNTER, AND IT IS THE STRONGEST THING SAID FOR EITHER DIRECTION:** downward inheritance is the one that carries **WHY**. A sub-project inheriting *\"we settled that outdoor units send cumulative totals, so a lost reading heals itself\"* receives reasoning, not status. **Upward roll-up moves numbers; downward inheritance moves rationale** — and holding WHY is the thing this design says it exists for. If either direction earns its place, the argument for this one is better.\n\n📌 A GENUINELY OPEN SUB-QUESTION NOBODY HAS ASKED: **does an inherited decision keep the hub's id, or get copied?** A copy is a second source of truth (see `dec:idea-the-hub-holds-a-copy-per-sub-repo-and-copies-go-stale`); a reference means the child's graph cannot be read alone, which breaks `dec:nested-graphs`' ownership boundary. Both readings cost something real.",
+        "name": "OPEN — decisions cannot cross a design boundary; and the hub case asks it in the DOWNWARD direction, where inheritance is the point",
+        "rationale": "Corrected an hour after it was written, on the same day, because the first version asserted an absence it had not checked — and an absence is exactly the kind of claim that hardens into folklore. The correction is kept in the node rather than silently replacing the text so the failure mode stays visible.\n\nKept separate from `dec:idea-one-owner-many-projects` because that node asks WHERE the boundary goes and this asks WHAT MAY CROSS IT.\n\nSHARPENED 2026-08-26. The hub thread asks this question in the DOWNWARD direction — leaders decide, sub-projects inherit — and that is recorded here rather than as a new node because it is the same question with a direction attached, and because it takes a side on option (b)'s unanswered half: inheritance means BINDING, not merely visible. Splitting it would separate an answer from the question it answers.\n\nWhat the sharpening adds beyond direction: binding inheritance puts `GOVERNED_BY` across a graph boundary, which `check_intent_authority` — the one ENFORCED rule here — has no account of, since it assumes governor and governed share an owner. That is the concrete obstacle, and it was not visible while the question was asked in the abstract.",
         "status": "proposed"
       }
     },
@@ -124370,6 +124500,16 @@
         "name": "DECIDED — the handoff hook is retired: orientation is computed, durable traps are TemporalFacts, and no markdown document carries either",
         "rationale": "Settled by Anthony on 2026-08-26 after the contradiction was put to him with both sides named. He chose to close it rather than let either side quietly win, which was the recommendation.\n\nThe decision retires the hook rather than narrowing the accepted decision, because the accepted decision is right and the hook was wrong: it enforced a document whose staleness was the original objection AND whose location made it untransportable, so it failed on both the axis it was argued against and the axis it was never tested on.\n\nThe TemporalFact observation is what makes this cheap. It was found by looking at what the memory notes actually contained and noticing the durable half was already in the graph under the right type — so the resolution required no new vocabulary, no new node type, and no build. The enforcement regression is written in rather than glossed, because trading an unavoidable mechanism for a voluntary one is a real loss and a later reader should meet it rather than discover it.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:idea-the-hub-holds-a-copy-per-sub-repo-and-copies-go-stale",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Anthony, 2026-08-26, continuing the hub thread.\n\n📌 DISTINCT FROM `dec:idea-a-hub-owns-designs-it-does-not-absorb-...`, which asks what RELATION should express a hub. This asks about CUSTODY AND CURRENCY: where a sub-project's design physically lives, what keeps a hub-held copy from going stale, and whether a sub-project needs a design at all. That node could be answered and leave every question here open.\n\n═══ THE IDEA, IN HIS WORDS ═══\n\n*\"each project repo in the master repo gets a `reflow2.json` file within the hub/project-brain repo. it is almost like running adopt skill on each repo, but keeping the resulting reflow2.json within the hub/project-brain repo.\"*\n\n**And he names the problem in the same breath:** *\"if one of the existing repos change, then the reflow2.json in the hub repo may not track that or be current with it. I think it may be unavoidable that adopt skill must be run on each sub-project repo in a master-project to keep currency??\"*\n\n═══ ⭐ THE ANSWER MAY ALREADY BE HALF-BUILT, AND IT IS WORTH CHECKING BEFORE DESIGNING ═══\n\nA copy going stale is not a new problem — it is one reflow2 already solves twice, and neither mechanism has been pointed here:\n\n- `sync_status` / `req:stale-seat-knows` — a seat whose graph never caught up must not replace a shared design with a complete-but-older document. **A hub holding N copies is N seats, all of which can go stale.** The refusal machinery exists.\n- **A checksum makes staleness computable rather than assumed.** A hub-held copy could carry the child export's `content_hash` and say plainly *\"this copy is behind\"* — which is the existing hub node's item 4 (last-export-date) with a sharper answer.\n\n⇒ **The honest first move is measurement, not vocabulary:** does a hub-held copy plus a content hash already answer this, making the gap a REPORT rather than a mechanism?\n\n═══ 🛑 \"MUST ADOPT BE RE-RUN PER SUB-REPO?\" — IT TURNS ON WHAT THE COPY IS FOR ═══\n\n- **If the copy is a CACHE of the child's own design**, re-running `adopt` is the wrong repair: the child should EXPORT and the hub should FETCH. Re-adopting re-derives from source what the child already knows — and worse, **two adopts of the same repo need not agree.** `adopt` is a guided process with human judgement in it, so the hub's copy would drift from the child's by INTERPRETATION, not merely by age. That is a nastier drift than staleness because nothing dates it.\n- **If the copy is the ONLY design and the child has none**, re-running adopt is the only route, and the currency problem is real and unavoidable.\n\n**Nothing in the question says which**, and it decides everything downstream.\n\n═══ HIS FINAL QUESTION, AND IT IS THE SHARPEST ═══\n\n*\"can the sub-projects exist without a reflow2.json object (either within them or contained in the master hub)?\"*\n\n⭐ **This decides whether the hub is a reflow2 feature or a different product.**\n\n- **(i) Every sub-project has its own design; the hub links or caches.** Smallest; uses `link-projects` / `mirror_surface`. ⚠️ Counter: O-02 measured zero of seven siblings exporting — blocked on a nudge problem before a vocabulary one.\n- **(ii) Sub-projects have none; the hub holds one per repo.** The idea as stated. ⚠️ Counter: the currency problem above, plus interpretation drift from repeated `adopt`.\n- **(iii) Sub-projects need nothing at all; the hub indexes repos directly.** Closest to the retrieval use cases. ⚠️ Counter: **reflow2 has never read a repository's source to build a graph, and `adopt` is a guided human/agent process, not a builder.** This is a new product surface, not an extension of an existing one.\n\n═══ ⚠️ THE COUNTERWEIGHT ═══\n\n**A hub holding N copies is a second source of truth, N times over.** `changelog_view`'s reasoning — nothing is stored, because a stored changelog could disagree with the graph — applies here with MORE force, not less. Every option except (i) manufactures records that can disagree with what they describe, and catching exactly that is reflow2's whole value.\n\n📌 **ONE MEASURED FACT BEARS ON IT:** `fact:the-hub-hand-rolled-its-own-graph-tooling-per-repo-rather-than-waiting` records a real hub carrying `codegraphs/` with a subdirectory **per repository** — option (ii)/(iii)'s shape, already built by hand. But it PREDATES reflow2, so it is inheritance rather than a verdict on what reflow2 should do. That node was corrected twice by its owner; read it before citing it.",
+        "name": "OPEN — if the hub holds a reflow2.json per sub-repo, what keeps each one current, and can a sub-project exist with no design of its own at all?",
+        "rationale": "Recorded as its own question because it asks about CUSTODY AND CURRENCY — where a sub-project's design lives and what keeps a copy honest — which is separate from what RELATION expresses a hub, and separate again from what may CROSS a design boundary.\n\nThe three readings of \"can a sub-project have no design at all\" are kept apart deliberately, because they are not degrees of one answer: (i) is existing machinery, (ii) is a caching problem, and (iii) would require reflow2 to read source to build a graph — something it has never done. Collapsing them would hide that the third is a different product rather than a larger version of the first.\n\nThe strongest objection is written at full strength: every option except the first manufactures a second source of truth about a system, which is the failure reflow2 exists to detect. And the interpretation-drift point is recorded because it is the non-obvious half — two runs of a guided process on the same repo need not agree, and no date reveals that.",
+        "status": "proposed"
       }
     },
     {
@@ -132199,6 +132339,18 @@
       }
     },
     {
+      "node_id": "question:1148eb83214a370e",
+      "node_type": "Question",
+      "properties": {
+        "answer": "A new part of its own, under Time & History. Anthony chose a new component `cmp:manual-work` for `crates/reflow2-core/src/manual_work.rs` over crediting the function to `cmp:temporal` next door, over `cmp:tools-temporal` where the tools are declared, and over filing it by purpose under `sub:session-posture`. Recorded as an ALLOCATED_TO edge, a CONTAINS from `sys:time-history`, and a REALIZES from `art:manual-work`; `chg:the-last-two-unallocated-capabilities-get-owners` carries the reasoning.",
+        "context_setter": "Capability “A session records the work it did by hand, with the diagnosis that separates a missing tool from an unfindable one” isn't assigned to any part",
+        "gap_id": "gap:1148eb83214a370e",
+        "question": "Which part of the architecture owns the function \"a session records the work it did by hand, with the diagnosis that separates a missing tool from an unfindable one\" — the implementing module manual_work.rs has no component of its own, so does it get one, or does this function get allocated to an existing part?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
       "node_id": "question:159ab608b850e46d",
       "node_type": "Question",
       "properties": {
@@ -132371,6 +132523,18 @@
         "context_setter": "Nothing satisfies requirement “A plan is a dated claim whose movement is on the record”",
         "gap_id": "gap:52b1ed1377382961",
         "question": "You wrote down that when a plan changes, the change itself should be dated and kept on the record — so you can always answer \"what did we believe back then?\" But nothing has been built to do that yet. Build it now, park it, or drop it?",
+        "rephrase_degraded": false,
+        "status": "answered"
+      }
+    },
+    {
+      "node_id": "question:59b48f3aced25835",
+      "node_type": "Question",
+      "properties": {
+        "answer": "Serving → service. Anthony chose the write guard over the entry point: the refusal is enforced in `ReflowService::write_lock`, not in the `--read-only` flag that main.rs parses. Recorded as an ALLOCATED_TO edge; `chg:the-last-two-unallocated-capabilities-get-owners` carries the reasoning.",
+        "context_setter": "Capability “A server can refuse every write, at the one point a write cannot avoid” isn't assigned to any part",
+        "gap_id": "gap:59b48f3aced25835",
+        "question": "Which part of the architecture owns the function \"a server can refuse every write, at the one point a write cannot avoid\" — the refusal is enforced in the service's write guard, so does that part own it, or is the owner the process entry point that carries the --read-only flag?",
         "rephrase_degraded": false,
         "status": "answered"
       }
@@ -140650,6 +140814,17 @@
       }
     },
     {
+      "node_id": "fact:export-must-be-last-means-last-relative-to-main-not-to-the-branch",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "measurement",
+        "statement": "MEASURED 2026-08-26 by a CI failure, after `dec:export-once-per-pr` was read, followed, and still got wrong.\n\n═══ THE MISREADING ═══\n\nThe rule says one commit per PR may export the design **and it must be LAST**. \"Last\" was read as *last among the branch's commits*. So when a follow-up fix landed after the export commit, the branch reconciled and exported a SECOND time — and that second export chained its `prev_content_hash` to the FIRST one.\n\nCI refused it:\n\n    FAIL LINEAGE 'docs/design/reflow2.json' does not link to the export it\n    replaced: it records sha256:82e005ce... where sha256:ad8b744f... is expected.\n\n⭐ **THE MECHANISM, WHICH IS THE PART WORTH KEEPING: CI CHECKS OUT THE PR *MERGE* COMMIT, SO `HEAD~1` IS `main` — NOT THE BRANCH'S PREVIOUS COMMIT.** The guard therefore compares the branch's final export against **main's** export. A branch may export exactly ONCE, from main's baseline, and the export's `prev_content_hash` must equal MAIN's `content_hash`.\n\n⇒ **\"Last\" means last relative to MAIN, not relative to the branch.** A local `reflow2_check` passes on a two-export branch because it compares against the working tree's own history; only CI sees the merge-commit view. **The local gate and the CI gate ask different questions here, and the local one is the weaker.**\n\n═══ THE REPAIR, AND IT IS THE DOCUMENTED ONE ═══\n\n    git reset --soft origin/main\n    git checkout origin/main -- docs/design/reflow2.json   # from ORIGIN/MAIN, never the branch\n    <export once>\n    <commit>\n\nVerify before pushing by comparing directly rather than trusting the shape:\n\n    git show origin/main:docs/design/reflow2.json | jq -r .content_hash\n    jq -r .prev_content_hash docs/design/reflow2.json      # must be identical\n\n⚠️ **AND A SECOND-ORDER TRAP THAT COST A FALSE ALARM:** `git log --name-only origin/main..HEAD | grep -c docs/design/reflow2.json` is NOT a valid count of exporting commits — `--name-only` includes commit MESSAGES, so a message that mentions the path inflates the count. Count with `git show --name-only --format=\"\" <sha>` per commit instead.\n\n📌 WHY IT RECURS: the release-cut procedure already carried \"one commit may export and `reset --soft` is the fix when you get it wrong\", learned on v0.22.0. That note describes the REPAIR and never states WHY last means last-relative-to-main. **A procedure that gives the fix without the mechanism is one somebody follows correctly and still misapplies**, which is exactly what happened here on a non-release PR the note's release framing did not obviously cover.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-26"
+      }
+    },
+    {
       "node_id": "fact:external-agent-side-report-2026-08-11",
       "node_type": "TemporalFact",
       "properties": {
@@ -144583,7 +144758,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:fd27ecdab6630176b28fb74bdc011c96d57db4c6b638836b386646f1c218c0b5",
+  "prev_content_hash": "sha256:21ab7fddf856e311dbd4e5449a39739b8d072981c5d8a9553c4b94ca46cc8f14",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
