@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:fd27ecdab6630176b28fb74bdc011c96d57db4c6b638836b386646f1c218c0b5",
+  "content_hash": "sha256:21ab7fddf856e311dbd4e5449a39739b8d072981c5d8a9553c4b94ca46cc8f14",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2972,6 +2972,14 @@
     },
     {
       "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-a-problem-in-the-users-words-should-retrieve-the-tool-that-answers-it",
+      "properties": {
+        "evidence": "That question asks how a problem stated in the user's words retrieves the TOOL that answers it. This asks how a thing named in the user's words retrieves the right NODE TYPE. Same gap on two surfaces, and the earlier one framed the retrieval problem first."
+      },
+      "to_id": "dec:idea-a-users-domain-vocabulary-has-no-route-into-se-vocabulary"
+    },
+    {
+      "edge_type": "ANTICIPATES",
       "from_id": "dec:idea-a-proposed-decision-asserts-nothing-so-what-may-a-structural-detector-say-about-it",
       "properties": {
         "evidence": "That decision's rationale states the general form in as many words — 'a rule maintained by hand with nothing checking it is a rule that silently stops being true' — and names itself the third instance of the class. It saw this general question coming while answering one instance of it."
@@ -3175,6 +3183,14 @@
         "evidence": "That measurement found ZERO of eight subsystems providing an interface, with every interface provided by a leaf component one level down - subsystems as groupings rather than black boxes. Four subsystems have since gained a PROVIDES edge, so the count aged; the finding did not, because none of the four carries a contract. It predicted the shape of today's answer before the edges existed."
       },
       "to_id": "dec:idea-what-would-a-provided-contract-buy-substitution-derived-tests-or-a-mock"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:the-lens-that-carries-the-persona-was-built-on-a-branch-and-never-shipped",
+      "properties": {
+        "evidence": "That measurement is what turned the question from 'which leg is missing' into 'the leg was built and never landed', which is a different repair at a different cost. It saw the disposition question coming by establishing that the code already exists."
+      },
+      "to_id": "dec:idea-the-persona-has-no-delivery-leg-so-what-carries-it"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -10579,6 +10595,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-users-domain-vocabulary-has-no-route-into-se-vocabulary",
+      "properties": {
+        "acted_at": "2026-08-26",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-view-can-slice-by-altitude-not-only-by-aspect",
       "properties": {
         "acted_at": "2026-08-14",
@@ -11734,6 +11759,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-the-persona-has-no-delivery-leg-so-what-carries-it",
+      "properties": {
+        "acted_at": "2026-08-26",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -14345,6 +14379,14 @@
         "evidence": "Not a veto — a raised threshold, and BLOCKS is the closest true relation the vocabulary offers. Before 2026-08-24 `max_flow_min_cut` was linked and callable, so this idea was 'use a function we already have'. This capability absorbed only what reflow2 calls and left `maxflow.rs` (248 lines) upstream, so acting on the idea now means retrieving a file from tag v0.12.0 first. The same holds for `dec:idea-other-centralities`, `dec:idea-missing-edge-prediction` and `dec:idea-relevance-ranking`; this edge is drawn on the sharpest instance rather than four times over, because relatedness is not similarity."
       },
       "to_id": "dec:idea-severability-cut"
+    },
+    {
+      "edge_type": "BLOCKS",
+      "from_id": "cap:the-skill-response-carries-the-lens",
+      "properties": {
+        "evidence": "That capability stands at `in_progress` and its own description says it moves to `realized` only 'when the branch merges'. Until this question is answered one way or the other, it cannot move — and a capability parked indefinitely at in_progress is what makes the release report read as though it shipped."
+      },
+      "to_id": "dec:idea-the-persona-has-no-delivery-leg-so-what-carries-it"
     },
     {
       "edge_type": "BLOCKS",
@@ -21561,6 +21603,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:baseline-31ba4a21ae1a9f5b",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:lens-handler-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:baseline-3557f368757d70a1",
       "properties": {
         "accepted_baseline": true,
@@ -21729,6 +21780,15 @@
         "action": "modified"
       },
       "to_id": "art:registry"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-8f8d2935d787075a",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:lens-core-test"
     },
     {
       "edge_type": "CHANGED",
@@ -30595,6 +30655,42 @@
         "action": "modified"
       },
       "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-lens-lands-a-month-after-it-was-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:claims"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-lens-lands-a-month-after-it-was-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-lens-lands-a-month-after-it-was-built",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-lens-lands-a-month-after-it-was-built",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:the-skill-response-carries-the-lens"
     },
     {
       "edge_type": "CHANGED",
@@ -100752,6 +100848,24 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:lens-core-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-skill-response-carries-the-lens"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:lens-handler-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-skill-response-carries-the-lens"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:llm",
       "properties": {
         "completeness": "complete"
@@ -108962,7 +109076,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3aea7e282a765bdd12ee8f6a1de65f216a22178d0bfaae9fc25b648d4f98e108",
+        "checksum": "sha256:2d9d47d689b9964eb984c29777fcf819258d1afda88d0003376e2c200cae0cc5",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/claims.rs",
         "name": "claims.rs",
@@ -109824,6 +109938,28 @@
         "name": "latent.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:lens-core-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:d1e29bf14ff4e4c76cc21671140eeb264ac3a65db9612ace43117145e522fa28",
+        "location": "crates/reflow2-core/tests/the_design_says_whose_words_to_use.rs",
+        "name": "tests/the_design_says_whose_words_to_use.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:lens-handler-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:d096bb47c21719759540d607e003332524568d053cec8f7853f5d9d348d5027a",
+        "location": "crates/reflow2-mcp/tests/a_skill_response_says_who_it_is_for.rs",
+        "name": "tests/a_skill_response_says_who_it_is_for.rs",
+        "status": "realized"
       }
     },
     {
@@ -110778,7 +110914,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:bf81f8f819dc1daf2011ddd11b2b938c00f1ad9ff5b5d059c97c89565e4ca795",
+        "checksum": "sha256:b094228983dd0251d46cd73f3fd4c6d72d6a77d64d232364caec67256e7807a0",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/skills.rs",
         "name": "skills.rs",
@@ -111390,7 +111526,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f67433db8262fb925c5dcd13fb8fd04d779e5cf90401854b5e4614108166ecb3",
+        "checksum": "sha256:17c856bb3593168d643ad9c1d05fa8b6386258e38b31bea3ad152609c228d0b1",
         "location": "crates/reflow2-mcp/src/tools/skills_tools.rs",
         "name": "skills_tools.rs",
         "status": "realized"
@@ -114123,10 +114259,10 @@
       "node_id": "cap:the-skill-response-carries-the-lens",
       "node_type": "Capability",
       "properties": {
-        "description": "BUILT 2026-08-19 on Anthony's idea, ON A BRANCH — **`get_skill` and `list_skills` carry a `lens` field**, so the reminder rides the response the agent reads immediately before doing the work.\n\n🛑 **STATUS IS `in_progress`, NOT `realized`, AND THAT IS DELIBERATE.** The code and its tests exist on `lens-hint-rides-the-loop-rail`; they are NOT merged and do NOT ship in v0.36.0. Set down explicitly during the v0.36.0 cut, because the design graph does not branch with git — the live store already held these nodes, and exporting `realized` would have made the release claim it shipped code that is not in it. Move to `realized` when the branch merges.\n\n**Distinct from the two neighbouring capabilities, and the split is the point:** `cap:the-agent-asks-who-it-is-talking-to` ASKS at orientation; `cap:the-register-rule-reaches-the-words` puts the RULE in served prose everywhere; **this one makes the reminder arrive on the wire, so it survives the context distance that prose does not.**\n\nWHAT WAS BUILT\n· **`DesignGraph::reader_lens()`** in core (`claims.rs`), returning `ReaderLens { with_background, without_background }`, re-exported at the crate root beside its siblings. Six tests PASSING in `the_design_says_whose_words_to_use.rs`; a workspace run with them included was 127 suites, 0 failed.\n· **`lens_line()`** in the MCP layer turns it into the sentence an agent reads.\n· **Attached best-effort to both skill tools**; 5 handler-level tests written and NOT YET RUN.\n\n⭐ THE FOUR PROPERTIES PINNED BY TESTS, because each is where this could have gone wrong:\n1. **IT REPORTS ABSENCE.** A design where nobody carries a background says so and NAMES who could be asked. This is the half reflow2 has never had — every detector reasons over what EXISTS and none asks whether a thing was never used at all.\n2. **IT NEVER CLAIMS TO KNOW WHO IS AT THE KEYBOARD.** reflow2 cannot: a `seat` names a session, never a person. It reports what the DESIGN holds and leaves matching the reader to the agent. **Confidently addressing the wrong person would be worse than silence.**\n3. **AN `automated_agent` IS NEVER COUNTED.** A bot's `description` is provenance about a tool; counting it would let a design claim it knows its AUDIENCE when it only knows its AUTHORS.\n4. **WHITESPACE IS NOT A BACKGROUND**, and `kind` unset reads as a person. The first is the same rule that made the served ask stop accepting *\"Bob\"*; the second because `kind` is optional and predates much of the graph.\n\n📌 **BEST-EFFORT BY CONSTRUCTION.** `lens_for_response` swallows a graph error and returns `None`, so a skill is still served when the graph is busy, missing or unreadable. **A reminder that could withhold a skill would trade a nudge for an outage.**\n\n📌 **HIS IDEA WAS AN INPUT PARAMETER; THIS IS AN OUTPUT.** `session_user` as an argument has a chicken-and-egg — the agent must already know who it is speaking to. As an output, **absence becomes the signal** and the caller passes nothing.\n\n🛑 **AND THE REAL LIMIT IS UNCHANGED BY ANY OF IT.** The tests prove the lens computes correctly and that the field is attached. **They do not prove an agent acts on it, and nothing proves the translation is any good.** This fixes \"the agent forgot\"; it does not touch \"the agent translated badly\". The trial — a real gap list narrated to a reader with a stated non-software background — is still the missing instrument.\n\n⚠️ OPEN, DELIBERATELY NOT DECIDED HERE: whether the lens needs `loop_hint`'s fire-on-change throttle.",
+        "description": "**REALIZED 2026-08-26 — `get_skill` and `list_skills` carry a `lens` field**, so the reminder rides the response the agent reads immediately before doing the work. Built 2026-08-19 on Anthony's idea.\n\n🛑 **IT SAT ON AN UNMERGED BRANCH FOR A MONTH, AND THE DESIGN SAID IT EXISTED THE WHOLE TIME.** This description previously read *\"status is `in_progress`, NOT `realized`, and that is deliberate… move to `realized` when the branch merges.\"* The branch (`lens-hint-rides-the-loop-rail`, commit e01c760) never merged. Meanwhile the capability appeared in `capabilities_covered` on release reports, because that list derives from shipped components and artifacts and never from a capability's STATUS — **so every reading of the release record said the mechanism shipped.** Measured and recorded in `fact:the-lens-that-carries-the-persona-was-built-on-a-branch-and-never-shipped`.\n\n**Distinct from the two neighbouring capabilities, and the split is the point:** `cap:the-agent-asks-who-it-is-talking-to` ASKS at orientation; `cap:the-register-rule-reaches-the-words` puts the RULE in served prose everywhere; **this one makes the reminder arrive on the wire, so it survives the context distance that prose does not.**\n\nWHAT IS BUILT\n· **`DesignGraph::reader_lens()`** in core (`claims.rs`), returning `ReaderLens { with_background, without_background }`. **Six tests passing** in `the_design_says_whose_words_to_use.rs`.\n· **`lens_line()`** in `skills.rs` turns it into the sentence an agent reads.\n· **`lens_for_response()`** attaches it best-effort to both skill tools in `tools/skills_tools.rs`. **Five handler tests passing** in `a_skill_response_says_who_it_is_for.rs`.\n· Verified against the REAL binary over stdio: a `get_skill` response returns keys `[body, description, lens, name]`.\n\n⭐ THE FOUR PROPERTIES PINNED BY TESTS, because each is where this could have gone wrong:\n1. **IT REPORTS ABSENCE.** A design where nobody carries a background says so and NAMES who could be asked — the half reflow2 has never had, since every detector reasons over what EXISTS.\n2. **IT NEVER CLAIMS TO KNOW WHO IS AT THE KEYBOARD.** A `seat` names a session, never a person. It reports what the DESIGN holds and leaves matching the reader to the agent. **Confidently addressing the wrong person would be worse than silence.**\n3. **AN `automated_agent` IS NEVER COUNTED.** A bot's `description` is provenance about a tool; counting it would let a design claim it knows its AUDIENCE when it only knows its AUTHORS.\n4. **WHITESPACE IS NOT A BACKGROUND**, and `kind` unset reads as a person.\n\n📌 **BEST-EFFORT BY CONSTRUCTION.** `lens_for_response` swallows a graph error and returns `None`, so a skill is still served when the graph is busy, missing or unreadable. **A reminder that could withhold a skill would trade a nudge for an outage.**\n\n📌 **THE IDEA WAS AN INPUT PARAMETER; THIS IS AN OUTPUT.** `session_user` as an argument has a chicken-and-egg — the agent must already know who it is speaking to. As an output, **absence becomes the signal** and the caller passes nothing.\n\n🛑 **TWO DEFECTS THE MONTH-LONG DELAY CREATED, both caught only because landing it was done by hand:**\n- **`lens_for_response` took a WRITE lock to do a READ.** Harmless in August; not now — `write_lock` became fallible AND refuses outright on a `--read-only` server, so the lens would have returned `None` on every read-only deployment. **That is exactly the surface a stranger reads a design through**, and no test would have caught it. Now `graph.read()`.\n- **The five handler tests never ran because they never COMPILED** — `GetSkillReq`/`ListSkillsReq` had moved modules and `name` had become `Option<String>`. The commit called them \"unrun\"; unrunnable is a different and softer-sounding state.\n\n🛑 **AND THE REAL LIMIT IS UNCHANGED BY ANY OF IT.** The tests prove the lens computes correctly and that the field is attached. **They do not prove an agent acts on it, and nothing proves the translation is any good.** This fixes \"the agent forgot\"; it does not touch \"the agent translated badly\". The trial — a real gap list narrated to a reader with a stated non-software background — is still the missing instrument.\n\n⚠️ OPEN, DELIBERATELY NOT DECIDED HERE: whether the lens needs `loop_hint`'s fire-on-change throttle.",
         "name": "A skill response says who the design knows how to speak to — or says plainly that it knows nobody",
         "provenance": "authored",
-        "status": "in_progress"
+        "status": "realized"
       }
     },
     {
@@ -116953,6 +117089,16 @@
       }
     },
     {
+      "node_id": "chg:baseline-31ba4a21ae1a9f5b",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-26",
+        "name": "First baseline. Written 2026-08-19 and never compiled until today — the request types had moved modules and a field had become Option.",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-3557f368757d70a1",
       "node_type": "ChangeEvent",
       "properties": {
@@ -117131,6 +117277,16 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-12",
         "name": "First baseline — new in this change."
+      }
+    },
+    {
+      "node_id": "chg:baseline-8f8d2935d787075a",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-26",
+        "name": "First baseline — written 2026-08-19 on the unmerged branch, landed today.",
+        "subject": "record"
       }
     },
     {
@@ -119756,6 +119912,18 @@
         "description": "Fixes `fact:defect-the-launch-wrapper-cannot-see-a-schema-change`, and the investigation found the defect was WIDER than the fact recorded.\n\n⭐ THE FRAMING THAT MATTERS, and it is sharper than 'the hash was incomplete': THIS HASH IS A GATE IN FRONT OF CARGO'S OWN CHANGE DETECTION. When it decides nothing moved, cargo is never invoked, so cargo's `rerun-if-changed` logic never gets to run. Anything the wrapper misses is therefore not merely untracked — it is actively shielded from the mechanism that would have caught it.\n\nTWO OMISSIONS, and the second was not in the original report:\n\n① `schema/*.yaml`, `include_str!`d by reflow2-core (schema.rs:19-38). A schema-only edit left the hash identical, so the wrapper printed 'binary current, skipping build' and served the previous VOCABULARY. Measured 2026-08-16: `describe_schema` answered with the pre-#199 `change_type` enum while main already declared `defect_fix`, and this session nearly recorded the exact fiction #199 had been merged hours earlier to end.\n\n② `getting-started/skills/**/SKILL.md`, embedded by `crates/reflow2-mcp/build.rs`. THIS ONE IS WORSE AND WAS INVISIBLE UNTIL LOOKED FOR: build.rs ALREADY declares `cargo:rerun-if-changed` on the kit (build.rs:29,50), so cargo would have rebuilt correctly on its own. The wrapper defeated a mechanism that was already right. Editing a SKILL.md served the old text with no warning — and skills change far more often than the schema does.\n\nMEASURED, FOUR CASES, each against both the old and new formula:\n\n    schema edit   new MOVED   old NOT MOVED    <- ①\n    SKILL.md edit new MOVED   old NOT MOVED    <- ②\n    test edit     new NOT     old NOT          <- counterweight\n    src edit      new MOVED   old MOVED        <- counterweight\n\nTHE TWO COUNTERWEIGHTS ARE THE POINT. Tests stay OUT deliberately — they are separate cargo targets and cannot change the binary this serves, so including them would rebuild on every test edit and train people to distrust the wrapper. And a `src/*.rs` edit still moves both formulas, so nothing that already worked regressed.\n\n📌 ONE-TIME COST, stated so it does not read as a fault: the first launch after this change rebuilds once regardless, because the stored `.reflow2-mcp.srchash` stamp was computed under the old formula and cannot match the new one. Observed and expected; stable from the second launch.\n\nNOT A REGISTERED ARTIFACT and nothing tests it — which is why the four-case measurement is recorded here rather than as a Verification. CONSUMERS ARE UNAFFECTED throughout: they run an installed release binary, never this wrapper.\n\nNOT FIXED: the wrapper still cannot notice that a RUNNING server has gone stale — it only decides what to build at launch. A session whose server started before a schema change still needs `--stop-shared`, and nothing tells it so.",
         "name": "The launch wrapper's hash covers the schema and the skills — the two trees compiled into the binary from outside src/, both of which it was silently blind to",
         "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:the-lens-lands-a-month-after-it-was-built",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-26",
+        "name": "The lens finally rides the skill response — and the drift it accumulated was a real bug",
+        "rationale": "🛑 A MONTH ON A BRANCH COST TWO REAL DEFECTS, AND THAT IS THE DURABLE LESSON.\n\n**1. THE WRITE-LOCK BUG, which would have shipped silently.** `lens_for_response` took `self.write_lock()` to perform a READ. Harmless when written on 2026-08-19; not harmless now. On 2026-08-26 `write_lock` became fallible AND began refusing outright on a `--read-only` server. Landing the branch unchanged would have returned `None` on every read-only deployment — **disabling the lens precisely on the surface a stranger reads the design through, which is where speaking their vocabulary matters most.** Computing a lens is a read; the original said otherwise and no test would have caught it, because no test ran against a read-only service. Now `self.graph.read()`.\n\n**2. THE FIVE HANDLER TESTS NEVER RAN BECAUSE THEY NEVER COMPILED.** The commit message called them \"unrun\". They were unrunnable: `GetSkillReq` / `ListSkillsReq` had moved from `skills` to `tools::skills_tools` in the tool-surface refactor, and `name` on two request types had become `Option<String>`. **\"Unrun tests\" and \"tests that do not compile\" are different states and the commit recorded the softer one.** All five pass now, alongside the six core tests.\n\n⭐ THE CHERRY-PICK CONFLICTED AND THE CONFLICT WAS INFORMATION. `skills.rs` was refactored after the branch: the tool handlers moved to `tools/skills_tools.rs` and the file kept only helpers. Resolving the conflict textually would have re-added structs that already exist elsewhere. The lens was instead applied BY HAND to the two files it actually belongs in — which is how the write-lock bug was noticed at all.\n\n📌 WHY IT MATTERED ENOUGH TO GO BACK FOR. A user reported twice, months apart, that reflow2 \"still speaks its own jargon and never asks who I am\". Both reports were correct and neither was a missing idea: the only two skills that instruct asking are `where-am-i` and `capture-intent`, which a regular user runs and a new user does not. **A mechanism that only fires on the path its author walks is indistinguishable from a working one, from where the author stands** — and the design recorded the capability, so every reading of the graph said the mechanism existed.\n\n⚠️ AND THE LIMIT THE CAPABILITY ALWAYS NAMED IS UNCHANGED: the tests prove the lens computes and is attached. They do not prove an agent ACTS on it, and nothing proves the translation is any good. This closes delivery. **Whether the words that come out are the reader's words remains unmeasured**, and the trial that would measure it — a real gap list narrated to a reader with a stated non-software background — is still the missing instrument.",
+        "subject": "system",
+        "summary": "`get_skill` and `list_skills` now carry a `lens` field: who the design knows how to speak to, or a plain statement that it knows nobody. Moves `cap:the-skill-response-carries-the-lens` from `in_progress` to `realized` — it was built 2026-08-19 on branch `lens-hint-rides-the-loop-rail` (commit e01c760), deliberately not marked realized at the v0.36.0 cut, and never merged. Verified live against the real binary: a `get_skill` response now returns keys [body, description, lens, name]. Workspace suite 1835 passed / 0 failed across 163 binaries, reconciling exactly against 1824 + 11 across 161 + 2."
       }
     },
     {
@@ -122882,6 +123050,16 @@
       }
     },
     {
+      "node_id": "dec:idea-a-users-domain-vocabulary-has-no-route-into-se-vocabulary",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** From a user report, 2026-08-26, relayed. Deliberately written WITHOUT the user's domain or employer: what generalises is the shape, and the specifics belong to them.\n\n═══ WHAT HAPPENED ═══\n\nA user working in a data-intensive domain found that the words their field uses do not map onto reflow2's node types. **So they wrote their own skill to translate between the two** — a private glossary sitting between their vocabulary and what reflow2 will accept.\n\nThe worked example, generalised: their domain has a first-class thing that behaves like a *request against a structured body of records*. Their translator decided it was an **Interface**. That may be right, or it may be a category error nobody will notice for months — and **nothing in reflow2 can tell them which.**\n\n⭐ **THE TELL IS THAT THEY BUILT THE TRANSLATOR AT ALL.** That is `req:a-session-says-what-it-did-by-hand-...`'s signal arriving before the tool that records it existed: a user reached for something reflow2 does not serve and built it themselves. Hand-rolled work carries intent, and this is a user saying *the vocabulary gap is real enough to write code about*.\n\n═══ WHY THIS IS HARDER THAN IT LOOKS ═══\n\nThe obvious reading is \"reflow2's vocabulary is too small\". That is probably wrong, and worth saying plainly: SE vocabulary is deliberately abstract so it spans a house, a spacecraft and a service. **The difficulty is not coverage, it is ROUTING** — which of several defensible node types a domain word belongs to, and the fact that more than one is defensible.\n\nA request against a structured body of records could honestly be:\n- an **Interface** — it is a contract with a caller, and it has a shape\n- a **Capability** — it is a function the system performs\n- a **Requirement** — if what matters is the obligation (\"answers within X\")\n- a **Flow** — if what matters is the sequence\n\n**All four are defensible and they lead to different designs.** That is not a gap in the vocabulary; it is a modelling decision the user is being asked to make with no guidance and no way to check the answer.\n\n═══ OPTIONS, none chosen ═══\n\n**(a) A ROUTING GUIDE — worked examples from domains that are not software.** Not new vocabulary: a document or skill that says \"here is a thing that looks like X, here is why it is modelled as Y, here is what breaks if you choose Z.\" ⚠️ Counter: prose that nobody reads at the moment of the decision, which is exactly what `dec:what-lives-where` argues against.\n\n**(b) THE ROUTING QUESTION ASKED AT CAPTURE, BY THE TOOL.** `capture-intent` already routes a user's words to node types; make the ambiguity explicit — offer the two or three defensible readings with what each buys and costs, and record which was chosen and why. ⚠️ Counter: it slows every capture to serve the ambiguous minority, and the skill's own doctrine is that asking the user which node type to use hands them work that is the agent's.\n\n**(c) MAKE THE USER'S GLOSSARY A FIRST-CLASS THING reflow2 holds.** They built a translator; reflow2 could record the mapping — *\"in this design, 'X' means Interface, decided on this date, for this reason\"* — so it is consistent, reviewable and inherited by the next session. ⚠️ Counter: a per-design glossary is real vocabulary surface with all three legs to build, and the value rests on an n=1 report.\n\n**(d) NOTHING. The translator working is the system working.** A user extended the tool to fit their domain, which is what an extensible tool is for. ⚠️ Counter: the translation is unreviewable and unversioned, its author cannot tell a good mapping from a bad one, and a wrong early call propagates through every downstream analysis silently.\n\n═══ ⚠️ THE COUNTERWEIGHT THAT MATTERS MOST ═══\n\n**This is n=1, relayed, with no specifics available.** Everything above is inference from a second-hand description. Before building anything, the honest next step is the one this project keeps proving right: get the case in the user's own words. `report_manual_work` now exists precisely to catch reports of this shape — a user going by hand where a tool should have served — and it shipped hours before this was recorded.\n\n📌 RELATED AND ALREADY OPEN: `dec:idea-a-problem-in-the-users-words-should-retrieve-the-tool-that-answers-it` asks the mirror-image question — retrieving the right TOOL from a problem stated in the user's words. This one is about retrieving the right NODE TYPE for a thing in the user's words. Same gap, two surfaces.",
+        "name": "OPEN — when a user's domain word has no obvious SE node type, they build their own translator; should reflow2 own that translation, and what does it cost to get it wrong?",
+        "rationale": "Recorded without the user's domain or employer deliberately, at the owner's request and because the design record is public. The shape generalises and the specifics add nothing a later reader needs; a design graph that carries somebody's work context because it happened to arrive in a conversation is a graph that leaks.\n\nKept separate from the persona question because they fail differently. The persona is a DELIVERY failure — the mechanism exists and does not reach anyone. This is a ROUTING failure — the mechanism does not exist, and it is not obvious it should, because the difficulty is genuine ambiguity rather than missing vocabulary.\n\nThe strongest argument against acting is recorded at full strength: n=1, relayed, no specifics. The strongest argument for is that the user built code to work around it, which is the most expensive signal a user can send short of leaving.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-a-view-can-slice-by-altitude-not-only-by-aspect",
       "node_type": "Decision",
       "properties": {
@@ -124235,6 +124413,16 @@
       }
     },
     {
+      "node_id": "dec:idea-the-persona-has-no-delivery-leg-so-what-carries-it",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Prompted by a user report, 2026-08-26: reflow2 *\"still speaks its own jargon and never asks who I am\"*, with the user's own guess that this is another two-of-three-legs case.\n\n📌 DISTINCT FROM THE TWO THE GUARD OFFERED, BY ROLE. The fact MEASURES what shipped. The capability describes WHAT WAS BUILT and is honest that it is `in_progress`. **This asks what should happen NOW**, which neither answers — a measurement states a condition and a capability states an intent; the disposition is a third thing.\n\n**The user's guess was right and the measurement is sharper than the guess.** It is not a missing leg: the delivery mechanism was **built, core-tested, and left on a branch that never merged** (`e01c760`, \"WIP: lens on the skill response — core green, mcp handler tests unrun\"). `reader_lens` / `lens_line` / `ReaderLens` have zero occurrences in shipped code, and `lens` is absent from the `get_skill` / `list_skills` toolsnaps.\n\n═══ ⭐ WHY IT BITES A USER AND NOT THE OWNER ═══\n\nThe two skills that instruct asking — `where-am-i` and `capture-intent` — are exactly the ones a **regular** user runs and a **new** user does not. The owner runs `/where` constantly, so the persona works for him and silently fails for everyone else. **A mechanism that only fires on the path its author walks is indistinguishable from a working one, from where the author stands.**\n\n═══ OPTIONS, none chosen ═══\n\n**(a) ⭐ LAND THE BRANCH.** The work exists; six core tests pass; five MCP handler tests were written and never run. Cheapest by a wide margin, and the capability node already describes what \"done\" means. ⚠️ Counter: it is a month old and the surrounding code has moved — `write_lock` alone gained a `?` at 98 call sites today. Re-landing is not free, and unrun handler tests are unrun evidence.\n\n**(b) CARRY IT ON THE LOOP RAIL INSTEAD OF THE SKILL RESPONSE.** `loop_status` and `open_questions` are what a session calls FIRST, before it knows which skill it wants; a skill response arrives only after somebody chose a skill. ⚠️ Counter: the orientation calls are already dense, and `dec:read-hint-shape` deliberately throttles what rides them. Adding a second passenger means re-opening that decision rather than assuming it.\n\n**(c) A DETECTOR FOR THE MISSING BACKGROUND.** Nothing today notices a Contributor with no `description`, or a design with no person in it at all. That is leg three and it is absent. ⚠️ Counter: it tells the OWNER something is missing; it does nothing for the session speaking jargon right now. It closes the audit hole, not the user's complaint.\n\n**(d) ACCEPT IT AND RETIRE THE CAPABILITY.** If the lens is not worth re-landing, saying so beats a node that reads `in_progress` forever. ⚠️ Counter: the underlying need has now been reported twice, months apart, by someone who is not the owner.\n\n═══ ⚠️ A SECOND FINDING, SEPARABLE AND ARGUABLY WORSE ═══\n\n**The v0.41.0 release report lists this capability under `capabilities_covered`.** That list derives from the components and artifacts a release ships, never from a capability's STATUS — so a capability whose implementation does not exist in the codebase reads as covered by a release. The capability node is honest; the release reading is not, and nothing reconciles the two. Whether `release_report` should read status is a different question and is not decided here.\n\n═══ ⚠️ AND THE LIMIT THAT NONE OF THIS TOUCHES ═══\n\nThe capability's own description already says it: the tests prove the lens computes and is attached, *\"they do not prove an agent acts on it, and nothing proves the translation is any good. This fixes 'the agent forgot'; it does not touch 'the agent translated badly'.\"* Every option above closes DELIVERY. **The quality of the translation remains unmeasured**, and the trial that would measure it — a real gap list narrated to a reader with a stated non-software background — is still the missing instrument.",
+        "name": "OPEN — the persona reaches nobody who does not run where-am-i: land the built branch, or is a skill-response field the wrong carrier?",
+        "rationale": "Recorded as its own question because it is about the CARRIER — what puts the persona in front of an agent — which is separate from whether reflow2 can translate a user's domain vocabulary at all, and separate again from whether a new user can find their way around the skills.\n\nThe measurement was taken before the options were written and it changed the question. The first framing was \"which leg is missing\"; the answer is that the leg was built and never landed. That is a different repair with a different cost, and mis-stating it would have sent somebody to write code that already exists.\n\n⚠️ Worth recording as a CLASS, not just an instance: a mechanism that only fires on the path its author walks is invisible from the author's seat by construction. Neither report of this symptom would have arrived without a user who is not the owner, and the same shape will hide the next one.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth",
       "node_type": "Decision",
       "properties": {
@@ -124415,9 +124603,9 @@
       "node_id": "dec:idea-where-does-tool-use-actually-fail-four-layers",
       "node_type": "Decision",
       "properties": {
-        "decision": "Anthony, 2026-08-26, thinking out loud: *\"what are some things we can do to increase the probability that an agent will use reflow2 skills and tools in a project? what would make the agent say, I have the perfect skill or tool needed for problem X? hopefully, by adding depth and layers, we can start seeing much more clearly why and when some skills/tools are used.\"*\n\n**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Nothing here is decided; the options are put down so a later session meets the reasoning rather than re-deriving it.\n\n═══ THE FRAME BEING PROPOSED: FOUR LAYERS, AND A SKIP HAPPENS AT THE WEAKEST ONE ═══\n\nFor an agent to use a skill, four things must all hold. They fail independently, they want different fixes, and reflow2 has not worked them equally:\n\n① **KNOWN** — the agent is aware the thing exists. *(Worked: `list_skills`, `get_skill`, served-not-installed, the handshake catalogue, 23 slash commands.)*\n\n② **RECOGNISED** — the agent notices THIS MOMENT is that skill's moment. *(Worked hard: `cap:skill-triggers`, the three-event loop nudge, `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue`.)*\n\n③ **WORTH IT** — the agent believes the skill beats what it would do unaided. *(BARELY WORKED AT ALL. There is no node arguing that a skill produces a better answer than competent improvisation; the whole surface argues that skipping is non-compliant, which is a different claim and a weaker motivator for something that is not trying to comply.)*\n\n④ **VISIBLE** — something can see whether it happened. *(PARTLY BUILT — see the correction below.)*\n\n⚠️ **CORRECTION MADE IN THE SAME SESSION, AND THE MISTAKE IS WORTH KEEPING.** This node first asserted that layer ④ was DEFERRED, reasoning from `req:skill-use-survives-a-long-session`, which says so in its own text. That was true when that requirement was written and is now FALSE: `req:skill-adherence-is-measured` is **`accepted`** (there is a `chg:undefer-skill-adherence-measurement`), and `cap:skill-loads-are-counted` is **built and `verified`**, with a passing check — a session that never opened a skill is visible and says so before it ends.\n\n**The error is the one this project keeps recording: reading a claim out of one node's prose instead of the node it is about.** `fact:reflow2s-black-boxes-hold-no-functions...` is a previous instance, and its own lesson reads *\"I MEASURED THE EDGES AND INFERRED THE HISTORY, without reading the Decision that recorded the history.\"* Same failure, five weeks apart, in a node about why mechanisms do not reach people.\n\n**What layer ④ actually holds now:** skill LOADS are counted, and their absence is announced at session end. **What it still does not hold:** any notion of which skill SHOULD have been loaded for the work that was done — the gap between performed and appropriate. That is the half `req:skill-adherence-is-measured` still describes as open, along with the constraint that makes it hard (`dec:loop-status-state-not-history` forbids the loop reasoning from run history; whether a report about the KIT's own adoption is exempt from that is explicitly unsettled).\n\n═══ THE EVIDENCE THAT ③ IS THE BOTTLENECK ═══\n\n`req:skill-use-survives-a-long-session` records the same failure twice, six days apart, and the second is the damning one: **`cap:skill-triggers` was `verified` and firing correctly, and the user still had to be the reminder.** Layer ② was WORKING and it was not enough.\n\nIt also names the structural ceiling on ②: every shape that capability recognises is a shape in the GRAPH-WRITE stream, so it requires the agent to have already touched the graph. *A skill load is not a graph write.* No amount of work on ② reaches an agent that never started.\n\n⭐ AND THE MEASUREMENT MOST WORTH REPEATING: both observations were made on sessions with **more** context about reflow2 than any consumer's agent will ever have — reflow2's own repo, its own author's instructions in the prompt. That is a BEST case, not a typical one.\n\n═══ OPTIONS, none chosen ═══\n\n**(a) Attack layer ③ directly: make the skill's ADVANTAGE legible at the moment of choice.** A skill result could open by saying what it will catch that improvisation will not — with a number where one exists. Cheap to try on one skill. ⚠️ Counter: this is self-promotion inside a tool result, and an agent that discounts it once will discount it always. It also cannot be honest without evidence.\n\n**(b) Keep hardening ② and accept the ceiling.** Cheapest, and it is what the last two increments did. ⚠️ Counter: measured twice as insufficient, and the ceiling is structural rather than a matter of effort.\n\n**(c) Finish layer ④ — the half that is missing, not the half that is built.** Loads are counted; what is absent is the comparison between the work performed and the skill that covers it. That comparison is what would let (a) be honest and would settle whether ③ is really the bottleneck. ⚠️ Counter: `dec:loop-status-state-not-history` may forbid the obvious implementation, and that must be settled BEFORE anything is built rather than discovered after. BL-155 also shows a usage measurement whose caveat swallowed its own verdict.\n\n**(d) Reject the frame.** Perhaps the real variable is neither knowledge nor motivation but CONTEXT BUDGET: a skill costs tokens to load mid-task, and an agent under pressure economises. If that is the mechanism, ① through ④ are all beside the point and the fix is making skills cheaper to load, not likelier to be chosen. **Nothing has tested this, and it would explain the measured facts as well as ③ does.**\n\n═══ WHY THE FRAME MIGHT EARN ITS KEEP ═══\n\nIt gives every future idea a place to attach, which is the \"depth and layers\" being asked for: a proposal that improves ① when the bottleneck is ③ can be recognised as such before it is built. **It is a diagnostic, not a design** — and, as the correction above shows, one whose own layer assignments must be checked against the nodes rather than assumed.",
-        "name": "OPEN — an agent skips a skill at one of four layers; which one is reflow2's real bottleneck, and is it the one nobody has worked on?",
-        "rationale": "Recorded as one Decision because it is one question — WHERE does the failure live — and the four layers are its options rather than four separate questions. Splitting it would lose the comparison, which is the only part that does any work.\n\nThe counter-argument to the frame itself is written in as option (d) rather than left out, because a frame that cannot be wrong is not a diagnostic. The context-budget explanation fits the same evidence and has never been tested, and if it is right the other three options are wasted effort.",
+        "decision": "Anthony, 2026-08-26, thinking out loud: *\"what are some things we can do to increase the probability that an agent will use reflow2 skills and tools in a project? what would make the agent say, I have the perfect skill or tool needed for problem X? hopefully, by adding depth and layers, we can start seeing much more clearly why and when some skills/tools are used.\"*\n\n**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Nothing here is decided; the options are put down so a later session meets the reasoning rather than re-deriving it.\n\n═══ THE FRAME BEING PROPOSED: FOUR LAYERS, AND A SKIP HAPPENS AT THE WEAKEST ONE ═══\n\nFor an agent to use a skill, four things must all hold. They fail independently, they want different fixes, and reflow2 has not worked them equally:\n\n① **KNOWN** — the agent is aware the thing exists. *(Worked: `list_skills`, `get_skill`, served-not-installed, the handshake catalogue, 24 slash commands.)*\n\n② **RECOGNISED** — the agent notices THIS MOMENT is that skill's moment. *(Worked hard: `cap:skill-triggers`, the three-event loop nudge, `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue`.)*\n\n③ **WORTH IT** — the agent believes the skill beats what it would do unaided. *(BARELY WORKED AT ALL. There is no node arguing that a skill produces a better answer than competent improvisation; the whole surface argues that skipping is non-compliant, which is a different claim and a weaker motivator for something that is not trying to comply.)*\n\n④ **VISIBLE** — something can see whether it happened. *(PARTLY BUILT — see the correction below.)*\n\n⚠️ **CORRECTION MADE IN THE SAME SESSION, AND THE MISTAKE IS WORTH KEEPING.** This node first asserted that layer ④ was DEFERRED, reasoning from `req:skill-use-survives-a-long-session`, which says so in its own text. That was true when that requirement was written and is now FALSE: `req:skill-adherence-is-measured` is **`accepted`**, and `cap:skill-loads-are-counted` is **built and `verified`**.\n\n**The error is the one this project keeps recording: reading a claim out of one node's prose instead of the node it is about.**\n\n**What layer ④ actually holds now:** skill LOADS are counted, and their absence is announced at session end. **What it still does not hold:** any notion of which skill SHOULD have been loaded for the work that was done.\n\n═══ THE EVIDENCE THAT ③ IS THE BOTTLENECK ═══\n\n`req:skill-use-survives-a-long-session` records the same failure twice, six days apart, and the second is the damning one: **`cap:skill-triggers` was `verified` and firing correctly, and the user still had to be the reminder.** Layer ② was WORKING and it was not enough.\n\nIt also names the structural ceiling on ②: every shape that capability recognises is a shape in the GRAPH-WRITE stream, so it requires the agent to have already touched the graph. *A skill load is not a graph write.* No amount of work on ② reaches an agent that never started.\n\n⭐ AND THE MEASUREMENT MOST WORTH REPEATING: both observations were made on sessions with **more** context about reflow2 than any consumer's agent will ever have. That is a BEST case, not a typical one.\n\n═══ OPTIONS, none chosen ═══\n\n**(a) Attack layer ③ directly: make the skill's ADVANTAGE legible at the moment of choice.** ⚠️ Counter: self-promotion inside a tool result, and it cannot be honest without evidence.\n\n**(b) Keep hardening ② and accept the ceiling.** ⚠️ Counter: measured twice as insufficient, and the ceiling is structural.\n\n**(c) Finish layer ④ — the half that is missing.** ⚠️ Counter: `dec:loop-status-state-not-history` may forbid the obvious implementation, and that must be settled BEFORE anything is built.\n\n**(d) Reject the frame.** Perhaps the real variable is CONTEXT BUDGET: a skill costs tokens to load mid-task, and an agent under pressure economises. **Nothing has tested this, and it would explain the measured facts as well as ③ does.**\n\n═══ WHY THE FRAME MIGHT EARN ITS KEEP ═══\n\nIt gives every future idea a place to attach: a proposal that improves ① when the bottleneck is ③ can be recognised as such before it is built. **It is a diagnostic, not a design.**\n\n────────────────────────────────────────────────────────────\n═══ 📌 SHARPENED 2026-08-26 BY A USER REPORT — AND THE FRAME HAS A HOLE ═══\n\n*A user reported, relayed, that they were \"probably not understanding all the skills in reflow2\". Recorded here rather than as a new node because this node's own rationale says splitting would \"lose the comparison, which is the only part that does any work\". Written without the user's domain or employer; the design record is public.*\n\n⭐ **EVERY ONE OF THE FOUR LAYERS IS ABOUT THE AGENT. NONE IS ABOUT THE PERSON.** The frame reads \"for an AGENT to use a skill, four things must hold\" — and a human who does not know what reflow2 is FOR fails before layer ① is reached. That is a candidate **layer ⓪ — ORIENTED: the person knows what this tool does and what it will ask of them.**\n\nWhether ⓪ belongs in the frame is the open part. Two readings, and they lead to different work:\n\n- **⓪ IS REAL.** reflow2 asks the human questions — gaps, decisions, who they are. A user who cannot answer *\"what is this for?\"* cannot answer those either, and no amount of agent-side triggering helps.\n- **⓪ IS A MIRAGE, and the report is really ① or ③ seen from the user's chair.** reflow2 is AGENT-DRIVEN. The user never picks a skill; they see the consequence of the agent picking one. *\"I do not understand the skills\"* may be *\"the agent never reached for one, and I noticed.\"* **Then a tutorial teaches the wrong party.**\n\n🛑 **NOTHING WE HAVE DISTINGUISHES THESE**, and that is the same hole layer ④ already names: loads are counted, but not whether the RIGHT skill was owed. `dec:bl-155`'s warning applies exactly — it could not tell *unused* from *unreachable*, and this cannot tell *uninformed user* from *unreaching agent*.\n\n📌 **WHAT IS ACTUALLY MEASURED TODAY, so ① is not overstated:** 22 served skills, 163 tools, `list_skills` / `get_skill` / `find_tools`, `docs/skills-and-tools.md`, 24 slash commands. All answer *\"what is there?\"*. **None answers *\"where do I start?\"*** — `genesis` covers a new PROJECT, `adopt` covers existing CODE, and nothing covers a new PERSON.\n\n⭐ **AND A WORKED EXAMPLE OF THE FRAME FAILING BELOW ALL FOUR LAYERS**, measured the same day: `fact:the-lens-that-carries-the-persona-was-built-on-a-branch-and-never-shipped`. The mechanism that would carry a reader's background to the agent was built, core-tested, and left on an unmerged branch. That is not ①, ②, ③ or ④ — the thing was never in the surface at all, while the design recorded the capability as existing. **A fifth failure mode: the mechanism is in the DESIGN and not in the BUILD.** Whether the frame should carry that too, or whether it belongs to release hygiene rather than adoption, is unsettled.\n\n⚠️ **THE COUNTERWEIGHT ON ALL OF IT:** n=1, relayed, from a user who cannot share specifics. This project's own history says the tempting fix is the wrong one. Before building a guide, the honest step is the one `report_manual_work` now exists to catch — get the case in the user's own words, and find out whether they wanted a skill they could not find or never knew a skill was owed.",
+        "name": "OPEN — an agent skips a skill at one of four layers, and a fifth may sit under them: which is reflow2's real bottleneck?",
+        "rationale": "Recorded as one Decision because it is one question — WHERE does the failure live — and the layers are its options rather than separate questions. Splitting it would lose the comparison, which is the only part that does any work.\n\nThe counter-argument to the frame itself is written in as option (d) rather than left out, because a frame that cannot be wrong is not a diagnostic.\n\nSHARPENED 2026-08-26. A user report about not understanding the skills was recorded HERE rather than as a parallel node, on that same reasoning. It contributes two things the frame did not have: a candidate layer ⓪ (the PERSON, where all four existing layers are about the AGENT), and a worked example of a failure that sits below all of them — a mechanism present in the design and absent from the build. Both are offered as questions about the frame rather than as extensions of it, because a diagnostic that grows a layer every time a report arrives has stopped diagnosing.",
         "status": "proposed"
       }
     },
@@ -141085,6 +141273,28 @@
       }
     },
     {
+      "node_id": "fact:the-hub-hand-rolled-its-own-graph-tooling-per-repo-rather-than-waiting",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "measurement",
+        "statement": "MEASURED 2026-08-26 by reading the `hxm_program` working tree, then CORRECTED TWICE by its owner within minutes. Both corrections are kept, because the sequence is the useful part: an inference was drawn from a file listing, published, and then dismantled by two facts nobody could read off the tree.\n\n🛑 **CORRECTION 1 — \"NO COMMITTED EXPORT\" WAS FALSE.** `reflow2.json` sits at the repo ROOT, not under `docs/design/` where reflow2's own convention puts it and the only place checked. **Absence measured by looking in one conventional location is not absence.** Third instance of that class today: `unallocated_component` reported 33 \"empty\" parts that were real modules; the three-legs audit v1 matched case-sensitively and reported a present detector as missing.\n\n🛑 **CORRECTION 2 — THE HEADLINE INFERENCE IS DEAD.** Anthony, asked directly: **\"I built hxm_program before I built reflow2, so much of it was hand-rolled prior to me adopting reflow2 on it.\"** The parallel tooling is **INHERITANCE, NOT A WORKAROUND**. It is not evidence of a reflow2 gap, and this node's original claim — that a user \"built parallel graph tooling because reflow2 does not do this\" — asserted a motive that never existed. **The tools predate the tool they were supposedly working around.**\n\n⭐ **AND THAT IS WHY THE CAVEAT WAS THERE.** The first version listed three things the finding did not establish, and #2 was *\"it does not date the tooling — any of it may predate the adoption, making it inheritance rather than workaround. Nothing here distinguishes those, and the difference decides whether this is a gap or a habit.\"* **The caveat named the exact question, one question answered it, and the answer killed the inference.** Cost: one sentence. Had the caveat been left off — or had the finding been reported as a gap — the design would now hold a false claim about a user's motives, and somebody might have built against it.\n\n═══ WHAT IS ACTUALLY TRUE OF THE TREE ═══\n\n  `reflow2.json`  a COMMITTED EXPORT at the repo root — 259 nodes, 501 edges,\n                  stamp 0.40.0, written 2026-08-26 20:28. 71 Decision, 29\n                  Artifact, 28 Capability, 27 Requirement, 20 DesignRule, 19\n                  ChangeEvent, 17 Question, 12 Verification, 11 Component, 11\n                  Fragment, 6 Interface, 3 Contributor. Real and actively kept.\n\n  `codegraphs/` (per-repo: hex, hex-acq-pyepics, hextools, nslsii),\n  `docs-graph/`, `dataflow/`, `DECISIONS.md` (338 lines) — **all predating the\n  reflow2 adoption.** A program that existed first and had reflow2 adopted ONTO\n  it, which is `adopt`'s whole premise rather than a complaint about it.\n\n═══ WHAT REMAINS WORTH ASKING, NOW THAT THE WRONG QUESTION IS CLOSED ═══\n\nThe interesting fact is no longer *why did they build it* but **what happened after adoption**: reflow2 and the inherited tooling now COEXIST, and nobody has asked which parts reflow2 displaced, which it duplicates, and which it has never reached. `DECISIONS.md` at 338 lines beside 71 Decision nodes is the sharpest instance — migration, rendering, or two records drifting apart are three different situations and the tree cannot tell them apart.\n\n⚠️ **AND THE GENERAL LESSON, WHICH IS ABOUT ADOPT AND NOT ABOUT THIS PROGRAM:** every brownfield adoption inherits tooling, and reflow2 has no way to ask *what did this project already have, and what should now retire*. `adopt` brings a system under design control and says nothing about the instruments the project was already using. Whether that is a gap or correctly out of scope is untested, and this node is not evidence either way — it is one program, and the owner wrote both halves.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-26"
+      }
+    },
+    {
+      "node_id": "fact:the-lens-that-carries-the-persona-was-built-on-a-branch-and-never-shipped",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "measurement",
+        "statement": "MEASURED 2026-08-26, from a user report that reflow2 \"still speaks its own jargon and never asks who I am\". The report is correct, and the cause is not a missing idea — it is a mechanism that was BUILT AND NEVER LANDED.\n\n═══ WHAT WAS MEASURED ═══\n\n  `lens` in the served surface (get_skill / list_skills toolsnaps)   ABSENT\n  `reader_lens` / `lens_line` / `ReaderLens` in shipped code         ZERO occurrences\n  the branch commit                                                  EXISTS: e01c760\n                                                                     \"WIP: lens on the skill response —\n                                                                      core green, mcp handler tests unrun\"\n\n`cap:the-skill-response-carries-the-lens` says so itself and is honest about it: status `in_progress`, and its description records that the code sits on `lens-hint-rides-the-loop-rail`, was deliberately NOT marked `realized` at the v0.36.0 cut, and should move only \"when the branch merges\". **It never merged.** Six core tests passed; five MCP handler tests were written and never run.\n\n═══ ⭐ WHY THIS IS NOT THE ORDINARY THREE-LEGS FAILURE ═══\n\nThe usual shape is a leg that was never built. Here the leg was BUILT, TESTED at the core, and left on a branch — which is worse in one specific way: **the design records the capability, so every reading of the graph says the mechanism exists.** It appears in `capabilities_covered` on the v0.41.0 release report, because that list derives from the components and artifacts a release ships rather than from a capability's STATUS. A reader of the release record would conclude the lens shipped.\n\n═══ WHAT THE PERSONA ACTUALLY HAS TODAY ═══\n\n  typed tool    `add_contributor` carries `description`             ✓\n  instruction   TWO served skills mention asking (where-am-i,\n                capture-intent) — and only those two               PARTIAL\n  delivery      nothing carries it on the wire                      ✗ (the unmerged branch)\n  detector      nothing notices a Contributor with no background    ✗\n\n⇒ **A session that never invokes those two skills is never told to ask, and is never handed what the design already knows.** The design holds a background for 5 of 6 Contributors; none of it reaches an agent that did not run `where-am-i`.\n\n⚠️ AND THE LIMIT THE CAPABILITY ITSELF NAMES REMAINS UNTOUCHED BY ANY OF THIS: the tests prove the lens computes and is attached; \"they do not prove an agent acts on it, and nothing proves the translation is any good. This fixes 'the agent forgot'; it does not touch 'the agent translated badly'.\" Landing the branch would close the delivery gap and leave the quality question exactly where it is.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-26"
+      }
+    },
+    {
       "node_id": "fact:the-level-ladder-has-a-hard-floor-at-component-and-no-assembly-rung",
       "node_type": "TemporalFact",
       "properties": {
@@ -144373,7 +144583,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:709641251b722fc0223f0484daeefb0893ceaea3f3d1c3cf2554c01831b83c75",
+  "prev_content_hash": "sha256:fd27ecdab6630176b28fb74bdc011c96d57db4c6b638836b386646f1c218c0b5",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
