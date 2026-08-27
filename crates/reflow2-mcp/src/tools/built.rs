@@ -76,11 +76,67 @@ impl ReflowService {
             features: req.features,
             declared_in: req.declared_in,
             graph_id: req.graph_id,
+            // THE BASELINE IS TAKEN HERE, AT THE MOMENT OF DECLARING, and that
+            // placement is the design. A hash recorded on a READ would make the
+            // watch report `moved` exactly once and then go permanently quiet,
+            // because the check would keep refreshing what it compares against.
+            // Declaring is a deliberate act by somebody who has looked, so it is
+            // the only honest place to say "this is what it looked like".
+            //
+            // A pointer at nothing readable is RECORDED ANYWAY, not refused: the
+            // upstream may not have exported yet, which is the normal state the
+            // hxm_program report measured (zero of seven siblings had an export).
+            // It comes back as `missing` on the next read, which is a finding
+            // rather than a wall.
+            design_export_hash: req
+                .design_export
+                .as_deref()
+                .and_then(crate::upstream::baseline_hash),
+            design_export: req.design_export,
+            design_export_seen_at: req.design_export_seen_at,
             note: req.note,
         };
         let mut g = self.write_lock().await?;
         g.declare_dependency(&decl).map_err(dyno_err)?;
         ok_json(g.dependency_manifest().map_err(dyno_err)?)
+    }
+
+    #[tool(
+        description = "Has the design this one DEPENDS ON moved since the declaration was made? \
+                       The second check req:design-dependencies-declared names, and the half \
+                       never built — reconcile_dependencies answers the other one, against the \
+                       BUILD. Walks the declared dependencies naming another reflow2 design AND \
+                       a path to its committed export, reads each WITHOUT IMPORTING IT, and \
+                       compares against what was recorded at declaration time. Importing is the \
+                       obvious route and the wrong one: an import into a store already holding a \
+                       design keeps the HOST'S name and absorbs the incoming nodes, so watching \
+                       that way swallows the thing watched. REPORTS, and silence is reported \
+                       rather than assumed: `moved`, `unchanged`, `never_seen` (declared, nobody \
+                       has looked yet), `missing`, `unreadable`, `graph_id_mismatch` (that \
+                       export belongs to a different design), `not_watched` (names a design, \
+                       gives nothing to watch) and `not_observed` (the bounded pass skipped it). \
+                       IT NEVER UPDATES THE BASELINE — a check that refreshed what it compares \
+                       against would report a move once and then go quiet forever; read what \
+                       changed, then re-declare. An empty answer means nothing is declared to \
+                       watch, NEVER that nothing moved.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn upstream_status(
+        &self,
+        Parameters(_req): Parameters<UpstreamStatusReq>,
+    ) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        let targets = g.upstream_targets().map_err(dyno_err)?;
+        let (observed, not_read) = crate::upstream::observe_upstreams(&targets);
+        let report = g.reconcile_upstream(&observed).map_err(dyno_err)?;
+        let mut payload = serde_json::to_value(&report).map_err(ser_err)?;
+        if let (Some(obj), Some(skipped)) = (payload.as_object_mut(), not_read) {
+            obj.insert(
+                "not_read".into(),
+                serde_json::to_value(&skipped).map_err(ser_err)?,
+            );
+        }
+        ok_json(payload)
     }
 
     #[tool(

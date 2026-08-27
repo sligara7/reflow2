@@ -372,6 +372,54 @@ impl ReflowService {
         // moved, which is the whole of ordinary solo work. The export is built
         // only when something HAS moved, so the common path costs one file read
         // and no comparison.
+        // Has the design this one DEPENDS ON moved? The other direction from
+        // `record_moved` below, and the second check
+        // `req:design-dependencies-declared` names in its own statement.
+        //
+        // GATED ON THE MANIFEST, and that is what keeps this cheap. A design
+        // that declares no upstream export to watch — which is every design
+        // until somebody deliberately points at one, this one included — pays a
+        // single node scan and reads no files at all. Only a design that has
+        // asked to watch something pays for the reading, which is the same
+        // bargain `sync_debt` strikes one paragraph down.
+        //
+        // ONLY THE ACTIONABLE ONES REACH `next`. `unchanged` is the ordinary
+        // quiet case and `never_seen` says nobody has looked, which is a
+        // statement about this design's own record rather than about the
+        // upstream; both stay in `upstream_status` where a reader who asked can
+        // see them, and neither becomes a line in the list a session acts on.
+        if let Ok(targets) = g.upstream_targets()
+            && !targets.is_empty()
+        {
+            let (observed, _) = crate::upstream::observe_upstreams(&targets);
+            if let Ok(report) = g.reconcile_upstream(&observed) {
+                let acting: Vec<&reflow2_core::UpstreamFinding> = report
+                    .findings
+                    .iter()
+                    .filter(|f| f.is_actionable())
+                    .collect();
+                if !acting.is_empty() {
+                    if let Some(obj) = payload.as_object_mut() {
+                        obj.insert(
+                            "upstream_moved".into(),
+                            json!(
+                                acting
+                                    .iter()
+                                    .map(|f| f.detail.clone())
+                                    .collect::<Vec<_>>()
+                                    .join(" ")
+                            ),
+                        );
+                    }
+                    if let Some(arr) = payload.get_mut("next").and_then(|v| v.as_array_mut()) {
+                        for f in &acting {
+                            arr.push(json!(f.detail.clone()));
+                        }
+                    }
+                }
+            }
+        }
+
         if let Some(graph_path) = self.graph_path.as_deref() {
             let live_nodes = g.count_all_nodes().unwrap_or(0);
             let debts =

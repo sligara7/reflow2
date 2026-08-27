@@ -1,0 +1,12 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "Has the design this one DEPENDS ON moved since the declaration was made? The second check req:design-dependencies-declared names, and the half never built — reconcile_dependencies answers the other one, against the BUILD. Walks the declared dependencies naming another reflow2 design AND a path to its committed export, reads each WITHOUT IMPORTING IT, and compares against what was recorded at declaration time. Importing is the obvious route and the wrong one: an import into a store already holding a design keeps the HOST'S name and absorbs the incoming nodes, so watching that way swallows the thing watched. REPORTS, and silence is reported rather than assumed: `moved`, `unchanged`, `never_seen` (declared, nobody has looked yet), `missing`, `unreadable`, `graph_id_mismatch` (that export belongs to a different design), `not_watched` (names a design, gives nothing to watch) and `not_observed` (the bounded pass skipped it). IT NEVER UPDATES THE BASELINE — a check that refreshed what it compares against would report a move once and then go quiet forever; read what changed, then re-declare. An empty answer means nothing is declared to watch, NEVER that nothing moved.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "additionalProperties": false,
+    "type": "object"
+  },
+  "name": "upstream_status"
+}

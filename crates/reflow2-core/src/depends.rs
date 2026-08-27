@@ -88,6 +88,36 @@ pub struct DependencyDeclaration {
     /// a defect, which is the same rule `reconcile_dependencies` already applies
     /// to the manifest as a whole.
     pub graph_id: Option<String>,
+
+    /// Path to the dependency design's COMMITTED EXPORT, when this design means
+    /// to watch it.
+    ///
+    /// ⭐ WHY A SECOND FIELD AND NOT JUST `graph_id`. The id says WHICH design;
+    /// this says WHERE ITS RECORD IS. An id alone is not resolvable — reflow2
+    /// does no file navigation (`describe_designs` makes the caller find the
+    /// candidate paths for exactly this reason), so a watch that had only an id
+    /// would have to go looking, which is the rule this deliberately does not
+    /// break. Naming the path in the committed manifest keeps the pointer where
+    /// a person can review it in a diff.
+    ///
+    /// Absent means NOBODY HAS SAID, never "there is nothing to watch": a
+    /// declaration naming a design and no export is reported as `not_watched`
+    /// rather than passing quietly.
+    #[serde(default)]
+    pub design_export: Option<String>,
+    /// The upstream export's content hash AS THE DECLARER LAST SAW IT.
+    ///
+    /// 🛑 THIS IS A BASELINE, NOT A CACHE, and nothing may refresh it on a read.
+    /// A check that updated its own baseline would report `moved` exactly once
+    /// and then be permanently quiet — the failure mode that makes a signal
+    /// worse than no signal. Re-declaring is the acknowledgement
+    /// (`dec:ask-not-repair`: name the remedy, never take it).
+    #[serde(default)]
+    pub design_export_hash: Option<String>,
+    /// When that baseline was taken. Caller-supplied: the core takes no clock,
+    /// so an undated baseline is REPORTED as undated and never assumed fresh.
+    #[serde(default)]
+    pub design_export_seen_at: Option<String>,
     /// Free-text note — why this pin, what was verified, what is owed.
     pub note: Option<String>,
 }
@@ -162,6 +192,37 @@ impl DesignGraph {
         if let Some(g) = decl.graph_id.as_deref().filter(|g| !g.trim().is_empty()) {
             props = props.set("dependency_graph_id", g);
         }
+        // Only when stated, for the same reason `graph_id` is: an empty string
+        // would claim a watch target whose path is blank, which is not the same
+        // fact as nobody having named one.
+        // ⚠️ THE BASELINE AND ITS DATE EXIST ONLY RELATIVE TO A PATH, so they are
+        // stored only when there is one. A hash with nothing to compare it
+        // against, or a date saying when a target nobody named was last seen,
+        // is a record of a check that never happened — and it reads to a person
+        // scanning the manifest exactly like one that did. Found by
+        // `an_unwatched_dependency_emits_no_watch_fields_at_all`, which failed
+        // on a leftover `design_export_seen_at`.
+        if let Some(p) = decl
+            .design_export
+            .as_deref()
+            .filter(|p| !p.trim().is_empty())
+        {
+            props = props.set("design_export", p);
+            if let Some(h) = decl
+                .design_export_hash
+                .as_deref()
+                .filter(|h| !h.trim().is_empty())
+            {
+                props = props.set("design_export_hash", h);
+            }
+            if let Some(a) = decl
+                .design_export_seen_at
+                .as_deref()
+                .filter(|a| !a.trim().is_empty())
+            {
+                props = props.set("design_export_seen_at", a);
+            }
+        }
         if let Some(n) = &decl.note {
             props = props.set("description", n.as_str());
         }
@@ -213,6 +274,9 @@ impl DesignGraph {
                 features: split("features"),
                 declared_in: get("declared_in"),
                 graph_id: get("dependency_graph_id"),
+                design_export: get("design_export"),
+                design_export_hash: get("design_export_hash"),
+                design_export_seen_at: get("design_export_seen_at"),
                 note: get("description"),
             });
         }
@@ -389,10 +453,339 @@ impl DesignGraph {
             if let Some(g) = &d.graph_id {
                 s.push_str(&format!("graph_id = \"{g}\"\n"));
             }
+            // The watch pointer and the baseline taken against it. Emitted
+            // together and only when stated: a path with no hash is a target
+            // nobody has looked at yet, and the manifest must be able to say so
+            // rather than implying a check that never ran.
+            if let Some(x) = &d.design_export {
+                s.push_str(&format!("design_export = \"{x}\"\n"));
+                // Only inside the path block: see the note on the write side.
+                // A baseline with no target is a check that never happened
+                // wearing the clothes of one that did.
+                if let Some(h) = &d.design_export_hash {
+                    s.push_str(&format!("design_export_hash = \"{h}\"\n"));
+                }
+                if let Some(a) = &d.design_export_seen_at {
+                    s.push_str(&format!("design_export_seen_at = \"{a}\"\n"));
+                }
+            }
             if let Some(n) = &d.note {
                 s.push_str(&format!("note = \"{}\"\n", n.replace('"', "'")));
             }
         }
         Ok(s)
+    }
+}
+
+/// What a caller found at one declared upstream export path.
+///
+/// ⚠️ THE CALLER SUPPLIES THIS, exactly as `reconcile_dependencies` takes
+/// `observed` and `reconcile_artifacts` takes hashes. `reflow2-core` does no
+/// file I/O, deliberately and repeatedly, and reading another design's record
+/// off disk is not the exception that changes that — it is the same split, one
+/// boundary along.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub struct ObservedUpstream {
+    /// The declaration's own id, so a finding names the thing that was declared.
+    pub id: String,
+    /// Whether the caller could read a reflow2 export at the declared path:
+    /// `read` | `missing` | `unreadable`.
+    pub state: String,
+    /// The export's COMPUTED content hash. Computed from content, never the
+    /// hash the document states about itself — a record edited by anything
+    /// other than `export_graph` keeps its old stamp, and trusting it is the
+    /// defect `sync_debt` already had to fix once.
+    #[serde(default)]
+    pub content_hash: Option<String>,
+    /// The `graph_id` the export at that path actually carries.
+    #[serde(default)]
+    pub graph_id: Option<String>,
+    /// How many nodes it holds, for a reader who wants a sense of scale.
+    #[serde(default)]
+    pub nodes: Option<usize>,
+}
+
+/// One thing to say about a declared dependency's upstream design.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct UpstreamFinding {
+    /// `moved` | `unchanged` | `never_seen` | `missing` | `unreadable`
+    /// | `graph_id_mismatch` | `not_watched` | `not_observed`
+    pub kind: &'static str,
+    /// The declaration's id.
+    pub dependency: String,
+    /// Its human name.
+    pub name: String,
+    /// The path being watched, where one was declared.
+    pub design_export: Option<String>,
+    /// What a reader should do about it, in a sentence.
+    pub detail: String,
+}
+
+impl UpstreamFinding {
+    /// Whether this finding asks the reader to DO something.
+    ///
+    /// `unchanged` and `never_seen` do not: the first is the quiet ordinary
+    /// case, and the second says nobody has looked yet, which is a statement
+    /// about the record rather than about the upstream.
+    pub fn is_actionable(&self) -> bool {
+        matches!(
+            self.kind,
+            "moved" | "missing" | "unreadable" | "graph_id_mismatch"
+        )
+    }
+}
+
+/// What the declared dependencies say about the designs upstream of them.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct UpstreamReport {
+    pub findings: Vec<UpstreamFinding>,
+    /// How many declarations name another reflow2 design at all.
+    pub designs_declared: usize,
+    /// How many of those carry an export path to watch.
+    pub watched: usize,
+    /// Said plainly whichever way it comes out — "nothing watched" and
+    /// "nothing has moved" must never look alike.
+    pub note: String,
+}
+
+/// One declared upstream a caller should go and look at.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct UpstreamTarget {
+    pub id: String,
+    pub name: String,
+    pub design_export: String,
+    /// The declared design's id, where one was named.
+    pub graph_id: Option<String>,
+    /// The baseline this design last saw, absent when nobody has looked.
+    pub design_export_hash: Option<String>,
+}
+
+impl DesignGraph {
+    /// The upstream exports a caller should read, from the committed manifest.
+    ///
+    /// This is the "who are my children" list, and it is deliberately NOT a new
+    /// vocabulary: the dependency manifest already holds it, version-pinned and
+    /// reviewable in a diff, and it carries the direction a flat list of ids
+    /// could not express.
+    pub fn upstream_targets(&self) -> Result<Vec<UpstreamTarget>, DynoError> {
+        let mut out = Vec::new();
+        for d in self.declared_dependencies()? {
+            let Some(path) = d.design_export.filter(|p| !p.trim().is_empty()) else {
+                continue;
+            };
+            out.push(UpstreamTarget {
+                id: d.id,
+                name: d.name,
+                design_export: path,
+                graph_id: d.graph_id,
+                design_export_hash: d.design_export_hash,
+            });
+        }
+        Ok(out)
+    }
+
+    /// Has the design this one depends on moved since the declaration was made?
+    ///
+    /// The second check `req:design-dependencies-declared` names in its own
+    /// statement — *"declared-versus-upstream answers has what I depend on moved
+    /// since"* — and the half that was never built. `reconcile_dependencies`
+    /// answers the other one, against the BUILD.
+    ///
+    /// 🛑 IT NEVER UPDATES THE BASELINE. The recorded hash is what the declarer
+    /// last looked at; refreshing it here would make this report `moved` exactly
+    /// once and then go quiet forever. Re-declaring is the acknowledgement.
+    ///
+    /// ⚠️ SILENCE IS REPORTED, NOT ASSUMED. A dependency naming another design
+    /// with no export path comes back as `not_watched`, and a watched target the
+    /// caller did not look at comes back as `not_observed` — because "nothing
+    /// has moved" and "nothing was checked" must never share an answer.
+    pub fn reconcile_upstream(
+        &self,
+        observed: &[ObservedUpstream],
+    ) -> Result<UpstreamReport, DynoError> {
+        let declared = self.declared_dependencies()?;
+        let by_id: BTreeMap<&str, &ObservedUpstream> =
+            observed.iter().map(|o| (o.id.as_str(), o)).collect();
+
+        let mut findings = Vec::new();
+        let mut designs_declared = 0usize;
+        let mut watched = 0usize;
+
+        for d in &declared {
+            let names_a_design = d.graph_id.as_deref().is_some_and(|g| !g.trim().is_empty());
+            let path = d.design_export.as_deref().filter(|p| !p.trim().is_empty());
+            if names_a_design {
+                designs_declared += 1;
+            }
+            let Some(path) = path else {
+                // A dependency with no design and no export is an ordinary code
+                // dependency and says nothing here. One that NAMES a design and
+                // gives nothing to watch is the silence worth reporting.
+                if names_a_design {
+                    findings.push(UpstreamFinding {
+                        kind: "not_watched",
+                        dependency: d.id.clone(),
+                        name: d.name.clone(),
+                        design_export: None,
+                        detail: format!(
+                            "'{}' names the reflow2 design '{}' but no export to watch, so nothing \
+                             here can tell you when it moves. Declare `design_export` pointing at \
+                             that design's committed export.",
+                            d.name,
+                            d.graph_id.as_deref().unwrap_or("")
+                        ),
+                    });
+                }
+                continue;
+            };
+            watched += 1;
+
+            let Some(o) = by_id.get(d.id.as_str()) else {
+                findings.push(UpstreamFinding {
+                    kind: "not_observed",
+                    dependency: d.id.clone(),
+                    name: d.name.clone(),
+                    design_export: Some(path.to_string()),
+                    detail: format!(
+                        "Nobody looked at {path} on this pass, so this says nothing about whether \
+                         '{}' has moved.",
+                        d.name
+                    ),
+                });
+                continue;
+            };
+
+            match o.state.as_str() {
+                "missing" => findings.push(UpstreamFinding {
+                    kind: "missing",
+                    dependency: d.id.clone(),
+                    name: d.name.clone(),
+                    design_export: Some(path.to_string()),
+                    detail: format!(
+                        "'{}' is declared to be watched at {path} and there is no file there. \
+                         Either the upstream moved its record or the pointer is wrong.",
+                        d.name
+                    ),
+                }),
+                "unreadable" => findings.push(UpstreamFinding {
+                    kind: "unreadable",
+                    dependency: d.id.clone(),
+                    name: d.name.clone(),
+                    design_export: Some(path.to_string()),
+                    detail: format!(
+                        "What is at {path} is not a readable reflow2 export, so '{}' cannot be \
+                         watched from there.",
+                        d.name
+                    ),
+                }),
+                _ => {
+                    // A path that points at a DIFFERENT design is worth more than
+                    // a moved hash: the two designs would otherwise be compared
+                    // forever and always disagree. Checked before movement, and
+                    // only when both sides said which design they mean.
+                    if let (Some(want), Some(got)) = (d.graph_id.as_deref(), o.graph_id.as_deref())
+                        && !want.trim().is_empty()
+                        && want != got
+                    {
+                        findings.push(UpstreamFinding {
+                            kind: "graph_id_mismatch",
+                            dependency: d.id.clone(),
+                            name: d.name.clone(),
+                            design_export: Some(path.to_string()),
+                            detail: format!(
+                                "'{}' is declared against design '{want}' but the export at {path} \
+                                 belongs to '{got}'. Watching it would compare two different \
+                                 designs and always disagree.",
+                                d.name
+                            ),
+                        });
+                        continue;
+                    }
+                    let Some(baseline) = d
+                        .design_export_hash
+                        .as_deref()
+                        .filter(|h| !h.trim().is_empty())
+                    else {
+                        findings.push(UpstreamFinding {
+                            kind: "never_seen",
+                            dependency: d.id.clone(),
+                            name: d.name.clone(),
+                            design_export: Some(path.to_string()),
+                            detail: format!(
+                                "{path} is readable but this design has never recorded what it \
+                                 looked like, so movement cannot be computed. Re-declare '{}' to \
+                                 take the baseline.",
+                                d.name
+                            ),
+                        });
+                        continue;
+                    };
+                    let found = o.content_hash.as_deref().unwrap_or_default();
+                    if found == baseline {
+                        findings.push(UpstreamFinding {
+                            kind: "unchanged",
+                            dependency: d.id.clone(),
+                            name: d.name.clone(),
+                            design_export: Some(path.to_string()),
+                            detail: format!(
+                                "'{}' is exactly as this design last saw it{}.",
+                                d.name,
+                                d.design_export_seen_at
+                                    .as_deref()
+                                    .map(|a| format!(", on {a}"))
+                                    .unwrap_or_else(|| ", on a date nobody recorded".into())
+                            ),
+                        });
+                    } else {
+                        findings.push(UpstreamFinding {
+                            kind: "moved",
+                            dependency: d.id.clone(),
+                            name: d.name.clone(),
+                            design_export: Some(path.to_string()),
+                            detail: format!(
+                                "'{}' HAS MOVED since this design last looked{}. It is pinned at \
+                                 version '{}'. Read what changed before assuming that pin still \
+                                 describes it, then re-declare to take a new baseline — nothing \
+                                 here updates it for you.",
+                                d.name,
+                                d.design_export_seen_at
+                                    .as_deref()
+                                    .map(|a| format!(" on {a}"))
+                                    .unwrap_or_default(),
+                                d.version
+                            ),
+                        });
+                    }
+                }
+            }
+        }
+
+        let moved = findings.iter().filter(|f| f.kind == "moved").count();
+        let note = if declared.is_empty() {
+            "Nothing is declared, so nothing can be watched. This is \"nobody has said\", never \
+             \"depends on nothing\"."
+                .to_string()
+        } else if watched == 0 {
+            format!(
+                "{designs_declared} dependency(ies) name another reflow2 design and NONE carries \
+                 an export to watch, so this report is silent for want of a target rather than \
+                 because nothing moved."
+            )
+        } else if moved == 0 {
+            format!(
+                "{watched} upstream design(s) watched, none moved since this design last looked. \
+                 Findings that say nobody looked, or that no baseline exists, are listed rather \
+                 than counted as agreement."
+            )
+        } else {
+            format!("{moved} of {watched} watched upstream design(s) have moved.")
+        };
+
+        Ok(UpstreamReport {
+            findings,
+            designs_declared,
+            watched,
+            note,
+        })
     }
 }
