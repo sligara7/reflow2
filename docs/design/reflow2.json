@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:e51ab0f9d7dee1f47453331baac2a74bb19513b4a023f308628bc2996a8a7e11",
+  "content_hash": "sha256:6dd573ac7638242d009705b51931cce57041fde1c7f3e7e9866dfe971ea4a9ae",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -12565,6 +12565,15 @@
       "from_id": "dec:the-tool-surface-slices-hold-no-function-of-their-own",
       "properties": {
         "acted_at": "2026-08-25",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:the-top-tier-is-uneven-because-depth-follows-structure-not-symmetry",
+      "properties": {
+        "acted_at": "2026-08-27",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -42867,6 +42876,14 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "dec:the-top-tier-is-uneven-because-depth-follows-structure-not-symmetry",
+      "properties": {
+        "note": "The carving shapes the depth. bl83a settled WHICH functional systems exist; this rules on how deep each of them goes, and reaches its answer by the same argument — a tier is modelled when the thing has one, never to make the diagram symmetric, exactly as the systems are functional rather than the file tree."
+      },
+      "to_id": "dec:bl83a-functional-decomposition"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one",
       "properties": {},
       "to_id": "dec:views-are-projections"
@@ -43983,6 +44000,14 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "sys:agent-surface",
+      "properties": {
+        "note": "One of the two branches that genuinely decomposes twice — it contains five subsystems, which is why it carries level `system` while seven similarly-named peers correctly carry `subsystem`."
+      },
+      "to_id": "dec:the-top-tier-is-uneven-because-depth-follows-structure-not-symmetry"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "sys:coherence-loop",
       "properties": {},
       "to_id": "dec:bl83a-functional-decomposition"
@@ -43994,6 +44019,14 @@
         "note": "This subsystem exists as a SEPARATE instrument from the store it reads, which is what observability-driven allocation wants: a part that reports on another part must not be able to quietly flatter it. Its detectors carry the same obligation the target imposes — each must be able to say it could not tell, rather than reporting clean over ground it never covered."
       },
       "to_id": "dec:reflow2-is-built-for-observability"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "sys:coherence-loop",
+      "properties": {
+        "note": "The other branch with a real intermediate tier — five subsystems beneath it. Its depth is earned, not assigned."
+      },
+      "to_id": "dec:the-top-tier-is-uneven-because-depth-follows-structure-not-symmetry"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -126022,6 +126055,16 @@
       }
     },
     {
+      "node_id": "dec:the-top-tier-is-uneven-because-depth-follows-structure-not-symmetry",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Anthony's word, 2026-08-27, asked and answered.\n\n📌 KEPT SEPARATE FROM THE TWO NEAR-MATCHES, DELIBERATELY. `dec:bl83a-functional-decomposition` rules on WHICH functional systems exist — the carving — and has been amended four times as that enumeration moved. This rules on HOW DEEP each branch goes, which is a different question with a different answer, and folding it in would give that node two questions and let it be half-answered. `dec:idea-a-nested-part-has-an-address-not-only-a-parent` asks how a nested part is NAMED; this says nothing about naming. GOVERNED_BY points at bl83a because the carving shapes this, not because they are the same ruling.\n\n═══ WHAT IS UNEVEN, measured 2026-08-27 ═══\n\nDirectly under the project sit three different depths:\n\n    2 SYSTEMS      sys:agent-surface, sys:coherence-loop — each contains 5 SUBSYSTEMS,\n                   which then contain components. Three tiers.\n    8 SUBSYSTEMS   sys:foundation (10 children), sys:time-history (7), sys:intake (4),\n                   sys:human-channel (2), sys:store (2), sys:vocabulary (2),\n                   sys:documentation (1), cmp:packaging (0) — components directly.\n                   Two tiers.\n    3 COMPONENTS   cmp:degraded, cmp:nudge, cmp:sync — no tier at all, sitting as\n                   peers of a system.\n\n═══ THE RULING ═══\n\n**A branch gets a rung when it HAS one, not so the diagram looks tidy.** Agent-surface and the coherence loop genuinely decompose twice; the rest are flat groupings of modules. Manufacturing an intermediate tier for the other seven so the top row matched would model structure the code does not have — the modelling fiction `dec:bl83a-functional-decomposition` exists to prevent, arriving from the opposite direction. That decision said the systems are FUNCTIONAL rather than the file tree; this says the DEPTH is functional too.\n\n📌 THE LEVEL LABELS ARE CORRECT AND WERE ALMOST \"FIXED\". Seven nodes carry a `sys:` id prefix while being labelled `subsystem`, which reads as an inconsistency and is not one: every parent here sits exactly one rung above its children, and `hierarchy_issues` returns ZERO. This session recommended relabelling all seven before checking their containment; the check showed the labels already right, so the edit would have INTRODUCED the error it believed it was removing. bl83a already records the same point about `cmp:packaging`'s prefix — ids are cosmetic, `level` is what the computation reads, and reflow2 has no rename operation worth the loss of snapshot history.\n\n═══ ⚠️ WHAT THIS RULING EXPLAINS, AND IT IS THE REASON TO HAVE IT ═══\n\n`detect_defects` reports `coupling_by_level` as: component 85 of 85 pairs coupled, subsystem 8, **system 0 pairs across 2 components**, part 0 across 2. Its own `coverage_note` states the consequence outright — every topology result at that level (cycles, severability, single points of failure) is **SILENT about that tier rather than clean about it**.\n\n**That silence is this shape, not a defect.** Only two branches are deep enough for a system-level topology question to mean anything, so there is next to nothing at that level to have a cycle or an articulation point. A reader meeting a clean system-level result should read it as \"there was almost nothing here to check\", and this node is where that is written down — on the DESIGN side, so it is found by someone reading the design rather than only by someone reading the tool's own caveat.\n\n🛑 IT LICENSES NOTHING ABOUT THE FUTURE. If a branch grows real internal structure it should gain a rung then; this rules on the shape as measured, not on a policy of staying shallow. And it PARKS NOTHING: no detector goes quiet, no finding is suppressed, every count stands.\n\n═══ ⚠️ WHAT IT DELIBERATELY DOES NOT COVER ═══\n\nFour oddities were found in the same pass and were NOT ruled on, because the option chosen was to change no structure. They stay visible and unblessed:\n\n- `cmp:packaging` is labelled `subsystem` and contains nothing — a rung with nothing under it. (bl83a records why it was promoted: four capabilities, three realized, something that shipped. Whether a childless subsystem is the right shape for that is still open.)\n- `cmp:degraded`, `cmp:nudge`, `cmp:sync` are bare components sitting as peers of a system directly under the project.",
+        "name": "DECIDED — the top tier is deliberately uneven: a branch earns a rung by having real internal structure, never for symmetry",
+        "rationale": "Recorded because the unevenness looks like debt and is not, and because that misreading nearly cost a real edit this same session: relabelling seven nodes was recommended from a surface reading of their ids, and checking the containment showed the labels were already correct. Writing the ruling down is what stops the same wrong conclusion being reached again from the same surface.\n\nThe second reason is the more useful one. The system-tier topology results are computed over 2 components and 0 coupled pairs, so they are silent rather than clean — and a detector reporting nothing because it had nothing to examine reads exactly like one that ran clean. `detect_defects` already says so in its `coverage_note`; this is the design-side half, so the explanation sits where a reader of the design meets the silence.\n\nScoped to what was asked: no structure changed, and the four oddities found in the same pass are named as explicitly out of scope rather than quietly swept in by a ruling that did not consider them.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "dec:the-transition-is-two-halves-and-reads-are-the-unscheduled-one",
       "node_type": "Decision",
       "properties": {
@@ -145237,7 +145280,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:adb29704d14d92203ed63e089aa81a8a166af243e23149ed878c4b729b8426b5",
+  "prev_content_hash": "sha256:e51ab0f9d7dee1f47453331baac2a74bb19513b4a023f308628bc2996a8a7e11",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
