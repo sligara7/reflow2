@@ -23,6 +23,22 @@
           "null"
         ]
       },
+      "design_export": {
+        "default": null,
+        "description": "Path to that design's COMMITTED EXPORT, when you mean to WATCH it — so\nthis design is told when the design it depends on moves. reflow2 reads\nthe file NOW and records what it looked like; later reads report whether\nit has changed since. Absent means \"nobody has said\": a dependency that\nnames a design and no export is reported as unwatched rather than\npassing quietly. The path is read, never searched for — reflow2 does no\nfile navigation, and this is a pointer this design supplies itself.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "design_export_seen_at": {
+        "default": null,
+        "description": "The date the baseline was taken, for the record. reflow2 takes no clock,\nso an undated baseline is reported as undated rather than assumed fresh.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "features": {
         "default": [],
         "description": "Build switches forwarded to the dependency BY NAME. A renamed feature is\na build break no API diff would mention, so it belongs in the record.",

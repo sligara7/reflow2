@@ -26,6 +26,9 @@ fn decl() -> DependencyDeclaration {
         // The ordinary case: a build dependency nobody has said is also a
         // design. The graph_id-bearing case has its own test below.
         graph_id: None,
+        design_export: None,
+        design_export_hash: None,
+        design_export_seen_at: None,
         note: Some("v0.12.0 verified safe to take: built and tested against it.".into()),
     }
 }

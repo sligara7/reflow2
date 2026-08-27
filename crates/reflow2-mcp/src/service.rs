@@ -2375,9 +2375,26 @@ pub struct DeclareDependencyReq {
     /// never "there is no design", and most dependencies never will have one.
     #[serde(default)]
     pub graph_id: Option<String>,
+    /// Path to that design's COMMITTED EXPORT, when you mean to WATCH it — so
+    /// this design is told when the design it depends on moves. reflow2 reads
+    /// the file NOW and records what it looked like; later reads report whether
+    /// it has changed since. Absent means "nobody has said": a dependency that
+    /// names a design and no export is reported as unwatched rather than
+    /// passing quietly. The path is read, never searched for — reflow2 does no
+    /// file navigation, and this is a pointer this design supplies itself.
+    #[serde(default)]
+    pub design_export: Option<String>,
+    /// The date the baseline was taken, for the record. reflow2 takes no clock,
+    /// so an undated baseline is reported as undated rather than assumed fresh.
+    #[serde(default)]
+    pub design_export_seen_at: Option<String>,
     #[serde(default)]
     pub note: Option<String>,
 }
+
+#[derive(Debug, Default, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct UpstreamStatusReq {}
 
 #[derive(Debug, Default, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]

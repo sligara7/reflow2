@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:adb29704d14d92203ed63e089aa81a8a166af243e23149ed878c4b729b8426b5",
+  "content_hash": "sha256:e51ab0f9d7dee1f47453331baac2a74bb19513b4a023f308628bc2996a8a7e11",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -895,6 +895,14 @@
     },
     {
       "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:the-hub-wants-what-an-accepted-requirement-already-half-built",
+      "properties": {
+        "note": "The accepted requirement whose second named check — declared-versus-upstream — was never built, and which is hub want #2."
+      },
+      "to_id": "req:design-dependencies-declared"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
       "from_id": "fact:the-levied-requirement-blocker-cleared-and-the-workaround-recurred",
       "properties": {},
       "to_id": "dec:idea-gap-flows-to-the-dependency"
@@ -932,6 +940,12 @@
       "from_id": "fact:the-stale-server-defect-recurred-to-the-people-who-wrote-it-down",
       "properties": {},
       "to_id": "req:the-server-is-the-authority-on-its-own-currency"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:the-upstream-watch-is-findable-only-in-reflow2s-own-words",
+      "properties": {},
+      "to_id": "cap:a-declared-dependency-is-watched-not-imported"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -1012,6 +1026,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-declared-dependency-is-watched-not-imported",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:depends"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -3278,6 +3300,14 @@
       "from_id": "req:complementary-pairing",
       "properties": {},
       "to_id": "req:seam-incompatibility"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "req:design-dependencies-declared",
+      "properties": {
+        "confidence": 0.9
+      },
+      "to_id": "dec:idea-a-hub-owns-designs-it-does-not-absorb-and-that-is-a-third-relation"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -9958,6 +9988,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:a-module-that-supplies-an-observation-holds-no-function-of-its-own",
+      "properties": {
+        "acted_at": "2026-08-26",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:a-projection-is-named-and-the-battery-runs-over-it",
       "properties": {
         "acted_at": "2026-08-10",
@@ -16104,6 +16143,78 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-declared-dependency-can-be-watched-without-being-imported",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:depends"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-declared-dependency-can-be-watched-without-being-imported",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-declared-dependency-can-be-watched-without-being-imported",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-built"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-declared-dependency-can-be-watched-without-being-imported",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-declared-dependency-can-be-watched-without-being-imported",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:design-dependencies-declared"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-declared-dependency-can-be-watched-without-being-imported",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:depends"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-declared-dependency-can-be-watched-without-being-imported",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:sync-debt"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-declared-dependency-can-be-watched-without-being-imported",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "req:design-dependencies-declared"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:a-deliverable-declares-who-it-reaches",
       "properties": {
         "accepted_baseline": true,
@@ -18813,6 +18924,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-0261ee9652df7997",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:upstream-read-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-02f735709d987075",
       "properties": {
         "accepted_baseline": true,
@@ -19497,6 +19617,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-653dc51730e238d0",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:depends-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-68873af158e9a5c0",
       "properties": {
         "accepted_baseline": true,
@@ -19722,6 +19851,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-85dee05f31b9910e",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-86120115ec83ae15",
       "properties": {
         "accepted_baseline": true,
@@ -19854,6 +19992,15 @@
         "action": "modified"
       },
       "to_id": "art:dependency-manifest"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-95bc7b40723b6e17",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:depends"
     },
     {
       "edge_type": "CHANGED",
@@ -20367,6 +20514,15 @@
         "action": "modified"
       },
       "to_id": "art:increment-plan"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-dc0204e8ca63511c",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:upstream"
     },
     {
       "edge_type": "CHANGED",
@@ -33306,6 +33462,12 @@
     },
     {
       "edge_type": "CONTAINS",
+      "from_id": "sub:across-designs",
+      "properties": {},
+      "to_id": "cmp:upstream"
+    },
+    {
+      "edge_type": "CONTAINS",
       "from_id": "sub:change-and-structure",
       "properties": {},
       "to_id": "cmp:allocate"
@@ -45087,6 +45249,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "cap:a-declared-dependency-is-watched-not-imported",
+      "properties": {},
+      "to_id": "fact:the-upstream-watch-is-findable-only-in-reflow2s-own-words"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "cap:a-design-says-which-vocabulary-it-has-never-used",
       "properties": {},
       "to_id": "fact:naming-properties-grows-the-list-where-it-can-be-acted-on"
@@ -45675,6 +45843,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-a-hub-owns-designs-it-does-not-absorb-and-that-is-a-third-relation",
+      "properties": {},
+      "to_id": "fact:the-hub-wants-what-an-accepted-requirement-already-half-built"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "dec:idea-detect-vocabulary-that-nothing-reaches",
       "properties": {},
       "to_id": "fact:precedes-is-unused-in-storyflow-and-flowless-here"
@@ -45714,6 +45888,12 @@
       "from_id": "dec:idea-need-to-know-compartments",
       "properties": {},
       "to_id": "fact:the-hosted-case-breaks-the-git-transport-and-the-access-topology-is-now-stated"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-the-hub-holds-a-copy-per-sub-repo-and-copies-go-stale",
+      "properties": {},
+      "to_id": "fact:the-hub-wants-what-an-accepted-requirement-already-half-built"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -98687,6 +98867,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:a-declared-dependency-can-be-watched-without-being-imported",
+      "properties": {
+        "at": "2026-08-26",
+        "note": "PARTIAL SUPERSESSION, SAME DAY, AND THE NODE STAYS OPEN. Only its \"WHAT IS NOT\" section is retired: \"nothing compares a declaration against the UPSTREAM DESIGN\" was true when measured and is now false — `upstream_status` does, `loop_status` carries it, and the barred route it named (importing to watch, which absorbs the child) is bypassed rather than taken.\n\nWHICH PARTS STILL STAND, and they are the reason this is an INVALIDATES rather than a closure. (1) Its headline is UNCHANGED and is now demonstrated rather than argued: two of the hub's four wants were the unbuilt half of an accepted requirement, not new vocabulary — building it needed no third composition mode and answered no tracker objection. (2) Its second star still stands entirely: the child list was already the committed manifest, and the build used it exactly as written. (3) Its stated LIMIT is untouched and is the live question — a declaration says I DEPEND ON that, a hub says I AM ANSWERABLE FOR that; hub wants #1 and #3 and the downward-inheritance direction are all exactly where they were.\n\n⚠️ AND WANT #4 IS ONLY HALF DONE, so the fact's claim about it is still partly live: `describe_designs` still carries no last-export date. What shipped answers \"has this upstream moved since I looked\", not \"which of my children have gone dark\", which is a different question needing a different read."
+      },
+      "to_id": "fact:the-hub-wants-what-an-accepted-requirement-already-half-built"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:absorb-core-storage-text",
       "properties": {
         "at": "2026-08-24T21:45:00Z",
@@ -100240,6 +100429,15 @@
         "completeness": "complete"
       },
       "to_id": "cap:design-dependencies-declared"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:depends",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-declared-dependency-is-watched-not-imported"
     },
     {
       "edge_type": "REALIZES",
@@ -102716,6 +102914,41 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:upstream",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-declared-dependency-is-watched-not-imported"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:upstream",
+      "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:upstream"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:upstream-judgement-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-declared-dependency-is-watched-not-imported"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:upstream-read-test",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-declared-dependency-is-watched-not-imported"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:verify",
       "properties": {
         "conformance": "unchecked"
@@ -102984,6 +103217,12 @@
       "from_id": "cap:a-cut-moves-every-version-claim-together",
       "properties": {},
       "to_id": "req:a-project-records-how-it-ships"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-declared-dependency-is-watched-not-imported",
+      "properties": {},
+      "to_id": "req:design-dependencies-declared"
     },
     {
       "edge_type": "SATISFIES",
@@ -106030,6 +106269,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:an-upstream-design-is-watched-not-imported",
+      "properties": {},
+      "to_id": "cap:a-declared-dependency-is-watched-not-imported"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:arrival-delta",
       "properties": {},
       "to_id": "cap:arrival-delta"
@@ -108702,6 +108947,30 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:upstream",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:upstream"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:upstream-judgement-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:upstream-judgement-test"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:upstream-read-test",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:upstream-read-test"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:verify",
       "properties": {
         "action": "created"
@@ -109420,7 +109689,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4494c050ea5ec664b3786a35c9301f29e5e5dd4b077cde57392b70fc93420bc3",
+        "checksum": "sha256:2bca54fad6b5ae52f1d3b4aada6425b5b4f063630821ecb5df46d15400a4025d",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/depends.rs",
         "name": "depends.rs",
@@ -109433,7 +109702,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:92c8a160242bcc63261ed2047d93094a2877f98e0fd109cb9eee424e366a8c4d",
+        "checksum": "sha256:2732433d60adbc611e3bf38c21caf7babd342dded35dacddd25bf1a0e9f65215",
         "granularity": "atomic",
         "location": "crates/reflow2-core/tests/depends.rs",
         "name": "tests/depends.rs",
@@ -110906,7 +111175,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:943ba39eea00d06a5cf9f909ee0f2a764baf2c52da7891c7f2b85e8fa3eac392",
+        "checksum": "sha256:c7b6c3ab731b619cbee151f1f9c1675bc42e29b88fcd2df1d2706dfec7441b64",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -111529,7 +111798,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:390eb4d13b68873bd33017e7992bdd1472317beb794c68f26ea71f8754c2a778",
+        "checksum": "sha256:885c1185e6bca2ff3155ce845675fb51333f381ffc12b9701ed2a1bfb5f8ee94",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/built.rs",
         "name": "tools/built.rs",
@@ -111568,7 +111837,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:49fd3abf22a2863ebc9b6cac4d0c3ed51916f94c39908ce4c5be185b4295c4a8",
+        "checksum": "sha256:962b52530ee94300272cd669a78a4c5657531e30d48b6d544ad1a62cb2d1403e",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -111805,6 +112074,39 @@
       }
     },
     {
+      "node_id": "art:upstream",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:bb93be30a84ee75aae99db9e46ebc77f4c562b43981beb443ca1102a6740a5cb",
+        "location": "crates/reflow2-mcp/src/upstream.rs",
+        "name": "upstream.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:upstream-judgement-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:ac434ae5b39148987403ef19a85c3b6c117051a20a3a60ec972f3c961988e83c",
+        "location": "crates/reflow2-core/tests/an_upstream_design_is_watched_not_imported.rs",
+        "name": "tests/an_upstream_design_is_watched_not_imported.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:upstream-read-test",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:d7fab7cc84baa2230268dbf641cead965aacbe076bcd679dc1f226efecd901ac",
+        "location": "crates/reflow2-mcp/tests/an_upstream_export_is_read_without_being_imported.rs",
+        "name": "tests/an_upstream_export_is_read_without_being_imported.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:usgov-genesis-feedback-2026-08-15",
       "node_type": "Artifact",
       "properties": {
@@ -111990,6 +112292,16 @@
         "provenance": "authored",
         "status": "planned",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:a-declared-dependency-is-watched-not-imported",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The second check `req:design-dependencies-declared` names and only half-delivered. A dependency declaration that names another reflow2 design may also name that design's COMMITTED EXPORT; reflow2 records the export's content hash when the declaration is made, and later reads report whether the upstream has moved since.\n\nSERVED AS `upstream_status`, and carried on `loop_status` as `upstream_moved` — the same shape `record_moved` already has, and for the same reason: that is the orientation call the session-start hook points sessions at. Deliberately NOT folded into `sync_status`, which answers the other direction (has MY record moved) and would blur two different questions into one list.\n\n📌 THE NEAR-MATCH OFFERED WAS `chg:a-declared-dependency-can-be-watched-without-being-imported`, which is the EVENT of building this on 2026-08-26. This is the standing CAPABILITY.\n\n⭐ WHY IT IS NOT THE EXISTING MECHANISM. `provenance::last_synced` already answers \"has that file moved\", but the only two paths that write into it are `export_graph` and `import_graph` — and importing a design into a store that already holds one KEEPS THE HOST'S NAME and upserts the incoming nodes into it. So watching a child by importing it ABSORBS the child, which is exactly what the hub case says a hub must not do. This watches without taking.\n\n⭐ THE CHILD LIST IS THE COMMITTED MANIFEST, not a per-machine config. `reflow2.toml` already names each dependency's design by `graph_id`, version-pinned and reviewable in a diff, and it inherits the direction the dependency edge carries.\n\n🛑 IT MUST NOT SILENCE ITSELF. The baseline is taken at DECLARATION time and a read never touches it — a check that refreshed what it compares against would report `moved` once and then be permanently quiet. Re-declaring is the acknowledgement (`dec:ask-not-repair`).\n\nWHAT IT REPORTS, and absence is reported rather than assumed: `moved`, `unchanged`, `never_seen` (a path is declared and nobody has looked yet), `missing`, `unreadable`, `graph_id_mismatch` (the export at that path belongs to a different design than the one declared), `not_watched` (a dependency names another design but gives nothing to watch) and `not_observed` (the bounded pass did not open it). Only `moved`, `missing`, `unreadable` and `graph_id_mismatch` reach `loop_status`'s `next` list.\n\n⚠️ THE PLACEMENT IS THE DESIGN. `reflow2-core` does no file I/O, so the core holds the declarations and the COMPARISON and the caller supplies what it found on disk — the same split `reconcile_dependencies` and `reconcile_artifacts` already make. The reading lives at the MCP layer in `upstream.rs`, beside `sync_debt`, for the reason that module already states. It does not NAVIGATE: every path read is one this design pointed at itself, in its own committed manifest.\n\n⚠️ CHEAP WHEN UNUSED. `loop_status` gates on the manifest, so a design declaring no upstream export — every design until somebody deliberately points at one, this one included — pays a single node scan and reads no files. The pass is bounded at 16 exports and NAMES what it skipped.\n\n⚠️ WHAT IT DOES NOT DELIVER. A declaration says I DEPEND ON that; a hub says I AM ANSWERABLE FOR that. Where a hub merely owns a child, saying so as a dependency would be modelling fiction. Cross-design realization and verification roll-up are untouched, and so is decisions-inherit-downward.",
+        "name": "A design says when the design it depends on has moved, without importing it",
+        "provenance": "authored",
+        "status": "verified"
       }
     },
     {
@@ -114608,6 +114920,18 @@
       }
     },
     {
+      "node_id": "chg:a-declared-dependency-can-be-watched-without-being-imported",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-26",
+        "name": "A declared dependency on another design can be watched without importing it",
+        "rationale": "Anthony's word 2026-08-26, manifest-driven form chosen over a stateless caller-supplies-paths form: the child list should live in the committed manifest rather than in a per-machine config or the agent's head, which is the property that made this route worth taking at all.\n\nWHY THIS RATHER THAN A HUB RELATION. `fact:the-hub-wants-what-an-accepted-requirement-already-half-built` carries the measurement. Two of the hub case's four wants are the unbuilt half of an ACCEPTED requirement, not new vocabulary — so they arrive with no tracker objection to answer and no third composition mode to define.\n\n⚠️ THE RULE THIS BENDS, NAMED BEFORE IT IS BENT. reflow2-core does no file I/O, deliberately and repeatedly, and `describe_designs` makes the CALLER find candidate paths because reflow2 does no file navigation. Reading an upstream export means reading a file this design was pointed at BY ITS OWN COMMITTED MANIFEST, which is a weaker claim than navigating — but it is not nothing, and it is why the read belongs at the MCP layer beside `sync_debt`, never in the core. That placement is the same call `sync_debt` already made and for the same stated reason.\n\n⚠️ IT MUST NOT SILENCE ITSELF. The recorded hash is what the declarer LAST LOOKED AT, and re-reading must never quietly update it — a check that refreshed its own baseline would report `moved` exactly once and then go permanently quiet. Re-declaring is the acknowledgement, which is `dec:ask-not-repair` applied here: name the remedy, never take it.\n\n⚠️ WHAT IT DOES NOT DELIVER. A dependency declaration says I DEPEND ON that; a hub says I AM ANSWERABLE FOR that. Where a hub merely owns a child, expressing that as a dependency would be the modelling fiction the hxm_program report objected to. Hub wants #1 (cross-design realization) and #3 (verification roll-up) are untouched, and so is the downward-inheritance direction.",
+        "subject": "system",
+        "summary": "Builds the second check `req:design-dependencies-declared` names and only half-delivered: declared-versus-UPSTREAM, \"has what I depend on moved since\". A declaration that names another reflow2 design gains an optional path to that design's committed export; reflow2 reads the file's content hash at declaration time and reports on later reads whether the upstream has moved, without importing it. Chosen over the existing route because the only two ways a path enters the watch record today are export_graph and import_graph, and importing a child ABSORBS it under the host's name."
+      }
+    },
+    {
       "node_id": "chg:a-deliverable-declares-who-it-reaches",
       "node_type": "ChangeEvent",
       "properties": {
@@ -115017,6 +115341,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-02",
         "name": "Registered before the clippy pass; the only edit since is manual_is_multiple_of plus rustfmt. No behaviour and no design meaning moved — the 9 tests are unchanged and still passing."
+      }
+    },
+    {
+      "node_id": "chg:accept-0261ee9652df7997",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-26",
+        "name": "`cargo fmt` reflowed a call after the file was first registered. No assertion changed.",
+        "subject": "system"
       }
     },
     {
@@ -115720,6 +116054,16 @@
       }
     },
     {
+      "node_id": "chg:accept-653dc51730e238d0",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-26",
+        "name": "Fixture only — the existing declaration literal gains the three new fields as None. Not one assertion changed, and the design's account of what these checks cover is unmoved.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-68873af158e9a5c0",
       "node_type": "ChangeEvent",
       "properties": {
@@ -115949,6 +116293,16 @@
       }
     },
     {
+      "node_id": "chg:accept-85dee05f31b9910e",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-26",
+        "name": "`cargo fmt` reflowed the new upstream block after the earlier baseline was taken. Formatting only.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-86120115ec83ae15",
       "node_type": "ChangeEvent",
       "properties": {
@@ -116085,6 +116439,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-18T00:35:00Z",
         "name": "The v0.34.0 version bump. The design meaning of a cut lives in the Release and its release_cut epoch, not in a version string — so the manifest moved and the design holds. Accepted BEFORE release_includes_all so the frozen manifest records the post-bump file, which is what actually ships.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-95bc7b40723b6e17",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-26",
+        "name": "`cargo fmt` reflowed two `if let` chains after the earlier baseline was taken. Not one character of behaviour or intent moved — caught because the fmt gate ran AFTER the checksums were recorded, which is the wrong order and is why the baseline is being retaken rather than left stale.",
         "subject": "system"
       }
     },
@@ -116615,6 +116979,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-17",
         "name": "A backlog row's reference to the renamed category; the plan itself is unchanged.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-dc0204e8ca63511c",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-26",
+        "name": "`.map(|t| observe_one(t))` → `.map(observe_one)`, the redundant_closure CI's mcp clippy gate caught and this session had not run. Behaviour and intent unmoved, so the design holds. The gate reached CI because the pre-push list in AGENTS.md was grepped rather than read, and the grep matched an earlier line naming only the core crate.",
         "subject": "system"
       }
     },
@@ -121691,6 +122065,19 @@
       }
     },
     {
+      "node_id": "cmp:upstream",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "upstream",
+        "provenance": "authored",
+        "purpose": "Reads the designs this one DEPENDS ON, without taking them in. Opens each declared upstream export named in the committed manifest, computes its content hash from content, and reports what is there — so `cmp:depends` can judge whether the upstream has moved. Implemented in `crates/reflow2-mcp/src/upstream.rs`.\n\n⚠️ IT READS, IT DOES NOT NAVIGATE, AND IT NEVER WRITES. `describe_designs` makes the caller find candidate paths because reflow2 does no file navigation; that rule is intact here, because every path opened is one this design pointed at ITSELF in its own committed manifest. Nothing on this path writes — not the baseline, not a sync record — because a check that refreshed what it compares against would report a move once and then go permanently quiet.\n\nGiven a part of its own on the ruling recorded as `chg:allocation-follows-the-code-not-the-neighbour` (2026-08-25), the same call made for `cmp:manual-work` earlier the same day: it is a real, checksummed module, so crediting its function to `cmp:sync-debt` or `cmp:depends` next door would be the neighbour-misfiling that ruling corrects. Placed under `sub:across-designs` beside `cmp:depends` and `cmp:seam` because what it does is cross a design boundary — not under `sub:serving`, where it merely happens to live in the crate.\n\n📌 THE CAPABILITY IS ALLOCATED TO `cmp:depends`, NOT HERE, AND THAT IS DELIBERATE. `cap:a-declared-dependency-is-watched-not-imported` spans two modules — the judgement in `depends.rs`, the reading here — and the standing ruling says move it, do not dual-allocate. The declaration and the comparison are what the capability IS; this supplies what was found on disk, exactly as a caller supplies `observed` to `reconcile_dependencies`. The artifact layer records both files as realizing it, which is the honest reading and the reason the two layers can be compared at all. It is also a live instance of `dec:idea-a-capability-is-a-set-of-functions-and-a-black-box-delivers-functions`, which asks whether a capability should be a SET of functions across parts — open, and this is a real case for it rather than a hypothetical.",
+        "status": "planned",
+        "tier": "operational"
+      }
+    },
+    {
       "node_id": "cmp:verify",
       "node_type": "Component",
       "properties": {
@@ -122113,6 +122500,16 @@
         "decision": "⛔ SUPERSEDED 2026-08-17, HOURS AFTER IT WAS WRITTEN, by `rule:fix-it-properly-while-it-is-still-cheap`. The original text is in `snap:epoch:the-key-is-renamed-and-the-sweep-says-what-it-swept:dec:a-misnaming-is-fixed-in-the-message-not-the-key`, and its reasoning is still the right shape for a project that HAS made a stability commitment — this one has not.\n\nWHAT IT DECIDED, AND WHAT CHANGED. It declined to rename the `disconnected_community` defect category, on the ground that the key is a consumer contract in three places (a documented HEAL category, what `detect_defects` callers match on, and a named ility source) and renaming it would break every consumer to fix a sentence. Anthony's rule reversed exactly that ground: before 1.0 the price of a break is at its lowest and rises with every user, so \"it would break consumers\" argues for doing it NOW. THE CATEGORY IS NOW `unthreaded_cluster`, which names what is actually missing — a traceability edge, the golden thread — and cannot be misread as \"unreachable in the graph\".\n\n⭐ AND THE COST ESTIMATE THIS DECISION RESTED ON WAS NEVER CHECKED, which is the part worth carrying forward. It said renaming would \"break every consumer\" without measuring what that meant. Measured before the rename: the key appears in 14 source and test files and 6 live docs, and 41 times in the committed export — ALL OF THEM PROSE. It was NEVER PERSISTED AS DATA: no node property anywhere holds it as a value, so no observation, no acknowledgement and no ility reading needed migrating. The rename was a sed and a doc pass. A cost asserted rather than measured decided the original call, in a project whose own standing rule is that claims in the records must be evidence-backed.\n\nTHE SECOND HALF WAS TAKEN TOO. This decision deferred giving unscoped `detect_defects` the envelope its scoped sibling already returns, as a consumer break out of scope for finishing (b) and (c). Also done: it now returns `{swept, defects}`, so an empty answer says whether it was exercised and found nothing or had nothing to examine.\n\nWHAT SURVIVES UNCHANGED, and it is the load-bearing half. \"Make it compute what it claims\" is still the wrong fix, for a reason that has nothing to do with cost: the computation is not broken. It runs connected components over `design_network()` correctly, and the narrowness is the deliberate exclusion of provenance types and CONTAINS — each with its own record (BL-84, BL-124). Widening the walk would undo those and report every Fragment as an island. The requirement's own text misdescribes the detector as computing modularity, which it does not. So the third option was right about the ALGORITHM and wrong about the NAME.\n\n📌 THE GENERAL LESSON, sharpened by being wrong: when a name overstates a computation, ask which of the three is actually wrong — the algorithm, the name, or the message — and do not let the cost of fixing one decide the answer before that cost has been measured.\n\n📝 HOW THIS NODE'S OWN HISTORY WAS NEARLY LOST, recorded because it is `req:a-write-cannot-silently-lose-someone-elses-work` happening to the agent writing about it. The supersession was first written by calling `add_decision` on the existing id, which REPLACED three properties. The reply's `revision` block said so and warned that the prior values existed nowhere else — the mitigation that requirement describes as \"detection rather than prevention\", working exactly as documented. The fix was to restore the original text, `record_change` to snapshot it, and only then apply this one. The lesson is the ordering: record_change BEFORE the merge, never after, or the snapshot captures the replacement and the history is confidently wrong.",
         "name": "SUPERSEDED — the message was fixed and the key was not; the key has since been renamed too",
         "rationale": "Superseded by rule:fix-it-properly-while-it-is-still-cheap. Its cost argument — that renaming would break every consumer — was asserted and never measured; the key turned out never to have been persisted as data, so the rename needed no migration at all. The algorithm half of its reasoning stands unchanged: the computation is correct and the narrow walk is deliberate, so \"make it compute what it claims\" remains the wrong fix.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:a-module-that-supplies-an-observation-holds-no-function-of-its-own",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "🛑 RECORDED AS `proposed` DELIBERATELY, AND IT MUST STAY THERE UNTIL ANTHONY SAYS OTHERWISE. This is the agent's judgement about how to model its own work, not his word — the same call made for `dec:an-interchangeable-backend-is-named-by-its-contract-not-by-a-function` on 2026-08-25, and for the same reason. A PROPOSED ruling PARKS NOTHING (there is a test pinning exactly that), so `cmp:upstream` goes on being reported as a part holding no function until this is accepted or replaced. That is correct behaviour, not a leak.\n\n📌 The near-match offered was `cmp:upstream` itself — the PART this rules about. This is the ruling; that is the thing ruled on.\n\n═══ THE SITUATION ═══\n\n`cap:a-declared-dependency-is-watched-not-imported` is implemented across two modules. The JUDGEMENT — the declaration, the baseline, the comparison, what counts as `moved` — is in `crates/reflow2-core/src/depends.rs` (`cmp:depends`). The OBSERVATION — opening each declared upstream export and computing its content hash — is in `crates/reflow2-mcp/src/upstream.rs` (`cmp:upstream`). The split is FORCED: reflow2-core does no file I/O, deliberately and repeatedly.\n\nThe standing ruling (`chg:allocation-follows-the-code-not-the-neighbour`, 2026-08-25) says allocate to the module whose code implements the function, MOVE IT, DO NOT DUAL-ALLOCATE. Both halves are real code, so obeying it leaves one of the two modules empty whichever way it goes.\n\n═══ THE PROPOSAL ═══\n\nA module whose whole job is to SUPPLY AN OBSERVATION to a judgement living elsewhere is not an implementer of that judgement's function. It is the caller's half of a caller-supplies-the-observation split — the same shape in which `reconcile_dependencies` takes `observed` and `reconcile_artifacts` takes hashes. The function is \"does the design I depend on differ from what I recorded\"; reading a file is not that function, it is the material the function consumes.\n\nSo allocation stays on `cmp:depends`, and `cmp:upstream` is PARKED as deliberately empty.\n\n═══ WHAT WOULD MAKE THIS WRONG, and it is not a small objection ═══\n\n⚠️ **This is one loose reading away from a licence to leave anything empty.** \"It only supplies input to something else\" describes a great many modules, and applied loosely it becomes the excuse that quietly covers every unallocated part — the opposite of what the 2026-08-25 sweep achieved, which was to find 19 real functions hiding behind exactly that kind of reasoning. If accepted, the boundary must be stated tightly: NOT \"helps another module\", but \"performs the I/O a deliberate no-I/O boundary forbids the judging module from doing, and makes no judgement of its own.\"\n\n⚠️ **The alternative is not absurd.** `cmp:upstream` could carry a capability of its own — *\"another design's record is read without opening its store\"* — which is arguably a real function and is close to what `describe_designs` already does for `cmp:latent`. That means MORE parts and MORE capabilities, which cuts against the over-engineering instinct, but it is honest and needs no new ruling at all.\n\n⚠️ **AND IT IS A LIVE INSTANCE OF AN OPEN QUESTION.** `dec:idea-a-capability-is-a-set-of-functions-and-a-black-box-delivers-functions` asks whether a capability should be a SET of functions across several parts, with a black box delivering functions rather than capabilities. This is exactly that case, arriving from real work rather than from thinking about the model — and if that question is answered YES, this ruling becomes unnecessary, because the capability would name both functions and both parts would hold one.\n\n═══ OPTIONS ═══\n\n(a) ACCEPT this ruling and park `cmp:upstream`, with the tight boundary above written into it.\n(b) GIVE `cmp:upstream` ITS OWN CAPABILITY and allocate normally. No ruling needed; one more capability and one more part that is genuinely for something.\n(c) DUAL-ALLOCATE to both parts, amending the 2026-08-25 ruling for the multi-module case specifically. Honest about the code, and it should amend that ruling rather than quietly break it.\n(d) LEAVE IT UNALLOCATED AND UNRULED — reported as a defect until the black-box question is settled, on the grounds that a real open instance is more useful pressure on that question than a ruling that makes it comfortable.",
+        "name": "PROPOSED — a module that only SUPPLIES AN OBSERVATION to a judgement elsewhere holds no function of its own",
+        "rationale": "Raised because building `cap:a-declared-dependency-is-watched-not-imported` produced a genuinely empty part, and the standing allocation ruling gives no answer for a function that spans a deliberate architectural boundary. Left proposed because accepting it would be the agent ruling on the tidiness of its own work, which is precisely the case reserved for the user.\n\nThe counter-arguments are written at full strength rather than as caveats, because this ruling's failure mode is that it GENERALISES: \"supplies input to another module\" would excuse nearly any empty part, and the 2026-08-25 sweep found 19 real functions behind that kind of reasoning. Option (d) is listed as a real option for the same reason — an open instance may be worth more than a comfortable answer.",
         "status": "proposed"
       }
     },
@@ -131868,6 +132265,36 @@
       }
     },
     {
+      "node_id": "frag:art:upstream",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered upstream.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:upstream-judgement-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered tests/an_upstream_design_is_watched_not_imported.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:upstream-read-test",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered tests/an_upstream_export_is_read_without_being_imported.rs"
+      }
+    },
+    {
       "node_id": "frag:art:verify",
       "node_type": "Fragment",
       "properties": {
@@ -140983,6 +141410,18 @@
       }
     },
     {
+      "node_id": "fact:manual-work-76c1f87ece4e7d11",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "manual_work",
+        "statement": "Wrote a throwaway Python script over the committed export to list every edge among a named SET of nodes — the hub idea cluster — with each edge's type, direction and `evidence` note, so I could tell whether last session's brainstorm actually linked the ideas or left them as orphans. Ran the same shape twice more: once to find the CONTAINS parents and children of a set of components, and once to list every edge touching two nodes I was judging.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-26",
+        "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":null}"
+      }
+    },
+    {
       "node_id": "fact:music-graph-f8-to-f20-verified-against-the-build-2026-08-17",
       "node_type": "TemporalFact",
       "properties": {
@@ -141459,6 +141898,19 @@
       }
     },
     {
+      "node_id": "fact:the-hub-wants-what-an-accepted-requirement-already-half-built",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "description": "MEASURED IN THE CODE 2026-08-26, following the custody node's own instruction that the honest first move is measurement rather than vocabulary.\n\n═══ WHAT IS BUILT ═══\n\n- `declare_dependency` ships. A declaration carries `source` (free text — 'a git URL, a registry, a path'), `version` (refused if absent — 'the version is the whole point'), the parts taken, forwarded build switches BY NAME, and `graph_id` — the id of the dependency's OWN reflow2 design. It lands in a checked-in `reflow2.toml`, human-editable and reviewable in a diff.\n- `reconcile_dependencies` ships. It compares the declaration against WHAT THE BUILD RESOLVES — Cargo.toml, docker-compose.yml, versions.env — catching the reliance nobody declared and the declaration the build no longer takes.\n- `sync_status` ships, over `provenance::last_synced`, a path→content-hash record.\n\n═══ WHAT IS NOT ═══\n\n**Nothing compares a declaration against the UPSTREAM DESIGN.** The accepted requirement names that check and only the build-facing half was built.\n\n🛑 AND THE CHEAP ROUTE TO IT IS BARRED BY THE THING THE HUB IS TRYING TO AVOID. `record_sync` is called by exactly two paths — `export_graph` and `import_graph` — so the only ways to get a path into the watch record are to export to it or import from it. And `import_graph` into a store that already holds a design KEEPS THE HOST'S NAME and upserts the incoming nodes into it (`adopt_on_import`: 'a store already holding a design keeps its own name, because layering an export onto a live design is an upsert, not a restore'). So importing a child to watch it ABSORBS the child — precisely what `dec:idea-a-hub-owns-designs-it-does-not-absorb-...` says a hub must not do.\n\n⭐ **THE MISSING PIECE IS THEREFORE MUCH SMALLER THAN A HUB RELATION: a way to WATCH a path without importing it.** The record, the comparison and the reporting all exist and are tested.\n\n⭐ **AND THE 'WHO ARE MY CHILDREN' RECORD IS NOT MISSING EITHER.** The obvious objection to a small step here was that something must say which designs to watch, and that something IS the hub relation arriving through the back door. It is not: the dependency manifest already holds it — checked in, version-pinned, naming the other design by `graph_id`, and inheriting the direction the dependency edge carries rather than being a flat list of ids.\n\n═══ ⚠️ WHAT THIS DOES NOT DELIVER, AND THE LIMIT IS REAL ═══\n\n**A dependency declaration says I DEPEND ON that. A hub says I AM ANSWERABLE FOR that.** Those are different claims. Where a hub genuinely consumes its children, the manifest expresses the relation honestly and this route works. Where it merely OWNS them — and 'leaders decide, sub-projects inherit' is ownership, not consumption — using a dependency declaration to say so would be exactly the modelling fiction the field report itself objected to when it refused to force hub relations into `Interface` nodes.\n\nSo this narrows the hub question rather than answering it: wants #2 and #4 fall out of finishing an accepted requirement, with no new vocabulary and no tracker objection. Want #1 (cross-design realization) and want #3 (verification roll-up) do not, and neither does the downward-inheritance direction.\n\n═══ ALSO MEASURED ═══\n\n`describe_designs` reads the sidecar beside each store without opening it — id, label, minted-or-adopted, schema stamp — and deliberately reports no node counts. It carries NO last-export date, so want #4 is a small addition to a read that already exists. It is filesystem-scoped, which is the counter the hub node already records against the index option.",
+        "fact_type": "status",
+        "name": "The hub's 'tell me when their export moves' is the unbuilt half of an accepted requirement, not a new relation — and the child list it needs already exists as the dependency manifest",
+        "statement": "Two of the hub's four wants are the UNBUILT HALF of an accepted requirement, not new vocabulary. `req:design-dependencies-declared` (ACCEPTED 2026-07-27) names both checks in its own statement: 'declared-versus-mirrored answers am I actually composing against the version I said, and DECLARED-VERSUS-UPSTREAM answers HAS WHAT I DEPEND ON MOVED SINCE. Either question is unanswerable with only one of the two halves.' The second is hub want #2 verbatim, written a month before the field report asked for it.",
+        "subject_id": "req:design-dependencies-declared",
+        "valid_from": "2026-08-26"
+      }
+    },
+    {
       "node_id": "fact:the-lens-that-carries-the-persona-was-built-on-a-branch-and-never-shipped",
       "node_type": "TemporalFact",
       "properties": {
@@ -141842,6 +142294,19 @@
         "statement": "FOUND BY BREAKING IT, 2026-08-18. Adding one tool (`set_capability_signature`) turned a green workspace red: `find_tools` stopped returning `link_artifact` for the query 'register a file that realizes a capability'.\\n\\nTHE MEASUREMENT. The top six scored 28, 27, 26, 26, 25, 24 \\u2014 a one-point near-tie across the whole visible band, with the default limit of 5. So the fifth and sixth places were separated by noise, and any new tool mentioning a common word displaced whatever was fifth.\\n\\nTHE CAUSE was in `score_tool`: every query term contributed the same weight regardless of how many tools mentioned it. 'capability' appears in dozens of descriptions; 'file' in a handful. Treating them equally is what compressed the band. There was no inverse document frequency anywhere in the catalogue, while `search_design` next door has used BM25 over Tantivy for months.\\n\\nWHY IT MATTERS BEYOND ONE TEST: THE CATALOGUE WAS UNSTABLE UNDER ITS OWN GROWTH. With 152 tools and rising, any addition could silently evict the right answer for a query nobody was thinking about \\u2014 and `req:agent-native` promises every capability is reachable over one surface, which is only true if an agent can FIND the tool. The failure mode is silent by construction: nothing tells you the answer you needed was sixth.\\n\\nFIXED AT THE ROOT rather than by widening the assertion or trimming the new tool's description, both of which were available and both of which would have hidden it. Term weights are now ln(1 + N/df). Measured after: 49.5, 38.3, 32.1, 29.1, 29.1, 28.8 \\u2014 the band spread out, and `link_artifact` moved from 6th to 3rd.\\n\\n\\u26a0\\ufe0f AND THE EVIDENCE WAS NEARLY LOST. The first workspace run was piped through `awk` to total the results, which discarded every failure line and left only 'workspace: 1314 passed, 1 failed' \\u2014 no test name, no assertion. Same class as the remembered `cargo test | grep | head` trap in a new costume: A SUMMARISING PIPELINE IS A TRUNCATING PIPELINE. Re-run with full output to a file, the name and the assertion were both there.",
         "subject_id": "req:agent-native",
         "valid_from": "2026-08-18"
+      }
+    },
+    {
+      "node_id": "fact:the-upstream-watch-is-findable-only-in-reflow2s-own-words",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "description": "⭐ THIS IS THE `rule:reflow2-is-built-for-other-projects-not-for-itself` TEST, APPLIED TO WORK BUILT THE SAME HOUR, AND IT FAILED. Anthony's standing instruction is to ask `find_tools` the question a USER would ask, in their words. Two queries, one job:\n\n    \"has the design I depend on moved since I declared it\"          → 3rd of 5, found\n    \"tell me when the other team changes their design so my\n     project knows it is out of date\"                                → ABSENT from the top 5\n\nIn the second, the top hit is `invalidates` — a tool for marking a finding stale, which has nothing to do with the question.\n\n🛑 THE DIAGNOSIS IS `tool_not_found`, NOT `tool_missing`, AND THE DISTINCTION IS THE WHOLE POINT. The capability exists, is verified, and is served. A session that needed it and hand-rolled a `git diff` on somebody else's export instead would be a DISCOVERABILITY failure — a different repair from building anything. `cap:a-session-reports-the-work-it-did-by-hand` exists to catch exactly that class, and this is a case where the failure is predictable in advance rather than discovered afterwards.\n\n⭐ WHY IT FAILS, and it is mechanical rather than mysterious. `find_tools` is BM25 over the served name, description and parameter names. The description is written in this design's own nouns — DEPENDS ON, declaration, upstream, moved. The words a user reaches for are not in it: *other team*, *out of date*, *stale*, *notify*, *tell me when*, *changed*, *sibling*, *partner*. None of those appear anywhere in the served text, so there is nothing for the ranking to match.\n\n⚠️ THE FIX IS WORDING, NOT A TOOL — and it is deliberately NOT applied here, because a description is the surface an agent binds to and `toolsnap` makes every change to it a reviewed artifact. Rewording it is a real change to the shipped surface and belongs in a change somebody looked at, not smuggled in beside the feature it critiques.\n\n⚠️ AND THE SAME MEASUREMENT SHOULD BE RUN ON THE REST OF THE SURFACE BEFORE ANY FIX. One tool reworded is one tool; if the surface is systematically written in reflow2's nouns — which the 164 descriptions plausibly are, since they were all written by people building reflow2 — then the finding is about the SURFACE and a per-tool patch is the wrong shape of repair. Nobody has measured that.\n\n🛑 NOTHING DETECTS THIS. There is no check that a served tool is reachable from the words its users would use, and the third leg of `fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it` — A DETECTOR THAT NOTICES ABSENCE — is missing here exactly as it is elsewhere. This finding was produced by a human instruction followed by hand, not by anything the system does on its own.",
+        "fact_type": "property",
+        "name": "The upstream watch is findable only by someone who already speaks reflow2 — in a user's own words it does not surface, and an unrelated tool ranks first",
+        "statement": "MEASURED against the live 164-tool surface the hour it shipped. Asked in reflow2's vocabulary — 'has the design I depend on moved since I declared it' — `upstream_status` ranks 3rd of 5. Asked in a USER's words for the same job — 'tell me when the other team changes their design so my project knows it is out of date' — it does NOT APPEAR IN THE TOP 5 AT ALL, and `invalidates`, an unrelated tool, ranks first.",
+        "subject_id": "cap:a-declared-dependency-is-watched-not-imported",
+        "valid_from": "2026-08-26"
       }
     },
     {
@@ -142578,6 +143043,20 @@
         "level": "unit",
         "method": "test",
         "name": "A swept file is not called unobserved because a parent also claims it",
+        "status": "passing"
+      }
+    },
+    {
+      "node_id": "ver:an-upstream-design-is-watched-not-imported",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Twenty-one tests across two files. `crates/reflow2-core/tests/an_upstream_design_is_watched_not_imported.rs` (14) pins the JUDGEMENT, which is pure: unchanged, moved, never_seen, missing, unreadable, graph_id_mismatch, not_watched, not_observed, and the manifest round trip. `crates/reflow2-mcp/tests/an_upstream_export_is_read_without_being_imported.rs` (7) pins the half only a filesystem can answer.\n\n⭐ THE TWO THAT CARRY THE FEATURE. `reading_never_updates_the_baseline_so_a_move_keeps_being_reported` reads three times and asserts the STORED hash is untouched, not merely that the report repeats — a check that refreshed its own baseline would report a move once and then be permanently quiet, which is worse than no check because the silence reads as agreement. `reading_an_upstream_does_not_pull_a_single_node_into_this_design` asserts the node count is unchanged, that a node existing only upstream is absent here, and that this design still carries its own graph_id — because the failure an import produces is subtler than extra nodes: the host keeps its name and the upstream's content arrives under it.\n\n`a_stale_self_stamp_does_not_hide_a_real_change` appends a node to an export by hand WITHOUT restamping — the shape a merge produces — and asserts the computed hash moves anyway. That is `sync_debt`'s 2026-08-11 defect written as a test before it could happen again here.\n\nFOUND A REAL DEFECT WHILE BEING WRITTEN, fixed at the cause rather than in the test: `an_unwatched_dependency_emits_no_watch_fields_at_all` failed on a leftover `design_export_seen_at`, which is a baseline date for a target nobody named — a record of a check that never happened, reading to anyone scanning the manifest exactly like one that did. The hash and its date are now stored and emitted only inside the path.",
+        "findings": "GREEN, and read from cargo's OWN exit code rather than from a pipe: `cargo test --workspace` exit 0, 165 suites, 1856 passed, 0 failed. The 21 tests of this check are inside that. Ran under `systemd-run --user --scope -p MemoryMax=6G` with output to a file, because `cargo test | grep | sort | head` returns head's exit code and says nothing about cargo — a trap this project has hit repeatedly.\n\n🛑 AND A GREEN `cargo test` IS NOT A GREEN CI, which this run proved again: `cargo fmt --all -- --check` FAILED at exit 1 on three reflowed `if let` chains while all 1856 tests passed. Fixed and re-verified at exit 0. Every other gate CI runs was then run locally and is green: `skill_lint` (all checks, including the description cap that had already caught this feature's first tool description at 1569 chars against a 1500 limit), `smoke_mcp` against the real binary over stdio, `validate_schema`, `test_init` (100 tests), and `cargo clippy -p reflow2-core --no-default-features --all-targets` with zero warnings.\n\n`toolsnap.py` reported the two intended surface changes — `declare_dependency` gaining `design_export` and `design_export_seen_at`, and the new `upstream_status` tool with no golden — and the goldens were regenerated deliberately with `--update` and re-checked clean.\n\n⚠️ ONE ORDERING MISTAKE WORTH RECORDING: the artifact baselines were taken BEFORE `cargo fmt` ran, so three of them were stale within minutes and had to be retaken as `design_holds`. Format first, then baseline.",
+        "kind": "verification",
+        "last_run_at": "2026-08-26",
+        "level": "integration",
+        "method": "test",
+        "name": "A declared upstream is read and compared without being imported",
         "status": "passing"
       }
     },
@@ -144758,7 +145237,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:21ab7fddf856e311dbd4e5449a39739b8d072981c5d8a9553c4b94ca46cc8f14",
+  "prev_content_hash": "sha256:adb29704d14d92203ed63e089aa81a8a166af243e23149ed878c4b729b8426b5",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

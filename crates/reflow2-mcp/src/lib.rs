@@ -16,3 +16,4 @@ pub mod shared;
 pub mod skills;
 pub mod sync_debt;
 pub mod tools;
+pub mod upstream;

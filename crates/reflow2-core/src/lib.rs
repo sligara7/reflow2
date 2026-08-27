@@ -115,7 +115,10 @@ pub use corpus::{
     CorpusDocument, CorpusOptions, CorpusReport, CorpusStep, DocumentOutcome, DocumentStatus,
 };
 pub use coverage::{CoverageReport, ObservedPath, UnclaimedRegion};
-pub use depends::{DependencyDeclaration, DependencyFinding, DependencyReport, ObservedDependency};
+pub use depends::{
+    DependencyDeclaration, DependencyFinding, DependencyReport, ObservedDependency,
+    ObservedUpstream, UpstreamFinding, UpstreamReport, UpstreamTarget,
+};
 pub use detect::{
     AFFECTED_CAP, AskedQuestion, AskedRecord, DEFAULT_REPLY_BUDGET_CHARS, GapCandidate, GapPrompt,
     GapReport, GapRow, GapScope, GapSource, NARROW_THE_SCOPE, NARROW_WITH_SCOPE, ReplyBudget,
