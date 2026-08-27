@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:07424da4f5ef62fa05f3d99fba899427174ea2bb90198a001b2beb49b6e9039c",
+  "content_hash": "sha256:dea84fd924e991db3de8d9d1b5074805a24e10e0b5dedb47db804a332a8f3f74",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -22,6 +22,14 @@
       "from_id": "fact:a-capability-delivered-as-a-model-change-can-never-be-reported-delivered",
       "properties": {},
       "to_id": "epoch:the-declared-walls-hold"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:a-findings-name-can-claim-more-than-its-data-and-the-name-is-what-search-returns",
+      "properties": {
+        "note": "That decision binds detectors and tools to never misrepresent what they know. This is the same rule unapplied to the records the design writes about itself."
+      },
+      "to_id": "dec:reflow2-is-built-for-observability"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3181,6 +3189,14 @@
       "from_id": "dec:orientation-is-computed-not-written",
       "properties": {},
       "to_id": "dec:a-projection-is-named-and-the-battery-runs-over-it"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:a-findings-name-can-claim-more-than-its-data-and-the-name-is-what-search-returns",
+      "properties": {
+        "confidence": 0.9
+      },
+      "to_id": "dec:idea-should-a-finding-be-required-to-bound-its-own-claim"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -11591,6 +11607,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-a-finding-be-required-to-bound-its-own-claim",
+      "properties": {
+        "acted_at": "2026-08-27",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -42908,6 +42933,14 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "dec:idea-should-a-finding-be-required-to-bound-its-own-claim",
+      "properties": {
+        "note": "The quality axis this question is asked under. If reflow2 is built so its answers never misrepresent what it knows, a finding whose name overstates its data is in scope; under any other axis it would be a style preference."
+      },
+      "to_id": "dec:reflow2-is-built-for-observability"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "dec:idea-should-reflow2-carry-its-own-git-discipline",
       "properties": {},
       "to_id": "dec:export-once-per-pr"
@@ -46059,6 +46092,12 @@
       "from_id": "dec:merge-survivor-provenance",
       "properties": {},
       "to_id": "fact:apply-heal-would-have-destroyed-the-wrong-contributor"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:reflow2-is-built-for-observability",
+      "properties": {},
+      "to_id": "fact:a-findings-name-can-claim-more-than-its-data-and-the-name-is-what-search-returns"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -124884,6 +124923,16 @@
       }
     },
     {
+      "node_id": "dec:idea-should-a-finding-be-required-to-bound-its-own-claim",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Raised 2026-08-27 from a live cost, not from thinking about the model: `fact:a-findings-name-can-claim-more-than-its-data-and-the-name-is-what-search-returns`.\n\n═══ THE QUESTION ═══\n\nA measured fact's NAME said the seam number *\"can never reach zero\"* because two edge sets were *\"disjoint by construction\"*. The measurement was sound; the claim was a state described as a law, and it moved in an afternoon. `search_design` returns the NAME, so that is the sentence a session meets.\n\nShould anything require a finding to say what it does NOT establish — and if so, where?\n\n═══ OPTIONS, NONE CHOSEN ═══\n\n**(a) NOTHING. This is writing discipline, not vocabulary.** The convention already exists and is widely followed — the exemplar itself carries a \"WHAT THIS DOES NOT SETTLE\" paragraph. One instance of a badly-worded name is a reason to write better names, not to grow the schema. ⚠️ Counter: the discipline was followed and still failed, because it bounded the body while the overreach was in the name, and the name is what search returns. A convention that does not reach the field readers see is not doing the job.\n\n**(b) A NAMING RULE, enforced by a lint.** Forbid law-shaped language — *by construction*, *can never*, *always*, *impossible* — in a TemporalFact name unless the body justifies it. ⚠️ Counter: word-blocklists are crude and generate false positives on findings where the strong claim is TRUE and earned. And a lint that fires on correct work is the alarm-on-correct-work failure this project keeps finding.\n\n**(c) A DECLARED BOUNDS FIELD on TemporalFact** — a `does_not_establish` sibling to `statement`, returned by `search_design` alongside the name. ⚠️ Counter: `basis` and `valid_from`/`valid_to` already exist and are the schema's answer to \"how strong is this claim, and when\"; a fourth qualifier may be one too many. And a declared field that is usually empty teaches readers to ignore it, which is worse than prose that is usually present.\n\n**(d) CHANGE WHAT SEARCH RETURNS** rather than what facts carry — return the closing paragraph, or the first line of `statement`, beside the name. ⚠️ Counter: it grows every search result on a design with 300+ facts, and `search_design` is already a bounded reply; this trades the cheapest read in the loop for a problem measured once.\n\n═══ ⚠️ WHAT MUST BE MEASURED BEFORE ANY OF IT ═══\n\n**Nobody has counted the prevalence.** n=1. Before growing a schema or writing a lint, somebody should sweep this design's TemporalFacts and ask how many names carry a claim their body does not support. If the answer is one, option (a) is obviously right and everything else is over-engineering. **That sweep has not been done, and doing it is cheaper than every option here.**\n\n📌 SEPARATE FROM, AND ADJACENT TO, `fact:the-upstream-watch-is-findable-only-in-reflow2s-own-words`. Both are cases where the record is ACCURATE and still misleads a reader — one through a name that overreaches, one through a description written in vocabulary its users do not share. Whether they are one problem about the gap between what a record says and what a reader takes from it, or two unrelated ones, is itself unsettled.",
+        "name": "OPEN — should a finding have to bound its own claim, and is the NAME the field that needs it?",
+        "rationale": "Raised because the cost was real and traceable: the overreaching name was cited twice as grounds for NOT doing work — once to the user, once into a ChangeEvent — before a five-minute measurement overturned it. A finding that argues against measuring is the most expensive kind to get wrong.\n\nLeft as brainstorming because the honest first move is a count, not a design. Option (a) — do nothing, write better names — is a real option and is listed first among the counters for that reason: at n=1 the schema should not move.\n\nRecorded with all four options rather than the one that looks best, because the two strongest counters point in opposite directions: the convention already exists and failed anyway, which argues for a mechanism; and the prevalence is unmeasured, which argues against building one.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-should-a-requirement-trace-back-to-its-demand-signal",
       "node_type": "Decision",
       "properties": {
@@ -139063,6 +139112,19 @@
       }
     },
     {
+      "node_id": "fact:a-findings-name-can-claim-more-than-its-data-and-the-name-is-what-search-returns",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "description": "⭐ THIS IS `dec:reflow2-is-built-for-observability` APPLIED WHERE IT WAS NOT. That decision binds future work with: *'a part that reports on something must be able to say it could not tell, and any new detector owes an answer for the case where it had nothing to run on.'* It is stated about DETECTORS AND TOOLS. Nothing states it about the RECORDS THE DESIGN WRITES ABOUT ITSELF — and a finding whose name overstates its data misrepresents what the design knows in exactly the way that decision forbids, one layer along.\n\n═══ THE MECHANISM, and it is specific rather than atmospheric ═══\n\n`search_design` returns a TemporalFact's **`name`**, its `node_id`, and `age_days`/`as_of`. It does NOT return `statement` or `description`. So the sentence a session meets when it goes looking is the name, and the bounded reasoning sits in fields the reader must take a second, deliberate step to reach.\n\n🛑 AND THE EXEMPLAR *DID* BOUND ITSELF — WHICH IS THE SHARPEST PART. Its body ends with a full paragraph headed 'WHAT THIS DOES NOT SETTLE': which level should carry contracts, and whether DEPENDS_ON between two impl blocks of one struct is worth recording. The convention exists and was followed. **It simply bounded a different claim than the one in the name.** So this is not a discipline nobody practises; it is a discipline that does not reach the field a reader actually sees.\n\n═══ ⚠️ WHAT THIS DOES NOT ESTABLISH — written first rather than last, because a finding about overreach that overreached would refute itself ═══\n\n- **n = 1.** One fact, examined because it misled a live session. **Nobody has counted how many of this design's 300+ TemporalFacts carry a name stronger than their data.** That measurement has not been made and this must not be read as though it had.\n- **It is not stale-ness, and the existing machinery does not reach it.** `invalidated_findings` reports a finding some record CLAIMS to have answered; `age_days` reports how old a claim is. The exemplar was neither stale nor claimed — it was CURRENT and CORRECT about its data. There is no signal here to detect with what exists.\n- **A second wrong recommendation the same session was NOT this class**, and folding it in would be the same error. Seven components were nearly relabelled from reading a `sys:` id prefix; that is treating a NAMING CONVENTION as evidence, and it was corrected by reading the containment. Related in outcome, different in mechanism. Kept apart deliberately.\n- **No remedy is asserted.** Whether anything should change — a naming discipline, a bounds field, a lint, or nothing at all — is open in `dec:idea-should-a-finding-be-required-to-bound-its-own-claim`.\n\n═══ WHY IT IS WORTH RECORDING AT n=1 ═══\n\nBecause the cost landed on a real session rather than in theory: the overreaching name was cited TWICE as grounds for not doing work, once to the user and once into a ChangeEvent, before a five-minute measurement overturned it. A finding that argues against measuring is the most expensive kind to get wrong, and 'by construction' is precisely the phrasing that argues against measuring.",
+        "fact_type": "property",
+        "name": "n=1, MECHANISM IDENTIFIED, PREVALENCE UNMEASURED — a measured fact's NAME asserted an impossibility its data did not establish, and `search_design` returns the name rather than the bounded body",
+        "statement": "ONE DOCUMENTED INSTANCE, 2026-08-27. `fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet` is named: 'The undeclared-seam finding CAN NEVER REACH ZERO: couplings are read from DEPENDS_ON and contracts from PROVIDES/CONSUMES, and on this design those two sets are DISJOINT BY CONSTRUCTION.' The measurement behind it was sound. The claim in the name was not: the sets were disjoint because contracts had been declared at the SUBSYSTEM boundary while couplings sat between MODULES — a state, not a property of the schema. Declaring three contracts between coupled modules moved it 8/72 → 13/72 in one afternoon. 'By construction' and 'can never' are the two words that made a measured state read as a law.",
+        "subject_id": "dec:reflow2-is-built-for-observability",
+        "valid_from": "2026-08-27"
+      }
+    },
+    {
       "node_id": "fact:a-fresh-server-on-an-old-build-is-not-stale-and-stamps-confidently",
       "node_type": "TemporalFact",
       "properties": {
@@ -145510,7 +145572,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:6dd573ac7638242d009705b51931cce57041fde1c7f3e7e9866dfe971ea4a9ae",
+  "prev_content_hash": "sha256:07424da4f5ef62fa05f3d99fba899427174ea2bb90198a001b2beb49b6e9039c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
