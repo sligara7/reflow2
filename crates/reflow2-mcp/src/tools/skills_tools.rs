@@ -66,13 +66,17 @@ impl ReflowService {
             .iter()
             .map(|s| json!({"name": s.name, "description": s.description}))
             .collect();
-        let payload = json!({
+        let mut payload = json!({
             "count": items.len(),
             "skills": items,
             "note": "Served from the reflow2 binary (dec:skills-served), so they cannot drift from \
                      the version you are running. Your harness does NOT auto-load these — call \
                      get_skill to read one in full."
         });
+        // The reminder rides the response the agent is already reading.
+        if let (Some(lens), Some(obj)) = (self.lens_for_response().await, payload.as_object_mut()) {
+            obj.insert("lens".into(), serde_json::Value::String(lens));
+        }
         structured(payload)
     }
 
@@ -105,11 +109,17 @@ impl ReflowService {
                 None,
             ));
         };
-        structured(json!({
+        let mut payload = json!({
             "name": skill.name,
             "description": skill.description,
             "body": skill.body,
-        }))
+        });
+        // The reminder rides the response the agent reads immediately BEFORE
+        // doing the work — the one moment it is certain to be looked at.
+        if let (Some(lens), Some(obj)) = (self.lens_for_response().await, payload.as_object_mut()) {
+            obj.insert("lens".into(), serde_json::Value::String(lens));
+        }
+        structured(payload)
     }
     /// The working instructions, served rather than installed.
     #[tool(

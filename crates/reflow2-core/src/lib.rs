@@ -102,6 +102,7 @@ pub use alternatives::{
 };
 pub use artifact::{ArtifactLink, DriftDisposition, LinkArtifactOptions};
 pub use budget::{BudgetContributor, BudgetReport, BudgetVerdict};
+pub use claims::{Claim, ReaderLens};
 pub use compare::{
     ChangedEdge, ChangedNode, ChangelogBucket, ChangelogDraft, ChangelogEntry, DesignDiff,
     DiffAncestry, DiffBand, DiffSummary, EdgeRef, LIVE_GRAPH_LABEL, ManifestDelta, NodeRef,

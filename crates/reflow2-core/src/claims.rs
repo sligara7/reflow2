@@ -336,3 +336,80 @@ impl DesignGraph {
         })
     }
 }
+
+/// WHO THE AGENT IS TALKING TO, AND WHETHER THE DESIGN KNOWS.
+///
+/// `dec:idea-a-user-carries-a-persona-that-shapes-every-reply` records the
+/// standing problem: reflow2's own vocabulary — gap, loop, detector, node id —
+/// reaches the person, and two users independently invented the same workaround
+/// of asking the agent to drop it. The rule that fixes it was written into
+/// served prose (v0.36.0 increment), and served prose has one failure mode this
+/// project has now measured twice: **it is read once and drifts**, and nothing
+/// observes whether it held.
+///
+/// This is the same reminder, computed and attached to a response the agent
+/// reads *again on every call* — the mechanism `loop_hint` already proved.
+///
+/// WHAT IT CAN AND CANNOT KNOW, stated because the limit shapes the wording.
+/// reflow2 has no notion of who is at the keyboard: a `seat` names a session,
+/// never a person, and nothing binds a session to a `Contributor`. So this
+/// never asserts *"you are talking to X"*. It reports what the DESIGN holds —
+/// which people carry a recorded background — and leaves matching the reader to
+/// the agent, which is the only party in the room that can.
+///
+/// ⭐ THE ABSENCE CASE IS THE POINT. A design where nobody has a recorded
+/// background cannot tell the agent whose vocabulary to use, and that silence is
+/// invisible today: every detector reasons about the consistency of what EXISTS,
+/// and nothing asks whether a thing was never used at all. Reporting the empty
+/// case is the half that turns a forgotten discipline into a visible one.
+///
+/// An `automated_agent` is deliberately excluded: a bot's `description` is
+/// provenance about a tool, not a reader's lens, and counting it would let the
+/// design claim it knows its audience when it only knows its authors.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ReaderLens {
+    /// People (`kind` = `person`, or unset) carrying a non-empty `description`.
+    pub with_background: Vec<String>,
+    /// People carrying none — askable, and the reason the count is not enough.
+    pub without_background: Vec<String>,
+}
+
+impl ReaderLens {
+    /// True when the design can say nothing at all about whose words to use.
+    pub fn is_silent(&self) -> bool {
+        self.with_background.is_empty()
+    }
+}
+
+impl DesignGraph {
+    /// Compute [`ReaderLens`] — see its docs for what it deliberately does not claim.
+    pub fn reader_lens(&self) -> Result<ReaderLens, DynoError> {
+        let mut with_background = Vec::new();
+        let mut without_background = Vec::new();
+        for c in self.scan_nodes(node::CONTRIBUTOR)? {
+            let kind = c.properties.get("kind").and_then(Value::as_str);
+            // Unset reads as a person: `kind` is optional and older nodes
+            // predate it, so treating silence as "not a person" would hide
+            // exactly the contributors most likely to be human.
+            if matches!(kind, Some("automated_agent")) {
+                continue;
+            }
+            let has_background = c
+                .properties
+                .get("description")
+                .and_then(Value::as_str)
+                .is_some_and(|s| !s.trim().is_empty());
+            if has_background {
+                with_background.push(c.node_id);
+            } else {
+                without_background.push(c.node_id);
+            }
+        }
+        with_background.sort();
+        without_background.sort();
+        Ok(ReaderLens {
+            with_background,
+            without_background,
+        })
+    }
+}
