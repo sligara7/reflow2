@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:6dd573ac7638242d009705b51931cce57041fde1c7f3e7e9866dfe971ea4a9ae",
+  "content_hash": "sha256:07424da4f5ef62fa05f3d99fba899427174ea2bb90198a001b2beb49b6e9039c",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -31740,6 +31740,60 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-three-real-internal-seams-are-declared",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:llm"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-three-real-internal-seams-are-declared",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:provenance"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-three-real-internal-seams-are-declared",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:sanitize"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-three-real-internal-seams-are-declared",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "ifc:ingress-trust-boundary"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-three-real-internal-seams-are-declared",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "ifc:llm-backend"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-three-real-internal-seams-are-declared",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "ifc:provenance-sidecar"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-tool-catalogue-weights-rare-words",
       "properties": {
         "accepted_baseline": true,
@@ -32642,6 +32696,14 @@
     },
     {
       "edge_type": "CONSUMES",
+      "from_id": "cmp:detect",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:llm-backend"
+    },
+    {
+      "edge_type": "CONSUMES",
       "from_id": "cmp:dimensions",
       "properties": {
         "dependency_type": "function_call",
@@ -32650,6 +32712,30 @@
         "weight_basis": "evidence"
       },
       "to_id": "ifc:req-dyno-vector-api"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:discover",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:provenance-sidecar"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:drift",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:llm-backend"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:export",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:provenance-sidecar"
     },
     {
       "edge_type": "CONSUMES",
@@ -32673,10 +32759,26 @@
       "edge_type": "CONSUMES",
       "from_id": "cmp:graph",
       "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:provenance-sidecar"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:graph",
+      "properties": {
         "weight": 0.9,
         "weight_basis": "evidence"
       },
       "to_id": "ifc:req-dyno-core-api"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:heal",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:ingress-trust-boundary"
     },
     {
       "edge_type": "CONSUMES",
@@ -32694,6 +32796,22 @@
         "weight_basis": "evidence"
       },
       "to_id": "ifc:ambient-agent"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:ingest",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:ingress-trust-boundary"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:ingest",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:llm-backend"
     },
     {
       "edge_type": "CONSUMES",
@@ -32836,6 +32954,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "ifc:graph-read"
+    },
+    {
+      "edge_type": "CONSUMES",
+      "from_id": "cmp:sync-debt",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:provenance-sidecar"
     },
     {
       "edge_type": "CONSUMES",
@@ -98927,6 +99053,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:the-three-real-internal-seams-are-declared",
+      "properties": {
+        "at": "2026-08-27",
+        "note": "PARTIALLY SUPERSEDED, AND THE PART THAT DIED IS THE HEADLINE. That fact's title says the undeclared-seam finding \"can never reach zero\" because the two edge sets are \"disjoint by construction\". IT MOVED TODAY: 8 of 72 covered became 13 of 72, by declaring three contracts between modules that already carried DEPENDS_ON edges.\n\nWHAT WAS ACTUALLY TRUE, and the correction is small but changes what follows from it: the sets were disjoint because every contract SAT AT THE SUBSYSTEM BOUNDARY while every coupling sat between MODULES. That is where the contracts happened to be declared, not a property of the schema. \"By construction\" claims no work can change it; work changed it in an afternoon.\n\nWHAT STILL STANDS, in full and re-measured today:\n- 56 of the 64 uncovered pairs have `impl DesignGraph` on BOTH sides and ZERO cross a crate boundary. Its central point — that demanding a contract between two impl blocks of one struct is an alarm on correct work — is unchanged and now independently reproduced.\n- Its list of the genuine cmp↔cmp boundaries was right, and the three declared today are additional real ones it did not enumerate rather than corrections to it.\n- Its closing sentence is untouched and is still the open question: whether DEPENDS_ON between two impl blocks of one struct is worth recording at all.\n\n⚠️ SO THE NUMBER CAN MOVE, BUT IT CANNOT REACH ZERO HONESTLY — for the reason the fact gives rather than the one it names. 56 of the remaining pairs should not have contracts at all, so a zero would mean somebody wrote 56 fictions. Anyone reading this as licence to close the gap should read the 56 first."
+      },
+      "to_id": "fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:write-buffer-gets-an-index-and-hydrate-drops-tenfold",
       "properties": {
         "at": "2026-08-24",
@@ -99839,6 +99974,14 @@
     },
     {
       "edge_type": "PROVIDES",
+      "from_id": "cmp:agent",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:llm-backend"
+    },
+    {
+      "edge_type": "PROVIDES",
       "from_id": "cmp:export",
       "properties": {
         "weight_basis": "estimated"
@@ -99863,6 +100006,14 @@
     },
     {
       "edge_type": "PROVIDES",
+      "from_id": "cmp:llm",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:llm-backend"
+    },
+    {
+      "edge_type": "PROVIDES",
       "from_id": "cmp:main",
       "properties": {
         "weight_basis": "estimated"
@@ -99879,6 +100030,14 @@
     },
     {
       "edge_type": "PROVIDES",
+      "from_id": "cmp:provenance",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:provenance-sidecar"
+    },
+    {
+      "edge_type": "PROVIDES",
       "from_id": "cmp:registry",
       "properties": {
         "weight_basis": "estimated"
@@ -99892,6 +100051,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "ifc:kv-backend"
+    },
+    {
+      "edge_type": "PROVIDES",
+      "from_id": "cmp:sanitize",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:ingress-trust-boundary"
     },
     {
       "edge_type": "PROVIDES",
@@ -120723,6 +120890,18 @@
       }
     },
     {
+      "node_id": "chg:the-three-real-internal-seams-are-declared",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-27",
+        "name": "Three genuine internal contracts are declared, and 56 non-seams are named as such",
+        "rationale": "Anthony's word 2026-08-27, choosing to work the real candidates over three alternatives after being shown that 56 of the 64 are not seams.\n\n⚠️ A PREDICTION MADE BEFORE THIS WORK WAS WRONG, AND THE CORRECTION IS THE USEFUL PART. This event first stated that declaring these contracts COULD NOT move the seam metric, citing `fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet`: couplings come from DEPENDS_ON, contracts from PROVIDES/CONSUMES, and on this design the two sets were \"disjoint by construction\". **It moved: 8 of 72 covered became 13 of 72.**\n\nThe August measurement was true WHEN TAKEN and its explanation was incomplete. The sets were disjoint because every contract then sat at the SUBSYSTEM boundary while every coupling sat between MODULES — an accident of where contracts had been declared, not a property of the schema. Declaring a contract between two modules that DO carry a DEPENDS_ON edge makes the sets intersect, and five did: detect↔llm, ingest↔llm, ingest↔sanitize, export↔provenance, graph↔provenance.\n\n⭐ SO THE METRIC WAS NEVER STUCK — IT WAS UNREACHABLE FROM WHERE THE CONTRACTS WERE. \"Disjoint by construction\" reads as a property of the design that no work can change, and it is not; it is a description of a state that this change altered. That distinction matters because the first reading argues for leaving the number alone forever.\n\n🛑 AND ONE OF THE EIGHT STAYED UNCOVERED, CORRECTLY. `cmp:agent`↔`cmp:llm` is still uncovered because BOTH sides PROVIDE `ifc:llm-backend` — agent.rs is an alternative implementation of the trait, not a consumer of llm.rs — so there is no provides/consumes PAIR between them. That is honest modelling producing an uncovered coupling, and it must not be \"fixed\" by drawing a CONSUMES edge that would assert a relationship the code does not have.\n\nWHY THESE THREE, from the modules' own words rather than from taste:\n- `llm.rs` opens *\"the one seam between the deterministic core and any LLM\"*. It had no Interface node while being the design's most explicitly named boundary. Five modules name `LlmBackend`; `cmp:llm` and `cmp:agent` both PROVIDE it (agent.rs is the ambient-agent ADAPTER, which is why it both provides this and consumes `ifc:ambient-agent`), and detect, ingest and drift consume it.\n- `sanitize.rs` opens *\"the ingress trust boundary\"*, and `req:trust-boundary-at-ingress` is accepted intent. Its error model is the contract: stripping must be SAID OUT LOUD, because a boundary that cleans text silently leaves the reader believing they saw the original.\n- `provenance.rs` writes files BESIDE the store that a DIFFERENT VINTAGE of the binary reads. That is a cross-version file-format contract by definition, and six modules read or write it.\n\nWHY NOT THE OTHER TWO. `cmp:graph`↔`cmp:schema` is a compile-time embed of the vocabulary, and `cmp:agent`↔`cmp:nodes` is use of node-type constants. Both are ordinary internal calls, and declaring a contract for them would be the same alarm-on-correct-work that the 56 impl-block pairs represent. Recorded here rather than left silent so the next reader knows they were examined and rejected, not missed.\n\n⚠️ EVERY SPEC WAS FILLED IN, DELIBERATELY. An Interface whose fields are all `unspecified` is a node, not a contract — `seam_report` reports unspecified as UNSTATED rather than as agreement precisely so that cannot pass for one. Medium, paradigm, payload format, operations, payload schema, auth, transport security and error model are set on all three.",
+        "subject": "record",
+        "summary": "`undeclared_seam` reported 64 uncontracted module pairs. RE-MEASURED 2026-08-27 against today's code: 56 of the 64 are pairs where BOTH sides are `impl DesignGraph` blocks — one Rust type split across files — and ZERO cross a crate boundary. Only 8 were candidates. Three real contracts are now declared and fully specified: `ifc:llm-backend`, `ifc:ingress-trust-boundary`, `ifc:provenance-sidecar`, each with both sides wired. Module-level seam coverage moved 8/72 → 13/72. Two of the eight (`cmp:graph`↔`cmp:schema`, `cmp:agent`↔`cmp:nodes`) were judged ordinary internal calls; a third (`cmp:agent`↔`cmp:llm`) stays uncovered because both sides PROVIDE the trait rather than one consuming it."
+      }
+    },
+    {
       "node_id": "chg:the-tool-catalogue-weights-rare-words",
       "node_type": "ChangeEvent",
       "properties": {
@@ -132547,6 +132726,23 @@
       }
     },
     {
+      "node_id": "ifc:ingress-trust-boundary",
+      "node_type": "Interface",
+      "properties": {
+        "auth": "none",
+        "designation": "internal",
+        "error_model": "Never silent. The contract is that stripping is SAID OUT LOUD — a caller must be told what was removed, because a boundary that cleans text without reporting it leaves the reader believing they saw the original.",
+        "medium": "library",
+        "name": "Ingress trust boundary — foreign text is stripped of hidden instructions, and the stripping is said out loud",
+        "operations": "sanitize(foreign_text) -> cleaned text + what was removed",
+        "paradigm": "synchronous",
+        "payload_format": "text",
+        "payload_schema": "crates/reflow2-core/src/sanitize.rs — three documented smuggling channels: Unicode tag characters (U+E0001, U+E0020–U+E007F), and the other classes the module enumerates. Technique imported from github-mcp-server's pkg/sanitize.",
+        "provenance": "authored",
+        "transport_security": "none"
+      }
+    },
+    {
       "node_id": "ifc:kv-backend",
       "node_type": "Interface",
       "properties": {
@@ -132560,6 +132756,23 @@
         "paradigm": "synchronous",
         "payload_format": "binary",
         "payload_schema": "Opaque bytes on both sides. The seam is deliberately schema-blind: every schema-aware behaviour — validation, the reverse index, the read cache, the write-buffer overlay, the full-text sidecar — sits ABOVE this trait in StorageEngine, and everything that touches bytes goes through it. Keys are built by `foundation/store/keys.rs` and namespaced by graph_id, which is what lets many graphs share one instance.",
+        "provenance": "authored",
+        "transport_security": "none"
+      }
+    },
+    {
+      "node_id": "ifc:llm-backend",
+      "node_type": "Interface",
+      "properties": {
+        "auth": "none",
+        "designation": "internal",
+        "error_model": "The core is deterministic and must stay so, so a backend failure is returned to the caller rather than retried or defaulted — a fabricated answer would put LLM output inside a deterministic result (`req:deterministic-core`, `req:no-silent-fallback`).",
+        "medium": "library",
+        "name": "LlmBackend — the one seam between the deterministic core and any LLM",
+        "operations": "complete(prompt) -> answer",
+        "paradigm": "synchronous",
+        "payload_format": "text",
+        "payload_schema": "crates/reflow2-core/src/llm.rs — the `LlmBackend` trait. The deterministic core never names a provider; it holds a `&dyn LlmBackend`.",
         "provenance": "authored",
         "transport_security": "none"
       }
@@ -132614,6 +132827,23 @@
         "payload_schema": "Identical to `ifc:mcp-tools`: `tools/list` returns each tool's `inputSchema` as JSON Schema generated from the Rust request types, so the field-level contract travels with the surface and cannot drift from the build.",
         "provenance": "authored",
         "spec": "SPLIT OUT OF `ifc:mcp-tools` ON 2026-08-13, ON ANTHONY'S WORD. One Interface had been describing two boundaries — its own `endpoint` said so: *\"a stdio pipe to a launched process, OR the address given to `--http`\"*. Everything above the transport is identical, because it is the same protocol; what differs is that this one can be reached remotely, can sit behind a gateway, and can terminate TLS, and the stdio one can do none of those.\n\n✅ `medium: json_rpc` SINCE 2026-08-23, ON ANTHONY'S WORD — \"add json_rpc and close the stale question\". Until then this node carried `unspecified`, and the paragraphs below record why, because the reasoning is what makes the value defensible rather than arbitrary.\n\nWHAT THE BLANK WAS. The enum offered REST / gRPC / event / graphql / cli / library / data / mechanical / electrical / human, and NONE OF THEM NAMED MCP OVER STREAMABLE HTTP. `REST` is wrong: this is not resource-oriented, it is a SINGLE endpoint carrying JSON-RPC 2.0, and every operation is a named tool rather than a verb on a resource. `cli` belongs to the other half. `gRPC` is a different protocol. So `unspecified` was the honest answer to a vocabulary that could not say this — not an oversight, and not a field nobody got round to.\n\nWHY IT WAS ADDED RATHER THAN ENDURED. `medium` is a pairing-key axis and `unspecified` reads as UNKNOWN, never as agreement, so this boundary could pair with NOTHING — including flo2's `ifc:reflow2-design-api`, which is the correspondence a user would actually assert. A permanent blank is not a neutral state; it is a boundary that cannot be checked against anybody.\n\nTHE OBJECTION THAT HAD BLOCKED IT, AND HOW IT WAS SETTLED. Adding the value was declined once because enum VALUES are not counted by the version stamp (which counts node and edge TYPES), making a new value a compatibility event nothing can detect — the stamp-blindness pattern this design has recorded four instances of. THE SAME FACT WAS RECORDED TWICE IN THIS PROJECT WITH OPPOSITE CONCLUSIONS: `schema/structure.yaml` cites the stamp's blindness as evidence that adding a value LOCKS NOBODY OUT, i.e. as a reason it is SAFE, while this node cited it as a reason to decline. Settled 2026-08-23 by separating two questions: the missing WORD is fixed, and the stamp not counting vocabulary is a SEPARATE defect with its own history, which is not repaired by leaving a boundary unnameable.\n\nWHAT READS THE NEW VALUE, checked rather than assumed (`dec:edge-orthogonality`: a vocabulary distinction earns its keep only if a computation reads it). Seam pairing compares `medium` as a plain string across `BASE_AXES`, so `json_rpc` matches its like and refuses `REST` with no new branch. `is_foundation_medium` special-cases only `library` and `data` — the media a consumer LINKS AGAINST rather than calls across — and `json_rpc` correctly falls outside it, so the structural detectors go on treating this as a runtime boundary that can fail on its own.\n\n📌 THIS IS THE HALF flo2 ACTUALLY MEANS. Its spec reads *\"MCP carried over HTTP, as reflow2 already serves with --http / --serve-shared\"*, so the correspondence a user would assert is flo2's `ifc:reflow2-design-api` ↔ THIS node, not the stdio one. The `transport_security` disagreement measured on 2026-08-13 (ours `none`, theirs `tls`) therefore lands here, and lands SHARPER: on a stdio pipe there is no transport to secure and the mismatch could be waved away as a segment artefact, but this boundary really is plain HTTP with no TLS while flo2 says `tls`. **Reading (b) — a real assumption gap — is now the more likely of the two.** STILL OPEN: resolving it needs flo2's side, and setting `medium` does not touch it. What HAS changed is that the two boundaries can now be paired at all, so the disagreement is reachable by a check instead of hidden behind an unknown medium.\n\n✅ `auth: none` and `transport_security: none` are facts: no authentication and no TLS anywhere in `crates/`. `--http-allow-host` is a Host-header allowlist. Terminating TLS and authenticating is `ifc:authenticating-gateway`'s job — a REQUIRED boundary whose name reads \"reflow2 has no authentication and is not getting any\".",
+        "transport_security": "none"
+      }
+    },
+    {
+      "node_id": "ifc:provenance-sidecar",
+      "node_type": "Interface",
+      "properties": {
+        "auth": "none",
+        "designation": "internal",
+        "error_model": "Refusing on ANY mismatch would be worse than the problem, so schema growth is tolerated and only a real incompatibility refuses. A file it cannot read is reported as unreadable, never assumed compatible.",
+        "medium": "data",
+        "name": "Provenance sidecar — which reflow2 wrote this graph, and what this seat last synced with, written beside the store",
+        "operations": "read on open; write on export and on import (record_sync)",
+        "paradigm": "synchronous",
+        "payload_format": "json",
+        "payload_schema": "Files beside the store, written and read by `crates/reflow2-core/src/provenance.rs`: which reflow2 vintage wrote this graph, and `last_synced` — the path-to-content-hash record a seat believes is at each target.",
+        "provenance": "authored",
         "transport_security": "none"
       }
     },
@@ -145280,7 +145510,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:e51ab0f9d7dee1f47453331baac2a74bb19513b4a023f308628bc2996a8a7e11",
+  "prev_content_hash": "sha256:6dd573ac7638242d009705b51931cce57041fde1c7f3e7e9866dfe971ea4a9ae",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
