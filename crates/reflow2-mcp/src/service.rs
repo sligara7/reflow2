@@ -3711,6 +3711,48 @@ impl ReflowService {
 
 #[tool_handler(router = self.tool_router)]
 impl ServerHandler for ReflowService {
+    /// Record who connected, then answer exactly as rmcp's default would.
+    ///
+    /// ⭐ THE POINT IS THE SIDE EFFECT, NOT THE ANSWER. A client that forwards
+    /// only `content` cannot read any structured reply, so "which client am I
+    /// and what did we agree to speak?" cannot be answered through a tool. It
+    /// is written beside the store instead, where a person can open it — see
+    /// [`crate::handshake`], which carries the full reasoning and the limits.
+    ///
+    /// 🛑 THE NEGOTIATION IS MIRRORED, NOT CALLED. rmcp's
+    /// `negotiate_protocol_version` is `pub(crate)`, so overriding `initialize`
+    /// means reproducing its four-line rule. [`crate::handshake::negotiate`]
+    /// holds the copy and a test pins it, so an rmcp change is loud rather than
+    /// a silent divergence in what this server answers `initialize` with. The
+    /// other three lines below are the default body verbatim.
+    async fn initialize(
+        &self,
+        request: rmcp::model::InitializeRequestParams,
+        context: rmcp::service::RequestContext<RoleServer>,
+    ) -> Result<rmcp::model::InitializeResult, McpError> {
+        context.peer.set_peer_info(request.clone());
+        let mut info = self.get_info();
+        let offered = info.protocol_version.clone();
+        info.protocol_version = crate::handshake::negotiate(
+            &request.protocol_version,
+            info.protocol_version,
+            &ServerHandler::supported_protocol_versions(self),
+        );
+        // Best effort and last: a diagnostic must never be able to fail a
+        // handshake. `Handshake::write` swallows its own IO errors for the same
+        // reason.
+        if let Some(graph_path) = self.graph_path.as_deref() {
+            crate::handshake::Handshake::new(
+                &request.client_info,
+                &request.protocol_version,
+                &info.protocol_version,
+                &offered,
+            )
+            .write(graph_path);
+        }
+        Ok(info)
+    }
+
     fn get_info(&self) -> ServerInfo {
         // NOT Implementation::from_build_env(): that macro expands in rmcp's
         // own build env, so the server introduced itself as the MCP library's

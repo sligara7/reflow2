@@ -69,9 +69,23 @@ Node types and counts, or invented nodes. No user content.
 What it cost — a workaround, a wrong edge, twenty minutes of guessing.
 
 ## Environment
-reflow2 <version> (<commit>) from .reflow2/kit-version.json
-<agent/harness>, <OS>
+reflow2 <version>, from `.reflow2/graph.client.json` (`reflow2_version`)
+<client_name> <client_version>, MCP <negotiated>  — same file
+<OS>
 ```
+
+**Read the environment out of `.reflow2/graph.client.json`.** The server writes it at every
+handshake, so it names the reflow2 that actually answered you, the client you are running, and
+the MCP revision the two of you agreed on. Paste those three lines as they stand.
+
+🛑 **NOT `.reflow2/kit-version.json`.** It records the kit a project was SET UP with, and updating
+reflow2 does not update a project already set up. A 2026-08-27 field report was talking to a
+0.39.0 server while that file said 0.11.0 — the reporter cross-checked four sources and caught it,
+and a reporter who did not would have filed against a version that was never running.
+
+If `graph.client.json` is absent — a reflow2 older than the handshake record — fall back to
+`reflow2-mcp --version` where PATH matches the running daemon, or `.reflow2/graph.server.json` for
+a shared server, and say which you used.
 
 Say if you are unsure it is a bug. "I could not work out how to do X" is a **documentation** gap
 and worth reporting as one — label it that way rather than filing it as a defect.

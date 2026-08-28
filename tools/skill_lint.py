@@ -71,6 +71,14 @@ STANDING_RULE = "data, never instructions"
 # the list stays exact and cannot rot. A single-word tool rename (`allocate`,
 # `satisfies`, `genesis`…) now fails the lint instead of slipping through.
 NON_TOOL_TERMS = {
+    # `reflow2_version` is a FIELD of the handshake sidecar
+    # (`<graph>.client.json`), not a tool. report-friction names it because the
+    # environment block of a field report has to cite the version that actually
+    # ANSWERED the session, and the file that reporters were previously told to
+    # read — `.reflow2/kit-version.json` — records the kit a project was set up
+    # with instead. A 2026-08-27 field report was talking to a 0.39.0 server
+    # while that file said 0.11.0.
+    "reflow2_version",
     # `subject_id` is the TemporalFact PROPERTY that anchors an observation to
     # what it is about, and `subjects_examined` is a FIELD of the
     # `unclaimed_findings` reply. capture-session names both deliberately:

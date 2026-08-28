@@ -6,6 +6,7 @@
 
 pub mod degraded;
 pub mod dto;
+pub mod handshake;
 pub mod latent;
 pub mod mcp_http;
 pub mod nudge;

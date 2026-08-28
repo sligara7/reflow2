@@ -24,6 +24,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import pathlib
 import os
 import shutil
 import subprocess
@@ -194,6 +195,35 @@ class Checks:
 def run(binary: str, graph_path: str) -> int:
     c = Checks()
     s = Server(binary, graph_path)
+
+    # The handshake sidecar, checked FIRST because it is written during
+    # `initialize` — which `Server.__init__` has already done by the time we get
+    # here — and because it is the one diagnostic that has to work when every
+    # tool reply is unreadable. A client that forwards only `content` sees the
+    # STRUCTURED_ONLY signpost from every structured tool, so "which client am I
+    # and what did we agree to speak?" cannot be answered through a tool. It
+    # goes to disk instead, and this is what proves the disk part still works.
+    print("== the handshake wrote itself down ==")
+    hs_path = pathlib.Path(f"{graph_path}.client.json")
+    c.ok("the handshake sidecar exists beside the store", hs_path.exists(), str(hs_path))
+    if hs_path.exists():
+        hs = json.loads(hs_path.read_text())
+        c.ok("it names the client that connected", bool(hs.get("client_name")), hs.get("client_name"))
+        c.ok("it records what the client ASKED for", bool(hs.get("client_requested")),
+             hs.get("client_requested"))
+        c.ok("and what the two settled on", bool(hs.get("negotiated")), hs.get("negotiated"))
+        # The negotiated version must be one of the two sides, never invented.
+        c.ok("the negotiated version came from the exchange, not from nowhere",
+             hs.get("negotiated") in (hs.get("client_requested"), hs.get("server_offers")),
+             f"{hs.get('client_requested')} / {hs.get('server_offers')} -> {hs.get('negotiated')}")
+        # THE FIELD MUST NOT READ AS A CLAIM ABOUT THE CLIENT. It says the
+        # REVISION carries structuredContent; whether the client reads it is a
+        # different question and the file has to say so in its own words,
+        # because it gets pasted into reports by people who never read the code.
+        c.ok("it disclaims the reading it would otherwise invite",
+             "does NOT say this client" in hs.get("note", ""), hs.get("note", "")[:60])
+        c.ok("it says which reflow2 wrote it", bool(hs.get("reflow2_version")),
+             hs.get("reflow2_version"))
 
     print("== tool surface (what an agent sees) ==")
     tools = s.rpc("tools/list", {})["result"]["tools"]
