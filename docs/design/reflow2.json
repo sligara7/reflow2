@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:27ac524f6aecc539729ad25eebc38d9b67e8a1d9eb3ed25ba469df2ec4d360ec",
+  "content_hash": "sha256:9edf35d206dae06026cad67b192e79a3afc5801f36485e69bec1a7de04326753",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -30943,6 +30943,51 @@
         "action": "modified"
       },
       "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-instructions-can-be-read-in-parts-and-the-signpost-speaks-to-the-agent",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-instructions-can-be-read-in-parts-and-the-signpost-speaks-to-the-agent",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-instructions-can-be-read-in-parts-and-the-signpost-speaks-to-the-agent",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-served-skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-instructions-can-be-read-in-parts-and-the-signpost-speaks-to-the-agent",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-instructions-can-be-read-in-parts-and-the-signpost-speaks-to-the-agent",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:skills-served"
     },
     {
       "edge_type": "CHANGED",
@@ -99371,6 +99416,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:the-instructions-can-be-read-in-parts-and-the-signpost-speaks-to-the-agent",
+      "properties": {
+        "at": "2026-08-28",
+        "note": "ANSWERED, AND PARTLY CORRECTED — read both halves before treating this record as history.\n\nWHAT IS FIXED: the fact proposed three shapes — standing rules first; sectioned get_instructions with a manifest; state the byte length so a truncated reader can detect it. All three now hold. The first measured as ALREADY DONE; the other two are built here, and the largest section (11,260 bytes) fits under the ~19.5 KB cap that truncated the reporter twice.\n\nWHAT WAS WRONG IN THE ORIGINAL: its central claim was that the order is \"worst-first-lost\" and that the sections a truncated agent loses are the ones telling it to distrust the tools and report the friction — the SELF-SEALING argument, which is why it was rated above a formatting nit. Measured on the current document 2026-08-28: the standing rules sit at 3.5%, 4.5% and 7.6%, and \"## If reflow2 gets in your way, say so\" sits at 63% — INSIDE the reporter's 73% cut. It reached him, and his 2026-08-27 report proves it: he filed the truncation. What he actually lost was the tail — the gap→question handshake (73.8%) and the tool inventory (78%).\n\n⚠️ SO THE FINDING WAS REAL AND ITS DIAGNOSIS HAD ROTTED. The defect persisted; the explanation of WHY it mattered stopped being true at some point nobody recorded. That is the same shape as fact:a-findings-name-can-claim-more-than-its-data, arriving from the other direction: not a name overclaiming its body, but a body whose reasoning went stale while its conclusion stayed correct."
+      },
+      "to_id": "fact:defect-the-served-instructions-put-their-standing-rules-where-a-client-cap-deletes-them"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:the-memory-backend-keeps-its-keys-ordered",
       "properties": {
         "at": "2026-08-25",
@@ -111864,7 +111918,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:acda0a159620c1d2c12b135356979d112febe2335b8c4b84d37d11ee9f9c4f15",
+        "checksum": "sha256:b8780a6de4877f12456b8462bea20b2a0c3b7062ec2b3c966105d19fa57d6046",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -111977,7 +112031,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b094228983dd0251d46cd73f3fd4c6d72d6a77d64d232364caec67256e7807a0",
+        "checksum": "sha256:55de4e6bdf65e0ac328b5b8c452f8b2776479f7e12841420ab7b0ce52d4bbf55",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/skills.rs",
         "name": "skills.rs",
@@ -112394,7 +112448,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:3a28c5d6f3bc91ce95ad0bc3da6bcc85c1bbb71e73e42fa670b14b101b78629c",
+        "checksum": "sha256:50f0de0af80329e21600e429628d404be705881ec6c1b30e0b5b955056e78113",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/served_skills.rs",
         "name": "served_skills.rs",
@@ -112600,7 +112654,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:17c856bb3593168d643ad9c1d05fa8b6386258e38b31bea3ad152609c228d0b1",
+        "checksum": "sha256:56669d9a0f4e84be147072e7aafce96257442b74556011601e0ce5b175c0eeab",
         "location": "crates/reflow2-mcp/src/tools/skills_tools.rs",
         "name": "skills_tools.rs",
         "status": "realized"
@@ -121108,6 +121162,18 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "The installer stops skipping the one ignore entry most likely to be already tracked, and the remedy it prints works on a directory"
+      }
+    },
+    {
+      "node_id": "chg:the-instructions-can-be-read-in-parts-and-the-signpost-speaks-to-the-agent",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-28",
+        "name": "The instructions can be read in parts, and the signpost speaks to the agent",
+        "rationale": "Both items are from Alex's 2026-08-27 field report, re-measured against 0.41.0 source before anything was designed.\n\n⭐ THE MEASUREMENT CORRECTED THE RECORDED DIAGNOSIS, which is why it was taken first. `fact:defect-the-served-instructions-put-their-standing-rules-where-a-client-cap-deletes-them` (2026-08-15) said the ordering is \"worst-first-lost\" and that report-friction sits AFTER the cut, making the defect self-sealing — the agent loses the instruction telling it to report the loss. Measured on the current document, that is no longer true: the standing rules sit at 3.5%, 4.5% and 7.6%, and \"## If reflow2 gets in your way, say so\" sits at 63%, INSIDE his 73% cut. It reached him. What he actually lost was the tail — the gap→question handshake at 73.8% and the entire tool inventory at 78%. That fact proposed three fix shapes; the first was already done, and this builds the other two.\n\n⚠️ THE OBVIOUS FIX WAS THE WRONG ONE, and measuring stopped it. `get_instructions` sends 56,257 bytes for a 26,846-byte document — 2.1×, the exact duplication removed from every other tool in August for being \"the difference between an answer a client could read and one it refused\". The tempting move is to remove it here too. THAT WOULD HAVE MADE THINGS WORSE FOR THE ONE USER WHO REPORTED IT: the prose tools reach him precisely BECAUSE they duplicate into `content`, and stripping the copy would have left him with nothing at all. Sectioning solves the size without taking away the field he can actually read.\n\n📌 THE SIGNPOST CHANGE IS OPTION (d) OF `dec:idea-how-does-a-content-only-client-get-an-answer`, taken deliberately as COMPLEMENTARY. That node records (d) as strictly improving every other option and foreclosing none, so this does not pre-empt Alex's pending answer on which protocol revision his client negotiated — the question that still decides between (a), (b) and (c). The defect it fixes is that the stub instructed a party not in the room: the AGENT reads it and cannot change its own harness, so for exactly the population it was written for it named no action anybody could take.",
+        "subject": "system",
+        "summary": "`get_instructions` gains an optional `section`, and every reply now carries a `sections` manifest with `total_bytes` and `returned_bytes` — so a client-side cap is DETECTABLE (one field disagrees with what the reader holds) and RECOVERABLE (the parts can be fetched one at a time). The largest section is 11,260 bytes against the ~19.5 KB cap that truncated a real consumer twice, so every section is individually deliverable on the harness that could not take the whole document. An unknown slug is refused and lists the legal ones. A test pins that the sections rejoin into the document byte for byte, and everything before the first `##` becomes `overview` so no byte is unreachable by slug.\n\nSeparately, the `STRUCTURED_ONLY` signpost was rewritten to address the AGENT rather than the client: it now names the prose tools, the fact that refusals arrive in `content` intact, and `export_graph` with a `path` — and states that these do not replace `search_design` before a create or `loop_status` before finishing."
       }
     },
     {
@@ -146266,7 +146332,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:1785db6c354095b10f77af3dac500468b0c26e5f7bfa9a29f2df0bfe3664d082",
+  "prev_content_hash": "sha256:27ac524f6aecc539729ad25eebc38d9b67e8a1d9eb3ed25ba469df2ec4d360ec",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
