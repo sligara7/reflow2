@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a91291f21c4deb4e0918bcd076a384611f865b20ca371f81fcb95f2f5b9effe7",
+  "content_hash": "sha256:1785db6c354095b10f77af3dac500468b0c26e5f7bfa9a29f2df0bfe3664d082",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -908,6 +908,12 @@
         "note": "The accepted requirement whose second named check — declared-versus-upstream — was never built, and which is hub want #2."
       },
       "to_id": "req:design-dependencies-declared"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:the-kit-manifest-gate-cannot-run-in-ci-because-ci-is-never-installed-into",
+      "properties": {},
+      "to_id": "fact:defect-kit-manifest-drift-is-invisible-to-ci"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2723,6 +2729,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:the-handshake-is-written-down-beside-the-graph",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:handshake"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:the-loop-holds-the-invitation",
       "properties": {
         "weight_basis": "estimated"
@@ -3008,6 +3022,14 @@
     },
     {
       "edge_type": "ANTICIPATES",
+      "from_id": "cap:the-handshake-is-written-down-beside-the-graph",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "dec:idea-how-does-a-content-only-client-get-an-answer"
+    },
+    {
+      "edge_type": "ANTICIPATES",
       "from_id": "dec:documentation-has-no-operational-coupling",
       "properties": {
         "confidence": 0.9
@@ -3230,6 +3252,12 @@
     },
     {
       "edge_type": "ANTICIPATES",
+      "from_id": "fact:field-friction-is-captured-and-then-owed-to-nobody",
+      "properties": {},
+      "to_id": "dec:idea-what-makes-a-field-report-owed"
+    },
+    {
+      "edge_type": "ANTICIPATES",
       "from_id": "fact:reflow2s-black-boxes-hold-no-functions-allocation-went-straight-to-the-modules",
       "properties": {
         "evidence": "That fact measured 177 of 178 ALLOCATED_TO edges landing on a module and DECOMPOSES at zero, and named the missing function layer as a real allocation-recording gap. It saw this question coming; this idea states what the missing layer would be. Drawn FROM the fact TO this decision."
@@ -3267,6 +3295,12 @@
         "evidence": "The earlier observation saw the same shape one layer down. It found that one RocksDB store serves every git branch, so two branches share a live graph — and its sharpest note is that `parallel-work`'s trigger conditions are framed by PEOPLE, so the solo maintainer with two branches, who hits the identical collision, is the reader the skill excludes. Same failure family: the machinery for keeping two lines of work apart exists, and what neither the store nor the skill carries is whether a line of work is FINISHED."
       },
       "to_id": "req:the-graph-can-say-what-has-already-been-done"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:the-signpost-instructs-a-party-that-cannot-act-and-the-absent-client-was-named",
+      "properties": {},
+      "to_id": "dec:idea-how-does-a-content-only-client-get-an-answer"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -9739,6 +9773,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "art:grok-build-tui-feedback-2026-08-27",
+      "properties": {
+        "acted_at": "2026-08-27",
+        "role": "author"
+      },
+      "to_id": "who:alex"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -16408,6 +16451,33 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-field-report-can-cite-the-version-that-answered-it",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-field-report-can-cite-the-version-that-answered-it",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:skills-served"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-field-report-can-cite-the-version-that-answered-it",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ver:kit-manifest-agrees"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:a-finding-describes-the-walk-that-produced-it",
       "properties": {
         "accepted_baseline": true,
@@ -22057,6 +22127,15 @@
         "action": "modified"
       },
       "to_id": "art:stats"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-9fadd6105aa8d3d4",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:grok-build-tui-feedback-2026-08-27"
     },
     {
       "edge_type": "CHANGED",
@@ -30728,6 +30807,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-handshake-writes-down-who-connected",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-handshake-writes-down-who-connected",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cmp:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-handshake-writes-down-who-connected",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "fact:the-signpost-instructs-a-party-that-cannot-act-and-the-absent-client-was-named"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-handshake-writes-down-who-connected",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "ifc:mcp-protocol"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-idea-cycle-was-a-mistyped-distinction",
       "properties": {
         "accepted_baseline": false,
@@ -33751,6 +33866,12 @@
       "from_id": "sub:install",
       "properties": {},
       "to_id": "cmp:init"
+    },
+    {
+      "edge_type": "CONTAINS",
+      "from_id": "sub:serving",
+      "properties": {},
+      "to_id": "cmp:handshake"
     },
     {
       "edge_type": "CONTAINS",
@@ -37382,6 +37503,22 @@
     },
     {
       "edge_type": "DOCUMENTS",
+      "from_id": "art:grok-build-tui-feedback-2026-08-27",
+      "properties": {
+        "doc_kind": "field_report"
+      },
+      "to_id": "fact:field-friction-is-captured-and-then-owed-to-nobody"
+    },
+    {
+      "edge_type": "DOCUMENTS",
+      "from_id": "art:grok-build-tui-feedback-2026-08-27",
+      "properties": {
+        "doc_kind": "field_report"
+      },
+      "to_id": "fact:the-signpost-instructs-a-party-that-cannot-act-and-the-absent-client-was-named"
+    },
+    {
+      "edge_type": "DOCUMENTS",
       "from_id": "art:increment-plan",
       "properties": {
         "doc_kind": "design_doc"
@@ -37732,6 +37869,15 @@
       "edge_type": "GOVERNED_BY",
       "from_id": "art:dev-storyflow-feedback-2026-08-23",
       "properties": {
+        "ruling": "parks"
+      },
+      "to_id": "dec:a-dated-field-report-is-registered-and-parked"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "art:grok-build-tui-feedback-2026-08-27",
+      "properties": {
+        "note": "A dated field report from 2026-08-27. It describes nothing and implements nothing, correctly: it is true of a moment and must not track the design as it moves. Same genre and same ruling as its four siblings.",
         "ruling": "parks"
       },
       "to_id": "dec:a-dated-field-report-is-registered-and-parked"
@@ -46110,6 +46256,18 @@
       "from_id": "dec:reflow2-is-built-for-observability",
       "properties": {},
       "to_id": "fact:a-findings-name-can-claim-more-than-its-data-and-the-name-is-what-search-returns"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "fact:defect-kit-manifest-drift-is-invisible-to-ci",
+      "properties": {},
+      "to_id": "fact:the-kit-manifest-gate-cannot-run-in-ci-because-ci-is-never-installed-into"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "fact:every-reply-was-sent-twice",
+      "properties": {},
+      "to_id": "fact:the-signpost-instructs-a-party-that-cannot-act-and-the-absent-client-was-named"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -99095,6 +99253,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:the-handshake-writes-down-who-connected",
+      "properties": {
+        "at": "2026-08-28",
+        "note": "PARTIALLY SUPERSEDED — ITS \"WHAT IS OWED\" CLAUSE IS DELIVERED, AND NOTHING ELSE IN IT MOVED. It closes: *\"a served surface that answers 'what version am I talking to?' WITHOUT depending on a file the installer may not have written. `loop_status.served_by.reflow2_version` already computes it; nothing puts it where a friction report would pick it up.\"*\n\n`<graph>.client.json` is now written at every `initialize`, carrying `reflow2_version` alongside the client's name, its version, and the negotiated MCP revision. It does not depend on the installer having written anything. And `report-friction` was changed in the same PR to read the environment block out of it — so it is now precisely where a friction report picks it up.\n\n🛑 THE MEASUREMENT ITSELF IS UNTOUCHED AND STAYS OPEN. Its subject is a past event — dev_storyflow filing a defect eighteen hours after it was fixed, while running a pre-#303 binary and reporting *\"kit-version.json absent — could not read a version.\"* That happened; a dated observation of a past event does not become false. Its central claim also still stands in full: an agent that cannot name its version cannot tell a live defect from a closed one, and 2026-08-27 supplied a second instance — a reporter talking to 0.39.0 while the kit stamp said 0.11.0.\n\n⚠️ AND ITS SECOND HALF IS UNADDRESSED: *\"the same trap is live on this side\"* — `served_by.stale` reporting a replaced executable. Nothing here touched that.\n\n📌 FOUND BY SEARCH, NOT BY THE COMPUTATION. `unclaimed_findings` on this session's ChangeEvents returned 17 candidates and this was not among them, because its `subject_id` is `req:declared-vocabulary-is-reachable-from-the-surface` and no change event touched that node. That is the documented limit — the computation reaches what is anchored — and the capture-session skill's instruction to search when you still suspect something is what found it."
+      },
+      "to_id": "fact:an-agent-that-cannot-name-its-version-reports-fixed-bugs"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:the-memory-backend-keeps-its-keys-ordered",
       "properties": {
         "at": "2026-08-25",
@@ -100063,6 +100230,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "ifc:graph-read"
+    },
+    {
+      "edge_type": "PROVIDES",
+      "from_id": "cmp:handshake",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "ifc:mcp-protocol"
     },
     {
       "edge_type": "PROVIDES",
@@ -101164,6 +101339,23 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:handshake",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-handshake-is-written-down-beside-the-graph"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:handshake",
+      "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:handshake"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:heal",
       "properties": {
         "conformance": "unchecked"
@@ -101912,6 +102104,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:report-friction-skill",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:skills-served"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:report-roll-withheld-test",
       "properties": {
         "completeness": "complete",
@@ -102250,6 +102451,15 @@
         "completeness": "complete",
         "conformance": "verified"
       },
+      "to_id": "cap:the-handshake-is-written-down-beside-the-graph"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:service",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
       "to_id": "cap:the-orientation-call-says-whether-its-own-answers-are-current"
     },
     {
@@ -102383,6 +102593,23 @@
         "completeness": "complete"
       },
       "to_id": "cmp:docs"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:smoke-mcp",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:the-handshake-is-written-down-beside-the-graph"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:smoke-mcp",
+      "properties": {
+        "conformance": "unchecked"
+      },
+      "to_id": "cmp:handshake"
     },
     {
       "edge_type": "REALIZES",
@@ -107501,6 +107728,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:the-handshake-is-written-down",
+      "properties": {},
+      "to_id": "cap:the-handshake-is-written-down-beside-the-graph"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:the-harness-registry-is-confirmed-by-the-harnesses",
       "properties": {},
       "to_id": "cap:init-asks-which-harness"
@@ -108303,6 +108536,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:handshake",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:handshake"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:heal",
       "properties": {
         "action": "created"
@@ -108599,6 +108840,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:report-friction-skill",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:report-friction-skill"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:report-roll-withheld-test",
       "properties": {
         "action": "created"
@@ -108852,6 +109101,14 @@
         "action": "created"
       },
       "to_id": "art:skills-catalog"
+    },
+    {
+      "edge_type": "YIELDED",
+      "from_id": "frag:art:smoke-mcp",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:smoke-mcp"
     },
     {
       "edge_type": "YIELDED",
@@ -110372,6 +110629,31 @@
       }
     },
     {
+      "node_id": "art:grok-build-tui-feedback-2026-08-27",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "audience": "internal",
+        "checksum": "sha256:4ca6237c63f7555f0f54d1a4c73cded628b7659d607313d8051f15c40807613a",
+        "granularity": "atomic",
+        "location": "docs/feedback/2026-08-27-grok-build-tui-agent-feedback.md",
+        "name": "Grok Build TUI agent feedback, 2026-08-27 — the structured-content stub makes the whole read surface unusable on a content-only client",
+        "status": "realized",
+        "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:handshake",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:9e805541a2352379adb5e74bc3f5f82510ca76f7b6aeea323981d0618e5dfc66",
+        "location": "crates/reflow2-mcp/src/handshake.rs",
+        "name": "handshake.rs",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:heal",
       "node_type": "Artifact",
       "properties": {
@@ -111101,6 +111383,17 @@
       }
     },
     {
+      "node_id": "art:report-friction-skill",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:225f4137b34be336d0d0ea796d1d4d333a6cf36181947d985fcd3edfa6771d4a",
+        "location": "getting-started/skills/report-friction/SKILL.md",
+        "name": "report-friction/SKILL.md",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:report-roll-withheld-test",
       "node_type": "Artifact",
       "properties": {
@@ -111435,7 +111728,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c7b6c3ab731b619cbee151f1f9c1675bc42e29b88fcd2df1d2706dfec7441b64",
+        "checksum": "sha256:acda0a159620c1d2c12b135356979d112febe2335b8c4b84d37d11ee9f9c4f15",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -111522,7 +111815,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cfaf7a3aa1d450cb3db7cf9519f855439c71eedf8695e53e9dec1f062c8afb44",
+        "checksum": "sha256:c5c75fa83c91b5bf65afdf1bc059940df2b45e6716664daa280268981ecf3ddc",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -111591,6 +111884,17 @@
         "name": "SKILLS.md",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:smoke-mcp",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:a549df338d5f553541eef5b1b1fe757a3a46d44daa019841f03ca815ac0ca6c0",
+        "location": "tools/smoke_mcp.py",
+        "name": "smoke_mcp.py",
+        "status": "realized"
       }
     },
     {
@@ -114859,6 +115163,16 @@
       }
     },
     {
+      "node_id": "cap:the-handshake-is-written-down-beside-the-graph",
+      "node_type": "Capability",
+      "properties": {
+        "description": "On `initialize`, reflow2 records the client's self-reported name and version, the protocol revision it REQUESTED, the revision negotiated, and what this server offers — to `<graph>.client.json`, beside the existing `.meta.json` and `.server.json` sidecars.\n\n⭐ THE PLACEMENT IS THE DESIGN. This exists for a client whose every structured tool reply is unreadable, so the question it answers — *\"which client am I, and what did we agree on?\"* — cannot be answered through a tool reply. It has to reach disk, where a person can open it with an editor and paste it into a report. Putting it on `graph_report.served_by` would put the answer inside exactly the channel that is broken.\n\n⚠️ IT RECORDS WHAT THE REVISION CONTAINS, NEVER WHAT THE CLIENT READS. The derived field is `protocol_has_structured_content` and it carries a note saying so in the file itself. A negotiated version is what a client CLAIMS to speak; it is not evidence of what that client implemented. Naming it `supports_structured_content` would assert the thing the field cannot know.\n\n⚠️ MOST RECENT CONNECTION ONLY, and no timestamp inside. The file is overwritten on every handshake, so it always describes the current client; the file's own mtime says when. A shared server serving two clients will show the later one — recorded as a known limit rather than solved with a ring buffer nobody has asked for.\n\n⚠️ IT MIRRORS A RULE IT CANNOT CALL. `negotiate_protocol_version` is `pub(crate)` in rmcp, so overriding `initialize` means reproducing four lines: echo the client's version if `supported_protocol_versions()` contains it, otherwise the server's fallback. A test pins that rule so an rmcp change is loud rather than silent — the same precedent as the test pinning what `ProtocolVersion::LATEST` resolves to.\n\nWHY IT IS WORTH BUILDING FOR ONE REPORT. Every field report so far has had to hand-assemble which reflow2 it was talking to — the 2026-08-27 report carries a four-row table of sources the reporter checked, one of which (`kit-version.json`) was stale and misleading. This removes a question the server already knows the answer to from the list a reporter has to work out.",
+        "name": "A server writes down which client connected and what they agreed to speak, where a broken protocol cannot hide it",
+        "provenance": "authored",
+        "status": "verified"
+      }
+    },
+    {
       "node_id": "cap:the-loop-holds-the-invitation",
       "node_type": "Capability",
       "properties": {
@@ -115229,6 +115543,18 @@
         "rationale": "Measured first: 112 of 205 TemporalFacts carried the property, 76 the edge, ZERO both. A clean split with no node caught between the two conventions is what a missing word looks like, not what carelessness looks like — the edge demands a DesignEpoch and a writer holding a date has nothing to point it at. Anthony chose (a) over migrating the 112 into invented epochs, and over making the edge polymorphic. The scope then grew on evidence: there was no reader to fall back, so one was built.",
         "subject": "system",
         "summary": "Implements `dec:how-should-a-temporal-fact-carry-its-date-when-there-is-no-epoch`, option (a), settled on Anthony's word 2026-08-16.\n\nWHAT CHANGED. `TemporalFact` declares `valid_from` and `valid_to` as date-string properties (`schema/temporal.yaml`). A new `reflow2-core::dates` module converts `YYYY-MM-DD` to a day number and subtracts. `SearchHit` gains a flattened `ClaimAge`, so `search_design` returns `as_of`, `age_days` and `expired` for any node carrying a date, and returns nothing extra for any node that does not.\n\n⭐ THE SCOPE GREW ON EVIDENCE, AND THAT IS THE POINT. The decision said \"declare the properties, and have readers prefer the edge and fall back to the property\". Checking what actually reads `VALID_FROM` found ONE reader — `readiness.rs:653` — which filters to `basis: forecast`, AND THERE ARE ZERO FORECAST FACTS IN THE DESIGN. All 189 dated facts are `measured`. So the 76 edge-bearing facts were just as unread in practice as the 112 property-bearing ones, and there was no reader to teach. Declaring the property alone would have changed the schema and left the corpus exactly as inert as before — which `dec:edge-orthogonality` forbids: a vocabulary distinction earns its keep only if a computation reads it. So the reader was built, and the property ships with it.\n\n⭐ THE READER WAS ALREADY DESIGNED AND UNBUILT. `cap:claims-carry-their-age` part 3 reads: \"where-am-i and search_design mark how old a node's factual half is, so a six-week-old observation is not narrated as current.\" A date string is exactly what that needs; an epoch reference is not, because an epoch carries a `sequence` for ordering and not a calendar position. This lands that part.\n\nTHE EXTRACTION HINT IS CORRECTED, and it was the cause rather than a detail. It read \"a satisfaction fact whose VALID_FROM is a later epoch; a dropped requirement = a fact with VALID_TO set\" — describing as fields two things that were edges. That is what taught 112 writers to invent the properties. It now states plainly that there are two ways to say when, that they are not interchangeable, and which to prefer.\n\nDELIBERATE SHAPE, each chosen against a cheaper alternative:\n- NO `chrono`. The core is dependency-light and the requirement is one subtraction; the civil-date conversion is a known closed form in fifteen lines.\n- `today` IS A PARAMETER on everything that decides. Only `today_utc()` reads the clock, at the edge. A function that reads the clock cannot be tested, only observed — and a module about staleness must not have tests that pass today and fail in a fortnight.\n- THE CLOCK IS READ ONCE PER RESULT LIST, not once per hit, so two hits can never disagree about what day it is.\n- `as_of` AND `age_days` ARE SEPARATE FIELDS so that \"dated, but the date will not parse\" is sayable. Collapsing them would make an unreadable date indistinguishable from no date.\n- AN UNREADABLE `valid_to` NEVER EXPIRES A CLAIM. Guessing would silently retire live facts.\n- A FUTURE DATE REPORTS A NEGATIVE AGE rather than clamping to zero, because clamping renders a forecast or a typo as \"current\" — the exact misreading the capability exists to prevent.\n\nVERIFIED. 15 cases in `a_claim_carries_its_age.rs`, all passing, including the Gregorian century exceptions (1900 not a leap year, 2000 one) that a naive `% 4` or `% 100` gets wrong. FOUR MUTATIONS, each killed by the right case: dropping the century exception fails the leap and anchor cases; clamping a future date fails the negative-age case; expiring on the last valid day fails the boundary case; treating an unreadable end date as expired fails the counterweight. END-TO-END on the real store through a restarted server: a fact dated today returned `age_days: 0`, one dated 2026-08-07 returned `age_days: 9`, and an undated fact returned no age fields at all — all three in one reply.\n\nNO SCHEMA STAMP MOVEMENT: properties are not counted by the version stamp, only node and edge types are, so no upgrade document is owed.\n\nNOT DONE, and named rather than left to be discovered: the 112 existing facts are not migrated or normalised — they are simply read now. Nothing writes `valid_from` automatically; it remains something an author states. And `where-am-i`, the other half of `cap:claims-carry-their-age` part 3, still does not mark age."
+      }
+    },
+    {
+      "node_id": "chg:a-field-report-can-cite-the-version-that-answered-it",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-28",
+        "name": "A field report cites the version that answered it, and the kit-manifest gate is actually run",
+        "rationale": "Anthony's word 2026-08-28, on all three parts. Two landed; the third could not.\n\n⭐ THE INSTRUCTION WAS MANUFACTURING BAD FIELD REPORTS, WHICH IS WHY IT WENT FIRST. A skill reflow2 SERVES told the reporter to cite a file that said 0.11.0 while the server answering was 0.39.0. Alex cross-checked four sources and caught it; a reporter who did not would have filed against a version that was never running. The fix depends on `cap:the-handshake-is-written-down-beside-the-graph`, built hours earlier — which gave the skill an accurate source to point AT rather than only a warning to point AWAY from.\n\n⚠️ VERIFIED, NOT TRUSTED, TWICE. The installer's dry run was read before it was run (11 changes, all `keep`, nothing deleted — it recognises the edited skill mirrors and leaves them). Afterwards the manifest was read OUT OF THE FILE — 0.41.0, d3cb4ab, 36 files — rather than from the installer's own \"Now: reflow2 0.41.0\" line, because `fact:the-v0380-manifest-shipped-empty-because-a-dry-run-reads-like-a-write` records a dry run reading exactly like a write. The pre-existing failure was confirmed by stashing the tree and re-running: still exit 1 without this session's edits.\n\n🛑 THE CI GATE WAS ADDED, MEASURED AND REVERTED, AND THAT IS THE MOST USEFUL PART. Everything that motivated it was true: the check existed, failed on a clean tree, and ran nowhere. What nobody had checked was whether CI has an installation to check. It does not — `.reflow2/` is gitignored, `git ls-files .reflow2/` is empty, and the check exits 2 on such a tree, so the gate would have turned every build red. The fresh-install case that COULD run there is already covered by `test_init.py`. An `INVALIDATES` claiming the finding closed was drawn and then deleted; `fact:the-kit-manifest-gate-cannot-run-in-ci-because-ci-is-never-installed-into` carries the measurement.\n\n📌 A CANDIDATE THAT WOULD REACH IT, recorded rather than built: the server already writes `reflow2_version` into `<graph>.client.json` and `.reflow2/kit-version.json` sits beside it. Comparing them and saying so — as `served_by.stale` already does for a replaced binary — reaches the developer AND the field without CI being involved at all.\n\n⚠️ NOT FIXED, AND SEPARATE: the RELEASE binary is stale relative to its source, which the installer warned about. A cousin of this staleness, left as its own thing.",
+        "subject": "system",
+        "summary": "Item 3 of the 2026-08-27 field report. `report-friction` told reporters to cite `.reflow2/kit-version.json`; it now says to read `.reflow2/graph.client.json`, the handshake sidecar, which names the reflow2 that actually ANSWERED the session plus the client and negotiated MCP revision. The installer was re-run to clear the drift (0.30.0 → 0.41.0, verified by reading the file). 🛑 THE CI GATE WAS ATTEMPTED AND REVERTED: `check_kit_manifest.py` cannot run in CI because `.reflow2/` is gitignored, so a checkout has no installation and the check exits 2. `fact:defect-kit-manifest-drift-is-invisible-to-ci` is NOT closed — it is sharpened, and the sharpening makes it harder."
       }
     },
     {
@@ -118059,6 +118385,16 @@
       }
     },
     {
+      "node_id": "chg:baseline-9fadd6105aa8d3d4",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-28",
+        "name": "First baseline. A dated field report is a frozen observation — it should never change, so any later drift is a real finding.",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-a7cbaa42349b3d83",
       "node_type": "ChangeEvent",
       "properties": {
@@ -120600,6 +120936,18 @@
       }
     },
     {
+      "node_id": "chg:the-handshake-writes-down-who-connected",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-28",
+        "name": "The handshake writes down who connected and what they agreed to speak",
+        "rationale": "Anthony's word 2026-08-28, choosing this over asking the reporter to wrap his MCP command with a tee script.\n\n⭐ THE DESIGN CONSTRAINT IS THE WHOLE POINT: THE ANSWER MUST BE READABLE WHEN THE PROTOCOL IS NOT WORKING. This exists because of `fact:the-signpost-instructs-a-party-that-cannot-act-and-the-absent-client-was-named` — a client that reads only `content` gets a stub from every structured tool, so the question \"why can I not read anything?\" CANNOT be answered through a tool reply. It has to reach disk. That is why this is a sidecar and not a field on `graph_report.served_by`, which is exactly the reply such a client cannot read.\n\nWHY IT ANSWERS THE RIGHT QUESTION. `structuredContent` arrived in MCP `2025-06-18`, and rmcp still negotiates `2024-11-05` and `2025-03-26`. If a reporting client requested a revision that PREDATES the field, version-gating is the spec-sanctioned fix. If it requested a modern one and still reads only `content`, that is a conformance gap and version-gating would do nothing. Those need different remedies and nothing could tell them apart.\n\n⚠️ IT RECORDS WHAT THE REVISION CONTAINS, NEVER WHAT THE CLIENT READS. The derived field is named `protocol_has_structured_content`, not `supports_structured_content`, and carries a note saying so. The distinction is the entire subject of this investigation: a negotiated version is what a client CLAIMS to speak, not proof of what it implemented. A flattering name here would be the same overreach `fact:a-findings-name-can-claim-more-than-its-data-...` describes, committed while fixing its cousin.\n\n⚠️ THE COUPLING THIS ACCEPTS, NAMED BEFORE IT IS TAKEN. `negotiate_protocol_version` is `pub(crate)` in rmcp, so overriding `initialize` means MIRRORING a four-line rule this crate cannot call: echo the client's version if `supported_protocol_versions()` contains it, else the server's fallback. A test pins the rule, following the precedent set by the test that pins which version `ProtocolVersion::LATEST` resolves to — this project already refuses to let an rmcp move happen silently.\n\nNO TIMESTAMP INSIDE THE FILE. It is overwritten on every handshake, so it always describes the CURRENT connection, and the file's own mtime says when. Inventing a clock for a field a reader can get from the filesystem would add a dependency and a thing to be wrong about.",
+        "subject": "system",
+        "summary": "reflow2 overrides `ServerHandler::initialize` to record the client's self-reported name and version, the protocol revision it REQUESTED, the revision negotiated, and what this server offers — written to `<graph>.client.json` beside the store, alongside the existing `.meta.json` and `.server.json` sidecars. Answers \"which client am I and what did we agree on?\" for every future field report, without the reporter instrumenting their own machine."
+      }
+    },
+    {
       "node_id": "chg:the-idea-cycle-was-a-mistyped-distinction",
       "node_type": "ChangeEvent",
       "properties": {
@@ -121639,6 +121987,19 @@
         "provenance": "authored",
         "purpose": "Domain-neutral graph theory over a dense in-memory graph: `GraphBuilder`, Leiden community detection, Tarjan strongly-connected components, connected components, directed cycle detection, articulation points and bridges, and Brandes betweenness centrality. Exact rather than approximate — design graphs are 10^2–10^3 nodes.\n\nAbsorbed from `dynograph-graph` at v0.12.0 on 2026-08-24 (increment 3 of `dec:absorb-the-foundation-subset-and-end-the-dependency`). 2,219 of the crate's 3,832 lines; 1,613 left behind in nine files reflow2 never calls.\n\n⭐ THE NAME IS ANTHONY'S, AND THE COLLISION IT AVOIDS IS REAL IN BOTH THE MODEL AND THE CODE. reflow2 already has `cmp:graph` for its own graph module, and dynograph-foundation's design has a `cmp:graph` of its own — one of three id collisions found while scoping a mirror that was then dropped. In the code the same clash bites harder: every absorbed file said `crate::graph` meaning ITS graph module, which in reflow2 resolves to `DesignGraph`. The imports were rewritten to `crate::graphalg::` for that reason.\n\nWHO USES IT: `cmp:structure` and `cmp:allocate` (both in `sys:coherence-loop`) and `cmp:flow` (in `sys:vocabulary`) — which is why it sits in `sys:foundation` rather than inside any one of them. It undergirds more than one subsystem, which is exactly the placement `dec:absorbed-code-is-distributed-by-function` calls for.\n\n⚖️ IT CARRIES `#![allow(dead_code)]`, deliberately. Eight items are unused from reflow2's point of view — two error variants, three policy variants, two accessors, a helper. They stay because the files are kept VERBATIM so they remain diffable against upstream, which is what the provenance requirement actually rests on. Anthony, 2026-08-24: *\"don't trim now - if we decide it isn't necessary, then we can trim in the future.\"*",
         "status": "planned"
+      }
+    },
+    {
+      "node_id": "cmp:handshake",
+      "node_type": "Component",
+      "properties": {
+        "kind": "module",
+        "level": "component",
+        "name": "handshake",
+        "provenance": "authored",
+        "purpose": "Records who connected and what the two sides agreed to speak, to `<graph>.client.json` beside the store. Implemented in `crates/reflow2-mcp/src/handshake.rs`; written from `ReflowService::initialize`.\n\n📌 The near-match offered was `cap:the-handshake-is-written-down-beside-the-graph` — the FUNCTION. This is the PART that holds it.\n\n⭐ IT IS A FILE BECAUSE THE PROTOCOL MAY BE THE BROKEN THING. It exists for a client whose every structured tool reply is an unreadable stub, so the question it answers — *which client am I, and what did we agree on?* — cannot be answered through a tool reply. It reaches disk, where a person opens it and pastes it into a report.\n\n⚠️ IT MIRRORS A RULE IT CANNOT CALL. rmcp's `negotiate_protocol_version` is `pub(crate)`, so this reproduces four lines: echo the client's requested version if `supported_protocol_versions()` contains it, else the server's fallback. A test pins that so an rmcp change is loud rather than a silent divergence in what this server answers `initialize` with.\n\nPlaced under `sub:serving` beside `cmp:service` and `cmp:shared`, because what it does is the connection handshake. Given a part of its own under the ruling recorded as `chg:allocation-follows-the-code-not-the-neighbour` (2026-08-25): it is a real, checksummed module, so crediting its function to `cmp:service` next door would be the neighbour-misfiling that ruling corrects.",
+        "status": "planned",
+        "tier": "operational"
       }
     },
     {
@@ -124476,6 +124837,16 @@
       }
     },
     {
+      "node_id": "dec:idea-how-does-a-content-only-client-get-an-answer",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Raised 2026-08-28 from a field report, not from thinking about reflow2.\n\n📌 The near-match offered was `fact:every-reply-was-sent-twice` — the MEASUREMENT that caused this, and the record of the choice made. This is the open question of what to do now that the choice has a named cost. Kept separate so the measurement stays a measurement.\n\n⚠️ **THE CONSTRAINT THAT BOUNDS EVERY OPTION:** reverting to always-duplicate resurrects the refusals. `detect_gaps` was 157,785 bytes on the wire and a harness refused it outright; 26,096 after the fix. **No option may give that back.**\n\n═══ OPTIONS, NONE CHOSEN ═══\n\n**(a) GATE ON THE NEGOTIATED PROTOCOL VERSION.** Duplicate into `content` only when the client negotiated below `2025-06-18`. This is what MCP's own backwards-compatibility SHOULD asks for, and it costs the 2× only for clients that need it. ⚠️ Counter, the one that killed this in August: priced at threading `RequestContext` through 155 handlers and 151 `ok_json` call sites. **That price has NOT been re-measured**, and two things bear on it — the version comparison already exists and is tested (`version_is_per_request`), and `json_result` is a single choke point, which is exactly the shape that made read-only cheap on 2026-08-26 when making `write_lock` fallible let the compiler find all 98 sites. ⚠️ **SECOND COUNTER, POSSIBLY FATAL: the reporting client may have negotiated a MODERN version and still read only `content`.** If so, gating on version would not have helped it at all.\n\n**(b) GATE ON SIZE, NOT VERSION.** Duplicate whenever the payload is small enough to be harmless — most replies are — and send the signpost only for the big ones. ⚠️ Counter: the failure becomes intermittent and size-dependent, which is worse to diagnose than a consistent one. A client would read most answers and silently lose the largest, which are the orientation calls that matter most.\n\n**(c) A SERVER FLAG** — `--duplicate-content`, set by whoever runs the server for such a client. Cheap, explicit, no protocol guessing. ⚠️ Counter: it must be DISCOVERED, and the person who needs it is reading a stub that does not mention it. That is the addressee problem again. Mitigated only if the stub itself names the flag.\n\n**(d) FIX THE SIGNPOST'S ADDRESSEE, and nothing else.** Rewrite the stub to speak to the AGENT, which is who reads it, naming what the agent can actually do: use `graph_report_markdown` and the prose tools, export to a file and read that, ask the operator for a flag. ⚠️ Counter: makes the outage survivable, not absent — the reporter's own words stand, that export-and-parse *'cannot replace `search_design` before a create, or `loop_status` before finishing.'* ⭐ But it is a one-string change that strictly improves every other option, so it is arguably complementary rather than alternative.\n\n**(e) DO NOTHING; IT IS THE CLIENT'S BUG.** The spec says SHOULD, not MUST. ⚠️ Counter: `rule:reflow2-is-built-for-other-projects-not-for-itself` makes field use the point, and this is field use. Declining should be explicit rather than by neglect.\n\n═══ ⚠️ WHAT MUST BE CHECKED BEFORE CHOOSING ═══\n\n1. **Which protocol revision did the reporting client negotiate?** The report does not say. If it is modern, option (a) is dead on arrival and the framing changes. **Cheapest and most decisive question here.** ⭐ ASKED 2026-08-28 — Anthony put it to Alex; an answer is expected within a day or so. `cap:the-handshake-is-written-down-beside-the-graph` was built the same day so the answer arrives in a file rather than requiring him to instrument his machine.\n\n   📌 **THE REFERENCE POINT TO READ HIS ANSWER AGAINST, measured 2026-08-28 on this repo's own server:** a known-good client — `claude-code 2.1.241` — requested and negotiated **`2025-11-25`**, and reads `structuredContent` without difficulty. So a modern revision in Alex's reply does NOT explain his outage and points at option (c) or (d); an old one (`2024-11-05`, `2025-03-26`) points at option (a). One line of his file decides it.\n\n2. **What does the ~300-line estimate cost today?** Made before anyone tried; the read-only precedent suggests a choke point plus the compiler may do most of it.\n3. **Is one client one client, or the first of several?** n=1 for the affected population — the mirror of the n=0 that justified the original decision.",
+        "name": "OPEN — how does a client that reads only `content` get an answer, without resurrecting the 2× wire cost?",
+        "rationale": "Raised because the field named the client the August decision was explicitly gambling did not exist: *'a large invasive change to protect a client nobody could name'*. The gamble was reasonable and it lost.\n\nThe constraint is stated before the options because the tempting move — put the payload back in `content` — undoes a measured 6× improvement and re-breaks the harnesses that drove it.\n\nOption (d) is flagged as complementary rather than alternative: the signpost speaks to the client while being read by the agent, and that is wrong regardless of which other option is chosen.\n\nLeft as brainstorming because question 1 can invalidate option (a) entirely and nobody has asked it. Choosing before asking would be the same mistake in a new costume.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-how-does-a-shipped-principle-say-whether-it-is-enforced",
       "node_type": "Decision",
       "properties": {
@@ -125358,6 +125729,16 @@
         "decision": "RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL. Nothing is claimed as intent, nothing is planned, and nobody has asked for this. Anthony, 2026-08-19, revisiting a use case he says he had in mind when he created the **adopt** skill: *\"taking some code base, running adopt skill on it, then we translate into another language… is there anything we can take from this?\"*, prompted by The New Stack on Canonical + University of Bristol translating AppArmor and snap-confine from C to Rust.\n\n═══════════════════════════════════════════════\nWHAT THE ARTICLE ACTUALLY SAYS, because it reframes the use case\n\n· *\"Generating code at scale is no longer the hard part — the hard part is proving that code actually does what the original did.\"*\n· *\"Trust, not code, is the bottleneck.\"*\n· Canonical's stated goal is not a rewrite. It is to find out **what evidence maintainers would need before trusting an automated translation of production code.** They are explicitly *\"not rushing to rewrite either one\"*.\n· Their method: an LLM generates Rust, then fuzzing plus formal program analysis compares the two implementations, and **symbolic repair** diagnoses and fixes each behavioural mismatch.\n· *\"A Rust port that interprets a policy differently from the existing implementation might compile perfectly and still be wrong.\"*\n· `unsafe` is the trap: a translator can carry hard C constructs across by leaning on it, *\"but relying on unsafe too heavily would bring many of the original memory-safety risks into the new code.\"* Idiomatic Rust needs *\"changes to data structures and lifetimes across several functions or entire modules\"* — so a faithful port is not line-by-line.\n· Target scale: *\"entire repositories containing hundreds of thousands of lines of C.\"*\n\n⭐ THE REFRAME. The naive version of this use case is \"adopt the C, generate the Rust from the graph.\" The article says that half is **solved and is not the bottleneck**. So if reflow2 has a part here at all, it is on the trust side, not the generation side.\n\n═══════════════════════════════════════════════\nIDEAS, unranked, each with what is cheap or expensive about it\n\n**A. reflow2 holds the ORACLE, not the translation.** adopt(C) recovers what the system is FOR; that recovered intent is the specification the Rust must satisfy, and the graph is where evidence that it does accumulates per capability, dated and attributed. Cheap, in that it needs no new mechanism.\n   ⚠️ COUNTER, and it is serious: adopt's intent is AGENT-RECOVERED FROM THE ARTIFACT BEING REPLACED. Using it as the oracle for a security-critical port risks a graph that is complete, confident and wrong in exactly the way the article warns a port can be. `req:adopt-says-how-much-it-got` exists precisely so recovery reports its own coverage — that number is the honest precondition, and a low one should stop this cold.\n\n**B. A PORT IS TWO AS-DESIGNED RECORDS, AND reflow2 ALREADY COMPARES THOSE.** `cap:certify-restructuring` (status `verified`) classifies every divergence between two design records as function-bearing, structural, or unclassified, and returns preserved / not_preserved / **indeterminate** — with *\"unclassified never passes.\"* A translation is the largest restructuring there is: function must be identical, structure is expected to differ. `compare_designs` / `pair_designs` are the same family.\n   ⭐ WHY THIS IS INTERESTING: it is a DESIGN-level differential, far coarser than symbolic execution, and it catches a class those tools cannot — a capability present in one implementation and absent in the other. Nobody is looking there.\n   ⚠️ COUNTER: coarse means coarse. It would never have caught AppArmor parsing a policy differently, which is the failure the article is actually about.\n\n**C. `unsafe` is a DESIGN-level debt signal, not a test outcome.** \"No capability counts as ported while its realizing artifact exceeds N unsafe blocks\" is expressible today — a DesignRule with stop-the-build power, or a Constraint, or a `GATED_ON` threshold. The article treats unsafe-overuse as the thing that quietly defeats the whole exercise, which is exactly the kind of claim that should be visible in a design rather than discovered in review.\n   ⭐ Also the most under-used part of reflow2 by Anthony's own measure — hard limits are built and barely used (1 Constraint node).\n\n**D. THE BOTTLENECK THEY NAME IS THE THING reflow2 ALREADY COMPUTES.** *\"What evidence would a maintainer need\"* is a coverage-of-claims-by-checks question: `evidence_report`, `confirmation_ledger`, `coverage_report`, `readiness_report`. The right answer to a maintainer is not \"it is equivalent\" but \"these capabilities have evidence, these do not, and here is what nobody checked\" — and reflow2's habit of REFUSING to summarise thin evidence is the feature, not a limitation.\n\n**E. THE CHEAP EXPERIMENT, and the only one with an answer key.** Run adopt on a real C project AND on its existing hand-written Rust port, then `compare_designs`. **`sudo-rs` vs `sudo`** is the strongest candidate: security-critical, deliberately behaviour-compatible, both public, both modest. `uutils` vs GNU coreutils is a second. The question it answers is falsifiable — *does the comparison surface anything a maintainer would care about, or only noise?*\n   📌 SAME SHAPE as `dec:idea-run-adopt-on-reflow2-itself-as-a-ground-truth-test`, already in this graph: pick a case where the answer is independently known, then see whether the tool finds it.\n\n═══════════════════════════════════════════════\n🛑 WHERE THIS MUST NOT GO, recorded now while it is cheap to say\n\nreflow2 does not do differential testing, symbolic execution, or repair, and should not start. `dec:non-goal-reflow2-does-not-judge-whether-a-check-is-meaningful` already settles the general form. The fuzzing-plus-formal-analysis half is Bristol's actual research and is where the difficulty lives; a pitch that drifts into \"reflow2 verifies the port\" would be claiming their result.\n\n⚠️ SCALE IS UNPROVEN. The article's target is 100k+ LOC repositories. adopt has never been run near that, and `cap:bl-211` — genesis assumes an opening BRIEF and has no shape for an opening FOLDER — is open. Any claim about repository-scale ingest is currently unevidenced.\n\n⚠️ AND NOBODY ASKED. This is a use case its author envisioned, not one a user brought. `dec:idea-field-evidence-is-a-prioritisation-input` would rank it below anything two projects reported this week.",
         "name": "OPEN — in an automated C→Rust style translation, is reflow2's part the ORACLE and the EVIDENCE LEDGER rather than the translation, and does the port become a two-design comparison?",
         "rationale": "Recorded as an open question rather than a proposal because Anthony was explicitly revisiting an old idea and asking what could be taken from someone else's work, not stating intent. The article's own framing is what makes it worth recording at all: it separates code generation, which it calls solved, from evidence of behavioural equivalence, which it calls the bottleneck — and that split lands on machinery reflow2 already has (`cap:certify-restructuring`, verified, whose verdict refuses to pass an unclassified divergence) rather than on machinery it would have to build. The counter-arguments are recorded beside each idea rather than argued in conversation, per the brainstorm rule, because the strongest objection here — that adopt's recovered intent is inferred from the very artifact being replaced, so it cannot be a trustworthy oracle for a security-critical port — is the kind of thing that gets lost and then re-proposed. NOTE ON THE RECORD: the first write of this node was malformed in the same way two earlier writes this session were, sending the rationale inside the decision body; corrected in place, and the recurrence is itself evidence on fact:changing-one-sentence-in-a-long-decision-cost-a-full-6242-character-resend.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-what-makes-a-field-report-owed",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Raised 2026-08-28 from `fact:field-friction-is-captured-and-then-owed-to-nobody`, itself raised because three of four items in a field report said *\"still true\"* and *\"same as 2026-08-18\"*.\n\n═══ THE PROBLEM IN ONE LINE ═══\n\nCapture works. **190 defect-facts, 189 with nothing claiming to have answered them, 8 INVALIDATES edges in the whole design, and no `loop_status` debt class counts any of it.** A friction report enters the graph and the one call every session makes cannot see it.\n\n═══ OPTIONS, NONE CHOSEN ═══\n\n**(a) A NEW DEBT CLASS — `open_field_defects` on `loop_status`.** The obvious answer. ⚠️ Counter, and it is serious: **a count that can never reach zero becomes wallpaper**, and this project has already found that failure three times (`unreviewed_ideas` at 111 of 186, the undeclared-seam list, the unallocated-parts list). 189 rows on the orientation call would be ignored inside a week and would drown the seven numbers that currently mean something.\n\n**(b) SCOPE IT THE WAY `unclaimed_findings` IS SCOPED.** That tool already solves the identical problem for a different question — it asks *\"what did THIS SESSION make false?\"* and returns a handful rather than hundreds, on the explicit reasoning that *\"design-wide there are hundreds of open observations and a list that long is wallpaper.\"* The same trick may apply: not \"all open field defects\" but \"field defects on ground you touched\", or \"reported more than once\". ⭐ **This is the option with a working precedent inside the same codebase.**\n\n**(c) MAKE REPETITION THE SIGNAL.** A friction item reported in two separate field reports is worth more than one reported once, and the second report is exactly when it becomes cheap to notice. Nothing today can tell that two reports describe the same item. ⚠️ Counter: needs the reports linked to their items, which is manual, and the reporter used placeholders (`cap:X`) precisely to avoid naming real nodes.\n\n**(d) NOTHING NEW — USE `INVALIDATES` PROPERLY AND THE NUMBER FALLS.** Much of the 189 is surely fixed with nobody having drawn the edge. Sweeping and closing what is genuinely done might leave a backlog small enough to read without any new machinery. ⚠️ Counter: that is a one-time cleanup, not a mechanism; it will re-accumulate. ⭐ But it is the honest FIRST move regardless of which option follows, because **nobody knows how big the real backlog is** and every other option is being designed against a number that is a raw count rather than a measurement.\n\n**(e) IT IS NOT REFLOW2'S JOB.** Bug triage belongs in an issue tracker, and this project has repeatedly refused to become one — the Task node type was killed on 2026-08-25 as *\"the road to being a tracker\"*. ⚠️ Counter: this is not tracking work, it is noticing that a recorded observation has gone unanswered — which is what `unclaimed_findings` and `invalidated_findings` already do. The line between them is real but thin, and worth stating rather than assuming.\n\n═══ ⚠️ WHAT MUST BE MEASURED BEFORE CHOOSING ═══\n\n**How many of the 189 are actually live?** The count is raw: `fact_type` is an optional free-string, so it both over- and under-counts, and an unknown share are fixed-but-unclosed. Designing a debt class against that number would be building for a backlog nobody has sized. **Option (d) is that measurement as well as a candidate remedy.**\n\n📌 ADJACENT, NOT THE SAME: `fact:the-upstream-watch-is-findable-only-in-reflow2s-own-words` and `fact:a-findings-name-can-claim-more-than-its-data...` are both about a record being ACCURATE and still not reaching a reader. This one is about a record reaching nobody at all. Whether they are one problem — **the design writes faithfully and reads back selectively** — is itself unsettled.",
+        "name": "OPEN — what makes a field-reported defect OWED, when the loop counts structure and a friction report is a fact?",
+        "rationale": "Raised because the repeats are the loudest signal in the report and have a different cause from the headline defect. Each repeated item has a local explanation and fixing all three would leave the pattern intact.\n\nFiled against `rule:reflow2-is-built-for-other-projects-not-for-itself` because that rule makes field use the point, and field use produces exactly the input with no return path.\n\nOption (d) is listed last among the doing-something options but flagged as the honest first move: every other option is being designed against a raw count, and nobody has sized the real backlog. Option (e) is a genuine option, not a strawman — this project has killed an adjacent idea for exactly that reason and the line deserves stating.",
         "status": "proposed"
       }
     },
@@ -131417,6 +131798,16 @@
       }
     },
     {
+      "node_id": "frag:art:handshake",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered handshake.rs"
+      }
+    },
+    {
       "node_id": "frag:art:heal",
       "node_type": "Fragment",
       "properties": {
@@ -131787,6 +132178,16 @@
       }
     },
     {
+      "node_id": "frag:art:report-friction-skill",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered report-friction/SKILL.md"
+      }
+    },
+    {
       "node_id": "frag:art:report-roll-withheld-test",
       "node_type": "Fragment",
       "properties": {
@@ -132104,6 +132505,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered SKILLS.md"
+      }
+    },
+    {
+      "node_id": "frag:art:smoke-mcp",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered smoke_mcp.py"
       }
     },
     {
@@ -141646,6 +142057,19 @@
       }
     },
     {
+      "node_id": "fact:field-friction-is-captured-and-then-owed-to-nobody",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "description": "⭐⭐ THE CAUSE IS STRUCTURAL AND IT IS ONE SENTENCE: **`loop_status` computes debt from STRUCTURE, and a friction report is a FACT, so no debt class counts it.**\n\nThe classes it computes are: unsurfaced gaps, unanswered questions, unwritten answers, undispositioned drift, unexamined claims, unproven capabilities, unsettled assigned decisions, structural defects, verification status, and export sync. **Not one of them is 'open defect reported from the field'.** A `fact_type: defect` TemporalFact is inert — it is written, it is true, and the one call every session is told to make cannot see it.\n\nSo the loop is not broken in the half everyone watches. It is broken in the half nobody measures: **things get IN and nothing brings them OUT.** A month-old friction item and a five-day-old one are equally invisible, and the only mechanism that has ever surfaced one is a human remembering.\n\n═══ CORROBORATION FROM AN INDEPENDENT DIRECTION ═══\n\n`fact:defect-kit-manifest-drift-is-invisible-to-ci` appeared in `detect_defects` on 2026-08-27 as an ORPHAN: *'points at nothing that exists — its subject/target id resolves to no node and it carries no edge either, so the record is about something the design no longer has.'* The structural detector CAN see that the record is dangling. It cannot see that the DEFECT is open. Those are different questions and only the first is asked.\n\n═══ ⚠️ WHY THIS IS THE ROOT AND NOT THE SYMPTOM ═══\n\nEach repeated item has its own local explanation — the instructions are truncated by a client cap, the kit manifest has no CI check, the loop nudge is not installed in that project. Fixing those three fixes those three. **The pattern is that all three survived a month of sessions that each ran `loop_status` and were told the loop was clean of everything it knows how to count.** Fix the three and the fourth will repeat in September.\n\n⭐ AND IT BEARS DIRECTLY ON THE STANDING RULE IT IS FILED AGAINST. `rule:reflow2-is-built-for-other-projects-not-for-itself` makes field use the point. Field use produces friction reports. Friction reports enter the graph and never come out. **The one input the rule says matters most is the one input with no return path.**\n\n═══ ⚠️ WHAT THIS DOES NOT ESTABLISH ═══\n\n- **189 open is a RAW COUNT, not a backlog.** Many are surely fixed, and nobody drew the edge — which is the same finding from the other side, not a separate one. How many are genuinely live is UNMEASURED, and this must not be read as '189 outstanding bugs'.\n- **`fact_type` is not a reliable filter.** It is an optional free-string property; facts recording a defect without that value are not in the 190, and facts carrying it that are really observations are. The number is indicative, not exact.\n- **No remedy is asserted**, and the obvious one — add a debt class — has a real counter: a count that can never reach zero becomes wallpaper, which is the failure this project has already found three times. Options are open in `dec:idea-what-makes-a-field-report-owed`.",
+        "fact_type": "defect",
+        "name": "ROOT CAUSE of the repeats: capture works and NOTHING MAKES IT OWED — 190 defect-facts, 189 open, 8 INVALIDATES edges in the whole design, and no loop_status class counts any of them",
+        "statement": "MEASURED 2026-08-28 over the committed export. THREE OF THE FOUR items in the 2026-08-27 field report are marked 'still true' and 'same as 2026-08-18'. They were all CAPTURED — `fact:defect-the-served-instructions-put-their-standing-rules-where-a-client-cap-deletes-them` (2026-08-15), `fact:defect-kit-manifest-drift-is-invisible-to-ci` (2026-08-07), `fact:defect-an-absent-kit-is-unreportable-while-a-stale-one-is-detected` (2026-08-15), and `ver:kit-manifest-agrees` whose own name records the friction as dating to 2026-07-25 and says 'unwritten'. So the capture half of the loop WORKS and has worked for a month. || THE NUMBERS: 190 TemporalFacts carry `fact_type: defect`. 189 have no inbound INVALIDATES — nothing claims to have answered them. 77 of those reach ONE EDGE OR NONE, so they appear in no impact analysis and cannot be reached by traversal from anything. The whole design holds 8 INVALIDATES edges in total.",
+        "subject_id": "rule:reflow2-is-built-for-other-projects-not-for-itself",
+        "valid_from": "2026-08-28"
+      }
+    },
+    {
       "node_id": "fact:five-false-green-traps-in-one-session-and-three-were-the-agents-own-command",
       "node_type": "TemporalFact",
       "properties": {
@@ -141763,6 +142187,18 @@
         "statement": "THE UNDECLARED-SEAM FINDING COULD NOT REACH ZERO, AND THE REASON WAS AN ALTITUDE MISMATCH RATHER THAN MISSING CONTRACTS. `fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet` measured the two sets as DISJOINT BY CONSTRUCTION — couplings read from DEPENDS_ON between modules, contracts from PROVIDES/CONSUMES between the boxes that contain them — so writing a contract could never move the number. MEASURED 2026-08-23 on reflow2's own design: module level 72 couplings against 42 contract pairs leaves 64 undeclared; LIFTED TO `subsystem` it is 11 against 13 with NOTHING undeclared. || ⭐ LIFTING BOTH SETS IS THE WHOLE CORRECTNESS ARGUMENT, AND THE HALF-FIX LOOKS RIGHT. Rolling up only the COUPLINGS is the obvious move and leaves the two vocabularies exactly as disjoint as they were — the contracts are still recorded between the leaves. Proven by reverting to that half-fix and watching the one case that matters fail while four others stayed green, which is why the case exists. || ⚠️ A ZERO HERE IS THE MOST DANGEROUS ANSWER THE TOOL CAN GIVE, and it is designed around. 'Nothing undeclared' at subsystem altitude compared ELEVEN couplings, not seventy-two. Every reply therefore carries the raw count and, when an altitude reaches nothing, the number of endpoints dropped — asked at `system`, where this design has no components at all, it reports 0 couplings compared and 114 endpoints unreachable rather than a clean bill. A vacuous zero that announces its own vacuity. || NOTHING IS WRITTEN BACK. The roll-up is derived on every call from CONTAINS + PROVIDES + CONSUMES. A stored edge between two subsystems would make the graph assert a contract nobody declared and be indistinguishable afterwards from one somebody did — `dec:views-are-projections`, and Anthony's own standing rule that a view is a projection and renderer fill-ins are defects. Pinned by a case that exports the design before and after and compares content hashes. || WHAT IT DOES NOT SETTLE: whether `detect_undeclared_seams` and the maturity `seams` band should themselves move to an altitude, or keep answering at module level. They are unchanged here on purpose — changing what a detector reports is a louder act than adding a way to ask, and the 64 remains visible until somebody decides which altitude that gap is about. || SOURCE: measured 2026-08-23 on reflow2 0.38.0, driving the built binary over real stdio.",
         "subject_id": "cmp:seam",
         "valid_from": "2026-08-23"
+      }
+    },
+    {
+      "node_id": "fact:manual-work-46b68cd85cf97510",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "manual_work",
+        "statement": "Wrote a throwaway Python script over the committed export to answer \"which registered Artifact covers this file path?\" — given the handful of files a change touched, return the artifact ids whose `location` matches, so I know which baselines to re-take. Needed it in three separate changes across two days: every time a set of files is edited, the next step is re-checksumming exactly the artifacts that cover them, and there is no way to ask which those are.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-28",
+        "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":null}"
       }
     },
     {
@@ -142267,6 +142703,19 @@
       }
     },
     {
+      "node_id": "fact:the-kit-manifest-gate-cannot-run-in-ci-because-ci-is-never-installed-into",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "description": "⭐ THE FINDING IS NOT 'SOMEBODY FORGOT TO ADD THE GATE'. It is that the thing the gate checks CANNOT EXIST IN CI. `check_kit_manifest` compares an INSTALLED kit against the kit SOURCE; CI checks out a repository that has never been installed into. There is no manifest to be stale.\n\n═══ AND THE CASE THAT COULD RUN THERE IS ALREADY COVERED ═══\n\nA fresh install DOES happen in CI: `tools/test_init.py` (100 tests, already a CI job) installs into a temp project and asserts *\"manifest and file agreeing, as they would after a clean install\"*. So pointing the gate at a temp install would be redundant, and pointing it at the repo root would be red. Neither is a gate worth having.\n\n═══ ⚠️ WHY THE ATTEMPT IS WORTH RECORDING RATHER THAN QUIETLY UNDONE ═══\n\nThe gate was added on the user's word, and the reasoning behind that word was sound: the check existed, it FAILED on a clean tree (kit 0.30.0 against a 0.41.0 source, plus three shipped command files the manifest did not record), and it ran nowhere. Everything about that was true. What neither of us had checked was whether CI has an installation to check — and it does not.\n\n🛑 SO THE `INVALIDATES` DRAWN AGAINST THAT FACT WAS WRONG AND WAS DELETED. For about twenty minutes the graph asserted the finding was closed at the cause. It is not closed; it is SHARPENED, and the sharpening makes it harder rather than easier to fix.\n\n═══ ⭐ WHAT WOULD ACTUALLY REACH IT, NOT BUILT, NOT ASKED FOR ═══\n\nThe server already holds both halves. It writes `reflow2_version` into `<graph>.client.json` at every handshake, and `.reflow2/kit-version.json` sits in the same directory. Comparing them and saying so — the way `served_by.stale` already says the binary was replaced — would reach the DEVELOPER and the FIELD without CI having anything to do with it. That is where the 2026-08-27 reporter's four-source cross-check would have collapsed to one line. Recorded as a candidate in `dec:idea-what-makes-a-field-report-owed`'s neighbourhood, not proposed here.\n\n═══ ⚠️ WHAT THIS DOES NOT ESTABLISH ═══\n\n- **The manifest drift itself WAS cleared**, and that part stands: installer re-run, `.reflow2/kit-version.json` read back from disk as 0.41.0 / d3cb4ab / 36 files, `check_kit_manifest` exit 0. That was a real local fix and is not undone by this.\n- **It says nothing about whether a gate SHOULD exist**, only that CI is the wrong place for this one. A local pre-push hook, or the server-side comparison above, are both untried.\n- **One repository, one CI configuration.** A project that COMMITS its `.reflow2/` would have a manifest in CI and the gate would work there — reflow2's own choice to gitignore it is what makes this structural here.",
+        "fact_type": "property",
+        "name": "SHARPENS why kit drift is invisible to CI, and it is STRUCTURAL: CI is never installed into, so the check exits 2 there — the gate was added, measured, and REVERTED",
+        "statement": "MEASURED 2026-08-28 while trying to close `fact:defect-kit-manifest-drift-is-invisible-to-ci` by adding `tools/check_kit_manifest.py` to `ci.yml` and to AGENTS.md's pre-push block. IT CANNOT WORK. `.reflow2/` is gitignored and NOTHING under it is tracked — `git ls-files .reflow2/` returns zero — so a CI checkout has no installation at all. Run against such a tree the check reports 'nothing installed here' and exits 2, which would turn every build red. Both edits were reverted.",
+        "subject_id": "fact:defect-kit-manifest-drift-is-invisible-to-ci",
+        "valid_from": "2026-08-28"
+      }
+    },
+    {
       "node_id": "fact:the-lens-that-carries-the-persona-was-built-on-a-branch-and-never-shipped",
       "node_type": "TemporalFact",
       "properties": {
@@ -142579,6 +143028,19 @@
         "statement": "MEASURED 2026-08-25 at main `a000bc7`, found while diagnosing interactive lag the user reported — and it turned out NOT to be the cause, which is the part worth writing down.\n\n═══ THE MECHANISM, READ OFF THE PROCESS TABLE ═══\n\n    pid 3828662  reflow2-mcp --graph-path ./.reflow2/graph --shared     ELAPSED 1-03:26:10\n      ├─ 758519   reflow2-mcp ... --serve-shared        S    RSS 299 MB   02:13:54   ← the live daemon\n      ├─ 599201   [reflow2-mcp] <defunct>               Z    RSS 0        02:46:05\n      ├─ 478637   [reflow2-mcp] <defunct>               Z    RSS 0        09:15:59\n      ├─ 291284   [reflow2-mcp] <defunct>               Z    RSS 0        10:04:39\n      ├─ 211254   [reflow2-mcp] <defunct>               Z    RSS 0        11:04:48\n      ├─ 121029   [reflow2-mcp] <defunct>               Z    RSS 0        13:47:45\n      ├─ 119935   [reflow2-mcp] <defunct>               Z    RSS 0        13:51:29\n      └─ 4129702  [reflow2-mcp] <defunct>               Z    RSS 0        23:33:48\n\n    total defunct reflow2-mcp: 9\n\nThe `--shared` process is the CLIENT the harness launches and it lives for the whole session (27 hours here). It forks a `--serve-shared` daemon when none is running. `--stop-shared` asks that daemon to exit — and **the parent never `wait()`s**, so the exited child stays in the process table as a zombie. One per restart, and the restarts are not rare: a NEW MCP TOOL is not callable until the server is bounced, so a session that adds tools bounces it repeatedly. This one did so four or five times in a day.\n\n═══ ⚠️ WHAT IT IS NOT, AND THIS IS THE POINT ═══\n\n**IT DID NOT CAUSE THE LAG, AND THE OBVIOUS READING SAYS IT DID.** Nine leaked processes with `reflow2-mcp` in the name looks exactly like a resource leak. Measured: every zombie holds **RSS 0 and 0% CPU** — a zombie is a process-table entry and nothing else. The actual cause was `cargo test --workspace --no-fail-fast -- --test-threads=2` on a **4-core** box driving load average to **5.8**; renicing it to +19 dropped that to 4.4 within seconds and it finished green at 1.99.\n\n⇒ Two defects were visible at once and only one was doing harm. Reporting the zombies as the cause would have been a confident, plausible, wrong diagnosis — and the fix would have changed nothing the user could feel.\n\n═══ WHY IT STILL MATTERS ═══\n\nA zombie costs a PID-table entry, not memory. Nine is harmless. But it is unbounded in the length of a session and one-per-bounce, and the thing that forces bounces — a new tool being uncallable until restart — is a normal part of developing reflow2 itself. A long-lived server on a busy machine accumulates them indefinitely.\n\n📌 THE FIX IS ORDINARY: `wait()` on the child after asking it to stop, or double-fork the daemon so `init` reaps it, or set `SIGCHLD` to `SIG_IGN` in the `--shared` client. None of that is architecture.\n\n⚠️ BOUNDS: one machine, one 27-hour session, Linux. The count is what THIS session produced; nothing here says how a fleet or a hosted tier behaves, and no fix has been attempted or verified.",
         "subject_id": "cap:shared-sessions",
         "valid_from": "2026-08-25"
+      }
+    },
+    {
+      "node_id": "fact:the-signpost-instructs-a-party-that-cannot-act-and-the-absent-client-was-named",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "description": "⭐ THE DECISION THAT CAUSED IT WAS SOUND ON ITS OWN TERMS AND IS NOT THE CAUSE. `fact:every-reply-was-sent-twice` measured a flat 2× on every reply: `detect_gaps` at 157,785 bytes on the wire, refused by a harness; 26,096 after the fix, a 6× improvement with the payload unchanged. **Reverting to always-duplicate resurrects the refusals.** Any remedy must keep that win.\n\n═══ CAUSE 1: THE PREMISE WAS VERIFIED AGAINST THE WRONG POPULATION ═══\n\nThe recorded reasoning is explicit: gating on the negotiated protocol version was rejected as *'a large invasive change to protect a client nobody could name'*. The check was real and is written down — all three in-repo Python clients read `structuredContent` first, the `j!` test macro reads it only, `proxy.rs` parses neither field. **Every client checked was Anthony's own.** `rule:reflow2-is-built-for-other-projects-not-for-itself` says the field is the point; the verification covered the self-host and not the field. Five days later the field named a client.\n\n⚠️ This is the same shape as `fact:a-findings-name-can-claim-more-than-its-data-...` and the seam-altitude misreading, both found 2026-08-27: **a measurement whose population did not cover the claim it was used to support.** Third instance in six days.\n\n═══ ⭐⭐ CAUSE 2, AND IT IS THE DEEPER ONE: THE MITIGATION ADDRESSES A PARTY THAT IS NOT IN THE ROOM ═══\n\nThe signpost was chosen over an empty `content` block deliberately and for a good reason — silence is indistinguishable from reflow2 not being configured (`req:never-silently-absent`). But read its text: *'**your client** is reading `content` for a tool that declares structured output: read `structuredContent` instead.'*\n\n**It instructs the CLIENT. It is delivered to the AGENT.** The agent cannot change its harness, so the signpost converts silence into an instruction its reader has no power to execute. The recorded claim that the signpost *'protects them anyway'* is therefore false for exactly the population it was written for. The reporter did the only thing left — export to a file and parse it with Python — and named it correctly: *'a post-hoc check, not a read. It cannot replace `search_design` before a create, or `loop_status` before finishing.'*\n\n═══ CAUSE 3: A SPEC `SHOULD` IS BEING DECLINED, WHICH IS LEGAL AND SHIFTS THE BURDEN ═══\n\nMCP 2025-06-18, verified against the specification 2026-08-28, states: *'For backwards compatibility, a tool that returns structured content SHOULD also return the serialized JSON in a TextContent block.'* The spec's own worked example carries both. reflow2 declines that SHOULD. A SHOULD may be declined — but declining it moves the entire burden onto clients, and MCP still negotiates `2024-11-05` and `2025-03-26`, which predate the field entirely.\n\n═══ ⚠️ THE COST ESTIMATE THAT DECIDED IT DESERVES RE-MEASURING, AND THIS IS A CANDIDATE NOT A CONCLUSION ═══\n\nThe rejection priced version-gating at threading `RequestContext` through 155 handlers and 151 `ok_json` call sites. Two things now bear on that and NEITHER HAS BEEN TESTED: (1) the version machinery ALREADY EXISTS and is tested — `version_is_per_request` and `identity_is_per_request`, with the note that an absent version 'falls back to the peer info recorded at `initialize`'; (2) `json_result` is a SINGLE CHOKE POINT, and making a single choke point carry new state is exactly how read-only shipped on 2026-08-26 — `write_lock` became fallible and the compiler turned all 98 write sites into errors until each was handled, finding a second assembly point review would have missed. **Whether the negotiated version can be captured once at initialize and read at `json_result` has NOT been checked**, and the ~300-line figure predates anyone asking.\n\n═══ WHAT THIS FACT DOES NOT ESTABLISH ═══\n\n- **One client, one report.** How many other field clients read only `content` is unknown and unmeasured. n=1 for the affected population, exactly as the original premise was n=0.\n- **No remedy is asserted.** Options are open in `dec:idea-how-does-a-content-only-client-get-an-answer`.\n- **The reporter was unsure of the classification too**, and said so: *'whether this is a reflow2 contract change the TUI has not implemented, or a regression that dropped a fallback.'* It is the former, deliberately — which does not make the outage less real.",
+        "fact_type": "defect",
+        "name": "ROOT CAUSE of the structured-content outage: the premise was 'a client nobody could name' and one is now named — and the mitigation instructs the CLIENT while being read by the AGENT, which cannot change its harness",
+        "statement": "FIELD REPORT 2026-08-27 (Grok Build TUI, macOS, reflow2 0.39.0), verified against 0.41.0 source 2026-08-28 — STILL TRUE. On a client that forwards only `content`, ~26 named reflow2 tools return the STRUCTURED_ONLY stub and nothing else: get_node, search_design, scan_nodes, loop_status, detect_gaps, export_graph, every constructor. The reporter's words: 'the capture → detect → ask loop is unreadable in this harness. The agent cannot confirm a write, cannot map the user's words to node ids without guessing, and cannot see whether anything is owed.' Refusals and prose tools still work, so the server is reachable and only its ANSWERS are gone.",
+        "subject_id": "fact:every-reply-was-sent-twice",
+        "valid_from": "2026-08-28"
       }
     },
     {
@@ -144318,11 +144780,13 @@
       "node_id": "ver:kit-manifest-agrees",
       "node_type": "Verification",
       "properties": {
+        "description": "`tools/check_kit_manifest.py` — version, file set and per-file hashes.\n\n⚠️ THE NAME USED TO CARRY THE REPORT, AND THE WORD IN IT WAS `unwritten`. It read: *\"friction 2026-07-25: reflow2's own manifest is four releases stale and nothing noticed; unwritten\"* — while `status` said `passing`. Both halves were wrong by 2026-08-28: the check HAD been written, and it was not being run.\n\n⭐ WHAT WAS ACTUALLY TRUE ON 2026-08-28, measured rather than read off the node: the check existed and FAILED on a clean tree — *\"installed by kit 0.30.0, but this source is 0.41.0\"*, plus three shipped command files the manifest did not record. It appeared in neither `ci.yml` nor the AGENTS.md gate list.\n\nTHE DRIFT WAS CLEARED: the installer was re-run and the manifest read back OUT OF THE FILE as 0.41.0 / d3cb4ab / 36 files — not trusted from the installer's own summary, because `fact:the-v0380-manifest-shipped-empty-because-a-dry-run-reads-like-a-write` records a dry run reading exactly like a write.\n\n🛑 BUT THIS CHECK IS NOT GATED, AND CANNOT BE, IN THIS REPOSITORY. Adding it to `ci.yml` was tried and REVERTED: `.reflow2/` is gitignored and nothing under it is tracked, so a CI checkout has no installation at all and the check exits 2 there — every build would go red. The fresh-install case that could run in CI is already covered by `test_init.py`. `fact:the-kit-manifest-gate-cannot-run-in-ci-because-ci-is-never-installed-into` carries that measurement, and `fact:defect-kit-manifest-drift-is-invisible-to-ci` stays OPEN and sharpened rather than closed.\n\n⇒ SO A PASSING STATUS HERE MEANS SOMEBODY RAN IT BY HAND. Nothing runs it on a schedule, and the next drift will accumulate exactly as this one did.\n\n📌 The report that used to live in this name is here in `description` instead, which is where it belongs — `fact:a-findings-name-can-claim-more-than-its-data-and-the-name-is-what-search-returns` (2026-08-27) measured that `search_design` returns the NAME, so a report written into a name is what every reader meets first.",
+        "findings": "RAN 2026-08-28 and it FAILED first: `stale_version` (installed by kit 0.30.0, source 0.41.0) plus three `file_set` findings — `.claude/commands/link-ideas.md`, `next.md` and `optimize.md` shipped and unrecorded. Confirmed pre-existing by stashing the working tree and re-running: still exit 1, so not caused by this session's edits.\n\nAfter re-running the installer: `kit manifest: OK — the installation agrees with the kit source (10 note(s))`, exit 0. Verified by reading `.reflow2/kit-version.json` directly — `reflow2_version: 0.41.0`, `commit: d3cb4ab`, 36 installed files — rather than believing the installer's own \"Now: reflow2 0.41.0\" line.\n\nThe 10 remaining notes are in-sync skill mirrors under `.claude/` and `.grok/`, which are deliberate here and enforced by `skill_lint`.",
         "kind": "verification",
-        "last_run_at": "2026-08-07",
+        "last_run_at": "2026-08-28",
         "level": "system",
         "method": "test",
-        "name": "The installed kit's manifest agrees with the kit source it claims to be — version, file set and per-file hashes (friction 2026-07-25: reflow2's own manifest is four releases stale and nothing noticed; unwritten)",
+        "name": "The installed kit's manifest agrees with the kit source it claims to be",
         "status": "passing"
       }
     },
@@ -145271,6 +145735,20 @@
       }
     },
     {
+      "node_id": "ver:the-handshake-is-written-down",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Thirteen checks in two places. Six unit tests in `crates/reflow2-mcp/src/handshake.rs` pin the logic: the negotiation rule mirrored from rmcp, the revision threshold (`2024-11-05` and `2025-03-26` report as NOT having `structuredContent`; `2025-06-18` and later do, `>=` not `==`), the sidecar path beside its siblings, a file round trip, and that an unwritable path is survived rather than propagated — a diagnostic must never be able to fail a handshake.\n\nSeven checks in `tools/smoke_mcp.py` drive the REAL BINARY over stdio, which is the only layer that proves the file is actually written during `initialize`: the sidecar exists, names the client, records what it asked for and what was settled, and — the one that matters — that **the negotiated version came from the exchange rather than from nowhere**, asserted as `negotiated ∈ {client_requested, server_offers}`.\n\n⭐ ONE CHECK EXISTS FOR A REASON THAT IS NOT ABOUT CODE. `it disclaims the reading it would otherwise invite` asserts the file's own `note` contains the sentence saying `protocol_has_structured_content` does NOT mean the client reads it. The file is meant to be pasted into a field report and read by somebody who has never seen this module, so its self-description has to hold up alone. Naming that field `supports_structured_content` would have asserted the one thing it cannot know.\n\nVERIFIED LIVE, not only by tests: the server was restarted against this session's real client and wrote `client-name: claude-code, version 2.1.241, requested and negotiated 2025-11-25, protocol_has_structured_content: true`. That is also the first data point for the comparison the file exists to enable.",
+        "findings": "GREEN, read from cargo's OWN exit code: `cargo test --workspace --no-fail-fast` exit 0, 165 suites, 1862 passed, 0 failed. `smoke_mcp.py` exit 0 with all seven handshake checks passing against the real binary over stdio.\n\n🛑 THE FIRST RUN WAS RED AND THE NOTIFICATION SAID OTHERWISE. The background task reported \"exit code 0\" — that was the shell wrapper; cargo's own code was 101 and one test had failed. Believing the wrapper would have shipped over a red suite. Same family as the piped-gate trap, in a new costume: read the exit code of the thing you ran, not of what ran it.\n\nWHAT FAILED, and it was a real ordering mistake rather than a defect: `a_served_skill_is_byte_identical_to_its_source` compares the skill COMPILED INTO THE BINARY against the source on disk. `report-friction/SKILL.md` was edited after the last build, so the two diverged and the test caught exactly what it exists for. Rebuilt; that suite is 8/8 and the workspace is green. **A served-skill edit needs a rebuild before the suite means anything** — the sibling of \"format before baselining\".\n\nVERIFIED LIVE as well as by tests: the shared server was restarted against this session's real client and wrote `claude-code 2.1.241, requested and negotiated 2025-11-25, protocol_has_structured_content: true`. That is the comparison point the file exists to produce — a client that negotiates a modern revision AND reads structuredContent, against which Alex's report can be read.",
+        "kind": "verification",
+        "last_run_at": "2026-08-28",
+        "level": "system",
+        "method": "test",
+        "name": "The handshake sidecar is written, and does not overclaim",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-harness-registry-is-confirmed-by-the-harnesses",
       "node_type": "Verification",
       "properties": {
@@ -145606,7 +146084,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:dea84fd924e991db3de8d9d1b5074805a24e10e0b5dedb47db804a332a8f3f74",
+  "prev_content_hash": "sha256:a91291f21c4deb4e0918bcd076a384611f865b20ca371f81fcb95f2f5b9effe7",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
