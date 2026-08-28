@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:9edf35d206dae06026cad67b192e79a3afc5801f36485e69bec1a7de04326753",
+  "content_hash": "sha256:da9e61fac3d7f057b1bd23c4ac05fd8263a54f20a714a5f5589150ce2547b27a",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -865,9 +865,21 @@
     },
     {
       "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:surfacing-a-known-cause-is-cheap-and-reaches-the-wrong-half",
+      "properties": {},
+      "to_id": "dec:idea-should-reflow2-serve-a-root-cause-analysis-method"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
       "from_id": "fact:ten-components-report-a-zero-blast-radius-the-source-contradicts",
       "properties": {},
       "to_id": "req:modularity-computed"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:the-author-of-a-skill-did-not-use-it-an-hour-later",
+      "properties": {},
+      "to_id": "dec:idea-where-does-tool-use-actually-fail-four-layers"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2447,6 +2459,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:root-cause-skill",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:sanitize-ingress",
       "properties": {
         "weight_basis": "estimated"
@@ -3280,6 +3300,18 @@
     },
     {
       "edge_type": "ANTICIPATES",
+      "from_id": "fact:manual-work-b838754c8eac2946",
+      "properties": {},
+      "to_id": "dec:idea-what-makes-a-field-report-owed"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:manual-work-c94ff005efcd95fa",
+      "properties": {},
+      "to_id": "dec:idea-how-does-a-session-ask-which-artifact-covers-a-file"
+    },
+    {
+      "edge_type": "ANTICIPATES",
       "from_id": "fact:reflow2s-black-boxes-hold-no-functions-allocation-went-straight-to-the-modules",
       "properties": {
         "evidence": "That fact measured 177 of 178 ALLOCATED_TO edges landing on a module and DECOMPOSES at zero, and named the missing function layer as a real allocation-recording gap. It saw this question coming; this idea states what the missing layer would be. Drawn FROM the fact TO this decision."
@@ -3317,6 +3349,14 @@
         "evidence": "The earlier observation saw the same shape one layer down. It found that one RocksDB store serves every git branch, so two branches share a live graph — and its sharpest note is that `parallel-work`'s trigger conditions are framed by PEOPLE, so the solo maintainer with two branches, who hits the identical collision, is the reader the skill excludes. Same failure family: the machinery for keeping two lines of work apart exists, and what neither the store nor the skill carries is whether a line of work is FINISHED."
       },
       "to_id": "req:the-graph-can-say-what-has-already-been-done"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:the-root-cause-was-on-the-record-and-a-session-re-derived-it-anyway",
+      "properties": {
+        "evidence": "This 2026-08-22 measurement saw the proposal's central weakness coming, six days early and from real work rather than from reasoning: a root cause was already recorded and findable by the error string, and a session re-derived it from scratch anyway. Its conclusion — \"the gap is not accumulation, it is SURFACING\" — is the argument that a METHOD may not be the missing piece, which is exactly what this Decision has to weigh."
+      },
+      "to_id": "dec:idea-should-reflow2-serve-a-root-cause-analysis-method"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -7635,6 +7675,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-four-layer-frame-gets-its-natural-experiment",
+      "properties": {},
+      "to_id": "epoch:the-author-did-not-use-the-skill-he-wrote"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-gate-checks-the-export-can-be-read-back",
       "properties": {},
       "to_id": "epoch:v0320"
@@ -9492,6 +9538,12 @@
       "from_id": "snap:epoch:the-ask-elicits-a-lens-not-a-name:art:where-am-i-skill",
       "properties": {},
       "to_id": "epoch:the-ask-elicits-a-lens-not-a-name"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:the-author-did-not-use-the-skill-he-wrote:dec:idea-where-does-tool-use-actually-fail-four-layers",
+      "properties": {},
+      "to_id": "epoch:the-author-did-not-use-the-skill-he-wrote"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -11780,6 +11832,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-should-reflow2-serve-a-root-cause-analysis-method",
+      "properties": {
+        "acted_at": "2026-08-28",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-should-the-checksum-accept-have-an-as-built-aligned-disposition",
       "properties": {
         "acted_at": "2026-08-14",
@@ -13923,6 +13984,15 @@
         "role": "author"
       },
       "to_id": "ctr:claude-fable"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:finding-a-cause-is-a-served-process-not-an-improvisation",
+      "properties": {
+        "acted_at": "2026-08-28",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -22260,6 +22330,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:baseline-d0fe5db428df9556",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:root-cause-command"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:baseline-d38dae8eb49c5c7a",
       "properties": {
         "accepted_baseline": true,
@@ -22320,6 +22399,15 @@
         "action": "modified"
       },
       "to_id": "art:check-intent-authority-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:baseline-ed680e569e475393",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:root-cause-skill"
     },
     {
       "edge_type": "CHANGED",
@@ -30577,6 +30665,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-four-layer-frame-gets-its-natural-experiment",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-where-does-tool-use-actually-fail-four-layers"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-gate-checks-the-export-can-be-read-back",
       "properties": {
         "accepted_baseline": true,
@@ -31591,6 +31688,42 @@
         "action": "modified"
       },
       "to_id": "ver:content-surface"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-root-cause-skill-generates-candidates-from-the-design",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "art:root-cause-command"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-root-cause-skill-generates-candidates-from-the-design",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:root-cause-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-root-cause-skill-generates-candidates-from-the-design",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-served-skills"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-root-cause-skill-generates-candidates-from-the-design",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:root-cause-skill"
     },
     {
       "edge_type": "CHANGED",
@@ -34708,6 +34841,14 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "fact:a-retired-dependencys-facts-keep-describing-this-project",
+      "properties": {
+        "alignment": "opposing"
+      },
+      "to_id": "fact:the-storage-seam-is-published-in-design-and-private-in-code"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "fact:adopt-recovers-depth-cleanly-and-cannot-recover-the-functional-carving",
       "properties": {
         "alignment": "supporting",
@@ -35984,6 +36125,26 @@
         "weight_basis": "estimated"
       },
       "to_id": "con:graph-construction-is-setup-not-work"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-should-reflow2-serve-a-root-cause-analysis-method",
+      "properties": {
+        "evidence": "Overconfident diagnosis — fixing a symptom while believing it is the cause — is an AI-agent failure mode, and that node asks which such modes reflow2 can actually reach as opposed to merely assert it addresses. Whether this idea is worth building turns on that answer: if this pitfall is in the class reflow2 cannot reach, a served RCA method would be the overstating failure that node warns against.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:idea-which-agent-pitfalls-can-reflow2-actually-reach"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "dec:idea-should-reflow2-serve-a-root-cause-analysis-method",
+      "properties": {
+        "evidence": "Any RCA method reflow2 serves would be the executable form of this rule, which already carries the ordered steps in Anthony's own words (2026-08-26). A skill that diverged from it would put two different methods in front of the same agent. The rule is `enforced: false` by his own decision, so the question this Decision asks — whether a served method changes anything — only makes sense with the rule standing behind it.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed"
     },
     {
       "edge_type": "DEPENDS_ON",
@@ -41626,6 +41787,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:root-cause-skill",
+      "properties": {},
+      "to_id": "rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:sanitize-ingress",
       "properties": {},
       "to_id": "decision:ack:07bb37be6d5cd129"
@@ -45258,6 +45425,12 @@
     },
     {
       "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-where-does-tool-use-actually-fail-four-layers",
+      "properties": {},
+      "to_id": "snap:epoch:the-author-did-not-use-the-skill-he-wrote:dec:idea-where-does-tool-use-actually-fail-four-layers"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
       "from_id": "dec:nested-graphs",
       "properties": {},
       "to_id": "snap:epoch:kpp-capture:dec:nested-graphs"
@@ -46344,6 +46517,12 @@
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-should-reflow2-serve-a-root-cause-analysis-method",
+      "properties": {},
+      "to_id": "fact:surfacing-a-known-cause-is-cheap-and-reaches-the-wrong-half"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
       "from_id": "dec:idea-the-hub-holds-a-copy-per-sub-repo-and-copies-go-stale",
       "properties": {},
       "to_id": "fact:the-hub-wants-what-an-accepted-requirement-already-half-built"
@@ -46353,6 +46532,12 @@
       "from_id": "dec:idea-what-makes-a-field-report-owed",
       "properties": {},
       "to_id": "fact:the-defect-backlog-is-real-not-bookkeeping-residue"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-where-does-tool-use-actually-fail-four-layers",
+      "properties": {},
+      "to_id": "fact:the-author-of-a-skill-did-not-use-it-an-hour-later"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -102285,6 +102470,24 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:root-cause-command",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:root-cause-skill"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:root-cause-skill",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:root-cause-skill"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:sanitize",
       "properties": {
         "completeness": "complete"
@@ -105016,6 +105219,12 @@
       "from_id": "cap:revise-trigger",
       "properties": {},
       "to_id": "req:roads-not-taken"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:root-cause-skill",
+      "properties": {},
+      "to_id": "req:finding-a-cause-is-a-served-process-not-an-improvisation"
     },
     {
       "edge_type": "SATISFIES",
@@ -107969,6 +108178,12 @@
       "from_id": "ver:the-release-cut-reads-back-whole",
       "properties": {},
       "to_id": "cap:a-cut-moves-every-version-claim-together"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:the-root-cause-skill-forces-rather-than-exhorts",
+      "properties": {},
+      "to_id": "cap:root-cause-skill"
     },
     {
       "edge_type": "VERIFIES",
@@ -111595,6 +111810,28 @@
       }
     },
     {
+      "node_id": "art:root-cause-command",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:26b80f1d7eda6ddf9a12ce916eca8365e334ebbdc7f298fffec9506094667ab9",
+        "location": "getting-started/commands/root-cause.md",
+        "name": "root-cause.md",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:root-cause-skill",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:0a20027aaffb53f3a614d547bc6ea5c7ba42d49f7ce099c445b0cac0825fa2d8",
+        "location": "getting-started/skills/root-cause/SKILL.md",
+        "name": "root-cause/SKILL.md",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:sanitize",
       "node_type": "Artifact",
       "properties": {
@@ -112448,7 +112685,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:50f0de0af80329e21600e429628d404be705881ec6c1b30e0b5b955056e78113",
+        "checksum": "sha256:b33081d7c44f07711a84643d0871d03272e2b1b85842082f197c5ce21ecd615b",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/tests/served_skills.rs",
         "name": "served_skills.rs",
@@ -115032,6 +115269,16 @@
         "provenance": "authored",
         "status": "planned",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:root-cause-skill",
+      "node_type": "Capability",
+      "properties": {
+        "description": "THE 22nd SERVED SKILL, and the second about doing work rather than describing it. Anthony, 2026-08-28: a `/rca` that walks the design systematically and returns possible root causes — \"trying to stem the agent's tendency to be over-confident in identifying an issue without doing proper RCA.\"\n\n⭐ WHY A SKILL WHEN THE RULE ALREADY EXISTED, and this is the whole design. `rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed` already carried the ordered method in Anthony's own words, is `enforced: false`, and its own text records that the fix which prompted it skipped the load-bearing step. A RULE is read once at handshake and states an intention; a SKILL is pulled at the moment of the work and states an action. The same distinction `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue` already makes for conventions.\n\n⭐⭐ THE PART THAT MAKES IT MORE THAN A CHECKLIST, and it came from Anthony correcting a first draft that had swung too far toward guiding the agent: THE DESIGN IS A CAUSE-GENERATOR. Step ③ does not say \"think of three causes\" — that yields two real candidates and a filler written to satisfy the instruction. It walks NINE BONES, each answered by a call rather than by memory: precedent (`search_design` on the raw error), intent (SATISFIES, and a requirement still `proposed`), allocation (`granularity_report` — a file realizing many capabilities is where defects concentrate), contract (`seam_report`), implementation (`reconcile_artifacts`), assurance (`coverage_report`, `evidence_report`), change (`propagate_from`), governance (`detect_defects`, CONTRADICTS), and staleness (`invalidated_findings`).\n\n⭐ AND WHERE THE PROJECT IS A CODEBASE, THE ARTIFACT LAYER IS THE BRIDGE: symptom → the capability it belongs to → the artifacts that REALIZE it → the actual files. That turns \"something is wrong in the system\" into a bounded set of source files each carrying a stated reason, which is a better starting point than a repository-wide search.\n\nTHE LOAD-BEARING STEP IS ④: name the measurement that would REFUTE each candidate. A measurement that CONFIRMS the favourite is not evidence — almost any observation is consistent with a plausible cause, which is what makes it plausible. If two candidates predict the same observation, the skill requires saying so rather than picking the likelier-sounding one.\n\n⚠️ ITS EXAMPLES ARE FROM THE SESSION THAT BUILT IT, not invented. Step ⑤ (\"a call that completed is not a call that worked\") records a search timed at 0.08s and reported as fast — the process had come up on a degraded surface, refused the tool and exited, so a true number measured a refusal. Step ② records a root cause that sat in the graph, findable by its error string, while a session re-derived it from scratch and wrote \"second occurrence, so it is a reliable pattern\"; that issue reached eleven occurrences before anyone searched.\n\n⚠️ HONEST LIMIT, WRITTEN INTO THE SKILL RATHER THAN OUT OF IT: the graph GENERATES candidates and never confirms them — a candidate the design produced is exactly as unproven as one somebody imagined — and it can only offer candidates about what it MODELS. An unmodelled file, an undeclared seam and an unwritten requirement all look like silence. `coverage_report` is what tells absence-of-cause from absence-of-modelling, and on this project it has named 136 files no Artifact points at.",
+        "name": "A failure gets its causes generated from the design, and the leading one has to survive a refuting measurement",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -118662,6 +118909,16 @@
       }
     },
     {
+      "node_id": "chg:baseline-d0fe5db428df9556",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-28",
+        "name": "First baseline. The /root-cause slash command, mirrored to .claude/commands. ver:every-skill-has-a-command requires it to exist.",
+        "subject": "record"
+      }
+    },
+    {
       "node_id": "chg:baseline-d38dae8eb49c5c7a",
       "node_type": "ChangeEvent",
       "properties": {
@@ -118727,6 +118984,16 @@
         "change_type": "baseline_established",
         "detected_at": "2026-08-21",
         "name": "First baseline, set at registration.",
+        "subject": "record"
+      }
+    },
+    {
+      "node_id": "chg:baseline-ed680e569e475393",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "baseline_established",
+        "detected_at": "2026-08-28",
+        "name": "First baseline. The kit source; build.rs compiles it into the binary, and .claude/skills and .grok/skills carry byte-identical mirrors that skill_lint holds to the same file set.",
         "subject": "record"
       }
     },
@@ -121047,6 +121314,18 @@
       }
     },
     {
+      "node_id": "chg:the-four-layer-frame-gets-its-natural-experiment",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "detected_at": "2026-08-28",
+        "name": "Snapshot the four-layer frame before this session's evidence is added to it",
+        "rationale": "Recorded ON the existing node rather than as a parallel one, following that node's own rationale: splitting \"would lose the comparison, which is the only part that does any work\".\n\nSnapshotted BEFORE the merge, which is the step this same session skipped twice on other nodes and was warned about by the tool both times (\"no snapshot holds the prior value\"). Doing it correctly here is not tidiness — the prior text of that node is the record of what the frame said before this evidence arrived, and the whole value of the addition is the comparison.",
+        "subject": "record",
+        "summary": "Adds two observations from the 2026-08-28 session to `dec:idea-where-does-tool-use-actually-fail-four-layers`: the author of a skill not using it an hour after writing it (layers ① and ③ saturated, failure at ②), and a systematic skip pattern the frame does not predict — capture/orient skills used, change-governing skills skipped."
+      }
+    },
+    {
       "node_id": "chg:the-gate-checks-the-export-can-be-read-back",
       "node_type": "ChangeEvent",
       "properties": {
@@ -121394,6 +121673,18 @@
       "properties": {
         "change_type": "deprecation",
         "name": "The content-store retirement now OBSOLETES everything its own text says it removed, not just one capability of five. FOUND WITHIN MINUTES OF SHIPPING THE READER FIX, 2026-08-12, and BY that fix: with `discontinued` finally visible on a read, `cap:content-manifest` came back `realized / discontinued:false` for a tool that no longer exists. `dec:the-content-store-is-discontinued` (accepted 2026-08-09) names its casualties explicitly — \"content_put / content_get / content_exists / CONTENT_MANIFEST, content.rs, content_tools.rs, the --content-path flag, and BOTH TEST FILES\" — but its OBSOLETES edges reached `cap:content-store` and the five Decisions it supersedes, and nothing else. THE RECORD CONTRADICTED ITSELF: the prose said removed, the structure said live. FOUR NODES WERE STRANDED, AND THE TWO WORST ARE VERIFICATIONS. `ver:content-store` and `ver:content-surface` both read `passing`, last_run_at 2026-07-31, for test files deleted on 2026-08-09 — a PASSING CHECK IS THE STRONGEST CLAIM THIS SYSTEM MAKES, and both were attached to nothing while sitting inside the 138-passing count the graph report shows. `cap:content-manifest` (realized) and `cap:session-artifacts` (VERIFIED, and its whole mechanism was content_put) were the other two. THIS RECORDS AN EXISTING DECISION RATHER THAN MAKING A NEW ONE — Anthony's word 2026-08-12, \"go ahead and draw the edges\", given after being shown that it moves delivery arithmetic, silences three detectors on those nodes, and changes the confirmed/passing counts. He was asked precisely because this project treats those numbers carefully; the edges make the structure agree with prose he had already accepted. ⭐ THE GENERALISABLE PART, and the reason this is worth reading later: A RETIREMENT IS DRAWN ONE EDGE AT A TIME WHILE THE THING BEING RETIRED IS A CLUSTER — a capability, its siblings, its verifications, its artifacts. Nothing checks that a discontinuation covers everything its own decision text names, and nothing did here. That gap is why four nodes sat wrong for three days with every gate green, and it is a candidate detector: a Decision whose text names removals that carry no OBSOLETES."
+      }
+    },
+    {
+      "node_id": "chg:the-root-cause-skill-generates-candidates-from-the-design",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-28",
+        "name": "The root-cause skill ships, and the design generates the candidates",
+        "rationale": "⭐ ANTHONY CORRECTED THE DESIGN TWICE WHILE IT WAS BEING BUILT, and both corrections are in the shipped skill.\n\nFIRST: the costing had been aimed at the wrong thing. Option (c) of `dec:idea-should-reflow2-serve-a-root-cause-analysis-method` — surfacing a known cause automatically at the moment of a symptom — was measured in detail before he said the point was \"not so much can the graph help determine root cause... it is more to direct the agent how to properly do the steps.\" The target is the AGENT'S PROCESS, which was question 1 on that node's own must-check list, and it had been answered by assumption rather than by asking.\n\nSECOND, AND IT IS THE ONE THAT MADE THE SKILL WORTH SHIPPING: the first draft over-corrected into pure process guidance, with step ③ reading \"write down at least three candidate causes\". He pushed back — \"you can often start fishbone analysis on inspecting the design... there is value in looking at a design (and if it is a software code base... you can inspect the implementation of the design also)\". He was right, and the weakness was concrete: an exhortation to think of three produces two real candidates and a filler that exists to satisfy the instruction. Step ③ now walks NINE BONES, each answered by a CALL rather than by memory, and names the artifact layer as the bridge from a symptom to the source files that could have produced it.\n\n🛑 WHY A SKILL AND NOT AN ENFORCED RULE, since the rule already existed. `rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed` is Anthony's own and is `enforced: false` by his own decision, for a reason its text states: nothing in a diff or a CI run can see whether a test was FAILING before the fix, so an enforced version could only check something weaker, and a check that reads as enforcement while measuring something else is worse than no check. What a skill changes is DELIVERY, not force — a rule is read once at handshake and states an intention; a skill is pulled at the moment of the work and states an action. The same distinction `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue` already draws for conventions.\n\n⚠️ THE SESSION THAT BUILT IT SUPPLIED ITS OWN EXAMPLES, WHICH IS WHY THEY ARE SPECIFIC. Three wrong diagnoses were made and refuted in the course of costing one option: that `search_design` was slow (refuted — `get_node` was equally slow), that every graph call was slow (refuted — this session's own calls plainly were not), and that the cost was per-TCP-connection (refuted — calls 2 and 3 on one connection were just as slow). The actual cause, found only by a discriminating test with a proper MCP handshake, is a ONE-TIME PER-SESSION HYDRATE: 41.11s for the first graph-touching call, then 0.05s and 0.04s. A defect report claiming reflow2 had a severe read-performance problem was one step from being filed, and every step of it felt like understanding.",
+        "subject": "system",
+        "summary": "The 22nd served skill. `/root-cause` walks nine steps in order: state the symptom as an observation (not a diagnosis); search for precedent; GENERATE candidates from the design along nine bones; name the measurement that would REFUTE each; take it and check the result rather than that the call finished; ask what CLASS this is; pin it with a test observed failing; fix at the cause and record the cause as a CAUSES edge; and say what could not be established. Shipped with a slash command, mirrored to the .claude and .grok trees, compiled into the binary by build.rs, and pinned by `ver:the-root-cause-skill-forces-rather-than-exhorts`."
       }
     },
     {
@@ -125623,6 +125914,16 @@
         "name": "OPEN — reflow2's own rules are tracked by hand while reflow2 has a governance layer built to track them. Should they be wired into it?",
         "rationale": "Reframed after misreading the question as git automation. The measurement is the argument: 10 DesignRules, 1 verified; the export rule is a Decision so the governance detector cannot see it; and the lineage gate that enforces it exists only as Python whose own source names the rule it enforces. The enforcement is automated and the tracking of it is not — so deleting the check would be invisible to the design. That is a product gap rather than a repo-hygiene one, because the governance entities exist precisely so any project can wire its own rules in.",
         "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-should-reflow2-serve-a-root-cause-analysis-method",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Anthony, 2026-08-28.\n\n📌 The near-match offered was `rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed`, and it is the right one to have offered — but it is a different act. That RULE says what should happen. This asks whether reflow2 should SERVE a method for doing it, and whether a method is even the missing piece.\n\n═══ HIS IDEA, IN HIS WORDS ═══\n\nA `/rca` skill: *\"my implemented design experienced problem X\"* → the skill walks the design systematically and returns POSSIBLE root causes. Useful when testing an implemented design, and after something has been fielded and fails.\n\nHe gave the method: define the problem with measurable specifics; collect data; identify causal factors; find the root cause past the obvious trigger; implement and monitor corrective action. Principles: causes not symptoms, evidence not assumption, blameless, structured, prevent recurrence.\n\n⭐ **AND HE GAVE THE MOTIVATION, WHICH IS THE SHARPEST PART:** *\"quite a few cases now where in using reflow2 on a project, the agent proposes a solution to an issue, then goes off and implements some solution, but it turns out that the solution only treated a symptom or superficial issue and not the root cause... basically, trying to stem the agent's tendency to be over-confident in identifying an issue without doing proper RCA.\"*\n\n═══ 🛑 TWO THINGS ALREADY IN THE DESIGN THAT CHANGE THE QUESTION ═══\n\n**① THE METHOD ALREADY EXISTS AND IS HIS.** `rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed` — Anthony, 2026-08-26 — carries the ordered method: root-cause it, pin it with a test that FAILS TODAY, fix at the cause, test, write the cause down. It is `enforced: false` by his own decision, and its own text states the cost: *\"advisory rules get skipped, and this rule exists precisely because F-01's own fix skipped step ②.\"* **So the method is not missing. It is written, it is his, and it is not being followed.** A skill that restates it produces a second copy of an instruction already being skipped, and looks like progress while doing it.\n\n**② THE MEASURED FAILURE WAS SURFACING, NOT METHOD.** `fact:the-root-cause-was-on-the-record-and-a-session-re-derived-it-anyway` (2026-08-22) is the one to read before choosing. A root cause was ALREADY written down, findable by the error string. Three days later a session hit the same error twice, diagnosed it from scratch, and wrote *\"second occurrence, so it is a reliable pattern\"* into its handoff — while a node saying *\"nine occurrences, here is the cause, here is the fix\"* sat in the graph. Its conclusion: ***\"The gap is not accumulation, it is SURFACING — nothing puts a known root cause in front of the session at the moment it hits the symptom.\"***\n\n⚠️ **A SKILL IS A METHOD, AND A SKILL HAS TO BE REACHED FOR** — which is the exact failure above. This does not kill the idea. It means option (a) alone probably does not reach what he is aiming at.\n\n═══ MEASURED 2026-08-28, so the options are costed against fact rather than guess ═══\n\n**The causal vocabulary EXISTS AND IS ALREADY IN USE** — nothing here needs a schema change: `CAUSES` 26, `TRIGGERS` 9, `MITIGATES` 14, `RISKS` 11, `BLOCKS` 11, `CONTRADICTS` 53, `INVALIDATES` 15.\n\n**There is a corpus of repairs to reason over:** of 703 ChangeEvents, 103 are `test_failure_fix` and 60 are `defect_fix` — 163 fixes. `req:a-fix-says-whether-it-corrected-the-cause` (ACCEPTED, unbuilt) asks each to say whether it reached the cause; none does yet.\n\n═══ OPTIONS, NONE CHOSEN ═══\n\n**(a) A SERVED SKILL, like the other twenty.** Walks the graph from the symptom: which capability is implicated, which artifacts realize it, which ChangeEvents touched them, which TemporalFacts already describe them, what verification covers them. Returns CANDIDATE causes with the evidence for each. Cheapest, consistent with the rest of the surface, no schema change. ⚠️ Counter: it has to be reached for, and ② is the measured proof that reaching is the failing step.\n\n**(b) MAKE THE RCA WRITE CAUSAL STRUCTURE.** The output is not prose but `CAUSES` / `TRIGGERS` edges from symptom to cause, so the NEXT occurrence finds the prior analysis by search. ⭐ This is what turns one investigation into a permanent answer, and the vocabulary is already there and in use. ⚠️ Counter: does nothing for a first occurrence, and pays off only if somebody searches — which is ② again.\n\n**(c) SURFACE A KNOWN CAUSE AT THE MOMENT OF THE SYMPTOM.** What ② says is actually missing: something that, when a session hits or reports a symptom, puts the already-recorded cause in front of it unasked. ⚠️ Counter: needs a trigger, and reflow2 has no hook into \"the agent just saw an error\" — though SessionStart and Stop hooks prove the harness CAN be reached. Most valuable, least specified, nobody has costed it.\n\n**(d) A DETECTOR ON THE RECORD RATHER THAN ON THE AGENT.** Build the accepted-and-unbuilt `req:a-fix-says-whether-it-corrected-the-cause` and let the design answer \"how much of this stands on a patch?\". ⚠️ Counter: post-hoc — it catches the shallow fix after it ships, which is better than nothing and is not what he asked for.\n\n**(e) ENFORCE THE EXISTING RULE INSTEAD OF ADDING ANYTHING.** ⚠️ Counter, and it is already settled once: the rule's own text explains why it is advisory — nothing in a diff or a CI run can see whether a test was FAILING before the fix, so an enforced version could only check something weaker, and *\"a check that reads as enforcement while measuring something else is worse than no check.\"* Reopening needs an argument that text does not already answer.\n\n═══ ⚠️ WHAT SHOULD BE CHECKED BEFORE CHOOSING ═══\n\n1. **Is the target the AGENT or the RECORD?** He said \"stem the agent's tendency\", which is (a)/(c). The graph can only reach the record, which is (b)/(d). Different products; the wording does not settle which.\n2. **How many of the 163 recorded fixes actually treated a symptom?** UNMEASURED. He says \"quite a few cases now\" and nothing counts them — the same unmeasured-n trap `dec:idea-what-makes-a-field-report-owed` was designed against, where the 2026-08-28 sweep found the raw count and the real one differed by a factor of forty.\n3. **Would this have caught the two instances from the session it was proposed in?** Both are live. A recorded diagnosis whose REASONING had gone stale while its conclusion stayed true; and an agent reading a fact about a RETIRED dependency as though it described this project. **Both were caught by measuring, not by method** — which is evidence about what actually works here.\n4. **`dec:idea-which-agent-pitfalls-can-reflow2-actually-reach` is the parent question**, and is the highest-ranked open decision in the design. Overconfident diagnosis is precisely an agent failure mode; whether reflow2 can reach it belongs there, not here.",
+        "name": "DECIDED — reflow2 serves an RCA method, and the design GENERATES the candidates: option (a) with (b) folded in as its step ⑧",
+        "rationale": "SETTLED BY ANTHONY, 2026-08-28, across three messages that each corrected the framing — which is why the options above are left standing rather than trimmed.\n\n① HE NARROWED THE TARGET: *\"not so much can the graph help determine root cause... it is more to direct the agent how to properly do the steps of root cause analysis and not just jump to quick solutions.\"* That answers must-check question 1 — AGENT, not RECORD — which had been answered by assumption while option (c) was being costed in detail.\n\n② THEN HE WIDENED IT BACK, and this is the correction that made the result worth shipping: *\"you can often start fishbone analysis on inspecting the design... there is value in looking at a design (and if it is a software code base that is being implemented in a reflow2 project, then you can inspect the implementation of the design also).\"* The first draft had over-corrected into pure process guidance whose step ③ read \"write down at least three candidate causes\" — an exhortation that yields two real candidates and a filler written to satisfy the instruction. Step ③ now walks NINE BONES, each answered by a call, with the artifact layer as the bridge from symptom to source files.\n\n③ *\"let's get to work implementing it.\"*\n\n═══ WHAT WAS CHOSEN ═══\n\n**(a) A SERVED SKILL — taken**, and its answer to (a)'s own counter (\"it has to be reached for\") is that a rule read once at handshake and a skill pulled at the moment of the work fail differently. The rule was not enough; that is the evidence, not a hope.\n\n**(b) WRITE CAUSAL STRUCTURE — taken, folded in as step ⑧** rather than built separately: the skill requires a `CAUSES` edge from cause to symptom, because the repair is recoverable from the diff and the cause is not.\n\n**(c) SURFACE AT THE MOMENT OF THE SYMPTOM — NOT taken, and now costed.** `fact:surfacing-a-known-cause-is-cheap-and-reaches-the-wrong-half` holds the measurement. It triggers on a FAILING TOOL CALL, and an overconfident fix compiles, passes and ships green — so it reaches the recurring-known-error case and not the case that prompted this. ⚠️ ITS COSTING ALSO CONTAINED THREE WRONG DIAGNOSES, corrected only by a discriminating test: the real cost is a one-time per-MCP-session hydrate (41.11s, then 0.05s), so a hook — a fresh process every time — pays it on every call. Inline is impossible, which is why `graph_probe.py` is detached. The option remains open on its own merits and is a different product.\n\n**(d) A DETECTOR ON THE RECORD — NOT taken, and it is the honest next increment.** `req:a-fix-says-whether-it-corrected-the-cause` is ACCEPTED and unbuilt. The skill supplies the INSTRUCTION and step ⑧ supplies the write; nothing yet NOTICES when a fix lands with no cause recorded. By this project's own three-legs finding that is two legs of three.\n\n**(e) ENFORCE THE RULE INSTEAD — NOT taken**, and its counter stands unchanged: nothing in a diff or a CI run can see whether a test was failing before the fix, so an enforced version could only measure something weaker, and a check that reads as enforcement while measuring something else is worse than no check.",
+        "status": "accepted"
       }
     },
     {
@@ -129886,6 +130187,16 @@
         "epoch_type": "revision",
         "name": "The orientation question asks for a background, not a name — because \"Bob\" answered the first version correctly and told the agent nothing",
         "sequence": 360,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:the-author-did-not-use-the-skill-he-wrote",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "The four-layer frame gets a natural experiment: maximum knowledge and belief, failure at recognition",
+        "sequence": 386,
         "status": "arrived"
       }
     },
@@ -136312,6 +136623,18 @@
       }
     },
     {
+      "node_id": "req:finding-a-cause-is-a-served-process-not-an-improvisation",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "Finding the cause of a failure is a process reflow2 serves, not one an agent improvises while under pressure to ship a fix",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "When something has failed and somebody is about to fix it, the steps of root cause analysis SHALL be delivered as a procedure the agent executes, not as advice it may recall — and the procedure SHALL be reachable at the moment of the work rather than read once at the start of a session.\n\nIt SHALL require candidate causes to be GENERATED FROM THE DESIGN rather than recalled, because \"think of three causes\" yields two real ones and a filler that exists to satisfy the instruction. Where the project has an implementation, the artifact layer SHALL be the path from a symptom to the source files that could have produced it.\n\nIt SHALL require, before any fix is proposed, a measurement that could REFUTE the leading candidate. A measurement that merely confirms it is not evidence: almost any observation is consistent with a plausible cause, which is what makes it plausible.\n\nWhere the design cannot answer, it SHALL say so rather than fall silent — an unmodelled file, an undeclared seam and an unwritten requirement all look identical to a graph that has never been told about them, and that silence must not read as the absence of a cause.\n\nDriven by Anthony, 2026-08-28: \"quite a few cases now where in using reflow2 on a project, the agent proposes a solution to an issue, then goes off and implements some solution, but it turns out that the solution only treated a symptom or superficial issue and not the root cause.\"",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:framework-is-chosen-not-defaulted",
       "node_type": "Requirement",
       "properties": {
@@ -139201,6 +139524,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:the-author-did-not-use-the-skill-he-wrote:dec:idea-where-does-tool-use-actually-fail-four-layers",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"EVOLVES_INTO\",\"other_type\":\"Requirement\",\"other_id\":\"req:skill-use-survives-a-long-session\",\"properties\":{\"evidence\":\"That requirement's own 'CANDIDATE MECHANISMS, in the order the evidence supports' section is the proto-form of this layering — it separates trigger mechanisms from measurement and names the structural ceiling on the trigger. This node generalises that into four independent failure points so a future proposal can be placed before it is built. The requirement stays live and governing; this is the analysis grown out of it, not a replacement.\"}},{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-26\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Requirement\",\"other_id\":\"req:skill-adherence-is-measured\",\"properties\":{\"evidence\":\"The frame's central claim — that layer ③ (worth it) is the bottleneck — is inference from two agent self-reports and cannot be tested until the missing half of that requirement exists: the comparison between the work a session performed and the skill that covers it. Loads are already counted; the performed-versus-appropriate gap is what would turn this diagnostic into a measurement rather than an argument.\",\"optional\":false,\"weight_basis\":\"estimated\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"DesignRule\",\"other_id\":\"rule:mcp-and-the-graph-are-the-only-common-ground\",\"properties\":{\"note\":\"Constrains what a fix at each layer may rest on. Layer 2 (recognise the moment) is the one currently served only by hooks, so under this rule its measured effectiveness describes one harness and any durable answer has to move onto the MCP surface.\"}}]",
+        "state": "{\"decision\":\"Anthony, 2026-08-26, thinking out loud: *\\\"what are some things we can do to increase the probability that an agent will use reflow2 skills and tools in a project? what would make the agent say, I have the perfect skill or tool needed for problem X? hopefully, by adding depth and layers, we can start seeing much more clearly why and when some skills/tools are used.\\\"*\\n\\n**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Nothing here is decided; the options are put down so a later session meets the reasoning rather than re-deriving it.\\n\\n═══ THE FRAME BEING PROPOSED: FOUR LAYERS, AND A SKIP HAPPENS AT THE WEAKEST ONE ═══\\n\\nFor an agent to use a skill, four things must all hold. They fail independently, they want different fixes, and reflow2 has not worked them equally:\\n\\n① **KNOWN** — the agent is aware the thing exists. *(Worked: `list_skills`, `get_skill`, served-not-installed, the handshake catalogue, 24 slash commands.)*\\n\\n② **RECOGNISED** — the agent notices THIS MOMENT is that skill's moment. *(Worked hard: `cap:skill-triggers`, the three-event loop nudge, `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue`.)*\\n\\n③ **WORTH IT** — the agent believes the skill beats what it would do unaided. *(BARELY WORKED AT ALL. There is no node arguing that a skill produces a better answer than competent improvisation; the whole surface argues that skipping is non-compliant, which is a different claim and a weaker motivator for something that is not trying to comply.)*\\n\\n④ **VISIBLE** — something can see whether it happened. *(PARTLY BUILT — see the correction below.)*\\n\\n⚠️ **CORRECTION MADE IN THE SAME SESSION, AND THE MISTAKE IS WORTH KEEPING.** This node first asserted that layer ④ was DEFERRED, reasoning from `req:skill-use-survives-a-long-session`, which says so in its own text. That was true when that requirement was written and is now FALSE: `req:skill-adherence-is-measured` is **`accepted`**, and `cap:skill-loads-are-counted` is **built and `verified`**.\\n\\n**The error is the one this project keeps recording: reading a claim out of one node's prose instead of the node it is about.**\\n\\n**What layer ④ actually holds now:** skill LOADS are counted, and their absence is announced at session end. **What it still does not hold:** any notion of which skill SHOULD have been loaded for the work that was done.\\n\\n═══ THE EVIDENCE THAT ③ IS THE BOTTLENECK ═══\\n\\n`req:skill-use-survives-a-long-session` records the same failure twice, six days apart, and the second is the damning one: **`cap:skill-triggers` was `verified` and firing correctly, and the user still had to be the reminder.** Layer ② was WORKING and it was not enough.\\n\\nIt also names the structural ceiling on ②: every shape that capability recognises is a shape in the GRAPH-WRITE stream, so it requires the agent to have already touched the graph. *A skill load is not a graph write.* No amount of work on ② reaches an agent that never started.\\n\\n⭐ AND THE MEASUREMENT MOST WORTH REPEATING: both observations were made on sessions with **more** context about reflow2 than any consumer's agent will ever have. That is a BEST case, not a typical one.\\n\\n═══ OPTIONS, none chosen ═══\\n\\n**(a) Attack layer ③ directly: make the skill's ADVANTAGE legible at the moment of choice.** ⚠️ Counter: self-promotion inside a tool result, and it cannot be honest without evidence.\\n\\n**(b) Keep hardening ② and accept the ceiling.** ⚠️ Counter: measured twice as insufficient, and the ceiling is structural.\\n\\n**(c) Finish layer ④ — the half that is missing.** ⚠️ Counter: `dec:loop-status-state-not-history` may forbid the obvious implementation, and that must be settled BEFORE anything is built.\\n\\n**(d) Reject the frame.** Perhaps the real variable is CONTEXT BUDGET: a skill costs tokens to load mid-task, and an agent under pressure economises. **Nothing has tested this, and it would explain the measured facts as well as ③ does.**\\n\\n═══ WHY THE FRAME MIGHT EARN ITS KEEP ═══\\n\\nIt gives every future idea a place to attach: a proposal that improves ① when the bottleneck is ③ can be recognised as such before it is built. **It is a diagnostic, not a design.**\\n\\n────────────────────────────────────────────────────────────\\n═══ 📌 SHARPENED 2026-08-26 BY A USER REPORT — AND THE FRAME HAS A HOLE ═══\\n\\n*A user reported, relayed, that they were \\\"probably not understanding all the skills in reflow2\\\". Recorded here rather than as a new node because this node's own rationale says splitting would \\\"lose the comparison, which is the only part that does any work\\\". Written without the user's domain or employer; the design record is public.*\\n\\n⭐ **EVERY ONE OF THE FOUR LAYERS IS ABOUT THE AGENT. NONE IS ABOUT THE PERSON.** The frame reads \\\"for an AGENT to use a skill, four things must hold\\\" — and a human who does not know what reflow2 is FOR fails before layer ① is reached. That is a candidate **layer ⓪ — ORIENTED: the person knows what this tool does and what it will ask of them.**\\n\\nWhether ⓪ belongs in the frame is the open part. Two readings, and they lead to different work:\\n\\n- **⓪ IS REAL.** reflow2 asks the human questions — gaps, decisions, who they are. A user who cannot answer *\\\"what is this for?\\\"* cannot answer those either, and no amount of agent-side triggering helps.\\n- **⓪ IS A MIRAGE, and the report is really ① or ③ seen from the user's chair.** reflow2 is AGENT-DRIVEN. The user never picks a skill; they see the consequence of the agent picking one. *\\\"I do not understand the skills\\\"* may be *\\\"the agent never reached for one, and I noticed.\\\"* **Then a tutorial teaches the wrong party.**\\n\\n🛑 **NOTHING WE HAVE DISTINGUISHES THESE**, and that is the same hole layer ④ already names: loads are counted, but not whether the RIGHT skill was owed. `dec:bl-155`'s warning applies exactly — it could not tell *unused* from *unreachable*, and this cannot tell *uninformed user* from *unreaching agent*.\\n\\n📌 **WHAT IS ACTUALLY MEASURED TODAY, so ① is not overstated:** 22 served skills, 163 tools, `list_skills` / `get_skill` / `find_tools`, `docs/skills-and-tools.md`, 24 slash commands. All answer *\\\"what is there?\\\"*. **None answers *\\\"where do I start?\\\"*** — `genesis` covers a new PROJECT, `adopt` covers existing CODE, and nothing covers a new PERSON.\\n\\n⭐ **AND A WORKED EXAMPLE OF THE FRAME FAILING BELOW ALL FOUR LAYERS**, measured the same day: `fact:the-lens-that-carries-the-persona-was-built-on-a-branch-and-never-shipped`. The mechanism that would carry a reader's background to the agent was built, core-tested, and left on an unmerged branch. That is not ①, ②, ③ or ④ — the thing was never in the surface at all, while the design recorded the capability as existing. **A fifth failure mode: the mechanism is in the DESIGN and not in the BUILD.** Whether the frame should carry that too, or whether it belongs to release hygiene rather than adoption, is unsettled.\\n\\n⚠️ **THE COUNTERWEIGHT ON ALL OF IT:** n=1, relayed, from a user who cannot share specifics. This project's own history says the tempting fix is the wrong one. Before building a guide, the honest step is the one `report_manual_work` now exists to catch — get the case in the user's own words, and find out whether they wanted a skill they could not find or never knew a skill was owed.\",\"name\":\"OPEN — an agent skips a skill at one of four layers, and a fifth may sit under them: which is reflow2's real bottleneck?\",\"rationale\":\"Recorded as one Decision because it is one question — WHERE does the failure live — and the layers are its options rather than separate questions. Splitting it would lose the comparison, which is the only part that does any work.\\n\\nThe counter-argument to the frame itself is written in as option (d) rather than left out, because a frame that cannot be wrong is not a diagnostic.\\n\\nSHARPENED 2026-08-26. A user report about not understanding the skills was recorded HERE rather than as a parallel node, on that same reasoning. It contributes two things the frame did not have: a candidate layer ⓪ (the PERSON, where all four existing layers are about the AGENT), and a worked example of a failure that sits below all of them — a mechanism present in the design and absent from the build. Both are offered as questions about the frame rather than as extensions of it, because a diagnostic that grows a layer every time a report arrives has stopped diagnosing.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-where-does-tool-use-actually-fail-four-layers",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:the-co-change-experiment-is-run:dec:idea-can-exhaustive-per-subsystem-tests-be-derived-rather-than-imagined",
       "node_type": "Snapshot",
       "properties": {
@@ -139923,6 +140256,20 @@
         "statement": "THE REPORT A SESSION READS TO DECIDE WHAT TO LOOK AT WAS 91.5% ROLL CALL. `graph_report` measured 166,934 characters AFTER the duplicate emission was already removed — 152,803 of them the full verification roll. 197 checks, 196 of them passing. The one read that exists to point a session somewhere spent nine tenths of itself saying '196 passing, 1 planned'. It is also what the where-am-i skill reads, so 'where does this design stand' was refused on a mature design. || AND 93% OF THE ROLL WAS ONE FIELD: `name`, 129,994 chars over 197 entries. 113 OF THE 197 NAMES RUN OVER 25 WORDS AND THE LONGEST IS 654 — whole reports written into a name because `description` was declared and unreachable from `add_verification` for a long time. ⇒ THE BULK WAS NOT INFORMATION, IT WAS A DATA-ENTRY SCAR, and the sharpest clue was already on the wire: `graph_report_markdown` renders THE SAME REPORT for a human in 6,172 bytes, 27× smaller. || BOTH MECHANISMS ALREADY EXISTED AND NEITHER HAD BEEN POINTED HERE. `vocabulary_coverage` withholds its flat list unless asked (`include_unused`); `loop_status` already returns a verification DIGEST with names cut at 25 words and the cut announced. Reusing that same digest is why the truncation is not written twice — and it is also why `loop_status`'s `full_list` pointer had to move from `graph_report` to `graph_report {include_verifications: true}`, or a withheld list would have been left with a stale retrieval instruction, which is worse than never withholding it. MEASURED: 166,934 → 15,480 bytes on the wire, roll still reachable at 165,207. || ⚠️ THE LIMIT, STATED RATHER THAN HIDDEN: the digest keeps every check that is NOT currently passing IN FULL, because that is what a reader acts on. So it is flat in the PASSING remainder, not in the check count. Here 196 of 197 pass and the saving is 11×; ON A DESIGN MID-BUILD WITH TWO HUNDRED `planned` CHECKS THIS REPORT WOULD BE LARGE AGAIN. That case is real, UNMEASURED, and deliberately not built for — the same 'measure before you cut' rule that cancelled the planned `loop_status` work an hour earlier. || A SECOND LIMIT WORTH SAYING: budgeting the report stops 113 essay-length names flooding a reply; IT DOES NOT MOVE THE REPORTS OUT OF THE NAME FIELDS. `add_verification` now reaches `description` and `findings`, so new checks land correctly and the existing 113 stay stranded. || SOURCE: measured 2026-08-23 on reflow2 0.38.0, driving the built binary over real stdio.",
         "subject_id": "cmp:report",
         "valid_from": "2026-08-23"
+      }
+    },
+    {
+      "node_id": "fact:a-retired-dependencys-facts-keep-describing-this-project",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "name": "A fact whose subject is a RETIRED dependency goes on reading as though it describes this project — it misled an agent and then the owner, in one session, about the KvBackend seam",
+        "statement": "MEASURED 2026-08-28. Nothing is wrong with the record; the hazard is where it points.\n\nWHAT HAPPENED. An agent read `fact:the-storage-seam-is-published-in-design-and-private-in-code` (2026-08-21) and reported to Anthony that reflow2's design designates `ifc:kv-backend` published while the code makes it `pub(crate)` — a live design-versus-code defect in THIS repo. It is not. That fact was measured by reading /home/ajs7/project/dynograph-foundation, and its `subject_id` is `dep:dynograph-foundation`. It describes THAT project's design graph.\n\nREFLOW2'S OWN NODE IS CORRECT, and was the whole time: `ifc:kv-backend` carries `designation: internal` and an `endpoint` reading \"crates/reflow2-core/src/foundation/store/backend.rs — `pub(crate) trait KvBackend: Send + Sync`\". Design and code agree. Only three Interfaces here are designated `published`: ifc:graph-export, ifc:mcp-tools, ifc:mcp-tools-http.\n\nTHE SECOND HALF, AND IT IS THE PART THAT ACTUALLY WENT STALE. That fact concludes: \"Swappable from INSIDE dynograph-foundation, not from outside it. A new backend — object storage, a networked KV, something sharded — is a change to that repo, not something reflow2 or flo2 could supply.\" TRUE WHEN WRITTEN AND FALSE THREE DAYS LATER: `dec:absorb-the-foundation-subset-and-end-the-dependency` completed 2026-08-24 and a new backend is now a change to reflow2's OWN repo. Verified 2026-08-28: no active `dynograph` dependency line in any Cargo.toml (every mention is a comment recording what was removed), `cargo tree -p reflow2-mcp` returns zero matches, and the trait is in-tree at crates/reflow2-core/src/foundation/store/backend.rs.\n\n⭐ THE GENERAL SHAPE, which is why this is recorded rather than just corrected. A fact carries a `subject_id` naming a dependency. The dependency is later RETIRED and its code ABSORBED. The fact keeps its wording, keeps reading as current, and now describes ground this project owns — while its conclusions were reasoned about a boundary that no longer exists. `loop_status` cannot see it: a TemporalFact is not a debt class. `unclaimed_findings` scoped to the absorption's ChangeEvents is the mechanism that WOULD reach it, and whether it was run at absorption time is not established here.\n\n⚠️ THE 2026-08-21 FACT IS NOT CLOSED, DELIBERATELY. Its first half — that dynograph-foundation's design designates the seam published while its code has it pub(crate) — was true of that repo when read and nobody has re-checked it. Closing the whole record would assert something unmeasured about another project. `valid_to` claims the WHOLE thing stopped being true, and only the reflow2-facing half did.\n\n⚠️ WHAT IS NOT ESTABLISHED: how many other facts name a retired dependency as their subject. One instance, found by being misled by it. It is not known whether this is a class.",
+        "subject_id": "ifc:kv-backend",
+        "valid_from": "2026-08-28",
+        "value": "{\"misread_fact\":\"fact:the-storage-seam-is-published-in-design-and-private-in-code\",\"its_subject\":\"dep:dynograph-foundation\",\"measured_on\":\"2026-08-21, by reading the other repo\",\"absorption_completed\":\"2026-08-24\",\"reflow2_designation\":\"internal (correct, agrees with code)\",\"published_interfaces_in_reflow2\":3,\"active_dynograph_dependency_lines\":0,\"cargo_tree_matches\":0,\"stale_half\":\"a new backend is a change to that repo, not something reflow2 could supply\",\"closed\":false}"
       }
     },
     {
@@ -142448,6 +142795,30 @@
       }
     },
     {
+      "node_id": "fact:manual-work-b838754c8eac2946",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "manual_work",
+        "statement": "Wrote Python over the committed export to enumerate every open field-reported defect record — counting those carrying a defect marker, subtracting the ones some record already claims to have answered, then bucketing the remainder by date, edge degree, and whether their own text declares a fix. This is the \"how big is the backlog actually?\" question, and no served tool answers it: the two that come closest ask a session-scoped question (what did MY changes make stale) or a per-finding one, not a design-wide inventory.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-28",
+        "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":null}"
+      }
+    },
+    {
+      "node_id": "fact:manual-work-c94ff005efcd95fa",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "manual_work",
+        "statement": "Wrote a throwaway Python script to answer \"which registered Artifacts cover the source files I just edited?\" — loading the committed export, building a location-to-node_id map, and filtering it by the four paths I had changed. Needed before re-baselining checksums, because accepting a baseline against the wrong artifact records a change to a file that never moved.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-28",
+        "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":null}"
+      }
+    },
+    {
       "node_id": "fact:music-graph-f8-to-f20-verified-against-the-build-2026-08-17",
       "node_type": "TemporalFact",
       "properties": {
@@ -142690,6 +143061,20 @@
       }
     },
     {
+      "node_id": "fact:surfacing-a-known-cause-is-cheap-and-reaches-the-wrong-half",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "measurement",
+        "name": "COSTING option (c): every part already exists and the whole thing runs in 0.08s — but it triggers on FAILING TOOL CALLS, and the overconfident-fix case Anthony described produces none",
+        "statement": "MEASURED 2026-08-28, costing option (c) of the RCA brainstorm — \"surface a known cause at the moment of the symptom\".\n\n═══ FOUR OF THE FIVE PARTS ALREADY EXIST ═══\n\n**① RETRIEVAL WORKS, MEASURED ON THE CASE THAT ACTUALLY FAILED.** Searching the raw error string `git: 'remote-https' is not a git command` returns `fact:the-gh-merge-failure-is-snap-confinement-and-nobody-was-counting` as hit #1 at score 30.19. That is the exact root cause a session re-derived from scratch on 2026-08-22 while it sat in the graph. A second real symptom, `invalid GapCandidate: missing field suggested_depth`, returns the F-01 fix ChangeEvent at 39.76 with the root-cause rule second. **The information was always retrievable. Nobody called the search.**\n\n**② A THRESHOLD SEPARATES SIGNAL FROM NOISE, on n=4.** Real symptoms with recorded causes: 30.19, 39.76. Plausible errors with nothing recorded: `connection refused ECONNREFUSED port 5432 postgres` → 13.35; `segmentation fault core dumped libssl undefined symbol` → 8.38. A cutoff near 20 fires on both true positives and neither control — a 2.3× margin.\n\n**③ THE HOOK INFRASTRUCTURE IS INSTALLED.** `reflow2_init.py` already registers four hooks: SessionStart, PostToolUse on `mcp__reflow2__.*`, PostToolUse on `Edit|Write|MultiEdit|NotebookEdit`, and Stop. SessionStart already prints into the session's context, which is the surfacing mechanism this needs.\n\n**④ LATENCY IS A NON-ISSUE, AND THAT WAS THE BIG UNKNOWN.** A COLD process — open the graph, initialize, run one search — is **0.08s**. Compare `graph_probe.py`'s own numbers, which exist because this constraint bit before: `loop_status` 22.6s, `loop_status since_export` 37.5s, `claim_report` 0.04s. Search sits with claim_report. **It can run inline; the async-probe pattern is not needed.**\n\n═══ WHAT WOULD HAVE TO BE BUILT — small ═══\n\nRegister PostToolUse on `Bash` (the tuple list already has the shape; today it matches reflow2 tools and edit tools only); read `tool_response`, which the payload carries and `loop_nudge.py` does not currently consume — it reads `tool_name` and `tool_input`; detect failure and extract a symptom string; search, threshold, format; suppress repeats within a session so a retried command does not fire the same hit every time.\n\n═══ 🛑 AND THE FINDING THAT MATTERS MOST: IT REACHES THE WRONG HALF ═══\n\n**This mechanism triggers on a FAILING TOOL CALL. The problem Anthony described produces none.** His words were that an agent \"proposes a solution to an issue, then goes off and implements some solution, but it turns out that the solution only treated a symptom.\" That fix COMPILES. Its tests PASS. It ships green. There is no failing command anywhere for a PostToolUse hook to see.\n\nSo option (c) as costed solves the **2026-08-22 problem** — a recurring KNOWN error whose cause is already recorded and nobody searches, measured at 11+ occurrences of one issue — and does **not** solve the problem that prompted the brainstorm. Both are real. They are not the same problem, and one cheap mechanism should not be described as answering both.\n\n⚠️ **COVERAGE IS 65%.** Of 192 defect-facts, 124 carry an error-like or quotable symptom that a string search could retrieve; 68 are abstract findings (\"a finding can outrun its own data\") that no error text will ever match. The abstract third is where the conceptual mistakes live — which is again the half Anthony is aiming at.\n\n⚠️ **IT REACHES ONE HARNESS.** Hooks are Claude Code's. `dec:idea-the-loop-nudge-exists-for-one-harness-only` is DECIDED and says a harness that cannot take the nudge is told so. Alex's Grok Build TUI cannot. **The second user — the one generating the field reports — would not get this.**\n\n⚠️ **THE THRESHOLD IS CALIBRATED ON FOUR POINTS.** BM25 scores are unnormalised and scale with query length and corpus size, so 20 is a fitted guess, not a constant. Shipping it wrong in the permissive direction produces a hook that fires on everything, which is the wallpaper failure this project has already killed three times (unreviewed_ideas at 111 of 186, the undeclared-seam list, the unallocated-parts list). A real calibration set is a prerequisite, not a nicety.",
+        "subject_id": "dec:idea-should-reflow2-serve-a-root-cause-analysis-method",
+        "valid_from": "2026-08-28",
+        "value": "{\"real_symptom_scores\":[30.19,39.76],\"control_scores\":[13.35,8.38],\"suggested_threshold\":20,\"threshold_n\":4,\"cold_search_latency_s\":0.08,\"loop_status_latency_s\":22.6,\"claim_report_latency_s\":0.04,\"hooks_already_registered\":[\"SessionStart\",\"PostToolUse mcp__reflow2__.*\",\"PostToolUse Edit|Write|MultiEdit|NotebookEdit\",\"Stop\"],\"payload_field_unread\":\"tool_response\",\"defect_facts\":192,\"with_quotable_symptom\":124,\"coverage_pct\":65,\"reaches_overconfident_fix_case\":false,\"harnesses_reached\":1}"
+      }
+    },
+    {
       "node_id": "fact:ten-components-report-a-zero-blast-radius-the-source-contradicts",
       "node_type": "TemporalFact",
       "properties": {
@@ -142724,6 +143109,20 @@
         "subject_id": "proj:reflow2",
         "valid_from": "2026-08-25",
         "value": "{\"measured_on\":\"docs/design/reflow2.json + live graph, 2026-08-25\",\"method\":\"per capability, compare ALLOCATED_TO target against the component owning the artifact(s) that REALIZE it\",\"capabilities_allocated\":212,\"agree\":59,\"disagree\":23,\"no_file_evidence\":130,\"disagreements_naming_an_unallocated_part\":19,\"unallocated_component_before\":33,\"after_correcting_allocations\":14,\"after_ruling_the_tool_surface\":2,\"leaf_components\":85,\"of_the_33_that_were_real_source_modules\":31,\"tool_gap\":\"no reflow2 tool compares the allocation layer against the artifact layer; reconcile_artifacts compares design-vs-disk, compare_designs compares design-vs-design\"}"
+      }
+    },
+    {
+      "node_id": "fact:the-author-of-a-skill-did-not-use-it-an-hour-later",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "name": "The four-layer frame's first clean separation of ② from ③: the author of a skill did not use it an hour after writing it — and the skip pattern across one session is SYSTEMATIC in a way the frame does not predict",
+        "statement": "OBSERVED 2026-08-28, in the session that built `cap:root-cause-skill`. Anthony asked, after the fact, *\"are you using reflow2 skills and tools to implement this design?\"* — which is itself the THIRD dated instance of the user being the trigger, after 2026-08-06 and the pair already on `req:skill-use-survives-a-long-session`.\n\n═══ ⭐⭐ OBSERVATION 1: LAYERS ① AND ③ SATURATED, FAILURE AT ② ═══\n\nThe agent wrote the `root-cause` skill, and roughly one hour later investigated a latency question WITHOUT INVOKING IT — producing FOUR wrong diagnoses in series, each replacing the last: that `search_design` was slow (refuted: `get_node` equally slow), that every graph call was slow (refuted: the session's own calls were not), that the cost was per-TCP-connection (refuted: calls 2 and 3 on one connection were 0.05s), and that it was contention from concurrent probes (refuted: a clean run was still 31.35s). The mechanism is STILL not established.\n\n⭐ **THIS IS THE FIRST OBSERVATION THAT SEPARATES ② FROM ③ CLEANLY.** In every prior sighting both could plausibly have failed. Here ③ (WORTH IT) cannot be the explanation: the agent had just spent the session ARGUING FOR the skill's value, writing its rationale, and pinning it with a test. ① (KNOWN) cannot be either: it authored the text. The failure was entirely at ② — RECOGNITION.\n\n⭐ **AND THE RECOGNITION FAILURE HAS A SPECIFIC, FIXABLE CAUSE.** The skill's own trigger description begins *\"Use when something has FAILED\"*. The agent was taking A MEASUREMENT THAT SURPRISED IT, which did not match that shape. **The trigger was written for the reported-defect case and not for the I-am-measuring-and-the-number-is-odd case — which is exactly where overconfident diagnosis begins.** A skill whose trigger names only the loud case is invisible during the quiet one.\n\n═══ ⭐⭐ OBSERVATION 2: THE SKIP PATTERN IS SYSTEMATIC, AND THE FRAME DOES NOT PREDICT IT ═══\n\nAcross one long session the split was clean:\n\n**USED, properly and before the work:** where-am-i, capture-intent, capture-session, brainstorm, artifact-design. Plus `loop_status` at every phase, `detect_gaps` after every capture batch, `unclaimed_findings`, `review_relations`, `report_manual_work`, and `search_design` before every create — where the duplicate guard correctly caught the agent twice.\n\n**SKIPPED, where they applied:** impact-check, revise-design, link-artifacts, `gap_to_prompt`. **`propagate_change` was never called ONCE**, although the server's own instructions say *\"on any change, add_change_event + propagate_change to see the blast radius BEFORE editing\"*. Source files were edited first and the ChangeEvent recorded after — the BL-163 shape the Stop hook exists to catch. `revise-design`'s snapshot-before-edit was skipped twice, and the tool warned both times that no snapshot held the prior values.\n\n⭐ **THE FOUR LAYERS APPLY EQUALLY TO BOTH GROUPS, SO THEY CANNOT EXPLAIN A SPLIT THIS CLEAN.** What distinguishes them is WHEN they are invoked: **the used skills fill a pause — a session start, a natural break, an explicit \"capture this\". The skipped skills must INTERRUPT work already in flight.**\n\n⚠️ **THAT IS EVIDENCE FOR OPTION (d), which this node says nothing has tested.** Not context budget exactly, but its close neighbour: a skill that asks the agent to STOP AND GO BACK costs more than one that occupies a moment with no other agenda. If that holds, hardening ①–③ for the change-governing skills is work aimed at the wrong variable.\n\n═══ ⚠️ WHAT THIS DOES NOT ESTABLISH ═══\n\n- **n=1 session, one agent, one model.** The split is clean but it is one observation, and this project's own history says the tempting fix is usually the wrong one.\n- **The pause-versus-interrupt reading is INFERENCE**, not measurement. It fits the data and so might other explanations — for instance that the capture skills have slash commands the user typed, while the change-governing ones must be self-invoked. That alternative is NOT ruled out here and would point at a completely different fix.\n- **It says nothing about consumers.** This was a session with far more reflow2 context than any consumer's agent will have, which the frame already notes makes it a BEST case rather than a typical one.",
+        "subject_id": "dec:idea-where-does-tool-use-actually-fail-four-layers",
+        "valid_from": "2026-08-28",
+        "value": "{\"third_dated_instance_of_user_as_trigger\":true,\"skill_authored_then_unused_within\":\"~1 hour\",\"serial_wrong_diagnoses\":4,\"layers_saturated\":[\"known\",\"worth_it\"],\"layer_that_failed\":\"recognised\",\"trigger_gap\":\"skill says 'something has FAILED'; the moment was 'a measurement surprised me'\",\"skills_used\":[\"where-am-i\",\"capture-intent\",\"capture-session\",\"brainstorm\",\"artifact-design\"],\"skills_skipped\":[\"impact-check\",\"revise-design\",\"link-artifacts\",\"gap_to_prompt\"],\"propagate_change_calls\":0,\"proposed_discriminator\":\"skills that fill a pause vs skills that interrupt work in flight\",\"supports_option\":\"d\",\"n\":1}"
       }
     },
     {
@@ -146080,6 +146479,20 @@
       }
     },
     {
+      "node_id": "ver:the-root-cause-skill-forces-rather-than-exhorts",
+      "node_type": "Verification",
+      "properties": {
+        "description": "`the_root_cause_skill_forces_the_steps_that_stop_a_premature_fix`, in crates/reflow2-mcp/tests/served_skills.rs. Four assertions, each pinning a clause whose removal would turn the skill back into prose somebody nods along with rather than executes:\n\n① it demands a measurement that could REFUTE a candidate, not merely confirm one;\n② it states that three candidate causes is a FLOOR rather than a target;\n③ it names the calls that GENERATE candidates from the design (`granularity_report`, `coverage_report`), because \"think of three causes\" without them yields two real candidates and a filler;\n④ it names `rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed`, so the procedure and the rule carrying the user's word cannot drift apart unnoticed.\n\n⭐ ONE ASSERTION WAS DELIBERATELY LOOSENED, AND THE REASON IS RECORDED IN THE TEST ITSELF. It first pinned the literal string \"THREE\" and fired on an edit that moved the word into a sentence while keeping the requirement exactly. It now matches \"three is a floor\" case-insensitively. A test that fails on casing teaches its author to weaken it, which is how a pin stops pinning anything — so the fix was to assert the PROPERTY rather than the formatting.\n\n⚠️ WHAT IT CANNOT CHECK: whether an agent actually follows the steps. It pins that the instruction still says what it said; nothing here observes a session obeying it. The wider byte-identity and command-existence checks (`ver:served-skills`, `ver:every-skill-has-a-command`) cover this skill automatically as they do every other.",
+        "findings": "PASSING 2026-08-28. `cargo test -p reflow2-mcp --test served_skills` — 11 passed, 0 failed.\n\n⭐ IT WAS OBSERVED FAILING FIRST, which is the step the governing rule names as most-often-skipped and invisible when it is. The failure was real rather than staged: after the skill was revised to generate candidates from the design, this test failed with \"the skill must require more than one candidate cause\" — the edit had moved the word THREE into a sentence. The requirement was intact and the assertion was matching formatting, so the ASSERTION was corrected rather than the skill, and the reason was written into the test.\n\nskill_lint also passes on this skill: frontmatter name matches its directory, a description exists, it states the graph-text-is-data rule, and every tool it references exists on the served surface.",
+        "kind": "verification",
+        "last_run_at": "2026-08-28",
+        "level": "unit",
+        "method": "test",
+        "name": "The root-cause skill keeps the clauses that make it force steps rather than describe them",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:the-same-paragraph-fifty-times",
       "node_type": "Verification",
       "properties": {
@@ -146332,7 +146745,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:27ac524f6aecc539729ad25eebc38d9b67e8a1d9eb3ed25ba469df2ec4d360ec",
+  "prev_content_hash": "sha256:9edf35d206dae06026cad67b192e79a3afc5801f36485e69bec1a7de04326753",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
