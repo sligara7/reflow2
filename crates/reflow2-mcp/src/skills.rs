@@ -17,6 +17,89 @@
 //! manifest read 0.8.0 with twelve skills while the project was at 0.11.0 with
 //! fifteen, and nothing anywhere noticed.
 
+/// One `##` section of the served instructions, addressable on its own.
+///
+/// **WHY THE INSTRUCTIONS ARE DIVISIBLE AT ALL.** Served as one ~27 KB payload
+/// they are, for some clients, undeliverable: Alex's Grok Build TUI reported
+/// receiving the first ~19.5 KB on 2026-08-18 and again on 2026-08-27, losing
+/// the gap-to-question handshake and the whole tool inventory both times. The
+/// agent could not know what it had lost, because a truncated document ends
+/// mid-sentence and says nothing about its own length.
+///
+/// The 2026-08-15 diagnosis (`fact:defect-the-served-instructions-put-their-
+/// standing-rules-where-a-client-cap-deletes-them`) proposed three shapes and
+/// this is two of them: sections a caller can fetch one at a time, and a stated
+/// total so a short read is DETECTABLE rather than silent. The third — putting
+/// the standing rules first — measured as already done, and that measurement
+/// corrects the fact: `## If reflow2 gets in your way, say so` sits at 63% and
+/// DID reach him. What he lost was the tail, not the rules.
+pub struct InstructionSection {
+    /// Slug from the heading, e.g. `the-loop` — what a caller passes.
+    pub slug: String,
+    /// The heading as written, without the `##`.
+    pub title: String,
+    /// The section text, heading included.
+    pub body: String,
+}
+
+/// Split the served instructions on their `##` headings.
+///
+/// Anything before the first `##` (the H1 and its preamble) becomes the
+/// `overview` section, so no byte of the document is unreachable by slug —
+/// a manifest that silently omits part of what it indexes is the same defect
+/// class this whole change exists to close.
+pub fn instruction_sections() -> Vec<InstructionSection> {
+    let mut out: Vec<InstructionSection> = Vec::new();
+    let mut cur_title = String::from("overview");
+    let mut cur_body = String::new();
+    for line in INSTRUCTIONS.lines() {
+        if let Some(rest) = line.strip_prefix("## ") {
+            if !cur_body.trim().is_empty() {
+                out.push(InstructionSection {
+                    slug: slugify(&cur_title),
+                    title: cur_title.clone(),
+                    body: cur_body.clone(),
+                });
+            }
+            cur_title = rest.trim().to_string();
+            cur_body = String::new();
+        }
+        cur_body.push_str(line);
+        cur_body.push('\n');
+    }
+    if !cur_body.trim().is_empty() {
+        out.push(InstructionSection {
+            slug: slugify(&cur_title),
+            title: cur_title,
+            body: cur_body,
+        });
+    }
+    out
+}
+
+/// Heading text to a stable, typeable slug.
+fn slugify(s: &str) -> String {
+    let mut out = String::new();
+    let mut last_dash = true;
+    for ch in s.chars() {
+        // Apostrophes VANISH rather than becoming separators: `reader's` must
+        // slug to `readers`, not `reader-s`. A slug is typed by a person
+        // reading the manifest, and a stray one-letter fragment reads like a
+        // typo in the tool rather than in the heading.
+        if ch == '\'' || ch == '\u{2019}' {
+            continue;
+        }
+        if ch.is_ascii_alphanumeric() {
+            out.push(ch.to_ascii_lowercase());
+            last_dash = false;
+        } else if !last_dash {
+            out.push('-');
+            last_dash = true;
+        }
+    }
+    out.trim_matches('-').to_string()
+}
+
 /// One skill, compiled in from `getting-started/skills/<name>/SKILL.md`.
 pub struct EmbeddedSkill {
     /// Directory name and frontmatter `name` — verified equal at build time.

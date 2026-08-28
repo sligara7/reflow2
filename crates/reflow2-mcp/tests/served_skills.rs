@@ -207,3 +207,82 @@ fn capture_intent_carries_a_routing_table_that_admits_where_it_runs_out() {
         );
     }
 }
+
+/// The instructions are divisible, and the division loses nothing.
+///
+/// The failure this guards is subtler than a wrong slug: a manifest that
+/// indexes only part of what it claims to index. If the preamble before the
+/// first `##` were dropped, `sections` would look complete while the standing
+/// rules — which live in exactly that region — were unreachable by slug, and a
+/// capped client following the manifest would never learn they existed.
+#[test]
+fn every_byte_of_the_instructions_is_reachable_by_some_section() {
+    use reflow2_mcp::skills::{INSTRUCTIONS, instruction_sections};
+
+    let sections = instruction_sections();
+    assert!(
+        sections.len() > 5,
+        "expected the instructions to divide into several sections, got {}",
+        sections.len()
+    );
+
+    let rejoined: String = sections.iter().map(|s| s.body.as_str()).collect();
+    assert_eq!(
+        rejoined.trim_end(),
+        INSTRUCTIONS.trim_end(),
+        "the sections must rejoin into the document byte for byte — a manifest \
+         that silently omits part of what it indexes is the defect this closes"
+    );
+
+    // The standing rules live before or near the top and must each be findable.
+    for slug in ["the-one-rule", "the-loop"] {
+        assert!(
+            sections.iter().any(|s| s.slug == slug),
+            "no section {slug:?}; slugs were: {:?}",
+            sections.iter().map(|s| &s.slug).collect::<Vec<_>>()
+        );
+    }
+
+    // Slugs are unique, or `section` would be ambiguous.
+    let mut slugs: Vec<&str> = sections.iter().map(|s| s.slug.as_str()).collect();
+    slugs.sort_unstable();
+    let before = slugs.len();
+    slugs.dedup();
+    assert_eq!(
+        before,
+        slugs.len(),
+        "section slugs must be unique: {slugs:?}"
+    );
+}
+
+/// The signpost names what the AGENT can do, not what the CLIENT should do.
+///
+/// `fact:the-signpost-instructs-a-party-that-cannot-act-and-the-absent-client-
+/// was-named`: the agent reads this string and cannot change its own harness,
+/// so an instruction addressed to the client named no action anybody could
+/// take. This pins the correction rather than trusting it to survive an edit.
+#[test]
+fn the_structured_only_signpost_gives_the_agent_something_it_can_actually_do() {
+    let stub = reflow2_mcp::service::structured_only_signpost();
+
+    for route in ["graph_report_markdown", "export_graph"] {
+        assert!(
+            stub.contains(route),
+            "the signpost must name {route}, which the agent CAN reach: {stub}"
+        );
+    }
+
+    // The honest bound, in the reporter's own terms. Presenting the workaround
+    // as a solution is how a defect stops being reported.
+    assert!(
+        stub.contains("search_design") && stub.contains("loop_status"),
+        "the signpost must say what export-and-parse does NOT replace: {stub}"
+    );
+
+    // It must not tell the reader to go and read a field its harness never
+    // forwards — that was the original defect.
+    assert!(
+        !stub.contains("read `structuredContent` instead"),
+        "the signpost must not instruct the client, which is not in the room: {stub}"
+    );
+}
