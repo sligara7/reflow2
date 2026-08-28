@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:1785db6c354095b10f77af3dac500468b0c26e5f7bfa9a29f2df0bfe3664d082",
+  "content_hash": "sha256:27ac524f6aecc539729ad25eebc38d9b67e8a1d9eb3ed25ba469df2ec4d360ec",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -871,6 +871,12 @@
     },
     {
       "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:the-defect-backlog-is-real-not-bookkeeping-residue",
+      "properties": {},
+      "to_id": "dec:idea-what-makes-a-field-report-owed"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
       "from_id": "fact:the-design-outward-blind-spot-appeared-in-three-independent-places",
       "properties": {
         "note": "the measurement behind option (a): nothing watched artifacts appearing"
@@ -1054,6 +1060,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:depends"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-declared-upstream-is-read-where-it-lies",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:upstream"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -3255,6 +3269,14 @@
       "from_id": "fact:field-friction-is-captured-and-then-owed-to-nobody",
       "properties": {},
       "to_id": "dec:idea-what-makes-a-field-report-owed"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:manual-work-46b68cd85cf97510",
+      "properties": {
+        "confidence": 1.0
+      },
+      "to_id": "dec:idea-how-does-a-session-ask-which-artifact-covers-a-file"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -9794,6 +9816,15 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "cap:a-declared-upstream-is-read-where-it-lies",
+      "properties": {
+        "acted_at": "2026-08-28",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "cap:atomic-requirement",
       "properties": {
         "acted_at": "2026-07-25",
@@ -10055,7 +10086,7 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:a-module-that-supplies-an-observation-holds-no-function-of-its-own",
       "properties": {
-        "acted_at": "2026-08-26",
+        "acted_at": "2026-08-28",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -11268,6 +11299,15 @@
       "from_id": "dec:idea-how-do-triage-findings-become-plannable-work",
       "properties": {
         "acted_at": "2026-08-16",
+        "role": "author"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-how-does-a-session-ask-which-artifact-covers-a-file",
+      "properties": {
+        "acted_at": "2026-08-28",
         "role": "author"
       },
       "to_id": "who:ajs"
@@ -13523,6 +13563,24 @@
         "role": "author"
       },
       "to_id": "who:storyflow-storybug-boss"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-report-can-name-what-was-talking-to-what",
+      "properties": {
+        "acted_at": "2026-08-28",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "req:a-report-can-name-what-was-talking-to-what",
+      "properties": {
+        "acted_at": "2026-08-28",
+        "role": "author"
+      },
+      "to_id": "who:claude-code"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -46244,6 +46302,12 @@
       "from_id": "dec:idea-the-hub-holds-a-copy-per-sub-repo-and-copies-go-stale",
       "properties": {},
       "to_id": "fact:the-hub-wants-what-an-accepted-requirement-already-half-built"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-what-makes-a-field-report-owed",
+      "properties": {},
+      "to_id": "fact:the-defect-backlog-is-real-not-bookkeeping-residue"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -99253,6 +99317,51 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:degraded-follows-transport",
+      "properties": {
+        "at": "2026-07-26",
+        "note": "BL-105 said the degraded surface ignores --http, so the outage it exists to explain went silent on the new transport. The fact's own closing clause reads \"FIXED 2026-07-26, same day\", and this ChangeEvent is that work — the degraded surface now follows the transport that was asked for. Edge drawn 2026-08-28 during the field-defect sweep; the closure was written in the fact's prose where no computation could read it."
+      },
+      "to_id": "fact:bl-105"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:lineage-message-names-its-decision",
+      "properties": {
+        "at": "2026-08-20",
+        "note": "BL-217's correction was that the export-lineage gate was RIGHT — it enforces dec:export-once-per-pr — but never NAMED the decision it was enforcing, so a reader hitting it could not tell a real violation from a gate bug. This ChangeEvent is that fix: the lineage gate now names dec:export-once-per-pr and admits a third cause. Edge drawn 2026-08-28 during the field-defect sweep."
+      },
+      "to_id": "fact:bl-217"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:omitting-last-run-at-no-longer-erases-it",
+      "properties": {
+        "at": "2026-08-09",
+        "note": "The fact records silent data loss — set_verification_status deleted last_run_at when the optional parameter was omitted — and its own text says \"FIXED 2026-08-09.\" This ChangeEvent is that work: the call stops deleting last_run_at when the parameter is omitted. Edge drawn 2026-08-28 during the field-defect sweep."
+      },
+      "to_id": "fact:defect-set-verification-status-erased-last-run-at"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:sidecar-loss-refused",
+      "properties": {
+        "at": "2026-08-07",
+        "note": "The fact opens \"CLOSED 2026-08-07, same day, by dec:sidecar-loss-guarded-by-store-evidence — the refusal now exists in code (identity::resolve_on_open + store_has_content), ver:sessions-cannot-cross-designs passes 5/5\". This ChangeEvent is that work. ⚠️ THE CLOSURE IS PARTIAL IN ONE NAMED WAY, stated on the fact itself: the refusal STOPS the loss but does not RECOVER a design already lost, because the id still cannot be read back off the store. This edge claims the recorded measurement is stale, not that the whole class is solved."
+      },
+      "to_id": "fact:defect-lost-identity-sidecar-opens-empty"
+    },
+    {
+      "edge_type": "INVALIDATES",
+      "from_id": "chg:the-gate-survives-a-directory-and-honours-its-exit-codes",
+      "properties": {
+        "at": "2026-08-19",
+        "note": "Reported by dev_storyflow's api-boss sidekick: reflow2_check.py crashed on a directory Artifact and reported the crash as \"GATE FAILED\". The fact says \"FIXED THE SAME DAY, both halves\" — a directory is now reported present-and-unhashable (no_baseline) rather than a fault, and faults stop being misfiled as gate failures. This ChangeEvent is that work. Edge drawn 2026-08-28 during the field-defect sweep."
+      },
+      "to_id": "fact:defect-the-gate-crashed-on-a-directory-artifact-and-misfiled-it-as-gate-failed"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:the-handshake-writes-down-who-connected",
       "properties": {
         "at": "2026-08-28",
@@ -103412,6 +103521,15 @@
       "edge_type": "REALIZES",
       "from_id": "art:upstream",
       "properties": {
+        "completeness": "complete",
+        "conformance": "unchecked"
+      },
+      "to_id": "cap:a-declared-upstream-is-read-where-it-lies"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:upstream",
+      "properties": {
         "conformance": "unchecked"
       },
       "to_id": "cmp:upstream"
@@ -103708,6 +103826,12 @@
     {
       "edge_type": "SATISFIES",
       "from_id": "cap:a-declared-dependency-is-watched-not-imported",
+      "properties": {},
+      "to_id": "req:design-dependencies-declared"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-declared-upstream-is-read-where-it-lies",
       "properties": {},
       "to_id": "req:design-dependencies-declared"
     },
@@ -105057,6 +105181,12 @@
       "from_id": "cap:the-graph-asks-what-a-session-made-false",
       "properties": {},
       "to_id": "req:the-graph-can-say-what-has-already-been-done"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:the-handshake-is-written-down-beside-the-graph",
+      "properties": {},
+      "to_id": "req:a-report-can-name-what-was-talking-to-what"
     },
     {
       "edge_type": "SATISFIES",
@@ -106759,6 +106889,12 @@
       "from_id": "ver:an-upstream-design-is-watched-not-imported",
       "properties": {},
       "to_id": "cap:a-declared-dependency-is-watched-not-imported"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:an-upstream-design-is-watched-not-imported",
+      "properties": {},
+      "to_id": "cap:a-declared-upstream-is-read-where-it-lies"
     },
     {
       "edge_type": "VERIFIES",
@@ -112866,6 +113002,16 @@
         "name": "A design says when the design it depends on has moved, without importing it",
         "provenance": "authored",
         "status": "verified"
+      }
+    },
+    {
+      "node_id": "cap:a-declared-upstream-is-read-where-it-lies",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Given the upstream exports this design named in its OWN committed manifest, opens each one, computes its content hash from content, and reports what was found — so the comparison living in `cmp:depends` has something to judge. Implemented in `crates/reflow2-mcp/src/upstream.rs`.\n\n⭐ WHY THIS IS A FUNCTION AND NOT AN IMPLEMENTATION DETAIL. `reflow2-core` does no file I/O, deliberately and repeatedly, so the module holding the judgement CANNOT open a file. This is the half that can. It is the same split `reconcile_dependencies` and `reconcile_artifacts` already make, where the caller supplies what it observed and the core judges it.\n\n⚠️ THREE PROHIBITIONS, EACH ONE LOAD-BEARING:\n- IT DOES NOT NAVIGATE. Every path opened is one this design pointed at ITSELF, in its own committed manifest. reflow2 does no file navigation; reading a self-declared path does not breach that rule, and searching for candidates would.\n- IT DOES NOT WRITE. Not the baseline, not a sync record. A read that refreshed what it compares against would report `moved` once and then go permanently quiet.\n- IT DOES NOT IMPORT. Importing a design into a store that already holds one keeps the HOST's name and upserts the incoming nodes into it, which ABSORBS the child — exactly what the hub case forbids. This looks without taking.\n\n⚠️ ABSENCE IS REPORTED, NEVER ASSUMED. `never_seen`, `missing`, `unreadable`, `graph_id_mismatch` and `not_observed` are distinct answers, so a pass that found nothing can never be read as a pass that found nothing WRONG. The pass is bounded at 16 exports and NAMES what it skipped.\n\n📌 IT SATISFIES THE SAME REQUIREMENT AS `cap:a-declared-dependency-is-watched-not-imported`, AND THAT IS DELIBERATE. `req:design-dependencies-declared` names two checks; \"has what I depend on moved since\" is unanswerable without this reading. Two capabilities against one requirement is the honest shape here — the requirement asks for a check, and the check has a judging half and a looking half. No new need was invented to justify this part.",
+        "name": "What a declared upstream actually holds is read where it lies — without navigating to it, writing to it, or taking it in",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -123141,9 +123287,9 @@
       "node_type": "Decision",
       "properties": {
         "decision": "🛑 RECORDED AS `proposed` DELIBERATELY, AND IT MUST STAY THERE UNTIL ANTHONY SAYS OTHERWISE. This is the agent's judgement about how to model its own work, not his word — the same call made for `dec:an-interchangeable-backend-is-named-by-its-contract-not-by-a-function` on 2026-08-25, and for the same reason. A PROPOSED ruling PARKS NOTHING (there is a test pinning exactly that), so `cmp:upstream` goes on being reported as a part holding no function until this is accepted or replaced. That is correct behaviour, not a leak.\n\n📌 The near-match offered was `cmp:upstream` itself — the PART this rules about. This is the ruling; that is the thing ruled on.\n\n═══ THE SITUATION ═══\n\n`cap:a-declared-dependency-is-watched-not-imported` is implemented across two modules. The JUDGEMENT — the declaration, the baseline, the comparison, what counts as `moved` — is in `crates/reflow2-core/src/depends.rs` (`cmp:depends`). The OBSERVATION — opening each declared upstream export and computing its content hash — is in `crates/reflow2-mcp/src/upstream.rs` (`cmp:upstream`). The split is FORCED: reflow2-core does no file I/O, deliberately and repeatedly.\n\nThe standing ruling (`chg:allocation-follows-the-code-not-the-neighbour`, 2026-08-25) says allocate to the module whose code implements the function, MOVE IT, DO NOT DUAL-ALLOCATE. Both halves are real code, so obeying it leaves one of the two modules empty whichever way it goes.\n\n═══ THE PROPOSAL ═══\n\nA module whose whole job is to SUPPLY AN OBSERVATION to a judgement living elsewhere is not an implementer of that judgement's function. It is the caller's half of a caller-supplies-the-observation split — the same shape in which `reconcile_dependencies` takes `observed` and `reconcile_artifacts` takes hashes. The function is \"does the design I depend on differ from what I recorded\"; reading a file is not that function, it is the material the function consumes.\n\nSo allocation stays on `cmp:depends`, and `cmp:upstream` is PARKED as deliberately empty.\n\n═══ WHAT WOULD MAKE THIS WRONG, and it is not a small objection ═══\n\n⚠️ **This is one loose reading away from a licence to leave anything empty.** \"It only supplies input to something else\" describes a great many modules, and applied loosely it becomes the excuse that quietly covers every unallocated part — the opposite of what the 2026-08-25 sweep achieved, which was to find 19 real functions hiding behind exactly that kind of reasoning. If accepted, the boundary must be stated tightly: NOT \"helps another module\", but \"performs the I/O a deliberate no-I/O boundary forbids the judging module from doing, and makes no judgement of its own.\"\n\n⚠️ **The alternative is not absurd.** `cmp:upstream` could carry a capability of its own — *\"another design's record is read without opening its store\"* — which is arguably a real function and is close to what `describe_designs` already does for `cmp:latent`. That means MORE parts and MORE capabilities, which cuts against the over-engineering instinct, but it is honest and needs no new ruling at all.\n\n⚠️ **AND IT IS A LIVE INSTANCE OF AN OPEN QUESTION.** `dec:idea-a-capability-is-a-set-of-functions-and-a-black-box-delivers-functions` asks whether a capability should be a SET of functions across several parts, with a black box delivering functions rather than capabilities. This is exactly that case, arriving from real work rather than from thinking about the model — and if that question is answered YES, this ruling becomes unnecessary, because the capability would name both functions and both parts would hold one.\n\n═══ OPTIONS ═══\n\n(a) ACCEPT this ruling and park `cmp:upstream`, with the tight boundary above written into it.\n(b) GIVE `cmp:upstream` ITS OWN CAPABILITY and allocate normally. No ruling needed; one more capability and one more part that is genuinely for something.\n(c) DUAL-ALLOCATE to both parts, amending the 2026-08-25 ruling for the multi-module case specifically. Honest about the code, and it should amend that ruling rather than quietly break it.\n(d) LEAVE IT UNALLOCATED AND UNRULED — reported as a defect until the black-box question is settled, on the grounds that a real open instance is more useful pressure on that question than a ruling that makes it comfortable.",
-        "name": "PROPOSED — a module that only SUPPLIES AN OBSERVATION to a judgement elsewhere holds no function of its own",
-        "rationale": "Raised because building `cap:a-declared-dependency-is-watched-not-imported` produced a genuinely empty part, and the standing allocation ruling gives no answer for a function that spans a deliberate architectural boundary. Left proposed because accepting it would be the agent ruling on the tidiness of its own work, which is precisely the case reserved for the user.\n\nThe counter-arguments are written at full strength rather than as caveats, because this ruling's failure mode is that it GENERALISES: \"supplies input to another module\" would excuse nearly any empty part, and the 2026-08-25 sweep found 19 real functions behind that kind of reasoning. Option (d) is listed as a real option for the same reason — an open instance may be worth more than a comfortable answer.",
-        "status": "proposed"
+        "name": "REJECTED — option (b) chosen instead: the reading half was given its own function, so no general rule about observation-suppliers was needed",
+        "rationale": "SETTLED BY ANTHONY, 2026-08-28: option (b) — give `cmp:upstream` its own capability — with the explicit instruction to DEFINE THE NEED FIRST rather than mint the capability and back-fill a reason.\n\n═══ WHY IT WAS RAISED (preserved from the original proposal, 2026-08-27) ═══\nRaised because building `cap:a-declared-dependency-is-watched-not-imported` produced a genuinely empty part, and the standing allocation ruling gives no answer for a function that spans a deliberate architectural boundary. Left proposed because accepting it would be the agent ruling on the tidiness of its own work, which is precisely the case reserved for the user. The counter-arguments were written at full strength rather than as caveats, because this ruling's failure mode is that it GENERALISES: \"supplies input to another module\" would excuse nearly any empty part, and the 2026-08-25 sweep found 19 real functions behind that kind of reasoning. Option (d) was listed as a real option for the same reason — an open instance may be worth more than a comfortable answer.\n\n═══ WHY (b) WON ═══\nThe proposal's own stated failure mode decided it: \"supplies input to another module\" describes a great many modules, and that reasoning has a 19-to-1 record of being the wrong read. A general rule with that record is a bad rule to accept off a single instance.\n\n(a) WAS ALSO THE WRONG TOOL. Under UAF/DoDAF a resource performs FUNCTIONS and a capability emerges from functions across resources, so \"reading a file is not a capability\" is defensible doctrine — but reflow2 has no `Function` type, so (a) would have been a doctrine rule papering over a schema limitation. (b) works honestly inside the vocabulary that actually exists.\n\n(c) was declined because it would break a working allocation ruling for one case. (d) was declined because parking a fully-explained defect as \"pressure\" degrades the defect list, and the pressure would have been aimed at adding a `Function` type to the schema — a change driven purely by reflow2's own design, which nobody using reflow2 has asked for. That is the wrench problem: do not reshape the tool because the tool's own model itched.\n\n⭐ THE NEED WAS DEFINED FIRST, AND IT WAS NOT A NEW ONE. `cap:a-declared-upstream-is-read-where-it-lies` satisfies the already-accepted `req:design-dependencies-declared`, whose statement names the check \"has what I depend on moved since\" — unanswerable without opening the upstream file. No requirement was invented to justify the part. The separation of the reading half from the judging half is an ARCHITECTURAL CONSTRAINT (reflow2-core does no file I/O), not a separate need, and constraints do not need their own requirements.\n\n📌 `dec:idea-a-capability-is-a-set-of-functions-and-a-black-box-delivers-functions` REMAINS OPEN and is untouched by this. It should be settled when a real user's design needs it, not because of one empty box in reflow2's own graph.",
+        "status": "rejected"
       }
     },
     {
@@ -124843,6 +124989,16 @@
         "decision": "**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Raised 2026-08-28 from a field report, not from thinking about reflow2.\n\n📌 The near-match offered was `fact:every-reply-was-sent-twice` — the MEASUREMENT that caused this, and the record of the choice made. This is the open question of what to do now that the choice has a named cost. Kept separate so the measurement stays a measurement.\n\n⚠️ **THE CONSTRAINT THAT BOUNDS EVERY OPTION:** reverting to always-duplicate resurrects the refusals. `detect_gaps` was 157,785 bytes on the wire and a harness refused it outright; 26,096 after the fix. **No option may give that back.**\n\n═══ OPTIONS, NONE CHOSEN ═══\n\n**(a) GATE ON THE NEGOTIATED PROTOCOL VERSION.** Duplicate into `content` only when the client negotiated below `2025-06-18`. This is what MCP's own backwards-compatibility SHOULD asks for, and it costs the 2× only for clients that need it. ⚠️ Counter, the one that killed this in August: priced at threading `RequestContext` through 155 handlers and 151 `ok_json` call sites. **That price has NOT been re-measured**, and two things bear on it — the version comparison already exists and is tested (`version_is_per_request`), and `json_result` is a single choke point, which is exactly the shape that made read-only cheap on 2026-08-26 when making `write_lock` fallible let the compiler find all 98 sites. ⚠️ **SECOND COUNTER, POSSIBLY FATAL: the reporting client may have negotiated a MODERN version and still read only `content`.** If so, gating on version would not have helped it at all.\n\n**(b) GATE ON SIZE, NOT VERSION.** Duplicate whenever the payload is small enough to be harmless — most replies are — and send the signpost only for the big ones. ⚠️ Counter: the failure becomes intermittent and size-dependent, which is worse to diagnose than a consistent one. A client would read most answers and silently lose the largest, which are the orientation calls that matter most.\n\n**(c) A SERVER FLAG** — `--duplicate-content`, set by whoever runs the server for such a client. Cheap, explicit, no protocol guessing. ⚠️ Counter: it must be DISCOVERED, and the person who needs it is reading a stub that does not mention it. That is the addressee problem again. Mitigated only if the stub itself names the flag.\n\n**(d) FIX THE SIGNPOST'S ADDRESSEE, and nothing else.** Rewrite the stub to speak to the AGENT, which is who reads it, naming what the agent can actually do: use `graph_report_markdown` and the prose tools, export to a file and read that, ask the operator for a flag. ⚠️ Counter: makes the outage survivable, not absent — the reporter's own words stand, that export-and-parse *'cannot replace `search_design` before a create, or `loop_status` before finishing.'* ⭐ But it is a one-string change that strictly improves every other option, so it is arguably complementary rather than alternative.\n\n**(e) DO NOTHING; IT IS THE CLIENT'S BUG.** The spec says SHOULD, not MUST. ⚠️ Counter: `rule:reflow2-is-built-for-other-projects-not-for-itself` makes field use the point, and this is field use. Declining should be explicit rather than by neglect.\n\n═══ ⚠️ WHAT MUST BE CHECKED BEFORE CHOOSING ═══\n\n1. **Which protocol revision did the reporting client negotiate?** The report does not say. If it is modern, option (a) is dead on arrival and the framing changes. **Cheapest and most decisive question here.** ⭐ ASKED 2026-08-28 — Anthony put it to Alex; an answer is expected within a day or so. `cap:the-handshake-is-written-down-beside-the-graph` was built the same day so the answer arrives in a file rather than requiring him to instrument his machine.\n\n   📌 **THE REFERENCE POINT TO READ HIS ANSWER AGAINST, measured 2026-08-28 on this repo's own server:** a known-good client — `claude-code 2.1.241` — requested and negotiated **`2025-11-25`**, and reads `structuredContent` without difficulty. So a modern revision in Alex's reply does NOT explain his outage and points at option (c) or (d); an old one (`2024-11-05`, `2025-03-26`) points at option (a). One line of his file decides it.\n\n2. **What does the ~300-line estimate cost today?** Made before anyone tried; the read-only precedent suggests a choke point plus the compiler may do most of it.\n3. **Is one client one client, or the first of several?** n=1 for the affected population — the mirror of the n=0 that justified the original decision.",
         "name": "OPEN — how does a client that reads only `content` get an answer, without resurrecting the 2× wire cost?",
         "rationale": "Raised because the field named the client the August decision was explicitly gambling did not exist: *'a large invasive change to protect a client nobody could name'*. The gamble was reasonable and it lost.\n\nThe constraint is stated before the options because the tempting move — put the payload back in `content` — undoes a measured 6× improvement and re-breaks the harnesses that drove it.\n\nOption (d) is flagged as complementary rather than alternative: the signpost speaks to the client while being read by the agent, and that is wrong regardless of which other option is chosen.\n\nLeft as brainstorming because question 1 can invalidate option (a) entirely and nobody has asked it. Choosing before asking would be the same mistake in a new costume.",
+        "status": "proposed"
+      }
+    },
+    {
+      "node_id": "dec:idea-how-does-a-session-ask-which-artifact-covers-a-file",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Raised 2026-08-28 by Anthony from `fact:manual-work-46b68cd85cf97510` — the same Python written three times in two days.\n\n═══ THE JOB ═══\n\nYou edit some files. Before re-taking baselines you must know **which registered Artifacts cover them**. Nothing answers that, so the work is: dump the export, build a `location → node_id` map, filter.\n\n═══ ⚠️ AND `search_design` DOES NOT MERELY FAIL — IT ANSWERS WRONGLY ═══\n\nMeasured 2026-08-28. Querying the exact path `crates/reflow2-mcp/src/tools/coherence.rs` against `node_type: Artifact` returns **`art:tools-capture`** first, then three unrelated core modules. The right answer, `art:tools-coherence`, is not in the top four.\n\nTHE CAUSE IS MEASURABLE: of 251 Artifacts, all carry a `location`; **203 have a short name, 22 carry the FULL PATH as their name, 26 are unrelated.** BM25 indexes name/statement/description and NOT `location` — so a path query scores best against the 22 whose *name* happens to be a path. **A wrong artifact returned confidently is worse than no answer**, because re-baselining the wrong one records a change against a file that did not move.\n\n═══ ⭐ THE SHARPEST FACT, AND IT SHAPES EVERY OPTION ═══\n\n`reconcile_artifacts` takes `observed: [{artifact_id, present, checksum}]` — **artifact_id, not path.** So the one tool that most needs this mapping REQUIRES the caller to already have it. The lookup is a precondition of the reconcile loop and is served by nothing.\n\n═══ OPTIONS, NONE CHOSEN ═══\n\n**(a) A NEW TOOL** — `artifacts_at(paths) -> [{path, artifact_id, ...}]`. Exact, unambiguous, obviously named. ⚠️ Counter: the surface is 164 tools and `find_tools` exists *because it is already too large to hold in context*. A 165th for a lookup is real cost, and `fact:the-upstream-watch-is-findable-only-in-reflow2s-own-words` says a new tool is only as good as its discoverability.\n\n**(b) INDEX `location` IN `search_design`.** One field into the BM25 index; the exact-path query then works. ⚠️ Counter, and it is the serious one: search is FUZZY AND RANKED, and this question wants EXACT. A ranked answer invites precisely the confident-wrong-answer measured above — it would rank better, not become correct. It also changes every other query's behaviour.\n\n**(c) LET `reconcile_artifacts` ACCEPT A PATH** where it now demands an `artifact_id`, resolving it itself. ⭐ Puts the answer where the need is, adds no tool, and removes the chicken-and-egg from the loop's own reconcile step. ⚠️ Counter: an ambiguous or unmatched path needs a defined answer, and silently skipping one would be a green report over a file nobody checked — the exact failure class this project keeps finding.\n\n**(d) EXTEND `coverage_report`.** It already takes observed paths and walks the same data, reporting what NO node claims. Making it also report what IS claimed, and by which artifact, is the inverse of what it computes. ⚠️ Counter: its whole framing is \"what is the design blind to\", and answering both may blur a tool whose value is that single question.\n\n**(e) DO NOTHING — it is `scan_nodes` plus a filter.** True, and it is what happened three times. ⚠️ Counter: 251 artifacts against a size-capped reply means paging, and the caller re-implements the join every time.\n\n═══ ⚠️ WHAT SHOULD BE CHECKED BEFORE CHOOSING ═══\n\n1. **Is the artifact naming inconsistency a separate defect worth fixing on its own?** 22 of 251 carry a path as their name. That is what poisons the search, and it may deserve a ruling regardless of which option here wins.\n2. **How often is this actually needed?** n=3 in two days, one person, one project. The `report_manual_work` record is the only evidence, and it is the same n=1-shaped evidence base that `dec:idea-should-a-finding-be-required-to-bound-its-own-claim` warns about designing against.\n3. **Does (c) subsume the need entirely?** If the only real consumer is the reconcile step, a lookup tool nobody else calls is a 165th tool for one caller.",
+        "name": "OPEN — how does a session ask \"which artifact covers this file?\" — a new tool, or a field the existing ones already need?",
+        "rationale": "Raised because the work was hand-rolled three times in two days and `report_manual_work` recorded it as `tool_missing` — a diagnosis re-checked here rather than trusted: `find_tools` was run first, and `search_design` was then tested against a real path and returned the WRONG artifact, which strengthens the case rather than weakening it.\n\nThe options are ordered from most obvious to least, and the most obvious one is listed with the strongest counter: a 165th tool on a surface already too large to hold is not free, and this project has just measured that a new tool is only as useful as it is findable.\n\nOption (c) is flagged because of a fact neither the friction report nor the original diagnosis noticed: `reconcile_artifacts` demands `artifact_id`, so the missing lookup is a precondition of the loop's own reconcile step rather than a convenience beside it.\n\nLeft as brainstorming, and the second thing to check says why: the evidence is one person, one project, three occurrences. That is thin ground for growing a surface.",
         "status": "proposed"
       }
     },
@@ -135007,6 +135163,18 @@
       }
     },
     {
+      "node_id": "req:a-report-can-name-what-was-talking-to-what",
+      "node_type": "Requirement",
+      "properties": {
+        "lineage": "original",
+        "name": "A person reporting a problem can name what was talking to what, without going through the channel that may be broken",
+        "priority": "medium",
+        "provenance": "authored",
+        "statement": "When someone reports a problem with reflow2, they SHALL be able to state which client connected, which server answered, and which protocol revision the two agreed to speak — read from a record the server itself wrote at connection time, rather than assembled by hand from whatever files happen to be nearby.\n\nThat record SHALL be reachable without a working structured tool reply, because the channel being reported on may itself be the fault.\n\nIt SHALL record what the negotiated revision CONTAINS, and SHALL NOT assert what the client actually reads: a negotiated version is what a client claims to speak, never evidence of what it implemented.\n\nDriven by the 2026-08-27 field report, which had to hand-assemble a four-row table of sources to answer this question, one of which was stale and misleading.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran",
       "node_type": "Requirement",
       "properties": {
@@ -142551,6 +142719,20 @@
       }
     },
     {
+      "node_id": "fact:the-defect-backlog-is-real-not-bookkeeping-residue",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "name": "THE SWEEP'S ANSWER: only 5 of 191 open defect-facts were fixed-but-unclosed — the backlog is REAL, not bookkeeping residue, and option (d)'s premise is FALSE at scale",
+        "statement": "MEASURED 2026-08-28 over the committed export, answering the question dec:idea-what-makes-a-field-report-owed named as the one that must be settled BEFORE choosing a remedy: 'How many of the 189 are actually live?'\n\nTHE ANSWER: almost all of them. 192 TemporalFacts carry fact_type=defect; 191 had no inbound INVALIDATES at sweep start. A text scan found fix-language anywhere in 28 of the 191. Reading those 28 in context rather than trusting the keyword — the discipline fact:a-findings-name-can-claim-more-than-its-data demands — only about 10 declare THEIR OWN closure, and only 5 had a ChangeEvent recording the work that did it. Those 5 are now closed with edges: bl-105, bl-217, the lost identity sidecar, set_verification_status erasing last_run_at, and the gate crashing on a directory artifact.\n\n⭐⭐ SO OPTION (d) IS REFUTED AS A REMEDY, THOUGH IT WAS RIGHT AS A FIRST MOVE. Its premise was 'much of the 189 is surely fixed with nobody having drawn the edge'. That was true for 5 of 191 — 2.6%. Sweeping does NOT leave a backlog small enough to read without machinery, and any debt class designed on the assumption that the raw count is inflated by bookkeeping would be designed against a number that is very nearly the real one.\n\n⭐ THE SECOND FINDING, AND IT EXPLAINS THE 8-EDGE TOTAL: THE CLOSURE CONVENTION HAS BEEN PROSE INSIDE THE FACT, NOT AN EDGE. The closed records were REWRITTEN in place — they open 'CLOSED 2026-08-07, same day, by...' or 'FIXED 2026-08-09.' and several then carry '--- ORIGINAL RECORD FOLLOWS ---'. A human reading the fact knows it is closed; no computation does. So the loop was not failing to record closures. It was recording them somewhere nothing can read, which is the same shape as fact:the-upstream-watch-is-findable-only-in-reflow2s-own-words.\n\n⚠️ TWO CLASSES THE SWEEP COULD NOT CLOSE, AND BOTH ARE HONEST REFUSALS RATHER THAN OMISSIONS:\n- FIXED ON MAIN, NOT YET RELEASED (fact:defect-create-node-merge-versus-replace-is-fixed-but-unreleased, fact:defect-loop-status-next-routes-to-the-destructive-skill). The code is right and every consumer still hits the bug. Closing these would tell a user running a release that their live defect is stale. Left open deliberately; this is a judgement for Anthony, not a bookkeeping call.\n- SELF-CORRECTED IN PLACE, NOTHING TO POINT FROM (fact:defect-documented-hook-path-may-not-exist, fact:defect-set-artifact-checksums-accepts-a-malformed-digest). Both were MISDIAGNOSES — the reported harm does not occur — corrected by measurement written into the same node. There is no ChangeEvent because no code changed, and minting a node purely to host an edge would be bureaucracy. The convention has no answer for a finding that was simply wrong.\n\n⭐ AND THE RECORDS ARE MORE DISCIPLINED THAN THE RAW COUNT SUGGESTS. At least six say plainly why they stay open: 'Left OPEN rather than closed, because only half of it moved'; 'Closing it here would report a class as fixed on the evidence of one case'; 'NOT FIXED HERE, and deliberately'. Nobody has been letting fixed things rot on the list. The list is long because the work is genuinely undone.\n\n⚠️ WHAT THIS DOES NOT ESTABLISH: whether the ~181 still-open items are individually still true. This sweep measured which records CLAIM their own closure, not which defects a fresh test would still reproduce. Establishing that means re-running each against current code, which nobody has done and which this fact must not be read as having done.",
+        "subject_id": "dec:idea-what-makes-a-field-report-owed",
+        "valid_from": "2026-08-28",
+        "value": "{\"defect_facts\":192,\"open_at_sweep_start\":191,\"fix_language_anywhere\":28,\"self_declared_closed\":10,\"closed_with_edges\":5,\"share_that_was_bookkeeping\":\"2.6%\",\"fixed_on_main_unreleased\":2,\"self_corrected_no_source_node\":2,\"invalidates_edges_before\":9,\"invalidates_edges_after\":14}"
+      }
+    },
+    {
       "node_id": "fact:the-degraded-surfaces-diagnosis-never-reaches-a-by-name-caller",
       "node_type": "TemporalFact",
       "properties": {
@@ -146084,7 +146266,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:a91291f21c4deb4e0918bcd076a384611f865b20ca371f81fcb95f2f5b9effe7",
+  "prev_content_hash": "sha256:1785db6c354095b10f77af3dac500468b0c26e5f7bfa9a29f2df0bfe3664d082",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
