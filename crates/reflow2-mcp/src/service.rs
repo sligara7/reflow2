@@ -732,11 +732,45 @@ pub(crate) fn read_debt_summary(s: &LoopStatus) -> String {
 /// **It says nothing about the design.** It is addressed to whoever is reading
 /// the wrong field, and its only job is to name the right one.
 ///
+/// ⚠️ **IT IS ADDRESSED TO THE AGENT, NOT TO THE CLIENT, AND THAT IS THE 2026-08-28
+/// CORRECTION.** The first version said *"your client is reading `content`… read
+/// `structuredContent` instead"* — an instruction aimed at a party that is not in
+/// the room. The thing that READS this string is the agent, and an agent cannot
+/// change its own harness, so for exactly the population the signpost was written
+/// for it named no action anybody could take. Alex's Grok Build TUI report
+/// (2026-08-27) is the measured case: ~26 tools returned this stub and nothing
+/// else, and his session spent its turns on log archaeology because the sentence
+/// told it to do the one thing it could not do.
+///
+/// So it now names what the AGENT can do, and says plainly where those routes
+/// fall short — his own words, kept because they are the honest bound: export
+/// and parse *"cannot replace `search_design` before a create, or `loop_status`
+/// before finishing."* A workaround presented as a solution is how a defect
+/// stops being reported.
+///
 /// The payload's SIZE is deliberately not in here. Measuring it means
 /// serializing the whole reply a second time purely to produce a number, on the
 /// exact replies where that is most expensive — and the sentence is actionable
 /// without it.
-pub(crate) const STRUCTURED_ONLY: &str = "This reply's payload is in `structuredContent`.      reflow2 no longer duplicates it into `content`, because sending every reply twice was the      difference between an answer a client could read and one it refused outright. If you are      reading this string, your client is reading `content` for a tool that declares structured      output: read `structuredContent` instead. Prose tools (graph_report_markdown and its      siblings) are unaffected and still return their document here.";
+pub(crate) const STRUCTURED_ONLY: &str = "This reply's payload is in `structuredContent`. \
+     reflow2 stopped duplicating it here because sending every reply twice was the difference \
+     between an answer a client could read and one it refused outright. IF THIS SENTENCE IS ALL \
+     YOU CAN SEE, your harness forwards only `content` and you cannot change that from where you \
+     are standing — so do this instead: the PROSE tools return their whole document in this field \
+     (`graph_report_markdown`, `get_instructions`, `get_skill`, `list_skills`), and REFUSALS \
+     arrive here in full, so a rejected call still tells you why; for anything else, call \
+     `export_graph` with a `path` and read the file you just wrote. Then tell whoever runs this \
+     server, because that file is a post-hoc check and not a read: it cannot replace \
+     `search_design` before you create a node, or `loop_status` before you finish.";
+
+/// The signpost text, for tests and for anything that needs to assert what a
+/// `content`-only client actually receives.
+///
+/// Exposed because the guarantee is not "a string exists" but "the string names
+/// a route the AGENT can take" — and that is only checkable from outside.
+pub fn structured_only_signpost() -> &'static str {
+    STRUCTURED_ONLY
+}
 
 /// Build the tool result from an already-enveloped object: the payload as
 /// `structuredContent`, and a one-line signpost in `content`.

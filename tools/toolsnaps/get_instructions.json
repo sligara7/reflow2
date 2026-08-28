@@ -2,10 +2,20 @@
   "annotations": {
     "readOnlyHint": true
   },
-  "description": "How to work THIS project with reflow2: the loop, the standing rules, and what to do first on an existing design. Served by the server rather than stored in the project, so it always matches the reflow2 you are talking to. Read it before the first design action of a session — the file in the repo is only a pointer here.",
+  "description": "How to work THIS project with reflow2: the loop, the standing rules, and what to do first on an existing design. Served by the server rather than stored in the project, so it always matches the reflow2 you are talking to. Read it before the first design action of a session — the file in the repo is only a pointer here. IT IS ~27 KB AND SOME CLIENTS CAP A TOOL RESULT, so every reply states `total_bytes` and a `sections` manifest: if what you hold is shorter than `returned_bytes`, your client truncated it and you can fetch the rest a section at a time with `section`. A capped read used to be silent, and what it removed was the tail — the gap→question handshake and the whole tool inventory.",
   "inputSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
+    "properties": {
+      "section": {
+        "default": null,
+        "description": "One section slug from the `sections` manifest, e.g. `the-loop`.\n\n**THIS EXISTS BECAUSE THE WHOLE DOCUMENT DOES NOT ALWAYS ARRIVE.** It is\n~27 KB, and a client-side result cap silently keeps the front of it: a\nreal consumer received the first ~19.5 KB twice, nine days apart, losing\nthe gap-to-question handshake and the entire tool inventory both times,\nwith nothing in the reply disagreeing with what it held.\n\nOmit it for the whole document plus the manifest. Pass it to fetch one\npart at a time, which is the path that works on a capped client. An\nunknown slug is REFUSED and lists the legal ones rather than returning\nan empty document, because a section that came back blank and a section\nthat does not exist must not be the same answer.",
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
     "type": "object"
   },
   "name": "get_instructions"

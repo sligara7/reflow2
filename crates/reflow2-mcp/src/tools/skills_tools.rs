@@ -36,7 +36,23 @@ pub struct ListSkillsReq {}
 
 #[derive(Debug, serde::Deserialize, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
-pub struct GetInstructionsReq {}
+pub struct GetInstructionsReq {
+    /// One section slug from the `sections` manifest, e.g. `the-loop`.
+    ///
+    /// **THIS EXISTS BECAUSE THE WHOLE DOCUMENT DOES NOT ALWAYS ARRIVE.** It is
+    /// ~27 KB, and a client-side result cap silently keeps the front of it: a
+    /// real consumer received the first ~19.5 KB twice, nine days apart, losing
+    /// the gap-to-question handshake and the entire tool inventory both times,
+    /// with nothing in the reply disagreeing with what it held.
+    ///
+    /// Omit it for the whole document plus the manifest. Pass it to fetch one
+    /// part at a time, which is the path that works on a capped client. An
+    /// unknown slug is REFUSED and lists the legal ones rather than returning
+    /// an empty document, because a section that came back blank and a section
+    /// that does not exist must not be the same answer.
+    #[serde(default)]
+    pub section: Option<String>,
+}
 
 #[derive(Debug, serde::Deserialize, schemars::JsonSchema)]
 #[serde(deny_unknown_fields)]
@@ -127,18 +143,55 @@ impl ReflowService {
                        what to do first on an existing design. Served by the server rather than \
                        stored in the project, so it always matches the reflow2 you are talking to. \
                        Read it before the first design action of a session — the file in the repo \
-                       is only a pointer here.",
+                       is only a pointer here. IT IS ~27 KB AND SOME CLIENTS CAP A TOOL RESULT, \
+                       so every reply states `total_bytes` and a `sections` manifest: if what you \
+                       hold is shorter than `returned_bytes`, your client truncated it and you \
+                       can fetch the rest a section at a time with `section`. A capped read used \
+                       to be silent, and what it removed was the tail — the gap→question \
+                       handshake and the whole tool inventory.",
         annotations(read_only_hint = true)
     )]
     pub async fn get_instructions(
         &self,
-        Parameters(_): Parameters<GetInstructionsReq>,
+        Parameters(req): Parameters<GetInstructionsReq>,
     ) -> Result<CallToolResult, McpError> {
+        let sections = crate::skills::instruction_sections();
+        let manifest: Vec<serde_json::Value> = sections
+            .iter()
+            .map(|s| json!({"section": s.slug, "title": s.title, "bytes": s.body.len()}))
+            .collect();
+
+        let (body, returned_section) = match req.section.as_deref() {
+            None => (INSTRUCTIONS.to_string(), None),
+            Some(want) => {
+                let Some(hit) = sections.iter().find(|s| s.slug == want) else {
+                    let legal: Vec<&str> = sections.iter().map(|s| s.slug.as_str()).collect();
+                    return Err(McpError::invalid_params(
+                        format!(
+                            "get_instructions: no section {want:?}. The sections are: {}. \
+                             Call with no `section` for the whole document and this manifest.",
+                            legal.join(", ")
+                        ),
+                        None,
+                    ));
+                };
+                (hit.body.clone(), Some(hit.slug.clone()))
+            }
+        };
+
         structured(json!({
-            "instructions": INSTRUCTIONS,
+            "instructions": body,
+            "section": returned_section,
+            "sections": manifest,
+            "total_bytes": INSTRUCTIONS.len(),
+            "returned_bytes": body.len(),
             "note": "Served from the reflow2 binary (req:thin-install), so upgrading reflow2 \
                      changes these instructions without changing anything in your repository. \
-                     The skills they refer to come from list_skills / get_skill.",
+                     The skills they refer to come from list_skills / get_skill. \
+                     ⚠️ IF `instructions` IS SHORTER THAN `returned_bytes`, YOUR CLIENT CAPPED \
+                     IT — this reply states its own length so a short read is detectable \
+                     instead of silent. Fetch the parts you are missing with \
+                     get_instructions {\"section\": \"<slug from sections>\"}.",
         }))
     }
     /// What design lives at each of these paths — without opening any of them.
