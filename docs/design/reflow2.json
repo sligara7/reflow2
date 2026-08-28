@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:dea84fd924e991db3de8d9d1b5074805a24e10e0b5dedb47db804a332a8f3f74",
+  "content_hash": "sha256:a91291f21c4deb4e0918bcd076a384611f865b20ca371f81fcb95f2f5b9effe7",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -920,6 +920,12 @@
       "from_id": "fact:the-modules-are-acyclic-but-the-declared-subsystems-are-not",
       "properties": {},
       "to_id": "req:modularity-computed"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:the-overreach-is-n1-of-312-and-89-percent-of-facts-have-no-name-at-all",
+      "properties": {},
+      "to_id": "fact:a-findings-name-can-claim-more-than-its-data-and-the-name-is-what-search-returns"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -46080,6 +46086,12 @@
       "from_id": "dec:idea-need-to-know-compartments",
       "properties": {},
       "to_id": "fact:the-hosted-case-breaks-the-git-transport-and-the-access-topology-is-now-stated"
+    },
+    {
+      "edge_type": "HAS_TEMPORAL_FACT",
+      "from_id": "dec:idea-should-a-finding-be-required-to-bound-its-own-claim",
+      "properties": {},
+      "to_id": "fact:the-overreach-is-n1-of-312-and-89-percent-of-facts-have-no-name-at-all"
     },
     {
       "edge_type": "HAS_TEMPORAL_FACT",
@@ -99127,6 +99139,15 @@
       "to_id": "fact:no-uncontaminated-sample-of-a-well-decomposed-design-exists-yet"
     },
     {
+      "edge_type": "INVALIDATES",
+      "from_id": "fact:the-overreach-is-n1-of-312-and-89-percent-of-facts-have-no-name-at-all",
+      "properties": {
+        "at": "2026-08-27",
+        "note": "SHARPENS IT, AND RETIRES EXACTLY ONE CLAUSE. That fact's name reads \"n=1, MECHANISM IDENTIFIED, PREVALENCE UNMEASURED\". The sweep it asked for has now been run: PREVALENCE IS MEASURED, and it is 1 of 312. Its own \"n=1\" was right and its \"nobody has counted\" is now false. Nothing else in it changes.\n\n⭐ WHAT THE COUNT ADDS RATHER THAN CORRECTS, and it is bigger than what was counted: 279 of 312 facts carry NO `name`, so for 89% the handle a reader meets is the ID — and `name` is not a declared property of TemporalFact at all. Its mechanism sentence, \"search_design returns the name rather than the bounded body\", is TRUE and covers a ninth of the cases.\n\n⚠️ AND THE COUNT WEAKENS ITS IMPLIED URGENCY, which is the honest reading. Stage 2 found the discipline mostly WORKING: a fact using the identical phrase \"by construction\" bounds its own headline explicitly and is not an overreach at all. A lint on that phrase would have fired on correct work.\n\n🛑 WHAT STILL STANDS ENTIRELY: the mechanism, the exemplar, the observation that the exemplar bounded a different claim than its name, and the reading of `dec:reflow2-is-built-for-observability` as a rule stated about detectors and never about the design's own records. That last is untouched and is the part worth keeping."
+      },
+      "to_id": "fact:a-findings-name-can-claim-more-than-its-data-and-the-name-is-what-search-returns"
+    },
+    {
       "edge_type": "MITIGATES",
       "from_id": "chg:write-buffer-gets-an-index-and-hydrate-drops-tenfold",
       "properties": {
@@ -142389,6 +142410,19 @@
       }
     },
     {
+      "node_id": "fact:the-overreach-is-n1-of-312-and-89-percent-of-facts-have-no-name-at-all",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "description": "⭐ THE COUNT ANSWERS ITS OWN QUESTION AND THE ANSWER IS: DO NOTHING TO THE SCHEMA. `dec:idea-should-a-finding-be-required-to-bound-its-own-claim` said the honest first move was a count, and that at n=1 the schema should not move. The count came back n=1. Option (a) — write better names — is the answer to the question as asked.\n\n⭐⭐ BUT THE COUNT RE-WEIGHTS THE OPTIONS, BECAUSE IT FOUND A DIFFERENT PROBLEM UNDERNEATH.\n\n**1. `name` IS NOT A DECLARED PROPERTY OF TemporalFact.** The schema declares `subject_id` (required), `basis`, `confidence`, `fact_type`, `statement`, `valid_from`, `valid_to`, `value`. There is no `name` and no `description`. Writing either returns `undeclared` from `create_node` — the store is a property bag on purpose, so the write succeeds. **That is exactly the 33/279 split**: facts written through a typed path have no name; facts written by hand with one do. So `search_design` displays a field the vocabulary does not declare, and for most facts it is empty.\n\n**2. AN OVERREACH BAKED INTO AN ID CANNOT BE CORRECTED.** reflow2 has no rename operation, and `dec:bl83a-functional-decomposition` records the reasoning for living with a misleading prefix rather than migrating: a rename destroys the node's snapshot history. The exemplar carries its overreach in BOTH fields — `...vocabularies-that-never-meet` — and only one of them is editable. A naming discipline reaches names; nothing reaches ids.\n\n**3. SO THE REMEDY RANKING IN THE OPEN QUESTION WAS WRONG WAY ROUND.** A lint on names would cover 33 of 312. Changing what `search_design` RETURNS — ranked weakest there, on the grounds that it trades the cheapest read in the loop for a problem measured once — is the only option that reaches the 89%. That counter still stands on cost; what has changed is the coverage it is weighed against.\n\n═══ ⭐ THE COUNTER-EXAMPLE, WORTH MORE THAN THE COUNT ═══\n\n`fact:a-functional-carving-does-not-match-the-coupling-and-was-never-going-to` uses **the same phrase** — 'a layered carving maximises cross-group edges BY CONSTRUCTION' — and is NOT an overreach. That claim is a real structural property of layering measured against undirected modularity, and the body carries an explicit '⚠️ BOUNDS' paragraph plus *'do not read this fact as evidence the split was wrong; read it as evidence that this is the wrong instrument for judging it.'* **The discipline works when it is practised, and it is mostly practised.** A lint on the phrase would have fired on this one and been wrong.\n\n═══ ⚠️ WHAT THIS COUNT DOES NOT ESTABLISH ═══\n\n- **Stage 1 is a PROXY with unknown recall.** It screens for law-shaped WORDS. A name that overstates its data without using any of them is invisible to it, and nobody has estimated how many that misses. The n=1 is a floor, not a total.\n- **One design, one reader.** Stage 2 was judged by the same session that wrote the finding, which is the weakest form of review available.\n- **It says nothing about other node types.** Verifications, Decisions and Requirements were not screened; only TemporalFacts.\n- **Two borderline cases were judged NOT confirmed and could go the other way**: `fact:a-capability-delivered-as-a-model-change-can-never-be-reported-delivered` and `fact:defect-a-question-not-created-by-gap-to-prompt-can-never-be-answered` both say 'can never' about a mechanism read from source. That is ordinary engineering speech about current code rather than a claim about impossibility, but a stricter reader would count them and get n=3.",
+        "fact_type": "property",
+        "name": "THE COUNT: overreach is 1 of 312 — but 279 of 312 facts have NO NAME, so for 89% the handle a reader meets is the immutable ID, and `name` is not even a declared property",
+        "statement": "SWEEP RUN 2026-08-27 on Anthony's ask, over all 312 TemporalFacts in this design. TWO STAGES, because 'claims more than its data' is a JUDGEMENT and a word-search is only a proxy for it. Stage 1, lexical screen for law-shaped language on the handle a reader actually meets: 49 of 312. Stage 2, reading them: almost all are ordinary defect reports — 'add_verification cannot reach its own fields' is true and specific, not a claim about impossibility in principle. ONE survives judgement: `fact:coupling-and-contract-are-recorded-in-vocabularies-that-never-meet`, the original. n=1 of 312.\n\nAND THE SWEEP FOUND SOMETHING LARGER THAN WHAT IT WAS COUNTING: 279 of the 312 carry NO `name` at all. Confirmed against a live `search_design` call, which returns `name: \"\"` plus the `node_id`. So for 89% of this design's facts the sentence a reader meets is the ID.",
+        "subject_id": "fact:a-findings-name-can-claim-more-than-its-data-and-the-name-is-what-search-returns",
+        "valid_from": "2026-08-27"
+      }
+    },
+    {
       "node_id": "fact:the-owner-uses-reflow2-as-a-funnel-for-random-order-input",
       "node_type": "TemporalFact",
       "properties": {
@@ -145572,7 +145606,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:07424da4f5ef62fa05f3d99fba899427174ea2bb90198a001b2beb49b6e9039c",
+  "prev_content_hash": "sha256:dea84fd924e991db3de8d9d1b5074805a24e10e0b5dedb47db804a332a8f3f74",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
