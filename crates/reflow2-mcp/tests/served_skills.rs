@@ -286,3 +286,62 @@ fn the_structured_only_signpost_gives_the_agent_something_it_can_actually_do() {
         "the signpost must not instruct the client, which is not in the room: {stub}"
     );
 }
+
+/// The root-cause skill is served, and it FORCES rather than exhorts.
+///
+/// The failure it exists to stop is an agent taking the first plausible
+/// explanation and building against it. A rule already said to do RCA
+/// (`rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed`, advisory)
+/// and its own text records that the fix which prompted it skipped the
+/// load-bearing step. What distinguishes a skill is that it is pulled at the
+/// moment of the work and names ACTIONS — so this pins the three steps whose
+/// removal would turn it back into prose somebody nods along with.
+#[test]
+fn the_root_cause_skill_forces_the_steps_that_stop_a_premature_fix() {
+    let skill = reflow2_mcp::skills::SKILLS
+        .iter()
+        .find(|s| s.name == "root-cause")
+        .expect("root-cause must be served");
+
+    // The discriminating-measurement step is the whole point. A confirming
+    // observation is consistent with any plausible cause; only a refuting one
+    // carries information.
+    assert!(
+        skill.body.contains("REFUTE") || skill.body.contains("refute"),
+        "the skill must demand a measurement that could REFUTE a candidate"
+    );
+
+    // A single hypothesis wins by default, and winning feels like understanding.
+    // Matched case-insensitively ON PURPOSE: an earlier version of this assertion
+    // pinned the literal "THREE" and failed on an edit that moved the word into a
+    // sentence while keeping the requirement exactly. A test that fires on casing
+    // teaches you to weaken it, which is how a pin stops pinning anything.
+    let body_lower = skill.body.to_lowercase();
+    assert!(
+        body_lower.contains("three is a floor"),
+        "the skill must state that three candidate causes is a FLOOR, not a target"
+    );
+
+    // And the candidates must be GENERATED from the design rather than recalled —
+    // "think of three" invites two real ones and a filler that exists to satisfy
+    // the instruction. The bones are what make the third one evidence.
+    assert!(
+        body_lower.contains("granularity_report") && body_lower.contains("coverage_report"),
+        "the skill must name the calls that turn the design into candidate causes"
+    );
+
+    // Pinning the instance fixes today and leaves the class open — this is the
+    // step the governing rule names as most-often-skipped and invisible when it is.
+    assert!(
+        skill.body.contains("FAILS TODAY") || skill.body.contains("fail"),
+        "the skill must require a test observed failing before the fix"
+    );
+
+    // It must not silently diverge from the rule that carries the user's word.
+    assert!(
+        skill
+            .body
+            .contains("rule:an-issue-is-root-caused-then-pinned-by-a-test-then-fixed"),
+        "the skill must name the rule it executes, so the two cannot drift apart unnoticed"
+    );
+}
