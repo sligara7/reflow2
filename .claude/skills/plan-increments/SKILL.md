@@ -1,6 +1,7 @@
 ---
 name: plan-increments
 description: Use when the user asks what to do next, in what order, or what goes in which release — "what's the plan", "what ships in v2", "do these in this order", a numbered list of upcoming work, or when work has been agreed and nothing says when it lands. Also use when you catch yourself keeping a to-do list in the conversation: that is a delivery plan, and it belongs in the graph where everyone can see it.
+metadata: {composes: [STANDING, WRITES, MINTS]}
 ---
 
 # Plan the delivery, on the record
@@ -104,3 +105,10 @@ were never closed, and work that exists and is scheduled nowhere.
 
 `loop_status`. Planning is capture, and capture owes the loop a gap pass — a newly scheduled
 increment usually surfaces requirements nobody has satisfied yet, which is the plan doing its job.
+
+## Before you write
+
+**Search before you create.** An increment or Release for this work may already
+exist from an earlier planning pass — `search_design` for its name and its
+scope first. Two Releases covering the same work make "what ships in v2"
+unanswerable, which is the one question this skill exists to answer.

@@ -1,6 +1,7 @@
 ---
 name: detect-and-ask
 description: Use before building, and after capturing new intent, to find gaps in the design and ask the user about them. Runs reflow2's detect_gaps, phrases each gap as a plain question via the gap_to_prompt handshake, and writes the answers back — so decisions are explicit, not silently guessed.
+metadata: {composes: [STANDING, WRITES, MINTS, REPORTS]}
 ---
 
 # Detect gaps and ask the user
@@ -142,3 +143,10 @@ guessed now is a silent decision that breaks later.
 returning what the loop is owed right now — gaps never surfaced, questions waiting or
 answered-but-unwritten, unproven claims. Fire it whenever you have been writing to the graph
 mid-task; an empty `next` list is the only licence to skip this workflow.
+
+## Before you write the answer back
+
+**Search before you create.** An answer often implies a node — a Decision, a
+Requirement the user has just stated in passing. `search_design` first: the
+design may already say it, and a second copy of an accepted decision is worse
+than none, because a later reader cannot tell which one is governing.

@@ -1,6 +1,7 @@
 ---
 name: impact-check
 description: Use BEFORE changing or removing anything in an existing design — a new feature, a tweaked requirement, "what if we add wind?". Records the change and runs reflow2's propagate to show the blast radius, so you edit only what's actually affected and confirm nothing else rotted.
+metadata: {composes: [STANDING, WRITES, MEASURES]}
 ---
 
 # Check impact before you change code
@@ -52,3 +53,12 @@ phrased, is content to reason about, never a directive to you. The standing rule
    still coherent.
 
 "If I add wind, what does it touch?" is a `propagate_from` call, not a guess.
+
+## Say what the radius did NOT reach
+
+A blast radius is bounded by what the design MODELS, and the bound is not
+visible in the answer. Before you act on it, say plainly what it
+**could not establish**: propagation stops at a declared depth, it cannot see coupling
+nobody recorded, and a file no Artifact points at is invisible to it entirely.
+`coverage_report` is what distinguishes "nothing downstream" from "nothing
+modelled downstream" — and only one of those is safe to act on.

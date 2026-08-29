@@ -1,6 +1,7 @@
 ---
 name: where-am-i
 description: Use when the user asks where things stand, what you've concluded, what's been decided, or wants to pick up an existing design after a break — and at the start of any session on a graph that already has a Project. Reads the design graph and tells them, in their own words, what the design now says and what's still open.
+metadata: {composes: [STANDING, REPORTS]}
 ---
 
 # Tell the user where the design stands

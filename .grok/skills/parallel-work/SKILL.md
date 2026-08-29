@@ -1,6 +1,7 @@
 ---
 name: parallel-work
 description: Use when two or more people (or agents) need to work on one design at the same time without colliding — "my brother and I are both editing this", "can we split this up", "how do we avoid stepping on each other", or before starting a large change on a design someone else is also touching. Sets up an isolated worktree with its own copy of the graph, claims the region you are taking, and merges back through reflow2's own three-way merge rather than through git's line merge.
+metadata: {composes: [STANDING, WRITES, DESTROYS]}
 ---
 
 # Two people, one design, no collisions
@@ -144,3 +145,14 @@ reviewed as a whole.
   pull.
 - **Code conflicts.** Handled by git exactly as before. Split the work by *component* where you
   can, so disjoint design regions also mean disjoint files.
+
+## What can be lost, said plainly
+
+**A merge back can lose work, and that is why it goes through reflow2's own
+three-way merge rather than git's line merge.** What is at risk: a node both
+seats edited, where the loser's properties are gone with no snapshot unless one
+was recorded; and edges dropped by an `accept_divergence` nobody read first.
+
+Read the dropped edges BEFORE accepting, and record a change on anything you
+edited in the worktree. A design merged cleanly and silently wrong is worse than
+a conflict, because nothing marks the place to look.

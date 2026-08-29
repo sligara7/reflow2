@@ -1,6 +1,7 @@
 ---
 name: root-cause
 description: Use when something has FAILED and somebody is about to explain it — a test that broke, a defect reported from the field, a system misbehaving after deployment, "why is X happening", "let's fix Y". ALSO use it for the quiet case, which is the one that gets missed - a number that surprises you, a measurement you cannot account for, something slower or larger or emptier than it should be, "that's odd", "why is this taking so long". The trigger is not how loud the failure is; it is that you are about to write down a CAUSE. Forces the steps of root cause analysis in order and generates the candidate causes from the design itself, so the first plausible explanation has to survive a measurement that could refute it before anything gets built. Distinct from impact-check, which asks what a change would BREAK; this asks what already broke, or what is already strange, and why.
+metadata: {composes: [STANDING, WRITES, MINTS, MEASURES]}
 ---
 
 # Find the cause before you fix the symptom
@@ -210,3 +211,9 @@ wrong answer that looks settled.
 - **It costs real time**, and its whole value is spent before anything is built — which is exactly
   when the pressure to skip it is highest. That pressure is the thing it exists to resist, so
   "this one is obvious" is the case to run it on, not the case to skip it for.
+
+## Before moving on
+
+`loop_status`. An investigation that recorded a cause has written to the graph,
+and a write owes the loop a gap pass like any other — the CAUSES edge from step
+⑧ is a design change, not a note.

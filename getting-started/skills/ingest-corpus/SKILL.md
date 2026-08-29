@@ -1,6 +1,7 @@
 ---
 name: ingest-corpus
 description: Use when reflow2 is pointed at a FOLDER of documents rather than one — a directory of specifications, years of accumulated notes, a handover pack, "here is everything we ever wrote about this". Walks the folder, turns the whole corpus into one design in a single batched handshake, and reports what it could not read. The scale sibling of capture-intent, and the mass-ingest primitive that adopt and genesis should consume rather than reimplement.
+metadata: {composes: [STANDING, WRITES, MINTS, MEASURES]}
 ---
 
 # INGEST A CORPUS — a folder of documents becomes one design
@@ -167,3 +168,11 @@ A corpus is a large capture, and capture is not the loop.
 - **Order affects attribution, not naming.** Documents integrate in the order you pass
   them, so a shared node's first Fragment is whichever document came first; the merged
   *name* is settled from the two strings alone and does not depend on arrival order.
+
+## Before you write
+
+**Search before you create.** A corpus is ingested into a design that usually
+already holds something, and bulk creation is where near-duplicates arrive by
+the dozen. Sample-search the terms the corpus uses before the batch lands; the
+duplicate guard will catch individual collisions, but it cannot tell you that
+half the folder restates what the design already says.

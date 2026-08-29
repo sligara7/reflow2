@@ -1,6 +1,7 @@
 ---
 name: genesis
 description: Use at the very start of a project, or whenever the reflow2 design graph is empty, to bootstrap it from the user's opening brief. Scaffolds the Project, seeds the brief into Requirements and Capabilities, captures deployment/platform context, and runs the first gap-detection round. Run this before any other reflow2 work on a new project.
+metadata: {composes: [STANDING, WRITES, REPORTS]}
 ---
 
 # GENESIS — bootstrap the design from a brief
