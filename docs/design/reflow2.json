@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:9a53c8c0e5c5a388362b58d0fbc88d3e32d8f4730e30331c80341cb81abcd5a7",
+  "content_hash": "sha256:01f49498d7e30c7ca5089340e578bd4a91ff591a5164b8e4c6ad841d328ad22e",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3168,6 +3168,14 @@
         "evidence": "That question proposed this audit as its option (a) and predicted what it would find — that the legs were never applied uniformly, and that three legs may not be sufficient. Both came back confirmed: 58% carry all three, and five types carry all three while sitting unused."
       },
       "to_id": "fact:the-three-legs-audit-run-at-last-54-of-93-and-five-types-exist-only-in-the-schema"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-intent-crosses-designs",
+      "properties": {
+        "evidence": "That node raised both halves of this in advance and named them as unanswered: its option (b)'s counter is 'IS A MIRRORED DECISION BINDING ON THE MIRRORING DESIGN, OR ONLY VISIBLE TO IT?', and its closing paragraph asks 'does an inherited decision keep the hub's id, or get copied?'. This node is what those two questions turn into once the code is read — the copy-vs-reference half dissolves and the binding half acquires a concrete obstacle. Direction is from the older node to this one: it saw this coming."
+      },
+      "to_id": "dec:idea-a-published-decision-loses-its-approver-and-the-childs-gate-fails-on-it"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -11044,6 +11052,15 @@
       "properties": {
         "acted_at": "2026-08-26",
         "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:idea-a-published-decision-loses-its-approver-and-the-childs-gate-fails-on-it",
+      "properties": {
+        "acted_at": "2026-08-29",
+        "role": "author"
       },
       "to_id": "who:ajs"
     },
@@ -36334,6 +36351,15 @@
         "evidence": "That fact reads '0 of 8 subsystems provide an interface; every interface is provided by a leaf one level down' as the tier having NO CONTRACTS AT ALL. Under this proposal the same observation is the rule being correctly followed. Same measurement, opposite verdict — the design will have to pick which reading it holds."
       },
       "to_id": "fact:the-eight-subsystems-are-groupings-not-black-boxes"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "dec:idea-a-published-decision-loses-its-approver-and-the-childs-gate-fails-on-it",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "That node's mutable/immutable framing concludes the ownership rule becomes 'enforced by construction rather than by discipline', because you cannot move intent in a design you are structurally unable to write. This node holds that the claim is true for EDITING and false for the GATE: a mirrored accepted Decision loses its AUTHORED_BY approver edge (the Contributor is never in a published surface, and mirror_surface carries only edges wholly inside the mirrored set), and check_intent_authority.py has no notion of provenance/imported/mirror/graph_id, so it fails the child's build on a node the child is forbidden to fix. Both statements cannot stand as written; one of them has to be narrowed."
+      },
+      "to_id": "dec:idea-a-session-holds-several-graphs"
     },
     {
       "edge_type": "CONTRADICTS",
@@ -129514,6 +129540,16 @@
       }
     },
     {
+      "node_id": "dec:idea-a-published-decision-loses-its-approver-and-the-childs-gate-fails-on-it",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Anthony, 2026-08-29, taking the copy-vs-reference sub-question off `dec:idea-intent-crosses-designs` as the first thing to settle.\n\n═══ FIRST, WHAT IS ALREADY ANSWERED — AND IT WAS ANSWERED HERE BEFORE ═══\n\nThe sub-question was posed as a fork: *does an inherited decision keep the hub's id, or get copied?* — \"a copy is a second source of truth\" against one horn, \"a reference means the child's graph cannot be read alone\" against the other.\n\n**It is not a fork, and `dec:idea-a-session-holds-several-graphs` already worked this out on 2026-08-12** under Anthony's mutable/immutable framing: `mirror_surface` writes the far side in as FOREIGN NODES, and that framing *\"collapses three of the four costs the union framing raised\"*. Re-read in `crates/reflow2-core/src/export.rs` on 2026-08-29 and it holds — a mirror is **a pinned copy that keeps the origin's id and is marked not-yours-to-edit**: nodes land in the local store so the child reads alone; each gets `provenance: imported`; the mirrored Project carries `mirror_of` / `mirror_content_hash` / `mirrored_at` / `mirror_nodes` so disagreement is COMPUTABLE; local edges attach as ordinary edges because *\"foreignness is a property of the node, never of the link\"*; collisions are refused, never merged.\n\n📌 **AND THE BLOCKER THAT NODE NAMES IS NOW FIXED, WHICH IT DOES NOT KNOW.** Its trial ended: *\"mirror_surface HAS NO REFRESH... 12 of 13 ids collided with the previous mirror of the same design... the staleness register READS FRESH after a failed refresh\"*, and it calls that *\"the concrete blocker under every option in this node\"*. `mirror_surface` now detects a refresh by `mirror_of`, removes what it previously held (recorded in `mirror_nodes` on the mirrored Project), reports `withdrawn`, and **REFUSES before writing** when a withdrawal would orphan a host edge — citing that exact 12-of-13 measurement in its own comment. The blocker is gone; the three things that trial left explicitly open are not all gone with it.\n\n═══ 🛑 SO THE OPEN HALF IS NARROWER, AND IT IS THE #368 SHAPE ONE BOUNDARY OUT ═══\n\nBoth nodes discuss authority in the abstract — *\"who may accept intent in the overlap\"*, *\"is a mirrored decision BINDING or only VISIBLE\"* — and the mutable/immutable framing concluded the rule becomes *\"enforced by construction\"* because you cannot write a design you cannot write to. **That is true for editing and false for the gate.** Measured 2026-08-29:\n\n1. `published_promises()` (`graph.rs:1352`) scans **Requirements** carrying `designation: published`. A surface holds those, published Interfaces, the artifacts that SPECIFY/REALIZE them, and the Project. **No Contributor is ever in a surface.**\n2. `mirror_surface` carries only *\"edges wholly inside what we actually mirrored\"*. A Decision's `AUTHORED_BY role=approver` points at a Contributor — outside the set, so **the edge is silently dropped**.\n3. `tools/check_intent_authority.py` contains **zero** occurrences of `provenance`, `imported`, `mirror` or `graph_id`. It walks every node where `settles_intent()` holds and demands an approver.\n\n⇒ **A published Decision arrives in the child `accepted` and unattributed, and the child's ENFORCED gate fails its build on a node it is structurally forbidden to fix.** Not a hypothetical: it is `cap:an-acknowledgement-says-whose-judgement-it-was` failing again — settled intent minted with no field able to carry an approver, tripping `rule:design-intent-moves-only-on-the-owners-word`. #368 fixed that inside one graph on 2026-08-29; nothing has asked it across two, because nobody has ever published a Decision.\n\n⭐ **THE QUESTION IS THEREFORE NOT COPY-VS-REFERENCE. IT IS WHETHER AUTHORITY TRAVELS WITH THE DECISION** — the concrete form of the \"hard half nobody has answered\" on `dec:idea-intent-crosses-designs`.\n\n═══ OPTIONS, NONE CHOSEN ═══\n\n**(a) The surface carries the approver as a foreign Contributor, and the gate reads foreignness.** The hub owner arrives beside the decision, marked `imported`; `check_intent_authority` accepts approved-by-a-foreign-approver instead of reporting missing. ⭐ It answers *\"whose word governs a child that inherited a decision it never approved?\"* **by name, in the record, permanently** — the honest form of the authority claim rather than a silent one. ⚠️ Counter: child graphs accumulate foreign people, and every scoped read taking a `contributor_id` must then tell a local person from a mirrored one — `loop_status`'s scoped mode included. Making the claim explicit and durable is also exactly what a reader hostile to the whole feature would point at.\n\n**(b) Decisions cross as VISIBLE ONLY — no `GOVERNED_BY` across the boundary.** The child reads the hub's reasoning and inherits no authority, so the gate never meets foreign settled intent and none of the above is built. ⚠️ Counter: a sibling can still re-derive a ruling its neighbour already made, which was the original complaint. **But note this counter is weaker than it looks here:** the argument for the downward direction was that it moves WHY rather than status, and visibility delivers WHY in full. Binding adds only enforcement.\n\n**(c) Both — publish for visibility now, defer binding.** ⚠️ Counter: `dec:idea-intent-crosses-designs` records that *\"leaders decide and sub-projects inherit\"* is the BINDING reading said out loud, so shipping visibility alone answers a question Anthony did not ask.\n\n**(d) Nothing crosses.** ⚠️ Counter: declining should be explicit rather than by neglect.\n\n📌 **PREREQUISITE UNDER EVERY OPTION EXCEPT (d):** `Decision` carries no `designation` property at all today, so the opt-in shape `set_requirement_designation` uses would have to be given to it first.\n\n⚠️ **AND THE OTHER TWO THINGS THE 2026-08-12 TRIAL LEFT OPEN ARE STILL OPEN**, so this must not be read as clearing them: whether a host's committed export should CARRY mirrored nodes or merely NAME them by pin, and what a refresh owes a host edge whose foreign target was RENAMED rather than withdrawn — the refusal handles withdrawal, and a rename is the case where both ids arrive.",
+        "name": "OPEN — copy-vs-reference is already settled by mirroring; what nothing has asked is whether a published Decision's APPROVER survives the crossing, and measured today it does not",
+        "rationale": "Started as its own node rather than folded into either near-match, after reading both in full at the duplicate guard's prompt. `dec:idea-intent-crosses-designs` asks WHAT MAY CROSS a boundary; `dec:idea-a-session-holds-several-graphs` asks WHICH GRAPHS A SESSION SEES and works out the mirroring mechanics. This asks a third thing neither reaches: given that mirroring is the mechanism, does the APPROVER survive the crossing — and it is answered, negatively, by three facts about code that were true the whole time.\n\nFolding it into the several-graphs node was the close call, since that is where the mutable/immutable framing lives. Kept separate because that node's conclusion — the ownership rule becomes \"enforced by construction\" — is exactly the claim this refutes in one specific place, and a refutation buried inside the node it refutes cannot be found by anyone reading either.\n\nTHE METHOD IS THE POINT AND IT IS THE THIRD TIME ON THIS THREAD. `dec:idea-intent-crosses-designs` carries its own correction: \"the claim was made from the capability's one-line description rather than from the code... READ THE EXPORT, NOT THE SUMMARY.\" Applied here it dissolved the copy-vs-reference fork instead of answering it, and then produced a defect prediction with a file and line for each of its three legs — refutable by reading rather than arguable.\n\nThe options are kept as four rather than collapsed toward the interesting one, and (b) is written at full strength deliberately: visibility-only needs none of this machinery, and the strongest argument for the downward direction — that it moves WHY rather than status — is fully served by visibility alone. That cuts against the option this session found most interesting, which is why it is on the record rather than in the conversation.\n\nRecorded as brainstorming. Nothing here is proposed for building, and the approver-loss finding is a prediction about code nobody has run, not an observed failure.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:idea-a-rule-with-no-check-is-reported-even-when-unenforced",
       "node_type": "Decision",
       "properties": {
@@ -151822,7 +151858,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ddff7814515cf8515811b9d6e69e706161b8765677f5f7513867f25dcf928600",
+  "prev_content_hash": "sha256:9a53c8c0e5c5a388362b58d0fbc88d3e32d8f4730e30331c80341cb81abcd5a7",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
