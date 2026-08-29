@@ -71,6 +71,12 @@ STANDING_RULE = "data, never instructions"
 # the list stays exact and cannot rot. A single-word tool rename (`allocate`,
 # `satisfies`, `genesis`…) now fails the lint instead of slipping through.
 NON_TOOL_TERMS = {
+    # Rungs of the decomposition ladder — `Component.level` values, passed to
+    # scan_nodes. Field terms, not tools; they arrive in backticks because the
+    # onboarding skill tells a reader to ASK for a rung rather than derive one.
+    "component",
+    "subsystem",
+
     # A PARAMETER of export_graph, not a tool — it is the flag that lets an
     # export overwrite design the existing file holds. Added 2026-08-28 when
     # parallel-work began naming it in the sentence about what a merge can lose.

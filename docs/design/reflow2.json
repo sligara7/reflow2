@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:6b783f6dddc5932f5ff9eddb1c6c313f73d65b3149d4e808e21ca00d73946391",
+  "content_hash": "sha256:ec21cae152411326ea1892d80d608c40a17f193c85648bf53b625c3e1b3ae177",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -33446,6 +33446,15 @@
         "action": "modified"
       },
       "to_id": "cap:nudge-absence-says-why"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-onboarding-skill-is-written",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
     },
     {
       "edge_type": "CHANGED",
@@ -107133,6 +107142,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:onboarding-skill",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "reviewed"
+      },
+      "to_id": "cap:onboarding"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:operate",
       "properties": {
         "completeness": "complete"
@@ -114098,6 +114116,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:onboarding-skill",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:onboarding-skill"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:operate",
       "properties": {
         "action": "created"
@@ -116473,6 +116499,17 @@
       }
     },
     {
+      "node_id": "art:onboarding-skill",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:a673256a273cfce6610d002c956f2f14e834643dc1da23bdab2b1de943152965",
+        "location": "getting-started/skills/onboarding/SKILL.md",
+        "name": "onboarding/SKILL.md — where does this new piece of work belong?",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "art:operate",
       "node_type": "Artifact",
       "properties": {
@@ -117266,7 +117303,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:fdc24066a33b35610f1ea93a493a4844fbab9a40994c7162a307fdc10569fa8f",
+        "checksum": "sha256:980c4c5bdecf79654ee7e155643e0e0a9e7919ae5211c6d851c2d8b85f6417fd",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -119952,12 +119989,12 @@
       "node_id": "cap:onboarding",
       "node_type": "Capability",
       "properties": {
-        "description": "Answer \"we need to add this — where does it go?\" from the graph, for someone who did not build the system. Assembles machinery that already exists and has never been pointed at this question: map the newcomer's words onto the parts that exist, show what touching each candidate would reach, name the decisions already governing that area and who authored them, name the intent it must not break, and say honestly which parts of the real system the design does not cover. Distinct from saying where the design stands, which answers what the system is and what was decided but not where new work belongs. No core change — a skill over existing operations. PLANNED — BL-101.",
+        "description": "Answer \"we need to add this — where does it go?\" from the graph, for someone who did not build the system. Assembles machinery that already exists and had never been pointed at this question: map the newcomer's words onto the parts that exist, show what touching each candidate would reach, name the decisions already governing that area and who authored them, name the intent it must not break, and say honestly which parts of the real system the design does not cover. Distinct from saying where the design stands, which answers what the system is and what was decided but not where new work belongs. No core change — a skill over existing operations.\n\n✅ BUILT 2026-08-29 — BL-101, accepted in the eight-requirement batch and unbuilt until now. `getting-started/skills/onboarding/SKILL.md`, served and mirrored, reachable by the `/where-does-it-go` command as well as by name.\n\nWHAT IT ACTUALLY DOES, in order: `search_design` on THE USER'S OWN WORDS before any paraphrase (a mismatch between their vocabulary and the design's is itself the finding, and is why a newcomer cannot find anything); `scan_nodes` with `level` for the rung a person reasons about, passed rather than derived from containment, because deriving it returns leaves nobody wired to a parent; `design_regions` and `granularity_report` to narrow, since a part already realizing many capabilities is where new work lands badly; `propagate_from` per candidate for the number that changes minds — 6 nodes against 40; `GOVERNED_BY` with `alternatives_for` and `recall_resolutions` for what already rules there; `claim_report` for who is in that ground now.\n\n⭐ TWO THINGS IT INSISTS ON. **A NAME, not just a ruling** — `AUTHORED_BY` lets a decision be handed over as \"this was Anna's call and here is why\", which is a thing a new hire can ask about rather than a wall. And **ONE RECOMMENDATION FIRST**, not a survey: a newcomer handed five balanced candidates has been given the original problem back with more words attached.\n\n🛑 AND THE CLAUSE THAT IS NON-OPTIONAL: step 5 says what the design CANNOT see — `coverage_report` for files no Artifact points at, `detect_gaps` scoped to the candidate, `seam_report` for whether the boundary is stated or assumed. A design is silent about what it does not model, and silence reads exactly like \"no problem here\". A confident answer drawn from a design that does not cover the relevant part is worse than no answer, because the person receiving it cannot tell which kind of silence they got.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Tell a newcomer where a new piece of work belongs",
         "provenance": "authored",
-        "status": "planned",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -126957,6 +126994,18 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The nudge state distinguishes \"not installed here\" from \"cannot be installed here\" — a new NoHookForThisHarness variant read from the harness answer the installer now records"
+      }
+    },
+    {
+      "node_id": "chg:the-onboarding-skill-is-written",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-29",
+        "name": "The onboarding skill is written — a newcomer can be told where new work belongs",
+        "rationale": "WRITTEN AS A SKILL RATHER THAN A TOOL because the answer is a judgement assembled from six reads, not a computation — which part SHOULD own a new thing is exactly the kind of call `dec:report-dont-judge` says reflow2 reports toward and never makes. A tool would have to pick, and picking is the user's.\n\nTHE THREE-WAY DISTINCTION IS STATED AT THE TOP because it is the thing most likely to send someone to the wrong place: where-am-i answers what the system IS, impact-check answers what a change to something EXISTING would break, and this answers where something NEW belongs. The first is often the right thing to run before this one, and the skill says so rather than assuming the reader has.\n\nIT ENDS BY REFUSING TO SURVEY. \"Give one recommendation first, then the runner-up and what would make it win\" — a newcomer handed five balanced candidates has been given the original problem back with more words attached. That is `req:a-question-arrives-with-a-reading` applied to an answer instead of to a question.\n\n⚠️ THE LINT CAUGHT THREE THINGS AND ALL THREE WERE REAL. Two backticked level values (`component`, `subsystem`) read as unknown tool names and needed the field-term allowlist; a stray directory created by a mis-scoped shell command appeared as two nameless skills; and `dec:idea-does-every-served-skill-get-a-command` requires a command per served skill, so the skill would have shipped reachable only by `get_skill`. None of the three would have been caught by reading the file.",
+        "subject": "system",
+        "summary": "`getting-started/skills/onboarding/SKILL.md`, served, mirrored, and reachable by the `/where-does-it-go` command. Moves `cap:onboarding` from `planned` to `realized` and delivers `req:onboard-newcomer`, accepted since the eight-requirement batch and unbuilt since — BL-101.\n\nNO CORE CHANGE, exactly as the capability said: it assembles machinery that already existed and had never been pointed at this question. `search_design` on the user's own words, `scan_nodes` with `level` for the right rung, `design_regions` and `granularity_report` to narrow, `propagate_from` for what each candidate would reach, `GOVERNED_BY` plus `alternatives_for` and `recall_resolutions` for what already rules there, `AUTHORED_BY` for who to ask, `claim_report` for who is in it now, and `coverage_report` / `detect_gaps` / `seam_report` for what the design cannot see.\n\nTHE REQUIREMENT'S HARDEST CLAUSE IS STEP 5 AND IT IS NON-OPTIONAL: \"say honestly which parts of the real system the design does not cover\". A confident answer drawn from a design that does not model the relevant part is worse than no answer, because the person receiving it cannot tell the silence was ignorance rather than absence.\n\n⭐ AND THE CLAUSE THAT IS NOT IN THE REQUIREMENT BUT IS THE MOST USEFUL THING IN THE SKILL: give the newcomer a NAME. `AUTHORED_BY` means a ruling can be handed over as \"this was Anna's call and here is why\" rather than as a wall. A decision with a person attached is one a new hire can ask about."
       }
     },
     {
@@ -138047,6 +138096,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered nudge.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:onboarding-skill",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered onboarding/SKILL.md — where does this new piece of work belong?"
       }
     },
     {
@@ -152547,7 +152606,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:4d61b912566ad43d7daa83a3bb784d99973b4bdccdff6917bdf63efee868dfde",
+  "prev_content_hash": "sha256:6b783f6dddc5932f5ff9eddb1c6c313f73d65b3149d4e808e21ca00d73946391",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
