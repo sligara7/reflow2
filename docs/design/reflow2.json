@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:433cc0c710c2a677b8767e6e20dbc70bba668ad1e37868eb73c6cd386260bc21",
+  "content_hash": "sha256:ef408da53201974489824a533cba6e99c27a03c4cc9a6aaea7dc0f9ee57f5efd",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -15796,7 +15796,7 @@
       "from_id": "req:the-surface-routes-to-what-the-tool-is-for-not-only-to-its-hygiene",
       "properties": {
         "acted_at": "2026-08-29",
-        "role": "author"
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -143611,7 +143611,7 @@
         "priority": "medium",
         "provenance": "authored",
         "statement": "A capability that answers whether a design is DELIVERING must be reachable from the instructions a session actually reads — not merely present on the tool surface. Where a report is deliberately reachable without one, the design says so in writing rather than leaving the omission to be read as an oversight.\n\nCAPTURED FROM ANTHONY'S OWN WORDS, 2026-08-29, and recorded because the need was his rather than derived from the tool: *\"if somebody using reflow2 on a project said, does my project do what it is supposed to do, you're telling me that reflow2 just responds with defects, gaps, export sync from a loop_status? I feel like we are slightly missing the mark of what reflow2 is supposed to do then — it isn't just a 'hygiene' mcp server.\"*\n\nTWO NEAR-MATCHES OFFERED AND BOTH READ, AND THE THREE ARE THE ORDINARY SHAPE OF A THREAD rather than a duplication. `fact:the-instruction-surface-routes-to-hygiene-and-not-to-whether-the-thing-works` is the MEASUREMENT, and keeps its own numbers and its own still-open half. `cap:every-served-report-is-reachable-from-an-instruction` is the MECHANISM that answers this, and is necessarily worded close to it — that closeness is the SATISFIES relation, not a collision. This is the STANDING NEED, which outlives both: the measurement becomes history and the mechanism becomes a merged diff, and this is what still has to be true afterwards.\n\nTHE MEASUREMENT BEHIND IT, taken the same day. reflow2 already computes the answer — `graph_report` returns \"Delivered: N of M requirement(s), computed from the thread\" — and nothing routed anyone to it. Across the 23 served skills at the time: `detect_gaps` named 16 times, `loop_status` 12, and `maturity_report`, `readiness_report`, `consumption_report`, `ility_report` and `flow_report` ZERO, absent from `AGENTS.md` and `service.rs` too. The orientation skill GATHERED the delivery line and its eight-step narration script never said to report it.\n\n⚠️ THE REQUIREMENT IS ABOUT REACHABILITY, NOT USE, and the distinction is deliberate: naming a report in a skill makes it reachable, not read. Whether the routed reports are actually invoked is a separate measurement nobody has taken.\n\n📌 THE COST OF NOT HAVING THIS, in his framing rather than the tool's: it made reflow2 PRESENT AS a hygiene server to the person using it. The tool could always answer the real question; nothing told the agent to ask the half that could.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -152739,7 +152739,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b82a4414fb245f3a148cace3b1ba2e1f69a1788ec289fa9903779c9c571c1b21",
+  "prev_content_hash": "sha256:433cc0c710c2a677b8767e6e20dbc70bba668ad1e37868eb73c6cd386260bc21",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
