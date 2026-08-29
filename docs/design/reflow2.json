@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ff18fa267bc98a66fd97c7558bc2c75f49612cc39dffefef49ca5c3e7273c577",
+  "content_hash": "sha256:5ade84a6f74ce009f9cf885f3a2fb5c60459ee76d03830bbcfc53bcc3b1c860c",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -14164,6 +14164,15 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:b25bb8d8db80dfd3",
       "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:b282848d8c49faf3",
+      "properties": {
+        "acted_at": "2026-08-29",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -45635,6 +45644,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "fact:a-dangling-reference-is-only-detected-when-the-node-is-also-edgeless",
+      "properties": {},
+      "to_id": "decision:ack:b282848d8c49faf3"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "fact:correction-stranded-server-is-recoverable-without-a-reconnect",
       "properties": {
         "note": "This correction is the clause that stands, on measured evidence rather than recency."
@@ -45676,6 +45691,12 @@
         "note": "The sweep this fact records was ordered by that rule — dev_storyflow first, Alex level with it, music_graph after — which is why music_graph has thirteen items unassessed and dev_storyflow's newest block does not."
       },
       "to_id": "rule:feedback-sources-have-a-priority-order-and-anthony-set-it"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "fact:nine-temporalfacts-point-their-subject-at-a-node-that-does-not-exist",
+      "properties": {},
+      "to_id": "decision:ack:b282848d8c49faf3"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -133767,6 +133788,16 @@
       }
     },
     {
+      "node_id": "decision:ack:b282848d8c49faf3",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the gap gap:b282848d8c49faf3.",
+        "name": "Reviewed: gap:b282848d8c49faf3",
+        "rationale": "DISTINCT, on Anthony's word 2026-08-29. The DUPLICATES edge is deliberate and the two nodes must NOT be merged.\n\nTHE HEURISTIC WAS RIGHT TO ASK — one name's words are a subset of the other's, and they do share a mechanism: both record that `orphan_node` short-circuits on degree before it looks at pointer properties, so a well-connected node hides its broken subject. The 2026-08-26 node said it first; the 2026-08-29 node re-derived it without searching, which is itself recorded on the edge.\n\nWHY THEY ARE STILL TWO THINGS:\n• `fact:nine-temporalfacts-point-their-subject-at-a-node-that-does-not-exist` is the BROADER record — the count of nine, the 5-versus-4 split across five distinct bad ids, and the cause for five of them (an agent copied a neighbour's `subject_id` convention without checking it resolved).\n• `fact:a-dangling-reference-is-only-detected-when-the-node-is-also-edgeless` is NARROWER and carries what the earlier one does not: the argument that the bias runs the wrong way (an edgeless node is the least consequential place for a broken pointer, so the detector was most reliable where it mattered least), and the rule that shipped from it as #373.\n\n⭐ AND THEIR NUMBERS DIFFER WITHOUT EITHER BEING WRONG, which is the strongest reason to keep both. 08-26 measured 8 of 9 caught with 1 invisible; 08-29 measured 7 of 9 with 2. Between those dates `fact:defect-kit-manifest-drift-is-invisible-to-ci` gained edges and crossed from visible to invisible — the finding's own mechanism demonstrating itself on a live node. A merge would have to pick one figure and would destroy that evidence, because the pair IS the observation.\n\n⇒ Merging would either lose content or produce one node asserting two measurements as if they were one. Linked, not merged, is the correct end state — the shape `DUPLICATES` exists for: the same thing said twice, for different reasons, both of which matter.",
+        "status": "accepted"
+      }
+    },
+    {
       "node_id": "decision:ack:b419dc7ce8da8c12",
       "node_type": "Decision",
       "properties": {
@@ -152270,7 +152301,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:b156799d121582a482d17cb91d9f4529498fa5701a52fd9c26886b49b4d12067",
+  "prev_content_hash": "sha256:ff18fa267bc98a66fd97c7558bc2c75f49612cc39dffefef49ca5c3e7273c577",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
