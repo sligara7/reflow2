@@ -294,6 +294,148 @@ impl DesignGraph {
         if let Some(def) = self.schema().node_types.get(node_type) {
             widen_ints_for_float_props(&def.properties, &mut props);
         }
+        self.refuse_dangling_node_refs(node_type, &props)?;
+        self.engine
+            .create_node(&self.graph_id, node_type, id, props)
+    }
+
+    /// Refuse a write whose property NAMES a node that does not exist.
+    ///
+    /// The sibling of `create_edge`'s endpoint guard, and it exists because the
+    /// same failure was reachable through the other shape of reference:
+    /// `fact:defect-a-property-naming-a-node-is-unguarded-while-edges-are-not`
+    /// measured a TemporalFact written with `subject_id` naming a capability
+    /// that had never existed. It was stored, echoed back without complaint,
+    /// and caught only because somebody read the write back by habit.
+    ///
+    /// REFUSED AT WRITE rather than reported later, for the reason `create_edge`
+    /// already gives: a dangling reference is not a judgement the user might
+    /// reasonably disagree with, so `dec:report-dont-judge` does not apply — it
+    /// is a graph that cannot be walked.
+    ///
+    /// ⚠️ A BARE ID CARRIES NO TYPE, which is the one way this differs from the
+    /// edge guard. An edge declares its endpoint types; `subject_id` holds only
+    /// `"cap:foo"`, and the store has no type-free lookup. So the id is resolved
+    /// by asking each declared node type in turn — the same walk
+    /// `count_all_nodes` makes. That is a handful of point lookups on a write
+    /// path, paid only by nodes that actually declare a reference.
+    ///
+    /// 🛑 WHAT THIS CANNOT REACH, measured on this design's own graph: of nine
+    /// dangling values, roughly a third are typos this refuses. The rest were
+    /// VALID WHEN WRITTEN and dangled later when the target was renamed. No
+    /// write-time check can catch those; they need detection, which is a
+    /// separate cause with a separate fix.
+    fn refuse_dangling_node_refs(
+        &self,
+        node_type: &str,
+        props: &std::collections::HashMap<String, Value>,
+    ) -> Result<(), DynoError> {
+        let refs = self.declared_node_refs(node_type, props);
+        if refs.is_empty() {
+            return Ok(());
+        }
+        let types: Vec<String> = self.schema().node_types.keys().cloned().collect();
+        for (prop, target) in refs {
+            let mut found = false;
+            for t in &types {
+                if self.get_node(t, &target)?.is_some() {
+                    found = true;
+                    break;
+                }
+            }
+            if !found {
+                return Err(Self::dangling_node_ref_error(node_type, &prop, &target));
+            }
+        }
+        Ok(())
+    }
+
+    /// The node-reference properties `node_type` declares, paired with the
+    /// value this node carries for each.
+    ///
+    /// ⭐ THE ONLY READER OF `node_ref` IN THE CRATE, and that is the point.
+    /// Two paths have to agree about what counts as a reference — the write-time
+    /// guard above, and the pass `import_graph` runs once a whole document is
+    /// staged — and a second copy of "which properties are references, and how
+    /// is one read" is exactly the hand-maintained duplicate that drifts.
+    ///
+    /// An absent or empty value is not returned: an unset optional reference is
+    /// not a dangling one.
+    pub(crate) fn declared_node_refs(
+        &self,
+        node_type: &str,
+        props: &std::collections::HashMap<String, Value>,
+    ) -> Vec<(String, String)> {
+        let Some(def) = self.schema().node_types.get(node_type) else {
+            return Vec::new();
+        };
+        let mut out: Vec<(String, String)> = def
+            .properties
+            .iter()
+            .filter(|(_, d)| d.node_ref)
+            .filter_map(|(name, _)| match props.get(name) {
+                Some(Value::String(target)) if !target.is_empty() => {
+                    Some((name.clone(), target.clone()))
+                }
+                _ => None,
+            })
+            .collect();
+        out.sort();
+        out
+    }
+
+    /// The refusal a dangling node reference gets, worded in one place so the
+    /// write path and the import path cannot come to say it differently.
+    pub(crate) fn dangling_node_ref_error(node_type: &str, prop: &str, target: &str) -> DynoError {
+        DynoError::Validation {
+            node_type: node_type.to_string(),
+            property: prop.to_string(),
+            message: format!(
+                "'{target}' names no node in this design. This property is declared \
+                 a node reference, so a value that resolves to nothing would be a \
+                 record about something the design does not have — the same refusal \
+                 an edge to a missing node already gets. Check the id, or create the \
+                 node first."
+            ),
+        }
+    }
+
+    /// [`create_node`](Self::create_node) with the node-reference guard NOT run
+    /// here — reserved for [`import_graph`](Self::import_graph), which runs the
+    /// equivalent check itself once every node in the document is staged.
+    ///
+    /// 🛑 THE GUARD IS NOT WEAKENED, IT IS MOVED — and it had to be, because the
+    /// write-time guard resolves a reference against the store AS IT STANDS,
+    /// which during an import is "however far down the document the walk has
+    /// got". An export is ordered by node type, never by dependency, so a
+    /// TemporalFact whose `subject_id` names a Verification is refused for no
+    /// reason but the alphabet.
+    ///
+    /// MEASURED, 2026-08-29, on this design's own export: importing it with the
+    /// guard on the walk failed with 23 faults and wrote nothing. **Only nine
+    /// were real** — five instances of the `prj:reflow2` typo for `proj:reflow2`
+    /// and four capabilities renamed after the fact was written. Three were
+    /// nodes PRESENT IN THE SAME DOCUMENT at indices 3342, 3360 and 3169,
+    /// referenced from 2854, 3167 and 3063; one more was a node refused above
+    /// cascading onto its referrer. A coherent design with no dangling
+    /// references at all would still have failed this way.
+    ///
+    /// ⭐ THE UNIT OF VALIDATION MUST MATCH THE UNIT OF ATOMICITY. The import is
+    /// all-or-nothing (`dec:bulk-is-all-or-nothing-with-per-item-findings`), so
+    /// the document is what becomes true or does not — and a reference has to be
+    /// judged against that, not against a partial state no caller ever observes.
+    /// This is the same shape the edge guard already gets for free by running
+    /// after every node is written.
+    pub(crate) fn create_node_refs_checked_later(
+        &mut self,
+        node_type: &str,
+        id: &str,
+        props: impl Into<std::collections::HashMap<String, Value>>,
+    ) -> Result<StoredNode, DynoError> {
+        let mut props = props.into();
+        if let Some(def) = self.schema().node_types.get(node_type) {
+            widen_ints_for_float_props(&def.properties, &mut props);
+        }
         self.engine
             .create_node(&self.graph_id, node_type, id, props)
     }

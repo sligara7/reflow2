@@ -273,6 +273,28 @@ pub struct ImportReport {
     /// store already carries.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub adopted_identity: Option<String>,
+    /// Node-reference properties whose value names a node that is neither in
+    /// the document nor already in the graph. Reported, never a refusal.
+    ///
+    /// ⭐ THE SIBLING OF `skipped_edges`, AND THE SAME QUESTION THAT FIELD
+    /// ALREADY ANSWERS: an edge whose endpoint is missing is skipped and named
+    /// rather than failing the restore, and a property naming a missing node is
+    /// the other shape of exactly that. Answering it differently here would mean
+    /// one import refusing what its neighbour two lines up reports.
+    ///
+    /// 🛑 WHY A RESTORE MUST NOT REFUSE THESE, though `create_node` does. The
+    /// write guard exists to stop a NEW record being made about a node the
+    /// design does not have. An import asserts nothing new — it reproduces a
+    /// state that already existed, and the document is the evidence of it.
+    /// Refusing would mean a graph holding one dangling reference has an
+    /// UNRESTORABLE BACKUP, and the remedy on offer would be hand-editing the
+    /// export, which is the one thing this project tells users never to do.
+    /// Measured 2026-08-29: this design's own export carried nine, all written
+    /// before the guard existed — five instances of a `prj:`/`proj:` typo and
+    /// four capabilities renamed after the fact was written.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default)]
+    pub dangling_node_refs: Vec<String>,
 }
 
 impl DesignGraph {
@@ -388,12 +410,60 @@ impl DesignGraph {
             // success would be the silent-failure this crate's first principle
             // forbids. The error carries the whole list.
             let mut faults: Vec<String> = Vec::new();
+            let mut pending_refs: Vec<(usize, &str, &str, String, String)> = Vec::new();
             for (index, n) in doc.nodes.iter().enumerate() {
                 let props: std::collections::HashMap<String, Value> =
                     n.properties.clone().into_iter().collect();
-                if let Err(e) = self.create_node(&n.node_type, &n.node_id, props) {
+                for (prop, target) in self.declared_node_refs(&n.node_type, &props) {
+                    pending_refs.push((
+                        index,
+                        n.node_id.as_str(),
+                        n.node_type.as_str(),
+                        prop,
+                        target,
+                    ));
+                }
+                if let Err(e) = self.create_node_refs_checked_later(&n.node_type, &n.node_id, props)
+                {
                     faults.push(format!("nodes[{index}] {}: {e}", n.node_id));
                 }
+            }
+
+            // A NODE REFERENCE RESOLVES AGAINST THE WHOLE DOCUMENT, NOT AGAINST
+            // HOW FAR THE WALK HAS GOT.
+            //
+            // `create_node` refuses a property that NAMES a node which does not
+            // exist, and on an interactive write that is exactly right. On an
+            // import it is not, because "exists" there would mean "appears
+            // earlier in this file" — and an export is sorted by node type, so
+            // the order is the alphabet rather than the dependencies.
+            //
+            // MEASURED 2026-08-29 on this design's own export: 23 faults, of
+            // which nine were real dangling references and four were nodes
+            // present in the very same document, refused only for sorting after
+            // their referrer. Nothing was written, so the export could not be
+            // restored at all.
+            //
+            // `types` is every node id the document carries and `existing` is
+            // every id already in the graph, so this asks the question against
+            // the state the import would actually leave behind. Resolving
+            // against `types` also stops one refused node cascading a second,
+            // derived fault onto whoever referenced it — the earlier fault is
+            // the one worth reading.
+            //
+            // ⚠️ IT STILL CANNOT SEE A RENAME. Four of the nine real dangles
+            // were valid when written and broke later when the target was
+            // renamed. No check on the write or on the import reaches those;
+            // they need detection over the graph as it stands, which is a
+            // different cause with a different fix.
+            let mut dangling_node_refs: Vec<String> = Vec::new();
+            for (_index, node_id, _node_type, prop, target) in pending_refs {
+                if types.contains_key(target.as_str()) || existing.contains_key(&target) {
+                    continue;
+                }
+                dangling_node_refs.push(format!(
+                    "{node_id}.{prop} -> {target} (names no node in the document or the graph)"
+                ));
             }
             let mut edges_written = 0;
             let mut skipped_edges = Vec::new();
@@ -456,6 +526,7 @@ impl DesignGraph {
                         .to_string()
                 }),
                 adopted_identity: adopted_identity.clone(),
+                dangling_node_refs,
             })
         })();
 

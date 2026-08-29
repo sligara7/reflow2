@@ -30,7 +30,7 @@ schema:
 
     TemporalFact:
       properties:
-        subject_id: { type: string, required: true, indexed: true, description: "Node the fact is about." }
+        subject_id: { type: string, required: true, indexed: true, node_ref: true, description: "Node the fact is about. A NODE REFERENCE: the id must resolve, and a write naming a node that does not exist is refused." }
         fact_type: { type: string, indexed: true, description: "status / allocation / dependency / satisfaction / property — what kind of assertion." }
         statement: { type: string, fulltext: true, description: "The time-bounded assertion in plain terms." }
         value: { type: string, description: "JSON of the asserted value (e.g. {status: realized})." }

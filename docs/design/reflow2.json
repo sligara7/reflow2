@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:c9b3f2c8b704033d0fb6b02af2bee229e869edfb759789dc4556f547accbc604",
+  "content_hash": "sha256:50c3e6c82abc6afd512f83176e95d045ce425407c1dda6f20a02371a8bf4a3e8",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3389,6 +3389,14 @@
       "from_id": "fact:the-signpost-instructs-a-party-that-cannot-act-and-the-absent-client-was-named",
       "properties": {},
       "to_id": "dec:idea-how-does-a-content-only-client-get-an-answer"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:the-unmaintained-premise-under-the-rocksdb-switch-has-moved",
+      "properties": {
+        "evidence": "The stale sentence is a comment in `[workspace.dependencies]`, which is exactly the surface that node is about. A dependency's REASON currently lives beside its pin as free prose that nothing checks and nothing expires, which is why this one could rot silently in the file somebody edits to act on it."
+      },
+      "to_id": "dec:idea-one-place-to-bump-a-dependency"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -18403,6 +18411,51 @@
         "action": "modified"
       },
       "to_id": "art:detect"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-restore-judges-a-reference-against-the-document-not-the-walk",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:export"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-restore-judges-a-reference-against-the-document-not-the-walk",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-restore-judges-a-reference-against-the-document-not-the-walk",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:main"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-restore-judges-a-reference-against-the-document-not-the-walk",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:repair-notes-lifted-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-restore-judges-a-reference-against-the-document-not-the-walk",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-temporal"
     },
     {
       "edge_type": "CHANGED",
@@ -35671,6 +35724,15 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "fact:the-unmaintained-premise-under-the-rocksdb-switch-has-moved",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "That decision holds the switch to rust-rocksdb is owed, and its strongest supporting argument was that the official wrapper was abandoned while the fork was maintained. If upstream is releasing again the argument no longer carries, which makes the decision a candidate for superseded. The contradiction is with its JUSTIFICATION, not with its conclusion — there may be other grounds for the switch, and none has been measured."
+      },
+      "to_id": "dec:absorb-rocksdb-024-unchanged-then-switch-separately"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "req:a-vocabulary-distinction-proves-it-is-read",
       "properties": {
         "alignment": "supporting",
@@ -38932,6 +38994,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "art:schema-temporal",
+      "properties": {},
+      "to_id": "dec:how-should-a-temporal-fact-carry-its-date-when-there-is-no-epoch"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:a-check-records-what-it-found-separately-from-what-it-is",
       "properties": {},
       "to_id": "rule:fix-it-properly-while-it-is-still-cheap"
@@ -39603,6 +39671,12 @@
       "from_id": "cap:claim-liveness",
       "properties": {},
       "to_id": "decision:ack:d1c2d599af5b45ce"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "cap:claims-carry-their-age",
+      "properties": {},
+      "to_id": "dec:how-should-a-temporal-fact-carry-its-date-when-there-is-no-epoch"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -44374,6 +44448,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "ifc:mcp-protocol",
+      "properties": {},
+      "to_id": "decision:ack:heal:6f773b6f7e7c5686"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "ifc:mcp-tools",
       "properties": {},
       "to_id": "decision:ack:heal:d6d4f53469211481"
@@ -44383,6 +44463,18 @@
       "from_id": "ifc:mcp-tools-http",
       "properties": {},
       "to_id": "decision:ack:7f72f4a7ae00b8de"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "ifc:mcp-tools-http",
+      "properties": {},
+      "to_id": "decision:ack:heal:8a6d72894136a514"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
+      "from_id": "ifc:session-graph-selector",
+      "properties": {},
+      "to_id": "decision:ack:heal:d1860c2ddc91c43c"
     },
     {
       "edge_type": "GOVERNED_BY",
@@ -102963,6 +103055,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:a-restore-judges-a-reference-against-the-document-not-the-walk",
+      "properties": {
+        "at": "2026-08-29",
+        "note": "The asymmetry this recorded is closed on the WRITE path: a property declared `node_ref` is now refused when it names a node that does not exist, the same refusal an edge endpoint has had since 2026-07-28, pinned by `crates/reflow2-core/tests/a_property_that_names_a_node_is_guarded.rs` (8 tests, observed failing before the guard existed).\n\n🛑 BOUNDED, because the fact's own scope note is still true and must not be read as closed with it: a write-time guard reaches only the values that were WRONG WHEN WRITTEN. Measured 2026-08-29 on this graph's nine dangling references, five are the `prj:`/`proj:` typo this refuses and four were VALID WHEN WRITTEN and broke later when the target was renamed. Those need detection over the graph as it stands, which is a separate cause with a separate fix and is not claimed here."
+      },
+      "to_id": "fact:defect-a-property-naming-a-node-is-unguarded-while-edges-are-not"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:absorb-core-storage-text",
       "properties": {
         "at": "2026-08-24T21:45:00Z",
@@ -114284,7 +114385,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a6cbbba3a5189697e62d33b051fafc04660c6a50b3346bd7823504158f5ed847",
+        "checksum": "sha256:cc488a234704516b0e93e84b5f37553a8bc28890570a7a2ada3d6e2e61291c22",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/export.rs",
         "name": "export.rs",
@@ -114435,7 +114536,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:4c72143838d93c63c840585eddb6597d7c641d6c68383c4206a79bc8a5b49168",
+        "checksum": "sha256:fe03dabb3ed33b0981ef8bc735fca63e9e4b57bdf04874b300da82bf880ff71b",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/graph.rs",
         "name": "crates/reflow2-core/src/graph.rs",
@@ -114770,7 +114871,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b5bf1aac74a81609adcea9e54b55b9a5689fc231bfccfd391a57057c3a9adb80",
+        "checksum": "sha256:dc66589b6c117c43fab27145543c4f9201b5affb51c2cc5e8eb038b6c2219366",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/main.rs",
         "name": "main.rs",
@@ -115189,7 +115290,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:a01343b1c8eca823cbcf68d5f2a804085b2f7ab490dd33d5595330e1ecff0c05",
+        "checksum": "sha256:1537d915048052aa71335907145f536231c2a981eb4e68d6730314a141b61bb3",
         "location": "crates/reflow2-mcp/tests/the_same_paragraph_fifty_times.rs",
         "name": "the_same_paragraph_fifty_times.rs",
         "status": "realized"
@@ -115442,7 +115543,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:5d77d0dcfc656e479cebe5374eb6a48f335443186344a7cd298275d1157ab978",
+        "checksum": "sha256:13f4370bf85e324c8fbe4f94f05761789b9ef41f3ee69fbd62c16c6a07f2d4a9",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/temporal.yaml",
@@ -119645,6 +119746,18 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "unprovided_interface stops firing on `required` boundaries — declaring what you need from outside was creating one 0.72 nag per requirement, forever"
+      }
+    },
+    {
+      "node_id": "chg:a-restore-judges-a-reference-against-the-document-not-the-walk",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-29",
+        "name": "Node-reference checking moves off the import walk and onto the whole document",
+        "rationale": "MEASURED 2026-08-29 on this design's own 3388-node export: with the guard on the walk, restoring it failed with 23 faults and wrote NOTHING. Only nine were real dangling references. Three were nodes present in the SAME document at indices 3342, 3360 and 3169, referenced from 2854, 3167 and 3063 — refused because `TemporalFact` sorts before `Verification`. One was a cascade, and ten were edges orphaned by the thirteen. A design with no dangling references at all would still have failed this way, which is what makes it a class rather than this graph's data problem.\n\nTHE CAUSE: the unit of validation did not match the unit of atomicity. The import is all-or-nothing, so the document is what becomes true — and a reference must be judged against that, not against a partial state no caller ever observes. The edge guard already gets this for free by running after every node is written.\n\nWHY REPORT RATHER THAN REFUSE, once the ordering was fixed: nine real dangles remained and the import still wrote nothing, so a graph holding ONE bad reference had an unrestorable backup, remediable only by hand-editing the export — the one thing this project tells users never to do. The write guard already stops a NEW false record being made; an import asserts nothing new, it reproduces a state that already existed. `ImportReport` had answered this exact question three times already (`skipped_edges`, `integrity_note`, `provenance_note` — all \"the import still proceeds but never silently\"), so this follows the house answer rather than inventing a fourth policy.\n\nRound trip after the fix, measured: 3388/3388 nodes, 15122/15122 edges, node and edge ORDER identical, zero properties gained, dropped or changed. The export is a lossless durable artifact.",
+        "subject": "system",
+        "summary": "`create_node` gained a guard refusing a property whose value NAMES a node that does not exist (the `node_ref` schema flag, for `TemporalFact.subject_id`). Correct on an interactive write, WRONG on an import: it resolved a reference against the store as it stood mid-walk, and an export is ordered by node type, never by dependency. `import_graph` now collects the references while it stages nodes and judges them AFTER every node is written, against the document's own ids plus what the graph already holds. A dangling one is REPORTED on `ImportReport.dangling_node_refs` and printed by `--import`, not refused."
       }
     },
     {
@@ -127337,6 +127450,16 @@
       }
     },
     {
+      "node_id": "dec:a-restore-reports-an-unresolvable-reference-rather-than-refusing-it",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "`import_graph` writes a node whose `node_ref` property names a node that is in neither the document nor the graph, and names it on `ImportReport.dangling_node_refs` (printed by `--import`). It does NOT fail the import. `create_node` is unchanged and still refuses such a write outright.\n\nRecorded as PROPOSED: it was Claude's engineering call, taken to keep this design's own export restorable, and it is Anthony's to settle or overturn.",
+        "name": "A restore reports an unresolvable node reference rather than refusing the whole document",
+        "rationale": "THE ALTERNATIVE, and why it lost: refuse the import, matching `create_node`. Measured 2026-08-29 — this design's own export carries nine references written before the guard existed (five instances of a `prj:`/`proj:` typo, four capabilities renamed after the fact was written). Under refusal the export could not be restored AT ALL, and the only remedy on offer was hand-editing the export document, which is the one thing this project tells users never to do. Any user upgrading into the guard with a single pre-existing dangling reference would silently acquire an unrestorable backup.\n\nTHE DISTINCTION THAT DECIDES IT: a write ASSERTS something new, and refusing a new record about a node the design does not have is right. An import ASSERTS NOTHING — it reproduces a state that already existed, and the document is the evidence that it did. Refusing there is the tool substituting its judgement for a reality it is being handed.\n\nNOT A NEW POLICY. `ImportReport` had already answered this same question three times — `skipped_edges` (an edge whose endpoint is missing is skipped and named, not fatal), `integrity_note` and `provenance_note`, each documented as \"the import still proceeds but never silently\". A dangling property reference is the other shape of a missing endpoint, so answering it differently would have one import refusing what its neighbour two lines up reports.\n\nTHE COST, stated plainly: import is now a path by which a dangling reference can enter a graph that did not have one — an export/import laundering route the write guard closes. Judged acceptable because it requires a deliberately constructed document, and because the renames that produce most real dangles are unreachable by ANY write-time check and need detection over the graph as it stands. That detection is a separate open piece of work.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "dec:a-stale-finding-is-closed-by-a-claim-not-a-computation",
       "node_type": "Decision",
       "properties": {
@@ -132735,6 +132858,16 @@
       }
     },
     {
+      "node_id": "decision:ack:heal:6f773b6f7e7c5686",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the structural defect heal:6f773b6f7e7c5686.",
+        "name": "Reviewed: heal:6f773b6f7e7c5686",
+        "rationale": "ACCEPTED AS ARCHITECTURE, NOT REPAIRED. Every path between subsystems routes through the MCP protocol because that is what reflow2 IS: an agent-native design brain whose entire surface is served over MCP. The detector is correct that the topology has one articulation point; it is wrong only in the implied remedy, `add_redundancy`, which would mean a second protocol nobody wants and no consumer asked for.\n\n⚠️ THE COST OF LEAVING IT OPEN IS THE REASON THIS IS ACKNOWLEDGED RATHER THAN IGNORED. Three permanent warnings in one category teach a reader to skim it, and the next single point of failure — a real one, in a place nobody chose — would arrive into a list already being skipped. This project has found that wallpaper failure three times (unreviewed_ideas at 111 of 186, the undeclared-seam list, the unallocated-parts list). Moving it into `reviewed_defects` keeps it visible and counted while restoring the open list's ability to mean something.\n\n📌 THE REVIEW EXPIRES IF THE SHAPE CHANGES, which is the property that makes this safe: the defect id hashes the category with the affected set, so if this interface stops being the sole bridge — or a different one becomes one — the new shape has a new id nobody has accepted, and it surfaces again.\n\n⚠️ NOT ACCEPTED: that a single point of failure here is harmless. `rule:mcp-and-the-graph-are-the-only-common-ground` makes this seam load-bearing on purpose, and its availability is a real operational property. What is accepted is that the DESIGN is right and the detector's suggested repair is not.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "decision:ack:heal:81571c7881a57813",
       "node_type": "Decision",
       "properties": {
@@ -132745,6 +132878,16 @@
       }
     },
     {
+      "node_id": "decision:ack:heal:8a6d72894136a514",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the structural defect heal:8a6d72894136a514.",
+        "name": "Reviewed: heal:8a6d72894136a514",
+        "rationale": "ACCEPTED AS ARCHITECTURE, for the same reason as `ifc:mcp-protocol` and with the same bound. The HTTP tool surface is one of the two transports the MCP surface is served over; every subsystem path crosses it because that is the design, not an accident of wiring. `add_redundancy` would mean a second, parallel transport carrying the same tools — which is what the stdio path already is, and the detector cannot see that they are alternatives rather than a chain.\n\n⭐ THAT LAST POINT IS THE HONEST CONTENT OF THIS REVIEW: stdio and HTTP ARE the redundancy, and the topology walk models them as sequential because both are modelled as interfaces on the same spine. The finding is a limitation of what the walk can express, not a property of the system.\n\n⚠️ NOT ACCEPTED: that the transport is unimportant. It is where a content-only client's whole read surface lives, which this project measured the hard way in August. What is accepted is that the shape the detector names is deliberate and its suggested repair already exists under a different name.",
+        "status": "proposed"
+      }
+    },
+    {
       "node_id": "decision:ack:heal:bda06fadbc343090",
       "node_type": "Decision",
       "properties": {
@@ -132752,6 +132895,16 @@
         "name": "Reviewed: heal:bda06fadbc343090",
         "rationale": "The contract side of dec:export-door-spof-accepted (2026-07-24): the export document IS the interchange format, so a redundant one would mean two records that must agree — the erosion this design exists to prevent.",
         "status": "accepted"
+      }
+    },
+    {
+      "node_id": "decision:ack:heal:d1860c2ddc91c43c",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "Accepted the structural defect heal:d1860c2ddc91c43c.",
+        "name": "Reviewed: heal:d1860c2ddc91c43c",
+        "rationale": "ACCEPTED AS ARCHITECTURE, and this one is a DELIBERATE chokepoint rather than merely an unavoidable one. A session names the design it works on through exactly one door, and `registry.rs` says why in its own words: `Registry::attach` takes an id and treats it as an ID ALWAYS, there is deliberately no `path_for(id)` and no `attach_path`, because \"a convenience overload is exactly how this property would be lost, so it is absent rather than documented\".\n\n⭐ SO REDUNDANCY HERE WOULD BE A DEFECT, not a repair. The property `ver:a-session-cannot-name-another-design` protects — that a session cannot reach a design it was not attached to — holds BY CONSTRUCTION precisely because there is one route in. A second path is the thing that guarantee exists to forbid.\n\n⚠️ NOT ACCEPTED: that concentration carries no risk. If this door breaks, every session is affected. What is accepted is that the concentration is the security property, and that `add_redundancy` would trade a correctness guarantee for an availability one nobody has asked for.",
+        "status": "proposed"
       }
     },
     {
@@ -144103,6 +144256,20 @@
       }
     },
     {
+      "node_id": "fact:agents-do-self-invoke-skills-at-scale-and-the-hook-not-the-catalogue-predicts-which",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.9,
+        "fact_type": "measurement",
+        "name": "MEASURED across 93 sessions of two OTHER reflow2 projects: 88% of skill loads had no slash command behind them, so agents DO self-invoke at scale — and what predicts a skill's load count is being named in the always-injected SessionStart hook, not being in the served catalogue",
+        "statement": "MEASURED 2026-08-29 over the Claude Code transcripts on the peer box (ajs77), read-only: `dev-storyflow` 91 sessions / 4157 real user turns / 21993 tool calls / 5240 reflow2 tool calls, spanning 2026-07-29 to 2026-08-29; `OpenLotR2` 2 sessions / 52 user turns / 440 reflow2 tool calls. 175 and 7 skill loads respectively, via `get_skill` (151) and the `Skill` tool (24).\n\n═══ ⭐ IT REFUTES THE STRONG FORM OF fact:a-skill-is-loaded-only-when-something-already-in-hand-demands-it ═══\n\nThat node says an agent loads a skill when something already in its hand demands it \"and otherwise substantially not at all\", generalising from ONE session where 3 of 5 loads were user-typed. At n=93 sessions the shape is the opposite: **154 of 175 loads (88%) had NO matching slash command anywhere earlier in the session.** Agents self-invoke reflow2 skills constantly. Where a matching command did exist, the median gap was 1 user turn, so those are genuinely command-driven and the split is clean.\n\nThe WEAK form survives and is what the data supports: loading is driven by an instruction already in context. reflow2 HAS such a mechanism — the SessionStart hook and the MCP server instructions — and it is working. The earlier node's error was treating 'no reflow2 TOOL demands a skill' as 'nothing demands a skill'.\n\n═══ ⭐⭐ WHAT ACTUALLY PREDICTS THE COUNT: THE HOOK, NOT THE CATALOGUE ═══\n\n    skill              loads   /cmd typed   ratio\n    where-am-i            42        5        8.4x   ← NAMED IN THE SessionStart HOOK\n    brainstorm            22       10        2.2x\n    capture-session       19       18        1.1x   ← essentially all user-typed\n    link-artifacts        15        0         —\n    capture-intent        15        0         —\n    revise-design         12        0         —\n\nThe MCP server instructions name ALL 23 skills and usage across them is 42..0 — a catalogue that lists everything predicts nothing. The SessionStart hook names only three (genesis, adopt, where-am-i), and `where-am-i` is the most-loaded skill by a factor of two over anything else, self-invoked 8.4x more often than it is asked for. The other two hook-named skills are one-time by nature (genesis 0, adopt 2), which is the expected reading rather than a counterexample.\n\n⭐ This is direct evidence for `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue`: an always-injected surface moves behaviour, a catalogue read once does not.\n\n═══ NEVER LOADED IN 91 SESSIONS ═══\n\nci-gate, genesis, kpp-proposal, link-ideas, optimize, parallel-work, plan-increments, root-cause.\n\n🛑 FOUR OF THOSE EIGHT ARE NOT EVIDENCE OF ANYTHING. `genesis` and `ci-gate` are one-time setup and the project is long past both; `adopt` at 2 fits the same shape. `root-cause` shipped in v0.42.0 on 2026-08-28 and could not have been used in a window that mostly precedes it. The four that are genuinely unexplained by situation are **kpp-proposal, link-ideas, optimize, parallel-work, plan-increments** (five, on a stricter reading).\n\n═══ ⚠️ WHAT THIS DOES NOT ESTABLISH ═══\n\n- Whether a never-loaded skill went unused because nothing triggered it or because its SITUATION never arose. Nothing here separates those, and for plan-increments and parallel-work the situation genuinely may not have arisen. This is the same unused-vs-unreachable ambiguity `dec:bl-155` names for tools.\n- Causation for the hook. `where-am-i` is also the most generically useful skill in the set, so hook-presence and intrinsic usefulness are confounded. A second skill added to the hook would test it, and that is the cheap discriminating experiment.\n- Attribution was measured as loads-per-skill against commands-for-that-same-skill, NOT by turn adjacency. Two earlier adjacency-based passes returned a false 100% self-invoked because Claude Code records tool results as `type: user` and records a slash command and its expansion as two separate user turns, either of which resets a naive 'previous user turn' flag. The ratio method avoids both.\n- OpenLotR2 at 2 sessions is far too small to read alone; it is reported for shape only.",
+        "subject_id": "dec:idea-where-does-tool-use-actually-fail-four-layers",
+        "valid_from": "2026-08-29",
+        "value": "{\"projects\":2,\"sessions\":93,\"dev_storyflow_sessions\":91,\"span\":\"2026-07-29..2026-08-29\",\"skill_loads\":182,\"loads_without_matching_command\":157,\"pct_self_invoked\":88,\"where_am_i_loads\":42,\"where_am_i_commands\":5,\"where_am_i_ratio\":8.4,\"skills_served\":23,\"distinct_loaded_dev_storyflow\":19,\"never_loaded\":[\"ci-gate\",\"genesis\",\"kpp-proposal\",\"link-ideas\",\"optimize\",\"parallel-work\",\"plan-increments\",\"root-cause\"],\"never_loaded_explained_by_situation\":[\"genesis\",\"ci-gate\",\"root-cause\"],\"reflow2_tool_calls\":5680}"
+      }
+    },
+    {
       "node_id": "fact:alex-grok-0240-feedback-triaged-2026-08-16",
       "node_type": "TemporalFact",
       "properties": {
@@ -147548,6 +147715,20 @@
       }
     },
     {
+      "node_id": "fact:the-unmaintained-premise-under-the-rocksdb-switch-has-moved",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.7,
+        "fact_type": "observation",
+        "name": "The `rocksdb` crate has resumed releasing (0.25), which removes the strongest argument for the rust-rocksdb switch — and the stale sentence sits in the workspace manifest, not in the decision",
+        "statement": "REPORTED BY ANTHONY, 2026-08-29: the official `rocksdb` crate has resumed updates and is at 0.25. Recorded at confidence 0.7 because it is his report rather than something measured here; `cargo info rocksdb` would settle it.\n\n═══ WHY IT MATTERS, AND IT IS NOT THE PARK ═══\n\n`dec:the-rust-rocksdb-switch-is-parked-until-the-store-question-settles` is UNAFFECTED. Its stated reason is not maintenance status — it is that the migration is *\"an 86-file change to the one component that may be retired\"*, blocked on `dec:idea-does-reflow2-need-a-byte-store-at-all-or-only-durability`. That question is still open, so the park still stands and this news does not unpark it.\n\n⭐ WHAT IT DOES BEAR ON IS THE OTHER DECISION. `dec:absorb-rocksdb-024-unchanged-then-switch-separately` says the switch is owed, and the strongest argument for it was that the official wrapper was abandoned while `rust-rocksdb` was maintained. **If upstream is releasing again, that argument is gone** — which makes the switch a candidate for SUPERSEDED rather than for action.\n\n═══ 🛑 THE STALE SENTENCE IS IN THE MANIFEST, WHICH IS THE DANGEROUS PART ═══\n\n`[workspace.dependencies]` in the root Cargo.toml carries this comment beside the pin: *\"`rocksdb` is the historically-unmaintained wrapper; `rust-rocksdb` (0.52) is the maintained one and is where this should end up.\"*\n\nThat is the sentence a session reads BEFORE it ever reaches either decision node, and it sits in the exact file somebody would edit to bump the pin. The park node anticipated the misreading almost word for word — it warns the switch *\"reads as tidy housekeeping — an unmaintained crate, a maintained replacement, and a version number that looks far behind\"* — and it correctly notes the version gap is illusory, since `rocksdb` 0.24 and `rust-rocksdb` 0.52 are different crates on independent numbering. But it could not know upstream would revive.\n\n⭐ THE SHAPE, AND IT IS THE THIRD SIGHTING IN TWO DAYS: a record whose CONCLUSION still stands while its JUSTIFICATION quietly stopped being true. The others are `fact:defect-the-served-instructions-put-their-standing-rules-where-a-client-cap-deletes-them` (the defect was real; its self-sealing explanation measured false) and `fact:a-retired-dependencys-facts-keep-describing-this-project` (true when written, false once the dependency was absorbed). None is caught by re-running anything, because the conclusion still reproduces.\n\n⚠️ WHAT THIS DOES NOT ESTABLISH: that `rocksdb` 0.25 should be adopted. That is a separate call with its own cost — AGENTS.md warns the pin carries a long recompile — and it is a version bump within the SAME crate, which is a third thing distinct from both the switch and the store question. Nor does it establish that `rust-rocksdb` is now the wrong choice on other grounds; only that the maintenance argument no longer carries it.",
+        "subject_id": "dec:absorb-rocksdb-024-unchanged-then-switch-separately",
+        "valid_from": "2026-08-29",
+        "value": "{\"reported_by\":\"Anthony, 2026-08-29\",\"claim\":\"official rocksdb crate resumed updates, now 0.25\",\"pinned_at\":\"0.24\",\"verified_here\":false,\"park_affected\":false,\"park_reason\":\"86-file migration to a component that may be retired\",\"switch_decision_affected\":true,\"stale_sentence_location\":\"root Cargo.toml [workspace.dependencies] comment\",\"three_distinct_questions\":[\"bump 0.24 to 0.25 in the same crate\",\"switch to rust-rocksdb\",\"whether a byte store is needed at all\"],\"pattern\":\"conclusion stands, justification rotted - third sighting\"}"
+      }
+    },
+    {
       "node_id": "fact:the-upstream-watch-is-findable-only-in-reflow2s-own-words",
       "node_type": "TemporalFact",
       "properties": {
@@ -150532,7 +150713,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:515b0365d042c37b3b77ecb5065c78065cfe45fc6fec8ca952eedf480886160e",
+  "prev_content_hash": "sha256:c9b3f2c8b704033d0fb6b02af2bee229e869edfb759789dc4556f547accbc604",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
