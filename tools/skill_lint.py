@@ -1143,6 +1143,66 @@ def main() -> int:
         f"{len(composed_failures)} unmet: {composed_failures[:12]}",
     )
 
+    # ---- TOOL-SIDE DEMAND ------------------------------------------------
+    # A skill may name the TOOLS whose descriptions must demand it, and this
+    # checks the tool actually does. The other direction of every check above:
+    # those ask what a SKILL says, and no amount of editing SKILL.md files
+    # reaches the surface an agent is actually reading when it decides.
+    #
+    # ⭐ WHY THIS IS THE LEVER, MEASURED 2026-08-29 over 91 sessions of a real
+    # reflow2 project (dev-storyflow, 2026-07-29..2026-08-29):
+    #
+    #     tool               calls  sessions  loaded the matching skill
+    #     Artifact               2         2      100%   ← description DEMANDS it
+    #     record_change        108        16       19%   ← no demand
+    #     add_artifact         134        27       22%   ← no demand
+    #     add_change_event     109        29       24%   ← no demand
+    #     add_requirement       77        18       61%   ← no demand
+    #
+    # Between a third and four-fifths of sessions doing the work never open the
+    # skill written for it. THE 100% IS n=2 AND IS NOT EVIDENCE — the measured
+    # part is the GAP, and this is the instrument for closing it.
+    #
+    # 🛑 IT CHECKS PRESENCE OF THE DEMAND, NEVER THAT THE DEMAND WORKS. That is
+    # the same honest limit the composed classes carry: a factory guarantees the
+    # mechanic is present, never that it is right. Whether tool-side demand
+    # actually moves the rate is an experiment running now against the baselines
+    # above, deliberately paired against a SessionStart-hook arm on a different
+    # skill so the two channels do not confound.
+    #
+    # The tool descriptions are read from the COMMITTED toolsnap goldens rather
+    # than from the Rust, so this gate needs no toolchain and cannot drift from
+    # what `toolsnap.py` already blesses.
+    snapdir = REPO / "tools/toolsnaps"
+    demand_failures: list[str] = []
+    demands = 0
+    for d in sorted(x for x in SKILLS.iterdir() if x.is_dir()):
+        text = (d / "SKILL.md").read_text(encoding="utf-8")
+        raw = frontmatter(text).get("metadata", "")
+        m = re.search(r"demanded_by:\s*\[(.*?)\]", raw)
+        if not m:
+            continue
+        for tool in [t.strip() for t in m.group(1).split(",") if t.strip()]:
+            demands += 1
+            snap = snapdir / f"{tool}.json"
+            if not snap.exists():
+                demand_failures.append(
+                    f"{d.name}: names tool {tool!r}, which has no golden "
+                    f"(tools/toolsnaps/{tool}.json) — check the tool name"
+                )
+                continue
+            desc = json.loads(snap.read_text(encoding="utf-8")).get("description", "")
+            if d.name not in desc:
+                demand_failures.append(
+                    f"{d.name}: {tool}'s description does not name it, so an agent "
+                    f"calling {tool} is never told the skill exists"
+                )
+    check(
+        f"every tool a skill names as demanding it actually does ({demands} declared)",
+        not demand_failures,
+        f"{len(demand_failures)} unmet: {demand_failures[:8]}",
+    )
+
     for label, phrase in ASK_CONTRACT.items():
         check(
             f"detect-and-ask states the obligation: {label}",

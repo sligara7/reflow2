@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:50c3e6c82abc6afd512f83176e95d045ce425407c1dda6f20a02371a8bf4a3e8",
+  "content_hash": "sha256:28f3553c3da175ead61b73a354e9f15365ac8716ae8d573c851bda460084c1d1",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -13573,6 +13573,33 @@
       "from_id": "decision:ack:ff976610480dab90",
       "properties": {
         "acted_at": "2026-08-23",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:heal:6f773b6f7e7c5686",
+      "properties": {
+        "acted_at": "2026-08-29",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:heal:8a6d72894136a514",
+      "properties": {
+        "acted_at": "2026-08-29",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:heal:d1860c2ddc91c43c",
+      "properties": {
+        "acted_at": "2026-08-29",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -33090,6 +33117,42 @@
         "action": "modified"
       },
       "to_id": "req:concurrent-planning"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:two-channels-for-making-a-skill-reachable-are-under-test",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:impact-check-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:two-channels-for-making-a-skill-reachable-are-under-test",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:loop-nudge"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:two-channels-for-making-a-skill-reachable-are-under-test",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:two-channels-for-making-a-skill-reachable-are-under-test",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-temporal"
     },
     {
       "edge_type": "CHANGED",
@@ -114682,7 +114745,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:f535f169ef2fd652380a8930a08842228b0be6971e49063de1b5dafacb554a9c",
+        "checksum": "sha256:a4e5b0e626b7f8af544c86a244aba01577d7522c1977ddd04ee47c43a75ff8be",
         "location": "getting-started/skills/impact-check/SKILL.md",
         "name": "impact-check/SKILL.md",
         "status": "realized"
@@ -114845,7 +114908,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:63cb1f09f969be33ab14fbd837eff877e28b7f432953985e7eeba10b32bf0f31",
+        "checksum": "sha256:1dc6dec37183cd464134e89d8e96c54aa9990cb2082760232cb56dfd7008386d",
         "granularity": "atomic",
         "location": "tools/loop_nudge.py",
         "name": "loop_nudge.py",
@@ -115786,7 +115849,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:f217583a448be3dea99458253445f91e6056028ea4d3d95980e8a1f43bbd7cd0",
+        "checksum": "sha256:cd506d20f9483ffdcd70e713b121deb3f98523b0dec99e08df03eeba0902fd3a",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -116446,7 +116509,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:7eb878fefd48bea1cda02cc0dffe8cc3d3c61f3822e0bd93bb7b99ae79e33746",
+        "checksum": "sha256:4732c3bb7cebda9ddde396ec21c4b6748e2304cd3af064ab9b24fa21b16a8965",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/temporal_tools.rs",
         "name": "tools/temporal_tools.rs",
@@ -125660,6 +125723,18 @@
       }
     },
     {
+      "node_id": "chg:two-channels-for-making-a-skill-reachable-are-under-test",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-29",
+        "name": "Two channels for making a skill reachable, each with its baseline recorded",
+        "rationale": "MEASURED 2026-08-29 across 91 sessions of dev-storyflow — see `fact:agents-do-self-invoke-skills-at-scale-and-the-hook-not-the-catalogue-predicts-which`. 88% of skill loads had no slash command behind them, and what predicts a skill's load count is being named in an always-injected surface rather than in the served catalogue.\n\nWHY TWO ARMS RATHER THAN ONE FIX: the observational result is confounded. `where-am-i` is named in the hook AND is the most generally useful skill in the set, so hook-presence and intrinsic usefulness cannot be separated from data nobody intervened on. One skill added to each channel, with baselines taken first, is the discriminating experiment.\n\n    TOOL-SIDE  impact-check  from record_change   baseline 19% (16 sessions)\n    HOOK       link-artifacts in SESSION_START    baseline 22% (27 sessions)\n\n⚠️ THE FINDING THAT MAKES THIS HARD, and it is recorded rather than worked around: BOTH CHANNELS ARE A FIXED BUDGET. `add_change_event` has the worst measured compliance (24%, 29 sessions) and sits at 1494 chars against a 1500-char limit — it physically could not carry a demand. The budget gate was left alone rather than raised, the tool-side arm was scoped to `record_change`, and the collision was written down. Naming all 23 skills in the hook would likewise rebuild the catalogue that demonstrably predicts nothing. Whatever mechanism wins, it wins inside a budget.\n\n🛑 THIS RECORDS AN EXPERIMENT, NOT A RESULT. Nothing here says either channel works. Read the baselines again in a few weeks.",
+        "subject": "system",
+        "summary": "Two paired EXPERIMENTS, on different skills so neither can claim the other's result. TOOL-SIDE: `impact-check` is demanded from `record_change`'s tool description, and `skill_lint` gains a `demanded_by` check — a skill declares the tools whose descriptions must demand it, read from the committed toolsnap goldens, and the gate fails when a named tool does not. HOOK: `link-artifacts` is named in `SESSION_START_TEXT`. Baselines are written into the code beside each change rather than left in a transcript."
+      }
+    },
+    {
       "node_id": "chg:two-more-modules-behind-the-read-contract",
       "node_type": "ChangeEvent",
       "properties": {
@@ -132864,7 +132939,7 @@
         "decision": "Accepted the structural defect heal:6f773b6f7e7c5686.",
         "name": "Reviewed: heal:6f773b6f7e7c5686",
         "rationale": "ACCEPTED AS ARCHITECTURE, NOT REPAIRED. Every path between subsystems routes through the MCP protocol because that is what reflow2 IS: an agent-native design brain whose entire surface is served over MCP. The detector is correct that the topology has one articulation point; it is wrong only in the implied remedy, `add_redundancy`, which would mean a second protocol nobody wants and no consumer asked for.\n\n⚠️ THE COST OF LEAVING IT OPEN IS THE REASON THIS IS ACKNOWLEDGED RATHER THAN IGNORED. Three permanent warnings in one category teach a reader to skim it, and the next single point of failure — a real one, in a place nobody chose — would arrive into a list already being skipped. This project has found that wallpaper failure three times (unreviewed_ideas at 111 of 186, the undeclared-seam list, the unallocated-parts list). Moving it into `reviewed_defects` keeps it visible and counted while restoring the open list's ability to mean something.\n\n📌 THE REVIEW EXPIRES IF THE SHAPE CHANGES, which is the property that makes this safe: the defect id hashes the category with the affected set, so if this interface stops being the sole bridge — or a different one becomes one — the new shape has a new id nobody has accepted, and it surfaces again.\n\n⚠️ NOT ACCEPTED: that a single point of failure here is harmless. `rule:mcp-and-the-graph-are-the-only-common-ground` makes this seam load-bearing on purpose, and its availability is a real operational property. What is accepted is that the DESIGN is right and the detector's suggested repair is not.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -132884,7 +132959,7 @@
         "decision": "Accepted the structural defect heal:8a6d72894136a514.",
         "name": "Reviewed: heal:8a6d72894136a514",
         "rationale": "ACCEPTED AS ARCHITECTURE, for the same reason as `ifc:mcp-protocol` and with the same bound. The HTTP tool surface is one of the two transports the MCP surface is served over; every subsystem path crosses it because that is the design, not an accident of wiring. `add_redundancy` would mean a second, parallel transport carrying the same tools — which is what the stdio path already is, and the detector cannot see that they are alternatives rather than a chain.\n\n⭐ THAT LAST POINT IS THE HONEST CONTENT OF THIS REVIEW: stdio and HTTP ARE the redundancy, and the topology walk models them as sequential because both are modelled as interfaces on the same spine. The finding is a limitation of what the walk can express, not a property of the system.\n\n⚠️ NOT ACCEPTED: that the transport is unimportant. It is where a content-only client's whole read surface lives, which this project measured the hard way in August. What is accepted is that the shape the detector names is deliberate and its suggested repair already exists under a different name.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -132904,7 +132979,7 @@
         "decision": "Accepted the structural defect heal:d1860c2ddc91c43c.",
         "name": "Reviewed: heal:d1860c2ddc91c43c",
         "rationale": "ACCEPTED AS ARCHITECTURE, and this one is a DELIBERATE chokepoint rather than merely an unavoidable one. A session names the design it works on through exactly one door, and `registry.rs` says why in its own words: `Registry::attach` takes an id and treats it as an ID ALWAYS, there is deliberately no `path_for(id)` and no `attach_path`, because \"a convenience overload is exactly how this property would be lost, so it is absent rather than documented\".\n\n⭐ SO REDUNDANCY HERE WOULD BE A DEFECT, not a repair. The property `ver:a-session-cannot-name-another-design` protects — that a session cannot reach a design it was not attached to — holds BY CONSTRUCTION precisely because there is one route in. A second path is the thing that guarantee exists to forbid.\n\n⚠️ NOT ACCEPTED: that concentration carries no risk. If this door breaks, every session is affected. What is accepted is that the concentration is the security property, and that `add_redundancy` would trade a correctness guarantee for an availability one nobody has asked for.",
-        "status": "proposed"
+        "status": "accepted"
       }
     },
     {
@@ -150713,7 +150788,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:c9b3f2c8b704033d0fb6b02af2bee229e869edfb759789dc4556f547accbc604",
+  "prev_content_hash": "sha256:50c3e6c82abc6afd512f83176e95d045ce425407c1dda6f20a02371a8bf4a3e8",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
