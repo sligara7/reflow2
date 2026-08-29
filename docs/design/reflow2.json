@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:b156799d121582a482d17cb91d9f4529498fa5701a52fd9c26886b49b4d12067",
+  "content_hash": "sha256:ff18fa267bc98a66fd97c7558bc2c75f49612cc39dffefef49ca5c3e7273c577",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3317,6 +3317,14 @@
         "evidence": "That measurement ends by naming exactly this as the question it leaves to the owner — 'which level should carry contracts' — so the earlier fact saw this idea coming and this idea is the answer to it. Drawn FROM the fact TO this decision."
       },
       "to_id": "dec:idea-a-contract-is-declared-at-the-lowest-level-and-rolled-up"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:defect-seven-temporal-facts-name-a-subject-id-that-does-not-exist",
+      "properties": {
+        "evidence": "It named the exact unswept ground on 2026-08-16: whether Snapshot.target_id and Question.gap_id carry the same rot, nobody has swept them. Thirteen days and two further countings later nobody had. That sweep is what this node reports, and it found 4 dangling Snapshot.target_id values plus the reason Question.gap_id must never be declared a node reference."
+      },
+      "to_id": "fact:which-properties-are-node-references-is-a-judgement-made-once-and-never-recorded-for-the-others"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -8015,6 +8023,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-import-decisions-rationale-loses-its-rename-leg",
+      "properties": {},
+      "to_id": "epoch:a-dangling-reference-is-found-on-its-own-terms"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-installer-says-the-graph-is-tracked-20260808",
       "properties": {},
       "to_id": "epoch:v0250"
@@ -9048,6 +9062,12 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:a-dangling-reference-is-found-on-its-own-terms:art:heal",
+      "properties": {},
+      "to_id": "epoch:a-dangling-reference-is-found-on-its-own-terms"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:a-dangling-reference-is-found-on-its-own-terms:dec:a-restore-reports-an-unresolvable-reference-rather-than-refusing-it",
       "properties": {},
       "to_id": "epoch:a-dangling-reference-is-found-on-its-own-terms"
     },
@@ -10482,6 +10502,15 @@
         "role": "author"
       },
       "to_id": "who:claude-code"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:a-restore-reports-an-unresolvable-reference-rather-than-refusing-it",
+      "properties": {
+        "acted_at": "2026-08-29",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
     },
     {
       "edge_type": "AUTHORED_BY",
@@ -16413,6 +16442,16 @@
         "validation_status": "unvalidated"
       },
       "to_id": "dec:the-decomposition-ladder-is-open-not-a-fixed-enum"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:which-properties-are-node-references-is-a-judgement-made-once-and-never-recorded-for-the-others",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "The cause behind the counted symptom. The nine dangling subject_ids are ids CONSTRUCTED BY CONVENTION RATHER THAN RESOLVED BY LOOKUP - 6 prefix errors on a real slug, 3 slugs invented from the name of a served tool - and they survived because whether a property is a node reference is a hand-made judgement recorded for exactly one property. Drawn from the cause to the record of the symptom per the root-cause skill: the repair is recoverable from the diff, the cause is not.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:nine-temporalfacts-point-their-subject-at-a-node-that-does-not-exist"
     },
     {
       "edge_type": "CAUSES",
@@ -32906,6 +32945,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-import-decisions-rationale-loses-its-rename-leg",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:a-restore-reports-an-unresolvable-reference-rather-than-refusing-it"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-installer-says-the-graph-is-tracked-20260808",
       "properties": {
         "accepted_baseline": true,
@@ -40005,6 +40053,15 @@
         "doc_kind": "design_doc"
       },
       "to_id": "dec:should-a-design-be-able-to-say-it-describes-something-that-already-exists"
+    },
+    {
+      "edge_type": "DUPLICATES",
+      "from_id": "fact:a-dangling-reference-is-only-detected-when-the-node-is-also-edgeless",
+      "properties": {
+        "basis": "suspected",
+        "evidence": "THE SAME FINDING, RE-DERIVED THREE DAYS LATER BY A SESSION THAT DID NOT SEARCH FIRST. The 2026-08-26 node already says it: the orphan check short-circuits on degree > 0 before it looks at pointer properties, so a fact attached to anything hides its broken subject, and the better a fact is linked the less likely its dangling subject is to be seen. The 08-29 node states the same mechanism in its own words and calls it new. LINKED RATHER THAN MERGED because both reasons matter and the numbers genuinely differ: 08-26 measured 8 of 9 caught with 1 invisible, 08-29 measured 7 of 9 with 2. Neither is wrong - fact:defect-kit-manifest-drift-is-invisible-to-ci gained edges between those dates and crossed from visible to invisible, which is the mechanism demonstrating itself on a live node. The later node also carries what the earlier does not: the bias argument, and the rule that shipped as #373."
+      },
+      "to_id": "fact:nine-temporalfacts-point-their-subject-at-a-node-that-does-not-exist"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -47289,6 +47346,12 @@
       "from_id": "dec:a-misnaming-is-fixed-in-the-message-not-the-key",
       "properties": {},
       "to_id": "snap:epoch:the-key-is-renamed-and-the-sweep-says-what-it-swept:dec:a-misnaming-is-fixed-in-the-message-not-the-key"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:a-restore-reports-an-unresolvable-reference-rather-than-refusing-it",
+      "properties": {},
+      "to_id": "snap:epoch:a-dangling-reference-is-found-on-its-own-terms:dec:a-restore-reports-an-unresolvable-reference-rather-than-refusing-it"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -126544,6 +126607,18 @@
       }
     },
     {
+      "node_id": "chg:the-import-decisions-rationale-loses-its-rename-leg",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "detected_at": "2026-08-29",
+        "name": "The import decision's rationale is corrected before the ruling",
+        "rationale": "A DECISION IS SETTLED ON ITS RATIONALE, SO CORRECTING THE RATIONALE FIRST IS THE WHOLE POINT. Accepting it as written would embalm a false claim about this project's own history at the moment it becomes binding — and an accepted Decision is what `where-am-i` reads back to the user as \"what you decided\", which is where a fiction does the most damage.\n\nTHE TWO EDITS PULL IN OPPOSITE DIRECTIONS, and both are recorded rather than only the convenient one. Withdrawing the rename leg WEAKENS the case for reporting: that leg argued the write-time guard cannot reach the real cause, and on this graph it reaches all nine. Closing the laundering cost STRENGTHENS it: the one price the decision admitted paying is now paid down by a detector that did not exist when it was drafted.\n\nWHAT IS DELIBERATELY NOT TOUCHED: the decision text itself, and the three arguments that carry it — an import ASSERTS NOTHING and reproduces a state the document is evidence of; refusal left this design's own 3388-node export unrestorable with hand-editing the export as the only remedy, which is the one thing the project tells users never to do; and `ImportReport` already answers this same question three times the other way (`skipped_edges`, `integrity_note`, `provenance_note`), so refusing here would have one import refusing what its neighbour two lines up reports. None of those three rested on the rename claim.\n\nSTATUS IS NOT MOVED BY THIS EVENT. `rule:design-intent-moves-only-on-the-owners-word` is ENFORCED and `check_intent_authority` fails the build on settled intent with no approver, so the ruling is Anthony's and is asked for separately. This only makes the thing he is ruling on true.",
+        "subject": "record",
+        "summary": "`dec:a-restore-reports-an-unresolvable-reference-rather-than-refusing-it` is about to be put to Anthony for a ruling, and its rationale contains a claim measured false the same day. Two edits, both to the rationale, none to the decision text: (1) the sentence \"four capabilities renamed after the fact was written\" is withdrawn and replaced with what was actually measured — those four ids never existed as nodes, so all nine of this graph's dangling values were wrong when written and every one would have been refused at write time; (2) the stated COST — \"import is now a path by which a dangling reference can enter a graph that did not have one — an export/import laundering route the write guard closes\" — is updated, because that route is no longer silent: the `dangling_reference` rule shipped in #373 reports an unresolvable reference on its own terms whatever the node's degree, so anything an import launders is detected on the next sweep rather than never."
+      }
+    },
+    {
       "node_id": "chg:the-installer-says-the-graph-is-tracked-20260808",
       "node_type": "ChangeEvent",
       "properties": {
@@ -128807,10 +128882,10 @@
       "node_id": "dec:a-restore-reports-an-unresolvable-reference-rather-than-refusing-it",
       "node_type": "Decision",
       "properties": {
-        "decision": "`import_graph` writes a node whose `node_ref` property names a node that is in neither the document nor the graph, and names it on `ImportReport.dangling_node_refs` (printed by `--import`). It does NOT fail the import. `create_node` is unchanged and still refuses such a write outright.\n\nRecorded as PROPOSED: it was Claude's engineering call, taken to keep this design's own export restorable, and it is Anthony's to settle or overturn.",
+        "decision": "`import_graph` writes a node whose `node_ref` property names a node that is in neither the document nor the graph, and names it on `ImportReport.dangling_node_refs` (printed by `--import`). It does NOT fail the import. `create_node` is unchanged and still refuses such a write outright.\n\nORIGINALLY RECORDED AS PROPOSED, because it was Claude's engineering call taken to keep this design's own export restorable, and it was Anthony's to settle or overturn.\n\n✅ SETTLED 2026-08-29 — ACCEPTED on Anthony's word, after its rationale was corrected twice the same day and a root-cause pass was run on dangling references. He settled the behaviour as drafted: report, do not refuse.",
         "name": "A restore reports an unresolvable node reference rather than refusing the whole document",
-        "rationale": "THE ALTERNATIVE, and why it lost: refuse the import, matching `create_node`. Measured 2026-08-29 — this design's own export carries nine references written before the guard existed (five instances of a `prj:`/`proj:` typo, four capabilities renamed after the fact was written). Under refusal the export could not be restored AT ALL, and the only remedy on offer was hand-editing the export document, which is the one thing this project tells users never to do. Any user upgrading into the guard with a single pre-existing dangling reference would silently acquire an unrestorable backup.\n\nTHE DISTINCTION THAT DECIDES IT: a write ASSERTS something new, and refusing a new record about a node the design does not have is right. An import ASSERTS NOTHING — it reproduces a state that already existed, and the document is the evidence that it did. Refusing there is the tool substituting its judgement for a reality it is being handed.\n\nNOT A NEW POLICY. `ImportReport` had already answered this same question three times — `skipped_edges` (an edge whose endpoint is missing is skipped and named, not fatal), `integrity_note` and `provenance_note`, each documented as \"the import still proceeds but never silently\". A dangling property reference is the other shape of a missing endpoint, so answering it differently would have one import refusing what its neighbour two lines up reports.\n\nTHE COST, stated plainly: import is now a path by which a dangling reference can enter a graph that did not have one — an export/import laundering route the write guard closes. Judged acceptable because it requires a deliberately constructed document, and because the renames that produce most real dangles are unreachable by ANY write-time check and need detection over the graph as it stands. That detection is a separate open piece of work.",
-        "status": "proposed"
+        "rationale": "THE ALTERNATIVE, and why it lost: refuse the import, matching `create_node`. Measured 2026-08-29 — this design's own export carried nine references written before the guard existed. Under refusal the export could not be restored AT ALL, and the only remedy on offer was hand-editing the export document, which is the one thing this project tells users never to do. Any user upgrading into the guard with a single pre-existing dangling reference would silently acquire an unrestorable backup.\n\nTHE DISTINCTION THAT DECIDES IT: a write ASSERTS something new, and refusing a new record about a node the design does not have is right. An import ASSERTS NOTHING — it reproduces a state that already existed, and the document is the evidence that it did. Refusing there is the tool substituting its judgement for a reality it is being handed.\n\nNOT A NEW POLICY. `ImportReport` had already answered this same question three times — `skipped_edges` (an edge whose endpoint is missing is skipped and named, not fatal), `integrity_note` and `provenance_note`, each documented as \"the import still proceeds but never silently\". A dangling property reference is the other shape of a missing endpoint, so answering it differently would have one import refusing what its neighbour two lines up reports.\n\n────────────────────────────────────────────────────────────\n⚠️ CORRECTED TWICE ON 2026-08-29, BEFORE THIS WAS PUT UP FOR A RULING.\nThe second correction reverses part of the first. Both are kept.\n────────────────────────────────────────────────────────────\n\n🛑 ① THE RENAME LEG WAS WITHDRAWN — CORRECTLY, BUT TOO BROADLY. The original said the nine were \"five instances of a `prj:`/`proj:` typo, four capabilities renamed after the fact was written\" and concluded that \"the renames that produce most real dangles are unreachable by ANY write-time check\". Measured: those four ids never existed as nodes under any prefix, and the root-cause pass sharpened it further — 6 of the 9 are PREFIX ERRORS on a real slug (`prj:`→`proj:`, `cap:thin-install`→`req:thin-install`) and 3 are slugs INVENTED FROM THE NAME OF A SERVED TOOL. None is a rename. All nine would have been refused at write time.\n\n⭐ ② THE ADMITTED COST IS SMALLER. The original accepted one price — \"an export/import laundering route the write guard closes\" — as a permanent blind spot. `dangling_reference` (#373) now reports an unresolvable reference on its own terms whatever the node's degree, so anything an import launders in is named on the next sweep rather than never.\n\n🛑🛑 ③ AND THE RETIRE CASE IS REAL AFTER ALL — IT WAS IN THE PROPERTY NOBODY HAD SWEPT. Correction ① was true of `TemporalFact.subject_id` and was over-generalised to the whole class. The root-cause pass swept the other two pointer properties `heal.rs` names, which `fact:defect-seven-temporal-facts-name-a-subject-id-that-does-not-exist` asked for on 2026-08-16 and nobody had done. `Snapshot.target_id` holds 195 values, 191 resolve, and ALL FOUR THAT DANGLE ARE RETIRES — `art:content`, `art:content-test`, `art:tools-content` snapshotted at `epoch:content-store-discontinued`, and `ctr:anthony` at `epoch:the-owners-identity-is-one-node-again`. Every one resolved when written and broke when its target was deleted or merged.\n\n⭐⭐ THIS IS NOW THE STRONGEST ARGUMENT ON THE RECORD FOR REPORTING RATHER THAN REFUSING, and it is measured rather than hypothesised: THOSE FOUR DANGLING REFERENCES ARE CORRECT. A Snapshot exists precisely to preserve what a node was; when the node is deliberately deleted, the snapshot pointing at nothing is the mechanism working, not a fault. So a refusing import would reject this design's own export over four records that are doing their job — and a refusal cannot tell a broken reference from a correct historical one, because at the point of restore they are the same bytes. Only a report can hand that judgement to the person who owns the design.\n\n⚠️ WHAT THAT COSTS THE OTHER SIDE, stated plainly: `Snapshot.target_id` is NOT declared `node_ref`, so those four are invisible to the guard and to `dangling_reference` today, and this argument bites only if anyone declares it. The point stands anyway — the four exist, they are correct, and any rule that treated pointer properties uniformly would refuse them.\n\n📌 WHAT SURVIVES UNTOUCHED, and is what actually carries the decision: assertion versus reproduction, the unrestorable-backup measurement, and the three existing `ImportReport` precedents. None rested on any corrected claim.",
+        "status": "accepted"
       }
     },
     {
@@ -143438,6 +143513,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:a-dangling-reference-is-found-on-its-own-terms:dec:a-restore-reports-an-unresolvable-reference-rather-than-refusing-it",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[]",
+        "state": "{\"decision\":\"`import_graph` writes a node whose `node_ref` property names a node that is in neither the document nor the graph, and names it on `ImportReport.dangling_node_refs` (printed by `--import`). It does NOT fail the import. `create_node` is unchanged and still refuses such a write outright.\\n\\nRecorded as PROPOSED: it was Claude's engineering call, taken to keep this design's own export restorable, and it is Anthony's to settle or overturn.\",\"name\":\"A restore reports an unresolvable node reference rather than refusing the whole document\",\"rationale\":\"THE ALTERNATIVE, and why it lost: refuse the import, matching `create_node`. Measured 2026-08-29 — this design's own export carries nine references written before the guard existed (five instances of a `prj:`/`proj:` typo, four capabilities renamed after the fact was written). Under refusal the export could not be restored AT ALL, and the only remedy on offer was hand-editing the export document, which is the one thing this project tells users never to do. Any user upgrading into the guard with a single pre-existing dangling reference would silently acquire an unrestorable backup.\\n\\nTHE DISTINCTION THAT DECIDES IT: a write ASSERTS something new, and refusing a new record about a node the design does not have is right. An import ASSERTS NOTHING — it reproduces a state that already existed, and the document is the evidence that it did. Refusing there is the tool substituting its judgement for a reality it is being handed.\\n\\nNOT A NEW POLICY. `ImportReport` had already answered this same question three times — `skipped_edges` (an edge whose endpoint is missing is skipped and named, not fatal), `integrity_note` and `provenance_note`, each documented as \\\"the import still proceeds but never silently\\\". A dangling property reference is the other shape of a missing endpoint, so answering it differently would have one import refusing what its neighbour two lines up reports.\\n\\nTHE COST, stated plainly: import is now a path by which a dangling reference can enter a graph that did not have one — an export/import laundering route the write guard closes. Judged acceptable because it requires a deliberately constructed document, and because the renames that produce most real dangles are unreachable by ANY write-time check and need detection over the graph as it stands. That detection is a separate open piece of work.\",\"status\":\"proposed\"}",
+        "target_id": "dec:a-restore-reports-an-unresolvable-reference-rather-than-refusing-it",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:a-default-is-not-a-difference:cap:defaults-are-not-serialized",
       "node_type": "Snapshot",
       "properties": {
@@ -147184,7 +147269,7 @@
         "confidence": 1.0,
         "fact_type": "defect",
         "statement": "THE KIT MANIFEST CANNOT BE GATED IN CI, AND THAT IS WHY ITS DRIFT SURVIVES. `.reflow2/` is gitignored (.gitignore:22), so `.reflow2/kit-version.json` is NEVER COMMITTED — `git ls-files .reflow2/` returns nothing. A CI checkout therefore has no stamp at all, and any check over it finds nothing to examine and passes. Wiring ver:kit-manifest-agrees into ci.yml would produce a permanently green check that inspects nothing, which is the failure mode this project already names: a green gate is the weakest evidence in the building. FOUND 2026-08-07 while writing that verification, which had sat `planned` since 2026-07-25 — thirteen days in which the stamp went from four releases stale to describing kit 0.22.0/8ed097f against a source at 0.24.0/a5b0f0d. The friction report that raised it said \"reflow2's own manifest is four releases stale and nothing noticed\"; the reason nothing noticed is structural, not inattention. THE CHECK ITSELF IS WRITTEN AND RUNS (tools/check_kit_manifest.py, 14 cases in tools/test_check_kit_manifest.py), and against this repo it reports exactly one real finding — stale_version — with the ten skill mirrors correctly classified as notes rather than drift. WHERE IT CAN ACTUALLY RUN IS THE OPEN QUESTION, and it is a design question rather than a wiring one: candidates are orientation time (the SessionStart hook already prints an orientation line and already knows whether a design is present), a loop_nudge shape, or folding the hash and file-set claims into `reflow2_init.py --check`, which already reports the VERSION half and is the run people trust before letting anything touch a repo. TWO THINGS THE CHECK GOT WRONG FIRST, both corrected by reading the installer rather than reasoning about it, and both worth keeping as calibration: (1) a manifest entry for a retired file looked like drift and is the installer's INTENDED steady state — install() writes new_manifest[rel] = recorded on purpose at reflow2_init.py:1031 for an edited retired file, so flagging it would make the gate permanently red on any project that ever edited a skill; (2) the six `.claude/skills/` and four `.grok/skills/` copies here are deliberate byte-identical mirrors of getting-started/skills/, enforced by skill_lint (skill_lint.py:45-46), so flagging their mere presence would make the gate red on the one repository that maintains them correctly. A first cut flagged all ten, and a doubled path segment (`skills/skills/...`) made every mirror read as drifted — a path that could not resolve looked identical to a difference.",
-        "subject_id": "cap:kit",
+        "subject_id": "req:thin-install",
         "valid_from": "2026-08-07",
         "value": "{\"cause\":\".gitignore:22 excludes .reflow2/, so .reflow2/kit-version.json is never committed and CI has no stamp\",\"consequence_if_wired\":\"a permanently green CI check that examines nothing\",\"measured\":{\"stamp_version\":\"0.22.0\",\"stamp_commit\":\"8ed097f\",\"source_version\":\"0.24.0\",\"source_commit\":\"a5b0f0d\",\"findings\":1,\"notes\":11},\"check\":\"tools/check_kit_manifest.py\",\"check_tests\":\"tools/test_check_kit_manifest.py, 14 cases\",\"planned_since\":\"2026-07-25\",\"open_question\":\"where it runs — orientation hook, a loop_nudge shape, or folded into reflow2_init.py --check which already reports the version half\",\"false_positives_corrected\":[\"retired-but-tracked entries are install()'s intended steady state (reflow2_init.py:1031)\",\"the skills mirrors are deliberate and skill_lint-enforced (skill_lint.py:45)\",\"a doubled path segment made every mirror read as drifted\"]}"
       }
@@ -149336,6 +149421,19 @@
         "statement": "THE WHOLE ORIENTATION SURFACE, MEASURED IN ONE SWEEP, with the duplicate emission removed — so these are the real sizes a client now sees. Bytes on the wire, reflow2's own design (2,932 nodes): open_questions 871 · what_next 3,157 · vocabulary_coverage 3,438 · graph_report_markdown 6,172 · loop_status 13,943 · detect_gaps 26,096 · detect_defects 46,314 · GRAPH_REPORT 165,858. || TWO FINDINGS, AND BOTH ARGUE AGAINST BUILDING FROM A LIST. (1) `loop_status` NEEDED NO WORK. It was measured at 72,886 chars and refused in-session (BL-205), and it is now 13,943 — the duplicate was most of it. Budgeting it was about to be recommended and MEASURING FIRST CANCELLED THE WORK ENTIRELY. (2) `graph_report` IS NOW THE WORST TOOL ON THE SURFACE BY SIX TIMES, and at 165,858 bytes it is LARGER THAN detect_gaps WAS BEFORE ANY OF THIS WORK. Halving it did not save it; it is the one that genuinely needs a budget of its own. It is also what the where-am-i skill reads, so 'tell me where this design stands' is STILL refused on a mature design. || THE SHARPEST CLUE ABOUT WHERE ITS BULK IS: `graph_report_markdown` renders THE SAME REPORT FOR A HUMAN in 6,172 bytes. The machine-readable form of the same content costs 27× more. That gap is very unlikely to be information; the detect_gaps precedent says look for enumeration nobody reads (there, 35% of the reply was affected_ids and almost all of it sat in three rollups). || RANKING IS NOT A WORK LIST. Everything under 15,000 bytes here is fine, and touching it would be tidying rather than fixing. The queue this justifies is graph_report, then detect_defects, and nothing else. || SOURCE: measured 2026-08-23 on reflow2 0.38.0, driving the built binary over real stdio, one process, one sweep.",
         "subject_id": "cmp:report",
         "valid_from": "2026-08-23"
+      }
+    },
+    {
+      "node_id": "fact:which-properties-are-node-references-is-a-judgement-made-once-and-never-recorded-for-the-others",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "ROOT-CAUSE PASS ON DANGLING NODE REFERENCES, 2026-08-29, run under the root-cause skill after three separate sessions had COUNTED them (7 on 08-16, 9 on 08-26, 9 on 08-29) and none had asked why they arise.\n\n═══ ① WHY THE NINE EXISTED — TWO CAUSES, NOT ONE, AND NEITHER IS A RENAME ═══\n\nSplit by asking whether the SLUG exists under a different prefix:\n\n    6 of 9  PREFIX ERROR ON A REAL SLUG    5 x prj:reflow2 -> proj:reflow2\n                                           1 x cap:thin-install -> req:thin-install\n    3 of 9  CONSTRUCTED FROM A TOOL NAME   cap:reconcile-artifacts, cap:link-artifacts,\n                                           cap:gap-to-prompt — slug exists NOWHERE, and all\n                                           three are the names of SERVED TOOLS\n                                           (reconcile_artifacts, link_artifact, gap_to_prompt)\n\n⭐ ONE MECHANISM UNDER BOTH: THE ID WAS CONSTRUCTED BY CONVENTION RATHER THAN RESOLVED BY LOOKUP. One group gets the prefix wrong, the other invents a slug from the tool it just used, assuming a capability is named after the tool that serves it. Neither involved asking the graph. That confirms and generalises the cause already recorded on `fact:nine-temporalfacts-point-their-subject-at-a-node-that-does-not-exist` for five of them — *\"the agent read an existing fact, copied its subject_id convention, and never checked that the id resolved\"*.\n\n═══ ② THE CLASS IS NOT 'POINTERS ARE UNGUARDED'. IT IS THAT THE JUDGEMENT WAS MADE ONCE. ═══\n\n`heal.rs` names three properties that carry a node as a value rather than as an edge. Measured across all of them on this graph:\n\n    TemporalFact.subject_id   333 values, 333 resolve   declared node_ref: YES\n    Snapshot.target_id        195 values, 191 resolve   declared node_ref: NO\n    Question.gap_id            57 values,   0 resolve   declared node_ref: NO\n\n🛑 AND THE THREE NEED THREE DIFFERENT ANSWERS, which is why this is a judgement and not something to automate:\n\n• `subject_id` — a fact ABOUT a node. If the node goes, the fact is about nothing. Dangling is a REAL DEFECT. Correctly declared.\n• `Snapshot.target_id` — a snapshot OF a node at an epoch. If the node is later deleted, THE SNAPSHOT IS THE ONLY SURVIVING RECORD OF IT. Dangling here is the mechanism WORKING. Declaring it would make a detector fire on correct history. Correctly undeclared — but nothing anywhere says so.\n• `Question.gap_id` — names a COMPUTED gap, never a node. 0 of 57 resolve and that is right. Not a node reference at all. Correctly undeclared — and again nothing says so.\n\n⚠️ SO THE DEFECT IS THE UNRECORDED JUDGEMENT, NOT THE MISSING FLAG. `subject_id` and `target_id` are declared IDENTICALLY in the schema — `type: string, required: true, indexed: true` — and differ only in `node_ref`. Nothing states why. The next person to notice the asymmetry has exactly two moves: declare it, and get a detector firing on correct history; or leave it, and never learn that the omission was deliberate. Both are worse than the judgement being written down.\n\n═══ ③ THE RETIRE CASE IS REAL AFTER ALL — IT WAS JUST IN THE PROPERTY NOBODY SWEPT ═══\n\nEarlier the same day this session withdrew the 'rename' leg from `dec:a-restore-reports-an-unresolvable-reference-rather-than-refusing-it`, on the measured ground that all nine `subject_id` dangles were wrong WHEN WRITTEN and none came from a retire. That is true of `subject_id` and it was too broad. All four `Snapshot.target_id` dangles are retires:\n\n    art:content, art:content-test, art:tools-content   snapshotted at epoch:content-store-discontinued\n    ctr:anthony                                        snapshotted at epoch:the-owners-identity-is-one-node-again\n\nEvery one resolved when written and broke when its target was deleted or merged. `fact:defect-seven-temporal-facts-name-a-subject-id-that-does-not-exist` (2026-08-16) predicted exactly this and said so — *\"NOT ESTABLISHED: whether Snapshot.target_id and Question.gap_id carry the same rot. Nobody has swept them\"* — and thirteen days later nobody had.\n\n🛑 NOT MEASURED, so this is not read wider than it is: only this one graph, and only the three properties `heal.rs` already names. Whether other node types carry undeclared de facto pointers was not swept — a scan for string values matching an id shape found only these three plus `Artifact.checksum` and `DesignEpoch.checksum`, which match on the `sha256:` prefix and are not references.",
+        "subject_id": "cap:a-dangling-reference-is-reported-whatever-the-nodes-degree",
+        "valid_from": "2026-08-29",
+        "value": "{\"measured_on\":\"reflow2's own graph, 2026-08-29, under the root-cause skill\",\"prior_countings\":[{\"date\":\"2026-08-16\",\"n\":7},{\"date\":\"2026-08-26\",\"n\":9},{\"date\":\"2026-08-29\",\"n\":9}],\"why_the_nine\":{\"prefix_error_on_a_real_slug\":6,\"constructed_from_a_tool_name\":3,\"rename_or_retire\":0},\"pointer_properties\":{\"TemporalFact.subject_id\":{\"values\":333,\"resolve\":333,\"declared_node_ref\":true,\"correct_answer\":\"declare - dangling is a real defect\"},\"Snapshot.target_id\":{\"values\":195,\"resolve\":191,\"declared_node_ref\":false,\"correct_answer\":\"do NOT declare - the snapshot is the surviving record of a deleted node, so dangling is the mechanism working\"},\"Question.gap_id\":{\"values\":57,\"resolve\":0,\"declared_node_ref\":false,\"correct_answer\":\"do NOT declare - names a computed gap, never a node\"}},\"snapshot_dangles_are_all_retires\":[\"art:content\",\"art:content-test\",\"art:tools-content\",\"ctr:anthony\"],\"the_defect\":\"the judgement about which properties are node references was made once, for one property, and never recorded for the other two - subject_id and target_id are declared identically apart from the flag and nothing says why\",\"corrects\":\"this session's own earlier withdrawal of the rename leg from dec:a-restore-reports-an-unresolvable-reference-rather-than-refusing-it - too broad; retires are real, in the property nobody swept\",\"not_measured\":\"whether node types beyond the three heal.rs names carry undeclared de facto pointers\"}"
       }
     },
     {
@@ -152172,7 +152270,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:a491314b7289c057eef066332710b12a3dd18079578326694fde98b250f17262",
+  "prev_content_hash": "sha256:b156799d121582a482d17cb91d9f4529498fa5701a52fd9c26886b49b4d12067",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
