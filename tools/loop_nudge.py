@@ -231,12 +231,52 @@ SKILL_OPS = {"get_skill"}
 # constant stating something nobody measured, and the skill's own text says to
 # use genesis instead when the graph is empty. So the line names BOTH doors and
 # lets one cheap call decide which one this is.
+# ⭐⭐ THE `link-artifacts` CLAUSE IS A RUNNING EXPERIMENT — DO NOT DELETE IT AS
+# CLUTTER, AND DO NOT READ IT AS SETTLED DOCTRINE.
+#
+# MEASURED 2026-08-29 across 91 sessions of a real reflow2 project
+# (dev-storyflow, 2026-07-29..2026-08-29, 5240 reflow2 tool calls): what
+# predicts whether a skill gets loaded is being named in THIS STRING, not being
+# in the served catalogue. The MCP instructions name all 23 skills and usage
+# across them runs 42..0. This hook named three, and one of them —
+# `where-am-i` — is the most-loaded skill by a factor of two, pulled 8.4x more
+# often than the user asks for it (42 loads, 5 slash commands).
+#
+# 🛑 THAT RESULT IS CONFOUNDED: where-am-i is also the most generally useful
+# skill in the set, so "named here" and "intrinsically useful" cannot be
+# separated from observational data. This clause is the discriminating
+# experiment — ONE skill added deliberately, with a baseline taken first.
+#
+#     BASELINE, dev-storyflow, before this line existed:
+#       sessions calling add_artifact  : 27
+#       of those, loaded link-artifacts: 6  (22%)
+#
+# Read it again in a few weeks. If the rate moves, an always-injected surface
+# moves behaviour and the budget question below is the real design problem. If
+# it does not, hook-presence was never the cause and where-am-i is simply
+# useful — which is worth knowing and is why the baseline is written down here
+# rather than recalled.
+#
+# ⚠️ PAIRED, ON PURPOSE, WITH A DIFFERENT ARM ON A DIFFERENT SKILL. `impact-check`
+# is being demanded from the `record_change` TOOL DESCRIPTION over the same
+# period (baseline 19%, 16 sessions), enforced by skill_lint's `demanded_by`
+# check. Two channels, two skills, so neither result can be claimed by the
+# other. Keep them apart.
+#
+# ⚠️ AND THIS STRING IS A SCARCE RESOURCE, which is the finding that makes the
+# whole question hard: it is read by every session at every start, so naming all
+# 23 skills here would recreate the catalogue that demonstrably predicts
+# nothing. The same budget bit the tool-side arm — `add_change_event` sits at
+# 1494 chars against a 1500 limit and physically could not carry its demand.
+# Whatever mechanism wins, it wins inside a budget.
 SESSION_START_TEXT = (
     "reflow2: this project has reflow2 installed. Orient first, before touching "
     "code: call open_questions — if this design is empty, start it with the "
     "genesis skill (new project) or the adopt skill (code that already exists); "
     "if it is not, read it back with the where-am-i skill. Skills are SERVED, "
-    "not installed: get_skill fetches one, list_skills names them all. While "
+    "not installed: get_skill fetches one, list_skills names them all. When you "
+    "write or change a file the design should know about, the link-artifacts "
+    "skill registers it against the capability it realizes. While "
     "you work, loop_status is the one cheap call that says what the coherence "
     "loop is owed; the Stop hook will nudge if graph writes finish without one."
 )

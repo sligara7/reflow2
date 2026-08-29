@@ -470,7 +470,11 @@ impl ReflowService {
                        `subject` says WHICH AXIS — `system` (the thing changed) or `record` \
                        (the thing did not change and only the design's knowledge of it did, \
                        e.g. a re-sync or a drift you are accepting). Leaving `subject` out is \
-                       a true answer and is never inferred from `change_type`.",
+                       a true answer and is never inferred from `change_type`. \
+                       ⭐ CHANGING SOMETHING THAT ALREADY EXISTS? LOAD THE `impact-check` \
+                       SKILL FIRST (`get_skill`) — it propagates from what you are about to \
+                       touch and shows the blast radius, so you edit what is actually \
+                       affected and learn what rotted before the edit, not after.",
         annotations(read_only_hint = false)
     )]
     pub async fn record_change(
