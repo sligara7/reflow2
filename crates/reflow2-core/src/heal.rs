@@ -1156,6 +1156,65 @@ impl DesignGraph {
         affected_ids: &[String],
         reason: &str,
     ) -> Result<String, DynoError> {
+        self.acknowledge_defect_by(defect_id, affected_ids, reason, None, None)
+    }
+
+    /// [`acknowledge_defect`](Self::acknowledge_defect), recording WHOSE
+    /// judgement it was.
+    ///
+    /// ⭐ THE SIBLING OF [`acknowledge_gap_by`](Self::acknowledge_gap_by), AND IT
+    /// EXISTS BECAUSE IT WAS NOT. That capability was built 2026-08-23 and
+    /// reached `acknowledge_gap` and `acknowledge_gaps` only; this function kept
+    /// minting an ACCEPTED Decision — settled intent — with no way for a caller
+    /// to say whose word it was.
+    ///
+    /// MEASURED 2026-08-29, on this design's own graph:
+    ///
+    /// ```text
+    /// tool                        acknowledgements   with an approver
+    /// acknowledge_gap(s)   param        168                51
+    /// acknowledge_defect   NO param      12                 0
+    /// ```
+    ///
+    /// 🛑 THE ZERO IS STRUCTURAL, NOT NEGLIGENCE. There was no parameter that
+    /// could carry a name, so the tool could not attribute even when the caller
+    /// wanted to — while `rule:design-intent-moves-only-on-the-owners-word` is
+    /// ENFORCED and `check_intent_authority` fails the build on exactly this.
+    /// It surfaced as three CI failures on PR #366; nine more of the same shape
+    /// were already in the grandfathered set. And all 51 approver edges on the
+    /// gap side are dated 2026-08-23/24, the day the parameter shipped — so
+    /// there is no evidence the parameter gets skipped when it exists, which is
+    /// what makes its ABSENCE here the cause rather than caller behaviour.
+    ///
+    /// ⚠️ AN ABSENT APPROVER IS ALLOWED AND REPORTED, NEVER REFUSED — the middle
+    /// behaviour `cap:an-acknowledgement-says-whose-judgement-it-was` settled
+    /// deliberately: a design that has modelled no Contributor must still be
+    /// able to accept a defect, which is most solo designs on day one. An
+    /// approver naming no Contributor IS refused, because a typo would attach
+    /// the owner's authority to somebody who does not exist.
+    pub fn acknowledge_defect_by(
+        &mut self,
+        defect_id: &str,
+        affected_ids: &[String],
+        reason: &str,
+        approver: Option<&str>,
+        acted_at: Option<&str>,
+    ) -> Result<String, DynoError> {
+        // CHECKED BEFORE ANYTHING IS MINTED, for the reason the gap sibling
+        // records: a check after the create would leave an ACCEPTED Decision
+        // with no approver behind on every refusal — the exact state this
+        // parameter exists to prevent, produced by the code meant to prevent it.
+        if let Some(who) = approver
+            && self.get_node(node::CONTRIBUTOR, who)?.is_none()
+        {
+            return Err(DynoError::Validation {
+                node_type: node::DECISION.to_string(),
+                property: "approver".into(),
+                message: format!(
+                    "no Contributor `{who}` in this design, so the acknowledgement was NOT recorded. An approver who does not exist attaches the owner's authority to a name nobody can check, which is worse than recording none. Create them with add_contributor, or omit `approver` and the reply will say the judgement carries nobody's name."
+                ),
+            });
+        }
         let decision_id = defect_ack_decision_id(defect_id);
         self.create_node(
             node::DECISION,
@@ -1184,6 +1243,20 @@ impl DesignGraph {
                     None,
                 )?;
             }
+        }
+        if let Some(who) = approver {
+            let mut props = crate::nodes::Props::new().set("role", "approver");
+            if let Some(at) = acted_at {
+                props = props.set("acted_at", at);
+            }
+            self.create_edge(
+                edge::AUTHORED_BY,
+                node::DECISION,
+                &decision_id,
+                node::CONTRIBUTOR,
+                who,
+                props,
+            )?;
         }
         Ok(decision_id)
     }

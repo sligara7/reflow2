@@ -711,9 +711,30 @@ impl ReflowService {
     ) -> Result<CallToolResult, McpError> {
         let mut g = self.write_lock().await?;
         let decision_id = g
-            .acknowledge_defect(&req.defect_id, &req.affected_ids, &req.reason)
+            .acknowledge_defect_by(
+                &req.defect_id,
+                &req.affected_ids,
+                &req.reason,
+                req.approver.as_deref(),
+                req.acted_at.as_deref(),
+            )
             .map_err(dyno_err)?;
-        ok_json(json!({ "acknowledged": req.defect_id, "decision_id": decision_id }))
+        // THE ABSENCE IS REPORTED, NEVER ASSUMED — the same sentence its gap
+        // sibling says, for the same reason and in the same words. Twelve of
+        // these were minted unattributed before the parameter existed.
+        let mut out = json!({ "acknowledged": req.defect_id, "decision_id": decision_id });
+        match req.approver.as_deref() {
+            Some(who) => {
+                out["approved_by"] = json!(who);
+            }
+            None => {
+                out["approved_by"] = JsonValue::Null;
+                out["unattributed"] = json!(
+                    "This acknowledgement carries NOBODY'S NAME. It mints an accepted Decision — settled intent — and `rule:design-intent-moves-only-on-the-owners-word` says that needs a name, so it will be reported by check_intent_authority. Pass `approver` (the Contributor whose judgement it is) to record it. Recorded anyway rather than refused, because a design that has modelled no Contributor must still be able to accept a defect."
+                );
+            }
+        }
+        ok_json(out)
     }
 
     #[tool(

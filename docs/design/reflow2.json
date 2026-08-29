@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:28f3553c3da175ead61b73a354e9f15365ac8716ae8d573c851bda460084c1d1",
+  "content_hash": "sha256:00b8e4fc0eed67dc5322131779b69b02b57229d90653efd25a7f56ae6faf2f17",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -31039,6 +31039,42 @@
         "action": "modified"
       },
       "to_id": "cap:defaults-are-not-serialized"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-acknowledgement-family-offers-one-surface",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-acknowledgement-family-offers-one-surface",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:service"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-acknowledgement-family-offers-one-surface",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-coherence"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-acknowledgement-family-offers-one-surface",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:an-acknowledgement-says-whose-judgement-it-was"
     },
     {
       "edge_type": "CHANGED",
@@ -114670,7 +114706,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6a1f239cf6b23f1e0acd1cfe614e316503a14bc3aabcdfb971a9e4aeef024a0d",
+        "checksum": "sha256:44d0edb6a6c8d8ce27de2ef61772febc69f9504e2bfc2fb1057d24ba2e3adb9e",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
@@ -115762,7 +115798,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b8780a6de4877f12456b8462bea20b2a0c3b7062ec2b3c966105d19fa57d6046",
+        "checksum": "sha256:522431d330b0e7ba6893e06e9a72d41edd5e300c337796c4b7dee512ec21e387",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/service.rs",
         "name": "service.rs",
@@ -116435,7 +116471,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:962b52530ee94300272cd669a78a4c5657531e30d48b6d544ad1a62cb2d1403e",
+        "checksum": "sha256:4b8e497a000950d4c6156e83fce45759688aa9487a80eb63107d57e892adfd5c",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/coherence.rs",
         "name": "tools/coherence.rs",
@@ -125054,6 +125090,18 @@
       "properties": {
         "change_type": "new_feature",
         "name": "BL-198 step 1 landed by REMOVING `default:` from ten properties, not by changing code. The route changed on a measurement: `default:` in the schema YAML is not documentation — dynograph-core applies it at WRITE time (schema.rs:507 inserts any missing property that declares one), which is where 3,207 stored values across 59% of the design came from. So export-side suppression could never have worked — the store cannot tell a chosen value from an injected one — and the real fix is one YAML token per property. FORWARD-ONLY: nodes already written keep what they hold, so the export does not churn and compare_designs sees nothing; the phantom-diff cost this epoch was scoped around does not arise on this route at all. TEN of 81 removed, 71 kept, and the RATIO is the finding: three mechanically-obvious candidates turned out to be meaningful and were kept on evidence."
+      }
+    },
+    {
+      "node_id": "chg:the-acknowledgement-family-offers-one-surface",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-29",
+        "name": "acknowledge_defect can record whose judgement it was, and a gate keeps the family aligned",
+        "rationale": "ROOT-CAUSED 2026-08-29 with the `root-cause` skill, from three CI failures on PR #366 against the ENFORCED `rule:design-intent-moves-only-on-the-owners-word`.\n\nTHE CAUSE IS NOT THIS TOOL. `cap:an-acknowledgement-says-whose-judgement-it-was` was built 2026-08-23 and reached `acknowledge_gap` and `acknowledge_gaps` only; the sibling was left behind.\n\n    acknowledge_gap(s)   HAS the param    168 acknowledgements,  51 attributed\n    acknowledge_defect   NO param          12 acknowledgements,   0 attributed\n\n🛑 THE ZERO IS STRUCTURAL, NOT NEGLIGENCE — there was no field to fill, so the tool could not attribute even when the caller wanted to, while `heal.rs` asserted in a comment that \"the user just settled it\".\n\n⭐ THE MEASUREMENT THAT KILLED THE COMFORTABLE READING: 51 of 168 looked like a 30% compliance rate and an argument that callers skip the field. Every one of those 51 approver edges is dated 2026-08-23 or 2026-08-24 — the day the parameter shipped and the day after — so the 117 without one are pre-fix history and there is NO evidence the parameter is skipped when it exists. That is what makes its ABSENCE the cause rather than caller behaviour.\n\nTwo other candidates were refuted rather than dropped: that something else minted these ids (`heal.rs:164` does), and that the gate's scope is wrong because `ver:acknowledgement-not-structure` excludes `decision:ack:` from the design network (the capability text explicitly says an absent approver \"will be reported by check_intent_authority\", so the design intends the gate to cover acknowledgements).\n\n⭐⭐ IT PINS THE CLASS, NOT THE INSTANCE. Adding a parameter to one tool fixes twelve nodes and nothing about the next capability that lands on one sibling and not the others. What was maintained by hand with nothing checking it was the FAMILY. The invariant was observed failing against the pre-fix surface: it names `acknowledge_defect` and passes the two siblings that were already correct.\n\n⚠️ NOT ESTABLISHED: why `acknowledge_defect` was missed on 2026-08-23 — overlooked or deliberately deferred. Nothing in the code or the graph says, and guessing would put a false cause in the record. Also open: whether the 117 unattributed historical acknowledgements should be backfilled or left as honest history.",
+        "subject": "system",
+        "summary": "`acknowledge_defect_by` takes `approver` and `acted_at`, mirroring `acknowledge_gap_by`: the Contributor is checked BEFORE anything is minted, `AUTHORED_BY role=approver` is drawn, and an absent approver is reported in the reply rather than assumed. Absence stays ALLOWED (a design with no Contributor modelled must still be able to accept a defect); a name matching no Contributor is REFUSED. `toolsnap.py` gains a family invariant: every `acknowledge_*` tool must offer `approver`, searched at any schema depth so a bulk form carrying it per item still counts."
       }
     },
     {
@@ -150788,7 +150836,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:50c3e6c82abc6afd512f83176e95d045ce425407c1dda6f20a02371a8bf4a3e8",
+  "prev_content_hash": "sha256:28f3553c3da175ead61b73a354e9f15365ac8716ae8d573c851bda460084c1d1",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
