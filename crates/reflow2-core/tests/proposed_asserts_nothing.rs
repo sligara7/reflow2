@@ -405,6 +405,17 @@ fn every_category_states_whether_it_reads_proposed() {
             HealCategory::SinglePointOfFailure
             | HealCategory::DeadEnd
             | HealCategory::CircularDependency => false,
+            // Does NOT read it, and the reason is stronger than for the others.
+            // Every category above weighs whether a node's status changes what a
+            // finding MEANS. Here it cannot: whether an id resolves is a fact
+            // about the graph, not about the carrier's confidence in itself. A
+            // `proposed` Decision whose reference names nothing is still a record
+            // about something the design does not have, and the same repair —
+            // decide what it meant — is just as available. Reading status here
+            // would mean a musing could hold a broken pointer indefinitely with
+            // nothing saying so, which is how the nine on reflow2's own graph
+            // survived in the first place.
+            HealCategory::DanglingReference => false,
         };
         // The assertion is not the value — it is that somebody wrote one down.
         // Both answers are legitimate; an unconsidered category is not.

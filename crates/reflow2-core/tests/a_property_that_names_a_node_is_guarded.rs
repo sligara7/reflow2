@@ -28,13 +28,30 @@
 //!    guard resolves a bare id by asking each declared node type in turn, the
 //!    same walk `count_all_nodes` already makes.
 //!
-//! 🛑 MEASURED SCOPE, so this test is not read as more than it is. Nine values
-//! in this design's own graph dangle, and a write-time guard reaches only about
-//! a third of them: three are the typo `prj:reflow2` for `proj:reflow2`, which
-//! this refuses. The rest — `cap:reconcile-artifacts`, `cap:thin-install`,
-//! `cap:gap-to-prompt` — were VALID WHEN WRITTEN and dangled later when the
-//! node was renamed. **No write-time check can catch those**; that is a second
-//! cause with its own fix, and this file does not claim it.
+//! 🛑 MEASURED SCOPE — CORRECTED 2026-08-29, AND THE CORRECTION MATTERS. This
+//! paragraph used to read: nine values dangle, three are the `prj:`/`proj:`
+//! typo, and the rest — `cap:reconcile-artifacts`, `cap:thin-install`,
+//! `cap:gap-to-prompt` — "were VALID WHEN WRITTEN and dangled later when the
+//! node was renamed", so "no write-time check can catch those".
+//!
+//! **BOTH HALVES WERE WRONG.** The typo accounts for FIVE of the nine, not
+//! three. And nothing was renamed: `git log -S '"node_id": "cap:link-artifacts"'`
+//! over the export's whole history returns ZERO commits, and the same for
+//! `cap:reconcile-artifacts`, `cap:thin-install` and `cap:gap-to-prompt`, while
+//! the identical probe against a real capability returns one. THOSE IDS NEVER
+//! EXISTED AS NODES. They were wrong when written — the same class as the typo.
+//!
+//! ⭐ SO THIS GUARD'S REACH WAS UNDERSTATED, NOT OVERSTATED: all nine of this
+//! graph's dangling values would have been refused at write time. The rename
+//! case remains a real hypothesis and is not demonstrated here, which is a
+//! weaker claim than the one it replaces and is the honest one.
+//!
+//! WHAT IS GENUINELY A SECOND CAUSE, and it was found by taking the sentence
+//! above seriously enough to check it: a value that dangles for ANY reason was
+//! only ever REPORTED when its node was also edgeless, because `orphan_node`
+//! required both. That is the read side, it is fixed by the `dangling_reference`
+//! rule, and its evidence lives in
+//! `tests/a_dangling_reference_is_found_whatever_its_degree.rs`.
 
 use reflow2_core::DesignGraph;
 use reflow2_core::nodes::Props;
