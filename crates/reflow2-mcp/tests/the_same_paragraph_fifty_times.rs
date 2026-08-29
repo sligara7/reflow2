@@ -44,19 +44,48 @@ macro_rules! j {
 
 /// `n` TemporalFacts pointing at nothing — `n` `orphan_node` defects, every one
 /// of them carrying the same repair paragraph.
+///
+/// EACH GHOST IS MADE BY CREATING ITS SUBJECT AND THEN DELETING IT, which is
+/// how a dangling reference actually arises now. Writing one dangling in a
+/// single call stopped being possible when `create_node` gained the node-ref
+/// guard, and the refusal is correct — so the fixture moved rather than the
+/// guard. The guard closes the typo cause; deletion and rename are the cause it
+/// cannot close, and the one this detector still has to catch.
 async fn with_orphans(n: usize) -> ReflowService {
     let s = ReflowService::in_memory().expect("in-memory service");
     for i in 0..n {
+        let ghost = format!("cmp:does-not-exist-{i}");
+        let _ = s
+            .create_node(Parameters(
+                serde_json::from_value(serde_json::json!({
+                    "node_type": "Component",
+                    "id": ghost,
+                    "props": { "name": format!("Soon to be gone, number {i}"), "purpose": "exists only to be deleted, so the fact about it dangles" }
+                }))
+                .unwrap(),
+            ))
+            .await
+            .expect("tool ok");
         let _ = s
             .create_node(Parameters(
                 serde_json::from_value(serde_json::json!({
                     "node_type": "TemporalFact",
                     "id": format!("fact:orphan-{i}"),
                     "props": {
-                        "subject_id": format!("cmp:does-not-exist-{i}"),
+                        "subject_id": ghost,
                         "statement": format!("A measurement about something absent, number {i}."),
                         "basis": "measured",
                     }
+                }))
+                .unwrap(),
+            ))
+            .await
+            .expect("tool ok");
+        let _ = s
+            .delete_node(Parameters(
+                serde_json::from_value(serde_json::json!({
+                    "node_type": "Component",
+                    "id": ghost
                 }))
                 .unwrap(),
             ))

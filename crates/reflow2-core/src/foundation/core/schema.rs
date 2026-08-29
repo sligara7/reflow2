@@ -136,6 +136,24 @@ pub struct PropertyDef {
     /// by validation.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
+    /// When `true`, this property's value is a NODE ID and the node must
+    /// exist. Declared here because the schema is the only place that can
+    /// say a string MEANS a reference.
+    ///
+    /// ⭐ WHY IT IS DECLARED HERE AND ENFORCED ELSEWHERE. An edge endpoint is
+    /// structurally a reference and `create_edge` has refused a dangling one
+    /// since 2026-07-28. A property is just a string, so until this flag
+    /// existed there was nothing for a guard to key on — which is exactly what
+    /// `fact:defect-a-property-naming-a-node-is-unguarded-while-edges-are-not`
+    /// records after a TemporalFact was written naming a capability that had
+    /// never existed.
+    ///
+    /// 🛑 `Schema::validate_node` CANNOT ENFORCE IT. That function takes only
+    /// `(node_type, properties)` and is deliberately pure — it has no store to
+    /// ask. The enforcement therefore lives in `DesignGraph::create_node`,
+    /// beside the edge guard, which is the only layer that can look a node up.
+    #[serde(default)]
+    pub node_ref: bool,
 }
 
 /// Supported property types.

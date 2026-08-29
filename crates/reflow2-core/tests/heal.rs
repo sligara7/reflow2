@@ -1501,6 +1501,22 @@ fn a_pointer_property_is_attachment_and_only_a_dangling_one_is_reported() {
             .set("statement", "cap:c was realized"),
     )
     .unwrap();
+    // THE GHOST IS MADE THE WAY GHOSTS ARE ACTUALLY MADE NOW: the capability
+    // exists, the fact is written about it, and the capability is then deleted.
+    //
+    // It used to be written dangling in one call. That stopped being possible
+    // when `create_node` gained the node-ref guard, which refuses a property
+    // naming a node that does not exist — and the refusal is correct, so the
+    // FIXTURE moved rather than the guard.
+    //
+    // ⭐ AND THE NEW SHAPE IS THE TRUER ONE. The guard closes the typo cause;
+    // it cannot close this one. Measured on reflow2's own graph: of nine
+    // dangling `subject_id` values, roughly a third were typos and the rest
+    // were VALID WHEN WRITTEN and dangled later when the target was renamed or
+    // removed. This test now exercises the cause that survives the guard, which
+    // is exactly the cause the detector has to keep catching.
+    g.add_capability("cap:deleted-last-year", "Gone", "was here once", None)
+        .unwrap();
     g.create_node(
         node::TEMPORAL_FACT,
         "fact:about-a-ghost",
@@ -1510,6 +1526,8 @@ fn a_pointer_property_is_attachment_and_only_a_dangling_one_is_reported() {
         ),
     )
     .unwrap();
+    g.delete_node(node::CAPABILITY, "cap:deleted-last-year")
+        .unwrap();
     g.add_verification(
         "ver:loose",
         "checks something",

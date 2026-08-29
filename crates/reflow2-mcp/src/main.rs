@@ -727,6 +727,23 @@ async fn main() -> anyhow::Result<()> {
                 eprintln!("  {edge}");
             }
         }
+        // The other shape of an unresolvable reference, and it gets the other
+        // half of the same sentence: a property naming a node that is neither in
+        // the document nor in the graph. The node IS written — a restore
+        // reproduces what already existed rather than asserting it afresh — so
+        // saying so here is the only thing standing between "reported" and
+        // "silently accepted".
+        if !report.dangling_node_refs.is_empty() {
+            eprintln!(
+                "reflow2: {} node reference(s) in this document resolve to nothing. The node(s) \
+                 were written — an import restores what a design already held — but the \
+                 reference cannot be walked:",
+                report.dangling_node_refs.len()
+            );
+            for r in &report.dangling_node_refs {
+                eprintln!("  {r}");
+            }
+        }
         return Ok(());
     }
 
