@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ddff7814515cf8515811b9d6e69e706161b8765677f5f7513867f25dcf928600",
+  "content_hash": "sha256:9a53c8c0e5c5a388362b58d0fbc88d3e32d8f4730e30331c80341cb81abcd5a7",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -13129,9 +13129,73 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:034e96a2e1a7f4d0",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:046d5d7e84c91989",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:07bb37be6d5cd129",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:0a63dc6a6c47e039",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:0a77650b58242054",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:101a69b0a4f8eed6",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:127934176c8341bd",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:159ab608b850e46d",
       "properties": {
         "acted_at": "2026-08-23",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:1740e2ac1ab8c993",
+      "properties": {
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -13147,9 +13211,105 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:1947285897ace4dc",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:19822d94e3adcd21",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:1c044be82819a511",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:1d9ec21937d2d172",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:1e7c0975c76f27fe",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:1f62e721f3cfa3da",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:2066530ed8b00fb8",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:2081c4b64282a08b",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:20af011cab22877e",
       "properties": {
         "acted_at": "2026-08-23",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:2162197689aecdb2",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:22386cd2f1a1fa96",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:230d69056201ed59",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:233d08765e4cfc7b",
+      "properties": {
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -13165,9 +13325,41 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:260a7ea303ec87f1",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:2a9626b1798c1959",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:2ef36611cca241cf",
       "properties": {
         "acted_at": "2026-08-23",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:2ef80cfd8036988f",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:30182d6495cdfe54",
+      "properties": {
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -13192,6 +13384,46 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:328f9220b2bcfe4e",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:33be77a4e91bc8ae",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:350d55cf9c8c3247",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:35dde67d212688fb",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:378cbdafd1fa41fb",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:3813cd116a865d92",
       "properties": {
         "acted_at": "2026-08-23",
@@ -13204,6 +13436,78 @@
       "from_id": "decision:ack:3824656f77280e5c",
       "properties": {
         "acted_at": "2026-08-23",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:39bc6f37b50dc9c3",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:3a667fe34b66bffd",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:3f600ff329ecb31a",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:41e84391c187d118",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:4589232c9150f8fe",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:48b5379679665396",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:48cde54264aac425",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:4a6cb8914622b724",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:4ac1c3ccf483b4d6",
+      "properties": {
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -13228,9 +13532,65 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:4d5e909b76d01f3c",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:4dc755507da9ffe5",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:4dfe80425e7f885e",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:4f687c2dc299f7c9",
       "properties": {
         "acted_at": "2026-08-23",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:4f9dcb95353889c2",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:52b1ed1377382961",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:532359c4b9e132a3",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:5551e27a6da191b0",
+      "properties": {
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -13309,9 +13669,153 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:593e26aed260f0a3",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:65b894fcc73c3961",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:6632226c74b49c3a",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:6675d6c59b2e2db3",
       "properties": {
         "acted_at": "2026-08-23",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:66c6e5b6a10c8ac3",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:695a599323c7edfe",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:6ac59b7adcc72d03",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:6bce37248bacaa09",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:72f2c38d8acdeac2",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:73e198ee5e28f1f1",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:755a5d5272eb702d",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:75651a693cc63b9c",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:75d815c93cad4c86",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:785c79650b436ed3",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:7957f52a429a38a3",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:7a268920fdfe0ba7",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:7a65e7fed7172917",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:7d8edafb0bd7aea3",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:7dfea41c0d708eab",
+      "properties": {
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -13327,9 +13831,49 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:80f8bc457bfe9e16",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:84538db885bb5946",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:85a8e6f0446bbbfd",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:8692d02c7fa57cd9",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:87ba139e4fafd736",
       "properties": {
         "acted_at": "2026-08-23",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:896e6b1107e0b6b4",
+      "properties": {
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -13345,9 +13889,97 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:8ce3d04154396568",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:8f0d325e9c91034d",
       "properties": {
         "acted_at": "2026-08-23",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:8f3bacedc618f3d4",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:90a90e90df05c31a",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:946dd6b0bb464229",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:94d6436f52168f32",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:95ddc1083445d73d",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:967cb35c16df7571",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:9b2071dba7dfe759",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:9eb6b2b4c5513865",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:9ff80e5afcd024e9",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:a3a499e09447e1e3",
+      "properties": {
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -13390,6 +14022,22 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:a714fec7e55225b4",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:a752db1dd8a251b2",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:a961bfe399679dbf",
       "properties": {
         "acted_at": "2026-08-24",
@@ -13399,9 +14047,81 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:ac64f6e79aa8a17d",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:acaf4106e0b94ec0",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:b0ef8ce1e452f881",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:b0f6553a7bd01e49",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:b13f13bfabebbd39",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:b2209f9f6cdaa2f5",
       "properties": {
         "acted_at": "2026-08-23",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:b25bb8d8db80dfd3",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:b419dc7ce8da8c12",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:b53c7315f39f3640",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:b5ecdffa784222a5",
+      "properties": {
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -13435,9 +14155,41 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:bab6219e3365123a",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:bd5aefd848b8d3e4",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:bd83c06ec2cb98ad",
       "properties": {
         "acted_at": "2026-08-23",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:be224976b1f4f6e1",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:c0ad59f11915ba50",
+      "properties": {
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -13507,9 +14259,49 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:c510544d78bf4fef",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:c628f709c27ad035",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:c8cfb3f3be9183af",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:c8f5d6be9df73437",
       "properties": {
         "acted_at": "2026-08-23",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:c9fd9c1708bed944",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:ca4e30e6002dfd13",
+      "properties": {
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -13525,6 +14317,38 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:cd7e9eaaeba49218",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:d1c2d599af5b45ce",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:d31369434b7b1347",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:d39c8c716229303c",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:d4cd76f49a75abec",
       "properties": {
         "acted_at": "2026-08-23",
@@ -13534,9 +14358,89 @@
     },
     {
       "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:d610aa40cddc6c70",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:dd3647889c878492",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:dd3c69b16fec5439",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
       "from_id": "decision:ack:dd6bbd09915b0ff0",
       "properties": {
         "acted_at": "2026-08-23",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:dfe1b2a6caace1f4",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:e114420e3f72541b",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:e2f901aa220997b4",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:e99afa635a6340fb",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:e9ba5784cf1cfa36",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:ebf17b5d2c53cf03",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:ec1f9f94c89d2f67",
+      "properties": {
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -13564,6 +14468,38 @@
       "from_id": "decision:ack:f384097e7d8b01b0",
       "properties": {
         "acted_at": "2026-08-23",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:f58dc09a846a8783",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:f66d5a4a818d9fbe",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:f78628387e7c41cc",
+      "properties": {
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "decision:ack:fc0919cac4f2727a",
+      "properties": {
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -119521,6 +120457,18 @@
       }
     },
     {
+      "node_id": "chg:117-historical-gap-acknowledgements-attributed-to-ajs",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "resync",
+        "detected_at": "2026-08-29",
+        "name": "The 117 unattributed gap acknowledgements were backfilled to who:ajs",
+        "rationale": "⚠️ THESE 117 EDGES DELIBERATELY CARRY NO `acted_at`, AND A LATER SESSION MUST NOT READ THAT AS AN OVERSIGHT. Stamping them 2026-08-29 would assert that Anthony judged 117 gaps in one morning, which is false; the real judgement dates are spread over 2026-07-23..2026-08-28 and were never recorded per-acknowledgement, so null is the only true value. Absent means \"not recorded\", and that is the honest answer.\n\nTHE SECOND REASON MATTERS MORE, because it protects a measurement. #368's root-cause analysis turned on dates: all 51 pre-existing approver edges on the gap side are dated 2026-08-23/24, the day `acknowledge_gap` shipped its `approver` parameter, and THAT CLUSTERING IS WHAT REFUTED the comfortable reading that 30% attribution meant careless callers. It established that the parameter gets used when it exists, which is what made its ABSENCE on `acknowledge_defect` the cause rather than caller behaviour. Backdating or same-dating this backfill would drop 117 synthetic points into exactly that distribution and destroy the evidence — a future session re-running the analysis would see 168 attributed acknowledgements clustered on two days and conclude something that was never true.\n\nSo the record of the backfill lives HERE, in one event that says what happened and when, rather than in 117 timestamps that would each say something slightly false.\n\nThis closes the caller-side half of `cap:an-acknowledgement-says-whose-judgement-it-was` for the gap family: the parameter shipped 2026-08-23, the sibling tool was fixed in #368, and this is the history the parameter could not have carried because it did not exist yet.",
+        "subject": "record",
+        "summary": "Every `decision:ack:*` gap acknowledgement that carried no approver — 117 of the 168 — was given an AUTHORED_BY role=approver edge to who:ajs, on Anthony's explicit word this session (\"for the 117 unattributed acknowledgements, you can attribute them to me\"). Written as one atomic create_edges call. Nothing about the acknowledgements themselves changed; only the record of whose judgement they were, which is why this is on the `record` axis. The set was verified against the committed export before writing: 117 is exactly the residue #368 measured, and no rationale in it attributes the judgement to anyone else. Four mention another name (Alex, the storyflow fleet) and all four are incidental — the trials programme lists storyflow among the real designs reflow2 is used on, and the Alex one is who:ajs's own standing policy re-firing because a capability joined the affected set. Thirty-one name no person at all; every one of those is an agent re-application of a standing disposition Anthony set (the trials-programme policy of 2026-07-23, dec:intent-preserved's post-cut rule), so the approver is his even though the prose does not say a name. The 9 unattributed `acknowledge_defect` acknowledgements are NOT in this set and remain unattributed."
+      }
+    },
+    {
       "node_id": "chg:a-budget-is-what-makes-optimisation-stop",
       "node_type": "ChangeEvent",
       "properties": {
@@ -150874,7 +151822,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:00b8e4fc0eed67dc5322131779b69b02b57229d90653efd25a7f56ae6faf2f17",
+  "prev_content_hash": "sha256:ddff7814515cf8515811b9d6e69e706161b8765677f5f7513867f25dcf928600",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
