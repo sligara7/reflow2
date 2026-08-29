@@ -31,6 +31,39 @@ This file is the third view: *what changed, and when*.
 
 ## [Unreleased]
 
+## [0.42.0] — 2026-08-28
+
+### Added — a served method for finding the cause, and skills that declare what they owe
+
+**Minor.** No schema change: the stamp is unmoved at 29 node types / 64 edge types / schema_version 1, diffed field by field against v0.41.0. **No upgrade doc is owed.**
+
+**`/root-cause` — the 23rd served skill, and the first about diagnosis.** Anthony: *"the agent proposes a solution to an issue, then goes off and implements some solution, but it turns out that the solution only treated a symptom."* Nine steps in order, and step ③ is what makes it more than a checklist: **the design generates the candidate causes.** Nine bones, each answered by a call rather than by memory — precedent (`search_design` on the raw error), allocation (`granularity_report`), contract (`seam_report`), implementation (`reconcile_artifacts`), assurance (`coverage_report`), change (`propagate_from`), governance (`detect_defects`), staleness (`invalidated_findings`). Where your project is a codebase, the artifact layer is the bridge: symptom → capability → the artifacts that realize it → the actual files.
+
+The load-bearing step is ④: **name the measurement that would REFUTE each candidate.** A confirming measurement is not evidence — almost any observation is consistent with a plausible cause, which is what makes it plausible.
+
+⚠️ **The skill failed its first test on its own author, one hour after being written, and the fix is in it.** Its trigger said *"when something has FAILED"*; the moment was a number that was merely odd, so it never fired, and four wrong causes were stated in a row. The trigger now reads: **the moment is when you are about to write down a cause, not how loud the failure is.**
+
+**Skills are composed of attribute classes.** Every skill declares `metadata: {composes: [...]}` and `skill_lint` checks it against those classes and no others — `STANDING`, `WRITES`, `MINTS`, `REVISES`, `REPORTS`, `MEASURES`, `DESTROYS`. This fills a tier that was missing: universal obligations were already checked by exhaustive loops (the graph-text-is-data rule sits at 23/23), per-skill obligations by three hand-written contracts, and **per-class obligations by nothing at all** — which is why a mechanic present in one skill never reached the others.
+
+It immediately found **eight skills that mint concept nodes and never said to search first**, a mechanic `capture-intent` and `brainstorm` both carry. Fourteen real omissions in total, each fixed with prose written for that skill.
+
+### Fixed — the field-report items, and a client that could not read a reply
+
+**A capped client can now read the instructions in parts.** `get_instructions` gains an optional `section` and every reply carries a `sections` manifest with `total_bytes` and `returned_bytes` — so a truncated read is **detectable** (one field disagrees with what you hold) and **recoverable**. Reported twice, nine days apart, by a consumer receiving the first ~19.5 KB of ~26.8 KB and losing the gap→question handshake and the whole tool inventory. The largest section is 11,260 bytes; every section is individually deliverable on the harness that could not take the whole.
+
+**The structured-content signpost now addresses the agent, not the client.** It used to say *"your client is reading `content`… read `structuredContent` instead"* — an instruction aimed at a party that is not in the room, since the agent reads it and cannot change its own harness. It now names what the agent can do: the prose tools return their document in `content`, refusals arrive there intact, and `export_graph` with a `path` writes a file it can read. It also states plainly that this does **not** replace `search_design` before a create.
+
+**`report-friction` stops manufacturing bad field reports.** It told reporters to cite `.reflow2/kit-version.json`, which read 0.11.0 while the server answering was 0.39.0. It now reads the environment out of the handshake sidecar.
+
+**A server writes down which client connected** — self-reported name and version, the revision requested, the revision negotiated — to `<graph>.client.json`, beside the existing sidecars. It records what a revision *contains* and never asserts what a client *reads*, because a negotiated version is a claim rather than evidence.
+
+### Changed
+
+**A declared dependency is watched, not imported.** A dependency declaration may name another design's committed export; reflow2 records its content hash and later reads report whether the upstream has moved. Served as `upstream_status` and carried on `loop_status`. It reads without taking: importing would absorb the child into the host.
+
+**The three real internal seams are declared** — the LLM backend, the ingress trust boundary, and the provenance sidecar.
+
+
 ## [0.41.0] — 2026-08-26
 
 ### Fixed — doing the right thing stops raising the alarm
