@@ -1,9 +1,8 @@
 # reflow2 — "Design Anything, Build Anything"
 
-> ### 👉 Just want to use it? Read **[getting-started/SETUP.md](getting-started/SETUP.md)**.
-> The **[getting-started/](getting-started/)** folder is the complete, non-developer setup:
-> install the server, connect grok build / claude code, verify it works. Everything below is
-> about reflow2's own internals.
+> ### 👉 New here? Start with **[What it actually is, concretely](#what-it-actually-is-concretely)** — one screen: the physical shape, the install line, and the first thing you'd type.
+> Full setup, including verifying it works, is **[getting-started/SETUP.md](getting-started/SETUP.md)**.
+> Everything after that first section is about reflow2's own internals.
 
 **reflow2 is a persistent design brain for building things with an AI agent.** It keeps a
 project's entire design — requirements, capabilities, components, code, tests, releases — in
@@ -15,6 +14,73 @@ over MCP; the graph carries the systems-engineering discipline so you don't have
 
 **New to the internals? Read [docs/overview.md](docs/overview.md) first** — it maps all the
 documents and how they fit together.
+
+## What it actually is, concretely
+
+Before any of the ideas below — the physical shape, because almost every wrong assumption about
+reflow2 is an assumption about its shape:
+
+**It is a program that runs on your own machine.** It keeps your design as **a file in your own
+repository**. **Your coding agent talks to it over MCP**, so you use it by talking to your agent
+rather than by running commands. **Nothing leaves your machine** — there is no service, no account
+and no telemetry.
+
+```mermaid
+flowchart LR
+    you["You"] --> agent["Your coding agent<br/>Claude Code · grok build · OpenCode"]
+    agent -->|"MCP"| server["reflow2-mcp<br/><i>one binary, on your machine</i>"]
+    server --> working[".reflow2/<br/><i>the working graph</i>"]
+    server --> export["docs/design/&lt;project&gt;.json<br/><i>committed · diffs and merges in git</i>"]
+```
+
+### Running it
+
+One command, once per machine — **not once per project**:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/sligara7/reflow2/main/tools/install.sh | sh
+```
+
+That installs the binary, registers the MCP server for **every** project on the machine, and
+drops in the slash commands and hooks. **There is nothing to put in your project** — no config to
+write, no instruction file to place. A folder you never design in stays untouched and gets a
+server that says exactly that.
+
+### The first thing you'd do
+
+Start your agent in a project directory and say one of three things, depending on where you are:
+
+| Where you are | What you say |
+| --- | --- |
+| A new thing, nothing built yet | `/genesis I want to build …` — a paragraph is plenty |
+| Code, hardware or documents that already exist, with no design written down | `/adopt` |
+| A design somebody else built and handed you | `/where`, then `/where-does-it-go` when you have a task |
+
+Never seen it before? Ask your agent **`/what-is-this`** and it will explain reflow2 in its own
+words before you read another line of this file.
+
+### What it can answer that nothing else can
+
+Worth knowing before you decide whether it is for you, because a tool described only by its checks
+reads as a linter:
+
+- **"How much of what we said we'd build actually works?"** — computed from the traceability
+  thread, not from anyone's status field: something satisfies each requirement, the thing that
+  satisfies it is built, and its check passes. Nobody can inflate it by marking their own work done.
+- **"Why is it like this?"** — the reasoning behind decisions, the alternatives rejected, and the
+  name of the person who decided. This is the one that survives people leaving.
+- **"What breaks if I change this?"** — the blast radius along the golden thread, before the edit.
+- **"I'm new here — where does this new feature belong?"** — which part should own it, and which
+  decisions already govern that ground.
+
+**The honest cost:** reflow2 only knows what somebody told it. A design nobody has captured
+answers nothing, and the capture is real work.
+
+Full setup, including verifying it works: **[getting-started/SETUP.md](getting-started/SETUP.md)**.
+
+---
+
+*Everything from here down is about reflow2's own internals and design philosophy.*
 
 ## Vision
 
@@ -36,10 +102,14 @@ build anything** — not just software: hardware, a document, a process, a full 
 A design moves along a phase spine (**WHAT → WHERE → BUILD → VERIFY → OPERATE**), and two
 foundations carry it:
 
-1. **The store** is [dynograph-foundation](https://github.com/sligara7/dynograph-foundation),
-   a schema-driven Rust graph engine (RocksDB + HNSW vectors + BM25 text + fuzzy/vector
-   entity resolution). The vocabulary is enforced on every write — an invented node or edge
-   type is refused, loudly.
+1. **The store** is a schema-driven graph engine inside `reflow2-core` — RocksDB or an
+   in-memory backend, with BM25 text search and fuzzy/vector entity resolution. The vocabulary is
+   enforced on every write: an invented node or edge type is *refused*, loudly, with the real
+   alternatives named. It began as [dynograph-foundation](https://github.com/sligara7/dynograph-foundation)
+   and the subset reflow2 actually used was **absorbed into this repository on 2026-08-24**
+   (`dec:absorb-the-foundation-subset-and-end-the-dependency`); nothing is pulled from that
+   repository any more. The RocksDB C++ build stays opt-in behind a feature flag, so the core
+   still runs on the in-memory backend with no long compile.
 2. **Design capture is extraction, not data entry**: freeform input — a brief, a
    conversation, prose read out of an existing codebase — is extracted into typed graph
    nodes in schema-driven, phase-aware, multi-pass fashion, with graph-informed dedup and
@@ -85,8 +155,8 @@ same way everything else here is: coverage is claimed only where a named mechani
 
 ## The design vocabulary
 
-Domain-neutral node types, layered by the phase they feed (28 types across 10 schema
-domains; see [docs/overview.md](docs/overview.md) and `tools/validate_schema.py`):
+Domain-neutral node types, layered by the phase they feed (29 node types and 64 edge types
+across 11 schema domains; see [docs/overview.md](docs/overview.md) and `tools/validate_schema.py`):
 
 | Phase / layer | Nodes |
 |-------|-------|
@@ -113,18 +183,18 @@ OBSOLETES, DUPLICATES, CONSTRAINS, ANTICIPATES, MASKS.
 ```
 reflow2/
   crates/
-    reflow2-core/    # the deterministic, LLM-free coherence engine (40 modules)
-    reflow2-mcp/     # the agent-native MCP server, stdio or HTTP (114 tools) — the binary you run
-  schema/            # 11 composable dynograph schema domains (29 node / 60 edge types)
+    reflow2-core/    # the deterministic, LLM-free coherence engine (59 modules)
+    reflow2-mcp/     # the agent-native MCP server, stdio or HTTP (165 tools) — the binary you run
+  schema/            # 11 composable schema domains (29 node / 64 edge types)
     core / functional / structure / build / verify / operate
     environment / temporal / inference / dimensions
   getting-started/   # the consumer kit installed into a project being designed
     SETUP.md         #   install + connect a coding agent + verify
     AGENTS.md        #   how an agent drives reflow2 to design YOUR project
-    skills/          #   the 15 skills (genesis, adopt, brainstorm, capture-intent, …)
+    skills/          #   the 25 served skills (genesis, adopt, help, onboarding, …)
                      #   — SKILLS.md is the catalogue: which skill, when
-    install.sh       #   fetch the released binaries, checksum-verified
-  tools/             # reflow2_init.py (installer), smoke_mcp.py + the trial harnesses,
+    commands/        #   the slash commands that reach them
+  tools/             # install.sh (one-line installer), reflow2_init.py, the trial harnesses,
                      #   build_design_graph.py (reflow2's own design), validate_schema.py
   docs/              # vision, design, and process specs — START at docs/overview.md
     overview.md · vision.md · three-axes.md · surface-plan.md · partnership.md
