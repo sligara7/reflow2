@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:4d61b912566ad43d7daa83a3bb784d99973b4bdccdff6917bdf63efee868dfde",
+  "content_hash": "sha256:6b783f6dddc5932f5ff9eddb1c6c313f73d65b3149d4e808e21ca00d73946391",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -33014,6 +33014,51 @@
         "action": "modified"
       },
       "to_id": "cap:kit"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-instruction-surface-routes-to-the-evaluative-half",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check-health-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-instruction-surface-routes-to-the-evaluative-half",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:plan-increments-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-instruction-surface-routes-to-the-evaluative-half",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-instruction-surface-routes-to-the-evaluative-half",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-instruction-surface-routes-to-the-evaluative-half",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:where-am-i-skill"
     },
     {
       "edge_type": "CHANGED",
@@ -104481,6 +104526,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:the-instruction-surface-routes-to-the-evaluative-half",
+      "properties": {
+        "at": "2026-08-29",
+        "note": "HALF CLOSED, AND THE HALF THAT REMAINS IS NAMED IN THE FACT ITSELF.\n\nCLOSED — the reachability half. Its sharpest instance is fixed: `where-am-i` now has a step 3 telling the agent to lead with the delivery line, so the number it already gathered gets said. And the class is pinned: every served `*_report` must be named in a skill or carry a written reason, checked in CI, observed failing first at six of fourteen.\n\n🛑 NOT CLOSED — the fact's own last paragraph: \"whether the five zero-mention reports are actually UNUSED in the field, or merely unmentioned. Naming was measured; invocation was not.\" That is exactly as open as it was. Routing makes a report reachable, not read, and the 93-session skill-adoption measurement says what predicts use is an ALWAYS-INJECTED surface — which a skill is not. A later count of whether these reports are now invoked is the measurement that would close it, and nobody has taken it.\n\n⚠️ ALSO STILL OPEN, and it is the more interesting one: the fact questions whether `Delivered: N of M` is the right headline for a USER's project at all, since it is computed from the thread and so measures whether the design's own chain is complete rather than whether the system works. Step 3 now states that bound in words rather than resolving it."
+      },
+      "to_id": "fact:the-instruction-surface-routes-to-hygiene-and-not-to-whether-the-thing-works"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:the-instructions-can-be-read-in-parts-and-the-signpost-speaks-to-the-agent",
       "properties": {
         "at": "2026-08-28",
@@ -107362,6 +107416,15 @@
         "conformance": "verified"
       },
       "to_id": "cap:bounded-reads"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:retire-from-design-skill",
+      "properties": {
+        "completeness": "partial",
+        "conformance": "verified"
+      },
+      "to_id": "cap:every-served-report-is-reachable-from-an-instruction"
     },
     {
       "edge_type": "REALIZES",
@@ -112353,6 +112416,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:every-served-report-is-reachable",
+      "properties": {},
+      "to_id": "cap:every-served-report-is-reachable-from-an-instruction"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:every-skill-has-a-command",
       "properties": {},
       "to_id": "req:kit-reaches-the-agent"
@@ -114189,6 +114258,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:retire-from-design-skill",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:retire-from-design-skill"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:sanitize",
       "properties": {
         "action": "created"
@@ -115225,7 +115302,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:e4cf67c687402f10bb4903f6d8181486106f3d7b8a7035a082254019f1737f21",
+        "checksum": "sha256:f2bf98ac9e3377fb19f8cde12030763518674df8c971341a877bf10bc7a421ab",
         "granularity": "atomic",
         "location": "getting-started/skills/check-health/SKILL.md",
         "name": "check-health/SKILL.md",
@@ -116472,7 +116549,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:e7efb6ed722c9a00b8266425b29229aa87cd29c6b860d25c92a9789b170db907",
+        "checksum": "sha256:4fda290182951d8825efc5cb3cbd1616da7ea5f13b38fba1a4f5a5e079ef077b",
         "granularity": "atomic",
         "location": "getting-started/skills/plan-increments/SKILL.md",
         "name": "plan-increments/SKILL.md",
@@ -116742,6 +116819,17 @@
         "checksum": "sha256:4153e2b121b9d7c82e33bca52d8f9111465f6537d0ebcc5d6e8ccbecaf383232",
         "location": "crates/reflow2-mcp/tests/a_report_is_not_a_list_of_every_check.rs",
         "name": "a_report_is_not_a_list_of_every_check.rs",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "art:retire-from-design-skill",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:1cdba38827046a8673390d785aee6be80484bf1ceedb3a29adeb2ec8ef9d683a",
+        "location": "getting-started/skills/retire-from-design/SKILL.md",
+        "name": "retire-from-design/SKILL.md",
         "status": "realized"
       }
     },
@@ -117178,7 +117266,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:cd506d20f9483ffdcd70e713b121deb3f98523b0dec99e08df03eeba0902fd3a",
+        "checksum": "sha256:fdc24066a33b35610f1ea93a493a4844fbab9a40994c7162a307fdc10569fa8f",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -117191,7 +117279,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:9352eb7ec610eb6187d482730ea021c18883d4548f4ba2ed3ab3b3fac0451bda",
+        "checksum": "sha256:a1c5f2a7114f8b29cef175420be55d82e9b3f46e01661cc34844a0200bb39737",
         "granularity": "atomic",
         "location": "tools/test_skill_lint.py",
         "name": "test_skill_lint.py",
@@ -118121,7 +118209,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:0b8605c30ad0042fdee9f08adaa49e8f90ff6bae11969617f957f8d85b8229d8",
+        "checksum": "sha256:6d06584e49f301282094e79ce47787c3f5d574b7f2f931d904fbe516dcf6f377",
         "location": "getting-started/skills/where-am-i/SKILL.md",
         "name": "where-am-i/SKILL.md — orientation, and the step that asks who the reader is",
         "status": "realized"
@@ -119310,6 +119398,16 @@
         "provenance": "authored",
         "status": "verified",
         "tier": "operational"
+      }
+    },
+    {
+      "node_id": "cap:every-served-report-is-reachable-from-an-instruction",
+      "node_type": "Capability",
+      "properties": {
+        "description": "`skill_lint.py` walks TOOLS → SKILLS: every served `*_report` must be named in at least one served skill, or carry a written reason in `UNROUTED_REPORTS`. The mirror of the lint's oldest check, which walked skills → tools and caught a skill naming a tool that was gone.\n\nBOTH NEAR-MATCHES READ; THREE KINDS OF RECORD. The fact is the MEASUREMENT of the hole and keeps its own numbers. The ChangeEvent DATES the repair. This is the standing capability that keeps it from reopening — the thing that stays true after the event is history.\n\nWHY THE MIRROR WAS MISSING AND WHAT IT COST. Nothing walked the other way, so a report could be built, correct, verified, and reachable by nobody with every gate green. Measured 2026-08-29: of 14 served reports, SIX were named in no skill — `consumption_report`, `flow_report`, `ility_report`, `maturity_report`, `readiness_report`, `release_report` — and none of the evaluative ones was named in `AGENTS.md` or `service.rs` either. Against the same 23 skills, `detect_gaps` is named 16 times and `loop_status` 12. **The instruction surface was hygiene-weighted, so reflow2 PRESENTED AS a hygiene server while holding nine reports that answer whether a design is actually delivering.**\n\nTHE RULE IS A SUFFIX, NOT A LIST. `*_report` is a convention the code already keeps, so it needs no maintenance and cannot silently omit a new report. A hand-kept list of \"the evaluative ones\" is precisely the thing that rots — the same defect found this morning in `node_ref`, where a judgement made once for one property was never recorded for any other.\n\nTHE EXEMPTION REGISTER CARRIES TWO KINDS AND MUST SAY WHICH. `needs no skill` is settled; `GAP:` is a routing hole recorded rather than papered over. Enforced by a test, because the cheap way to pass this check is to name every orphan report in whatever skill is nearest — which satisfies the lint and defeats it. A gap that reads as settled never gets fixed.\n\n🛑 IT CHECKS REACHABILITY, NOT USE. Naming was measured; invocation was not. A report named in a skill is reachable, not necessarily read, and the 93-session skill-adoption result says what predicts use is an always-injected surface — which a skill is not. This closes the unreachable half and leaves the unread half open.",
+        "name": "A report nobody is routed to fails the build, or says in writing why it needs no route",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -126702,6 +126800,18 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "The installer stops skipping the one ignore entry most likely to be already tracked, and the remedy it prints works on a directory"
+      }
+    },
+    {
+      "node_id": "chg:the-instruction-surface-routes-to-the-evaluative-half",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-29",
+        "name": "Orientation says what is DELIVERED, and a lint keeps every report reachable",
+        "rationale": "🛑 THE CHECK WAS WRITTEN FIRST AND OBSERVED FAILING, against the unfixed tree, exit 1: `named in NO skill: ['consumption_report', 'flow_report', 'ility_report', 'maturity_report', 'readiness_report', 'release_report']`. Six of fourteen. That sentence is the only evidence the failing-first step happened, which is why it is here rather than implied.\n\nWHY THE RULE IS `*_report` AND NOT A LIST OF \"EVALUATIVE\" TOOLS. A hand-kept list of which tools matter is the thing that rots — the same defect this session found in `node_ref` this morning, where a judgement made once for one property was never recorded for any other. A suffix already used consistently in the code needs no maintenance and cannot silently omit a new report.\n\nTHE REGISTER CARRIES TWO KINDS OF ENTRY AND SAYS WHICH. \"needs no skill\" is settled; \"GAP:\" is a routing hole recorded rather than papered over. A test enforces the prefix, because a gap that reads as settled never gets fixed — and the cheap way to pass this check would have been to name every orphan report in whatever skill was nearest, which would satisfy the lint and defeat its purpose.\n\n⚠️ WHAT THIS DOES NOT FIX. Naming was measured; INVOCATION was not. A report named in a skill is reachable, not necessarily read — and the 93-session skill-adoption result says what predicts use is an always-injected surface, which a skill is not. So this closes the \"unreachable\" half and leaves the \"unread\" half open, and the two must not be confused. The honest test of whether it worked is whether a later session, asked \"is my project doing what it is supposed to do\", answers with a delivery number instead of a defect count.",
+        "subject": "system",
+        "summary": "Fixes `fact:the-instruction-surface-routes-to-hygiene-and-not-to-whether-the-thing-works` on both the instance and the class.\n\nTHE INSTANCE — `where-am-i` now has a step 3, \"How much of it is actually working\", leading with the delivery line from `graph_report_markdown` and saying what it means: something satisfies each requirement, the capability is built, its check passes, computed from the thread rather than read off a status field. It says out loud that this is usually the question the user came with, and that a report which only ever lists debt reads as a hygiene tool whatever else it can do. It also BOUNDS the number in the same breath — it measures the design's own chain, not the running system.\n\nTHE CLASS — `skill_lint.py` gained the mirror of its oldest check. It already walked skills → tools (\"every referenced tool exists\"); nothing walked tools → skills, so a report could be built, correct, verified and reachable by nobody with every gate green. Now every served `*_report` must be named in some skill or carry a written reason in `UNROUTED_REPORTS`.\n\nROUTED, each into the skill whose job it serves rather than wherever it fit: `maturity_report` → where-am-i (the trajectory behind the snapshot), `readiness_report` → plan-increments (a GATED_ON rung decides what can ship when), `ility_report` → check-health (it reads the same sweep and says what the defects MEAN), `consumption_report` → retire-from-design (what nothing consumes is where retirement candidates come from, and its refusal to answer is itself the finding).\n\nEXEMPTED WITH REASONS, and the two are different: `release_report` \"needs no skill\" — cutting a release is a repo procedure, not a design-loop step. `flow_report` is a \"GAP:\" — nothing owns inspecting an existing Flow; capture-intent and adopt CREATE flows and no skill reads one back. Naming it in capture-intent would have been inventing a use to satisfy the check, which is the failure the check exists to find one level up."
       }
     },
     {
@@ -138140,6 +138250,16 @@
       }
     },
     {
+      "node_id": "frag:art:retire-from-design-skill",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered retire-from-design/SKILL.md"
+      }
+    },
+    {
       "node_id": "frag:art:sanitize",
       "node_type": "Fragment",
       "properties": {
@@ -148950,6 +149070,19 @@
       }
     },
     {
+      "node_id": "fact:the-instruction-surface-routes-to-hygiene-and-not-to-whether-the-thing-works",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "REFLOW2 COMPUTES WHETHER A DESIGN IS DELIVERING AND ITS INSTRUCTION SURFACE NEVER ROUTES ANYONE THERE. Found 2026-08-29 when Anthony challenged a claim this session had made — that \"nothing in the orientation reads measures whether reflow2 does what it's supposed to do\". THE CLAIM WAS FALSE ABOUT THE TOOL AND TRUE ABOUT THE EXPERIENCE, and the gap between those two is the defect.\n\n═══ ① THE MEASURE EXISTS, AND IS PROMINENT ═══\n\n`graph_report_markdown` returns, in its seventh line: *\"Delivered: 151 of 193 requirement(s) (158 satisfied) — computed from the thread (something satisfies it, and that capability is built and currently passing), not from a status field.\"* That is exactly the answer to \"does my project do what it is supposed to do\", computed rather than asserted. NINE report functions in core answer that family of question: coverage, evidence, maturity, readiness, consumption, ility, flow, graph, forecast_readiness.\n\nTHIS SESSION READ THAT LINE AT ORIENTATION, never mentioned it again, and four hours later computed the same number by hand in Python to answer the same question. That is the symptom, and the agent was not being careless.\n\n═══ 🛑 ② THE MEASURED CAUSE: THE INSTRUCTION SURFACE IS HYGIENE-WEIGHTED ═══\n\nNamed in the 23 served skills:\n\n    detect_gaps            16 of 23      hygiene\n    loop_status            12 of 23      hygiene\n    coverage_report         5 of 23\n    graph_report            3 of 23\n    seam_report             2 of 23\n    evidence_report         1 of 23\n    maturity_report         0 of 23      <-- and 0 instruction files\n    readiness_report        0 of 23      <--\n    consumption_report      0 of 23      <--\n    ility_report            0 of 23      <--\n    forecast_readiness      0 of 23      <--\n\nAlso checked, because a skill is not the only surface: NONE of the evaluative reports is named in `AGENTS.md` or in `service.rs` either. They are reachable only by an agent that goes looking through the raw tool list.\n\n⭐ AND THE ORIENTATION SKILL IS THE SHARPEST INSTANCE. `where-am-i` GATHERS `graph_report_markdown` — so the delivery line is in the agent's hands — and then its \"Tell them\" section gives EIGHT numbered steps of what to say, none of which is how much of the intent is actually built and working. The words \"deliver\", \"coverage\" and \"satisfied\" appear ZERO times in that skill. An agent that follows the script faithfully reports what is undecided and never reports what is done.\n\n═══ ③ THE CLASS, and it is the same one three other findings describe ═══\n\nBuilt, correct, and not routed. `cap:built-and-consumed-by-nothing` is a detector for exactly this shape. The linking layer (`mirror_surface`, `export_surface`, `pair_designs`, `seam_report`) was measured at ZERO instances while being built and verified. And the 2026-08-29 skill-adoption measurement across 93 sessions found that what predicts a skill's load count is being named in an ALWAYS-INJECTED SURFACE, not being in the served catalogue — which is this fact stated about skills instead of about reports.\n\n⚠️ WHY IT MATTERS MORE THAN A MISSING MENTION: it makes reflow2 PRESENT AS a hygiene server to the person using it. A user asking \"is my project doing what it is supposed to do\" is answered with gaps, defects and export sync — not because the tool cannot answer, but because nothing tells the agent to ask the half that can.\n\n🛑 NOT ESTABLISHED: whether the five zero-mention reports are actually UNUSED in the field, or merely unmentioned. Naming was measured; invocation was not. The 93-session measurement is suggestive for skills and does not transfer to tools without its own count. Also not established: whether `Delivered: N of M` is the right headline for a USER's project rather than for reflow2's own — it is computed from the thread, so it measures whether the design's own chain is complete and its recorded checks pass, which is a narrower claim than \"the system works\".",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-29",
+        "value": "{\"found\":\"2026-08-29, by Anthony challenging this session's claim\",\"claim_that_was_false\":\"nothing in the orientation reads measures whether the design is delivering\",\"the_measure_that_exists\":\"graph_report_markdown line 7: Delivered 151 of 193 requirements, computed from the thread\",\"evaluative_report_functions_in_core\":9,\"named_in_served_skills\":{\"detect_gaps\":16,\"loop_status\":12,\"coverage_report\":5,\"graph_report\":3,\"seam_report\":2,\"evidence_report\":1,\"maturity_report\":0,\"readiness_report\":0,\"consumption_report\":0,\"ility_report\":0,\"forecast_readiness\":0},\"also_absent_from\":[\"AGENTS.md\",\"service.rs\"],\"sharpest_instance\":\"where-am-i gathers graph_report_markdown and its 8-step narration script never says to report delivery; the words deliver/coverage/satisfied appear 0 times in that skill\",\"class\":\"built, correct, and not routed - same shape as cap:built-and-consumed-by-nothing, the zero-instance linking layer, and the 93-session finding that an always-injected surface predicts use\",\"not_established\":[\"whether the zero-mention reports are unused in the field or merely unmentioned - naming was measured, invocation was not\",\"whether 'Delivered N of M' is the right headline for a user's project: it is computed from the thread, so it measures the design's own chain rather than the system working\"]}"
+      }
+    },
+    {
       "node_id": "fact:the-kit-manifest-gate-cannot-run-in-ci-because-ci-is-never-installed-into",
       "node_type": "TemporalFact",
       "properties": {
@@ -150729,6 +150862,20 @@
       }
     },
     {
+      "node_id": "ver:every-served-report-is-reachable",
+      "node_type": "Verification",
+      "properties": {
+        "description": "The check itself in `tools/skill_lint.py` (run by CI), plus 4 cases in `tools/test_skill_lint.py` guarding the check from rotting.\n\n🛑 OBSERVED FAILING FIRST, against the unfixed tree, exit 1: `named in NO skill: ['consumption_report', 'flow_report', 'ility_report', 'maturity_report', 'readiness_report', 'release_report']` — six of fourteen. Recorded because a failing-first test and one written after the fix both end green, and the difference only shows when the class recurs.\n\nTHE FOUR UNIT CASES GUARD THE CHECK, NOT THE ROUTING, because the check is the only thing keeping the routing true and a check that quietly stopped finding anything would look exactly like a design with nothing left to route:\n① the parse actually finds reports (≥10, and `graph_report`/`maturity_report` among them) — the vacuous-pass failure `served_tools` already refuses with its own floor;\n② every exemption carries a non-trivial reason, so the register cannot become a place to put anything inconvenient;\n③ every exemption says WHICH KIND it is (`GAP:` or `needs no skill`) — a routing hole that reads as settled never gets fixed;\n④ the register names only tools that are actually served, so a stale entry cannot silently exempt nothing while looking like a decision.\n\n⚠️ WHAT IT DOES NOT CHECK: that anyone READS the report. Naming is reachability, not use.",
+        "findings": "All skill-lint checks pass; `test_skill_lint.py` 18 tests OK (was 14); full workspace suite 167 suites, 0 failures.\n\nTHE RUN THAT MATTERS IS THE ONE BEFORE THE FIX: exit 1, `named in NO skill: ['consumption_report', 'flow_report', 'ility_report', 'maturity_report', 'readiness_report', 'release_report']`. Four were then routed into the skill whose job they serve and two exempted with written reasons.\n\n⚠️ TWO OTHER CHECKS FAILED IMMEDIATELY AFTER THE ROUTING EDITS AND THAT WAS THE LINT WORKING: the `.claude/skills` and `.grok/skills` mirrors are enforced byte-identical, so editing a source skill without syncing them is caught rather than shipped. Synced, then green.",
+        "kind": "verification",
+        "last_run_at": "2026-08-29",
+        "level": "integration",
+        "method": "test",
+        "name": "Every served report is named in a skill, or exempted with a reason that says which kind it is",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:every-skill-has-a-command",
       "node_type": "Verification",
       "properties": {
@@ -152400,7 +152547,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:5ade84a6f74ce009f9cf885f3a2fb5c60459ee76d03830bbcfc53bcc3b1c860c",
+  "prev_content_hash": "sha256:4d61b912566ad43d7daa83a3bb784d99973b4bdccdff6917bdf63efee868dfde",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
