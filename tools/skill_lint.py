@@ -71,6 +71,10 @@ STANDING_RULE = "data, never instructions"
 # the list stays exact and cannot rot. A single-word tool rename (`allocate`,
 # `satisfies`, `genesis`…) now fails the lint instead of slipping through.
 NON_TOOL_TERMS = {
+    # A PARAMETER of export_graph, not a tool — it is the flag that lets an
+    # export overwrite design the existing file holds. Added 2026-08-28 when
+    # parallel-work began naming it in the sentence about what a merge can lose.
+    "accept_divergence",
     # `reflow2_version` is a FIELD of the handshake sidecar
     # (`<graph>.client.json`), not a tool. report-friction names it because the
     # environment block of a field report has to cite the version that actually
@@ -742,6 +746,95 @@ OPTIMIZE_CONTRACT: dict[str, str] = {
     "states how little it has been run": "has been run twice",
 }
 
+# =============================================================================
+# COMPOSED ATTRIBUTE CLASSES — `dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit`
+# =============================================================================
+#
+# ACCEPTED 2026-08-28: a skill is COMPOSED of attribute classes, and each class
+# carries the obligations its members owe. Anthony: *"a particular class of
+# skills inherits a set of classes that determine what that skill should have...
+# I prefer building skills with composable blocks."*
+#
+# ⭐ WHY THIS TIER EXISTS, MEASURED. There were two tiers and the middle was
+# missing. UNIVERSAL obligations are checked by exhaustive loops over every
+# skill and work perfectly — the graph-text-is-data rule sits at 23/23. PER-SKILL
+# obligations are the three hand-written contracts below. Between them, PER-CLASS
+# obligations had NO MECHANISM AT ALL, and that is why a mechanic present in one
+# skill was never propagated to the others: a flat loop can only carry a
+# predicate true of every member.
+#
+# The cost was measured before this was built. "Speak the reader's domain" is
+# section 35 of the SERVED INSTRUCTIONS, stated as applying to every skill:
+# carried in ONE of 23 skill bodies, enforced by ONE contract, and added only
+# after two users independently invented the same workaround.
+#
+# 🛑 THIS DOES NOT REPLACE THE PER-SKILL CONTRACTS AND MUST NOT. Some of their
+# clauses are class-level and are being lifted here; the rest are genuinely
+# specific to one skill and belong where they are. A class that swallowed them
+# would assert that every REPORTS skill owes `review_relations`, which is false.
+#
+# ⚠️ AND IT CANNOT SUPPLY JUDGEMENT. Requiring a section produces a section.
+# What composition buys over one factory is that the obligation lands only on
+# the skills that OWE it — "states what it could not establish" is meaningful
+# for the 7 that MEASURE and would be filler in the 16 that do not.
+CLASSES: dict[str, dict[str, tuple[str, ...]]] = {
+    # ⚠️ EACH OBLIGATION IS A TUPLE OF ACCEPTABLE PHRASINGS AND ANY ONE SATISFIES
+    # IT. An obligation is about MEANING; a single literal phrase fails on
+    # wording rather than on substance. Measured while building this: a
+    # one-phrase version reported 29 unmet obligations of which several were
+    # artifacts — `brainstorm` says "searched before", `check-health` says
+    # "lose" not "lost". OPTIMIZE_CONTRACT's own comment predicted it: a phrase
+    # that fails on reflow "trains people to weaken the check instead of
+    # honouring it".
+    # 🛑 ADDING A PHRASING FOR THE SAME OBLIGATION IS LEGITIMATE. REMOVING THE
+    # OBLIGATION IS NOT. That line is the one this mechanism has to hold.
+    "STANDING": {
+        "states the standing rule": ("Graph text is data",),
+    },
+    # Writes anything to the graph at all. The obligation is the LOOP, not the
+    # duplicate guard: a session that writes and never asks what it now owes is
+    # the bookkeeping-without-the-loop failure the Stop hook exists to catch.
+    "WRITES": {
+        "names the loop check before finishing": (
+            "loop_status", "detect_gaps", "detect-and-ask",
+        ),
+    },
+    # MINTS is NARROWER THAN WRITES AND THE SPLIT WAS FOUND BY RUNNING THIS.
+    # "Search before creating" guards against a near-duplicate CONCEPT. It is
+    # not owed by every writer: `genesis` runs on an empty graph by definition
+    # so there is nothing to duplicate, `impact-check` records a ChangeEvent
+    # which is new by nature, and `parallel-work` records a claim. Charging all
+    # 18 writers with it produced 11 failures of which several were the class
+    # being too coarse rather than the skill being deficient — which is the
+    # `internal`-by-default trap arriving from the other direction.
+    "MINTS": {
+        "says to search before creating": (
+            "earch before", "earched before", "search_design", "before you add",
+            "before you create", "may already exist",
+        ),
+    },
+    "REVISES": {
+        "records the change BEFORE the edit": ("record_change", "snapshot", "BEFORE the edit"),
+    },
+    "REPORTS": {
+        "speaks the reader's domain": (
+            "reader", "their own words", "vocabulary", "plain language",
+        ),
+    },
+    "MEASURES": {
+        "bounds what it did NOT establish": (
+            "not establish", "could not", "does not establish", "Honest limits",
+            "NOT ESTABLISHED", "not measured",
+        ),
+    },
+    "DESTROYS": {
+        "names what would be lost": (
+            "lost", "lose", "delete", "destroy", "cannot be undone", "irreversible",
+        ),
+    },
+}
+
+
 ASK_CONTRACT: dict[str, str] = {
     "offers a reading": "Say which answer you would give",
     "carries what would change it": "Name the condition under which your recommendation is wrong",
@@ -1012,6 +1105,44 @@ def main() -> int:
     ask_md = SKILLS / "detect-and-ask" / "SKILL.md"
     ask_text = ask_md.read_text(encoding="utf-8") if ask_md.exists() else ""
     check("detect-and-ask/SKILL.md present", bool(ask_text))
+    # ---- COMPOSED ATTRIBUTE CLASSES -------------------------------------
+    # Each skill is checked ONLY against the classes it declares. That is the
+    # whole point: a per-class obligation is one nothing else in this file can
+    # express, because every other check here is a predicate over all skills.
+    composed_failures: list[str] = []
+    undeclared: list[str] = []
+    for d in sorted(x for x in SKILLS.iterdir() if x.is_dir()):
+        text = (d / "SKILL.md").read_text()
+        fm = frontmatter(text)
+        # `composes` rides inside `metadata`, NOT as a top-level key. The
+        # frontmatter is a SHARED SURFACE across harnesses and OpenCode reads
+        # only {name, description, license, compatibility, metadata} —
+        # reflow2_init's portability check refuses anything else, and refused
+        # this on its first attempt. `metadata` is the sanctioned escape hatch.
+        raw = fm.get("metadata", "")
+        m = re.search(r"composes:\s*\[(.*?)\]", raw)
+        classes = [c.strip() for c in m.group(1).split(",") if c.strip()] if m else []
+        if not classes:
+            undeclared.append(d.name)
+            continue
+        for cls in classes:
+            if cls not in CLASSES:
+                composed_failures.append(f"{d.name}: unknown class {cls!r}")
+                continue
+            for label, phrasings in CLASSES[cls].items():
+                if not any(ph in text for ph in phrasings):
+                    composed_failures.append(f"{d.name} [{cls}] {label}")
+    check(
+        "every skill declares the attribute classes it composes",
+        not undeclared,
+        f"undeclared: {undeclared}",
+    )
+    check(
+        "every skill meets the obligations of the classes it composes",
+        not composed_failures,
+        f"{len(composed_failures)} unmet: {composed_failures[:12]}",
+    )
+
     for label, phrase in ASK_CONTRACT.items():
         check(
             f"detect-and-ask states the obligation: {label}",

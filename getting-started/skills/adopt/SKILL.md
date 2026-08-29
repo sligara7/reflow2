@@ -1,6 +1,7 @@
 ---
 name: adopt
 description: Use when reflow2 is pointed at a system that ALREADY EXISTS — a codebase, a product, a device — with little or no requirements documentation. The sibling of genesis, it brings the existing system under design control by the accepted reverse-engineering lifecycle - gather, scan, analyze (static and dynamic), recover intent, validate - producing a graph that says honestly what exists, what it is for, and what nobody can know from the artifact alone.
+metadata: {composes: [STANDING, WRITES, MINTS, MEASURES, REPORTS]}
 ---
 
 # ADOPT — bring a system that already exists under design control
@@ -226,3 +227,11 @@ or genuinely open, and the user has been told what the design does not cover —
 gap is closed. A system adopted honestly usually *should* have open gaps and uncovered regions;
 naming them is what "under design control" means, and hiding them is how a thin pass gets
 mistaken for a complete one.
+
+## Before you write
+
+**Search before you create.** Adopt runs against a design that may already hold
+nodes from an earlier pass or a hand-written start, and mass recovery is exactly
+where near-duplicates arrive in bulk. `search_design` on what you are about to
+add; the constructors will refuse a near-match and name it, and one merge done
+by hand is more expensive than every search you skipped.

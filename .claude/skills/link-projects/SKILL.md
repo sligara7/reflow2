@@ -1,6 +1,7 @@
 ---
 name: link-projects
 description: Use when two or more separate reflow2 projects need to work together — "link projectA and projectB", "how does our service talk to theirs", "make the interface between these two real". Takes a correspondence the USER asserts and drives it to a fully specified contract, boundary by boundary. Distinct from parallel-work (several people on ONE design) and from link-artifacts (files inside one design).
+metadata: {composes: [STANDING, WRITES, MINTS, REPORTS]}
 ---
 
 # Link two projects, and make the interface real
@@ -148,3 +149,10 @@ authored it — is thrown away.
 
 `loop_status`. Specifying a boundary is a real design change: it owes a ChangeEvent, and the export
 owes a refresh. And a new `incompatible` is a finding for two owners, not one.
+
+## Before you write
+
+**Search before you create.** The boundary may already be modelled from the
+other side — `search_design` for the interface's name and both designs' terms
+before adding one. Two Interfaces describing one contract is the failure this
+skill exists to prevent, arriving through the skill itself.

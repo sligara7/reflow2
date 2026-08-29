@@ -1,6 +1,7 @@
 ---
 name: brainstorm
 description: Use when the user is thinking out loud rather than deciding — "just brainstorming", "what if we", "a few options", several half-formed ideas in one breath, "I'm not sure yet", or working an idea through before committing to it. Records the ideas in the graph AS ideas, so nothing is lost and nothing is claimed as intent; links each new idea to the ones it actually relates to, so a later search finds a line of reasoning rather than an orphan; and asks before promoting any of them into requirements or capabilities.
+metadata: {composes: [STANDING, WRITES, MINTS]}
 ---
 
 # Think out loud, on the record

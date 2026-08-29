@@ -1,6 +1,7 @@
 ---
 name: kpp-proposal
 description: Use when the user states a need that sounds like it MUST hold no matter what — a number with a unit, a "shall", something whose failure would sink the whole effort. Asks them whether it is a key performance parameter instead of deciding for them, records it as inviolable intent if they say yes, and records the decline if they say no so the question is not asked twice. The capture half of KPPs; the violations are computed by detect_gaps.
+metadata: {composes: [STANDING, WRITES, MINTS, REPORTS]}
 ---
 
 # Notice when a stated need may be inviolable — and ask

@@ -1,6 +1,7 @@
 ---
 name: check-health
 description: Use after any structural change to the design (new components, new contracts, a resync after impact) and periodically before a build push. Runs reflow2's HEAL detectors to find structural defects the design can't see in itself — circular dependencies, single points of failure, duplicates, disconnected clusters — then applies only the mechanical fixes and brings the rest to the user. Distinct from detect-and-ask: that asks what the design *means*, this checks how the design is *shaped*.
+metadata: {composes: [STANDING, MEASURES, DESTROYS]}
 ---
 
 # Check the design's structural health

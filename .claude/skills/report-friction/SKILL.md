@@ -1,6 +1,7 @@
 ---
 name: report-friction
 description: Use when reflow2 itself gets in your way while you are designing — a tool that fails without saying why, a gap that fires on correct work, something you cannot record, a rejection you cannot act on. Writes a report the maintainer can act on, redacted of the user's design content, and offers to file it. Not for problems with the project you are designing; only for reflow2 itself.
+metadata: {composes: [STANDING, WRITES, MINTS, REPORTS]}
 ---
 
 # Report friction with reflow2
@@ -119,3 +120,18 @@ recorded.
 - Do not editorialise about the maintainer's choices. Say what happened, what it cost, and what
   you expected. They will draw their own conclusions — the trial reports that shaped this project
   worked precisely because they described friction rather than prescribing fixes.
+
+## Before you write, and who reads it
+
+**Search before you create.** The friction may already be reported — this
+project has measured the same item filed across separate sessions because
+nobody looked. `search_design` on the error text or the tool's name first, and
+add to the existing record rather than beside it.
+
+**Write it in the READER's domain.** The reader is whoever maintains the tool,
+not you: name the tool, the call, the exact refusal and what you expected, in
+their vocabulary rather than in your project's. Strip your design's content —
+the report travels, the domain does not.
+
+**Before moving on, `loop_status`.** A friction report is a graph write like any
+other, and it owes the loop the same pass.

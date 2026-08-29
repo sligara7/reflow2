@@ -1,6 +1,7 @@
 ---
 name: ci-gate
 description: Use when the user wants the design checked on every commit — a CI build gate, "fail the build if the design drifts", shift-left coherence. Sets up reflow2_check.py against the committed design export so unaccepted drift and serious open gaps turn the build red, and explains how to make a red build green honestly.
+metadata: {composes: [STANDING]}
 ---
 
 # The design gate: every commit answers "does the design still describe this build?"

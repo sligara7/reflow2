@@ -1,6 +1,7 @@
 ---
 name: link-artifacts
 description: Use right after you create or substantially change a real source file (Unity C#, a spec, a doc), to register it in the reflow2 graph as an Artifact that REALIZES the capability it implements — with a content hash so later edits are detectable. Also use to reconcile the design against what is actually on disk. Keeps as-designed vs as-built honest and closes the unrealized_capability gap.
+metadata: {composes: [STANDING, WRITES, MINTS, MEASURES]}
 ---
 
 # Link real files back to the design
@@ -138,3 +139,15 @@ does not cover the "capability claims realized with no passing check" loop debt.
 things it parks are joined only to each other, so they can read as an island; if the ruling
 genuinely follows from something already in the design, draw that edge too — because it is true,
 not to quiet the detector.
+
+## Before you write, and what the reconcile did NOT establish
+
+**Search before you create.** The file may already be registered under another
+id — `search_design` for its path and its name before adding one, because two
+Artifacts pointing at one file will drift apart and nothing will say which is
+authoritative.
+
+**And bound the reconcile.** A clean pass means the files the design KNOWS ABOUT
+match. It does **not establish** that the build is correct: a file no Artifact
+points at is invisible, and `coverage_report` is the call that names those.
+Report what was swept, not just what passed.
