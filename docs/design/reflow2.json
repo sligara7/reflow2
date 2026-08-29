@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:5ade84a6f74ce009f9cf885f3a2fb5c60459ee76d03830bbcfc53bcc3b1c860c",
+  "content_hash": "sha256:4d61b912566ad43d7daa83a3bb784d99973b4bdccdff6917bdf63efee868dfde",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -8197,6 +8197,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:the-schema-says-which-id-properties-are-node-references-and-why-the-others-are-not",
+      "properties": {},
+      "to_id": "epoch:a-dangling-reference-is-found-on-its-own-terms"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:the-served-surface-carries-todays-gate-lessons",
       "properties": {},
       "to_id": "epoch:v0310"
@@ -9062,6 +9068,18 @@
     {
       "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:a-dangling-reference-is-found-on-its-own-terms:art:heal",
+      "properties": {},
+      "to_id": "epoch:a-dangling-reference-is-found-on-its-own-terms"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:a-dangling-reference-is-found-on-its-own-terms:art:schema-core",
+      "properties": {},
+      "to_id": "epoch:a-dangling-reference-is-found-on-its-own-terms"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:a-dangling-reference-is-found-on-its-own-terms:art:schema-temporal",
       "properties": {},
       "to_id": "epoch:a-dangling-reference-is-found-on-its-own-terms"
     },
@@ -10598,6 +10616,15 @@
       "from_id": "dec:an-empty-manifest-on-a-shipped-release-stops-the-build",
       "properties": {
         "acted_at": "2026-08-21",
+        "role": "approver"
+      },
+      "to_id": "who:ajs"
+    },
+    {
+      "edge_type": "AUTHORED_BY",
+      "from_id": "dec:an-id-property-is-one-of-four-kinds-and-only-one-is-a-node-reference",
+      "properties": {
+        "acted_at": "2026-08-29",
         "role": "approver"
       },
       "to_id": "who:ajs"
@@ -33701,6 +33728,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:the-schema-says-which-id-properties-are-node-references-and-why-the-others-are-not",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-core"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-schema-says-which-id-properties-are-node-references-and-why-the-others-are-not",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:schema-temporal"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:the-served-surface-carries-todays-gate-lessons",
       "properties": {
         "accepted_baseline": true,
@@ -46983,6 +47028,18 @@
       "from_id": "art:release-workflow",
       "properties": {},
       "to_id": "snap:epoch:the-image-must-start:art:release-workflow"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:schema-core",
+      "properties": {},
+      "to_id": "snap:epoch:a-dangling-reference-is-found-on-its-own-terms:art:schema-core"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:schema-temporal",
+      "properties": {},
+      "to_id": "snap:epoch:a-dangling-reference-is-found-on-its-own-terms:art:schema-temporal"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -116766,7 +116823,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:7e30aab123b6030242a20fc64e5ea309500bfd2ff303680ab156ad1300094f23",
+        "checksum": "sha256:9317507269ef7dd2e286d81ace2873d45495705cff3a5b731ffb0ce6f7180091",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/core.yaml",
@@ -116878,7 +116935,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "spec",
-        "checksum": "sha256:13f4370bf85e324c8fbe4f94f05761789b9ef41f3ee69fbd62c16c6a07f2d4a9",
+        "checksum": "sha256:9ae6a96c7579f3b8234f2d217d29ffafc6ba78bc1e646237b2e0664fd4f686be",
         "granularity": "atomic",
         "last_confirmed_at": "2026-08-02",
         "location": "schema/temporal.yaml",
@@ -126925,6 +126982,18 @@
       }
     },
     {
+      "node_id": "chg:the-schema-says-which-id-properties-are-node-references-and-why-the-others-are-not",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "detected_at": "2026-08-29",
+        "name": "Question.gap_id's declaration states why it is not a node reference",
+        "rationale": "THE SWEEP GOT WIDER WHEN IT WAS RUN WITHOUT A FLOOR, and the count of kinds went from the expected three to four. The root-cause pass measured only the three properties `heal.rs` names. Re-swept 2026-08-29 across EVERY `*_id` property with no minimum-instance floor:\n\n    TemporalFact.subject_id        334 values, 334 resolve   a NODE REFERENCE\n    Snapshot.target_id             196 values, 192 resolve   a HISTORICAL ANCHOR\n    Question.gap_id                 57 values,   0 resolve   a COMPUTED-FINDING REFERENCE\n    Resource.dependency_graph_id      1 value,    0 resolve   a CROSS-DESIGN REFERENCE\n\nThe fourth was not in any earlier reading and is a kind nobody had named: it holds `dynograph-foundation`, which is a GRAPH id rather than a node id, and it is not a declared property at all — the store is a property bag, so it was written and never validated against anything.\n\n⚠️ AND THREE MORE ARE DECLARED BUT HAVE NEVER BEEN WRITTEN: `ReadinessAssessment.target_id`, `DimensionAssessment.target_id`, `DimensionObservation.target_id`, all at zero instances. They read like node references — an assessment OF a node — but whether a scored node's later deletion makes the assessment wrong (a node reference) or leaves it as the surviving record of what was scored (a historical anchor) is exactly the `subject_id`-versus-`target_id` question again, and with no instances there is no evidence to settle it either way. Recorded as undecided ON PURPOSE rather than guessed, because a wrong `node_ref` on an unpopulated type would be a rule nobody could have tested.\n\nWHY THE SCHEMA IS EDITED AND THE FLAG IS NOT. Every instinct here says \"declare them and let the guard sort it out\", and that is the move this change refuses. `Snapshot.target_id` MUST NOT be declared: four of its values dangle today and all four are correct — three artifacts deleted at `epoch:content-store-discontinued` and `ctr:anthony` merged into `who:ajs`. A snapshot exists to preserve what a node was, so a snapshot pointing at nothing is the mechanism working. Declaring it would make `dangling_reference` fire on correct history, which is the failure this project judges worse than no detector at all.",
+        "subject": "record",
+        "summary": "Adding the reason to two schema property descriptions — `Snapshot.target_id` (schema/temporal.yaml) and `Question.gap_id` (schema/core.yaml) — so a reader meets the judgement at the point of the declaration rather than inferring it from an absent flag. Closes the defect named by `fact:which-properties-are-node-references-is-a-judgement-made-once-and-never-recorded-for-the-others`: `subject_id` and `target_id` are declared IDENTICALLY apart from `node_ref` and nothing said why, so the next reader either declares it and breaks history, or leaves it and never learns the omission was deliberate.\n\nTHE SCHEMA IS THE RIGHT PLACE BECAUSE IT IS SERVED. The YAML is `include_str!`d into reflow2-core and reaches agents through `describe_schema`, so a sentence here is read at the moment somebody is deciding what a property means. That is the same reasoning `dec:skills-served` applies to skills, and the same reasoning the revise-design correction applies to tool descriptions — the text an agent reads at call time is the text that governs."
+      }
+    },
+    {
       "node_id": "chg:the-served-surface-carries-todays-gate-lessons",
       "node_type": "ChangeEvent",
       "properties": {
@@ -129016,6 +129085,16 @@
         "decision": "`release_without_manifest` is raised at severity 0.85, above `reflow2_check`'s default `--gap-threshold` of 0.8, so a Release that is pinned to an epoch, deployed, and includes nothing FAILS the gate rather than appearing as a note.\n\nIt joins the band of findings that say the design asserts something untrue — failing_verification 0.80, kpp_contradicted 0.85, kpp_unbound 0.90, kpp_breached 0.95 — rather than the band below it, which holds questions waiting for a human. Its sibling `release_without_epoch` stays at 0.6 and stays a question: WHICH epoch a release belongs to is a judgement, and nothing false has been asserted by the edge's absence.\n\nA genuinely contentless release — a re-tag, a docs-only republish — remains a real state. It is red until somebody acknowledges it with a reason on the record, never red forever.\n\nDISTINCT FROM the requirement it settles a question about: that says the state shall be REPORTED, and would be satisfied by a detector of any severity. This says how loud the report is, which is a separate choice with its own cost — a red build on a contentless release — and could be reversed without touching the requirement at all.",
         "name": "DECIDED — a published release recording that it shipped nothing stops the build",
         "rationale": "ANTHONY'S CALL, 2026-08-21, asked as a direct choice between stopping the build, staying a note at 0.65, and expressing it as a DesignRule carrying enforcement. He chose to stop the build.\n\nTHE EVIDENCE PUT TO HIM, AND IT IS THE WHOLE ARGUMENT: a note was already demonstrably not enough. The v0.38.0 cut passed `reflow2_check` GREEN with 96 notes scrolling past it, and that is exactly how a tag was pushed, built, published and asset-verified over an empty manifest. A finding nobody is made to read is not a finding.\n\nTHE COST WAS STATED BEFORE HE CHOSE: a release that really did ship no new content will red-build until acknowledged, which is one call with his reason attached.\n\nWHY NOT THE DESIGNRULE ROUTE, which was offered and not taken: it is the cleaner separation of \"how bad\" from \"does CI fail\", and it would have needed checking that the rule actually reaches `reflow2_check`. Left on the table rather than refuted — if severity ever has to be tuned for a reason unrelated to CI, that is the route back.\n\nTHE NUMBER IS NOT TUNED TO THE THRESHOLD. 0.85 sits above 0.80 with room, deliberately, so raising `--gap-threshold` one notch does not silently drop the rule out of the gate — the failure mode this whole line of work exists to prevent.",
+        "status": "accepted"
+      }
+    },
+    {
+      "node_id": "dec:an-id-property-is-one-of-four-kinds-and-only-one-is-a-node-reference",
+      "node_type": "Decision",
+      "properties": {
+        "decision": "A property whose value is an id is NOT automatically a node reference. Four kinds exist in this design, measured 2026-08-29 across every `*_id` property with no minimum-instance floor, and only the first takes `node_ref: true`:\n\n① **NODE REFERENCE** — names a node that must exist for the record to mean anything. Dangling is a real defect. `TemporalFact.subject_id` (334 values, 334 resolve). DECLARED.\n\n② **HISTORICAL ANCHOR** — resolves when written, and is EXPECTED to stop resolving. The record exists to survive its target. `Snapshot.target_id` (196 values, 192 resolve; all 4 dangles correct). NOT DECLARED.\n\n③ **COMPUTED-FINDING REFERENCE** — names something calculated and never stored as a node, so it resolves to nothing by construction. `Question.gap_id` (57 values, 0 resolve — the correct reading, not rot). NOT DECLARED.\n\n④ **CROSS-DESIGN REFERENCE** — names a GRAPH rather than a node. `Resource.dependency_graph_id` (1 value, `dynograph-foundation`). NOT DECLARED, and not a declared property at all.\n\nTHE RULE THAT FOLLOWS: `node_ref` is applied only to ① — and where it is withheld, THE DECLARATION ITSELF SAYS WHY, in the schema description, because that is the text a reader meets. Done for `Snapshot.target_id` and `Question.gap_id`.\n\n⚠️ THREE ARE DECLARED AND HAVE NEVER BEEN WRITTEN, so they are recorded as UNDECIDED rather than assigned: `ReadinessAssessment.target_id`, `DimensionAssessment.target_id`, `DimensionObservation.target_id`, all at zero instances. Whether a scored node's later deletion makes the assessment wrong (①) or leaves it as the surviving record of what was scored (②) is the same question, and there is no evidence to settle it. Decide when the first one is written.",
+        "name": "An id-valued property is one of four kinds, and only one of them is a node reference",
+        "rationale": "Recorded on Anthony's word 2026-08-29 — \"record the judgement for target_id and gap_id\" — after `fact:which-properties-are-node-references-is-a-judgement-made-once-and-never-recorded-for-the-others` found the judgement had been made exactly once, for one property, and never written down for any other.\n\nTHREE NEAR-MATCHES WERE OFFERED AND ALL THREE READ IN FULL; THIS IS A DIFFERENT KIND OF RECORD. The two facts are MEASUREMENTS — one of the detection hole, one of the cause — and they keep their own numbers and caveats. `dec:a-restore-reports-an-unresolvable-reference-rather-than-refusing-it` is a decision about what an IMPORT does when it meets an unresolvable value. This is the standing rule about which properties are references AT ALL, which is upstream of both: it decides what the guard and the detector are even looking at.\n\nTHE DEFECT WAS THE SILENCE, NOT A MISSING FLAG. `subject_id` and `target_id` are declared identically — `type: string, required: true, indexed: true` — and differ only in `node_ref`. Nothing said why, so the next reader had two moves and both were bad: declare it, and a detector starts firing on correct history; leave it, and never learn the omission was deliberate. An unrecorded judgement is indistinguishable from an oversight, and this design has now spent three sessions rediscovering the same class because of it.\n\n⭐ THE FOURTH KIND WAS FOUND BY DROPPING A THRESHOLD, WHICH IS WORTH KEEPING AS METHOD. The root-cause pass swept only the three properties `heal.rs` names, with a three-instance floor to filter noise. Re-run with no floor, `Resource.dependency_graph_id` appeared — one value, naming a graph rather than a node, undeclared in the schema entirely. A filter set to suppress noise had been suppressing a whole category, which is the same shape as the defect that started this thread: an instrument that looks complete because the cases it misses are the ones it cannot see.\n\nWHY NOT SIMPLY DECLARE EVERYTHING THAT LOOKS LIKE A POINTER, which is the tempting simplification: it would refuse every Question this design has ever written (kind ③ resolves to nothing by construction) and make `dangling_reference` report four correct historical records as defects (kind ②). A rule that fires on correct work is worse than no rule — the standing judgement behind `supporting is not conflict` and behind the `required`-designation skip in `unprovided_interface`.\n\nTHE THREE UNDECIDED ONES ARE LEFT UNDECIDED ON PURPOSE. Guessing a `node_ref` for a type with zero instances would assert a rule nobody could have tested, at exactly the moment there is no evidence — and a wrong guess would be discovered by the first person to write one, as a refusal they cannot act on.",
         "status": "accepted"
       }
     },
@@ -143544,6 +143623,26 @@
       }
     },
     {
+      "node_id": "snap:epoch:a-dangling-reference-is-found-on-its-own-terms:art:schema-core",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:81403d844b84c265da25581c0e3794dbaabae825eebfca0de0917b7f2cfe5322\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:81403d844b84c265da25581c0e3794dbaabae825eebfca0de0917b7f2cfe5322\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:81403d844b84c265da25581c0e3794dbaabae825eebfca0de0917b7f2cfe5322\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:81403d844b84c265da25581c0e3794dbaabae825eebfca0de0917b7f2cfe5322\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:a8fd5362d207f3ffcdc0a146eea29f3060104109227fd5626b05bfa31984fbca\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:a8fd5362d207f3ffcdc0a146eea29f3060104109227fd5626b05bfa31984fbca\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:d2df8ff9f93352a3a4d1948a62b35890862e2fed2e3aa53d67282637bb139b0a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:44024934a64197163ce3e1c5c43cd4f86214e8a4cf5ce44d98466d5f9da00a47\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:7b5303233e9b8622836c1d1890481d82e59d2fb1dfc0cc056d6a10ccc01d3806\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:7b5303233e9b8622836c1d1890481d82e59d2fb1dfc0cc056d6a10ccc01d3806\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:7b5303233e9b8622836c1d1890481d82e59d2fb1dfc0cc056d6a10ccc01d3806\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:7b5303233e9b8622836c1d1890481d82e59d2fb1dfc0cc056d6a10ccc01d3806\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:7b5303233e9b8622836c1d1890481d82e59d2fb1dfc0cc056d6a10ccc01d3806\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:3c14debf63e30806550295d9645fa4c3d47da88e722c020053f66c07b52f36bb\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{\"as_checksum\":\"sha256:3c14debf63e30806550295d9645fa4c3d47da88e722c020053f66c07b52f36bb\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{\"as_checksum\":\"sha256:3c14debf63e30806550295d9645fa4c3d47da88e722c020053f66c07b52f36bb\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0360\",\"properties\":{\"as_checksum\":\"sha256:3c14debf63e30806550295d9645fa4c3d47da88e722c020053f66c07b52f36bb\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0370\",\"properties\":{\"as_checksum\":\"sha256:3c14debf63e30806550295d9645fa4c3d47da88e722c020053f66c07b52f36bb\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0380\",\"properties\":{\"as_checksum\":\"sha256:3c14debf63e30806550295d9645fa4c3d47da88e722c020053f66c07b52f36bb\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0390\",\"properties\":{\"as_checksum\":\"sha256:3c14debf63e30806550295d9645fa4c3d47da88e722c020053f66c07b52f36bb\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0400\",\"properties\":{\"as_checksum\":\"sha256:7e30aab123b6030242a20fc64e5ea309500bfd2ff303680ab156ad1300094f23\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0410\",\"properties\":{\"as_checksum\":\"sha256:7e30aab123b6030242a20fc64e5ea309500bfd2ff303680ab156ad1300094f23\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0420\",\"properties\":{\"as_checksum\":\"sha256:7e30aab123b6030242a20fc64e5ea309500bfd2ff303680ab156ad1300094f23\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:schema\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:core-api\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"out\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:graph-export\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"out\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:mcp-tools\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"out\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:mcp-tools-http\",\"properties\":{\"format\":\"json_schema\"}}]",
+        "state": "{\"artifact_type\":\"spec\",\"checksum\":\"sha256:7e30aab123b6030242a20fc64e5ea309500bfd2ff303680ab156ad1300094f23\",\"granularity\":\"atomic\",\"last_confirmed_at\":\"2026-08-02\",\"location\":\"schema/core.yaml\",\"name\":\"core.yaml\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:schema-core",
+        "target_type": "Artifact"
+      }
+    },
+    {
+      "node_id": "snap:epoch:a-dangling-reference-is-found-on-its-own-terms:art:schema-temporal",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:7e014003391a0a160bf4275aeced9d58de24821120830cd3a05b8a2f985a3a09\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:d7334b25184278142393ad3cee84c4a0bff14c3a6640be744d739ecedb26e5b8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:d7334b25184278142393ad3cee84c4a0bff14c3a6640be744d739ecedb26e5b8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:7be3062dbe9327ac959652734116c350d114d3ca4348ba0f8aa1050c5e91f2c0\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{\"as_checksum\":\"sha256:7be3062dbe9327ac959652734116c350d114d3ca4348ba0f8aa1050c5e91f2c0\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{\"as_checksum\":\"sha256:7be3062dbe9327ac959652734116c350d114d3ca4348ba0f8aa1050c5e91f2c0\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0360\",\"properties\":{\"as_checksum\":\"sha256:7be3062dbe9327ac959652734116c350d114d3ca4348ba0f8aa1050c5e91f2c0\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0370\",\"properties\":{\"as_checksum\":\"sha256:7be3062dbe9327ac959652734116c350d114d3ca4348ba0f8aa1050c5e91f2c0\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0380\",\"properties\":{\"as_checksum\":\"sha256:1b26be8b2a0395d36a29d1ce7001fce0fc35bee193aec446e24099e7c292c92c\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0390\",\"properties\":{\"as_checksum\":\"sha256:5d77d0dcfc656e479cebe5374eb6a48f335443186344a7cd298275d1157ab978\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0400\",\"properties\":{\"as_checksum\":\"sha256:5d77d0dcfc656e479cebe5374eb6a48f335443186344a7cd298275d1157ab978\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0410\",\"properties\":{\"as_checksum\":\"sha256:5d77d0dcfc656e479cebe5374eb6a48f335443186344a7cd298275d1157ab978\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0420\",\"properties\":{\"as_checksum\":\"sha256:5d77d0dcfc656e479cebe5374eb6a48f335443186344a7cd298275d1157ab978\"}},{\"direction\":\"out\",\"edge_type\":\"GOVERNED_BY\",\"other_type\":\"Decision\",\"other_id\":\"dec:how-should-a-temporal-fact-carry-its-date-when-there-is-no-epoch\",\"properties\":{}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:the-resolution-of-a-gap-can-be-scheduled-into-an-increment\",\"properties\":{\"completeness\":\"partial\",\"conformance\":\"verified\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:schema\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:core-api\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"out\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:graph-export\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"out\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:mcp-tools\",\"properties\":{\"format\":\"json_schema\"}},{\"direction\":\"out\",\"edge_type\":\"SPECIFIES\",\"other_type\":\"Interface\",\"other_id\":\"ifc:mcp-tools-http\",\"properties\":{\"format\":\"json_schema\"}}]",
+        "state": "{\"artifact_type\":\"spec\",\"checksum\":\"sha256:13f4370bf85e324c8fbe4f94f05761789b9ef41f3ee69fbd62c16c6a07f2d4a9\",\"granularity\":\"atomic\",\"last_confirmed_at\":\"2026-08-02\",\"location\":\"schema/temporal.yaml\",\"name\":\"temporal.yaml\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:schema-temporal",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:a-dangling-reference-is-found-on-its-own-terms:dec:a-restore-reports-an-unresolvable-reference-rather-than-refusing-it",
       "node_type": "Snapshot",
       "properties": {
@@ -152301,7 +152400,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ff18fa267bc98a66fd97c7558bc2c75f49612cc39dffefef49ca5c3e7273c577",
+  "prev_content_hash": "sha256:5ade84a6f74ce009f9cf885f3a2fb5c60459ee76d03830bbcfc53bcc3b1c860c",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

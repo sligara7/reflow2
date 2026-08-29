@@ -65,7 +65,7 @@ schema:
 
     Snapshot:
       properties:
-        target_id: { type: string, required: true, indexed: true, description: "Node this snapshot captures." }
+        target_id: { type: string, required: true, indexed: true, description: "Node this snapshot captures. DELIBERATELY NOT `node_ref`, and the omission is a decision rather than an oversight: this is a HISTORICAL ANCHOR, not a live reference. It resolves when the snapshot is written and is EXPECTED to stop resolving afterwards, because a snapshot exists precisely to preserve what a node was — when the node is deleted, this record is the only surviving trace of it. Measured 2026-08-29: 196 values, 192 resolve, and all 4 that dangle are correct (art:content, art:content-test and art:tools-content deleted at epoch:content-store-discontinued; ctr:anthony merged into who:ajs). Declaring `node_ref` would refuse those writes and make the `dangling_reference` detector fire on history doing its job. Contrast TemporalFact.subject_id, declared identically apart from the flag: a fact about a vanished node is about nothing, so there the dangle IS the defect." }
         target_type: { type: string, indexed: true, description: "Label of the captured node (Component, Capability, Requirement...)." }
         state: { type: string, description: "JSON of the node's property bag at the epoch." }
         edges: { type: string, description: "JSON array of the node's design edges at the epoch (direction, edge_type, other endpoint, edge properties), sorted for byte-stable exports. Bookkeeping neighbours (history, provenance, observations, questions) are excluded: an edge move is a design change and must be recoverable (BL-63), the audit trail is not. Absent on snapshots taken before BL-63." }
