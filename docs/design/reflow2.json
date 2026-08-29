@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ec21cae152411326ea1892d80d608c40a17f193c85648bf53b625c3e1b3ae177",
+  "content_hash": "sha256:a70effa16252361cf865bbbe8b60ac6d8ad405dce54e16ed5bc065e6ce47dcef",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -106728,6 +106728,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:help-skill",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "reviewed"
+      },
+      "to_id": "cap:a-newcomer-can-ask-the-agent-what-this-is"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:hierarchy",
       "properties": {
         "completeness": "complete",
@@ -109118,6 +109127,15 @@
       "from_id": "cap:a-module-can-be-read-swapped-and-tested-behind-a-contract",
       "properties": {},
       "to_id": "req:recursive-black-box-decomposition"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-newcomer-can-ask-the-agent-what-this-is",
+      "properties": {
+        "coverage": "partial",
+        "evidence": "PARTIAL ON PURPOSE, and the missing half is named rather than left to be discovered. The requirement is about \"someone arriving at reflow2 cold\", and that person arrives by one of two doors. This capability serves the one who HAS AN AGENT and asks it — the help skill answers what reflow2 physically is, what it can answer that nothing else can, the one first move for where they actually are, and what it deliberately will not do. It cannot serve the other door at all: a stranger who lands on the repository without an agent never sees a served skill, and for them the README is the entry surface. `cap:explains-itself` (BL-102) still owns that half and stays PLANNED. ⭐ The skill also settles a clause the requirement got slightly stale on: it says a newcomer must \"find where the agent instructions go\", and since the user-scope installer there is nowhere to put them — one install per machine registers every project, with no per-project setup and no file to place. The skill answers by saying there is nothing to do."
+      },
+      "to_id": "req:explains-itself"
     },
     {
       "edge_type": "SATISFIES",
@@ -113972,6 +113990,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:help-skill",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:help-skill"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:hierarchy",
       "properties": {
         "action": "created"
@@ -116108,6 +116134,17 @@
         "name": "heal.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:help-skill",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "document",
+        "checksum": "sha256:be01560d2be43e4cfc583a519ea57a65404cae15aeabb2ba247d50b9de77e505",
+        "location": "getting-started/skills/help/SKILL.md",
+        "name": "help/SKILL.md — explaining reflow2 to someone who has not been convinced yet",
+        "status": "realized"
       }
     },
     {
@@ -118439,6 +118476,16 @@
         "name": "A module stands behind the read contract, so it can be swapped, tested with no store, and held still to be measured",
         "provenance": "authored",
         "status": "verified"
+      }
+    },
+    {
+      "node_id": "cap:a-newcomer-can-ask-the-agent-what-this-is",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The `help` skill: what reflow2 physically is, what it can answer that nothing else can, the one first move for where the person actually is, and what it deliberately will not do. Served and mirrored, reachable by `/what-is-this`.\n\nDISTINCT FROM `cap:explains-itself`, WHICH IT DOES NOT REPLACE. That capability is the DOCUMENTATION entry surface — README, getting-started, diagrams — and reaches a stranger who lands on the repository with no agent at all. This one reaches the person who has an agent and asks it. Two audiences, two surfaces, and the README is the one a stranger meets first, so `req:explains-itself` is satisfied only PARTIALLY here and BL-102 stays open.\n\nDISTINCT FROM `cap:onboarding`, one question earlier. That answers \"where does this new work belong\" for someone new to a DESIGN; this answers \"what is this thing\" for someone new to the TOOL.\n\n⭐ SECTION 2 IS THE POINT AND IS THE ONE MOST LIKELY TO BE LEFT OUT. A tool described by its checks reads as a linter, and a person who thinks reflow2 is a linter never asks it the questions it exists for. So the skill names four things it can answer that nothing else can — how much of what we said we would build actually works (computed from the thread, not from a status field), why it is like this and WHO decided, what breaks if I change this, and where does new work belong. This is `fact:the-instruction-surface-routes-to-hygiene-and-not-to-whether-the-thing-works` applied at first contact rather than at orientation.\n\n⚠️ AND IT STATES THE COST IN THE SAME BREATH: reflow2 only knows what somebody told it, and the work of capture is real. Hiding that produces a user who feels misled in week two.\n\nSECTION 4 IS THE OTHER HALF OF THAT HONESTY — four things it deliberately will NOT do, said unprompted: it does not read source and build the design for you, it does not decide anything for you, it does not judge whether a check is meaningful, and it cannot tell you the design matches reality. Each is a deliberate choice rather than a missing feature, and each is a week-two disappointment otherwise.\n\n📌 IT ALSO CORRECTS A STALE CLAUSE IN THE REQUIREMENT. `req:explains-itself` says a newcomer must \"find where the agent instructions go\". Since the user-scope installer there is nowhere to put them — install once per machine and every project is registered, with no per-project setup and no file to place. The skill answers the question by saying there is nothing to do, which is the true and more useful answer.",
+        "name": "Someone who has never seen reflow2 can ask their agent what it is and get a straight answer",
+        "provenance": "authored",
+        "status": "realized"
       }
     },
     {
@@ -126808,6 +126855,18 @@
         "rationale": "Anthony's word 2026-08-28, choosing this over asking the reporter to wrap his MCP command with a tee script.\n\n⭐ THE DESIGN CONSTRAINT IS THE WHOLE POINT: THE ANSWER MUST BE READABLE WHEN THE PROTOCOL IS NOT WORKING. This exists because of `fact:the-signpost-instructs-a-party-that-cannot-act-and-the-absent-client-was-named` — a client that reads only `content` gets a stub from every structured tool, so the question \"why can I not read anything?\" CANNOT be answered through a tool reply. It has to reach disk. That is why this is a sidecar and not a field on `graph_report.served_by`, which is exactly the reply such a client cannot read.\n\nWHY IT ANSWERS THE RIGHT QUESTION. `structuredContent` arrived in MCP `2025-06-18`, and rmcp still negotiates `2024-11-05` and `2025-03-26`. If a reporting client requested a revision that PREDATES the field, version-gating is the spec-sanctioned fix. If it requested a modern one and still reads only `content`, that is a conformance gap and version-gating would do nothing. Those need different remedies and nothing could tell them apart.\n\n⚠️ IT RECORDS WHAT THE REVISION CONTAINS, NEVER WHAT THE CLIENT READS. The derived field is named `protocol_has_structured_content`, not `supports_structured_content`, and carries a note saying so. The distinction is the entire subject of this investigation: a negotiated version is what a client CLAIMS to speak, not proof of what it implemented. A flattering name here would be the same overreach `fact:a-findings-name-can-claim-more-than-its-data-...` describes, committed while fixing its cousin.\n\n⚠️ THE COUPLING THIS ACCEPTS, NAMED BEFORE IT IS TAKEN. `negotiate_protocol_version` is `pub(crate)` in rmcp, so overriding `initialize` means MIRRORING a four-line rule this crate cannot call: echo the client's version if `supported_protocol_versions()` contains it, else the server's fallback. A test pins the rule, following the precedent set by the test that pins which version `ProtocolVersion::LATEST` resolves to — this project already refuses to let an rmcp move happen silently.\n\nNO TIMESTAMP INSIDE THE FILE. It is overwritten on every handshake, so it always describes the CURRENT connection, and the file's own mtime says when. Inventing a clock for a field a reader can get from the filesystem would add a dependency and a thing to be wrong about.",
         "subject": "system",
         "summary": "reflow2 overrides `ServerHandler::initialize` to record the client's self-reported name and version, the protocol revision it REQUESTED, the revision negotiated, and what this server offers — written to `<graph>.client.json` beside the store, alongside the existing `.meta.json` and `.server.json` sidecars. Answers \"which client am I and what did we agree on?\" for every future field report, without the reporter instrumenting their own machine."
+      }
+    },
+    {
+      "node_id": "chg:the-help-skill-is-written",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-29",
+        "name": "A newcomer can ask their agent what reflow2 is — and is told what it can answer, not what it checks",
+        "rationale": "PARTIAL, NOT FULL, AND THE MISSING HALF IS NAMED. `req:explains-itself` is about \"someone arriving at reflow2 cold\", and that person arrives by one of two doors. A served skill reaches only the one who already has an agent. A stranger landing on the repository sees the README and nothing else, so `cap:explains-itself` (BL-102) keeps that half and stays PLANNED. Claiming full coverage here would have retired a requirement while half its audience was still unserved — the exact overstatement this session spent the afternoon finding elsewhere.\n\n📌 IT CORRECTS A CLAUSE THE REQUIREMENT GOT STALE ON. The requirement says a newcomer must \"find where the agent instructions go\". Since the user-scope installer there is nowhere to put them: one install per machine registers every project, with no per-project setup, no file to place and no config to write. The skill answers by saying there is nothing to do — which is true, is more useful, and would have been a wrong instruction if written from the requirement's wording instead of from `getting-started/SETUP.md`.\n\nWHY A SKILL NAMED `help` AND A COMMAND NAMED `/what-is-this`. `/help` is a built-in CLI command in the harness and a command file of that name would be shadowed — so the SKILL takes the guessable name an agent reaches for, and the COMMAND takes one that cannot collide.\n\n⚠️ THE LINT CAUGHT A REAL CONFUSION: `adopt` in backticks read as an unknown tool, because `genesis` IS both a tool and a skill and `adopt` is only a skill. Written as prose it would have shipped as a false claim about the tool surface.",
+        "subject": "system",
+        "summary": "`getting-started/skills/help/SKILL.md`, served and mirrored, reachable by `/what-is-this`. Second of the newcomer pair, after `onboarding`. New capability `cap:a-newcomer-can-ask-the-agent-what-this-is`, satisfying `req:explains-itself` at coverage PARTIAL.\n\nFIVE SECTIONS, and the order is the argument: what it physically is (a program on your machine, a graph as a file in your repo, your agent talking to it over MCP, nothing leaves) — then what it can ANSWER — then the one first move for where they actually are — then what it deliberately will not do — then get out of the way.\n\n⭐ SECTION 2 IS WHY THIS EXISTS AND IS THE ONE MOST LIKELY TO BE LEFT OUT. A tool described by its checks reads as a linter, and a person who thinks reflow2 is a linter never asks it the questions it exists for. Four things it can answer that nothing else can: how much of what we said we would build actually works (computed from the thread, not from a status field, so nobody can inflate it by marking their own work done), why it is like this and WHO decided, what breaks if I change this, and where does new work belong. This is the same finding as `fact:the-instruction-surface-routes-to-hygiene-and-not-to-whether-the-thing-works` applied at FIRST CONTACT rather than at orientation.\n\nSECTION 4 IS THE PRICE OF SECTION 2 BEING BELIEVED — four things it will NOT do, said unprompted: it does not read source and build the design for you (`/adopt` has a person in it; two runs need not agree), it does not decide anything for you, it does not judge whether a check is meaningful, and it cannot tell you the design matches reality — only that the files it was pointed at have not changed, and which files nobody pointed it at."
       }
     },
     {
@@ -137916,6 +137975,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered heal.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:help-skill",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered help/SKILL.md — explaining reflow2 to someone who has not been convinced yet"
       }
     },
     {
@@ -152606,7 +152675,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:6b783f6dddc5932f5ff9eddb1c6c313f73d65b3149d4e808e21ca00d73946391",
+  "prev_content_hash": "sha256:ec21cae152411326ea1892d80d608c40a17f193c85648bf53b625c3e1b3ae177",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
