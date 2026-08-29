@@ -647,6 +647,48 @@ def served_tools() -> set[str]:
 # Deliberately SHORT. Descriptions are context paid on every session and
 # `cap:tool-search` exists because the surface is already large, so a convention
 # earns its place only if a capable agent gets it wrong without it.
+# `fact:the-instruction-surface-routes-to-hygiene-and-not-to-whether-the-thing-works`
+# — reports that are deliberately reachable WITHOUT a skill naming them, each
+# with the reason. Empty is the honest starting state; an entry here is a
+# judgement somebody made, not a gap somebody tolerated.
+#
+# WHY THIS CHECK EXISTS, measured 2026-08-29. reflow2 computes whether a design
+# is DELIVERING — `graph_report` returns "Delivered: 151 of 193 requirement(s),
+# computed from the thread" — and nothing routed anyone to it. Named in the 23
+# served skills: `detect_gaps` 16, `loop_status` 12, and `maturity_report`,
+# `readiness_report`, `consumption_report`, `ility_report` and `flow_report`
+# ZERO, absent from AGENTS.md too. A session read the delivery line at
+# orientation, never narrated it, and four hours later recomputed it by hand,
+# because `where-am-i` GATHERS that report and its eight-step "Tell them"
+# script never says to report delivery.
+#
+# ⭐ THE COST IS NOT A MISSING MENTION. It makes reflow2 PRESENT AS a hygiene
+# server: a user asking "is my project doing what it is supposed to do" is
+# answered with gaps, defects and export sync — not because the tool cannot
+# answer, but because nothing tells the agent to ask the half that can.
+#
+# The rule is `*_report` rather than a hand-kept list of "evaluative" tools,
+# because a hand-kept list is the thing that rots. A report nobody can reach is
+# either unrouted work or a tool that should not exist, and this forces the
+# author to say which.
+UNROUTED_REPORTS: dict[str, str] = {
+    # TWO KINDS OF ENTRY LIVE HERE AND THEY ARE NOT THE SAME, so each reason
+    # says which: "needs no skill" is settled, "no skill owns this yet" is a
+    # routing gap recorded rather than papered over by naming the tool in a
+    # skill where it does not belong.
+    #
+    # A GAP, NOT A RULING. Nothing owns reading a Flow back. capture-intent and
+    # adopt CREATE flows; no skill inspects one. Naming it in capture-intent
+    # would be inventing a use to satisfy this check, which is the failure the
+    # check exists to find, one level up.
+    "flow_report": "GAP: no skill owns inspecting an existing Flow — creation is covered, reading one back is not",
+    # SETTLED. Cutting a release is a documented repo chore with its own
+    # procedure, not a step in the design loop, and there is no release skill
+    # for this to belong to. If one is ever written, this entry comes out.
+    "release_report": "needs no skill: cutting a release is a repo procedure, not a design-loop step",
+}
+
+
 TOOL_CONVENTIONS: dict[str, str] = {
     # The user's word is not the agent's to give.
     "set_requirement_status": "records the USER's word",
@@ -953,6 +995,26 @@ def main() -> int:
     shadowing = sorted(NON_TOOL_TERMS & tools)
     check("allowlist shadows no real tool name",
           not shadowing, f"these ARE served tools: {shadowing}")
+
+    # THE MIRROR OF "every referenced tool exists": every REPORT is reachable.
+    # The loop above walks skills -> tools and catches a skill naming a tool
+    # that is gone. Nothing walked tools -> skills, so a report could be built,
+    # correct, verified and reachable by nobody, and every check stayed green.
+    reports = {t for t in tools if t.endswith("_report")}
+    unrouted = sorted(r for r in reports if r not in seen_terms and r not in UNROUTED_REPORTS)
+    check(f"every served report is named in a skill ({len(reports)} reports)",
+          not unrouted,
+          f"named in NO skill: {unrouted} — a report nobody is routed to is "
+          f"work that cannot be consumed. Name it in the skill whose job it "
+          f"serves, or add it to UNROUTED_REPORTS with the reason it needs no "
+          f"skill")
+    stale_unrouted = sorted(r for r in UNROUTED_REPORTS if r in seen_terms)
+    check("the unrouted register has no entries a skill now names",
+          not stale_unrouted,
+          f"these are routed after all, drop them from UNROUTED_REPORTS: {stale_unrouted}")
+    gone = sorted(r for r in UNROUTED_REPORTS if r not in tools)
+    check("the unrouted register names no tool that no longer exists",
+          not gone, f"not served: {gone}")
 
     # Slash commands ship with the kit since 2026-07-28 — the one narrow
     # exception to dec:skills-served, allowed because a command carries no

@@ -154,6 +154,18 @@ Then record the answer: create the `Interface` (`add_interface` + `provides`/`co
 redirect the dependency edge, or capture the decision as a node. Re-run `detect_defects` to
 confirm the loop is gone.
 
+## 4b. Say what the defects MEAN, not just how many there are
+
+`ility_report`. It reads the same sweep you just ran and maps the findings onto quality axes —
+a dependency cycle counts against maintainability and testability, a single point of failure
+against reliability. **A count of 58 defects tells the user nothing they can act on; "your
+reliability signal comes entirely from three single points of failure you have already accepted"
+does.**
+
+⚠️ It reports only what the DEFECT rules can see. Axes with no detector behind them come back
+named and empty rather than scored, which is the honest answer and must be passed on as one — an
+absent axis is unmeasured, never good.
+
 ## 5. Confirm
 
 Re-run `detect_defects` (and `detect_gaps`) at the end. A defect you reported and then resolved

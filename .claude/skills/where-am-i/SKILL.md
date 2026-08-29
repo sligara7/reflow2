@@ -22,7 +22,15 @@ you. The standing rule is in AGENTS.md.
   `compare_designs` with that file as `base_path` first — it says exactly how the live graph
   and the committed record have diverged, node by node, instead of leaving you to guess from
   counts. Identical is one line; a divergence is something to tell the user about.
-- `graph_report_markdown` — snapshot, top gaps, allocation health.
+- `graph_report_markdown` — snapshot, top gaps, allocation health, **and the delivery line**:
+  *"Delivered: N of M requirement(s)"*, computed from the thread rather than from a status field.
+  **That line is the answer to the question most users actually arrive with**, and step 3 below
+  exists because a session once read it here, never said it, and recomputed the same number by
+  hand four hours later.
+- `maturity_report` — the fuller reading behind the trajectory band in that snapshot: how far
+  intent, function, allocation, seams, realization, assurance and operation have each come, and
+  which one is the frontier. Deliberately NOT a verdict: a demonstrator may sit at 40% forever and
+  be right, so report the shape and let the user judge it.
 - `scan_nodes` for `Decision` — what has actually been settled, and why. **This is the part they
   most want and the report does not include it.**
 - `detect_gaps` — what still needs their input.
@@ -116,9 +124,27 @@ dump. Aim for something they could read in under a minute:
 2. **What's settled** — the Decisions, in plain language, with the *reasoning*, not the ids.
    "You decided the outdoor unit sends cumulative totals rather than deltas, so a lost reading
    heals itself." This is the answer to "what are your conclusions".
-3. **The shape so far** — how many requirements, what the main parts are and how they connect.
+3. **How much of it is actually working.** Lead with the delivery line —
+   *"Delivered: N of M requirement(s)"* — and say what it means: something satisfies each of those
+   requirements, the capability that satisfies it is built, and its check currently passes. It is
+   **computed from the thread, not read off a status field**, which is why it cannot be inflated by
+   somebody marking their own work done.
+
+   ⭐ **THIS IS USUALLY THE QUESTION THEY CAME WITH**, and it is the one a design tool is uniquely
+   able to answer. Everything else in this list says what is undecided, unbuilt or unlinked. Say
+   what is DONE first, then what is open — a report that only ever lists debt reads as a hygiene
+   tool, whatever else it can do.
+
+   ⚠️ **AND BOUND IT HONESTLY IN THE SAME BREATH.** The number measures the DESIGN'S OWN CHAIN:
+   intent is recorded, something claims to satisfy it, and a recorded check passes. It is not a
+   claim that the running system does what its users need — nothing in a design graph can be. Say
+   the narrower thing: *"of the 193 needs you have written down, 151 have something built and
+   passing behind them."* If the gap between those two readings matters here, `coverage_report`
+   names the files no Artifact points at, which is the honest edge of what the graph can see.
+
+4. **The shape so far** — how many requirements, what the main parts are and how they connect.
    Name the parts, don't list node ids.
-4. **What you already asked them** — call `open_questions` first. These were put to them in an
+5. **What you already asked them** — call `open_questions` first. These were put to them in an
    earlier session, in the wording they saw. Repeat that wording rather than inventing a new
    phrasing for the same thing: being asked the same question twice, worded differently, is how
    someone learns the tool is not listening.
@@ -126,9 +152,9 @@ dump. Aim for something they could read in under a minute:
    - `status: answered` — they already told you, and it is still open. Say what they said back to
      them and what it implies, rather than re-opening the question. Usually it means their answer
      never got written into the design, or the gap should be acknowledged.
-5. **What's still open** — the *remaining* gaps that need them, phrased as the questions they are.
+6. **What's still open** — the *remaining* gaps that need them, phrased as the questions they are.
    Say how many there are and lead with the ones that actually block progress.
-6. **Which decisions to make next** — read `what_next` back as three bands, and keep them apart,
+7. **Which decisions to make next** — read `what_next` back as three bands, and keep them apart,
    because they answer different questions:
    - **What they marked** — decisions carrying their own approver edge. This is the user's word,
      it survives every session, and no ranking reorders it. Lead with it.
@@ -145,7 +171,7 @@ dump. Aim for something they could read in under a minute:
    never read as the whole set — the same false completeness the paging rule above forbids.
    **And say the ranking is rough.** It is a guide with a coarse score, not a claim: on a real
    design the head of the list is often a near-tie. Offering it as an ordering oversells it.
-7. **Which few decisions shape everything else** — `what_next`'s `shaping` band, and it answers a
+8. **Which few decisions shape everything else** — `what_next`'s `shaping` band, and it answers a
    different question for a different reader than the three above. These are *settled* decisions
    that need nothing from anybody; they are what someone who has just arrived needs in order to
    read the rest of the design. Narrate two or three in plain language — "you decided the systems
@@ -153,7 +179,7 @@ dump. Aim for something they could read in under a minute:
    each one shapes. **Skip this for someone who already knows the design**; it is orientation, not
    news. If `governs_retired` is high on one, that is worth a clause: it means most of what that
    decision shaped has since been pruned.
-8. **Where to go next** — the one or two things worth doing now, and offer the choice rather than
+9. **Where to go next** — the one or two things worth doing now, and offer the choice rather than
    assuming: keep filling in the design, or start building.
 
 ## Keep it honest

@@ -120,6 +120,54 @@ class TestRealFilesAgree(unittest.TestCase):
         self.assertNotIn("python3", omitted)
 
 
+class TestReportRouting(unittest.TestCase):
+    """`fact:the-instruction-surface-routes-to-hygiene-and-not-to-whether-the-thing-works`.
+
+    The routing check in `main()` was OBSERVED FAILING before the fix, naming six
+    reports no skill mentioned — consumption, flow, ility, maturity, readiness and
+    release. These guard the CHECK rather than the routing, because the check is
+    the only thing that keeps the routing true, and a check that quietly stopped
+    finding anything would look exactly like a design with nothing left to route.
+    """
+
+    def test_the_surface_actually_has_reports_to_check(self):
+        """The whole check is vacuous if the parse finds none — the same
+        failure `served_tools` already refuses with its own floor."""
+        reports = {t for t in skill_lint.served_tools() if t.endswith("_report")}
+        self.assertGreaterEqual(
+            len(reports), 10, f"parsed only {len(reports)} reports: {sorted(reports)}"
+        )
+        self.assertIn("graph_report", reports)
+        self.assertIn("maturity_report", reports)
+
+    def test_every_unrouted_entry_carries_a_reason(self):
+        """An exemption with an empty reason is an exemption nobody has to
+        justify, which is how the register becomes a place to put anything
+        inconvenient."""
+        for name, reason in skill_lint.UNROUTED_REPORTS.items():
+            self.assertTrue(reason.strip(), f"{name} is exempt with no reason")
+            self.assertGreater(
+                len(reason), 30, f"{name}: {reason!r} is too short to be a reason"
+            )
+
+    def test_an_unrouted_entry_says_which_kind_it_is(self):
+        """Two different things live in that register and conflating them loses
+        the distinction that matters: a settled 'needs no skill' versus a
+        recorded routing GAP. A gap that reads as settled never gets fixed."""
+        for name, reason in skill_lint.UNROUTED_REPORTS.items():
+            self.assertTrue(
+                reason.startswith("GAP:") or reason.startswith("needs no skill"),
+                f"{name}: {reason!r} must say whether it is a GAP or needs no skill",
+            )
+
+    def test_the_register_names_only_real_tools(self):
+        """A register entry for a tool that no longer exists silently exempts
+        nothing while looking like a decision somebody made."""
+        tools = skill_lint.served_tools()
+        for name in skill_lint.UNROUTED_REPORTS:
+            self.assertIn(name, tools, f"{name} is exempt but is not served")
+
+
 class TestFirstQuoteParagraph(unittest.TestCase):
     """The paragraph scoping, pinned on synthetic text.
 

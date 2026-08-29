@@ -71,6 +71,16 @@ with the first. If you want to know what actually landed, compute it — do not 
 5. **Say what is NOT in it.** An increment defined only by what it contains cannot be argued with.
    The theme should make the exclusions obvious.
 
+## 3b. Check what the plan is GATED ON before you commit to an order
+
+`readiness_report` on any enabling technology an increment depends on. A `GATED_ON` edge carries
+the rung an increment demands (`kind` TRL or MRL, `min_level`), so a plan that ignores it is a
+date nobody can hold. **The threshold is the user's judgement and the level is an observation** —
+report the gap between them and let them decide, rather than reordering the plan yourself.
+
+Silent on most designs, and that silence is information: no `GATED_ON` edges means nothing here
+has been said to depend on an immature technology, not that nothing does.
+
 ## 4. When the increment arrives
 
 1. `set_epoch_status` to arrived, and `add_release` / `release_includes` for what actually
