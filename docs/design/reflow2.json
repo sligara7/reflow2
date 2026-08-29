@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a491314b7289c057eef066332710b12a3dd18079578326694fde98b250f17262",
+  "content_hash": "sha256:b156799d121582a482d17cb91d9f4529498fa5701a52fd9c26886b49b4d12067",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -1074,6 +1074,14 @@
         "weight_basis": "estimated"
       },
       "to_id": "cmp:packaging"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:a-dangling-reference-is-reported-whatever-the-nodes-degree",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:heal"
     },
     {
       "edge_type": "ALLOCATED_TO",
@@ -4458,6 +4466,12 @@
       "from_id": "chg:a-contract-can-carry-evidence",
       "properties": {},
       "to_id": "epoch:a-contract-can-carry-evidence"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "chg:a-dangling-reference-is-detected-on-its-own-terms",
+      "properties": {},
+      "to_id": "epoch:a-dangling-reference-is-found-on-its-own-terms"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -9030,6 +9044,12 @@
       "from_id": "snap:epoch:a-contract-can-carry-evidence:art:schema-verify",
       "properties": {},
       "to_id": "epoch:a-contract-can-carry-evidence"
+    },
+    {
+      "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:a-dangling-reference-is-found-on-its-own-terms:art:heal",
+      "properties": {},
+      "to_id": "epoch:a-dangling-reference-is-found-on-its-own-terms"
     },
     {
       "edge_type": "AT_EPOCH",
@@ -17720,6 +17740,42 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-dangling-reference-is-detected-on-its-own-terms",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:heal"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-dangling-reference-is-detected-on-its-own-terms",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:ility"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-dangling-reference-is-detected-on-its-own-terms",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:proposed-asserts-nothing-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-dangling-reference-is-detected-on-its-own-terms",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:repair-notes-lifted-test"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:a-declared-dependency-can-be-watched-without-being-imported",
       "properties": {
         "accepted_baseline": true,
@@ -20921,6 +20977,15 @@
         "action": "modified"
       },
       "to_id": "art:machine-install"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-2e4267785d7f10f4",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:test-a-dangling-reference-is-found-whatever-its-degree"
     },
     {
       "edge_type": "CHANGED",
@@ -46768,6 +46833,12 @@
       "from_id": "art:graph",
       "properties": {},
       "to_id": "snap:epoch:a-write-can-be-conditional-on-what-was-read:art:graph"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "art:heal",
+      "properties": {},
+      "to_id": "snap:epoch:a-dangling-reference-is-found-on-its-own-terms:art:heal"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -104179,6 +104250,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:a-dangling-reference-is-detected-on-its-own-terms",
+      "properties": {
+        "at": "2026-08-29",
+        "note": "CLOSED ON THE READ SIDE, WHICH IS THE WHOLE OF WHAT THAT FACT MEASURED. It named the fix in its own last line — \"a rule that walks every property declared `node_ref` and reports an unresolvable value on its own terms, independent of the node's degree\" — and that is what `dangling_reference` is, reusing `declared_node_refs` exactly as the fact suggested so the detector and the write guard cannot disagree about what a reference is.\n\n🛑 ITS STATED SCOPE IS NOT CLOSED WITH IT, and must not be read as closed. The fact says plainly it was \"measured on ONE property (`TemporalFact.subject_id`) on ONE graph\" and that whether other types declare `node_ref`, and whether any of those dangle, was NOT measured. The new rule is written against the SCHEMA rather than against that one property, so it would find those too — but nobody has run it on a graph that has any, and a rule that would catch something is not the same fact as a measurement that nothing is there. On reflow2's own graph `subject_id` is still the only declared `node_ref`, so this design cannot supply the evidence.\n\nWHAT ELSE THE MEASUREMENT KEEPS: its numbers (9 dangling, 7 reported, 2 silent), its mechanism sentence, and its observation that the bias ran the wrong way — an edgeless node being the least consequential place for a broken pointer. That last is now recorded as the reason the rule ignores degree, so it outlived the defect it explained."
+      },
+      "to_id": "fact:a-dangling-reference-is-only-detected-when-the-node-is-also-edgeless"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:a-declared-dependency-can-be-watched-without-being-imported",
       "properties": {
         "at": "2026-08-26",
@@ -106371,6 +106451,15 @@
       "edge_type": "REALIZES",
       "from_id": "art:heal",
       "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-dangling-reference-is-reported-whatever-the-nodes-degree"
+    },
+    {
+      "edge_type": "REALIZES",
+      "from_id": "art:heal",
+      "properties": {
         "conformance": "unchecked"
       },
       "to_id": "cap:a-finding-describes-the-walk-that-produced-it"
@@ -107837,6 +107926,15 @@
     },
     {
       "edge_type": "REALIZES",
+      "from_id": "art:test-a-dangling-reference-is-found-whatever-its-degree",
+      "properties": {
+        "completeness": "complete",
+        "conformance": "verified"
+      },
+      "to_id": "cap:a-dangling-reference-is-reported-whatever-the-nodes-degree"
+    },
+    {
+      "edge_type": "REALIZES",
       "from_id": "art:test-a-session-with-no-seed-can-find-one",
       "properties": {
         "completeness": "complete",
@@ -108744,6 +108842,12 @@
       "from_id": "cap:a-cut-moves-every-version-claim-together",
       "properties": {},
       "to_id": "req:a-project-records-how-it-ships"
+    },
+    {
+      "edge_type": "SATISFIES",
+      "from_id": "cap:a-dangling-reference-is-reported-whatever-the-nodes-degree",
+      "properties": {},
+      "to_id": "req:a-report-says-what-it-swept-and-whether-its-checks-ran"
     },
     {
       "edge_type": "SATISFIES",
@@ -111568,6 +111672,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-dangling-reference-is-found-whatever-its-degree",
+      "properties": {},
+      "to_id": "cap:a-dangling-reference-is-reported-whatever-the-nodes-degree"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-deliberate-state-is-counted",
       "properties": {},
       "to_id": "cap:a-ruling-parks-a-node-and-parked-nodes-are-counted"
@@ -114258,6 +114368,14 @@
     },
     {
       "edge_type": "YIELDED",
+      "from_id": "frag:art:test-a-dangling-reference-is-found-whatever-its-degree",
+      "properties": {
+        "action": "created"
+      },
+      "to_id": "art:test-a-dangling-reference-is-found-whatever-its-degree"
+    },
+    {
+      "edge_type": "YIELDED",
       "from_id": "frag:art:test-a-session-with-no-seed-can-find-one",
       "properties": {
         "action": "created"
@@ -115740,7 +115858,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:44d0edb6a6c8d8ce27de2ef61772febc69f9504e2bfc2fb1057d24ba2e3adb9e",
+        "checksum": "sha256:efcfef0d000789a90a9055c374b42a77958a8b6e5dde7b8de49797fd38df4189",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/heal.rs",
         "name": "heal.rs",
@@ -115802,7 +115920,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:b6014988f1b2d3f977c20d455aac66b35494a764eac0ad58195d1712ce81bcf3",
+        "checksum": "sha256:7ab70f5005fe27a779fae6cc51cc8a50862402fd1b6578be258379a8d6658943",
         "granularity": "atomic",
         "location": "crates/reflow2-core/src/ility.rs",
         "name": "ility.rs",
@@ -116265,7 +116383,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:74ca30e9135b24a6f7867c0625e9b004f095aae28ff804dfab0abb60f99a3c29",
+        "checksum": "sha256:fcb7d9ba57613eafad8495fd471befeeaec9150be502c35e443f55cce207935a",
         "location": "crates/reflow2-core/tests/proposed_asserts_nothing.rs",
         "name": "tests/proposed_asserts_nothing.rs",
         "status": "realized"
@@ -116423,7 +116541,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:1537d915048052aa71335907145f536231c2a981eb4e68d6730314a141b61bb3",
+        "checksum": "sha256:f35c611572dfe346718c41d43a37eed2369a57354f12bf9feac686764daebb06",
         "location": "crates/reflow2-mcp/tests/the_same_paragraph_fifty_times.rs",
         "name": "the_same_paragraph_fifty_times.rs",
         "status": "realized"
@@ -117135,6 +117253,17 @@
         "name": "crates/reflow2-core/src/temporal.rs",
         "status": "realized",
         "volatility": "stable"
+      }
+    },
+    {
+      "node_id": "art:test-a-dangling-reference-is-found-whatever-its-degree",
+      "node_type": "Artifact",
+      "properties": {
+        "artifact_type": "code",
+        "checksum": "sha256:eff5e13a0920d032a51e6b4471a05edd9021ac385c7b927b06de2c86e7092861",
+        "location": "crates/reflow2-core/tests/a_dangling_reference_is_found_whatever_its_degree.rs",
+        "name": "a_dangling_reference_is_found_whatever_its_degree.rs",
+        "status": "realized"
       }
     },
     {
@@ -117945,6 +118074,16 @@
       "properties": {
         "description": "Step 1 of `flow:release-cut`. The version is claimed in more places than one: `Cargo.toml`, `reflow2.toml`, `Cargo.lock` (via `cargo update -p reflow2-core -p reflow2-mcp --offline`), the upgrade-note list in `docs/overview.md`, and two spots in `AGENTS.md`. `tools/check_doc_versions.py` verifies the documentation half.\n\nTHE TRAP, AND IT COSTS A RETRY EVERY TIME IT IS MISSED: `reflow2.toml` IS a registered artifact (`art:dependency-manifest`), so bumping it drifts the coherence gate with a `checksum_change`. Accept that drift two-sided as `design_holds` with a note — the design meaning of a cut lives in the Release and its epoch, never in a version string — and accept it BEFORE the manifest is frozen. `release_includes_all` freezes each artifact's CURRENT checksum, so accepting afterwards records that the release shipped the pre-bump file. Accepting first is one step; accepting after is two plus a second export.\n\nALSO REBUILD THE BINARY AFTER THIS STEP. A schema stamp carries the version of the binary that wrote it, so exporting later with a pre-bump build stamps the OLD version. That is why v0.20.0's committed export said 0.19.0.",
         "name": "A cut moves every version claim together, and accepts the drift it causes before freezing the manifest",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
+      "node_id": "cap:a-dangling-reference-is-reported-whatever-the-nodes-degree",
+      "node_type": "Capability",
+      "properties": {
+        "description": "The `dangling_reference` HEAL rule walks every property the schema declares `node_ref` and reports a non-empty value naming no node — independent of the carrier's degree, its status, and any ruling that parks it.\n\nDELIBERATELY NAMED AFTER ITS SIBLING `cap:a-node-attached-to-nothing-is-reported-whatever-its-type`, because it closes the same shape of hole one axis over. That capability's promise was \"whatever its type\"; the unstated qualifier was \"and whatever its degree\", which was false. Measured 2026-08-29 on reflow2's own graph: of nine dangling `subject_id` values, seven were reported and two were silent, and the two silent ones were exactly the two carrying edges — because `orphan_node` fires only when a subject \"resolves to no node AND it carries no edge either\".\n\nTWO NEAR-MATCHES WERE OFFERED AND BOTH READ; THE THREE ARE DIFFERENT KINDS OF RECORD, which is why this is its own node. `fact:a-dangling-reference-is-only-detected-when-the-node-is-also-edgeless` is the MEASUREMENT of the hole and keeps its own numbers and scope caveat. `chg:a-dangling-reference-is-detected-on-its-own-terms` is the EVENT that changed the code, and dates it. This is the standing capability the design now claims — the thing that stays true after the event is history and the measurement is superseded.\n\nTHREE PROPERTIES IT HOLDS, each a decision rather than a default:\n\n① SELF-LIMITING BY POPULATION. It reports how many declared node REFERENCES it walked, not how many nodes exist. A schema declaring no `node_ref` property gives `examined: 0`, and the sweep's starved-rule note then says in words that this rule had nothing to examine — so a clean result can never be read as a clean design. Counting nodes would have claimed thousands examined while inspecting none.\n\n② ONE DEFECT, ONE FINDING. It runs before the zero-degree rule and that rule skips whatever it reports, so an edgeless node with a broken pointer arrives once. Reporting it twice would put one fault in two vocabularies suggesting two different repairs — the duplication BL-176 measured a field reporter stopping work over.\n\n③ NOT SUPPRESSIBLE BY A PARK, unlike its sibling. `GOVERNED_BY ruling: parks` says a node is deliberately attached to nothing, which is a state a person can hold. Nobody can decide that a record is ABOUT a node the design does not have, so a park must not silence this.\n\nIt proposes no repair and says why: choosing the intended target is a judgement, a near-spelling match is not evidence, and a tool guessing would fabricate the same class of false record the rule exists to find. `propose_heal` reports it as a skipped operation carrying that reason, rather than emitting the generation stub every other non-repairable category emits.",
+        "name": "A reference that resolves to nothing is reported on its own terms, whatever else the node is attached to",
         "provenance": "authored",
         "status": "realized"
       }
@@ -120640,6 +120779,18 @@
       }
     },
     {
+      "node_id": "chg:a-dangling-reference-is-detected-on-its-own-terms",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-29",
+        "name": "heal.rs gains the dangling_reference rule and de-duplicates the zero-degree arm",
+        "rationale": "Recorded before the edit rather than after, so the snapshot catches the code as it stands.\n\nTHE FIX IS AT THE ROOT AND NOT BESIDE IT. The tempting repair was to widen the zero-degree rule's escape clause so a dangling pointer survives the degree check. That would have left dangling-reference detection as a side effect of a rule about attachment, which is the actual cause: `orphan_node` fires only when a subject \"resolves to no node AND it carries no edge either\", so the conjunction — not the coverage — is the defect. A rule that owns one thing can be reasoned about; a side effect cannot.\n\nWHY IT IS SELF-LIMITING, which is the property worth having: population is the count of declared node-reference VALUES walked. A schema declaring no `node_ref` property gives `examined: 0`, and the sweep's existing `coverage_note` then says in words that this rule had nothing to examine — so a clean result can never be read as a clean design. That is `loop_status` refusing an unknown contributor_id, applied to a detector.\n\nPARKING DELIBERATELY DOES NOT SUPPRESS IT, and the reason is not an oversight to be corrected later. A `GOVERNED_BY ruling: parks` says a node is deliberately attached to NOTHING, which is a statement about attachment. A pointer that resolves to nothing is not a deliberate state anybody can hold — the design cannot decide that a record is about a node it does not have. Letting the park quiet it would make the one rule that finds broken references suppressible by an unrelated ruling.\n\nNOT MECHANICALLY REPAIRABLE, and it belongs in `repair_is_a_judgement` for a reason this session can attest to: repointing the four bad capability references this morning took reading each fact and confirming the target owned what the fact was about, and one was settled only by a VERIFIES edge rather than by any resemblance in the words. A tool guessing the target would fabricate the same class of false record the rule exists to find.",
+        "subject": "system",
+        "summary": "Adding a `dangling_reference` HEAL rule that walks every property the schema declares `node_ref` and reports a value resolving to no node — on its own terms, whatever the node's degree. Closes `fact:a-dangling-reference-is-only-detected-when-the-node-is-also-edgeless`, measured this morning: 7 of 9 dangling references on this graph surfaced and 2 did not, and the 2 invisible ones were exactly the 2 that carried edges. Reuses `declared_node_refs` — already documented as \"THE ONLY READER of `node_ref` IN THE CRATE\" — so the detector cannot come to disagree with the write-time guard about what counts as a reference. Also de-duplicates against the existing zero-degree rule, whose TemporalFact/Snapshot arm currently reports \"points at nothing that exists AND it carries no edge either\": that arm conflates a broken pointer with an unattached node, and once the new rule owns the pointer case, reporting both would be the same defect twice in two vocabularies — the exact noise that made a field reporter stop work (BL-176)."
+      }
+    },
+    {
       "node_id": "chg:a-declared-dependency-can-be-watched-without-being-imported",
       "node_type": "ChangeEvent",
       "properties": {
@@ -121450,6 +121601,16 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-07-28",
         "name": "First registration — the file was written for cap:machine-wide-install in the same session that recorded it."
+      }
+    },
+    {
+      "node_id": "chg:accept-2e4267785d7f10f4",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "refactor",
+        "detected_at": "2026-08-29",
+        "name": "`cargo fmt` only — the baseline was taken before the formatter ran. Nothing the file asserts changed.",
+        "subject": "system"
       }
     },
     {
@@ -134231,6 +134392,16 @@
       }
     },
     {
+      "node_id": "epoch:a-dangling-reference-is-found-on-its-own-terms",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "A dangling reference stops being a side effect of the orphan rule and gets a rule of its own (2026-08-29)",
+        "sequence": 389,
+        "status": "arrived"
+      }
+    },
+    {
       "node_id": "epoch:a-default-is-not-a-difference",
       "node_type": "DesignEpoch",
       "properties": {
@@ -138181,6 +138352,16 @@
         "provenance": "authored",
         "status": "ingested",
         "title": "Registered crates/reflow2-core/src/temporal.rs"
+      }
+    },
+    {
+      "node_id": "frag:art:test-a-dangling-reference-is-found-whatever-its-degree",
+      "node_type": "Fragment",
+      "properties": {
+        "fragment_type": "implementation",
+        "provenance": "authored",
+        "status": "ingested",
+        "title": "Registered a_dangling_reference_is_found_whatever_its_degree.rs"
       }
     },
     {
@@ -143247,6 +143428,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:a-dangling-reference-is-found-on-its-own-terms:art:heal",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0100\",\"properties\":{\"as_checksum\":\"sha256:01606f8905e95775\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0101\",\"properties\":{\"as_checksum\":\"sha256:01606f8905e95775\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0110\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0120\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0130\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0140\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0150\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0160\",\"properties\":{\"as_checksum\":\"sha256:fa4fa10add42f5e8\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0170\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0180\",\"properties\":{}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0190\",\"properties\":{\"as_checksum\":\"sha256:30d3e7a27a3b198c46498bf1befd6511166bf8649c8837e6d78ac36cbb5d0852\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0200\",\"properties\":{\"as_checksum\":\"sha256:30d3e7a27a3b198c46498bf1befd6511166bf8649c8837e6d78ac36cbb5d0852\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0210\",\"properties\":{\"as_checksum\":\"sha256:a72ee9d0af723c8c9d345849969bc4af4d7d62e8210df0c336e89d6b20192ba2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0220\",\"properties\":{\"as_checksum\":\"sha256:a4d8b8b8387e35f0236aae9e00a8d685235a77ff04b3425e05d72647c3ebe930\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0221\",\"properties\":{\"as_checksum\":\"sha256:a4d8b8b8387e35f0236aae9e00a8d685235a77ff04b3425e05d72647c3ebe930\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0230\",\"properties\":{\"as_checksum\":\"sha256:a4d8b8b8387e35f0236aae9e00a8d685235a77ff04b3425e05d72647c3ebe930\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0240\",\"properties\":{\"as_checksum\":\"sha256:d3c6e9fe1cac1177\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0250\",\"properties\":{\"as_checksum\":\"sha256:59747ef7945dd315f0ef154b20e5034b3c03506a27394e5ab19425383360758a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0260\",\"properties\":{\"as_checksum\":\"sha256:59747ef7945dd315f0ef154b20e5034b3c03506a27394e5ab19425383360758a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0261\",\"properties\":{\"as_checksum\":\"sha256:59747ef7945dd315f0ef154b20e5034b3c03506a27394e5ab19425383360758a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0270\",\"properties\":{\"as_checksum\":\"sha256:59747ef7945dd315f0ef154b20e5034b3c03506a27394e5ab19425383360758a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0280\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0290\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0300\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0310\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0320\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0321\",\"properties\":{\"as_checksum\":\"sha256:d4e20e5868b04f2066426da081829198232e958219b56fbb242c464e1c8340cf\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0330\",\"properties\":{\"as_checksum\":\"sha256:8b5553c1a9b686a3a4760c51614d8e4c35e9dfb2f3c65c7f954ac84da9962ecc\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0340\",\"properties\":{\"as_checksum\":\"sha256:2c078196ea233296ffcf5a75c16767589a535b2e7bc24ab6b22f7ac578a90b81\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0350\",\"properties\":{\"as_checksum\":\"sha256:2c078196ea233296ffcf5a75c16767589a535b2e7bc24ab6b22f7ac578a90b81\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0360\",\"properties\":{\"as_checksum\":\"sha256:2c078196ea233296ffcf5a75c16767589a535b2e7bc24ab6b22f7ac578a90b81\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0370\",\"properties\":{\"as_checksum\":\"sha256:bd7df630caf299ba832eb39d624b62b24707438ec22690199eb595618836606a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0380\",\"properties\":{\"as_checksum\":\"sha256:bd7df630caf299ba832eb39d624b62b24707438ec22690199eb595618836606a\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0390\",\"properties\":{\"as_checksum\":\"sha256:d96dd706db3632149066681374b1e7fbf1e8994d81914c624b48e0ba80b7daa2\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v040\",\"properties\":{\"as_checksum\":\"sha256:7fd0af4d731e0f22\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0400\",\"properties\":{\"as_checksum\":\"sha256:47c7ba73efcc547e3e977fd40b7585e2314c1d116c9ea9d732082be5dcb3542b\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0410\",\"properties\":{\"as_checksum\":\"sha256:6a1f239cf6b23f1e0acd1cfe614e316503a14bc3aabcdfb971a9e4aeef024a0d\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v0420\",\"properties\":{\"as_checksum\":\"sha256:6a1f239cf6b23f1e0acd1cfe614e316503a14bc3aabcdfb971a9e4aeef024a0d\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v050\",\"properties\":{\"as_checksum\":\"sha256:2f778205ea735815\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v060\",\"properties\":{\"as_checksum\":\"sha256:b69c5f6682770736\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v061\",\"properties\":{\"as_checksum\":\"sha256:b48ea911ce1a3fe0\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v070\",\"properties\":{\"as_checksum\":\"sha256:2f75755ae2cd98d4\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v080\",\"properties\":{\"as_checksum\":\"sha256:2f75755ae2cd98d4\"}},{\"direction\":\"in\",\"edge_type\":\"INCLUDES\",\"other_type\":\"Release\",\"other_id\":\"rel:v090\",\"properties\":{\"as_checksum\":\"sha256:2f75755ae2cd98d4\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-finding-describes-the-walk-that-produced-it\",\"properties\":{\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-finding-names-the-mechanism-that-parks-a-deliberate-state\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-node-attached-to-nothing-is-reported-whatever-its-type\",\"properties\":{\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-ruling-parks-a-node-and-parked-nodes-are-counted\",\"properties\":{\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-sweep-names-its-own-scope-and-the-category-names-what-it-computes\",\"properties\":{\"conformance\":\"unchecked\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:a-sweep-says-what-it-could-not-have-found\",\"properties\":{\"completeness\":\"complete\",\"conformance\":\"verified\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Capability\",\"other_id\":\"cap:supporting-is-not-conflict\",\"properties\":{\"completeness\":\"complete\"}},{\"direction\":\"out\",\"edge_type\":\"REALIZES\",\"other_type\":\"Component\",\"other_id\":\"cmp:heal\",\"properties\":{\"completeness\":\"complete\"}}]",
+        "state": "{\"artifact_type\":\"code\",\"checksum\":\"sha256:44d0edb6a6c8d8ce27de2ef61772febc69f9504e2bfc2fb1057d24ba2e3adb9e\",\"granularity\":\"atomic\",\"location\":\"crates/reflow2-core/src/heal.rs\",\"name\":\"heal.rs\",\"status\":\"realized\",\"volatility\":\"stable\"}",
+        "target_id": "art:heal",
+        "target_type": "Artifact"
+      }
+    },
+    {
       "node_id": "snap:epoch:a-default-is-not-a-difference:cap:defaults-are-not-serialized",
       "node_type": "Snapshot",
       "properties": {
@@ -145166,7 +145357,7 @@
         "confidence": 1.0,
         "fact_type": "defect",
         "statement": "A DANGLING `node_ref` PROPERTY IS REPORTED ONLY WHEN THE NODE CARRYING IT IS ALSO EDGELESS, SO A WELL-CONNECTED NODE POINTING AT NOTHING IS SILENT. Measured 2026-08-29 on reflow2's own graph, on the nine dangling `TemporalFact.subject_id` references that #366 identified and deliberately left for 'detection over the graph as it stands'.\n\nTHE MECHANISM IS IN THE FINDING'S OWN WORDS, so this is textual rather than inferred. `orphan_node` reports: 'points at nothing that exists — its subject/target id resolves to no node AND IT CARRIES NO EDGE EITHER, so the record is about something the design no longer has.' The conjunction is the defect. Dangling-reference detection is not a rule; it is a side effect of the orphan rule, and it inherits that rule's precondition.\n\nTHE MEASUREMENT, and the correlation is exact:\n\n    edges on the fact   dangling target          reported by detect_defects?\n    2                   cap:thin-install         NO\n    1                   prj:reflow2              NO\n    0  (x7)             the other seven          YES, all seven\n\nSo 7 of 9 surfaced and 2 did not — 22% invisible — and the two invisible ones are exactly the two that were attached to something. `detect_defects` returned 62 findings in that same run and neither was among them.\n\n⚠️ WHY IT IS WORSE THAN A PLAIN ABSENCE: the rule LOOKS like it covers dangling references, and on this graph it covered 78% of them. A reader checking whether the class is detected finds seven examples of it being detected. The failure is invisible in exactly the way a partial detector always is — it produces evidence of working.\n\n⭐ AND THE BIAS RUNS THE WRONG WAY. An edgeless node is by construction the LEAST consequential one to have a bad pointer, because nothing else reaches it. A node with edges is embedded in the design, so its pointer is read by more paths — and that is precisely the one this misses. The detector is most reliable where it matters least.\n\n🛑 SCOPE, so this is not read wider than it is: measured on ONE property (`TemporalFact.subject_id`) on ONE graph. `node_ref` is a schema flag and other types may declare it; whether they do, and whether any of those carry dangling values, was NOT measured. The `create_node` guard shipped in #366 stops NEW bad values on any `node_ref` property, so this concerns only values written before that guard, or broken later by a rename — which is the residue #366 named as needing a different fix.\n\nWHAT WOULD CLOSE IT: a rule that walks every property declared `node_ref` and reports an unresolvable value on its own terms, independent of the node's degree. The write-side guard already knows which properties those are.",
-        "subject_id": "cap:detect",
+        "subject_id": "cap:a-node-attached-to-nothing-is-reported-whatever-its-type",
         "valid_from": "2026-08-29",
         "value": "{\"measured_on\":\"reflow2's own graph, 2026-08-29\",\"dangling_subject_id_refs\":9,\"reported_by_detect_defects\":7,\"invisible\":2,\"invisible_share\":0.22,\"mechanism\":\"orphan_node requires 'resolves to no node AND carries no edge either' - the conjunction is stated in the finding's own message\",\"invisible_cases\":[{\"fact\":\"fact:defect-kit-manifest-drift-is-invisible-to-ci\",\"edges\":2,\"target\":\"cap:thin-install\"},{\"fact\":\"fact:reflow2s-black-boxes-hold-no-functions-allocation-went-straight-to-the-modules\",\"edges\":1,\"target\":\"prj:reflow2\"}],\"total_findings_in_that_run\":62,\"bias\":\"an edgeless node is the least consequential one to have a bad pointer; the detector is most reliable where it matters least\",\"not_measured\":\"whether other types declare node_ref, and whether any carry dangling values\",\"fix_shape\":\"a rule walking every property declared node_ref, independent of node degree - the write-side guard from #366 already knows which properties those are\"}"
       }
@@ -149202,6 +149393,20 @@
       }
     },
     {
+      "node_id": "ver:a-dangling-reference-is-found-whatever-its-degree",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Eight cases in `crates/reflow2-core/tests/a_dangling_reference_is_found_whatever_its_degree.rs`, all passing 2026-08-29.\n\nTHE FIXTURE HAS TO DELETE ITS OWN TARGET, and that is not a convenience — it is the only route to a dangling reference now that #366's write guard refuses one directly. It is also the honest account of how real ones arise: a target retired or renamed after the record was written.\n\nWHAT IS PINNED:\n① the regression — an ATTACHED node with a broken pointer is reported. This is the case that was silent, 2 of the 9 measured.\n② the edgeless case still reported, so the fix does not trade one hole for another.\n③ no double-report: the edgeless case satisfies both rules' conditions and must arrive once.\n④ a resolving reference is NOT a finding, so correct work costs nothing.\n⑤ a park does not silence it, asserted rather than left to be discovered because the same ruling DOES silence `orphan_node` one rule over.\n⑥ the population counts references rather than nodes — four nodes with no reference property examine ZERO.\n⑦ the message names both the property and the unresolvable id.\n⑧ no repair is proposed and the finding says why.\n\n⚠️ THE PRE-STATE IS ASSERTED, NOT DESCRIBED, and this is the part worth keeping. These tests cannot be run against the old build — `HealCategory::DanglingReference` did not exist, so they would not compile — and a test that only ever passes is no evidence about the bug it names. Case ① therefore also asserts that `orphan_node` does NOT report the attached node, which is the condition that made the rule necessary and is checkable on both sides of the change. If that assertion ever fails, the two rules have started to overlap and the de-duplication needs rethinking.\n\nTwo class guards elsewhere were forced to answer for the new category rather than being updated silently: `every_category_is_listed_in_all` (heal.rs) and `every_category_states_whether_it_reads_proposed` (tests/proposed_asserts_nothing.rs). Both are exhaustive matches with no wildcard, which is why the compiler stopped the build until each was answered.",
+        "findings": "8 passed, 0 failed, on the full `cargo test -p reflow2-core` run (201 lib + every integration suite green).\n\nTWO THINGS THE RUN ESTABLISHED THAT THE PASS COUNT DOES NOT SHOW:\n\n① THE COMPILER, NOT A REVIEWER, FOUND THE THREE PLACES A NEW CATEGORY HAD TO ANSWER. Adding the variant broke the build in `heal.rs` (propose_heal's repair dispatch), `ility.rs` (`axes_for`), and `tests/proposed_asserts_nothing.rs` (the reads-proposed class guard) — every one an exhaustive match written with no wildcard precisely so this would happen. `every_category_is_listed_in_all` then failed on its hand-maintained count until `ALL` was extended, which is the check its own comment says exists because \"a category missing from ALL would make that claim quietly short\".\n\n② THE FIXTURES CANNOT WRITE A DANGLING REFERENCE DIRECTLY, so each creates its target and deletes it. That is #366's write guard working, observed from the test side rather than asserted — and it is why the read-side rule was needed at all: the only remaining routes to a broken pointer are a retire, a rename, or a value written before that guard existed.",
+        "kind": "verification",
+        "last_run_at": "2026-08-29",
+        "level": "unit",
+        "method": "test",
+        "name": "A dangling node reference is reported whatever the node's degree, status or ruling",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-deliberate-state-is-counted",
       "node_type": "Verification",
       "properties": {
@@ -151967,7 +152172,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:01f49498d7e30c7ca5089340e578bd4a91ff591a5164b8e4c6ad841d328ad22e",
+  "prev_content_hash": "sha256:a491314b7289c057eef066332710b12a3dd18079578326694fde98b250f17262",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

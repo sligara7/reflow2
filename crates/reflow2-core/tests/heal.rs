@@ -1509,12 +1509,23 @@ fn a_pointer_property_is_attachment_and_only_a_dangling_one_is_reported() {
     // naming a node that does not exist — and the refusal is correct, so the
     // FIXTURE moved rather than the guard.
     //
-    // ⭐ AND THE NEW SHAPE IS THE TRUER ONE. The guard closes the typo cause;
-    // it cannot close this one. Measured on reflow2's own graph: of nine
-    // dangling `subject_id` values, roughly a third were typos and the rest
-    // were VALID WHEN WRITTEN and dangled later when the target was renamed or
-    // removed. This test now exercises the cause that survives the guard, which
-    // is exactly the cause the detector has to keep catching.
+    // ⭐ AND THE NEW SHAPE IS THE TRUER ONE — though the reason given here was
+    // wrong, and is corrected 2026-08-29. This comment used to say the guard
+    // closes the typo cause but not this one, because "of nine dangling
+    // `subject_id` values, roughly a third were typos and the rest were VALID
+    // WHEN WRITTEN and dangled later when the target was renamed or removed".
+    //
+    // MEASURED: five of the nine were the typo, not three, and NOTHING was
+    // renamed. `git log -S '"node_id": "cap:link-artifacts"'` over the export's
+    // whole history returns zero commits, and the same for the other three
+    // capability ids, while the identical probe on a real capability returns
+    // one. They never existed as nodes. So all nine would have been refused at
+    // write time, and the retire-and-dangle cause this fixture exercises is a
+    // real hypothesis rather than something observed here.
+    //
+    // The fixture stays as it is regardless: it is still the only way to build
+    // a dangling reference now that the guard exists, and a retire is still a
+    // cause no write-time check can reach.
     g.add_capability("cap:deleted-last-year", "Gone", "was here once", None)
         .unwrap();
     g.create_node(
@@ -1549,8 +1560,33 @@ fn a_pointer_property_is_attachment_and_only_a_dangling_one_is_reported() {
         !by_id.contains_key("fact:about-something"),
         "a fact that names a live node is attached, edge or no edge: {by_id:?}"
     );
-    assert_eq!(by_id.get("fact:about-a-ghost"), Some(&HealSeverity::Info));
     assert_eq!(by_id.get("ver:loose"), Some(&HealSeverity::Warning));
+
+    // OWNERSHIP MOVED 2026-08-29, AND THAT IS THE POINT OF THE CHANGE. This
+    // used to assert `by_id.get("fact:about-a-ghost") == Info` — the ghost
+    // reported as an ORPHAN. It is now reported by `dangling_reference`, which
+    // owns broken pointers whatever the node's degree, and `orphan_node` skips
+    // whatever that rule reports so one fault arrives once rather than twice in
+    // two vocabularies suggesting two different repairs.
+    //
+    // Both halves are asserted rather than just the new one: dropping the
+    // negative would let the duplicate quietly come back.
+    assert!(
+        !by_id.contains_key("fact:about-a-ghost"),
+        "a broken pointer now belongs to dangling_reference; orphan_node must not repeat it: \
+         {by_id:?}"
+    );
+    let dangling: Vec<String> = g
+        .open_defects()
+        .unwrap()
+        .into_iter()
+        .filter(|d| d.category == HealCategory::DanglingReference)
+        .flat_map(|d| d.affected_ids)
+        .collect();
+    assert!(
+        dangling.contains(&"fact:about-a-ghost".to_string()),
+        "and it must still be reported, by the rule that owns it: {dangling:?}"
+    );
 }
 
 /// BL-42, held open while the rest of the rule generalized. A Capability with

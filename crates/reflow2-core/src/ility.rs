@@ -225,10 +225,15 @@ fn axes_for(category: HealCategory) -> &'static [&'static str] {
         HealCategory::SinglePointOfFailure => &["reliability"],
         HealCategory::UnthreadedCluster => &["maintainability"],
         HealCategory::Contradiction => &["maintainability"],
+        // A dangling reference is a defect in the RECORD, not evidence about
+        // any quality of the system being described — a fact pointing at a node
+        // that is not there says nothing about whether the design is reliable or
+        // maintainable. Same reasoning as `orphan_node` beside it.
         HealCategory::OrphanNode
         | HealCategory::Duplicate
         | HealCategory::UnresolvedSetup
-        | HealCategory::DeadEnd => &[],
+        | HealCategory::DeadEnd
+        | HealCategory::DanglingReference => &[],
     }
 }
 

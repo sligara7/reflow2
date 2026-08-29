@@ -83,6 +83,25 @@ pub enum HealCategory {
     /// A set of parts that depend on each other in a loop, directly via
     /// `DEPENDS_ON` or through the contracts they provide and consume.
     CircularDependency,
+    /// A property the schema declares a node reference whose value names no
+    /// node — a record about something the design does not have.
+    ///
+    /// SEPARATE FROM [`OrphanNode`](Self::OrphanNode) DELIBERATELY, AND THE
+    /// SEPARATION IS THE WHOLE FIX. The zero-degree rule reported this case
+    /// only when the node was ALSO edgeless, because its TemporalFact arm reads
+    /// "resolves to no node AND it carries no edge either" — so dangling-
+    /// reference detection was a side effect of a rule about ATTACHMENT and
+    /// inherited that rule's precondition. Measured on reflow2's own graph
+    /// 2026-08-29: 9 dangling `subject_id` values, 7 reported, 2 silent, and
+    /// the 2 silent ones were exactly the 2 that carried edges
+    /// (`fact:a-dangling-reference-is-only-detected-when-the-node-is-also-edgeless`).
+    ///
+    /// ⚠️ THE BIAS RAN THE WRONG WAY, which is why widening the other rule was
+    /// not the fix: an edgeless node is by construction the LEAST consequential
+    /// place for a broken pointer, because nothing else reaches it. A node with
+    /// edges is embedded in the design and its pointer is read down more paths.
+    /// The old behaviour was most reliable where it mattered least.
+    DanglingReference,
 }
 
 impl HealCategory {
@@ -106,6 +125,7 @@ impl HealCategory {
         HealCategory::SinglePointOfFailure,
         HealCategory::DeadEnd,
         HealCategory::CircularDependency,
+        HealCategory::DanglingReference,
     ];
 
     /// Stable snake_case key.
@@ -119,6 +139,7 @@ impl HealCategory {
             HealCategory::SinglePointOfFailure => "single_point_of_failure",
             HealCategory::DeadEnd => "dead_end",
             HealCategory::CircularDependency => "circular_dependency",
+            HealCategory::DanglingReference => "dangling_reference",
         }
     }
 }
@@ -1102,7 +1123,43 @@ impl DesignGraph {
                 self.dependency_pairs()?.pairs.len(),
                 "dependency pairs",
             ),
+            // COUNTED IN REFERENCES, NOT IN NODES, AND THAT IS WHAT MAKES THE
+            // RULE SELF-LIMITING. A schema declaring no `node_ref` property at
+            // all gives `examined: 0`, and `sweep_scope`'s existing starved-rule
+            // note then says in words that this rule had NOTHING TO EXAMINE — so
+            // a clean result can never be read as a clean design. Counting nodes
+            // instead would report thousands examined while checking nothing.
+            pop(
+                HealCategory::DanglingReference.as_str(),
+                self.declared_reference_count(index)?,
+                "declared node references",
+            ),
         ])
+    }
+
+    /// How many declared node references this graph actually carries — the
+    /// population `dangling_reference` walks.
+    ///
+    /// REFERENCES, NOT NODES. The number a reader needs is "how many things
+    /// could this rule have found", and on a schema declaring one `node_ref`
+    /// property that is the count of nodes carrying a non-empty value for it,
+    /// not the count of nodes in the graph. Reporting the latter would say
+    /// 3,405 examined while the rule inspected 332, which is the overstating
+    /// instrument this whole rule was added to stop being.
+    fn declared_reference_count(
+        &self,
+        index: &HashMap<String, String>,
+    ) -> Result<usize, DynoError> {
+        let mut n = 0;
+        for (node_id, node_type) in index {
+            let Some(node) = self.get_node(node_type, node_id)? else {
+                continue;
+            };
+            let props: std::collections::HashMap<String, Value> =
+                node.properties.clone().into_iter().collect();
+            n += self.declared_node_refs(node_type, &props).len();
+        }
+        Ok(n)
     }
 
     /// Coupling visible at each declared decomposition level. See
@@ -1368,6 +1425,55 @@ impl DesignGraph {
         // (`req:a-deliberate-state-is-not-a-defect`).
         let parked: BTreeSet<String> = self.parked_nodes()?.into_iter().collect();
 
+        // dangling_reference — a declared node-reference property naming a node
+        // that is not here. RUN FIRST, because the zero-degree rule below skips
+        // whatever this reports: an edgeless node with a broken pointer is ONE
+        // defect and must not arrive as two findings in two vocabularies, which
+        // is the duplication BL-176 measured a field reporter stopping work over.
+        //
+        // ⚠️ PARKING DOES NOT SUPPRESS THIS, and that is a decision rather than an
+        // omission. `GOVERNED_BY ruling: parks` says a node is deliberately
+        // attached to NOTHING — a statement about attachment, which somebody can
+        // hold. A pointer resolving to nothing is not a state anybody can hold:
+        // the design cannot decide that a record is about a node it does not
+        // have. Letting a park quiet it would make the one rule that finds broken
+        // references suppressible by an unrelated ruling.
+        let mut dangling_reference_nodes: BTreeSet<String> = BTreeSet::new();
+        for (node_id, node_type) in &index {
+            let Some(n) = self.get_node(node_type, node_id)? else {
+                continue;
+            };
+            // `declared_node_refs` IS THE SHARED READER, and reusing it is the
+            // point rather than a convenience: it is documented as the only
+            // reader of `node_ref` in the crate, so this detector and the
+            // write-time guard cannot come to disagree about what counts as a
+            // reference or how one is read. A second copy of that rule is the
+            // hand-maintained duplicate that drifts.
+            let props: std::collections::HashMap<String, Value> =
+                n.properties.clone().into_iter().collect();
+            for (prop, target) in self.declared_node_refs(node_type, &props) {
+                if index.contains_key(&target) {
+                    continue;
+                }
+                dangling_reference_nodes.insert(node_id.clone());
+                let affected = vec![node_id.clone()];
+                issues.push(HealIssue {
+                    id: issue_id(HealCategory::DanglingReference, &affected),
+                    category: HealCategory::DanglingReference,
+                    severity: HealSeverity::Warning,
+                    message: format!(
+                        "{node_type} '{node_id}' has `{prop}: {target}`, and '{target}' names                          no node in this design — so this record is about something the design                          does not have. Reported whatever else the node is linked to: a broken                          pointer on a well-connected node is read down MORE paths than one on                          an isolated node, not fewer."
+                    ),
+                    suggested_fix_type: None,
+                    repair_is_a_judgement: Some(
+                        "No mechanical repair, and guessing would manufacture the exact kind of                          false record this rule exists to find. Three outcomes are all possible                          and only a person can tell them apart: the id is a TYPO for a node that                          exists (repoint it), the target was RETIRED and the record is now about                          nothing (repoint or retire the record), or the id was WRONG WHEN                          WRITTEN and never named anything (repoint it, and the right target is                          not recoverable from the id). A close-spelling match is not evidence —                          on reflow2's own graph the four capability references repaired                          2026-08-29 were settled by reading each record and asking which node                          OWNED what it was about, and one of the four was decided by a VERIFIES                          edge rather than by any resemblance in the words.",
+                    ),
+                    affected_ids: affected,
+                    hubs: Vec::new(),
+                });
+            }
+        }
+
         // orphan_node — missing golden-thread links, scoped to the ones DETECT
         // does not already ask about.
         //
@@ -1565,6 +1671,16 @@ impl DesignGraph {
                 // degree-zero — this skip is belt-and-braces so the two rules
                 // cannot disagree about one node if that ever stops being true.
                 if parked.contains(&n.node_id) {
+                    continue;
+                }
+                // Already reported as a broken pointer by `dangling_reference`
+                // above. ONE DEFECT, ONE FINDING: this rule's TemporalFact arm
+                // reads "points at nothing that exists AND carries no edge
+                // either", which conflates a broken reference with an
+                // unattached node. Now that the pointer case has a rule of its
+                // own, reporting both would say the same thing twice in two
+                // vocabularies and suggest two different repairs for one fault.
+                if dangling_reference_nodes.contains(&n.node_id) {
                     continue;
                 }
                 if !self.outgoing(&n.node_id, None)?.is_empty()
@@ -2388,6 +2504,26 @@ impl DesignGraph {
                         description: format!("Propose redundancy for {}", issue.message),
                     })
                 }
+                // NO STUB, AND THE ABSENCE IS THE POINT. Every other
+                // non-repairable category above still emits a GeneratedContentStub
+                // — "propose a bridge", "propose redundancy" — because something
+                // can sensibly be drafted for a human to judge. Nothing can be
+                // drafted here: the repair is choosing WHICH node the record meant,
+                // and a proposal would be a guess dressed as a suggestion. That is
+                // the same false record the rule exists to find, arriving through
+                // the repair path, so this reports the issue as skipped WITH ITS
+                // REASON rather than manufacturing a candidate.
+                //
+                // It is also what `orphan_node`'s own history argues for: its
+                // `generate_owner` stub could never be applied and "only ever
+                // inflated the defect count and the awaiting-generation pile".
+                HealCategory::DanglingReference => skipped_operations.push(SkippedOperation {
+                    reference: issue.id.clone(),
+                    reason: format!(
+                        "no repair can be proposed: fixing {} means deciding which node the                          record was about, and only a person holds that. A near-spelling match                          is not evidence of the intended target.",
+                        issue.id
+                    ),
+                }),
                 // Breaking a cycle is a design decision, not a mechanical edit —
                 // which edge to invert, whether to introduce an interface, whether
                 // to go event-driven. Always human-reviewed, never auto-applied.
@@ -3252,7 +3388,8 @@ mod tests {
                 | HealCategory::UnthreadedCluster
                 | HealCategory::SinglePointOfFailure
                 | HealCategory::DeadEnd
-                | HealCategory::CircularDependency => HealCategory::ALL.contains(&c),
+                | HealCategory::CircularDependency
+                | HealCategory::DanglingReference => HealCategory::ALL.contains(&c),
             }
         }
         for c in HealCategory::ALL {
@@ -3260,7 +3397,7 @@ mod tests {
         }
         assert_eq!(
             HealCategory::ALL.len(),
-            8,
+            9,
             "a category was added or removed — extend `ALL`, the match above, and this count \
              together, or the sweep will understate which rules it ran"
         );

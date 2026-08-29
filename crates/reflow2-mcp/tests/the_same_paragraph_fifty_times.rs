@@ -42,50 +42,32 @@ macro_rules! j {
     };
 }
 
-/// `n` TemporalFacts pointing at nothing — `n` `orphan_node` defects, every one
-/// of them carrying the same repair paragraph.
+/// `n` Verifications checking nothing — `n` `orphan_node` defects, every one of
+/// them carrying the same repair paragraph.
 ///
-/// EACH GHOST IS MADE BY CREATING ITS SUBJECT AND THEN DELETING IT, which is
-/// how a dangling reference actually arises now. Writing one dangling in a
-/// single call stopped being possible when `create_node` gained the node-ref
-/// guard, and the refusal is correct — so the fixture moved rather than the
-/// guard. The guard closes the typo cause; deletion and rename are the cause it
-/// cannot close, and the one this detector still has to catch.
+/// ⚠️ REWRITTEN 2026-08-29, AND THE REASON IS WORTH KEEPING. This fixture used
+/// to build its orphans out of TemporalFacts pointing at deleted subjects. That
+/// worked only while `orphan_node` happened to own broken pointers as a side
+/// effect of its degree check; the moment `dangling_reference` took that case,
+/// the fixture produced ZERO orphan rows and both tests here failed — not
+/// because the hoisting mechanism they exist to pin had changed, but because
+/// their raw material had moved to another rule.
+///
+/// A test about how a SHARED PARAGRAPH IS SENT should not depend on which rule
+/// happens to generate the rows. An edgeless Verification is an orphan by the
+/// plainest reading of the rule — it "checks nothing", no VERIFIES edge says
+/// what it is a check OF — and involves no pointer at all, so this fixture is
+/// now independent of anything the reference rules do.
 async fn with_orphans(n: usize) -> ReflowService {
     let s = ReflowService::in_memory().expect("in-memory service");
     for i in 0..n {
-        let ghost = format!("cmp:does-not-exist-{i}");
         let _ = s
-            .create_node(Parameters(
+            .add_verification(Parameters(
                 serde_json::from_value(serde_json::json!({
-                    "node_type": "Component",
-                    "id": ghost,
-                    "props": { "name": format!("Soon to be gone, number {i}"), "purpose": "exists only to be deleted, so the fact about it dangles" }
-                }))
-                .unwrap(),
-            ))
-            .await
-            .expect("tool ok");
-        let _ = s
-            .create_node(Parameters(
-                serde_json::from_value(serde_json::json!({
-                    "node_type": "TemporalFact",
-                    "id": format!("fact:orphan-{i}"),
-                    "props": {
-                        "subject_id": ghost,
-                        "statement": format!("A measurement about something absent, number {i}."),
-                        "basis": "measured",
-                    }
-                }))
-                .unwrap(),
-            ))
-            .await
-            .expect("tool ok");
-        let _ = s
-            .delete_node(Parameters(
-                serde_json::from_value(serde_json::json!({
-                    "node_type": "Component",
-                    "id": ghost
+                    "id": format!("ver:checks-nothing-{i}"),
+                    "name": format!("A check nothing says the subject of, number {i}"),
+                    "method": "test",
+                    "level": "unit",
                 }))
                 .unwrap(),
             ))
