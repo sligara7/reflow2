@@ -7,6 +7,14 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
+      "acted_at": {
+        "default": null,
+        "description": "When the judgement was made. The core takes no clock.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "affected_ids": {
         "default": [],
         "description": "The defect's `affected_ids`, so the review is reachable from the design.",
@@ -14,6 +22,14 @@
           "type": "string"
         },
         "type": "array"
+      },
+      "approver": {
+        "default": null,
+        "description": "WHOSE judgement this is — the `Contributor` who decided the defect is\nacceptable. Draws `AUTHORED_BY role=approver` on the Decision this mints.\n\nOPTIONAL, and the absence is REPORTED rather than assumed, matching\n`acknowledge_gap` exactly: a design that has modelled no Contributor\nwould otherwise be unable to acknowledge anything. But an acknowledgement\nIS the owner's word by definition, and one with no name on it fails\n`check_intent_authority`.\n\n⭐ THIS ARRIVED SIX DAYS AFTER ITS SIBLING, WHICH IS THE WHOLE POINT.\nThe capability was built 2026-08-23 for `acknowledge_gap` and never\nreached here. Measured 2026-08-29: 168 gap acknowledgements, 51 with an\napprover; 12 defect acknowledgements, ZERO — because no parameter existed\nthat could carry a name.\n\nA name that matches no Contributor is REFUSED, not ignored: a typo would\notherwise attach the owner's authority to somebody who does not exist.",
+        "type": [
+          "string",
+          "null"
+        ]
       },
       "defect_id": {
         "description": "The defect's `id`, exactly as `detect_defects` reported it.",

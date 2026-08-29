@@ -2325,6 +2325,28 @@ pub struct AcknowledgeDefectReq {
     pub affected_ids: Vec<String>,
     /// Why this defect is acceptable. Recorded as the Decision's rationale.
     pub reason: String,
+    /// WHOSE judgement this is — the `Contributor` who decided the defect is
+    /// acceptable. Draws `AUTHORED_BY role=approver` on the Decision this mints.
+    ///
+    /// OPTIONAL, and the absence is REPORTED rather than assumed, matching
+    /// `acknowledge_gap` exactly: a design that has modelled no Contributor
+    /// would otherwise be unable to acknowledge anything. But an acknowledgement
+    /// IS the owner's word by definition, and one with no name on it fails
+    /// `check_intent_authority`.
+    ///
+    /// ⭐ THIS ARRIVED SIX DAYS AFTER ITS SIBLING, WHICH IS THE WHOLE POINT.
+    /// The capability was built 2026-08-23 for `acknowledge_gap` and never
+    /// reached here. Measured 2026-08-29: 168 gap acknowledgements, 51 with an
+    /// approver; 12 defect acknowledgements, ZERO — because no parameter existed
+    /// that could carry a name.
+    ///
+    /// A name that matches no Contributor is REFUSED, not ignored: a typo would
+    /// otherwise attach the owner's authority to somebody who does not exist.
+    #[serde(default)]
+    pub approver: Option<String>,
+    /// When the judgement was made. The core takes no clock.
+    #[serde(default)]
+    pub acted_at: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]

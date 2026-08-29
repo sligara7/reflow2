@@ -133,6 +133,82 @@ def provenance(binary: str) -> str:
     return line
 
 
+# TOOL FAMILIES THAT MUST OFFER THE SAME SURFACE
+# =============================================================================
+#
+# A family is a set of tools a user reads as siblings. Nothing made them stay
+# siblings, and on 2026-08-29 that cost was measured.
+#
+# `cap:an-acknowledgement-says-whose-judgement-it-was` was built 2026-08-23 and
+# gave `acknowledge_gap` / `acknowledge_gaps` an optional `approver`. It never
+# reached `acknowledge_defect`, which went on minting an ACCEPTED Decision —
+# settled intent — with no parameter that could carry a name:
+#
+#     acknowledge_gap(s)   HAS the param     168 acknowledgements,  51 attributed
+#     acknowledge_defect   NO param           12 acknowledgements,   0 attributed
+#
+# ⭐ THE ZERO IS STRUCTURAL. It is not that callers skipped the field; there was
+# no field. All 51 approver edges on the gap side are dated 2026-08-23/24, the
+# day the parameter shipped, so there is no evidence the parameter is ignored
+# when it exists. It surfaced as three CI failures against the ENFORCED
+# `rule:design-intent-moves-only-on-the-owners-word`, with nine more of the same
+# shape already grandfathered.
+#
+# 🛑 SO THIS PINS THE CLASS, NOT THE INSTANCE. Adding `approver` to one tool
+# fixes those twelve nodes; it does nothing about the next capability that lands
+# on one sibling and not the others. What was maintained by hand with nothing
+# checking it was the FAMILY, and this is the check.
+#
+# The parameter may sit anywhere in the schema: a bulk form carries it PER ITEM
+# (`acknowledge_gaps` takes `gaps`, and `approver` lives inside each entry),
+# which is deliberate — a batch under one shared approver would record a
+# judgement nobody made for every item but one.
+FAMILY_INVARIANTS: list[tuple[str, str, str]] = [
+    (
+        "acknowledge_",
+        "approver",
+        "an acknowledgement mints an ACCEPTED Decision — settled intent — so it "
+        "must be able to record whose judgement it was "
+        "(rule:design-intent-moves-only-on-the-owners-word)",
+    ),
+]
+
+
+def _schema_mentions(schema: object, prop: str) -> bool:
+    """Is `prop` a property anywhere in this schema, at any depth?
+
+    Depth matters: a bulk form declares the field inside its item schema rather
+    than at the top level, and a check that only looked one level down would
+    report `acknowledge_gaps` as missing a parameter it actually carries.
+    """
+    if isinstance(schema, dict):
+        props = schema.get("properties")
+        if isinstance(props, dict) and prop in props:
+            return True
+        return any(_schema_mentions(v, prop) for v in schema.values())
+    if isinstance(schema, list):
+        return any(_schema_mentions(v, prop) for v in schema)
+    return False
+
+
+def family_invariants(live: dict[str, dict]) -> int:
+    """Every member of a named family offers the family's required parameter."""
+    problems = 0
+    for prefix, prop, why in FAMILY_INVARIANTS:
+        members = sorted(n for n in live if n.startswith(prefix))
+        missing = [
+            n for n in members if not _schema_mentions(live[n].get("inputSchema"), prop)
+        ]
+        if missing:
+            problems += len(missing)
+            print(f"\n=== FAMILY DRIFT: {prefix}* must all take `{prop}` ===")
+            print(f"  why: {why}")
+            print(f"  family ({len(members)}): {', '.join(members)}")
+            for n in missing:
+                print(f"  MISSING in {n}")
+    return problems
+
+
 def check(live: dict[str, dict]) -> int:
     if not os.path.isdir(SNAP_DIR):
         print(f"no toolsnaps directory at {SNAP_DIR}\n"
@@ -166,8 +242,10 @@ def check(live: dict[str, dict]) -> int:
         print(f"\n=== GOLDEN with no tool: {name} ===")
         print("  a committed toolsnap has no matching served tool")
 
+    family = family_invariants(live)
+
     print("\n" + "=" * 62)
-    problems = len(drifted) + len(added) + len(removed)
+    problems = len(drifted) + len(added) + len(removed) + family
     if problems:
         print(f"TOOLSNAP DRIFT ({problems}): "
               f"{len(drifted)} changed, {len(added)} added, {len(removed)} removed.")
@@ -177,6 +255,8 @@ def check(live: dict[str, dict]) -> int:
         print(BINARY_PROVENANCE)
         return 1
     print(f"ALL {len(live_names)} TOOLSNAPS MATCH — the served surface is unchanged.")
+    print(f"and every tool family offers its required parameter "
+          f"({len(FAMILY_INVARIANTS)} invariant(s) checked).")
     print(BINARY_PROVENANCE)
     return 0
 
