@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:da9e61fac3d7f057b1bd23c4ac05fd8263a54f20a714a5f5589150ce2547b27a",
+  "content_hash": "sha256:515b0365d042c37b3b77ecb5065c78065cfe45fc6fec8ca952eedf480886160e",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -865,6 +865,12 @@
     },
     {
       "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:skill-mechanics-track-enforcement-exactly-and-they-split-into-three-kinds",
+      "properties": {},
+      "to_id": "dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
       "from_id": "fact:surfacing-a-known-cause-is-cheap-and-reaches-the-wrong-half",
       "properties": {},
       "to_id": "dec:idea-should-reflow2-serve-a-root-cause-analysis-method"
@@ -880,6 +886,12 @@
       "from_id": "fact:the-author-of-a-skill-did-not-use-it-an-hour-later",
       "properties": {},
       "to_id": "dec:idea-where-does-tool-use-actually-fail-four-layers"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:the-contracts-are-the-same-shape-and-the-code-says-so-twice",
+      "properties": {},
+      "to_id": "dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -906,6 +918,12 @@
       "from_id": "fact:the-diamond-meets-at-dynographs-internals-not-its-interface",
       "properties": {},
       "to_id": "dec:idea-a-change-upstream-reaches-the-sibling-that-never-asked"
+    },
+    {
+      "edge_type": "ABOUT_ENTITY",
+      "from_id": "fact:the-exhaustive-check-was-built-and-can-only-carry-universal-obligations",
+      "properties": {},
+      "to_id": "dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit"
     },
     {
       "edge_type": "ABOUT_ENTITY",
@@ -2595,6 +2613,14 @@
     },
     {
       "edge_type": "ALLOCATED_TO",
+      "from_id": "cap:skills-are-composed-of-attribute-classes",
+      "properties": {
+        "weight_basis": "estimated"
+      },
+      "to_id": "cmp:skills"
+    },
+    {
+      "edge_type": "ALLOCATED_TO",
       "from_id": "cap:skills-served",
       "properties": {
         "weight_basis": "estimated"
@@ -3412,6 +3438,14 @@
         "evidence": "The three-legs measurement (2026-08-18) predicted this exact hole in advance: an instruction without a detector that notices ABSENCE leaves the vocabulary empty in every project using reflow2, not only in reflow2's own graph. 145 ideas joined by 12 edges is what that prediction looks like when it comes true. The fact named the leg before anyone went looking for it."
       },
       "to_id": "dec:idea-what-notices-an-idea-that-connects-to-nothing"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "fact:vocabulary-needs-three-legs-and-a-users-project-gets-none-of-it",
+      "properties": {
+        "evidence": "The three-legs finding — that vocabulary reaches a user's design only with a typed tool AND an instruction AND a detector that notices absence — is the same claim one level down: a mechanic present in one skill and enforced nowhere has an instruction and no detector. \"Speak the reader's domain\" is stated in the served instructions for every skill, carried by one and enforced for one, which is exactly the two-of-three failure that finding names."
+      },
+      "to_id": "fact:the-contracts-are-the-same-shape-and-the-code-says-so-twice"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -6301,6 +6335,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "chg:composition-is-chosen-for-the-skill-surface",
+      "properties": {},
+      "to_id": "epoch:composition-is-chosen-over-exhaustive-checks"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "chg:confirmation-vocabulary",
       "properties": {},
       "to_id": "epoch:v0220"
@@ -8983,6 +9023,12 @@
     },
     {
       "edge_type": "AT_EPOCH",
+      "from_id": "snap:epoch:composition-is-chosen-over-exhaustive-checks:dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit",
+      "properties": {},
+      "to_id": "epoch:composition-is-chosen-over-exhaustive-checks"
+    },
+    {
+      "edge_type": "AT_EPOCH",
       "from_id": "snap:epoch:constraint-is-not-only-numeric:art:capture-intent-skill",
       "properties": {},
       "to_id": "epoch:constraint-is-not-only-numeric"
@@ -10640,8 +10686,8 @@
       "edge_type": "AUTHORED_BY",
       "from_id": "dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit",
       "properties": {
-        "acted_at": "2026-08-26",
-        "role": "author"
+        "acted_at": "2026-08-28",
+        "role": "approver"
       },
       "to_id": "who:ajs"
     },
@@ -14841,6 +14887,26 @@
         "validation_status": "hypothesis"
       },
       "to_id": "dec:idea-a-contract-is-declared-at-the-lowest-level-and-rolled-up"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:a-skill-is-loaded-only-when-something-already-in-hand-demands-it",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "THE CLASS TEST (step ⑥): does the cause explain the EARLIER occurrence, not just today's? Yes, and from a different fleet and model. That agent used search_design, get_node, create_node, loop_status and get_skill constantly — everything already in its hand — and used detect_gaps, gap_to_prompt, impact-check, detect_defects, reconcile_artifacts, coverage_report and evidence_report exactly zero times. Nothing it was already calling required any of them. Its own reason (3) states the same mechanism independently: 'skills are PULL, and the thing that would tell you to load one is itself a lookup you must remember to make.' Its measured discriminator — three blocking gates each produced an immediate fix, zero passive hints did — is the same shape and was reproduced a third time today.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:an-agent-stopped-reaching-for-reflow2-and-a-second-one-reproduced-it-the-same-day"
+    },
+    {
+      "edge_type": "CAUSES",
+      "from_id": "fact:a-skill-is-loaded-only-when-something-already-in-hand-demands-it",
+      "properties": {
+        "basis": "correlational",
+        "evidence": "TODAY'S SYMPTOM. Of 23 served skills, 5 were loaded: 3 because the user typed a command or asked, 1 because the Artifact tool made it a hard precondition, 1 self-invoked. The skip pattern that observation recorded — capture/orient used, change-governing skipped — is explained by WHO INITIATED rather than by what kind of skill it is, and the pause-versus-interrupt reading proposed there was refuted: all 23 are mirrored identically and impact-check, revise-design and link-artifacts all have slash commands. ⚠️ PARTIAL: this does NOT explain the author case within that observation, where the skill was known and valued and still missed because its trigger named only the loud failure. That is a second, recognition-side cause.",
+        "validation_status": "unvalidated"
+      },
+      "to_id": "fact:the-author-of-a-skill-did-not-use-it-an-hour-later"
     },
     {
       "edge_type": "CAUSES",
@@ -19216,6 +19282,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-04f1020b8000c46a",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect-and-ask-skill"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-0500fc47eb120e13",
       "properties": {
         "accepted_baseline": true,
@@ -19522,6 +19597,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-36009ca068952b87",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:kpp-proposal-skill"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-3697d785d60e5b5c",
       "properties": {
         "accepted_baseline": true,
@@ -19585,12 +19669,39 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-3ff9d8ca02055a16",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:parallel-work-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-40175f24d4af1021",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:plan-increments-skill"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-402643b1b7044f89",
       "properties": {
         "accepted_baseline": true,
         "action": "modified"
       },
       "to_id": "art:evidence-quality-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-406c5df20e1172e5",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:brainstorm-skill"
     },
     {
       "edge_type": "CHANGED",
@@ -19675,12 +19786,30 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-47718543f09a3d5a",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:governance-proposal-skill"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-489316048746f57d",
       "properties": {
         "accepted_baseline": true,
         "action": "modified"
       },
       "to_id": "art:degraded"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-49a66e7c8fce0429",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:root-cause-skill"
     },
     {
       "edge_type": "CHANGED",
@@ -19801,6 +19930,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-58ccb64673403d1e",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:genesis-skill"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-5926becab7a70367",
       "properties": {
         "accepted_baseline": true,
@@ -19855,6 +19993,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-64cceb69c008a2b8",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-link-projects"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-653dc51730e238d0",
       "properties": {
         "accepted_baseline": true,
@@ -19897,6 +20044,15 @@
         "action": "modified"
       },
       "to_id": "art:surprises"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-6cac066db6363b0c",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check-health-skill"
     },
     {
       "edge_type": "CHANGED",
@@ -19954,6 +20110,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-76bd27f1bfc5ce6a",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:impact-check-skill"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-774f1fe469ddec75",
       "properties": {
         "accepted_baseline": true,
@@ -19969,6 +20134,15 @@
         "action": "modified"
       },
       "to_id": "art:unreachable-decision-test"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-7a7704979d951caf",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:optimize-skill"
     },
     {
       "edge_type": "CHANGED",
@@ -20224,6 +20398,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-931cd2a6e2337d77",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:where-am-i-skill"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-943f9c508e56ba0c",
       "properties": {
         "accepted_baseline": true,
@@ -20404,6 +20587,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-a89f2286daa7bfd3",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-acb06c45b63a7b6d",
       "properties": {
         "accepted_baseline": true,
@@ -20467,12 +20659,30 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-b68a94b177123593",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:capture-session-skill"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-b6c2d52afc751a6e",
       "properties": {
         "accepted_baseline": true,
         "action": "modified"
       },
       "to_id": "art:structure"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-b75bfe9286b04eda",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-ingest-corpus"
     },
     {
       "edge_type": "CHANGED",
@@ -20773,6 +20983,15 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:accept-de44df21bae8a0d9",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report-friction-skill"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:accept-dfd8f1bc21828db6",
       "properties": {
         "accepted_baseline": true,
@@ -20878,6 +21097,15 @@
         "action": "modified"
       },
       "to_id": "art:search"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-ef9c822be3f2979c",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:capture-intent-skill"
     },
     {
       "edge_type": "CHANGED",
@@ -21031,6 +21259,15 @@
         "action": "modified"
       },
       "to_id": "art:graph"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:accept-f813f5619f659197",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:adopt-skill"
     },
     {
       "edge_type": "CHANGED",
@@ -24613,6 +24850,15 @@
         "action": "added"
       },
       "to_id": "cap:composed-analysis"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:composition-is-chosen-for-the-skill-surface",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit"
     },
     {
       "edge_type": "CHANGED",
@@ -29672,6 +29918,195 @@
         "action": "modified"
       },
       "to_id": "req:skill-adherence-is-measured"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:skills-are-composed-of-attribute-classes",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:adopt-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:skills-are-composed-of-attribute-classes",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:brainstorm-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:skills-are-composed-of-attribute-classes",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:capture-intent-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:skills-are-composed-of-attribute-classes",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:capture-session-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:skills-are-composed-of-attribute-classes",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:check-health-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:skills-are-composed-of-attribute-classes",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:detect-and-ask-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:skills-are-composed-of-attribute-classes",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:genesis-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:skills-are-composed-of-attribute-classes",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:governance-proposal-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:skills-are-composed-of-attribute-classes",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:impact-check-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:skills-are-composed-of-attribute-classes",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:kpp-proposal-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:skills-are-composed-of-attribute-classes",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:optimize-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:skills-are-composed-of-attribute-classes",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:parallel-work-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:skills-are-composed-of-attribute-classes",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:plan-increments-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:skills-are-composed-of-attribute-classes",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:report-friction-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:skills-are-composed-of-attribute-classes",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:root-cause-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:skills-are-composed-of-attribute-classes",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-ingest-corpus"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:skills-are-composed-of-attribute-classes",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-link-projects"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:skills-are-composed-of-attribute-classes",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:skill-lint"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:skills-are-composed-of-attribute-classes",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:where-am-i-skill"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:skills-are-composed-of-attribute-classes",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "added"
+      },
+      "to_id": "cap:skills-are-composed-of-attribute-classes"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:skills-are-composed-of-attribute-classes",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:skills-served"
     },
     {
       "edge_type": "CHANGED",
@@ -34949,6 +35384,15 @@
     },
     {
       "edge_type": "CONTRADICTS",
+      "from_id": "fact:the-exhaustive-check-was-built-and-can-only-carry-universal-obligations",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "That measurement implied the fix was more enforcement, reading the 23/23-versus-5-18 spread as an argument for checking more mechanics. This one shows the spread is not an enforcement shortfall but a SCOPE limit: every existing check asserts a universal predicate and none can express a per-class obligation, so adding exhaustive checks cannot close the gap it identified. The counts stand; the implied remedy does not."
+      },
+      "to_id": "fact:skill-mechanics-track-enforcement-exactly-and-they-split-into-three-kinds"
+    },
+    {
+      "edge_type": "CONTRADICTS",
       "from_id": "fact:the-revising-write-warning-fired-correctly-and-the-overwrite-happened-anyway",
       "properties": {
         "alignment": "supporting",
@@ -36746,6 +37190,26 @@
     },
     {
       "edge_type": "DEPENDS_ON",
+      "from_id": "fact:skill-mechanics-track-enforcement-exactly-and-they-split-into-three-kinds",
+      "properties": {
+        "evidence": "The third mechanic kind — tool-side preconditions — is identified only because that observation counted HOW each of five skills came to be invoked, and found the one self-invoked without the user was the one a tool demanded. Without that count this measurement would have concluded the factory should edit SKILL.md files, which is the wrong artifact for the mechanic that has evidence behind it.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "fact:the-author-of-a-skill-did-not-use-it-an-hour-later"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
+      "from_id": "fact:the-exhaustive-check-was-built-and-can-only-carry-universal-obligations",
+      "properties": {
+        "evidence": "Anthony's argument for composition is a MOSA argument, and that node is where MOSA already lives in this design. The claim is structural rather than aesthetic: a MOSA module is severable and meets a stated interface, so it composes selectively and upgrades without touching neighbours; an exhaustive check is one monolithic predicate over a whole population and has neither property. If reflow2 is going to report MOSA conformance for other people's designs, its own skill surface failing the severability criterion is worth knowing.",
+        "optional": false,
+        "weight_basis": "estimated"
+      },
+      "to_id": "dec:mosa-conformance"
+    },
+    {
+      "edge_type": "DEPENDS_ON",
       "from_id": "req:a-fit-is-not-a-test",
       "properties": {
         "optional": false,
@@ -38096,6 +38560,14 @@
         "evidence": "Direction is deliberate and reads FROM the older thought TO this one: Anthony's 2026-08-24 musing — \"maybe we stand up a db just for a session and the reflow.json file becomes the enduring thing\" — grown up into a settled staged decision once its blockers were measured. That node stays proposed and keeps the reasoning; this is what it became."
       },
       "to_id": "dec:idea-the-store-becomes-a-session-cache-and-the-export-becomes-the-truth"
+    },
+    {
+      "edge_type": "EVOLVES_INTO",
+      "from_id": "fact:skill-mechanics-track-enforcement-exactly-and-they-split-into-three-kinds",
+      "properties": {
+        "evidence": "That measurement found the mechanics split into boilerplate, judgement and tool-side kinds, and left the judgement kind as an unresolved objection to any factory — forcing a section into 23 skills manufactures filler. Anthony's composition framing is that thought grown up: it makes the objection dissolve rather than stand, because a MEASURES class demands the section only of the five skills that measure. The earlier fact identified the problem; this one identifies the shape that answers it."
+      },
+      "to_id": "fact:the-contracts-are-the-same-shape-and-the-code-says-so-twice"
     },
     {
       "edge_type": "EVOLVES_INTO",
@@ -42057,6 +42529,12 @@
     },
     {
       "edge_type": "GOVERNED_BY",
+      "from_id": "cap:skills-are-composed-of-attribute-classes",
+      "properties": {},
+      "to_id": "dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit"
+    },
+    {
+      "edge_type": "GOVERNED_BY",
       "from_id": "cap:skills-served",
       "properties": {},
       "to_id": "dec:skills-served"
@@ -45332,6 +45810,12 @@
       "from_id": "dec:external-blob-store-pressure",
       "properties": {},
       "to_id": "snap:epoch:arrival-delta:dec:external-blob-store-pressure"
+    },
+    {
+      "edge_type": "HAS_SNAPSHOT",
+      "from_id": "dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit",
+      "properties": {},
+      "to_id": "snap:epoch:composition-is-chosen-over-exhaustive-checks:dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit"
     },
     {
       "edge_type": "HAS_SNAPSHOT",
@@ -105348,6 +105832,12 @@
     },
     {
       "edge_type": "SATISFIES",
+      "from_id": "cap:skills-are-composed-of-attribute-classes",
+      "properties": {},
+      "to_id": "req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue"
+    },
+    {
+      "edge_type": "SATISFIES",
       "from_id": "cap:skills-served",
       "properties": {},
       "to_id": "req:thin-install"
@@ -107434,6 +107924,12 @@
       "from_id": "ver:every-skill-has-a-command",
       "properties": {},
       "to_id": "req:kit-reaches-the-agent"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:every-skill-meets-the-classes-it-composes",
+      "properties": {},
+      "to_id": "cap:skills-are-composed-of-attribute-classes"
     },
     {
       "edge_type": "VERIFIES",
@@ -110046,7 +110542,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:ce5ad2d156c47395f4c343cc68af0b3d81b9cef26cb4791ef9cee592d3e0e3c8",
+        "checksum": "sha256:a2881baa471d910a8a6fadfa92a526c487d567488b1fbcf61551916dafac241a",
         "granularity": "atomic",
         "location": "getting-started/skills/adopt/SKILL.md",
         "name": "adopt/SKILL.md",
@@ -110150,7 +110646,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:994623c187efbe6436c39b4379713ec2ddcab0ebb13a1aff78bf6e352a2bedaa",
+        "checksum": "sha256:557e7e6dd6b83bb847999fd1dd15d6ca926339791af22786ff9c1780971dca6a",
         "granularity": "atomic",
         "location": "getting-started/skills/brainstorm/SKILL.md",
         "name": "brainstorm/SKILL.md",
@@ -110224,7 +110720,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:e1051f00038030c69fd7208108d56b55e11169a2e4145461b677c11a779c39c3",
+        "checksum": "sha256:bee313e88e08315c3583f38976053950ace8efd8f3d0bb6babb0a8b3e5cd5827",
         "granularity": "atomic",
         "location": "getting-started/skills/capture-intent/SKILL.md",
         "name": "capture-intent SKILL.md — the conversational capture path, now registering the document it captured from",
@@ -110237,7 +110733,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:cba3f8d56328f2f35a0a049cf466cd74cd4f9da373db3c10d75482d30dbac909",
+        "checksum": "sha256:95f94a7cb3af21bae6c886ca092401684380ad43c691657e95575c521796cecc",
         "granularity": "atomic",
         "location": "getting-started/skills/capture-session/SKILL.md",
         "name": "getting-started/skills/capture-session/SKILL.md",
@@ -110289,7 +110785,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:0599e56015b53dd5a57b9562bc0d9a82a065003ea1ea91fa9af0881c168ec80a",
+        "checksum": "sha256:e4cf67c687402f10bb4903f6d8181486106f3d7b8a7035a082254019f1737f21",
         "granularity": "atomic",
         "location": "getting-started/skills/check-health/SKILL.md",
         "name": "check-health/SKILL.md",
@@ -110650,7 +111146,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:db420230a07934367ea1c8fa8a5a6285a4e8b05274253ebfb0846eee55b8d51e",
+        "checksum": "sha256:d0b2edd737d8da981807eedfbf3c103f815d135f806f6eb99cc68111f2f248f1",
         "location": "getting-started/skills/detect-and-ask/SKILL.md",
         "name": "detect-and-ask/SKILL.md — the ask half of the loop, and now the rule for when NOT to ask",
         "status": "realized"
@@ -110940,7 +111436,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:60c9815b8bad39cb3ecf2c150aa31c37ee717abdcba526e6f57d4579ef30bc2b",
+        "checksum": "sha256:f075fc68671e17dc497016105b9438405ebc1a48d1f14f185015dec190e9acd2",
         "granularity": "atomic",
         "location": "getting-started/skills/genesis/SKILL.md",
         "name": "genesis/SKILL.md",
@@ -110966,7 +111462,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:fd8331443a248d4fbe0eb45a2888ff7deda5f059733753b7b43025ee0582147b",
+        "checksum": "sha256:24ffc5f4793657f57f13cbe252e02eee5c03b410c3aa4ff3f70b28b2e8986dbb",
         "granularity": "atomic",
         "location": "getting-started/skills/governance-proposal/SKILL.md",
         "name": "governance-proposal/SKILL.md",
@@ -111138,7 +111634,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:166978819d9f154d3cc010132fba1629578ffa2ab7e2a7702ab90dd852b6f676",
+        "checksum": "sha256:f535f169ef2fd652380a8930a08842228b0be6971e49063de1b5dafacb554a9c",
         "location": "getting-started/skills/impact-check/SKILL.md",
         "name": "impact-check/SKILL.md",
         "status": "realized"
@@ -111240,7 +111736,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:65a01535f32f023e",
+        "checksum": "sha256:563670b446f361a6d61aa8c8518e09cf4c4c3e13bdd1254766a878836f324c6a",
         "granularity": "atomic",
         "location": "getting-started/skills/kpp-proposal/SKILL.md",
         "name": "kpp-proposal/SKILL.md",
@@ -111499,7 +111995,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d0b2e84e704cf9273df4bd8827e029a8205ffe8d5fa01078c358296c8c7ea9f1",
+        "checksum": "sha256:0c9c28a395e27132f80602735f3f24e2a05d31d11bd39266a1f06a2c34fbd7e4",
         "location": "getting-started/skills/optimize/SKILL.md",
         "name": "optimize/SKILL.md",
         "status": "realized"
@@ -111523,7 +112019,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:a174eaa7a6781e8a3e5b3df9ce8629efabae2ae8e336dbe16c1ae26a2b33daf7",
+        "checksum": "sha256:36b58d63938915517ba922a5d69aa28fb9e13906124dca9cc057798f60a89720",
         "granularity": "atomic",
         "location": "getting-started/skills/parallel-work/SKILL.md",
         "name": "parallel-work/SKILL.md",
@@ -111536,7 +112032,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:ce7feac76c8da9cd72c6188a2f0035565f37031c2632354820baaf7fc1ffcdcd",
+        "checksum": "sha256:e7efb6ed722c9a00b8266425b29229aa87cd29c6b860d25c92a9789b170db907",
         "granularity": "atomic",
         "location": "getting-started/skills/plan-increments/SKILL.md",
         "name": "plan-increments/SKILL.md",
@@ -111792,7 +112288,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:225f4137b34be336d0d0ea796d1d4d333a6cf36181947d985fcd3edfa6771d4a",
+        "checksum": "sha256:806145d1b3d8099957f3a1cc24fc96443266b98a102344b7e9bdb93dacd52d2d",
         "location": "getting-started/skills/report-friction/SKILL.md",
         "name": "report-friction/SKILL.md",
         "status": "realized"
@@ -111825,7 +112321,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:0a20027aaffb53f3a614d547bc6ea5c7ba42d49f7ce099c445b0cac0825fa2d8",
+        "checksum": "sha256:5c0ddb093e3e9f370151b37bcd48a5c8b83fe26287eed014479fb7c01235ffa5",
         "location": "getting-started/skills/root-cause/SKILL.md",
         "name": "root-cause/SKILL.md",
         "status": "realized"
@@ -112216,7 +112712,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:c221daad4dd73582e3abec93e7d0493e75f71f7809f138c1852271fa63f37ea4",
+        "checksum": "sha256:82d2cd02c3eeceaf3e39fef710e548bcb9847fa978ef0088eee128038ea64abb",
         "granularity": "atomic",
         "location": "getting-started/skills/ingest-corpus/SKILL.md",
         "name": "ingest-corpus SKILL.md — the folder walk, which reflow2 cannot do itself",
@@ -112229,7 +112725,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:e758f8098e95ab2784de46b3cd83fcec1ceb4bdec8aad8011651b2d40fd3d205",
+        "checksum": "sha256:070ea47ddb04c34d557169e6efd126e05143d0364a9e5dff45160fd194eaf1c7",
         "granularity": "atomic",
         "location": "getting-started/skills/link-projects/SKILL.md",
         "name": "link-projects/SKILL.md",
@@ -112242,7 +112738,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:c5c75fa83c91b5bf65afdf1bc059940df2b45e6716664daa280268981ecf3ddc",
+        "checksum": "sha256:f217583a448be3dea99458253445f91e6056028ea4d3d95980e8a1f43bbd7cd0",
         "granularity": "atomic",
         "location": "tools/skill_lint.py",
         "name": "skill_lint.py",
@@ -113174,7 +113670,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:7c7cca9c24de4f4c6adc6577fa8b998840139e3d8f75f4f496ca0562c8fb7257",
+        "checksum": "sha256:0b8605c30ad0042fdee9f08adaa49e8f90ff6bae11969617f957f8d85b8229d8",
         "location": "getting-started/skills/where-am-i/SKILL.md",
         "name": "where-am-i/SKILL.md — orientation, and the step that asks who the reader is",
         "status": "realized"
@@ -115448,6 +115944,16 @@
       }
     },
     {
+      "node_id": "cap:skills-are-composed-of-attribute-classes",
+      "node_type": "Capability",
+      "properties": {
+        "description": "Every served skill carries `composes: [...]` in its frontmatter naming the attribute classes it owes, and `skill_lint` checks each skill ONLY against the classes it declares. Seven classes: STANDING, WRITES, MINTS, REVISES, REPORTS, MEASURES, DESTROYS.\n\n⭐ IT FILLS A MISSING MIDDLE TIER, and the tier is the whole point. UNIVERSAL obligations are checked by exhaustive loops over every skill and work perfectly — the graph-text-is-data rule sits at 23/23. PER-SKILL obligations are the three hand-written contracts (`ASK_CONTRACT`, `LINK_CONTRACT`, `OPTIMIZE_CONTRACT`). Between them, PER-CLASS obligations had NO MECHANISM, which is why a mechanic present in one skill never propagated: a flat loop can only carry a predicate true of every member.\n\n📌 IT DOES NOT REPLACE THE PER-SKILL CONTRACTS. Some of their clauses were class-level and were lifted; the rest are specific to one skill and stay. A class that swallowed them would assert that every REPORTS skill owes `review_relations`, which is false.\n\n⚠️ MINTS IS NARROWER THAN WRITES, AND THE SPLIT WAS FOUND BY RUNNING IT. \"Search before creating\" guards against a near-duplicate CONCEPT and is not owed by every writer: `genesis` runs on an empty graph by definition, `impact-check` records a ChangeEvent which is new by nature, `parallel-work` records a claim. Charging all 18 writers with it produced 11 failures of which several were the class being too coarse rather than the skill being deficient.\n\n⚠️ OBLIGATIONS ARE TUPLES OF ACCEPTABLE PHRASINGS, NOT SINGLE LITERALS. A one-phrase version reported 29 unmet of which 13 were matching artifacts — `brainstorm` says \"searched before\", `check-health` says \"lose\" not \"lost\". The rule written into the code is the one that keeps this honest: ADDING A PHRASING FOR THE SAME OBLIGATION IS LEGITIMATE; REMOVING THE OBLIGATION IS NOT.\n\n⚠️ WHAT IT CANNOT DO: supply judgement. Requiring a section produces a section. What composition buys over a single factory is that the obligation lands only on the skills that OWE it — \"states what it could not establish\" is meaningful for the 7 that MEASURE and would be filler in the 16 that do not. The manufactured-ambiguity trap comes from UNIFORMITY, not from construction.\n\n⚠️ AND THE CARVING IS ONE READING. Seven classes with one obligation each is a starting set, not a taxonomy. It holds by its own stated test — no skill lands in four classes excluding the universal base — but MEASURES and DESTROYS carry a single thin obligation apiece and nobody has tested the carving against a skill it was not derived from.",
+        "name": "A skill declares the attribute classes it composes, and is checked only against those",
+        "provenance": "authored",
+        "status": "realized"
+      }
+    },
+    {
       "node_id": "cap:skills-served",
       "node_type": "Capability",
       "properties": {
@@ -116434,6 +116940,16 @@
       }
     },
     {
+      "node_id": "chg:accept-04f1020b8000c46a",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-28",
+        "name": "`composes` moved into `metadata` for harness portability. No design meaning changed.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-0500fc47eb120e13",
       "node_type": "ChangeEvent",
       "properties": {
@@ -116751,6 +117267,16 @@
       }
     },
     {
+      "node_id": "chg:accept-36009ca068952b87",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-28",
+        "name": "`composes` moved into `metadata` for harness portability. No design meaning changed.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-3697d785d60e5b5c",
       "node_type": "ChangeEvent",
       "properties": {
@@ -116814,12 +117340,42 @@
       }
     },
     {
+      "node_id": "chg:accept-3ff9d8ca02055a16",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-28",
+        "name": "`composes` moved into `metadata` for harness portability. No design meaning changed.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-40175f24d4af1021",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-28",
+        "name": "`composes` moved into `metadata` for harness portability. No design meaning changed.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-402643b1b7044f89",
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "refactor",
         "detected_at": "2026-08-17",
         "name": "Renamed category and detect_defects -> open_defects; the assertions are unchanged.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-406c5df20e1172e5",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-28",
+        "name": "`composes` moved into `metadata` for harness portability. No design meaning changed.",
         "subject": "system"
       }
     },
@@ -116910,11 +117466,31 @@
       }
     },
     {
+      "node_id": "chg:accept-47718543f09a3d5a",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-28",
+        "name": "`composes` moved into `metadata` for harness portability. No design meaning changed.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-489316048746f57d",
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "test_failure_fix",
         "name": "Same bytes — re-registered in the sha256: dialect the gate compares in (the bare-hex false-drift bug, fixed in artifact.rs this session)."
+      }
+    },
+    {
+      "node_id": "chg:accept-49a66e7c8fce0429",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-28",
+        "name": "`composes` moved into `metadata` for harness portability. No design meaning changed.",
+        "subject": "system"
       }
     },
     {
@@ -117033,6 +117609,16 @@
       }
     },
     {
+      "node_id": "chg:accept-58ccb64673403d1e",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-28",
+        "name": "`composes` moved into `metadata` for harness portability. No design meaning changed.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-5926becab7a70367",
       "node_type": "ChangeEvent",
       "properties": {
@@ -117087,6 +117673,16 @@
       }
     },
     {
+      "node_id": "chg:accept-64cceb69c008a2b8",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-28",
+        "name": "`composes` moved into `metadata` for harness portability. No design meaning changed.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-653dc51730e238d0",
       "node_type": "ChangeEvent",
       "properties": {
@@ -117131,6 +117727,16 @@
         "change_type": "refactor",
         "detected_at": "2026-07-21",
         "name": "Freshness examination 2026-07-21: file checksum unchanged since registration (as-built == as-designed); capability carries passing verification. No drift; design holds."
+      }
+    },
+    {
+      "node_id": "chg:accept-6cac066db6363b0c",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-28",
+        "name": "`composes` moved into `metadata` for harness portability. No design meaning changed.",
+        "subject": "system"
       }
     },
     {
@@ -117188,6 +117794,16 @@
       }
     },
     {
+      "node_id": "chg:accept-76bd27f1bfc5ce6a",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-28",
+        "name": "`composes` moved into `metadata` for harness portability. No design meaning changed.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-774f1fe469ddec75",
       "node_type": "ChangeEvent",
       "properties": {
@@ -117204,6 +117820,16 @@
         "change_type": "refactor",
         "detected_at": "2026-08-17",
         "name": "Renamed category and detect_defects -> open_defects; the assertions are unchanged.",
+        "subject": "system"
+      }
+    },
+    {
+      "node_id": "chg:accept-7a7704979d951caf",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-28",
+        "name": "`composes` moved into `metadata` for harness portability. No design meaning changed.",
         "subject": "system"
       }
     },
@@ -117466,6 +118092,16 @@
       }
     },
     {
+      "node_id": "chg:accept-931cd2a6e2337d77",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-28",
+        "name": "`composes` moved into `metadata` for harness portability. No design meaning changed.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-943f9c508e56ba0c",
       "node_type": "ChangeEvent",
       "properties": {
@@ -117657,6 +118293,16 @@
       }
     },
     {
+      "node_id": "chg:accept-a89f2286daa7bfd3",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-28",
+        "name": "Reads the nested `metadata: {composes: [...]}` form, with the portability reason recorded in the code beside it.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-acb06c45b63a7b6d",
       "node_type": "ChangeEvent",
       "properties": {
@@ -117723,12 +118369,32 @@
       }
     },
     {
+      "node_id": "chg:accept-b68a94b177123593",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-28",
+        "name": "`composes` moved into `metadata` for harness portability. No design meaning changed.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-b6c2d52afc751a6e",
       "node_type": "ChangeEvent",
       "properties": {
         "change_type": "test_failure_fix",
         "detected_at": "2026-08-01",
         "name": "BL-141(a): dependency_pairs keeps the Interface beside each collapsed pair instead of discarding it, and circular_dependencies returns DependencyCycle carrying that attribution. The pairs and the cycles found are identical."
+      }
+    },
+    {
+      "node_id": "chg:accept-b75bfe9286b04eda",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-28",
+        "name": "`composes` moved into `metadata` for harness portability. No design meaning changed.",
+        "subject": "system"
       }
     },
     {
@@ -118036,6 +118702,16 @@
       }
     },
     {
+      "node_id": "chg:accept-de44df21bae8a0d9",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-28",
+        "name": "`composes` moved into `metadata` for harness portability. No design meaning changed.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-dfd8f1bc21828db6",
       "node_type": "ChangeEvent",
       "properties": {
@@ -118146,6 +118822,16 @@
       }
     },
     {
+      "node_id": "chg:accept-ef9c822be3f2979c",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-28",
+        "name": "`composes` moved into `metadata` for harness portability. No design meaning changed.",
+        "subject": "system"
+      }
+    },
+    {
       "node_id": "chg:accept-eight-requirements",
       "node_type": "ChangeEvent",
       "properties": {
@@ -118237,6 +118923,16 @@
         "change_type": "test_failure_fix",
         "detected_at": "2026-07-23",
         "name": "Live-store catch-up: the 2026-07-23 session (f4109cb stamp-ordering, dc9bf96 refusal message) reconciled these checksums in the committed export via the build script while the live server was down; this accepts the same on-disk content in the live graph. Fixes restore intended behaviour — no design meaning."
+      }
+    },
+    {
+      "node_id": "chg:accept-f813f5619f659197",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-28",
+        "name": "`composes` moved from a TOP-LEVEL frontmatter key into `metadata`. reflow2_init's harness-portability check refused the top-level form and was right to: skill frontmatter is a SHARED SURFACE and OpenCode reads only {name, description, license, compatibility, metadata}. No design meaning changed — the same classes are declared, in the one place every harness tolerates.",
+        "subject": "system"
       }
     },
     {
@@ -119561,6 +120257,18 @@
       "properties": {
         "change_type": "new_feature",
         "name": "Two designs analysed together without either being written to: the dependency's ids are namespaced into an in-memory graph and reflow2's ordinary detectors run over the whole, every finding attributed ours/theirs/seam"
+      }
+    },
+    {
+      "node_id": "chg:composition-is-chosen-for-the-skill-surface",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "scope_change",
+        "detected_at": "2026-08-28",
+        "name": "Snapshot the factory decision before the composition ruling replaces its framing",
+        "rationale": "Snapshotted before the merge. The prior text is the record of what the node argued when it still assumed a single factory, and the whole value of the ruling is the comparison with what it now says.",
+        "subject": "record",
+        "summary": "Anthony rules that skills are built from composable attribute classes rather than stamped by one factory or swept by one exhaustive check. Settles `dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit` on option (f), the composition option that the node's original (a)-(d) did not contain."
       }
     },
     {
@@ -121094,6 +121802,18 @@
       "properties": {
         "change_type": "new_feature",
         "name": "The hook counts skill loads and names the session that opened none — the half of req:skill-adherence-is-measured that cap:skill-triggers structurally could not see"
+      }
+    },
+    {
+      "node_id": "chg:skills-are-composed-of-attribute-classes",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-28",
+        "name": "Skills are composed of attribute classes, and the composition found its own miscast class",
+        "rationale": "⭐ THE MECHANISM PROVED ITSELF BY BEING WRONG, TWICE, AND THAT IS THE RECORD WORTH KEEPING.\n\nFIRST, THE CLASS WAS MISCAST. Charging all 18 writers with \"search before creating\" produced 11 failures — but `genesis` runs on an EMPTY GRAPH by definition, `impact-check` records a ChangeEvent which is new by nature, and `parallel-work` records a claim. Those were not omissions; the class was too coarse. Splitting MINTS out of WRITES cut the list to 14, every one real. **The refinement came from RUNNING it, not from thinking harder before writing it** — which is the argument for construction over inspection, arriving from inside the thing being built.\n\nSECOND, THE OBLIGATIONS WERE LITERAL PHRASES and 13 of the 29 first-run failures were matching artifacts rather than deficiencies. `OPTIMIZE_CONTRACT`'s own comment had predicted exactly this and the warning was in the file being edited. The trap then bit a THIRD time during the fix: new `impact-check` text wrapped \"could not\\nestablish\" across a newline and failed for the documented reason. The line was reflowed; the check was not weakened. The governing rule is now written beside the classes — ADDING A PHRASING FOR THE SAME OBLIGATION IS LEGITIMATE, REMOVING THE OBLIGATION IS NOT.\n\n⭐ WHAT IT FOUND, which is the payoff Anthony asked for: EIGHT skills that mint concept nodes never said to search first — a mechanic `capture-intent` and `brainstorm` both carry. Nobody had noticed because until now nothing could ask a per-class question. That is \"a successful skill does something the others do not\", surfaced automatically rather than discovered by accident.\n\n📌 AND THE SECOND REASON IS CREDIBILITY, NOT MAINTENANCE. Anthony: *\"having reflow2 reflect all the principles it says it will do for other projects is not necessarily a functional win, but it is a 'marketing' win in terms that reflow2 'looks the part'.\"* It is stronger than that: `dec:mosa-conformance` asks whether reflow2 should report MOSA conformance for other people's designs, and its own skill surface would have failed the severability criterion — three contracts that cannot be composed, applied selectively, or replaced independently.\n\n⚠️ ORDER HELD, and it is the one that bit earlier in the same session: both frontmatter parsers were checked to tolerate unknown keys BEFORE 69 files were edited, and `cargo fmt --check` ran before any baseline was taken.",
+        "subject": "system",
+        "summary": "`composes: [...]` added to the frontmatter of all 23 served skills across all three trees, plus a CLASSES table in `skill_lint.py` that checks each skill only against the classes it declares. Seven classes: STANDING, WRITES, MINTS, REVISES, REPORTS, MEASURES, DESTROYS. Fourteen real omissions found and fixed with prose written per skill."
       }
     },
     {
@@ -124499,9 +125219,9 @@
       "node_type": "Decision",
       "properties": {
         "decision": "**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Anthony, 2026-08-26, in his own words:\n\n*\"can we construct skills or tools in a factory that ensures they get the required mechanics/functions? then when we need to make a 'class' change, it is fixing the factory, not the individual skill.\"*\n\n📌 DISTINCT FROM `dec:idea-a-tool-class-should-carry-a-contract-that-something-checks`, which asks WHAT a class must guarantee. This asks HOW the guarantee is delivered — by construction, or by inspection after the fact. Both answers are available for any contract, and the choice between them is the whole content here.\n\n═══ THE DISTINCTION THAT MATTERS ═══\n\n**A CHECK finds the omission after somebody made it. A FACTORY makes the omission unconstructable.** Today's fix is the first: `every_category_states_whether_it_reads_proposed` catches an unclassified category at compile time, but only after somebody wrote it. A factory would mean a finding kind cannot come into existence without answering.\n\nThis is the shape Anthony is reaching for, and the payoff he names is real: **a class change becomes one edit instead of N.** Today's change edited three call sites for one rule. The three instances this week each edited between one and three sites. Nothing has yet needed editing across all 173 tools — which is either evidence the problem is small, or evidence it has not bitten yet.\n\n═══ WHAT ALREADY EXISTS, because the answer is not \"nothing\" ═══\n\n- **`#[tool]` is already a proc macro** — construction already runs through a single point. Whether it can be made to REQUIRE annotations is a technical question nobody has asked. This is the most promising unexamined lead here.\n- **`skill_lint.py`, 1126 lines** — the inspection route, already built and already large.\n- **`HealCategory::ALL` plus two exhaustive-match tests** — the compile-time route at its smallest, and it works.\n- **The 12 tool-surface slices** — a classification that already exists and deliberately holds no function.\n\n═══ OPTIONS, none chosen ═══\n\n**(a) EXTEND THE `#[tool]` MACRO to require the annotation set.** The factory Anthony describes, in the place construction already happens. Missing annotation = compile error, no list to maintain. ⚠️ Counter: proc-macro work is unpleasant to debug, and a required field with a default is not required at all — the design would have to refuse silence, which means touching all 173 declarations once.\n\n**(b) A CONSTRUCTOR FUNCTION / TRAIT rather than a macro change.** Each tool built through a typed builder that cannot be finished incomplete. ⚠️ Counter: heavier than the macro that is already there, and the macro is the thing standing between the author and the surface.\n\n**(c) KEEP INSPECTION, MAKE IT EXHAUSTIVE.** No factory; just ensure every class has one test asserting every member answers. ⚠️ Counter: this is what the repo already does, and it is what let three instances through — each guard was written after its own incident, never before the next.\n\n**(d) NOT WORTH IT YET.** No class change has ever required editing more than three sites. ⚠️ Counter: the cost being counted is wrong — the expensive part was never the editing, it was the DISCOVERY, and each discovery came from a user hitting it in the field.\n\n═══ ⚠️ THE COUNTERWEIGHTS, and there are two real ones ═══\n\n**1. A factory guarantees the mechanics are PRESENT, never that they are RIGHT.** Every instance this week was a case where the mechanism existed and the JUDGEMENT was missing — `unallocated_component` could have read the ruling, the replay contract was written down, `proposed` was documented in four places. A factory that injects a required field produces 173 tools with a field filled in to satisfy the compiler. That is the `internal`-by-default trap the interface `designation` field already documents: *\"BECAUSE it is the default, `internal` cannot distinguish 'deliberately internal' from 'nobody classified this'.\"* **A factory can manufacture exactly that ambiguity at scale.**\n\n**2. Over-engineering, and it is his own standing concern.** *\"designs get so overcomplicated when often a simple solution will do.\"* A factory, a registry and a class taxonomy is the shape an engineer reaches for. The measured alternative is one exhaustive match per class — roughly fifteen lines, no new machinery, and it has now worked twice in the same file.\n\n⇒ Which suggests the cheapest honest test: **name a change that WOULD have required editing all 173 tools.** If one exists, the factory earns itself. If none does, option (d) is the answer and the exhaustive-match habit is enough.",
-        "name": "OPEN — should skills and tools be CONSTRUCTED through something that gives them the required mechanics, so a class change is one edit rather than N?",
-        "rationale": "Kept separate from the contract question because WHAT a class guarantees and HOW that guarantee is delivered are independently answerable — a contract can be enforced by construction or by inspection, and picking one does not settle the other.\n\nRecorded with the two counterweights at full strength because both are Anthony's own reasoning turned on his own idea: he watches for over-engineering, and he has said that a fix must reach the cause. A factory reaches the MECHANISM and not the JUDGEMENT, and every instance this week was a missing judgement beside a present mechanism. That is the strongest argument against the idea and it belongs on the node rather than in a reply he will not see again.",
-        "status": "proposed"
+        "name": "DECIDED — skills are COMPOSED of attribute classes, not stamped by one factory and not swept by one exhaustive check",
+        "rationale": "SETTLED BY ANTHONY, 2026-08-28, on option (f) — an option the original (a)–(d) did not contain, because they all assumed ONE factory stamping every member of a class identically.\n\nHIS FRAMING: *\"I didn't mean we have only one factory... like in python, a class can inherit a class which can inherit a class (I actually prefer class composition versus class inheritance). so a particular class of skills inherits a set of classes that determine what that skill should have.\"* And: *\"I prefer building skills with composable blocks (and potentially using dependency injection if that can be done in rust). I also feel like it fits the MOSA type concept better than exhaustive checks.\"*\n\n═══ WHAT SETTLED THE TWO COUNTERWEIGHTS ═══\n\n**COUNTERWEIGHT 1 IS DISSOLVED, NOT OVERRULED.** *\"A factory guarantees the mechanics are PRESENT, never that they are RIGHT.\"* True of a single factory, which must demand a section from all 23 and would get filler from the 15 that do not need it. COMPOSITION DEMANDS IT ONLY OF THE CLASS THAT OWES IT — \"honest limits\" from the skills that MEASURE, where its absence is a real omission. **The manufactured-ambiguity trap comes from UNIFORMITY, not from construction.**\n\n**COUNTERWEIGHT 2 — OVER-ENGINEERING — WAS ANSWERED BY MEASUREMENT, AND THE MEASURED ALTERNATIVE FAILED.** This node's own recommendation was that one exhaustive match per class is enough. CHECKED AGAINST SOURCE 2026-08-28: the exhaustive check was BUILT and IS RUNNING over every skill — `served_skills.rs` iterates `SKILLS` three times, `skill_lint` walks every directory. And every one of its assertions is a UNIVERSAL predicate. A flat loop over a flat set cannot express \"this skill owes REPORTS mechanics and that one does not\". It did not fail; it succeeded at its scope, which is why the one universal mechanic is at 23/23 and every other is at 5–18. **\"Just add an exhaustive check\" was tried and is structurally unable to reach the case.** See `fact:the-exhaustive-check-was-built-and-can-only-carry-universal-obligations`.\n\n═══ THE NODE'S OWN TEST, ANSWERED ═══\n\nIt posed: *\"name a change that WOULD have required editing all 173 tools.\"* Unanswered for tools; answered for skills. \"Speak the reader's domain\" is §35 of the SERVED INSTRUCTIONS, stated as applying to every skill — carried in ONE of 23 skill bodies, enforced by ONE of three hand-written contracts, added only after two users independently invented the same workaround. A universal rule, implemented once, discovered late.\n\n═══ ⭐ AND A SECOND REASON, WHICH IS ANTHONY'S AND IS NOT SUPERFICIAL ═══\n\n*\"having reflow2 reflect all the principles it says it will do for other projects is not necessarily a functional win, but it is a 'marketing' win in terms that reflow2 'looks the part'... little details like these make a difference.\"*\n\nIt is stronger than he states it. `dec:mosa-conformance` asks whether reflow2 should REPORT MOSA CONFORMANCE for other people's designs, given it already computes most of the criteria. **Its own skill surface would fail the severability criterion** — three contracts that cannot be composed, applied selectively, or replaced independently. That is not presentation; it is the tool exhibiting the property it flags. And it sits with the dogfooding rationale already on `chg:user-is-still-the-reminder`: using the thing is the instrument that finds its defects.\n\n⚠️ THIS IS NOT A BREACH OF `rule:reflow2-is-built-for-other-projects-not-for-itself`. That rule forbids building FEATURES for reflow2's own sake. This applies reflow2's OWN STATED PRINCIPLES to its own construction, which is the rule's premise rather than an exception to it.\n\n═══ 🛑 WHAT IS STILL UNCHOSEN, AND IT IS NOT SMALL ═══\n\n**WHERE THE COMPOSITION LIVES.** Three candidates with materially different costs, none priced: (i) `skill_lint.py` — cheapest, Python, refactors the three existing contracts into composable sets, blocks in CI; (ii) a `composes:` list in each SKILL.md's frontmatter that the lint reads — makes the obligation legible to the AGENT reading the skill, not only to CI; (iii) the Rust build, strongest and most expensive. **Rust has no inheritance at all, so composition via traits is the only idiom available there — and the codebase already does constructor injection at `KvBackend` (a six-method trait, two implementations, `Box<dyn KvBackend>` in `StorageEngine`).**\n\n**AND THE CLASS CARVING IS UNTESTED.** STANDING / WRITES / REVISES / REPORTS / MEASURES / DESTROYS is one agent's reading of 23 skills. A skill landing in four of them is a sign the carving is wrong, and nobody has tried it against the real set.",
+        "status": "accepted"
       }
     },
     {
@@ -129525,6 +130245,16 @@
         "epoch_type": "revision",
         "name": "The subscribe side becomes declarable and the seam is computed",
         "sequence": 236,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:composition-is-chosen-over-exhaustive-checks",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "revision",
+        "name": "Composition is chosen: skills composed of attribute classes, not stamped by one factory or swept by one check",
+        "sequence": 387,
         "status": "arrived"
       }
     },
@@ -138594,6 +139324,16 @@
       }
     },
     {
+      "node_id": "snap:epoch:composition-is-chosen-over-exhaustive-checks:dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit",
+      "node_type": "Snapshot",
+      "properties": {
+        "edges": "[{\"direction\":\"out\",\"edge_type\":\"AUTHORED_BY\",\"other_type\":\"Contributor\",\"other_id\":\"who:ajs\",\"properties\":{\"acted_at\":\"2026-08-26\",\"role\":\"author\"}},{\"direction\":\"out\",\"edge_type\":\"DEPENDS_ON\",\"other_type\":\"Decision\",\"other_id\":\"dec:idea-a-tool-class-should-carry-a-contract-that-something-checks\",\"properties\":{\"evidence\":\"A factory can only guarantee mechanics somebody has named. Until the class contract question is answered — which axes, obliging what — there is nothing for a factory to build in, so this is worth nothing until that one lands.\",\"optional\":false,\"weight_basis\":\"estimated\"}}]",
+        "state": "{\"decision\":\"**RECORDED AS BRAINSTORMING, NOT AS A PROPOSAL.** Anthony, 2026-08-26, in his own words:\\n\\n*\\\"can we construct skills or tools in a factory that ensures they get the required mechanics/functions? then when we need to make a 'class' change, it is fixing the factory, not the individual skill.\\\"*\\n\\n📌 DISTINCT FROM `dec:idea-a-tool-class-should-carry-a-contract-that-something-checks`, which asks WHAT a class must guarantee. This asks HOW the guarantee is delivered — by construction, or by inspection after the fact. Both answers are available for any contract, and the choice between them is the whole content here.\\n\\n═══ THE DISTINCTION THAT MATTERS ═══\\n\\n**A CHECK finds the omission after somebody made it. A FACTORY makes the omission unconstructable.** Today's fix is the first: `every_category_states_whether_it_reads_proposed` catches an unclassified category at compile time, but only after somebody wrote it. A factory would mean a finding kind cannot come into existence without answering.\\n\\nThis is the shape Anthony is reaching for, and the payoff he names is real: **a class change becomes one edit instead of N.** Today's change edited three call sites for one rule. The three instances this week each edited between one and three sites. Nothing has yet needed editing across all 173 tools — which is either evidence the problem is small, or evidence it has not bitten yet.\\n\\n═══ WHAT ALREADY EXISTS, because the answer is not \\\"nothing\\\" ═══\\n\\n- **`#[tool]` is already a proc macro** — construction already runs through a single point. Whether it can be made to REQUIRE annotations is a technical question nobody has asked. This is the most promising unexamined lead here.\\n- **`skill_lint.py`, 1126 lines** — the inspection route, already built and already large.\\n- **`HealCategory::ALL` plus two exhaustive-match tests** — the compile-time route at its smallest, and it works.\\n- **The 12 tool-surface slices** — a classification that already exists and deliberately holds no function.\\n\\n═══ OPTIONS, none chosen ═══\\n\\n**(a) EXTEND THE `#[tool]` MACRO to require the annotation set.** The factory Anthony describes, in the place construction already happens. Missing annotation = compile error, no list to maintain. ⚠️ Counter: proc-macro work is unpleasant to debug, and a required field with a default is not required at all — the design would have to refuse silence, which means touching all 173 declarations once.\\n\\n**(b) A CONSTRUCTOR FUNCTION / TRAIT rather than a macro change.** Each tool built through a typed builder that cannot be finished incomplete. ⚠️ Counter: heavier than the macro that is already there, and the macro is the thing standing between the author and the surface.\\n\\n**(c) KEEP INSPECTION, MAKE IT EXHAUSTIVE.** No factory; just ensure every class has one test asserting every member answers. ⚠️ Counter: this is what the repo already does, and it is what let three instances through — each guard was written after its own incident, never before the next.\\n\\n**(d) NOT WORTH IT YET.** No class change has ever required editing more than three sites. ⚠️ Counter: the cost being counted is wrong — the expensive part was never the editing, it was the DISCOVERY, and each discovery came from a user hitting it in the field.\\n\\n═══ ⚠️ THE COUNTERWEIGHTS, and there are two real ones ═══\\n\\n**1. A factory guarantees the mechanics are PRESENT, never that they are RIGHT.** Every instance this week was a case where the mechanism existed and the JUDGEMENT was missing — `unallocated_component` could have read the ruling, the replay contract was written down, `proposed` was documented in four places. A factory that injects a required field produces 173 tools with a field filled in to satisfy the compiler. That is the `internal`-by-default trap the interface `designation` field already documents: *\\\"BECAUSE it is the default, `internal` cannot distinguish 'deliberately internal' from 'nobody classified this'.\\\"* **A factory can manufacture exactly that ambiguity at scale.**\\n\\n**2. Over-engineering, and it is his own standing concern.** *\\\"designs get so overcomplicated when often a simple solution will do.\\\"* A factory, a registry and a class taxonomy is the shape an engineer reaches for. The measured alternative is one exhaustive match per class — roughly fifteen lines, no new machinery, and it has now worked twice in the same file.\\n\\n⇒ Which suggests the cheapest honest test: **name a change that WOULD have required editing all 173 tools.** If one exists, the factory earns itself. If none does, option (d) is the answer and the exhaustive-match habit is enough.\",\"name\":\"OPEN — should skills and tools be CONSTRUCTED through something that gives them the required mechanics, so a class change is one edit rather than N?\",\"rationale\":\"Kept separate from the contract question because WHAT a class guarantees and HOW that guarantee is delivered are independently answerable — a contract can be enforced by construction or by inspection, and picking one does not settle the other.\\n\\nRecorded with the two counterweights at full strength because both are Anthony's own reasoning turned on his own idea: he watches for over-engineering, and he has said that a fix must reach the cause. A factory reaches the MECHANISM and not the JUDGEMENT, and every instance this week was a missing judgement beside a present mechanism. That is the strongest argument against the idea and it belongs on the node rather than in a reply he will not see again.\",\"status\":\"proposed\"}",
+        "target_id": "dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit",
+        "target_type": "Decision"
+      }
+    },
+    {
       "node_id": "snap:epoch:constraint-is-not-only-numeric:art:capture-intent-skill",
       "node_type": "Snapshot",
       "properties": {
@@ -140295,6 +141035,20 @@
         "subject_id": "cap:what-next",
         "valid_from": "2026-08-14",
         "value": "{\"reported\":\"2026-08-14, Alex's Grok 4.6 session, Opportunities\",\"corroborates\":\"dec:idea-remaining-work-has-no-answer-in-the-graph - which lacked evidence from outside this project\",\"their_workaround\":\"an accepted Decision's PROSE as the MVP plan, plus Capability.status as the checklist\",\"identical_to\":\"the workaround this project reached for, independently\",\"the_finding\":\"when the graph cannot answer a daily question, people answer it from prose and the prose silently becomes load-bearing\",\"what_next_does_instead\":\"ranks open Decisions - what needs a HUMAN, a different question from what is left to BUILD\",\"root_already_recorded\":\"artifact layer is at COMPONENT granularity; see fact:the-build-list-is-suppressed-by-realized-via-component\"}"
+      }
+    },
+    {
+      "node_id": "fact:a-skill-is-loaded-only-when-something-already-in-hand-demands-it",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 0.8,
+        "fact_type": "root_cause",
+        "name": "ROOT CAUSE of skills going unused: an agent loads a skill when something ALREADY IN ITS HAND demands it, and otherwise substantially not at all — and no reflow2 tool demands any reflow2 skill",
+        "statement": "REACHED 2026-08-28 by running the `root-cause` skill on the question \"why does the agent not reach for reflow2 skills and tools?\". Steps in order; the discriminating measurement refuted the investigator's own leading hypothesis.\n\n═══ THE CAUSE ═══\n\n**A skill is loaded when something the agent is ALREADY HOLDING makes it a precondition. Unprompted self-invocation is close to absent.** Counted over one long session, of the five skills loaded out of twenty-three served: THREE because the user typed a slash command or asked; ONE because a tool the agent had to call anyway said it MUST load it first (`Artifact` → `artifact-design`); ONE genuinely self-invoked. **No reflow2 tool makes any reflow2 skill a precondition of itself.**\n\n═══ WHAT THE DISCRIMINATING MEASUREMENT KILLED ═══\n\nThe leading candidate going in was the investigator's own: that capture/orient skills get used and change-governing ones get skipped because the first fill a pause and the second must INTERRUPT work in flight. **REFUTED.** All twenty-three skills are mirrored identically into `.claude/skills/`, and `impact-check`, `revise-design` and `link-artifacts` all have slash commands — so neither reachability nor command-availability separates the two groups. The capture/change split was a pattern in the sample, not a cause. What actually separates them is WHO INITIATED.\n\n═══ WHY IT IS THE CAUSE AND NOT THE INSTANCE (step ⑥) ═══\n\nIt explains the earlier occurrences, which is the test. `fact:an-agent-stopped-reaching-for-reflow2-and-a-second-one-reproduced-it-the-same-day` (2026-08-23, a different fleet, a different model, asked directly and writing from inside the failure) reports constant use of `search_design`, `get_node`, `create_node`, `loop_status`, `get_skill` — the things it was already holding — and ZERO use of `detect_gaps`, `gap_to_prompt`, `impact-check`, `detect_defects`, `reconcile_artifacts`, `coverage_report`, `evidence_report`. **Nothing it was already calling required any of them.** Its own reason (3) states the mechanism in different words: *\"skills are PULL, and the thing that would tell you to load one is itself a lookup you must remember to make.\"*\n\n⭐ AND IT MATCHES THE ONLY DISCRIMINATOR ANYONE HAS MEASURED. That same fact records that three BLOCKING gates each produced an immediate fix and zero passive hints did — *\"the Stop hook worked BECAUSE IT BLOCKED, not because it spoke.\"* Today reproduced it a third way: the Stop hook blocked and was obeyed within one turn; `reflow2_check` blocked and four drifted artifacts were repaired; `loop_hint` appeared on nearly every call and was acted on ZERO times.\n\n═══ WHAT THIS IMPLIES, WITHOUT PRESCRIBING IT ═══\n\nThe repair shape the evidence points at is `req:a-discipline-is-delivered-at-the-tool-not-in-a-catalogue`, which is ALREADY ACCEPTED: put the precondition on the tool the agent is already reaching for, the way `Artifact` does. This is the first measurement of that mechanism working on an agent that skipped everything else. **The choice is Anthony's and nothing is pinned or built here** — step ⑦ was deliberately not taken, because pinning a test before the fix is chosen would pin the instance.\n\n═══ ⚠️ WHAT THIS DOES NOT ESTABLISH (step ⑨) ═══\n\n- **n=5 invocations in one session, one agent, one model**, plus one corroborating report from another fleet. The \"who initiated\" reading FITS those five; it is inference, not proof.\n- **One alternative is NOT ruled out:** that the change-governing skills have narrower or worse-matching trigger descriptions than the capture ones. Separating that needs the trigger text compared against the moments each skill was owed, which nothing measures.\n- **It says nothing about consumers.** Both observed sessions had far more reflow2 context than any consumer's agent will have, which makes them a BEST case.\n- **It does not explain the `root-cause` author case by itself.** There, the skill was known, valued and still missed — the trigger named only the loud failure while the moment was a merely odd number. That is a RECOGNITION failure inside the same session, and it is a second cause rather than an instance of this one.",
+        "subject_id": "req:skill-use-survives-a-long-session",
+        "valid_from": "2026-08-28",
+        "value": "{\"skills_served\":23,\"skills_loaded\":5,\"user_initiated\":3,\"tool_mandated\":1,\"self_invoked\":1,\"reflow2_tools_requiring_a_reflow2_skill\":0,\"refuted_hypothesis\":\"pause vs interrupt / capture vs change-governing\",\"refuted_by\":\"all 23 mirrored identically; impact-check, revise-design, link-artifacts all have slash commands\",\"blocking_interventions_obeyed\":3,\"passive_hints_acted_on\":0,\"corroborating_observation\":\"fact:an-agent-stopped-reaching-for-reflow2-and-a-second-one-reproduced-it-the-same-day\",\"step_7_pin\":\"deliberately not taken - fix not chosen\"}"
       }
     },
     {
@@ -143049,6 +143803,20 @@
       }
     },
     {
+      "node_id": "fact:skill-mechanics-track-enforcement-exactly-and-they-split-into-three-kinds",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "name": "MEASURED across all 23 served skills: the ONE mechanic skill_lint enforces is at 23/23; every mechanic it does not enforce sits at 5-18/23. Presence tracks enforcement exactly — and the mechanics split into three kinds a factory treats differently",
+        "statement": "MEASURED 2026-08-28 over `getting-started/skills/*/SKILL.md`, prompted by Anthony noticing that \"we keep finding that a successful skill does something another does not\" and wanting the good mechanic applied automatically rather than rediscovered.\n\n═══ THE NUMBERS ═══\n\n    graph-text-is-data rule    23/23   ← THE ONLY ONE skill_lint ENFORCES\n    says what it CANNOT do     18/23\n    honest limits section       8/23\n    loop_status before finish   8/23\n    an anti-pattern list        7/23\n    names what it is NOT        5/23\n    a MEASURED example          5/23\n\n⭐⭐ **PRESENCE TRACKS ENFORCEMENT EXACTLY.** The single checked mechanic is universal. Every unchecked one is between a fifth and four-fifths, and which skills have it is a matter of what its author happened to write that day. This is not a claim about diligence; it is what an unenforced convention looks like at n=23.\n\n═══ ⭐ AND IT ANSWERS THE NODE'S OWN TEST, IN THE SKILL DOMAIN ═══\n\nThat node poses the cheapest honest test as: *\"name a change that WOULD have required editing all 173 tools. If one exists, the factory earns itself.\"* Posed for tools, it was unanswered. **For skills it is answered now: \"every skill states its honest limits\" requires editing 15 of 23.** A class change needing N edits exists today, and there are at least four more in the table above.\n\n═══ 🛑 BUT THE MECHANICS ARE NOT ONE KIND, AND THAT IS THE REFINEMENT ═══\n\nThe node's counterweight 1 stands — *\"a factory guarantees the mechanics are PRESENT, never that they are RIGHT\"* — and the measurement shows it applies to some mechanics and not others:\n\n**① BOILERPLATE, where presence IS correctness.** The graph-text-is-data line; having a slash command. One right answer, no judgement, and a linter cannot be satisfied dishonestly. **A factory owns this class completely, and the 23/23 proves it works.**\n\n**② JUDGEMENT, where presence is NOT correctness.** \"Honest limits\", \"a measured example\", \"what it cannot do\". Forcing these into 15 skills yields 15 sections written to satisfy a linter — exactly the `internal`-by-default trap the node already names, manufactured at scale. **A factory can require the SECTION and cannot supply the HONESTY.** What it can do is make the omission visible and attributable rather than invisible.\n\n**③ TOOL-SIDE, which cannot be fixed by editing skills at all.** The mechanic measured to actually work today is not in any SKILL.md: the `Artifact` tool's own description says the agent MUST load `artifact-design` before writing the file. Of five skills used in a long session, three were invoked because the user typed a command, one because a tool demanded it, and one was genuinely self-invoked — see `fact:the-author-of-a-skill-did-not-use-it-an-hour-later`. **No reflow2 tool makes any reflow2 skill a precondition of itself.** That is a class change across the tool surface, not the skill surface, and no amount of editing SKILL.md files reaches it.\n\n⚠️ **SO THE FACTORY QUESTION SPLITS.** For ① it is cheap and demonstrably effective. For ② it risks manufacturing the ambiguity the node warns about. For ③ it is aimed at the wrong artifact entirely — and ③ is the one with evidence of changing an agent's behaviour.\n\n⚠️ WHAT THIS DOES NOT ESTABLISH: the seven mechanics were chosen by the measuring agent and detected by regex over prose, so both the list and the counts are approximate — a skill may honour a mechanic in words the pattern missed. The claim that presence tracks enforcement rests on ONE enforced mechanic; a second enforced one would test it properly. And nothing here says which mechanics are WORTH having, only which are unevenly present.",
+        "subject_id": "dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit",
+        "valid_from": "2026-08-28",
+        "value": "{\"skills\":23,\"enforced_mechanics\":1,\"enforced_present\":23,\"honest_limits\":8,\"loop_status_at_end\":8,\"anti_pattern_list\":7,\"names_what_it_is_not\":5,\"measured_example\":5,\"says_what_it_cannot_do\":18,\"class_change_requiring_n_edits\":\"every skill states its honest limits = 15 edits\",\"mechanic_kinds\":[\"boilerplate: presence is correctness\",\"judgement: presence is not correctness\",\"tool-side: not in the skill at all\"],\"tool_side_example\":\"Artifact requires loading artifact-design; no reflow2 tool requires any reflow2 skill\"}"
+      }
+    },
+    {
       "node_id": "fact:skill-use-measured-two-channels-2026-08-14",
       "node_type": "TemporalFact",
       "properties": {
@@ -143172,6 +143940,20 @@
       }
     },
     {
+      "node_id": "fact:the-contracts-are-the-same-shape-and-the-code-says-so-twice",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "name": "COMPOSITION, not one factory — Anthony's refinement, and skill_lint already contains the evidence: three contracts the code itself calls \"the same shape\" twice, and a rule the instructions apply to EVERY skill that is carried by 1 of 23 and enforced for 1 of 23",
+        "statement": "ANTHONY, 2026-08-28, correcting the framing of this node: *\"I didn't mean we have only one factory, I was actually thinking of multiple factories. like in python, a class can inherit a class which can inherit a class (I actually prefer class composition versus class inheritance). so a particular class of skills inherits a set of classes that determine what that skill should have. different skills inherit (or are composed) of different class attributes.\"*\n\n⚠️ **THE OPTIONS ON THIS NODE ALL ASSUMED ONE FACTORY**, stamping every member of a class identically. That is not what he asked for and it is a materially weaker idea. This is option (f): COMPOSABLE ATTRIBUTE CLASSES, each skill composed of the ones it actually owes.\n\n═══ ⭐ THE EVIDENCE IS ALREADY IN `skill_lint.py`, IN ITS OWN COMMENTS ═══\n\nThree per-skill contracts exist — `ASK_CONTRACT`, `LINK_CONTRACT`, `OPTIMIZE_CONTRACT` — each a dict of {label: required phrase}, each bound to ONE skill by its OWN loop (lines 1015, 1031, 1042). **And the file says twice, in comments, that they are the same shape:** *\"The same shape as ASK_CONTRACT above and for the same reason\"* (line 679) and *\"Same shape as ASK_CONTRACT and LINK_CONTRACT\"* (line 719). The abstraction was NOTICED, WRITTEN DOWN, AND NOT TAKEN — three times over, in a 1,126-line file.\n\n═══ 🛑 AND THE KILLER INSTANCE, MEASURED ═══\n\n**\"Speak the reader's domain, never reflow2's\" is §35 of the SERVED INSTRUCTIONS.** It is stated as applying to every skill. Measured across the 23 SKILL.md bodies: it is carried by **ONE** (`detect-and-ask`) and enforced by **ONE** contract (`ASK_CONTRACT`, where it was added 2026-08-19 after two users independently invented the same workaround of asking the agent to drop reflow2's jargon).\n\n**A universal rule, implemented once, enforced once, discovered late.** That is the cycle this idea exists to break, and it is not hypothetical.\n\n═══ ⭐⭐ WHY COMPOSITION ANSWERS COUNTERWEIGHT 1, WHICH ONE FACTORY DOES NOT ═══\n\nThis node's strongest objection is that *\"a factory guarantees the mechanics are PRESENT, never that they are RIGHT\"* — force a section into 23 skills and get 23 sections written to satisfy a linter. `fact:skill-mechanics-track-enforcement-exactly-and-they-split-into-three-kinds` measured that the mechanics divide into BOILERPLATE (presence is correctness), JUDGEMENT (presence is not), and TOOL-SIDE (not in the skill at all).\n\n**Composition dissolves the objection for the JUDGEMENT class.** A single factory must demand \"honest limits\" of all 23, where 15 of them would produce filler. Composition demands it only of the skills that compose a MEASURES attribute — the five that actually measure something — where the section is meaningful and its absence is a real omission. **The manufactured-ambiguity trap comes from UNIFORMITY, not from construction.**\n\n═══ CANDIDATE ATTRIBUTE CLASSES, derived from the 23 skills rather than invented ═══\n\nOffered as a starting point, not a taxonomy: STANDING (the graph-text-is-data rule — the only one at 23/23, and already the base class in effect); WRITES (search before create, typed constructors, loop debt before finishing); REVISES (snapshot before edit — the mechanic skipped twice in this very session); REPORTS (speak the reader's domain, never paste raw ids, say what is withheld); MEASURES (bound the claim, state n, say what could not be established); DESTROYS (name what would be lost, require a human read before applying).\n\n⚠️ WHAT THIS DOES NOT ESTABLISH: the six classes above are this agent's reading of 23 skills and nobody has tested that they carve cleanly — a skill belonging to four of them is a sign the carving is wrong. Whether the mechanism should be a Python composition in `skill_lint`, a declaration in each SKILL.md's frontmatter, or something in the build is UNCHOSEN and they have different costs. And the over-engineering counterweight on this node still stands in full: a class taxonomy is exactly the shape an engineer reaches for, and the measured alternative — one exhaustive check per class — is fifteen lines.",
+        "subject_id": "dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit",
+        "valid_from": "2026-08-28",
+        "value": "{\"contracts_of_the_same_shape\":3,\"code_comments_saying_so\":2,\"separate_loops_binding_them\":3,\"skill_lint_lines\":1126,\"reader_domain_rule\":{\"stated_in\":\"served AGENTS.md section 35, applies to every skill\",\"carried_in_skill_bodies\":1,\"enforced_by_contract\":1,\"of\":23,\"added_after\":\"two users independently inventing the same workaround, 2026-08-19\"},\"candidate_classes\":[\"STANDING\",\"WRITES\",\"REVISES\",\"REPORTS\",\"MEASURES\",\"DESTROYS\"],\"resolves_counterweight\":\"uniformity, not construction, is what manufactures filler\"}"
+      }
+    },
+    {
       "node_id": "fact:the-decision-race-is-caller-ordering-not-read-after-write",
       "node_type": "TemporalFact",
       "properties": {
@@ -143251,6 +144033,20 @@
         "statement": "MEASURED from the committed export: reflow2 declares EIGHT subsystems (`sys:agent-surface`, `sys:coherence-loop`, `sys:documentation`, `sys:human-channel`, `sys:intake`, `sys:store`, `sys:time-history`, `sys:vocabulary`) and NOT ONE OF THEM PROVIDES AN INTERFACE.\n\n  subsystem            contains  PROVIDES  CONSUMES\n  sys:agent-surface       5         -         -\n  sys:coherence-loop     18         -         -\n  sys:documentation       1         -         -\n  sys:human-channel       2         -         -\n  sys:intake              3         -         -\n  sys:store               4         -         2\n  sys:time-history        5         -         -\n  sys:vocabulary          4         -         -\n\nZERO of eight provide; ONE of eight consumes anything, and both of its consumed interfaces are external (`ifc:exclusive-local-store`, `ifc:req-dyno-storage-api`) rather than a seam with a sibling subsystem. EVERY interface in the design is provided by a LEAF component one level down — `cmp:service` (ifc:mcp-tools, ifc:mcp-tools-http), `cmp:graph` (ifc:core-api), `cmp:export` (ifc:graph-export), `cmp:main` (ifc:rendezvous-sidecar), `cmp:registry` (ifc:session-graph-selector).\n\nWHAT THAT MEANS, in the systems-engineering sense Anthony raised: the eight are GROUPINGS, not black boxes. A black box is defined by its boundary — you can say what it offers and what it needs without opening it. Here you cannot say either for seven of the eight, so the decomposition carries no interface contract at any level above the leaves. `granularity_report` and `seam_report` have nothing to read at the subsystem tier.\n\nRECORDED BECAUSE IT IS THE BASELINE for a future increment doing proper SE on reflow2 itself, and because the number is the argument: 0/8 is not 'some interfaces are missing', it is 'the tier has no contracts at all'.",
         "subject_id": "proj:reflow2",
         "valid_from": "2026-08-17"
+      }
+    },
+    {
+      "node_id": "fact:the-exhaustive-check-was-built-and-can-only-carry-universal-obligations",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "name": "The exhaustive check was BUILT and IS RUNNING over every skill — and it structurally cannot express a per-CLASS obligation, which is exactly why Artifact had a mechanic the others did not",
+        "statement": "CHECKED 2026-08-28 against source, because Anthony asked whether the exhaustive check had actually been tried or only discussed: *\"haven't we tried the exhaustive check already (I might be mistaken)?\"*\n\n**HE IS NOT MISTAKEN. IT EXISTS, IT IS IMPLEMENTED, AND IT RUNS OVER EVERY SKILL.** `HealCategory::ALL` with its exhaustive-match tests in `crates/reflow2-core/src/heal.rs`; dozens of `every_*` tests across the core test suite; and for skills specifically, `crates/reflow2-mcp/tests/served_skills.rs` iterates `SKILLS` three separate times while `tools/skill_lint.py` walks every skill directory.\n\n═══ ⭐⭐ AND THAT IS WHY IT DID NOT CATCH THE ARTIFACT CASE ═══\n\n**EVERY EXHAUSTIVE SKILL CHECK ASSERTS A UNIVERSAL PREDICATE.** Read from source: byte-identical to its kit source; has a non-empty description; appears in the served catalogue; states the graph-text-is-data rule; references only tools that exist; mirrors match across the three trees. Each is true-of-all-skills by construction.\n\n**A flat loop over a flat set can only carry an obligation that applies to every member.** It has no vocabulary for *\"this skill owes REPORTS mechanics and that one does not\"*. So the exhaustive check did not fail — it succeeded completely, at its own scope, which is why the one universal mechanic sits at 23/23 while every other sits between 5 and 18.\n\n═══ THE THREE TIERS, AND THE MIDDLE ONE IS WHERE THE PAIN IS ═══\n\n    UNIVERSAL obligation   → exhaustive loop            → WORKS. 23/23.\n    PER-SKILL obligation   → 3 hand-written contracts   → N edits; the file itself\n                                                          notes TWICE they are\n                                                          \"the same shape\"\n    PER-CLASS obligation   → NOTHING EXISTS             → Artifact's mechanic\n                                                          never propagated\n\n`ASK_CONTRACT`, `LINK_CONTRACT` and `OPTIMIZE_CONTRACT` are composition attempted by copy-paste: the right idea, expressed by duplication, bound to one skill each by its own loop.\n\n═══ ⭐ THE MOSA ARGUMENT, WHICH IS ANTHONY'S AND IS SOUND ═══\n\n*\"I also feel like it fits the MOSA type concept better than exhaustive checks.\"* It does, and the reason is structural rather than aesthetic: a MOSA module is SEVERABLE and meets a stated INTERFACE, so it can be composed selectively, replaced, or upgraded without touching its neighbours. **An exhaustive check has neither property** — it is one monolithic predicate over the whole population, cannot be applied to a subset, and cannot be replaced for one member without weakening it for all. `dec:mosa-conformance` already asks whether reflow2 should report MOSA conformance given it computes most of the criteria; this is the same concept turned inward on reflow2's own skill surface.\n\n═══ ON DEPENDENCY INJECTION IN RUST — IT IS ALREADY IN THIS CODEBASE ═══\n\n*\"potentially using dependency injection if that can be done in rust\"*. It can, and it is not a new pattern here. **Rust has NO inheritance at all**, so composition via traits is the only idiom available — his stated preference is what the language forces. And the project already does constructor injection: `KvBackend` is a six-method trait with two implementations (`RocksBackend`, `MemoryBackend`) held as `Box<dyn KvBackend>` inside `StorageEngine`. The pattern he is describing for skills is the one already load-bearing under the store.\n\n⚠️ WHAT THIS DOES NOT ESTABLISH: that composition is worth its cost here. It establishes only that the exhaustive check was genuinely tried, works at its scope, and cannot reach per-class obligations — so \"just add an exhaustive check\" is not an available answer to the Artifact case. The over-engineering counterweight on the parent node stands, and where the composition would LIVE (skill_lint, SKILL.md frontmatter, or the Rust build) is unchosen with materially different costs.",
+        "subject_id": "dec:idea-a-factory-builds-the-mechanics-in-so-a-class-fix-is-one-edit",
+        "valid_from": "2026-08-28",
+        "value": "{\"exhaustive_check_exists\":true,\"where\":[\"HealCategory::ALL + exhaustive-match tests\",\"served_skills.rs iterates SKILLS x3\",\"skill_lint.py walks every skill dir\"],\"all_assertions_are_universal\":true,\"universal_mechanic_coverage\":\"23/23\",\"non_universal_mechanic_coverage\":\"5-18/23\",\"per_class_mechanism\":\"none\",\"per_skill_contracts\":3,\"rust_has_inheritance\":false,\"di_already_in_codebase\":\"KvBackend trait, 2 impls, Box<dyn KvBackend> in StorageEngine\"}"
       }
     },
     {
@@ -145102,6 +145898,20 @@
       }
     },
     {
+      "node_id": "ver:every-skill-meets-the-classes-it-composes",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Two checks in `tools/skill_lint.py`, run by CI. The first asserts every skill carries a `composes:` declaration — an undeclared skill is invisible to the second, so silence there would read as compliance. The second checks each skill against the obligations of the classes it declares AND NO OTHERS, which is the property no other check in the file can express: everything else there is a predicate over all skills.\n\n⚠️ WHAT IT CANNOT CHECK, and it is the same limit the whole idea carries: whether the obligation was met HONESTLY. It confirms a skill says something that carries the meaning; it cannot confirm the sentence is true or useful. Requiring a section produces a section.\n\n📌 THE OBLIGATIONS ARE TUPLES OF ACCEPTABLE PHRASINGS deliberately, because a single literal fails on wording rather than substance — measured at 13 false failures out of 29 on the first run. The governing line is in the code beside them: adding a phrasing for the same obligation is legitimate, removing the obligation is not.",
+        "findings": "PASSING 2026-08-28, after fourteen real omissions were fixed. `python3 tools/skill_lint.py` — all checks passed.\n\n⭐ IT WAS OBSERVED FAILING FIRST, THREE TIMES, AND EACH FAILURE CHANGED SOMETHING:\n\nRUN 1 — 29 unmet. Reading them showed 13 were MATCHING ARTIFACTS rather than deficiencies (`brainstorm` says \"searched before\", `check-health` says \"lose\" not \"lost\"). Obligations became tuples of acceptable phrasings.\n\nRUN 2 — 16 unmet, of which 11 were the SAME obligation. That concentration was the signal: \"search before creating\" is not owed by every writer, because `genesis` runs on an empty graph, `impact-check` records an event and `parallel-work` records a claim. MINTS was split out of WRITES. **The class was wrong, not the skills.**\n\nRUN 3 — 14 unmet, every one real: 8 skills that mint concept nodes never said to search first; `impact-check` and `link-artifacts` did not bound what they failed to establish; `parallel-work` did not name what a merge can lose; `root-cause` did not name the loop check. Fixed with prose written for each skill.\n\nRUN 4 — 1 unmet, and it was the documented trap: the new `impact-check` text wrapped \"could not\\\\nestablish\" across a newline, which `OPTIMIZE_CONTRACT`'s own comment predicts (\"fails on reflow rather than on meaning, which trains people to weaken the check\"). THE LINE WAS REFLOWED; THE CHECK WAS NOT WEAKENED.\n\nThe existing tool-reference check then caught `accept_divergence` named as a tool when it is a parameter of `export_graph` — added to NON_TOOL_TERMS in the same diff, as that check instructs.\n\nFull suite green alongside: `cargo test --workspace` exit 0 from cargo's own code, 165 suites, 1865 passed, 0 failed — byte-identity across all three trees re-verified after 69 frontmatter edits and 33 appended sections.",
+        "kind": "verification",
+        "last_run_at": "2026-08-28",
+        "level": "system",
+        "method": "analysis",
+        "name": "Every skill declares its attribute classes, and meets the obligations of the ones it declares",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:evidence-fidelity",
       "node_type": "Verification",
       "properties": {
@@ -146745,7 +147555,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:9edf35d206dae06026cad67b192e79a3afc5801f36485e69bec1a7de04326753",
+  "prev_content_hash": "sha256:da9e61fac3d7f057b1bd23c4ac05fd8263a54f20a714a5f5589150ce2547b27a",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
