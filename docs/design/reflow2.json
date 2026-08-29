@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:a70effa16252361cf865bbbe8b60ac6d8ad405dce54e16ed5bc065e6ce47dcef",
+  "content_hash": "sha256:b82a4414fb245f3a148cace3b1ba2e1f69a1788ec289fa9903779c9c571c1b21",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -33608,6 +33608,15 @@
         "action": "modified"
       },
       "to_id": "rule:fix-it-properly-while-it-is-still-cheap"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:the-readme-says-what-it-is-before-what-it-believes",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:readme"
     },
     {
       "edge_type": "CHANGED",
@@ -116748,7 +116757,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "document",
-        "checksum": "sha256:00ac00342910d276b036ffa093f2ed3ee8a7efb9abe9d3b2a5c21fcfa30939c8",
+        "checksum": "sha256:cf52dfdb70d8548665c7faac8eb96fe445c596a55871d0e803341262b75a922e",
         "granularity": "atomic",
         "location": "README.md",
         "name": "README.md",
@@ -119524,12 +119533,12 @@
       "node_id": "cap:explains-itself",
       "node_type": "Capability",
       "properties": {
-        "description": "The plain-language entry surface: what reflow2 physically is, how it runs on the reader's own machine, where the agent instructions go, and a few concrete uses — before any doctrine. Realized by documentation artifacts (README, the getting-started material, diagrams) rather than by code, which is why it is a capability with no module: what satisfies it is prose and pictures. PLANNED — BL-102. Deliberately left unallocated at capture: which part of the project owns its own explanation is a real question, not an obvious one, and inventing an owner would be a renderer fill-in of the kind dec:views-are-projections forbids.",
+        "description": "The plain-language entry surface: what reflow2 physically is, how it runs on the reader's own machine, what it can answer that nothing else can, and the first thing they would actually type — before any doctrine. Realized by documentation rather than by code, which is why it is a capability with no module: what satisfies it is prose and a picture.\n\n✅ BUILT 2026-08-29 — BL-102. `README.md` gains a first section, \"What it actually is, concretely\", sitting before Vision: the physical shape in four sentences, a mermaid diagram of agent → MCP → binary → the two files in your own repo, the one-line install with \"there is nothing to put in your project\", the three first moves as a table, and the four questions it can answer that nothing else can. The top banner now points INTO that section rather than away from the file.\n\n⭐ IT DELIBERATELY MIRRORS THE `help` SKILL, AND THE DUPLICATION IS THE POINT. Two doors, two audiences: the skill answers someone who already has an agent and asks it; this answers a stranger who lands on the repository with neither. `cap:a-newcomer-can-ask-the-agent-what-this-is` satisfies `req:explains-itself` only PARTIALLY for exactly that reason, and this closes the other half. If the two ever disagree, the README is the one a stranger meets first.\n\n🛑 AND THE REWRITE FOUND SEVEN STALE FACTS, which is the more transferable result. Tools 114 → 165, skills 15 → 25, core modules 40 → 59, edge types 60 → 64; the file contradicted itself on the vocabulary counts; `install.sh` was listed in the wrong directory; and — in the first screen a stranger reads — \"**The store** is dynograph-foundation\" had been FALSE SINCE 2026-08-24, when that subset was absorbed and the dependency ended.\n\n⚠️ THE README IS THE ONE DOCUMENT WITH NO CHECK BEHIND IT. `skill_lint` guards the skills, `reflow2_check` guards design against build, `check_intent_authority` guards settled intent — and the file a stranger reads first carried 114 tools while 165 were served, with nothing anywhere able to say so. No check was added: a lint parsing prose for counts would be brittle and would fire on correct rewording. The numbers are right today and will drift again, and saying so is the honest position rather than pretending a fix.",
         "is_entry_point": false,
         "is_exit_point": false,
         "name": "Explain itself to someone who has not been convinced yet",
         "provenance": "authored",
-        "status": "planned",
+        "status": "realized",
         "tier": "operational"
       }
     },
@@ -127136,6 +127145,18 @@
       "properties": {
         "change_type": "scope_change",
         "name": "The rule conflated an ENDURING philosophy with a corollary that expires at 1.0, and said the whole thing should be revisited then — Anthony corrected it: the philosophy endures"
+      }
+    },
+    {
+      "node_id": "chg:the-readme-says-what-it-is-before-what-it-believes",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "documentation",
+        "detected_at": "2026-08-29",
+        "name": "The README leads with the physical shape, and seven stale facts are corrected",
+        "rationale": "THE ORDERING WAS THE DEFECT `req:explains-itself` NAMED: \"the doctrine that makes reflow2 worth using is not the entry point to it\". The file ran Vision → What this is → the hallucination question → vocabulary → Layout before ever saying it is a binary you run locally. Nothing was deleted to fix that — the philosophy is intact and still good, it just no longer comes first.\n\n⭐ THE SECTION MIRRORS THE `help` SKILL ON PURPOSE, AND THE DUPLICATION IS THE POINT. The two reach different people through different doors: the skill answers someone who has an agent and asks it; the README answers a stranger who lands on the repository and has neither. `cap:a-newcomer-can-ask-the-agent-what-this-is` was recorded as satisfying the requirement only PARTIALLY for exactly this reason, and this closes the other half. If the two ever disagree, the README is the one a stranger meets first.\n\nWHY THE STALE NUMBERS ARE A FINDING AND NOT A CHORE: every one drifted silently, and the README is the ONE document with no check behind it. `skill_lint` guards the skills, `reflow2_check` guards the design against the build, `check_intent_authority` guards settled intent — and the file a stranger reads first had 114 tools written in it while 165 were served. Nothing anywhere would have said so. That is the same shape as this afternoon's finding one more level out, and it is recorded rather than merely fixed.\n\n📌 WHAT WAS DELIBERATELY NOT DONE: no check was added for the README's numbers. A lint that parses prose for counts would be brittle and would fire on correct rewording, and the honest alternative — stop putting exact counts in prose — is a bigger judgement than this change should make unilaterally. The numbers are correct today and will drift again; that is stated here rather than pretended away.",
+        "subject": "record",
+        "summary": "BL-102, and the last half of `req:explains-itself`. A new first section — \"What it actually is, concretely\" — sits before Vision and carries: the physical shape in four sentences (a program on your machine, a design as a file in your own repo, your agent talking to it over MCP, nothing leaves), a mermaid diagram of exactly that, the one-line install with \"there is nothing to put in your project\", the three first moves as a table, and what it can answer that nothing else can. The banner at the top now points INTO that section instead of away from the file.\n\n🛑 AND SEVEN FACTUAL CLAIMS WERE STALE, EVERY ONE MEASURED RATHER THAN GUESSED. Tools 114 → 165. Skills 15 → 25. Core modules 40 → 59. Edge types 60 → 64. The vocabulary section said \"28 types across 10 schema domains\" while the Layout section said \"29 node / 60 edge types\" across 11 — the file contradicted itself, and neither figure was right. `install.sh` was listed under `getting-started/` and lives in `tools/`.\n\n⚠️ THE SEVENTH IS NOT A NUMBER AND IT MATTERED MOST: \"**The store** is dynograph-foundation, a schema-driven Rust graph engine\" — in the first screen a stranger reads. That has been FALSE SINCE 2026-08-24, when the subset reflow2 actually called was absorbed into `reflow2-core/src/` and the dependency ended (`dec:absorb-the-foundation-subset-and-end-the-dependency`). The manifest says so in capitals — \"NOTHING IS PULLED FROM THAT REPOSITORY ANY MORE\" — and the README went on telling every new reader the architecture depended on an external library. Now corrected, with the absorption and its date stated rather than the history quietly erased."
       }
     },
     {
@@ -152675,7 +152696,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:ec21cae152411326ea1892d80d608c40a17f193c85648bf53b625c3e1b3ae177",
+  "prev_content_hash": "sha256:a70effa16252361cf865bbbe8b60ac6d8ad405dce54e16ed5bc065e6ce47dcef",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
