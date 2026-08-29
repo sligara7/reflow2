@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:00b8e4fc0eed67dc5322131779b69b02b57229d90653efd25a7f56ae6faf2f17",
+  "content_hash": "sha256:ddff7814515cf8515811b9d6e69e706161b8765677f5f7513867f25dcf928600",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -144291,6 +144291,20 @@
       }
     },
     {
+      "node_id": "fact:a-separator-line-between-a-test-run-and-its-exit-code-read-manufactures-a-green",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "measurement",
+        "name": "MEASURED: reading ${PIPESTATUS[0]} one command late reports 0 for a run that exited 7 — a false GREEN produced by a cosmetic separator, twice in one session",
+        "statement": "MEASURED 2026-08-29, after reporting a passing test suite that had actually FAILED.\n\n═══ THE DEMONSTRATION, run both ways ═══\n\n```text\nbash -c 'exit 7' 2>&1 | tail -1\necho \"--------\"                      <- a cosmetic separator\necho ${PIPESTATUS[0]}   ->  0       <- WRONG, and it reads as a pass\n\nbash -c 'exit 7' 2>&1 | tail -1\necho ${PIPESTATUS[0]}   ->  7       <- correct\n```\n\n`PIPESTATUS` describes THE MOST RECENT PIPELINE, so any intervening command — `echo` included — overwrites it with that command's status, which is almost always 0. The separator that makes output readable is the thing that destroys the evidence.\n\n═══ HOW IT ACTUALLY PRESENTED ═══\n\nTWICE in one session, both times as a confident green:\n1. `cargo test` printed `test result: FAILED. 7 passed; 1 failed` AND the line under it read `CARGO TEST EXIT=0`. The suite genuinely had a failing test; the exit code shown was the separator's.\n2. `<binary> --import <doc> | tail -12` reported `IMPORT EXIT=0` while the import had exited 1 and written nothing. Here the fault is the sibling one — bare `$?` after a pipeline is the LAST element's status, so it measured `tail`.\n\n⭐ BOTH ARE THE SAME FAMILY: the status read did not belong to the command being judged. And both are silent — the wrong number is a plausible number, in the right place, in the right format.\n\n═══ 🛑 THE CAUSE I FIRST RECORDED WAS WRONG, WHICH IS THE SECOND FINDING ═══\n\nThe first diagnosis written down was *\"`systemd-run --user --scope` does not propagate exit codes\"*. It is FALSE and was refuted by one measurement: `systemd-run --user --scope -p MemoryMax=1G bash -c 'exit 7'` returns 7, identically to running it bare. The wrapper was innocent and was blamed because it was the unfamiliar element in the line — the plausible suspect rather than the measured one. It had already been written into a handoff note before the check was run, and would have taught the next session to distrust the wrong thing.\n\n═══ WHAT TO DO INSTEAD ═══\n\nRead the status in the SAME command as the thing that produced it, and prefer having the runner say so itself:\n\n```text\nsystemd-run --user --scope ... bash -c 'cargo test ...; echo \"INNER_EXIT=$?\"'\n```\n\n⚠️ WHY THIS IS WORTH A NODE IN A DESIGN GRAPH: `rule:a-green-gate-is-the-weakest-evidence` is the project's standing stance, and this is a mechanism that FABRICATES one from a run that failed. The reflow2 gate list in AGENTS.md is run by hand by agents, and an agent that reports the list green on this idiom has told the user something false about every gate at once.\n\n⚠️ NOT ESTABLISHED: whether any committed script or workflow in this repo reads a pipeline status late. Grepped for `systemd-run` in AGENTS.md, CLAUDE.md, .github/workflows and tools/ — one hit, in AGENTS.md prose, and it is not a gate. CI itself uses plain `run:` steps, so the hazard measured here is the AGENT'S shell, not the committed pipeline.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-29",
+        "value": "{\"observed_exit_when_read_late\":0,\"actual_exit\":7,\"false_greens_in_one_session\":2,\"kinds\":[\"PIPESTATUS clobbered by an intervening echo\",\"bare $? after a pipeline measures the last element (tail)\"],\"first_diagnosis\":\"systemd-run --scope eats exit codes\",\"first_diagnosis_verdict\":\"REFUTED by measurement: scope returns 7 for exit 7\",\"repo_scripts_affected\":\"none found; hazard is the agent shell, not committed CI\"}"
+      }
+    },
+    {
       "node_id": "fact:a-skill-is-loaded-only-when-something-already-in-hand-demands-it",
       "node_type": "TemporalFact",
       "properties": {
@@ -145975,7 +145989,7 @@
         "basis": "measured",
         "confidence": 0.9,
         "fact_type": "defect",
-        "statement": "art:main (crates/reflow2-mcp/src/main.rs) REALIZES cap:snapshot-read and cmp:main, and nothing else — so the file that carries the whole CLI surface is traced to one capability it barely touches and NOT to the ones it actually serves. Measured 2026-08-06 by reconcile_artifacts, which returned propagation_seeds ['cap:snapshot-read','cmp:main'] for a change that was entirely about cap:content-store's --content-path argument. CONSEQUENCE: the reconcile-driven path from a code change back to the intent that justified it — the loop link-artifacts step 6 exists to close, and which the skill calls 'the loop the original Reflow never closed' — lands on the wrong capability for any CLI change. The correct blast radius was only obtained because the agent hand-named cap:content-store in add_change_event from judgement; had it trusted the graph, ifc:mcp-tools would never have appeared as a boundary crossing and a tool-surface change would have shipped unnoticed. THE UNDERLYING SHAPE is that main.rs is one atomic artifact standing for many capabilities (content store, HTTP/shared serving, export, import, merge driver, latent mode), which is the pending_expansion case link-artifacts describes: a placeholder standing in for files that should each become their own node, where an atomic registration buys a false tick. Not yet decided whether the fix is more REALIZES edges from the one artifact or a finer artifact decomposition.",
+        "statement": "art:main (crates/reflow2-mcp/src/main.rs) REALIZES cap:snapshot-read and cmp:main, and nothing else — so the file that carries the whole CLI surface is traced to one capability it barely touches and NOT to the ones it actually serves. Measured 2026-08-06 by reconcile_artifacts, which returned propagation_seeds ['cap:snapshot-read','cmp:main'] for a change that was entirely about cap:content-store's --content-path argument. CONSEQUENCE: the reconcile-driven path from a code change back to the intent that justified it — the loop link-artifacts step 6 exists to close, and which the skill calls 'the loop the original Reflow never closed' — lands on the wrong capability for any CLI change. The correct blast radius was only obtained because the agent hand-named cap:content-store in add_change_event from judgement; had it trusted the graph, ifc:mcp-tools would never have appeared as a boundary crossing and a tool-surface change would have shipped unnoticed. THE UNDERLYING SHAPE is that main.rs is one atomic artifact standing for many capabilities (content store, HTTP/shared serving, export, import, merge driver, latent mode), which is the pending_expansion case link-artifacts describes: a placeholder standing in for files that should each become their own node, where an atomic registration buys a false tick. Not yet decided whether the fix is more REALIZES edges from the one artifact or a finer artifact decomposition.\n\n═══ SECOND OCCURRENCE, 2026-08-29 — 23 DAYS LATER, SAME COST, SAME WORKAROUND ═══\n\nSurfaced by `unclaimed_findings` during a capture-session pass, as the ONE candidate returned for that session's three ChangeEvents (subjects_examined 13), reached via art:main. Examined and left OPEN: the session changed main.rs (an import now prints unresolvable node references) but changed nothing about what it REALIZES, so every word above is still true.\n\n⭐ WHAT MAKES IT WORTH RE-DATING RATHER THAN JUST NOT CLOSING: the session REPRODUCED the defect's cost without noticing at the time. All three of its ChangeEvents carried `affected` lists typed out from judgement — art:export, art:graph, art:main, art:schema-temporal, art:repair-notes-lifted-test, and later art:heal, art:service, art:tools-coherence — read off `reflow2_check.py`'s drift output rather than obtained from the graph. That is the identical workaround the 2026-08-06 entry describes, arrived at independently, by an agent that had not read this node.\n\n🛑 SO THE HAND-NAMING IS NOT AN ANOMALY OF ONE SESSION; IT IS THE STANDING PRACTICE THIS DEFECT FORCES. The drift report names the FILES that changed, and mapping those to intent stays a human judgement — which is exactly the loop step this defect breaks. Two occurrences, 23 days apart, both silent, both only visible because someone looked.\n\nThe fix remains undecided (more REALIZES edges vs. finer artifact decomposition). What the second occurrence adds is evidence about COST: the workaround is cheap and reliable enough that nobody is forced to fix the cause, which is why it has survived 23 days.",
         "subject_id": "art:main",
         "value": "{\"artifact\":\"art:main\",\"location\":\"crates/reflow2-mcp/src/main.rs\",\"realizes_actual\":[\"cap:snapshot-read\",\"cmp:main\"],\"realizes_expected_at_least\":[\"cap:content-store\"],\"found_by\":\"reconcile_artifacts propagation_seeds, 2026-08-06\",\"granularity_declared\":\"atomic\",\"candidate_granularity\":\"pending_expansion\",\"why_it_mattered_today\":\"the correct radius (829 impacted, ifc:mcp-tools crossed) came from a hand-named seed, not from the graph\"}"
       }
@@ -146812,6 +146826,30 @@
         "statement": "Wrote a throwaway Python script over the committed export to list every edge among a named SET of nodes — the hub idea cluster — with each edge's type, direction and `evidence` note, so I could tell whether last session's brainstorm actually linked the ideas or left them as orphans. Ran the same shape twice more: once to find the CONTAINS parents and children of a set of components, and once to list every edge touching two nodes I was judging.",
         "subject_id": "proj:reflow2",
         "valid_from": "2026-08-26",
+        "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":null}"
+      }
+    },
+    {
+      "node_id": "fact:manual-work-9a1bceeb20b41503",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "manual_work",
+        "statement": "Wrote scripts to read a month of agent session transcripts off a peer machine and count, per skill, how often it was loaded versus how often the user typed its command — then the same per tool, to compare tools whose description demands a skill against tools that demand none. The output was the evidence for two experiments about why skills go unused. Three passes were needed because the first two mis-attributed every load: the harness records tool results as user turns, and records a slash command and its expansion as two separate turns, so any naive \"previous user turn\" test returns a clean-looking 100% that is entirely an artifact. Nothing in the design surface reads session history, so the whole question — is the kit actually being reached for — is answerable only from outside it.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-29",
+        "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":null}"
+      }
+    },
+    {
+      "node_id": "fact:manual-work-b4d0c4de46644a8f",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "fact_type": "manual_work",
+        "statement": "Wrote a throwaway script to walk the exported design and find every property whose value NAMES a node id, then check whether that id still resolves — the read-side counterpart of the write-time guard added this session. It found nine, split by cause: some were wrong when written (a typo in a prefix) and the rest were VALID when written and broke later when the target was renamed. The second group is the whole point: no write-time check can ever reach them, because nothing was wrong at the moment of writing. Also had to hand-classify each one as a genuine dangle versus a forward reference that merely sorted later in the document, which is a distinction the design has no way to express.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-29",
         "value": "{\"diagnosis\":\"tool_missing\",\"reflow2_tool\":null}"
       }
     },
@@ -150836,7 +150874,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:28f3553c3da175ead61b73a354e9f15365ac8716ae8d573c851bda460084c1d1",
+  "prev_content_hash": "sha256:00b8e4fc0eed67dc5322131779b69b02b57229d90653efd25a7f56ae6faf2f17",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
