@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:ef408da53201974489824a533cba6e99c27a03c4cc9a6aaea7dc0f9ee57f5efd",
+  "content_hash": "sha256:4b8420f13fbda505db73e8b4228131f76eb3aab57efff0cdea5f2921ced239ad",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -3200,6 +3200,14 @@
         "evidence": "That node raised both halves of this in advance and named them as unanswered: its option (b)'s counter is 'IS A MIRRORED DECISION BINDING ON THE MIRRORING DESIGN, OR ONLY VISIBLE TO IT?', and its closing paragraph asks 'does an inherited decision keep the hub's id, or get copied?'. This node is what those two questions turn into once the code is read — the copy-vs-reference half dissolves and the binding half acquires a concrete obstacle. Direction is from the older node to this one: it saw this coming."
       },
       "to_id": "dec:idea-a-published-decision-loses-its-approver-and-the-childs-gate-fails-on-it"
+    },
+    {
+      "edge_type": "ANTICIPATES",
+      "from_id": "dec:idea-intent-crosses-designs",
+      "properties": {
+        "evidence": "That node asked the question this answers, and named it as the half nobody had settled: 'IS A MIRRORED DECISION BINDING ON THE MIRRORING DESIGN, OR ONLY VISIBLE TO IT?' It also predicted the obstacle correctly — 'check_intent_authority is the ENFORCED rule... whose word governs a child that inherited a decision it never approved?' The experiment answers both: the status field is the switch, and the approver must travel only for the binding form."
+      },
+      "to_id": "fact:the-status-field-is-the-binding-versus-visible-switch"
     },
     {
       "edge_type": "ANTICIPATES",
@@ -37100,6 +37108,15 @@
         "evidence": "Third instance of the same defect, and the first to land on the maintainer rather than a reporter. Adds the remedy that fails (--stop-shared, absent from both prior records) and the cost (a full day of undogfooded work); adds nothing to the diagnosis, which was already certain."
       },
       "to_id": "fact:defect-a-running-server-cannot-say-it-is-stale"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "fact:the-status-field-is-the-binding-versus-visible-switch",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "Not the finding itself — a claim this session made ALONGSIDE it, on the same day, and this refutes. Arguing from the approver-loss discovery I concluded that visible-only 'needs none of this machinery' and recommended it as the cheap option. Measured: `settles_intent()` reads only `status == accepted` and never looks at GOVERNED_BY, so a mirrored ACCEPTED decision fails the gate whether it governs anything or not. Visible is only cheap if what arrives is `proposed`, which is a different design from the one I was recommending."
+      },
+      "to_id": "fact:the-instruction-surface-routes-to-hygiene-and-not-to-whether-the-thing-works"
     },
     {
       "edge_type": "CONTRADICTS",
@@ -149641,6 +149658,19 @@
       }
     },
     {
+      "node_id": "fact:the-status-field-is-the-binding-versus-visible-switch",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "observation",
+        "statement": "BINDING-VERSUS-VISIBLE IS ALREADY DECIDED BY A FIELD THAT EXISTS. Measured 2026-08-29 by running the REAL `check_intent_authority.py` against three hand-built export documents, each simulating a hub Decision arriving in a child design by mirroring.\n\n    CASE                                                    GATE      what it means\n    A  accepted, approver edge dropped                      FAIL (1)  what mirroring produces TODAY\n    B  accepted + hub owner's Contributor + approver edge    OK   (0)  BINDING — named authority\n    C  arrives as `proposed`, reasoning intact               OK   (0)  VISIBLE — asserts nothing locally\n\n🛑 ① \"VISIBLE IS THE CHEAP OPTION\" WAS FALSE AS I HAD FRAMED IT, and this refutes my own recommendation from earlier the same day. I argued visible-only needs none of the machinery binding needs. But `settles_intent()` reads ONLY `status == \"accepted\"` — it never looks at `GOVERNED_BY`. So a mirrored accepted Decision trips the enforced rule whether or not it governs anything in the child. There is no free version of \"just let them see it\" if what arrives is still marked accepted.\n\n⭐ ② AND THE SWITCH IS THE STATUS FIELD, NOT A NEW MECHANISM. Case C needs nothing built beyond making Decision publishable: a hub decision arriving as `proposed` is READABLE — name, statement, rationale, alternatives all intact — and asserts nothing in the child's graph. That is not a workaround; it is literally true. The hub's settled intent is the child's OPEN QUESTION, and the child owner accepting it is the local ruling. Case B is then the binding form, and it costs exactly one thing: the approver Contributor must travel in the published surface so the edge survives. No gate change, no `provenance: imported` awareness — B passed with the stock gate untouched.\n\n③ THE GATE ITSELF NAMED CASE C AND I HAD NOT CONSIDERED IT. Its failure message offers three honest remedies: get the approver, move the status back to `proposed`, or (refused) add the id to the grandfathered set. The second is the whole visible design, written in an error string, and I read past it twice.\n\n🛑 BOUNDS, and the first one narrows an overstatement I made this morning. `check_intent_authority.py` is REFLOW2-ONLY — it is not installed into consumer projects, which get `reflow2_check.py`. So \"the child's build fails\" is true of reflow2 self-hosting and NOT automatically true of a user's child design; whether their graph enforces the same rule is theirs to say. What survives unbounded is the doctrine rather than the tooling: an accepted Decision with nobody's name on it is a forged signature, and that is `dec:certainty-derived`, not a python script.\n\nALSO NOT ESTABLISHED: whether a reader on the far side actually GETS VALUE from an inherited rationale. That was the experiment originally proposed and this is not it — this measures what the machinery permits, not what a person finds useful. It is the cheaper question and it had to be answered first, because two of the three crossings were not available at all.",
+        "subject_id": "proj:reflow2",
+        "valid_from": "2026-08-29",
+        "value": "{\"method\":\"three hand-built export documents run through the real tools/check_intent_authority.py\",\"cases\":{\"A_accepted_no_approver\":{\"exit\":1,\"verdict\":\"FAIL\",\"note\":\"what mirroring produces today\"},\"B_accepted_with_travelled_approver\":{\"exit\":0,\"verdict\":\"OK\",\"note\":\"binding - named authority, costs one thing: the Contributor must be in the published surface\"},\"C_arrives_proposed\":{\"exit\":0,\"verdict\":\"OK\",\"note\":\"visible - readable, asserts nothing locally, needs no new machinery\"}},\"refutes\":\"this session's own earlier claim that visible-only needs none of binding's machinery - settles_intent reads only status==accepted and never looks at GOVERNED_BY\",\"the_switch\":\"the status field itself: proposed = visible, accepted = binding\",\"bound\":\"check_intent_authority.py is reflow2-only and does not ship to consumers; the doctrine (dec:certainty-derived) is what generalises, not the script\",\"not_established\":\"whether a reader on the far side gets value from an inherited rationale - that is the original experiment and this is not it\"}"
+      }
+    },
+    {
       "node_id": "fact:the-storage-seam-is-published-in-design-and-private-in-code",
       "node_type": "TemporalFact",
       "properties": {
@@ -152739,7 +152769,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:433cc0c710c2a677b8767e6e20dbc70bba668ad1e37868eb73c6cd386260bc21",
+  "prev_content_hash": "sha256:ef408da53201974489824a533cba6e99c27a03c4cc9a6aaea7dc0f9ee57f5efd",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
