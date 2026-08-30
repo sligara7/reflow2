@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:5c81188cda6abdc4d067bee4606562e28e9d589b79daa832e3f73882ea5769a5",
+  "content_hash": "sha256:8a34ee774ecb48a0168ee8914e097a18ecf71139ba1217599bf5288be72d6ab3",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -37837,6 +37837,24 @@
         "evidence": "That decision holds the switch to rust-rocksdb is owed, and its strongest supporting argument was that the official wrapper was abandoned while the fork was maintained. If upstream is releasing again the argument no longer carries, which makes the decision a candidate for superseded. The contradiction is with its JUSTIFICATION, not with its conclusion — there may be other grounds for the switch, and none has been measured."
       },
       "to_id": "dec:absorb-rocksdb-024-unchanged-then-switch-separately"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "fact:tool-call-markup-bleeds-into-the-last-prose-field-and-typed-fields-catch-it",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "alignment=supporting. That idea was recorded as a suspicion and has carried NO links since — detect_defects reports it as an orphan precisely because nobody had an occurrence to attach. This is five measured instances in one session, and it also NARROWS the idea: fields do not collapse into each other, the damage lands on the LAST prose field of a malformed call."
+      },
+      "to_id": "dec:idea-a-prose-field-silently-absorbed-tool-call-markup"
+    },
+    {
+      "edge_type": "CONTRADICTS",
+      "from_id": "fact:tool-call-markup-bleeds-into-the-last-prose-field-and-typed-fields-catch-it",
+      "properties": {
+        "alignment": "opposing",
+        "evidence": "alignment=supporting. All five were caught by reading the tool's echoed reply rather than by any check — which is exactly the habit that rule exists to install, doing the work it was written for. Three of them would otherwise have been stored silently and looked like prose somebody meant."
+      },
+      "to_id": "rule:success-is-read-from-the-authoritative-object"
     },
     {
       "edge_type": "CONTRADICTS",
@@ -111578,6 +111596,12 @@
       "edge_type": "PRECEDES",
       "from_id": "epoch:planned-seams",
       "properties": {},
+      "to_id": "epoch:the-linking-judgement-becomes-compellable-and-visible"
+    },
+    {
+      "edge_type": "PRECEDES",
+      "from_id": "epoch:planned-seams",
+      "properties": {},
       "to_id": "epoch:the-systems-views-are-rendered-from-the-graph"
     },
     {
@@ -118412,6 +118436,12 @@
       "from_id": "fact:defect-lineage-message-omits-its-own-decision",
       "properties": {},
       "to_id": "epoch:defects-closed-2026-08-07"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:a-band-carries-what-it-was-computed-over",
+      "properties": {},
+      "to_id": "cap:a-derived-number-carries-what-it-was-computed-over"
     },
     {
       "edge_type": "VERIFIES",
@@ -142477,7 +142507,7 @@
         "epoch_type": "release_cut",
         "name": "PLANNED — seams become trustworthy before they become work. The instruments that report the seam picture were wrong in both directions: the roll-up dropped 58 of 86 modules and answered a FALSE ZERO, and the module-level band reports a ratio over a population it never names. Fix the instruments, then re-read what they say. NO VERSION NUMBER BY DESIGN (dec:idea-a-planned-increment-is-named-by-content-not-by-number). Supersedes epoch:v0270-planned. REVISED 2026-08-30 — the prior text is preserved on chg:seam-lift-finds-a-container-by-level-not-by-id-prefix and described a world that had moved: it said seams sat at 0% of 73 couplings with 3 Interfaces and none specified, and cited BL-193/BL-190 from a backlog retired 2026-08-07. Today there are 22 Interfaces, several fully specified, and the honest reading is 13 of 19 subsystem boundaries covered with SIX genuinely undeclared.",
         "sequence": 266,
-        "status": "planned"
+        "status": "arrived"
       }
     },
     {
@@ -142787,6 +142817,16 @@
         "epoch_type": "revision",
         "name": "Fixed properly rather than patched — the misnamed category is renamed and the unscoped sweep returns what it examined",
         "sequence": 349,
+        "status": "arrived"
+      }
+    },
+    {
+      "node_id": "epoch:the-linking-judgement-becomes-compellable-and-visible",
+      "node_type": "DesignEpoch",
+      "properties": {
+        "epoch_type": "milestone",
+        "name": "ARRIVED 2026-08-30 — a brainstormed idea becomes a declared kind, the near-match refusal asks about relatedness as well as sameness, and whether the discipline is followed becomes answerable. Unplanned: it emerged from a root-cause pass on why brainstorm content was not linked, which itself began as a user question mid-session. Recorded with add_epoch because it HAPPENED — nobody planned it, and pretending otherwise would make the plan look better than it was. Shipped as #393 and #394; the six undeclared subsystem boundaries the seam increment surfaced were NOT specified and remain open.",
+        "sequence": 268,
         "status": "arrived"
       }
     },
@@ -156882,6 +156922,18 @@
       }
     },
     {
+      "node_id": "fact:tool-call-markup-bleeds-into-the-last-prose-field-and-typed-fields-catch-it",
+      "node_type": "TemporalFact",
+      "properties": {
+        "basis": "measured",
+        "confidence": 1.0,
+        "fact_type": "defect",
+        "statement": "FIVE OBSERVED INSTANCES IN ONE SESSION, 2026-08-30, giving a parked idea its first evidence. `dec:idea-a-prose-field-silently-absorbed-tool-call-markup` has sat with NO LINKS since it was recorded — `detect_defects` reports it as an orphan — because nobody had a measured occurrence to attach. This is that.\n\n═══ THE SHAPE, AND IT IS NARROWER THAN THE PARKED IDEA FEARED ═══\n\nIn every case the agent's tool-call markup was malformed at the END of the call, and the damage landed on the LAST prose field. Fields did not collapse into each other; earlier fields were untouched every time.\n\n  · `dec:idea-who-authors-the-domain-artifact` — `</rationale>` and `</invoke>` written into the tail of `rationale`.\n  · `dec:a-brainstormed-idea-is-a-first-class-kind` — same two tags, same field, same position.\n  · `chg:the-relatedness-judgement-rides-the-refusal` — `</summary>` plus an entire `<parameter name=\"rationale\">` opening tag absorbed into `summary`, and the rationale therefore never arrived as a field at all.\n\n⭐ THE SPLIT IS THE FINDING, AND IT IS REFLOW2'S OWN DOCTRINE SHOWING UP AS DATA.\n\nTwo further instances behaved COMPLETELY DIFFERENTLY. Two `report_manual_work` calls carried the same class of malformed markup, and both were REFUSED outright — `failed to deserialize parameters: missing field \\`diagnosis\\``. Nothing was stored, and the agent knew immediately.\n\nThe difference is not the agent and not the harness. It is WHAT THE FIELD IS:\n\n    FREE PROSE  (`rationale`, `summary`)  — 3 of 3 SILENTLY STORED THE GARBAGE\n    REQUIRED TYPED (`diagnosis`, an enum) — 2 of 2 REFUSED LOUDLY\n\nA property bag accepts whatever arrives, so a mangled prose field is indistinguishable from prose somebody meant. A required enum has a shape to fail against. THIS IS THE SAME ARGUMENT REFLOW2 ALREADY MAKES ABOUT TYPED TOOLS VERSUS INSTRUCTIONS, arriving from the other direction: the typed field is what noticed.\n\n═══ WHAT IT COST HERE ═══\nAll five were caught by reading the tool's echoed reply, which is the habit `rule:success-is-read-from-the-authoritative-object` exists to install — not by any check. Cost was one corrective call each. In the `summary` case the rationale was LOST rather than mangled: the field was never sent, so a reader would have seen a change event with no reasoning and nothing would have said one was intended.\n\n⚠️ NOT ESTABLISHED, and the limits matter for whether anything should be built:\n· WHOSE DEFECT IT IS. The malformed markup originates in the AGENT'S emission, not in reflow2. reflow2's contribution is that a free-text field cannot refuse a value — which is arguably correct behaviour for a property bag, not a bug.\n· Whether it is detectable at all. A heuristic refusing prose containing `</` or `<parameter` would fire on any design that legitimately discusses XML, tool schemas or HTML — and this graph discusses tool schemas constantly.\n· Whether five in one session is a rate or an outlier. One session, one agent, one model. Nothing says whether this is common.\n· Whether the same bleed reaches OTHER free-text fields — `statement`, `decision`, `description`, `findings`. Only `rationale` and `summary` were observed, and only because they happened to be last.",
+        "subject_id": "dec:idea-a-prose-field-silently-absorbed-tool-call-markup",
+        "valid_from": "2026-08-30"
+      }
+    },
+    {
       "node_id": "fact:twelve-records-that-still-read-confident",
       "node_type": "TemporalFact",
       "properties": {
@@ -156974,6 +157026,20 @@
         "subject_id": "cap:a-dangling-reference-is-reported-whatever-the-nodes-degree",
         "valid_from": "2026-08-29",
         "value": "{\"measured_on\":\"reflow2's own graph, 2026-08-29, under the root-cause skill\",\"prior_countings\":[{\"date\":\"2026-08-16\",\"n\":7},{\"date\":\"2026-08-26\",\"n\":9},{\"date\":\"2026-08-29\",\"n\":9}],\"why_the_nine\":{\"prefix_error_on_a_real_slug\":6,\"constructed_from_a_tool_name\":3,\"rename_or_retire\":0},\"pointer_properties\":{\"TemporalFact.subject_id\":{\"values\":333,\"resolve\":333,\"declared_node_ref\":true,\"correct_answer\":\"declare - dangling is a real defect\"},\"Snapshot.target_id\":{\"values\":195,\"resolve\":191,\"declared_node_ref\":false,\"correct_answer\":\"do NOT declare - the snapshot is the surviving record of a deleted node, so dangling is the mechanism working\"},\"Question.gap_id\":{\"values\":57,\"resolve\":0,\"declared_node_ref\":false,\"correct_answer\":\"do NOT declare - names a computed gap, never a node\"}},\"snapshot_dangles_are_all_retires\":[\"art:content\",\"art:content-test\",\"art:tools-content\",\"ctr:anthony\"],\"the_defect\":\"the judgement about which properties are node references was made once, for one property, and never recorded for the other two - subject_id and target_id are declared identically apart from the flag and nothing says why\",\"corrects\":\"this session's own earlier withdrawal of the rename leg from dec:a-restore-reports-an-unresolvable-reference-rather-than-refusing-it - too broad; retires are real, in the property nobody swept\",\"not_measured\":\"whether node types beyond the three heal.rs names carry undeclared de facto pointers\"}"
+      }
+    },
+    {
+      "node_id": "ver:a-band-carries-what-it-was-computed-over",
+      "node_type": "Verification",
+      "properties": {
+        "description": "crates/reflow2-core/tests/maturity.rs, two cases.\n\n`a_band_that_can_read_low_for_a_correct_design_says_so` asserts the seams band carries a caveat naming the ALTITUDE it answers at and pointing at `seam_coverage`; that the four bands where a correct design reads low all carry one (seams, realization, assurance, operation); and that the three which measure exactly what they claim carry NONE. The negative half is the load-bearing one — a caveat on every band is noise, and noise is how a real warning stops being read.\n\n`the_rendered_report_carries_the_caveat_next_to_the_number` asserts it survives into `to_markdown`. THAT IS THE CASE TO BREAK FIRST when doubting this check: the defect was never that the caveat did not exist — `seam_coverage` emitted it all along — but that the tool QUOTING the number stripped it. A caveat living only in the struct would have prevented nothing.",
+        "findings": "Both cases pass on main at 1f789f3 (#391). Run 2026-08-30: `cargo test -p reflow2-core --no-default-features --test maturity` — 12 passed, 0 failed; and the whole core suite, 136 suites / 1552 passed / 0 failed. CI green on both jobs for that commit.\n\nRecorded 2026-08-30 during the increment wrap-up, and the delay is the finding rather than a footnote: `arrival_delta` on epoch:planned-seams reported the capability as `outstanding` even though it was realized and merged, because delivery is computed from the thread and no passing check pointed at it. The check existed as code from the moment the feature did; the design did not know. That is the gap between \"it is tested\" and \"the design can say it is tested\".",
+        "kind": "verification",
+        "last_run_at": "2026-08-30",
+        "level": "unit",
+        "method": "test",
+        "name": "A band that can read low for a correct design says so, and the caveat survives into the rendered report",
+        "status": "passing"
       }
     },
     {
@@ -159866,7 +159932,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:3db1adbe1a1c75abbc513dd12a057f5bf026e9d05a5ecd7c6a3b78f048d5631e",
+  "prev_content_hash": "sha256:5c81188cda6abdc4d067bee4606562e28e9d589b79daa832e3f73882ea5769a5",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",
