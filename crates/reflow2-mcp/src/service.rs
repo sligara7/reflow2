@@ -2160,6 +2160,28 @@ pub struct DecisionReq {
     /// records.
     #[serde(default)]
     pub kind: Option<String>,
+    /// The relations you judged REAL among the near-matches this call surfaced.
+    /// Same shape as `review_relations`, drawn in the same call so the
+    /// judgement cannot be lost between two.
+    ///
+    /// Required — TOGETHER WITH ITS ALTERNATIVE BELOW — only when this is an
+    /// `exploratory` Decision and near-matches were found. An idea nothing
+    /// resembles is captured with no ceremony at all.
+    #[serde(default)]
+    pub related_to: Option<Vec<RelationLinkReq>>,
+    /// THE OTHER HALF, AND IT IS A FULL ANSWER RATHER THAN A WEAKER ONE: what
+    /// you looked at and why nothing was honestly related.
+    ///
+    /// It exists because a missing edge and an unexamined idea are
+    /// indistinguishable without it, and measured 2026-08-30 the note had been
+    /// used twice in 207 ideas — so the design could not tell an idea somebody
+    /// judged from one nobody opened.
+    ///
+    /// 🛑 NEVER INVENT A RELATION TO GET PAST THIS. A false neighbour is worse
+    /// than a missing one: anything that searches by neighbourhood repeats it
+    /// forever. This field is the honest way through.
+    #[serde(default)]
+    pub no_relation_note: Option<String>,
 }
 
 #[derive(Debug, Deserialize, JsonSchema)]

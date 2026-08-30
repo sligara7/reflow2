@@ -83,6 +83,38 @@ pub struct RelationLink {
 }
 
 /// What a review did.
+/// How much of the idea population has been through the linking judgement —
+/// and, deliberately, how much of that this can and cannot tell you.
+#[derive(Debug, Clone, Default, PartialEq, Serialize)]
+pub struct LinkingReport {
+    /// Decisions declaring `kind: exploratory` — the population the discipline
+    /// applies to, and the denominator of every figure below.
+    pub ideas: usize,
+    /// Of those, how many carry at least one review relation. NOT how many were
+    /// reviewed — see `not_observed_about`.
+    pub linked: usize,
+    /// Of those, how many carry `no_relation_note`: somebody looked and
+    /// recorded that nothing was honestly related. **A full answer, not a
+    /// weaker one**, and the half that separates a judged idea from an
+    /// unopened one.
+    pub noted: usize,
+    /// Neither. For these, "nobody looked" and "looked and found nothing"
+    /// cannot be told apart.
+    pub silent: usize,
+    /// Which ones, so the number is never a bare ratio.
+    pub silent_ids: Vec<String>,
+    /// Decisions declaring `kind: exploratory`, `choice`, or nothing at all.
+    /// The third is a real state, not a gap: absent means nobody said.
+    pub exploratory: usize,
+    pub choice: usize,
+    pub kind_unstated: usize,
+    /// What this report cannot see. Carried WITH the numbers rather than left
+    /// to the reader, because a caveat that lives only in the tool that
+    /// computes it gets stripped by whatever quotes the figure
+    /// (`cap:a-derived-number-carries-what-it-was-computed-over`).
+    pub not_observed_about: Vec<String>,
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize)]
 pub struct ReviewOutcome {
     pub node_type: String,
@@ -284,6 +316,73 @@ impl DesignGraph {
     /// `undecided_decision_point` already asks about them. Excludes parked
     /// nodes, which are the recorded answer "this correctly attaches to
     /// nothing".
+    /// **Is the linking discipline being followed?** — the question the design
+    /// could not answer about itself.
+    ///
+    /// `unreviewed_ideas` counts the ideas nobody has opened, and that count is
+    /// consumed by a detector the owner has ACCEPTED (an unlinked idea is not a
+    /// defect — `decision:ack:baa3d7b03a08dedb`, 2026-08-23). So the number was
+    /// computed, wired to something deliberately silent, and reachable from
+    /// nowhere else. Measured 2026-08-30, that silence hid a real shape: 140 of
+    /// 207 ideas carried a relation and `no_relation_note` had been used TWICE,
+    /// so for the 67 unlinked ideas "nobody looked" and "looked and found
+    /// nothing" were indistinguishable — the exact distinction the note exists
+    /// to preserve.
+    ///
+    /// THIS REPORTS, IT NEVER PRESSES. It raises no gap and changes no
+    /// detector: the owner's judgement that an unlinked idea is not a defect
+    /// stands untouched. What it removes is the inability to SEE.
+    ///
+    /// ⚠️ AND IT SAYS WHAT IT CANNOT KNOW, in `not_observed_about`, because the
+    /// honest limit is severe: an edge can be drawn by a dozen tools, and
+    /// nothing records WHICH drew it. So `linked` counts ideas that have a
+    /// relation, never ideas somebody reviewed — the two are not the same, and
+    /// the report must not let a reader mistake one for the other.
+    pub fn linking_report(&self) -> Result<LinkingReport, DynoError> {
+        let mut r = LinkingReport::default();
+        for dec in self.scan_nodes(node::DECISION)? {
+            let kind = dec
+                .properties
+                .get("kind")
+                .and_then(crate::foundation::core::Value::as_str)
+                .map(str::to_string);
+            let noted = dec.properties.contains_key("no_relation_note");
+            let linked = self.has_review_relation(&dec.node_id)?;
+            match kind.as_deref() {
+                Some("exploratory") => r.exploratory += 1,
+                Some("choice") => r.choice += 1,
+                _ => r.kind_unstated += 1,
+            }
+            // Only ideas carry the discipline. A Decision nobody has classified
+            // is counted apart rather than assumed to be one — the same reason
+            // the property has no default.
+            if kind.as_deref() != Some("exploratory") {
+                continue;
+            }
+            r.ideas += 1;
+            if linked {
+                r.linked += 1;
+            }
+            if noted {
+                r.noted += 1;
+            }
+            if !linked && !noted {
+                r.silent += 1;
+                r.silent_ids.push(dec.node_id.clone());
+            }
+        }
+        r.silent_ids.sort();
+        r.not_observed_about = vec![
+            "WHETHER THE DISCIPLINE WAS FOLLOWED. An edge can be drawn by any of a dozen tools              and nothing records which drew it, so `linked` counts ideas that HAVE a relation,              never ideas somebody reviewed. A relation drawn in passing by `governed_by` or              `satisfies` is indistinguishable here from one somebody judged."
+                .into(),
+            "THE IDEAS CARRYING NO `kind`. They are counted in `kind_unstated` and excluded from              every other figure, because their only evidence of being ideas is an id prefix that              was deliberately retired — reading it here would launder it back in."
+                .into(),
+            "WHETHER A SILENT IDEA IS A PROBLEM. It is not reported as a defect and raises no              gap: an unlinked idea legitimately governs nothing yet, which is the owner's              standing judgement."
+                .into(),
+        ];
+        Ok(r)
+    }
+
     pub fn unreviewed_ideas(&self) -> Result<Vec<String>, DynoError> {
         let mut out = Vec::new();
         for dec in self.scan_nodes(node::DECISION)? {

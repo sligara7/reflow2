@@ -90,6 +90,8 @@ async fn withdrawn() -> ReflowService {
         rationale: None,
         distinct_from: None,
         kind: None,
+        related_to: None,
+        no_relation_note: None,
     })));
     j!(s.set_decision_status(Parameters(SetDecisionStatusReq {
         decision_id: "dec:discontinue".into(),
@@ -210,6 +212,8 @@ async fn a_proposed_decision_discontinues_nothing() {
         rationale: None,
         distinct_from: None,
         kind: None,
+        related_to: None,
+        no_relation_note: None,
     })));
     j!(s.create_edge(Parameters(CreateEdgeReq {
         edge_type: "OBSOLETES".into(),
@@ -288,6 +292,8 @@ async fn it_is_not_a_capability_only_field() {
         rationale: None,
         distinct_from: None,
         kind: None,
+        related_to: None,
+        no_relation_note: None,
     })));
     j!(s.set_decision_status(Parameters(SetDecisionStatusReq {
         decision_id: "dec:drop".into(),

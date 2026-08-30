@@ -4,6 +4,43 @@
   },
   "description": "Record a Decision and why it was made (an ADR). Use this whenever the user chooses between real alternatives — the rationale is what stops the choice being silently reversed later. Link it with `governed_by`. It lands `proposed`: recording a choice is not the same as settling it, so reaching `accepted` is a separate act (`set_decision_status`, or `collapse_decision` when a fork is chosen). That is deliberate — an accepted Decision is what where-am-i reads back to the user as \"what you decided\", so asserting it on their behalf would be the forgery dec:certainty-derived forbids for requirement status. BEHAVIOUR CHANGED 2026-07-25: this used to default to `accepted`. CONTENT FIELDS ARE REQUIRED TO CREATE AND OPTIONAL TO REVISE: call it again with the same id and only what you are changing — omitted fields keep their stored value, so correcting one never means re-sending a 2 KB field you did not touch.",
   "inputSchema": {
+    "$defs": {
+      "RelationLinkReq": {
+        "additionalProperties": false,
+        "description": "One relation for `review_relations`.",
+        "properties": {
+          "evidence": {
+            "description": "WHY this relation is true, in a sentence. Required — a relation with no\nevidence is an assertion the next reader can neither check nor overturn.",
+            "type": "string"
+          },
+          "incoming": {
+            "default": null,
+            "description": "Draw the edge FROM the other node instead. Direction is part of the\nclaim: every one of these reads as a sentence, *from RELATION to*, and\nbackwards the same edge asserts something false with nothing to catch it.",
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "other_id": {
+            "type": "string"
+          },
+          "other_type": {
+            "type": "string"
+          },
+          "relation": {
+            "description": "`CONTRADICTS` (both cannot hold) / `EVOLVES_INTO` (the older thought,\ngrown up) / `DEPENDS_ON` (only worth anything if the other lands first)\n/ `CAUSES` / `TRIGGERS` (taking one forces the other) / `BLOCKS` /\n`DUPLICATES` (the same thing said twice — link, do not merge; they were\nsaid for different reasons) / `ANTICIPATES` (the earlier one saw this\ncoming) / `OBSOLETES` / `RISKS` / `MITIGATES` (one is a hazard, the\nother answers it) / `MASKS` / `VIOLATES`.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "relation",
+          "other_type",
+          "other_id",
+          "evidence"
+        ],
+        "type": "object"
+      }
+    },
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "additionalProperties": false,
     "properties": {
@@ -44,11 +81,29 @@
           "null"
         ]
       },
+      "no_relation_note": {
+        "default": null,
+        "description": "THE OTHER HALF, AND IT IS A FULL ANSWER RATHER THAN A WEAKER ONE: what\nyou looked at and why nothing was honestly related.\n\nIt exists because a missing edge and an unexamined idea are\nindistinguishable without it, and measured 2026-08-30 the note had been\nused twice in 207 ideas — so the design could not tell an idea somebody\njudged from one nobody opened.\n\n🛑 NEVER INVENT A RELATION TO GET PAST THIS. A false neighbour is worse\nthan a missing one: anything that searches by neighbourhood repeats it\nforever. This field is the honest way through.",
+        "type": [
+          "string",
+          "null"
+        ]
+      },
       "rationale": {
         "default": null,
         "description": "Why — the part worth recording.",
         "type": [
           "string",
+          "null"
+        ]
+      },
+      "related_to": {
+        "description": "The relations you judged REAL among the near-matches this call surfaced.\nSame shape as `review_relations`, drawn in the same call so the\njudgement cannot be lost between two.\n\nRequired — TOGETHER WITH ITS ALTERNATIVE BELOW — only when this is an\n`exploratory` Decision and near-matches were found. An idea nothing\nresembles is captured with no ceremony at all.",
+        "items": {
+          "$ref": "#/$defs/RelationLinkReq"
+        },
+        "type": [
+          "array",
           "null"
         ]
       }

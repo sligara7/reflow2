@@ -1417,6 +1417,31 @@ impl ReflowService {
     }
 
     #[tool(
+        description = "IS THE LINKING DISCIPLINE BEING FOLLOWED? — the question the design could \
+                       not ask about itself. Splits the ideas (`Decision` with `kind: \
+                       exploratory`) into LINKED (carries a relation), NOTED (carries \
+                       `no_relation_note` — somebody looked and recorded that nothing was \
+                       honestly related), and SILENT (neither, so 'nobody looked' and 'looked and \
+                       found nothing' cannot be told apart). The silent ones are NAMED, never \
+                       just counted. ⚠️ IT REPORTS AND NEVER PRESSES: it raises no gap and moves \
+                       no detector, because an unlinked idea legitimately governs nothing yet and \
+                       that judgement is the owner's, already made. What it removes is the \
+                       inability to SEE — measured 2026-08-30, `no_relation_note` had been used \
+                       TWICE across 207 ideas and nothing anywhere could say so. 🛑 READ \
+                       `not_observed_about`: an edge can be drawn by a dozen tools and nothing \
+                       records which drew it, so `linked` counts ideas that HAVE a relation, \
+                       never ideas somebody reviewed. Decisions carrying no `kind` are counted \
+                       apart and excluded from every ratio — their only evidence of being ideas \
+                       is an id prefix deliberately retired, and reading it here would launder it \
+                       back in.",
+        annotations(read_only_hint = true)
+    )]
+    pub async fn linking_report(&self) -> Result<CallToolResult, McpError> {
+        let g = self.graph.read().await;
+        ok_json(g.linking_report().map_err(dyno_err)?)
+    }
+
+    #[tool(
         description = "Record what a node relates to — or that nothing does. Use it right after capturing an idea, decision or requirement, while the search you ran to check for duplicates is still in hand: those near-matches are the candidates, and today they are read once and thrown away. Draw the relations that are genuinely true (`CONTRADICTS`, `EVOLVES_INTO`, `DEPENDS_ON`, `CAUSES`, `TRIGGERS`, `BLOCKS`, `DUPLICATES`, `ANTICIPATES`, `OBSOLETES`, `RISKS`, `MITIGATES`, `MASKS`, `VIOLATES`), each with the reason in `evidence`. Two or three is a good outcome; ten is a smell, because relatedness is not similarity. If nothing is honestly related, pass `note` instead — that is a real answer, not a weaker one, and it is what tells a later reader this node was considered rather than never opened. NEVER invent a relation to have something to pass: a false neighbour is worse than a missing one, since anything that searches by neighbourhood repeats it forever. Refuses when you give neither.",
         annotations(read_only_hint = false)
     )]
@@ -1515,6 +1540,86 @@ impl ReflowService {
             }
             return Err(e);
         }
+        // A′ — THE REFUSAL THAT ALREADY FIRED ASKS ONE MORE QUESTION.
+        //
+        // The duplication judgement above stops the caller and makes them read
+        // the near-matches. It then throws that reading away for RELATEDNESS.
+        // They are already looking at the list; they were only ever asked half
+        // a question about it.
+        //
+        // Measured 2026-08-30: 140 of 207 ideas carry a relation, and the
+        // "nothing was related" note had been used TWICE — so for the 67
+        // unlinked ideas, "nobody looked" and "looked and found nothing" are
+        // indistinguishable, which is exactly the distinction the note exists
+        // to preserve
+        // (`fact:the-linking-discipline-reproduced-its-own-finding-2026-08-30`).
+        //
+        // SCOPED TO `exploratory` DELIBERATELY. Unscoped this would land on the
+        // Requirement/Capability/ChangeEvent capture path a consumer's field
+        // report names as his existing friction, and no ceremony is added to an
+        // idea nothing resembles — the refusal only extends one that already
+        // fired.
+        let near = found
+            .as_ref()
+            .map(|sf| !sf.near_matches.is_empty())
+            .unwrap_or(false);
+        let exploratory = req.kind.as_deref() == Some("exploratory");
+        if exploratory && near && req.related_to.is_none() && req.no_relation_note.is_none() {
+            if !existed {
+                let _ = g.delete_node(node_ty, &req.id);
+            }
+            let listed = found
+                .as_ref()
+                .map(|sf| {
+                    sf.near_matches
+                        .iter()
+                        .map(|m| format!("  {} ({}) — {}", m.node_id, m.node_type, m.name))
+                        .collect::<Vec<_>>()
+                        .join("\n")
+                })
+                .unwrap_or_default();
+            return Err(McpError::invalid_params(
+                format!(
+                    "You have read these to decide they are not DUPLICATES. Say whether any is \
+                     RELATED, in this same call — the judgement is the deliberate act, and it is \
+                     lost if it waits for a second one:\n\n{listed}\n\nTWO WAYS ON, both \
+                     complete answers. DRAW THEM — pass `related_to` with the relations you judged \
+                     real, each carrying its `evidence`. Or SAY NOTHING WAS — pass \
+                     `no_relation_note` with what you looked at and why none of these is honestly \
+                     related.\n\n🛑 NEVER INVENT A RELATION TO GET PAST THIS. A false neighbour is \
+                     worse than a missing one, because anything searching by neighbourhood repeats \
+                     it forever; the note is the honest route and is not the weaker one. An idea \
+                     nothing resembles is never asked this at all."
+                ),
+                None,
+            ));
+        }
+        if exploratory && (req.related_to.is_some() || req.no_relation_note.is_some()) {
+            let links: Vec<RelationLink> = req
+                .related_to
+                .unwrap_or_default()
+                .into_iter()
+                .map(|l| RelationLink {
+                    relation: l.relation,
+                    other_type: l.other_type,
+                    other_id: l.other_id,
+                    evidence: l.evidence,
+                    incoming: l.incoming.unwrap_or(false),
+                })
+                .collect();
+            g.review_relations(node_ty, &req.id, &links, req.no_relation_note.as_deref())
+                .map_err(dyno_err)?;
+        }
+        // Re-read AFTER the review, so the reply shows the note it just wrote.
+        // The first cut built the reply before this and echoed the pre-note
+        // state — a caller following "read the result back" would have been
+        // told the judgement was not recorded when it was, which is the same
+        // unreadable-success problem a consumer's field report is about.
+        // Caught by the test, not by review.
+        let node = match g.get_node(node_ty, &req.id).map_err(dyno_err)? {
+            Some(fresh) => NodeDto::from(fresh),
+            None => node,
+        };
         let revision = revision_of(&g, prior.as_ref(), &node);
         with_capture_notes(
             node,

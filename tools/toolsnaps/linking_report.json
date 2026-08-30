@@ -1,0 +1,11 @@
+{
+  "annotations": {
+    "readOnlyHint": true
+  },
+  "description": "IS THE LINKING DISCIPLINE BEING FOLLOWED? — the question the design could not ask about itself. Splits the ideas (`Decision` with `kind: exploratory`) into LINKED (carries a relation), NOTED (carries `no_relation_note` — somebody looked and recorded that nothing was honestly related), and SILENT (neither, so 'nobody looked' and 'looked and found nothing' cannot be told apart). The silent ones are NAMED, never just counted. ⚠️ IT REPORTS AND NEVER PRESSES: it raises no gap and moves no detector, because an unlinked idea legitimately governs nothing yet and that judgement is the owner's, already made. What it removes is the inability to SEE — measured 2026-08-30, `no_relation_note` had been used TWICE across 207 ideas and nothing anywhere could say so. 🛑 READ `not_observed_about`: an edge can be drawn by a dozen tools and nothing records which drew it, so `linked` counts ideas that HAVE a relation, never ideas somebody reviewed. Decisions carrying no `kind` are counted apart and excluded from every ratio — their only evidence of being ideas is an id prefix deliberately retired, and reading it here would launder it back in.",
+  "inputSchema": {
+    "properties": {},
+    "type": "object"
+  },
+  "name": "linking_report"
+}
