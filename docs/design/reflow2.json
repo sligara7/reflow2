@@ -1,5 +1,5 @@
 {
-  "content_hash": "sha256:78ee057df672945084a5b14fd6e6b7f50bb6211909932c0de6fdbe42d722ed18",
+  "content_hash": "sha256:6962c73e4858725643827d365c74b41f6764fd92d76be7f3f83bc54c96af3011",
   "edges": [
     {
       "edge_type": "ABOUT_ENTITY",
@@ -18032,6 +18032,24 @@
     },
     {
       "edge_type": "CHANGED",
+      "from_id": "chg:a-cross-type-near-match-is-named-as-a-layer",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-capture"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:a-cross-type-near-match-is-named-as-a-layer",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:search-first-at-the-tool"
+    },
+    {
+      "edge_type": "CHANGED",
       "from_id": "chg:a-dangling-reference-is-detected-on-its-own-terms",
       "properties": {
         "accepted_baseline": true,
@@ -29658,6 +29676,24 @@
         "action": "modified"
       },
       "to_id": "art:verify"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:one-tool-declares-its-output-contract",
+      "properties": {
+        "accepted_baseline": true,
+        "action": "modified"
+      },
+      "to_id": "art:tools-query"
+    },
+    {
+      "edge_type": "CHANGED",
+      "from_id": "chg:one-tool-declares-its-output-contract",
+      "properties": {
+        "accepted_baseline": false,
+        "action": "modified"
+      },
+      "to_id": "cap:mcp-surface"
     },
     {
       "edge_type": "CHANGED",
@@ -107501,6 +107537,15 @@
     },
     {
       "edge_type": "INVALIDATES",
+      "from_id": "chg:a-cross-type-near-match-is-named-as-a-layer",
+      "properties": {
+        "at": "2026-08-29",
+        "note": "The guard now tells a layer from a copy IN WHAT IT SAYS, which is what Alex actually hit: a cross-type match is described as a different KIND of record and does not offer sharpening, while a same-type match reads exactly as before. Pinned by two tests observed failing first, in the discriminating split (cross-type red, same-type green).\n\n🛑 READ THIS AS A BOUNDED CLAIM, NOT A CLEAN CLOSE. `fact:the-near-match-filter-has-no-node-type-term` — the CAUSE — is deliberately left OPEN, because it is still literally true: the selection is unchanged and remains `not-itself AND score-above-floor`. Cross-type matches are still SELECTED; they are now correctly DESCRIBED. That is the conservative repair (② of the two recorded), chosen because excluding those pairs would trade a false alarm for a silent miss in the one guard built to prevent silent duplication.\n\n⚠️ AND THE MEASUREMENT THAT WOULD JUSTIFY THE OTHER REPAIR STILL HAS NOT BEEN TAKEN: nobody has counted how often a cross-type hit is a REAL duplicate rather than the prescribed layered capture. Until somebody does, ① stays unbuilt on purpose rather than unbuilt by neglect.\n\n📌 The friction this closes was one refused round-trip per honest capture. The invisible half named in the finding — a Requirement never written because the tool made it awkward — cannot be measured either way, before or after."
+      },
+      "to_id": "fact:the-duplicate-guard-cannot-tell-a-second-layer-from-a-second-copy"
+    },
+    {
+      "edge_type": "INVALIDATES",
       "from_id": "chg:a-dangling-reference-is-detected-on-its-own-terms",
       "properties": {
         "at": "2026-08-29",
@@ -115010,6 +115055,12 @@
     },
     {
       "edge_type": "VERIFIES",
+      "from_id": "ver:a-cross-type-near-match-is-named-as-a-layer",
+      "properties": {},
+      "to_id": "cap:search-first-at-the-tool"
+    },
+    {
+      "edge_type": "VERIFIES",
       "from_id": "ver:a-dangling-reference-is-found-whatever-its-degree",
       "properties": {},
       "to_id": "cap:a-dangling-reference-is-reported-whatever-the-nodes-degree"
@@ -115862,6 +115913,12 @@
       "from_id": "ver:nudge-silent-without-design",
       "properties": {},
       "to_id": "cap:machine-wide-install"
+    },
+    {
+      "edge_type": "VERIFIES",
+      "from_id": "ver:one-tool-declares-its-output-contract",
+      "properties": {},
+      "to_id": "cap:mcp-surface"
     },
     {
       "edge_type": "VERIFIES",
@@ -121020,7 +121077,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:d301d99eb58acbd0f5be8d34608058a49c9b47e09face0dbb2fcae9d8860f29c",
+        "checksum": "sha256:84c190ca64b365ebef17cd6d733715e8d2e06ebfd8e4d1a544bdf8e4235a10ac",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/capture.rs",
         "name": "crates/reflow2-mcp/src/tools/capture.rs",
@@ -121096,7 +121153,7 @@
       "node_type": "Artifact",
       "properties": {
         "artifact_type": "code",
-        "checksum": "sha256:6646989566ce15cec393b3b803dc2ebd902a3229fd706034840e6c3ce6314d61",
+        "checksum": "sha256:fc8bf22168d8c7268e17ac66dd80ec41f9d8035ba76f9298a47b490bf3683a5c",
         "granularity": "atomic",
         "location": "crates/reflow2-mcp/src/tools/query.rs",
         "name": "tools/query.rs",
@@ -124230,6 +124287,18 @@
       "properties": {
         "change_type": "new_feature",
         "name": "VERIFIES' target enumeration admits Interface — all 18 contracts carried zero checks because the edge was illegal, while the check for one of them already existed and had to hang off a Capability"
+      }
+    },
+    {
+      "node_id": "chg:a-cross-type-near-match-is-named-as-a-layer",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "defect_fix",
+        "detected_at": "2026-08-29",
+        "name": "A near-match of another type is described as a different kind of record, not as a near-duplicate",
+        "rationale": "Reported by Alex 2026-08-29 (art:grok-shell-feedback-2026-08-29): after recording a ChangeEvent for a code change, capturing the same idea as a Requirement was refused naming that ChangeEvent, and a Decision restating a Capability was refused naming the Capability. The served instructions ASK for both records, so an agent following the loop honestly tripped the guard every time — his words, \"distinct_from works; it is just the default path now.\"\n\n🛑 THE REFUSAL WAS KEPT ON PURPOSE, AND THE OTHER REPAIR WAS REJECTED. Excluding cross-type pairs from the filter would have removed the friction and also removed a real catch when an agent genuinely duplicates an idea across layers — trading a false alarm for a silent miss, which is the failure this guard was built to stop. Nobody has counted how often a cross-type hit IS a real duplicate, so suppressing the check would act on an unmeasured assumption.\n\n🛑 SO THIS DOES NOT REACH THE CAUSE, AND SAYS SO. fact:the-near-match-filter-has-no-node-type-term stays OPEN and stays literally true: the selection is still `not-itself AND score-above-floor`, with no type term. What changed is the WORDING, one layer later. That is the conservative half of the repair and it matches how the guard was justified — refuse_unless_deliberate is documented as forcing a CHOICE, never as preventing a write.\n\nRoot-caused with the root-cause skill; pinned by two tests written first and OBSERVED FAILING — cross-type FAILED and same-type PASSED against the unfixed code, which is the split that shows the tests discriminate rather than merely rejecting current behaviour.",
+        "subject": "system",
+        "summary": "The search-before-you-add guard now words its refusal according to whether the near-match is the SAME TYPE as the node being created. A same-type hit reads as before and offers SHARPEN. A hit of another type is described as a different KIND of record, says that recording what shipped and recording what must stay true are different acts on the same work, and does NOT offer sharpening — calling `add_requirement` with a ChangeEvent's id is not a route that exists. `refuse_unless_deliberate` takes the created node's type; the four constructors that refuse (Requirement, Capability, Component, Decision) pass it."
       }
     },
     {
@@ -129109,6 +129178,18 @@
       "properties": {
         "change_type": "test_failure_fix",
         "name": "set_verification_status stops deleting last_run_at when the optional parameter is omitted — the convention three sibling setters already documented"
+      }
+    },
+    {
+      "node_id": "chg:one-tool-declares-its-output-contract",
+      "node_type": "ChangeEvent",
+      "properties": {
+        "change_type": "new_feature",
+        "detected_at": "2026-08-29",
+        "name": "search_design declares an output schema, and every other tool is the control",
+        "rationale": "THIS IS AN EXPERIMENT, NOT A POLICY, and the control arm is the point.\n\nAlex's client negotiated MCP 2025-11-25 — the same revision claude-code reads structuredContent from without difficulty — which killed option (a) of dec:idea-how-does-a-content-only-client-get-an-answer and left a candidate nobody had considered: reflow2 returns structuredContent on every JSON tool and declared outputSchema on none, while MCP pairs the two. A client that surfaces a structured payload only for tools advertising an output contract would behave exactly as he describes.\n\n⭐ ONE TOOL, SO THE RESULT IS READABLE. If his next session reads search_design's payload and still not get_node's, the cause is found and the repair is to declare schemas rather than to choose among the decision's remaining options. If it reads neither, the candidate is refuted and those options stand unchanged. An all-tools change could not distinguish \"the schema did it\" from \"something else in the release did it\".\n\n🛑 THE CANDIDATE IS BOUNDED AND THIS DOES NOT ASSERT IT IS THE CAUSE: absence of outputSchema cannot be SUFFICIENT, because claude-code reads this server fine against the same undeclared surface. The most that can be true is that it is NECESSARY for his client.\n\nSAFE BY CONSTRUCTION: rmcp 3.1.2 advertises outputSchema in tools/list and never validates an outgoing payload against it — read in the SDK source, not assumed. A wrong schema misinforms a client; it cannot fail a call.\n\nThe finding stands either way: the seam to every MCP client is declared on the input side for ~165 tools and undeclared on the output side for all of them, and that asymmetry was never decided.",
+        "subject": "system",
+        "summary": "`search_design` now advertises an `outputSchema` in `tools/list` — the first and only declared output contract on the whole surface. Exactly one toolsnap moved. It describes the three fields SearchResult always carries (hits, stale, limit), the optional per-hit age fields, and the optional loop_hint, and deliberately does NOT close the object, because ok_read may add loop_hint and a closed schema would be wrong the moment the envelope grows a field."
       }
     },
     {
@@ -153210,6 +153291,20 @@
       }
     },
     {
+      "node_id": "ver:a-cross-type-near-match-is-named-as-a-layer",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Two cases in `crates/reflow2-mcp/tests/a_near_match_of_another_type_is_named_as_a_layer.rs`, pinning the CLASS rather than Alex's two instances: that the refusal's wording is a function of whether the types differ, IN BOTH DIRECTIONS.\n\n🛑 OBSERVED FAILING FIRST, against the unfixed code: cross-type FAILED, same-type PASSED. That split is the evidence — the passing case is the counterweight, and today's behaviour was already right for it, so the pair discriminates rather than merely rejecting the current message. It panicked precisely on the \"different kind of record\" assertion, with the earlier assertions (the refusal names the matched id, names `distinct_from`, and names the other type) already passing — which confirmed the refusal had always PRINTED the type and never ACTED on it.\n\nWHAT IS PINNED:\n① the reported case — add_change_event then add_requirement in the same words is refused, but described as a different KIND of record, and SHARPEN is NOT offered, because calling add_requirement with a ChangeEvent's id is not a route that exists;\n② the counterweight — a same-type near-duplicate still says SHARPEN and is still NOT described as a different kind of record.\n\nWithout ② the first test would keep passing while the same-type wording drifted into the layered phrasing, which would quietly destroy the distinction the change exists to make.\n\n⚠️ WHAT IT DOES NOT COVER: the SELECTION. The filter still has no node-type term by choice, so this cannot detect a change to which nodes are matched — only to how they are described.",
+        "findings": "2 passed after the change. **BEFORE it: 1 failed, 1 passed** — the cross-type case failed on the \"different kind of record\" assertion, and the same-type counterweight passed, because today's behaviour was already correct for it.\n\n⭐ THE SHAPE OF THE RED RUN IS THE EVIDENCE, not just its redness: the earlier assertions in the failing test — that the refusal names the matched id, names `distinct_from`, and names the other node's TYPE — all passed against the unfixed code. That is what established the cause precisely: the refusal had always PRINTED the type and never ACTED on it, so the repair was known to be a wording change rather than a selection change before a line was written.\n\nFull workspace suite green: 169 suites, 0 failures (up 2 files from 167). In-memory backend 135 suites. `cargo clippy` both crates with `-D warnings` clean; `cargo fmt --check` clean. Exactly 1 toolsnap moved and it was not this one — the guard's surface is unchanged, as a message-only repair should be.",
+        "kind": "verification",
+        "last_run_at": "2026-08-29",
+        "level": "integration",
+        "method": "test",
+        "name": "A cross-type near-match names the layering; a same-type one still offers sharpening",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:a-dangling-reference-is-found-whatever-its-degree",
       "node_type": "Verification",
       "properties": {
@@ -154906,6 +155001,20 @@
       }
     },
     {
+      "node_id": "ver:one-tool-declares-its-output-contract",
+      "node_type": "Verification",
+      "properties": {
+        "description": "Two cases in `crates/reflow2-mcp/tests/one_tool_declares_its_output_contract.rs`, guarding an EXPERIMENT rather than a feature.\n\n🛑 OBSERVED FAILING FIRST: both cases failed against the undeclared surface — the subject because `search_design` carried no `output_schema`, and the control because the declared set was empty rather than exactly `[search_design]`.\n\nWHAT IS PINNED:\n① `search_design` declares an object schema naming the three fields SearchResult always returns (hits, stale, limit) — so the subject arm exists and describes the reply reflow2 actually sends;\n② EXACTLY ONE tool on the query router declares a schema, and at least one undeclared tool remains — so the CONTROL arm exists.\n\n⭐ ② IS THE LOAD-BEARING ONE AND IT WILL LOOK LIKE AN OBSTACLE. If somebody declares schemas on more tools before Alex's result is read, this fails — and that is the test doing its job. An all-tools change cannot distinguish \"the schema did it\" from \"something else in that release did it\", so broadening the declaration early does not merely weaken the experiment, it destroys the only question it was built to answer.\n\nWHAT HAPPENS AFTER THE RESULT IS READ: delete the file. It guards a measurement, not a property, and a test that outlives its question becomes a rule nobody chose.\n\n⚠️ WHAT IT CANNOT COVER: whether the schema changes what Alex's client does. Only his session can measure that, and no test on this machine can stand in for it.",
+        "findings": "2 passed after the change; **both failed before it** — the subject because `search_design` carried no `output_schema` at all, the control because the declared set was empty rather than exactly `[search_design]`.\n\nSurface change confirmed minimal by the toolsnaps, which is the check that matters for an experiment needing a control: `python3 tools/toolsnap.py` reported **1 changed, 0 added, 0 removed**, and the diff on `tools/toolsnaps/search_design.json` is the `outputSchema` object and nothing else. So every other tool on the surface is untouched and remains a valid control arm.\n\nFull workspace suite green: 169 suites, 0 failures. In-memory backend 135 suites. clippy both crates with `-D warnings` clean; `cargo fmt --check` clean.\n\n🛑 WHAT IS STILL UNMEASURED, AND IT IS THE ENTIRE POINT: whether declaring the schema changes what Alex's client shows his agent. These tests prove the experiment is SET UP correctly; they cannot prove anything about the question. That measurement needs his session against a released binary.",
+        "kind": "verification",
+        "last_run_at": "2026-08-29",
+        "level": "integration",
+        "method": "test",
+        "name": "Exactly one tool declares an output schema, and a control arm survives",
+        "status": "passing"
+      }
+    },
+    {
       "node_id": "ver:orphan-attachment",
       "node_type": "Verification",
       "properties": {
@@ -156003,7 +156112,7 @@
       }
     }
   ],
-  "prev_content_hash": "sha256:da249028182fa4c3d32e6f917759b3f3904f4ca760d8b7b17c05fc31c26061f1",
+  "prev_content_hash": "sha256:78ee057df672945084a5b14fd6e6b7f50bb6211909932c0de6fdbe42d722ed18",
   "stamp": {
     "edge_type_names": [
       "ABOUT_ENTITY",

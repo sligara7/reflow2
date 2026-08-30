@@ -16,6 +16,102 @@ use std::collections::HashMap;
 use std::sync::Arc;
 use std::sync::atomic::{AtomicU64, Ordering};
 
+/// The output contract for `search_design` — **the one declared schema on the
+/// whole surface, and it is an EXPERIMENT rather than a policy.**
+///
+/// # What it is for
+///
+/// Alex reported (2026-08-29) that his agent sees only the `content` stub for
+/// almost every tool, while his client negotiated MCP `2025-11-25` — the same
+/// revision `claude-code` reads `structuredContent` from without difficulty.
+/// That killed the leading explanation (gate the duplication on protocol
+/// version) and left a candidate nobody had considered: **reflow2 returns
+/// `structuredContent` everywhere and declared `outputSchema` nowhere**, and
+/// MCP pairs the two. A client that surfaces a structured payload only for
+/// tools advertising an output contract would behave exactly as he describes.
+///
+/// So exactly ONE tool declares one, and every other tool is the control. If
+/// his next session reads `search_design` and still not `get_node`, the cause
+/// is found and the repair is to declare schemas. If it reads neither, the
+/// candidate is refuted and the client ignores `structuredContent` outright.
+/// `tests/one_tool_declares_its_output_contract.rs` keeps both arms honest.
+///
+/// 🛑 DO NOT BROADEN THIS BEFORE THE RESULT IS READ. Declaring schemas on more
+/// tools destroys the control arm and the question goes unanswered — which is
+/// the whole cost, because nothing else can distinguish the two outcomes.
+///
+/// # Why declaring it cannot break anything
+///
+/// rmcp 3.1.2 advertises `outputSchema` in `tools/list` and never validates an
+/// outgoing payload against it — checked in the SDK source, not assumed. A
+/// wrong schema would misinform a client; it cannot fail a call.
+///
+/// # Why `additionalProperties` is deliberately absent
+///
+/// `ok_read` may add `loop_hint`, and `envelope` passes objects through
+/// unchanged. Closing the object would make this schema wrong the moment the
+/// envelope grows a field, and a wrong contract is worse than a partial one.
+fn search_design_output_schema() -> Arc<rmcp::model::JsonObject> {
+    let schema = json!({
+        "type": "object",
+        "description": "A ranked list of design nodes matching the query, with the bounds of \
+                        the search stated so a caller can tell a complete answer from a \
+                        truncated one.",
+        "properties": {
+            "hits": {
+                "type": "array",
+                "description": "Matching nodes, best first. Scores are comparable WITHIN one \
+                                result list and not across queries.",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "node_id": { "type": "string" },
+                        "node_type": { "type": "string" },
+                        "name": {
+                            "type": "string",
+                            "description": "The node's name at hit time; empty if it has none."
+                        },
+                        "score": { "type": "number", "description": "BM25 relevance." },
+                        "age_days": {
+                            "type": "integer",
+                            "description": "Present only on a node carrying a date — how old \
+                                            its claim is. Absent on an undated node."
+                        },
+                        "as_of": {
+                            "type": "string",
+                            "description": "The date the claim was made, when it carries one."
+                        }
+                    },
+                    "required": ["node_id", "node_type", "name", "score"]
+                }
+            },
+            "stale": {
+                "type": "array",
+                "description": "Ids the index returned but the store no longer holds. NON-EMPTY \
+                                MEANS THE INDEX HAS DRIFTED and a reindex is due — it is not a \
+                                list of results.",
+                "items": { "type": "string" }
+            },
+            "limit": {
+                "type": "integer",
+                "description": "The limit that bounded this result. hits.len() == limit means \
+                                there may be more; this is the no-silent-caps rule made visible."
+            },
+            "loop_hint": {
+                "type": "string",
+                "description": "Present only when the coherence loop is owed something."
+            }
+        },
+        "required": ["hits", "stale", "limit"]
+    });
+    Arc::new(
+        schema
+            .as_object()
+            .expect("the literal above is an object")
+            .clone(),
+    )
+}
+
 use rmcp::{
     ErrorData as McpError, RoleServer, ServerHandler,
     handler::server::{router::tool::ToolRouter, wrapper::Parameters},
@@ -518,6 +614,7 @@ impl ReflowService {
                        user's words to the node they mean. Result reports its own bounds: \
                        hits.len() == limit means there may be more, and a non-empty `stale` \
                        list means the index has drifted from the store.",
+        output_schema = search_design_output_schema(),
         annotations(read_only_hint = true)
     )]
     pub async fn search_design(

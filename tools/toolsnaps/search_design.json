@@ -35,5 +35,68 @@
     ],
     "type": "object"
   },
-  "name": "search_design"
+  "name": "search_design",
+  "outputSchema": {
+    "description": "A ranked list of design nodes matching the query, with the bounds of the search stated so a caller can tell a complete answer from a truncated one.",
+    "properties": {
+      "hits": {
+        "description": "Matching nodes, best first. Scores are comparable WITHIN one result list and not across queries.",
+        "items": {
+          "properties": {
+            "age_days": {
+              "description": "Present only on a node carrying a date — how old its claim is. Absent on an undated node.",
+              "type": "integer"
+            },
+            "as_of": {
+              "description": "The date the claim was made, when it carries one.",
+              "type": "string"
+            },
+            "name": {
+              "description": "The node's name at hit time; empty if it has none.",
+              "type": "string"
+            },
+            "node_id": {
+              "type": "string"
+            },
+            "node_type": {
+              "type": "string"
+            },
+            "score": {
+              "description": "BM25 relevance.",
+              "type": "number"
+            }
+          },
+          "required": [
+            "node_id",
+            "node_type",
+            "name",
+            "score"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "limit": {
+        "description": "The limit that bounded this result. hits.len() == limit means there may be more; this is the no-silent-caps rule made visible.",
+        "type": "integer"
+      },
+      "loop_hint": {
+        "description": "Present only when the coherence loop is owed something.",
+        "type": "string"
+      },
+      "stale": {
+        "description": "Ids the index returned but the store no longer holds. NON-EMPTY MEANS THE INDEX HAS DRIFTED and a reindex is due — it is not a list of results.",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "hits",
+      "stale",
+      "limit"
+    ],
+    "type": "object"
+  }
 }

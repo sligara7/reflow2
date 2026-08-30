@@ -535,6 +535,7 @@ fn refuse_unless_deliberate(
     found: &Option<SearchFirst>,
     distinct_from: Option<&Vec<String>>,
     node_id: &str,
+    creating: &str,
 ) -> Result<(), McpError> {
     let Some(sf) = found else { return Ok(()) };
     if sf.near_matches.is_empty() {
@@ -561,18 +562,61 @@ fn refuse_unless_deliberate(
         .map(|m| format!("\"{}\"", m.node_id))
         .collect::<Vec<_>>()
         .join(", ");
+
+    // ⭐ THE TYPE RELATIONSHIP DECIDES THE WORDING, because it decides what the
+    // agent should do next. A same-type hit may be the same record written
+    // twice — sharpening is the right move. A hit of ANOTHER type usually is
+    // not a duplicate at all: it is the same work recorded at a different
+    // layer, which is the sequence the served instructions ASK for (record what
+    // shipped as a ChangeEvent, then what must stay true as a Requirement).
+    //
+    // Reported by Alex 2026-08-29: following that loop honestly tripped this
+    // guard every time, and the refusal presented his ChangeEvent as a possible
+    // duplicate. The nodes really did match on words; what was wrong was
+    // calling that a duplicate.
+    //
+    // 🛑 THE REFUSAL STAYS. Excluding cross-type pairs from the filter was the
+    // other available repair and was rejected: it trades a false alarm for a
+    // silent miss, and a silent miss is the failure this guard exists to stop.
+    // Nobody has counted how often a cross-type hit IS a real duplicate, so
+    // suppressing the check would be acting on an unmeasured assumption.
+    let same_type: Vec<&&NearMatch> = unacknowledged
+        .iter()
+        .filter(|m| m.node_type == creating)
+        .collect();
+
+    if same_type.is_empty() {
+        // Every match is of another type. Sharpening is not offered, because
+        // calling this constructor with another type's id is not a route that
+        // exists — offering it would send the agent somewhere it cannot go.
+        return Err(McpError::invalid_params(
+            format!(
+                "The design already holds a DIFFERENT KIND OF RECORD saying something close to \
+                 this, so `{node_id}` was NOT created. Nothing here is a near-duplicate of a \
+                 {creating}:\n\n{listed}\n\nUSUALLY THIS IS THE LOOP WORKING. Recording what \
+                 shipped and recording what must stay true are different acts on the same work, \
+                 and they are supposed to read alike — if that is what this is, call again with \
+                 `distinct_from: [{ids}]` and carry on.\n\nWORTH ONE LOOK FIRST: if the idea \
+                 really belongs on the record above rather than beside it, put it there instead \
+                 — a second node that only restates the first is the thing this check exists to \
+                 catch, and it can wear a different type."
+            ),
+            None,
+        ));
+    }
+
     Err(McpError::invalid_params(
         format!(
             "The design already says something close to this, so `{node_id}` was NOT created. \
              Read these and decide — sharpening an existing node or starting a new one are \
              different acts, and this is the moment to choose:\n\n{listed}\n\nTWO WAYS ON, both \
-             deliberate:\n  SHARPEN — call this same tool with the EXISTING id. Constructors \
-             merge, so what you pass overwrites and what you omit survives; nothing is lost and \
-             the new detail lands on the node that already holds the idea.\n  START A NEW ONE — \
-             call again with `distinct_from: [{ids}]`, which records that you read them and \
-             judged this different.\n\nThis is not a duplicate accusation. Saying the same thing \
-             twice in different words is sometimes real signal, which is why the second route \
-             exists and why nothing was merged for you."
+             deliberate:\n  SHARPEN — call this same tool with the EXISTING id of a {creating} \
+             above. Constructors merge, so what you pass overwrites and what you omit survives; \
+             nothing is lost and the new detail lands on the node that already holds the idea.\n  \
+             START A NEW ONE — call again with `distinct_from: [{ids}]`, which records that you \
+             read them and judged this different.\n\nThis is not a duplicate accusation. Saying \
+             the same thing twice in different words is sometimes real signal, which is why the \
+             second route exists and why nothing was merged for you."
         ),
         None,
     ))
@@ -659,7 +703,9 @@ impl ReflowService {
                 .map_err(dyno_err)?,
         );
         let found = search_first(&g, &req.id, existed, &format!("{name} {statement}"));
-        if let Err(e) = refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id) {
+        if let Err(e) =
+            refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id, "Requirement")
+        {
             // Roll back the node we just wrote. The check needs the node in the
             // index to have an in-query baseline, so the write comes first and
             // is undone when the caller has not yet chosen. Only ever undoes a
@@ -742,7 +788,9 @@ impl ReflowService {
                 .map_err(dyno_err)?,
         );
         let found = search_first(&g, &req.id, existed, &format!("{name} {description}"));
-        if let Err(e) = refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id) {
+        if let Err(e) =
+            refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id, "Capability")
+        {
             // Roll back the node we just wrote. The check needs the node in the
             // index to have an in-query baseline, so the write comes first and
             // is undone when the caller has not yet chosen. Only ever undoes a
@@ -884,7 +932,9 @@ impl ReflowService {
                 .map_err(dyno_err)?,
         );
         let found = search_first(&g, &req.id, existed, &format!("{name} {description}"));
-        if let Err(e) = refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id) {
+        if let Err(e) =
+            refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id, "Component")
+        {
             // Roll back the node we just wrote. The check needs the node in the
             // index to have an in-query baseline, so the write comes first and
             // is undone when the caller has not yet chosen. Only ever undoes a
@@ -1427,7 +1477,9 @@ impl ReflowService {
                 .map_err(dyno_err)?,
         );
         let found = search_first(&g, &req.id, existed, &format!("{name} {decision}"));
-        if let Err(e) = refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id) {
+        if let Err(e) =
+            refuse_unless_deliberate(&found, req.distinct_from.as_ref(), &req.id, "Decision")
+        {
             // Roll back the node we just wrote. The check needs the node in the
             // index to have an in-query baseline, so the write comes first and
             // is undone when the caller has not yet chosen. Only ever undoes a
